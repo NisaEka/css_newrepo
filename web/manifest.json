@@ -1,0 +1,35 @@
+{
+    "name": "css_mobile",
+    "short_name": "css_mobile",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "CSS (Customer Self Service) merupakan one stop aplikasi untuk memenuhi kebutuhan customer terbaik JNE. Dengan power apps CSS, kamu akan mendapatkan pengalaman luar biasa dalam berkirim paket. Bisa mendapatkan fasilitas Poin, Diskon, Pickup, Monitoring, COD, hingga Cashless didalam satu genggaman. Cukup dengan 10 menit langsung bisa dipakai dan siap menjadi partner bisnis online kamu.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
