@@ -1,3 +1,5 @@
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
@@ -34,24 +36,24 @@ class App extends StatelessWidget {
       title: 'CSS',
       theme: ThemeData(
         // useMaterial3: true,
-        fontFamily: 'plus jakarta sans',
+        fontFamily: 'Ubuntu',
         // backgroundColor: baseColor,
         appBarTheme: const AppBarTheme(
-          // backgroundColor: whiteColor,
+          backgroundColor: blueJNE,
           elevation: 0,
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          // fillColor: whiteColor,
-          // labelStyle: hintTextStyle.copyWith(color: blackColor),
-          // hintStyle: hintTextStyle,
+          fillColor: whiteColor,
+          labelStyle: hintTextStyle.copyWith(color: greyDarkColor1),
+          hintStyle: hintTextStyle,
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(
-              // color: neutralColor,
+              color: neutralColor,
               width: 1,
-              // style: BorderStyle.solid,
+              style: BorderStyle.solid,
             ),
           ),
           disabledBorder: OutlineInputBorder(
@@ -85,7 +87,7 @@ class App extends StatelessWidget {
               minimumSize: MaterialStateProperty.all<Size>(const Size(100, 40)),
               shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
               elevation: MaterialStateProperty.resolveWith<double>(
-                    (Set<MaterialState> states) {
+                (Set<MaterialState> states) {
                   if (states.contains(MaterialState.disabled)) {
                     return 0;
                   }
@@ -99,4 +101,3 @@ class App extends StatelessWidget {
     );
   }
 }
-

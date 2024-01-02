@@ -88,7 +88,8 @@ class LoginScreen extends StatelessWidget {
                             radius: 20,
                             title: 'Masuk'.tr,
                             onPressed: () async {
-                              if (controller.formKey.currentState?.validate() == true) controller.doLogin();
+                              // if (controller.formKey.currentState?.validate() == true) controller.doLogin();
+                              controller.doLogin();
                             },
                           ),
                           Container(
@@ -111,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-            bottomNavigationBar: SizedBox(height: 135, child: SvgPicture.asset(ImageConstant.vector1)),
+            bottomNavigationBar: SizedBox(height: 135, child: SvgPicture.asset(ImageConstant.vector1, fit: BoxFit.fill,)),
           );
         });
   }
