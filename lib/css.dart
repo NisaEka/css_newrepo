@@ -35,19 +35,27 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'CSS',
       theme: ThemeData(
-        // useMaterial3: true,
+        // primaryColor: blueJNE,
+        colorScheme: ColorScheme.light(
+            primary: blueJNE,
+            secondary: greyLightColor1,
+            background: Colors.white),
+        useMaterial3: true,
         fontFamily: 'Ubuntu',
         // backgroundColor: baseColor,
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           backgroundColor: blueJNE,
           elevation: 0,
+          titleTextStyle: appTitleTextStyle,
+          iconTheme: const IconThemeData(color: whiteColor),
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: whiteColor,
           labelStyle: hintTextStyle.copyWith(color: greyDarkColor1),
           hintStyle: hintTextStyle,
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(
@@ -79,13 +87,17 @@ class App extends StatelessWidget {
               minimumSize: const Size(100, 40),
               // side: const BorderSide(color: infoColor),
               // foregroundColor: infoColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+              textStyle:
+                  const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
               minimumSize: MaterialStateProperty.all<Size>(const Size(100, 40)),
-              shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8))),
               elevation: MaterialStateProperty.resolveWith<double>(
                 (Set<MaterialState> states) {
                   if (states.contains(MaterialState.disabled)) {
@@ -94,7 +106,8 @@ class App extends StatelessWidget {
                   return 0; // Defer to the widget's default.
                 },
               ),
-              textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
+              textStyle: MaterialStateProperty.all<TextStyle>(
+                  const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
         ),
       ),
       home: const LoginScreen(),

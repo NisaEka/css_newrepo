@@ -21,6 +21,8 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   intl: ^0.18.1
   flutter_svg: ^1.1.6
+  cupertino_stepper: ^0.2.1
+  dropdown_search: ^5.0.6
 
 
 

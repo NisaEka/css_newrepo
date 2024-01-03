@@ -3,25 +3,29 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:get/get.dart';
 
 class CustomTextFormField extends StatelessWidget {
   CustomTextFormField(
       {super.key,
-        required this.controller,
-        this.label,
-        this.helperText,
-        this.hintText,
-        this.readOnly = false,
-        this.onChanged,
-        this.isRequired = false,
-        this.validator,
-        this.inputFormatters,
-        this.onTap,
-        this.suffixIcon,
-        this.backgroundColor,
-        this.multiLine = false,
-        this.inputType,
-        this.prefixIcon, this.isObscure}) {
+      required this.controller,
+      this.label,
+      this.helperText,
+      this.hintText,
+      this.readOnly = false,
+      this.onChanged,
+      this.isRequired = false,
+      this.validator,
+      this.inputFormatters,
+      this.onTap,
+      this.suffixIcon,
+      this.backgroundColor,
+      this.multiLine = false,
+      this.inputType,
+      this.prefixIcon,
+      this.isObscure,
+      this.width,
+      this.height}) {
     if (isRequired && !readOnly) {
       validator ??= ValidationBuilder().required().build();
     }
@@ -43,21 +47,25 @@ class CustomTextFormField extends StatelessWidget {
   final Color? backgroundColor;
   final bool multiLine;
   final bool? isObscure;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RichText(
-          text: TextSpan(
-            text: label,
-            style: formLabelTextStyle,
-            children: <TextSpan>[
-              // TextSpan(text: isRequired ? "*" : "", style: const TextStyle(color: Colors.red)),
-            ],
-          ),
-        ),
+        label != null
+            ? RichText(
+                text: TextSpan(
+                  text: label,
+                  style: formLabelTextStyle,
+                  children: const <TextSpan>[
+                    // TextSpan(text: isRequired ? "*" : "", style: const TextStyle(color: Colors.red)),
+                  ],
+                ),
+              )
+            : SizedBox(),
         SizedBox(
           height: helperText != null ? 16 : 8,
         ),
@@ -66,6 +74,8 @@ class CustomTextFormField extends StatelessWidget {
           height: helperText != null ? 16 : 0,
         ),
         Container(
+          width: width ?? null,
+          height: height != null && multiLine == false ? height ?? 55 : null,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: TextFormField(
             minLines: multiLine ? 3 : 1,
@@ -81,10 +91,10 @@ class CustomTextFormField extends StatelessWidget {
             inputFormatters: inputFormatters,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             style: Theme.of(context).textTheme.bodyText1?.copyWith(
-              fontSize: 16,
-              color: Colors.black,
-              // fontWeight: FontWeight.w600,
-            ),
+                  fontSize: 16,
+                  color: Colors.black,
+                  // fontWeight: FontWeight.w600,
+                ),
             decoration: InputDecoration(
                 fillColor: backgroundColor ?? (onTap != null || !readOnly ? whiteColor : neutralColor),
                 //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
@@ -94,15 +104,13 @@ class CustomTextFormField extends StatelessWidget {
                 hintText: hintText ?? label,
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(
-                        color: readOnly ? Colors.black54 : Theme.of(context).primaryColor,
-                        width: readOnly ? 1 : 2,
-                        style: BorderStyle.solid
-                    )
-                ),
+                    borderSide: BorderSide(color: readOnly ? Colors.black54 : Theme.of(context).primaryColor, width: readOnly ? 1 : 2, style: BorderStyle.solid)),
                 hintStyle: hintTextStyle),
           ),
         ),
+        const SizedBox(
+          height: 10,
+        )
       ],
     );
   }

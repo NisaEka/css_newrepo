@@ -1,7 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/reusable/items/bottom_menu_item.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/step1/inputkiriman1_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/input_kiriman_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,7 +48,8 @@ class BottomBar extends StatelessWidget {
                 const SizedBox(width: 30, height: 30),
                 const SizedBox(width: 30, height: 30),
                 BottomMenuItem(
-                    icon: Icon(Icons.person, color: menu == 1 ? redJNE : blueJNE),
+                    icon:
+                        Icon(Icons.person, color: menu == 1 ? redJNE : blueJNE),
                     title: "Profil".tr,
                     color: menu == 1 ? redJNE : blueJNE,
                     onTap: () => Get.off(const ProfileScreen())),
@@ -58,10 +60,14 @@ class BottomBar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
           child: FloatingActionButton(
-            // notchMargin: 24.0,
+            shape: CircleBorder(),
             backgroundColor: redJNE,
-            onPressed: () => Get.to(const InputKiriman1Screen()),
-            child: Icon(Icons.add),
+            // onPressed: () => Get.to(const InputKirimanScreen()),
+            onPressed: () => Get.to(const InformasiPengirimScreen()),
+            child: const Icon(
+              Icons.add,
+              color: whiteColor,
+            ),
           ),
         ),
       ],
