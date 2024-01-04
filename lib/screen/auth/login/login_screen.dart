@@ -6,6 +6,7 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/reusable/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
+import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,14 +29,21 @@ class LoginScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   // SafeArea(child: SizedBox()),
-                  Container(
-                    height: Get.height / 5,
-                    child: SvgPicture.asset(ImageConstant.vector2),
-                    alignment: Alignment.topLeft,
+                  Stack(
+                    children: [
+                      Container(
+                        height: Get.height / 4,
+                        alignment: Alignment.topLeft,
+                        child: SvgPicture.asset(ImageConstant.vector2),
+                      ),
+                      Positioned(
+                        top: 140,
+                        left: 0,right: 0,
+                        child: Image.asset(ImageConstant.logoCSS_blue, height: 67),
+                      ),
+                    ],
                   ),
-                  Center(
-                    child: Image.asset(ImageConstant.logoCSS_blue, height: 67),
-                  ),
+
                   // CustomFilledButton(color: Colors.blue, title: "en", onPressed: () => Get.updateLocale(Locale("en", "US")),),
                   // SizedBox(height: 20,),
                   // CustomFill edButton(color: Colors.blue, title: "id", onPressed: () => Get.updateLocale(Locale("id", "ID")),),
@@ -46,6 +54,11 @@ class LoginScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Center(
+                              child: Text(
+                            'Masuk ke akun anda'.tr,
+                            style: listTitleTextStyle,
+                          )),
                           const SizedBox(height: 25),
                           CustomTextFormField(
                             controller: controller.emailTextField,
@@ -106,7 +119,7 @@ class LoginScreen extends StatelessWidget {
                             fontColor: blueJNE,
                             radius: 20,
                             title: "Daftar".tr,
-                            onPressed: () {},
+                            onPressed: () => Get.to(const SignUpScreen()),
                           ),
                           const SizedBox(height: 10),
                         ],

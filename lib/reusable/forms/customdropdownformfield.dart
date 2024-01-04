@@ -9,7 +9,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
   CustomDropDownFormField(
       {super.key,
       required this.items,
-      required this.label,
+      this.label,
       this.value,
       this.hintText,
       this.readOnly = false,
@@ -17,14 +17,16 @@ class CustomDropDownFormField<T> extends StatelessWidget {
       this.isRequired = false,
       this.validator,
       this.selectedItem,
-      this.textStyle, this.width}) {
+      this.textStyle,
+      this.width,
+      this.suffixIcon,
+      this.prefixIcon}) {
     if (isRequired) {
-      validator ??=
-          ValidationBuilder().required().build() as FormFieldValidator<T>?;
+      validator ??= ValidationBuilder().required().build() as FormFieldValidator<T>?;
     }
   }
 
-  final String label;
+  final String? label;
   final String? hintText;
   final String? selectedItem;
   final bool readOnly;
@@ -35,6 +37,8 @@ class CustomDropDownFormField<T> extends StatelessWidget {
   FormFieldValidator<T>? validator;
   final List<DropdownMenuItem<T>>? items;
   final double? width;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
 
   _getDropDown() {
     if (items == null) {
@@ -42,10 +46,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
     }
     return DropdownSearch<String>(
       validator: (value) {
-        if (value == null ||
-            value.isEmpty ||
-            value == hintText ||
-            value == label) {
+        if (value == null || value.isEmpty || value == hintText || value == label) {
           // return validator!(value as T);
           return "This field is required";
         }
@@ -57,20 +58,19 @@ class CustomDropDownFormField<T> extends StatelessWidget {
         showSearchBox: items!.length >= 15,
         searchDelay: const Duration(milliseconds: 500),
         itemBuilder: (context, item, bool) {
-          return Container(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: Text(item));
+          return Container(padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), child: Text(item));
         },
       ),
       dropdownButtonProps: const DropdownButtonProps(
         icon: Icon(Icons.keyboard_arrow_down),
       ),
-      items:
-          items!.map((DropdownMenuItem e) => (e.child as Text).data!).toList(),
+      items: items!.map((DropdownMenuItem e) => (e.child as Text).data!).toList(),
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
           hintText: hintText ?? label,
           hintStyle: hintTextStyle,
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
         ),
         baseStyle: textStyle,
       ),
@@ -82,9 +82,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
   }
 
   dynamic _getIdSelectedValue(String selected) {
-    DropdownMenuItem? item = items?.firstWhere(
-            (DropdownMenuItem item) => (item.child as Text).data == selected)
-        as DropdownMenuItem;
+    DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => (item.child as Text).data == selected) as DropdownMenuItem;
     return item.value;
   }
 
@@ -92,17 +90,15 @@ class CustomDropDownFormField<T> extends StatelessWidget {
     if (items != null) {
       if (items!.isNotEmpty) {
         if (value != null) {
-          DropdownMenuItem? item = items?.firstWhere(
-              (DropdownMenuItem item) => item.value == value,
-              orElse: () => items!.first) as DropdownMenuItem;
+          DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => item.value == value, orElse: () => items!.first) as DropdownMenuItem;
           Text textView = item.child as Text;
 
-          return textView.data ?? hintText ?? label;
+          return textView.data ?? hintText ?? label ?? '';
         }
       }
     }
 
-    return hintText ?? label;
+    return hintText ?? label ?? '';
   }
 
   @override
@@ -110,17 +106,17 @@ class CustomDropDownFormField<T> extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RichText(
-          text: TextSpan(
-            text: label,
-            style: formlabelTextStyle,
-            children: <TextSpan>[
-              TextSpan(
-                  text: isRequired ? "*" : "",
-                  style: const TextStyle(color: Colors.red)),
-            ],
-          ),
-        ),
+        label != null
+            ? RichText(
+                text: TextSpan(
+                  text: label,
+                  style: formlabelTextStyle,
+                  children: <TextSpan>[
+                    TextSpan(text: isRequired ? "" : "", style: const TextStyle(color: Colors.red)),
+                  ],
+                ),
+              )
+            : SizedBox(),
         const SizedBox(
           height: 8,
         ),
@@ -129,10 +125,9 @@ class CustomDropDownFormField<T> extends StatelessWidget {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: readOnly
               ? TextField(
-                  controller:
-                      TextEditingController(text: selectedItem.toString()),
+                  controller: TextEditingController(text: selectedItem.toString()),
                   enabled: false,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 16,
                         color: Colors.black,
                         // fontWeight: FontWeight.w600,
