@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 
 TextStyle titleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 29, fontWeight: medium);
+TextStyle subTitleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 14, fontWeight: regular);
 TextStyle formLabelTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 16, fontWeight: bold, color: greyDarkColor1);
 TextStyle hintTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 14, fontWeight: semiBold, color: neutralColor);
 TextStyle inputTextStyle = const TextStyle(fontFamily: 'Ubuntu', fontSize: 14, color: greyDarkColor1);

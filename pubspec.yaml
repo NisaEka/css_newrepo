@@ -23,6 +23,8 @@ dependencies:
   flutter_svg: ^1.1.6
   cupertino_stepper: ^0.2.1
   dropdown_search: ^5.0.6
+  lottie: ^2.7.0
+  package_info_plus: ^5.0.1
 
 
 
@@ -36,6 +38,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/lottie/
 
   fonts:
     - family: Ubuntu

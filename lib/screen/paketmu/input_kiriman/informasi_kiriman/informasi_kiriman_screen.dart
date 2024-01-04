@@ -5,6 +5,7 @@ import 'package:css_mobile/reusable/forms/customdropdownformfield.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/reusable/forms/customformlabel.dart';
 import 'package:css_mobile/reusable/forms/customtextformfield.dart';
+import 'package:css_mobile/screen/dialog/success_dialog.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -84,7 +85,29 @@ class InformasiKirimanScreen extends StatelessWidget {
                                 //   child: Center(child: const Text('Kg')),
                                 // ),
                               ),
-                              CustomFormLabel(label: "Dimensi (Opsional)"),
+                              Row(
+                                children: [
+                                  Checkbox(
+                                    checkColor: Colors.white,
+                                    value: controller.asuransi,
+                                    onChanged: (bool? value) {
+                                      controller.asuransi = value!;
+                                      controller.update();
+                                    },
+                                  ),
+                                  Text("Asuransi".tr, style: listTitleTextStyle),
+                                  Checkbox(
+                                    checkColor: Colors.white,
+                                    value: controller.packingKayu,
+                                    onChanged: (bool? value) {
+                                      controller.packingKayu = value!;
+                                      controller.update();
+                                    },
+                                  ),
+                                  Text("Packing Kayu".tr, style: listTitleTextStyle)
+                                ],
+                              ),
+                              const CustomFormLabel(label: "Dimensi (Opsional)"),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -125,10 +148,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     label: 'Jumlah Packing'.tr,
                                     width: Get.width / 2.3,
                                     items: [
-                                      DropdownMenuItem(
+                                      const DropdownMenuItem(
                                         child: Text('Paket'),
                                       ),
-                                      DropdownMenuItem(
+                                      const DropdownMenuItem(
                                         child: Text('Dokumen'),
                                       ),
                                     ],
@@ -151,6 +174,12 @@ class InformasiKirimanScreen extends StatelessWidget {
                                 controller: controller.hargaBarang,
                                 label: 'Harga Barang'.tr,
                               ),
+                              controller.asuransi
+                                  ? CustomTextFormField(
+                                      controller: controller.hargaAsuransi,
+                                      label: 'Harga Asuransi'.tr,
+                                    )
+                                  : SizedBox(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -180,6 +209,9 @@ class InformasiKirimanScreen extends StatelessWidget {
                                 color: redJNE,
                                 title: 'Buat Resi'.tr,
                                 radius: 20,
+                                onPressed: () {
+                                  Get.to(const SuceesDialog());
+                                },
                               )
                             ],
                           ),

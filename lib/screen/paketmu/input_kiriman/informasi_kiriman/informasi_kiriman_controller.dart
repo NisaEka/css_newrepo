@@ -16,7 +16,7 @@ class InformasiKirimaController extends BaseController{
   final layanan = TextEditingController();
   final hargaBarang = TextEditingController();
   final ongkosKirim = TextEditingController();
-  final hargaAsurans = TextEditingController();
+  final hargaAsuransi = TextEditingController();
   final codFee = TextEditingController();
   final hargaCOD = TextEditingController();
 
