@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/css.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/reusable/forms/customtextformfield.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -25,9 +27,14 @@ class LoginScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  SizedBox(height: Get.height / 5),
+                  // SafeArea(child: SizedBox()),
+                  Container(
+                    height: Get.height / 5,
+                    child: SvgPicture.asset(ImageConstant.vector2),
+                    alignment: Alignment.topLeft,
+                  ),
                   Center(
-                    child: Image.asset(ImageConstant.logoCSS, height: 67),
+                    child: Image.asset(ImageConstant.logoCSS_blue, height: 67),
                   ),
                   // CustomFilledButton(color: Colors.blue, title: "en", onPressed: () => Get.updateLocale(Locale("en", "US")),),
                   // SizedBox(height: 20,),
@@ -58,9 +65,7 @@ class LoginScreen extends StatelessWidget {
                             suffixIcon: IconButton(
                               icon: controller.showIcon,
                               onPressed: () {
-                                controller.isObscurePasswordLogin
-                                    ? controller.isObscurePasswordLogin = false
-                                    : controller.isObscurePasswordLogin = true;
+                                controller.isObscurePasswordLogin ? controller.isObscurePasswordLogin = false : controller.isObscurePasswordLogin = true;
                                 controller.isObscurePasswordLogin != false
                                     ? controller.showIcon = const Icon(
                                         Icons.visibility,
@@ -79,8 +84,7 @@ class LoginScreen extends StatelessWidget {
                             child: TextButton(
                               // onPressed: () => Get.to(const ForgotPasswordScreen()),
                               onPressed: () {},
-                              child: Text("Lupa kata sandi?".tr,
-                                  style: listTitleTextStyle.copyWith(color: infoColor, decoration: TextDecoration.underline)),
+                              child: Text("Lupa kata sandi?".tr, style: listTitleTextStyle.copyWith(color: infoColor, decoration: TextDecoration.underline)),
                             ),
                           ),
                           CustomFilledButton(
@@ -112,7 +116,25 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-            bottomNavigationBar: SizedBox(height: 135, child: SvgPicture.asset(ImageConstant.vector1, fit: BoxFit.fill,)),
+            bottomNavigationBar: Container(
+              // padding: EdgeInsets.all(25),
+              height: 110,
+              child: Column(
+                children: [
+                  Image.asset(
+                    ImageConstant.logoJNE,
+                    height: 56,
+                  ),
+                  Text('ver ${controller.version}')
+                ],
+              ),
+            ),
+            // bottomNavigationBar: SizedBox(
+            //     height: 135,
+            //     child: SvgPicture.asset(
+            //       ImageConstant.vector1,
+            //       fit: BoxFit.fill,
+            //     )),
           );
         });
   }
