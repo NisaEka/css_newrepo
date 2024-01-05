@@ -4,4 +4,5 @@ import 'package:flutter/material.dart';
 class PasswordRecoveryController extends BaseController{
   final formKey = GlobalKey<FormState>();
 
+  int? recovery;
 }

@@ -4,6 +4,7 @@ import 'package:css_mobile/reusable/bar/logoheader.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/screen/auth/forgot_password/get_otp/fp_otp_controller.dart';
 import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_screen.dart';
+import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -66,7 +67,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                           color: Colors.transparent,
                           title: 'Gunakan cara lain'.tr,
                           fontColor: blueJNE,
-
+                          onPressed: () => Get.to(const PasswordRecoveryScreen()),
                         )
                       ],
                     ),
