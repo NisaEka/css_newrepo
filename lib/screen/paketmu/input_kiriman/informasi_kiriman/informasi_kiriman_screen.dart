@@ -6,6 +6,7 @@ import 'package:css_mobile/reusable/forms/customdropdownformfield.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/reusable/forms/customformlabel.dart';
 import 'package:css_mobile/reusable/forms/customtextformfield.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -210,7 +211,11 @@ class InformasiKirimanScreen extends StatelessWidget {
                                 title: 'Buat Resi'.tr,
                                 radius: 20,
                                 onPressed: () {
-                                  Get.to(const SuceesDialog());
+                                  Get.to(SuceesDialog(
+                                    message: "Resi telah dibuat",
+                                    buttonTitle: "Selanjutnya",
+                                    nextAction: () => Get.offAll(DashboardScreen()),
+                                  ));
                                 },
                               )
                             ],

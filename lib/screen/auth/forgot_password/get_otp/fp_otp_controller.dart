@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
-class GetOTPController extends BaseController {
+class ForgotPasswordOTPController extends BaseController {
   final formKey = GlobalKey<FormState>();
   final otpPin = TextEditingController();
   final focusNode = FocusNode();
@@ -56,7 +56,7 @@ class GetOTPController extends BaseController {
 
   @override
   void onReady() {
-    _startTimer(3);
+    _startTimer(60);
     super.onReady();
   }
 

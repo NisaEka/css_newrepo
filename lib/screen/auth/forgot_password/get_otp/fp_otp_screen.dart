@@ -2,19 +2,20 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/reusable/bar/logoheader.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
-import 'package:css_mobile/screen/auth/forgot_password/get_otp/get_otp_controller.dart';
+import 'package:css_mobile/screen/auth/forgot_password/get_otp/fp_otp_controller.dart';
+import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
-class GetOTPScreen extends StatelessWidget {
-  const GetOTPScreen({super.key});
+class ForgotPasswordOTPScreen extends StatelessWidget {
+  const ForgotPasswordOTPScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GetOTPController>(
-        init: GetOTPController(),
+    return GetBuilder<ForgotPasswordOTPController>(
+        init: ForgotPasswordOTPController(),
         builder: (controller) {
           return Scaffold(
             body: Column(
@@ -59,6 +60,13 @@ class GetOTPScreen extends StatelessWidget {
                           color: blueJNE,
                           title: 'Selanjutnya'.tr,
                           radius: 50,
+                          onPressed: () => Get.to(const NewPasswordScreen()),
+                        ),
+                        CustomFilledButton(
+                          color: Colors.transparent,
+                          title: 'Gunakan cara lain'.tr,
+                          fontColor: blueJNE,
+
                         )
                       ],
                     ),

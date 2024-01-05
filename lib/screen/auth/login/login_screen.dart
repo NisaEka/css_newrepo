@@ -7,7 +7,7 @@ import 'package:css_mobile/reusable/bar/logoheader.dart';
 import 'package:css_mobile/reusable/bar/versionsection.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/reusable/forms/customtextformfield.dart';
-import 'package:css_mobile/screen/auth/forgot_password/get_otp/get_otp_screen.dart';
+import 'package:css_mobile/screen/auth/forgot_password/get_otp/fp_otp_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
@@ -84,7 +84,7 @@ class LoginScreen extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                              onPressed: () => Get.to(const GetOTPScreen()),
+                              onPressed: () => Get.to(const ForgotPasswordOTPScreen()),
                               child: Text("Lupa kata sandi?".tr, style: listTitleTextStyle.copyWith(color: infoColor)),
                             ),
                           ),
