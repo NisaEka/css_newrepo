@@ -1,6 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/reusable/bar/logoheader.dart';
+import 'package:css_mobile/reusable/bar/versionsection.dart';
 import 'package:css_mobile/reusable/forms/customdropdownformfield.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/reusable/forms/customformlabel.dart';
@@ -22,20 +24,7 @@ class SignUpScreen extends StatelessWidget {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: Get.height / 4,
-                        alignment: Alignment.topLeft,
-                        child: SvgPicture.asset(ImageConstant.vector2),
-                      ),
-                      Positioned(
-                        top: 140,
-                        left: 0,right: 0,
-                        child: Image.asset(ImageConstant.logoCSS_blue, height: 67),
-                      ),
-                    ],
-                  ),
+                  const LogoHeader(),
                   Form(
                     key: controller.formKey,
                     child: Padding(
@@ -99,19 +88,7 @@ class SignUpScreen extends StatelessWidget {
                             title: 'Daftar'.tr,
                             radius: 50,
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: 30,bottom: 20),
-                            // height: 110,
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  ImageConstant.logoJNE,
-                                  height: 56,
-                                ),
-                                Text('ver ${controller.version}')
-                              ],
-                            ),
-                          ),
+                          const VersionApp()
                         ],
                       ),
                     ),

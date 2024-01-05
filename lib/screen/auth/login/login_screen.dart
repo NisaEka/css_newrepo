@@ -3,8 +3,11 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/css.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/reusable/bar/logoheader.dart';
+import 'package:css_mobile/reusable/bar/versionsection.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/reusable/forms/customtextformfield.dart';
+import 'package:css_mobile/screen/auth/forgot_password/get_otp/get_otp_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
@@ -29,21 +32,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   // SafeArea(child: SizedBox()),
-                  Stack(
-                    children: [
-                      Container(
-                        height: Get.height / 4,
-                        alignment: Alignment.topLeft,
-                        child: SvgPicture.asset(ImageConstant.vector2),
-                      ),
-                      Positioned(
-                        top: 140,
-                        left: 0,right: 0,
-                        child: Image.asset(ImageConstant.logoCSS_blue, height: 67),
-                      ),
-                    ],
-                  ),
-
+                  const LogoHeader(),
                   // CustomFilledButton(color: Colors.blue, title: "en", onPressed: () => Get.updateLocale(Locale("en", "US")),),
                   // SizedBox(height: 20,),
                   // CustomFill edButton(color: Colors.blue, title: "id", onPressed: () => Get.updateLocale(Locale("id", "ID")),),
@@ -95,9 +84,8 @@ class LoginScreen extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                              // onPressed: () => Get.to(const ForgotPasswordScreen()),
-                              onPressed: () {},
-                              child: Text("Lupa kata sandi?".tr, style: listTitleTextStyle.copyWith(color: infoColor, decoration: TextDecoration.underline)),
+                              onPressed: () => Get.to(const GetOTPScreen()),
+                              child: Text("Lupa kata sandi?".tr, style: listTitleTextStyle.copyWith(color: infoColor)),
                             ),
                           ),
                           CustomFilledButton(
@@ -129,19 +117,7 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-            bottomNavigationBar: Container(
-              // padding: EdgeInsets.all(25),
-              height: 110,
-              child: Column(
-                children: [
-                  Image.asset(
-                    ImageConstant.logoJNE,
-                    height: 56,
-                  ),
-                  Text('ver ${controller.version}')
-                ],
-              ),
-            ),
+            bottomNavigationBar: VersionApp(),
             // bottomNavigationBar: SizedBox(
             //     height: 135,
             //     child: SvgPicture.asset(

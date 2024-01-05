@@ -15,15 +15,8 @@ class SignUpController extends BaseController{
   String? version;
   bool pakaiJNE = false;
 
-  void initData() async {
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    version = packageInfo.version;
-    update();
-  }
-
   @override
   void onInit() {
     super.onInit();
-    initData();
   }
 }

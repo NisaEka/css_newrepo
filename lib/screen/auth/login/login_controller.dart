@@ -12,24 +12,16 @@ class LoginController extends BaseController {
   final passwordTextField = TextEditingController();
   bool isObscurePasswordLogin = false;
   Locale? lang;
-  String? version;
 
   @override
   void onInit() {
     super.onInit();
-    initData();
   }
 
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
     color: greyDarkColor1,
   );
-
-  void initData() async {
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    version = packageInfo.version;
-    update();
-  }
 
   void doLogin() {
     Get.offAll(DashboardScreen());
