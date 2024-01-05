@@ -27,32 +27,29 @@ class BottomBar extends StatelessWidget {
       children: [
         Container(
           height: 70.0,
-          decoration: BoxDecoration(color: whiteColor, boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3),
-            )
-          ]),
+          decoration: BoxDecoration(
+              color: whiteColor,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3),
+                )
+              ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                BottomMenuItem(
-                    icon: Icon(Icons.home, color: menu == 0 ? redJNE : blueJNE),
-                    title: "Beranda".tr,
-                    color: menu == 0 ? redJNE : blueJNE,
-                    onTap: () => Get.off(const DashboardScreen())),
+                BottomMenuItem(icon: Icon(Icons.home, color: menu == 0 ? redJNE : blueJNE), title: "Beranda".tr, color: menu == 0 ? redJNE : blueJNE, onTap: () => Get.off(const DashboardScreen())),
                 const SizedBox(width: 30, height: 30),
                 const SizedBox(width: 30, height: 30),
-                BottomMenuItem(
-                    icon:
-                        Icon(Icons.person, color: menu == 1 ? redJNE : blueJNE),
-                    title: "Profil".tr,
-                    color: menu == 1 ? redJNE : blueJNE,
-                    onTap: () => Get.off(const ProfileScreen())),
+                BottomMenuItem(icon: Icon(Icons.person, color: menu == 1 ? redJNE : blueJNE), title: "Profil".tr, color: menu == 1 ? redJNE : blueJNE, onTap: () => Get.off(const ProfileScreen())),
               ],
             ),
           ),
@@ -60,7 +57,7 @@ class BottomBar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
           child: FloatingActionButton(
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
             backgroundColor: redJNE,
             // onPressed: () => Get.to(const InputKirimanScreen()),
             onPressed: () => Get.to(const InformasiPengirimScreen()),

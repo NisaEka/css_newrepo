@@ -1,9 +1,11 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/dialog/success_dialog.dart';
 import 'package:css_mobile/reusable/bar/logoheader.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/reusable/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_controller.dart';
+import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,6 +49,11 @@ class NewPasswordScreen extends StatelessWidget {
                             color: blueJNE,
                             title: 'Konfirmasi'.tr,
                             radius: 50,
+                            onPressed: () => Get.to(SucceesDialog(
+                              message: "Password berhasil diperbaharui".tr,
+                              buttonTitle: "Masuk".tr,
+                              nextAction: () => Get.offAll(const LoginScreen()),
+                            )),
                           )
                         ],
                       ),

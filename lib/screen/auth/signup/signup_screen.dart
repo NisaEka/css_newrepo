@@ -8,6 +8,7 @@ import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/reusable/forms/customformlabel.dart';
 import 'package:css_mobile/reusable/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/auth/signup/signup_controller.dart';
+import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -87,6 +88,7 @@ class SignUpScreen extends StatelessWidget {
                             color: blueJNE,
                             title: 'Daftar'.tr,
                             radius: 50,
+                            onPressed: () => Get.to(const SignUpOTPScreen()),
                           ),
                           const VersionApp()
                         ],

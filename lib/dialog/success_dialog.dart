@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-class SuceesDialog extends StatelessWidget {
+class SucceesDialog extends StatelessWidget {
   final String message;
   final VoidCallback? nextAction;
   final String buttonTitle;
 
-  const SuceesDialog({
+  const SucceesDialog({
     super.key,
     required this.message,
     this.nextAction,

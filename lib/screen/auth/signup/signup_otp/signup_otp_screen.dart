@@ -1,22 +1,22 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/dialog/success_dialog.dart';
 import 'package:css_mobile/reusable/bar/logoheader.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
-import 'package:css_mobile/screen/auth/forgot_password/get_otp/fp_otp_controller.dart';
-import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_screen.dart';
-import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_screen.dart';
+import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
-class ForgotPasswordOTPScreen extends StatelessWidget {
-  const ForgotPasswordOTPScreen({super.key});
+class SignUpOTPScreen extends StatelessWidget {
+  const SignUpOTPScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ForgotPasswordOTPController>(
-        init: ForgotPasswordOTPController(),
+    return GetBuilder<SignUpOTPController>(
+        init: SignUpOTPController(),
         builder: (controller) {
           return Scaffold(
             body: Column(
@@ -61,14 +61,12 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                           color: blueJNE,
                           title: 'Selanjutnya'.tr,
                           radius: 50,
-                          onPressed: () => Get.to(const NewPasswordScreen()),
+                          onPressed: () => Get.to(SucceesDialog(
+                            message: "Selamat, kamu sudah terdaftar".tr,
+                            buttonTitle: "Masuk".tr,
+                            nextAction: () => Get.offAll(const LoginScreen()),
+                          )),
                         ),
-                        CustomFilledButton(
-                          color: Colors.transparent,
-                          title: 'Gunakan cara lain'.tr,
-                          fontColor: blueJNE,
-                          onPressed: () => Get.to(const PasswordRecoveryScreen()),
-                        )
                       ],
                     ),
                   ),

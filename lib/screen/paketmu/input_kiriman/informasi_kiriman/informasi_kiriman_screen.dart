@@ -211,7 +211,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                 title: 'Buat Resi'.tr,
                                 radius: 20,
                                 onPressed: () {
-                                  Get.to(SuceesDialog(
+                                  Get.to(SucceesDialog(
                                     message: "Resi telah dibuat",
                                     buttonTitle: "Selanjutnya",
                                     nextAction: () => Get.offAll(DashboardScreen()),

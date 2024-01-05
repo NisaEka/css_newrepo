@@ -7,7 +7,7 @@ import 'package:css_mobile/reusable/bar/logoheader.dart';
 import 'package:css_mobile/reusable/bar/versionsection.dart';
 import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
 import 'package:css_mobile/reusable/forms/customtextformfield.dart';
-import 'package:css_mobile/screen/auth/forgot_password/get_otp/fp_otp_screen.dart';
+import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
