@@ -1,6 +1,9 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/reusable/bar/custombackbutton.dart';
+import 'package:css_mobile/reusable/bar/customstepper.dart';
+import 'package:css_mobile/reusable/bar/customtopbar.dart';
 import 'package:css_mobile/reusable/bar/logoheader.dart';
 import 'package:css_mobile/reusable/bar/versionsection.dart';
 import 'package:css_mobile/reusable/forms/customdropdownformfield.dart';
@@ -10,6 +13,7 @@ import 'package:css_mobile/reusable/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/auth/signup/signup_controller.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -22,10 +26,37 @@ class SignUpScreen extends StatelessWidget {
         init: SignUpController(),
         builder: (controller) {
           return Scaffold(
+            appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(200),
+                child: Stack(
+                  children: [
+                    const Positioned(
+                      left: 10, top: 40,
+                      child: CustomBackButton(),
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: Container(
+                        height: Get.height / 4,
+                        alignment: Alignment.topLeft,
+                        child: Transform.flip(
+                          flipX: true,
+                          child: SvgPicture.asset(ImageConstant.vector2),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 140,
+                      left: 0,
+                      right: 0,
+                      child: Image.asset(ImageConstant.logoCSS_blue, height: 67),
+                    ),
+                  ],
+                )),
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  const LogoHeader(),
+                  // const LogoHeader(),
                   Form(
                     key: controller.formKey,
                     child: Padding(

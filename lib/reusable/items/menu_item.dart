@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,13 +18,20 @@ class MenuItem extends StatelessWidget {
         margin: EdgeInsets.all(10),
         child: Column(
           children: [
-            Image.asset(menuImg, height: Get.width / 9),
+            Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: blueJNE,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.asset(menuImg, height: Get.width / 9),
+            ),
             SizedBox(
                 child: Text(
-                  menuTitle,
-                  style: sublistTitleTextStyle,
-                  textAlign: TextAlign.center,
-                )),
+              menuTitle,
+              style: sublistTitleTextStyle,
+              textAlign: TextAlign.center,
+            )),
           ],
         ),
       ),
