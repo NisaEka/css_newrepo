@@ -2,8 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/reusable/bar/custombottombar.dart';
-import 'package:css_mobile/reusable/items/menu_item.dart';
+import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
+import 'package:css_mobile/widgets/bar/custombottombar.dart';
+import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -80,7 +81,7 @@ class DashboardScreen extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Image.asset(ImageConstant.logoJLC, height: 14),
-                                        Text(' 1.000 Point')
+                                        const Text(' 1.000 Point')
                                         // const Padding(
                                         //   padding: EdgeInsets.symmetric(horizontal: 8),
                                         //   child: Icon(
@@ -185,6 +186,7 @@ class DashboardScreen extends StatelessWidget {
                                       MenuItem(
                                         menuImg: ImageConstant.cekOngkirIcon,
                                         menuTitle: "Cek Ongkir\n".tr,
+                                        onTap: () => Get.to(const CekOngkirScreen()),
                                       ),
                                       MenuItem(
                                         menuImg: ImageConstant.dukunganTeknisIcon,

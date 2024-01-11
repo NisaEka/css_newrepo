@@ -3,7 +3,6 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
-import 'package:get/get.dart';
 
 class CustomTextFormField extends StatelessWidget {
   CustomTextFormField(
@@ -65,7 +64,7 @@ class CustomTextFormField extends StatelessWidget {
                   ],
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         SizedBox(
           height: helperText != null ? 16 : 8,
         ),
@@ -90,7 +89,7 @@ class CustomTextFormField extends StatelessWidget {
             obscureText: isObscure ?? false,
             inputFormatters: inputFormatters,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16,
                   color: Colors.black,
                   // fontWeight: FontWeight.w600,
@@ -100,11 +99,12 @@ class CustomTextFormField extends StatelessWidget {
                 //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
                 suffixIcon: suffixIcon,
                 prefixIcon: prefixIcon,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                contentPadding: EdgeInsets.only(top: 16, bottom: 16, left: prefixIcon != null ? 70 : 10, right: 10),
                 hintText: hintText ?? label,
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor, width: readOnly ? 1 : 2, style: BorderStyle.solid)),
+                    borderSide: BorderSide(
+                        color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor, width: readOnly ? 1 : 2, style: BorderStyle.solid)),
                 hintStyle: hintTextStyle),
           ),
         ),

@@ -1,11 +1,11 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/dialog/success_dialog.dart';
-import 'package:css_mobile/reusable/bar/customstepper.dart';
-import 'package:css_mobile/reusable/forms/customdropdownformfield.dart';
-import 'package:css_mobile/reusable/forms/customfilledbutton.dart';
-import 'package:css_mobile/reusable/forms/customformlabel.dart';
-import 'package:css_mobile/reusable/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/bar/customstepper.dart';
+import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customformlabel.dart';
+import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_controller.dart';
 import 'package:flutter/material.dart';

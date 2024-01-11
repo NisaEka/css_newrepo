@@ -1,5 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/reusable/items/bottom_menu_item.dart';
+import 'package:css_mobile/widgets/items/bottom_menu_item.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/input_kiriman_screen.dart';

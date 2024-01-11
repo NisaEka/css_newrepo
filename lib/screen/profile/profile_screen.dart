@@ -1,4 +1,4 @@
-import 'package:css_mobile/reusable/bar/custombottombar.dart';
+import 'package:css_mobile/widgets/bar/custombottombar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
