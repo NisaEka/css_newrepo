@@ -21,7 +21,9 @@ class CekOngkirScreen extends StatelessWidget {
         init: CekOngkirController(),
         builder: (controller) {
           return Scaffold(
-            appBar: const CustomTopBar(),
+            appBar: CustomTopBar(
+              title: Text('Cek Ongkos Kirim'.tr),
+            ),
             body: SingleChildScrollView(
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -133,7 +135,6 @@ class CekOngkirScreen extends StatelessWidget {
                       servicePrice: '15.000',
                       serviceDuration: '1 - 2 D',
                     ),
-
                   ],
                 ),
               ),
