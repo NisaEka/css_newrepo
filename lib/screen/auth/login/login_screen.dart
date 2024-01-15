@@ -72,7 +72,9 @@ class LoginScreen extends StatelessWidget {
                             suffixIcon: IconButton(
                               icon: controller.showIcon,
                               onPressed: () {
-                                controller.isObscurePasswordLogin ? controller.isObscurePasswordLogin = false : controller.isObscurePasswordLogin = true;
+                                controller.isObscurePasswordLogin
+                                    ? controller.isObscurePasswordLogin = false
+                                    : controller.isObscurePasswordLogin = true;
                                 controller.isObscurePasswordLogin != false
                                     ? controller.showIcon = const Icon(
                                         Icons.visibility,
@@ -90,7 +92,8 @@ class LoginScreen extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child: TextButton(
                               onPressed: () => Get.to(const ForgotPasswordOTPScreen()),
-                              child: Text("Lupa kata sandi?".tr, style: listTitleTextStyle.copyWith(color: infoColor)),
+                              child: Text("Lupa kata sandi?".tr,
+                                  style: listTitleTextStyle.copyWith(color: infoColor)),
                             ),
                           ),
                           CustomFilledButton(
@@ -100,6 +103,7 @@ class LoginScreen extends StatelessWidget {
                             onPressed: () async {
                               if (controller.formKey.currentState?.validate() == true) controller.doLogin();
                               // controller.doLogin();
+
                             },
                           ),
                           Container(

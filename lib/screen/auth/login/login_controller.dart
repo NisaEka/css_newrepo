@@ -9,6 +9,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
 
 class LoginController extends BaseController {
   final formKey = GlobalKey<FormState>();
@@ -17,16 +18,19 @@ class LoginController extends BaseController {
   final passwordField = FocusNode();
 
   bool isObscurePasswordLogin = false;
-  Locale? lang;
-  double? lat;
-  double? lng;
-
-  // Position? currentPosition;
   bool isLoading = false;
+  Locale? lang;
 
   @override
   void onInit() {
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    emailTextField.dispose();
+    passwordTextField.dispose();
   }
 
   Widget showIcon = const Icon(
@@ -44,10 +48,7 @@ class LoginController extends BaseController {
           email: emailTextField.text,
           password: passwordTextField.text,
           device: await getDeviceinfo(),
-          coordinate: Coordinate(
-            lng: 0,
-            lat: 0,
-          ),
+          coordinate: await getCurrentLocation(),
         ),
       )
           .then((value) async {
@@ -57,18 +58,18 @@ class LoginController extends BaseController {
             value.payload?.allowedMenu ?? AllowedMenu(),
           );
 
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.info,
-                color: Colors.white,
-              ),
-              message: value.message.toString(),
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: successColor,
-            ),
-          );
+          // Get.showSnackbar(
+          //   GetSnackBar(
+          //     icon: const Icon(
+          //       Icons.info,
+          //       color: Colors.white,
+          //     ),
+          //     message: value.message.toString(),
+          //     isDismissible: true,
+          //     duration: const Duration(seconds: 3),
+          //     backgroundColor: successColor,
+          //   ),
+          // );
         } else {
           Get.showSnackbar(
             GetSnackBar(
@@ -83,7 +84,7 @@ class LoginController extends BaseController {
             ),
           );
         }
-      }).then((value) => cekToken());
+      }).then((value) => Get.offAll(DashboardScreen()));
     } catch (e) {
       e.printError();
       // Get.showSnackbar(
@@ -142,48 +143,30 @@ class LoginController extends BaseController {
     update();
   }
 
-// Future<void> getCurrentPosition() async {
-//   final hasPermission = await handleLocationPermission();
-//   if (!hasPermission) return;
-//   await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-//       .then((Position position) {
-//     currentPosition = position;
-//     lat = currentPosition?.latitude;
-//     lng = currentPosition?.longitude;
-//     update();
-//   }).catchError((e) {
-//     debugPrint(e);
-//   });
-//   update();
-//   lat.printInfo(info: 'lat');
-//   lng.printInfo(info: 'lng');
-// }
-//
-// Future<bool> handleLocationPermission() async {
-//   bool serviceEnabled;
-//   LocationPermission permission;
-//
-//   serviceEnabled = await Geolocator.isLocationServiceEnabled();
-//   if (!serviceEnabled) {
-//     // ScaffoldMessenger.of(context as BuildContext).showSnackBar(const SnackBar(
-//     //     content: Text('Location services are disabled. Please enable the services')));
-//     // return false;
-//   }
-//   permission = await Geolocator.checkPermission();
-//   if (permission == LocationPermission.denied) {
-//     permission = await Geolocator.requestPermission();
-//     if (permission == LocationPermission.denied) {
-//       // ScaffoldMessenger.of(context as BuildContext)
-//       //     .showSnackBar(const SnackBar(content: Text('Location permissions are denied')));
-//       return false;
-//     }
-//   }
-//   if (permission == LocationPermission.deniedForever) {
-//     // ScaffoldMessenger.of(context as BuildContext).showSnackBar(const SnackBar(
-//     //     content:
-//     //         Text('Location permissions are permanently denied, we cannot request permissions.')));
-//     return false;
-//   }
-//   return true;
-// }
+  Future<Coordinate> getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    Position position;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    position = await Geolocator.getCurrentPosition();
+    return Coordinate(lat: position.latitude, lng: position.longitude);
+  }
 }
