@@ -1,8 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/css.dart';
-import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -12,10 +10,8 @@ import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -101,9 +97,8 @@ class LoginScreen extends StatelessWidget {
                             radius: 20,
                             title: 'Masuk'.tr,
                             onPressed: () async {
-                              if (controller.formKey.currentState?.validate() == true) controller.doLogin();
-                              // controller.doLogin();
-
+                              // if (controller.formKey.currentState?.validate() == true) controller.doLogin();
+                              Get.to(const DashboardScreen());
                             },
                           ),
                           Container(
@@ -126,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-            bottomNavigationBar: VersionApp(),
+            bottomNavigationBar: const VersionApp(),
             // bottomNavigationBar: SizedBox(
             //     height: 135,
             //     child: SvgPicture.asset(

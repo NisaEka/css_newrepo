@@ -5,6 +5,9 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar.dart';
+import 'package:css_mobile/widgets/dashboard/dashboard_carousel.dart';
+import 'package:css_mobile/widgets/dashboard/jlcpoint_widget.dart';
+import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:flutter/material.dart';
@@ -57,55 +60,12 @@ class DashboardScreen extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Selamat Datang".tr,
-                                        style: sublistTitleTextStyle.copyWith(color: whiteColor),
-                                      ),
-                                      Text(
-                                        "Joni".tr,
-                                        style: listTitleTextStyle.copyWith(color: whiteColor),
-                                      ),
-                                    ],
+                                  CustomLabelText(
+                                    title: 'Selamat Datang'.tr,
+                                    value: 'Joni',
+                                    fontColor: whiteColor,
                                   ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: whiteColor,
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Image.asset(ImageConstant.logoJLC, height: 14),
-                                        const Text(' 1.000 Point')
-                                        // const Padding(
-                                        //   padding: EdgeInsets.symmetric(horizontal: 8),
-                                        //   child: Icon(
-                                        //     Icons.storefront_rounded,
-                                        //     color: whiteColor,
-                                        //   ),
-                                        // ),
-                                        // Column(
-                                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                                        //   children: [
-                                        //     Text(
-                                        //       "Joni Store".tr,
-                                        //       style: sublistTitleTextStyle.copyWith(color: whiteColor),
-                                        //     ),
-                                        //     Text(
-                                        //       "Pemilik".tr,
-                                        //       style: listTitleTextStyle.copyWith(color: whiteColor),
-                                        //     ),
-                                        //   ],
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
+                                  const JLCPointWidget()
                                 ],
                               ),
                               const SizedBox(height: 18),
@@ -119,33 +79,14 @@ class DashboardScreen extends StatelessWidget {
                                   ),
                                 ),
                                 readOnly: true,
-                                onTap: () => Get.to(LacakKirimanScreen()),
+                                onTap: () => Get.to(const LacakKirimanScreen()),
                               )
                             ],
                           ),
                         ),
                         Column(
                           children: [
-                            Container(
-                              margin: const EdgeInsets.only(left: 20, right: 20, top: 150),
-                              height: 100,
-                              width: Get.width - 50,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(color: infoLightColor1.withOpacity(0.8)),
-                              child: CarouselSlider(
-                                items: controller.bannerList,
-                                options: CarouselOptions(
-                                  autoPlay: true,
-                                  viewportFraction: 1,
-                                  enableInfiniteScroll: false,
-                                  height: 100,
-                                  // pauseAutoPlayOnTouch: true,
-                                  onPageChanged: (index, reason) => controller.bannerIndex,
-                                ),
-                                disableGesture: true,
-                                carouselController: controller.commercialCarousel,
-                              ),
-                            ),
+                            DashboardCarousel(bannerList: controller.bannerList, bannerIndex: controller.bannerIndex,),
                             Container(
                               margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
                               decoration: BoxDecoration(
