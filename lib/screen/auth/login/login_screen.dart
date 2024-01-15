@@ -93,8 +93,8 @@ class LoginScreen extends StatelessWidget {
                             radius: 20,
                             title: 'Masuk'.tr,
                             onPressed: () async {
-                              // if (controller.formKey.currentState?.validate() == true) controller.doLogin();
-                              controller.doLogin();
+                              if (controller.formKey.currentState?.validate() == true) controller.doLogin();
+                              // controller.doLogin();
                             },
                           ),
                           Container(

@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -12,6 +17,11 @@ class LoginController extends BaseController {
   final passwordTextField = TextEditingController();
   bool isObscurePasswordLogin = false;
   Locale? lang;
+  double? lat;
+  double? lng;
+
+  // Position? currentPosition;
+  bool isLoading = false;
 
   @override
   void onInit() {
@@ -23,7 +33,142 @@ class LoginController extends BaseController {
     color: greyDarkColor1,
   );
 
-  void doLogin() {
-    Get.offAll(DashboardScreen());
+  Future<void> doLogin() async {
+    isLoading = true;
+    update();
+    try {
+      await authRepository
+          .postLogin(
+        InputLoginModel(
+          email: emailTextField.text,
+          password: passwordTextField.text,
+          device: await getDeviceinfo(),
+          coordinate: Coordinate(
+            lng: 0,
+            lat: 0,
+          ),
+        ),
+      )
+          .then((value) {
+        if (value.code == 200) {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.error,
+                color: Colors.white,
+              ),
+              message: value.message.toString(),
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: successColor,
+            ),
+          );
+        } else {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.error,
+                color: Colors.white,
+              ),
+              message: value.message.toString(),
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      });
+    } catch (e) {
+      e.printError();
+      Get.showSnackbar(
+        const GetSnackBar(
+          icon: Icon(
+            Icons.error,
+            color: Colors.white,
+          ),
+          message: 'Email or Password is not valid',
+          isDismissible: true,
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+    isLoading = false;
+    update();
+    // Get.offAll(DashboardScreen());
   }
+
+  Future<Device?> getDeviceinfo() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      // import 'dart:io'
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      var systemName = iosDeviceInfo.systemName;
+      var version = iosDeviceInfo.systemVersion;
+      var name = iosDeviceInfo.name;
+      var model = iosDeviceInfo.model;
+
+      return Device(
+        deviceId: iosDeviceInfo.identifierForVendor,
+        deviceVersion: '$systemName $version',
+      );
+    } else if (Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      var release = androidDeviceInfo.version.release;
+      var sdkInt = androidDeviceInfo.version.sdkInt;
+      var manufacturer = androidDeviceInfo.manufacturer;
+      var model = androidDeviceInfo.model;
+
+      return Device(
+        deviceId: androidDeviceInfo.id,
+        deviceVersion: 'Android $release',
+      );
+    }
+    return null;
+  }
+
+// Future<void> getCurrentPosition() async {
+//   final hasPermission = await handleLocationPermission();
+//   if (!hasPermission) return;
+//   await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+//       .then((Position position) {
+//     currentPosition = position;
+//     lat = currentPosition?.latitude;
+//     lng = currentPosition?.longitude;
+//     update();
+//   }).catchError((e) {
+//     debugPrint(e);
+//   });
+//   update();
+//   lat.printInfo(info: 'lat');
+//   lng.printInfo(info: 'lng');
+// }
+//
+// Future<bool> handleLocationPermission() async {
+//   bool serviceEnabled;
+//   LocationPermission permission;
+//
+//   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+//   if (!serviceEnabled) {
+//     // ScaffoldMessenger.of(context as BuildContext).showSnackBar(const SnackBar(
+//     //     content: Text('Location services are disabled. Please enable the services')));
+//     // return false;
+//   }
+//   permission = await Geolocator.checkPermission();
+//   if (permission == LocationPermission.denied) {
+//     permission = await Geolocator.requestPermission();
+//     if (permission == LocationPermission.denied) {
+//       // ScaffoldMessenger.of(context as BuildContext)
+//       //     .showSnackBar(const SnackBar(content: Text('Location permissions are denied')));
+//       return false;
+//     }
+//   }
+//   if (permission == LocationPermission.deniedForever) {
+//     // ScaffoldMessenger.of(context as BuildContext).showSnackBar(const SnackBar(
+//     //     content:
+//     //         Text('Location permissions are permanently denied, we cannot request permissions.')));
+//     return false;
+//   }
+//   return true;
+// }
 }

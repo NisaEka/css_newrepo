@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:css_mobile/const/app_const.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 
@@ -8,14 +9,13 @@ class NetworkCore {
 
   NetworkCore() {
     dio.options = BaseOptions(
-        // baseUrl: AppConst.baseUrl,
+        baseUrl: AppConst.baseUrl,
         connectTimeout: 20000,
         receiveTimeout: 20000,
         sendTimeout: 20000,
         headers: {
-          'accept' : 'application/json',
-        }
-    );
+          'accept': 'application/json',
+        });
 
     String env = FlavorConfig.instance.name ?? "PROD";
     if (env != "PROD") {
