@@ -22,6 +22,13 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+//apply plugin: 'com.android.application'
+//// START: FlutterFire Configuration
+//apply plugin: 'com.google.gms.google-services'
+//// END: FlutterFire Configuration
+//apply plugin: 'kotlin-android'
+//apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
 android {
     namespace "com.jne.css.css_mobile"
     compileSdkVersion flutter.compileSdkVersion
@@ -76,14 +83,14 @@ android {
         }
         prod {
             dimension "app"
-            resValue "string", "app_name", "Pigeon"
+            resValue "string", "app_name", "css"
         }
 
         applicationVariants.all { variant ->
             variant.outputs.all {
                 def flavor = variant.name
                 def versionName = variant.versionName
-                outputFileName = "pigeon${flavor}_${versionName}.apk"
+                outputFileName = "css${flavor}_${versionName}.apk"
             }
         }
     }
@@ -93,4 +100,7 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:multidex:2.0.1'
+}
