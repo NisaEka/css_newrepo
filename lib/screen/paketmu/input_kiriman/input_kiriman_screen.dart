@@ -21,6 +21,7 @@ class InputKirimanScreen extends StatelessWidget {
                   // color: blueJNE,
                   ),
               child: IKStepper(
+                type: StepperType.horizontal,
                 steps: controller.steps,
                 currentStep: controller.currentStep,
                 onStepContinue: () {

@@ -4,6 +4,7 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:get/get.dart';
 
 class CSS extends StatelessWidget {
@@ -11,12 +12,13 @@ class CSS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // String env = FlavorConfig.instance.name ?? "PROD";
-    // if (env == "DEV" || env == "STG") {
-    //   return const FlavorBanner(
-    //     location: BannerLocation.topEnd,
-    //     child: App(),
-    //   )
+    String env = FlavorConfig.instance.name ?? "PROD";
+    if (env == "DEV" || env == "STG") {
+      return const FlavorBanner(
+        location: BannerLocation.topEnd,
+        child: App(),
+      );
+    }
 
     return const App();
   }
@@ -36,7 +38,11 @@ class App extends StatelessWidget {
       title: 'CSS',
       theme: ThemeData(
         // primaryColor: blueJNE,
-        colorScheme: ColorScheme.light(primary: blueJNE, secondary: greyLightColor1, background: Colors.white),
+        colorScheme: const ColorScheme.light(
+          primary: blueJNE,
+          secondary: greyLightColor1,
+          background: Colors.white,
+        ),
         useMaterial3: true,
         fontFamily: 'Ubuntu',
         // backgroundColor: baseColor,
@@ -89,7 +95,8 @@ class App extends StatelessWidget {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
               minimumSize: MaterialStateProperty.all<Size>(const Size(100, 40)),
-              shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
               elevation: MaterialStateProperty.resolveWith<double>(
                 (Set<MaterialState> states) {
                   if (states.contains(MaterialState.disabled)) {
@@ -98,7 +105,8 @@ class App extends StatelessWidget {
                   return 0; // Defer to the widget's default.
                 },
               ),
-              textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
+              textStyle: MaterialStateProperty.all<TextStyle>(
+                  const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
         ),
       ),
       home: const LoginScreen(),

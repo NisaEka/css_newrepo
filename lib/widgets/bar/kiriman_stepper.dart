@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 
-class IKStepper extends StatelessWidget {
+class KirimanStepper extends StatelessWidget {
   final List<Step> steps;
   final int currentStep;
   final void Function(int)? onStepTapped;
@@ -9,7 +9,7 @@ class IKStepper extends StatelessWidget {
   final VoidCallback? onstepCancel;
   final StepperType type;
 
-  const IKStepper(
+  KirimanStepper(
       {super.key,
       required this.steps,
       required this.currentStep,
@@ -24,8 +24,8 @@ class IKStepper extends StatelessWidget {
       data: ThemeData(
         // canvasColor: blueJNE,,
         colorScheme: const ColorScheme.light(
-          primary: redJNE,
-          secondary: greyLightColor1,
+          primary: blueJNE,
+          secondary: greyColor,
           background: Colors.white,
         ),
       ),
@@ -39,6 +39,7 @@ class IKStepper extends StatelessWidget {
         stepIconBuilder: (stepIndex, stepState) {
           return null;
         },
+        controlsBuilder: (context, details) => const Row(),
       ),
     );
   }

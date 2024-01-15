@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/bar/kiriman_stepper.dart';
 import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
@@ -197,6 +198,11 @@ class LacakKirimanScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   const CustomFormLabel(label: 'Riwayat Kiriman'),
                   const Divider(),
+                  KirimanStepper(
+                    steps: controller.steps,
+                    currentStep: 0,
+                    type: StepperType.vertical,
+                  )
                 ],
               ),
             ),
