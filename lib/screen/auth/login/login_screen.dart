@@ -54,11 +54,16 @@ class LoginScreen extends StatelessWidget {
                             hintText: "Alamat email / Nama pengguna".tr,
                             prefixIcon: const Icon(Icons.person),
                             isRequired: true,
+                            onSubmit: (_) {
+                              FocusScope.of(context).nextFocus();
+                            },
                             validator: ValidationBuilder().email().minLength(10).build(),
                           ),
                           CustomTextFormField(
                             controller: controller.passwordTextField,
                             hintText: "Kata Sandi".tr,
+
+                            // focusNode: controller.passwordField,
                             prefixIcon: const Icon(Icons.lock),
                             isRequired: true,
                             validator: ValidationBuilder().password().build(),

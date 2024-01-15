@@ -5,6 +5,28 @@ import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  final TextEditingController controller;
+  final String? label;
+  final String? hintText;
+  final String? helperText;
+  final bool readOnly;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmit;
+  bool isRequired;
+  FormFieldValidator<String>? validator;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? inputType;
+  final GestureTapCallback? onTap;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
+  final Color? backgroundColor;
+  final bool multiLine;
+  final bool? isObscure;
+  final double? width;
+  final double? height;
+  final FocusNode? focusNode;
+  final bool? autofocus;
+
   CustomTextFormField(
       {super.key,
       required this.controller,
@@ -24,30 +46,14 @@ class CustomTextFormField extends StatelessWidget {
       this.prefixIcon,
       this.isObscure,
       this.width,
-      this.height}) {
+      this.height,
+      this.onSubmit,
+      this.focusNode,
+      this.autofocus}) {
     if (isRequired && !readOnly) {
       validator ??= ValidationBuilder().required().build();
     }
   }
-
-  final TextEditingController controller;
-  final String? label;
-  final String? hintText;
-  final String? helperText;
-  final bool readOnly;
-  final ValueChanged<String>? onChanged;
-  bool isRequired;
-  FormFieldValidator<String>? validator;
-  final List<TextInputFormatter>? inputFormatters;
-  final TextInputType? inputType;
-  final GestureTapCallback? onTap;
-  final Widget? suffixIcon;
-  final Widget? prefixIcon;
-  final Color? backgroundColor;
-  final bool multiLine;
-  final bool? isObscure;
-  final double? width;
-  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +90,9 @@ class CustomTextFormField extends StatelessWidget {
             controller: controller,
             readOnly: readOnly,
             onChanged: onChanged,
+            onFieldSubmitted: onSubmit,
+            autofocus: autofocus ?? false,
+            focusNode: focusNode,
             validator: validator,
             keyboardType: inputType,
             obscureText: isObscure ?? false,
@@ -95,16 +104,20 @@ class CustomTextFormField extends StatelessWidget {
                   // fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(
-                fillColor: backgroundColor ?? (onTap != null || !readOnly ? whiteColor : neutralColor),
+                fillColor:
+                    backgroundColor ?? (onTap != null || !readOnly ? whiteColor : neutralColor),
                 //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
                 suffixIcon: suffixIcon,
                 prefixIcon: prefixIcon,
-                contentPadding: EdgeInsets.only(top: 16, bottom: 16, left: prefixIcon != null ? 70 : 10, right: 10),
+                contentPadding: EdgeInsets.only(
+                    top: 16, bottom: 16, left: prefixIcon != null ? 70 : 10, right: 10),
                 hintText: hintText ?? label,
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                        color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor, width: readOnly ? 1 : 2, style: BorderStyle.solid)),
+                        color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor,
+                        width: readOnly ? 1 : 2,
+                        style: BorderStyle.solid)),
                 hintStyle: hintTextStyle),
           ),
         ),
