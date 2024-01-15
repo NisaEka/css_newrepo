@@ -80,18 +80,18 @@ class LoginController extends BaseController {
       });
     } catch (e) {
       e.printError();
-      Get.showSnackbar(
-        const GetSnackBar(
-          icon: Icon(
-            Icons.error,
-            color: Colors.white,
-          ),
-          message: 'Email or Password is not valid',
-          isDismissible: true,
-          duration: Duration(seconds: 3),
-          backgroundColor: Colors.red,
-        ),
-      );
+      // Get.showSnackbar(
+      //   const GetSnackBar(
+      //     icon: Icon(
+      //       Icons.error,
+      //       color: Colors.white,
+      //     ),
+      //     message: 'Email or Password is not valid',
+      //     isDismissible: true,
+      //     duration: Duration(seconds: 3),
+      //     backgroundColor: Colors.red,
+      //   ),
+      // );
     }
     isLoading = false;
     update();
