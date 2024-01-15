@@ -2,9 +2,11 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
+import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? title;
@@ -13,6 +15,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   final Size? height;
   final double elevation;
   final Widget? flexibleSpace;
+  final String? screenTittle;
 
   const CustomTopBar({
     Key? key,
@@ -22,21 +25,20 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
     this.height,
     this.elevation = 0,
     this.flexibleSpace,
+    this.screenTittle,
   }) : super(key: key);
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(120);
 
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(150),
+      preferredSize: const Size.fromHeight(150),
       child: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: greyLightColor1),
-        backgroundColor: greyLightColor1,
+        backgroundColor: Colors.transparent,
         toolbarHeight: 100,
-        // centerTitle: true,
-        // title: title,
+        title: title,
         leading: leading ?? const CustomBackButton(),
         actions: action ??
             [
@@ -45,16 +47,23 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
                 child: SvgPicture.asset(ImageConstant.vector4),
               ),
             ],
-        // flexibleSpace: Container(
-        //   margin: const EdgeInsets.only(top: 50, left: 20),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Text('title', style: titleTextStyle.copyWith(color: greyDarkColor1, fontWeight: regular)),
-        //       // flexibleSpace ?? const SizedBox()
-        //     ],
-        //   ),
-        // ),
+        flexibleSpace: Container(
+          margin: const EdgeInsets.only(top: 110, left: 20),
+          width: Get.width,
+          decoration: const BoxDecoration(
+            color: Colors.transparent,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              screenTittle != null
+                  ? Text(screenTittle!.tr,
+                      style: appTitleTextStyle.copyWith(color: greyDarkColor1))
+                  : SizedBox(),
+              flexibleSpace ?? const SizedBox(),
+            ],
+          ),
+        ),
       ),
     );
   }

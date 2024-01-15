@@ -22,7 +22,8 @@ class CekOngkirScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              title: Text('Cek Ongkos Kirim'.tr),
+              // title: Text('Cek Ongkos Kirim'.tr),
+              screenTittle: 'Cek Ongkos Kirim'.tr,
             ),
             body: SingleChildScrollView(
               child: Container(

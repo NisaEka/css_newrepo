@@ -19,7 +19,8 @@ class LacakKirimanScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: CustomTopBar(
-            title: Text('Lacak Kiriman'.tr),
+            // title: Text('Lacak Kiriman'.tr),
+            screenTittle: 'Lacak Kiriman'.tr,
           ),
           body: Container(
             margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
