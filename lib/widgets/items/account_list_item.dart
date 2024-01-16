@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AccountListItem extends StatefulWidget {
   final String accountNumber;
@@ -9,6 +10,7 @@ class AccountListItem extends StatefulWidget {
   final VoidCallback? onTap;
   late bool isSelected;
   final int? index;
+  final double? width;
 
   AccountListItem({
     super.key,
@@ -18,6 +20,7 @@ class AccountListItem extends StatefulWidget {
     this.onTap,
     this.isSelected = false,
     this.index,
+    this.width,
   });
 
   @override
@@ -33,7 +36,7 @@ class _AccountListItemState extends State<AccountListItem> {
                 widget.isSelected = widget.isSelected == false ? true : false;
               }),
       child: Container(
-          width: 180,
+          width: widget.width ?? Get.width/2,
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -53,7 +56,7 @@ class _AccountListItemState extends State<AccountListItem> {
                     widget.accountNumber,
                     style: listTitleTextStyle.copyWith(color: blueJNE),
                   ),
-                  widget.isSelected ? const Icon(Icons.check, color: successColor) : SizedBox()
+                  widget.isSelected ? const Icon(Icons.check, color: successColor) : const SizedBox()
                 ],
               ),
               Text(
@@ -62,6 +65,7 @@ class _AccountListItemState extends State<AccountListItem> {
               ),
               Container(
                 padding: const EdgeInsets.all(5),
+                margin: const EdgeInsets.only(top: 5),
                 decoration: BoxDecoration(
                   color: successColor,
                   borderRadius: BorderRadius.circular(4),

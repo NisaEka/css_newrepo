@@ -9,6 +9,7 @@ import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_controller.dart';
+import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,40 +22,46 @@ class InformasiKirimanScreen extends StatelessWidget {
         init: InformasiKirimaController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor: greyLightColor1,
             appBar: CustomTopBar(
               screenTittle: 'Input Transaksi'.tr,
-              flexibleSpace: CustomStepper(currentStep: 2, totalStep: controller.steps.length, steps: controller.steps,),
+              flexibleSpace: CustomStepper(
+                currentStep: 2,
+                totalStep: controller.steps.length,
+                steps: controller.steps,
+              ),
             ),
             body: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  Container(
+                    // alignment: Alignment.topRight,
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                        color: redJNE,
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12))),
+                    child: Text('NON COD', style: listTitleTextStyle.copyWith(color: whiteColor)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: AccountListItem(
+                      accountNumber: '80563320',
+                      accountName: 'SETIAP HARI DIPAKAI PT / EVERPRO COD DROP OFF REG',
+                      accountType: 'NON CASHLESS',
+                      isSelected: true,
+                      width: Get.width,
+                      onTap: () {
+
+                      },
+                    ),
+                  ),
                   Container(
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(10),
                     width: Get.width,
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Informasi Kiriman'.tr,
-                          style: appTitleTextStyle.copyWith(color: greyDarkColor1),
-                          textAlign: TextAlign.left,
-                        ),
-                        const Divider(),
-                        const SizedBox(height: 15),
                         Form(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,7 +177,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       controller: controller.hargaAsuransi,
                                       label: 'Harga Asuransi'.tr,
                                     )
-                                  : SizedBox(),
+                                  : const SizedBox(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -204,7 +211,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                   Get.to(SucceesDialog(
                                     message: "Resi telah dibuat",
                                     buttonTitle: "Selanjutnya",
-                                    nextAction: () => Get.offAll(DashboardScreen()),
+                                    nextAction: () => Get.offAll(const DashboardScreen()),
                                   ));
                                 },
                               )

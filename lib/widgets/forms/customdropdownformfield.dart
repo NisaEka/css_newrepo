@@ -133,7 +133,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
                   enabled: false,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 16,
-                        color: Colors.black,
+                        color: greyDarkColor1,
                         // fontWeight: FontWeight.w600,
                       ),
                   decoration: InputDecoration(
