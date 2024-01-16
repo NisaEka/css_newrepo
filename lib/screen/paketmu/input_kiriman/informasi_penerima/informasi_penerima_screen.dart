@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
@@ -19,11 +20,14 @@ class InformasiPenerimaScreen extends StatelessWidget {
         init: InformasiPenerimaController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor: greyLightColor1,
             appBar: CustomTopBar(
               screenTittle: 'Input Transaksi'.tr,
-              flexibleSpace: CustomStepper(currentStep: 1, totalStep: controller.steps.length, steps: controller.steps,),
+              flexibleSpace: CustomStepper(
+                currentStep: 1,
+                totalStep: controller.steps.length,
+                steps: controller.steps,
               ),
+            ),
             body: SingleChildScrollView(
               child: Column(
                 children: [
@@ -31,71 +35,68 @@ class InformasiPenerimaScreen extends StatelessWidget {
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(10),
                     width: Get.width,
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Informasi Penerima'.tr,
-                          style:
-                              appTitleTextStyle.copyWith(color: greyDarkColor1),
-                          textAlign: TextAlign.left,
-                        ),
-                        const Divider(),
-                        const SizedBox(height: 15),
                         Form(
                             child: Column(
                           children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: Get.width / 1.35,
-                                  child: CustomTextFormField(
-                                      controller: controller.namaPenerima,
-                                      label: "Nama Penerima".tr),
+                            GestureDetector(
+                              onTap: () => Get.to(const ListPenerimaScreen()),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                                margin: const EdgeInsets.symmetric(vertical: 10),
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(color: greyColor, width: 2),
+                                      top: BorderSide(color: greyColor, width: 2)),
                                 ),
-                                CustomFilledButton(
-                                  color: infoColor,
-                                  width: 50,
-                                  height: 50,
-                                  icon: Icons.perm_contact_cal,
-                                  fontSize: 30,
-                                  margin: EdgeInsets.only(top: 15, left: 10),
-                                  padding: EdgeInsets.only(left: 8),
-                                )
-                              ],
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Lihat Data Penerima'.tr),
+                                    const Icon(
+                                      Icons.keyboard_arrow_right,
+                                      color: redJNE,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            CustomTextFormField(
+                              controller: controller.namaPenerima,
+                              hintText: "Nama Penerima".tr,
+                              prefixIcon: const Icon(Icons.person),
                             ),
                             CustomTextFormField(
                               controller: controller.nomorTelpon,
-                              label: "Nomor Telepon".tr,
+                              hintText: "Nomor Telepon".tr,
                               inputType: TextInputType.number,
+                              prefixIcon: const Icon(Icons.phone),
                             ),
                             CustomDropDownFormField(
                               items: [],
-                              label: "Kota Tujuan".tr,
+                              hintText: "Kota Tujuan".tr,
+                              prefixIcon: const Icon(Icons.location_city),
+                              textStyle: hintTextStyle,
                             ),
                             CustomTextFormField(
                               controller: controller.alamatLengkap,
-                              label: "Alamat".tr,
+                              hintText: "Alamat".tr,
+                              prefixIcon: const Icon(Icons.location_city),
                               multiLine: true,
                             ),
                             CustomFilledButton(
-                              color: redJNE,
+                              color: greyLightColor3,
+                              title: 'Simpan Data Penerima'.tr,
+
+                              fontColor: blueJNE,
+                            ),
+                            CustomFilledButton(
+                              color: blueJNE,
                               title: "Selanjutnya".tr,
-                              radius: 20,
-                              onPressed: () =>
-                                  Get.to(const InformasiKirimanScreen()),
+
+                              onPressed: () => Get.to(const InformasiKirimanScreen()),
                             )
                           ],
                         )),

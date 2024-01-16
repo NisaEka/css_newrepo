@@ -46,13 +46,6 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Text(
-                        //   'Informasi Pengirim'.tr,
-                        //   style: appTitleTextStyle.copyWith(color: greyDarkColor1),
-                        //   textAlign: TextAlign.left,
-                        // ),
-                        // const Divider(),
-                        const SizedBox(height: 15),
                         Form(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
