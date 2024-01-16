@@ -29,40 +29,36 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   }) : super(key: key);
 
   @override
-  Size get preferredSize => const Size.fromHeight(120);
+  Size get preferredSize => flexibleSpace != null ? Size.fromHeight(205) : Size.fromHeight(120);
 
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(150),
-      child: AppBar(
-        backgroundColor: Colors.transparent,
-        toolbarHeight: 100,
-        title: title,
-        leading: leading ?? const CustomBackButton(),
-        actions: action ??
-            [
-              Transform.flip(
-                flipY: true,
-                child: SvgPicture.asset(ImageConstant.vector4),
-              ),
-            ],
-        flexibleSpace: Container(
-          margin: const EdgeInsets.only(top: 110, left: 20),
-          width: Get.width,
-          decoration: const BoxDecoration(
-            color: Colors.transparent,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              screenTittle != null
-                  ? Text(screenTittle!.tr,
-                      style: appTitleTextStyle.copyWith(color: greyDarkColor1))
-                  : SizedBox(),
-              flexibleSpace ?? const SizedBox(),
-            ],
-          ),
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      toolbarHeight: 100,
+      title: title,
+      leading: leading ?? const CustomBackButton(),
+      actions: action ??
+          [
+            Transform.flip(
+              flipY: true,
+              child: SvgPicture.asset(ImageConstant.vector4),
+            ),
+          ],
+      flexibleSpace: Container(
+        margin: const EdgeInsets.only(top: 110, left: 20),
+        width: Get.width,
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            screenTittle != null
+                ? Text(screenTittle!.tr, style: appTitleTextStyle.copyWith(color: greyDarkColor1))
+                : SizedBox(),
+            flexibleSpace ?? const SizedBox(),
+          ],
         ),
       ),
     );

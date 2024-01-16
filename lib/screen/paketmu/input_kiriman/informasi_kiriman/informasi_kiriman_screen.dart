@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/dialog/success_dialog.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
+import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
@@ -21,20 +22,9 @@ class InformasiKirimanScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             backgroundColor: greyLightColor1,
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(150),
-              child: AppBar(
-                toolbarHeight: 100,
-                title: Text('Input Kiriman'.tr),
-                flexibleSpace: Container(
-                  margin: const EdgeInsets.only(top: 100),
-                  width: Get.width,
-                  decoration: const BoxDecoration(
-                    color: blueJNE,
-                  ),
-                  child: const CustomStepper(totalStep: 3, currentStep: 3),
-                ),
-              ),
+            appBar: CustomTopBar(
+              screenTittle: 'Input Transaksi'.tr,
+              flexibleSpace: const CustomStepper(currentStep: 2, totalStep: 3),
             ),
             body: SingleChildScrollView(
               child: Column(

@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/bar/custom_stepper.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
+import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -24,21 +25,9 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
         init: InformasiPengirimController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor: greyLightColor1,
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(150),
-              child: AppBar(
-                toolbarHeight: 100,
-                title: Text('Input Kiriman'.tr),
-                flexibleSpace: Container(
-                  margin: const EdgeInsets.only(top: 100),
-                  width: Get.width,
-                  decoration: const BoxDecoration(
-                    color: blueJNE,
-                  ),
-                  child: const CustomStepper(totalStep: 3, currentStep: 0),
-                ),
-              ),
+            appBar: CustomTopBar(
+              screenTittle: 'Input Transaksi'.tr,
+              flexibleSpace: const CustomStepper(currentStep: 0, totalStep: 3),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -128,7 +117,6 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 label: "Alamat".tr,
                                 readOnly: !controller.dropshipper,
                                 multiLine: true,
-
                               ),
                               CustomFilledButton(
                                 color: redJNE,

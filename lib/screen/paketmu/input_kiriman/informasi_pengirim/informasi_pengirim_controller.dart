@@ -12,4 +12,6 @@ class InformasiPengirimController extends BaseController {
 
   bool dropshipper = false;
   bool codOgkir = false;
+
+  // List
 }
