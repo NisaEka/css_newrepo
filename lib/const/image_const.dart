@@ -21,6 +21,7 @@ class ImageConstant {
   static const String paketmuIcon = "assets/icons/Paketmu.png";
   static const String pengaturanIcon = "assets/icons/Pengaturan.png";
   static const String scanIcon = "assets/icons/Scan.png";
+  static const String truckIcon = "assets/icons/truck.png";
 
   static const String successIcon = "assets/lottie/success_lottie.json";
 }

@@ -20,6 +20,6 @@ class DashboardController extends BaseController {
     const Text('for commercial banner 2'),
     const Text('for commercial banner 3'),
   ];
-  int bannerIndex = 0.obs as int;
+  var bannerIndex = 0.obs;
   CarouselController commercialCarousel = CarouselController();
 }

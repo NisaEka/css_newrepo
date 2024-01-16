@@ -30,7 +30,7 @@ class CustomLabelText extends StatelessWidget {
         children: [
           Text(
             title,
-            style: sublistTitleTextStyle.copyWith(color: fontColor ?? greyColor),
+            style: subTitleTextStyle.copyWith(color: fontColor ?? greyColor),
           ),
           Text(
             value.toUpperCase(),

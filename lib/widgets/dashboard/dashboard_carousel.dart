@@ -5,22 +5,25 @@ import 'package:get/get.dart';
 
 class DashboardCarousel extends StatelessWidget {
   final List<Widget> bannerList;
-  final int bannerIndex;
+  var bannerIndex;
 
-  const DashboardCarousel({
+  DashboardCarousel({
     super.key,
     required this.bannerList,
-    required this.bannerIndex,
+    this.bannerIndex,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20, top: 150),
+      margin: const EdgeInsets.only(left: 15, right: 15, top: 150),
       height: 100,
-      width: Get.width - 50,
+      width: Get.size.width,
       alignment: Alignment.center,
-      decoration: BoxDecoration(color: infoLightColor1.withOpacity(0.8)),
+      decoration: BoxDecoration(
+        color: greyColor.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: CarouselSlider(
         items: bannerList,
         options: CarouselOptions(

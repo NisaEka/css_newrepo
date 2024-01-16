@@ -5,10 +5,17 @@ import 'package:get/get.dart';
 
 class MenuItem extends StatelessWidget {
   final String menuTitle;
-  final String menuImg;
+  final String? menuImg;
+  final Icon? menuIcon;
   final VoidCallback? onTap;
 
-  const MenuItem({super.key, required this.menuTitle, required this.menuImg, this.onTap});
+  const MenuItem({
+    super.key,
+    required this.menuTitle,
+    this.menuImg,
+    this.onTap,
+    this.menuIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +24,7 @@ class MenuItem extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
               padding: EdgeInsets.all(5),
@@ -24,14 +32,17 @@ class MenuItem extends StatelessWidget {
                 color: blueJNE,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Image.asset(menuImg, height: Get.width / 9),
+              // child: Icon(Icons.more_horiz),
+              child: menuIcon ?? Image.asset(menuImg ?? '', height: Get.width / 9),
             ),
             SizedBox(
-                child: Text(
-              menuTitle,
-              style: sublistTitleTextStyle,
-              textAlign: TextAlign.center,
-            )),
+              // width: 65,
+              child: Text(
+                menuTitle.splitMapJoin(' ', onMatch: (p0) => '\n'),
+                style: sublistTitleTextStyle,
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
       ),
