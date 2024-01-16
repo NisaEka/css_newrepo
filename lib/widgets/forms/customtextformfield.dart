@@ -109,6 +109,8 @@ class CustomTextFormField extends StatelessWidget {
                 //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
                 suffixIcon: suffixIcon,
                 prefixIcon: prefixIcon,
+                prefixIconColor: greyDarkColor1,
+                suffixIconColor: greyDarkColor1,
                 contentPadding: EdgeInsets.only(
                     top: 16, bottom: 16, left: prefixIcon != null ? 70 : 10, right: 10),
                 hintText: hintText ?? label,

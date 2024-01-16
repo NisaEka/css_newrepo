@@ -58,7 +58,8 @@ class CustomDropDownFormField<T> extends StatelessWidget {
         showSearchBox: items!.length >= 15,
         searchDelay: const Duration(milliseconds: 500),
         itemBuilder: (context, item, bool) {
-          return Container(padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), child: Text(item));
+          return Container(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), child: Text(item));
         },
       ),
       dropdownButtonProps: const DropdownButtonProps(
@@ -82,7 +83,9 @@ class CustomDropDownFormField<T> extends StatelessWidget {
   }
 
   dynamic _getIdSelectedValue(String selected) {
-    DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => (item.child as Text).data == selected) as DropdownMenuItem;
+    DropdownMenuItem? item =
+        items?.firstWhere((DropdownMenuItem item) => (item.child as Text).data == selected)
+            as DropdownMenuItem;
     return item.value;
   }
 
@@ -90,7 +93,8 @@ class CustomDropDownFormField<T> extends StatelessWidget {
     if (items != null) {
       if (items!.isNotEmpty) {
         if (value != null) {
-          DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => item.value == value, orElse: () => items!.first) as DropdownMenuItem;
+          DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => item.value == value,
+              orElse: () => items!.first) as DropdownMenuItem;
           Text textView = item.child as Text;
 
           return textView.data ?? hintText ?? label ?? '';
@@ -110,7 +114,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
             ? RichText(
                 text: TextSpan(
                   text: label,
-                  style: formlabelTextStyle,
+                  style: formLabelTextStyle,
                   children: <TextSpan>[
                     TextSpan(text: isRequired ? "" : "", style: const TextStyle(color: Colors.red)),
                   ],
@@ -132,8 +136,12 @@ class CustomDropDownFormField<T> extends StatelessWidget {
                         color: Colors.black,
                         // fontWeight: FontWeight.w600,
                       ),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     fillColor: neutralColor,
+                    prefixIcon: prefixIcon,
+                    suffixIcon: suffixIcon,
+                    prefixIconColor: greyDarkColor1,
+                    suffixIconColor: greyDarkColor1,
                   ),
                 )
               : _getDropDown(),
