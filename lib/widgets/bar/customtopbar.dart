@@ -29,7 +29,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   }) : super(key: key);
 
   @override
-  Size get preferredSize => flexibleSpace != null ? Size.fromHeight(205) : Size.fromHeight(120);
+  Size get preferredSize => flexibleSpace != null ? Size.fromHeight(215) : Size.fromHeight(120);
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +45,21 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
               child: SvgPicture.asset(ImageConstant.vector4),
             ),
           ],
-      flexibleSpace: Container(
-        margin: const EdgeInsets.only(top: 110, left: 20),
-        width: Get.width,
-        decoration: const BoxDecoration(
-          color: Colors.transparent,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            screenTittle != null
+      flexibleSpace: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 110, left: 20),
+            width: Get.width,
+            decoration: const BoxDecoration(
+              color: Colors.transparent,
+            ),
+            child: screenTittle != null
                 ? Text(screenTittle!.tr, style: appTitleTextStyle.copyWith(color: greyDarkColor1))
                 : SizedBox(),
-            flexibleSpace ?? const SizedBox(),
-          ],
-        ),
+          ),
+          flexibleSpace ?? const SizedBox(),
+
+        ],
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/widgets/bar/custom_stepper.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
@@ -111,6 +111,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               ),
                               controller.dropshipper
                                   ? GestureDetector(
+                                      onTap: () => Get.to(const ListDropshipperScreen()),
                                       child: Container(
                                         padding:
                                             const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
@@ -165,7 +166,6 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 readOnly: !controller.dropshipper,
                                 multiLine: true,
                                 prefixIcon: const Icon(Icons.location_city),
-
                               ),
                               controller.dropshipper
                                   ? CustomFilledButton(

@@ -12,69 +12,89 @@ class CustomStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(
-        totalStep,
-        (index) => Container(
-          // height: 100,
-          margin: const EdgeInsets.only(top: 30),
-          child: Column(
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    // margin: const EdgeInsets.all(10),
-                    // padding: EdgeInsets.all(10),
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                        color: currentStep >= index ? blueJNE : greyColor,
-                        borderRadius: BorderRadius.circular(50),
-                        // border: Border.all(
-                        //   color: currentStep >= index ? Colors.transparent : whiteColor,
-                        // ),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: redJNE,
-                            spreadRadius: 1,
-                            offset: Offset(3, 3),
-                          )
-                        ]),
-                    child: Center(
-                      child: Text(
-                        '${index + 1}',
-                        style: listTitleTextStyle.copyWith(color: whiteColor),
-                      ),
+            children: List.generate(
+              totalStep,
+              (index) => Container(
+                // height: 100,
+                // color: Colors.blue,
+                margin: const EdgeInsets.only(top: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          // margin: const EdgeInsets.all(10),
+                          // padding: EdgeInsets.all(10),
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                              color: currentStep >= index ? blueJNE : greyColor,
+                              borderRadius: BorderRadius.circular(50),
+                              // border: Border.all(
+                              //   color: currentStep >= index ? Colors.transparent : whiteColor,
+                              // ),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: redJNE,
+                                  spreadRadius: 1,
+                                  offset: Offset(3, 3),
+                                )
+                              ]),
+                          child: Center(
+                            child: currentStep <= index
+                                ? Text(
+                                    '${index + 1}',
+                                    style: listTitleTextStyle.copyWith(color: whiteColor),
+                                  )
+                                : Icon(
+                                    Icons.check,
+                                    color: whiteColor,
+                                  ),
+                          ),
+                        ),
+                        index < (totalStep - 1)
+                            ? Container(
+                                width: Get.width / totalStep - 10,
+                                height: 1,
+                                margin: const EdgeInsets.only(left: 3),
+                                decoration: BoxDecoration(
+                                  color: currentStep > index ? blueJNE : greyColor,
+                                ),
+                              )
+                            : const SizedBox()
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+              totalStep,
+              (index) => Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: Center(
+                  child: Text(
+                    steps?[index] ?? '',
+                    style: sublistTitleTextStyle.copyWith(
+                      color: currentStep == index ? blueJNE : Colors.transparent,
                     ),
                   ),
-                  index < (totalStep - 1)
-                      ? Container(
-                          width: Get.width / totalStep - 10,
-                          height: 1,
-                          margin: const EdgeInsets.only(left: 3),
-                          decoration: BoxDecoration(
-                            color: currentStep > index ? blueJNE : greyColor,
-                          ),
-                        )
-                      : const SizedBox()
-                ],
+                ),
               ),
-              currentStep == index
-                  ? Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      child: Center(
-                        child: Text(
-                          steps?[index] ?? '',
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
-            ],
-          ),
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
