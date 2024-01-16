@@ -22,8 +22,8 @@ class InformasiPenerimaScreen extends StatelessWidget {
             backgroundColor: greyLightColor1,
             appBar: CustomTopBar(
               screenTittle: 'Input Transaksi'.tr,
-              flexibleSpace: const CustomStepper(currentStep: 1, totalStep: 3),
-            ),
+              flexibleSpace: CustomStepper(currentStep: 1, totalStep: controller.steps.length, steps: controller.steps,),
+              ),
             body: SingleChildScrollView(
               child: Column(
                 children: [

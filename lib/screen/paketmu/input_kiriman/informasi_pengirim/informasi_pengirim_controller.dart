@@ -13,5 +13,5 @@ class InformasiPengirimController extends BaseController {
   bool dropshipper = false;
   bool codOgkir = false;
 
-  // List
+  List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
 }

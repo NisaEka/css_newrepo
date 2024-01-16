@@ -12,16 +12,16 @@ class CustomStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List color = [blueJNE, greyColor];
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
         totalStep,
-        (index) => SizedBox(
-          height: 100,
+        (index) => Container(
+          // height: 100,
+          margin: const EdgeInsets.only(top: 30),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -52,8 +52,9 @@ class CustomStepper extends StatelessWidget {
                   ),
                   index < (totalStep - 1)
                       ? Container(
-                          width: Get.width / totalStep - 20,
+                          width: Get.width / totalStep - 10,
                           height: 1,
+                          margin: const EdgeInsets.only(left: 3),
                           decoration: BoxDecoration(
                             color: currentStep > index ? blueJNE : greyColor,
                           ),
@@ -61,6 +62,16 @@ class CustomStepper extends StatelessWidget {
                       : const SizedBox()
                 ],
               ),
+              currentStep == index
+                  ? Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: Center(
+                        child: Text(
+                          steps?[index] ?? '',
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),

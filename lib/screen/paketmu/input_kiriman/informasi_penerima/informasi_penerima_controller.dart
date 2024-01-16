@@ -7,4 +7,7 @@ class InformasiPenerimaController extends BaseController{
   final nomorTelpon = TextEditingController();
   final kotaTujuan = TextEditingController();
   final alamatLengkap = TextEditingController();
+
+  List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
+
 }

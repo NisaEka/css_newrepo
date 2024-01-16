@@ -1,7 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:flutter/material.dart';
 
-class InformasiKirimaController extends BaseController{
+class InformasiKirimaController extends BaseController {
   final formKey = GlobalKey<FormState>();
   final service = TextEditingController();
   final beratKiriman = TextEditingController();
@@ -22,4 +22,6 @@ class InformasiKirimaController extends BaseController{
 
   bool asuransi = false;
   bool packingKayu = false;
+
+  List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
 }

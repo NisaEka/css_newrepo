@@ -24,7 +24,7 @@ class InformasiKirimanScreen extends StatelessWidget {
             backgroundColor: greyLightColor1,
             appBar: CustomTopBar(
               screenTittle: 'Input Transaksi'.tr,
-              flexibleSpace: const CustomStepper(currentStep: 2, totalStep: 3),
+              flexibleSpace: CustomStepper(currentStep: 2, totalStep: controller.steps.length, steps: controller.steps,),
             ),
             body: SingleChildScrollView(
               child: Column(

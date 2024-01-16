@@ -27,7 +27,11 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
           return Scaffold(
             appBar: CustomTopBar(
               screenTittle: 'Input Transaksi'.tr,
-              flexibleSpace: const CustomStepper(currentStep: 0, totalStep: 3),
+              flexibleSpace: CustomStepper(
+                currentStep: 0,
+                totalStep: controller.steps.length,
+                steps: controller.steps,
+              ),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -36,18 +40,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(10),
                     width: Get.width,
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
+
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
