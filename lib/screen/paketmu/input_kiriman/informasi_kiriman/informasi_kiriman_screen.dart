@@ -37,9 +37,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                   Container(
                     // alignment: Alignment.topRight,
                     padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                        color: redJNE,
-                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12))),
+                    decoration: const BoxDecoration(color: redJNE, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12))),
                     child: Text('NON COD', style: listTitleTextStyle.copyWith(color: whiteColor)),
                   ),
                   Padding(
@@ -51,9 +49,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                       accountType: 'NON CASHLESS',
                       isSelected: true,
                       width: Get.width,
-                      onTap: () {
-
-                      },
+                      onTap: () {},
                     ),
                   ),
                   Container(
@@ -227,6 +223,5 @@ class InformasiKirimanScreen extends StatelessWidget {
             ),
           );
         });
-    ;
   }
 }

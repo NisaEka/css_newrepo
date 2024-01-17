@@ -1,6 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_controller.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
@@ -8,10 +11,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customswitch.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_controller.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -57,24 +57,23 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 child: controller.isLoading
                                     ? const Text('Loading data...')
                                     : Row(
-                                        children: controller.accountList
-                                            .mapIndexed(
-                                              (i, e) => AccountListItem(
-                                                accountID: e.accountId.toString(),
-                                                accountNumber: e.accountNumber.toString(),
-                                                accountName: e.accountName.toString(),
-                                                accountType: e.accountService.toString(),
-                                                // isSelected: e.isSelected ?? false,
-                                                isSelected: controller.selectedAccount == e ? true : false,
-                                                onTap: () {
-                                                  controller.selectedAccount = e;
-                                                  controller.update();
-                                                  controller.selectedAccount?.isSelected.printInfo();
-                                                },
-                                              ),
-                                            )
-                                            .toList(),
-                                      ),
+                                  children: controller.accountList
+                                      .mapIndexed(
+                                        (i, e) => AccountListItem(
+                                      accountID: e.accountId.toString(),
+                                      accountNumber: e.accountNumber.toString(),
+                                      accountName: e.accountName.toString(),
+                                      accountType: e.accountService.toString(),
+                                      // isSelected: e.isSelected ?? false,
+                                      isSelected: controller.selectedAccount == e ? true : false,
+                                      onTap: () {
+                                        controller.selectedAccount = e;
+                                        controller.update();
+                                      },
+                                    ),
+                                  )
+                                      .toList(),
+                                ),
                               ),
                               // CustomDropDownFormField(
                               //   items: [],
@@ -98,25 +97,25 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               ),
                               controller.dropshipper
                                   ? GestureDetector(
-                                      onTap: () => Get.to(const ListDropshipperScreen()),
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                                        margin: const EdgeInsets.symmetric(vertical: 10),
-                                        decoration: const BoxDecoration(
-                                          border: Border(bottom: BorderSide(color: greyColor, width: 2), top: BorderSide(color: greyColor, width: 2)),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text('Lihat Data Dropshipper'.tr),
-                                            const Icon(
-                                              Icons.keyboard_arrow_right,
-                                              color: redJNE,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    )
+                                onTap: () => Get.to(const ListDropshipperScreen()),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                                  margin: const EdgeInsets.symmetric(vertical: 10),
+                                  decoration: const BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: greyColor, width: 2), top: BorderSide(color: greyColor, width: 2)),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Lihat Data Dropshipper'.tr),
+                                      const Icon(
+                                        Icons.keyboard_arrow_right,
+                                        color: redJNE,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
                                   : const SizedBox(),
                               CustomTextFormField(
                                 controller: controller.namaPengirim,
@@ -134,6 +133,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               CustomDropDownFormField(
                                 items: [],
                                 hintText: "Kota Pengirim".tr,
+                                selectedItem: controller.kotaPengirim.text,
                                 textStyle: hintTextStyle,
                                 readOnly: !controller.dropshipper,
                                 prefixIcon: const Icon(Icons.location_city),
@@ -153,10 +153,10 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               ),
                               controller.dropshipper
                                   ? CustomFilledButton(
-                                      color: greyLightColor3,
-                                      title: 'Simpan Data Dropshipper'.tr,
-                                      fontColor: blueJNE,
-                                    )
+                                color: greyLightColor3,
+                                title: 'Simpan Data Dropshipper'.tr,
+                                fontColor: blueJNE,
+                              )
                                   : const SizedBox(),
                               CustomFilledButton(
                                 color: blueJNE,

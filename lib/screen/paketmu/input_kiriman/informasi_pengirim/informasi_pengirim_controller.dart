@@ -32,6 +32,13 @@ class InformasiPengirimController extends BaseController {
     isLoading = true;
     try {
       await delivery.getAccountNumber().then((value) => accountList.addAll(value.payload ?? []));
+      await delivery.getSender().then((value) {
+        namaPengirim.text = value.payload?.name ?? '';
+        nomorTelpon.text = value.payload?.phone ?? '';
+        kotaPengirim.text = value.payload?.city ?? '';
+        kodePos.text = value.payload?.zipCode ?? '';
+        alamatLengkap.text = value.payload?.address ?? '';
+      });
       update();
     } catch (e) {
       e.printError();
