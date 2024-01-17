@@ -11,6 +11,7 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_controller.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -53,34 +54,27 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               CustomFormLabel(label: 'Nomor Akun'.tr),
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    AccountListItem(
-                                      accountNumber: '80563320',
-                                      accountName:
-                                          'SETIAP HARI DIPAKAI PT / EVERPRO COD DROP OFF REG',
-                                      accountType: 'NON CASHLESS',
-                                    ),
-                                    AccountListItem(
-                                      accountNumber: '80563320',
-                                      accountName:
-                                          'SETIAP HARI DIPAKAI PT / EVERPRO COD DROP OFF REG',
-                                      accountType: 'NON CASHLESS',
-                                    ),
-                                    AccountListItem(
-                                      accountNumber: '80563320',
-                                      accountName:
-                                          'SETIAP HARI DIPAKAI PT / EVERPRO COD DROP OFF REG',
-                                      accountType: 'NON CASHLESS',
-                                    ),
-                                    AccountListItem(
-                                      accountNumber: '80563320',
-                                      accountName:
-                                          'SETIAP HARI DIPAKAI PT / EVERPRO COD DROP OFF REG',
-                                      accountType: 'NON CASHLESS',
-                                    ),
-                                  ],
-                                ),
+                                child: controller.isLoading
+                                    ? const Text('Loading data...')
+                                    : Row(
+                                        children: controller.accountList
+                                            .mapIndexed(
+                                              (i, e) => AccountListItem(
+                                                accountID: e.accountId.toString(),
+                                                accountNumber: e.accountNumber.toString(),
+                                                accountName: e.accountName.toString(),
+                                                accountType: e.accountService.toString(),
+                                                // isSelected: e.isSelected ?? false,
+                                                isSelected: controller.selectedAccount == e ? true : false,
+                                                onTap: () {
+                                                  controller.selectedAccount = e;
+                                                  controller.update();
+                                                  controller.selectedAccount?.isSelected.printInfo();
+                                                },
+                                              ),
+                                            )
+                                            .toList(),
+                                      ),
                               ),
                               // CustomDropDownFormField(
                               //   items: [],
@@ -106,13 +100,10 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                   ? GestureDetector(
                                       onTap: () => Get.to(const ListDropshipperScreen()),
                                       child: Container(
-                                        padding:
-                                            const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                                         margin: const EdgeInsets.symmetric(vertical: 10),
                                         decoration: const BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(color: greyColor, width: 2),
-                                              top: BorderSide(color: greyColor, width: 2)),
+                                          border: Border(bottom: BorderSide(color: greyColor, width: 2), top: BorderSide(color: greyColor, width: 2)),
                                         ),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

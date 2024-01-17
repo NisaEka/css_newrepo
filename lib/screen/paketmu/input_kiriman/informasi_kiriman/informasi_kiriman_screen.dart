@@ -45,6 +45,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: AccountListItem(
+                      accountID: '',
                       accountNumber: '80563320',
                       accountName: 'SETIAP HARI DIPAKAI PT / EVERPRO COD DROP OFF REG',
                       accountType: 'NON CASHLESS',

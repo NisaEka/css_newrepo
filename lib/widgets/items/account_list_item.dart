@@ -7,6 +7,7 @@ class AccountListItem extends StatefulWidget {
   final String accountNumber;
   final String accountName;
   final String accountType;
+  final String accountID;
   final VoidCallback? onTap;
   late bool isSelected;
   final int? index;
@@ -20,7 +21,7 @@ class AccountListItem extends StatefulWidget {
     this.onTap,
     this.isSelected = false,
     this.index,
-    this.width,
+    this.width, required this.accountID,
   });
 
   @override
