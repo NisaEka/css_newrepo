@@ -57,23 +57,24 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 child: controller.isLoading
                                     ? const Text('Loading data...')
                                     : Row(
-                                  children: controller.accountList
-                                      .mapIndexed(
-                                        (i, e) => AccountListItem(
-                                      accountID: e.accountId.toString(),
-                                      accountNumber: e.accountNumber.toString(),
-                                      accountName: e.accountName.toString(),
-                                      accountType: e.accountService.toString(),
-                                      // isSelected: e.isSelected ?? false,
-                                      isSelected: controller.selectedAccount == e ? true : false,
-                                      onTap: () {
-                                        controller.selectedAccount = e;
-                                        controller.update();
-                                      },
-                                    ),
-                                  )
-                                      .toList(),
-                                ),
+                                        children: controller.accountList
+                                            .mapIndexed(
+                                              (i, e) => AccountListItem(
+                                                accountID: e.accountId.toString(),
+                                                accountNumber: e.accountNumber.toString(),
+                                                accountName: e.accountName.toString(),
+                                                accountType: e.accountService.toString(),
+                                                // isSelected: e.isSelected ?? false,
+                                                isSelected: controller.selectedAccount == e ? true : false,
+                                                onTap: () {
+                                                  controller.selectedAccount = e;
+                                                  controller.getOriginList(e.accountId.toString());
+                                                  controller.update();
+                                                },
+                                              ),
+                                            )
+                                            .toList(),
+                                      ),
                               ),
                               // CustomDropDownFormField(
                               //   items: [],
@@ -84,6 +85,20 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 label: 'Kirim sebagai dropshipper'.tr,
                                 onChange: (bool? value) {
                                   controller.dropshipper = value!;
+                                  if (value == true) {
+                                    controller.namaPengirim.text = '';
+                                    controller.nomorTelpon.text = '';
+                                    controller.kotaPengirim.text = '';
+                                    controller.kodePos.text = '';
+                                    controller.alamatLengkap.text = '';
+                                  } else {
+                                    controller.namaPengirim.text = controller.senderOrigin?.name ?? '';
+                                    controller.nomorTelpon.text = controller.senderOrigin?.phone ?? '';
+                                    controller.kotaPengirim.text = controller.senderOrigin?.city ?? '';
+                                    controller.kodePos.text = controller.senderOrigin?.zipCode ?? '';
+                                    controller.alamatLengkap.text = controller.senderOrigin?.address ?? '';
+                                  }
+
                                   controller.update();
                                 },
                               ),
@@ -131,7 +146,14 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 prefixIcon: const Icon(Icons.phone),
                               ),
                               CustomDropDownFormField(
-                                items: [],
+                                items: controller.originList
+                                    .map(
+                                      (e) => DropdownMenuItem(
+                                        value: e,
+                                        child: Text(e.originName.toString()),
+                                      ),
+                                    )
+                                    .toList(),
                                 hintText: "Kota Pengirim".tr,
                                 selectedItem: controller.kotaPengirim.text,
                                 textStyle: hintTextStyle,

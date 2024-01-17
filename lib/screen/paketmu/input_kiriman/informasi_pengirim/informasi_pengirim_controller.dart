@@ -1,5 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/delivery/get_account_number_model.dart';
+import 'package:css_mobile/data/model/delivery/get_origin_model.dart';
+import 'package:css_mobile/data/model/delivery/get_sender_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,8 +20,11 @@ class InformasiPengirimController extends BaseController {
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<AccountNumber> accountList = [];
+  List<Origin> originList = [];
 
   AccountNumber? selectedAccount;
+  Origin? selectedOrigin;
+  Sender? senderOrigin;
 
   @override
   void onInit() {
@@ -33,6 +38,7 @@ class InformasiPengirimController extends BaseController {
     try {
       await delivery.getAccountNumber().then((value) => accountList.addAll(value.payload ?? []));
       await delivery.getSender().then((value) {
+        senderOrigin = value.payload;
         namaPengirim.text = value.payload?.name ?? '';
         nomorTelpon.text = value.payload?.phone ?? '';
         kotaPengirim.text = value.payload?.city ?? '';
@@ -44,6 +50,16 @@ class InformasiPengirimController extends BaseController {
       e.printError();
     }
     isLoading = false;
+    update();
+  }
+
+  Future<void> getOriginList(String accountID) async {
+    originList = [];
+    try {
+      await delivery.getOrigin('', accountID).then((value) => originList.addAll(value.payload ?? []));
+    } catch (e) {
+      e.printError();
+    }
     update();
   }
 }

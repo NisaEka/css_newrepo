@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class RadioListItem extends StatelessWidget {
   final List groupValue;
-  final String value;
+  final dynamic value;
   final void Function(dynamic) onChange;
   final bool isSelected;
 

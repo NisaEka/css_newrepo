@@ -48,27 +48,16 @@ class ListDropshipperScreen extends StatelessWidget {
                   const SizedBox(height: 30),
                   SingleChildScrollView(
                     child: Column(
-                      children: [
-                        RadioListItem(
-                          value: 'a',
-                          groupValue: controller.dropshipper,
-                          isSelected: controller.selected,
-                          onChange: (value) {
-                            controller.dropshipper = value ?? '';
-                            controller.update();
-                          },
-                        ),
-                        RadioListItem(
-                          value: 'b',
-                          groupValue: controller.dropshipper,
-                          isSelected: controller.selected,
-                          onChange: (value) {
-                            // controller.dropshipper = value ?? '';
-                            controller.selected = controller.selected == true ? false : true;
-                            controller.update();
-                          },
-                        )
-                      ],
+                      children: controller.dropshipperList
+                          .map((e) => RadioListItem(
+                                groupValue: controller.dropshipperList,
+                                value: e,
+                                onChange: (value) {
+                                  controller.selectedDropshipper = value;
+                                  controller.update();
+                                },
+                              ))
+                          .toList(),
                     ),
                   )
                 ],

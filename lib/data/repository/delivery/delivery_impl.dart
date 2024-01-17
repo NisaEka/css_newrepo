@@ -1,5 +1,6 @@
 import 'package:css_mobile/data/model/delivery/get_account_number_model.dart';
 import 'package:css_mobile/data/model/delivery/get_dropshipper_model.dart';
+import 'package:css_mobile/data/model/delivery/get_origin_model.dart';
 import 'package:css_mobile/data/model/delivery/get_sender_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/delivery/delivery_repository.dart';
@@ -50,6 +51,25 @@ class DeliveryRepositoryImpl extends DeliveryRepository {
         "/delivery/sender",
       );
       return GetSenderModel.fromJson(response.data);
+    } on DioError catch (e) {
+      //print("response error: ${e.response?.data}");
+      return e.error;
+    }
+  }
+
+  @override
+  Future<GetOriginModel> getOrigin(String? keyword, String accountID) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.get(
+        "/delivery/origin",
+        queryParameters: {
+          "keyword": keyword,
+          "account_id": accountID,
+        },
+      );
+      return GetOriginModel.fromJson(response.data);
     } on DioError catch (e) {
       //print("response error: ${e.response?.data}");
       return e.error;
