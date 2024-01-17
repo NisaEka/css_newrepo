@@ -17,6 +17,7 @@ class InformasiPengirimController extends BaseController {
   bool dropshipper = false;
   bool codOgkir = false;
   bool isLoading = false;
+  bool isLoadOrigin = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<AccountNumberModel> accountList = [];
@@ -55,11 +56,13 @@ class InformasiPengirimController extends BaseController {
 
   Future<void> getOriginList(String accountID) async {
     originList = [];
+    isLoadOrigin = true;
     try {
       await delivery.getOrigin('', accountID).then((value) => originList.addAll(value.payload ?? []));
     } catch (e) {
       e.printError();
     }
+    isLoadOrigin = false;
     update();
   }
 }

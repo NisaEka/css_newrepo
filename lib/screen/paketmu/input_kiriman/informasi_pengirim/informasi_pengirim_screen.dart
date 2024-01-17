@@ -154,11 +154,16 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                       ),
                                     )
                                     .toList(),
-                                hintText: "Kota Pengirim".tr,
+                                hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
                                 selectedItem: controller.kotaPengirim.text,
-                                textStyle: hintTextStyle,
+                                textStyle: controller.selectedOrigin == null ? hintTextStyle : subTitleTextStyle,
                                 readOnly: !controller.dropshipper,
                                 prefixIcon: const Icon(Icons.location_city),
+                                onChanged: (value) {
+                                  controller.kotaPengirim.text = value?.originName ?? '';
+                                  controller.selectedOrigin = value;
+                                  controller.update();
+                                },
                               ),
                               CustomTextFormField(
                                 controller: controller.kodePos,

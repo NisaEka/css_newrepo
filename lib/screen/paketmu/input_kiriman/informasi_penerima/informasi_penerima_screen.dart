@@ -1,19 +1,25 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_controller.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class InformasiPenerimaScreen extends StatelessWidget {
+class InformasiPenerimaScreen extends StatefulWidget {
   const InformasiPenerimaScreen({super.key});
 
+  @override
+  State<InformasiPenerimaScreen> createState() => _InformasiPenerimaScreenState();
+}
+
+class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InformasiPenerimaController>(
@@ -40,30 +46,28 @@ class InformasiPenerimaScreen extends StatelessWidget {
                       children: [
                         Form(
                             child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () => Get.to(const ListPenerimaScreen()),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                                margin: const EdgeInsets.symmetric(vertical: 10),
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(color: greyColor, width: 2),
-                                      top: BorderSide(color: greyColor, width: 2)),
+                              children: [
+                                GestureDetector(
+                                  onTap: () => Get.to(const ListPenerimaScreen()),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                                    margin: const EdgeInsets.symmetric(vertical: 10),
+                                    decoration: const BoxDecoration(
+                                      border: Border(bottom: BorderSide(color: greyColor, width: 2), top: BorderSide(color: greyColor, width: 2)),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Lihat Data Penerima'.tr),
-                                    const Icon(
-                                      Icons.keyboard_arrow_right,
-                                      color: redJNE,
-                                    )
-                                  ],
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Lihat Data Penerima'.tr),
+                                        const Icon(
+                                          Icons.keyboard_arrow_right,
+                                          color: redJNE,
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            CustomTextFormField(
+                                CustomTextFormField(
                               controller: controller.namaPenerima,
                               hintText: "Nama Penerima".tr,
                               prefixIcon: const Icon(Icons.person),
@@ -74,32 +78,47 @@ class InformasiPenerimaScreen extends StatelessWidget {
                               inputType: TextInputType.number,
                               prefixIcon: const Icon(Icons.phone),
                             ),
+                            CustomSearchDropdownField(
+                              items: [
+                                DropdownMenuItem(value: 0, child: Container(height: 100, width: Get.width - 100, alignment: Alignment.center, child: TextField())),
+                                DropdownMenuItem(value: 2, child: Text('Two')),
+                                DropdownMenuItem(value: 3, child: Text('Three')),
+                                DropdownMenuItem(value: 4, child: Text('Four')),
+                              ],
+                            ),
                             CustomDropDownFormField(
-                              items: [],
-                              hintText: "Kota Tujuan".tr,
+                              // asyncItems: (String filter) => controller.getDestinationList(filter),
+                              items: controller.destinationList
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      value: e,
+                                      child: Text(
+                                          '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.tariffCode}'),
+                                    ),
+                                  )
+                                  .toList(),
+                              hintText: controller.isLoading ? "Loading..." : "Kota Tujuan".tr,
                               prefixIcon: const Icon(Icons.location_city),
                               textStyle: hintTextStyle,
                             ),
-                            CustomTextFormField(
-                              controller: controller.alamatLengkap,
-                              hintText: "Alamat".tr,
-                              prefixIcon: const Icon(Icons.location_city),
-                              multiLine: true,
-                            ),
-                            CustomFilledButton(
-                              color: greyLightColor3,
-                              title: 'Simpan Data Penerima'.tr,
-
-                              fontColor: blueJNE,
-                            ),
-                            CustomFilledButton(
-                              color: blueJNE,
-                              title: "Selanjutnya".tr,
-
-                              onPressed: () => Get.to(const InformasiKirimanScreen()),
-                            )
-                          ],
-                        )),
+                                CustomTextFormField(
+                                  controller: controller.alamatLengkap,
+                                  hintText: "Alamat".tr,
+                                  prefixIcon: const Icon(Icons.location_city),
+                                  multiLine: true,
+                                ),
+                                CustomFilledButton(
+                                  color: greyLightColor3,
+                                  title: 'Simpan Data Penerima'.tr,
+                                  fontColor: blueJNE,
+                                ),
+                                CustomFilledButton(
+                                  color: blueJNE,
+                                  title: "Selanjutnya".tr,
+                                  onPressed: () => Get.to(const InformasiKirimanScreen()),
+                                )
+                              ],
+                            )),
                       ],
                     ),
                   ),

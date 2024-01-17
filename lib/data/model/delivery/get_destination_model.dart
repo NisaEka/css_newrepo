@@ -94,6 +94,11 @@ class DestinationModel {
     _tariffCode = json['tariff_code'];
   }
 
+  static List<DestinationModel> fromJsonList(List list) {
+    // if (list == null) return null;
+    return list.map((item) => DestinationModel.fromJson(item)).toList();
+  }
+
   String? _id;
   String? _countryName;
   String? _provinceName;
