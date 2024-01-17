@@ -19,12 +19,12 @@ class InformasiPengirimController extends BaseController {
   bool isLoading = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
-  List<AccountNumber> accountList = [];
-  List<Origin> originList = [];
+  List<AccountNumberModel> accountList = [];
+  List<OriginModel> originList = [];
 
-  AccountNumber? selectedAccount;
-  Origin? selectedOrigin;
-  Sender? senderOrigin;
+  AccountNumberModel? selectedAccount;
+  OriginModel? selectedOrigin;
+  SenderModel? senderOrigin;
 
   @override
   void onInit() {

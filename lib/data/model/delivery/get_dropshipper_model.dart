@@ -8,7 +8,7 @@ class GetDropshipperModel {
   GetDropshipperModel({
     num? code,
     String? message,
-    List<Dropshipper>? payload,
+    List<DropshipperModel>? payload,
   }) {
     _code = code;
     _message = message;
@@ -21,19 +21,19 @@ class GetDropshipperModel {
     if (json['payload'] != null) {
       _payload = [];
       json['payload'].forEach((v) {
-        _payload?.add(Dropshipper.fromJson(v));
+        _payload?.add(DropshipperModel.fromJson(v));
       });
     }
   }
 
   num? _code;
   String? _message;
-  List<Dropshipper>? _payload;
+  List<DropshipperModel>? _payload;
 
   GetDropshipperModel copyWith({
     num? code,
     String? message,
-    List<Dropshipper>? payload,
+    List<DropshipperModel>? payload,
   }) =>
       GetDropshipperModel(
         code: code ?? _code,
@@ -45,7 +45,7 @@ class GetDropshipperModel {
 
   String? get message => _message;
 
-  List<Dropshipper>? get payload => _payload;
+  List<DropshipperModel>? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -58,12 +58,12 @@ class GetDropshipperModel {
   }
 }
 
-Dropshipper payloadFromJson(String str) => Dropshipper.fromJson(json.decode(str));
+DropshipperModel payloadFromJson(String str) => DropshipperModel.fromJson(json.decode(str));
 
-String payloadToJson(Dropshipper data) => json.encode(data.toJson());
+String payloadToJson(DropshipperModel data) => json.encode(data.toJson());
 
-class Dropshipper {
-  Dropshipper({
+class DropshipperModel {
+  DropshipperModel({
     String? id,
     String? name,
     String? phone,
@@ -81,7 +81,7 @@ class Dropshipper {
     _origin = origin;
   }
 
-  Dropshipper.fromJson(dynamic json) {
+  DropshipperModel.fromJson(dynamic json) {
     _id = json['id'];
     _name = json['name'];
     _phone = json['phone'];
@@ -99,7 +99,7 @@ class Dropshipper {
   String? _address;
   String? _origin;
 
-  Dropshipper copyWith({
+  DropshipperModel copyWith({
     String? id,
     String? name,
     String? phone,
@@ -108,7 +108,7 @@ class Dropshipper {
     String? address,
     String? origin,
   }) =>
-      Dropshipper(
+      DropshipperModel(
         id: id ?? _id,
         name: name ?? _name,
         phone: phone ?? _phone,

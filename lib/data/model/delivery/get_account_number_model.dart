@@ -8,7 +8,7 @@ class GetAccountNumberModel {
   GetAccountNumberModel({
     num? code,
     String? message,
-    List<AccountNumber>? payload,
+    List<AccountNumberModel>? payload,
   }) {
     _code = code;
     _message = message;
@@ -21,19 +21,19 @@ class GetAccountNumberModel {
     if (json['payload'] != null) {
       _payload = [];
       json['payload'].forEach((v) {
-        _payload?.add(AccountNumber.fromJson(v));
+        _payload?.add(AccountNumberModel.fromJson(v));
       });
     }
   }
 
   num? _code;
   String? _message;
-  List<AccountNumber>? _payload;
+  List<AccountNumberModel>? _payload;
 
   GetAccountNumberModel copyWith({
     num? code,
     String? message,
-    List<AccountNumber>? payload,
+    List<AccountNumberModel>? payload,
   }) =>
       GetAccountNumberModel(
         code: code ?? _code,
@@ -45,7 +45,7 @@ class GetAccountNumberModel {
 
   String? get message => _message;
 
-  List<AccountNumber>? get payload => _payload;
+  List<AccountNumberModel>? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -58,12 +58,12 @@ class GetAccountNumberModel {
   }
 }
 
-AccountNumber payloadFromJson(String str) => AccountNumber.fromJson(json.decode(str));
+AccountNumberModel payloadFromJson(String str) => AccountNumberModel.fromJson(json.decode(str));
 
-String payloadToJson(AccountNumber data) => json.encode(data.toJson());
+String payloadToJson(AccountNumberModel data) => json.encode(data.toJson());
 
-class AccountNumber {
-  AccountNumber({
+class AccountNumberModel {
+  AccountNumberModel({
     String? accountId,
     String? accountName,
     String? accountBranch,
@@ -91,7 +91,7 @@ class AccountNumber {
     _isSelected = isSelected;
   }
 
-  AccountNumber.fromJson(dynamic json) {
+  AccountNumberModel.fromJson(dynamic json) {
     _accountId = json['account_id'];
     _accountName = json['account_name'];
     _accountBranch = json['account_branch'];
@@ -119,7 +119,7 @@ class AccountNumber {
   AvailableService? _availableService;
   bool? _isSelected;
 
-  AccountNumber copyWith({
+  AccountNumberModel copyWith({
     String? accountId,
     String? accountName,
     String? accountBranch,
@@ -133,7 +133,7 @@ class AccountNumber {
     AvailableService? availableService,
     bool? isSelected,
   }) =>
-      AccountNumber(
+      AccountNumberModel(
         accountId: accountId ?? _accountId,
         accountName: accountName ?? _accountName,
         accountBranch: accountBranch ?? _accountBranch,

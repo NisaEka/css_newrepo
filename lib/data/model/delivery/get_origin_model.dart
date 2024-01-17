@@ -9,7 +9,7 @@ class GetOriginModel {
     num? code,
     String? message,
     String? regId,
-    List<Origin>? payload,
+    List<OriginModel>? payload,
   }) {
     _code = code;
     _message = message;
@@ -24,7 +24,7 @@ class GetOriginModel {
     if (json['payload'] != null) {
       _payload = [];
       json['payload'].forEach((v) {
-        _payload?.add(Origin.fromJson(v));
+        _payload?.add(OriginModel.fromJson(v));
       });
     }
   }
@@ -32,13 +32,13 @@ class GetOriginModel {
   num? _code;
   String? _message;
   String? _regId;
-  List<Origin>? _payload;
+  List<OriginModel>? _payload;
 
   GetOriginModel copyWith({
     num? code,
     String? message,
     String? regId,
-    List<Origin>? payload,
+    List<OriginModel>? payload,
   }) =>
       GetOriginModel(
         code: code ?? _code,
@@ -53,7 +53,7 @@ class GetOriginModel {
 
   String? get regId => _regId;
 
-  List<Origin>? get payload => _payload;
+  List<OriginModel>? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -67,12 +67,12 @@ class GetOriginModel {
   }
 }
 
-Origin payloadFromJson(String str) => Origin.fromJson(json.decode(str));
+OriginModel payloadFromJson(String str) => OriginModel.fromJson(json.decode(str));
 
-String payloadToJson(Origin data) => json.encode(data.toJson());
+String payloadToJson(OriginModel data) => json.encode(data.toJson());
 
-class Origin {
-  Origin({
+class OriginModel {
+  OriginModel({
     String? originCode,
     String? originName,
     String? branchCode,
@@ -82,7 +82,7 @@ class Origin {
     _branchCode = branchCode;
   }
 
-  Origin.fromJson(dynamic json) {
+  OriginModel.fromJson(dynamic json) {
     _originCode = json['origin_code'];
     _originName = json['origin_name'];
     _branchCode = json['branch_code'];
@@ -92,12 +92,12 @@ class Origin {
   String? _originName;
   String? _branchCode;
 
-  Origin copyWith({
+  OriginModel copyWith({
     String? originCode,
     String? originName,
     String? branchCode,
   }) =>
-      Origin(
+      OriginModel(
         originCode: originCode ?? _originCode,
         originName: originName ?? _originName,
         branchCode: branchCode ?? _branchCode,

@@ -8,7 +8,7 @@ class GetSenderModel {
   GetSenderModel({
     num? code,
     String? message,
-    Sender? payload,
+    SenderModel? payload,
   }) {
     _code = code;
     _message = message;
@@ -18,17 +18,17 @@ class GetSenderModel {
   GetSenderModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
-    _payload = json['payload'] != null ? Sender.fromJson(json['payload']) : null;
+    _payload = json['payload'] != null ? SenderModel.fromJson(json['payload']) : null;
   }
 
   num? _code;
   String? _message;
-  Sender? _payload;
+  SenderModel? _payload;
 
   GetSenderModel copyWith({
     num? code,
     String? message,
-    Sender? payload,
+    SenderModel? payload,
   }) =>
       GetSenderModel(
         code: code ?? _code,
@@ -40,7 +40,7 @@ class GetSenderModel {
 
   String? get message => _message;
 
-  Sender? get payload => _payload;
+  SenderModel? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -53,12 +53,12 @@ class GetSenderModel {
   }
 }
 
-Sender payloadFromJson(String str) => Sender.fromJson(json.decode(str));
+SenderModel payloadFromJson(String str) => SenderModel.fromJson(json.decode(str));
 
-String payloadToJson(Sender data) => json.encode(data.toJson());
+String payloadToJson(SenderModel data) => json.encode(data.toJson());
 
-class Sender {
-  Sender({
+class SenderModel {
+  SenderModel({
     String? name,
     String? phone,
     String? city,
@@ -72,7 +72,7 @@ class Sender {
     _address = address;
   }
 
-  Sender.fromJson(dynamic json) {
+  SenderModel.fromJson(dynamic json) {
     _name = json['name'];
     _phone = json['phone'];
     _city = json['city'];
@@ -86,14 +86,14 @@ class Sender {
   String? _zipCode;
   String? _address;
 
-  Sender copyWith({
+  SenderModel copyWith({
     String? name,
     String? phone,
     String? city,
     String? zipCode,
     String? address,
   }) =>
-      Sender(
+      SenderModel(
         name: name ?? _name,
         phone: phone ?? _phone,
         city: city ?? _city,

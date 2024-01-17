@@ -3,9 +3,9 @@ import 'package:css_mobile/data/model/delivery/get_dropshipper_model.dart';
 import 'package:get/get.dart';
 
 class ListDropshipperController extends BaseController {
-  List<Dropshipper> dropshipperList = [];
+  List<DropshipperModel> dropshipperList = [];
 
-  Dropshipper? selectedDropshipper;
+  DropshipperModel? selectedDropshipper;
 
   @override
   void onInit() {
