@@ -54,15 +54,14 @@ class InformasiPengirimController extends BaseController {
     update();
   }
 
-  Future<void> getOriginList(String accountID) async {
+  Future<List<OriginModel>> getOriginList(String keyword, String accountID) async {
     originList = [];
     isLoadOrigin = true;
-    try {
-      await delivery.getOrigin('', accountID).then((value) => originList.addAll(value.payload ?? []));
-    } catch (e) {
-      e.printError();
-    }
+    var response = await delivery.getOrigin(keyword, accountID);
+    var models = response.payload?.toList();
+
     isLoadOrigin = false;
     update();
+    return models ?? [];
   }
 }

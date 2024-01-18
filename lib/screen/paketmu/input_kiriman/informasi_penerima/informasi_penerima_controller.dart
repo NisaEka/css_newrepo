@@ -15,22 +15,23 @@ class InformasiPenerimaController extends BaseController{
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<DestinationModel> destinationList = [];
 
+  DestinationModel? selectedDestination;
+
   @override
   void onInit() {
     super.onInit();
     Future.wait([getDestinationList(''), getDestList('')]);
   }
 
-  Future<void> getDestinationList(String keyword) async {
+  Future<List<DestinationModel>> getDestinationList(String keyword) async {
     isLoading = true;
     destinationList = [];
-    try {
-      await delivery.getDestination(keyword).then((value) => destinationList.addAll(value.payload ?? []));
-    } catch (e) {
-      e.printError();
-    }
+    var response = await delivery.getDestination(keyword);
+    var models = response.payload?.toList();
+
     isLoading = false;
     update();
+    return models ?? [];
   }
 
   Future<List<DestinationModel>> getDestList(String keyword) async {

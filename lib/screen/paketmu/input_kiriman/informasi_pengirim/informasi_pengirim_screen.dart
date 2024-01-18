@@ -1,14 +1,15 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/delivery/get_origin_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_controller.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
+import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customswitch.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
@@ -68,7 +69,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                                 isSelected: controller.selectedAccount == e ? true : false,
                                                 onTap: () {
                                                   controller.selectedAccount = e;
-                                                  controller.getOriginList(e.accountId.toString());
+                                                  controller.getOriginList('', e.accountId.toString());
                                                   controller.update();
                                                 },
                                               ),
@@ -145,26 +146,48 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 readOnly: !controller.dropshipper,
                                 prefixIcon: const Icon(Icons.phone),
                               ),
-                              CustomDropDownFormField(
-                                items: controller.originList
-                                    .map(
-                                      (e) => DropdownMenuItem(
-                                        value: e,
-                                        child: Text(e.originName.toString()),
-                                      ),
-                                    )
-                                    .toList(),
-                                hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
-                                selectedItem: controller.kotaPengirim.text,
-                                textStyle: controller.selectedOrigin == null ? hintTextStyle : subTitleTextStyle,
-                                readOnly: !controller.dropshipper,
-                                prefixIcon: const Icon(Icons.location_city),
+                              CustomSearchDropdownField<OriginModel>(
+                                asyncItems: (String filter) => controller.getOriginList(filter, controller.selectedAccount?.accountId ?? ''),
+                                itemBuilder: (context, e, b) {
+                                  return Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                    child: Text(
+                                      e.originName.toString(),
+                                    ),
+                                  );
+                                },
+                                itemAsString: (OriginModel e) => e.originName.toString(),
                                 onChanged: (value) {
-                                  controller.kotaPengirim.text = value?.originName ?? '';
                                   controller.selectedOrigin = value;
                                   controller.update();
+                                  // print(jsonEncode(value));
                                 },
+                                selectedItem: controller.kotaPengirim.text,
+                                readOnly: controller.selectedAccount == null ? true : !controller.dropshipper,
+                                hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
+                                prefixIcon: const Icon(Icons.location_city),
+                                textStyle: controller.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
                               ),
+                              // CustomDropDownFormField(
+                              //   items: controller.originList
+                              //       .map(
+                              //         (e) => DropdownMenuItem(
+                              //           value: e,
+                              //           child: Text(e.originName.toString()),
+                              //         ),
+                              //       )
+                              //       .toList(),
+                              //   hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
+                              //   selectedItem: controller.kotaPengirim.text,
+                              //   textStyle: controller.selectedOrigin == null ? hintTextStyle : subTitleTextStyle,
+                              //   readOnly: !controller.dropshipper,
+                              //   prefixIcon: const Icon(Icons.location_city),
+                              //   onChanged: (value) {
+                              //     controller.kotaPengirim.text = value?.originName ?? '';
+                              //     controller.selectedOrigin = value;
+                              //     controller.update();
+                              //   },
+                              // ),
                               CustomTextFormField(
                                 controller: controller.kodePos,
                                 hintText: "Kode Pos".tr,
