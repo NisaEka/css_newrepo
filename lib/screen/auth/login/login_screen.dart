@@ -1,13 +1,13 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/widgets/bar/logoheader.dart';
-import 'package:css_mobile/widgets/bar/versionsection.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
+import 'package:css_mobile/widgets/bar/logoheader.dart';
+import 'package:css_mobile/widgets/bar/versionsection.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -110,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                             fontColor: blueJNE,
                             radius: 20,
                             title: "Daftar".tr,
-                            onPressed: () => Get.to(const SignUpScreen()),
+                            onPressed: () => Get.to(const SignUpScreen())?.then((_) => controller.formKey.currentState?.reset()),
                           ),
                           const SizedBox(height: 10),
                         ],

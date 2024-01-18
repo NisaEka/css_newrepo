@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/delivery/get_origin_model.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_controller.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
@@ -49,6 +48,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Form(
+                          key: controller.formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -77,21 +77,19 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                             .toList(),
                                       ),
                               ),
-                              // CustomDropDownFormField(
-                              //   items: [],
-                              //   label: "Nomor Akun".tr,
-                              // ),
                               CustomSwitch(
                                 value: controller.dropshipper,
                                 label: 'Kirim sebagai dropshipper'.tr,
                                 onChange: (bool? value) {
                                   controller.dropshipper = value!;
                                   if (value == true) {
-                                    controller.namaPengirim.text = '';
-                                    controller.nomorTelpon.text = '';
-                                    controller.kotaPengirim.text = '';
-                                    controller.kodePos.text = '';
-                                    controller.alamatLengkap.text = '';
+                                    controller.namaPengirim.clear();
+                                    controller.nomorTelpon.clear();
+                                    controller.kotaPengirim.clear();
+                                    controller.kodePos.clear();
+                                    controller.alamatLengkap.clear();
+                                    controller.selectedAccount = null;
+                                    controller.isValidate = false;
                                   } else {
                                     controller.namaPengirim.text = controller.senderOrigin?.name ?? '';
                                     controller.nomorTelpon.text = controller.senderOrigin?.phone ?? '';
@@ -113,30 +111,31 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               ),
                               controller.dropshipper
                                   ? GestureDetector(
-                                onTap: () => Get.to(const ListDropshipperScreen()),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                                  margin: const EdgeInsets.symmetric(vertical: 10),
-                                  decoration: const BoxDecoration(
-                                    border: Border(bottom: BorderSide(color: greyColor, width: 2), top: BorderSide(color: greyColor, width: 2)),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('Lihat Data Dropshipper'.tr),
-                                      const Icon(
-                                        Icons.keyboard_arrow_right,
-                                        color: redJNE,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
+                                      onTap: () => Get.to(const ListDropshipperScreen()),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                                        margin: const EdgeInsets.symmetric(vertical: 10),
+                                        decoration: const BoxDecoration(
+                                          border: Border(bottom: BorderSide(color: greyColor, width: 2), top: BorderSide(color: greyColor, width: 2)),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text('Lihat Data Dropshipper'.tr),
+                                            const Icon(
+                                              Icons.keyboard_arrow_right,
+                                              color: redJNE,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
                                   : const SizedBox(),
                               CustomTextFormField(
                                 controller: controller.namaPengirim,
                                 hintText: "Nama Pengirim".tr,
                                 readOnly: !controller.dropshipper,
+                                isRequired: true,
                                 prefixIcon: const Icon(Icons.person),
                               ),
                               CustomTextFormField(
@@ -144,6 +143,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 hintText: "Nomor Telepon".tr,
                                 inputType: TextInputType.number,
                                 readOnly: !controller.dropshipper,
+                                isRequired: true,
                                 prefixIcon: const Icon(Icons.phone),
                               ),
                               CustomSearchDropdownField<OriginModel>(
@@ -159,6 +159,8 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 itemAsString: (OriginModel e) => e.originName.toString(),
                                 onChanged: (value) {
                                   controller.selectedOrigin = value;
+                                  controller.kotaPengirim.text = controller.selectedOrigin?.originName ?? '';
+                                  // controller.kodePos.text = controller.selectedOrigin?.
                                   controller.update();
                                   // print(jsonEncode(value));
                                 },
@@ -168,36 +170,18 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 prefixIcon: const Icon(Icons.location_city),
                                 textStyle: controller.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
                               ),
-                              // CustomDropDownFormField(
-                              //   items: controller.originList
-                              //       .map(
-                              //         (e) => DropdownMenuItem(
-                              //           value: e,
-                              //           child: Text(e.originName.toString()),
-                              //         ),
-                              //       )
-                              //       .toList(),
-                              //   hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
-                              //   selectedItem: controller.kotaPengirim.text,
-                              //   textStyle: controller.selectedOrigin == null ? hintTextStyle : subTitleTextStyle,
-                              //   readOnly: !controller.dropshipper,
-                              //   prefixIcon: const Icon(Icons.location_city),
-                              //   onChanged: (value) {
-                              //     controller.kotaPengirim.text = value?.originName ?? '';
-                              //     controller.selectedOrigin = value;
-                              //     controller.update();
-                              //   },
-                              // ),
                               CustomTextFormField(
                                 controller: controller.kodePos,
                                 hintText: "Kode Pos".tr,
                                 readOnly: !controller.dropshipper,
+                                isRequired: true,
                                 prefixIcon: const Icon(Icons.line_style),
                               ),
                               CustomTextFormField(
                                 controller: controller.alamatLengkap,
                                 hintText: "Alamat".tr,
                                 readOnly: !controller.dropshipper,
+                                isRequired: true,
                                 multiLine: true,
                                 prefixIcon: const Icon(Icons.location_city),
                               ),
@@ -209,10 +193,13 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               )
                                   : const SizedBox(),
                               CustomFilledButton(
-                                color: blueJNE,
+                                color:
+                                    (controller.formKey.currentState?.validate() == true && controller.selectedAccount != null) ? blueJNE : greyColor,
                                 title: "Selanjutnya".tr,
                                 // radius: 20,
-                                onPressed: () => Get.to(const InformasiPenerimaScreen()),
+                                onPressed: () {
+                                  controller.isValidate ? controller.nextStep() : null;
+                                },
                               )
                             ],
                           ),

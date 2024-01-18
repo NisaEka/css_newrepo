@@ -21,6 +21,8 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
   final double? width;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  bool isRequired;
+
 
   CustomSearchDropdownField({
     super.key,
@@ -37,7 +39,10 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
     this.width,
     this.suffixIcon,
     this.prefixIcon,
+    this.isRequired = false,
   });
+
+
 
   @override
   Widget build(BuildContext context) {

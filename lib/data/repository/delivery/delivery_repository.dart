@@ -2,6 +2,7 @@ import 'package:css_mobile/data/model/delivery/get_account_number_model.dart';
 import 'package:css_mobile/data/model/delivery/get_destination_model.dart';
 import 'package:css_mobile/data/model/delivery/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/delivery/get_origin_model.dart';
+import 'package:css_mobile/data/model/delivery/get_receiver_model.dart';
 import 'package:css_mobile/data/model/delivery/get_sender_model.dart';
 
 abstract class DeliveryRepository {
@@ -14,4 +15,6 @@ abstract class DeliveryRepository {
   Future<GetOriginModel> getOrigin(String? keyword, String accountID);
 
   Future<GetDestinationModel> getDestination(String? keyword);
+
+  Future<GetReceiverModel> getReceiver();
 }

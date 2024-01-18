@@ -1,7 +1,9 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/delivery/delivery_data_model.dart';
 import 'package:css_mobile/data/model/delivery/get_account_number_model.dart';
 import 'package:css_mobile/data/model/delivery/get_origin_model.dart';
 import 'package:css_mobile/data/model/delivery/get_sender_model.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +20,7 @@ class InformasiPengirimController extends BaseController {
   bool codOgkir = false;
   bool isLoading = false;
   bool isLoadOrigin = false;
+  bool isValidate = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<AccountNumberModel> accountList = [];
@@ -63,5 +66,32 @@ class InformasiPengirimController extends BaseController {
     isLoadOrigin = false;
     update();
     return models ?? [];
+  }
+
+  void nextStep() {
+    Get.to(const InformasiPenerimaScreen(), arguments: {
+      "cod_ongkir": codOgkir,
+      "account": selectedAccount,
+      "origin": Origin(
+        // origin code kalo sender bukan dropshipper?
+        code: selectedOrigin?.branchCode,
+        desc: selectedOrigin?.originName,
+        branch: selectedOrigin?.branchCode,
+      ),
+      "dropship": dropshipper,
+      "shipper": Shipper(
+        name: namaPengirim.text.toUpperCase(),
+        address: alamatLengkap.text.toUpperCase(),
+        address1: '',
+        address2: '',
+        address3: '',
+        city: kotaPengirim.text.toUpperCase(),
+        zip: kodePos.text,
+        // region: senderOrigin?., //province
+        country: "ID",
+        contact: senderOrigin?.name?.toUpperCase(),
+        phone: senderOrigin?.phone,
+      ),
+    });
   }
 }

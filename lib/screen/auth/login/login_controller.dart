@@ -17,7 +17,7 @@ class LoginController extends BaseController {
   final passwordTextField = TextEditingController();
   final passwordField = FocusNode();
 
-  bool isObscurePasswordLogin = false;
+  bool isObscurePasswordLogin = true;
   bool isLoading = false;
   Locale? lang;
 

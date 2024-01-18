@@ -1,14 +1,14 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/dialog/success_dialog.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_controller.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_controller.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,15 +38,15 @@ class InformasiKirimanScreen extends StatelessWidget {
                     // alignment: Alignment.topRight,
                     padding: const EdgeInsets.all(10),
                     decoration: const BoxDecoration(color: redJNE, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12))),
-                    child: Text('NON COD', style: listTitleTextStyle.copyWith(color: whiteColor)),
+                    child: Text(controller.account.accountService ?? '', style: listTitleTextStyle.copyWith(color: whiteColor)),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: AccountListItem(
-                      accountID: '',
-                      accountNumber: '80563320',
-                      accountName: 'SETIAP HARI DIPAKAI PT / EVERPRO COD DROP OFF REG',
-                      accountType: 'NON CASHLESS',
+                      accountID: controller.account.accountId ?? '',
+                      accountNumber: controller.account.accountNumber ?? '',
+                      accountName: controller.account.accountName ?? '',
+                      accountType: controller.account.accountService ?? '',
                       isSelected: true,
                       width: Get.width,
                       onTap: () {},
@@ -63,7 +63,9 @@ class InformasiKirimanScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              CustomDropDownFormField(items: [], label: "Service".tr),
+                              CustomFormLabel(label: 'Service'.tr),
+
+                              //CustomDropDownFormField(items: [], label: "Service".tr),
                               CustomTextFormField(
                                 controller: controller.beratKiriman,
                                 label: "Berat Kiriman".tr,

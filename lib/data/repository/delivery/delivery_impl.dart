@@ -2,6 +2,7 @@ import 'package:css_mobile/data/model/delivery/get_account_number_model.dart';
 import 'package:css_mobile/data/model/delivery/get_destination_model.dart';
 import 'package:css_mobile/data/model/delivery/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/delivery/get_origin_model.dart';
+import 'package:css_mobile/data/model/delivery/get_receiver_model.dart';
 import 'package:css_mobile/data/model/delivery/get_sender_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/delivery/delivery_repository.dart';
@@ -87,6 +88,19 @@ class DeliveryRepositoryImpl extends DeliveryRepository {
         },
       );
       return GetDestinationModel.fromJson(response.data);
+    } on DioError catch (e) {
+      //print("response error: ${e.response?.data}");
+      return e.error;
+    }
+  }
+
+  @override
+  Future<GetReceiverModel> getReceiver() async {
+    try {
+      Response response = await network.dio.get(
+        "/delivery/receiver",
+      );
+      return GetReceiverModel.fromJson(response.data);
     } on DioError catch (e) {
       //print("response error: ${e.response?.data}");
       return e.error;
