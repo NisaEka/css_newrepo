@@ -24,6 +24,7 @@ class LoginController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    cekToken();
   }
 
   @override

@@ -13,7 +13,7 @@ class CustomBackButton<T> extends StatelessWidget {
     return IconButton(
         onPressed: onPressed ?? ()=> Get.back(),
         icon: const Icon(
-          Icons.arrow_circle_left_sharp,
+          Icons.arrow_circle_left,
           color: blueJNE,
           size: 40,
         ));
