@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/delivery/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_controller.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
@@ -45,6 +45,9 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                       children: [
                         Form(
                             key: controller.formKey,
+                            onChanged: () {
+                              controller.update();
+                            },
                             child: Column(
                               children: [
                                 GestureDetector(
@@ -71,30 +74,40 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   controller: controller.namaPenerima,
                                   hintText: "Nama Penerima".tr,
                                   prefixIcon: const Icon(Icons.person),
+                                  isRequired: true,
+
                                 ),
                                 CustomTextFormField(
                                   controller: controller.nomorTelpon,
                                   hintText: "Nomor Telepon".tr,
                                   inputType: TextInputType.number,
                                   prefixIcon: const Icon(Icons.phone),
+                                  isRequired: true,
+
                                 ),
                                 CustomSearchDropdownField<DestinationModel>(
                                   asyncItems: (String filter) => controller.getDestinationList(filter),
                                   itemBuilder: (context, e, b) {
-                                    return Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                      child: Text(
-                                        '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.tariffCode}',
+                                    return GestureDetector(
+                                      onTap: () => controller.update(),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                        child: Text(
+                                          '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
+                                        ),
                                       ),
                                     );
                                   },
                                   itemAsString: (DestinationModel e) =>
-                                  '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.tariffCode}',
+                                      '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
                                   onChanged: (value) {
                                     controller.selectedDestination = value;
                                     controller.update();
+                                    controller.update();
                                     // print(jsonEncode(value));
                                   },
+                                  value: controller.selectedDestination ?? null,
+                                  isRequired: controller.selectedDestination == null ? true : false,
                                   readOnly: false,
                                   hintText: controller.isLoading ? "Loading..." : "Kota Tujuan".tr,
                                   prefixIcon: const Icon(Icons.location_city),
@@ -105,6 +118,8 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   hintText: "Alamat".tr,
                                   prefixIcon: const Icon(Icons.location_city),
                                   multiLine: true,
+                                  isRequired: true,
+
                                 ),
                                 CustomFilledButton(
                                   color: greyLightColor3,

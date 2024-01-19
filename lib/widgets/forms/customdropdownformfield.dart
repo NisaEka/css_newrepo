@@ -22,7 +22,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
       this.suffixIcon,
       this.prefixIcon}) {
     if (isRequired) {
-      validator ??= ValidationBuilder().required().build() as FormFieldValidator<T>?;
+      // validator ??= ValidationBuilder().required().build() as FormFieldValidator<T>?;
     }
   }
 

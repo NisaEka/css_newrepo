@@ -9,6 +9,7 @@ import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,29 +31,90 @@ class InformasiKirimanScreen extends StatelessWidget {
                 steps: controller.steps,
               ),
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    // alignment: Alignment.topRight,
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(color: redJNE, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12))),
-                    child: Text(controller.account.accountService ?? '', style: listTitleTextStyle.copyWith(color: whiteColor)),
+            body: CustomScrollView(
+              slivers: [
+                // SliverPersistentHeader(
+                //   delegate: SliverAppBarDelegate(
+                //     minHeight: 150,
+                //     maxHeight: 32,
+                //     child: CustomTopBar(
+                //       screenTittle: 'Input Transaksi'.tr,
+                //       flexibleSpace: CustomStepper(
+                //         currentStep: 2,
+                //         totalStep: controller.steps.length,
+                //         steps: controller.steps,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        // alignment: Alignment.topRight,
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(color: redJNE, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12))),
+                        child: Text(controller.account.accountService ?? '', style: listTitleTextStyle.copyWith(color: whiteColor)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: AccountListItem(
+                          accountID: controller.account.accountId ?? '',
+                          accountNumber: controller.account.accountNumber ?? '',
+                          accountName: controller.account.accountName ?? '',
+                          accountType: controller.account.accountService ?? '',
+                          isSelected: true,
+                          width: Get.width,
+                          onTap: () {},
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Center(
+                        child: CustomFormLabel(label: 'Service'.tr),
+                      ),
+                      const SizedBox(height: 10),
+                      controller.isLoading ? Center(child: Text('Loading service...')) : SizedBox()
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: AccountListItem(
-                      accountID: controller.account.accountId ?? '',
-                      accountNumber: controller.account.accountNumber ?? '',
-                      accountName: controller.account.accountName ?? '',
-                      accountType: controller.account.accountService ?? '',
-                      isSelected: true,
-                      width: Get.width,
-                      onTap: () {},
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  sliver: SliverGrid(
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 100.0,
+                      mainAxisSpacing: 20.0,
+                      crossAxisSpacing: 20.0,
+                      childAspectRatio: 4.0,
+                      // mainAxisExtent: 10
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            controller.selectedService = controller.serviceList[index];
+                            controller.update();
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: controller.selectedService == controller.serviceList[index] ? blueJNE : greyLightColor3,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Text(
+                              controller.serviceList[index].serviceDisplay ?? '',
+                              style: listTitleTextStyle.copyWith(
+                                  color: controller.selectedService == controller.serviceList[index] ? whiteColor : blueJNE),
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: controller.serviceList.length,
                     ),
                   ),
-                  Container(
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(10),
                     width: Get.width,
@@ -60,90 +122,17 @@ class InformasiKirimanScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Form(
+                          key: controller.formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              CustomFormLabel(label: 'Service'.tr),
-
-                              //CustomDropDownFormField(items: [], label: "Service".tr),
-                              CustomTextFormField(
-                                controller: controller.beratKiriman,
-                                label: "Berat Kiriman".tr,
-                                inputType: TextInputType.number,
-                                hintText: 'Kg',
-                                // suffixIcon: Container(
-                                //   height: 55,
-                                //   width: 55,
-                                //   decoration: BoxDecoration(
-                                //     color: greyLightColor2,
-                                //     borderRadius: BorderRadius.circular(8),
-                                //     border: Border.all(color: greyDarkColor1),
-                                //   ),
-                                //   child: Center(child: const Text('Kg')),
-                                // ),
-                              ),
-                              Row(
-                                children: [
-                                  Checkbox(
-                                    checkColor: Colors.white,
-                                    value: controller.asuransi,
-                                    onChanged: (bool? value) {
-                                      controller.asuransi = value!;
-                                      controller.update();
-                                    },
-                                  ),
-                                  Text("Asuransi".tr, style: listTitleTextStyle),
-                                  Checkbox(
-                                    checkColor: Colors.white,
-                                    value: controller.packingKayu,
-                                    onChanged: (bool? value) {
-                                      controller.packingKayu = value!;
-                                      controller.update();
-                                    },
-                                  ),
-                                  Text("Packing Kayu".tr, style: listTitleTextStyle)
-                                ],
-                              ),
-                              const CustomFormLabel(label: "Dimensi (Opsional)"),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CustomTextFormField(
-                                    controller: controller.dimensiPanjang,
-                                    label: 'Panjang'.tr,
-                                    hintText: 'Cm',
-                                    width: Get.width / 3.5,
-                                    inputType: TextInputType.number,
-                                  ),
-                                  CustomTextFormField(
-                                    controller: controller.dimensiLebar,
-                                    label: 'Lebar'.tr,
-                                    hintText: 'Cm',
-                                    width: Get.width / 3.5,
-                                    inputType: TextInputType.number,
-                                  ),
-                                  CustomTextFormField(
-                                    controller: controller.dimensiTinggi,
-                                    label: 'Tinggi'.tr,
-                                    hintText: 'Cm',
-                                    width: Get.width / 3.5,
-                                    inputType: TextInputType.number,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  CustomTextFormField(
-                                    controller: controller.jumlahPacking,
-                                    label: 'Jumlah Packing'.tr,
-                                    inputType: TextInputType.number,
-                                    width: Get.width / 2.3,
-                                    height: 46,
-                                  ),
                                   CustomDropDownFormField(
-                                    label: 'Jumlah Packing'.tr,
+                                    hintText: 'Jenis Barang'.tr,
                                     width: Get.width / 2.3,
+                                    isRequired: true,
                                     items: [
                                       const DropdownMenuItem(
                                         child: Text('Paket'),
@@ -153,59 +142,221 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
+                                  CustomTextFormField(
+                                    controller: controller.noReference,
+                                    hintText: 'No Referensi (opsional)'.tr,
+                                    inputType: TextInputType.number,
+                                    width: Get.width / 2.3,
+                                    height: 46,
+                                  ),
                                 ],
                               ),
                               CustomTextFormField(
                                 controller: controller.namaBarang,
-                                label: 'Nama Barang'.tr,
+                                hintText: 'Nama Barang'.tr,
+                                isRequired: true,
                               ),
-                              CustomTextFormField(
-                                controller: controller.noReference,
-                                label: 'Nomor Referensi (Opsional)'.tr,
-                              ),
-                              CustomTextFormField(
-                                controller: controller.intruksiKhusus,
-                                label: 'Instruksi Khusus (Opsional)'.tr,
-                              ),
-                              CustomTextFormField(
-                                controller: controller.hargaBarang,
-                                label: 'Harga Barang'.tr,
-                              ),
-                              controller.asuransi
-                                  ? CustomTextFormField(
-                                      controller: controller.hargaAsuransi,
-                                      label: 'Harga Asuransi'.tr,
-                                    )
-                                  : const SizedBox(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   CustomTextFormField(
-                                    controller: controller.layanan,
-                                    label: 'Layanan'.tr,
-                                    readOnly: true,
-                                    width: Get.width / 2.3,
+                                    controller: controller.hargaBarang,
+                                    hintText: 'Harga Barang'.tr,
+                                    prefixIcon: const SatuanFieldIcon(
+                                      title: 'Rp',
+                                      isPrefix: true,
+                                    ),
+                                    width: Get.width / 2,
+                                    isRequired: true,
                                   ),
                                   CustomTextFormField(
-                                    controller: controller.ongkosKirim,
-                                    label: 'Ongkos Kirim'.tr,
-                                    readOnly: true,
-                                    width: Get.width / 2.3,
+                                    controller: controller.jumlahPacking,
+                                    hintText: 'Jumlah Packing'.tr,
+                                    inputType: TextInputType.number,
+                                    width: Get.width / 2.8,
+                                    isRequired: true,
                                   ),
                                 ],
                               ),
-                              CustomTextFormField(
-                                controller: controller.codFee,
-                                label: 'COD Fee'.tr,
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: greyDarkColor2),
+                                ),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                  leading: Icon(
+                                    Icons.verified_user_outlined,
+                                    color: redJNE,
+                                  ),
+                                  title: Text(
+                                    'Gunakan Asuransi Pengiriman ( Rp. 100.000 )',
+                                    style: sublistTitleTextStyle,
+                                  ),
+                                  trailing: Checkbox(
+                                    checkColor: Colors.white,
+                                    activeColor: redJNE,
+                                    value: controller.asuransi,
+                                    onChanged: (bool? value) {
+                                      controller.asuransi = value!;
+                                      controller.update();
+                                    },
+                                  ),
+                                ),
                               ),
                               CustomTextFormField(
-                                controller: controller.hargaCOD,
-                                label: "Harga COD Ongkir",
+                                controller: controller.intruksiKhusus,
+                                hintText: 'Instruksi Khusus (Opsional)'.tr,
+                              ),
+                              // controller.asuransi
+                              //     ? CustomTextFormField(
+                              //   controller: controller.hargaAsuransi,
+                              //   hintText: 'Harga Asuransi'.tr,
+                              // )
+                              //     : const SizedBox(),
+                              Container(
+                                decoration: BoxDecoration(
+                                    // borderRadius: BorderRadius.circular(8),
+                                    // border: Border(
+                                    //   bottom: BorderSide(color: greyLightColor3, width: 5),
+                                    //   top: BorderSide(color: greyLightColor3, width: 5),
+                                    // ),
+                                    ),
+                                child: ListTile(
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                    leading: Switch(
+                                      value: controller.packingKayu,
+                                      onChanged: (bool? value) {
+                                        controller.packingKayu = value!;
+                                        controller.update();
+                                      },
+                                    ),
+                                    title: Text("Packing Kayu".tr),
+                                    trailing: const Icon(
+                                      Icons.info_outline,
+                                      color: redJNE,
+                                    )),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  CustomTextFormField(
+                                    controller: controller.beratKiriman,
+                                    hintText: "Berat Kiriman".tr,
+                                    inputType: TextInputType.number,
+                                    width: Get.width / 2.5,
+                                    suffixIcon: const SatuanFieldIcon(title: 'KG', isSuffix: true),
+                                  ),
+                                  Text('Dimensi Kiriman'.tr),
+                                  Switch(
+                                    value: controller.dimensi,
+                                    onChanged: (value) {
+                                      controller.dimensi = value;
+                                      controller.update();
+                                    },
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomTextFormField(
+                                    controller: controller.dimensiPanjang,
+                                    hintText: 'Panjang'.tr,
+                                    // hintText: 'Cm',
+                                    width: Get.width / 3.5,
+                                    inputType: TextInputType.number,
+                                    suffixIcon: SatuanFieldIcon(
+                                      title: 'CM',
+                                      isSuffix: true,
+                                    ),
+                                    readOnly: !controller.dimensi,
+                                  ),
+                                  CustomTextFormField(
+                                    controller: controller.dimensiLebar,
+                                    hintText: 'Lebar'.tr,
+                                    // hintText: 'Cm',
+                                    width: Get.width / 3.5,
+                                    inputType: TextInputType.number,
+                                    suffixIcon: SatuanFieldIcon(
+                                      title: 'CM',
+                                      isSuffix: true,
+                                    ),
+                                    readOnly: !controller.dimensi,
+                                  ),
+                                  CustomTextFormField(
+                                    controller: controller.dimensiTinggi,
+                                    hintText: 'Tinggi'.tr,
+                                    // hintText: 'Cm',
+                                    width: Get.width / 3.5,
+                                    inputType: TextInputType.number,
+                                    suffixIcon: SatuanFieldIcon(
+                                      title: 'CM',
+                                      isSuffix: true,
+                                    ),
+                                    readOnly: !controller.dimensi,
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: greyDarkColor2),
+                                ),
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
+                                    controller.account.accountService?.toUpperCase() == 'COD'
+                                        ? Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('Total COD fee'),
+                                              Text('15%', style: listTitleTextStyle),
+                                            ],
+                                          )
+                                        : const SizedBox(),
+                                    controller.account.accountService?.toUpperCase() == 'COD'
+                                        ? Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('Total COD'),
+                                              Text('Rp. 641.590', style: listTitleTextStyle),
+                                            ],
+                                          )
+                                        : const SizedBox(),
+                                    controller.codOngkir
+                                        ? Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('Total COD Ongkir'),
+                                              Text('Rp. 641.590', style: listTitleTextStyle),
+                                            ],
+                                          )
+                                        : const SizedBox(),
+                                    controller.asuransi
+                                        ? Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('Total Asuransi Pengiriman'),
+                                              Text('Rp. 100.000', style: listTitleTextStyle),
+                                            ],
+                                          )
+                                        : const SizedBox(),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Total Ongkos Kirim'),
+                                        Text('Rp. ${controller.totalOngkir}', style: listTitleTextStyle),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                               CustomFilledButton(
-                                color: redJNE,
+                                color: blueJNE,
                                 title: 'Buat Resi'.tr,
-                                radius: 20,
                                 onPressed: () {
                                   Get.to(SucceesDialog(
                                     message: "Resi telah dibuat",
@@ -220,8 +371,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                ],
-              ),
+                )
+              ],
             ),
           );
         });

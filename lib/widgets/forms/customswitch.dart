@@ -6,6 +6,7 @@ class CustomSwitch extends StatelessWidget {
   final String label;
   final void Function(bool) onChange;
 
+
   const CustomSwitch({super.key, required this.value, required this.label, required this.onChange});
 
   @override

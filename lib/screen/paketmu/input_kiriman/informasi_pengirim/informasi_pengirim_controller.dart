@@ -1,8 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/delivery/delivery_data_model.dart';
-import 'package:css_mobile/data/model/delivery/get_account_number_model.dart';
-import 'package:css_mobile/data/model/delivery/get_origin_model.dart';
-import 'package:css_mobile/data/model/delivery/get_sender_model.dart';
+import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
+import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +28,7 @@ class InformasiPengirimController extends BaseController {
 
   AccountNumberModel? selectedAccount;
   OriginModel? selectedOrigin;
-  SenderModel? senderOrigin;
+  ShipperModel? senderOrigin;
 
   @override
   void onInit() {
@@ -40,12 +40,12 @@ class InformasiPengirimController extends BaseController {
     accountList = [];
     isLoading = true;
     try {
-      await delivery.getAccountNumber().then((value) => accountList.addAll(value.payload ?? []));
-      await delivery.getSender().then((value) {
+      await transaction.getAccountNumber().then((value) => accountList.addAll(value.payload ?? []));
+      await transaction.getSender().then((value) {
         senderOrigin = value.payload;
         namaPengirim.text = value.payload?.name ?? '';
         nomorTelpon.text = value.payload?.phone ?? '';
-        kotaPengirim.text = value.payload?.city ?? '';
+        kotaPengirim.text = value.payload?.origin?.originName ?? '';
         kodePos.text = value.payload?.zipCode ?? '';
         alamatLengkap.text = value.payload?.address ?? '';
       });
@@ -60,7 +60,7 @@ class InformasiPengirimController extends BaseController {
   Future<List<OriginModel>> getOriginList(String keyword, String accountID) async {
     originList = [];
     isLoadOrigin = true;
-    var response = await delivery.getOrigin(keyword, accountID);
+    var response = await transaction.getOrigin(keyword, accountID);
     var models = response.payload?.toList();
 
     isLoadOrigin = false;
@@ -74,9 +74,9 @@ class InformasiPengirimController extends BaseController {
       "account": selectedAccount,
       "origin": Origin(
         // origin code kalo sender bukan dropshipper?
-        code: selectedOrigin?.branchCode,
-        desc: selectedOrigin?.originName,
-        branch: selectedOrigin?.branchCode,
+        code: selectedOrigin?.branchCode ?? senderOrigin?.origin?.originCode,
+        desc: selectedOrigin?.originName ?? senderOrigin?.origin?.originName,
+        branch: selectedOrigin?.branchCode ?? senderOrigin?.origin?.branchCode,
       ),
       "dropship": dropshipper,
       "shipper": Shipper(

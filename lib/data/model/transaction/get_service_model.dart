@@ -1,9 +1,6 @@
 import 'dart:convert';
-
 GetServiceModel getServiceModelFromJson(String str) => GetServiceModel.fromJson(json.decode(str));
-
 String getServiceModelToJson(GetServiceModel data) => json.encode(data.toJson());
-
 class GetServiceModel {
   GetServiceModel({
     num? code,
@@ -84,7 +81,6 @@ class ServiceModel {
     _currency = json['currency'];
     _price = json['price'];
   }
-
   String? _serviceDisplay;
   String? _serviceCode;
   String? _goodsType;
@@ -105,15 +101,10 @@ class ServiceModel {
         currency: currency ?? _currency,
         price: price ?? _price,
       );
-
   String? get serviceDisplay => _serviceDisplay;
-
   String? get serviceCode => _serviceCode;
-
   String? get goodsType => _goodsType;
-
   String? get currency => _currency;
-
   String? get price => _price;
 
   Map<String, dynamic> toJson() {
@@ -125,4 +116,5 @@ class ServiceModel {
     map['price'] = _price;
     return map;
   }
+
 }

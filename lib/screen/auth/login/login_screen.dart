@@ -26,7 +26,6 @@ class LoginScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  // SafeArea(child: SizedBox()),
                   const LogoHeader(),
                   // CustomFilledButton(color: Colors.blue, title: "en", onPressed: () => Get.updateLocale(Locale("en", "US")),),
                   // SizedBox(height: 20,),

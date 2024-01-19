@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/delivery/get_origin_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_controller.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
@@ -93,7 +93,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                   } else {
                                     controller.namaPengirim.text = controller.senderOrigin?.name ?? '';
                                     controller.nomorTelpon.text = controller.senderOrigin?.phone ?? '';
-                                    controller.kotaPengirim.text = controller.senderOrigin?.city ?? '';
+                                    controller.kotaPengirim.text = controller.senderOrigin?.origin?.originName ?? '';
                                     controller.kodePos.text = controller.senderOrigin?.zipCode ?? '';
                                     controller.alamatLengkap.text = controller.senderOrigin?.address ?? '';
                                   }
@@ -198,7 +198,9 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 title: "Selanjutnya".tr,
                                 // radius: 20,
                                 onPressed: () {
-                                  controller.isValidate ? controller.nextStep() : null;
+                                  controller.formKey.currentState?.validate() == true && controller.selectedAccount != null
+                                      ? controller.nextStep()
+                                      : null;
                                 },
                               )
                             ],

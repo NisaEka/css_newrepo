@@ -1,9 +1,6 @@
 import 'dart:convert';
-
 GetDestinationModel getDestinationModelFromJson(String str) => GetDestinationModel.fromJson(json.decode(str));
-
 String getDestinationModelToJson(GetDestinationModel data) => json.encode(data.toJson());
-
 class GetDestinationModel {
   GetDestinationModel({
     num? code,
@@ -65,96 +62,86 @@ String payloadToJson(DestinationModel data) => json.encode(data.toJson());
 class DestinationModel {
   DestinationModel({
     String? id,
+    String? destinationCode,
     String? countryName,
     String? provinceName,
     String? cityName,
     String? districtName,
     String? subDistrictName,
     String? zipCode,
-    String? tariffCode,
   }) {
     _id = id;
+    _destinationCode = destinationCode;
     _countryName = countryName;
     _provinceName = provinceName;
     _cityName = cityName;
     _districtName = districtName;
     _subDistrictName = subDistrictName;
     _zipCode = zipCode;
-    _tariffCode = tariffCode;
   }
 
   DestinationModel.fromJson(dynamic json) {
     _id = json['id'];
+    _destinationCode = json['destination_code'];
     _countryName = json['country_name'];
     _provinceName = json['province_name'];
     _cityName = json['city_name'];
     _districtName = json['district_name'];
     _subDistrictName = json['sub_district_name'];
     _zipCode = json['zip_code'];
-    _tariffCode = json['tariff_code'];
-  }
-
-  static List<DestinationModel> fromJsonList(List list) {
-    // if (list == null) return null;
-    return list.map((item) => DestinationModel.fromJson(item)).toList();
   }
 
   String? _id;
+  String? _destinationCode;
   String? _countryName;
   String? _provinceName;
   String? _cityName;
   String? _districtName;
   String? _subDistrictName;
   String? _zipCode;
-  String? _tariffCode;
 
   DestinationModel copyWith({
     String? id,
+    String? destinationCode,
     String? countryName,
     String? provinceName,
     String? cityName,
     String? districtName,
     String? subDistrictName,
     String? zipCode,
-    String? tariffCode,
   }) =>
       DestinationModel(
         id: id ?? _id,
+        destinationCode: destinationCode ?? _destinationCode,
         countryName: countryName ?? _countryName,
         provinceName: provinceName ?? _provinceName,
         cityName: cityName ?? _cityName,
         districtName: districtName ?? _districtName,
         subDistrictName: subDistrictName ?? _subDistrictName,
         zipCode: zipCode ?? _zipCode,
-        tariffCode: tariffCode ?? _tariffCode,
       );
 
   String? get id => _id;
 
+  String? get destinationCode => _destinationCode;
+
   String? get countryName => _countryName;
-
   String? get provinceName => _provinceName;
-
   String? get cityName => _cityName;
-
   String? get districtName => _districtName;
-
   String? get subDistrictName => _subDistrictName;
-
   String? get zipCode => _zipCode;
-
-  String? get tariffCode => _tariffCode;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
+    map['destination_code'] = _destinationCode;
     map['country_name'] = _countryName;
     map['province_name'] = _provinceName;
     map['city_name'] = _cityName;
     map['district_name'] = _districtName;
     map['sub_district_name'] = _subDistrictName;
     map['zip_code'] = _zipCode;
-    map['tariff_code'] = _tariffCode;
     return map;
   }
 }

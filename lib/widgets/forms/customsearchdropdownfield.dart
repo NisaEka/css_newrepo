@@ -22,27 +22,33 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   bool isRequired;
+  FormFieldValidator<T>? validator;
 
-
-  CustomSearchDropdownField({
-    super.key,
-    this.items,
-    required this.asyncItems,
-    required this.onChanged,
-    required this.itemAsString,
-    required this.itemBuilder,
-    this.label,
-    this.hintText,
-    this.selectedItem,
-    required this.readOnly,
-    this.textStyle,
-    this.width,
-    this.suffixIcon,
-    this.prefixIcon,
-    this.isRequired = false,
-  });
-
-
+  CustomSearchDropdownField(
+      {super.key,
+      this.items,
+      required this.asyncItems,
+      required this.onChanged,
+      required this.itemAsString,
+      required this.itemBuilder,
+      this.label,
+      this.hintText,
+      this.selectedItem,
+      required this.readOnly,
+      this.textStyle,
+      this.width,
+      this.suffixIcon,
+      this.prefixIcon,
+      this.isRequired = false,
+      this.value}) {
+    if (isRequired) {
+      if (value == null || value == hintText || value == label) {
+        // return validator!(value as T);
+        // validator ??= ValidationBuilder().required().build() as FormFieldValidator<T>?;
+        // return "This field is required";
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +72,11 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
     }
     return DropdownSearch<T>(
       validator: (value) {
-        if (value == null || value == hintText || value == label) {
-          // return validator!(value as T);
-          return "This field is required";
+        if (isRequired) {
+          if (value == null || value == hintText || value == label) {
+            // return validator!(value as T);
+            return "This field is required";
+          }
         }
       },
       popupProps: PopupProps.menu(

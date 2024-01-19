@@ -1,9 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/widgets/items/bottom_menu_item.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/input_kiriman_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
+import 'package:css_mobile/widgets/items/bottom_menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,10 +45,20 @@ class BottomBar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                BottomMenuItem(icon: Icon(Icons.home, color: menu == 0 ? redJNE : blueJNE), title: "Beranda".tr, color: menu == 0 ? redJNE : blueJNE, onTap: () => Get.off(const DashboardScreen())),
+                BottomMenuItem(
+                  icon: Icon(Icons.home, color: menu == 0 ? redJNE : blueJNE),
+                  title: "Beranda".tr,
+                  color: menu == 0 ? redJNE : blueJNE,
+                  onTap: () => Get.off(const DashboardScreen()),
+                ),
                 const SizedBox(width: 30, height: 30),
                 const SizedBox(width: 30, height: 30),
-                BottomMenuItem(icon: Icon(Icons.person, color: menu == 1 ? redJNE : blueJNE), title: "Profil".tr, color: menu == 1 ? redJNE : blueJNE, onTap: () => Get.off(const ProfileScreen())),
+                BottomMenuItem(
+                  icon: Icon(Icons.person, color: menu == 1 ? redJNE : blueJNE),
+                  title: "Profil".tr,
+                  color: menu == 1 ? redJNE : blueJNE,
+                  onTap: () => Get.off(const ProfileScreen()),
+                ),
               ],
             ),
           ),

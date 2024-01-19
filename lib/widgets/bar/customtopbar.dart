@@ -48,7 +48,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
       flexibleSpace: Column(
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 110, left: 20),
+            margin: const EdgeInsets.only(top: 100, left: 20),
             width: Get.width,
             decoration: const BoxDecoration(
               color: Colors.transparent,

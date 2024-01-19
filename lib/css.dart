@@ -1,6 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +35,7 @@ class App extends StatelessWidget {
       fallbackLocale: const Locale("id", "ID"),
       debugShowCheckedModeBanner: false,
       title: 'CSS',
+
       theme: ThemeData(
         // primaryColor: blueJNE,
         colorScheme: const ColorScheme.light(

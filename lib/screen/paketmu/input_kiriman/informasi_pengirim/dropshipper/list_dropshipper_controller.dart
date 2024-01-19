@@ -1,5 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/delivery/get_dropshipper_model.dart';
+import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:get/get.dart';
 
 class ListDropshipperController extends BaseController {
@@ -15,7 +15,7 @@ class ListDropshipperController extends BaseController {
 
   Future<void> initData() async {
     try {
-      await delivery.getDropshipper().then((value) => dropshipperList.addAll(value.payload ?? []));
+      await transaction.getDropshipper().then((value) => dropshipperList.addAll(value.payload ?? []));
     } catch (e) {
       e.printError();
     }

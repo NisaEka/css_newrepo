@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-DeliveryDataModel deliveryDataModelFromJson(String str) => DeliveryDataModel.fromJson(json.decode(str));
+TransactionDataModel transactionDataModelFromJson(String str) => TransactionDataModel.fromJson(json.decode(str));
 
-String deliveryDataModelToJson(DeliveryDataModel data) => json.encode(data.toJson());
+String transactionDataModelToJson(TransactionDataModel data) => json.encode(data.toJson());
 
-class DeliveryDataModel {
-  DeliveryDataModel({
+class TransactionDataModel {
+  TransactionDataModel({
     Delivery? delivery,
     Account? account,
     Origin? origin,
@@ -23,7 +23,7 @@ class DeliveryDataModel {
     _receiver = receiver;
   }
 
-  DeliveryDataModel.fromJson(dynamic json) {
+  TransactionDataModel.fromJson(dynamic json) {
     _delivery = json['delivery'] != null ? Delivery.fromJson(json['delivery']) : null;
     _account = json['account'] != null ? Account.fromJson(json['account']) : null;
     _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
@@ -32,7 +32,6 @@ class DeliveryDataModel {
     _shipper = json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
     _receiver = json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
   }
-
   Delivery? _delivery;
   Account? _account;
   Origin? _origin;
@@ -41,7 +40,7 @@ class DeliveryDataModel {
   Shipper? _shipper;
   Receiver? _receiver;
 
-  DeliveryDataModel copyWith({
+  TransactionDataModel copyWith({
     Delivery? delivery,
     Account? account,
     Origin? origin,
@@ -50,7 +49,7 @@ class DeliveryDataModel {
     Shipper? shipper,
     Receiver? receiver,
   }) =>
-      DeliveryDataModel(
+      TransactionDataModel(
         delivery: delivery ?? _delivery,
         account: account ?? _account,
         origin: origin ?? _origin,
@@ -59,19 +58,12 @@ class DeliveryDataModel {
         shipper: shipper ?? _shipper,
         receiver: receiver ?? _receiver,
       );
-
   Delivery? get delivery => _delivery;
-
   Account? get account => _account;
-
   Origin? get origin => _origin;
-
   Destination? get destination => _destination;
-
   Goods? get goods => _goods;
-
   Shipper? get shipper => _shipper;
-
   Receiver? get receiver => _receiver;
 
   Map<String, dynamic> toJson() {
@@ -102,9 +94,7 @@ class DeliveryDataModel {
 }
 
 Receiver receiverFromJson(String str) => Receiver.fromJson(json.decode(str));
-
 String receiverToJson(Receiver data) => json.encode(data.toJson());
-
 class Receiver {
   Receiver({
     String? name,
@@ -119,7 +109,7 @@ class Receiver {
     String? contact,
     String? phone,
     String? district,
-    String? subdistrict,
+    String? subDistrict,
   }) {
     _name = name;
     _address = address;
@@ -133,7 +123,7 @@ class Receiver {
     _contact = contact;
     _phone = phone;
     _district = district;
-    _subdistrict = subdistrict;
+    _subDistrict = subDistrict;
   }
 
   Receiver.fromJson(dynamic json) {
@@ -149,9 +139,8 @@ class Receiver {
     _contact = json['contact'];
     _phone = json['phone'];
     _district = json['district'];
-    _subdistrict = json['subdistrict'];
+    _subDistrict = json['sub_district'];
   }
-
   String? _name;
   String? _address;
   String? _address1;
@@ -164,7 +153,7 @@ class Receiver {
   String? _contact;
   String? _phone;
   String? _district;
-  String? _subdistrict;
+  String? _subDistrict;
 
   Receiver copyWith({
     String? name,
@@ -179,7 +168,7 @@ class Receiver {
     String? contact,
     String? phone,
     String? district,
-    String? subdistrict,
+    String? subDistrict,
   }) =>
       Receiver(
         name: name ?? _name,
@@ -194,7 +183,7 @@ class Receiver {
         contact: contact ?? _contact,
         phone: phone ?? _phone,
         district: district ?? _district,
-        subdistrict: subdistrict ?? _subdistrict,
+        subDistrict: subDistrict ?? _subDistrict,
       );
 
   String? get name => _name;
@@ -216,12 +205,11 @@ class Receiver {
   String? get country => _country;
 
   String? get contact => _contact;
-
   String? get phone => _phone;
 
   String? get district => _district;
 
-  String? get subdistrict => _subdistrict;
+  String? get subDistrict => _subDistrict;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -237,15 +225,13 @@ class Receiver {
     map['contact'] = _contact;
     map['phone'] = _phone;
     map['district'] = _district;
-    map['subdistrict'] = _subdistrict;
+    map['sub_district'] = _subDistrict;
     return map;
   }
 }
 
 Shipper shipperFromJson(String str) => Shipper.fromJson(json.decode(str));
-
 String shipperToJson(Shipper data) => json.encode(data.toJson());
-
 class Shipper {
   Shipper({
     String? name,
@@ -286,7 +272,6 @@ class Shipper {
     _contact = json['contact'];
     _phone = json['phone'];
   }
-
   String? _name;
   String? _address;
   String? _address1;
@@ -325,27 +310,16 @@ class Shipper {
         contact: contact ?? _contact,
         phone: phone ?? _phone,
       );
-
   String? get name => _name;
-
   String? get address => _address;
-
   String? get address1 => _address1;
-
   String? get address2 => _address2;
-
   String? get address3 => _address3;
-
   String? get city => _city;
-
   String? get zip => _zip;
-
   String? get region => _region;
-
   String? get country => _country;
-
   String? get contact => _contact;
-
   String? get phone => _phone;
 
   Map<String, dynamic> toJson() {
@@ -366,16 +340,14 @@ class Shipper {
 }
 
 Goods goodsFromJson(String str) => Goods.fromJson(json.decode(str));
-
 String goodsToJson(Goods data) => json.encode(data.toJson());
-
 class Goods {
   Goods({
     String? type,
     String? desc,
-    num? amount,
-    num? quantity,
-    num? weight,
+    String? amount,
+    String? quantity,
+    String? weight,
   }) {
     _type = type;
     _desc = desc;
@@ -394,16 +366,16 @@ class Goods {
 
   String? _type;
   String? _desc;
-  num? _amount;
-  num? _quantity;
-  num? _weight;
+  String? _amount;
+  String? _quantity;
+  String? _weight;
 
   Goods copyWith({
     String? type,
     String? desc,
-    num? amount,
-    num? quantity,
-    num? weight,
+    String? amount,
+    String? quantity,
+    String? weight,
   }) =>
       Goods(
         type: type ?? _type,
@@ -417,11 +389,11 @@ class Goods {
 
   String? get desc => _desc;
 
-  num? get amount => _amount;
+  String? get amount => _amount;
 
-  num? get quantity => _quantity;
+  String? get quantity => _quantity;
 
-  num? get weight => _weight;
+  String? get weight => _weight;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -435,9 +407,7 @@ class Goods {
 }
 
 Destination destinationFromJson(String str) => Destination.fromJson(json.decode(str));
-
 String destinationToJson(Destination data) => json.encode(data.toJson());
-
 class Destination {
   Destination({
     String? code,
@@ -451,7 +421,6 @@ class Destination {
     _code = json['code'];
     _desc = json['desc'];
   }
-
   String? _code;
   String? _desc;
 
@@ -463,9 +432,7 @@ class Destination {
         code: code ?? _code,
         desc: desc ?? _desc,
       );
-
   String? get code => _code;
-
   String? get desc => _desc;
 
   Map<String, dynamic> toJson() {
@@ -477,9 +444,7 @@ class Destination {
 }
 
 Origin originFromJson(String str) => Origin.fromJson(json.decode(str));
-
 String originToJson(Origin data) => json.encode(data.toJson());
-
 class Origin {
   Origin({
     String? code,
@@ -496,7 +461,6 @@ class Origin {
     _desc = json['desc'];
     _branch = json['branch'];
   }
-
   String? _code;
   String? _desc;
   String? _branch;
@@ -511,11 +475,8 @@ class Origin {
         desc: desc ?? _desc,
         branch: branch ?? _branch,
       );
-
   String? get code => _code;
-
   String? get desc => _desc;
-
   String? get branch => _branch;
 
   Map<String, dynamic> toJson() {
@@ -528,9 +489,7 @@ class Origin {
 }
 
 Account accountFromJson(String str) => Account.fromJson(json.decode(str));
-
 String accountToJson(Account data) => json.encode(data.toJson());
-
 class Account {
   Account({
     String? number,
@@ -544,7 +503,6 @@ class Account {
     _number = json['number'];
     _service = json['service'];
   }
-
   String? _number;
   String? _service;
 
@@ -556,9 +514,7 @@ class Account {
         number: number ?? _number,
         service: service ?? _service,
       );
-
   String? get number => _number;
-
   String? get service => _service;
 
   Map<String, dynamic> toJson() {
@@ -570,9 +526,7 @@ class Account {
 }
 
 Delivery deliveryFromJson(String str) => Delivery.fromJson(json.decode(str));
-
 String deliveryToJson(Delivery data) => json.encode(data.toJson());
-
 class Delivery {
   Delivery({
     String? serviceCode,
@@ -580,13 +534,13 @@ class Delivery {
     String? specialInstruction,
     String? codFlag,
     String? codOngkir,
-    num? codFee,
+    String? codFee,
     String? insuranceFlag,
-    num? insuranceFee,
-    num? deliveryFee,
-    num? deliveryFeeTotal,
-    num? deliveryPricePublish,
-    num? deliveryAmountPublish,
+    String? insuranceFee,
+    String? flatRate,
+    String? flatRateWithInsurance,
+    String? freightCharge,
+    String? freightChargeWithInsurance,
   }) {
     _serviceCode = serviceCode;
     _woodPackaging = woodPackaging;
@@ -596,10 +550,10 @@ class Delivery {
     _codFee = codFee;
     _insuranceFlag = insuranceFlag;
     _insuranceFee = insuranceFee;
-    _deliveryFee = deliveryFee;
-    _deliveryFeeTotal = deliveryFeeTotal;
-    _deliveryPricePublish = deliveryPricePublish;
-    _deliveryAmountPublish = deliveryAmountPublish;
+    _flatRate = flatRate;
+    _flatRateWithInsurance = flatRateWithInsurance;
+    _freightCharge = freightCharge;
+    _freightChargeWithInsurance = freightChargeWithInsurance;
   }
 
   Delivery.fromJson(dynamic json) {
@@ -611,10 +565,10 @@ class Delivery {
     _codFee = json['cod_fee'];
     _insuranceFlag = json['insurance_flag'];
     _insuranceFee = json['insurance_fee'];
-    _deliveryFee = json['delivery_fee'];
-    _deliveryFeeTotal = json['delivery_fee_total'];
-    _deliveryPricePublish = json['delivery_price_publish'];
-    _deliveryAmountPublish = json['delivery_amount_publish'];
+    _flatRate = json['flat_rate'];
+    _flatRateWithInsurance = json['flat_rate_with_insurance'];
+    _freightCharge = json['freight_charge'];
+    _freightChargeWithInsurance = json['freight_charge_with_insurance'];
   }
 
   String? _serviceCode;
@@ -622,13 +576,13 @@ class Delivery {
   String? _specialInstruction;
   String? _codFlag;
   String? _codOngkir;
-  num? _codFee;
+  String? _codFee;
   String? _insuranceFlag;
-  num? _insuranceFee;
-  num? _deliveryFee;
-  num? _deliveryFeeTotal;
-  num? _deliveryPricePublish;
-  num? _deliveryAmountPublish;
+  String? _insuranceFee;
+  String? _flatRate;
+  String? _flatRateWithInsurance;
+  String? _freightCharge;
+  String? _freightChargeWithInsurance;
 
   Delivery copyWith({
     String? serviceCode,
@@ -636,13 +590,13 @@ class Delivery {
     String? specialInstruction,
     String? codFlag,
     String? codOngkir,
-    num? codFee,
+    String? codFee,
     String? insuranceFlag,
-    num? insuranceFee,
-    num? deliveryFee,
-    num? deliveryFeeTotal,
-    num? deliveryPricePublish,
-    num? deliveryAmountPublish,
+    String? insuranceFee,
+    String? flatRate,
+    String? flatRateWithInsurance,
+    String? freightCharge,
+    String? freightChargeWithInsurance,
   }) =>
       Delivery(
         serviceCode: serviceCode ?? _serviceCode,
@@ -653,10 +607,10 @@ class Delivery {
         codFee: codFee ?? _codFee,
         insuranceFlag: insuranceFlag ?? _insuranceFlag,
         insuranceFee: insuranceFee ?? _insuranceFee,
-        deliveryFee: deliveryFee ?? _deliveryFee,
-        deliveryFeeTotal: deliveryFeeTotal ?? _deliveryFeeTotal,
-        deliveryPricePublish: deliveryPricePublish ?? _deliveryPricePublish,
-        deliveryAmountPublish: deliveryAmountPublish ?? _deliveryAmountPublish,
+        flatRate: flatRate ?? _flatRate,
+        flatRateWithInsurance: flatRateWithInsurance ?? _flatRateWithInsurance,
+        freightCharge: freightCharge ?? _freightCharge,
+        freightChargeWithInsurance: freightChargeWithInsurance ?? _freightChargeWithInsurance,
       );
 
   String? get serviceCode => _serviceCode;
@@ -669,19 +623,19 @@ class Delivery {
 
   String? get codOngkir => _codOngkir;
 
-  num? get codFee => _codFee;
+  String? get codFee => _codFee;
 
   String? get insuranceFlag => _insuranceFlag;
 
-  num? get insuranceFee => _insuranceFee;
+  String? get insuranceFee => _insuranceFee;
 
-  num? get deliveryFee => _deliveryFee;
+  String? get flatRate => _flatRate;
 
-  num? get deliveryFeeTotal => _deliveryFeeTotal;
+  String? get flatRateWithInsurance => _flatRateWithInsurance;
 
-  num? get deliveryPricePublish => _deliveryPricePublish;
+  String? get freightCharge => _freightCharge;
 
-  num? get deliveryAmountPublish => _deliveryAmountPublish;
+  String? get freightChargeWithInsurance => _freightChargeWithInsurance;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -693,10 +647,11 @@ class Delivery {
     map['cod_fee'] = _codFee;
     map['insurance_flag'] = _insuranceFlag;
     map['insurance_fee'] = _insuranceFee;
-    map['delivery_fee'] = _deliveryFee;
-    map['delivery_fee_total'] = _deliveryFeeTotal;
-    map['delivery_price_publish'] = _deliveryPricePublish;
-    map['delivery_amount_publish'] = _deliveryAmountPublish;
+    map['flat_rate'] = _flatRate;
+    map['flat_rate_with_insurance'] = _flatRateWithInsurance;
+    map['freight_charge'] = _freightCharge;
+    map['freight_charge_with_insurance'] = _freightChargeWithInsurance;
     return map;
   }
+
 }

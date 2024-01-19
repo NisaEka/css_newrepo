@@ -1,7 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/delivery/delivery_data_model.dart';
-import 'package:css_mobile/data/model/delivery/get_account_number_model.dart';
-import 'package:css_mobile/data/model/delivery/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,7 +35,7 @@ class InformasiPenerimaController extends BaseController {
   Future<List<DestinationModel>> getDestinationList(String keyword) async {
     isLoading = true;
     destinationList = [];
-    var response = await delivery.getDestination(keyword);
+    var response = await transaction.getDestination(keyword);
     var models = response.payload?.toList();
 
     isLoading = false;
@@ -62,8 +62,9 @@ class InformasiPenerimaController extends BaseController {
         country: selectedDestination?.countryName,
         contact: namaPenerima.text.toUpperCase(),
         district: selectedDestination?.districtName,
-        subdistrict: selectedDestination?.subDistrictName,
-      )
+        subDistrict: selectedDestination?.subDistrictName,
+      ),
+      "destination": selectedDestination,
     });
   }
 }
