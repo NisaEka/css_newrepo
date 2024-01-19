@@ -93,6 +93,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             controller.selectedService = controller.serviceList[index];
+                            controller.hitungOngkir(controller.beratKiriman.text ?? '0', controller.selectedService?.serviceCode ?? '');
                             controller.update();
                           },
                           child: Container(
@@ -123,6 +124,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                       children: [
                         Form(
                           key: controller.formKey,
+                          onChanged: () {
+                            controller.hitungOngkir(controller.beratKiriman.text ?? '0', controller.selectedService?.serviceCode ?? '');
+                            controller.update();
+                          },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -133,11 +138,13 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     hintText: 'Jenis Barang'.tr,
                                     width: Get.width / 2.3,
                                     isRequired: true,
-                                    items: [
-                                      const DropdownMenuItem(
+                                    items: const [
+                                      DropdownMenuItem(
+                                        value: "PAKET",
                                         child: Text('Paket'),
                                       ),
-                                      const DropdownMenuItem(
+                                      DropdownMenuItem(
+                                        value: "DOKUMEN",
                                         child: Text('Dokumen'),
                                       ),
                                     ],
@@ -167,14 +174,14 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       isPrefix: true,
                                     ),
                                     width: Get.width / 2,
-                                    isRequired: true,
+                                    // isRequired: true,
                                   ),
                                   CustomTextFormField(
                                     controller: controller.jumlahPacking,
                                     hintText: 'Jumlah Packing'.tr,
                                     inputType: TextInputType.number,
                                     width: Get.width / 2.8,
-                                    isRequired: true,
+                                    // isRequired: true,
                                   ),
                                 ],
                               ),
@@ -245,7 +252,12 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     hintText: "Berat Kiriman".tr,
                                     inputType: TextInputType.number,
                                     width: Get.width / 2.5,
+                                    isRequired: true,
                                     suffixIcon: const SatuanFieldIcon(title: 'KG', isSuffix: true),
+                                    onSubmit: (value) {
+                                      controller.hitungOngkir(controller.beratKiriman.text ?? '0', controller.selectedService?.serviceCode ?? '');
+                                      controller.update();
+                                    },
                                   ),
                                   Text('Dimensi Kiriman'.tr),
                                   Switch(
@@ -355,7 +367,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                                 ),
                               ),
                               CustomFilledButton(
-                                color: blueJNE,
+                                color:
+                                    controller.formKey.currentState?.validate() == true && controller.selectedService != null ? blueJNE : greyColor,
                                 title: 'Buat Resi'.tr,
                                 onPressed: () {
                                   Get.to(SucceesDialog(

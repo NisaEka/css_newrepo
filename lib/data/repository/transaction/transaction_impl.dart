@@ -134,6 +134,14 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.dio.get(
         "/transaction/fee",
+        // queryParameters: {
+        //   "origin_code": "AMI10000",
+        //   "destination_code": "CGK10302",
+        //   "service_code": "JTR",
+        //   "weight": 1,
+        //   "cust_no": "1624166223" //account number
+        // }
+        options: Options(method: "GET"),
         queryParameters: {
           "origin_code": params.originCode,
           "destination_code": params.destinationCode,
@@ -142,6 +150,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
           "cust_no": params.custNo,
         },
       );
+      print(response.data);
       return GetTransactionFeeModel.fromJson(response.data);
     } on DioError catch (e) {
       //print("response error: ${e.response?.data}");

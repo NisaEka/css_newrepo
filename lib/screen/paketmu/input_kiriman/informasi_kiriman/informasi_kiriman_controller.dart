@@ -51,19 +51,20 @@ class InformasiKirimaController extends BaseController {
     Future.wait([initData()]);
   }
 
-  int? totalOngkir = 0;
+  int totalOngkir = 0;
 
-  Future<void> hitungOngkir() async {
+  void hitungOngkir(String weight, String service) async {
     var resp = await transaction.getTransactionFee(TransactionFeeDataModel(
       destinationCode: destination.destinationCode,
       originCode: origin.code,
-      serviceCode: selectedService?.serviceCode,
-      weight: int.parse(beratKiriman.text),
+      serviceCode: service,
+      weight: int.parse(weight),
       custNo: account.accountNumber,
     ));
     var fee = resp.payload;
-    totalOngkir = int.parse(fee?.flatRate ?? fee?.freightCharge ?? '0');
-
+    print(fee?.flatRate);
+    // totalOngkir = int.parse(fee?.flatRate ?? fee?.freightCharge ?? '99');
+    totalOngkir = totalOngkir + 10;
     update();
   }
 
