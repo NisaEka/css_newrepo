@@ -6,7 +6,9 @@ import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
+import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/service_data_model.dart';
+import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_fee_data_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
@@ -116,11 +118,12 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.dio.get(
         "/transaction/service",
-        queryParameters: {
-          'account_id': param.accountId,
-          'origin_code': param.originCode,
-          'destination_code': param.destinationCode,
-        },
+        queryParameters: param.toJson(),
+        // queryParameters: {
+        //   'account_id': param.accountId,
+        //   'origin_code': param.originCode,
+        //   'destination_code': param.destinationCode,
+        // },
       );
       return GetServiceModel.fromJson(response.data);
     } on DioError catch (e) {
@@ -141,7 +144,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         //   "weight": 1,
         //   "cust_no": "1624166223" //account number
         // }
-        options: Options(method: "GET"),
+        // options: Options(method: "GET"),
         queryParameters: {
           "origin_code": params.originCode,
           "destination_code": params.destinationCode,
@@ -152,6 +155,29 @@ class TransactionRepositoryImpl extends TransactionRepository {
       );
       print(response.data);
       return GetTransactionFeeModel.fromJson(response.data);
+    } on DioError catch (e) {
+      //print("response error: ${e.response?.data}");
+      return e.error;
+    }
+  }
+
+  @override
+  Future<PostTransactionModel> postTransaction(TransactionDataModel data) async {
+    try {
+      Response response = await network.dio.post(
+        "/transaction",
+        // queryParameters: {
+        //   "origin_code": "AMI10000",
+        //   "destination_code": "CGK10302",
+        //   "service_code": "JTR",
+        //   "weight": 1,
+        //   "cust_no": "1624166223" //account number
+        // }
+        // options: Options(method: "GET"),
+        data: data,
+      );
+      // print(response.data);
+      return PostTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
       //print("response error: ${e.response?.data}");
       return e.error;
