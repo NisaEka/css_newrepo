@@ -162,24 +162,83 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<PostTransactionModel> postTransaction(TransactionDataModel data) async {
+  Future postTransaction(TransactionDataModel data) async {
+    data.toJson().printInfo();
     try {
       Response response = await network.dio.post(
         "/transaction",
-        // queryParameters: {
-        //   "origin_code": "AMI10000",
-        //   "destination_code": "CGK10302",
-        //   "service_code": "JTR",
-        //   "weight": 1,
-        //   "cust_no": "1624166223" //account number
+        data: data.toJson(),
+        // data: {
+        //   "delivery": {
+        //     "service_code": data.delivery?.serviceCode,
+        //     "wood_packaging": data.delivery?.woodPackaging,
+        //     "special_instruction": data.delivery?.specialInstruction,
+        //     "cod_flag": data.delivery?.codFlag,
+        //     "cod_ongkir": data.delivery?.codOngkir,
+        //     "cod_fee": data.delivery?.codFee,
+        //     "insurance_flag": data.delivery?.insuranceFlag,
+        //     "insurance_fee": data.delivery?.insuranceFee,
+        //     "flat_rate": data.delivery?.flatRate,
+        //     "flat_rate_with_insurance": data.delivery?.flatRateWithInsurance,
+        //     "freight_charge": data.delivery?.freightCharge,
+        //     "freight_charge_with_insurance": data.delivery?.freightChargeWithInsurance
+        //   },
+        //   "account": {
+        //     "number": data.account?.number,
+        //     "service": data.account?.service,
+        //   },
+        //   "origin": {
+        //     "code": data.origin?.code,
+        //     "desc": data.origin?.desc,
+        //     "branch": data.origin?.branch,
+        //   },
+        //   "destination": {
+        //     "code": data.destination?.code,
+        //     "desc": data.destination?.desc,
+        //   },
+        //   "goods": {
+        //     "type": data.goods?.type,
+        //     "desc": data.goods?.desc,
+        //     "amount": data.goods?.amount,
+        //     "quantity": data.goods?.quantity,
+        //     "weight": data.goods?.weight,
+        //   },
+        //   "shipper": {
+        //     "name": data.shipper?.name,
+        //     "address": data.shipper?.address,
+        //     "address1": data.shipper?.address1,
+        //     "address2": data.shipper?.address2,
+        //     "address3": data.shipper?.address3,
+        //     "city": data.shipper?.city,
+        //     "zip": data.shipper?.zip,
+        //     "region": data.shipper?.region,
+        //     "country": data.shipper?.country,
+        //     "contact": data.shipper?.contact,
+        //     "phone": data.shipper?.phone
+        //   },
+        //   "receiver": {
+        //     "name": data.receiver?.name,
+        //     "address": data.receiver?.address,
+        //     "address1": data.receiver?.address1,
+        //     "address2": data.receiver?.address2,
+        //     "address3": data.receiver?.address3,
+        //     "city": data.receiver?.city,
+        //     "zip": data.receiver?.zip,
+        //     "region": data.receiver?.region,
+        //     "country": data.receiver?.country,
+        //     "contact": data.receiver?.contact,
+        //     "phone": data.receiver?.phone,
+        //     "district": data.receiver?.district,
+        //     "sub_district": data.receiver?.subDistrict
+        //   }
         // }
-        // options: Options(method: "GET"),
-        data: data,
       );
-      // print(response.data);
-      return PostTransactionModel.fromJson(response.data);
+      print(response.data);
+      return response.data;
+      // return PostTransactionModel.fromJson(response.data);
+      // return PostTransactionModel();
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
+      print("response error: ${e.response?.data}");
       return e.error;
     }
   }

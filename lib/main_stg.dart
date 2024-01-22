@@ -6,7 +6,7 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 
 void main() {
   FlavorConfig(
-    name: "Test",
+    name: "local",
     location: BannerLocation.topEnd,
     variables: stgEnvironment,
   );

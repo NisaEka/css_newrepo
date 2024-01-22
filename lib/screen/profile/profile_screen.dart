@@ -98,6 +98,7 @@ class ProfileScreen extends StatelessWidget {
                   leading: const Icon(Icons.account_box, color: blueJNE, size: 30),
                   title: Text('Keluar'.tr, style: listTitleTextStyle.copyWith(color: blueJNE)),
                   trailing: const Icon(Icons.logout, color: redJNE, size: 25),
+                  onTap: () => controller.doLogout(),
                 ),
               ],
             ),

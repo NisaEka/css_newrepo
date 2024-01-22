@@ -1,9 +1,6 @@
 import 'dart:convert';
-
 GetAccountNumberModel getAccountNumberModelFromJson(String str) => GetAccountNumberModel.fromJson(json.decode(str));
-
 String getAccountNumberModelToJson(GetAccountNumberModel data) => json.encode(data.toJson());
-
 class GetAccountNumberModel {
   GetAccountNumberModel({
     num? code,
@@ -68,14 +65,13 @@ class AccountNumberModel {
     String? accountName,
     String? accountBranch,
     String? accountService,
-    String? accountCategory,
-    String? accountCustType,
+    dynamic accountCategory,
+    dynamic accountCustType,
     String? accountNumber,
     String? accountStatus,
-    String? accountCodFee,
+    dynamic accountCodFee,
     String? accountTransaction,
     AvailableService? availableService,
-    bool? isSelected,
   }) {
     _accountId = accountId;
     _accountName = accountName;
@@ -88,7 +84,6 @@ class AccountNumberModel {
     _accountCodFee = accountCodFee;
     _accountTransaction = accountTransaction;
     _availableService = availableService;
-    _isSelected = isSelected;
   }
 
   AccountNumberModel.fromJson(dynamic json) {
@@ -103,35 +98,32 @@ class AccountNumberModel {
     _accountCodFee = json['account_cod_fee'];
     _accountTransaction = json['account_transaction'];
     _availableService = json['available_service'] != null ? AvailableService.fromJson(json['available_service']) : null;
-    _isSelected = true;
   }
 
   String? _accountId;
   String? _accountName;
   String? _accountBranch;
   String? _accountService;
-  String? _accountCategory;
-  String? _accountCustType;
+  dynamic _accountCategory;
+  dynamic _accountCustType;
   String? _accountNumber;
   String? _accountStatus;
-  String? _accountCodFee;
+  dynamic _accountCodFee;
   String? _accountTransaction;
   AvailableService? _availableService;
-  bool? _isSelected;
 
   AccountNumberModel copyWith({
     String? accountId,
     String? accountName,
     String? accountBranch,
     String? accountService,
-    String? accountCategory,
-    String? accountCustType,
+    dynamic accountCategory,
+    dynamic accountCustType,
     String? accountNumber,
     String? accountStatus,
-    String? accountCodFee,
+    dynamic accountCodFee,
     String? accountTransaction,
     AvailableService? availableService,
-    bool? isSelected,
   }) =>
       AccountNumberModel(
         accountId: accountId ?? _accountId,
@@ -145,7 +137,6 @@ class AccountNumberModel {
         accountCodFee: accountCodFee ?? _accountCodFee,
         accountTransaction: accountTransaction ?? _accountTransaction,
         availableService: availableService ?? _availableService,
-        isSelected: isSelected ?? _isSelected,
       );
 
   String? get accountId => _accountId;
@@ -156,21 +147,19 @@ class AccountNumberModel {
 
   String? get accountService => _accountService;
 
-  String? get accountCategory => _accountCategory;
+  dynamic get accountCategory => _accountCategory;
 
-  String? get accountCustType => _accountCustType;
+  dynamic get accountCustType => _accountCustType;
 
   String? get accountNumber => _accountNumber;
 
   String? get accountStatus => _accountStatus;
 
-  String? get accountCodFee => _accountCodFee;
+  dynamic get accountCodFee => _accountCodFee;
 
   String? get accountTransaction => _accountTransaction;
 
   AvailableService? get availableService => _availableService;
-
-  bool? get isSelected => _isSelected;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -187,22 +176,19 @@ class AccountNumberModel {
     if (_availableService != null) {
       map['available_service'] = _availableService?.toJson();
     }
-    map['isSelected'] = _isSelected;
     return map;
   }
 }
 
 AvailableService availableServiceFromJson(String str) => AvailableService.fromJson(json.decode(str));
-
 String availableServiceToJson(AvailableService data) => json.encode(data.toJson());
-
 class AvailableService {
   AvailableService({
-    dynamic ss,
-    dynamic yes,
+    String? ss,
+    String? yes,
     String? reg,
-    dynamic oke,
-    dynamic jtr,
+    String? oke,
+    String? jtr,
     dynamic intl,
   }) {
     _ss = ss;
@@ -222,19 +208,19 @@ class AvailableService {
     _intl = json['intl'];
   }
 
-  dynamic _ss;
-  dynamic _yes;
+  String? _ss;
+  String? _yes;
   String? _reg;
-  dynamic _oke;
-  dynamic _jtr;
+  String? _oke;
+  String? _jtr;
   dynamic _intl;
 
   AvailableService copyWith({
-    dynamic ss,
-    dynamic yes,
+    String? ss,
+    String? yes,
     String? reg,
-    dynamic oke,
-    dynamic jtr,
+    String? oke,
+    String? jtr,
     dynamic intl,
   }) =>
       AvailableService(
@@ -246,15 +232,15 @@ class AvailableService {
         intl: intl ?? _intl,
       );
 
-  dynamic get ss => _ss;
+  String? get ss => _ss;
 
-  dynamic get yes => _yes;
+  String? get yes => _yes;
 
   String? get reg => _reg;
 
-  dynamic get oke => _oke;
+  String? get oke => _oke;
 
-  dynamic get jtr => _jtr;
+  String? get jtr => _jtr;
 
   dynamic get intl => _intl;
 

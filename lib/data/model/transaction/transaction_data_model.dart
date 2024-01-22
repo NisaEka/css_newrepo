@@ -64,25 +64,25 @@ class TransactionDataModel {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (_delivery != null) {
-      map['delivery'] = _delivery?.toJson();
+      map['"delivery"'] = _delivery?.toJson();
     }
     if (_account != null) {
-      map['account'] = _account?.toJson();
+      map['"account"'] = _account?.toJson();
     }
     if (_origin != null) {
-      map['origin'] = _origin?.toJson();
+      map['"origin"'] = _origin?.toJson();
     }
     if (_destination != null) {
-      map['destination'] = _destination?.toJson();
+      map['"destination"'] = _destination?.toJson();
     }
     if (_goods != null) {
-      map['goods'] = _goods?.toJson();
+      map['"goods"'] = _goods?.toJson();
     }
     if (_shipper != null) {
-      map['shipper'] = _shipper?.toJson();
+      map['"shipper"'] = _shipper?.toJson();
     }
     if (_receiver != null) {
-      map['receiver'] = _receiver?.toJson();
+      map['"receiver"'] = _receiver?.toJson();
     }
     return map;
   }
@@ -195,19 +195,19 @@ class Receiver {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['name'] = _name;
-    map['address'] = _address;
-    map['address1'] = _address1;
-    map['address2'] = _address2;
-    map['address3'] = _address3;
-    map['city'] = _city;
-    map['zip'] = _zip;
-    map['region'] = _region;
-    map['country'] = _country;
-    map['contact'] = _contact;
-    map['phone'] = _phone;
-    map['district'] = _district;
-    map['sub_district'] = _subDistrict;
+    map['"name"'] = '"$_name"';
+    map['"address"'] = '"$_address"';
+    map['"address1"'] = '"$_address1"';
+    map['"address2"'] = '"$_address2"';
+    map['"address3"'] = '"$_address3"';
+    map['"city"'] = '"$_city"';
+    map['"zip"'] = '"$_zip"';
+    map['"region"'] = '"$_region"';
+    map['"country"'] = '"$_country"';
+    map['"contact"'] = '"$_contact"';
+    map['"phone"'] = '"$_phone"';
+    map['"district"'] = '"$_district"';
+    map['"sub_district"'] = '"$_subDistrict"';
     return map;
   }
 
@@ -305,17 +305,17 @@ class Shipper {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['name'] = _name;
-    map['address'] = _address;
-    map['address1'] = _address1;
-    map['address2'] = _address2;
-    map['address3'] = _address3;
-    map['city'] = _city;
-    map['zip'] = _zip;
-    map['region'] = _region;
-    map['country'] = _country;
-    map['contact'] = _contact;
-    map['phone'] = _phone;
+    map['"name"'] = '"$_name"';
+    map['"address"'] = '"$_address"';
+    map['"address1"'] = '"$_address1"';
+    map['"address2"'] = '"$_address2"';
+    map['"address3"'] = '"$_address3"';
+    map['"city"'] = '"$_city"';
+    map['"zip"'] = '"$_zip"';
+    map['"region"'] = '"$_region"';
+    map['"country"'] = '"$_country"';
+    map['"contact"'] = '"$_contact"';
+    map['"phone"'] = '"$_phone"';
     return map;
   }
 
@@ -377,11 +377,11 @@ class Goods {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['type'] = _type;
-    map['desc'] = _desc;
-    map['amount'] = _amount;
-    map['quantity'] = _quantity;
-    map['weight'] = _weight;
+    map['"type"'] = '"$_type"';
+    map['"desc"'] = '"$_desc"';
+    map['"amount"'] = _amount;
+    map['"quantity"'] = _quantity;
+    map['"weight"'] = _weight;
     return map;
   }
 
@@ -415,8 +415,8 @@ class Destination {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['desc'] = _desc;
+    map['"code"'] = '"$_code"';
+    map['"desc"'] = '"$_desc"';
     return map;
   }
 
@@ -457,9 +457,9 @@ class Origin {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['desc'] = _desc;
-    map['branch'] = _branch;
+    map['"code"'] = '"$_code"';
+    map['"desc"'] = '"$_desc"';
+    map['"branch"'] = '"$_branch"';
     return map;
   }
 
@@ -493,8 +493,8 @@ class Account {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['number'] = _number;
-    map['service'] = _service;
+    map['"number"'] = '"$_number"';
+    map['"service"'] = '"$_service"';
     return map;
   }
 
@@ -612,18 +612,18 @@ class Delivery {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['service_code'] = _serviceCode;
-    map['wood_packaging'] = _woodPackaging;
-    map['special_instruction'] = _specialInstruction;
-    map['cod_flag'] = _codFlag;
-    map['cod_ongkir'] = _codOngkir;
-    map['cod_fee'] = _codFee;
-    map['insurance_flag'] = _insuranceFlag;
-    map['insurance_fee'] = _insuranceFee;
-    map['flat_rate'] = _flatRate;
-    map['flat_rate_with_insurance'] = _flatRateWithInsurance;
-    map['freight_charge'] = _freightCharge;
-    map['freight_charge_with_insurance'] = _freightChargeWithInsurance;
+    map['"service_code"'] = '"$_serviceCode"';
+    map['"wood_packaging"'] = '"$_woodPackaging"';
+    map['"special_instruction"'] = '"$_specialInstruction"';
+    map['"cod_flag"'] = '"$_codFlag"';
+    map['"cod_ongkir"'] = '"$_codOngkir"';
+    map['"cod_fee"'] = _codFee;
+    map['"insurance_flag"'] = '"$_insuranceFlag"';
+    map['"insurance_fee"'] = _insuranceFee;
+    map['"flat_rate"'] = _flatRate;
+    map['"flat_rate_with_insurance"'] = _flatRateWithInsurance;
+    map['"freight_charge"'] = _freightCharge;
+    map['"freight_charge_with_insurance"'] = _freightChargeWithInsurance;
     return map;
   }
 

@@ -1,43 +1,84 @@
 import 'dart:convert';
-
 PostTransactionModel postTransactionModelFromJson(String str) => PostTransactionModel.fromJson(json.decode(str));
-
 String postTransactionModelToJson(PostTransactionModel data) => json.encode(data.toJson());
-
 class PostTransactionModel {
   PostTransactionModel({
-    String? code,
+    num? code,
     String? message,
+    Payload? payload,
   }) {
     _code = code;
     _message = message;
+    _payload = payload;
   }
 
   PostTransactionModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
+    _payload = json['payload'] != null ? Payload.fromJson(json['payload']) : null;
   }
 
-  String? _code;
+  num? _code;
   String? _message;
+  Payload? _payload;
 
   PostTransactionModel copyWith({
-    String? code,
+    num? code,
     String? message,
+    Payload? payload,
   }) =>
       PostTransactionModel(
         code: code ?? _code,
         message: message ?? _message,
+        payload: payload ?? _payload,
       );
 
-  String? get code => _code;
+  num? get code => _code;
 
   String? get message => _message;
+
+  Payload? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['code'] = _code;
     map['message'] = _message;
+    if (_payload != null) {
+      map['payload'] = _payload?.toJson();
+    }
+    return map;
+  }
+}
+
+Payload payloadFromJson(String str) => Payload.fromJson(json.decode(str));
+
+String payloadToJson(Payload data) => json.encode(data.toJson());
+
+class Payload {
+  Payload({
+    String? awb,
+  }) {
+    _awb = awb;
+  }
+
+  Payload.fromJson(dynamic json) {
+    _awb = json['awb'];
+  }
+
+  String? _awb;
+
+  Payload copyWith({
+    String? awb,
+  }) =>
+      Payload(
+        awb: awb ?? _awb,
+      );
+
+  String? get awb => _awb;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['awb'] = _awb;
     return map;
   }
 }

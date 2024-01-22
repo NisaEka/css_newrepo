@@ -1,10 +1,11 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/dialog/success_dialog.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_controller.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
@@ -12,6 +13,7 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class InformasiKirimanScreen extends StatelessWidget {
@@ -93,7 +95,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             controller.selectedService = controller.serviceList[index];
-                            controller.hitungOngkir(controller.beratKiriman.text ?? '0', controller.selectedService?.serviceCode ?? '');
+                            controller.getOngkir();
                             controller.update();
                           },
                           child: Container(
@@ -125,7 +127,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                         Form(
                           key: controller.formKey,
                           onChanged: () {
-                            controller.hitungOngkir(controller.beratKiriman.text ?? '0', controller.selectedService?.serviceCode ?? '');
+                            controller.getOngkir();
+                            controller.hitungOngkir();
                             controller.update();
                           },
                           child: Column(
@@ -148,6 +151,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         child: Text('Dokumen'),
                                       ),
                                     ],
+                                    onChanged: (value) {
+                                      controller.jenisBarang.text = value!;
+                                      controller.update();
+                                    },
                                   ),
                                   CustomTextFormField(
                                     controller: controller.noReference,
@@ -155,6 +162,9 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     inputType: TextInputType.number,
                                     width: Get.width / 2.3,
                                     height: 46,
+                                    validator: (value) {
+                                      ValidationBuilder().min(8).build();
+                                    },
                                   ),
                                 ],
                               ),
@@ -174,14 +184,14 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       isPrefix: true,
                                     ),
                                     width: Get.width / 2,
-                                    // isRequired: true,
+                                    isRequired: controller.asuransi,
                                   ),
                                   CustomTextFormField(
                                     controller: controller.jumlahPacking,
                                     hintText: 'Jumlah Packing'.tr,
                                     inputType: TextInputType.number,
                                     width: Get.width / 2.8,
-                                    // isRequired: true,
+                                    isRequired: true,
                                   ),
                                 ],
                               ),
@@ -204,8 +214,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     checkColor: Colors.white,
                                     activeColor: redJNE,
                                     value: controller.asuransi,
-                                    onChanged: (bool? value) {
+                                    onChanged: (value) {
                                       controller.asuransi = value!;
+                                      controller.hitungOngkir();
+                                      value == false ? controller.hargaBarang.clear() : null;
                                       controller.update();
                                     },
                                   ),
@@ -235,6 +247,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       value: controller.packingKayu,
                                       onChanged: (bool? value) {
                                         controller.packingKayu = value!;
+                                        controller.intruksiKhusus.text = value == true ? "MOHON DIPACKING KAYU" : "";
                                         controller.update();
                                       },
                                     ),
@@ -255,7 +268,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     isRequired: true,
                                     suffixIcon: const SatuanFieldIcon(title: 'KG', isSuffix: true),
                                     onSubmit: (value) {
-                                      controller.hitungOngkir(controller.beratKiriman.text ?? '0', controller.selectedService?.serviceCode ?? '');
+                                      controller.getOngkir;
                                       controller.update();
                                     },
                                   ),
@@ -264,6 +277,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     value: controller.dimensi,
                                     onChanged: (value) {
                                       controller.dimensi = value;
+                                      controller.dimensiPanjang.clear();
+                                      controller.dimensiLebar.clear();
+                                      controller.dimensiTinggi.clear();
+                                      controller.beratKiriman.clear();
                                       controller.update();
                                     },
                                   )
@@ -283,6 +300,9 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       isSuffix: true,
                                     ),
                                     readOnly: !controller.dimensi,
+                                    onChanged: (value) {
+                                      controller.hitungOngkir();
+                                    },
                                   ),
                                   CustomTextFormField(
                                     controller: controller.dimensiLebar,
@@ -295,6 +315,9 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       isSuffix: true,
                                     ),
                                     readOnly: !controller.dimensi,
+                                    onChanged: (value) {
+                                      controller.hitungOngkir();
+                                    },
                                   ),
                                   CustomTextFormField(
                                     controller: controller.dimensiTinggi,
@@ -307,75 +330,94 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       isSuffix: true,
                                     ),
                                     readOnly: !controller.dimensi,
+                                    onChanged: (value) {
+                                      controller.hitungOngkir();
+                                    },
                                   ),
                                 ],
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: greyDarkColor2),
-                                ),
-                                padding: const EdgeInsets.all(10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
-                                    controller.account.accountService?.toUpperCase() == 'COD'
-                                        ? Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text('Total COD fee'),
-                                              Text('15%', style: listTitleTextStyle),
-                                            ],
-                                          )
-                                        : const SizedBox(),
-                                    controller.account.accountService?.toUpperCase() == 'COD'
-                                        ? Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text('Total COD'),
-                                              Text('Rp. 641.590', style: listTitleTextStyle),
-                                            ],
-                                          )
-                                        : const SizedBox(),
-                                    controller.codOngkir
-                                        ? Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text('Total COD Ongkir'),
-                                              Text('Rp. 641.590', style: listTitleTextStyle),
-                                            ],
-                                          )
-                                        : const SizedBox(),
-                                    controller.asuransi
-                                        ? Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text('Total Asuransi Pengiriman'),
-                                              Text('Rp. 100.000', style: listTitleTextStyle),
-                                            ],
-                                          )
-                                        : const SizedBox(),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Total Ongkos Kirim'),
-                                        Text('Rp. ${controller.totalOngkir}', style: listTitleTextStyle),
-                                      ],
+                              controller.isCalculate
+                                  ? Container(
+                                      width: Get.width,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(color: greyDarkColor2),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
+                                          Text('Menghitung...'.tr),
+                                        ],
+                                      ),
                                     )
-                                  ],
-                                ),
-                              ),
+                                  : Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(color: greyDarkColor2),
+                                      ),
+                                      padding: const EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
+                                          controller.account.accountService?.toUpperCase() == 'COD'
+                                              // &&
+                                              //     (controller.account.accountCustType?.toUpperCase() == "990" ||
+                                              //         controller.account.accountCustType?.toUpperCase() == "992")
+                                              ? Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text('COD fee'),
+                                                    Text('15%', style: listTitleTextStyle),
+                                                  ],
+                                                )
+                                              : const SizedBox(),
+                                          controller.account.accountService?.toUpperCase() == 'COD'
+                                              ? Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text('Harga COD'),
+                                                    Text('Rp. ${controller.hargacod.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                  ],
+                                                )
+                                              : const SizedBox(),
+                                          controller.codOngkir
+                                              ? Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text('COD Ongkir'),
+                                                    Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                  ],
+                                                )
+                                              : const SizedBox(),
+                                          controller.asuransi
+                                              ? Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text('Asuransi Pengiriman'),
+                                                    Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                  ],
+                                                )
+                                              : const SizedBox(),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('Ongkos Kirim'),
+                                              Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
                               CustomFilledButton(
                                 color:
                                     controller.formKey.currentState?.validate() == true && controller.selectedService != null ? blueJNE : greyColor,
                                 title: 'Buat Resi'.tr,
                                 onPressed: () {
-                                  Get.to(SucceesDialog(
-                                    message: "Resi telah dibuat",
-                                    buttonTitle: "Selanjutnya",
-                                    nextAction: () => Get.offAll(const DashboardScreen()),
-                                  ));
+                                  controller.formKey.currentState?.validate() == true && controller.selectedService != null
+                                      ? controller.saveTransaction()
+                                      : null;
                                 },
                               )
                             ],

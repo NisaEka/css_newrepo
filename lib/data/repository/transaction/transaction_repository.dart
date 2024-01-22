@@ -31,5 +31,5 @@ abstract class TransactionRepository {
 
   Future<GetTransactionFeeModel> getTransactionFee(TransactionFeeDataModel params);
 
-  Future<PostTransactionModel> postTransaction(TransactionDataModel data);
+  Future postTransaction(TransactionDataModel data);
 }

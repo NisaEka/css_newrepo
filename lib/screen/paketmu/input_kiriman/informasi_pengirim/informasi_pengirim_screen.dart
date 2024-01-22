@@ -69,6 +69,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                                 isSelected: controller.selectedAccount == e ? true : false,
                                                 onTap: () {
                                                   controller.selectedAccount = e;
+                                                  controller.codOgkir = false;
                                                   controller.getOriginList('', e.accountId.toString());
                                                   controller.update();
                                                 },
@@ -88,8 +89,6 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     controller.kotaPengirim.clear();
                                     controller.kodePos.clear();
                                     controller.alamatLengkap.clear();
-                                    controller.selectedAccount = null;
-                                    controller.isValidate = false;
                                   } else {
                                     controller.namaPengirim.text = controller.senderOrigin?.name ?? '';
                                     controller.nomorTelpon.text = controller.senderOrigin?.phone ?? '';
@@ -98,17 +97,21 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     controller.alamatLengkap.text = controller.senderOrigin?.address ?? '';
                                   }
 
+                                  controller.selectedAccount = null;
+                                  controller.isValidate = false;
                                   controller.update();
                                 },
                               ),
-                              CustomSwitch(
-                                value: controller.codOgkir,
-                                label: 'COD Ongkir'.tr,
-                                onChange: (bool? value) {
-                                  controller.codOgkir = value!;
-                                  controller.update();
-                                },
-                              ),
+                              controller.selectedAccount?.accountService == "JLC"
+                                  ? CustomSwitch(
+                                      value: controller.codOgkir,
+                                      label: 'COD Ongkir'.tr,
+                                      onChange: (bool? value) {
+                                        controller.codOgkir = value!;
+                                        controller.update();
+                                      },
+                                    )
+                                  : SizedBox(),
                               controller.dropshipper
                                   ? GestureDetector(
                                       onTap: () => Get.to(const ListDropshipperScreen()),

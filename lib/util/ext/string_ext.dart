@@ -9,6 +9,10 @@ extension StringExt on String {
     return int.parse(replaceAll(RegExp(r"\D"), ""));
   }
 
+  double toDouble() {
+    return double.parse(replaceAll(RegExp(r"\D"), ""));
+  }
+
   String toDateFormat({String targetFormat = "dd-MM-yyyy", String originFormat = "dd/MM/yyyy"}) {
     try {
       DateTime dateTimeOrigin = DateFormat(originFormat).parse(this);

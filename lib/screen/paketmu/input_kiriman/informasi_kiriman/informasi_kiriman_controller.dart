@@ -5,6 +5,8 @@ import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/service_data_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_fee_data_model.dart';
+import 'package:css_mobile/dialog/success_dialog.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,7 +41,12 @@ class InformasiKirimaController extends BaseController {
   bool asuransi = false;
   bool packingKayu = false;
   bool isLoading = false;
+  bool isCalculate = false;
   bool dimensi = false;
+  double isr = 0;
+  double berat = 0;
+  double hargacod = 0;
+  double hargacCODOngkir = 0;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<ServiceModel> serviceList = [];
@@ -53,23 +60,75 @@ class InformasiKirimaController extends BaseController {
   }
 
   int totalOngkir = 0;
-  double flatRate = 0;
-  double flatRateISR = 0;
-  double freightCharge = 0;
-  double freightChargeISR = 0;
+  num flatRate = 0;
+  num flatRateISR = 0;
+  num freightCharge = 0;
+  num freightChargeISR = 0;
 
-  void hitungOngkir(String weight, String service) async {
-    var resp = await transaction.getTransactionFee(TransactionFeeDataModel(
-      destinationCode: destination.destinationCode,
-      originCode: origin.code,
-      serviceCode: service,
-      weight: int.parse(weight),
-      custNo: account.accountNumber,
-    ));
-    var fee = resp.payload;
-    print(fee?.flatRate);
-    // totalOngkir = int.parse(fee?.flatRate ?? fee?.freightCharge ?? '99');
-    totalOngkir = totalOngkir + 10;
+  void hitungOngkir() {
+    if (dimensi) {
+      if (selectedService?.serviceCode == "JTR23" ||
+          selectedService?.serviceCode == "JTR<130" ||
+          selectedService?.serviceCode == "JTR250" ||
+          selectedService?.serviceCode == "JTR>250") {
+        berat = (dimensiPanjang.text.toDouble() * dimensiLebar.text.toDouble() * dimensiTinggi.text.toDouble()) / 5000;
+      } else {
+        berat = (dimensiPanjang.text.toDouble() * dimensiLebar.text.toDouble() * dimensiTinggi.text.toDouble()) / 6000;
+      }
+      beratKiriman.text = berat.toString();
+    }
+
+    if (asuransi) {
+      isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.toInt())) + 5000;
+      flatRateISR = flatRate + isr;
+    }
+    hargacod = ((2.5 / 100) * ((hargaBarang.text == '' ? 0 : hargaBarang.text.toInt()) + freightCharge)) +
+        (hargaBarang.text == '' ? 0 : hargaBarang.text.toInt()) +
+        freightCharge +
+        (asuransi ? isr : 0);
+    hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1100;
+    update();
+  }
+
+  Future<void> getOngkir() async {
+    isCalculate = true;
+    try {
+      await transaction
+          .getTransactionFee(
+        TransactionFeeDataModel(
+          destinationCode: destination.destinationCode,
+          originCode: origin.code,
+          serviceCode: selectedService?.serviceCode,
+          weight: int.parse(beratKiriman.text),
+          custNo: account.accountNumber,
+        ),
+      )
+          .then((value) {
+        flatRate = value.payload?.flatRate?.toInt() ?? 0;
+        freightCharge = value.payload?.freightCharge?.toInt() ?? 0;
+        hitungOngkir();
+      });
+    } catch (e) {
+      e.printError();
+      var message;
+      if (selectedService == null) {
+        message = "Service harus diisi";
+        Get.showSnackbar(
+          GetSnackBar(
+            message: message,
+            isDismissible: true,
+            margin: EdgeInsets.only(bottom: 0),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.red,
+            snackPosition: SnackPosition.BOTTOM,
+            snackStyle: SnackStyle.FLOATING,
+            animationDuration: Duration(milliseconds: 500),
+          ),
+        );
+      }
+    }
+
+    isCalculate = false;
     update();
   }
 
@@ -106,7 +165,7 @@ class InformasiKirimaController extends BaseController {
               codFlag: account.accountService == "COD" ? "Y" : "N",
               codOngkir: codOngkir ? "Y" : "N",
               insuranceFlag: asuransi ? "Y" : "N",
-              insuranceFee: hargaAsuransi.text.toInt(),
+              insuranceFee: isr,
               flatRate: flatRate,
               flatRateWithInsurance: flatRateISR,
               freightCharge: freightCharge,
@@ -127,9 +186,16 @@ class InformasiKirimaController extends BaseController {
             shipper: shipper,
             receiver: receiver,
           ))
-          .then((value) => print(value.message));
-    } catch (e) {
+          .then(
+            (_) => Get.to(SucceesDialog(
+              message: "Resi telah dibuat",
+              buttonTitle: "Selanjutnya",
+              nextAction: () => Get.offAll(const DashboardScreen()),
+            )),
+          );
+    } catch (e, i) {
       e.printError();
+      i.printError();
     }
   }
 }
