@@ -9,6 +9,7 @@ void main() {
     name: "local",
     location: BannerLocation.topEnd,
     variables: stgEnvironment,
+    color: Colors.red
   );
 
   WidgetsFlutterBinding.ensureInitialized();

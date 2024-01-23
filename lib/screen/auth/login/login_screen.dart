@@ -6,6 +6,7 @@ import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
@@ -21,103 +22,111 @@ class LoginScreen extends StatelessWidget {
         init: LoginController(),
         builder: (controller) {
           return Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const LogoHeader(),
-                  // CustomFilledButton(color: Colors.blue, title: "en", onPressed: () => Get.updateLocale(Locale("en", "US")),),
-                  // SizedBox(height: 20,),
-                  // CustomFill edButton(color: Colors.blue, title: "id", onPressed: () => Get.updateLocale(Locale("id", "ID")),),
-                  Form(
-                    key: controller.formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 40, right: 40, top: 30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                              child: Text(
-                            'Masuk ke akun anda'.tr,
-                            style: listTitleTextStyle,
-                          )),
-                          const SizedBox(height: 25),
-                          CustomTextFormField(
-                            controller: controller.emailTextField,
-                            hintText: "Alamat email / Nama pengguna".tr,
-                            prefixIcon: const Icon(Icons.person),
-                            isRequired: true,
-                            onSubmit: (_) {
-                              FocusScope.of(context).nextFocus();
-                            },
-                            validator: ValidationBuilder().email().minLength(10).build(),
-                          ),
-                          CustomTextFormField(
-                            controller: controller.passwordTextField,
-                            hintText: "Kata Sandi".tr,
+            body: Stack (
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    // mainAxisSize: MainAxisSize.max,
+                    children: [
+                      const LogoHeader(),
+                      // CustomFilledButton(color: Colors.blue, title: "en", onPressed: () => Get.updateLocale(Locale("en", "US")),),
+                      // SizedBox(height: 20,),
+                      // CustomFill edButton(color: Colors.blue, title: "id", onPressed: () => Get.updateLocale(Locale("id", "ID")),),
+                      Form(
+                        key: controller.formKey,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 40, right: 40, top: 30),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Center(
+                                  child: Text(
+                                'Masuk ke akun anda'.tr,
+                                style: listTitleTextStyle,
+                              )),
+                              const SizedBox(height: 25),
+                              CustomTextFormField(
+                                controller: controller.emailTextField,
+                                hintText: "Alamat email / Nama pengguna".tr,
+                                prefixIcon: const Icon(Icons.person),
+                                isRequired: true,
+                                onSubmit: (_) {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                                validator: ValidationBuilder().email().minLength(10).build(),
+                              ),
+                              CustomTextFormField(
+                                controller: controller.passwordTextField,
+                                hintText: "Kata Sandi".tr,
 
-                            // focusNode: controller.passwordField,
-                            prefixIcon: const Icon(Icons.lock),
-                            isRequired: true,
-                            validator: ValidationBuilder().password().build(),
-                            isObscure: controller.isObscurePasswordLogin,
-                            multiLine: false,
-                            suffixIcon: IconButton(
-                              icon: controller.showIcon,
-                              onPressed: () {
-                                controller.isObscurePasswordLogin
-                                    ? controller.isObscurePasswordLogin = false
-                                    : controller.isObscurePasswordLogin = true;
-                                controller.isObscurePasswordLogin != false
-                                    ? controller.showIcon = const Icon(
-                                        Icons.visibility,
-                                        color: greyDarkColor1,
-                                      )
-                                    : controller.showIcon = const Icon(
-                                        Icons.visibility_off,
-                                        color: Colors.black,
-                                      );
-                                controller.update();
-                              },
-                            ),
+                                // focusNode: controller.passwordField,
+                                prefixIcon: const Icon(Icons.lock),
+                                isRequired: true,
+                                validator: ValidationBuilder().password().build(),
+                                isObscure: controller.isObscurePasswordLogin,
+                                multiLine: false,
+                                suffixIcon: IconButton(
+                                  icon: controller.showIcon,
+                                  onPressed: () {
+                                    controller.isObscurePasswordLogin
+                                        ? controller.isObscurePasswordLogin = false
+                                        : controller.isObscurePasswordLogin = true;
+                                    controller.isObscurePasswordLogin != false
+                                        ? controller.showIcon = const Icon(
+                                            Icons.visibility,
+                                            color: greyDarkColor1,
+                                          )
+                                        : controller.showIcon = const Icon(
+                                            Icons.visibility_off,
+                                            color: Colors.black,
+                                          );
+                                    controller.update();
+                                  },
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () => Get.to(const ForgotPasswordOTPScreen()),
+                                  child: Text("Lupa kata sandi?".tr,
+                                      style: listTitleTextStyle.copyWith(color: infoColor)),
+                                ),
+                              ),
+                              CustomFilledButton(
+                                color: blueJNE,
+                                radius: 20,
+                                title: 'Masuk'.tr,
+                                onPressed: () async {
+                                  if (controller.formKey.currentState?.validate() == true) controller.doLogin();
+
+                                  // Get.to(const DashboardScreen());
+                                },
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                child: Text("Belum punya akun?".tr, style: listTitleTextStyle),
+                              ),
+                              CustomFilledButton(
+                                color: Colors.transparent,
+                                borderColor: blueJNE,
+                                fontColor: blueJNE,
+                                radius: 20,
+                                title: "Daftar".tr,
+                                onPressed: () => Get.to(const SignUpScreen())?.then((_) => controller.formKey.currentState?.reset()),
+                              ),
+                              const SizedBox(height: 10),
+                            ],
                           ),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () => Get.to(const ForgotPasswordOTPScreen()),
-                              child: Text("Lupa kata sandi?".tr,
-                                  style: listTitleTextStyle.copyWith(color: infoColor)),
-                            ),
-                          ),
-                          CustomFilledButton(
-                            color: blueJNE,
-                            radius: 20,
-                            title: 'Masuk'.tr,
-                            onPressed: () async {
-                              if (controller.formKey.currentState?.validate() == true) controller.doLogin();
-                              // Get.to(const DashboardScreen());
-                            },
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            child: Text("Belum punya akun?".tr, style: listTitleTextStyle),
-                          ),
-                          CustomFilledButton(
-                            color: Colors.transparent,
-                            borderColor: blueJNE,
-                            fontColor: blueJNE,
-                            radius: 20,
-                            title: "Daftar".tr,
-                            onPressed: () => Get.to(const SignUpScreen())?.then((_) => controller.formKey.currentState?.reset()),
-                          ),
-                          const SizedBox(height: 10),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                controller.isLoading==true
+                    ? const LoadingDialog()
+                    : Container(),
+              ],
             ),
             bottomNavigationBar: const VersionApp(),
             // bottomNavigationBar: SizedBox(

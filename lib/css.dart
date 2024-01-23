@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
@@ -105,11 +105,11 @@ class App extends StatelessWidget {
                   return 0; // Defer to the widget's default.
                 },
               ),
-              textStyle: MaterialStateProperty.all<TextStyle>(
-                  const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
+              textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
         ),
       ),
-      home: const LoginScreen(),
+      // home: const LoginScreen(),
+      home: const DashboardScreen(),
     );
   }
 }

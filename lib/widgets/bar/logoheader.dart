@@ -11,7 +11,7 @@ class LogoHeader extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: Get.height / 4,
+          height: 205,
           alignment: Alignment.topLeft,
           child: SvgPicture.asset(ImageConstant.vector2),
         ),

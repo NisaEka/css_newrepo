@@ -1,15 +1,14 @@
-import 'dart:convert';
 import 'dart:io';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 
 class LoginController extends BaseController {
   final formKey = GlobalKey<FormState>();
@@ -24,7 +23,6 @@ class LoginController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    cekToken();
   }
 
   @override
@@ -58,7 +56,7 @@ class LoginController extends BaseController {
             value.payload?.token ?? '',
             value.payload?.allowedMenu ?? AllowedMenu(),
           );
-
+          Get.offAll(const DashboardScreen());
           // Get.showSnackbar(
           //   GetSnackBar(
           //     icon: const Icon(
@@ -85,7 +83,7 @@ class LoginController extends BaseController {
             ),
           );
         }
-      }).then((value) => Get.offAll(DashboardScreen()));
+      });
     } catch (e) {
       e.printError();
       // Get.showSnackbar(

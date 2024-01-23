@@ -8,6 +8,7 @@ class MenuItem extends StatelessWidget {
   final String? menuImg;
   final Icon? menuIcon;
   final VoidCallback? onTap;
+  final bool isActive;
 
   const MenuItem({
     super.key,
@@ -15,6 +16,7 @@ class MenuItem extends StatelessWidget {
     this.menuImg,
     this.onTap,
     this.menuIcon,
+    this.isActive = true,
   });
 
   @override
@@ -29,11 +31,15 @@ class MenuItem extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: blueJNE,
+                color: isActive ? blueJNE : blueJNE.withOpacity(0.8),
                 borderRadius: BorderRadius.circular(10),
               ),
               // child: Icon(Icons.more_horiz),
-              child: menuIcon ?? Image.asset(menuImg ?? '', height: Get.width / 9),
+              child: menuIcon ??
+                  Image.asset(
+                    menuImg ?? '',
+                    height: Get.width / 9,
+                  ),
             ),
             SizedBox(
               // width: 65,

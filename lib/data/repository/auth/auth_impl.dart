@@ -3,6 +3,7 @@ import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 
@@ -19,8 +20,18 @@ class AuthRepositoryImpl extends AuthRepository {
       );
       return LoginModel.fromJson(response.data);
     } on DioError catch (e) {
-      // debugPrint("error login : ${LoginModel.fromJson(e?.response?.data)}");
-      //print("response error: ${e.response?.data}");
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(
+            Icons.info,
+            color: Colors.white,
+          ),
+          message: e.message,
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: Colors.red,
+        ),
+      );
       return e.response?.data!;
     }
   }

@@ -31,6 +31,7 @@ class _VersionAppState extends State<VersionApp> {
     return Container(
       margin: EdgeInsets.only(top: 50),
       height: 110,
+      color: Colors.transparent,
       child: Column(
         children: [
           Image.asset(

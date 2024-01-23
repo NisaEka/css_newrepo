@@ -94,12 +94,19 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         )
                         .toList()),
-                ListTile(
-                  leading: const Icon(Icons.account_box, color: blueJNE, size: 30),
-                  title: Text('Keluar'.tr, style: listTitleTextStyle.copyWith(color: blueJNE)),
-                  trailing: const Icon(Icons.logout, color: redJNE, size: 25),
-                  onTap: () => controller.doLogout(),
-                ),
+                controller.isLogin() == true
+                    ? ListTile(
+                        leading: const Icon(Icons.account_box, color: blueJNE, size: 30),
+                        title: Text('Keluar'.tr, style: listTitleTextStyle.copyWith(color: blueJNE)),
+                        trailing: const Icon(Icons.logout, color: redJNE, size: 25),
+                        onTap: () => controller.doLogout(),
+                      )
+                    : ListTile(
+                        leading: const Icon(Icons.account_box, color: blueJNE, size: 30),
+                        title: Text('Masuk'.tr, style: listTitleTextStyle.copyWith(color: blueJNE)),
+                        trailing: const Icon(Icons.login, color: redJNE, size: 25),
+                        onTap: () => controller.doLogout(),
+                      )
               ],
             ),
             bottomNavigationBar: const BottomBar(

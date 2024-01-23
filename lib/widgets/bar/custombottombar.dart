@@ -1,7 +1,10 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
+import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +20,12 @@ class BottomBar extends StatelessWidget {
     this.label,
     this.onTap,
   }) : super(key: key);
+
+  Future<bool> isLogin() async {
+    String token = await StorageCore().readToken() ?? '';
+    bool login = token != null;
+    return login;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +76,14 @@ class BottomBar extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 40.0),
           child: FloatingActionButton(
             shape: const CircleBorder(),
-            backgroundColor: redJNE,
+            backgroundColor: isLogin() == true ? redJNE : errorLightColor2,
             // onPressed: () => Get.to(const InputKirimanScreen()),
-            onPressed: () => Get.to(const InformasiPengirimScreen()),
+            onPressed: () => isLogin() == true
+                ? Get.to(const InformasiPengirimScreen())
+                : showDialog(
+                    context: context,
+                    builder: (context) => const LoginAlertDialog(),
+                  ),
             child: const Icon(
               Icons.add,
               color: whiteColor,
