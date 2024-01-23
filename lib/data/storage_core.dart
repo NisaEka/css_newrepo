@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:ui';
+
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -8,6 +8,7 @@ class StorageCore {
   static const String localeApp = "locale";
   static const String token = 'token';
   static const String allowedMenu = 'allowed_menu';
+  static const String favoriteMenu = 'favorite_menu';
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);
@@ -15,6 +16,10 @@ class StorageCore {
 
   Future<String> readString(String key) async {
     return await storage.read(key: key) ?? "";
+  }
+
+  void deleteString(String key) async {
+    await storage.delete(key: key);
   }
 
   Future<void> saveToken(String token, AllowedMenu allowedMenu) async {

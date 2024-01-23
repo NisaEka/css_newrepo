@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_carousel.dart';
@@ -9,11 +9,8 @@ import 'package:css_mobile/widgets/dashboard/dashboard_marquee.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_menu2.dart';
 import 'package:css_mobile/widgets/dashboard/jlcpoint_widget.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:marquee/marquee.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -76,7 +73,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 children: [
                                   CustomLabelText(
                                     title: 'Selamat Datang'.tr,
-                                    value: 'Joni',
+                                    value: controller.isLogin ? 'Joni' : '',
                                     fontColor: whiteColor,
                                   ),
                                   const JLCPointWidget()

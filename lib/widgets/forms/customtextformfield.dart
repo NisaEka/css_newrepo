@@ -80,7 +80,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
         Container(
           width: width ?? null,
-          height: height != null && multiLine == false ? height ?? 55 : null,
+          height: height != null && multiLine == false ? height ?? 39 : null,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: TextFormField(
             minLines: multiLine ? 3 : 1,

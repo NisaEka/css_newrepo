@@ -51,6 +51,7 @@ class ProfileController extends BaseController {
 
   void doLogout() async {
     storage.deleteToken();
+
     Get.offAll(const LoginScreen());
   }
 }
