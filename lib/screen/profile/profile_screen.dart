@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/profile/profile_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
@@ -94,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         )
                         .toList()),
-                controller.isLogin() == true
+                controller.isLogin
                     ? ListTile(
                         leading: const Icon(Icons.account_box, color: blueJNE, size: 30),
                         title: Text('Keluar'.tr, style: listTitleTextStyle.copyWith(color: blueJNE)),
@@ -102,15 +103,16 @@ class ProfileScreen extends StatelessWidget {
                         onTap: () => controller.doLogout(),
                       )
                     : ListTile(
-                        leading: const Icon(Icons.account_box, color: blueJNE, size: 30),
+                  leading: const Icon(Icons.account_box, color: blueJNE, size: 30),
                         title: Text('Masuk'.tr, style: listTitleTextStyle.copyWith(color: blueJNE)),
                         trailing: const Icon(Icons.login, color: redJNE, size: 25),
-                        onTap: () => controller.doLogout(),
+                        onTap: () => Get.to(const LoginScreen()),
                       )
               ],
             ),
-            bottomNavigationBar: const BottomBar(
+            bottomNavigationBar: BottomBar(
               menu: 1,
+              isLogin: controller.isLogin,
             ),
           );
         });

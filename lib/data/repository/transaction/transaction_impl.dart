@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
@@ -6,7 +7,6 @@ import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
-import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/service_data_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_fee_data_model.dart';
@@ -239,6 +239,22 @@ class TransactionRepositoryImpl extends TransactionRepository {
       // return PostTransactionModel();
     } on DioError catch (e) {
       print("response error: ${e.response?.data}");
+      return e.error;
+    }
+  }
+
+  @override
+  Future<GetCodFeeModel> getCODFee(String accountId) async {
+    try {
+      Response response = await network.dio.get(
+        "/account/cod/fee",
+        queryParameters: {
+          'account_id': accountId,
+        },
+      );
+      return GetCodFeeModel.fromJson(response.data);
+    } on DioError catch (e) {
+      //print("response error: ${e.response?.data}");
       return e.error;
     }
   }

@@ -35,6 +35,7 @@ class LoginScreen extends StatelessWidget {
                       // CustomFill edButton(color: Colors.blue, title: "id", onPressed: () => Get.updateLocale(Locale("id", "ID")),),
                       Form(
                         key: controller.formKey,
+                        autovalidateMode: AutovalidateMode.always,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 40, right: 40, top: 30),
                           child: Column(
@@ -51,9 +52,8 @@ class LoginScreen extends StatelessWidget {
                                 hintText: "Alamat email / Nama pengguna".tr,
                                 prefixIcon: const Icon(Icons.person),
                                 isRequired: true,
-                                onSubmit: (_) {
-                                  FocusScope.of(context).nextFocus();
-                                },
+                                focusNode: controller.emailFocus,
+                                onSubmit: (_) {},
                                 validator: ValidationBuilder().email().minLength(10).build(),
                               ),
                               CustomTextFormField(
@@ -66,6 +66,7 @@ class LoginScreen extends StatelessWidget {
                                 validator: ValidationBuilder().password().build(),
                                 isObscure: controller.isObscurePasswordLogin,
                                 multiLine: false,
+                                focusNode: controller.passFocus,
                                 suffixIcon: IconButton(
                                   icon: controller.showIcon,
                                   onPressed: () {
@@ -95,7 +96,6 @@ class LoginScreen extends StatelessWidget {
                               ),
                               CustomFilledButton(
                                 color: blueJNE,
-                                radius: 20,
                                 title: 'Masuk'.tr,
                                 onPressed: () async {
                                   if (controller.formKey.currentState?.validate() == true) controller.doLogin();
@@ -103,15 +103,24 @@ class LoginScreen extends StatelessWidget {
                                   // Get.to(const DashboardScreen());
                                 },
                               ),
+                              // CustomFilledButton(
+                              //   color: Colors.transparent,
+                              //   borderColor: blueJNE,
+                              //   fontColor: blueJNE,
+                              //   title: 'Masuk Tanpa Login'.tr,
+                              //   onPressed: () async {
+                              //     Get.offAll(const DashboardScreen());
+                              //   },
+                              // ),
                               Container(
                                 alignment: Alignment.center,
                                 child: Text("Belum punya akun?".tr, style: listTitleTextStyle),
                               ),
                               CustomFilledButton(
+                                // color: blueJNE,
                                 color: Colors.transparent,
                                 borderColor: blueJNE,
                                 fontColor: blueJNE,
-                                radius: 20,
                                 title: "Daftar".tr,
                                 onPressed: () => Get.to(const SignUpScreen())?.then((_) => controller.formKey.currentState?.reset()),
                               ),

@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
@@ -32,4 +33,6 @@ abstract class TransactionRepository {
   Future<GetTransactionFeeModel> getTransactionFee(TransactionFeeDataModel params);
 
   Future postTransaction(TransactionDataModel data);
+
+  Future<GetCodFeeModel> getCODFee(String accountID);
 }

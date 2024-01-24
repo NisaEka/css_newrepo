@@ -19,7 +19,7 @@ class SatuanFieldIcon extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       width: 30,
-      height: 54,
+      height: 39,
       margin: EdgeInsets.only(right: isPrefix! ? 10 : 0, left: isSuffix! ? 5 : 0),
       decoration: BoxDecoration(
         color: blueJNE,

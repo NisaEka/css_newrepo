@@ -14,23 +14,45 @@ class LoginController extends BaseController {
   final formKey = GlobalKey<FormState>();
   final emailTextField = TextEditingController();
   final passwordTextField = TextEditingController();
-  final passwordField = FocusNode();
+  final emailFocus = FocusNode();
+  final passFocus = FocusNode();
+  final emailFieldKey = GlobalKey<FormFieldState>();
+  final passFieldKey = GlobalKey<FormFieldState>();
 
   bool isObscurePasswordLogin = true;
   bool isLoading = false;
   Locale? lang;
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  DateTime? currentBackPressTime;
 
   @override
   void onClose() {
     super.onClose();
     emailTextField.dispose();
     passwordTextField.dispose();
+    emailFocus.dispose();
+    passFocus.dispose();
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailTextField.dispose();
+    passwordTextField.dispose();
+    emailFocus.dispose();
+    passFocus.dispose();
+  }
+
+  // Future<bool> onWillPop() {
+  //   DateTime now = DateTime.now();
+  //   if (currentBackPressTime == null || now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+  //     currentBackPressTime = now;
+  //     Get.showSnackbar(GetSnackBar(
+  //       message: exit_warning,
+  //     ));
+  //     return Future.value(false);
+  //   }
+  //   return Future.value(true);
+  // }
 
   Widget showIcon = const Icon(
     Icons.remove_red_eye,

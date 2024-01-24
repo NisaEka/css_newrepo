@@ -26,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
   final double? height;
   final FocusNode? focusNode;
   final bool? autofocus;
+  final EdgeInsets? contentPadding;
 
   CustomTextFormField(
       {super.key,
@@ -49,7 +50,7 @@ class CustomTextFormField extends StatelessWidget {
       this.height,
       this.onSubmit,
       this.focusNode,
-      this.autofocus}) {
+      this.autofocus, this.contentPadding}) {
     if (isRequired && !readOnly) {
       validator ??= ValidationBuilder().required().build();
     }
@@ -103,23 +104,21 @@ class CustomTextFormField extends StatelessWidget {
                   color: Colors.black,
                   // fontWeight: FontWeight.w600,
                 ),
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
-                fillColor:
-                    backgroundColor ?? (onTap != null || !readOnly ? whiteColor : neutralColor),
+                label: label == null ? Text(hintText ?? '') : const SizedBox(),
+                fillColor: backgroundColor ?? (onTap != null || !readOnly ? whiteColor : neutralColor),
                 //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
                 suffixIcon: suffixIcon,
                 prefixIcon: prefixIcon,
                 prefixIconColor: greyDarkColor1,
                 suffixIconColor: greyDarkColor1,
-                contentPadding: EdgeInsets.only(
-                    top: 16, bottom: 16, left: prefixIcon != null ? 70 : 10, right: 10),
+                contentPadding: contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                 hintText: hintText ?? label,
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                        color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor,
-                        width: readOnly ? 1 : 2,
-                        style: BorderStyle.solid)),
+                        color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor, width: readOnly ? 1 : 2, style: BorderStyle.solid)),
                 hintStyle: hintTextStyle),
           ),
         ),

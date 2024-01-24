@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardCarousel extends StatelessWidget {
+  final bool isLogin;
   final List<Widget> bannerList;
   var bannerIndex;
 
@@ -11,12 +12,13 @@ class DashboardCarousel extends StatelessWidget {
     super.key,
     required this.bannerList,
     this.bannerIndex,
+    required this.isLogin,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 15, right: 15, top: 150),
+      margin: EdgeInsets.only(left: 15, right: 15, top: isLogin ? 150 : 110),
       height: 100,
       width: Get.size.width,
       alignment: Alignment.center,

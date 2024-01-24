@@ -36,7 +36,7 @@ class _VersionAppState extends State<VersionApp> {
         children: [
           Image.asset(
             ImageConstant.logoJNE,
-            height: 56,
+            height: 34,
           ),
           Text('ver $version')
         ],

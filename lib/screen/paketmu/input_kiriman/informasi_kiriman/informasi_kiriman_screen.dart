@@ -2,10 +2,11 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_controller.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
@@ -13,6 +14,7 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -127,8 +129,6 @@ class InformasiKirimanScreen extends StatelessWidget {
                         Form(
                           key: controller.formKey,
                           onChanged: () {
-                            controller.getOngkir();
-                            controller.hitungOngkir();
                             controller.update();
                           },
                           child: Column(
@@ -173,18 +173,24 @@ class InformasiKirimanScreen extends StatelessWidget {
                                 hintText: 'Nama Barang'.tr,
                                 isRequired: true,
                               ),
+
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   CustomTextFormField(
+                                    key: controller.hargaCODkey,
                                     controller: controller.hargaBarang,
                                     hintText: 'Harga Barang'.tr,
                                     prefixIcon: const SatuanFieldIcon(
                                       title: 'Rp',
                                       isPrefix: true,
                                     ),
+                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly, ThousandsSeparatorInputFormatter()],
+                                    inputType: TextInputType.number,
+                                    contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 40, right: 10),
                                     width: Get.width / 2,
                                     isRequired: controller.asuransi,
+                                    onChanged: (value) => controller.hitungOngkir(),
                                   ),
                                   CustomTextFormField(
                                     controller: controller.jumlahPacking,
@@ -207,7 +213,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     color: redJNE,
                                   ),
                                   title: Text(
-                                    'Gunakan Asuransi Pengiriman ( Rp. 100.000 )',
+                                    'Gunakan Asuransi Pengiriman \n( Rp. ${controller.isr.toInt().toCurrency()} )',
                                     style: sublistTitleTextStyle,
                                   ),
                                   trailing: Checkbox(
@@ -218,11 +224,13 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       controller.asuransi = value!;
                                       controller.hitungOngkir();
                                       value == false ? controller.hargaBarang.clear() : null;
+                                      controller.hargaCODkey.currentState?.validate();
                                       controller.update();
                                     },
                                   ),
                                 ),
                               ),
+
                               CustomTextFormField(
                                 controller: controller.intruksiKhusus,
                                 hintText: 'Instruksi Khusus (Opsional)'.tr,
@@ -267,8 +275,9 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     width: Get.width / 2.5,
                                     isRequired: true,
                                     suffixIcon: const SatuanFieldIcon(title: 'KG', isSuffix: true),
-                                    onSubmit: (value) {
-                                      controller.getOngkir;
+                                    onChanged: (value) {
+                                      controller.berat = value.toDouble();
+                                      controller.getOngkir();
                                       controller.update();
                                     },
                                   ),
@@ -280,8 +289,9 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       controller.dimensiPanjang.clear();
                                       controller.dimensiLebar.clear();
                                       controller.dimensiTinggi.clear();
-                                      controller.beratKiriman.clear();
+                                      controller.beratKiriman.text = '0';
                                       controller.update();
+                                      controller.getOngkir();
                                     },
                                   )
                                 ],
@@ -301,7 +311,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     ),
                                     readOnly: !controller.dimensi,
                                     onChanged: (value) {
-                                      controller.hitungOngkir();
+                                      controller.hitungBerat();
                                     },
                                   ),
                                   CustomTextFormField(
@@ -316,7 +326,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     ),
                                     readOnly: !controller.dimensi,
                                     onChanged: (value) {
-                                      controller.hitungOngkir();
+                                      controller.hitungBerat();
                                     },
                                   ),
                                   CustomTextFormField(
@@ -331,7 +341,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     ),
                                     readOnly: !controller.dimensi,
                                     onChanged: (value) {
-                                      controller.hitungOngkir();
+                                      controller.hitungBerat();
                                     },
                                   ),
                                 ],
@@ -369,7 +379,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text('COD fee'),
-                                                    Text('15%', style: listTitleTextStyle),
+                                                    Text('${controller.codfee * 100}%'.replaceAll('.', ','), style: listTitleTextStyle),
                                                   ],
                                                 )
                                               : const SizedBox(),
@@ -396,7 +406,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text('Asuransi Pengiriman'),
-                                                    Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                    Text('Rp. ${controller.isr.toInt().toCurrency()}', style: listTitleTextStyle),
                                                   ],
                                                 )
                                               : const SizedBox(),
@@ -404,7 +414,14 @@ class InformasiKirimanScreen extends StatelessWidget {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text('Ongkos Kirim'),
-                                              Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
+                                              Text('Rp. ${controller.totalOngkir.toInt().toCurrency()}', style: listTitleTextStyle),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('Total Ongkos Kirim'),
+                                              Text('Rp. ${(controller.totalOngkir + controller.isr).toInt().toCurrency()}', style: listTitleTextStyle),
                                             ],
                                           )
                                         ],

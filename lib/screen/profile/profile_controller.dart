@@ -3,9 +3,11 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/profile/profil_list_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends BaseController {
+  bool isLogin = false;
   List<AccountNumberModel> accountList = [];
 
   @override
@@ -15,15 +17,15 @@ class ProfileController extends BaseController {
   }
 
   Future<void> initData() async {
-    try {} catch (e) {
+    try {
+      String? token = await storage.readToken();
+      debugPrint("token : $token");
+      isLogin = token != null;
+    } catch (e) {
       e.printError();
     }
-  }
 
-  Future<bool> isLogin() async {
-    String token = await storage.readToken() ?? '';
-    bool login = token != null;
-    return login;
+    update();
   }
 
   List<ProfilListModel> profilList = [

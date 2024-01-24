@@ -9,13 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardMenu2 extends StatelessWidget {
-  const DashboardMenu2({super.key});
-
-  Future<bool> isLogin() async {
-    String token = await StorageCore().readToken() ?? '';
-    bool login = token != null;
-    return login;
-  }
+  final bool isLogin;
+  const DashboardMenu2({super.key,required this.isLogin});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +24,8 @@ class DashboardMenu2 extends StatelessWidget {
             MenuItem(
               menuTitle: 'Input Kirimanmu'.tr,
               menuImg: ImageConstant.paketmuIcon,
-              isActive: isLogin() == true,
-              onTap: () => isLogin() == true
+              isActive: isLogin,
+              onTap: () => isLogin
                   ? Get.to(const InformasiPengirimScreen())
                   : showDialog(
                       context: context,

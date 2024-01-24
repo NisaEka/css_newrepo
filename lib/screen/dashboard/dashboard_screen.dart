@@ -57,7 +57,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Stack(
                       children: [
                         Container(
-                          height: 160,
+                          height: controller.isLogin ? 160 : 120,
                           padding: const EdgeInsets.all(20),
                           decoration: const BoxDecoration(
                             color: blueJNE,
@@ -68,17 +68,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           child: Column(
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  CustomLabelText(
-                                    title: 'Selamat Datang'.tr,
-                                    value: controller.isLogin ? 'Joni' : '',
-                                    fontColor: whiteColor,
-                                  ),
-                                  const JLCPointWidget()
-                                ],
-                              ),
+                              controller.isLogin
+                                  ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CustomLabelText(
+                                          title: 'Selamat Datang'.tr,
+                                          value: 'Joni',
+                                          fontColor: whiteColor,
+                                        ),
+                                        const JLCPointWidget()
+                                      ],
+                                    )
+                                  : const SizedBox(),
                               const SizedBox(height: 18),
                               TextField(
                                 decoration: InputDecoration(
@@ -95,13 +97,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ],
                           ),
                         ),
-                        DashboardCarousel(bannerList: controller.bannerList),
+                        DashboardCarousel(
+                          isLogin: controller.isLogin,
+                          bannerList: controller.bannerList,
+                        ),
                       ],
                     ),
                     const DashboardMarquee(
                       marqueeText: 'Data diperbaharui setiap jam 06 : 45 WIB',
                     ),
-                    const DashboardMenu2()
+                    DashboardMenu2(
+                      isLogin: controller.isLogin,
+                    )
                   ],
                 ),
               ),
@@ -109,6 +116,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           bottomNavigationBar: BottomBar(
             menu: 0,
+            isLogin: controller.isLogin,
             onTap: (index) {
               controller.selectedIndex.value = index;
               controller.update();

@@ -1,6 +1,4 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/storage_core.dart';
-import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
@@ -13,19 +11,15 @@ class BottomBar extends StatelessWidget {
   final int menu;
   final String? label;
   final void Function(int)? onTap;
+  final bool isLogin;
 
   const BottomBar({
     Key? key,
     required this.menu,
     this.label,
     this.onTap,
+    required this.isLogin,
   }) : super(key: key);
-
-  Future<bool> isLogin() async {
-    String token = await StorageCore().readToken() ?? '';
-    bool login = token != null;
-    return login;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +70,9 @@ class BottomBar extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 40.0),
           child: FloatingActionButton(
             shape: const CircleBorder(),
-            backgroundColor: isLogin() == true ? redJNE : errorLightColor2,
+            backgroundColor: isLogin ? redJNE : errorLightColor2,
             // onPressed: () => Get.to(const InputKirimanScreen()),
-            onPressed: () => isLogin() == true
+            onPressed: () => isLogin
                 ? Get.to(const InformasiPengirimScreen())
                 : showDialog(
                     context: context,

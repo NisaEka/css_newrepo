@@ -21,6 +21,7 @@ class InformasiKirimaController extends BaseController {
   DestinationModel destination = Get.arguments['destination'];
 
   final formKey = GlobalKey<FormState>();
+  final hargaCODkey = GlobalKey<FormFieldState>();
   final service = TextEditingController();
   final beratKiriman = TextEditingController();
   final dimensiPanjang = TextEditingController();
@@ -35,7 +36,8 @@ class InformasiKirimaController extends BaseController {
   final hargaBarang = TextEditingController();
   final ongkosKirim = TextEditingController();
   final hargaAsuransi = TextEditingController();
-  final codFee = TextEditingController();
+
+  // final codFee = TextEditingController();
   final hargaCOD = TextEditingController();
 
   bool asuransi = false;
@@ -43,10 +45,6 @@ class InformasiKirimaController extends BaseController {
   bool isLoading = false;
   bool isCalculate = false;
   bool dimensi = false;
-  double isr = 0;
-  double berat = 0;
-  double hargacod = 0;
-  double hargacCODOngkir = 0;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<ServiceModel> serviceList = [];
@@ -64,8 +62,16 @@ class InformasiKirimaController extends BaseController {
   num flatRateISR = 0;
   num freightCharge = 0;
   num freightChargeISR = 0;
+  double isr = 0;
+  double? berat;
+  double hargacod = 0;
+  double hargacCODOngkir = 0;
+  double codfee = 0;
 
-  void hitungOngkir() {
+  void hitungBerat() {
+    isCalculate = true;
+    berat = 0;
+
     if (dimensi) {
       if (selectedService?.serviceCode == "JTR23" ||
           selectedService?.serviceCode == "JTR<130" ||
@@ -77,16 +83,43 @@ class InformasiKirimaController extends BaseController {
       }
       beratKiriman.text = berat.toString();
     }
+    update();
+    getOngkir();
+    update();
+    hitungOngkir();
+    isCalculate = false;
 
-    if (asuransi) {
-      isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.toInt())) + 5000;
+    update();
+  }
+
+  void hitungOngkir() {
+    totalOngkir = 0;
+    isr = 0;
+    isCalculate = true;
+    // if (asuransi) {
+      isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
       flatRateISR = flatRate + isr;
-    }
-    hargacod = ((2.5 / 100) * ((hargaBarang.text == '' ? 0 : hargaBarang.text.toInt()) + freightCharge)) +
-        (hargaBarang.text == '' ? 0 : hargaBarang.text.toInt()) +
+      freightChargeISR = freightCharge + isr;
+      update();
+    // }
+    totalOngkir = freightCharge.toInt();
+    hargacod = ((codfee * ((hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + freightCharge)) +
+        (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt()) +
         freightCharge +
         (asuransi ? isr : 0);
     hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1100;
+    isCalculate = false;
+    update();
+  }
+
+  Future<void> getCODfee() async {
+    isCalculate = true;
+
+    await transaction.getCODFee(account.accountId.toString()).then(
+          (value) => codfee = value.payload?.disc?.toDouble() ?? 0,
+        );
+    isCalculate = false;
+
     update();
   }
 
@@ -99,14 +132,14 @@ class InformasiKirimaController extends BaseController {
           destinationCode: destination.destinationCode,
           originCode: origin.code,
           serviceCode: selectedService?.serviceCode,
-          weight: int.parse(beratKiriman.text),
+          weight: beratKiriman.text == '' ? 1 : beratKiriman.text.toInt(),
           custNo: account.accountNumber,
         ),
       )
           .then((value) {
         flatRate = value.payload?.flatRate?.toInt() ?? 0;
         freightCharge = value.payload?.freightCharge?.toInt() ?? 0;
-        hitungOngkir();
+
       });
     } catch (e) {
       e.printError();
@@ -127,7 +160,7 @@ class InformasiKirimaController extends BaseController {
         );
       }
     }
-
+    hitungOngkir();
     isCalculate = false;
     update();
   }
@@ -147,6 +180,7 @@ class InformasiKirimaController extends BaseController {
           .then(
             (value) => serviceList.addAll(value.payload ?? []),
           );
+      getCODfee();
     } catch (e) {
       e.printError();
     }
@@ -167,6 +201,7 @@ class InformasiKirimaController extends BaseController {
               insuranceFlag: asuransi ? "Y" : "N",
               insuranceFee: isr,
               flatRate: flatRate,
+              codFee: codfee,
               flatRateWithInsurance: flatRateISR,
               freightCharge: freightCharge,
               freightChargeWithInsurance: freightChargeISR,
@@ -181,7 +216,7 @@ class InformasiKirimaController extends BaseController {
               type: jenisBarang.text,
               desc: namaBarang.text,
               quantity: jumlahPacking.text.toInt(),
-              weight: beratKiriman.text.toInt(),
+              weight: berat
             ),
             shipper: shipper,
             receiver: receiver,

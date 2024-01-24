@@ -24,7 +24,7 @@ class CustomFilledButton extends StatelessWidget {
       this.onPressed,
       this.borderColor = Colors.transparent,
       this.fontColor = Colors.white,
-      this.radius = 5,
+      this.radius = 10,
       this.fontSize = 14,
       this.margin,
       this.padding})

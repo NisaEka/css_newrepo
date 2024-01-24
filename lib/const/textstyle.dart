@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 TextStyle titleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 29, fontWeight: medium);
 TextStyle subTitleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 14, fontWeight: regular);
-TextStyle formLabelTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 16, fontWeight: bold, color: greyDarkColor1);
-TextStyle hintTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 14, fontWeight: semiBold, color: neutralColor);
-TextStyle inputTextStyle = const TextStyle(fontFamily: 'Ubuntu', fontSize: 14, color: greyDarkColor1);
+TextStyle formLabelTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 14, fontWeight: bold, color: greyDarkColor1);
+TextStyle hintTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 12, fontWeight: semiBold, color: neutralColor);
+TextStyle inputTextStyle = const TextStyle(fontFamily: 'Ubuntu', fontSize: 12, color: greyDarkColor1);
 TextStyle listTitleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 14, fontWeight: bold, color: greyDarkColor1);
 TextStyle sublistTitleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 12, fontWeight: regular, color: greyDarkColor1);
 TextStyle appTitleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 18, fontWeight: medium, color: whiteColor);
