@@ -3,7 +3,6 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -33,7 +32,8 @@ class SucceesDialog extends StatelessWidget {
             Lottie.asset(ImageConstant.successIcon),
             Text(
               message.tr,
-              style: sublistTitleTextStyle,
+              style: subTitleTextStyle,
+              textAlign: TextAlign.center,
             ),
             CustomFilledButton(
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),

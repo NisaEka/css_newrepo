@@ -32,7 +32,7 @@ abstract class TransactionRepository {
 
   Future<GetTransactionFeeModel> getTransactionFee(TransactionFeeDataModel params);
 
-  Future postTransaction(TransactionDataModel data);
+  Future<PostTransactionModel> postTransaction(TransactionDataModel data);
 
   Future<GetCodFeeModel> getCODFee(String accountID);
 }

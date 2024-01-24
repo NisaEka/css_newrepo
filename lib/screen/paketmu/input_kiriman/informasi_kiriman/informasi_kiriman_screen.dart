@@ -78,7 +78,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                         child: CustomFormLabel(label: 'Service'.tr),
                       ),
                       const SizedBox(height: 10),
-                      controller.isLoading ? Center(child: Text('Loading service...')) : SizedBox()
+                      controller.isServiceLoad ? Center(child: Text('Loading service...')) : SizedBox()
                     ],
                   ),
                 ),

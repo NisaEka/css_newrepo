@@ -56,6 +56,7 @@ class InformasiPenerimaController extends BaseController {
         address1: '',
         address2: '',
         address3: '',
+        phone: nomorTelpon.text,
         city: selectedDestination?.cityName,
         zip: selectedDestination?.zipCode,
         region: selectedDestination?.cityName,

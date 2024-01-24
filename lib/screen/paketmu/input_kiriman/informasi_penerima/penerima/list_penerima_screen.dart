@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/add/tambah_penerima_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -25,7 +26,7 @@ class ListPenerimaScreen extends StatelessWidget {
               ),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => Get.to(const TambahPenerimaScreen()),
                   icon: const Icon(
                     Icons.add,
                     color: blueJNE,

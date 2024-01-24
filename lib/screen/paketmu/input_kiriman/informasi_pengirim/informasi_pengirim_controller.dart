@@ -1,8 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
+import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -82,12 +82,13 @@ class InformasiPengirimController extends BaseController {
       "shipper": Shipper(
         name: namaPengirim.text.toUpperCase(),
         address: alamatLengkap.text.toUpperCase(),
-        address1: '',
-        address2: '',
-        address3: '',
+        address1: alamatLengkap.text.length >= 30 ? alamatLengkap.text.substring(0, 30) : '',
+        address2: alamatLengkap.text.length >= 60 ? alamatLengkap.text.substring(31, 60) : '',
+        address3: alamatLengkap.text.length >= 90 ? alamatLengkap.text.substring(60, 90) : '',
         city: kotaPengirim.text.toUpperCase(),
         zip: kodePos.text,
-        // region: senderOrigin?., //province
+        region: senderOrigin?.region?.name,
+        //province
         country: "ID",
         contact: senderOrigin?.name?.toUpperCase(),
         phone: senderOrigin?.phone,

@@ -42,8 +42,9 @@ class InformasiKirimaController extends BaseController {
 
   bool asuransi = false;
   bool packingKayu = false;
-  bool isLoading = false;
+  bool isServiceLoad = false;
   bool isCalculate = false;
+  bool isLoading = false;
   bool dimensi = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
@@ -166,7 +167,7 @@ class InformasiKirimaController extends BaseController {
   }
 
   Future<void> initData() async {
-    isLoading = true;
+    isServiceLoad = true;
     serviceList = [];
     try {
       await transaction
@@ -184,11 +185,12 @@ class InformasiKirimaController extends BaseController {
     } catch (e) {
       e.printError();
     }
-    isLoading = false;
+    isServiceLoad = false;
     update();
   }
 
   Future<void> saveTransaction() async {
+    isLoading = true;
     try {
       await transaction
           .postTransaction(TransactionDataModel(
@@ -213,24 +215,31 @@ class InformasiKirimaController extends BaseController {
             origin: origin,
             destination: Destination(code: destination.destinationCode, desc: destination.cityName),
             goods: Goods(
-              type: jenisBarang.text,
-              desc: namaBarang.text,
-              quantity: jumlahPacking.text.toInt(),
-              weight: berat
-            ),
+                type: jenisBarang.text,
+                desc: namaBarang.text,
+                amount: hargaBarang.text.digitOnly().toInt(),
+                quantity: jumlahPacking.text.toInt(),
+                weight: berat),
             shipper: shipper,
             receiver: receiver,
           ))
           .then(
-            (_) => Get.to(SucceesDialog(
-              message: "Resi telah dibuat",
-              buttonTitle: "Selanjutnya",
-              nextAction: () => Get.offAll(const DashboardScreen()),
-            )),
+            (v) => Get.to(
+                SucceesDialog(
+                    message: "Transaksi Berhasil\n${v.payload?.awb}",
+                    buttonTitle: "Selanjutnya",
+                    nextAction: () => Get.offAll(
+                          const DashboardScreen(),
+                        )),
+                arguments: {
+                  'awb': v.payload?.awb,
+                }),
           );
     } catch (e, i) {
       e.printError();
       i.printError();
     }
+    isLoading = false;
+    update();
   }
 }

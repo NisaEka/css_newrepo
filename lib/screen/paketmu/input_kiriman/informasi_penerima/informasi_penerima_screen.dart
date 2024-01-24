@@ -46,6 +46,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                         Form(
                             key: controller.formKey,
                             onChanged: () {
+                              controller.formKey.currentState?.validate();
                               controller.update();
                             },
                             child: Column(

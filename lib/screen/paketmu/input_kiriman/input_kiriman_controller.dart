@@ -11,19 +11,19 @@ class InputKirimanController extends BaseController {
   int currentStep = 0;
 
   List<Step> steps = [
-    Step(
+    const Step(
       title: Text(''),
       content: InformasiPengirimScreen(),
       isActive: true,
       // label: Text('Informasi\nPengirim'.tr),
     ),
-    Step(
+    const Step(
       title: Text(''),
       content: InformasiPenerimaScreen(),
       isActive: false,
       // label: Text('Informasi\nPenerima'.tr)
     ),
-    Step(
+    const Step(
       title: Text(''),
       content: InformasiKirimanScreen(),
       isActive: false,
