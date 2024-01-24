@@ -103,8 +103,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                       ],
                     ),
-                    const DashboardMarquee(
-                      marqueeText: 'Data diperbaharui setiap jam 06 : 45 WIB',
+                    DashboardMarquee(
+                      marqueeText: controller.marqueeText ?? '',
                     ),
                     DashboardMenu2(
                       isLogin: controller.isLogin,

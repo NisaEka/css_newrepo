@@ -55,7 +55,7 @@ class CustomStepper extends StatelessWidget {
                                     '${index + 1}',
                                     style: listTitleTextStyle.copyWith(color: whiteColor),
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.check,
                                     color: whiteColor,
                                   ),
@@ -68,11 +68,11 @@ class CustomStepper extends StatelessWidget {
                                 margin: const EdgeInsets.only(left: 3),
                                 decoration: BoxDecoration(
                                   color: currentStep > index ? blueJNE : greyColor,
-                                  boxShadow: const [
+                                  boxShadow: [
                                     BoxShadow(
-                                      color: redJNE,
+                                      color: currentStep > index ? redJNE : Colors.transparent,
                                       spreadRadius: 1,
-                                      offset: Offset(1, 1),
+                                      offset: const Offset(1, 1),
                                     )
                                   ],
                                 ),

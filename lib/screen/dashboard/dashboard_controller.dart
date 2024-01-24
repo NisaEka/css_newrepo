@@ -9,6 +9,9 @@ class DashboardController extends BaseController {
   final selectedIndex = 0.obs;
 
   bool isLogin = false;
+  bool isLoading = false;
+
+  String? marqueeText;
 
   List<Widget> widgetOptions = <Widget>[
     const DashboardScreen(),
@@ -17,18 +20,14 @@ class DashboardController extends BaseController {
 
   List<String> appTitle = <String>["Beranda".tr, "Profil".tr];
 
-  List<Widget> bannerList = [
-    const Text('for commercial banner 1'),
-    const Text('for commercial banner 2'),
-    const Text('for commercial banner 3'),
-  ];
+  List<Widget> bannerList = [];
   var bannerIndex = 0.obs;
   CarouselController commercialCarousel = CarouselController();
 
   @override
   void onInit() {
     super.onInit();
-    Future.wait([cekToken()]);
+    Future.wait([initData(), cekToken()]);
   }
 
   Future<bool> cekToken() async {
@@ -37,5 +36,19 @@ class DashboardController extends BaseController {
     isLogin = token != null;
     update();
     return (token == null);
+  }
+
+  Future<void> initData() async {
+    isLoading = true;
+    bannerList = [
+      const Text('for commercial banner 1'),
+      const Text('for commercial banner 2'),
+      const Text('for commercial banner 3'),
+    ];
+
+    marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
+
+    isLoading = false;
+    update();
   }
 }
