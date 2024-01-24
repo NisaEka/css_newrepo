@@ -421,7 +421,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text('Total Ongkos Kirim'),
-                                              Text('Rp. ${(controller.totalOngkir + controller.isr).toInt().toCurrency()}', style: listTitleTextStyle),
+                                              Text('Rp. ${(controller.totalOngkir).toInt().toCurrency()}', style: listTitleTextStyle),
                                             ],
                                           )
                                         ],

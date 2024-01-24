@@ -9,7 +9,8 @@ class TransactionDataModel {
     Destination? destination,
     Goods? goods,
     Shipper? shipper,
-    Receiver? receiver,}) {
+    Receiver? receiver,
+  }) {
     _delivery = delivery;
     _account = account;
     _origin = origin;
@@ -28,6 +29,7 @@ class TransactionDataModel {
     _shipper = json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
     _receiver = json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
   }
+
   Delivery? _delivery;
   Account? _account;
   Origin? _origin;
@@ -36,7 +38,8 @@ class TransactionDataModel {
   Shipper? _shipper;
   Receiver? _receiver;
 
-  TransactionDataModel copyWith({ Delivery? delivery,
+  TransactionDataModel copyWith({
+    Delivery? delivery,
     Account? account,
     Origin? origin,
     Destination? destination,
@@ -64,25 +67,25 @@ class TransactionDataModel {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (_delivery != null) {
-      map['"delivery"'] = _delivery?.toJson();
+      map['delivery'] = _delivery?.toJson();
     }
     if (_account != null) {
-      map['"account"'] = _account?.toJson();
+      map['account'] = _account?.toJson();
     }
     if (_origin != null) {
-      map['"origin"'] = _origin?.toJson();
+      map['origin'] = _origin?.toJson();
     }
     if (_destination != null) {
-      map['"destination"'] = _destination?.toJson();
+      map['destination'] = _destination?.toJson();
     }
     if (_goods != null) {
-      map['"goods"'] = _goods?.toJson();
+      map['goods'] = _goods?.toJson();
     }
     if (_shipper != null) {
-      map['"shipper"'] = _shipper?.toJson();
+      map['shipper'] = _shipper?.toJson();
     }
     if (_receiver != null) {
-      map['"receiver"'] = _receiver?.toJson();
+      map['receiver'] = _receiver?.toJson();
     }
     return map;
   }
@@ -105,7 +108,8 @@ class Receiver {
     String? contact,
     String? phone,
     String? district,
-    String? subDistrict,}) {
+    String? subDistrict,
+  }) {
     _name = name;
     _address = address;
     _address1 = address1;
@@ -150,7 +154,8 @@ class Receiver {
   String? _district;
   String? _subDistrict;
 
-  Receiver copyWith({ String? name,
+  Receiver copyWith({
+    String? name,
     String? address,
     String? address1,
     String? address2,
@@ -195,19 +200,19 @@ class Receiver {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['"name"'] = '"$_name"';
-    map['"address"'] = '"$_address"';
-    map['"address1"'] = '"$_address1"';
-    map['"address2"'] = '"$_address2"';
-    map['"address3"'] = '"$_address3"';
-    map['"city"'] = '"$_city"';
-    map['"zip"'] = '"$_zip"';
-    map['"region"'] = '"$_region"';
-    map['"country"'] = '"$_country"';
-    map['"contact"'] = '"$_contact"';
-    map['"phone"'] = '"$_phone"';
-    map['"district"'] = '"$_district"';
-    map['"sub_district"'] = '"$_subDistrict"';
+    map['name'] = _name;
+    map['address'] = _address;
+    map['address1'] = _address1;
+    map['address2'] = _address2;
+    map['address3'] = _address3;
+    map['city'] = _city;
+    map['zip'] = _zip;
+    map['region'] = _region;
+    map['country'] = _country;
+    map['contact'] = _contact;
+    map['phone'] = _phone;
+    map['district'] = _district;
+    map['sub_district'] = _subDistrict;
     return map;
   }
 
@@ -227,7 +232,8 @@ class Shipper {
     String? region,
     String? country,
     String? contact,
-    String? phone,}) {
+    String? phone,
+  }) {
     _name = name;
     _address = address;
     _address1 = address1;
@@ -266,7 +272,8 @@ class Shipper {
   String? _contact;
   String? _phone;
 
-  Shipper copyWith({ String? name,
+  Shipper copyWith({
+    String? name,
     String? address,
     String? address1,
     String? address2,
@@ -305,17 +312,17 @@ class Shipper {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['"name"'] = '"$_name"';
-    map['"address"'] = '"$_address"';
-    map['"address1"'] = '"$_address1"';
-    map['"address2"'] = '"$_address2"';
-    map['"address3"'] = '"$_address3"';
-    map['"city"'] = '"$_city"';
-    map['"zip"'] = '"$_zip"';
-    map['"region"'] = '"$_region"';
-    map['"country"'] = '"$_country"';
-    map['"contact"'] = '"$_contact"';
-    map['"phone"'] = '"$_phone"';
+    map['name'] = _name;
+    map['address'] = _address;
+    map['address1'] = _address1;
+    map['address2'] = _address2;
+    map['address3'] = _address3;
+    map['city'] = _city;
+    map['zip'] = _zip;
+    map['region'] = _region;
+    map['country'] = _country;
+    map['contact'] = _contact;
+    map['phone'] = _phone;
     return map;
   }
 
@@ -329,7 +336,8 @@ class Goods {
     String? desc,
     num? amount,
     num? quantity,
-    num? weight,}) {
+    num? weight,
+  }) {
     _type = type;
     _desc = desc;
     _amount = amount;
@@ -351,7 +359,8 @@ class Goods {
   num? _quantity;
   num? _weight;
 
-  Goods copyWith({ String? type,
+  Goods copyWith({
+    String? type,
     String? desc,
     num? amount,
     num? quantity,
@@ -364,24 +373,19 @@ class Goods {
         quantity: quantity ?? _quantity,
         weight: weight ?? _weight,
       );
-
   String? get type => _type;
-
   String? get desc => _desc;
-
   num? get amount => _amount;
-
   num? get quantity => _quantity;
-
   num? get weight => _weight;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['"type"'] = '"$_type"';
-    map['"desc"'] = '"$_desc"';
-    map['"amount"'] = _amount;
-    map['"quantity"'] = _quantity;
-    map['"weight"'] = _weight;
+    map['type'] = _type;
+    map['desc'] = _desc;
+    map['amount'] = _amount;
+    map['quantity'] = _quantity;
+    map['weight'] = _weight;
     return map;
   }
 
@@ -392,7 +396,8 @@ String destinationToJson(Destination data) => json.encode(data.toJson());
 class Destination {
   Destination({
     String? code,
-    String? desc,}) {
+    String? desc,
+  }) {
     _code = code;
     _desc = desc;
   }
@@ -401,22 +406,27 @@ class Destination {
     _code = json['code'];
     _desc = json['desc'];
   }
+
   String? _code;
   String? _desc;
 
-  Destination copyWith({ String? code,
+  Destination copyWith({
+    String? code,
     String? desc,
   }) =>
-      Destination(code: code ?? _code,
+      Destination(
+        code: code ?? _code,
         desc: desc ?? _desc,
       );
+
   String? get code => _code;
+
   String? get desc => _desc;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['"code"'] = '"$_code"';
-    map['"desc"'] = '"$_desc"';
+    map['code'] = _code;
+    map['desc'] = _desc;
     return map;
   }
 
@@ -428,7 +438,8 @@ class Origin {
   Origin({
     String? code,
     String? desc,
-    String? branch,}) {
+    String? branch,
+  }) {
     _code = code;
     _desc = desc;
     _branch = branch;
@@ -439,27 +450,32 @@ class Origin {
     _desc = json['desc'];
     _branch = json['branch'];
   }
+
   String? _code;
   String? _desc;
   String? _branch;
 
-  Origin copyWith({ String? code,
+  Origin copyWith({
+    String? code,
     String? desc,
     String? branch,
   }) =>
-      Origin(code: code ?? _code,
+      Origin(
+        code: code ?? _code,
         desc: desc ?? _desc,
         branch: branch ?? _branch,
       );
+
   String? get code => _code;
+
   String? get desc => _desc;
   String? get branch => _branch;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['"code"'] = '"$_code"';
-    map['"desc"'] = '"$_desc"';
-    map['"branch"'] = '"$_branch"';
+    map['code'] = _code;
+    map['desc'] = _desc;
+    map['branch'] = _branch;
     return map;
   }
 
@@ -470,7 +486,8 @@ String accountToJson(Account data) => json.encode(data.toJson());
 class Account {
   Account({
     String? number,
-    String? service,}) {
+    String? service,
+  }) {
     _number = number;
     _service = service;
   }
@@ -479,22 +496,27 @@ class Account {
     _number = json['number'];
     _service = json['service'];
   }
+
   String? _number;
   String? _service;
 
-  Account copyWith({ String? number,
+  Account copyWith({
+    String? number,
     String? service,
   }) =>
-      Account(number: number ?? _number,
+      Account(
+        number: number ?? _number,
         service: service ?? _service,
       );
+
   String? get number => _number;
+
   String? get service => _service;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['"number"'] = '"$_number"';
-    map['"service"'] = '"$_service"';
+    map['number'] = _number;
+    map['service'] = _service;
     return map;
   }
 
@@ -515,7 +537,8 @@ class Delivery {
     num? flatRate,
     num? flatRateWithInsurance,
     num? freightCharge,
-    num? freightChargeWithInsurance,}) {
+    num? freightChargeWithInsurance,
+  }) {
     _serviceCode = serviceCode;
     _woodPackaging = woodPackaging;
     _specialInstruction = specialInstruction;
@@ -544,7 +567,6 @@ class Delivery {
     _freightCharge = json['freight_charge'];
     _freightChargeWithInsurance = json['freight_charge_with_insurance'];
   }
-
   String? _serviceCode;
   String? _woodPackaging;
   String? _specialInstruction;
@@ -558,7 +580,8 @@ class Delivery {
   num? _freightCharge;
   num? _freightChargeWithInsurance;
 
-  Delivery copyWith({ String? serviceCode,
+  Delivery copyWith({
+    String? serviceCode,
     String? woodPackaging,
     String? specialInstruction,
     String? codFlag,
@@ -585,45 +608,33 @@ class Delivery {
         freightCharge: freightCharge ?? _freightCharge,
         freightChargeWithInsurance: freightChargeWithInsurance ?? _freightChargeWithInsurance,
       );
-
   String? get serviceCode => _serviceCode;
-
   String? get woodPackaging => _woodPackaging;
-
   String? get specialInstruction => _specialInstruction;
-
   String? get codFlag => _codFlag;
-
   String? get codOngkir => _codOngkir;
-
   num? get codFee => _codFee;
-
   String? get insuranceFlag => _insuranceFlag;
-
   num? get insuranceFee => _insuranceFee;
-
   num? get flatRate => _flatRate;
-
   num? get flatRateWithInsurance => _flatRateWithInsurance;
-
   num? get freightCharge => _freightCharge;
-
   num? get freightChargeWithInsurance => _freightChargeWithInsurance;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['"service_code"'] = '"$_serviceCode"';
-    map['"wood_packaging"'] = '"$_woodPackaging"';
-    map['"special_instruction"'] = '"$_specialInstruction"';
-    map['"cod_flag"'] = '"$_codFlag"';
-    map['"cod_ongkir"'] = '"$_codOngkir"';
-    map['"cod_fee"'] = _codFee;
-    map['"insurance_flag"'] = '"$_insuranceFlag"';
-    map['"insurance_fee"'] = _insuranceFee;
-    map['"flat_rate"'] = _flatRate;
-    map['"flat_rate_with_insurance"'] = _flatRateWithInsurance;
-    map['"freight_charge"'] = _freightCharge;
-    map['"freight_charge_with_insurance"'] = _freightChargeWithInsurance;
+    map['service_code'] = _serviceCode;
+    map['wood_packaging'] = _woodPackaging;
+    map['special_instruction'] = _specialInstruction;
+    map['cod_flag'] = _codFlag;
+    map['cod_ongkir'] = _codOngkir;
+    map['cod_fee'] = _codFee;
+    map['insurance_flag'] = _insuranceFlag;
+    map['insurance_fee'] = _insuranceFee;
+    map['flat_rate'] = _flatRate;
+    map['flat_rate_with_insurance'] = _flatRateWithInsurance;
+    map['freight_charge'] = _freightCharge;
+    map['freight_charge_with_insurance'] = _freightChargeWithInsurance;
     return map;
   }
 

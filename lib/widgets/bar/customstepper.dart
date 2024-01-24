@@ -36,18 +36,19 @@ class CustomStepper extends StatelessWidget {
                           height: 30,
                           width: 30,
                           decoration: BoxDecoration(
-                              color: currentStep >= index ? blueJNE : greyColor,
-                              borderRadius: BorderRadius.circular(50),
-                              // border: Border.all(
-                              //   color: currentStep >= index ? Colors.transparent : whiteColor,
-                              // ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: redJNE,
-                                  spreadRadius: 1,
-                                  offset: Offset(3, 3),
-                                )
-                              ]),
+                            color: currentStep >= index ? blueJNE : greyColor,
+                            borderRadius: BorderRadius.circular(50),
+                            // border: Border.all(
+                            //   color: currentStep >= index ? Colors.transparent : whiteColor,
+                            // ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: redJNE,
+                                spreadRadius: 1,
+                                offset: Offset(2, 1),
+                              )
+                            ],
+                          ),
                           child: Center(
                             child: currentStep <= index
                                 ? Text(
@@ -63,10 +64,17 @@ class CustomStepper extends StatelessWidget {
                         index < (totalStep - 1)
                             ? Container(
                                 width: Get.width / totalStep - 10,
-                                height: 1,
+                                height: 2,
                                 margin: const EdgeInsets.only(left: 3),
                                 decoration: BoxDecoration(
                                   color: currentStep > index ? blueJNE : greyColor,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: redJNE,
+                                      spreadRadius: 1,
+                                      offset: Offset(1, 1),
+                                    )
+                                  ],
                                 ),
                               )
                             : const SizedBox()

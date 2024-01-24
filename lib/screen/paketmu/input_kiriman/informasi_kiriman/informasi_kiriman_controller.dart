@@ -98,16 +98,15 @@ class InformasiKirimaController extends BaseController {
     isr = 0;
     isCalculate = true;
     // if (asuransi) {
-      isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
-      flatRateISR = flatRate + isr;
-      freightChargeISR = freightCharge + isr;
-      update();
+    isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
+    flatRateISR = flatRate + isr;
+    freightChargeISR = freightCharge + isr;
+    update();
     // }
-    totalOngkir = freightCharge.toInt();
-    hargacod = ((codfee * ((hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + freightCharge)) +
+    totalOngkir = asuransi ? flatRateISR.toInt() : flatRate.toInt();
+    hargacod = (codfee * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) +
         (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt()) +
-        freightCharge +
-        (asuransi ? isr : 0);
+        totalOngkir;
     hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1100;
     isCalculate = false;
     update();
