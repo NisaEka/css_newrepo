@@ -2,7 +2,6 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class CustomDropDownFormField<T> extends StatelessWidget {
@@ -68,6 +67,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
       items: items!.map((DropdownMenuItem e) => (e.child as Text).data!).toList(),
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
+          label: Text(hintText ?? ''),
           hintText: hintText ?? label,
           hintStyle: hintTextStyle,
           prefixIcon: prefixIcon,
@@ -137,6 +137,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
                         // fontWeight: FontWeight.w600,
                       ),
                   decoration: InputDecoration(
+                    label: Text(hintText ?? ''),
                     fillColor: neutralColor,
                     prefixIcon: prefixIcon,
                     suffixIcon: suffixIcon,

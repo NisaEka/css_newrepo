@@ -2,18 +2,26 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 
-class RadioListItem extends StatelessWidget {
-  final List groupValue;
+class ContactRadioListItem extends StatelessWidget {
+  final dynamic groupValue;
   final dynamic value;
-  final void Function(dynamic) onChange;
+  final void Function(dynamic) onChanged;
   final bool isSelected;
+  final String? name;
+  final String? phone;
+  final String? city;
+  final String? address;
 
-  const RadioListItem({
+  const ContactRadioListItem({
     super.key,
     required this.groupValue,
     required this.value,
-    required this.onChange,
+    required this.onChanged,
     this.isSelected = false,
+    this.name,
+    this.phone,
+    this.city,
+    this.address,
   });
 
   @override
@@ -23,12 +31,13 @@ class RadioListItem extends StatelessWidget {
       child: RadioListTile(
         value: value,
         groupValue: groupValue,
-        onChanged: onChange,
+        onChanged: onChanged,
         shape: Border.all(color: isSelected ? redJNE : greyColor),
         selectedTileColor: redJNE,
-        title: Text('Arif Daryanto', style: listTitleTextStyle),
-        subtitle: const Column(
-          children: [],
+        title: Text(name ?? '', style: listTitleTextStyle),
+        subtitle: Text(
+          '$phone \n$city \n$address',
+          style: subTitleTextStyle,
         ),
       ),
     );

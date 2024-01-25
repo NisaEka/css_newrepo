@@ -3,7 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
-import 'package:css_mobile/widgets/items/radio_list_item.dart';
+import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -49,10 +49,10 @@ class ListDropshipperScreen extends StatelessWidget {
                   SingleChildScrollView(
                     child: Column(
                       children: controller.dropshipperList
-                          .map((e) => RadioListItem(
+                          .map((e) => ContactRadioListItem(
                                 groupValue: controller.dropshipperList,
                                 value: e,
-                                onChange: (value) {
+                                onChanged: (value) {
                                   controller.selectedDropshipper = value;
                                   controller.update();
                                 },

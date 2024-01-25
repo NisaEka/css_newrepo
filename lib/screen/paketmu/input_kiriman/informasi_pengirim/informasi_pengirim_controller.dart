@@ -48,6 +48,11 @@ class InformasiPengirimController extends BaseController {
         kotaPengirim.text = value.payload?.origin?.originName ?? '';
         kodePos.text = value.payload?.zipCode ?? '';
         alamatLengkap.text = value.payload?.address ?? '';
+        selectedOrigin = OriginModel(
+          originCode: senderOrigin?.origin?.originCode,
+          branchCode: senderOrigin?.origin?.branchCode,
+          originName: senderOrigin?.origin?.originName,
+        );
       });
       update();
     } catch (e) {

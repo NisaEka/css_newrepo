@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,11 +28,33 @@ class InformasiPenerimaController extends BaseController {
   List<DestinationModel> destinationList = [];
 
   DestinationModel? selectedDestination;
+  ReceiverModel? selectedReceiver;
 
   @override
   void onInit() {
     super.onInit();
     Future.wait([getDestinationList('')]);
+  }
+
+  FutureOr<ReceiverModel?> getSelectedReceiver(ReceiverModel receiver) async {
+    namaPenerima.text = receiver.name ?? '';
+    nomorTelpon.text = receiver.phone ?? '';
+    kotaTujuan.text = receiver.idDestination ?? '';
+    alamatLengkap.text = receiver.address ?? '';
+    getDestinationList(receiver.city ?? '');
+    selectedDestination = DestinationModel(
+      id: receiver.idDestination,
+      destinationCode: receiver.destinationCode,
+      cityName: receiver.city,
+      countryName: receiver.country,
+      districtName: receiver.receiverDistrict,
+      provinceName: receiver.region,
+      subDistrictName: receiver.receiverSubDistrict,
+      zipCode: receiver.zipCode,
+    );
+
+    update();
+    return receiver;
   }
 
   Future<List<DestinationModel>> getDestinationList(String keyword) async {

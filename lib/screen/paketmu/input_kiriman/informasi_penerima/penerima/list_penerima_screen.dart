@@ -1,9 +1,11 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/add/tambah_penerima_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
+import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,6 +48,27 @@ class ListPenerimaScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 30),
+                  Expanded(
+                    child: ListView(
+                      children: controller.receiverList
+                          .map((e) => ContactRadioListItem(
+                              value: e,
+                              name: e.name,
+                              phone: e.phone,
+                              city: e.city,
+                              address: e.address,
+                              groupValue: controller.selectedReceiver,
+                              isSelected: e == controller.selectedReceiver ? true : false,
+                              onChanged: (value) {
+                                controller.selectedReceiver = value as ReceiverModel?;
+                                controller.update();
+                                Get.back(
+                                  result: controller.selectedReceiver,
+                                );
+                              }))
+                          .toList(),
+                    ),
+                  )
                 ],
               ),
             ),

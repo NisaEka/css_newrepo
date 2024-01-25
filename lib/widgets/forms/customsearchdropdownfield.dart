@@ -62,6 +62,7 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
               // fontWeight: FontWeight.w600,
             ),
         decoration: InputDecoration(
+          label: Text(hintText ?? ''),
           fillColor: neutralColor,
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
@@ -91,8 +92,10 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
       dropdownButtonProps: const DropdownButtonProps(
         icon: Icon(Icons.keyboard_arrow_down),
       ),
+
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
+          label: Text(hintText ?? ''),
           hintText: hintText ?? label,
           hintStyle: hintTextStyle,
           prefixIcon: prefixIcon,
@@ -103,6 +106,7 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
       asyncItems: asyncItems,
       itemAsString: itemAsString,
       onChanged: onChanged,
+      selectedItem: value,
     );
   }
 

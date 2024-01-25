@@ -52,7 +52,9 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                             child: Column(
                               children: [
                                 GestureDetector(
-                                  onTap: () => Get.to(const ListPenerimaScreen()),
+                                  onTap: () async => controller.selectedReceiver = await Get.to(const ListPenerimaScreen())?.then(
+                                    (result) => controller.getSelectedReceiver(result),
+                                  ),
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                                     margin: const EdgeInsets.symmetric(vertical: 10),
@@ -104,10 +106,9 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   onChanged: (value) {
                                     controller.selectedDestination = value;
                                     controller.update();
-                                    controller.update();
                                     // print(jsonEncode(value));
                                   },
-                                  value: controller.selectedDestination ?? null,
+                                  value: controller.selectedDestination,
                                   isRequired: controller.selectedDestination == null ? true : false,
                                   readOnly: false,
                                   hintText: controller.isLoading ? "Loading..." : "Kota Tujuan".tr,
