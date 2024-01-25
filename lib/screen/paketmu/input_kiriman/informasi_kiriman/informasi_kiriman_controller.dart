@@ -190,6 +190,7 @@ class InformasiKirimaController extends BaseController {
 
   Future<void> saveTransaction() async {
     isLoading = true;
+    update();
     try {
       await transaction
           .postTransaction(TransactionDataModel(

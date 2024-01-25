@@ -7,11 +7,15 @@ class LoadingDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      height: Get.height,
+      width: Get.width,
+      color: greyColor.withOpacity(0.3),
+      alignment: Alignment.center,
       child: Container(
         height: Get.width / 4,
         width: Get.width / 4,
-        decoration: BoxDecoration(color: greyColor.withOpacity(0.5)),
+        decoration: BoxDecoration(color: greyColor.withOpacity(0.6)),
         child: const Center(
           child: CircularProgressIndicator.adaptive(),
         ),

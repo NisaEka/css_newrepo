@@ -451,7 +451,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              !controller.isLoading ? const LoadingDialog() : Container(),
+              controller.isLoading ? const LoadingDialog() : Container(),
             ],
           );
         });
