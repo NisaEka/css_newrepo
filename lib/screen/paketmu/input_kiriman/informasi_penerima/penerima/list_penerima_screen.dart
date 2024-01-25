@@ -51,7 +51,8 @@ class ListPenerimaScreen extends StatelessWidget {
                   Expanded(
                     child: ListView(
                       children: controller.receiverList
-                          .map((e) => ContactRadioListItem(
+                          .map(
+                            (e) => ContactRadioListItem(
                               value: e,
                               name: e.name,
                               phone: e.phone,
@@ -65,7 +66,9 @@ class ListPenerimaScreen extends StatelessWidget {
                                 Get.back(
                                   result: controller.selectedReceiver,
                                 );
-                              }))
+                              },
+                            ),
+                          )
                           .toList(),
                     ),
                   )

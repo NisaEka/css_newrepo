@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
@@ -34,6 +37,22 @@ class InformasiPengirimController extends BaseController {
   void onInit() {
     super.onInit();
     Future.wait([initData()]);
+  }
+
+  FutureOr<DropshipperModel?> getSelectedDropshipper(DropshipperModel dropshipper) async {
+    namaPengirim.text = dropshipper.name ?? '';
+    nomorTelpon.text = dropshipper.phone ?? '';
+    kotaPengirim.text = dropshipper.city ?? '';
+    alamatLengkap.text = dropshipper.address ?? '';
+    kodePos.text = dropshipper.zipCode ?? '';
+    getOriginList(dropshipper.city ?? '', selectedAccount?.accountId ?? '');
+    selectedOrigin = OriginModel(
+      originName: dropshipper.city,
+      originCode: dropshipper.origin,
+    );
+
+    update();
+    return dropshipper;
   }
 
   Future<void> initData() async {

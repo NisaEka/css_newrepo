@@ -89,15 +89,21 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     controller.kotaPengirim.clear();
                                     controller.kodePos.clear();
                                     controller.alamatLengkap.clear();
+                                    controller.selectedOrigin = null;
                                   } else {
                                     controller.namaPengirim.text = controller.senderOrigin?.name ?? '';
                                     controller.nomorTelpon.text = controller.senderOrigin?.phone ?? '';
                                     controller.kotaPengirim.text = controller.senderOrigin?.origin?.originName ?? '';
                                     controller.kodePos.text = controller.senderOrigin?.zipCode ?? '';
                                     controller.alamatLengkap.text = controller.senderOrigin?.address ?? '';
+                                    controller.selectedOrigin = OriginModel(
+                                      originCode: controller.senderOrigin?.origin?.originCode,
+                                      branchCode: controller.senderOrigin?.origin?.branchCode,
+                                      originName: controller.senderOrigin?.origin?.originName,
+                                    );
                                   }
 
-                                  controller.selectedAccount = null;
+                                  // controller.selectedAccount = null;
                                   controller.isValidate = false;
                                   controller.update();
                                 },
@@ -114,7 +120,9 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                   : SizedBox(),
                               controller.dropshipper
                                   ? GestureDetector(
-                                      onTap: () => Get.to(const ListDropshipperScreen()),
+                                      onTap: () => Get.to( ListDropshipperScreen())?.then(
+                                            (result) => controller.getSelectedDropshipper(result),
+                                      ),
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                                         margin: const EdgeInsets.symmetric(vertical: 10),
@@ -167,6 +175,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                   controller.update();
                                   // print(jsonEncode(value));
                                 },
+                                value: controller.selectedOrigin,
                                 selectedItem: controller.kotaPengirim.text,
                                 readOnly: controller.selectedAccount == null ? true : !controller.dropshipper,
                                 hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
