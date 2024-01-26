@@ -26,7 +26,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              screenTittle: 'Input Transaksi'.tr,
+              title: 'Input Transaksi'.tr,
               flexibleSpace: CustomStepper(
                 currentStep: 1,
                 totalStep: controller.steps.length,

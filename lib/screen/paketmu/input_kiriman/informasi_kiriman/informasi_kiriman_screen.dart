@@ -31,7 +31,7 @@ class InformasiKirimanScreen extends StatelessWidget {
             children: [
               Scaffold(
                 appBar: CustomTopBar(
-                  screenTittle: 'Input Transaksi'.tr,
+                  title: 'Input Transaksi'.tr,
                   flexibleSpace: CustomStepper(
                     currentStep: 2,
                     totalStep: controller.steps.length,

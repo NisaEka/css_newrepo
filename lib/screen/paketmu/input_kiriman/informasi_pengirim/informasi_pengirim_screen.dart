@@ -30,7 +30,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              screenTittle: 'Input Transaksi'.tr,
+              title: 'Input Transaksi'.tr,
               flexibleSpace: CustomStepper(
                 currentStep: 0,
                 totalStep: controller.steps.length,
@@ -117,12 +117,23 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                         controller.update();
                                       },
                                     )
-                                  : SizedBox(),
+                                  : const SizedBox(),
                               controller.dropshipper
                                   ? GestureDetector(
-                                      onTap: () => Get.to( ListDropshipperScreen())?.then(
-                                            (result) => controller.getSelectedDropshipper(result),
-                                      ),
+                                      onTap: () => controller.selectedAccount != null
+                                          ? Get.to(const ListDropshipperScreen(), arguments: {
+                                              'account': controller.selectedAccount,
+                                            })?.then(
+                                              (result) => controller.getSelectedDropshipper(result),
+                                            )
+                                          : Get.showSnackbar(
+                                              const GetSnackBar(
+                                                message: 'Pilih Account Terlebih dahulu',
+                                                backgroundColor: errorColor,
+                                                isDismissible: true,
+                                                duration: Duration(seconds: 3),
+                                              ),
+                                            ),
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                                         margin: const EdgeInsets.symmetric(vertical: 10),

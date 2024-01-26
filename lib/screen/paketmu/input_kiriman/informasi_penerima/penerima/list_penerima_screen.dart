@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/add/tambah_penerima_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/add/add_penerima_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -28,7 +28,7 @@ class ListPenerimaScreen extends StatelessWidget {
               ),
               actions: [
                 IconButton(
-                  onPressed: () => Get.to(const TambahPenerimaScreen()),
+                  onPressed: () => Get.to(const AddPenerimaScreen()),
                   icon: const Icon(
                     Icons.add,
                     color: blueJNE,
@@ -48,17 +48,21 @@ class ListPenerimaScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  Expanded(
-                    child: ListView(
-                      children: controller.receiverList
-                          .map(
-                            (e) => ContactRadioListItem(
-                              value: e,
-                              name: e.name,
-                              phone: e.phone,
-                              city: e.city,
-                              address: e.address,
-                              groupValue: controller.selectedReceiver,
+                  controller.isLoading
+                      ? Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        )
+                      : Expanded(
+                          child: ListView(
+                            children: controller.receiverList
+                                .map(
+                                  (e) => ContactRadioListItem(
+                                    value: e,
+                                    name: e.name,
+                                    phone: e.phone,
+                                    city: e.city,
+                                    address: e.address,
+                                    groupValue: controller.selectedReceiver,
                               isSelected: e == controller.selectedReceiver ? true : false,
                               onChanged: (value) {
                                 controller.selectedReceiver = value as ReceiverModel?;
@@ -68,7 +72,7 @@ class ListPenerimaScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                          )
+                      )
                           .toList(),
                     ),
                   )

@@ -3,6 +3,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
+import 'package:css_mobile/screen/pengaturan/pengaturan_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_carousel.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_marquee.dart';
@@ -40,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 icon: const Icon(Icons.notifications),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Get.to(const PengaturanScreen()),
                 icon: const Icon(Icons.settings),
               ),
             ],

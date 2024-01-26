@@ -85,9 +85,9 @@ class ProfileScreen extends StatelessWidget {
                                                 Text("Kode Pos", style: subTitleTextStyle),
                                                 Text("Nomor Telepon", style: subTitleTextStyle),
                                                 Text("Nomor Whatsapp", style: subTitleTextStyle),
-                                                Text("Alamat Email", style: subTitleTextStyle),
-                                              ],
-                                            )
+                                                  Text("Alamat Email", style: subTitleTextStyle),
+                                                ],
+                                              )
                                             : const SizedBox()
                                         : const SizedBox()
                               ],
@@ -95,19 +95,12 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         )
                         .toList()),
-                controller.isLogin
-                    ? ListTile(
-                        leading: const Icon(Icons.account_box, color: blueJNE, size: 30),
-                        title: Text('Keluar'.tr, style: listTitleTextStyle.copyWith(color: blueJNE)),
-                        trailing: const Icon(Icons.logout, color: redJNE, size: 25),
-                        onTap: () => controller.doLogout(),
-                      )
-                    : ListTile(
+                ListTile(
                   leading: const Icon(Icons.account_box, color: blueJNE, size: 30),
-                        title: Text('Masuk'.tr, style: listTitleTextStyle.copyWith(color: blueJNE)),
-                        trailing: const Icon(Icons.login, color: redJNE, size: 25),
-                        onTap: () => Get.to(const LoginScreen()),
-                      )
+                  title: Text(controller.isLogin ? 'Keluar'.tr : 'Masuk', style: listTitleTextStyle.copyWith(color: blueJNE)),
+                  trailing: Icon(controller.isLogin ? Icons.logout : Icons.login, color: redJNE, size: 25),
+                  onTap: () => controller.isLogin ? controller.doLogout() : Get.to(const LoginScreen()),
+                )
               ],
             ),
             bottomNavigationBar: BottomBar(

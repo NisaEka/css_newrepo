@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/add/add_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -27,7 +28,9 @@ class ListDropshipperScreen extends StatelessWidget {
               ),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => Get.to(const AddDropshipperScreen(), arguments: {
+                    'account': controller.account,
+                  })?.then((value) => controller.initData()),
                   icon: const Icon(
                     Icons.add,
                     color: blueJNE,
@@ -47,22 +50,26 @@ class ListDropshipperScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  SingleChildScrollView(
-                    child: Column(
-                      children: controller.dropshipperList
-                          .map((e) => ContactRadioListItem(
-                        groupValue: controller.dropshipperList,
-                                value: e,
-                                name: e.name,
-                                phone: e.phone,
-                                city: e.city,
-                                address: e.address,
-                                onChanged: (value) {
-                                  controller.selectedDropshipper = value as DropshipperModel?;
-                                  controller.update();
-                                  Get.back(result: controller.selectedDropshipper);
-                                },
-                              ))
+                  controller.isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: controller.dropshipperList
+                                .map((e) => ContactRadioListItem(
+                                      groupValue: controller.dropshipperList,
+                                      value: e,
+                                      name: e.name,
+                                      phone: e.phone,
+                                      city: e.city,
+                                      address: e.address,
+                                      onChanged: (value) {
+                              controller.selectedDropshipper = value as DropshipperModel?;
+                              controller.update();
+                              Get.back(result: controller.selectedDropshipper);
+                            },
+                          ))
                           .toList(),
                     ),
                   )

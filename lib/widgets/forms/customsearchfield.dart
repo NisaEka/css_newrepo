@@ -5,10 +5,10 @@ class CustomSearchField extends StatelessWidget {
   final String hintText;
   final VoidCallback? onTap;
   final void Function()? onSubmit;
-  final Icon? prefixIcon;
-  final Icon? suffixIcon;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
 
-  const CustomSearchField({
+  const   CustomSearchField({
     super.key,
     required this.hintText,
     this.onTap,
@@ -39,7 +39,7 @@ class CustomSearchField extends StatelessWidget {
             ? Container(
                 alignment: Alignment.center,
                 width: 30,
-                height: 60,
+                height: 39,
                 margin: const EdgeInsets.only(right: 10),
                 decoration: BoxDecoration(
                   color: blueJNE,
@@ -55,7 +55,7 @@ class CustomSearchField extends StatelessWidget {
             ? Container(
                 alignment: Alignment.center,
                 width: 30,
-                height: 60,
+                height: 39,
                 margin: const EdgeInsets.only(left: 10),
                 decoration: BoxDecoration(
                   color: blueJNE,

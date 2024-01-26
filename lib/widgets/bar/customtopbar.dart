@@ -7,23 +7,25 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
-  final Widget? title;
+  // final Widget? title;
   final Widget? leading;
   final List<Widget>? action;
   final Size? height;
   final double elevation;
   final Widget? flexibleSpace;
-  final String? screenTittle;
+  final String? title;
+  final Color? backgroundColor;
 
   const CustomTopBar({
     Key? key,
-    this.title,
+    // this.title,
     this.leading,
     this.action,
     this.height,
     this.elevation = 0,
     this.flexibleSpace,
-    this.screenTittle,
+    this.title,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
@@ -65,7 +67,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
     //   ),
     // );
     return Container(
-      color: greyLightColor2,
+      color: backgroundColor ?? greyLightColor2,
       child: Column(
         children: [
           Row(
@@ -84,7 +86,15 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
             decoration: const BoxDecoration(
               color: Colors.transparent,
             ),
-            child: screenTittle != null ? Text(screenTittle!.tr, style: appTitleTextStyle.copyWith(color: greyDarkColor1)) : SizedBox(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                title != null ? Text(title!.tr, style: appTitleTextStyle.copyWith(color: greyDarkColor1)) : SizedBox(),
+                Row(
+                  children: action?.toList() ?? [],
+                )
+              ],
+            ),
           ),
           flexibleSpace ?? const SizedBox(),
         ],

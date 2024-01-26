@@ -1,0 +1,101 @@
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/add/add_penerima_controller.dart';
+import 'package:css_mobile/widgets/bar/custombackbutton.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
+import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class AddPenerimaScreen extends StatelessWidget {
+  const AddPenerimaScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<AddPenerimaController>(
+        init: AddPenerimaController(),
+        builder: (controller) {
+          return Scaffold(
+            appBar: AppBar(
+              elevation: 1,
+              backgroundColor: Colors.white,
+              title: Text(
+                'Tambah Data Penerima'.tr,
+                style: appTitleTextStyle.copyWith(
+                  color: blueJNE,
+                ),
+              ),
+              leading: const CustomBackButton(),
+            ),
+            body: SingleChildScrollView(
+              child: Container(
+                  // padding: const EdgeInsets.all(30),
+                  margin: EdgeInsets.all(30),
+                  child: Form(
+                      key: controller.formKey,
+                      onChanged: () {
+                        controller.formKey.currentState?.validate();
+                        controller.update();
+                      },
+                      child: Column(
+                        children: [
+                          CustomTextFormField(
+                            controller: controller.namaPenerima,
+                            hintText: "Nama Penerima".tr,
+                            prefixIcon: const Icon(Icons.person),
+                            isRequired: true,
+                          ),
+                          CustomTextFormField(
+                            controller: controller.noHP,
+                            hintText: "Nomor Telepon".tr,
+                            inputType: TextInputType.number,
+                            prefixIcon: const Icon(Icons.phone),
+                            isRequired: true,
+                          ),
+                          CustomSearchDropdownField<DestinationModel>(
+                            asyncItems: (String filter) => controller.getDestinationList(filter),
+                            itemBuilder: (context, e, b) {
+                              return GestureDetector(
+                                onTap: () => controller.update(),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                  child: Text(
+                                    '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
+                                  ),
+                                ),
+                              );
+                            },
+                            itemAsString: (DestinationModel e) =>
+                                '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
+                            onChanged: (value) {
+                              controller.selectedDestination = value;
+                              controller.update();
+                              // print(jsonEncode(value));
+                            },
+                            value: controller.selectedDestination,
+                            isRequired: controller.selectedDestination == null ? true : false,
+                            readOnly: false,
+                            hintText: controller.isLoading ? "Loading..." : "Kota Tujuan".tr,
+                            prefixIcon: const Icon(Icons.location_city),
+                            textStyle: controller.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
+                          ),
+                          CustomTextFormField(
+                            controller: controller.alamat,
+                            hintText: "Alamat".tr,
+                            prefixIcon: const Icon(Icons.location_city),
+                            multiLine: true,
+                            isRequired: true,
+                          ),
+                          CustomFilledButton(
+                            color: blueJNE,
+                            title: 'Simpan Data Penerima'.tr,
+                          ),
+                        ],
+                      ))),
+            ),
+          );
+        });
+  }
+}
