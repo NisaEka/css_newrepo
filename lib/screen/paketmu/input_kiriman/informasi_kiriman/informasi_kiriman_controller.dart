@@ -5,7 +5,7 @@ import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/service_data_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_fee_data_model.dart';
-import 'package:css_mobile/dialog/success_dialog.dart';
+import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -225,7 +225,7 @@ class InformasiKirimaController extends BaseController {
           ))
           .then(
             (v) => Get.to(
-                SucceesDialog(
+                SucceesScreen(
                     message: "Transaksi Berhasil\n${v.payload?.awb}",
                     buttonTitle: "Selanjutnya",
                     nextAction: () => Get.offAll(

@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-class SucceesDialog extends StatelessWidget {
+class FailedScreen extends StatelessWidget {
   final String message;
   final VoidCallback? nextAction;
   final String buttonTitle;
 
-  const SucceesDialog({
+  const FailedScreen({
     super.key,
     required this.message,
     this.nextAction,
@@ -29,7 +29,7 @@ class SucceesDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const LogoHeader(),
-            Lottie.asset(ImageConstant.successIcon),
+            Lottie.asset(ImageConstant.failedLottie),
             Text(
               message.tr,
               style: subTitleTextStyle,
