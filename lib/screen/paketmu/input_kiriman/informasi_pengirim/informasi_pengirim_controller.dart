@@ -130,7 +130,7 @@ class InformasiPengirimController extends BaseController {
       "account": selectedAccount,
       "origin": Origin(
         // origin code kalo sender bukan dropshipper?
-        code: selectedOrigin?.branchCode ?? senderOrigin?.origin?.originCode,
+        code: selectedOrigin?.originCode ?? senderOrigin?.origin?.originCode,
         desc: selectedOrigin?.originName ?? senderOrigin?.origin?.originName,
         branch: selectedOrigin?.branchCode ?? senderOrigin?.origin?.branchCode,
       ),

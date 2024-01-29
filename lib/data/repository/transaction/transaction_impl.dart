@@ -126,12 +126,12 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.dio.get(
         "/transaction/service",
-        queryParameters: param.toJson(),
-        // queryParameters: {
-        //   'account_id': param.accountId,
-        //   'origin_code': param.originCode,
-        //   'destination_code': param.destinationCode,
-        // },
+        // queryParameters: param,
+        queryParameters: {
+          'account_id': param.accountId,
+          'origin_code': param.originCode,
+          'destination_code': param.destinationCode,
+        },
       );
       return GetServiceModel.fromJson(response.data);
     } on DioError catch (e) {

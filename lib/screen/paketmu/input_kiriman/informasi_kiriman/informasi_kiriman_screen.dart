@@ -226,7 +226,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         onChanged: (value) {
                                           controller.asuransi = value!;
                                           controller.hitungOngkir();
-                                          value == false ? controller.hargaBarang.clear() : null;
+                                          // value == false ? controller.hargaBarang.clear() : null;
                                           controller.hargaCODkey.currentState?.validate();
                                           controller.update();
                                         },
@@ -292,7 +292,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                           controller.dimensiPanjang.clear();
                                           controller.dimensiLebar.clear();
                                           controller.dimensiTinggi.clear();
-                                          controller.beratKiriman.text = '0';
+                                          controller.beratKiriman.text = '1';
                                           controller.update();
                                           controller.getOngkir();
                                         },
