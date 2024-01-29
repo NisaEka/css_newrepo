@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/connection_test.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_impl.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
@@ -13,5 +14,6 @@ class GlobalBinding extends Bindings {
     Get.put<StorageCore>(StorageCore(), permanent: true);
     Get.put<AuthRepository>(AuthRepositoryImpl(), permanent: true);
     Get.put<TransactionRepository>(TransactionRepositoryImpl(), permanent: true);
+    Get.put<ConnectionTest>(ConnectionTest(), permanent: true);
   }
 }

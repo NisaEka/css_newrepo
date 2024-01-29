@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
@@ -7,6 +6,7 @@ import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,12 +25,14 @@ class InformasiPengirimController extends BaseController {
   bool isLoading = false;
   bool isLoadOrigin = false;
   bool isValidate = false;
+  bool isOnline = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<AccountNumberModel> accountList = [];
   List<OriginModel> originList = [];
 
   AccountNumberModel? selectedAccount;
+  GetOriginModel? originModel;
   OriginModel? selectedOrigin;
   ShipperModel? senderOrigin;
 
@@ -39,7 +41,6 @@ class InformasiPengirimController extends BaseController {
     super.onInit();
     Future.wait([
       initData(),
-      connectivityCheck(),
     ]);
   }
 
@@ -59,26 +60,14 @@ class InformasiPengirimController extends BaseController {
     return dropshipper;
   }
 
-  Future<bool> connectivityCheck() async {
-    bool isOnline = false;
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      isOnline = (result.isNotEmpty && result[0].rawAddress.isNotEmpty);
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('online');
-      }
-      update();
-    } on SocketException catch (_) {
-      print('offline');
-    }
-
-    return isOnline;
-  }
 
   Future<void> initData() async {
-    connectivityCheck();
     accountList = [];
     isLoading = true;
+    connection.isOnline().then((value) => isOnline = value);
+    update();
+
+    // if (isOnline) {
     try {
       await transaction.getAccountNumber().then((value) => accountList.addAll(value.payload ?? []));
       await transaction.getSender().then((value) {
@@ -97,7 +86,25 @@ class InformasiPengirimController extends BaseController {
       update();
     } catch (e) {
       e.printError();
+      var accounts = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
+      accountList.addAll(accounts.payload ?? []);
+      // accountList.addAll(GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts)) );
+      senderOrigin = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+      namaPengirim.text = senderOrigin?.name ?? '';
+      nomorTelpon.text = senderOrigin?.phone ?? '';
+      kotaPengirim.text = senderOrigin?.origin?.originName ?? '';
+      kodePos.text = senderOrigin?.zipCode ?? '';
+      alamatLengkap.text = senderOrigin?.address ?? '';
+      selectedOrigin = OriginModel(
+        originCode: senderOrigin?.origin?.originCode,
+        branchCode: senderOrigin?.origin?.branchCode,
+        originName: senderOrigin?.origin?.originName,
+      );
     }
+    // } else {
+    //
+    // }
+
     isLoading = false;
     update();
   }
@@ -105,12 +112,16 @@ class InformasiPengirimController extends BaseController {
   Future<List<OriginModel>> getOriginList(String keyword, String accountID) async {
     originList = [];
     isLoadOrigin = true;
-    var response = await transaction.getOrigin(keyword, accountID);
-    var models = response.payload?.toList();
+    try {
+      var response = await transaction.getOrigin(keyword, accountID);
+      originModel = response;
+    } catch (e) {
+      e.printError();
+    }
 
     isLoadOrigin = false;
     update();
-    return models ?? [];
+    return originModel?.payload?.toList() ?? [];
   }
 
   void nextStep() {

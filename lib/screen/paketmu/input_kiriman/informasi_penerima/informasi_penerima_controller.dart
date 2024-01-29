@@ -27,6 +27,7 @@ class InformasiPenerimaController extends BaseController {
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<DestinationModel> destinationList = [];
 
+  GetDestinationModel? destinationModel;
   DestinationModel? selectedDestination;
   ReceiverModel? selectedReceiver;
 
@@ -60,12 +61,16 @@ class InformasiPenerimaController extends BaseController {
   Future<List<DestinationModel>> getDestinationList(String keyword) async {
     isLoading = true;
     destinationList = [];
-    var response = await transaction.getDestination(keyword);
-    var models = response.payload?.toList();
+    try {
+      var response = await transaction.getDestination(keyword);
+      destinationModel = response;
+    } catch (e) {
+      e.printError();
+    }
 
     isLoading = false;
     update();
-    return models ?? [];
+    return destinationModel?.payload?.toList() ?? [];
   }
 
   void nextStep() {

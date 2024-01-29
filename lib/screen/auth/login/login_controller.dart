@@ -64,7 +64,7 @@ class LoginController extends BaseController {
     isLoading = true;
     update();
     try {
-      await authRepository
+      await auth
           .postLogin(
         InputLoginModel(
           email: emailTextField.text,

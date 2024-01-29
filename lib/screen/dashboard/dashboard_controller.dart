@@ -27,8 +27,6 @@ class DashboardController extends BaseController {
   var bannerIndex = 0.obs;
   CarouselController commercialCarousel = CarouselController();
 
-
-
   @override
   void onInit() {
     super.onInit();
@@ -63,7 +61,7 @@ class DashboardController extends BaseController {
 
       await transaction.getAccountNumber().then((value) async => await storage.saveData(
             StorageCore.accounts,
-            value.payload,
+            value,
           ));
 
       var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
