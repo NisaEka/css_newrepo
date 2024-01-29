@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
@@ -36,7 +37,10 @@ class InformasiPengirimController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([initData()]);
+    Future.wait([
+      initData(),
+      connectivityCheck(),
+    ]);
   }
 
   FutureOr<DropshipperModel?> getSelectedDropshipper(DropshipperModel dropshipper) async {
@@ -55,7 +59,24 @@ class InformasiPengirimController extends BaseController {
     return dropshipper;
   }
 
+  Future<bool> connectivityCheck() async {
+    bool isOnline = false;
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      isOnline = (result.isNotEmpty && result[0].rawAddress.isNotEmpty);
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('online');
+      }
+      update();
+    } on SocketException catch (_) {
+      print('offline');
+    }
+
+    return isOnline;
+  }
+
   Future<void> initData() async {
+    connectivityCheck();
     accountList = [];
     isLoading = true;
     try {

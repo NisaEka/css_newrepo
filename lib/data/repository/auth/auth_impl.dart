@@ -20,18 +20,7 @@ class AuthRepositoryImpl extends AuthRepository {
       );
       return LoginModel.fromJson(response.data);
     } on DioError catch (e) {
-      Get.showSnackbar(
-        GetSnackBar(
-          icon: const Icon(
-            Icons.info,
-            color: Colors.white,
-          ),
-          message: e.message,
-          isDismissible: true,
-          duration: const Duration(seconds: 3),
-          backgroundColor: Colors.red,
-        ),
-      );
+
       return e.response?.data!;
     }
   }

@@ -30,11 +30,10 @@ class LoginAlertDialog extends StatelessWidget {
           ),
           child: Text('Login'.tr),
           onPressed: () {
-            Get.to(const LoginScreen());
+            Get.off(const LoginScreen());
           },
         ),
       ],
     );
-    ;
   }
 }

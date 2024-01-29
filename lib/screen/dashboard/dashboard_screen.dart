@@ -75,7 +75,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       children: [
                                         CustomLabelText(
                                           title: 'Selamat Datang'.tr,
-                                          value: 'Joni',
+                                          value: controller.userName ?? '',
                                           fontColor: whiteColor,
                                         ),
                                         const JLCPointWidget()
@@ -118,11 +118,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           bottomNavigationBar: BottomBar(
             menu: 0,
             isLogin: controller.isLogin,
-            onTap: (index) {
-              controller.selectedIndex.value = index;
-              controller.update();
-              Get.offAll(const DashboardScreen(), arguments: index);
-            },
+            // onTap: (index) {
+            //   controller.selectedIndex.value = index;
+            //   controller.update();
+            //   // Get.offAll(const DashboardScreen(), arguments: index);
+            // },
           ),
         );
       },

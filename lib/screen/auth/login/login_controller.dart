@@ -4,6 +4,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -74,11 +75,14 @@ class LoginController extends BaseController {
       )
           .then((value) async {
         if (value.code == 200) {
-          await storage.saveToken(
-            value.payload?.token ?? '',
-            value.payload?.allowedMenu ?? AllowedMenu(),
-          );
-          Get.offAll(const DashboardScreen());
+          await storage
+              .saveToken(
+                value.payload?.token ?? '',
+                value.payload?.allowedMenu ?? AllowedMenu(),
+              )
+              .then((_) => Get.delete<DashboardController>())
+              .then((_) => Get.offAll(const DashboardScreen()));
+
           // Get.showSnackbar(
           //   GetSnackBar(
           //     icon: const Icon(

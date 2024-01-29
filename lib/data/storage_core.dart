@@ -9,6 +9,8 @@ class StorageCore {
   static const String token = 'token';
   static const String allowedMenu = 'allowed_menu';
   static const String favoriteMenu = 'favorite_menu';
+  static const String shipper = 'shipper';
+  static const String accounts = 'accounts';
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);
@@ -16,6 +18,14 @@ class StorageCore {
 
   Future<String> readString(String key) async {
     return await storage.read(key: key) ?? "";
+  }
+
+  Future<void> saveData(String key, dynamic data) async {
+    await storage.write(key: key, value: jsonEncode(data));
+  }
+
+  Future<dynamic> readData(String key) async {
+    return jsonDecode(await storage.read(key: key) ?? '{}');
   }
 
   void deleteString(String key) async {

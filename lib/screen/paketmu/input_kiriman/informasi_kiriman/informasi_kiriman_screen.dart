@@ -299,18 +299,19 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       )
                                     ],
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CustomTextFormField(
-                                        controller: controller.dimensiPanjang,
-                                        hintText: 'Panjang'.tr,
-                                        // hintText: 'Cm',
-                                        width: Get.width / 3.5,
-                                        inputType: TextInputType.number,
-                                        suffixIcon: SatuanFieldIcon(
-                                          title: 'CM',
-                                          isSuffix: true,
+                                  controller.dimensi
+                                      ? Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            CustomTextFormField(
+                                              controller: controller.dimensiPanjang,
+                                              hintText: 'Panjang'.tr,
+                                              // hintText: 'Cm',
+                                              width: Get.width / 3.5,
+                                              inputType: TextInputType.number,
+                                              suffixIcon: SatuanFieldIcon(
+                                                title: 'CM',
+                                                isSuffix: true,
                                         ),
                                         readOnly: !controller.dimensi,
                                         onChanged: (value) {
@@ -338,17 +339,18 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         // hintText: 'Cm',
                                         width: Get.width / 3.5,
                                         inputType: TextInputType.number,
-                                        suffixIcon: SatuanFieldIcon(
-                                          title: 'CM',
-                                          isSuffix: true,
-                                        ),
-                                        readOnly: !controller.dimensi,
-                                        onChanged: (value) {
-                                          controller.hitungBerat();
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                                              suffixIcon: SatuanFieldIcon(
+                                                title: 'CM',
+                                                isSuffix: true,
+                                              ),
+                                              readOnly: !controller.dimensi,
+                                              onChanged: (value) {
+                                                controller.hitungBerat();
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                      : SizedBox(),
                                   controller.isCalculate
                                       ? Container(
                                           width: Get.width,
@@ -417,7 +419,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Text('Ongkos Kirim'),
-                                                  Text('Rp. ${controller.totalOngkir.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                  Text('Rp. ${controller.flatRate.toInt().toCurrency()}', style: listTitleTextStyle),
                                                 ],
                                               ),
                                               Row(
