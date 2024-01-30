@@ -1,8 +1,8 @@
 import 'dart:convert';
-TransactionFeeDataModel transactionFeeDataModelFromJson(String str) => TransactionFeeDataModel.fromJson(json.decode(str));
-String transactionFeeDataModelToJson(TransactionFeeDataModel data) => json.encode(data.toJson());
-class TransactionFeeDataModel {
-  TransactionFeeDataModel({
+DataTransactionFeeModel transactionFeeDataModelFromJson(String str) => DataTransactionFeeModel.fromJson(json.decode(str));
+String transactionFeeDataModelToJson(DataTransactionFeeModel data) => json.encode(data.toJson());
+class DataTransactionFeeModel {
+  DataTransactionFeeModel({
       String? originCode, 
       String? destinationCode, 
       String? serviceCode, 
@@ -15,7 +15,7 @@ class TransactionFeeDataModel {
     _custNo = custNo;
 }
 
-  TransactionFeeDataModel.fromJson(dynamic json) {
+  DataTransactionFeeModel.fromJson(dynamic json) {
     _originCode = json['origin_code'];
     _destinationCode = json['destination_code'];
     _serviceCode = json['service_code'];
@@ -27,12 +27,12 @@ class TransactionFeeDataModel {
   String? _serviceCode;
   num? _weight;
   String? _custNo;
-TransactionFeeDataModel copyWith({  String? originCode,
+DataTransactionFeeModel copyWith({  String? originCode,
   String? destinationCode,
   String? serviceCode,
   num? weight,
   String? custNo,
-}) => TransactionFeeDataModel(  originCode: originCode ?? _originCode,
+}) => DataTransactionFeeModel(  originCode: originCode ?? _originCode,
   destinationCode: destinationCode ?? _destinationCode,
   serviceCode: serviceCode ?? _serviceCode,
   weight: weight ?? _weight,

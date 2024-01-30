@@ -92,7 +92,7 @@ class AddDropshipperScreen extends StatelessWidget {
                           color: controller.formKey.currentState?.validate() ?? false ? blueJNE : greyColor,
                           title: "Simpan Data Dropshipper".tr,
                           // radius: 20,
-                          onPressed: () {}),
+                          onPressed: () => controller.formKey.currentState?.validate() == true ? controller.saveDropshipper() : null),
                     ],
                   ),
                 ),

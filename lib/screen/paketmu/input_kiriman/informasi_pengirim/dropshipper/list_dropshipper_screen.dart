@@ -46,7 +46,7 @@ class ListDropshipperScreen extends StatelessWidget {
                     hintText: 'Cari Data Dropshipper'.tr,
                     prefixIcon: const Icon(
                       Icons.search,
-                      color: Colors.white,
+                      color: whiteColor,
                     ),
                   ),
                   const SizedBox(height: 30),

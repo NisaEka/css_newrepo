@@ -223,7 +223,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         style: sublistTitleTextStyle,
                                       ),
                                       trailing: Checkbox(
-                                        checkColor: Colors.white,
+                                        checkColor: whiteColor,
                                         activeColor: redJNE,
                                         value: controller.asuransi,
                                         onChanged: (value) {
@@ -465,7 +465,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              controller.isLoading || controller.isCalculate ? const LoadingDialog() : Container(),
+              controller.isLoading || controller.isCalculate || controller.isServiceLoad ? const LoadingDialog() : Container(),
             ],
           );
         });

@@ -18,7 +18,7 @@ class CustomSnackbar extends StatelessWidget {
     return GetSnackBar(
       icon: const Icon(
         Icons.info,
-        color: Colors.white,
+        color: whiteColor,
       ),
       message: message,
       isDismissible: true,

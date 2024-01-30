@@ -124,9 +124,11 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
 
                                 ),
                                 CustomFilledButton(
-                                  color: greyLightColor3,
+                                  color: whiteColor,
                                   title: 'Simpan Data Penerima'.tr,
-                                  fontColor: blueJNE,
+                                  borderColor: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,
+                                  fontColor: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,
+                                  onPressed: () => controller.formKey.currentState?.validate() == true ? controller.saveReceiver() : null,
                                 ),
                                 CustomFilledButton(
                                   color: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,

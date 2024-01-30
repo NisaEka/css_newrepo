@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
-import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:flutter/material.dart';
@@ -151,5 +152,34 @@ class InformasiPengirimController extends BaseController {
         dropship: dropshipper,
       ),
     });
+  }
+
+  Future<void> saveDropshipper() async {
+    try {
+      await transaction
+          .postDropshipper(DropshipperModel(
+            name: namaPengirim.text,
+            phone: nomorTelpon.text,
+            origin: selectedOrigin?.originCode,
+            zipCode: kodePos.text,
+            address: alamatLengkap.text,
+          ))
+          .then(
+            (value) => Get.showSnackbar(
+              GetSnackBar(
+                icon: const Icon(
+                  Icons.info,
+                  color: whiteColor,
+                ),
+                message: value.message.toString(),
+                isDismissible: true,
+                duration: const Duration(seconds: 3),
+                backgroundColor: successColor,
+              ),
+            ),
+          );
+    } catch (e) {
+      e.printError();
+    }
   }
 }

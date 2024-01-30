@@ -1,12 +1,12 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DraftTransactionListItem extends StatelessWidget {
-  final TransactionDataModel data;
+  final DataTransactionModel data;
   final VoidCallback? onDelete;
   final VoidCallback? onValidate;
 

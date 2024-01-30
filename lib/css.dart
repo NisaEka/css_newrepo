@@ -41,7 +41,7 @@ class App extends StatelessWidget {
         colorScheme: const ColorScheme.light(
           primary: blueJNE,
           secondary: greyLightColor1,
-          background: Colors.white,
+          background: whiteColor,
         ),
         useMaterial3: true,
         fontFamily: 'Ubuntu',

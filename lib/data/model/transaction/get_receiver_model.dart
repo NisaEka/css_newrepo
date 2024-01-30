@@ -108,7 +108,9 @@ class ReceiverModel {
     _phone = json['phone'];
     _destinationCode = json['destination_code'];
     _destinationDescription = json['destination_description'];
+    _destinationDescription = json['destination_desc'];
     _idDestination = json['id_destination'];
+    _idDestination = json['destination_id'];
     _idReceive = json['id_receive'];
     _receiverDistrict = json['receiver_district'];
     _receiverSubDistrict = json['receiver_sub_district'];
@@ -208,7 +210,9 @@ class ReceiverModel {
     map['phone'] = _phone;
     map['destination_code'] = _destinationCode;
     map['destination_description'] = _destinationDescription;
+    map['destination_desc'] = _destinationDescription;
     map['id_destination'] = _idDestination;
+    map['destination_id'] = _idDestination;
     map['id_receive'] = _idReceive;
     map['receiver_district'] = _receiverDistrict;
     map['receiver_sub_district'] = _receiverSubDistrict;

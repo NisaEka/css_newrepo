@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 
-TransactionDataModel transactionDataModelFromJson(String str) => TransactionDataModel.fromJson(json.decode(str));
+DataTransactionModel transactionDataModelFromJson(String str) => DataTransactionModel.fromJson(json.decode(str));
 
-String transactionDataModelToJson(TransactionDataModel data) => json.encode(data.toJson());
+String transactionDataModelToJson(DataTransactionModel data) => json.encode(data.toJson());
 
-class TransactionDataModel {
-  TransactionDataModel({
+class DataTransactionModel {
+  DataTransactionModel({
     Delivery? delivery,
     Account? account,
     Origin? origin,
@@ -30,7 +30,7 @@ class TransactionDataModel {
     _dataDestination = dataDestination;
   }
 
-  TransactionDataModel.fromJson(dynamic json) {
+  DataTransactionModel.fromJson(dynamic json) {
     _delivery = json['delivery'] != null ? Delivery.fromJson(json['delivery']) : null;
     _account = json['account'] != null ? Account.fromJson(json['account']) : null;
     _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
@@ -52,7 +52,7 @@ class TransactionDataModel {
   AccountNumberModel? _dataAccount;
   DestinationModel? _dataDestination;
 
-  TransactionDataModel copyWith({
+  DataTransactionModel copyWith({
     Delivery? delivery,
     Account? account,
     Origin? origin,
@@ -63,7 +63,7 @@ class TransactionDataModel {
     AccountNumberModel? dataAccount,
     DestinationModel? dataDestination,
   }) =>
-      TransactionDataModel(
+      DataTransactionModel(
         delivery: delivery ?? _delivery,
         account: account ?? _account,
         origin: origin ?? _origin,

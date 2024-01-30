@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
-import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -97,5 +98,42 @@ class InformasiPenerimaController extends BaseController {
       ),
       "destination": selectedDestination,
     });
+  }
+
+  Future<void> saveReceiver() async {
+    try {
+      await transaction
+          .postReceiver(ReceiverModel(
+            name: namaPenerima.text,
+            contact: namaPenerima.text,
+            phone: nomorTelpon.text,
+            address: alamatLengkap.text,
+            city: selectedDestination?.cityName,
+            zipCode: selectedDestination?.zipCode,
+            region: selectedDestination?.provinceName,
+            country: selectedDestination?.countryName,
+            destinationCode: selectedDestination?.destinationCode,
+            destinationDescription: selectedDestination?.cityName,
+            idDestination: selectedDestination?.id,
+            receiverDistrict: selectedDestination?.districtName,
+            receiverSubDistrict: selectedDestination?.subDistrictName,
+          ))
+          .then(
+            (value) => Get.showSnackbar(
+              GetSnackBar(
+                icon: const Icon(
+                  Icons.info,
+                  color: whiteColor,
+                ),
+                message: value.message.toString(),
+                isDismissible: true,
+                duration: const Duration(seconds: 3),
+                backgroundColor: successColor,
+              ),
+            ),
+          );
+    } catch (e) {
+      e.printError();
+    }
   }
 }

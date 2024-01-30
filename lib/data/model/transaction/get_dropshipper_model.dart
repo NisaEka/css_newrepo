@@ -89,6 +89,7 @@ class DropshipperModel {
     _city = json['city'];
     _address = json['address'];
     _origin = json['origin'];
+    _origin = json['origin_code'];
   }
 
   String? _id;
@@ -141,6 +142,7 @@ class DropshipperModel {
     map['city'] = _city;
     map['address'] = _address;
     map['origin'] = _origin;
+    map['origin_code'] = _origin;
     return map;
   }
 }

@@ -8,9 +8,9 @@ import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
-import 'package:css_mobile/data/model/transaction/service_data_model.dart';
-import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
-import 'package:css_mobile/data/model/transaction/transaction_fee_data_model.dart';
+import 'package:css_mobile/data/model/transaction/data_service_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 
 abstract class TransactionRepository {
   Future<GetAccountNumberModel> getAccountNumber();
@@ -28,11 +28,15 @@ abstract class TransactionRepository {
 
   Future<GetReceiverModel> getReceiver();
 
-  Future<GetServiceModel> getService(ServiceDataModel param);
+  Future<GetServiceModel> getService(DataServiceModel param);
 
-  Future<GetTransactionFeeModel> getTransactionFee(TransactionFeeDataModel params);
+  Future<GetTransactionFeeModel> getTransactionFee(DataTransactionFeeModel params);
 
-  Future<PostTransactionModel> postTransaction(TransactionDataModel data);
+  Future<PostTransactionModel> postTransaction(DataTransactionModel data);
 
   Future<GetCodFeeModel> getCODFee(String accountID);
+
+  Future postDropshipper(DropshipperModel data);
+
+  Future postReceiver(ReceiverModel data);
 }

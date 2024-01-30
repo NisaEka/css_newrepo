@@ -4,10 +4,10 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
-import 'package:css_mobile/data/model/transaction/service_data_model.dart';
-import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
-import 'package:css_mobile/data/model/transaction/transaction_draft_model.dart';
-import 'package:css_mobile/data/model/transaction/transaction_fee_data_model.dart';
+import 'package:css_mobile/data/model/transaction/data_service_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
@@ -57,10 +57,10 @@ class InformasiKirimaController extends BaseController {
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<ServiceModel> serviceList = [];
-  List<TransactionDataModel> draftList = [];
+  List<DataTransactionModel> draftList = [];
 
   ServiceModel? selectedService;
-  TransactionDraftModel? draftData;
+  DraftTransactionModel? draftData;
 
   @override
   void onInit() {
@@ -138,7 +138,7 @@ class InformasiKirimaController extends BaseController {
     try {
       await transaction
           .getTransactionFee(
-        TransactionFeeDataModel(
+        DataTransactionFeeModel(
           destinationCode: destination.destinationCode,
           originCode: origin.code,
           serviceCode: selectedService?.serviceCode,
@@ -192,7 +192,7 @@ class InformasiKirimaController extends BaseController {
     try {
       await transaction
           .getService(
-            ServiceDataModel(
+            DataServiceModel(
               accountId: account.accountId,
               originCode: origin.code,
               destinationCode: destination.destinationCode,
@@ -205,6 +205,7 @@ class InformasiKirimaController extends BaseController {
     } catch (e) {
       e.printError();
     }
+    hitungOngkir();
 
     goods != null ? loadDraft() : null;
     isServiceLoad = false;
@@ -213,9 +214,9 @@ class InformasiKirimaController extends BaseController {
 
   Future<void> saveDraft() async {
     draftList = [];
-    TransactionDraftModel temp = TransactionDraftModel.fromJson(await storage.readData(StorageCore.draftTransaction));
+    DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
     draftList.addAll(temp.draft ?? []);
-    draftList.add(TransactionDataModel(
+    draftList.add(DataTransactionModel(
       delivery: Delivery(
         serviceCode: selectedService?.serviceCode,
         woodPackaging: packingKayu ? "Y" : "N",
@@ -249,7 +250,7 @@ class InformasiKirimaController extends BaseController {
     ));
 
     var data = '{"draft" : ${jsonEncode(draftList)}}';
-    draftData = TransactionDraftModel.fromJson(jsonDecode(data));
+    draftData = DraftTransactionModel.fromJson(jsonDecode(data));
 
     await storage.saveData(StorageCore.draftTransaction, draftData).then(
           (_) => Get.close(3),
@@ -261,7 +262,7 @@ class InformasiKirimaController extends BaseController {
     update();
     try {
       await transaction
-          .postTransaction(TransactionDataModel(
+          .postTransaction(DataTransactionModel(
             delivery: Delivery(
               serviceCode: selectedService?.serviceCode,
               woodPackaging: packingKayu ? "Y" : "N",

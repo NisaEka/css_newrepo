@@ -20,7 +20,7 @@ class AddPenerimaScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               elevation: 1,
-              backgroundColor: Colors.white,
+              backgroundColor: whiteColor,
               title: Text(
                 'Tambah Data Penerima'.tr,
                 style: appTitleTextStyle.copyWith(
@@ -89,8 +89,9 @@ class AddPenerimaScreen extends StatelessWidget {
                             isRequired: true,
                           ),
                           CustomFilledButton(
-                            color: blueJNE,
+                            color: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,
                             title: 'Simpan Data Penerima'.tr,
+                            onPressed: () => controller.formKey.currentState?.validate() == true ? controller.saveReceiver() : null,
                           ),
                         ],
                       ))),

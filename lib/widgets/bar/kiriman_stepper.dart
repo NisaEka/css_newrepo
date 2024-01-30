@@ -26,7 +26,7 @@ class KirimanStepper extends StatelessWidget {
         colorScheme: const ColorScheme.light(
           primary: blueJNE,
           secondary: greyColor,
-          background: Colors.white,
+          background: whiteColor,
         ),
       ),
       child: Stepper(

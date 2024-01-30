@@ -188,6 +188,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                   // print(jsonEncode(value));
                                 },
                                 value: controller.selectedOrigin,
+                                isRequired: true,
                                 selectedItem: controller.kotaPengirim.text,
                                 readOnly: controller.selectedAccount == null ? true : !controller.dropshipper,
                                 hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
@@ -211,10 +212,15 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               ),
                               controller.dropshipper
                                   ? CustomFilledButton(
-                                color: greyLightColor3,
-                                title: 'Simpan Data Dropshipper'.tr,
-                                fontColor: blueJNE,
-                              )
+                                      color: whiteColor,
+                                      borderColor: (controller.formKey.currentState?.validate() == true && controller.selectedAccount != null)
+                                          ? blueJNE
+                                          : greyColor,
+                                      title: 'Simpan Data Dropshipper'.tr,
+                                      fontColor: (controller.formKey.currentState?.validate() == true && controller.selectedAccount != null)
+                                          ? blueJNE
+                                          : greyColor,
+                                    )
                                   : const SizedBox(),
                               CustomFilledButton(
                                 color:

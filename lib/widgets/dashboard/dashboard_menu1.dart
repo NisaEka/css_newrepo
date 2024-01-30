@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
@@ -13,7 +14,7 @@ class DashboardMenu1 extends StatelessWidget {
       margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
+        color: whiteColor,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),

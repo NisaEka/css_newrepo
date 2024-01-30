@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 
 class CustomFilledButton extends StatelessWidget {
@@ -23,7 +24,7 @@ class CustomFilledButton extends StatelessWidget {
       required this.color,
       this.onPressed,
       this.borderColor = Colors.transparent,
-      this.fontColor = Colors.white,
+      this.fontColor = whiteColor,
       this.radius = 10,
       this.fontSize = 14,
       this.margin,
@@ -50,17 +51,17 @@ class CustomFilledButton extends StatelessWidget {
           children: [
             icon != null
                 ? Icon(
-                    icon,
-                    color: fontColor,
-                    size: fontSize! + 2,
-                  )
+              icon,
+              color: fontColor,
+              size: fontSize! + 2,
+            )
                 : Container(),
             title != null
                 ? Text(
-                    ' $title',
-                    style: TextStyle(color: fontColor, fontWeight: FontWeight.w900, fontSize: fontSize),
-                    textAlign: TextAlign.center,
-                  )
+              ' $title',
+              style: TextStyle(color: fontColor, fontWeight: FontWeight.w900, fontSize: fontSize),
+              textAlign: TextAlign.center,
+            )
                 : Container(),
           ],
         ),

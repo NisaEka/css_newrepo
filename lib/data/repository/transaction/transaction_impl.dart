@@ -1,3 +1,6 @@
+import 'package:css_mobile/data/model/transaction/data_service_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
@@ -8,9 +11,6 @@ import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
-import 'package:css_mobile/data/model/transaction/service_data_model.dart';
-import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
-import 'package:css_mobile/data/model/transaction/transaction_fee_data_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
 import 'package:dio/dio.dart';
@@ -119,7 +119,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<GetServiceModel> getService(ServiceDataModel param) async {
+  Future<GetServiceModel> getService(DataServiceModel param) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
@@ -141,7 +141,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<GetTransactionFeeModel> getTransactionFee(TransactionFeeDataModel params) async {
+  Future<GetTransactionFeeModel> getTransactionFee(DataTransactionFeeModel params) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
@@ -173,7 +173,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<PostTransactionModel> postTransaction(TransactionDataModel data) async {
+  Future<PostTransactionModel> postTransaction(DataTransactionModel data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo();
@@ -268,6 +268,42 @@ class TransactionRepositoryImpl extends TransactionRepository {
       return GetCodFeeModel.fromJson(response.data);
     } on DioError catch (e) {
       //print("response error: ${e.response?.data}");
+      return e.error;
+    }
+  }
+
+  @override
+  Future postDropshipper(DropshipperModel data) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    data.toJson().printInfo();
+    try {
+      Response response = await network.dio.post(
+        "/dropshipper",
+        data: data,
+      );
+      print(response.data);
+      return response.data;
+    } on DioError catch (e) {
+      print("response error: ${e.response?.data}");
+      return e.error;
+    }
+  }
+
+  @override
+  Future postReceiver(ReceiverModel data) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    data.toJson().printInfo();
+    try {
+      Response response = await network.dio.post(
+        "/receiver",
+        data: data,
+      );
+      print(response.data);
+      return response.data;
+    } on DioError catch (e) {
+      print("response error: ${e.response?.data}");
       return e.error;
     }
   }

@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
-import 'package:css_mobile/data/model/transaction/transaction_draft_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
 import 'package:get/get.dart';
 
 class DraftTransaksiController extends BaseController {
-  List<TransactionDataModel> draftList = [];
-  TransactionDraftModel? draftData;
+  List<DataTransactionModel> draftList = [];
+  DraftTransactionModel? draftData;
 
   @override
   void onInit() {
@@ -19,7 +19,7 @@ class DraftTransaksiController extends BaseController {
 
   Future<void> initData() async {
     draftList = [];
-    var data = TransactionDraftModel.fromJson(await storage.readData(StorageCore.draftTransaction));
+    var data = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
     draftList.addAll(data.draft);
 
     update();
@@ -28,7 +28,7 @@ class DraftTransaksiController extends BaseController {
   void delete(int index) async {
     draftList.removeAt(index);
     var data = '{"draft" : ${jsonEncode(draftList)}}';
-    draftData = TransactionDraftModel.fromJson(jsonDecode(data));
+    draftData = DraftTransactionModel.fromJson(jsonDecode(data));
 
     await storage.saveData(StorageCore.draftTransaction, draftData).then(
           (_) => update(),

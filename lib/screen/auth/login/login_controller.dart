@@ -87,7 +87,7 @@ class LoginController extends BaseController {
           //   GetSnackBar(
           //     icon: const Icon(
           //       Icons.info,
-          //       color: Colors.white,
+          //       color: whiteColor,
           //     ),
           //     message: value.message.toString(),
           //     isDismissible: true,
@@ -100,7 +100,7 @@ class LoginController extends BaseController {
             GetSnackBar(
               icon: const Icon(
                 Icons.error,
-                color: Colors.white,
+                color: whiteColor,
               ),
               message: value.message.toString(),
               isDismissible: true,
@@ -116,7 +116,7 @@ class LoginController extends BaseController {
       //   const GetSnackBar(
       //     icon: Icon(
       //       Icons.error,
-      //       color: Colors.white,
+      //       color: whiteColor,
       //     ),
       //     message: 'Email or Password is not valid',
       //     isDismissible: true,

@@ -44,7 +44,7 @@ class ListPenerimaScreen extends StatelessWidget {
                     hintText: 'Cari Data Penerima'.tr,
                     prefixIcon: const Icon(
                       Icons.search,
-                      color: Colors.white,
+                      color: whiteColor,
                     ),
                   ),
                   const SizedBox(height: 30),

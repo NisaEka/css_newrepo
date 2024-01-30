@@ -1,8 +1,8 @@
 import 'dart:convert';
-ServiceDataModel serviceDataModelFromJson(String str) => ServiceDataModel.fromJson(json.decode(str));
-String serviceDataModelToJson(ServiceDataModel data) => json.encode(data.toJson());
-class ServiceDataModel {
-  ServiceDataModel({
+DataServiceModel serviceDataModelFromJson(String str) => DataServiceModel.fromJson(json.decode(str));
+String serviceDataModelToJson(DataServiceModel data) => json.encode(data.toJson());
+class DataServiceModel {
+  DataServiceModel({
       String? accountId, 
       String? originCode, 
       String? destinationCode,}){
@@ -11,7 +11,7 @@ class ServiceDataModel {
     _destinationCode = destinationCode;
 }
 
-  ServiceDataModel.fromJson(dynamic json) {
+  DataServiceModel.fromJson(dynamic json) {
     _accountId = json['account_id'];
     _originCode = json['origin_code'];
     _destinationCode = json['destination_code'];
@@ -19,10 +19,10 @@ class ServiceDataModel {
   String? _accountId;
   String? _originCode;
   String? _destinationCode;
-ServiceDataModel copyWith({  String? accountId,
+DataServiceModel copyWith({  String? accountId,
   String? originCode,
   String? destinationCode,
-}) => ServiceDataModel(  accountId: accountId ?? _accountId,
+}) => DataServiceModel(  accountId: accountId ?? _accountId,
   originCode: originCode ?? _originCode,
   destinationCode: destinationCode ?? _destinationCode,
 );
