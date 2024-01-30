@@ -148,6 +148,7 @@ class InformasiPengirimController extends BaseController {
         country: "ID",
         contact: senderOrigin?.name?.toUpperCase(),
         phone: senderOrigin?.phone,
+        dropship: dropshipper,
       ),
     });
   }

@@ -1,6 +1,12 @@
 import 'dart:convert';
+
+import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+
 TransactionDataModel transactionDataModelFromJson(String str) => TransactionDataModel.fromJson(json.decode(str));
+
 String transactionDataModelToJson(TransactionDataModel data) => json.encode(data.toJson());
+
 class TransactionDataModel {
   TransactionDataModel({
     Delivery? delivery,
@@ -10,6 +16,8 @@ class TransactionDataModel {
     Goods? goods,
     Shipper? shipper,
     Receiver? receiver,
+    AccountNumberModel? dataAccount,
+    DestinationModel? dataDestination,
   }) {
     _delivery = delivery;
     _account = account;
@@ -18,6 +26,8 @@ class TransactionDataModel {
     _goods = goods;
     _shipper = shipper;
     _receiver = receiver;
+    _dataAccount = dataAccount;
+    _dataDestination = dataDestination;
   }
 
   TransactionDataModel.fromJson(dynamic json) {
@@ -28,6 +38,8 @@ class TransactionDataModel {
     _goods = json['goods'] != null ? Goods.fromJson(json['goods']) : null;
     _shipper = json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
     _receiver = json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
+    _dataAccount = json['data_account'] != null ? AccountNumberModel.fromJson(json['data_account']) : null;
+    _dataDestination = json['data_destination'] != null ? DestinationModel.fromJson(json['data_destination']) : null;
   }
 
   Delivery? _delivery;
@@ -37,6 +49,8 @@ class TransactionDataModel {
   Goods? _goods;
   Shipper? _shipper;
   Receiver? _receiver;
+  AccountNumberModel? _dataAccount;
+  DestinationModel? _dataDestination;
 
   TransactionDataModel copyWith({
     Delivery? delivery,
@@ -46,6 +60,8 @@ class TransactionDataModel {
     Goods? goods,
     Shipper? shipper,
     Receiver? receiver,
+    AccountNumberModel? dataAccount,
+    DestinationModel? dataDestination,
   }) =>
       TransactionDataModel(
         delivery: delivery ?? _delivery,
@@ -55,14 +71,27 @@ class TransactionDataModel {
         goods: goods ?? _goods,
         shipper: shipper ?? _shipper,
         receiver: receiver ?? _receiver,
+        dataAccount: dataAccount ?? _dataAccount,
+        dataDestination: dataDestination ?? _dataDestination,
       );
+
   Delivery? get delivery => _delivery;
+
   Account? get account => _account;
+
   Origin? get origin => _origin;
+
   Destination? get destination => _destination;
+
   Goods? get goods => _goods;
+
   Shipper? get shipper => _shipper;
+
   Receiver? get receiver => _receiver;
+
+  AccountNumberModel? get dataAccount => _dataAccount;
+
+  DestinationModel? get dataDestination => _dataDestination;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -86,6 +115,12 @@ class TransactionDataModel {
     }
     if (_receiver != null) {
       map['receiver'] = _receiver?.toJson();
+    }
+    if (_dataAccount != null) {
+      map['data_account'] = _dataAccount?.toJson();
+    }
+    if (_dataDestination != null) {
+      map['data_destination'] = _dataDestination?.toJson();
     }
     return map;
   }
@@ -233,6 +268,7 @@ class Shipper {
     String? country,
     String? contact,
     String? phone,
+    bool? dropship,
   }) {
     _name = name;
     _address = address;
@@ -245,6 +281,7 @@ class Shipper {
     _country = country;
     _contact = contact;
     _phone = phone;
+    _dropship = dropship;
   }
 
   Shipper.fromJson(dynamic json) {
@@ -259,6 +296,7 @@ class Shipper {
     _country = json['country'];
     _contact = json['contact'];
     _phone = json['phone'];
+    _dropship = json['dropship'];
   }
   String? _name;
   String? _address;
@@ -271,6 +309,7 @@ class Shipper {
   String? _country;
   String? _contact;
   String? _phone;
+  bool? _dropship;
 
   Shipper copyWith({
     String? name,
@@ -284,6 +323,7 @@ class Shipper {
     String? country,
     String? contact,
     String? phone,
+    bool? dropship,
   }) =>
       Shipper(
         name: name ?? _name,
@@ -297,18 +337,30 @@ class Shipper {
         country: country ?? _country,
         contact: contact ?? _contact,
         phone: phone ?? _phone,
+        dropship: dropship ?? _dropship,
       );
   String? get name => _name;
   String? get address => _address;
+
   String? get address1 => _address1;
+
   String? get address2 => _address2;
+
   String? get address3 => _address3;
+
   String? get city => _city;
+
   String? get zip => _zip;
+
   String? get region => _region;
+
   String? get country => _country;
+
   String? get contact => _contact;
+
   String? get phone => _phone;
+
+  bool? get dropship => _dropship;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -323,6 +375,7 @@ class Shipper {
     map['country'] = _country;
     map['contact'] = _contact;
     map['phone'] = _phone;
+    map['dropship'] = _dropship;
     return map;
   }
 

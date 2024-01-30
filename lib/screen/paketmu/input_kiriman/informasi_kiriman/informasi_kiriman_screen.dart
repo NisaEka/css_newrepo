@@ -81,7 +81,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                             child: CustomFormLabel(label: 'Service'.tr),
                           ),
                           const SizedBox(height: 10),
-                          controller.isServiceLoad ? Center(child: Text('Loading service...')) : SizedBox()
+                          controller.isServiceLoad ? const Center(child: Text('Loading service...')) : const SizedBox()
                         ],
                       ),
                     ),
@@ -101,6 +101,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                               onTap: () {
                                 controller.selectedService = controller.serviceList[index];
                                 controller.getOngkir();
+                                controller.formValidate = controller.formKey.currentState?.validate() ?? false;
                                 controller.update();
                               },
                               child: Container(
@@ -132,6 +133,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                             Form(
                               key: controller.formKey,
                               onChanged: () {
+                                controller.formValidate = controller.formKey.currentState?.validate() ?? false;
                                 controller.update();
                               },
                               child: Column(
@@ -144,6 +146,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         hintText: 'Jenis Barang'.tr,
                                         width: Get.width / 2.3,
                                         isRequired: true,
+                                        value: controller.jenisBarang.text,
                                         items: const [
                                           DropdownMenuItem(
                                             value: "PAKET",
@@ -210,8 +213,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       border: Border.all(color: greyDarkColor2),
                                     ),
                                     child: ListTile(
-                                      contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                                      leading: Icon(
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                                      leading: const Icon(
                                         Icons.verified_user_outlined,
                                         color: redJNE,
                                       ),
@@ -245,7 +248,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                   // )
                                   //     : const SizedBox(),
                                   Container(
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         // borderRadius: BorderRadius.circular(8),
                                         // border: Border(
                                         //   bottom: BorderSide(color: greyLightColor3, width: 5),
@@ -253,7 +256,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         // ),
                                         ),
                                     child: ListTile(
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                                         leading: Switch(
                                           value: controller.packingKayu,
                                           onChanged: (bool? value) {
@@ -309,37 +312,37 @@ class InformasiKirimanScreen extends StatelessWidget {
                                               // hintText: 'Cm',
                                               width: Get.width / 3.5,
                                               inputType: TextInputType.number,
-                                              suffixIcon: SatuanFieldIcon(
+                                              suffixIcon: const SatuanFieldIcon(
                                                 title: 'CM',
                                                 isSuffix: true,
-                                        ),
-                                        readOnly: !controller.dimensi,
-                                        onChanged: (value) {
-                                          controller.hitungBerat();
-                                        },
-                                      ),
+                                              ),
+                                              readOnly: !controller.dimensi,
+                                              onChanged: (value) {
+                                                controller.hitungBerat();
+                                              },
+                                            ),
                                       CustomTextFormField(
                                         controller: controller.dimensiLebar,
-                                        hintText: 'Lebar'.tr,
-                                        // hintText: 'Cm',
-                                        width: Get.width / 3.5,
-                                        inputType: TextInputType.number,
-                                        suffixIcon: SatuanFieldIcon(
-                                          title: 'CM',
-                                          isSuffix: true,
-                                        ),
-                                        readOnly: !controller.dimensi,
-                                        onChanged: (value) {
-                                          controller.hitungBerat();
-                                        },
-                                      ),
+                                              hintText: 'Lebar'.tr,
+                                              // hintText: 'Cm',
+                                              width: Get.width / 3.5,
+                                              inputType: TextInputType.number,
+                                              suffixIcon: const SatuanFieldIcon(
+                                                title: 'CM',
+                                                isSuffix: true,
+                                              ),
+                                              readOnly: !controller.dimensi,
+                                              onChanged: (value) {
+                                                controller.hitungBerat();
+                                              },
+                                            ),
                                       CustomTextFormField(
                                         controller: controller.dimensiTinggi,
                                         hintText: 'Tinggi'.tr,
                                         // hintText: 'Cm',
                                         width: Get.width / 3.5,
                                         inputType: TextInputType.number,
-                                              suffixIcon: SatuanFieldIcon(
+                                        suffixIcon: const SatuanFieldIcon(
                                                 title: 'CM',
                                                 isSuffix: true,
                                               ),
@@ -350,7 +353,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                             ),
                                           ],
                                         )
-                                      : SizedBox(),
+                                      : const SizedBox(),
                                   controller.isCalculate
                                       ? Container(
                                           width: Get.width,
@@ -383,7 +386,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                   ? Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
-                                                        Text('COD fee'),
+                                                        const Text('COD fee'),
                                                         Text('${controller.codfee * 100}%'.replaceAll('.', ','), style: listTitleTextStyle),
                                                       ],
                                                     )
@@ -392,7 +395,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                   ? Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
-                                                        Text('Harga COD'),
+                                                        const Text('Harga COD'),
                                                         Text('Rp. ${controller.hargacod.toInt().toCurrency()}', style: listTitleTextStyle),
                                                       ],
                                                     )
@@ -401,7 +404,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                   ? Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
-                                                        Text('COD Ongkir'),
+                                                        const Text('COD Ongkir'),
                                                         Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
                                                       ],
                                                     )
@@ -410,7 +413,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                   ? Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
-                                                        Text('Asuransi Pengiriman'),
+                                                        const Text('Asuransi Pengiriman'),
                                                         Text('Rp. ${controller.isr.toInt().toCurrency()}', style: listTitleTextStyle),
                                                       ],
                                                     )
@@ -418,14 +421,14 @@ class InformasiKirimanScreen extends StatelessWidget {
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text('Ongkos Kirim'),
+                                                  const Text('Ongkos Kirim'),
                                                   Text('Rp. ${controller.flatRate.toInt().toCurrency()}', style: listTitleTextStyle),
                                                 ],
                                               ),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text('Total Ongkos Kirim'),
+                                                  const Text('Total Ongkos Kirim'),
                                                   Text('Rp. ${(controller.totalOngkir).toInt().toCurrency()}', style: listTitleTextStyle),
                                                 ],
                                               )
@@ -433,16 +436,25 @@ class InformasiKirimanScreen extends StatelessWidget {
                                           ),
                                         ),
                                   CustomFilledButton(
-                                    color: controller.formKey.currentState?.validate() == true && controller.selectedService != null
-                                        ? blueJNE
-                                        : greyColor,
+                                    color: controller.formValidate && controller.selectedService != null ? blueJNE : greyColor,
                                     title: 'Buat Resi'.tr,
                                     onPressed: () {
-                                      controller.formKey.currentState?.validate() == true && controller.selectedService != null
-                                          ? controller.saveTransaction()
-                                          : null;
+                                      controller.formValidate && controller.selectedService != null ? controller.saveTransaction() : null;
                                     },
-                                  )
+                                  ),
+
+                                  /// Sementara
+                                  controller.goods == null
+                                      ? CustomFilledButton(
+                                          color: whiteColor,
+                                          borderColor: controller.formValidate ? blueJNE : greyColor,
+                                          fontColor: controller.formValidate ? blueJNE : greyColor,
+                                          title: 'Simpan ke Draft'.tr,
+                                          onPressed: () {
+                                            controller.formValidate ? controller.saveDraft() : null;
+                                          },
+                                        )
+                                      : const SizedBox(),
                                 ],
                               ),
                             ),
@@ -453,7 +465,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              controller.isLoading ? const LoadingDialog() : Container(),
+              controller.isLoading || controller.isCalculate ? const LoadingDialog() : Container(),
             ],
           );
         });

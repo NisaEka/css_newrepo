@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/service_data_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_data_model.dart';
+import 'package:css_mobile/data/model/transaction/transaction_draft_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_fee_data_model.dart';
-import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +24,8 @@ class InformasiKirimaController extends BaseController {
   AccountNumberModel account = Get.arguments['account'];
   Receiver receiver = Get.arguments['receiver'];
   DestinationModel destination = Get.arguments['destination'];
+  Delivery? delivery = Get.arguments['delivery'];
+  Goods? goods = Get.arguments['goods'];
 
   final formKey = GlobalKey<FormState>();
   final hargaCODkey = GlobalKey<FormFieldState>();
@@ -46,11 +53,14 @@ class InformasiKirimaController extends BaseController {
   bool isCalculate = false;
   bool isLoading = false;
   bool dimensi = false;
+  bool formValidate = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<ServiceModel> serviceList = [];
+  List<TransactionDataModel> draftList = [];
 
   ServiceModel? selectedService;
+  TransactionDraftModel? draftData;
 
   @override
   void onInit() {
@@ -139,7 +149,6 @@ class InformasiKirimaController extends BaseController {
           .then((value) {
         flatRate = value.payload?.flatRate?.toInt() ?? 0;
         freightCharge = value.payload?.freightCharge?.toInt() ?? 0;
-
       });
     } catch (e) {
       e.printError();
@@ -150,12 +159,12 @@ class InformasiKirimaController extends BaseController {
           GetSnackBar(
             message: message,
             isDismissible: true,
-            margin: EdgeInsets.only(bottom: 0),
-            duration: Duration(seconds: 3),
+            margin: const EdgeInsets.only(bottom: 0),
+            duration: const Duration(seconds: 3),
             backgroundColor: Colors.red,
             snackPosition: SnackPosition.BOTTOM,
             snackStyle: SnackStyle.FLOATING,
-            animationDuration: Duration(milliseconds: 500),
+            animationDuration: const Duration(milliseconds: 500),
           ),
         );
       }
@@ -165,9 +174,21 @@ class InformasiKirimaController extends BaseController {
     update();
   }
 
+  void loadDraft() async {
+    namaBarang.text = goods?.desc ?? '';
+    jenisBarang.text = goods?.type ?? '';
+    hargaBarang.text = goods?.amount?.toInt().toCurrency().toString() ?? '';
+    jumlahPacking.text = goods?.quantity.toString() ?? '';
+    asuransi = delivery?.insuranceFlag == "Y" ? true : false;
+    intruksiKhusus.text = delivery?.specialInstruction ?? '';
+    packingKayu = delivery?.woodPackaging == "Y" ? true : false;
+    beratKiriman.text = goods?.weight.toString() ?? '';
+  }
+
   Future<void> initData() async {
     isServiceLoad = true;
     serviceList = [];
+    print('account id : ${account.accountId}');
     try {
       await transaction
           .getService(
@@ -184,8 +205,55 @@ class InformasiKirimaController extends BaseController {
     } catch (e) {
       e.printError();
     }
+
+    goods != null ? loadDraft() : null;
     isServiceLoad = false;
     update();
+  }
+
+  Future<void> saveDraft() async {
+    draftList = [];
+    TransactionDraftModel temp = TransactionDraftModel.fromJson(await storage.readData(StorageCore.draftTransaction));
+    draftList.addAll(temp.draft ?? []);
+    draftList.add(TransactionDataModel(
+      delivery: Delivery(
+        serviceCode: selectedService?.serviceCode,
+        woodPackaging: packingKayu ? "Y" : "N",
+        specialInstruction: intruksiKhusus.text,
+        codFlag: account.accountService == "COD" ? "Y" : "N",
+        codOngkir: codOngkir ? "Y" : "N",
+        insuranceFlag: asuransi ? "Y" : "N",
+        insuranceFee: isr,
+        flatRate: flatRate,
+        codFee: codfee,
+        flatRateWithInsurance: flatRateISR,
+        freightCharge: freightCharge,
+        freightChargeWithInsurance: freightChargeISR,
+      ),
+      account: Account(
+        number: account.accountNumber,
+        service: account.accountService,
+      ),
+      origin: origin,
+      destination: Destination(code: destination.destinationCode, desc: destination.cityName),
+      goods: Goods(
+          type: jenisBarang.text,
+          desc: namaBarang.text,
+          amount: hargaBarang.text.digitOnly().toInt(),
+          quantity: jumlahPacking.text.toInt(),
+          weight: berat),
+      shipper: shipper,
+      receiver: receiver,
+      dataAccount: account,
+      dataDestination: destination,
+    ));
+
+    var data = '{"draft" : ${jsonEncode(draftList)}}';
+    draftData = TransactionDraftModel.fromJson(jsonDecode(data));
+
+    await storage.saveData(StorageCore.draftTransaction, draftData).then(
+          (_) => Get.close(3),
+        );
   }
 
   Future<void> saveTransaction() async {

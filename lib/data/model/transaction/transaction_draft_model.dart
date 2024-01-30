@@ -13,6 +13,12 @@ class TransactionDraftModel {
     _draft = draft;
   }
 
+  List<TransactionDataModel> get draft => _draft ?? [];
+
+  set draft(List<TransactionDataModel> value) {
+    _draft = value;
+  }
+
   TransactionDraftModel.fromJson(dynamic json) {
     if (json['draft'] != null) {
       _draft = [];
@@ -31,7 +37,6 @@ class TransactionDraftModel {
         draft: draft ?? _draft,
       );
 
-  List<TransactionDataModel>? get draft => _draft;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

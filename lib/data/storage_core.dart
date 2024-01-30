@@ -11,6 +11,7 @@ class StorageCore {
   static const String favoriteMenu = 'favorite_menu';
   static const String shipper = 'shipper';
   static const String accounts = 'accounts';
+  static const String draftTransaction = 'transaction_drafts';
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);

@@ -49,6 +49,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                       children: [
                         Form(
                           key: controller.formKey,
+                          onChanged: () => controller.update(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

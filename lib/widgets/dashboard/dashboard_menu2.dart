@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
+import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
@@ -38,8 +39,9 @@ class DashboardMenu2 extends StatelessWidget {
               onTap: () => Get.to(const CekOngkirScreen()),
             ),
             MenuItem(
-              menuTitle: 'Aggregasi Pembayaran'.tr,
-              menuImg: ImageConstant.truckIcon,
+              menuTitle: 'Draft Transaksi'.tr,
+              menuImg: ImageConstant.paketmuIcon,
+              onTap: () => Get.to(const DraftTransaksiScreen()),
             ),
             MenuItem(
               menuTitle: 'Minta Dijemput'.tr,
