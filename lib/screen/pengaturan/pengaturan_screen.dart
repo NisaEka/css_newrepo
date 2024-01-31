@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -56,6 +57,7 @@ class PengaturanScreen extends StatelessWidget {
                   SettingListItem(
                     title: 'Pengaturan Label'.tr,
                     icon: Icons.label_outline,
+                    onTap: () => Get.to(const PengaturanLabelScreen()),
                   ),
                   SettingListItem(
                     title: 'Pengaturan Petugas'.tr,

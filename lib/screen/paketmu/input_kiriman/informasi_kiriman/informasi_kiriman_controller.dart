@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/transaction/data_service_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
-import 'package:css_mobile/data/model/transaction/data_service_model.dart';
-import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
-import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
-import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
@@ -27,6 +27,7 @@ class InformasiKirimaController extends BaseController {
   Delivery? delivery = Get.arguments['delivery'];
   Goods? goods = Get.arguments['goods'];
 
+  final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
   final formKey = GlobalKey<FormState>();
   final hargaCODkey = GlobalKey<FormFieldState>();
   final service = TextEditingController();
@@ -43,6 +44,7 @@ class InformasiKirimaController extends BaseController {
   final hargaBarang = TextEditingController();
   final ongkosKirim = TextEditingController();
   final hargaAsuransi = TextEditingController();
+
 
   // final codFee = TextEditingController();
   final hargaCOD = TextEditingController();
@@ -183,6 +185,7 @@ class InformasiKirimaController extends BaseController {
     intruksiKhusus.text = delivery?.specialInstruction ?? '';
     packingKayu = delivery?.woodPackaging == "Y" ? true : false;
     beratKiriman.text = goods?.weight.toString() ?? '';
+    selectedService = serviceList.where((e) => e.serviceCode == delivery?.serviceCode).first;
   }
 
   Future<void> initData() async {

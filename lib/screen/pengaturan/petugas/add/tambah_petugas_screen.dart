@@ -1,6 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/add/tambah_petugas_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/forms/customcheckbox.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -58,23 +60,42 @@ class TambahPetugasScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Center(
-                                child: Text('Tentukan Hak Akses'.tr),
+                                child: Text('Tentukan Hak Akses'.tr, style: listTitleTextStyle),
                               ),
-                              Column(
-                                children: List.generate(
-                                  controller.hakAkses.length,
-                                  (index) => ListTile(
-                                    leading: Checkbox(
-                                      value: false,
-                                      onChanged: (value) {
-                                        value = value == true ? false : true;
-                                        controller.update();
-                                      },
-                                    ),
-                                    title: Text(controller.hakAkses[index]['Profilku'].toString()),
-                                  ),
+                              Column(children: [
+                                CustomCheckbox(
+                                  label: 'Profilku'.tr,
+                                  value: controller.profil,
+                                  onChanged: (value) {
+                                    controller.profil = value!;
+                                    controller.update();
+                                  },
                                 ),
-                              )
+                                CustomCheckbox(
+                                  label: 'Fasilitasku'.tr,
+                                  value: controller.fasilitas,
+                                  onChanged: (value) {
+                                    controller.fasilitas = value!;
+                                    controller.update();
+                                  },
+                                ),
+                                CustomCheckbox(
+                                  label: 'Ubah Kata Sandi'.tr,
+                                  value: controller.ubahPassword,
+                                  onChanged: (value) {
+                                    controller.ubahPassword = value!;
+                                    controller.update();
+                                  },
+                                ),
+                                CustomCheckbox(
+                                  label: 'Beranda'.tr,
+                                  value: controller.beranda,
+                                  onChanged: (value) {
+                                    controller.beranda = value!;
+                                    controller.update();
+                                  },
+                                ),
+                              ])
                             ],
                           ),
                         )

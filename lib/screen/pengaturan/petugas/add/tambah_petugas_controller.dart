@@ -1,3 +1,4 @@
+import 'dart:core';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -9,10 +10,10 @@ class TambahPetugasController extends BaseController {
   final kataSandi = TextEditingController();
   final kataSandiConfirm = TextEditingController();
 
-  List hakAkses = [
-    {'Profilku': false},
-    // 'Fasilitasku',
-    // 'Ubah Kata Sandi',
-    // 'Beranda',
-  ];
+  bool profil = false;
+  bool fasilitas = false;
+  bool ubahPassword = false;
+  bool beranda = false;
+
+
 }

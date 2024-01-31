@@ -43,7 +43,7 @@ class CustomDropDownField<T> extends StatelessWidget {
       decoration: const InputDecoration(contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 2)),
       icon: const Icon(Icons.keyboard_arrow_down),
       hint: Text(
-        hintText ?? label!,
+        hintText ?? label ?? '',
         style: hintTextStyle,
       ),
       value: value,
@@ -64,12 +64,12 @@ class CustomDropDownField<T> extends StatelessWidget {
         if (value != null) {
           DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => item.value == value) as DropdownMenuItem;
           Text textView = item.child as Text;
-          return textView.data ?? hintText ?? label!;
+          return textView.data ?? hintText ?? label ?? '';
         }
       }
     }
 
-    return hintText ?? label!;
+    return hintText ?? label ?? '';
   }
 
   @override

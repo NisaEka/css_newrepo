@@ -266,9 +266,23 @@ class InformasiKirimanScreen extends StatelessWidget {
                                           },
                                         ),
                                         title: Text("Packing Kayu".tr),
-                                        trailing: const Icon(
-                                          Icons.info_outline,
-                                          color: redJNE,
+                                        trailing: Tooltip(
+                                          key: controller.tooltipkey,
+                                          triggerMode: TooltipTriggerMode.manual,
+                                          showDuration: const Duration(seconds: 1),
+                                          decoration: BoxDecoration(
+                                          ),
+                                          message: 'Hanya sebagai instruksi penggunaan packing kayu',
+
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              controller.tooltipkey.currentState?.ensureTooltipVisible().printInfo();
+                                            },
+                                            child: const Icon(
+                                              Icons.info_outline,
+                                              color: redJNE,
+                                            ),
+                                          ),
                                         )),
                                   ),
                                   Row(
