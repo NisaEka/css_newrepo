@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
@@ -26,6 +28,7 @@ class InformasiKirimaController extends BaseController {
   DestinationModel destination = Get.arguments['destination'];
   Delivery? delivery = Get.arguments['delivery'];
   Goods? goods = Get.arguments['goods'];
+  int? draftIndex = Get.arguments['index'];
 
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
   final formKey = GlobalKey<FormState>();
@@ -45,7 +48,6 @@ class InformasiKirimaController extends BaseController {
   final ongkosKirim = TextEditingController();
   final hargaAsuransi = TextEditingController();
 
-
   // final codFee = TextEditingController();
   final hargaCOD = TextEditingController();
 
@@ -56,6 +58,7 @@ class InformasiKirimaController extends BaseController {
   bool isLoading = false;
   bool dimensi = false;
   bool formValidate = false;
+  bool isOnline = true;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<ServiceModel> serviceList = [];
@@ -68,6 +71,17 @@ class InformasiKirimaController extends BaseController {
   void onInit() {
     super.onInit();
     Future.wait([initData()]);
+
+    connection.checkConnection();
+
+    (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      connection.isOnline().then((value) {
+        isOnline = value && (result != ConnectivityResult.none);
+        update();
+      });
+      initData();
+      update();
+    }));
   }
 
   int totalOngkir = 0;
@@ -109,6 +123,7 @@ class InformasiKirimaController extends BaseController {
     totalOngkir = 0;
     isr = 0;
     isCalculate = true;
+    update();
     // if (asuransi) {
     isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
     flatRateISR = flatRate + isr;
@@ -120,6 +135,9 @@ class InformasiKirimaController extends BaseController {
         (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt()) +
         totalOngkir;
     hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1100;
+
+    update();
+
     isCalculate = false;
     update();
   }
@@ -154,8 +172,8 @@ class InformasiKirimaController extends BaseController {
       });
     } catch (e) {
       e.printError();
-      var message;
-      if (selectedService == null) {
+      String message;
+      if (selectedService == null && isOnline) {
         message = "Service harus diisi";
         Get.showSnackbar(
           GetSnackBar(
@@ -172,11 +190,14 @@ class InformasiKirimaController extends BaseController {
       }
     }
     hitungOngkir();
-    isCalculate = false;
     update();
   }
 
   void loadDraft() async {
+    draftList = [];
+    DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
+    draftList.addAll(temp.draft);
+
     namaBarang.text = goods?.desc ?? '';
     jenisBarang.text = goods?.type ?? '';
     hargaBarang.text = goods?.amount?.toInt().toCurrency().toString() ?? '';
@@ -184,14 +205,36 @@ class InformasiKirimaController extends BaseController {
     asuransi = delivery?.insuranceFlag == "Y" ? true : false;
     intruksiKhusus.text = delivery?.specialInstruction ?? '';
     packingKayu = delivery?.woodPackaging == "Y" ? true : false;
-    beratKiriman.text = goods?.weight.toString() ?? '';
+    beratKiriman.text = goods?.weight.toString() ?? '1';
     selectedService = serviceList.where((e) => e.serviceCode == delivery?.serviceCode).first;
+
+    if (delivery?.flatRate != null) {
+      getOngkir();
+    }
+    update();
+  }
+
+  void deleteDraft(int index) async {
+    if (goods != null) {
+      draftList.removeAt(index);
+      var data = '{"draft" : ${jsonEncode(draftList)}}';
+      draftData = DraftTransactionModel.fromJson(jsonDecode(data));
+
+      await storage.saveData(StorageCore.draftTransaction, draftData).then(
+            (_) => update(),
+          );
+      // initData();
+    }
+
+    update();
   }
 
   Future<void> initData() async {
     isServiceLoad = true;
     serviceList = [];
     print('account id : ${account.accountId}');
+    connection.isOnline().then((value) => isOnline = value);
+
     try {
       await transaction
           .getService(
@@ -218,7 +261,7 @@ class InformasiKirimaController extends BaseController {
   Future<void> saveDraft() async {
     draftList = [];
     DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
-    draftList.addAll(temp.draft ?? []);
+    draftList.addAll(temp.draft);
     draftList.add(DataTransactionModel(
       delivery: Delivery(
         serviceCode: selectedService?.serviceCode,
@@ -245,7 +288,7 @@ class InformasiKirimaController extends BaseController {
           desc: namaBarang.text,
           amount: hargaBarang.text.digitOnly().toInt(),
           quantity: jumlahPacking.text.toInt(),
-          weight: berat),
+          weight: berat ?? beratKiriman.text.toInt()),
       shipper: shipper,
       receiver: receiver,
       dataAccount: account,
@@ -255,8 +298,23 @@ class InformasiKirimaController extends BaseController {
     var data = '{"draft" : ${jsonEncode(draftList)}}';
     draftData = DraftTransactionModel.fromJson(jsonDecode(data));
 
+    deleteDraft(draftIndex!);
+
     await storage.saveData(StorageCore.draftTransaction, draftData).then(
-          (_) => Get.close(3),
+          (_) => Get.to(
+            SuccessScreen(
+              message: "Transaksi di simpan ke draft",
+              icon: const Icon(
+                Icons.warning,
+                color: warningColor,
+                size: 150,
+              ),
+              buttonTitle: "Kembali ke dashboard",
+              nextAction: () => Get.offAll(
+                const DashboardScreen(),
+              ),
+            ),
+          ),
         );
   }
 
@@ -266,50 +324,53 @@ class InformasiKirimaController extends BaseController {
     try {
       await transaction
           .postTransaction(DataTransactionModel(
-            delivery: Delivery(
-              serviceCode: selectedService?.serviceCode,
-              woodPackaging: packingKayu ? "Y" : "N",
-              specialInstruction: intruksiKhusus.text,
-              codFlag: account.accountService == "COD" ? "Y" : "N",
-              codOngkir: codOngkir ? "Y" : "N",
-              insuranceFlag: asuransi ? "Y" : "N",
-              insuranceFee: isr,
-              flatRate: flatRate,
-              codFee: codfee,
-              flatRateWithInsurance: flatRateISR,
-              freightCharge: freightCharge,
-              freightChargeWithInsurance: freightChargeISR,
-            ),
-            account: Account(
-              number: account.accountNumber,
-              service: account.accountService,
-            ),
-            origin: origin,
-            destination: Destination(code: destination.destinationCode, desc: destination.cityName),
-            goods: Goods(
-                type: jenisBarang.text,
-                desc: namaBarang.text,
-                amount: hargaBarang.text.digitOnly().toInt(),
-                quantity: jumlahPacking.text.toInt(),
-                weight: berat),
-            shipper: shipper,
-            receiver: receiver,
-          ))
-          .then(
-            (v) => Get.to(
-                SucceesScreen(
-                    message: "Transaksi Berhasil\n${v.payload?.awb}",
-                    buttonTitle: "Selanjutnya",
-                    nextAction: () => Get.offAll(
-                          const DashboardScreen(),
-                        )),
-                arguments: {
-                  'awb': v.payload?.awb,
-                }),
-          );
+        delivery: Delivery(
+          serviceCode: selectedService?.serviceCode,
+          woodPackaging: packingKayu ? "Y" : "N",
+          specialInstruction: intruksiKhusus.text,
+          codFlag: account.accountService == "COD" ? "Y" : "N",
+          codOngkir: codOngkir ? "Y" : "N",
+          insuranceFlag: asuransi ? "Y" : "N",
+          insuranceFee: isr,
+          flatRate: flatRate,
+          codFee: codfee,
+          flatRateWithInsurance: flatRateISR,
+          freightCharge: freightCharge,
+          freightChargeWithInsurance: freightChargeISR,
+        ),
+        account: Account(
+          number: account.accountNumber,
+          service: account.accountService,
+        ),
+        origin: origin,
+        destination: Destination(code: destination.destinationCode, desc: destination.cityName),
+        goods: Goods(
+            type: jenisBarang.text,
+            desc: namaBarang.text,
+            amount: hargaBarang.text.digitOnly().toInt(),
+            quantity: jumlahPacking.text.toInt(),
+            weight: berat),
+        shipper: shipper,
+        receiver: receiver,
+      ))
+          .then((v) {
+        deleteDraft(draftIndex!);
+        Get.to(
+          SuccessScreen(
+              message: "Transaksi Berhasil\n${v.payload?.awb}",
+              buttonTitle: "Kembali ke dashboard",
+              nextAction: () => Get.offAll(
+                    const DashboardScreen(),
+                  )),
+          arguments: {
+            'awb': v.payload?.awb,
+          },
+        );
+      });
     } catch (e, i) {
       e.printError();
       i.printError();
+      saveDraft();
     }
     isLoading = false;
     update();

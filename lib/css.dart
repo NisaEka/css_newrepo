@@ -3,6 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:get/get.dart';
 
@@ -28,6 +29,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return GetMaterialApp(
       // navigatorKey: NavigationUtil.navigationKey,
       translations: AppTranslation(),
@@ -35,7 +41,6 @@ class App extends StatelessWidget {
       fallbackLocale: const Locale("id", "ID"),
       debugShowCheckedModeBanner: false,
       title: 'CSS',
-
       theme: ThemeData(
         // primaryColor: blueJNE,
         colorScheme: const ColorScheme.light(
@@ -98,7 +103,7 @@ class App extends StatelessWidget {
               shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
               elevation: MaterialStateProperty.resolveWith<double>(
-                (Set<MaterialState> states) {
+                    (Set<MaterialState> states) {
                   if (states.contains(MaterialState.disabled)) {
                     return 0;
                   }

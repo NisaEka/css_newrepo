@@ -12,11 +12,14 @@ class LoadingDialog extends StatelessWidget {
       width: Get.width,
       color: greyColor.withOpacity(0.3),
       alignment: Alignment.center,
-      child: const Center(
+      child: Center(
         child: SizedBox(
           height: 100,
           width: 100,
-          child: CircularProgressIndicator.adaptive(),
+          child: CircularProgressIndicator.adaptive(
+            strokeWidth: 20,
+            backgroundColor: redJNE,
+          ),
         ),
       ),
     );

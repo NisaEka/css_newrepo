@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/add/add_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
+import 'package:css_mobile/widgets/bar/offlinebar.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
@@ -27,21 +28,24 @@ class ListDropshipperScreen extends StatelessWidget {
                 style: appTitleTextStyle.copyWith(color: blueJNE),
               ),
               actions: [
-                IconButton(
-                  onPressed: () => Get.to(const AddDropshipperScreen(), arguments: {
-                    'account': controller.account,
-                  })?.then((value) => controller.initData()),
-                  icon: const Icon(
-                    Icons.add,
-                    color: blueJNE,
-                  ),
-                )
+                controller.isOnline
+                    ? IconButton(
+                        onPressed: () => Get.to(const AddDropshipperScreen(), arguments: {
+                          'account': controller.account,
+                        })?.then((value) => controller.initData()),
+                        icon: const Icon(
+                          Icons.add,
+                          color: blueJNE,
+                        ),
+                      )
+                    : const SizedBox()
               ],
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Column(
                 children: [
+                  // !controller.isOnline ? const OfflineBar() : const SizedBox(),
                   CustomSearchField(
                     hintText: 'Cari Data Dropshipper'.tr,
                     prefixIcon: const Icon(

@@ -49,7 +49,7 @@ class NewPasswordScreen extends StatelessWidget {
                             color: blueJNE,
                             title: 'Konfirmasi'.tr,
                             radius: 50,
-                            onPressed: () => Get.to(SucceesScreen(
+                            onPressed: () => Get.to(SuccessScreen(
                               message: "Password berhasil diperbaharui".tr,
                               buttonTitle: "Masuk".tr,
                               nextAction: () => Get.offAll(const LoginScreen()),

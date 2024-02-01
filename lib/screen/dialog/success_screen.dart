@@ -7,16 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-class SucceesScreen extends StatelessWidget {
+class SuccessScreen extends StatelessWidget {
   final String message;
   final VoidCallback? nextAction;
   final String buttonTitle;
+  final Widget? icon;
+  final Color? fontColor;
 
-  const SucceesScreen({
+  const SuccessScreen({
     super.key,
     required this.message,
     this.nextAction,
     required this.buttonTitle,
+    this.icon,
+    this.fontColor,
   });
 
   @override
@@ -29,14 +33,14 @@ class SucceesScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const LogoHeader(),
-            Lottie.asset(ImageConstant.successLottie),
+            icon ?? Lottie.asset(ImageConstant.successLottie),
             Text(
               message.tr,
-              style: subTitleTextStyle,
+              style: appTitleTextStyle.copyWith(color: fontColor ?? greyDarkColor1),
               textAlign: TextAlign.center,
             ),
             CustomFilledButton(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
               color: blueJNE,
               radius: 50,
               title: buttonTitle.tr,

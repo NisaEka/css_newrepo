@@ -61,7 +61,7 @@ class SignUpOTPScreen extends StatelessWidget {
                           color: blueJNE,
                           title: 'Selanjutnya'.tr,
                           radius: 50,
-                          onPressed: () => Get.to(SucceesScreen(
+                          onPressed: () => Get.to(SuccessScreen(
                             message: "Selamat, kamu sudah terdaftar".tr,
                             buttonTitle: "Masuk".tr,
                             nextAction: () => Get.offAll(const LoginScreen()),

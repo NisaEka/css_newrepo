@@ -29,7 +29,7 @@ dependencies:
   geolocator: ^10.1.0
   marquee: ^2.2.3
   pinput: ^3.0.1
-  background_fetch: ^1.2.2
+  connectivity_plus: ^5.0.2
 
 
 

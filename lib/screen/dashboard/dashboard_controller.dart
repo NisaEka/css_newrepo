@@ -66,6 +66,16 @@ class DashboardController extends BaseController {
 
       var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
       userName = shipper.name;
+
+      await transaction.getDropshipper().then((value) async => await storage.saveData(
+            StorageCore.dropshipper,
+            value,
+          ));
+
+      await transaction.getReceiver().then((value) async => await storage.saveData(
+            StorageCore.receiver,
+            value,
+          ));
       update();
     } catch (e) {
       e.printError();

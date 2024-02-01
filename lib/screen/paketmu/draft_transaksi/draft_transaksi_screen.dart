@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -20,6 +19,15 @@ class DraftTransaksiScreen extends StatelessWidget {
           return Scaffold(
             appBar: const CustomTopBar(
               title: 'Draft Transaksi',
+              action: [
+                CustomFilledButton(
+                  color: successColor,
+                  icon: Icons.sync,
+                  width: 100,
+                  title: 'Sync Data',
+                ),
+                SizedBox(width: 20)
+              ],
             ),
             body: Padding(
               padding: const EdgeInsets.all(20),
@@ -34,12 +42,12 @@ class DraftTransaksiScreen extends StatelessWidget {
                   //     controller.update();
                   //   },
                   // ),
-                  CustomSearchField(
+                  const CustomSearchField(
                     hintText: 'cari...',
                   ),
                   Expanded(
                     child: ListView(
-                      children: controller.draftList
+                      children: controller.draftList.reversed
                           .mapIndexed(
                             (i, e) => DraftTransactionListItem(
                               data: e,

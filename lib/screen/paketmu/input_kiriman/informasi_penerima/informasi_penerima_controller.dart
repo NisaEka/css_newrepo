@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
@@ -24,6 +25,7 @@ class InformasiPenerimaController extends BaseController {
   final alamatLengkap = TextEditingController();
 
   bool isLoading = false;
+  bool isOnline = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<DestinationModel> destinationList = [];
@@ -36,6 +38,17 @@ class InformasiPenerimaController extends BaseController {
   void onInit() {
     super.onInit();
     Future.wait([getDestinationList('')]);
+    connection.isOnline().then((value) => isOnline = value);
+
+    connection.checkConnection();
+
+    (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      connection.isOnline().then((value) {
+        isOnline = value && (result != ConnectivityResult.none);
+        update();
+      });
+      update();
+    }));
   }
 
   FutureOr<ReceiverModel?> getSelectedReceiver(ReceiverModel receiver) async {

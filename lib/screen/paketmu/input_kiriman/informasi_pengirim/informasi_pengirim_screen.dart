@@ -6,6 +6,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/drops
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_controller.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/bar/offlinebar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
@@ -31,10 +32,16 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
           return Scaffold(
             appBar: CustomTopBar(
               title: 'Input Transaksi'.tr,
-              flexibleSpace: CustomStepper(
-                currentStep: 0,
-                totalStep: controller.steps.length,
-                steps: controller.steps,
+              flexibleSpace: Column(
+                children: [
+                  CustomStepper(
+                    currentStep: 0,
+                    totalStep: controller.steps.length,
+                    steps: controller.steps,
+                  ),
+                  const SizedBox(height: 15),
+                  controller.isOnline ? const SizedBox() : const OfflineBar(),
+                ],
               ),
             ),
             body: SingleChildScrollView(
@@ -49,7 +56,11 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                       children: [
                         Form(
                           key: controller.formKey,
-                          onChanged: () => controller.update(),
+                          onChanged: () {
+                            controller.formValidate();
+                            controller.connection.isOnline().then((value) => controller.isOnline = value);
+                            controller.update();
+                          },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -72,6 +83,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                                   controller.selectedAccount = e;
                                                   controller.codOgkir = false;
                                                   controller.getOriginList('', e.accountId.toString());
+                                                  controller.formValidate();
                                                   controller.update();
                                                 },
                                               ),
@@ -84,6 +96,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 label: 'Kirim sebagai dropshipper'.tr,
                                 onChange: (bool? value) {
                                   controller.dropshipper = value!;
+
                                   if (value == true) {
                                     controller.namaPengirim.clear();
                                     controller.nomorTelpon.clear();
@@ -91,6 +104,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     controller.kodePos.clear();
                                     controller.alamatLengkap.clear();
                                     controller.selectedOrigin = null;
+                                    controller.isValidate = false;
                                   } else {
                                     controller.namaPengirim.text = controller.senderOrigin?.name ?? '';
                                     controller.nomorTelpon.text = controller.senderOrigin?.phone ?? '';
@@ -102,10 +116,8 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                       branchCode: controller.senderOrigin?.origin?.branchCode,
                                       originName: controller.senderOrigin?.origin?.originName,
                                     );
+                                    controller.isValidate = true;
                                   }
-
-                                  // controller.selectedAccount = null;
-                                  controller.isValidate = false;
                                   controller.update();
                                 },
                               ),
@@ -210,27 +222,20 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 multiLine: true,
                                 prefixIcon: const Icon(Icons.location_city),
                               ),
-                              controller.dropshipper
+                              controller.dropshipper && controller.isOnline!
                                   ? CustomFilledButton(
-                                      color: whiteColor,
-                                      borderColor: (controller.formKey.currentState?.validate() == true && controller.selectedAccount != null)
-                                          ? blueJNE
-                                          : greyColor,
+                                color: whiteColor,
+                                      borderColor: controller.isValidate ? blueJNE : greyColor,
                                       title: 'Simpan Data Dropshipper'.tr,
-                                      fontColor: (controller.formKey.currentState?.validate() == true && controller.selectedAccount != null)
-                                          ? blueJNE
-                                          : greyColor,
+                                      fontColor: controller.isValidate ? blueJNE : greyColor,
                                     )
                                   : const SizedBox(),
                               CustomFilledButton(
-                                color:
-                                    (controller.formKey.currentState?.validate() == true && controller.selectedAccount != null) ? blueJNE : greyColor,
+                                color: controller.isValidate ? blueJNE : greyColor,
                                 title: "Selanjutnya".tr,
                                 // radius: 20,
                                 onPressed: () {
-                                  controller.formKey.currentState?.validate() == true && controller.selectedAccount != null
-                                      ? controller.nextStep()
-                                      : null;
+                                  controller.isValidate ? controller.nextStep() : null;
                                 },
                               )
                             ],

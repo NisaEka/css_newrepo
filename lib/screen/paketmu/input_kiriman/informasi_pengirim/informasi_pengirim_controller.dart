@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
@@ -26,7 +27,7 @@ class InformasiPengirimController extends BaseController {
   bool isLoading = false;
   bool isLoadOrigin = false;
   bool isValidate = false;
-  bool isOnline = false;
+  bool isOnline = true;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<AccountNumberModel> accountList = [];
@@ -43,6 +44,15 @@ class InformasiPengirimController extends BaseController {
     Future.wait([
       initData(),
     ]);
+    connection.checkConnection();
+
+    (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      connection.isOnline().then((value) {
+        isOnline = value && (result != ConnectivityResult.none);
+        update();
+      });
+      update();
+    }));
   }
 
   FutureOr<DropshipperModel?> getSelectedDropshipper(DropshipperModel dropshipper) async {
@@ -61,14 +71,20 @@ class InformasiPengirimController extends BaseController {
     return dropshipper;
   }
 
+  void formValidate() {
+    isValidate = formKey.currentState?.validate() == true && selectedAccount != null && selectedOrigin != null;
+    update();
+    (formKey.currentState?.validate() == true).printInfo(info: 'form validate');
+    (selectedAccount != null).printInfo(info: 'selectedAccount');
+    (selectedOrigin != null).printInfo(info: 'selectedOrigin');
+    isValidate.printInfo(info: 'isvalidate');
+  }
 
   Future<void> initData() async {
     accountList = [];
     isLoading = true;
     connection.isOnline().then((value) => isOnline = value);
-    update();
 
-    // if (isOnline) {
     try {
       await transaction.getAccountNumber().then((value) => accountList.addAll(value.payload ?? []));
       await transaction.getSender().then((value) {
@@ -102,9 +118,6 @@ class InformasiPengirimController extends BaseController {
         originName: senderOrigin?.origin?.originName,
       );
     }
-    // } else {
-    //
-    // }
 
     isLoading = false;
     update();

@@ -51,7 +51,8 @@ class DraftTransaksiController extends BaseController {
       "destination": data.dataDestination,
       "delivery": data.delivery,
       "goods": data.goods,
-      "draft": true
+      "draft": true,
+      "index": index,
     });
   }
 }

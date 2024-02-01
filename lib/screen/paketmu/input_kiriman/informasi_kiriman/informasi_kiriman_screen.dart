@@ -7,6 +7,7 @@ import 'package:css_mobile/util/input_formatter/thousand_separator_input_formate
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/bar/offlinebar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -32,10 +33,16 @@ class InformasiKirimanScreen extends StatelessWidget {
               Scaffold(
                 appBar: CustomTopBar(
                   title: 'Input Transaksi'.tr,
-                  flexibleSpace: CustomStepper(
-                    currentStep: 2,
-                    totalStep: controller.steps.length,
-                    steps: controller.steps,
+                  flexibleSpace: Column(
+                    children: [
+                      CustomStepper(
+                        currentStep: 2,
+                        totalStep: controller.steps.length,
+                        steps: controller.steps,
+                      ),
+                      const SizedBox(height: 15),
+                      controller.isOnline ? const SizedBox() : const OfflineBar(),
+                    ],
                   ),
                 ),
                 body: CustomScrollView(
@@ -268,20 +275,14 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         title: Text("Packing Kayu".tr),
                                         trailing: Tooltip(
                                           key: controller.tooltipkey,
-                                          triggerMode: TooltipTriggerMode.manual,
+                                          triggerMode: TooltipTriggerMode.tap,
                                           showDuration: const Duration(seconds: 1),
-                                          decoration: BoxDecoration(
-                                          ),
+                                          decoration: const BoxDecoration(),
+                                          textStyle: listTitleTextStyle.copyWith(color: Colors.red),
                                           message: 'Hanya sebagai instruksi penggunaan packing kayu',
-
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              controller.tooltipkey.currentState?.ensureTooltipVisible().printInfo();
-                                            },
-                                            child: const Icon(
-                                              Icons.info_outline,
-                                              color: redJNE,
-                                            ),
+                                          child: const Icon(
+                                            Icons.info_outline,
+                                            color: redJNE,
                                           ),
                                         )),
                                   ),
@@ -383,18 +384,19 @@ class InformasiKirimanScreen extends StatelessWidget {
                                             ],
                                           ),
                                         )
-                                      : Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
-                                            border: Border.all(color: greyDarkColor2),
-                                          ),
-                                          padding: const EdgeInsets.all(10),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
-                                              controller.account.accountService?.toUpperCase() == 'COD'
-                                                  // &&
+                                      : controller.isOnline
+                                          ? Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                border: Border.all(color: greyDarkColor2),
+                                              ),
+                                              padding: const EdgeInsets.all(10),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
+                                                  controller.account.accountService?.toUpperCase() == 'COD'
+                                                      // &&
                                                   //     (controller.account.accountCustType?.toUpperCase() == "990" ||
                                                   //         controller.account.accountCustType?.toUpperCase() == "992")
                                                   ? Row(
@@ -438,28 +440,32 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                   const Text('Ongkos Kirim'),
                                                   Text('Rp. ${controller.flatRate.toInt().toCurrency()}', style: listTitleTextStyle),
                                                 ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  const Text('Total Ongkos Kirim'),
-                                                  Text('Rp. ${(controller.totalOngkir).toInt().toCurrency()}', style: listTitleTextStyle),
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      const Text('Total Ongkos Kirim'),
+                                                      Text('Rp. ${(controller.totalOngkir).toInt().toCurrency()}', style: listTitleTextStyle),
+                                                    ],
+                                                  )
                                                 ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                  CustomFilledButton(
-                                    color: controller.formValidate && controller.selectedService != null ? blueJNE : greyColor,
-                                    title: 'Buat Resi'.tr,
-                                    onPressed: () {
-                                      controller.formValidate && controller.selectedService != null ? controller.saveTransaction() : null;
-                                    },
-                                  ),
+                                              ),
+                                            )
+                                          : const SizedBox(),
+                                  controller.isOnline
+                                      ? CustomFilledButton(
+                                          color: controller.formValidate && controller.selectedService != null ? blueJNE : greyColor,
+                                          title: 'Buat Resi'.tr,
+                                          onPressed: () {
+                                            controller.formValidate && controller.selectedService != null ? controller.saveTransaction() : null;
+                                          },
+                                        )
+                                      : const SizedBox(),
 
                                   /// Sementara
-                                  controller.goods == null
-                                      ? CustomFilledButton(
+                                  // controller.goods == null || !controller.isOnline
+                                  //     ?
+                                  CustomFilledButton(
                                           color: whiteColor,
                                           borderColor: controller.formValidate ? blueJNE : greyColor,
                                           fontColor: controller.formValidate ? blueJNE : greyColor,
@@ -468,7 +474,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                             controller.formValidate ? controller.saveDraft() : null;
                                           },
                                         )
-                                      : const SizedBox(),
+                                      // : const SizedBox(),
                                 ],
                               ),
                             ),
