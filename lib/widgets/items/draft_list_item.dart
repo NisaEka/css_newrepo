@@ -1,94 +1,160 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
-class DraftTransactionListItem extends StatelessWidget {
+class DraftTransactionListItem extends StatefulWidget {
   final DataTransactionModel data;
   final VoidCallback? onDelete;
   final VoidCallback? onValidate;
+  final int index;
+  bool showDetail = false;
 
-  const DraftTransactionListItem({
+  DraftTransactionListItem({
     super.key,
     required this.data,
     this.onDelete,
     this.onValidate,
+    required this.index,
   });
 
   @override
+  State<DraftTransactionListItem> createState() => _DraftTransactionListItemState();
+}
+
+class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // ondra
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: greyColor),
-        ),
-        child: Column(
+      onTap: () {
+        setState(() {
+          widget.showDetail = (widget.showDetail == true)
+              ? false
+              : (widget.showDetail == false)
+                  ? true
+                  : false;
+        });
+      },
+      child: Slidable(
+        key: ValueKey(widget.index),
+        startActionPane: ActionPane(
+          dragDismissible: true,
+          dismissible: DismissiblePane(onDismissed: widget.onDelete ?? () {}),
+          motion: const DrawerMotion(),
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Account ID'),
-                Text(data.dataAccount?.accountId ?? '', style: listTitleTextStyle),
-              ],
+            SlidableAction(
+              onPressed: (context) => widget.onDelete,
+              // backgroundColor: errorColor,
+              foregroundColor: errorColor,
+              icon: Icons.delete,
+              label: 'Hapus',
+              borderRadius: BorderRadius.circular(8),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Account Number'),
-                Text(data.dataAccount?.accountNumber ?? '', style: listTitleTextStyle),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Account Name'),
-                Text(data.dataAccount?.accountName ?? '', style: listTitleTextStyle),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Account Service'),
-                Text(data.dataAccount?.accountService ?? '', style: listTitleTextStyle),
-              ],
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('nama barang'),
-                Text(data.goods?.desc ?? '', style: listTitleTextStyle),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('shipper'),
-                Text(data.shipper?.name ?? '', style: listTitleTextStyle),
-              ],
-            ),
-            Row(
-              children: [
-                CustomFilledButton(
-                  color: errorColor,
-                  title: 'Delete',
-                  width: Get.width / 5,
-                  onPressed: onDelete,
+          ],
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              right: 0,
+              top: 5,
+              child: Container(
+                padding: const EdgeInsets.only(top: 5, right: 5, left: 20, bottom: 2),
+                decoration: BoxDecoration(
+                    color: widget.data.delivery?.flatRate == 0 ? infoColor : successColor,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(8),
+                      bottomLeft: Radius.circular(20),
+                    )),
+                child: Text(
+                  widget.data.delivery?.flatRate == 0 ? 'Draft' : 'Ready to Upload',
+                  style: listTitleTextStyle.copyWith(color: whiteColor),
                 ),
-                CustomFilledButton(
-                  color: successColor,
-                  title: 'Validate',
-                  width: Get.width / 5,
-                  onPressed: onValidate,
-                ),
-              ],
-            )
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: greyColor),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(widget.data.createAt!.toDateTimeFormat().toString(), style: sublistTitleTextStyle),
+                      !widget.showDetail ? const Icon(Icons.keyboard_arrow_down) : const Icon(Icons.keyboard_arrow_up),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomLabelText(
+                        title: 'Account Number',
+                        value: widget.data.dataAccount?.accountNumber ?? '',
+                      ),
+                      CustomLabelText(
+                        title: 'Account Name',
+                        value: widget.data.dataAccount?.accountName ?? '',
+                        alignment: 'end',
+                      ),
+                    ],
+                  ),
+                  widget.showDetail
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomLabelText(
+                                  title: 'Shipper',
+                                  value: widget.data.shipper?.name ?? '',
+                                ),
+                                CustomLabelText(
+                                  alignment: 'end',
+                                  title: 'Receiver',
+                                  value: widget.data.receiver?.name ?? '',
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomLabelText(
+                                  title: 'Origin',
+                                  value: widget.data.origin?.desc ?? '',
+                                ),
+                                CustomLabelText(
+                                  alignment: 'end',
+                                  title: 'Destination',
+                                  value: widget.data.dataDestination?.cityName ?? '',
+                                ),
+                              ],
+                            ),
+                            const Divider(),
+                            CustomLabelText(
+                              title: 'Nama Barang',
+                              value: widget.data.goods?.desc ?? '',
+                            ),
+                            CustomFilledButton(
+                              color: blueJNE,
+                              title: 'Validate',
+                              onPressed: widget.onValidate,
+                            )
+                          ],
+                        )
+                      : const SizedBox(),
+                ],
+              ),
+            ),
           ],
         ),
       ),

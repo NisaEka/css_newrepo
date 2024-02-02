@@ -29,6 +29,7 @@ class InformasiKirimaController extends BaseController {
   Delivery? delivery = Get.arguments['delivery'];
   Goods? goods = Get.arguments['goods'];
   int? draftIndex = Get.arguments['index'];
+  DataTransactionModel? draft = Get.arguments['draft'];
 
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
   final formKey = GlobalKey<FormState>();
@@ -122,39 +123,45 @@ class InformasiKirimaController extends BaseController {
   void hitungOngkir() {
     totalOngkir = 0;
     isr = 0;
-    isCalculate = true;
-    update();
-    // if (asuransi) {
-    isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
-    flatRateISR = flatRate + isr;
-    freightChargeISR = freightCharge + isr;
-    update();
-    // }
-    totalOngkir = asuransi ? flatRateISR.toInt() : flatRate.toInt();
-    hargacod = (codfee * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) +
-        (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt()) +
-        totalOngkir;
-    hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1100;
+    if (isOnline) {
+      isCalculate = true;
+      update();
+      if (isOnline) {
+        // if (asuransi) {
+        isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
+        flatRateISR = flatRate + isr;
+        freightChargeISR = freightCharge + isr;
+        update();
+        // }
+        totalOngkir = asuransi ? flatRateISR.toInt() : flatRate.toInt();
+        hargacod = (codfee * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) +
+            (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt()) +
+            totalOngkir;
+        hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1100;
 
-    update();
+        update();
+      }
 
-    isCalculate = false;
-    update();
+      isCalculate = false;
+      update();
+    }
   }
 
   Future<void> getCODfee() async {
-    isCalculate = true;
+    if (isOnline) {
+      isCalculate = true;
 
-    await transaction.getCODFee(account.accountId.toString()).then(
-          (value) => codfee = value.payload?.disc?.toDouble() ?? 0,
-        );
-    isCalculate = false;
+      await transaction.getCODFee(account.accountId.toString()).then(
+            (value) => codfee = value.payload?.disc?.toDouble() ?? 0,
+          );
+      isCalculate = false;
 
-    update();
+      update();
+    }
   }
 
   Future<void> getOngkir() async {
-    isCalculate = true;
+    isCalculate = isOnline ? true : false;
     try {
       await transaction
           .getTransactionFee(
@@ -215,7 +222,6 @@ class InformasiKirimaController extends BaseController {
   }
 
   void deleteDraft(int index) async {
-    if (goods != null) {
       draftList.removeAt(index);
       var data = '{"draft" : ${jsonEncode(draftList)}}';
       draftData = DraftTransactionModel.fromJson(jsonDecode(data));
@@ -224,7 +230,6 @@ class InformasiKirimaController extends BaseController {
             (_) => update(),
           );
       // initData();
-    }
 
     update();
   }
@@ -238,18 +243,34 @@ class InformasiKirimaController extends BaseController {
     try {
       await transaction
           .getService(
-            DataServiceModel(
-              accountId: account.accountId,
-              originCode: origin.code,
-              destinationCode: destination.destinationCode,
+        DataServiceModel(
+          accountId: account.accountId,
+          originCode: origin.code,
+          destinationCode: destination.destinationCode,
+        ),
+      )
+          .then((value) {
+        serviceList.addAll(value.payload ?? []);
+        if (value.code != 200) {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.error,
+                color: whiteColor,
+              ),
+              message: value.message.toString(),
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.red,
             ),
-          )
-          .then(
-            (value) => serviceList.addAll(value.payload ?? []),
           );
+          isOnline = false;
+        }
+      });
       getCODfee();
     } catch (e) {
       e.printError();
+      // isOnline = false;
     }
     hitungOngkir();
 
@@ -263,6 +284,8 @@ class InformasiKirimaController extends BaseController {
     DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
     draftList.addAll(temp.draft);
     draftList.add(DataTransactionModel(
+      createAt: goods == null ? DateTime.now().toString() : draft?.createAt,
+      updateAt: DateTime.now().toString(),
       delivery: Delivery(
         serviceCode: selectedService?.serviceCode,
         woodPackaging: packingKayu ? "Y" : "N",
@@ -298,7 +321,7 @@ class InformasiKirimaController extends BaseController {
     var data = '{"draft" : ${jsonEncode(draftList)}}';
     draftData = DraftTransactionModel.fromJson(jsonDecode(data));
 
-    deleteDraft(draftIndex!);
+    goods != null ? deleteDraft(draftIndex!) : null;
 
     await storage.saveData(StorageCore.draftTransaction, draftData).then(
           (_) => Get.to(

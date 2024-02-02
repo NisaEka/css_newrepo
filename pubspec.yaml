@@ -30,6 +30,7 @@ dependencies:
   marquee: ^2.2.3
   pinput: ^3.0.1
   connectivity_plus: ^5.0.2
+  flutter_slidable: ^3.0.1
 
 
 

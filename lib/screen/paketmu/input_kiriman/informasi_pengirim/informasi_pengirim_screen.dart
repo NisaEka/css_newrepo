@@ -228,6 +228,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                       borderColor: controller.isValidate ? blueJNE : greyColor,
                                       title: 'Simpan Data Dropshipper'.tr,
                                       fontColor: controller.isValidate ? blueJNE : greyColor,
+                                      onPressed: () => controller.isValidate ? controller.saveDropshipper() : null,
                                     )
                                   : const SizedBox(),
                               CustomFilledButton(

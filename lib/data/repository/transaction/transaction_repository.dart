@@ -36,7 +36,7 @@ abstract class TransactionRepository {
 
   Future<GetCodFeeModel> getCODFee(String accountID);
 
-  Future postDropshipper(DropshipperModel data);
+  Future<PostTransactionModel> postDropshipper(DropshipperModel data);
 
-  Future postReceiver(ReceiverModel data);
+  Future<PostTransactionModel> postReceiver(ReceiverModel data);
 }

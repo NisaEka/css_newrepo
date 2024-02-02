@@ -8,6 +8,7 @@ import 'package:css_mobile/data/model/transaction/get_account_number_model.dart'
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -58,7 +59,7 @@ class InformasiPenerimaController extends BaseController {
     alamatLengkap.text = receiver.address ?? '';
     getDestinationList(receiver.city ?? '');
     selectedDestination = DestinationModel(
-      id: receiver.idDestination,
+      id: receiver.idDestination?.toInt(),
       destinationCode: receiver.destinationCode,
       cityName: receiver.city,
       countryName: receiver.country,
@@ -78,8 +79,9 @@ class InformasiPenerimaController extends BaseController {
     try {
       var response = await transaction.getDestination(keyword);
       destinationModel = response;
-    } catch (e) {
+    } catch (e,i) {
       e.printError();
+      i.printError();
     }
 
     isLoading = false;
@@ -127,7 +129,7 @@ class InformasiPenerimaController extends BaseController {
             country: selectedDestination?.countryName,
             destinationCode: selectedDestination?.destinationCode,
             destinationDescription: selectedDestination?.cityName,
-            idDestination: selectedDestination?.id,
+            idDestination: selectedDestination?.id.toString(),
             receiverDistrict: selectedDestination?.districtName,
             receiverSubDistrict: selectedDestination?.subDistrictName,
           ))
@@ -138,10 +140,10 @@ class InformasiPenerimaController extends BaseController {
                   Icons.info,
                   color: whiteColor,
                 ),
-                message: value.message.toString(),
+                message: value.message,
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
-                backgroundColor: successColor,
+                backgroundColor: value.code == 201 ? successColor : errorColor,
               ),
             ),
           );

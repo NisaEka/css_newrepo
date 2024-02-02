@@ -1,7 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/items/draft_list_item.dart';
@@ -16,51 +19,88 @@ class DraftTransaksiScreen extends StatelessWidget {
     return GetBuilder<DraftTransaksiController>(
         init: DraftTransaksiController(),
         builder: (controller) {
-          return Scaffold(
-            appBar: const CustomTopBar(
-              title: 'Draft Transaksi',
-              action: [
-                CustomFilledButton(
-                  color: successColor,
-                  icon: Icons.sync,
-                  width: 100,
-                  title: 'Sync Data',
-                ),
-                SizedBox(width: 20)
-              ],
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  // CustomFilledButton(
-                  //   color: errorColor,
-                  //   title: 'clear draft',
-                  //   onPressed: () {
-                  //     controller.storage.deleteString(StorageCore.draftTransaction);
-                  //     controller.initData();
-                  //     controller.update();
-                  //   },
-                  // ),
-                  const CustomSearchField(
-                    hintText: 'cari...',
-                  ),
-                  Expanded(
-                    child: ListView(
-                      children: controller.draftList.reversed
-                          .mapIndexed(
-                            (i, e) => DraftTransactionListItem(
-                              data: e,
-                              onDelete: () => controller.delete(i),
-                              onValidate: () => controller.validate(i),
-                            ),
+          return Stack(
+            children: [
+              Scaffold(
+                appBar: CustomTopBar(
+                  title: 'Draft Transaksi',
+                  action: [
+                    controller.isOnline && controller.isSync
+                        ? CustomFilledButton(
+                            color: successColor,
+                            icon: Icons.sync,
+                            width: 100,
+                            title: 'Sync Data',
+                            onPressed: () => controller.syncData(),
                           )
-                          .toList(),
-                    ),
+                        : const SizedBox(),
+                    const SizedBox(width: 20)
+                  ],
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      // CustomFilledButton(
+                      //   color: errorColor,
+                      //   title: 'clear draft',
+                      //   onPressed: () {
+                      //     controller.storage.deleteString(StorageCore.draftTransaction);
+                      //     controller.initData();
+                      //     controller.update();
+                      //   },
+                      // ),
+                      const CustomSearchField(
+                        hintText: 'cari...',
+                      ),
+                      Expanded(
+                        child: controller.draftList.isNotEmpty
+                            ? ListView(
+                                children: controller.draftList
+                                    .mapIndexed(
+                                      (i, e) => DraftTransactionListItem(
+                                        data: e,
+                                        index: i,
+                                        onDelete: () => showDialog(
+                                          context: context,
+                                          builder: (context) => DeleteAlertDialog(
+                                            onDelete: () {
+                                              controller.delete(i);
+                                              controller.initData();
+                                              Get.back();
+                                            },
+                                            onBack: () {
+                                              Get.back();
+                                              controller.initData();
+                                            },
+                                          ),
+                                        ),
+                                        onValidate: () => controller.validate(i),
+                                      ),
+                                    )
+                                    .toList(),
+                              )
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.folder_off_outlined,
+                                    size: 50,
+                                    color: blueJNE,
+                                  ),
+                                  Text(
+                                    'Draft Kosong',
+                                    style: appTitleTextStyle.copyWith(color: blueJNE),
+                                  ),
+                                ],
+                              ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              controller.isLoading ? const LoadingDialog() : Container(),
+            ],
           );
         });
   }

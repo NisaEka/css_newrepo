@@ -18,6 +18,8 @@ class DataTransactionModel {
     Receiver? receiver,
     AccountNumberModel? dataAccount,
     DestinationModel? dataDestination,
+    String? createAt,
+    String? updateAt,
   }) {
     _delivery = delivery;
     _account = account;
@@ -28,6 +30,8 @@ class DataTransactionModel {
     _receiver = receiver;
     _dataAccount = dataAccount;
     _dataDestination = dataDestination;
+    _createAt = createAt;
+    _updateAt = updateAt;
   }
 
   DataTransactionModel.fromJson(dynamic json) {
@@ -40,6 +44,8 @@ class DataTransactionModel {
     _receiver = json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
     _dataAccount = json['data_account'] != null ? AccountNumberModel.fromJson(json['data_account']) : null;
     _dataDestination = json['data_destination'] != null ? DestinationModel.fromJson(json['data_destination']) : null;
+    _createAt = json['create_at'];
+    _updateAt = json['update_at'];
   }
 
   Delivery? _delivery;
@@ -51,6 +57,8 @@ class DataTransactionModel {
   Receiver? _receiver;
   AccountNumberModel? _dataAccount;
   DestinationModel? _dataDestination;
+  String? _createAt;
+  String? _updateAt;
 
   DataTransactionModel copyWith({
     Delivery? delivery,
@@ -62,6 +70,8 @@ class DataTransactionModel {
     Receiver? receiver,
     AccountNumberModel? dataAccount,
     DestinationModel? dataDestination,
+    String? createAt,
+    String? updateAt,
   }) =>
       DataTransactionModel(
         delivery: delivery ?? _delivery,
@@ -73,6 +83,8 @@ class DataTransactionModel {
         receiver: receiver ?? _receiver,
         dataAccount: dataAccount ?? _dataAccount,
         dataDestination: dataDestination ?? _dataDestination,
+        createAt: createAt ?? _createAt,
+        updateAt: updateAt ?? _updateAt,
       );
 
   Delivery? get delivery => _delivery;
@@ -92,6 +104,10 @@ class DataTransactionModel {
   AccountNumberModel? get dataAccount => _dataAccount;
 
   DestinationModel? get dataDestination => _dataDestination;
+
+  String? get createAt => _createAt;
+
+  String? get updateAt => _updateAt;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -122,6 +138,8 @@ class DataTransactionModel {
     if (_dataDestination != null) {
       map['data_destination'] = _dataDestination?.toJson();
     }
+    map['create_at'] = _createAt;
+    map['update_at'] = _updateAt;
     return map;
   }
 

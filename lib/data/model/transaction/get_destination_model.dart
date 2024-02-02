@@ -61,7 +61,7 @@ String payloadToJson(DestinationModel data) => json.encode(data.toJson());
 
 class DestinationModel {
   DestinationModel({
-    String? id,
+    num? id,
     String? destinationCode,
     String? countryName,
     String? provinceName,
@@ -91,7 +91,7 @@ class DestinationModel {
     _zipCode = json['zip_code'];
   }
 
-  String? _id;
+  num? _id;
   String? _destinationCode;
   String? _countryName;
   String? _provinceName;
@@ -101,7 +101,7 @@ class DestinationModel {
   String? _zipCode;
 
   DestinationModel copyWith({
-    String? id,
+    num? id,
     String? destinationCode,
     String? countryName,
     String? provinceName,
@@ -121,15 +121,20 @@ class DestinationModel {
         zipCode: zipCode ?? _zipCode,
       );
 
-  String? get id => _id;
+  num? get id => _id;
 
   String? get destinationCode => _destinationCode;
 
   String? get countryName => _countryName;
+
   String? get provinceName => _provinceName;
+
   String? get cityName => _cityName;
+
   String? get districtName => _districtName;
+
   String? get subDistrictName => _subDistrictName;
+
   String? get zipCode => _zipCode;
 
   Map<String, dynamic> toJson() {

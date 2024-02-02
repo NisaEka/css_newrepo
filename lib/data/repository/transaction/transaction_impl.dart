@@ -134,9 +134,11 @@ class TransactionRepositoryImpl extends TransactionRepository {
         },
       );
       return GetServiceModel.fromJson(response.data);
+
     } on DioError catch (e) {
       //print("response error: ${e.response?.data}");
-      return e.error;
+      // return e.error;
+      return GetServiceModel.fromJson(e.response?.data);
     }
   }
 
@@ -273,7 +275,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future postDropshipper(DropshipperModel data) async {
+  Future<PostTransactionModel> postDropshipper(DropshipperModel data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo();
@@ -283,15 +285,16 @@ class TransactionRepositoryImpl extends TransactionRepository {
         data: data,
       );
       print(response.data);
-      return response.data;
+      return PostTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
       print("response error: ${e.response?.data}");
-      return e.error;
+      return PostTransactionModel.fromJson(e.response?.data);
+      // return e.error;
     }
   }
 
   @override
-  Future postReceiver(ReceiverModel data) async {
+  Future<PostTransactionModel> postReceiver(ReceiverModel data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo();
@@ -301,10 +304,12 @@ class TransactionRepositoryImpl extends TransactionRepository {
         data: data,
       );
       print(response.data);
-      return response.data;
+      // return response.data;
+      return PostTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
       print("response error: ${e.response?.data}");
-      return e.error;
+      // return e.error;
+      return PostTransactionModel.fromJson(e.response?.data);
     }
   }
 }

@@ -113,6 +113,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   onChanged: (value) {
                                     controller.selectedDestination = value;
                                     controller.update();
+                                    print(controller.selectedDestination?.id);
                                     // print(jsonEncode(value));
                                   },
                                   value: controller.selectedDestination,

@@ -14,10 +14,10 @@ class OfflineBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 2),
       // margin: const EdgeInsets.only(bottom: 5),
       decoration: const BoxDecoration(
-        color: errorLightColor3,
+        color: greyColor,
       ),
       child: Text(
-        'Anda sedang offline',
+        'Mode offline',
         style: listTitleTextStyle.copyWith(color: whiteColor),
       ),
     );

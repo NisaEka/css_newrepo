@@ -184,10 +184,10 @@ class InformasiPengirimController extends BaseController {
                   Icons.info,
                   color: whiteColor,
                 ),
-                message: value.message.toString(),
+                message: value.message,
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
-                backgroundColor: successColor,
+                backgroundColor: value.code == 200 ? successColor : errorColor,
               ),
             ),
           );
