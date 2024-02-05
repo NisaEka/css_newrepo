@@ -14,6 +14,7 @@ class CustomFilledButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
+  final TextStyle? fontStyle;
 
   const CustomFilledButton(
       {Key? key,
@@ -28,7 +29,8 @@ class CustomFilledButton extends StatelessWidget {
       this.radius = 10,
       this.fontSize = 14,
       this.margin,
-      this.padding})
+      this.padding,
+      this.fontStyle})
       : super(key: key);
 
   @override
@@ -51,17 +53,17 @@ class CustomFilledButton extends StatelessWidget {
           children: [
             icon != null
                 ? Icon(
-              icon,
-              color: fontColor,
-              size: fontSize! + 2,
-            )
+                    icon,
+                    color: fontColor,
+                    size: fontSize! + 2,
+                  )
                 : Container(),
             title != null
                 ? Text(
-              ' $title',
-              style: TextStyle(color: fontColor, fontWeight: FontWeight.w900, fontSize: fontSize),
-              textAlign: TextAlign.center,
-            )
+                    ' $title',
+                    style: fontStyle ?? TextStyle(color: fontColor, fontWeight: FontWeight.w900, fontSize: fontSize),
+                    textAlign: TextAlign.center,
+                  )
                 : Container(),
           ],
         ),

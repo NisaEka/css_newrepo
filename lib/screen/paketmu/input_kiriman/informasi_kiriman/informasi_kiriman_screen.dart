@@ -336,8 +336,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                 controller.hitungBerat();
                                               },
                                             ),
-                                      CustomTextFormField(
-                                        controller: controller.dimensiLebar,
+                                            CustomTextFormField(
+                                              controller: controller.dimensiLebar,
                                               hintText: 'Lebar'.tr,
                                               // hintText: 'Cm',
                                               width: Get.width / 3.5,
@@ -351,13 +351,13 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                 controller.hitungBerat();
                                               },
                                             ),
-                                      CustomTextFormField(
-                                        controller: controller.dimensiTinggi,
-                                        hintText: 'Tinggi'.tr,
-                                        // hintText: 'Cm',
-                                        width: Get.width / 3.5,
-                                        inputType: TextInputType.number,
-                                        suffixIcon: const SatuanFieldIcon(
+                                            CustomTextFormField(
+                                              controller: controller.dimensiTinggi,
+                                              hintText: 'Tinggi'.tr,
+                                              // hintText: 'Cm',
+                                              width: Get.width / 3.5,
+                                              inputType: TextInputType.number,
+                                              suffixIcon: const SatuanFieldIcon(
                                                 title: 'CM',
                                                 isSuffix: true,
                                               ),
@@ -397,49 +397,49 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                   CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
                                                   controller.account.accountService?.toUpperCase() == 'COD'
                                                       // &&
-                                                  //     (controller.account.accountCustType?.toUpperCase() == "990" ||
-                                                  //         controller.account.accountCustType?.toUpperCase() == "992")
-                                                  ? Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        const Text('COD fee'),
-                                                        Text('${controller.codfee * 100}%'.replaceAll('.', ','), style: listTitleTextStyle),
-                                                      ],
-                                                    )
-                                                  : const SizedBox(),
-                                              controller.account.accountService?.toUpperCase() == 'COD'
-                                                  ? Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        const Text('Harga COD'),
-                                                        Text('Rp. ${controller.hargacod.toInt().toCurrency()}', style: listTitleTextStyle),
-                                                      ],
-                                                    )
-                                                  : const SizedBox(),
-                                              controller.codOngkir
-                                                  ? Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        const Text('COD Ongkir'),
-                                                        Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
-                                                      ],
-                                                    )
-                                                  : const SizedBox(),
-                                              controller.asuransi
-                                                  ? Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        const Text('Asuransi Pengiriman'),
-                                                        Text('Rp. ${controller.isr.toInt().toCurrency()}', style: listTitleTextStyle),
-                                                      ],
-                                                    )
-                                                  : const SizedBox(),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  const Text('Ongkos Kirim'),
-                                                  Text('Rp. ${controller.flatRate.toInt().toCurrency()}', style: listTitleTextStyle),
-                                                ],
+                                                      //     (controller.account.accountCustType?.toUpperCase() == "990" ||
+                                                      //         controller.account.accountCustType?.toUpperCase() == "992")
+                                                      ? Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            const Text('COD fee'),
+                                                            Text('${controller.codfee * 100}%'.replaceAll('.', ','), style: listTitleTextStyle),
+                                                          ],
+                                                        )
+                                                      : const SizedBox(),
+                                                  controller.account.accountService?.toUpperCase() == 'COD'
+                                                      ? Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            const Text('Harga COD'),
+                                                            Text('Rp. ${controller.hargacod.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                          ],
+                                                        )
+                                                      : const SizedBox(),
+                                                  controller.codOngkir
+                                                      ? Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            const Text('COD Ongkir'),
+                                                            Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                          ],
+                                                        )
+                                                      : const SizedBox(),
+                                                  controller.asuransi
+                                                      ? Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            const Text('Asuransi Pengiriman'),
+                                                            Text('Rp. ${controller.isr.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                          ],
+                                                        )
+                                                      : const SizedBox(),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      const Text('Ongkos Kirim'),
+                                                      Text('Rp. ${controller.flatRate.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                    ],
                                                   ),
                                                   Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -462,10 +462,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         )
                                       : const SizedBox(),
 
-                                  /// Sementara
-                                  // controller.goods == null || !controller.isOnline
-                                  //     ?
-                                  CustomFilledButton(
+                                  controller.goods == null && !controller.isOnline
+                                      ? CustomFilledButton(
                                           color: whiteColor,
                                           borderColor: controller.formValidate ? blueJNE : greyColor,
                                           fontColor: controller.formValidate ? blueJNE : greyColor,
@@ -474,7 +472,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                             controller.formValidate ? controller.saveDraft() : null;
                                           },
                                         )
-                                      // : const SizedBox(),
+                                      : const SizedBox(),
                                 ],
                               ),
                             ),

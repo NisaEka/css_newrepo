@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -9,6 +10,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/items/draft_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class DraftTransaksiScreen extends StatelessWidget {
@@ -50,8 +52,9 @@ class DraftTransaksiScreen extends StatelessWidget {
                       //     controller.update();
                       //   },
                       // ),
-                      const CustomSearchField(
-                        hintText: 'cari...',
+                      CustomSearchField(
+                        hintText: 'Cari transaksimu'.tr,
+                        prefixIcon: SvgPicture.asset(IconsConstant.search),
                       ),
                       Expanded(
                         child: controller.draftList.isNotEmpty
@@ -63,7 +66,8 @@ class DraftTransaksiScreen extends StatelessWidget {
                                         index: i,
                                         onDelete: () => showDialog(
                                           context: context,
-                                          builder: (context) => DeleteAlertDialog(
+                                          builder: (context) =>
+                                              DeleteAlertDialog(
                                             onDelete: () {
                                               controller.delete(i);
                                               controller.initData();
@@ -75,7 +79,8 @@ class DraftTransaksiScreen extends StatelessWidget {
                                             },
                                           ),
                                         ),
-                                        onValidate: () => controller.validate(i),
+                                        onValidate: () =>
+                                            controller.validate(i),
                                       ),
                                     )
                                     .toList(),
@@ -90,7 +95,8 @@ class DraftTransaksiScreen extends StatelessWidget {
                                   ),
                                   Text(
                                     'Draft Kosong',
-                                    style: appTitleTextStyle.copyWith(color: blueJNE),
+                                    style: appTitleTextStyle.copyWith(
+                                        color: blueJNE),
                                   ),
                                 ],
                               ),

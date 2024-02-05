@@ -4,6 +4,7 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,8 @@ import 'package:get/get.dart';
 
 class DashboardMenu2 extends StatelessWidget {
   final bool isLogin;
-  const DashboardMenu2({super.key,required this.isLogin});
+
+  const DashboardMenu2({super.key, required this.isLogin});
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +46,10 @@ class DashboardMenu2 extends StatelessWidget {
               onTap: () => Get.to(const DraftTransaksiScreen()),
             ),
             MenuItem(
-              menuTitle: 'Minta Dijemput'.tr,
-              menuImg: ImageConstant.truckIcon,
+              menuTitle: 'Riwayat kiriman'.tr,
+              menuImg: ImageConstant.paketmuIcon,
+              onTap: () => Get.to(const RiwayatKirimanScreen()),
+
             ),
             MenuItem(
               menuTitle: 'Lainnya'.tr,
