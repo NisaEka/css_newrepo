@@ -15,6 +15,7 @@ import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
+import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
@@ -33,6 +34,33 @@ class InformasiKirimanScreen extends StatelessWidget {
               Scaffold(
                 appBar: CustomTopBar(
                   title: 'Input Transaksi'.tr,
+                  action: [
+                    controller.isOnline
+                        ? const SizedBox()
+                        : Tooltip(
+                            key: controller.offlineTooltipKey,
+                            triggerMode: TooltipTriggerMode.tap,
+                            showDuration: const Duration(seconds: 3),
+                            decoration: ShapeDecoration(
+                              color: greyColor,
+                              shape: ToolTipCustomShape(usePadding: false),
+                            ),
+                            // textStyle: listTitleTextStyle.copyWith(color: whiteColor),
+                            message: 'Offline Mode',
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 20),
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: successColor,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Icon(
+                                Icons.cloud_off,
+                                color: whiteColor,
+                              ),
+                            ),
+                          )
+                  ],
                   flexibleSpace: Column(
                     children: [
                       CustomStepper(
@@ -41,7 +69,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                         steps: controller.steps,
                       ),
                       const SizedBox(height: 15),
-                      controller.isOnline ? const SizedBox() : const OfflineBar(),
+                      // !controller.isOnline ? const SizedBox() : const OfflineBar(),
                     ],
                   ),
                 ),
@@ -263,28 +291,40 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         // ),
                                         ),
                                     child: ListTile(
-                                        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                                        leading: Switch(
-                                          value: controller.packingKayu,
-                                          onChanged: (bool? value) {
-                                            controller.packingKayu = value!;
-                                            controller.intruksiKhusus.text = value == true ? "MOHON DIPACKING KAYU" : "";
-                                            controller.update();
-                                          },
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                                      leading: Switch(
+                                        value: controller.packingKayu,
+                                        onChanged: (bool? value) {
+                                          controller.packingKayu = value!;
+                                          controller.intruksiKhusus.text = value == true ? "MOHON DIPACKING KAYU" : "";
+                                          controller.update();
+                                        },
+                                      ),
+                                      title: Text("Packing Kayu".tr),
+                                      // trailing: IconButton(
+                                      //   onPressed: () {},
+                                      //   icon: const Icon(
+                                      //     Icons.info_outline,
+                                      //     color: redJNE,
+                                      //   ),
+                                      //   tooltip: 'Hanya sebagai instruksi penggunaan packing kayu',
+                                      // ),
+                                      trailing: Tooltip(
+                                        key: controller.tooltipkey,
+                                        triggerMode: TooltipTriggerMode.tap,
+                                        showDuration: const Duration(seconds: 3),
+                                        decoration: ShapeDecoration(
+                                          color: greyColor,
+                                          shape: ToolTipCustomShape(usePadding: false),
                                         ),
-                                        title: Text("Packing Kayu".tr),
-                                        trailing: Tooltip(
-                                          key: controller.tooltipkey,
-                                          triggerMode: TooltipTriggerMode.tap,
-                                          showDuration: const Duration(seconds: 1),
-                                          decoration: const BoxDecoration(),
-                                          textStyle: listTitleTextStyle.copyWith(color: Colors.red),
-                                          message: 'Hanya sebagai instruksi penggunaan packing kayu',
-                                          child: const Icon(
-                                            Icons.info_outline,
-                                            color: redJNE,
-                                          ),
-                                        )),
+                                        textStyle: listTitleTextStyle.copyWith(color: whiteColor),
+                                        message: 'Hanya sebagai instruksi penggunaan packing kayu',
+                                        child: const Icon(
+                                          Icons.info_outline,
+                                          color: redJNE,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,

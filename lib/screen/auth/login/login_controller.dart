@@ -112,18 +112,19 @@ class LoginController extends BaseController {
       });
     } catch (e) {
       e.printError();
-      // Get.showSnackbar(
-      //   const GetSnackBar(
-      //     icon: Icon(
-      //       Icons.error,
-      //       color: whiteColor,
-      //     ),
-      //     message: 'Email or Password is not valid',
-      //     isDismissible: true,
-      //     duration: Duration(seconds: 3),
-      //     backgroundColor: Colors.red,
-      //   ),
-      // );
+      Get.showSnackbar(
+        const GetSnackBar(
+          icon: Icon(
+            Icons.error,
+            color: whiteColor,
+          ),
+          message: 'Connection times out',
+          isDismissible: true,
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.red,
+        ),
+      );
+
     }
     isLoading = false;
     update();
@@ -187,8 +188,7 @@ class LoginController extends BaseController {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
 
     position = await Geolocator.getCurrentPosition();

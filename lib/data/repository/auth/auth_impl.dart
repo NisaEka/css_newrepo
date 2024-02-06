@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -20,8 +21,7 @@ class AuthRepositoryImpl extends AuthRepository {
       );
       return LoginModel.fromJson(response.data);
     } on DioError catch (e) {
-
-      return e.response?.data!;
+      return LoginModel.fromJson(e.response?.data);
     }
   }
 }

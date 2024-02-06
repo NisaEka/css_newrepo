@@ -3,7 +3,9 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/items/riwayat_kiriman_list_item.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,241 @@ class RiwayatKirimanScreen extends StatelessWidget {
           return Scaffold(
             appBar: CustomTopBar(
               title: 'Riwayat Kiriman'.tr,
+              action: [
+                Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    color: controller.isFiltered ? redJNE : Colors.transparent,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      Get.bottomSheet(
+                        enableDrag: true,
+                        isDismissible: false,
+                        // isScrollControlled: true,
+                        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Filter',
+                                      style: appTitleTextStyle.copyWith(
+                                        color: blueJNE,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        if (!controller.isFiltered) {
+                                          controller.selectedDateFilter = null;
+                                          controller.selectedPetugasEntry = null;
+                                          controller.selectedStatusKiriman = null;
+                                          controller.isFiltered = false;
+                                          controller.update();
+                                        }
+                                        Get.back();
+                                      },
+                                      icon: const Icon(Icons.close),
+                                    ),
+                                  ],
+                                ),
+                                // const Divider(color: greyColor),
+                                const SizedBox(height: 10),
+                                Expanded(
+                                  child: CustomScrollView(
+                                    slivers: [
+                                      const SliverToBoxAdapter(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            CustomFormLabel(label: 'Pilih Tanggal'),
+                                            SizedBox(height: 10),
+
+                                            CustomFormLabel(label: 'Status Kiriman'),
+                                            SizedBox(height: 10),
+                                            // CustomFormLabel(label: 'Petugas Entry'),
+                                          ],
+                                        ),
+                                      ),
+                                      SliverPadding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                                        sliver: SliverGrid(
+                                          delegate: SliverChildBuilderDelegate(
+                                            (context, index) => GestureDetector(
+                                              onTap: () => setState(() {
+                                                controller.selectedStatusKiriman = controller.listStatusKiriman[index];
+                                                controller.update();
+                                              }),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      controller.selectedStatusKiriman == controller.listStatusKiriman[index] ? blueJNE : whiteColor,
+                                                  border: Border.all(
+                                                    color: controller.selectedStatusKiriman != controller.listStatusKiriman[index]
+                                                        ? blueJNE
+                                                        : whiteColor,
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(5),
+                                                ),
+                                                child: Text(
+                                                  controller.listStatusKiriman[index],
+                                                  textAlign: TextAlign.center,
+                                                  style: listTitleTextStyle.copyWith(
+                                                      color: controller.selectedStatusKiriman == controller.listStatusKiriman[index]
+                                                          ? whiteColor
+                                                          : blueJNE),
+                                                ),
+                                              ),
+                                            ),
+                                            childCount: controller.listStatusKiriman.length,
+                                          ),
+                                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent: 140,
+                                            mainAxisSpacing: 5,
+                                            crossAxisSpacing: 16,
+                                            childAspectRatio: 2,
+                                            // mainAxisExtent: 100
+                                          ),
+                                        ),
+                                      ),
+                                      SliverToBoxAdapter(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(height: 10),
+                                            // const CustomFormLabel(label: 'Petugas Entry'),
+                                            CustomDropDownField(
+                                              items: [],
+                                              label: 'Petugas Entry',
+                                              hintText: 'Petugas Entry',
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    controller.isFiltered
+                                        ? CustomFilledButton(
+                                            color: whiteColor,
+                                            fontColor: blueJNE,
+                                            borderColor: blueJNE,
+                                            width: Get.width / 2.5,
+                                            title: 'Reset Filter',
+                                            onPressed: () {
+                                              controller.selectedDateFilter = null;
+                                              controller.selectedPetugasEntry = null;
+                                              controller.selectedStatusKiriman = null;
+                                              controller.isFiltered = false;
+                                              controller.update();
+                                              Get.back();
+                                            },
+                                          )
+                                        : const SizedBox(),
+                                    CustomFilledButton(
+                                      color: controller.selectedDateFilter != null ||
+                                              controller.selectedPetugasEntry != null ||
+                                              controller.selectedStatusKiriman != null
+                                          ? blueJNE
+                                          : greyColor,
+                                      width: controller.isFiltered ? Get.width / 2.5 : Get.width - 40,
+                                      title: 'Terapkan',
+                                      onPressed: () {
+                                        if (controller.selectedDateFilter != null ||
+                                            controller.selectedPetugasEntry != null ||
+                                            controller.selectedStatusKiriman != null) {
+                                          controller.isFiltered = true;
+                                          controller.update();
+                                          Get.back();
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                )
+                                // SingleChildScrollView(
+                                //   scrollDirection: Axis.horizontal,
+                                //   child: Row(
+                                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                //     children: [
+                                //       controller.selectedDateFilter != null ||
+                                //               controller.selectedStatusKiriman != null ||
+                                //               controller.selectedPetugasEntry != null
+                                //           ? Container(
+                                //               decoration: BoxDecoration(
+                                //                 color: greyColor,
+                                //                 borderRadius: BorderRadius.circular(8),
+                                //               ),
+                                //               child: IconButton(
+                                //                 onPressed: () {
+                                //                   controller.selectedDateFilter = null;
+                                //                   controller.selectedPetugasEntry = null;
+                                //                   controller.selectedStatusKiriman = null;
+                                //                 },
+                                //                 icon: const Icon(Icons.close_rounded),
+                                //                 color: blueJNE,
+                                //               ),
+                                //             )
+                                //           : const SizedBox(),
+                                //       CustomFilledButton(
+                                //         color: controller.selectedDateFilter != null ? blueJNE : whiteColor,
+                                //         title: 'Pilih Tanggal'.tr,
+                                //         width: Get.width / 3,
+                                //         fontColor: controller.selectedDateFilter != null ? whiteColor : greyDarkColor1,
+                                //         borderColor: greyDarkColor1,
+                                //         fontStyle: subTitleTextStyle,
+                                //         radius: 15,
+                                //         margin: const EdgeInsets.symmetric(horizontal: 5),
+                                //       ),
+                                //       CustomFilledButton(
+                                //         color: controller.selectedStatusKiriman != null ? blueJNE : whiteColor,
+                                //         title: 'Status Kiriman'.tr,
+                                //         width: Get.width / 3,
+                                //         fontColor: controller.selectedStatusKiriman != null ? whiteColor : greyDarkColor1,
+                                //         borderColor: greyDarkColor1,
+                                //         fontStyle: subTitleTextStyle,
+                                //         radius: 15,
+                                //         margin: const EdgeInsets.symmetric(horizontal: 5),
+                                //       ),
+                                //       CustomFilledButton(
+                                //         color: controller.selectedPetugasEntry != null ? blueJNE : whiteColor,
+                                //         title: 'Petugas Entry'.tr,
+                                //         width: Get.width / 3,
+                                //         fontColor: controller.selectedPetugasEntry != null ? whiteColor : greyDarkColor1,
+                                //         borderColor: greyDarkColor1,
+                                //         fontStyle: subTitleTextStyle,
+                                //         radius: 15,
+                                //         margin: const EdgeInsets.symmetric(horizontal: 5),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                          );
+                        }),
+                        backgroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.filter_alt_outlined),
+                    color: controller.isFiltered ? whiteColor : redJNE,
+                    tooltip: 'filter',
+                  ),
+                )
+              ],
             ),
             body: Padding(
               padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
@@ -140,64 +377,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Container(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          controller.selectedDateFilter != null || controller.selectedStatusKiriman != null || controller.selectedPetugasEntry != null
-                              ? Container(
-                                  decoration: BoxDecoration(
-                                    color: greyColor,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      controller.selectedDateFilter = null;
-                                      controller.selectedPetugasEntry = null;
-                                      controller.selectedStatusKiriman = null;
-                                      controller.update();
-                                    },
-                                    icon: const Icon(Icons.close_rounded),
-                                    color: blueJNE,
-                                  ),
-                                )
-                              : const SizedBox(),
-                          CustomFilledButton(
-                            color: controller.selectedDateFilter != null ? blueJNE : whiteColor,
-                            title: 'Pilih Tanggal'.tr,
-                            width: Get.width / 3,
-                            fontColor: controller.selectedDateFilter != null ? whiteColor : greyDarkColor1,
-                            borderColor: greyDarkColor1,
-                            fontStyle: subTitleTextStyle,
-                            radius: 15,
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                          ),
-                          CustomFilledButton(
-                            color: controller.selectedStatusKiriman != null ? blueJNE : whiteColor,
-                            title: 'Status Kiriman'.tr,
-                            width: Get.width / 3,
-                            fontColor: controller.selectedStatusKiriman != null ? whiteColor : greyDarkColor1,
-                            borderColor: greyDarkColor1,
-                            fontStyle: subTitleTextStyle,
-                            radius: 15,
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                          ),
-                          CustomFilledButton(
-                            color: controller.selectedPetugasEntry != null ? blueJNE : whiteColor,
-                            title: 'Petugas Entry'.tr,
-                            width: Get.width / 3,
-                            fontColor: controller.selectedPetugasEntry != null ? whiteColor : greyDarkColor1,
-                            borderColor: greyDarkColor1,
-                            fontStyle: subTitleTextStyle,
-                            radius: 15,
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // const SizedBox(height: 10),
                   Expanded(
                     child: ListView(
                       children: [
@@ -207,6 +387,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                           noResi: 'R123',
                           petugas: 'Joni',
                           penerima: 'sarah',
+                          status: 'Dibatalkan oleh kamu',
                         )
                       ],
                     ),

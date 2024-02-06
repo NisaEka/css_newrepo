@@ -21,10 +21,10 @@ class LoginScreen extends StatelessWidget {
     return GetBuilder<LoginController>(
         init: LoginController(),
         builder: (controller) {
-          return Scaffold(
-            body: Stack (
-              children: [
-                SingleChildScrollView(
+          return Stack(
+            children: [
+              Scaffold(
+                body: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     // mainAxisSize: MainAxisSize.max,
@@ -90,8 +90,7 @@ class LoginScreen extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
                                   onPressed: () => Get.to(const ForgotPasswordOTPScreen()),
-                                  child: Text("Lupa kata sandi?".tr,
-                                      style: listTitleTextStyle.copyWith(color: infoColor)),
+                                  child: Text("Lupa kata sandi?".tr, style: listTitleTextStyle.copyWith(color: infoColor)),
                                 ),
                               ),
                               CustomFilledButton(
@@ -132,18 +131,16 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                controller.isLoading==true
-                    ? const LoadingDialog()
-                    : Container(),
-              ],
-            ),
-            bottomNavigationBar: const VersionApp(),
-            // bottomNavigationBar: SizedBox(
-            //     height: 135,
-            //     child: SvgPicture.asset(
-            //       ImageConstant.vector1,
-            //       fit: BoxFit.fill,
-            //     )),
+                bottomNavigationBar: const VersionApp(),
+                // bottomNavigationBar: SizedBox(
+                //     height: 135,
+                //     child: SvgPicture.asset(
+                //       ImageConstant.vector1,
+                //       fit: BoxFit.fill,
+                //     )),
+              ),
+              controller.isLoading == true ? const LoadingDialog() : Container(),
+            ],
           );
         });
   }

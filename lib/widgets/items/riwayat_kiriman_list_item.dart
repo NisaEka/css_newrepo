@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
   final String noResi;
   final String petugas;
   final String penerima;
+  final String status;
 
   const RiwayatKirimanListItem({
     super.key,
@@ -17,6 +19,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
     required this.noResi,
     required this.petugas,
     required this.penerima,
+    required this.status,
   });
 
   @override
@@ -33,7 +36,71 @@ class RiwayatKirimanListItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(tanggalEntry.toLongDateFormat()),
+              Text(
+                tanggalEntry.toLongDateFormat(),
+                style: sublistTitleTextStyle,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: errorColor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Text(
+                  status,
+                  style: sublistTitleTextStyle.copyWith(
+                    color: whiteColor,
+                    fontSize: 8,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Order ID',
+                    style: sublistTitleTextStyle.copyWith(fontSize: 10),
+                  ),
+                  Text(
+                    'No Resi',
+                    style: sublistTitleTextStyle.copyWith(fontSize: 10),
+                  ),
+                  Text(
+                    'Petugas Entry',
+                    style: sublistTitleTextStyle.copyWith(fontSize: 10),
+                  ),
+                  Text(
+                    'Penerima',
+                    style: sublistTitleTextStyle.copyWith(fontSize: 10),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    ': $orderID',
+                    style: listTitleTextStyle.copyWith(fontSize: 10),
+                  ),
+                  Text(
+                    ': $noResi',
+                    style: listTitleTextStyle.copyWith(fontSize: 10),
+                  ),
+                  Text(
+                    ': $petugas',
+                    style: listTitleTextStyle.copyWith(fontSize: 10),
+                  ),
+                  Text(
+                    ': $penerima',
+                    style: listTitleTextStyle.copyWith(fontSize: 10),
+                  ),
+                ],
+              ),
             ],
           )
         ],

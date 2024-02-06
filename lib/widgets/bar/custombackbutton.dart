@@ -22,12 +22,8 @@ class CustomBackButton<T> extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed ?? () => Get.back(),
       child: Container(
-
-        decoration: BoxDecoration(
-          color: blueJNE,
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: SvgPicture.asset(IconsConstant.arrowChevron),
+        margin: const EdgeInsets.all(10),
+        child: SvgPicture.asset(IconsConstant.arrowCircle),
       ),
     );
   }

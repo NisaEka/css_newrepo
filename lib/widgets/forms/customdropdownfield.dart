@@ -86,7 +86,7 @@ class CustomDropDownField<T> extends StatelessWidget {
         //     ],
         //   ),
         // ),
-        Text(label ?? ''),
+        Text(label ?? '', style: listTitleTextStyle,),
         const SizedBox(
           height: 8,
         ),

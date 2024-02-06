@@ -32,6 +32,7 @@ class InformasiKirimaController extends BaseController {
   DataTransactionModel? draft = Get.arguments['draft'];
 
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
+  final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
   final formKey = GlobalKey<FormState>();
   final hargaCODkey = GlobalKey<FormFieldState>();
   final service = TextEditingController();
