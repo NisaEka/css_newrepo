@@ -1,13 +1,18 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RiwayatKirimanController extends BaseController {
+  final startDateField = TextEditingController();
+  final endDateField = TextEditingController();
+
   int selectedKiriman = 0;
-  DateTime? selectedDateFilter;
+  DateTime? startDate;
+  DateTime? endDate;
   String? selectedStatusKiriman;
   String? selectedPetugasEntry;
 
@@ -21,88 +26,38 @@ class RiwayatKirimanController extends BaseController {
     "Sukses Dikembalikan",
   ];
 
-  void showFilter() {
-    isFiltered = isFiltered ? false : true;
-    update();
+  @override
+  void onInit() {
+    super.onInit();
+    startDateField.text = DateTime.now().toString().toDateTimeFormat();
+  }
 
-    Get.bottomSheet(
-      Column(
-        children: [
-          const SizedBox(height: 20),
-          const Center(
-            child: Text(
-              'Bottom Sheet',
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-          OutlinedButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: const Text('Close'),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                selectedDateFilter != null || selectedStatusKiriman != null || selectedPetugasEntry != null
-                    ? Container(
-                        decoration: BoxDecoration(
-                          color: greyColor,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            selectedDateFilter = null;
-                            selectedPetugasEntry = null;
-                            selectedStatusKiriman = null;
-                          },
-                          icon: const Icon(Icons.close_rounded),
-                          color: blueJNE,
-                        ),
-                      )
-                    : const SizedBox(),
-                CustomFilledButton(
-                  color: selectedDateFilter != null ? blueJNE : whiteColor,
-                  title: 'Pilih Tanggal'.tr,
-                  width: Get.width / 3,
-                  fontColor: selectedDateFilter != null ? whiteColor : greyDarkColor1,
-                  borderColor: greyDarkColor1,
-                  fontStyle: subTitleTextStyle,
-                  radius: 15,
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                ),
-                CustomFilledButton(
-                  color: selectedStatusKiriman != null ? blueJNE : whiteColor,
-                  title: 'Status Kiriman'.tr,
-                  width: Get.width / 3,
-                  fontColor: selectedStatusKiriman != null ? whiteColor : greyDarkColor1,
-                  borderColor: greyDarkColor1,
-                  fontStyle: subTitleTextStyle,
-                  radius: 15,
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                ),
-                CustomFilledButton(
-                  color: selectedPetugasEntry != null ? blueJNE : whiteColor,
-                  title: 'Petugas Entry'.tr,
-                  width: Get.width / 3,
-                  fontColor: selectedPetugasEntry != null ? whiteColor : greyDarkColor1,
-                  borderColor: greyDarkColor1,
-                  fontStyle: subTitleTextStyle,
-                  radius: 15,
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                ),
-              ],
-            ),
-          ),
-        ],
+  Future<void> selectDate(BuildContext context) async {
+    final ThemeData theme = Theme.of(context);
+    final DateTimeRange? picked = await showDateRangePicker(
+      context: context,
+      initialDateRange: DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(Duration(days: 7)),
       ),
-      backgroundColor: Colors.white,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    );
+      firstDate: DateTime(DateTime.now().year - 5),
+      lastDate: DateTime(DateTime.now().year + 5),
+      builder: (BuildContext? context, Widget? child) {
+        return child!;
+      },
+    ).then((selectedTime) {
+      // Handle the selected date and time here.
+      if (selectedTime != null) {
+        // DateTime selectedDateTime = DateTime(
+        //   startDate.year,
+        //   startDate.month,
+        //   startDate.day,
+        //   selectedTime.hour,
+        //   selectedTime.minute,
+        // );
+        // print(selectedDateTime); // You can use the selectedDateTime as needed.
+      }
+    });
+    if (picked != null) print({picked.start.toString() + ' - ' + picked.end.toString()});
   }
 }
