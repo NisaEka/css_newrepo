@@ -62,19 +62,19 @@ class RiwayatKirimanListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Order ID',
+                    'Order ID'.tr,
                     style: sublistTitleTextStyle.copyWith(fontSize: 10),
                   ),
                   Text(
-                    'No Resi',
+                    'No Resi'.tr,
                     style: sublistTitleTextStyle.copyWith(fontSize: 10),
                   ),
                   Text(
-                    'Petugas Entry',
+                    'Petugas Entry'.tr,
                     style: sublistTitleTextStyle.copyWith(fontSize: 10),
                   ),
                   Text(
-                    'Penerima',
+                    'Penerima'.tr,
                     style: sublistTitleTextStyle.copyWith(fontSize: 10),
                   ),
                 ],

@@ -182,14 +182,14 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         width: Get.width / 2.3,
                                         isRequired: true,
                                         value: controller.jenisBarang.text,
-                                        items: const [
+                                        items: [
                                           DropdownMenuItem(
                                             value: "PAKET",
-                                            child: Text('Paket'),
+                                            child: Text('Paket'.tr),
                                           ),
                                           DropdownMenuItem(
                                             value: "DOKUMEN",
-                                            child: Text('Dokumen'),
+                                            child: Text('Dokumen'.tr),
                                           ),
                                         ],
                                         onChanged: (value) {
@@ -202,6 +202,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         hintText: 'No Referensi (opsional)'.tr,
                                         inputType: TextInputType.number,
                                         width: Get.width / 2.3,
+                                        height: 46,
                                         validator: (value) {
                                           ValidationBuilder().min(8).build();
                                         },
@@ -211,7 +212,6 @@ class InformasiKirimanScreen extends StatelessWidget {
                                   CustomTextFormField(
                                     controller: controller.namaBarang,
                                     hintText: 'Nama Barang'.tr,
-                                    height: 40,
                                     isRequired: true,
                                   ),
 
@@ -230,7 +230,6 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         inputType: TextInputType.number,
                                         contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 40, right: 10),
                                         width: Get.width / 2,
-                                        height: 40,
                                         isRequired: controller.asuransi,
                                         onChanged: (value) => controller.hitungOngkir(),
                                       ),
@@ -239,7 +238,6 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         hintText: 'Jumlah Packing'.tr,
                                         inputType: TextInputType.number,
                                         width: Get.width / 2.8,
-                                        height: 40,
                                         isRequired: true,
                                       ),
                                     ],
@@ -256,7 +254,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         color: redJNE,
                                       ),
                                       title: Text(
-                                        'Gunakan Asuransi Pengiriman ( Rp. ${controller.isr.toInt().toCurrency()} )',
+                                        '${'Gunakan Asuransi Pengiriman'.tr} \n( Rp. ${controller.isr.toInt().toCurrency()} )',
                                         style: sublistTitleTextStyle,
                                       ),
                                       trailing: Checkbox(
@@ -320,7 +318,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                           shape: ToolTipCustomShape(usePadding: false),
                                         ),
                                         textStyle: listTitleTextStyle.copyWith(color: whiteColor),
-                                        message: 'Hanya sebagai instruksi penggunaan packing kayu',
+                                        message: 'Hanya sebagai instruksi penggunaan packing kayu'.tr,
                                         child: const Icon(
                                           Icons.info_outline,
                                           color: redJNE,
@@ -453,7 +451,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                       ? Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            const Text('Harga COD'),
+                                                            Text('Harga COD'.tr),
                                                             Text('Rp. ${controller.hargacod.toInt().toCurrency()}', style: listTitleTextStyle),
                                                           ],
                                                         )
@@ -462,7 +460,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                       ? Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            const Text('COD Ongkir'),
+                                                            Text('COD Ongkir'.tr),
                                                             Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
                                                           ],
                                                         )
@@ -471,7 +469,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                       ? Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            const Text('Asuransi Pengiriman'),
+                                                            Text('Asuransi Pengiriman'.tr),
                                                             Text('Rp. ${controller.isr.toInt().toCurrency()}', style: listTitleTextStyle),
                                                           ],
                                                         )
@@ -479,14 +477,14 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                   Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      const Text('Ongkos Kirim'),
+                                                      Text('Ongkos Kirim'.tr),
                                                       Text('Rp. ${controller.flatRate.toInt().toCurrency()}', style: listTitleTextStyle),
                                                     ],
                                                   ),
                                                   Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      const Text('Total Ongkos Kirim'),
+                                                      Text('Total Ongkos Kirim'.tr),
                                                       Text('Rp. ${(controller.totalOngkir).toInt().toCurrency()}', style: listTitleTextStyle),
                                                     ],
                                                   )
