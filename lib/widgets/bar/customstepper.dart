@@ -93,7 +93,7 @@ class CustomStepper extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 10),
                 child: Center(
                   child: Text(
-                    steps?[index] ?? '',
+                    steps?[index].tr ?? '',
                     style: sublistTitleTextStyle.copyWith(
                       color: currentStep == index ? blueJNE : Colors.transparent,
                     ),

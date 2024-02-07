@@ -23,7 +23,7 @@ class AddDropshipperScreen extends StatelessWidget {
               elevation: 1,
               backgroundColor: whiteColor,
               leading: const CustomBackButton(),
-              title: Text('Tambah Data Dropshipper', style: appTitleTextStyle.copyWith(color: blueJNE)),
+              title: Text('Tambah Data Dropshipper'.tr, style: appTitleTextStyle.copyWith(color: blueJNE)),
             ),
             body: SingleChildScrollView(
               child: Padding(

@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,6 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       // navigatorKey: NavigationUtil.navigationKey,
       translations: AppTranslation(),
-      locale: Get.deviceLocale,
       fallbackLocale: const Locale("id", "ID"),
       debugShowCheckedModeBanner: false,
       title: 'CSS',

@@ -140,8 +140,8 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                               (result) => controller.getSelectedDropshipper(result),
                                             )
                                           : Get.showSnackbar(
-                                              const GetSnackBar(
-                                                message: 'Pilih Account Terlebih dahulu',
+                                               GetSnackBar(
+                                                message: 'Pilih Account Terlebih dahulu'.tr,
                                                 backgroundColor: errorColor,
                                                 isDismissible: true,
                                                 duration: Duration(seconds: 3),
@@ -224,7 +224,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               ),
                               controller.dropshipper && controller.isOnline!
                                   ? CustomFilledButton(
-                                color: whiteColor,
+                                      color: whiteColor,
                                       borderColor: controller.isValidate ? blueJNE : greyColor,
                                       title: 'Simpan Data Dropshipper'.tr,
                                       fontColor: controller.isValidate ? blueJNE : greyColor,

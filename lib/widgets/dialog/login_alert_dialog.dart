@@ -10,9 +10,9 @@ class LoginAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: whiteColor,
-      title: const Text('Akses Terbatas '),
-      content: const Text(
-        'Anda harus login untuk menggunakan fitur ini',
+      title: Text('Akses Terbatas'.tr),
+      content: Text(
+        'Anda harus login untuk menggunakan fitur ini'.tr,
       ),
       actions: <Widget>[
         TextButton(

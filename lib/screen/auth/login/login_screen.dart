@@ -30,9 +30,6 @@ class LoginScreen extends StatelessWidget {
                     // mainAxisSize: MainAxisSize.max,
                     children: [
                       const LogoHeader(),
-                      // CustomFilledButton(color: Colors.blue, title: "en", onPressed: () => Get.updateLocale(Locale("en", "US")),),
-                      // SizedBox(height: 20,),
-                      // CustomFill edButton(color: Colors.blue, title: "id", onPressed: () => Get.updateLocale(Locale("id", "ID")),),
                       Form(
                         key: controller.formKey,
                         autovalidateMode: AutovalidateMode.always,
