@@ -13,9 +13,9 @@ class DashboardMarquee extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Get.size.width,
-      height: 40,
+      height: 30,
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.circular(8),
@@ -24,7 +24,7 @@ class DashboardMarquee extends StatelessWidget {
           BoxShadow(
             color: blueJNE,
             spreadRadius: 1,
-            offset: Offset(-7, 7),
+            offset: Offset(-3, 3),
           ),
         ],
       ),

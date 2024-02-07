@@ -12,6 +12,13 @@ class JLCPointWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.circular(50),
+        boxShadow: const [
+          BoxShadow(
+            color: redJNE,
+            spreadRadius: 1,
+            offset: Offset(-2, 1),
+          ),
+        ],
       ),
       alignment: Alignment.center,
       child: Row(

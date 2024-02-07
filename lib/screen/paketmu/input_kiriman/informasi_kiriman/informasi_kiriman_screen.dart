@@ -202,7 +202,6 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         hintText: 'No Referensi (opsional)'.tr,
                                         inputType: TextInputType.number,
                                         width: Get.width / 2.3,
-                                        height: 46,
                                         validator: (value) {
                                           ValidationBuilder().min(8).build();
                                         },
@@ -212,6 +211,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                   CustomTextFormField(
                                     controller: controller.namaBarang,
                                     hintText: 'Nama Barang'.tr,
+                                    height: 40,
                                     isRequired: true,
                                   ),
 
@@ -230,6 +230,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         inputType: TextInputType.number,
                                         contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 40, right: 10),
                                         width: Get.width / 2,
+                                        height: 40,
                                         isRequired: controller.asuransi,
                                         onChanged: (value) => controller.hitungOngkir(),
                                       ),
@@ -238,6 +239,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         hintText: 'Jumlah Packing'.tr,
                                         inputType: TextInputType.number,
                                         width: Get.width / 2.8,
+                                        height: 40,
                                         isRequired: true,
                                       ),
                                     ],
@@ -254,7 +256,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         color: redJNE,
                                       ),
                                       title: Text(
-                                        'Gunakan Asuransi Pengiriman \n( Rp. ${controller.isr.toInt().toCurrency()} )',
+                                        'Gunakan Asuransi Pengiriman ( Rp. ${controller.isr.toInt().toCurrency()} )',
                                         style: sublistTitleTextStyle,
                                       ),
                                       trailing: Checkbox(

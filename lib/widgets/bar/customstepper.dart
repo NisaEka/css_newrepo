@@ -45,7 +45,7 @@ class CustomStepper extends StatelessWidget {
                               BoxShadow(
                                 color: redJNE,
                                 spreadRadius: 1,
-                                offset: Offset(2, 1),
+                                offset: Offset(2, 0),
                               )
                             ],
                           ),
@@ -72,7 +72,7 @@ class CustomStepper extends StatelessWidget {
                                     BoxShadow(
                                       color: currentStep > index ? redJNE : Colors.transparent,
                                       spreadRadius: 1,
-                                      offset: const Offset(1, 1),
+                                      offset: const Offset(1, -1),
                                     )
                                   ],
                                 ),

@@ -144,7 +144,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                                 message: 'Pilih Account Terlebih dahulu',
                                                 backgroundColor: errorColor,
                                                 isDismissible: true,
-                                                duration: Duration(seconds: 3),
+                                                duration: Duration(seconds: 5),
                                               ),
                                             ),
                                       child: Container(

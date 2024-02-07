@@ -11,7 +11,7 @@ class CustomFormLabel extends StatelessWidget{
     return RichText(
       text: TextSpan(
         text: label,
-        style: formLabelTextStyle,
+        style: subformLabelTextStyle,
         children: <TextSpan>[
           TextSpan(
               text: showRequired ? "*" : "",

@@ -63,8 +63,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           decoration: const BoxDecoration(
                             color: blueJNE,
                             borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(50),
-                              bottomRight: Radius.circular(50),
+                              bottomLeft: Radius.circular(40),
+                              bottomRight: Radius.circular(40),
                             ),
                           ),
                           child: Column(

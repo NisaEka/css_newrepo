@@ -91,7 +91,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                title != null ? Text(title!.tr, style: appTitleTextStyle.copyWith(color: greyDarkColor1)) : SizedBox(),
+                title != null ? Text(title!.tr, style: subappTitleTextStyle.copyWith(color: greyDarkColor1)) : SizedBox(),
                 Row(
                   children: action?.toList() ?? [],
                 )

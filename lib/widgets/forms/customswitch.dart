@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,11 @@ class CustomSwitch extends StatelessWidget {
     return  Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: listTitleTextStyle),
+        Text(label, style: subformLabelTextStyle),
         Switch(
           value: value,
           onChanged: onChange,
+          inactiveThumbColor: blueJNE,
         )
       ],
     );
