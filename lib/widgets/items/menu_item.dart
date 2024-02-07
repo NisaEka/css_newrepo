@@ -24,12 +24,12 @@ class MenuItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.all(8),
+        margin: EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.all(5),
+              padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
                 color: isActive ? blueJNE : blueJNE.withOpacity(0.8),
                 borderRadius: BorderRadius.circular(10),

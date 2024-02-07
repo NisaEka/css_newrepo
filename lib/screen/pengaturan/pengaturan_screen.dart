@@ -31,32 +31,24 @@ class PengaturanScreen extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     trailing: Container(
                       width: 90,
-                      child: Row(
+                      child: const Row(
                         children: [
-                          // CustomFilledButton(color: Colors.blue, title: "en", onPressed: () => Get.updateLocale(Locale("en", "US")),),
-                          // SizedBox(height: 20,),
-                          // CustomFill edButton(color: Colors.blue, title: "id", onPressed: () => Get.updateLocale(Locale("id", "ID")),),
-
                           CustomFilledButton(
-                            color: controller.lang == "id_ID" ? blueJNE : whiteColor,
-                            fontColor: controller.lang == "id_ID" ? whiteColor : greyColor,
-                            borderColor: controller.lang == "id_ID" ? Colors.transparent : greyColor,
+                            color: blueJNE,
                             title: 'ID',
                             width: 40,
                             margin: EdgeInsets.zero,
                             padding: EdgeInsets.zero,
-                            onPressed: () => controller.changeLanguage("ID"),
                           ),
-                          const SizedBox(width: 10),
+                          SizedBox(width: 10),
                           CustomFilledButton(
-                            color: controller.lang == "en_US" ? blueJNE : whiteColor,
-                            fontColor: controller.lang == "en_US" ? whiteColor : greyColor,
-                            borderColor: controller.lang == "en_US" ? Colors.transparent : greyColor,
+                            color: whiteColor,
+                            fontColor: greyColor,
+                            borderColor: greyColor,
                             margin: EdgeInsets.zero,
                             padding: EdgeInsets.zero,
                             title: 'EN',
                             width: 40,
-                            onPressed: () => controller.changeLanguage("EN"),
                           ),
                         ],
                       ),
@@ -73,7 +65,7 @@ class PengaturanScreen extends StatelessWidget {
                     onTap: () => Get.to(const PengaturanPetugasscreen()),
                   ),
                   SettingListItem(
-                    title: 'Ubah Kata Sandi'.tr,
+                    title: 'Ubah Kata Snadi'.tr,
                     icon: Icons.lock_open_outlined,
                   )
                 ],
@@ -85,7 +77,7 @@ class PengaturanScreen extends StatelessWidget {
                 onTap: () => controller.isLogin ? controller.doLogout() : Get.to(const LoginScreen()),
                 leading: Icon(controller.isLogin ? Icons.logout : Icons.login),
                 title: Text(controller.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
-                trailing: Text('${'Versi'.tr} ${controller.version.toString()}'),
+                trailing: Text('Versi ${controller.version.toString()}'),
                 shape: const Border(
                   bottom: BorderSide(color: greyColor),
                   top: BorderSide(color: greyColor),

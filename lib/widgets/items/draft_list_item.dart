@@ -6,7 +6,6 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:get/get.dart';
 
 class DraftTransactionListItem extends StatefulWidget {
   final DataTransactionModel data;
@@ -52,7 +51,7 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
               // backgroundColor: errorColor,
               foregroundColor: errorColor,
               icon: Icons.delete,
-              label: 'Hapus'.tr,
+              label: 'Hapus',
               borderRadius: BorderRadius.circular(8),
             ),
           ],
@@ -97,11 +96,11 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomLabelText(
-                        title: 'Account Number'.tr,
+                        title: 'Account Number',
                         value: widget.data.dataAccount?.accountNumber ?? '',
                       ),
                       CustomLabelText(
-                        title: 'Account Name'.tr,
+                        title: 'Account Name',
                         value: widget.data.dataAccount?.accountName ?? '',
                         alignment: 'end',
                       ),
@@ -116,12 +115,12 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomLabelText(
-                                  title: 'Shipper'.tr,
+                                  title: 'Shipper',
                                   value: widget.data.shipper?.name ?? '',
                                 ),
                                 CustomLabelText(
                                   alignment: 'end',
-                                  title: 'Receiver'.tr,
+                                  title: 'Receiver',
                                   value: widget.data.receiver?.name ?? '',
                                 ),
                               ],
@@ -130,24 +129,24 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomLabelText(
-                                  title: 'Origin'.tr,
+                                  title: 'Origin',
                                   value: widget.data.origin?.desc ?? '',
                                 ),
                                 CustomLabelText(
                                   alignment: 'end',
-                                  title: 'Destination'.tr,
+                                  title: 'Destination',
                                   value: widget.data.dataDestination?.cityName ?? '',
                                 ),
                               ],
                             ),
                             const Divider(),
                             CustomLabelText(
-                              title: 'Nama Barang'.tr,
+                              title: 'Nama Barang',
                               value: widget.data.goods?.desc ?? '',
                             ),
                             CustomFilledButton(
                               color: blueJNE,
-                              title: 'Validate'.tr,
+                              title: 'Validate',
                               onPressed: widget.onValidate,
                             )
                           ],
@@ -162,3 +161,4 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
     );
   }
 }
+

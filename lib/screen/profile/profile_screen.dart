@@ -52,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
                                 ListTile(
                                   leading: SvgPicture.asset(e.leading.toString()),
                                   title: Text(
-                                    e.title?.tr ?? '',
+                                    e.title ?? '',
                                     style: listTitleTextStyle.copyWith(color: blueJNE),
                                   ),
                                   trailing: Transform.flip(flipY: e.isShow ?? true, child: SvgPicture.asset(IconsConstant.arrowChevron)),

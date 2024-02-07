@@ -16,9 +16,9 @@ class DeleteAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: whiteColor,
-      title: Text('Data akan dihapus'.tr),
-      content: Text(
-        'Anda yakin menghapus data ini ?'.tr,
+      title: const Text('Data akan dihapus '),
+      content: const Text(
+        'Anda yakin menghapus data ini ? ',
       ),
       actions: <Widget>[
         TextButton(

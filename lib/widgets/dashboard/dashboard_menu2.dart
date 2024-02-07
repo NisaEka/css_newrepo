@@ -46,7 +46,7 @@ class DashboardMenu2 extends StatelessWidget {
               onTap: () => Get.to(const DraftTransaksiScreen()),
             ),
             MenuItem(
-              menuTitle: 'Riwayat Kiriman'.tr,
+              menuTitle: 'Riwayat kiriman'.tr,
               menuImg: ImageConstant.paketmuIcon,
               onTap: () => Get.to(const RiwayatKirimanScreen()),
 

@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DraftTransaksiController extends BaseController {
-
   List<DataTransactionModel> draftList = [];
 
   DraftTransactionModel? draftData;
@@ -91,16 +90,14 @@ class DraftTransaksiController extends BaseController {
         isLoading = true;
         update();
         await transaction.postTransaction(upload).then((value) async {
-          if (value.code == 201) {
-            draftList.removeWhere((draft) => draft.delivery?.flatRate != 0);
-            var data = '{"draft" : ${jsonEncode(draftList)}}';
-            draftData = DraftTransactionModel.fromJson(jsonDecode(data));
+          draftList.removeWhere((draft) => draft.delivery?.flatRate != 0);
+          var data = '{"draft" : ${jsonEncode(draftList)}}';
+          draftData = DraftTransactionModel.fromJson(jsonDecode(data));
 
-            await storage.saveData(StorageCore.draftTransaction, draftData).then((_) {
-              initData();
-              isLoading = false;
-            });
-          }
+          await storage.saveData(StorageCore.draftTransaction, draftData).then((_) {
+            initData();
+            isLoading = false;
+          });
 
           update();
 
@@ -110,10 +107,10 @@ class DraftTransaksiController extends BaseController {
                 Icons.info,
                 color: whiteColor,
               ),
-              message: value.code == 201 ? "Draft berhasil di upload" : "Draft gagal di upload",
+              message: value.code == 200 ? "Draft berhasil di upload" : "Draft gagal di upload",
               isDismissible: true,
               duration: const Duration(seconds: 3),
-              backgroundColor: value.code == 201 ? successColor : errorColor,
+              backgroundColor: value.code == 200 ? successColor : errorColor,
             ),
           );
         });

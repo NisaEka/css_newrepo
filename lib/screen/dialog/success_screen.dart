@@ -10,9 +10,7 @@ import 'package:lottie/lottie.dart';
 class SuccessScreen extends StatelessWidget {
   final String message;
   final VoidCallback? nextAction;
-  final VoidCallback? secondAction;
   final String buttonTitle;
-  final String? secondButtonTitle;
   final Widget? icon;
   final Color? fontColor;
 
@@ -23,8 +21,6 @@ class SuccessScreen extends StatelessWidget {
     required this.buttonTitle,
     this.icon,
     this.fontColor,
-    this.secondAction,
-    this.secondButtonTitle,
   });
 
   @override
@@ -43,27 +39,12 @@ class SuccessScreen extends StatelessWidget {
               style: appTitleTextStyle.copyWith(color: fontColor ?? greyDarkColor1),
               textAlign: TextAlign.center,
             ),
-            Column(
-              children: [
-                secondAction != null
-                    ? CustomFilledButton(
-                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        color: whiteColor,
-                        fontColor: blueJNE,
-                        borderColor: blueJNE,
-                        title: secondButtonTitle,
-                        radius: 50,
-                        onPressed: secondAction,
-                      )
-                    : SizedBox(),
-                CustomFilledButton(
-                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  color: blueJNE,
-                  radius: 50,
-                  title: buttonTitle.tr,
-                  onPressed: nextAction,
-                ),
-              ],
+            CustomFilledButton(
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+              color: blueJNE,
+              radius: 50,
+              title: buttonTitle.tr,
+              onPressed: nextAction,
             ),
           ],
         ),
