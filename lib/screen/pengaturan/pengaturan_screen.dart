@@ -65,7 +65,7 @@ class PengaturanScreen extends StatelessWidget {
                     onTap: () => Get.to(const PengaturanPetugasscreen()),
                   ),
                   SettingListItem(
-                    title: 'Ubah Kata Snadi'.tr,
+                    title: 'Ubah Kata Sandi'.tr,
                     icon: Icons.lock_open_outlined,
                   )
                 ],
@@ -77,7 +77,7 @@ class PengaturanScreen extends StatelessWidget {
                 onTap: () => controller.isLogin ? controller.doLogout() : Get.to(const LoginScreen()),
                 leading: Icon(controller.isLogin ? Icons.logout : Icons.login),
                 title: Text(controller.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
-                trailing: Text('Versi ${controller.version.toString()}'),
+                trailing: Text('v ${controller.version.toString()}'.tr),
                 shape: const Border(
                   bottom: BorderSide(color: greyColor),
                   top: BorderSide(color: greyColor),

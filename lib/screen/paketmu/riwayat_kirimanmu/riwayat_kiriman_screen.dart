@@ -77,7 +77,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            CustomFormLabel(label: 'Tanggal Entry'),
+                                            CustomFormLabel(label: 'Tanggal Entry'.tr),
                                             SizedBox(height: 10),
                                             CustomTextFormField(
                                               controller: controller.startDateField,
@@ -85,7 +85,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                               onTap: () => controller.selectDate(context),
                                               // hintText: 'Dari Tanggal',
                                             ),
-                                            CustomFormLabel(label: 'Status Kiriman'),
+                                            CustomFormLabel(label: 'Status Kiriman'.tr),
                                             SizedBox(height: 10),
                                             // CustomFormLabel(label: 'Petugas Entry'),
                                           ],
@@ -177,7 +177,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                           ? blueJNE
                                           : greyColor,
                                       width: controller.isFiltered ? Get.width / 2.5 : Get.width - 40,
-                                      title: 'Terapkan',
+                                      title: 'Terapkan'.tr,
                                       onPressed: () {
                                         if (controller.startDate != null ||
                                             controller.selectedPetugasEntry != null ||
@@ -270,7 +270,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
               child: Column(
                 children: [
                   CustomSearchField(
-                    hintText: 'Cari'.tr,
+                    hintText: 'Cari Transaksi'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
                     ),

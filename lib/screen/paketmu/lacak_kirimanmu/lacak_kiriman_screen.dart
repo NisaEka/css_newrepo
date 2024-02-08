@@ -55,12 +55,12 @@ class LacakKirimanScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomLabelText(
-                        title: 'Dari',
+                        title: 'Dari'.tr,
                         value: 'Kota administrasi j',
                         width: Get.width / 3,
                       ),
                       CustomLabelText(
-                        title: 'Status Kiriman',
+                        title: 'Status Kiriman'.tr,
                         value: 'Delivered',
                         valueColor: redJNE,
                         width: Get.width / 3,
@@ -73,12 +73,12 @@ class LacakKirimanScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomLabelText(
-                        title: 'Menuju',
+                        title: 'Menuju'.tr,
                         value: 'Bandung kidul, Bandung',
                         width: Get.width / 3,
                       ),
                       CustomLabelText(
-                        title: 'Perkiraan sampai tujuan',
+                        title: 'Perkiraan sampai tujuan'.tr,
                         value: '2 days',
                         valueColor: redJNE,
                         width: Get.width / 2,
@@ -145,12 +145,12 @@ class LacakKirimanScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomLabelText(
-                        title: 'Tanggal Kirim',
+                        title: 'Tanggal Kirim'.tr,
                         value: '16 Oktober 2023 18.40',
                         width: Get.width / 3,
                       ),
                       CustomLabelText(
-                        title: 'Berat Kiriman',
+                        title: 'Berat Kiriman'.tr,
                         value: '1 KG',
                         width: Get.width / 3,
                         alignment: 'end',
@@ -158,7 +158,7 @@ class LacakKirimanScreen extends StatelessWidget {
                     ],
                   ),
                   CustomLabelText(
-                    title: 'Deskripsi',
+                    title: 'Deskripsi'.tr,
                     value: 'SEAGATE EXPANSION HARDDISK  EXTERNAL 1 TB - HITAM [FS]',
                     width: Get.width / 2,
                   ),
@@ -167,12 +167,12 @@ class LacakKirimanScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomLabelText(
-                        title: 'Nama Pengirim',
+                        title: 'Nama Pengirim'.tr,
                         value: 'SEAGATE OFFICIAL STORE',
                         width: Get.width / 3,
                       ),
                       CustomLabelText(
-                        title: 'Nama Penerima',
+                        title: 'Nama Penerima'.tr,
                         value: 'SEAGATE OFFICIAL STORE',
                         width: Get.width / 3,
                         alignment: 'end',
@@ -183,12 +183,12 @@ class LacakKirimanScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomLabelText(
-                        title: 'Kota Pengirim',
+                        title: 'Kota Pengirim'.tr,
                         value: 'kota administrasi J',
                         width: Get.width / 3,
                       ),
                       CustomLabelText(
-                        title: 'Kota Penerima',
+                        title: 'Kota Penerima'.tr,
                         value: 'Bandung kidul, Bandung',
                         width: Get.width / 3,
                         alignment: 'end',

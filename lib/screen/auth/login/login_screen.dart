@@ -49,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                               const SizedBox(height: 25),
                               CustomTextFormField(
                                 controller: controller.emailTextField,
-                                hintText: "Alamat email / Nama pengguna".tr,
+                                hintText: "Alamat email".tr,
                                 prefixIcon: const Icon(Icons.person),
                                 isRequired: true,
                                 focusNode: controller.emailFocus,
@@ -113,6 +113,7 @@ class LoginScreen extends StatelessWidget {
                               // ),
                               Container(
                                 alignment: Alignment.center,
+                                margin: const EdgeInsets.only(top: 60),
                                 child: Text("Belum punya akun?".tr, style: listTitleTextStyle),
                               ),
                               CustomFilledButton(

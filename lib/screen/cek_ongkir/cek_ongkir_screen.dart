@@ -36,7 +36,7 @@ class CekOngkirScreen extends StatelessWidget {
                         children: [
                           CustomDropDownFormField(
                             items: [],
-                            hintText: 'Kota Pengirim'.tr,
+                            hintText: 'Kota Asal'.tr,
                             textStyle: hintTextStyle,
                           ),
                           CustomDropDownFormField(

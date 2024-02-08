@@ -31,22 +31,22 @@ class ProfileController extends BaseController {
   List<ProfilListModel> profilList = [
     ProfilListModel(
       leading: IconsConstant.openAccount,
-      title: 'Lihat Akun',
+      title: 'Lihat Akun'.tr,
       isShow: false,
     ),
     ProfilListModel(
       leading: IconsConstant.dataUser,
-      title: 'Data Umum',
+      title: 'Data Umum'.tr,
       isShow: false,
     ),
     ProfilListModel(
       leading: IconsConstant.addressBook,
-      title: 'Alamat Pengiriman',
+      title: 'Alamat Pengiriman'.tr,
       isShow: false,
     ),
     ProfilListModel(
       leading: IconsConstant.documentInfo,
-      title: 'Dokumen',
+      title: 'Dokumen'.tr,
       isShow: false,
     ),
   ];

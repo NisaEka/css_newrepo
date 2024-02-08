@@ -74,7 +74,7 @@ class ProfileScreen extends StatelessWidget {
                                             ? Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text("Nama Toko / Perusahaan", style: subTitleTextStyle),
+                                                Text("Nama Toko / Perusahaan".tr, style: subTitleTextStyle),
                                                 Text("Nama Lengkap", style: subTitleTextStyle),
                                                 Text("Nomor Identitas / KTP", style: subTitleTextStyle),
                                                 Text("Alamat Lengkap", style: subTitleTextStyle),
@@ -97,7 +97,7 @@ class ProfileScreen extends StatelessWidget {
                         .toList()),
                 ListTile(
                   leading: const Icon(Icons.account_box, color: blueJNE, size: 30),
-                  title: Text(controller.isLogin ? 'Keluar'.tr : 'Masuk', style: listTitleTextStyle.copyWith(color: blueJNE)),
+                  title: Text(controller.isLogin ? 'Keluar'.tr : 'Masuk'.tr, style: listTitleTextStyle.copyWith(color: blueJNE)),
                   trailing: Icon(controller.isLogin ? Icons.logout : Icons.login, color: redJNE, size: 25),
                   onTap: () => controller.isLogin ? controller.doLogout() : Get.to(const LoginScreen()),
                 )

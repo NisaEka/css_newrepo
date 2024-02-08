@@ -28,7 +28,7 @@ class PengaturanLabelScreen extends StatelessWidget {
                 children: [
                   CustomSwitch(
                     value: controller.copyLabel,
-                    label: 'Copy Label',
+                    label: 'Copy Label'.tr,
                     onChange: (value) {
                       controller.copyLabel = value;
                       controller.update();

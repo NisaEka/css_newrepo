@@ -85,7 +85,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               const SizedBox(height: 18),
                               TextField(
                                 decoration: InputDecoration(
-                                  hintText: 'Masukan nomor resi untuk lacak kiriman',
+                                  hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
                                   hintStyle: hintTextStyle,
                                   suffixIcon: const Icon(
                                     Icons.qr_code,

@@ -62,7 +62,7 @@ class InformasiKirimaController extends BaseController {
   bool formValidate = false;
   bool isOnline = true;
 
-  List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
+  List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
   List<ServiceModel> serviceList = [];
   List<DataTransactionModel> draftList = [];
 

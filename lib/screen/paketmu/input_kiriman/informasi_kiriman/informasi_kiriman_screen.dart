@@ -113,10 +113,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Center(
-                            child: CustomFormLabel(label: 'Service'.tr),
+                            child: CustomFormLabel(label: 'Services'.tr),
                           ),
                           const SizedBox(height: 10),
-                          controller.isServiceLoad ? const Center(child: Text('Loading service...')) : const SizedBox()
+                          controller.isServiceLoad ? const Center(child: Text('Loading services...')) : const SizedBox()
                         ],
                       ),
                     ),
@@ -254,7 +254,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         color: redJNE,
                                       ),
                                       title: Text(
-                                        'Gunakan Asuransi Pengiriman \n( Rp. ${controller.isr.toInt().toCurrency()} )',
+                                        'Gunakan Asuransi Pengiriman ( Rp. ${controller.isr.toInt().toCurrency()} )',
                                         style: sublistTitleTextStyle,
                                       ),
                                       trailing: Checkbox(
@@ -318,7 +318,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                           shape: ToolTipCustomShape(usePadding: false),
                                         ),
                                         textStyle: listTitleTextStyle.copyWith(color: whiteColor),
-                                        message: 'Hanya sebagai instruksi penggunaan packing kayu',
+                                        message: 'Hanya sebagai instruksi penggunaan packing kayu'.tr,
                                         child: const Icon(
                                           Icons.info_outline,
                                           color: redJNE,

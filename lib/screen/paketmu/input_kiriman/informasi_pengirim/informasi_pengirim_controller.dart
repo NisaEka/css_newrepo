@@ -29,7 +29,7 @@ class InformasiPengirimController extends BaseController {
   bool isValidate = false;
   bool isOnline = true;
 
-  List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
+  List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
   List<AccountNumberModel> accountList = [];
   List<OriginModel> originList = [];
 

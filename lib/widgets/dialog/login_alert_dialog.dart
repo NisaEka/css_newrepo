@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,25 +11,25 @@ class LoginAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: whiteColor,
-      title: const Text('Akses Terbatas '),
-      content: const Text(
-        'Anda harus login untuk menggunakan fitur ini',
+      title: const Text('Akses Terbatas'),
+      content: Text(
+        'Anda harus mempunyai akun CSS untuk menggunakan fitur ini'.tr,
       ),
       actions: <Widget>[
         TextButton(
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelLarge,
           ),
-          child: Text('kembali'.tr),
+          child: Text('Daftar'.tr),
           onPressed: () {
-            Get.back();
+            Get.off(const SignUpScreen());
           },
         ),
         TextButton(
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelLarge,
           ),
-          child: Text('Login'.tr),
+          child: Text('Masuk'.tr),
           onPressed: () {
             Get.off(const LoginScreen());
           },

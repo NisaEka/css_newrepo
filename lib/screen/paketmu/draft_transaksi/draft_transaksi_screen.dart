@@ -53,7 +53,7 @@ class DraftTransaksiScreen extends StatelessWidget {
                       //   },
                       // ),
                       CustomSearchField(
-                        hintText: 'Cari transaksimu'.tr,
+                        hintText: 'Cari Transaksi'.tr,
                         prefixIcon: SvgPicture.asset(IconsConstant.search),
                       ),
                       Expanded(

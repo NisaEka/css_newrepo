@@ -38,7 +38,7 @@ class _VersionAppState extends State<VersionApp> {
             ImageConstant.logoJNE,
             height: 34,
           ),
-          Text('ver $version')
+          Text('v $version')
         ],
       ),
     );

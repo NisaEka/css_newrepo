@@ -26,7 +26,7 @@ class JLCPointWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(ImageConstant.logoJLC, height: 14),
-          const Text(' 1.000 Point')
+          const Text(' 1.000 Point'),
           // const Padding(
           //   padding: EdgeInsets.symmetric(horizontal: 8),
           //   child: Icon(
