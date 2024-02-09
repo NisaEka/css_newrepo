@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserInfoCard extends StatelessWidget {
   const UserInfoCard({super.key});
@@ -26,7 +27,7 @@ class UserInfoCard extends StatelessWidget {
             Text("ALEX COLLECTION", style: sublistTitleTextStyle),
             Text("user@mail.com", style: sublistTitleTextStyle),
             Text(
-              "Pemilik",
+              "Pemilik".tr,
               style: listTitleTextStyle,
             )
           ],

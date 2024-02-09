@@ -13,6 +13,7 @@ import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -102,10 +103,11 @@ class InformasiKirimaController extends BaseController {
     berat = 0;
 
     if (dimensi) {
-      if (selectedService?.serviceCode == "JTR23" ||
-          selectedService?.serviceCode == "JTR<130" ||
-          selectedService?.serviceCode == "JTR250" ||
-          selectedService?.serviceCode == "JTR>250") {
+      if (selectedService?.serviceCode?.contains("JTR") == true) {
+        // if (selectedService?.serviceCode == "JTR23" ||
+        //     selectedService?.serviceCode == "JTR<130" ||
+        //     selectedService?.serviceCode == "JTR250" ||
+        //     selectedService?.serviceCode == "JTR>250") {
         berat = (dimensiPanjang.text.toDouble() * dimensiLebar.text.toDouble() * dimensiTinggi.text.toDouble()) / 5000;
       } else {
         berat = (dimensiPanjang.text.toDouble() * dimensiLebar.text.toDouble() * dimensiTinggi.text.toDouble()) / 6000;
@@ -124,13 +126,17 @@ class InformasiKirimaController extends BaseController {
   void hitungOngkir() {
     totalOngkir = 0;
     isr = 0;
+    isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
+    flatRateISR = flatRate + isr;
+    update();
+
     if (isOnline) {
       isCalculate = true;
       update();
       if (isOnline) {
         // if (asuransi) {
-        isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
-        flatRateISR = flatRate + isr;
+        // isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
+        // flatRateISR = flatRate + isr;
         freightChargeISR = freightCharge + isr;
         update();
         // }
@@ -182,7 +188,7 @@ class InformasiKirimaController extends BaseController {
       e.printError();
       String message;
       if (selectedService == null && isOnline) {
-        message = "Service harus diisi";
+        message = "Service harus diisi".tr;
         Get.showSnackbar(
           GetSnackBar(
             message: message,
@@ -223,14 +229,14 @@ class InformasiKirimaController extends BaseController {
   }
 
   void deleteDraft(int index) async {
-      draftList.removeAt(index);
-      var data = '{"draft" : ${jsonEncode(draftList)}}';
-      draftData = DraftTransactionModel.fromJson(jsonDecode(data));
+    draftList.removeAt(index);
+    var data = '{"draft" : ${jsonEncode(draftList)}}';
+    draftData = DraftTransactionModel.fromJson(jsonDecode(data));
 
-      await storage.saveData(StorageCore.draftTransaction, draftData).then(
-            (_) => update(),
-          );
-      // initData();
+    await storage.saveData(StorageCore.draftTransaction, draftData).then(
+          (_) => update(),
+        );
+    // initData();
 
     update();
   }
@@ -327,17 +333,22 @@ class InformasiKirimaController extends BaseController {
     await storage.saveData(StorageCore.draftTransaction, draftData).then(
           (_) => Get.to(
             SuccessScreen(
-              message: "Transaksi di simpan ke draft",
+              message: "Transaksi di simpan ke draft".tr,
               icon: const Icon(
                 Icons.warning,
                 color: warningColor,
                 size: 150,
               ),
-              buttonTitle: "Kembali ke dashboard",
+              buttonTitle: "Kembali ke Beranda".tr,
               nextAction: () => Get.offAll(
                 const DashboardScreen(),
               ),
+              secondButtonTitle: "Lihat Draft".tr,
+              secondAction: () => Get.offAll(const DraftTransaksiScreen()),
             ),
+            arguments: {
+              'transaction': true,
+            },
           ),
         );
   }
@@ -378,17 +389,21 @@ class InformasiKirimaController extends BaseController {
         receiver: receiver,
       ))
           .then((v) {
-        deleteDraft(draftIndex!);
+        if (goods != null) {
+          deleteDraft(draftIndex!);
+        }
+
         Get.to(
           SuccessScreen(
-              message: "Transaksi Berhasil\n${v.payload?.awb}",
-              buttonTitle: "Kembali ke dashboard",
-              nextAction: () => Get.offAll(
-                    const DashboardScreen(),
-                  )),
-          arguments: {
-            'awb': v.payload?.awb,
-          },
+            message: "${'Transaksi Berhasil'.tr}\n${v.payload?.awb}",
+            buttonTitle: "Kembali ke Beranda".tr,
+            nextAction: () => Get.offAll(
+              const DashboardScreen(),
+              arguments: {
+                'awb': v.payload?.awb,
+              },
+            ),
+          ),
         );
       });
     } catch (e, i) {

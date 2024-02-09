@@ -29,35 +29,37 @@ class RiwayatKirimanController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    startDateField.text = DateTime.now().toString().toDateTimeFormat();
   }
 
-  Future<void> selectDate(BuildContext context) async {
-    final ThemeData theme = Theme.of(context);
-    final DateTimeRange? picked = await showDateRangePicker(
+  Future<DateTime?> selectDate(BuildContext context) {
+    return showDatePicker(
       context: context,
-      initialDateRange: DateTimeRange(
-        start: DateTime.now(),
-        end: DateTime.now().add(Duration(days: 7)),
-      ),
-      firstDate: DateTime(DateTime.now().year - 5),
-      lastDate: DateTime(DateTime.now().year + 5),
-      builder: (BuildContext? context, Widget? child) {
-        return child!;
-      },
-    ).then((selectedTime) {
-      // Handle the selected date and time here.
-      if (selectedTime != null) {
-        // DateTime selectedDateTime = DateTime(
-        //   startDate.year,
-        //   startDate.month,
-        //   startDate.day,
-        //   selectedTime.hour,
-        //   selectedTime.minute,
-        // );
-        // print(selectedDateTime); // You can use the selectedDateTime as needed.
-      }
-    });
-    if (picked != null) print({picked.start.toString() + ' - ' + picked.end.toString()});
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    ).then(
+      (selectedDate) => showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      ).then((selectedTime) => DateTime(
+            selectedDate!.year,
+            selectedDate.month,
+            selectedDate.day,
+            selectedTime!.hour,
+            selectedTime.minute,
+          )),
+    );
+  }
+
+  void resetFilter() {
+    startDate = null;
+    endDate = null;
+    startDateField.clear();
+    endDateField.clear();
+    selectedPetugasEntry = null;
+    selectedStatusKiriman = null;
+    isFiltered = false;
+    update();
+    Get.back();
   }
 }

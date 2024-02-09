@@ -43,6 +43,32 @@ class DashboardController extends BaseController {
   }
 
   Future<void> initData() async {
+    String local = await storage.readString(StorageCore.localeApp);
+
+    local.isEmpty.printInfo();
+    if (local.isEmpty) {
+      (Get.deviceLocale == Locale("id", "ID")).printInfo(info: "local");
+      if (Get.deviceLocale == Locale("id", "ID")) {
+        await storage.writeString(StorageCore.localeApp, "id_ID");
+        Get.updateLocale(Locale("id", "ID"));
+        update();
+      } else {
+        await storage.writeString(StorageCore.localeApp, "en_US");
+        Get.updateLocale(Locale("en", "ES"));
+        update();
+      }
+    } else {
+      if (local == "id_ID") {
+        await storage.writeString(StorageCore.localeApp, "id_ID");
+        Get.updateLocale(Locale("id", "ID"));
+        update();
+      } else {
+        await storage.writeString(StorageCore.localeApp, "en_US");
+        Get.updateLocale(Locale("en", "ES"));
+        update();
+      }
+    }
+
     cekToken();
     isLoading = true;
     bannerList = [

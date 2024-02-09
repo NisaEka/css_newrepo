@@ -28,7 +28,7 @@ class InformasiPenerimaController extends BaseController {
   bool isLoading = false;
   bool isOnline = false;
 
-  List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
+  List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<DestinationModel> destinationList = [];
 
   GetDestinationModel? destinationModel;
