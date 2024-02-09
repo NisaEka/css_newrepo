@@ -64,10 +64,10 @@ class TambahPetugasScreen extends StatelessWidget {
                               ),
                               Column(children: [
                                 CustomCheckbox(
-                                  label: 'Profilku'.tr,
-                                  value: controller.profil,
+                                  label: 'profilku'.tr,
+                                  value: controller.profilku,
                                   onChanged: (value) {
-                                    controller.profil = value!;
+                                    controller.profilku = value!;
                                     controller.update();
                                   },
                                 ),

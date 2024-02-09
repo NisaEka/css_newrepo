@@ -290,7 +290,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
               child: Column(
                 children: [
                   CustomSearchField(
-                    hintText: 'Cari Transaksi'.tr,
+                    hintText: 'Cari Transaksimu'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
                     ),

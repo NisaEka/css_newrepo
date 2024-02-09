@@ -102,6 +102,11 @@ class DashboardController extends BaseController {
             StorageCore.receiver,
             value,
           ));
+
+      await profil.getBasicProfil().then((value) async => await storage.saveData(
+            StorageCore.userProfil,
+            value.payload,
+          ));
       update();
     } catch (e) {
       e.printError();

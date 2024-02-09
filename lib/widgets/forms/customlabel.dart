@@ -35,7 +35,7 @@ class CustomLabelText extends StatelessWidget {
           Text(
             value.toUpperCase(),
             // "This is a long text This is a long text This is a long text",
-            overflow: TextOverflow.ellipsis,
+            // overflow: TextOverflow.ellipsis,
             maxLines: 1,
             softWrap: true,
             textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
