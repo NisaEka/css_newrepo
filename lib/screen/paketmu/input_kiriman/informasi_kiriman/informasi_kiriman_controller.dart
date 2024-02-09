@@ -14,6 +14,7 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -345,6 +346,8 @@ class InformasiKirimaController extends BaseController {
               ),
               secondButtonTitle: "Lihat Draft".tr,
               secondAction: () => Get.offAll(const DraftTransaksiScreen()),
+              thirdButtonTitle : "Buat Transaksi Lainnya".tr,
+              thirdAction: () => Get.offAll(const InformasiPengirimScreen()),
             ),
             arguments: {
               'transaction': true,
@@ -403,6 +406,8 @@ class InformasiKirimaController extends BaseController {
                 'awb': v.payload?.awb,
               },
             ),
+            thirdButtonTitle : "Buat Transaksi Lainnya".tr,
+            thirdAction: () => Get.offAll(const InformasiPengirimScreen()),
           ),
         );
       });

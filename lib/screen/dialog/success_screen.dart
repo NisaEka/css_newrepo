@@ -11,7 +11,9 @@ class SuccessScreen extends StatelessWidget {
   final String message;
   final VoidCallback? nextAction;
   final VoidCallback? secondAction;
+  final VoidCallback? thirdAction;
   final String buttonTitle;
+  final String? thirdButtonTitle;
   final String? secondButtonTitle;
   final Widget? icon;
   final Color? fontColor;
@@ -24,7 +26,9 @@ class SuccessScreen extends StatelessWidget {
     this.icon,
     this.fontColor,
     this.secondAction,
+    this.thirdAction,
     this.secondButtonTitle,
+    this.thirdButtonTitle,
   });
 
   @override
@@ -52,14 +56,23 @@ class SuccessScreen extends StatelessWidget {
                         fontColor: blueJNE,
                         borderColor: blueJNE,
                         title: secondButtonTitle,
-                        radius: 50,
+                        radius: 10,
                         onPressed: secondAction,
                       )
                     : SizedBox(),
                 CustomFilledButton(
                   margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   color: blueJNE,
-                  radius: 50,
+                  radius: 10,
+                  title: thirdButtonTitle,
+                  onPressed: thirdAction,
+                ),
+                CustomFilledButton(
+                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  color: Colors.white,
+                  borderColor: blueJNE,
+                  fontColor: blueJNE,
+                  radius: 10,
                   title: buttonTitle.tr,
                   onPressed: nextAction,
                 ),
