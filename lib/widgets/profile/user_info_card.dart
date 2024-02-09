@@ -5,7 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserInfoCard extends StatelessWidget {
-  const UserInfoCard({super.key});
+  final String name;
+  final String brand;
+  final String mail;
+  final String type;
+
+  const UserInfoCard({
+    super.key,
+    required this.name,
+    required this.brand,
+    required this.mail,
+    required this.type,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +34,11 @@ class UserInfoCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("JONI J", style: listTitleTextStyle.copyWith(fontSize: 16)),
-            Text("ALEX COLLECTION", style: sublistTitleTextStyle),
-            Text("user@mail.com", style: sublistTitleTextStyle),
+            Text(name, style: listTitleTextStyle.copyWith(fontSize: 16)),
+            Text(brand, style: sublistTitleTextStyle),
+            Text(mail, style: sublistTitleTextStyle),
             Text(
-              "Pemilik".tr,
+              type.tr,
               style: listTitleTextStyle,
             )
           ],

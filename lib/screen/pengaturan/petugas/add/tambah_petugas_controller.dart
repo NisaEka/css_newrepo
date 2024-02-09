@@ -10,7 +10,7 @@ class TambahPetugasController extends BaseController {
   final kataSandi = TextEditingController();
   final kataSandiConfirm = TextEditingController();
 
-  bool profil = false;
+  bool profilku = false;
   bool fasilitas = false;
   bool ubahPassword = false;
   bool beranda = false;

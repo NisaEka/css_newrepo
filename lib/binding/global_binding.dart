@@ -2,6 +2,8 @@ import 'package:css_mobile/data/connection_test.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_impl.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
+import 'package:css_mobile/data/repository/profil/profil_impl.dart';
+import 'package:css_mobile/data/repository/profil/profil_repository.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_impl.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -15,5 +17,6 @@ class GlobalBinding extends Bindings {
     Get.put<AuthRepository>(AuthRepositoryImpl(), permanent: true);
     Get.put<TransactionRepository>(TransactionRepositoryImpl(), permanent: true);
     Get.put<ConnectionTest>(ConnectionTest(), permanent: true);
+    Get.put<ProfilRepository>(ProfilRepositoryImpl(), permanent: true);
   }
 }

@@ -4,7 +4,7 @@ import 'package:css_mobile/css.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 
-void main() {
+void main() async {
   FlavorConfig(
     name: "DEV",
     location: BannerLocation.topEnd,

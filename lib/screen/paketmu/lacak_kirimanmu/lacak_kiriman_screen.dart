@@ -57,7 +57,7 @@ class LacakKirimanScreen extends StatelessWidget {
                       CustomLabelText(
                         title: 'Dari'.tr,
                         value: 'Kota administrasi j',
-                        width: Get.width / 3,
+                        width: Get.width / 2,
                       ),
                       CustomLabelText(
                         title: 'Status Kiriman'.tr,
@@ -75,7 +75,7 @@ class LacakKirimanScreen extends StatelessWidget {
                       CustomLabelText(
                         title: 'Menuju'.tr,
                         value: 'Bandung kidul, Bandung',
-                        width: Get.width / 3,
+                        width: Get.width / 2.9,
                       ),
                       CustomLabelText(
                         title: 'Perkiraan sampai tujuan'.tr,
@@ -147,7 +147,7 @@ class LacakKirimanScreen extends StatelessWidget {
                       CustomLabelText(
                         title: 'Tanggal Kirim'.tr,
                         value: '16 Oktober 2023 18.40',
-                        width: Get.width / 3,
+                        width: Get.width / 2,
                       ),
                       CustomLabelText(
                         title: 'Berat Kiriman'.tr,
@@ -185,7 +185,7 @@ class LacakKirimanScreen extends StatelessWidget {
                       CustomLabelText(
                         title: 'Kota Pengirim'.tr,
                         value: 'kota administrasi J',
-                        width: Get.width / 3,
+                        width: Get.width / 2,
                       ),
                       CustomLabelText(
                         title: 'Kota Penerima'.tr,
@@ -196,7 +196,7 @@ class LacakKirimanScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  const CustomFormLabel(label: 'Riwayat Kiriman'),
+                  CustomFormLabel(label: 'Riwayat Kiriman'.tr),
                   const Divider(),
                   KirimanStepper(
                     steps: controller.steps,
