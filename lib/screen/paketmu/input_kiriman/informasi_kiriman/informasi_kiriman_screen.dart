@@ -254,7 +254,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         color: redJNE,
                                       ),
                                       title: Text(
-                                        '${'Gunakan Asuransi Pengiriman'.tr} \n( Rp. ${controller.isr.toInt().toCurrency()} )',
+                                        '${'Gunakan Asuransi Pengiriman'.tr} ( Rp. ${controller.isr.toInt().toCurrency()} )',
                                         style: sublistTitleTextStyle,
                                       ),
                                       trailing: Checkbox(

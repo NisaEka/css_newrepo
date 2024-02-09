@@ -1,7 +1,9 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
+import 'package:css_mobile/screen/laporan_pembayaran/laporan_pembayaran_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
@@ -53,7 +55,7 @@ class DashboardMenu2 extends StatelessWidget {
             ),
             MenuItem(
               menuTitle: 'Lainnya'.tr,
-              // onTap: () => Get.to(const BonusKamuScreen()),
+              onTap: () => Get.to(const LaporanPembayaranScreen()),
               menuIcon: const Icon(
                 Icons.more_horiz,
                 color: whiteColor,
