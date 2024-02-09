@@ -31,24 +31,28 @@ class PengaturanScreen extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     trailing: Container(
                       width: 90,
-                      child: const Row(
+                      child: Row(
                         children: [
                           CustomFilledButton(
-                            color: blueJNE,
+                            color: controller.lang == "id_ID" ? blueJNE : whiteColor,
+                            fontColor: controller.lang == "id_ID" ? whiteColor : greyColor,
+                            borderColor: controller.lang == "id_ID" ? Colors.transparent : greyColor,
                             title: 'ID',
                             width: 40,
                             margin: EdgeInsets.zero,
                             padding: EdgeInsets.zero,
+                            onPressed: () => controller.changeLanguage("ID"),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           CustomFilledButton(
-                            color: whiteColor,
-                            fontColor: greyColor,
-                            borderColor: greyColor,
+                            color: controller.lang == "en_US" ? blueJNE : whiteColor,
+                            fontColor: controller.lang == "en_US" ? whiteColor : greyColor,
+                            borderColor: controller.lang == "en_US" ? Colors.transparent : greyColor,
                             margin: EdgeInsets.zero,
                             padding: EdgeInsets.zero,
                             title: 'EN',
                             width: 40,
+                            onPressed: () => controller.changeLanguage("EN"),
                           ),
                         ],
                       ),

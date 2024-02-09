@@ -37,7 +37,6 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       // navigatorKey: NavigationUtil.navigationKey,
       translations: AppTranslation(),
-      locale: Get.deviceLocale,
       fallbackLocale: const Locale("id", "ID"),
       debugShowCheckedModeBanner: false,
       title: 'CSS',

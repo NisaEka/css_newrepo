@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_controller.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -56,13 +57,8 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                     IconButton(
                                       onPressed: () {
                                         if (!controller.isFiltered) {
-                                          controller.startDate = null;
-                                          controller.selectedPetugasEntry = null;
-                                          controller.selectedStatusKiriman = null;
-                                          controller.isFiltered = false;
-                                          controller.update();
+                                          controller.resetFilter();
                                         }
-                                        Get.back();
                                       },
                                       icon: const Icon(Icons.close),
                                     ),
@@ -79,11 +75,40 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                           children: [
                                             CustomFormLabel(label: 'Tanggal Entry'.tr),
                                             SizedBox(height: 10),
-                                            CustomTextFormField(
-                                              controller: controller.startDateField,
-                                              readOnly: true,
-                                              onTap: () => controller.selectDate(context),
-                                              // hintText: 'Dari Tanggal',
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                CustomTextFormField(
+                                                  controller: controller.startDateField,
+                                                  readOnly: true,
+                                                  width: Get.width / 2.3,
+                                                  hintText: 'Dari'.tr,
+                                                  // label: ,
+                                                  onTap: () => controller.selectDate(context).then((value) {
+                                                    setState(() {
+                                                      controller.startDate = value;
+                                                      controller.startDateField.text = value.toString().toDateTimeFormat();
+                                                      controller.endDate = DateTime.now();
+                                                      controller.endDateField.text = DateTime.now().toString().toDateTimeFormat();
+                                                      controller.update();
+                                                    });
+                                                  }),
+                                                  // hintText: 'Dari Tanggal',
+                                                ),
+                                                CustomTextFormField(
+                                                  controller: controller.endDateField,
+                                                  readOnly: true,
+                                                  width: Get.width / 2.3,
+                                                  hintText: 'Hingga'.tr,
+                                                  onTap: () => controller.selectDate(context).then((value) {
+                                                    setState(() {
+                                                      controller.endDate = value;
+                                                      controller.endDateField.text = value.toString().toDateTimeFormat();
+                                                      controller.update();
+                                                    });
+                                                  }),
+                                                ),
+                                              ],
                                             ),
                                             CustomFormLabel(label: 'Status Kiriman'.tr),
                                             SizedBox(height: 10),
@@ -113,7 +138,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                                   borderRadius: BorderRadius.circular(5),
                                                 ),
                                                 child: Text(
-                                                  controller.listStatusKiriman[index],
+                                                  controller.listStatusKiriman[index].tr,
                                                   textAlign: TextAlign.center,
                                                   style: listTitleTextStyle.copyWith(
                                                       color: controller.selectedStatusKiriman == controller.listStatusKiriman[index]
@@ -141,8 +166,8 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                             // const CustomFormLabel(label: 'Petugas Entry'),
                                             CustomDropDownField(
                                               items: [],
-                                              label: 'Petugas Entry',
-                                              hintText: 'Petugas Entry',
+                                              label: 'Petugas Entry'.tr,
+                                              hintText: 'Petugas Entry'.tr,
                                             )
                                           ],
                                         ),
@@ -159,19 +184,13 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                             fontColor: blueJNE,
                                             borderColor: blueJNE,
                                             width: Get.width / 2.5,
-                                            title: 'Reset Filter',
-                                            onPressed: () {
-                                              controller.startDate = null;
-                                              controller.selectedPetugasEntry = null;
-                                              controller.selectedStatusKiriman = null;
-                                              controller.isFiltered = false;
-                                              controller.update();
-                                              Get.back();
-                                            },
+                                            title: 'Reset Filter'.tr,
+                                            onPressed: () => controller.resetFilter(),
                                           )
                                         : const SizedBox(),
                                     CustomFilledButton(
                                       color: controller.startDate != null ||
+                                              controller.endDate != null ||
                                               controller.selectedPetugasEntry != null ||
                                               controller.selectedStatusKiriman != null
                                           ? blueJNE
@@ -180,6 +199,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                       title: 'Terapkan'.tr,
                                       onPressed: () {
                                         if (controller.startDate != null ||
+                                            controller.endDate != null ||
                                             controller.selectedPetugasEntry != null ||
                                             controller.selectedStatusKiriman != null) {
                                           controller.isFiltered = true;
@@ -394,7 +414,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                           noResi: 'R123',
                           petugas: 'Joni',
                           penerima: 'sarah',
-                          status: 'Dibatalkan oleh kamu',
+                          status: 'Dibatalkan oleh kamu'.tr,
                         )
                       ],
                     ),

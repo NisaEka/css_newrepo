@@ -28,7 +28,7 @@ class PengaturanLabelScreen extends StatelessWidget {
                 children: [
                   CustomSwitch(
                     value: controller.copyLabel,
-                    label: 'Copy Label'.tr,
+                    label: 'Salin Label'.tr,
                     onChange: (value) {
                       controller.copyLabel = value;
                       controller.update();
@@ -36,15 +36,15 @@ class PengaturanLabelScreen extends StatelessWidget {
                   ),
                   CustomDropDownField(
                     // value: controller.selectedTampil,
-                    hintText: 'Tampilan Biaya Kirim'.tr,
-                    items: const [
+                    hintText: 'Biaya Kirim'.tr,
+                    items: [
                       DropdownMenuItem(
                         value: 'PUBLISH RATE',
-                        child: Text('PUBLISH RATE'),
+                        child: Text('Publish Rate'.tr.toUpperCase()),
                       ),
                       DropdownMenuItem(
                         value: 'SEMBUNYIKAN',
-                        child: Text('SEMBUNYIKAN'),
+                        child: Text('Sembunyikan'.tr.toUpperCase()),
                       ),
                     ],
                     onChanged: (value) {
