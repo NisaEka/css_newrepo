@@ -28,7 +28,7 @@ class CustomSearchField extends StatelessWidget {
           width: 2,
         )),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(
             color: neutralColor,
             width: 1,
@@ -38,14 +38,14 @@ class CustomSearchField extends StatelessWidget {
         prefixIcon: prefixIcon != null
             ? Container(
                 alignment: Alignment.center,
-                width: 30,
+                width: 40,
                 height: 39,
                 margin: const EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: blueJNE,
                   borderRadius: BorderRadius.only(
-                    topLeft: const Radius.circular(8),
-                    bottomLeft: const Radius.circular(8),
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
                   ),
                 ),
                 child: prefixIcon,
@@ -57,11 +57,11 @@ class CustomSearchField extends StatelessWidget {
                 width: 30,
                 height: 39,
                 margin: const EdgeInsets.only(left: 10),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: blueJNE,
                   borderRadius: BorderRadius.only(
-                    topRight: const Radius.circular(8),
-                    bottomRight: const Radius.circular(8),
+                    topRight: Radius.circular(12),
+                    bottomRight: Radius.circular(12),
                   ),
                 ),
                 child: suffixIcon,

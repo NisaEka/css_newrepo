@@ -1,30 +1,27 @@
-import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/screen/laporan_pembayaran/laporan_pembayaran_controller.dart';
+import 'package:css_mobile/screen/laporan_pembayaran/uang_cod_kamu/uang_cod_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/forms/customsearchfield.dart';
-import 'package:css_mobile/widgets/laporan_pembayaran/lappembayaran_box.dart';
+import 'package:css_mobile/widgets/laporan_pembayaran/uangcod_box.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../const/color_const.dart';
-import '../../const/textstyle.dart';
-import '../../widgets/forms/customfilledbutton.dart';
-import '../../widgets/forms/customformlabel.dart';
-import '../../widgets/forms/customtextformfield.dart';
+import '../../../const/color_const.dart';
+import '../../../const/textstyle.dart';
+import '../../../widgets/forms/customfilledbutton.dart';
+import '../../../widgets/forms/customformlabel.dart';
+import '../../../widgets/forms/customtextformfield.dart';
 
-class LaporanPembayaranScreen extends StatelessWidget {
-  const LaporanPembayaranScreen({super.key});
+class UangCODScreen extends StatelessWidget {
+  const UangCODScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LaporanPembayaranController>(
-        init: LaporanPembayaranController(),
+    return GetBuilder<UangCODController>(
+        init: UangCODController(),
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              title: 'Laporan Agregasi Pembayaran'.tr,
+              title: 'Uang COD Kamu'.tr,
               action: [
                 Container(
                   margin: const EdgeInsets.only(right: 10),
@@ -169,12 +166,7 @@ class LaporanPembayaranScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               child: Column(
                 children: [
-                  LapPembayaranBox(),
-                  CustomSearchField(hintText: 'Cari Data Agregasi'.tr,
-                  suffixIcon: SvgPicture.asset(
-                    IconsConstant.search,
-                  ),
-                  ),
+                  UangCODBox(),
                   Expanded(
                     child: ListView(
                       children: [

@@ -1,12 +1,10 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/data/storage_core.dart';
-import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
-import 'package:css_mobile/screen/laporan_pembayaran/laporan_pembayaran_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
+import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +53,7 @@ class DashboardMenu2 extends StatelessWidget {
             ),
             MenuItem(
               menuTitle: 'Lainnya'.tr,
-              onTap: () => Get.to(const LaporanPembayaranScreen()),
+              onTap: () => Get.to(const AltProfileScreen()),
               menuIcon: const Icon(
                 Icons.more_horiz,
                 color: whiteColor,

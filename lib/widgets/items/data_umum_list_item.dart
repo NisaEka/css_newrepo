@@ -2,16 +2,16 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SettingListItem extends StatelessWidget {
+class DataUmumListItem extends StatelessWidget {
   final String title;
+  final String? subtitle;
   final IconData icon;
-  final VoidCallback? onTap;
 
-  const SettingListItem({
+  const DataUmumListItem({
     super.key,
     required this.title,
+    this.subtitle,
     required this.icon,
-    this.onTap,
   });
 
   @override
@@ -23,11 +23,13 @@ class SettingListItem extends StatelessWidget {
         color: blueJNE,
       ),
       title: Text(title.tr,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis),
+      subtitle: Text(subtitle ?? '',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis),
       shape: const Border(bottom: BorderSide(color: greyColor)),
       contentPadding: EdgeInsets.zero,
-      onTap: onTap,
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_screen.dart';
@@ -78,7 +79,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           value: controller.userName ?? '',
                                           fontColor: whiteColor,
                                         ),
-                                        const JLCPointWidget()
+                                        GestureDetector(
+                                          onTap: () => Get.to(const BonusKamuScreen()),
+                                          child: const JLCPointWidget(),
+                                        ),
                                       ],
                                     )
                                   : const SizedBox(),
