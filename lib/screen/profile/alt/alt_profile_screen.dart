@@ -1,13 +1,16 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_controller.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/akun_bank_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/alamat_return_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
+import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/comingsoon_dialog.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +26,9 @@ class AltProfileScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
+              leading: CustomBackButton(
+                onPressed: () => Get.offAll(const DashboardScreen()),
+              ),
               backgroundColor: whiteColor,
               title: 'Profil'.tr,
             ),
@@ -60,7 +66,10 @@ class AltProfileScreen extends StatelessWidget {
                   SettingListItem(
                     title: 'Fasilitasku'.tr,
                     icon: Icons.format_list_numbered_rounded,
-                    // onTap: () => Get.to(const AkunBankScreen()),
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => const ComingSoonDialog(),
+                    ),
                   ),
                   SettingListItem(
                     title: 'Lihat Akun'.tr,

@@ -185,7 +185,9 @@ class LanguageEN {
       "informasi": "Information",
       "return_info": "This data is used in the process of returning your shipment.",
       "Akun Bank": "Bank Account",
-      "bank_info": "This data is used in the process of transferring your COD money."
+      "bank_info": "This data is used in the process of transferring your COD money.",
+      "Lihat Semua Layanan": "See All Services",
+
     };
   }
 }

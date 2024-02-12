@@ -113,6 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     DashboardMenu2(
                       isLogin: controller.isLogin,
+                      menu: controller.menuItems,
                     )
                   ],
                 ),

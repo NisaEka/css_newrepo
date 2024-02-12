@@ -1,6 +1,11 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
+import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -99,10 +104,9 @@ class App extends StatelessWidget {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
               minimumSize: MaterialStateProperty.all<Size>(const Size(100, 40)),
-              shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+              shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
               elevation: MaterialStateProperty.resolveWith<double>(
-                    (Set<MaterialState> states) {
+                (Set<MaterialState> states) {
                   if (states.contains(MaterialState.disabled)) {
                     return 0;
                   }
@@ -112,6 +116,13 @@ class App extends StatelessWidget {
               textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
         ),
       ),
+      getPages: [
+        GetPage(name: "/inputKiriman", page: () => const InformasiPengirimScreen()),
+        GetPage(name: "/cekOngkir", page: () => const CekOngkirScreen()),
+        GetPage(name: "/draftTransaksi", page: () => const DraftTransaksiScreen()),
+        GetPage(name: "/riwayatKiriman", page: () => const RiwayatKirimanScreen()),
+        GetPage(name: "/lacakKiriman", page: () => const LacakKirimanScreen()),
+      ],
       // home: const LoginScreen(),
       home: const DashboardScreen(),
     );
