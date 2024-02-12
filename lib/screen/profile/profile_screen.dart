@@ -297,9 +297,9 @@ class ProfileScreen extends StatelessWidget {
                                                             Column(
                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
-                                                                Text("Nama Bank", style: subTitleTextStyle),
-                                                                Text("No Rekening", style: subTitleTextStyle),
-                                                                Text("Atas Nama", style: subTitleTextStyle),
+                                                                Text("Nama Bank".tr, style: subTitleTextStyle),
+                                                                Text("No Rekening".tr, style: subTitleTextStyle),
+                                                                Text("Atas Nama".tr, style: subTitleTextStyle),
                                                               ],
                                                             ),
                                                             const SizedBox(width: 10),
@@ -314,12 +314,12 @@ class ProfileScreen extends StatelessWidget {
                                                                     overflow: TextOverflow.ellipsis,
                                                                   ),
                                                                   Text(
-                                                                    controller.ccrfProfil?.bankAccount?.accountName ?? '-',
+                                                                    controller.ccrfProfil?.bankAccount?.accountNumber ?? '-',
                                                                     style: listTitleTextStyle,
                                                                     overflow: TextOverflow.ellipsis,
                                                                   ),
                                                                   Text(
-                                                                    controller.ccrfProfil?.bankAccount?.accountNumber ?? '-',
+                                                                    controller.ccrfProfil?.bankAccount?.accountName ?? '-',
                                                                     style: listTitleTextStyle,
                                                                     overflow: TextOverflow.ellipsis,
                                                                   ),
@@ -339,11 +339,11 @@ class ProfileScreen extends StatelessWidget {
                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                               // mainAxisAlignment: MainAxisAlignment.start,
                                                               children: [
-                                                                Text("Foto Dokumen KTP", style: subTitleTextStyle),
+                                                                Text("Foto Dokumen KTP".tr, style: subTitleTextStyle),
                                                                 DocumentImageItem(img: controller.ccrfProfil?.document?.idCard ?? ''),
-                                                                Text("Foto Dokumen NPWP", style: subTitleTextStyle),
+                                                                Text("Foto Dokumen NPWP".tr, style: subTitleTextStyle),
                                                                 DocumentImageItem(img: controller.ccrfProfil?.document?.npwp ?? ''),
-                                                                Text("Foto Dokumen Buku Rekening", style: subTitleTextStyle),
+                                                                Text("Foto Dokumen Buku Rekening".tr, style: subTitleTextStyle),
                                                                 DocumentImageItem(img: controller.ccrfProfil?.document?.bankAccount ?? ''),
                                                               ],
                                                             ),

@@ -8,7 +8,7 @@ class CustomSearchField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
 
-  const   CustomSearchField({
+  const CustomSearchField({
     super.key,
     required this.hintText,
     this.onTap,
@@ -44,8 +44,8 @@ class CustomSearchField extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: blueJNE,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    bottomLeft: Radius.circular(12),
+                    topLeft: Radius.circular(8),
+                    bottomLeft: Radius.circular(8),
                   ),
                 ),
                 child: prefixIcon,
@@ -60,8 +60,8 @@ class CustomSearchField extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: blueJNE,
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(12),
-                    bottomRight: Radius.circular(12),
+                    topRight: Radius.circular(8),
+                    bottomRight: Radius.circular(8),
                   ),
                 ),
                 child: suffixIcon,

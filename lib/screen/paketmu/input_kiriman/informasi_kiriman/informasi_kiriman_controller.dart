@@ -99,9 +99,10 @@ class InformasiKirimaController extends BaseController {
   double hargacCODOngkir = 0;
   double codfee = 0;
 
-  void hitungBerat() {
+  void hitungBerat(double p, double l, double t) {
     isCalculate = true;
     berat = 0;
+    update();
 
     if (dimensi) {
       if (selectedService?.serviceCode?.contains("JTR") == true) {
@@ -109,17 +110,15 @@ class InformasiKirimaController extends BaseController {
         //     selectedService?.serviceCode == "JTR<130" ||
         //     selectedService?.serviceCode == "JTR250" ||
         //     selectedService?.serviceCode == "JTR>250") {
-        berat = (dimensiPanjang.text.toDouble() * dimensiLebar.text.toDouble() * dimensiTinggi.text.toDouble()) / 5000;
+
+        berat = (p * l * t) / 5000;
       } else {
-        berat = (dimensiPanjang.text.toDouble() * dimensiLebar.text.toDouble() * dimensiTinggi.text.toDouble()) / 6000;
+        berat = (p * l * t) / 6000;
       }
-      beratKiriman.text = berat.toString();
+      beratKiriman.text = berat!.toStringAsFixed(2);
     }
     update();
     getOngkir();
-    update();
-    hitungOngkir();
-    isCalculate = false;
 
     update();
   }
@@ -177,7 +176,7 @@ class InformasiKirimaController extends BaseController {
           destinationCode: destination.destinationCode,
           originCode: origin.code,
           serviceCode: selectedService?.serviceCode,
-          weight: beratKiriman.text == '' ? 1 : beratKiriman.text.toInt(),
+          weight: beratKiriman.text == '' ? 1 : beratKiriman.text.split('.').first.toInt(),
           custNo: account.accountNumber,
         ),
       )
@@ -245,7 +244,7 @@ class InformasiKirimaController extends BaseController {
   Future<void> initData() async {
     isServiceLoad = true;
     serviceList = [];
-    print('account id : ${account.accountId}');
+    // print('account id : ${account.accountId}');
     connection.isOnline().then((value) => isOnline = value);
 
     try {
@@ -346,7 +345,7 @@ class InformasiKirimaController extends BaseController {
               ),
               secondButtonTitle: "Lihat Draft".tr,
               secondAction: () => Get.offAll(const DraftTransaksiScreen()),
-              thirdButtonTitle : "Buat Transaksi Lainnya".tr,
+              thirdButtonTitle: "Buat Transaksi Lainnya".tr,
               thirdAction: () => Get.offAll(const InformasiPengirimScreen()),
             ),
             arguments: {
@@ -406,7 +405,7 @@ class InformasiKirimaController extends BaseController {
                 'awb': v.payload?.awb,
               },
             ),
-            thirdButtonTitle : "Buat Transaksi Lainnya".tr,
+            thirdButtonTitle: "Buat Transaksi Lainnya".tr,
             thirdAction: () => Get.offAll(const InformasiPengirimScreen()),
           ),
         );

@@ -1,11 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AkunBankController extends BaseController {
+class DokumenController extends BaseController {
   bool isLogin = false;
   bool isLoading = false;
 

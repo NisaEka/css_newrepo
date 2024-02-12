@@ -1,12 +1,12 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/akun_bank_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/items/bank_account_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../const/textstyle.dart';
-import '../../../../widgets/forms/customformlabel.dart';
 
 class AkunBankScreen extends StatelessWidget {
   const AkunBankScreen({super.key});
@@ -39,14 +39,13 @@ class AkunBankScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Kerahasiaan Data',
+                                      'Kerahasiaan Data'.tr,
                                       style: appTitleTextStyle.copyWith(
                                         color: blueJNE,
                                       ),
                                     ),
                                     IconButton(
-                                      onPressed: () {
-                                      },
+                                      onPressed: () => Get.back(),
                                       icon: const Icon(Icons.close),
                                     ),
                                   ],
@@ -58,15 +57,7 @@ class AkunBankScreen extends StatelessWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            CustomFormLabel(
-                                                label:
-                                                'Data ini dipergunakan dalam proses '
-                                                    'transfer uang COD kamu. \n'
-                                                    '\n'
-                                                    'Informasi ini rahasia, '
-                                                    'hanya kamu yang dapat melihatnya '
-                                                    'dan tidak dibagikan ke pihak manapun'.tr),
-
+                                            CustomFormLabel(label: '${'bank_info'.tr}\n\n${'kerahasiaan_data'.tr}'),
                                           ],
                                         ),
                                       ),
@@ -84,35 +75,39 @@ class AkunBankScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    icon: const Icon(Icons.info_rounded,
-                        color: redJNE),
+                    icon: const Icon(Icons.info_rounded, color: redJNE),
                     tooltip: 'informasi'.tr,
                   ),
                 )
               ],
             ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  const SizedBox(height: 21),
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        BankAccountListItem(
-                          icon: const Icon(
-                            Icons.credit_card_rounded,
-                            color: blueJNE,
-                          ),
-                          title: controller.ccrfProfil?.bankAccount?.account ?? '-',
-                          subtitle: controller.ccrfProfil?.bankAccount?.accountNumber ?? '-',
-                          subtitle2: controller.ccrfProfil?.bankAccount?.accountName ?? '-',
+            body: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 21),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            BankAccountListItem(
+                              icon: const Icon(
+                                Icons.credit_card_rounded,
+                                color: blueJNE,
+                              ),
+                              title: controller.ccrfProfil?.bankAccount?.account ?? '-',
+                              subtitle: controller.ccrfProfil?.bankAccount?.accountNumber ?? '-',
+                              subtitle2: controller.ccrfProfil?.bankAccount?.accountName ?? '-',
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                controller.isLoading ? const LoadingDialog() : Container(),
+              ],
             ),
           );
         });

@@ -1,17 +1,17 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_controller.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/akun_bank_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/alamat_return_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_screen.dart';
+import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../const/image_const.dart';
 
 class AltProfileScreen extends StatelessWidget {
   const AltProfileScreen({super.key});
@@ -43,9 +43,7 @@ class AltProfileScreen extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(10),
                           margin: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              border: Border.all(color: blueJNE)),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(color: blueJNE)),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
@@ -87,6 +85,7 @@ class AltProfileScreen extends StatelessWidget {
                   SettingListItem(
                     title: 'Dokumen'.tr,
                     icon: Icons.file_present_rounded,
+                    onTap: () => Get.to(const DokumenScreen()),
                   )
                 ],
               ),

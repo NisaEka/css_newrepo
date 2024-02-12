@@ -6,6 +6,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -88,20 +89,7 @@ class DraftTransaksiScreen extends StatelessWidget {
                                     )
                                     .toList(),
                               )
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.folder_off_outlined,
-                                    size: 50,
-                                    color: blueJNE,
-                                  ),
-                                  Text(
-                                    'Draft Kosong'.tr,
-                                    style: appTitleTextStyle.copyWith(color: blueJNE),
-                                  ),
-                                ],
-                              ),
+                            : DataEmpty(text: "Draft Kosong".tr),
                       ),
                     ],
                   ),

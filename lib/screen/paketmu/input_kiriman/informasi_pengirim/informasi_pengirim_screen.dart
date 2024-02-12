@@ -1,9 +1,10 @@
-import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_controller.dart';
+import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/offlinebar.dart';
@@ -32,6 +33,9 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
           return Scaffold(
             appBar: CustomTopBar(
               title: 'Input Transaksi'.tr,
+              leading: CustomBackButton(
+                onPressed: () => Get.off(const DashboardScreen()),
+              ),
               flexibleSpace: Column(
                 children: [
                   CustomStepper(
@@ -71,8 +75,8 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     ? const Text('Loading data...')
                                     : Row(
                                         children: controller.accountList
-                                            .mapIndexed(
-                                              (i, e) => AccountListItem(
+                                            .map(
+                                              (e) => AccountListItem(
                                                 accountID: e.accountId.toString(),
                                                 accountNumber: e.accountNumber.toString(),
                                                 accountName: e.accountName.toString(),
@@ -140,11 +144,11 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                               (result) => controller.getSelectedDropshipper(result),
                                             )
                                           : Get.showSnackbar(
-                                               GetSnackBar(
+                                              GetSnackBar(
                                                 message: 'Pilih Account Terlebih dahulu'.tr,
                                                 backgroundColor: errorColor,
                                                 isDismissible: true,
-                                                duration: Duration(seconds: 5),
+                                                duration: const Duration(seconds: 5),
                                               ),
                                             ),
                                       child: Container(
@@ -222,7 +226,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 multiLine: true,
                                 prefixIcon: const Icon(Icons.location_city),
                               ),
-                              controller.dropshipper && controller.isOnline!
+                              controller.dropshipper && controller.isOnline
                                   ? CustomFilledButton(
                                       color: whiteColor,
                                       borderColor: controller.isValidate ? blueJNE : greyColor,

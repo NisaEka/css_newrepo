@@ -1,13 +1,12 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/items/data_umum_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../const/textstyle.dart';
-import '../../../../widgets/forms/customformlabel.dart';
-
 
 class DataUmumScreen extends StatelessWidget {
   const DataUmumScreen({super.key});
@@ -41,14 +40,13 @@ class DataUmumScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Kerahasiaan Data',
+                                      'Kerahasiaan Data'.tr,
                                       style: appTitleTextStyle.copyWith(
                                         color: blueJNE,
                                       ),
                                     ),
                                     IconButton(
-                                      onPressed: () {
-                                      },
+                                      onPressed: () => Get.back(),
                                       icon: const Icon(Icons.close),
                                     ),
                                   ],
@@ -60,12 +58,7 @@ class DataUmumScreen extends StatelessWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            CustomFormLabel(
-                                                label:
-                                                'Informasi ini rahasia, '
-                                                    'hanya kamu yang dapat melihatnya '
-                                                    'dan tidak dibagikan ke pihak manapun  '.tr),
-
+                                            CustomFormLabel(label: 'kerahasiaan_data'.tr),
                                           ],
                                         ),
                                       ),
@@ -83,50 +76,53 @@ class DataUmumScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    icon: const Icon(Icons.info_rounded,
-                    color: redJNE),
+                    icon: const Icon(Icons.info_rounded, color: redJNE),
                     tooltip: 'informasi'.tr,
                   ),
                 )
               ],
             ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: ListView(
-                children: [
-                  DataUmumListItem(
-                    title: controller.ccrfProfil?.generalInfo?.brand ?? '-',
-                    subtitle: controller.ccrfProfil?.generalInfo?.email ?? '-',
-                    icon: Icons.store_mall_directory_rounded,
+            body: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: ListView(
+                    children: [
+                      DataUmumListItem(
+                        title: controller.ccrfProfil?.generalInfo?.brand ?? '-',
+                        subtitle: controller.ccrfProfil?.generalInfo?.email ?? '-',
+                        icon: Icons.store_mall_directory_rounded,
+                      ),
+                      DataUmumListItem(
+                        title: controller.ccrfProfil?.generalInfo?.name ?? '-',
+                        subtitle: controller.ccrfProfil?.generalInfo?.idCardNumber ?? '-',
+                        icon: Icons.person_pin_rounded,
+                      ),
+                      DataUmumListItem(
+                        title: controller.ccrfProfil?.generalInfo?.secondaryPhone ?? controller.ccrfProfil?.generalInfo?.phone ?? '-',
+                        subtitle: controller.ccrfProfil?.generalInfo?.phone ?? '-',
+                        icon: Icons.contact_phone_rounded,
+                      ),
+                      DataUmumListItem(
+                        title: controller.ccrfProfil?.generalInfo?.address ?? '-',
+                        subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
+                        icon: Icons.folder_zip_rounded,
+                      ),
+                      DataUmumListItem(
+                        title: controller.ccrfProfil?.generalInfo?.district ?? '-',
+                        subtitle: controller.ccrfProfil?.generalInfo?.subDistrict ?? '-',
+                        icon: Icons.location_city_rounded,
+                      ),
+                      DataUmumListItem(
+                        title: controller.ccrfProfil?.generalInfo?.city ?? '-',
+                        subtitle: controller.ccrfProfil?.generalInfo?.province ?? '-',
+                        icon: Icons.location_city_rounded,
+                      )
+                    ],
                   ),
-                  DataUmumListItem(
-                    title: controller.ccrfProfil?.generalInfo?.name ?? '-',
-                    subtitle: controller.ccrfProfil?.generalInfo?.idCardNumber ?? '-',
-                    icon: Icons.person_pin_rounded,
-                  ),
-                  DataUmumListItem(
-                    title: controller.ccrfProfil?.generalInfo?.secondaryPhone ??
-                        controller.ccrfProfil?.generalInfo?.phone ?? '-',
-                    subtitle: controller.ccrfProfil?.generalInfo?.phone ?? '-',
-                    icon: Icons.contact_phone_rounded,
-                  ),
-                  DataUmumListItem(
-                    title: controller.ccrfProfil?.generalInfo?.address ?? '-',
-                    subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
-                    icon: Icons.folder_zip_rounded,
-                  ),
-                  DataUmumListItem(
-                    title: controller.ccrfProfil?.generalInfo?.district ?? '-',
-                    subtitle: controller.ccrfProfil?.generalInfo?.subDistrict ?? '-',
-                    icon: Icons.location_city_rounded,
-                  ),
-                  DataUmumListItem(
-                    title: controller.ccrfProfil?.generalInfo?.city ?? '-',
-                    subtitle: controller.ccrfProfil?.generalInfo?.province ?? '-',
-                    icon: Icons.location_city_rounded,
-                  )
-                ],
-              ),
+                ),
+                controller.isLoading ? const LoadingDialog() : Container(),
+              ],
             ),
           );
         });

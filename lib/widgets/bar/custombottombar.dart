@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
+import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item.dart';
@@ -60,7 +61,8 @@ class BottomBar extends StatelessWidget {
                   icon: Icon(Icons.person, color: menu == 1 ? redJNE : blueJNE),
                   title: "Profil".tr,
                   color: menu == 1 ? redJNE : blueJNE,
-                  onTap: () => Get.offAll(const ProfileScreen()),
+                  // onTap: () => Get.offAll(const ProfileScreen()),
+                  onTap: () => Get.offAll(const AltProfileScreen()),
                 ),
               ],
             ),

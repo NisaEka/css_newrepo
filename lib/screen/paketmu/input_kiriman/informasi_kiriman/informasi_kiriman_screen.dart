@@ -333,7 +333,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         controller: controller.beratKiriman,
                                         hintText: "Berat Kiriman".tr,
                                         inputType: TextInputType.number,
-                                        width: Get.width / 2.5,
+                                        width: Get.width / 3,
                                         isRequired: true,
                                         suffixIcon: const SatuanFieldIcon(title: 'KG', isSuffix: true),
                                         onChanged: (value) {
@@ -373,7 +373,11 @@ class InformasiKirimanScreen extends StatelessWidget {
                                               ),
                                               readOnly: !controller.dimensi,
                                               onChanged: (value) {
-                                                controller.hitungBerat();
+                                                controller.hitungBerat(
+                                                  controller.dimensiPanjang.text.toDouble(),
+                                                  controller.dimensiLebar.text.toDouble(),
+                                                  controller.dimensiTinggi.text.toDouble(),
+                                                );
                                               },
                                             ),
                                             CustomTextFormField(
@@ -388,7 +392,11 @@ class InformasiKirimanScreen extends StatelessWidget {
                                               ),
                                               readOnly: !controller.dimensi,
                                               onChanged: (value) {
-                                                controller.hitungBerat();
+                                                controller.hitungBerat(
+                                                  controller.dimensiPanjang.text.toDouble(),
+                                                  controller.dimensiLebar.text.toDouble(),
+                                                  controller.dimensiTinggi.text.toDouble(),
+                                                );
                                               },
                                             ),
                                             CustomTextFormField(
@@ -403,7 +411,11 @@ class InformasiKirimanScreen extends StatelessWidget {
                                               ),
                                               readOnly: !controller.dimensi,
                                               onChanged: (value) {
-                                                controller.hitungBerat();
+                                                controller.hitungBerat(
+                                                  controller.dimensiPanjang.text.toDouble(),
+                                                  controller.dimensiLebar.text.toDouble(),
+                                                  controller.dimensiTinggi.text.toDouble(),
+                                                );
                                               },
                                             ),
                                           ],
