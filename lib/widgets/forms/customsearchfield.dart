@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 class CustomSearchField extends StatelessWidget {
   final String hintText;
   final VoidCallback? onTap;
-  final void Function()? onSubmit;
+  final void Function(String)? onSubmit;
+  final void Function(String)? onChanged;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final TextEditingController controller;
 
   const CustomSearchField({
     super.key,
@@ -15,11 +17,13 @@ class CustomSearchField extends StatelessWidget {
     this.onSubmit,
     this.prefixIcon,
     this.suffixIcon,
+    this.onChanged, required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
         enabledBorder: const OutlineInputBorder(
@@ -68,6 +72,9 @@ class CustomSearchField extends StatelessWidget {
               )
             : null,
       ),
+      onTap: onTap,
+      onSubmitted: onSubmit,
+      onChanged: onChanged,
     );
   }
 }

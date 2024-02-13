@@ -340,11 +340,11 @@ class ProfileScreen extends StatelessWidget {
                                                               // mainAxisAlignment: MainAxisAlignment.start,
                                                               children: [
                                                                 Text("Foto Dokumen KTP".tr, style: subTitleTextStyle),
-                                                                DocumentImageItem(img: controller.ccrfProfil?.document?.idCard ?? ''),
+                                                                // DocumentImageItem(img: controller.ccrfProfil?.document?.idCard ?? ''),
                                                                 Text("Foto Dokumen NPWP".tr, style: subTitleTextStyle),
-                                                                DocumentImageItem(img: controller.ccrfProfil?.document?.npwp ?? ''),
+                                                                // DocumentImageItem(img: controller.ccrfProfil?.document?.npwp ?? ''),
                                                                 Text("Foto Dokumen Buku Rekening".tr, style: subTitleTextStyle),
-                                                                DocumentImageItem(img: controller.ccrfProfil?.document?.bankAccount ?? ''),
+                                                                // DocumentImageItem(img: controller.ccrfProfil?.document?.bankAccount ?? ''),
                                                               ],
                                                             ),
                                                           )

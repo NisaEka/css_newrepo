@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_controller.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -34,19 +35,28 @@ class CekOngkirScreen extends StatelessWidget {
                       key: controller.formKey,
                       child: Column(
                         children: [
-                          CustomDropDownFormField(
-                            items: [],
+                          CustomTextFormField(
+                            controller: controller.kotaPengirim,
+                            // items: [],
                             hintText: 'Kota Asal'.tr,
-                            textStyle: hintTextStyle,
+                            // textStyle: hintTextStyle,
+                            readOnly: true,
+                            suffixIcon: const Icon(Icons.keyboard_arrow_down),
+                            onTap: () => controller.showCityList('Kota Asal'.tr),
                           ),
-                          CustomDropDownFormField(
-                            items: [],
+                          CustomTextFormField(
+                            controller: controller.kotaTujuan,
+                            // items: [],
                             hintText: 'Kota Tujuan'.tr,
-                            textStyle: hintTextStyle,
+                            // textStyle: hintTextStyle,
+                            readOnly: true,
+                            suffixIcon: const Icon(Icons.keyboard_arrow_down),
+                            onTap: () => controller.showCityList('Kota Tujuan'.tr),
                           ),
                           CustomTextFormField(
                             controller: controller.beratKiriman,
                             hintText: 'Berat Kiriman'.tr,
+                            isRequired: true,
                             suffixIcon: const SatuanFieldIcon(
                               title: 'KG',
                               isSuffix: true,
@@ -61,44 +71,61 @@ class CekOngkirScreen extends StatelessWidget {
                               controller.update();
                             },
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomTextFormField(
-                                controller: controller.panjang,
-                                hintText: 'Panjang'.tr,
-                                suffixIcon: SatuanFieldIcon(
-                                  title: 'CM',
-                                  isSuffix: true,
-                                ),
-                                width: Get.width / 3.8,
-                                inputType: TextInputType.number,
-                                readOnly: !controller.dimensi,
-                              ),
-                              CustomTextFormField(
-                                controller: controller.lebar,
-                                hintText: 'Lebar'.tr,
-                                suffixIcon: SatuanFieldIcon(
-                                  title: 'CM',
-                                  isSuffix: true,
-                                ),
-                                width: Get.width / 3.8,
-                                inputType: TextInputType.number,
-                                readOnly: !controller.dimensi,
-                              ),
-                              CustomTextFormField(
-                                controller: controller.tinggi,
-                                hintText: 'Tinggi'.tr,
-                                suffixIcon: SatuanFieldIcon(
-                                  title: 'CM',
-                                  isSuffix: true,
-                                ),
-                                width: Get.width / 3.8,
-                                inputType: TextInputType.number,
-                                readOnly: !controller.dimensi,
-                              ),
-                            ],
-                          ),
+                          controller.dimensi
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CustomTextFormField(
+                                      controller: controller.panjang,
+                                      hintText: 'Panjang'.tr,
+                                      suffixIcon: const SatuanFieldIcon(
+                                        title: 'CM',
+                                        isSuffix: true,
+                                      ),
+                                      width: Get.width / 3.8,
+                                      inputType: TextInputType.number,
+                                      readOnly: !controller.dimensi,
+                                      onChanged: (value) => controller.hitungBerat(
+                                        controller.panjang.text.toDouble(),
+                                        controller.lebar.text.toDouble(),
+                                        controller.tinggi.text.toDouble(),
+                                      ),
+                                    ),
+                                    CustomTextFormField(
+                                      controller: controller.lebar,
+                                      hintText: 'Lebar'.tr,
+                                      suffixIcon: const SatuanFieldIcon(
+                                        title: 'CM',
+                                        isSuffix: true,
+                                      ),
+                                      width: Get.width / 3.8,
+                                      inputType: TextInputType.number,
+                                      readOnly: !controller.dimensi,
+                                      onChanged: (value) => controller.hitungBerat(
+                                        controller.panjang.text.toDouble(),
+                                        controller.lebar.text.toDouble(),
+                                        controller.tinggi.text.toDouble(),
+                                      ),
+                                    ),
+                                    CustomTextFormField(
+                                      controller: controller.tinggi,
+                                      hintText: 'Tinggi'.tr,
+                                      suffixIcon: const SatuanFieldIcon(
+                                        title: 'CM',
+                                        isSuffix: true,
+                                      ),
+                                      width: Get.width / 3.8,
+                                      inputType: TextInputType.number,
+                                      readOnly: !controller.dimensi,
+                                      onChanged: (value) => controller.hitungBerat(
+                                        controller.panjang.text.toDouble(),
+                                        controller.lebar.text.toDouble(),
+                                        controller.tinggi.text.toDouble(),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox(),
                           CustomSwitch(
                             value: controller.asuransi,
                             label: "Asuransi".tr,
@@ -107,30 +134,33 @@ class CekOngkirScreen extends StatelessWidget {
                               controller.update();
                             },
                           ),
-                          CustomTextFormField(
-                            controller: controller.estimasiHargaBarang,
-                            hintText: 'Estimasi Harga Barang'.tr,
-                            prefixIcon: SatuanFieldIcon(
-                              title: 'Rp',
-                              isPrefix: true,
-                            ),
-                          )
+                          controller.asuransi
+                              ? CustomTextFormField(
+                                  controller: controller.estimasiHargaBarang,
+                                  hintText: 'Estimasi Harga Barang'.tr,
+                                  isRequired: controller.asuransi,
+                                  prefixIcon: const SatuanFieldIcon(
+                                    title: 'Rp',
+                                    isPrefix: true,
+                                  ),
+                                )
+                              : const SizedBox(),
                         ],
                       ),
                     ),
-                    SizedBox(height: 25),
+                    const SizedBox(height: 25),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [CustomFormLabel(label: 'Layanan'.tr), CustomFormLabel(label: 'Biaya & Durasi'.tr)],
                     ),
-                    Divider(),
-                    OngkirListItem(
+                    const Divider(),
+                    const OngkirListItem(
                       serviceTitle: 'REG',
                       serviceSubtitle: 'Dokumen/Paket',
                       servicePrice: '10.000',
                       serviceDuration: '3 - 4 D',
                     ),
-                    OngkirListItem(
+                    const OngkirListItem(
                       serviceTitle: 'YES',
                       serviceSubtitle: 'Paket',
                       servicePrice: '15.000',
@@ -143,7 +173,12 @@ class CekOngkirScreen extends StatelessWidget {
             bottomNavigationBar: CustomFilledButton(
               color: blueJNE,
               title: 'Cek Ongkos Kirim'.tr,
-              margin: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+              margin: const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+              onPressed: () {
+                if (controller.formKey.currentState!.validate() == true) {
+                  print('test');
+                }
+              },
             ),
           );
         });

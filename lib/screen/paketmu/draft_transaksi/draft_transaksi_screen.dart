@@ -30,7 +30,7 @@ class DraftTransaksiScreen extends StatelessWidget {
                 appBar: CustomTopBar(
                   title: 'Draft Transaksi'.tr,
                   leading: CustomBackButton(
-                    onPressed: () => Get.off(const DashboardScreen()),
+                    onPressed: () => Get.offAll(const DashboardScreen()),
                   ),
                   action: [
                     controller.isOnline && controller.isSync
@@ -59,6 +59,7 @@ class DraftTransaksiScreen extends StatelessWidget {
                       //   },
                       // ),
                       CustomSearchField(
+                        controller: TextEditingController(),
                         hintText: 'Cari transaksimu'.tr,
                         prefixIcon: SvgPicture.asset(IconsConstant.search),
                       ),

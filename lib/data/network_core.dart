@@ -7,6 +7,7 @@ class NetworkCore {
   Dio tarif = Dio();
   Dio tracing = Dio();
   Dio reference = Dio();
+  Dio city = Dio();
 
   NetworkCore() {
     dio.options = BaseOptions(

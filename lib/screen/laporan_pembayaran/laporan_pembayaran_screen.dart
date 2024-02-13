@@ -1,18 +1,17 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/laporan_pembayaran/laporan_pembayaran_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
+import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/lappembayaran_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
-import '../../const/color_const.dart';
-import '../../const/textstyle.dart';
-import '../../widgets/forms/customfilledbutton.dart';
-import '../../widgets/forms/customformlabel.dart';
-import '../../widgets/forms/customtextformfield.dart';
 
 class LaporanPembayaranScreen extends StatelessWidget {
   const LaporanPembayaranScreen({super.key});
@@ -74,7 +73,7 @@ class LaporanPembayaranScreen extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             CustomFormLabel(label: 'Tanggal Pembayaran'.tr),
-                                            SizedBox(height: 10),
+                                            const SizedBox(height: 10),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
@@ -121,24 +120,20 @@ class LaporanPembayaranScreen extends StatelessWidget {
                                   children: [
                                     controller.isFiltered
                                         ? CustomFilledButton(
-                                      color: whiteColor,
-                                      fontColor: blueJNE,
-                                      borderColor: blueJNE,
-                                      width: Get.width / 2.5,
-                                      title: 'Reset Filter'.tr,
-                                      onPressed: () => controller.resetFilter(),
-                                    )
+                                            color: whiteColor,
+                                            fontColor: blueJNE,
+                                            borderColor: blueJNE,
+                                            width: Get.width / 2.5,
+                                            title: 'Reset Filter'.tr,
+                                            onPressed: () => controller.resetFilter(),
+                                          )
                                         : const SizedBox(),
                                     CustomFilledButton(
-                                      color: controller.startDate != null ||
-                                          controller.endDate != null
-                                          ? blueJNE
-                                          : greyColor,
+                                      color: controller.startDate != null || controller.endDate != null ? blueJNE : greyColor,
                                       width: controller.isFiltered ? Get.width / 2.5 : Get.width - 40,
                                       title: 'Terapkan'.tr,
                                       onPressed: () {
-                                        if (controller.startDate != null ||
-                                            controller.endDate != null) {
+                                        if (controller.startDate != null || controller.endDate != null) {
                                           controller.isFiltered = true;
                                           controller.update();
                                           Get.back();
@@ -169,17 +164,17 @@ class LaporanPembayaranScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               child: Column(
                 children: [
-                  LapPembayaranBox(),
-                  CustomSearchField(hintText: 'Cari Data Agregasi'.tr,
-                  suffixIcon: SvgPicture.asset(
-                    IconsConstant.search,
-                  ),
+                  const LapPembayaranBox(),
+                  CustomSearchField(
+                    controller: TextEditingController(),
+                    hintText: 'Cari Data Agregasi'.tr,
+                    suffixIcon: SvgPicture.asset(
+                      IconsConstant.search,
+                    ),
                   ),
                   Expanded(
                     child: ListView(
-                      children: [
-
-                      ],
+                      children: [],
                     ),
                   )
                 ],

@@ -29,9 +29,10 @@ class LacakKirimanScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomSearchField(
+                  CustomSearchField(
+                    controller: TextEditingController(),
                     hintText: 'Masukan Nomor Resimu',
-                    suffixIcon: Icon(
+                    suffixIcon: const Icon(
                       Icons.qr_code_scanner,
                       color: whiteColor,
                       size: 30,

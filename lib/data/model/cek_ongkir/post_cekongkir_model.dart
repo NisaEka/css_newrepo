@@ -1,11 +1,11 @@
-class PostCekOngkirModel {
-  PostCekOngkirModel({
+class PostCekongkirModel {
+  PostCekongkirModel({
     List<Price>? price,
   }) {
     _price = price;
   }
 
-  PostCekOngkirModel.fromJson(dynamic json) {
+  PostCekongkirModel.fromJson(dynamic json) {
     if (json['price'] != null) {
       _price = [];
       json['price'].forEach((v) {
@@ -16,10 +16,10 @@ class PostCekOngkirModel {
 
   List<Price>? _price;
 
-  PostCekOngkirModel copyWith({
+  PostCekongkirModel copyWith({
     List<Price>? price,
   }) =>
-      PostCekOngkirModel(
+      PostCekongkirModel(
         price: price ?? _price,
       );
 

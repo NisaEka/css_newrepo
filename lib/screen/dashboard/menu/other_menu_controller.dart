@@ -68,7 +68,7 @@ class OtherMenuCotroller extends BaseController {
         isAuth: true,
         isFavorite: favoritList.where((e) => e.title == "Draft Transaksi").isNotEmpty,
         isEdit: isEdit,
-        route: "/riwayatKiriman",
+        route: "/draftTransaksi",
       ),
       Items(
         title: "Lacak Kiriman",

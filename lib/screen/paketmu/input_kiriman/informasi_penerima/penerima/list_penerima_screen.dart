@@ -41,6 +41,7 @@ class ListPenerimaScreen extends StatelessWidget {
               child: Column(
                 children: [
                   CustomSearchField(
+                    controller: TextEditingController(),
                     hintText: 'Cari Data Penerima'.tr,
                     prefixIcon: const Icon(
                       Icons.search,

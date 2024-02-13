@@ -47,6 +47,7 @@ class ListDropshipperScreen extends StatelessWidget {
                 children: [
                   // !controller.isOnline ? const OfflineBar() : const SizedBox(),
                   CustomSearchField(
+                    controller: TextEditingController(),
                     hintText: 'Cari Data Dropshipper'.tr,
                     prefixIcon: const Icon(
                       Icons.search,

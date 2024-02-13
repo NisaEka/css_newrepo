@@ -33,6 +33,7 @@ class PengaturanPetugasscreen extends StatelessWidget {
         child: Column(
           children: [
             CustomSearchField(
+              controller: TextEditingController(),
               hintText: 'Cari Data Petugas'.tr,
               prefixIcon: SvgPicture.asset(IconsConstant.search),
             ),

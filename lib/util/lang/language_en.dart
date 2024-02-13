@@ -187,7 +187,7 @@ class LanguageEN {
       "Akun Bank": "Bank Account",
       "bank_info": "This data is used in the process of transferring your COD money.",
       "Lihat Semua Layanan": "See All Services",
-
+      "Tutup": "Close",
     };
   }
 }

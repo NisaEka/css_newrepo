@@ -2,6 +2,8 @@ import 'package:css_mobile/data/connection_test.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_impl.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
+import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_impl.dart';
+import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
 import 'package:css_mobile/data/repository/profil/profil_impl.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_impl.dart';
@@ -18,5 +20,6 @@ class GlobalBinding extends Bindings {
     Get.put<TransactionRepository>(TransactionRepositoryImpl(), permanent: true);
     Get.put<ConnectionTest>(ConnectionTest(), permanent: true);
     Get.put<ProfilRepository>(ProfilRepositoryImpl(), permanent: true);
+    Get.put<CekOngkirRepository>(CekOngkirRepositoryImpl(), permanent: false);
   }
 }

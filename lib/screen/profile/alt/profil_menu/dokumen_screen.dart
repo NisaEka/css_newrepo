@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/image_popup_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/items/document_image_item.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +107,16 @@ class DokumenScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Lampiran Dokumen KTP".tr, style: subTitleTextStyle),
-                        DocumentImageItem(img: controller.ccrfProfil?.document?.idCard ?? ''),
+                        DocumentImageItem(
+                          img: controller.ccrfProfil?.document?.idCard ?? '',
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (context) => ImagePopupDialog(
+                              title: 'Lampiran Dokumen KTP'.tr,
+                              img: controller.ccrfProfil?.document?.idCard ?? '',
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -130,7 +140,16 @@ class DokumenScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Lampiran Dokumen NPWP".tr, style: subTitleTextStyle),
-                        DocumentImageItem(img: controller.ccrfProfil?.document?.npwp ?? ''),
+                        DocumentImageItem(
+                          img: controller.ccrfProfil?.document?.npwp ?? '',
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (context) => ImagePopupDialog(
+                              title: 'Lampiran Dokumen NPWP'.tr,
+                              img: controller.ccrfProfil?.document?.npwp ?? '',
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -154,7 +173,16 @@ class DokumenScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Lampiran Dokumen Rekening".tr, style: subTitleTextStyle),
-                        DocumentImageItem(img: controller.ccrfProfil?.document?.bankAccount ?? ''),
+                        DocumentImageItem(
+                          img: controller.ccrfProfil?.document?.bankAccount ?? '',
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (context) => ImagePopupDialog(
+                              title: 'Lampiran Dokumen Rekening'.tr,
+                              img: controller.ccrfProfil?.document?.bankAccount ?? '',
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -165,4 +193,3 @@ class DokumenScreen extends StatelessWidget {
         });
   }
 }
-

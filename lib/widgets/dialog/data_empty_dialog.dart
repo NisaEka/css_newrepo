@@ -19,7 +19,7 @@ class DataEmpty extends StatelessWidget {
           color: blueJNE,
         ),
         Text(
-          'Account Kosong'.tr,
+          text.tr,
           style: appTitleTextStyle.copyWith(color: blueJNE),
         ),
       ],

@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/akun_transaksi/akun_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_controller.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -108,7 +109,12 @@ class InformasiKirimanScreen extends StatelessWidget {
                               accountType: controller.account.accountService ?? '',
                               isSelected: true,
                               width: Get.width,
-                              onTap: () {},
+                              onTap: () => controller.dropship == false
+                                  ? Get.to(const AkunTransaksiScreen())?.then((result) {
+                                      controller.account = result;
+                                      controller.update();
+                                    })
+                                  : null,
                             ),
                           ),
                           const SizedBox(height: 10),
