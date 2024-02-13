@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OtherMenuCotroller extends BaseController {
@@ -116,12 +118,19 @@ class OtherMenuCotroller extends BaseController {
   }
 
   void saveChanges() async {
-    isEdit = isEdit ? false : true;
-
-    var data = '{"items" : ${jsonEncode(favoritList)}}';
-    menuData = MenuItemModel.fromJson(jsonDecode(data));
-
+    if (isEdit == false) {
+      isEdit = true;
+      update();
+    } else {
+      isEdit = false;
+      update();
+      var data = '{"items" : ${jsonEncode(favoritList)}}';
+      menuData = MenuItemModel.fromJson(jsonDecode(data));
+      update();
+      await storage.saveData(StorageCore.favoriteMenu, menuData).then((value) {
+        initData();
+      });
+    }
     update();
-    isEdit ? await storage.saveData(StorageCore.favoriteMenu, data).then((value) => Get.back()) : null;
   }
 }

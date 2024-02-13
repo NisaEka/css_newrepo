@@ -47,6 +47,7 @@ class DashboardController extends BaseController {
   }
 
   Future<void> cekFavoritMenu() async {
+    menuItems = [];
     var favMenu = await storage.readString(StorageCore.favoriteMenu);
     var menu = MenuItemModel.fromJson(jsonDecode(favMenu));
     print('menu kosong : ${menu.items != null}');
@@ -91,6 +92,7 @@ class DashboardController extends BaseController {
     } else {
       menuItems.addAll(menu.items ?? []);
     }
+    update();
   }
 
   Future<void> cekLocalLanguage() async {

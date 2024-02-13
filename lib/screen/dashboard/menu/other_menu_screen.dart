@@ -84,12 +84,14 @@ class OtherMenuScreen extends StatelessWidget {
                             isActive: (controller.favoritList[i].isAuth ?? false) ? controller.isLogin : true,
                             isEdit: controller.isEdit,
                             isFavorite: controller.favoritList[i].isFavorite,
-                            onTap: () => (controller.favoritList[i].isAuth == true && !controller.isLogin)
-                                ? showDialog(
-                                    context: context,
-                                    builder: (context) => const LoginAlertDialog(),
-                                  )
-                                : Get.toNamed(controller.favoritList[i].route.toString()),
+                            onTap: () => controller.isEdit
+                                ? controller.removeFavorit(i)
+                                : (controller.favoritList[i].isAuth == true && !controller.isLogin)
+                                    ? showDialog(
+                                        context: context,
+                                        builder: (context) => const LoginAlertDialog(),
+                                      )
+                                    : Get.toNamed(controller.favoritList[i].route.toString()),
                             onEdit: () => controller.removeFavorit(i),
                           ),
                           childCount: controller.favoritList.length,
@@ -123,12 +125,14 @@ class OtherMenuScreen extends StatelessWidget {
                             isEdit: controller.isEdit,
                             onEdit: () => controller.addFavorit(i, controller.paketmuList[i]),
                             isFavorite: controller.paketmuList[i].isFavorite,
-                            onTap: () => (controller.paketmuList[i].isAuth == true && !controller.isLogin)
-                                ? showDialog(
-                                    context: context,
-                                    builder: (context) => const LoginAlertDialog(),
-                                  )
-                                : Get.toNamed(controller.paketmuList[i].route.toString()),
+                            onTap: () => controller.isEdit
+                                ? controller.addFavorit(i, controller.paketmuList[i])
+                                : (controller.paketmuList[i].isAuth == true && !controller.isLogin)
+                                    ? showDialog(
+                                        context: context,
+                                        builder: (context) => const LoginAlertDialog(),
+                                      )
+                                    : Get.toNamed(controller.paketmuList[i].route.toString()),
                           ),
                           childCount: controller.paketmuList.length,
                         ),
@@ -161,12 +165,14 @@ class OtherMenuScreen extends StatelessWidget {
                             isEdit: controller.isEdit,
                             onEdit: () => controller.addFavorit(i, controller.otherList[i]),
                             isFavorite: controller.otherList[i].isFavorite,
-                            onTap: () => (controller.otherList[i].isAuth == true && !controller.isLogin)
-                                ? showDialog(
-                                    context: context,
-                                    builder: (context) => const LoginAlertDialog(),
-                                  )
-                                : Get.toNamed(controller.otherList[i].route.toString()),
+                            onTap: () => controller.isEdit
+                                ? controller.addFavorit(i, controller.paketmuList[i])
+                                : (controller.otherList[i].isAuth == true && !controller.isLogin)
+                                    ? showDialog(
+                                        context: context,
+                                        builder: (context) => const LoginAlertDialog(),
+                                      )
+                                    : Get.toNamed(controller.otherList[i].route.toString()),
                           ),
                           childCount: controller.otherList.length,
                         ),

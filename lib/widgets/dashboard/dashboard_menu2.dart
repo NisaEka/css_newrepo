@@ -9,11 +9,13 @@ import 'package:get/get.dart';
 class DashboardMenu2 extends StatelessWidget {
   final bool isLogin;
   final List<Items> menu;
+  final VoidCallback? getOtherMenu;
 
   const DashboardMenu2({
     super.key,
     required this.isLogin,
     required this.menu,
+    this.getOtherMenu,
   });
 
   @override
@@ -80,7 +82,7 @@ class DashboardMenu2 extends StatelessWidget {
             // ),
             MenuItem(
               menuTitle: 'Lainnya'.tr,
-              onTap: () => Get.to(const OtherMenuScreen()),
+              onTap: getOtherMenu,
               menuIcon: const Icon(
                 Icons.more_horiz,
                 color: whiteColor,
