@@ -15,10 +15,20 @@ class AccountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
-        border: Border.all(color: greyDarkColor2),
+        color: whiteColor,
+        border: Border.all(color: greyDarkColor1),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: const [
+          BoxShadow(
+            color: blueJNE,
+            spreadRadius: 1,
+            offset: Offset(-2, 2),
+          ),
+        ],
       ),
+      alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +38,6 @@ class AccountCard extends StatelessWidget {
             children: [
               Text(account.accountNumber ?? '', style: listTitleTextStyle.copyWith(color: blueJNE)),
               Text(account.accountName ?? '', style: listTitleTextStyle.copyWith(color: blueJNE)),
-              Text(account.accountService ?? '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
               Row(
                 children: [
                   Text(account.availableService?.ss == "Y" ? "ss " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),

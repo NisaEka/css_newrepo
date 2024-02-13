@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -5,6 +6,8 @@ import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/items/document_image_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../../widgets/forms/customformlabel.dart';
 
 class DokumenScreen extends StatelessWidget {
   const DokumenScreen({super.key});
@@ -17,28 +20,149 @@ class DokumenScreen extends StatelessWidget {
           return Scaffold(
             appBar: CustomTopBar(
               title: "Dokumen".tr,
-            ),
-            body: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("Foto Dokumen KTP".tr, style: subTitleTextStyle),
-                      DocumentImageItem(img: controller.ccrfProfil?.document?.idCard ?? ''),
-                      Text("Foto Dokumen NPWP".tr, style: subTitleTextStyle),
-                      DocumentImageItem(img: controller.ccrfProfil?.document?.npwp ?? ''),
-                      Text("Foto Dokumen Buku Rekening".tr, style: subTitleTextStyle),
-                      DocumentImageItem(img: controller.ccrfProfil?.document?.bankAccount ?? ''),
-                    ],
+              action: [
+                Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  child: IconButton(
+                    onPressed: () {
+                      Get.bottomSheet(
+                        enableDrag: true,
+                        isDismissible: true,
+                        // isScrollControlled: true,
+                        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Kerahasiaan Data'.tr,
+                                      style: appTitleTextStyle.copyWith(
+                                        color: blueJNE,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () => Get.back(),
+                                      icon: const Icon(Icons.close),
+                                    ),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: CustomScrollView(
+                                    slivers: [
+                                      SliverToBoxAdapter(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            CustomFormLabel(label: 'kerahasiaan_data'.tr),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                        backgroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.info_rounded, color: redJNE),
+                    tooltip: 'informasi'.tr,
                   ),
-                ),
-                controller.isLoading ? const LoadingDialog() : Container(),
+                )
               ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: ListView(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      border: Border.all(color: greyDarkColor1),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: blueJNE,
+                          spreadRadius: 1,
+                          offset: Offset(-2, 2),
+                        ),
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Lampiran Dokumen KTP".tr, style: subTitleTextStyle),
+                        DocumentImageItem(img: controller.ccrfProfil?.document?.idCard ?? ''),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      border: Border.all(color: greyDarkColor1),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: blueJNE,
+                          spreadRadius: 1,
+                          offset: Offset(-2, 2),
+                        ),
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Lampiran Dokumen NPWP".tr, style: subTitleTextStyle),
+                        DocumentImageItem(img: controller.ccrfProfil?.document?.npwp ?? ''),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      border: Border.all(color: greyDarkColor1),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: blueJNE,
+                          spreadRadius: 1,
+                          offset: Offset(-2, 2),
+                        ),
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Lampiran Dokumen Rekening".tr, style: subTitleTextStyle),
+                        DocumentImageItem(img: controller.ccrfProfil?.document?.bankAccount ?? ''),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         });
   }
 }
+
