@@ -45,3 +45,4 @@ app.*.map.json
 
 # env
 #/lib/config/env.dart
+/lib/config/api_config.dart

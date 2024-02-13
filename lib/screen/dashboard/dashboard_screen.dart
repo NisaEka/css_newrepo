@@ -3,6 +3,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/dashboard/menu/other_menu_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar.dart';
@@ -113,7 +114,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     DashboardMenu2(
                       isLogin: controller.isLogin,
-                    )
+                      menu: controller.menuItems,
+                      getOtherMenu: () => Get.to(const OtherMenuScreen())?.then(
+                        (result) => controller.cekFavoritMenu(),
+                      ),
+                    ),
                   ],
                 ),
               ),

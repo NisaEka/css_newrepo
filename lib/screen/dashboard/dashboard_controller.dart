@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -21,8 +25,8 @@ class DashboardController extends BaseController {
     const ProfileScreen(),
   ];
 
+  List<Items> menuItems = [];
   List<String> appTitle = <String>["Beranda".tr, "Profil".tr];
-
   List<Widget> bannerList = [];
   var bannerIndex = 0.obs;
   CarouselController commercialCarousel = CarouselController();
@@ -42,9 +46,57 @@ class DashboardController extends BaseController {
     return isLogin;
   }
 
-  Future<void> initData() async {
-    String local = await storage.readString(StorageCore.localeApp);
+  Future<void> cekFavoritMenu() async {
+    menuItems = [];
+    var favMenu = await storage.readString(StorageCore.favoriteMenu);
+    var menu = MenuItemModel.fromJson(jsonDecode(favMenu));
+    print('menu kosong : ${menu.items != null}');
 
+    if (favMenu.isEmpty) {
+      await storage.saveData(
+          StorageCore.favoriteMenu,
+          MenuItemModel(items: [
+            Items(
+              title: "Input Kirimanmu",
+              icon: ImageConstant.paketmuIcon,
+              route: "/inputKiriman",
+              isFavorite: true,
+              isEdit: false,
+              isAuth: true,
+            ),
+            Items(
+              title: "Cek Ongkir",
+              icon: ImageConstant.cekOngkirIcon,
+              route: "/cekOngkir",
+              isFavorite: true,
+              isEdit: false,
+              isAuth: false,
+            ),
+            Items(
+              title: "Draft Transaksi",
+              icon: ImageConstant.paketmuIcon,
+              route: "draft_transaksi",
+              isFavorite: true,
+              isEdit: false,
+              isAuth: true,
+            ),
+            Items(
+              title: "Riwayat Kiriman",
+              icon: ImageConstant.paketmuIcon,
+              route: "/riwayatKiriman",
+              isFavorite: true,
+              isEdit: false,
+              isAuth: true,
+            ),
+          ]));
+    } else {
+      menuItems.addAll(menu.items ?? []);
+    }
+    update();
+  }
+
+  Future<void> cekLocalLanguage() async {
+    String local = await storage.readString(StorageCore.localeApp);
     local.isEmpty.printInfo();
     if (local.isEmpty) {
       (Get.deviceLocale == Locale("id", "ID")).printInfo(info: "local");
@@ -68,7 +120,11 @@ class DashboardController extends BaseController {
         update();
       }
     }
+  }
 
+  Future<void> initData() async {
+    cekLocalLanguage();
+    cekFavoritMenu();
     cekToken();
     isLoading = true;
     bannerList = [
@@ -107,6 +163,7 @@ class DashboardController extends BaseController {
             StorageCore.userProfil,
             value.payload,
           ));
+
       update();
     } catch (e) {
       e.printError();

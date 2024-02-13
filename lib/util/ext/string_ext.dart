@@ -13,6 +13,10 @@ extension StringExt on String {
     return double.parse(replaceAll(RegExp(r"\D"), ""));
   }
 
+  bool toBool() {
+    return bool.parse(this);
+  }
+
   String toDateFormat({String targetFormat = "dd-MM-yyyy", String originFormat = "dd/MM/yyyy"}) {
     try {
       DateTime dateTimeOrigin = DateTime.parse(this);
