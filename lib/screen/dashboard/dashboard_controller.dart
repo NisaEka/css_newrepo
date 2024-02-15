@@ -159,7 +159,7 @@ class DashboardController extends BaseController {
 
     marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
 
-    if (isLogin) {
+    // if (isLogin == true) {
       try {
         await transaction.getSender().then((value) async => await storage.saveData(
               StorageCore.shipper,
@@ -193,7 +193,7 @@ class DashboardController extends BaseController {
       } catch (e) {
         e.printError();
       }
-    }
+    // }
 
     isLoading = false;
     update();

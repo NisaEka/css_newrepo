@@ -84,7 +84,7 @@ class AkunBankScreen extends StatelessWidget {
             body: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     children: [
                       const SizedBox(height: 21),
