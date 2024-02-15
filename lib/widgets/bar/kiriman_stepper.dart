@@ -42,7 +42,7 @@ class KirimanStepper extends StatelessWidget {
               child: SvgPicture.asset(
                 IconsConstant.box,
                 // height: 100,
-                color: blueJNE,
+                color: currentStep == 0 ? blueJNE : null,
               ),
             ),
             Container(
@@ -76,7 +76,7 @@ class KirimanStepper extends StatelessWidget {
                 ),
               ),
             ),
-            cnote?.photo != null || cnote?.signature != null || cnote?.lat != null
+            (cnote?.photo != null || cnote?.signature != null || cnote?.lat != null) && (currentStep == 0)
                 ? GestureDetector(
                     onTap: () {
                       Get.bottomSheet(

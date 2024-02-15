@@ -217,7 +217,7 @@ class LacakKirimanScreen extends StatelessWidget {
                                 const Divider(),
                                 Column(
                                   children: controller.trackModel?.history?.isNotEmpty ?? false
-                                      ? controller.trackModel?.history!
+                                      ? controller.trackModel?.history!.reversed
                                               .mapIndexed((i, e) => KirimanStepper(
                                                     currentStep: i,
                                                     length: controller.trackModel?.history?.length,
