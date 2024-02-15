@@ -4,10 +4,8 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 
 class NetworkCore {
   Dio dio = Dio();
-  Dio tarif = Dio();
-  Dio tracing = Dio();
-  Dio reference = Dio();
   Dio city = Dio();
+  Dio jne = Dio();
 
   NetworkCore() {
     dio.options = BaseOptions(
@@ -21,8 +19,8 @@ class NetworkCore {
       },
     );
 
-    tarif.options = BaseOptions(
-      baseUrl: AppConst.tarifUrl,
+    city.options = BaseOptions(
+      baseUrl: AppConst.cityUrl,
       connectTimeout: 20000,
       receiveTimeout: 20000,
       sendTimeout: 20000,
@@ -32,25 +30,13 @@ class NetworkCore {
       },
     );
 
-    tracing.options = BaseOptions(
-      baseUrl: AppConst.tracingUrl,
+    jne.options = BaseOptions(
+      baseUrl: AppConst.jneUrl,
       connectTimeout: 20000,
       receiveTimeout: 20000,
       sendTimeout: 20000,
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'User-Agent': 'php-request',
-      },
-    );
-
-    reference.options = BaseOptions(
-      baseUrl: AppConst.referenceUrl,
-      connectTimeout: 20000,
-      receiveTimeout: 20000,
-      sendTimeout: 20000,
-      headers: {
-        'Accept': 'application/json',
+        // 'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     );
@@ -58,9 +44,8 @@ class NetworkCore {
     String env = FlavorConfig.instance.name ?? "PROD";
     if (env != "PROD") {
       dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
-      tarif.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
-      tracing.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
-      reference.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
+      city.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
+      jne.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
     }
   }
 }

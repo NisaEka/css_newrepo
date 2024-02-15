@@ -1,8 +1,10 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_controller.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
@@ -151,21 +153,26 @@ class CekOngkirScreen extends StatelessWidget {
                     const SizedBox(height: 25),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [CustomFormLabel(label: 'Layanan'.tr), CustomFormLabel(label: 'Biaya & Durasi'.tr)],
+                      children: [
+                        CustomFormLabel(label: 'Layanan'.tr),
+                        CustomFormLabel(label: 'Biaya & Durasi'.tr),
+                      ],
                     ),
                     const Divider(),
-                    const OngkirListItem(
-                      serviceTitle: 'REG',
-                      serviceSubtitle: 'Dokumen/Paket',
-                      servicePrice: '10.000',
-                      serviceDuration: '3 - 4 D',
-                    ),
-                    const OngkirListItem(
-                      serviceTitle: 'YES',
-                      serviceSubtitle: 'Paket',
-                      servicePrice: '15.000',
-                      serviceDuration: '1 - 2 D',
-                    ),
+                    controller.isLoading
+                        ? const CircularProgressIndicator()
+                        : Column(
+                            children: controller.ongkirList
+                                .map(
+                                  (e) => OngkirListItem(
+                                    serviceTitle: e.serviceDisplay.toString(),
+                                    serviceSubtitle: e.goodsType.toString(),
+                                    servicePrice: e.price?.toInt().toCurrency().toString() ?? '',
+                                    serviceDuration: '${e.etdFrom ?? ''} - ${e.etdThru ?? ''} ${e.times ?? ''}',
+                                  ),
+                                )
+                                .toList(),
+                          )
                   ],
                 ),
               ),
@@ -176,7 +183,7 @@ class CekOngkirScreen extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
               onPressed: () {
                 if (controller.formKey.currentState!.validate() == true) {
-                  print('test');
+                  controller.loadOngkir();
                 }
               },
             ),

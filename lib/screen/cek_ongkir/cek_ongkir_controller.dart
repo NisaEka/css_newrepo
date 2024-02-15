@@ -2,6 +2,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_city_model.dart';
+import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
@@ -27,6 +28,9 @@ class CekOngkirController extends BaseController {
   bool isLoading = false;
 
   List<City> cityList = [];
+  List<City> originList = [];
+  List<City> destinationList = [];
+  List<Price> ongkirList = [];
 
   PostCekongkirCityModel? cityModel;
   City? selectedDestination;
@@ -36,19 +40,41 @@ class CekOngkirController extends BaseController {
   void onInit() {
     super.onInit();
     Future.wait([
-      getOriginList('jakarta'),
-      getDestinationList('jakarta'),
+      getOriginList(''),
+      getDestinationList(''),
     ]);
   }
 
+  Future<void> loadOngkir() async {
+    ongkirList = [];
+    isLoading = true;
+    update();
+    try {
+      await ongkir
+          .postCekOngkir(
+        selectedOrigin?.code ?? '',
+        selectedDestination?.code ?? '',
+        beratKiriman.text,
+      )
+          .then((value) {
+        ongkirList.addAll(value.price ?? []);
+      });
+    } catch (e) {
+      e.printError();
+    }
+
+    isLoading = false;
+    update();
+  }
+
   Future<List<City>> getOriginList(String keyword) async {
-    cityList = [];
+    originList = [];
     isLoading = true;
     try {
       var response = await ongkir.postOrigin(keyword);
       cityModel = response;
-      cityList.addAll(cityModel?.detail ?? []);
-      print(cityModel?.detail);
+      originList.addAll(cityModel?.detail ?? []);
+      // print(cityModel?.detail);
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -56,17 +82,17 @@ class CekOngkirController extends BaseController {
 
     isLoading = false;
     update();
-    // return cityModel?.city?.toList() ?? [];
-    return cityList;
+    return cityModel?.detail?.toList() ?? [];
+    // return originList;
   }
 
   Future<List<City>> getDestinationList(String keyword) async {
     isLoading = true;
-    cityList = [];
+    destinationList = [];
     try {
       var response = await ongkir.postDestination(keyword);
       cityModel = response;
-      cityList.addAll(response.detail ?? []);
+      destinationList.addAll(response.detail ?? []);
       update();
     } catch (e, i) {
       e.printError();
@@ -75,8 +101,8 @@ class CekOngkirController extends BaseController {
 
     isLoading = false;
     update();
-    return cityList;
-    // return destinationModel?.payload?.toList() ?? [];
+    // return destinationList;
+    return cityModel?.detail?.toList() ?? [];
   }
 
   void hitungBerat(double p, double l, double t) {
@@ -94,6 +120,7 @@ class CekOngkirController extends BaseController {
 
   void showCityList(String title) {
     searchCity.clear();
+    cityModel = null;
     update();
     Get.bottomSheet(
       enableDrag: true,
@@ -121,12 +148,8 @@ class CekOngkirController extends BaseController {
                 controller: searchCity,
                 hintText: 'Cari'.tr,
                 onSubmit: (value) {
-                  print(value);
-                  getOriginList(value).then((dest) {
-                    print("dest $dest");
-                    // destinationList = [];
-                    // destinationList
-                  });
+                  print('value : $value');
+                  getOriginList(value).then((dest) {});
                   update();
                   setState(() {});
                 },
@@ -139,11 +162,9 @@ class CekOngkirController extends BaseController {
                 //   ),
                 // ),
                 child: FutureBuilder(
-                  future: getOriginList(searchCity.text),
-                  // future: (title == "Kota Asal" || title == "Origin")
-                  //     ? getOriginList(searchCity.text)
-                  //     : getDestinationList(searchCity.text),
-                  initialData: cityList,
+                  // future: getOriginList(searchCity.text == '' ? 'jak' : searchCity.text),
+                  future: (title == "Kota Asal" || title == "Origin") ? getOriginList(searchCity.text) : getDestinationList(searchCity.text),
+                  // initialData: (title == "Kota Asal" || title == "Origin") ? originList : destinationList,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
