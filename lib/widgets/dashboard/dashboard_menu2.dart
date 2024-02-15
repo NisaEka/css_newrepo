@@ -38,7 +38,7 @@ class DashboardMenu2 extends StatelessWidget {
                                 context: context,
                                 builder: (context) => const LoginAlertDialog(),
                               )
-                            : Get.toNamed(e.route.toString()),
+                            : Get.toNamed(e.route.toString(), arguments: {}),
                       ))
                   .toList(),
             ),

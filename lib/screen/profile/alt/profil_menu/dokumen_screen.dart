@@ -87,103 +87,37 @@ class DokumenScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: ListView(
                 children: [
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      border: Border.all(color: greyDarkColor1),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: blueJNE,
-                          spreadRadius: 1,
-                          offset: Offset(-2, 2),
-                        ),
-                      ],
-                    ),
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Lampiran Dokumen KTP".tr, style: subTitleTextStyle),
-                        DocumentImageItem(
-                          img: controller.ccrfProfil?.document?.idCard ?? '',
-                          onTap: () => showDialog(
-                            context: context,
-                            builder: (context) => ImagePopupDialog(
-                              title: 'Lampiran Dokumen KTP'.tr,
-                              img: controller.ccrfProfil?.document?.idCard ?? '',
-                            ),
-                          ),
-                        ),
-                      ],
+                  DocumentImageItem(
+                    title: 'Lampiran Dokumen KTP'.tr,
+                    img: controller.ccrfProfil?.document?.idCard ?? '',
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => ImagePopupDialog(
+                        title: 'Lampiran Dokumen KTP'.tr,
+                        img: controller.ccrfProfil?.document?.idCard ?? '',
+                      ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      border: Border.all(color: greyDarkColor1),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: blueJNE,
-                          spreadRadius: 1,
-                          offset: Offset(-2, 2),
-                        ),
-                      ],
-                    ),
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Lampiran Dokumen NPWP".tr, style: subTitleTextStyle),
-                        DocumentImageItem(
-                          img: controller.ccrfProfil?.document?.npwp ?? '',
-                          onTap: () => showDialog(
-                            context: context,
-                            builder: (context) => ImagePopupDialog(
-                              title: 'Lampiran Dokumen NPWP'.tr,
-                              img: controller.ccrfProfil?.document?.npwp ?? '',
-                            ),
-                          ),
-                        ),
-                      ],
+                  DocumentImageItem(
+                    title: 'Lampiran Dokumen NPWP'.tr,
+                    img: controller.ccrfProfil?.document?.npwp ?? '',
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => ImagePopupDialog(
+                        title: 'Lampiran Dokumen NPWP'.tr,
+                        img: controller.ccrfProfil?.document?.npwp ?? '',
+                      ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      border: Border.all(color: greyDarkColor1),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: blueJNE,
-                          spreadRadius: 1,
-                          offset: Offset(-2, 2),
-                        ),
-                      ],
-                    ),
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Lampiran Dokumen Rekening".tr, style: subTitleTextStyle),
-                        DocumentImageItem(
-                          img: controller.ccrfProfil?.document?.bankAccount ?? '',
-                          onTap: () => showDialog(
-                            context: context,
-                            builder: (context) => ImagePopupDialog(
-                              title: 'Lampiran Dokumen Rekening'.tr,
-                              img: controller.ccrfProfil?.document?.bankAccount ?? '',
-                            ),
-                          ),
-                        ),
-                      ],
+                  DocumentImageItem(
+                    title: 'Lampiran Dokumen Rekening'.tr,
+                    img: controller.ccrfProfil?.document?.bankAccount ?? '',
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => ImagePopupDialog(
+                        title: 'Lampiran Dokumen Rekening'.tr,
+                        img: controller.ccrfProfil?.document?.bankAccount ?? '',
+                      ),
                     ),
                   ),
                 ],

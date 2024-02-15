@@ -232,7 +232,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                                           title: 'Rp',
                                           isPrefix: true,
                                         ),
-                                        inputFormatters: [FilteringTextInputFormatter.digitsOnly, ThousandsSeparatorInputFormatter()],
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly,
+                                          ThousandsSeparatorInputFormatter(),
+                                        ],
                                         inputType: TextInputType.number,
                                         contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 40, right: 10),
                                         width: Get.width / 2,

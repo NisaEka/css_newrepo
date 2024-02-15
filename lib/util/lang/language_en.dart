@@ -188,6 +188,8 @@ class LanguageEN {
       "bank_info": "This data is used in the process of transferring your COD money.",
       "Lihat Semua Layanan": "See All Services",
       "Tutup": "Close",
+      "Masukan 3 atau lebih karakter": "Please enter 3 or more character",
+      "Detail Kiriman": "Shipment Detail",
     };
   }
 }

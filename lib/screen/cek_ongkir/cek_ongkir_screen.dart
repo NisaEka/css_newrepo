@@ -3,6 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_controller.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
@@ -13,6 +14,7 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:css_mobile/widgets/items/ongkir_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class CekOngkirScreen extends StatelessWidget {
@@ -42,7 +44,8 @@ class CekOngkirScreen extends StatelessWidget {
                             // items: [],
                             hintText: 'Kota Asal'.tr,
                             // textStyle: hintTextStyle,
-                            readOnly: true,
+                            readOnly: controller.selectedOrigin != null,
+                            isRequired: true,
                             suffixIcon: const Icon(Icons.keyboard_arrow_down),
                             onTap: () => controller.showCityList('Kota Asal'.tr),
                           ),
@@ -51,7 +54,8 @@ class CekOngkirScreen extends StatelessWidget {
                             // items: [],
                             hintText: 'Kota Tujuan'.tr,
                             // textStyle: hintTextStyle,
-                            readOnly: true,
+                            readOnly: controller.selectedDestination != null,
+                            isRequired: true,
                             suffixIcon: const Icon(Icons.keyboard_arrow_down),
                             onTap: () => controller.showCityList('Kota Tujuan'.tr),
                           ),
@@ -133,6 +137,11 @@ class CekOngkirScreen extends StatelessWidget {
                             label: "Asuransi".tr,
                             onChange: (value) {
                               controller.asuransi = value;
+                              // controller.loadOngkir();
+                              if (value == false) {
+                                controller.isr = 0;
+                                controller.estimasiHargaBarang.clear();
+                              }
                               controller.update();
                             },
                           ),
@@ -145,6 +154,12 @@ class CekOngkirScreen extends StatelessWidget {
                                     title: 'Rp',
                                     isPrefix: true,
                                   ),
+                                  contentPadding: EdgeInsets.only(left: 40),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    ThousandsSeparatorInputFormatter(),
+                                  ],
+                                  // onChanged: (value) => controller.hitungAsuransi(),
                                 )
                               : const SizedBox(),
                         ],
@@ -167,7 +182,7 @@ class CekOngkirScreen extends StatelessWidget {
                                   (e) => OngkirListItem(
                                     serviceTitle: e.serviceDisplay.toString(),
                                     serviceSubtitle: e.goodsType.toString(),
-                                    servicePrice: e.price?.toInt().toCurrency().toString() ?? '',
+                                    servicePrice: (e.price!.toInt() + controller.isr).toInt().toCurrency().toString() ?? '',
                                     serviceDuration: '${e.etdFrom ?? ''} - ${e.etdThru ?? ''} ${e.times ?? ''}',
                                   ),
                                 )

@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_city_model.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
-import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class CekOngkirController extends BaseController {
   bool dimensi = false;
   bool isCalculate = false;
   double berat = 0;
+  double isr = 0;
   bool isLoading = false;
 
   List<City> cityList = [];
@@ -46,6 +48,7 @@ class CekOngkirController extends BaseController {
   }
 
   Future<void> loadOngkir() async {
+    hitungAsuransi();
     ongkirList = [];
     isLoading = true;
     update();
@@ -105,6 +108,12 @@ class CekOngkirController extends BaseController {
     return cityModel?.detail?.toList() ?? [];
   }
 
+  void hitungAsuransi() {
+    isr = 0;
+    isr = (0.002 * (estimasiHargaBarang.text == '' ? 0 : estimasiHargaBarang.text.digitOnly().toInt())) + 5000;
+    update();
+  }
+
   void hitungBerat(double p, double l, double t) {
     isCalculate = true;
     berat = 0;
@@ -112,7 +121,7 @@ class CekOngkirController extends BaseController {
 
     if (dimensi) {
       berat = (p * l * t) / 6000;
-      beratKiriman.text = berat!.toStringAsFixed(2);
+      beratKiriman.text = berat.toStringAsFixed(2);
     }
 
     update();
@@ -147,14 +156,18 @@ class CekOngkirController extends BaseController {
               CustomSearchField(
                 controller: searchCity,
                 hintText: 'Cari'.tr,
-                onSubmit: (value) {
-                  print('value : $value');
-                  getOriginList(value).then((dest) {});
+                validate: searchCity.text.length < 3,
+                validationText: 'Masukan 3 atau lebih karakter'.tr,
+                onChanged: (value) {
+                  Timer(const Duration(milliseconds: 1000), () {
+                    getOriginList(value).then((dest) {});
+                  });
+
                   update();
                   setState(() {});
                 },
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               Expanded(
                 // child: ListView.builder(
                 //   itemBuilder: (c, i) => ListTile(

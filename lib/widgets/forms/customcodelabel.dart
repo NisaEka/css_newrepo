@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomCodeLabel extends StatelessWidget {
   final String label;
@@ -13,7 +14,7 @@ class CustomCodeLabel extends StatelessWidget {
       children: [
         Text(label, style: appTitleTextStyle.copyWith(color: blueJNE)),
         IconButton(
-          onPressed: () {},
+          onPressed: () => Clipboard.setData(ClipboardData(text: label)),
           icon: Icon(
             Icons.copy_rounded,
             color: blueJNE,

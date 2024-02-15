@@ -4,6 +4,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/menu/other_menu_screen.dart';
+import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar.dart';
@@ -89,16 +90,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   : const SizedBox(),
                               const SizedBox(height: 18),
                               TextField(
+                                controller: controller.nomorResi,
                                 decoration: InputDecoration(
                                   hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
                                   hintStyle: hintTextStyle,
-                                  suffixIcon: const Icon(
-                                    Icons.qr_code,
-                                    color: redJNE,
+                                  suffixIcon: GestureDetector(
+                                    onTap: () => Get.to(const BarcodeScanScreen(), arguments: {
+                                      "cek_resi": true,
+                                    })?.then((result) {
+                                      controller.nomorResi.clear();
+                                      controller.update();
+                                    }),
+                                    child: const Icon(
+                                      Icons.qr_code,
+                                      color: redJNE,
+                                    ),
                                   ),
                                 ),
-                                readOnly: true,
-                                onTap: () => Get.to(const LacakKirimanScreen()),
+                                // readOnly: true,
+                                onSubmitted: (value) => Get.to(const LacakKirimanScreen(), arguments: {
+                                  'nomor_resi': value,
+                                })?.then((value) {
+                                  controller.nomorResi.clear();
+                                  controller.update();
+                                }),
                               ),
                             ],
                           ),

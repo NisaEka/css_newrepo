@@ -91,7 +91,7 @@ class OtherMenuScreen extends StatelessWidget {
                                         context: context,
                                         builder: (context) => const LoginAlertDialog(),
                                       )
-                                    : Get.toNamed(controller.favoritList[i].route.toString()),
+                                    : Get.toNamed(controller.favoritList[i].route.toString(), arguments: {}),
                             onEdit: () => controller.removeFavorit(i),
                           ),
                           childCount: controller.favoritList.length,
@@ -132,7 +132,7 @@ class OtherMenuScreen extends StatelessWidget {
                                         context: context,
                                         builder: (context) => const LoginAlertDialog(),
                                       )
-                                    : Get.toNamed(controller.paketmuList[i].route.toString()),
+                                    : Get.toNamed(controller.paketmuList[i].route.toString(), arguments: {}),
                           ),
                           childCount: controller.paketmuList.length,
                         ),
@@ -172,7 +172,7 @@ class OtherMenuScreen extends StatelessWidget {
                                         context: context,
                                         builder: (context) => const LoginAlertDialog(),
                                       )
-                                    : Get.toNamed(controller.otherList[i].route.toString()),
+                                    : Get.toNamed(controller.otherList[i].route.toString(), arguments: {}),
                           ),
                           childCount: controller.otherList.length,
                         ),

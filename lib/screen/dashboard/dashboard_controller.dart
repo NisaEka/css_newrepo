@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 
 class DashboardController extends BaseController {
   final selectedIndex = 0.obs;
+  final nomorResi = TextEditingController();
 
   bool isLogin = false;
   bool isLoading = false;
