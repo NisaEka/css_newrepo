@@ -190,6 +190,10 @@ class LanguageEN {
       "Tutup": "Close",
       "Masukan 3 atau lebih karakter": "Please enter 3 or more character",
       "Detail Kiriman": "Shipment Detail",
+      "Foto Pengiriman": "Shipment Photo",
+      "Tanda Tangan": "Signature",
+      "Lokasi Penerima": "Consignee Location",
+      "access_denied": "You must have a CSS account to use this feature",
     };
   }
 }

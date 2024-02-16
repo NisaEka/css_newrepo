@@ -12,6 +12,12 @@ class PostCekongkirCityModel {
         _detail?.add(City.fromJson(v));
       });
     }
+    if (json['payload'] != null) {
+      _detail = [];
+      json['payload'].forEach((v) {
+        _detail?.add(City.fromJson(v));
+      });
+    }
   }
 
   List<City>? _detail;
@@ -29,6 +35,9 @@ class PostCekongkirCityModel {
     final map = <String, dynamic>{};
     if (_detail != null) {
       map['detail'] = _detail?.map((v) => v.toJson()).toList();
+    }
+    if (_detail != null) {
+      map['payload'] = _detail?.map((v) => v.toJson()).toList();
     }
     return map;
   }

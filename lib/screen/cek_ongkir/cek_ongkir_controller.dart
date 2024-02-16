@@ -48,7 +48,7 @@ class CekOngkirController extends BaseController {
   }
 
   Future<void> loadOngkir() async {
-    hitungAsuransi();
+    if (asuransi) hitungAsuransi();
     ongkirList = [];
     isLoading = true;
     update();
@@ -111,6 +111,7 @@ class CekOngkirController extends BaseController {
   void hitungAsuransi() {
     isr = 0;
     isr = (0.002 * (estimasiHargaBarang.text == '' ? 0 : estimasiHargaBarang.text.digitOnly().toInt())) + 5000;
+    print('isr $isr');
     update();
   }
 

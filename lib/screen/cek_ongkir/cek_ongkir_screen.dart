@@ -137,10 +137,10 @@ class CekOngkirScreen extends StatelessWidget {
                             label: "Asuransi".tr,
                             onChange: (value) {
                               controller.asuransi = value;
-                              // controller.loadOngkir();
                               if (value == false) {
                                 controller.isr = 0;
                                 controller.estimasiHargaBarang.clear();
+                                // controller.loadOngkir();
                               }
                               controller.update();
                             },

@@ -10,10 +10,11 @@ class LoginAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      elevation: 0,
       backgroundColor: whiteColor,
       title: Text('Akses Terbatas'.tr),
       content: Text(
-        'Anda harus mempunyai akun CSS untuk menggunakan fitur ini'.tr,
+        'access_denied'.tr,
       ),
       actions: <Widget>[
         TextButton(

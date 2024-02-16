@@ -297,8 +297,8 @@ class InformasiKirimaController extends BaseController {
         serviceCode: selectedService?.serviceCode,
         woodPackaging: packingKayu ? "Y" : "N",
         specialInstruction: intruksiKhusus.text,
-        codFlag: account.accountService == "COD" ? "Y" : "N",
-        codOngkir: codOngkir ? "Y" : "N",
+        codFlag: account.accountService == "COD" ? "YES" : "NO",
+        codOngkir: codOngkir ? "YES" : "NO",
         insuranceFlag: asuransi ? "Y" : "N",
         insuranceFee: isr,
         flatRate: flatRate,
@@ -362,11 +362,11 @@ class InformasiKirimaController extends BaseController {
       await transaction
           .postTransaction(DataTransactionModel(
         delivery: Delivery(
-          serviceCode: selectedService?.serviceCode,
+          serviceCode: selectedService?.serviceDisplay,
           woodPackaging: packingKayu ? "Y" : "N",
           specialInstruction: intruksiKhusus.text,
-          codFlag: account.accountService == "COD" ? "Y" : "N",
-          codOngkir: codOngkir ? "Y" : "N",
+          codFlag: account.accountService == "COD" ? "YES" : "NO",
+          codOngkir: codOngkir ? "YES" : "NO",
           insuranceFlag: asuransi ? "Y" : "N",
           insuranceFee: isr,
           flatRate: flatRate,

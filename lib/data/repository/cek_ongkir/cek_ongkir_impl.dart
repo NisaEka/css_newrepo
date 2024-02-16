@@ -35,11 +35,17 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
   @override
   Future<PostCekongkirCityModel> postDestination(String keyword) async {
     try {
-      Response response = await network.city.post(
-        '/dest/key/$keyword',
-        data: {
-          'username': ApiConfig.ctUsername,
-          'api_key': ApiConfig.ctApiKey,
+      // Response response = await network.city.post(
+      // '/dest/key/$keyword',
+      // data: {
+      // 'username': ApiConfig.ctUsername,
+      // 'api_key': ApiConfig.ctApiKey,
+      // },
+      // );
+      Response response = await network.dio.get(
+        '/destination/tracing',
+        queryParameters: {
+          'keyword': keyword,
         },
       );
       return PostCekongkirCityModel.fromJson(response.data);
@@ -52,15 +58,20 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
   @override
   Future<PostCekongkirCityModel> postOrigin(String keyword) async {
     try {
-      Response response = await network.city.post(
-        '/orig/key/$keyword',
-        data: {
-          'username': ApiConfig.ctUsername,
-          'api_key': ApiConfig.ctApiKey,
+      // Response response = await network.city.post(
+      //   '/orig/key/$keyword',
+      //   data: {
+      //     'username': ApiConfig.ctUsername,
+      //     'api_key': ApiConfig.ctApiKey,
+      //   },
+      // );
+      // print(' origin ${response.data}');
+      Response response = await network.dio.get(
+        '/origin/tracing',
+        queryParameters: {
+          'keyword': keyword,
         },
       );
-      print(' origin ${response.data}');
-
       return PostCekongkirCityModel.fromJson(response.data);
     } on DioError catch (e) {
       print('error origin ${e.response?.data}');

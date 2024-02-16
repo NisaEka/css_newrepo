@@ -46,7 +46,7 @@ class KirimanStepper extends StatelessWidget {
               ),
             ),
             Container(
-              height: 90,
+              height: (currentStep == 0 && cnote?.photo != null) ? 110 : 60,
               margin: const EdgeInsets.only(left: 21),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
               decoration: BoxDecoration(
@@ -115,7 +115,9 @@ class KirimanStepper extends StatelessWidget {
                                   context: context,
                                   builder: (context) => ImagePopupDialog(
                                     title: 'Lokasi Penerima'.tr,
-                                    img: cnote?.signature ?? '',
+                                    // img: cnote?.signature ?? '',
+                                    lat: '10.305385',
+                                    lng: '77.923029',
                                   ),
                                 ),
                               ),
@@ -130,16 +132,22 @@ class KirimanStepper extends StatelessWidget {
                       );
                     },
                     child: Container(
+                      width: 75,
+                      height: 60,
                       margin: const EdgeInsets.only(top: 5),
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: greyColor),
                       ),
-                      child: Image.asset(
-                        ImageConstant.pantauPaketmuIcon,
-                        height: 50,
+                      child: Image.network(
+                        cnote?.photo ?? '',
+                        fit: BoxFit.fill,
                       ),
+                      // child: Image.asset(
+                      //   ImageConstant.pantauPaketmuIcon,
+                      //   height: 50,
+                      // ),
                     ),
                   )
                 : const SizedBox(),

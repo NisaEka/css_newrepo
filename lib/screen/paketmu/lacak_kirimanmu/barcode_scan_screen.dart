@@ -35,12 +35,23 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
       _scanBarcode = barcodeScanRes;
     });
 
-    if (cekResi == true) {
-      Get.off(const LacakKirimanScreen(), arguments: {
-        'nomor_resi': barcodeScanRes,
-      });
+    if (barcodeScanRes != "-1") {
+      if (cekResi == true) {
+        Get.off(const LacakKirimanScreen(), arguments: {
+          'nomor_resi': barcodeScanRes,
+        });
+      } else {
+        Get.back(result: barcodeScanRes);
+      }
     } else {
-      Get.back(result: barcodeScanRes);
+      setState(() {
+        _scanBarcode = "Scan canceled";
+      });
+      if (cekResi == true) {
+        Get.off(const LacakKirimanScreen(), arguments: {});
+      } else {
+        Get.back();
+      }
     }
   }
 
@@ -48,7 +59,10 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Barcode scan')),
+        appBar: AppBar(
+          title: const Text('Barcode scan'),
+          centerTitle: true,
+        ),
         body: Builder(
           builder: (BuildContext context) {
             return Container();

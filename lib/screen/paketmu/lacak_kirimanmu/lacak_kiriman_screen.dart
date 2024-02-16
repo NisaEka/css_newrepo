@@ -37,7 +37,7 @@ class LacakKirimanScreen extends StatelessWidget {
                       controller: controller.searchField,
                       hintText: 'Masukan Nomor Resimu'.tr,
                       suffixIcon: GestureDetector(
-                        onTap: () => Get.to(const BarcodeScanScreen())?.then((result) {
+                        onTap: () => Get.to(const BarcodeScanScreen(), arguments: {})?.then((result) {
                           controller.searchField.text = result;
                           controller.update();
                           controller.cekResi(result);

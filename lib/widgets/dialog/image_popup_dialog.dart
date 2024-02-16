@@ -4,12 +4,16 @@ import 'package:get/get.dart';
 
 class ImagePopupDialog extends StatelessWidget {
   final String title;
-  final String img;
+  final String? img;
+  final String? lat;
+  final String? lng;
 
   const ImagePopupDialog({
     super.key,
     required this.title,
-    required this.img,
+    this.img,
+    this.lat,
+    this.lng,
   });
 
   @override
@@ -19,29 +23,30 @@ class ImagePopupDialog extends StatelessWidget {
       backgroundColor: whiteColor,
       title: Text(title.tr),
       content: Image.network(
-        img,
-        fit: BoxFit.fill,
-        errorBuilder: (context, error, stackTrace) => Container(
-          height: 62,
-          width: 153,
-          decoration: BoxDecoration(
-            // color: greyLightColor3,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: const Center(child: Icon(Icons.image_not_supported_outlined)),
-        ),
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          }
-          return Center(
-            child: CircularProgressIndicator(
-              value:
-                  loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
+              img ?? '',
+              fit: BoxFit.fill,
+              errorBuilder: (context, error, stackTrace) => Container(
+                height: 62,
+                width: 153,
+                decoration: BoxDecoration(
+                  // color: greyLightColor3,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Center(child: Icon(Icons.image_not_supported_outlined)),
+              ),
+              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                }
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
       actions: <Widget>[
         TextButton(
           style: TextButton.styleFrom(
