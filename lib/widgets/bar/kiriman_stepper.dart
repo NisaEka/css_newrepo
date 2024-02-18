@@ -3,6 +3,7 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/lacak_kiriman/post_lacak_kiriman_model.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/image_popup_dialog.dart';
 import 'package:css_mobile/widgets/items/document_image_item.dart';
 import 'package:flutter/material.dart';
@@ -111,13 +112,15 @@ class KirimanStepper extends StatelessWidget {
                               DocumentImageItem(
                                 title: 'Lokasi Penerima'.tr,
                                 // img: cnote?.signature ?? '',
+                                lat: cnote?.lat?.toDouble(),
+                                lng: cnote?.long?.toDouble(),
                                 onTap: () => showDialog(
                                   context: context,
                                   builder: (context) => ImagePopupDialog(
                                     title: 'Lokasi Penerima'.tr,
                                     // img: cnote?.signature ?? '',
-                                    lat: '10.305385',
-                                    lng: '77.923029',
+                                    lat: cnote?.lat?.toDouble(),
+                                    lng: cnote?.long?.toDouble(),
                                   ),
                                 ),
                               ),

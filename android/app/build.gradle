@@ -23,22 +23,34 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+
+def mapsProperties = new Properties()
+def localMapsPropertiesFile = rootProject.file('local_maps.properties')
+if (localMapsPropertiesFile.exists()) {
+    project.logger.info('Load maps properties from local file')
+    localMapsPropertiesFile.withReader('UTF-8') { reader ->
+        mapsProperties.load(reader)
+    }
+} else {
+    project.logger.info('Load maps properties from environment')
+    try {
+        mapsProperties['MAPS_API_KEY'] = System.getenv('MAPS_API_KEY')
+    } catch (NullPointerException e) {
+        project.logger.warn('Failed to load MAPS_API_KEY from environment.', e)
+    }
+}
+def mapsApiKey = mapsProperties.getProperty('MAPS_API_KEY')
+if (mapsApiKey == null) {
+    mapsApiKey = ""
+    project.logger.error('Google Maps Api Key not configured. Set it in `local_maps.properties` or in the environment variable `MAPS_API_KEY`')
+}
+
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-def dartEnvironmentVariables = []
-
-if (project.hasProperty('dart-defines')) {
-    dartEnvironmentVariables = project.property('dart-defines')
-            .split(',')
-            .collectEntries { entry ->
-                def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
-                [(pair.first()): pair.last()]
-            }
-}
 
 android {
     namespace "com.jne.css.css_mobile"
@@ -60,12 +72,12 @@ android {
 
     defaultConfig {
         applicationId "com.jne.css.css_mobile"
-        minSdkVersion 21
+        minSdkVersion 20
         multiDexEnabled true
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        manifestPlaceholders['MAP_APIKEY'] = dartEnvironmentVariables.MAP_APIKEY
+        manifestPlaceholders = [MAPS_API_KEY: mapsApiKey]
     }
 
     signingConfigs {

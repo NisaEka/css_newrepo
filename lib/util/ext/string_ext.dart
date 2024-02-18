@@ -10,7 +10,7 @@ extension StringExt on String {
   }
 
   double toDouble() {
-    return double.parse(replaceAll(RegExp(r"\D"), ""));
+    return double.parse(this);
   }
 
   bool toBool() {

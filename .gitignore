@@ -44,5 +44,6 @@ app.*.map.json
 /android/app/release
 
 # env
-#/lib/config/env.dart
+/lib/config/env.dart
 /lib/config/api_config.dart
+/android/local_maps.properties

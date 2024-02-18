@@ -1,12 +1,16 @@
+import 'dart:async';
+
 import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class ImagePopupDialog extends StatelessWidget {
+class ImagePopupDialog extends StatefulWidget {
   final String title;
   final String? img;
-  final String? lat;
-  final String? lng;
+  final double? lat;
+  final double? lng;
 
   const ImagePopupDialog({
     super.key,
@@ -17,13 +21,50 @@ class ImagePopupDialog extends StatelessWidget {
   });
 
   @override
+  State<ImagePopupDialog> createState() => _ImagePopupDialogState();
+}
+
+class _ImagePopupDialogState extends State<ImagePopupDialog> {
+  late GoogleMapController mapController;
+  Completer<GoogleMapController>? googleMapController;
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print('lat lng ${widget.lat}');
     return AlertDialog(
       contentPadding: const EdgeInsets.all(5),
       backgroundColor: whiteColor,
-      title: Text(title.tr),
-      content: Image.network(
-              img ?? '',
+      title: Text(widget.title.tr),
+      content: widget.lat != null
+          ? GoogleMap(
+              // onMapCreated: _onMapCreated,
+              onMapCreated: (controller) => googleMapController?.complete(controller),
+              zoomControlsEnabled: false,
+              myLocationButtonEnabled: false,
+              markers: <Marker>{
+                Marker(
+                  draggable: false,
+                  markerId: const MarkerId('SomeId'),
+                  position: LatLng(
+                    widget.lat!,
+                    widget.lng!,
+                  ),
+                )
+              },
+              initialCameraPosition: CameraPosition(
+                target: LatLng(
+                  widget.lat!,
+                  widget.lng!,
+                ),
+                zoom: 16.0,
+              ),
+            )
+          : Image.network(
+              widget.img ?? '',
               fit: BoxFit.fill,
               errorBuilder: (context, error, stackTrace) => Container(
                 height: 62,
