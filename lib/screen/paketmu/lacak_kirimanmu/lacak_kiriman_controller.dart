@@ -10,15 +10,27 @@ class LacakKirimanController extends BaseController {
   final String? resi = Get.arguments['nomor_resi'];
 
   bool isLoading = false;
+  bool isLogin = false;
+
   PostLacakKirimanModel? trackModel;
 
   @override
   void onInit() {
     super.onInit();
+    cekToken();
     if (resi != null) {
       searchField.text = resi ?? '';
       cekResi(resi ?? '');
     }
+  }
+
+  Future<bool> cekToken() async {
+    String? token = await storage.readToken();
+    debugPrint("token : $token");
+    isLogin = token != null;
+    update();
+
+    return isLogin;
   }
 
   Future<PostLacakKirimanModel> cekResi(String nomorResi) async {

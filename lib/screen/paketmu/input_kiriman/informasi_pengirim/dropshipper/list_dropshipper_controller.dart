@@ -47,4 +47,16 @@ class ListDropshipperController extends BaseController {
     isLoading = false;
     update();
   }
+
+  void delete(DropshipperModel data) async {
+    try {
+      await transaction.deleteDropshipper(data.id ?? '').then(
+            (value) => null,
+          );
+    } catch (e) {
+      e.printError();
+    }
+    initData();
+  }
 }
+

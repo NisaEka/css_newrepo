@@ -223,6 +223,7 @@ class LacakKirimanScreen extends StatelessWidget {
                                                     length: controller.trackModel?.history?.length,
                                                     history: e,
                                                     cnote: controller.trackModel?.cnote,
+                                                    isLogin: controller.isLogin,
                                                   ))
                                               .toList() ??
                                           []

@@ -39,4 +39,8 @@ abstract class TransactionRepository {
   Future<PostTransactionModel> postDropshipper(DropshipperModel data);
 
   Future<PostTransactionModel> postReceiver(ReceiverModel data);
+
+  Future<PostTransactionModel> deleteDropshipper(String id);
+
+  Future<PostTransactionModel> deleteReceiver(String id);
 }

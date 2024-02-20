@@ -16,7 +16,7 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
     String weight,
   ) async {
     try {
-      Response response = await network.city.post(
+      Response response = await network.jne.post(
         '/pricedev',
         data: {
           'username': ApiConfig.username,

@@ -4,7 +4,8 @@ import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/add/add_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
-import 'package:css_mobile/widgets/bar/offlinebar.dart';
+import 'package:collection/collection.dart';
+import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
@@ -59,10 +60,11 @@ class ListDropshipperScreen extends StatelessWidget {
                       ? const Center(
                           child: CircularProgressIndicator.adaptive(),
                         )
-                      : SingleChildScrollView(
-                          child: Column(
+                      : Expanded(
+                          child: ListView(
                             children: controller.dropshipperList
-                                .map((e) => ContactRadioListItem(
+                                .mapIndexed((i, e) => ContactRadioListItem(
+                                      index: i,
                                       groupValue: controller.dropshipperList,
                                       value: e,
                                       name: e.name,
@@ -70,14 +72,27 @@ class ListDropshipperScreen extends StatelessWidget {
                                       city: e.city,
                                       address: e.address,
                                       onChanged: (value) {
-                              controller.selectedDropshipper = value as DropshipperModel?;
-                              controller.update();
-                              Get.back(result: controller.selectedDropshipper);
-                            },
-                          ))
-                          .toList(),
-                    ),
-                  )
+                                        controller.selectedDropshipper = value as DropshipperModel?;
+                                        controller.update();
+                                        Get.back(result: controller.selectedDropshipper);
+                                      },
+                                      onDelete: () => showDialog(
+                                        context: context,
+                                        builder: (context) => DeleteAlertDialog(
+                                          onDelete: () {
+                                            controller.delete(e);
+                                            Get.back();
+                                          },
+                                          onBack: () {
+                                            Get.back();
+                                            controller.initData();
+                                          },
+                                        ),
+                                      ),
+                                    ))
+                                .toList(),
+                          ),
+                        )
                 ],
               ),
             ),

@@ -134,7 +134,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
         },
       );
       return GetServiceModel.fromJson(response.data);
-
     } on DioError catch (e) {
       //print("response error: ${e.response?.data}");
       // return e.error;
@@ -302,6 +301,42 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.dio.post(
         "/receiver",
         data: data,
+      );
+      print(response.data);
+      // return response.data;
+      return PostTransactionModel.fromJson(response.data);
+    } on DioError catch (e) {
+      print("response error: ${e.response?.data}");
+      // return e.error;
+      return PostTransactionModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<PostTransactionModel> deleteDropshipper(String id) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.delete(
+        "/dropshipper/$id",
+      );
+      print(response.data);
+      // return response.data;
+      return PostTransactionModel.fromJson(response.data);
+    } on DioError catch (e) {
+      print("response error: ${e.response?.data}");
+      // return e.error;
+      return PostTransactionModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<PostTransactionModel> deleteReceiver(String id) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.delete(
+        "/receiver/$id",
       );
       print(response.data);
       // return response.data;

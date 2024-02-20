@@ -27,11 +27,12 @@ class DocumentImageItem extends StatefulWidget {
 }
 
 class _DocumentImageItemState extends State<DocumentImageItem> {
-  late GoogleMapController mapController;
   Completer<GoogleMapController>? googleMapController;
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  @override
+  void initState() {
+    super.initState();
+    print('lat: ${widget.lat}');
   }
 
   @override
@@ -68,20 +69,20 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
 
                         zoomControlsEnabled: false,
                         myLocationButtonEnabled: false,
-                        markers: Set<Marker>.of([
+                        markers: <Marker>{
                           Marker(
                             draggable: false,
-                            markerId: MarkerId('SomeId'),
+                            markerId: const MarkerId('SomeId'),
                             position: LatLng(
                               widget.lat!,
                               widget.lng!,
                             ),
                           )
-                        ]),
+                        },
                         initialCameraPosition: CameraPosition(
                           target: LatLng(
-                            widget.lat ?? 0,
-                            widget.lng ?? 0,
+                            widget.lat!,
+                            widget.lng!,
                           ),
                           zoom: 16.0,
                         ),

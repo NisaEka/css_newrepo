@@ -15,6 +15,7 @@ class KirimanStepper extends StatelessWidget {
   final Cnote? cnote;
   final int currentStep;
   final int? length;
+  final bool isLogin;
 
   const KirimanStepper({
     super.key,
@@ -22,6 +23,7 @@ class KirimanStepper extends StatelessWidget {
     this.history,
     this.length,
     this.cnote,
+    this.isLogin = false,
   });
 
   @override
@@ -47,7 +49,7 @@ class KirimanStepper extends StatelessWidget {
               ),
             ),
             Container(
-              height: (currentStep == 0 && cnote?.photo != null) ? 110 : 60,
+              height: ((currentStep == 0 && cnote?.photo != null)) && isLogin ? 110 : 60,
               margin: const EdgeInsets.only(left: 21),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
               decoration: BoxDecoration(
@@ -77,7 +79,7 @@ class KirimanStepper extends StatelessWidget {
                 ),
               ),
             ),
-            (cnote?.photo != null || cnote?.signature != null || cnote?.lat != null) && (currentStep == 0)
+            ((cnote?.photo != null || cnote?.signature != null || cnote?.lat != null) && (currentStep == 0)) && isLogin
                 ? GestureDetector(
                     onTap: () {
                       Get.bottomSheet(

@@ -4,10 +4,12 @@ import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/add/add_penerima_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
+import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:collection/collection.dart';
 
 class ListPenerimaScreen extends StatelessWidget {
   const ListPenerimaScreen({super.key});
@@ -50,33 +52,47 @@ class ListPenerimaScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   controller.isLoading
-                      ? Center(
+                      ? const Center(
                           child: CircularProgressIndicator.adaptive(),
                         )
                       : Expanded(
                           child: ListView(
                             children: controller.receiverList
-                                .map(
-                                  (e) => ContactRadioListItem(
+                                .mapIndexed(
+                                  (i, e) => ContactRadioListItem(
+                                    index: i,
                                     value: e,
                                     name: e.name,
                                     phone: e.phone,
                                     city: e.city,
                                     address: e.address,
                                     groupValue: controller.selectedReceiver,
-                              isSelected: e == controller.selectedReceiver ? true : false,
-                              onChanged: (value) {
-                                controller.selectedReceiver = value as ReceiverModel?;
-                                controller.update();
-                                Get.back(
-                                  result: controller.selectedReceiver,
-                                );
-                              },
-                            ),
-                      )
-                          .toList(),
-                    ),
-                  )
+                                    isSelected: e == controller.selectedReceiver ? true : false,
+                                    onChanged: (value) {
+                                      controller.selectedReceiver = value as ReceiverModel?;
+                                      controller.update();
+                                      Get.back(
+                                        result: controller.selectedReceiver,
+                                      );
+                                    },
+                                    onDelete: () => showDialog(
+                                      context: context,
+                                      builder: (context) => DeleteAlertDialog(
+                                        onDelete: () {
+                                          controller.delete(e);
+                                          Get.back();
+                                        },
+                                        onBack: () {
+                                          Get.back();
+                                          controller.initData();
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        )
                 ],
               ),
             ),

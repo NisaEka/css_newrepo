@@ -41,4 +41,15 @@ class ListPenerimaController extends BaseController {
     isLoading = false;
     update();
   }
+
+  void delete(ReceiverModel data) async {
+    try {
+      // await transaction.deleteReceiver(data.id ?? '').then(
+      //       (value) => null,
+      //     );
+    } catch (e) {
+      e.printError();
+    }
+    initData();
+  }
 }

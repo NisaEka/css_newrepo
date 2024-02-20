@@ -162,4 +162,3 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
     );
   }
 }
-

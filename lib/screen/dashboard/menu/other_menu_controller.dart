@@ -1,11 +1,8 @@
 import 'dart:convert';
-
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OtherMenuCotroller extends BaseController {
@@ -112,6 +109,12 @@ class OtherMenuCotroller extends BaseController {
       otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = true : null;
       update();
       favoritList.add(menu);
+    } else {
+      paketmuList.where((e) => e == menu).isNotEmpty ? paketmuList.where((e) => e == menu).first.isFavorite = false : null;
+      otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = false : null;
+      update();
+
+      favoritList.removeWhere((e) => e.title == menu.title);
     }
 
     update();
