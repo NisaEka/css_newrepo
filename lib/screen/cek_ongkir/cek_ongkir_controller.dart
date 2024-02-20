@@ -122,10 +122,22 @@ class CekOngkirController extends BaseController {
 
     if (dimensi) {
       berat = (p * l * t) / 6000;
-      beratKiriman.text = berat.toStringAsFixed(2);
-    }
+      String b = "0.${berat.toStringAsFixed(2).split('.').last}";
 
-    update();
+      if (berat < 1) {
+        beratKiriman.text = '1';
+      } else if (b.toDouble() >= 0.31) {
+        beratKiriman.text = berat.ceil().toString();
+      } else {
+        beratKiriman.text = berat.truncate().toString();
+      }
+
+      // if (b.split('.').last.toInt() > 30) {
+      // beratKiriman.text = berat.truncate().toString();
+      // }
+
+      update();
+    }
   }
 
   void showCityList(String title) {

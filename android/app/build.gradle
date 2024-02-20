@@ -72,7 +72,7 @@ android {
 
     defaultConfig {
         applicationId "com.jne.css.css_mobile"
-        minSdkVersion 20
+        minSdkVersion 21
         multiDexEnabled true
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

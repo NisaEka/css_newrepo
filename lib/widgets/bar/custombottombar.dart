@@ -2,7 +2,6 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
-import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +25,11 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       // overflow: Overflow.visible,
-      alignment: new FractionalOffset(.5, 1.0),
+      alignment: const FractionalOffset(.5, 1.0),
       children: [
         Container(
-          height: 70.0,
+          height: 70,
+          alignment: Alignment.center,
           decoration: BoxDecoration(
               color: whiteColor,
               borderRadius: const BorderRadius.only(

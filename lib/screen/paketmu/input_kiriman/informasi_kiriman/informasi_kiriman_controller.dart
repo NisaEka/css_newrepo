@@ -94,7 +94,7 @@ class InformasiKirimaController extends BaseController {
   num freightCharge = 0;
   num freightChargeISR = 0;
   double isr = 0;
-  double? berat;
+  double berat = 0;
   double hargacod = 0;
   double hargacCODOngkir = 0;
   double codfee = 0;
@@ -115,7 +115,17 @@ class InformasiKirimaController extends BaseController {
       } else {
         berat = (p * l * t) / 6000;
       }
-      beratKiriman.text = berat!.toStringAsFixed(2);
+
+      String b = "0.${berat.toStringAsFixed(2).split('.').last}";
+
+      if (berat < 1) {
+        beratKiriman.text = '1';
+      } else if (b.toDouble() >= 0.31) {
+        beratKiriman.text = berat.ceil().toString();
+      } else {
+        beratKiriman.text = berat.truncate().toString();
+      }
+      // beratKiriman.text = berat!.toStringAsFixed(2);
     }
     update();
     getOngkir();

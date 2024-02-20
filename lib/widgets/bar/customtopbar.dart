@@ -31,7 +31,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   }) : super(key: key);
 
   @override
-  Size get preferredSize => flexibleSpace != null ? Size.fromHeight(215) : Size.fromHeight(120);
+  Size get preferredSize => flexibleSpace != null ? const Size.fromHeight(215) : const Size.fromHeight(120);
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              leading ?? CustomBackButton(),
+              leading ?? const CustomBackButton(),
               Transform.flip(
                 flipY: true,
                 child: SvgPicture.asset(ImageConstant.vector4),
@@ -91,7 +91,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                title != null ? Text(title!.tr, style: subappTitleTextStyle.copyWith(color: greyDarkColor1)) : SizedBox(),
+                title != null ? Text(title!.tr, style: subappTitleTextStyle.copyWith(color: greyDarkColor1)) : const SizedBox(),
                 Row(
                   children: action?.toList() ?? [],
                 )

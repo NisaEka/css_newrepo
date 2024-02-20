@@ -12,8 +12,10 @@ class BottomMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
-        height: 50,
+        alignment: Alignment.bottomCenter,
+        height: 55,
         child: Column(
           children: [
             icon,
@@ -24,7 +26,6 @@ class BottomMenuItem extends StatelessWidget {
           ],
         ),
       ),
-      onTap: onTap,
     );
   }
 }
