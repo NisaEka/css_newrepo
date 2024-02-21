@@ -148,6 +148,46 @@ class OtherMenuScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text("Keuanganmu".tr, style: listTitleTextStyle),
+                            const Divider(color: greyColor),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      sliver: SliverGrid(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, i) => MenuItem(
+                            menuTitle: controller.keuanganmuList[i].title?.tr ?? '',
+                            menuImg: controller.keuanganmuList[i].icon,
+                            isActive: (controller.keuanganmuList[i].isAuth ?? false) ? controller.isLogin : true,
+                            isEdit: controller.isEdit,
+                            onEdit: () => controller.addFavorit(i, controller.keuanganmuList[i]),
+                            isFavorite: controller.keuanganmuList[i].isFavorite,
+                            onTap: () => controller.isEdit
+                                ? controller.addFavorit(i, controller.keuanganmuList[i])
+                                : (controller.keuanganmuList[i].isAuth == true && !controller.isLogin)
+                                    ? showDialog(
+                                        context: context,
+                                        builder: (context) => const LoginAlertDialog(),
+                                      )
+                                    : Get.toNamed(controller.keuanganmuList[i].route.toString(), arguments: {}),
+                          ),
+                          childCount: controller.keuanganmuList.length,
+                        ),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          childAspectRatio: 0.8,
+                        ),
+                      ),
+                    ),
+                    SliverPadding(
+                      padding: const EdgeInsets.only(left: 20, right: 10, top: 20),
+                      sliver: SliverToBoxAdapter(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Text("Lainnya".tr, style: listTitleTextStyle),
                             const Divider(color: greyColor),
                           ],

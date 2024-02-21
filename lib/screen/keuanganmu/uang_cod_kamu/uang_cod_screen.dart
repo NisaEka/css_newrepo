@@ -1,29 +1,30 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/laporan_pembayaran/laporan_pembayaran_controller.dart';
+import 'package:css_mobile/screen/keuanganmu/uang_cod_kamu/uang_cod_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
-import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/lappembayaran_box.dart';
+import 'package:css_mobile/widgets/laporan_pembayaran/uangcod_box.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class LaporanPembayaranScreen extends StatelessWidget {
-  const LaporanPembayaranScreen({super.key});
+class UangCODScreen extends StatelessWidget {
+  const UangCODScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LaporanPembayaranController>(
-        init: LaporanPembayaranController(),
+    return GetBuilder<UangCODController>(
+        init: UangCODController(),
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              title: 'Laporan Agregasi Pembayaran'.tr,
+              title: 'Uang_COD Kamu'.tr.splitMapJoin(
+                    '_',
+                    onMatch: (p0) => ' ',
+                  ),
               action: [
                 Container(
                   margin: const EdgeInsets.only(right: 10),
@@ -72,7 +73,7 @@ class LaporanPembayaranScreen extends StatelessWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            CustomFormLabel(label: 'Tanggal Pembayaran'.tr),
+                                            CustomFormLabel(label: 'Tanggal Pencarian'.tr),
                                             const SizedBox(height: 10),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,7 +99,7 @@ class LaporanPembayaranScreen extends StatelessWidget {
                                                   controller: controller.endDateField,
                                                   readOnly: true,
                                                   width: Get.width / 2.3,
-                                                  hintText: 'Tanggal Awal'.tr,
+                                                  hintText: 'Tanggal Akhir'.tr,
                                                   onTap: () => controller.selectDate(context).then((value) {
                                                     setState(() {
                                                       controller.endDate = value;
@@ -161,16 +162,12 @@ class LaporanPembayaranScreen extends StatelessWidget {
               ],
             ),
             body: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
               child: Column(
                 children: [
-                  const LapPembayaranBox(),
-                  CustomSearchField(
-                    controller: TextEditingController(),
-                    hintText: 'Cari Data Agregasi'.tr,
-                    suffixIcon: SvgPicture.asset(
-                      IconsConstant.search,
-                    ),
+                   PaymentBox(
+                    title: "COD Terkumpul Dari Pelanggan".tr,
+                    value: "Rp. 3.172.648",
                   ),
                   Expanded(
                     child: ListView(

@@ -6,13 +6,12 @@ import 'package:get/get.dart';
 class AggMinusBox extends StatelessWidget {
   const AggMinusBox({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: Get.size.width,
       height: 39,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: whiteColor,
@@ -30,10 +29,7 @@ class AggMinusBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(
-              Icons.info_rounded,
-              color: redJNE
-          ),
+          const Icon(Icons.info_rounded, color: redJNE),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(

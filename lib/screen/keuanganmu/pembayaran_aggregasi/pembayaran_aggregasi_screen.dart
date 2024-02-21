@@ -1,29 +1,34 @@
+import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/laporan_pembayaran/minus/laporan_agregasi_minus_controller.dart';
+import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
-import 'package:css_mobile/widgets/laporan_pembayaran/aggminus_box.dart';
+import 'package:css_mobile/widgets/items/account_list_item.dart';
+import 'package:css_mobile/widgets/laporan_pembayaran/lappembayaran_box.dart';
+import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class LaporanAgregasiMinusScreen extends StatelessWidget {
-  const LaporanAgregasiMinusScreen({super.key});
+class PembayaranAggergasiScreen extends StatelessWidget {
+  const PembayaranAggergasiScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LaporanAgregasiMinusController>(
-        init: LaporanAgregasiMinusController(),
+    return GetBuilder<PembayaranAggergasiController>(
+        init: PembayaranAggergasiController(),
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              title: 'Laporan Agregasi Minus'.tr,
+              title: 'Laporan Pembayaran Aggregasi'.tr,
               action: [
                 Container(
                   margin: const EdgeInsets.only(right: 10),
@@ -72,8 +77,36 @@ class LaporanAgregasiMinusScreen extends StatelessWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
+                                            CustomFormLabel(label: 'Nomor Akun'.tr),
+                                            SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Row(
+                                                children: controller.accountList
+                                                    .map(
+                                                      (e) => AccountListItem(
+                                                        accountID: e.accountId.toString(),
+                                                        accountNumber: e.accountNumber.toString(),
+                                                        accountName: e.accountName.toString(),
+                                                        accountType: e.accountService.toString(),
+                                                        // isSelected: e.isSelected ?? false,
+                                                        isSelected: controller.selectedAccount.where((accounts) => accounts == e).isNotEmpty,
+                                                        onTap: () {
+                                                          setState(() {
+                                                            if (controller.selectedAccount.where((accounts) => accounts == e).isNotEmpty) {
+                                                              controller.selectedAccount.removeWhere((accounts) => accounts == e);
+                                                            } else {
+                                                              controller.selectedAccount.add(e);
+                                                            }
+                                                            controller.update();
+                                                          });
+                                                        },
+                                                      ),
+                                                    )
+                                                    .toList(),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 10),
                                             CustomFormLabel(label: 'Tanggal Pembayaran'.tr),
-                                            SizedBox(height: 10),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
@@ -87,8 +120,9 @@ class LaporanAgregasiMinusScreen extends StatelessWidget {
                                                     setState(() {
                                                       controller.startDate = value;
                                                       controller.startDateField.text = value.toString().toDateTimeFormat();
-                                                      controller.endDate = DateTime.now();
-                                                      controller.endDateField.text = DateTime.now().toString().toDateTimeFormat();
+                                                      controller.endDate = value;
+                                                      controller.endDateField.text = value.toString().toDateTimeFormat();
+
                                                       controller.update();
                                                     });
                                                   }),
@@ -98,7 +132,7 @@ class LaporanAgregasiMinusScreen extends StatelessWidget {
                                                   controller: controller.endDateField,
                                                   readOnly: true,
                                                   width: Get.width / 2.3,
-                                                  hintText: 'Tanggal Awal'.tr,
+                                                  hintText: 'Tanggal Akhir'.tr,
                                                   onTap: () => controller.selectDate(context).then((value) {
                                                     setState(() {
                                                       controller.endDate = value;
@@ -129,11 +163,17 @@ class LaporanAgregasiMinusScreen extends StatelessWidget {
                                           )
                                         : const SizedBox(),
                                     CustomFilledButton(
-                                      color: controller.startDate != null || controller.endDate != null ? blueJNE : greyColor,
+                                      color: controller.startDate != null ||
+                                              controller.endDate != null ||
+                                              !controller.accountList.equals(controller.selectedAccount)
+                                          ? blueJNE
+                                          : greyColor,
                                       width: controller.isFiltered ? Get.width / 2.5 : Get.width - 40,
                                       title: 'Terapkan'.tr,
                                       onPressed: () {
-                                        if (controller.startDate != null || controller.endDate != null) {
+                                        if (controller.startDate != null ||
+                                            controller.endDate != null ||
+                                            !controller.accountList.equals(controller.selectedAccount)) {
                                           controller.isFiltered = true;
                                           controller.update();
                                           Get.back();
@@ -161,20 +201,33 @@ class LaporanAgregasiMinusScreen extends StatelessWidget {
               ],
             ),
             body: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 children: [
-                  AggMinusBox(),
+                  PaymentBox(
+                    title: "Total nilai yang sudah dibayarkan".tr,
+                    value: "Rp. 3.910.000",
+                  ),
                   CustomSearchField(
                     controller: TextEditingController(),
-                    hintText: 'Cari Data Agregasi Minus'.tr,
-                    suffixIcon: SvgPicture.asset(
+                    hintText: 'Cari Data Agregasi'.tr,
+                    prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
                     ),
                   ),
                   Expanded(
                     child: ListView(
-                      children: [],
+                      children: const [
+                        ReportListItem(
+                          status: "Success",
+                        ),
+                        ReportListItem(
+                          status: "Success",
+                        ),
+                        ReportListItem(
+                          status: "Success",
+                        ),
+                      ],
                     ),
                   )
                 ],

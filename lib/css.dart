@@ -2,6 +2,9 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/keuanganmu/minus/aggregasi_minus_screen.dart';
+import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_screen.dart';
+import 'package:css_mobile/screen/keuanganmu/uang_cod_kamu/uang_cod_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
@@ -122,6 +125,9 @@ class App extends StatelessWidget {
         GetPage(name: "/draftTransaksi", page: () => const DraftTransaksiScreen()),
         GetPage(name: "/riwayatKiriman", page: () => const RiwayatKirimanScreen()),
         GetPage(name: "/lacakKiriman", page: () => const LacakKirimanScreen()),
+        GetPage(name: "/pembayaranAggregasi", page: () => const PembayaranAggergasiScreen()),
+        GetPage(name: "/aggregasiMinus", page: () => const AggregasiMinusScreen()),
+        GetPage(name: "/uangCODKamu", page: () => const UangCODScreen()),
       ],
       // home: const LoginScreen(),
       home: const DashboardScreen(),

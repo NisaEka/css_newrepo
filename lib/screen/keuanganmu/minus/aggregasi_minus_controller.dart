@@ -1,9 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
-class LaporanPembayaranController extends BaseController{
+class AggregasiMinusController extends BaseController{
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
 

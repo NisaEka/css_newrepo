@@ -5,16 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marquee/marquee.dart';
 
-class LapPembayaranBox extends StatelessWidget {
-  const LapPembayaranBox({super.key});
+class PaymentBox extends StatelessWidget {
+  final String title;
+  final String value;
 
+  const PaymentBox({
+    super.key,
+    required this.title,
+    required this.value,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: Get.size.width,
-      height: 62,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      height: 65,
+      margin: const EdgeInsets.symmetric(vertical: 20),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: whiteColor,
@@ -32,16 +38,17 @@ class LapPembayaranBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(padding: EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
-            children: [
-              Text("Total nilai yang sudah dibayarkan".tr,
-                  style: subformLabelTextStyle),
-              Text("Rp. 3.910.000",
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              children: [
+                Text(title.capitalize ?? '', style: subformLabelTextStyle),
+                Text(
+                  value,
                   style: appTitleTextStyle.copyWith(color: blueJNE),
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

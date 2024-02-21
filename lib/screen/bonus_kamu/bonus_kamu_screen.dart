@@ -1,6 +1,11 @@
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/jlcpoint/jlcpoint_box.dart';
+import 'package:css_mobile/widgets/jlcpoint/point_list_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,15 +21,125 @@ class BonusKamuScreen extends StatelessWidget {
             appBar: CustomTopBar(
               title: 'Bonus Kamu'.tr,
             ),
-            body: SingleChildScrollView(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                child: const Column(
+            body: Column(
+              children: [
+                SizedBox(
+                  height: 100,
+                  child: Stack(
+                    children: [
+                      const JlcPointBox(),
+                      Positioned(
+                        bottom: 0,
+                        right: 25,
+                        child: CustomFilledButton(
+                          color: blueJNE,
+                          title: "Tukarkan Poinmu".tr.toUpperCase(),
+                          width: 128,
+                          height: 24,
+                          radius: 20,
+                          padding: EdgeInsets.zero,
+                          fontColor: whiteColor,
+                          fontSize: 9,
+                          boxShadow: const [
+                            BoxShadow(
+                              color: redJNE,
+                              spreadRadius: 0.3,
+                              offset: Offset(2, 2),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Row(
                   children: [
-                    JlcPointBox()
+                    CustomFilledButton(
+                      color: controller.tabIndex == 0 ? blueJNE : blueJNE.withOpacity(0.5),
+                      title: "Total Transaksi".tr,
+                      radius: 0,
+                      width: Get.width / 2,
+                      fontStyle: subTitleTextStyle.copyWith(color: whiteColor),
+                      boxShadow: [
+                        BoxShadow(
+                          color: controller.tabIndex == 0 ? redJNE : blueJNE.withOpacity(0.8),
+                          spreadRadius: 2,
+                          offset: const Offset(-2, 2),
+                        )
+                      ],
+                      onPressed: () {
+                        controller.tabIndex = 0;
+                        controller.update();
+                      },
+                    ),
+                    CustomFilledButton(
+                      color: controller.tabIndex == 1 ? blueJNE : blueJNE.withOpacity(0.5),
+                      title: "Penukaran Poin Terakhir".tr,
+                      radius: 0,
+                      width: Get.width / 2,
+                      fontStyle: subTitleTextStyle.copyWith(color: whiteColor),
+                      boxShadow: [
+                        BoxShadow(
+                          color: controller.tabIndex == 1 ? redJNE : blueJNE.withOpacity(0.8),
+                          spreadRadius: 2,
+                          offset: const Offset(2, 2),
+                        )
+                      ],
+                      onPressed: () {
+                        controller.tabIndex = 1;
+                        controller.update();
+                      },
+                    ),
                   ],
                 ),
-              ),
+                Expanded(
+                  child: ListView(
+                    children: controller.tabIndex == 0
+                        ? [
+                            PointListItem(
+                              dateTime: '2024-01-03 20:06:25 PM',
+                              point: 0.56,
+                              title: 'Resi'.tr,
+                              subtitle: "021440000279424",
+                              amount: 'Rp. 177.000',
+                              status: "Valid",
+                            ),
+                            PointListItem(
+                              dateTime: '2024-01-03 20:06:25 PM',
+                              point: 0.56,
+                              title: 'Resi'.tr,
+                              subtitle: "021440000279424",
+                              amount: 'Rp. 177.000',
+                              status: "Valid",
+                            ),
+                            PointListItem(
+                              dateTime: '2024-01-03 20:06:25 PM',
+                              point: -0.56,
+                              title: 'Resi'.tr,
+                              subtitle: "021440000279424",
+                              amount: 'Rp. 177.000',
+                              status: "Cancel",
+                            ),
+                          ]
+                        : [
+                            PointListItem(
+                              dateTime: '2024-01-03 20:06:25 PM',
+                              point: 1680,
+                              title: 'Nomor'.tr,
+                              subtitle: "JLCM0324727",
+                              rewards: '1',
+                            ),
+                            PointListItem(
+                              dateTime: '2024-01-03 20:06:25 PM',
+                              point: 1680,
+                              title: 'Nomor'.tr,
+                              subtitle: "JLCM0324727",
+                              rewards: '1',
+                            ),
+                          ],
+                  ),
+                ),
+              ],
             ),
           );
         });

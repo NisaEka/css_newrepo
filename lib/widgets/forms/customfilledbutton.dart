@@ -15,6 +15,7 @@ class CustomFilledButton extends StatelessWidget {
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final TextStyle? fontStyle;
+  final List<BoxShadow>? boxShadow;
 
   const CustomFilledButton(
       {Key? key,
@@ -30,7 +31,8 @@ class CustomFilledButton extends StatelessWidget {
       this.fontSize = 14,
       this.margin,
       this.padding,
-      this.fontStyle})
+      this.fontStyle,
+      this.boxShadow})
       : super(key: key);
 
   @override
@@ -47,6 +49,7 @@ class CustomFilledButton extends StatelessWidget {
           color: color,
           borderRadius: BorderRadius.circular(radius),
           border: Border.all(color: borderColor!),
+          boxShadow: boxShadow,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -11,6 +11,7 @@ class OtherMenuCotroller extends BaseController {
 
   List<Items> favoritList = [];
   List<Items> paketmuList = [];
+  List<Items> keuanganmuList = [];
   List<Items> otherList = [];
 
   MenuItemModel? menuData;
@@ -77,6 +78,34 @@ class OtherMenuCotroller extends BaseController {
       ),
     ];
 
+    keuanganmuList = [
+      Items(
+        title: "Pembayaran Aggregasi",
+        icon: ImageConstant.keuanganmuIcon,
+        isAuth: false,
+        isFavorite: favoritList.where((e) => e.title == "Laporan Pembayaran Aggregasi").isNotEmpty,
+        isEdit: isEdit,
+        route: "/pembayaranAggregasi",
+      ),
+      Items(
+        title: "Aggregasi Minus",
+        icon: ImageConstant.keuanganmuIcon,
+        isAuth: false,
+        isFavorite: favoritList.where((e) => e.title == "Laporan Pembayaran Aggregasi").isNotEmpty,
+        isEdit: isEdit,
+        route: "/aggregasiMinus",
+      ),
+      Items(
+        title: "Uang_COD Kamu",
+        icon: ImageConstant.keuanganmuIcon,
+        isAuth: false,
+        isFavorite: favoritList.where((e) => e.title == "Laporan Pembayaran Aggregasi").isNotEmpty,
+        isEdit: isEdit,
+        route: "/uangCODKamu",
+      ),
+
+    ];
+
     otherList = [
       Items(
         title: "Cek Ongkir",
@@ -107,11 +136,14 @@ class OtherMenuCotroller extends BaseController {
     if (favoritList.where((e) => e.title == menu.title).isEmpty) {
       paketmuList.where((e) => e == menu).isNotEmpty ? paketmuList.where((e) => e == menu).first.isFavorite = true : null;
       otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = true : null;
+      keuanganmuList.where((e) => e == menu).isNotEmpty ? keuanganmuList.where((e) => e == menu).first.isFavorite = true : null;
+
       update();
       favoritList.add(menu);
     } else {
       paketmuList.where((e) => e == menu).isNotEmpty ? paketmuList.where((e) => e == menu).first.isFavorite = false : null;
       otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = false : null;
+      keuanganmuList.where((e) => e == menu).isNotEmpty ? keuanganmuList.where((e) => e == menu).first.isFavorite = false : null;
       update();
 
       favoritList.removeWhere((e) => e.title == menu.title);

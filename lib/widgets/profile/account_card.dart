@@ -40,12 +40,12 @@ class AccountCard extends StatelessWidget {
               Text(account.accountName ?? '', style: listTitleTextStyle.copyWith(color: blueJNE)),
               Row(
                 children: [
-                  Text(account.availableService?.ss == "Y" ? "ss " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                  Text(account.availableService?.yes == "Y" ? "yes " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                  Text(account.availableService?.reg == "Y" ? "reg " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                  Text(account.availableService?.oke == "Y" ? "oke " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                  Text(account.availableService?.jtr == "Y" ? "jtr " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                  Text(account.availableService?.intl == "Y" ? "intl " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                  Text(account.availableService?.ss == "Y" ? "SS " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                  Text(account.availableService?.yes == "Y" ? "YES " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                  Text(account.availableService?.reg == "Y" ? "REG " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                  Text(account.availableService?.oke == "Y" ? "OKE " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                  Text(account.availableService?.jtr == "Y" ? "JTR " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                  Text(account.availableService?.intl == "Y" ? "INTL " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
                 ],
               ),
             ],

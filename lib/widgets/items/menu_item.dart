@@ -52,7 +52,7 @@ class MenuItem extends StatelessWidget {
                 SizedBox(
                   // width: 65,
                   child: Text(
-                    menuTitle.splitMapJoin(' ', onMatch: (p0) => '\n'),
+                    menuTitle.splitMapJoin(' ', onMatch: (p0) => '\n').splitMapJoin('_', onMatch: (p0) => ' '),
                     style: sublistTitleTextStyle,
                     textAlign: TextAlign.center,
                   ),
