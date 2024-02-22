@@ -6,7 +6,10 @@ import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
@@ -43,4 +46,16 @@ abstract class TransactionRepository {
   Future<PostTransactionModel> deleteDropshipper(String id);
 
   Future<PostTransactionModel> deleteReceiver(String id);
+
+  Future<GetTransactionModel> getTransaction(
+    int page,
+    int limit,
+    String transType,
+    String transDate,
+    String transStatus,
+  );
+
+  Future<GetTransactionByAwbModel> getTransactionByAWB(String awb);
+
+  Future<GetTransactionCountModel> getTransactionCount();
 }

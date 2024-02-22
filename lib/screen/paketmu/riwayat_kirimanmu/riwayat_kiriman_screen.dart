@@ -1,9 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/forms/customcheckbox.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
@@ -13,9 +16,20 @@ import 'package:css_mobile/widgets/items/riwayat_kiriman_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class RiwayatKirimanScreen extends StatelessWidget {
+class RiwayatKirimanScreen extends StatefulWidget {
   const RiwayatKirimanScreen({super.key});
+
+  @override
+  State<RiwayatKirimanScreen> createState() => _RiwayatKirimanScreenState();
+}
+
+class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +88,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             CustomFormLabel(label: 'Tanggal Entry'.tr),
-                                            SizedBox(height: 10),
+                                            const SizedBox(height: 10),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
@@ -82,12 +96,14 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                                   controller: controller.startDateField,
                                                   readOnly: true,
                                                   width: Get.width / 2.3,
-                                                  hintText: 'Dari'.tr,
+                                                  hintText: 'Tanggal Awal'.tr,
                                                   // label: ,
                                                   onTap: () => controller.selectDate(context).then((value) {
                                                     setState(() {
                                                       controller.startDate = value;
                                                       controller.startDateField.text = value.toString().toDateTimeFormat();
+                                                      // controller.startDateField.text = value?.millisecondsSinceEpoch.toString() ?? '';
+                                                      // print(value?.millisecondsSinceEpoch.toString() ?? '');
                                                       controller.endDate = DateTime.now();
                                                       controller.endDateField.text = DateTime.now().toString().toDateTimeFormat();
                                                       controller.update();
@@ -99,7 +115,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                                   controller: controller.endDateField,
                                                   readOnly: true,
                                                   width: Get.width / 2.3,
-                                                  hintText: 'Hingga'.tr,
+                                                  hintText: 'Tanggal Akhir'.tr,
                                                   onTap: () => controller.selectDate(context).then((value) {
                                                     setState(() {
                                                       controller.endDate = value;
@@ -111,7 +127,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                               ],
                                             ),
                                             CustomFormLabel(label: 'Status Kiriman'.tr),
-                                            SizedBox(height: 10),
+                                            const SizedBox(height: 10),
                                             // CustomFormLabel(label: 'Petugas Entry'),
                                           ],
                                         ),
@@ -210,63 +226,6 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                     ),
                                   ],
                                 )
-                                // SingleChildScrollView(
-                                //   scrollDirection: Axis.horizontal,
-                                //   child: Row(
-                                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                //     children: [
-                                //       controller.selectedDateFilter != null ||
-                                //               controller.selectedStatusKiriman != null ||
-                                //               controller.selectedPetugasEntry != null
-                                //           ? Container(
-                                //               decoration: BoxDecoration(
-                                //                 color: greyColor,
-                                //                 borderRadius: BorderRadius.circular(8),
-                                //               ),
-                                //               child: IconButton(
-                                //                 onPressed: () {
-                                //                   controller.selectedDateFilter = null;
-                                //                   controller.selectedPetugasEntry = null;
-                                //                   controller.selectedStatusKiriman = null;
-                                //                 },
-                                //                 icon: const Icon(Icons.close_rounded),
-                                //                 color: blueJNE,
-                                //               ),
-                                //             )
-                                //           : const SizedBox(),
-                                //       CustomFilledButton(
-                                //         color: controller.selectedDateFilter != null ? blueJNE : whiteColor,
-                                //         title: 'Pilih Tanggal'.tr,
-                                //         width: Get.width / 3,
-                                //         fontColor: controller.selectedDateFilter != null ? whiteColor : greyDarkColor1,
-                                //         borderColor: greyDarkColor1,
-                                //         fontStyle: subTitleTextStyle,
-                                //         radius: 15,
-                                //         margin: const EdgeInsets.symmetric(horizontal: 5),
-                                //       ),
-                                //       CustomFilledButton(
-                                //         color: controller.selectedStatusKiriman != null ? blueJNE : whiteColor,
-                                //         title: 'Status Kiriman'.tr,
-                                //         width: Get.width / 3,
-                                //         fontColor: controller.selectedStatusKiriman != null ? whiteColor : greyDarkColor1,
-                                //         borderColor: greyDarkColor1,
-                                //         fontStyle: subTitleTextStyle,
-                                //         radius: 15,
-                                //         margin: const EdgeInsets.symmetric(horizontal: 5),
-                                //       ),
-                                //       CustomFilledButton(
-                                //         color: controller.selectedPetugasEntry != null ? blueJNE : whiteColor,
-                                //         title: 'Petugas Entry'.tr,
-                                //         width: Get.width / 3,
-                                //         fontColor: controller.selectedPetugasEntry != null ? whiteColor : greyDarkColor1,
-                                //         borderColor: greyDarkColor1,
-                                //         fontStyle: subTitleTextStyle,
-                                //         radius: 15,
-                                //         margin: const EdgeInsets.symmetric(horizontal: 5),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
                               ],
                             ),
                           );
@@ -302,7 +261,9 @@ class RiwayatKirimanScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           controller.selectedKiriman = 0;
+                          controller.transType = '';
                           controller.update();
+                          controller.pagingController.refresh();
                         },
                         child: Container(
                           width: Get.width / 4,
@@ -319,7 +280,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                '10.000',
+                                controller.total.toString(),
                                 style: listTitleTextStyle.copyWith(
                                   color: controller.selectedKiriman == 0 ? whiteColor : blueJNE,
                                 ),
@@ -337,7 +298,9 @@ class RiwayatKirimanScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           controller.selectedKiriman = 1;
+                          controller.transType = 'COD';
                           controller.update();
+                          controller.pagingController.refresh();
                         },
                         child: Container(
                           width: Get.width / 4,
@@ -352,7 +315,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                '7.000',
+                                controller.cod.toString(),
                                 style: listTitleTextStyle.copyWith(
                                   color: controller.selectedKiriman == 1 ? whiteColor : blueJNE,
                                 ),
@@ -370,7 +333,9 @@ class RiwayatKirimanScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           controller.selectedKiriman = 2;
+                          controller.transType = 'NON COD';
                           controller.update();
+                          controller.pagingController.refresh();
                         },
                         child: Container(
                           width: Get.width / 4,
@@ -387,7 +352,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                '3.000',
+                                controller.noncod.toString(),
                                 style: listTitleTextStyle.copyWith(
                                   color: controller.selectedKiriman == 2 ? whiteColor : blueJNE,
                                 ),
@@ -405,19 +370,37 @@ class RiwayatKirimanScreen extends StatelessWidget {
                     ],
                   ),
                   // const SizedBox(height: 10),
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        // Text(DateTime.parse('2024-02-06 15:02').toString()),
-                        RiwayatKirimanListItem(
-                          tanggalEntry: DateTime.now().toString(),
-                          orderID: '123',
-                          noResi: 'R123',
-                          petugas: 'Joni',
-                          penerima: 'sarah',
-                          status: 'Dibatalkan oleh kamu'.tr,
+                  controller.isSelect
+                      ? CustomCheckbox(
+                          value: controller.isSelectAll,
+                          label: 'Pilih Semua'.tr,
+                          onChanged: (value) {
+                            controller.selectAll(value!);
+                          },
                         )
-                      ],
+                      : const SizedBox(),
+                  Expanded(
+                    child: PagedListView<int, TransactionModel>(
+                      pagingController: controller.pagingController,
+                      builderDelegate: PagedChildBuilderDelegate<TransactionModel>(
+                        transitionDuration: const Duration(milliseconds: 500),
+                        itemBuilder: (context, item, index) => RiwayatKirimanListItem(
+                          tanggalEntry: item.createdDate?.toShortDateFormat() ?? '',
+                          orderID: item.orderId ?? '-',
+                          service: item.service.toString(),
+                          noResi: item.awb.toString(),
+                          apiType: item.apiType.toString(),
+                          penerima: item.receiver?.name ?? '',
+                          status: item.status.toString().tr,
+                          isSelected: controller.selectedTransaction.where((e) => e == item).isNotEmpty,
+                          onLongPress: () {
+                            controller.select(item);
+                          },
+                          onTap: () {
+                            controller.unselect(item);
+                          },
+                        ),
+                      ),
                     ),
                   )
                 ],

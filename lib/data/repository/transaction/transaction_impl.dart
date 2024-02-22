@@ -9,7 +9,10 @@ import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
@@ -182,70 +185,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.dio.post(
         "/transaction",
         data: data,
-        // data: {
-        //   "delivery": {
-        //     "service_code": data.delivery?.serviceCode,
-        //     "wood_packaging": data.delivery?.woodPackaging,
-        //     "special_instruction": data.delivery?.specialInstruction,
-        //     "cod_flag": data.delivery?.codFlag,
-        //     "cod_ongkir": data.delivery?.codOngkir,
-        //     "cod_fee": data.delivery?.codFee,
-        //     "insurance_flag": data.delivery?.insuranceFlag,
-        //     "insurance_fee": data.delivery?.insuranceFee,
-        //     "flat_rate": data.delivery?.flatRate,
-        //     "flat_rate_with_insurance": data.delivery?.flatRateWithInsurance,
-        //     "freight_charge": data.delivery?.freightCharge,
-        //     "freight_charge_with_insurance": data.delivery?.freightCharge,
-        //   },
-        //   "account": {
-        //     "number": data.account?.number,
-        //     "service": data.account?.service,
-        //   },
-        //   "origin": {
-        //     "code": data.origin?.code,
-        //     "desc": data.origin?.desc,
-        //     "branch": data.origin?.branch,
-        //   },
-        //   "destination": {
-        //     "code": data.destination?.code,
-        //     "desc": data.destination?.desc,
-        //   },
-        //   "goods": {
-        //     "type": data.goods?.type,
-        //     "desc": data.goods?.desc,
-        //     "amount": data.goods?.amount,
-        //     "quantity": data.goods?.quantity,
-        //     "weight": data.goods?.weight,
-        //   },
-        //   "shipper": {
-        //     "name": data.shipper?.name,
-        //     "address": data.shipper?.address,
-        //     "address1": data.shipper?.address1,
-        //     "address2": data.shipper?.address2,
-        //     "address3": data.shipper?.address3,
-        //     "city": data.shipper?.city,
-        //     "zip": data.shipper?.zip,
-        //     "region": data.shipper?.region,
-        //     "country": data.shipper?.country,
-        //     "contact": data.shipper?.contact,
-        //     "phone": data.shipper?.phone,
-        //   },
-        //   "receiver": {
-        //     "name": data.receiver?.name,
-        //     "address": data.receiver?.address,
-        //     "address1": data.receiver?.address1,
-        //     "address2": data.receiver?.address2,
-        //     "address3": data.receiver?.address3,
-        //     "city": data.receiver?.city,
-        //     "zip": data.receiver?.zip,
-        //     "region": data.receiver?.region,
-        //     "country": data.receiver?.country,
-        //     "contact": data.receiver?.contact,
-        //     "phone": data.receiver?.phone,
-        //     "district": data.receiver?.district,
-        //     "sub_district": data.receiver?.subDistrict,
-        //   },
-        // },
       );
       print(response.data);
       // return response.data;
@@ -345,6 +284,73 @@ class TransactionRepositoryImpl extends TransactionRepository {
       print("response error: ${e.response?.data}");
       // return e.error;
       return PostTransactionModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<GetTransactionModel> getTransaction(
+    int page,
+    int limit,
+    String transType,
+    String transDate,
+    String transStatus,
+  ) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.get(
+        "/transaction",
+        queryParameters: {
+          "transaction_status": transStatus,
+          "transaction_date": transDate,
+          "transaction_type": transType,
+          "page": page,
+          "limit": limit,
+        },
+      );
+      print(response.data);
+      // return response.data;
+      return GetTransactionModel.fromJson(response.data);
+    } on DioError catch (e) {
+      print("response error: ${e.response?.data}");
+      // return e.error;
+      return GetTransactionModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<GetTransactionByAwbModel> getTransactionByAWB(String awb) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.get(
+        "/transaction/$awb",
+      );
+      print(response.data);
+      // return response.data;
+      return GetTransactionByAwbModel.fromJson(response.data);
+    } on DioError catch (e) {
+      print("response error: ${e.response?.data}");
+      // return e.error;
+      return GetTransactionByAwbModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<GetTransactionCountModel> getTransactionCount() async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.get(
+        "/transaction/count",
+      );
+      print(response.data);
+      // return response.data;
+      return GetTransactionCountModel.fromJson(response.data);
+    } on DioError catch (e) {
+      print("response error: ${e.response?.data}");
+      // return e.error;
+      return GetTransactionCountModel.fromJson(e.response?.data);
     }
   }
 }

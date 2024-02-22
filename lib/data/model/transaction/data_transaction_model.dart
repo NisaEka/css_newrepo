@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
 
 DataTransactionModel transactionDataModelFromJson(String str) => DataTransactionModel.fromJson(json.decode(str));
 
@@ -142,11 +143,12 @@ class DataTransactionModel {
     map['update_at'] = _updateAt;
     return map;
   }
-
 }
 
 Receiver receiverFromJson(String str) => Receiver.fromJson(json.decode(str));
+
 String receiverToJson(Receiver data) => json.encode(data.toJson());
+
 class Receiver {
   Receiver({
     String? name,
@@ -162,6 +164,11 @@ class Receiver {
     String? phone,
     String? district,
     String? subDistrict,
+    String? destinationCode,
+    String? destinationDescription,
+    String? idDestination,
+    String? idReceive,
+    String? registrationId,
   }) {
     _name = name;
     _address = address;
@@ -176,6 +183,11 @@ class Receiver {
     _phone = phone;
     _district = district;
     _subDistrict = subDistrict;
+    _destinationCode = destinationCode;
+    _destinationDescription = destinationDescription;
+    _idDestination = idDestination;
+    _idReceive = idReceive;
+    _registrationId = registrationId;
   }
 
   Receiver.fromJson(dynamic json) {
@@ -185,14 +197,22 @@ class Receiver {
     _address2 = json['address2'];
     _address3 = json['address3'];
     _city = json['city'];
-    _zip = json['zip'];
+    _zip = json['zip_code'] ?? json['zip'];
     _region = json['region'];
     _country = json['country'];
     _contact = json['contact'];
     _phone = json['phone'];
     _district = json['district'];
     _subDistrict = json['sub_district'];
+    _destinationCode = json['destination_code'];
+    _destinationDescription = json['destination_description'];
+    _idDestination = json['id_destination'];
+    _idReceive = json['id_receive'];
+    _district = json['receiver_district'];
+    _subDistrict = json['receiver_sub_district'];
+    _registrationId = json['registration_id'];
   }
+
   String? _name;
   String? _address;
   String? _address1;
@@ -206,6 +226,11 @@ class Receiver {
   String? _phone;
   String? _district;
   String? _subDistrict;
+  String? _destinationCode;
+  String? _destinationDescription;
+  String? _idDestination;
+  String? _idReceive;
+  String? _registrationId;
 
   Receiver copyWith({
     String? name,
@@ -221,6 +246,11 @@ class Receiver {
     String? phone,
     String? district,
     String? subDistrict,
+    String? destinationCode,
+    String? destinationDescription,
+    String? idDestination,
+    String? idReceive,
+    String? registrationId,
   }) =>
       Receiver(
         name: name ?? _name,
@@ -236,20 +266,48 @@ class Receiver {
         phone: phone ?? _phone,
         district: district ?? _district,
         subDistrict: subDistrict ?? _subDistrict,
+        destinationCode: destinationCode ?? _destinationCode,
+        destinationDescription: destinationDescription ?? _destinationDescription,
+        idDestination: idDestination ?? _idDestination,
+        idReceive: idReceive ?? _idReceive,
+        registrationId: registrationId ?? _registrationId,
       );
+
   String? get name => _name;
+
   String? get address => _address;
+
   String? get address1 => _address1;
+
   String? get address2 => _address2;
+
   String? get address3 => _address3;
+
   String? get city => _city;
+
   String? get zip => _zip;
+
   String? get region => _region;
+
   String? get country => _country;
+
   String? get contact => _contact;
+
   String? get phone => _phone;
+
   String? get district => _district;
+
   String? get subDistrict => _subDistrict;
+
+  String? get destinationCode => _destinationCode;
+
+  String? get destinationDescription => _destinationDescription;
+
+  String? get idDestination => _idDestination;
+
+  String? get idReceive => _idReceive;
+
+  String? get registrationId => _registrationId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -266,13 +324,23 @@ class Receiver {
     map['phone'] = _phone;
     map['district'] = _district;
     map['sub_district'] = _subDistrict;
+    map['zip_code'] = _zip;
+    map['destination_code'] = _destinationCode;
+    map['destination_description'] = _destinationDescription;
+    map['id_destination'] = _idDestination;
+    map['id_receive'] = _idReceive;
+    map['receiver_district'] = _district;
+    map['receiver_sub_district'] = _subDistrict;
+    map['registration_id'] = _registrationId;
+
     return map;
   }
-
 }
 
 Shipper shipperFromJson(String str) => Shipper.fromJson(json.decode(str));
+
 String shipperToJson(Shipper data) => json.encode(data.toJson());
+
 class Shipper {
   Shipper({
     String? name,
@@ -287,6 +355,7 @@ class Shipper {
     String? contact,
     String? phone,
     bool? dropship,
+    String? origin,
   }) {
     _name = name;
     _address = address;
@@ -300,6 +369,7 @@ class Shipper {
     _contact = contact;
     _phone = phone;
     _dropship = dropship;
+    _origin = origin;
   }
 
   Shipper.fromJson(dynamic json) {
@@ -315,7 +385,10 @@ class Shipper {
     _contact = json['contact'];
     _phone = json['phone'];
     _dropship = json['dropship'];
+    _zip = json['zip_code'];
+    _origin = json['origin'];
   }
+
   String? _name;
   String? _address;
   String? _address1;
@@ -328,6 +401,7 @@ class Shipper {
   String? _contact;
   String? _phone;
   bool? _dropship;
+  String? _origin;
 
   Shipper copyWith({
     String? name,
@@ -342,6 +416,7 @@ class Shipper {
     String? contact,
     String? phone,
     bool? dropship,
+    String? origin,
   }) =>
       Shipper(
         name: name ?? _name,
@@ -356,8 +431,11 @@ class Shipper {
         contact: contact ?? _contact,
         phone: phone ?? _phone,
         dropship: dropship ?? _dropship,
+        origin: origin ?? _origin,
       );
+
   String? get name => _name;
+
   String? get address => _address;
 
   String? get address1 => _address1;
@@ -380,6 +458,8 @@ class Shipper {
 
   bool? get dropship => _dropship;
 
+  String? get origin => _origin;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['name'] = _name;
@@ -394,13 +474,17 @@ class Shipper {
     map['contact'] = _contact;
     map['phone'] = _phone;
     map['dropship'] = _dropship;
+    map['zip_code'] = _zip;
+    map['origin'] = _origin;
+
     return map;
   }
-
 }
 
 Goods goodsFromJson(String str) => Goods.fromJson(json.decode(str));
+
 String goodsToJson(Goods data) => json.encode(data.toJson());
+
 class Goods {
   Goods({
     String? type,
@@ -444,10 +528,15 @@ class Goods {
         quantity: quantity ?? _quantity,
         weight: weight ?? _weight,
       );
+
   String? get type => _type;
+
   String? get desc => _desc;
+
   num? get amount => _amount;
+
   num? get quantity => _quantity;
+
   num? get weight => _weight;
 
   Map<String, dynamic> toJson() {
@@ -459,11 +548,12 @@ class Goods {
     map['weight'] = _weight;
     return map;
   }
-
 }
 
 Destination destinationFromJson(String str) => Destination.fromJson(json.decode(str));
+
 String destinationToJson(Destination data) => json.encode(data.toJson());
+
 class Destination {
   Destination({
     String? code,
@@ -500,11 +590,12 @@ class Destination {
     map['desc'] = _desc;
     return map;
   }
-
 }
 
 Origin originFromJson(String str) => Origin.fromJson(json.decode(str));
+
 String originToJson(Origin data) => json.encode(data.toJson());
+
 class Origin {
   Origin({
     String? code,
@@ -540,6 +631,7 @@ class Origin {
   String? get code => _code;
 
   String? get desc => _desc;
+
   String? get branch => _branch;
 
   Map<String, dynamic> toJson() {
@@ -549,52 +641,12 @@ class Origin {
     map['branch'] = _branch;
     return map;
   }
-
-}
-
-Account accountFromJson(String str) => Account.fromJson(json.decode(str));
-String accountToJson(Account data) => json.encode(data.toJson());
-class Account {
-  Account({
-    String? number,
-    String? service,
-  }) {
-    _number = number;
-    _service = service;
-  }
-
-  Account.fromJson(dynamic json) {
-    _number = json['number'];
-    _service = json['service'];
-  }
-
-  String? _number;
-  String? _service;
-
-  Account copyWith({
-    String? number,
-    String? service,
-  }) =>
-      Account(
-        number: number ?? _number,
-        service: service ?? _service,
-      );
-
-  String? get number => _number;
-
-  String? get service => _service;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['number'] = _number;
-    map['service'] = _service;
-    return map;
-  }
-
 }
 
 Delivery deliveryFromJson(String str) => Delivery.fromJson(json.decode(str));
+
 String deliveryToJson(Delivery data) => json.encode(data.toJson());
+
 class Delivery {
   Delivery({
     String? serviceCode,
@@ -638,6 +690,7 @@ class Delivery {
     _freightCharge = json['freight_charge'];
     _freightChargeWithInsurance = json['freight_charge_with_insurance'];
   }
+
   String? _serviceCode;
   String? _woodPackaging;
   String? _specialInstruction;
@@ -679,17 +732,29 @@ class Delivery {
         freightCharge: freightCharge ?? _freightCharge,
         freightChargeWithInsurance: freightChargeWithInsurance ?? _freightChargeWithInsurance,
       );
+
   String? get serviceCode => _serviceCode;
+
   String? get woodPackaging => _woodPackaging;
+
   String? get specialInstruction => _specialInstruction;
+
   String? get codFlag => _codFlag;
+
   String? get codOngkir => _codOngkir;
+
   num? get codFee => _codFee;
+
   String? get insuranceFlag => _insuranceFlag;
+
   num? get insuranceFee => _insuranceFee;
+
   num? get flatRate => _flatRate;
+
   num? get flatRateWithInsurance => _flatRateWithInsurance;
+
   num? get freightCharge => _freightCharge;
+
   num? get freightChargeWithInsurance => _freightChargeWithInsurance;
 
   Map<String, dynamic> toJson() {
@@ -708,5 +773,4 @@ class Delivery {
     map['freight_charge_with_insurance'] = _freightChargeWithInsurance;
     return map;
   }
-
 }

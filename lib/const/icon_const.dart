@@ -12,5 +12,7 @@ class IconsConstant {
   static const String qrcode = "assets/icons/qrcode-scan.svg";
   static const String search = "assets/icons/search.svg";
   static const String transaction = "assets/icons/transaction.svg";
+  static const String paket = "assets/icons/paket.png";
+
 
 }

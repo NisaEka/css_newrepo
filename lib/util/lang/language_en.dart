@@ -214,6 +214,7 @@ class LanguageEN {
       "Uang_COD Kamu": "Your_COD Fee",
       "Tanggal Pencarian": "Search Date",
       "COD Terkumpul Dari Pelanggan": "COD Collected From Customers",
+      "Pilih Semua": "Select All",
     };
   }
 }

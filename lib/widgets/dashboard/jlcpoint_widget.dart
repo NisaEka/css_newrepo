@@ -16,7 +16,7 @@ class JLCPointWidget extends StatelessWidget {
           BoxShadow(
             color: redJNE,
             spreadRadius: 1,
-            offset: Offset(-2, 1),
+            offset: Offset(-2, 3),
           ),
         ],
       ),
