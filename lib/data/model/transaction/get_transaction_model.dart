@@ -1,6 +1,5 @@
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
-
-import 'get_transaction_by_awb_model.dart';
+import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 
 class GetTransactionModel {
   GetTransactionModel({

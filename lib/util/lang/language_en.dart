@@ -215,6 +215,15 @@ class LanguageEN {
       "Tanggal Pencarian": "Search Date",
       "COD Terkumpul Dari Pelanggan": "COD Collected From Customers",
       "Pilih Semua": "Select All",
+      "Tipe": "Type",
+      "Dana COD": "COD Fee",
+      "Pengirim": "Shipper",
+      "Kontak Penerima": "Consignee Contact",
+      "Status Transaksi": "Transaction Status",
+      "Status Pickup": "Pickup Status",
+      "Tanggal Pesanan": "Transaction Date",
+      "Lihat Resi": "View Receipt",
+      "Edit Kiriman": "Edit Shipment",
     };
   }
 }

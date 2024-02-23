@@ -30,10 +30,10 @@ class InformasiPengirimController extends BaseController {
   bool isOnline = true;
 
   List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
-  List<AccountNumberModel> accountList = [];
+  List<Account> accountList = [];
   List<OriginModel> originList = [];
 
-  AccountNumberModel? selectedAccount;
+  Account? selectedAccount;
   GetOriginModel? originModel;
   OriginModel? selectedOrigin;
   ShipperModel? senderOrigin;

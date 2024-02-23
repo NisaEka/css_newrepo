@@ -17,7 +17,7 @@ class DataTransactionModel {
     Goods? goods,
     Shipper? shipper,
     Receiver? receiver,
-    AccountNumberModel? dataAccount,
+    Account? dataAccount,
     DestinationModel? dataDestination,
     String? createAt,
     String? updateAt,
@@ -43,7 +43,7 @@ class DataTransactionModel {
     _goods = json['goods'] != null ? Goods.fromJson(json['goods']) : null;
     _shipper = json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
     _receiver = json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
-    _dataAccount = json['data_account'] != null ? AccountNumberModel.fromJson(json['data_account']) : null;
+    _dataAccount = json['data_account'] != null ? Account.fromJson(json['data_account']) : null;
     _dataDestination = json['data_destination'] != null ? DestinationModel.fromJson(json['data_destination']) : null;
     _createAt = json['create_at'];
     _updateAt = json['update_at'];
@@ -56,7 +56,7 @@ class DataTransactionModel {
   Goods? _goods;
   Shipper? _shipper;
   Receiver? _receiver;
-  AccountNumberModel? _dataAccount;
+  Account? _dataAccount;
   DestinationModel? _dataDestination;
   String? _createAt;
   String? _updateAt;
@@ -69,7 +69,7 @@ class DataTransactionModel {
     Goods? goods,
     Shipper? shipper,
     Receiver? receiver,
-    AccountNumberModel? dataAccount,
+    Account? dataAccount,
     DestinationModel? dataDestination,
     String? createAt,
     String? updateAt,
@@ -102,7 +102,7 @@ class DataTransactionModel {
 
   Receiver? get receiver => _receiver;
 
-  AccountNumberModel? get dataAccount => _dataAccount;
+  Account? get dataAccount => _dataAccount;
 
   DestinationModel? get dataDestination => _dataDestination;
 

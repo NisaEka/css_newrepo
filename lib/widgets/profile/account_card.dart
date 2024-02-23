@@ -4,7 +4,7 @@ import 'package:css_mobile/data/model/transaction/get_account_number_model.dart'
 import 'package:flutter/material.dart';
 
 class AccountCard extends StatelessWidget {
-  final AccountNumberModel account;
+  final Account account;
 
   const AccountCard({
     super.key,

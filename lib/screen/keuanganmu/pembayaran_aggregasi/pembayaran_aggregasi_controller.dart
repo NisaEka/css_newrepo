@@ -12,8 +12,8 @@ class PembayaranAggergasiController extends BaseController {
   DateTime? endDate;
   bool isFiltered = false;
 
-  List<AccountNumberModel> accountList = [];
-  List<AccountNumberModel> selectedAccount = [];
+  List<Account> accountList = [];
+  List<Account> selectedAccount = [];
 
   @override
   void onInit() {

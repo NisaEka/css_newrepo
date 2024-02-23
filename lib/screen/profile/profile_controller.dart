@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 
 class ProfileController extends BaseController {
   bool isLogin = false;
-  List<AccountNumberModel> accountList = [];
+  List<Account> accountList = [];
   BasicProfilModel? basicProfil;
   CcrfProfilModel? ccrfProfil;
 

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddDropshipperController extends BaseController {
-  AccountNumberModel account = Get.arguments['account'];
+  Account account = Get.arguments['account'];
 
   final formKey = GlobalKey<FormState>();
   final namaPengirim = TextEditingController();

@@ -10,7 +10,7 @@ class NoAkunController extends BaseController {
   bool isLogin = false;
   bool isLoading = false;
 
-  List<AccountNumberModel> accountList = [];
+  List<Account> accountList = [];
 
   @override
   void onInit() {

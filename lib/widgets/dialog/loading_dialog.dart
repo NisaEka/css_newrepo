@@ -3,21 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoadingDialog extends StatelessWidget {
-  const LoadingDialog({super.key});
+  final Color? background;
+  final double? height;
+  final double? width;
+  final double? size;
+
+  const LoadingDialog({
+    super.key,
+    this.background,
+    this.height,
+    this.width,
+    this.size,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.height,
-      width: Get.width,
-      color: greyColor.withOpacity(0.3),
+      height: height ?? Get.height,
+      width: width ?? Get.width,
+      color: background ?? greyColor.withOpacity(0.3),
       alignment: Alignment.center,
       child: Center(
         child: SizedBox(
-          height: 100,
-          width: 100,
+          height: size ?? 100,
+          width: size ?? 100,
           child: CircularProgressIndicator.adaptive(
-            strokeWidth: 20,
+            strokeWidth: size != null ? 8 : 20,
             backgroundColor: redJNE,
           ),
         ),

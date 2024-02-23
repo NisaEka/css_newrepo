@@ -6,6 +6,8 @@ import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcheckbox.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -385,7 +387,7 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                       builderDelegate: PagedChildBuilderDelegate<TransactionModel>(
                         transitionDuration: const Duration(milliseconds: 500),
                         itemBuilder: (context, item, index) => RiwayatKirimanListItem(
-                          tanggalEntry: item.createdDate?.toShortDateFormat() ?? '',
+                          tanggalEntry: item.createdDate?.toShortDateTimeFormat() ?? '',
                           orderID: item.orderId ?? '-',
                           service: item.service.toString(),
                           noResi: item.awb.toString(),
@@ -399,6 +401,25 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                           onTap: () {
                             controller.unselect(item);
                           },
+                        ),
+                        firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                        firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                          height: 100,
+                          background: Colors.transparent,
+                        ),
+                        noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
+                        noMoreItemsIndicatorBuilder: (context) => const Center(
+                          child: Divider(
+                            indent: 100,
+                            endIndent: 100,
+                            thickness: 2,
+                            color: blueJNE,
+                          ),
+                        ),
+                        newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                          background: Colors.transparent,
+                          height: 50,
+                          size: 30,
                         ),
                       ),
                     ),

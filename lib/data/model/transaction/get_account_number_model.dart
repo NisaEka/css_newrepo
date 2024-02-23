@@ -1,11 +1,14 @@
 import 'dart:convert';
+
 GetAccountNumberModel getAccountNumberModelFromJson(String str) => GetAccountNumberModel.fromJson(json.decode(str));
+
 String getAccountNumberModelToJson(GetAccountNumberModel data) => json.encode(data.toJson());
+
 class GetAccountNumberModel {
   GetAccountNumberModel({
     num? code,
     String? message,
-    List<AccountNumberModel>? payload,
+    List<Account>? payload,
   }) {
     _code = code;
     _message = message;
@@ -18,19 +21,19 @@ class GetAccountNumberModel {
     if (json['payload'] != null) {
       _payload = [];
       json['payload'].forEach((v) {
-        _payload?.add(AccountNumberModel.fromJson(v));
+        _payload?.add(Account.fromJson(v));
       });
     }
   }
 
   num? _code;
   String? _message;
-  List<AccountNumberModel>? _payload;
+  List<Account>? _payload;
 
   GetAccountNumberModel copyWith({
     num? code,
     String? message,
-    List<AccountNumberModel>? payload,
+    List<Account>? payload,
   }) =>
       GetAccountNumberModel(
         code: code ?? _code,
@@ -42,7 +45,7 @@ class GetAccountNumberModel {
 
   String? get message => _message;
 
-  List<AccountNumberModel>? get payload => _payload;
+  List<Account>? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -55,21 +58,21 @@ class GetAccountNumberModel {
   }
 }
 
-AccountNumberModel payloadFromJson(String str) => AccountNumberModel.fromJson(json.decode(str));
+Account payloadFromJson(String str) => Account.fromJson(json.decode(str));
 
-String payloadToJson(AccountNumberModel data) => json.encode(data.toJson());
+String payloadToJson(Account data) => json.encode(data.toJson());
 
-class AccountNumberModel {
-  AccountNumberModel({
+class Account {
+  Account({
     String? accountId,
     String? accountName,
     String? accountBranch,
     String? accountService,
-    dynamic accountCategory,
-    dynamic accountCustType,
+    String? accountCategory,
+    String? accountCustType,
     String? accountNumber,
     String? accountStatus,
-    dynamic accountCodFee,
+    String? accountCodFee,
     String? accountTransaction,
     AvailableService? availableService,
   }) {
@@ -86,7 +89,7 @@ class AccountNumberModel {
     _availableService = availableService;
   }
 
-  AccountNumberModel.fromJson(dynamic json) {
+  Account.fromJson(dynamic json) {
     _accountId = json['account_id'];
     _accountName = json['account_name'];
     _accountBranch = json['account_branch'];
@@ -104,28 +107,28 @@ class AccountNumberModel {
   String? _accountName;
   String? _accountBranch;
   String? _accountService;
-  dynamic _accountCategory;
-  dynamic _accountCustType;
+  String? _accountCategory;
+  String? _accountCustType;
   String? _accountNumber;
   String? _accountStatus;
-  dynamic _accountCodFee;
+  String? _accountCodFee;
   String? _accountTransaction;
   AvailableService? _availableService;
 
-  AccountNumberModel copyWith({
+  Account copyWith({
     String? accountId,
     String? accountName,
     String? accountBranch,
     String? accountService,
-    dynamic accountCategory,
-    dynamic accountCustType,
+    String? accountCategory,
+    String? accountCustType,
     String? accountNumber,
     String? accountStatus,
-    dynamic accountCodFee,
+    String? accountCodFee,
     String? accountTransaction,
     AvailableService? availableService,
   }) =>
-      AccountNumberModel(
+      Account(
         accountId: accountId ?? _accountId,
         accountName: accountName ?? _accountName,
         accountBranch: accountBranch ?? _accountBranch,
@@ -147,15 +150,15 @@ class AccountNumberModel {
 
   String? get accountService => _accountService;
 
-  dynamic get accountCategory => _accountCategory;
+  String? get accountCategory => _accountCategory;
 
-  dynamic get accountCustType => _accountCustType;
+  String? get accountCustType => _accountCustType;
 
   String? get accountNumber => _accountNumber;
 
   String? get accountStatus => _accountStatus;
 
-  dynamic get accountCodFee => _accountCodFee;
+  String? get accountCodFee => _accountCodFee;
 
   String? get accountTransaction => _accountTransaction;
 
@@ -181,7 +184,9 @@ class AccountNumberModel {
 }
 
 AvailableService availableServiceFromJson(String str) => AvailableService.fromJson(json.decode(str));
+
 String availableServiceToJson(AvailableService data) => json.encode(data.toJson());
+
 class AvailableService {
   AvailableService({
     String? ss,
@@ -213,7 +218,7 @@ class AvailableService {
   String? _reg;
   String? _oke;
   String? _jtr;
-  dynamic _intl;
+  String? _intl;
 
   AvailableService copyWith({
     String? ss,
@@ -221,7 +226,7 @@ class AvailableService {
     String? reg,
     String? oke,
     String? jtr,
-    dynamic intl,
+    String? intl,
   }) =>
       AvailableService(
         ss: ss ?? _ss,
@@ -242,7 +247,7 @@ class AvailableService {
 
   String? get jtr => _jtr;
 
-  dynamic get intl => _intl;
+  String? get intl => _intl;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

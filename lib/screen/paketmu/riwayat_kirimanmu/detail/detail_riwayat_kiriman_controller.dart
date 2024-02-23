@@ -9,7 +9,7 @@ class DetailRiwayatKirimanController extends BaseController {
 
   TransactionModel? transactionModel;
 
-  bool isLoading = true;
+  bool isLoading = false;
 
   @override
   void onInit() {
@@ -18,19 +18,20 @@ class DetailRiwayatKirimanController extends BaseController {
   }
 
   Future<void> initData() async {
-    // Timer(const Duration(seconds: 2), () {
+    isLoading = true;
+    update();
+    Timer(const Duration(seconds: 1), () {
       try {
-        transaction.getTransactionByAWB(awb).then(
-              (value) => transactionModel = value.payload,
-            );
-        update();
+        transaction.getTransactionByAWB(awb).then((value) {
+          transactionModel = value.payload;
+          update();
+        });
       } catch (e) {
         e.printError();
       }
 
       isLoading = false;
       update();
-    // });
-    update();
+    });
   }
 }

@@ -27,6 +27,7 @@ class CustomTextFormField extends StatelessWidget {
   final FocusNode? focusNode;
   final bool? autofocus;
   final EdgeInsets? contentPadding;
+  final bool noBorder;
 
   CustomTextFormField(
       {super.key,
@@ -50,7 +51,9 @@ class CustomTextFormField extends StatelessWidget {
       this.height,
       this.onSubmit,
       this.focusNode,
-      this.autofocus, this.contentPadding}) {
+      this.autofocus,
+      this.contentPadding,
+      this.noBorder = false}) {
     if (isRequired && !readOnly) {
       validator ??= ValidationBuilder().required().build();
     }
@@ -82,7 +85,9 @@ class CustomTextFormField extends StatelessWidget {
         Container(
           width: width ?? null,
           height: height != null && multiLine == false ? height ?? 39 : null,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: TextFormField(
             minLines: multiLine ? 3 : 1,
             maxLines: !multiLine ? 1 : 3,
@@ -115,10 +120,24 @@ class CustomTextFormField extends StatelessWidget {
                 suffixIconColor: greyDarkColor1,
                 contentPadding: contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                 hintText: hintText ?? label,
+                disabledBorder: noBorder
+                    ? OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(
+                          color: readOnly ? Colors.white : Theme.of(context).primaryColor,
+                          width: readOnly ? 1 : 2,
+                          style: BorderStyle.solid,
+                        ),
+                      )
+                    : null,
                 focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(
-                        color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor, width: readOnly ? 1 : 2, style: BorderStyle.solid)),
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor,
+                    width: readOnly ? 1 : 2,
+                    style: BorderStyle.solid,
+                  ),
+                ),
                 hintStyle: hintTextStyle),
           ),
         ),

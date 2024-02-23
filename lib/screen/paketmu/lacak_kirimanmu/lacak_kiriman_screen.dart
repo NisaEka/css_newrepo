@@ -163,7 +163,7 @@ class LacakKirimanScreen extends StatelessWidget {
                                   children: [
                                     CustomLabelText(
                                       title: 'Tanggal Kirim'.tr,
-                                      value: controller.trackModel?.cnote?.cnoteDate?.toLongDateFormat() ?? '',
+                                      value: controller.trackModel?.cnote?.cnoteDate?.toLongDateTimeFormat() ?? '',
                                       width: Get.width / 2,
                                     ),
                                     CustomLabelText(

@@ -17,7 +17,7 @@ class InformasiPenerimaController extends BaseController {
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
   Origin origin = Get.arguments['origin'];
-  AccountNumberModel account = Get.arguments['account'];
+  Account account = Get.arguments['account'];
 
   final formKey = GlobalKey<FormState>();
   final namaPenerima = TextEditingController();

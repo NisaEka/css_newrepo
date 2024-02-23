@@ -11,6 +11,7 @@ TextStyle listTitleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 14, fon
 TextStyle sublistTitleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 12, fontWeight: regular, color: greyDarkColor1);
 TextStyle appTitleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 18, fontWeight: medium, color: whiteColor);
 TextStyle subappTitleTextStyle = TextStyle(fontFamily: 'Ubuntu', fontSize: 20, fontWeight: regular, color: whiteColor);
+TextStyle itemTextStyle = const TextStyle(fontFamily: 'Ubuntu', fontSize: 10);
 
 FontWeight light = FontWeight.w300;
 FontWeight regular = FontWeight.w400;

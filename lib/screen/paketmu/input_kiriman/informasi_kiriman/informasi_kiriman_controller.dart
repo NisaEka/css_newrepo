@@ -26,7 +26,7 @@ class InformasiKirimaController extends BaseController {
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
   Origin origin = Get.arguments['origin'];
-  AccountNumberModel account = Get.arguments['account'];
+  Account account = Get.arguments['account'];
   Receiver receiver = Get.arguments['receiver'];
   DestinationModel destination = Get.arguments['destination'];
   Delivery? delivery = Get.arguments['delivery'];

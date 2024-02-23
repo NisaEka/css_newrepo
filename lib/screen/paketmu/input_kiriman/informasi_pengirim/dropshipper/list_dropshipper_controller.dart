@@ -6,7 +6,7 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:get/get.dart';
 
 class ListDropshipperController extends BaseController {
-  AccountNumberModel account = Get.arguments['account'];
+  Account account = Get.arguments['account'];
 
   bool isLoading = false;
   bool isOnline = false;

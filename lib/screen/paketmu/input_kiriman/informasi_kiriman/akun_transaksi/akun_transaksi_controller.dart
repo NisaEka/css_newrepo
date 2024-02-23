@@ -3,8 +3,8 @@ import 'package:css_mobile/data/model/transaction/get_account_number_model.dart'
 import 'package:css_mobile/data/storage_core.dart';
 
 class AkunTranasksiController extends BaseController {
-  List<AccountNumberModel> accountList = [];
-  AccountNumberModel? selectedAccount;
+  List<Account> accountList = [];
+  Account? selectedAccount;
 
   @override
   void onInit() {

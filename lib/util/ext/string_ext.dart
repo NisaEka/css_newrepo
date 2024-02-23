@@ -28,7 +28,7 @@ extension StringExt on String {
     }
   }
 
-  String toLongDateFormat({String targetFormat = "dd MMMM yyyy HH:mmzzz", String originFormat = "dd/MM/yyyy"}) {
+  String toLongDateTimeFormat({String targetFormat = "dd MMMM yyyy HH:mmzzz", String originFormat = "dd/MM/yyyy"}) {
     try {
       DateTime dateTimeOrigin = DateTime.parse(this);
       DateFormat dateFormat = DateFormat(targetFormat);
@@ -39,7 +39,31 @@ extension StringExt on String {
     }
   }
 
-  String toShortDateFormat({String targetFormat = "dd MMM yyyy HH:mmzzz", String originFormat = "dd/MM/yyyy"}) {
+
+  String toShortDateTimeFormat({String targetFormat = "dd MMM yyyy HH:mmzzz", String originFormat = "dd/MM/yyyy"}) {
+    try {
+      DateTime dateTimeOrigin = DateTime.parse(this);
+      DateFormat dateFormat = DateFormat(targetFormat);
+      return dateFormat.format(dateTimeOrigin);
+    } catch (e) {
+      print("ERROR toLongDateFormat $e");
+      return "-";
+    }
+  }
+
+  String toLongDateFormat({String targetFormat = "dd MMMM yyyy", String originFormat = "dd/MM/yyyy"}) {
+    try {
+      DateTime dateTimeOrigin = DateTime.parse(this);
+      DateFormat dateFormat = DateFormat(targetFormat);
+      return dateFormat.format(dateTimeOrigin);
+    } catch (e) {
+      print("ERROR toLongDateFormat $e");
+      return "-";
+    }
+  }
+
+
+  String toShortDateFormat({String targetFormat = "dd MMM yyyy", String originFormat = "dd/MM/yyyy"}) {
     try {
       DateTime dateTimeOrigin = DateTime.parse(this);
       DateFormat dateFormat = DateFormat(targetFormat);

@@ -10,6 +10,9 @@ class CustomLabelText extends StatelessWidget {
   final Color? fontColor;
   final String? alignment;
   final double? width;
+  final double? fontSize;
+  final TextStyle? titleTextStyle;
+  final TextStyle? valueTextStyle;
 
   const CustomLabelText({
     super.key,
@@ -19,6 +22,9 @@ class CustomLabelText extends StatelessWidget {
     this.alignment,
     this.width,
     this.fontColor,
+    this.fontSize,
+    this.titleTextStyle,
+    this.valueTextStyle,
   });
 
   @override
@@ -30,7 +36,11 @@ class CustomLabelText extends StatelessWidget {
         children: [
           Text(
             title,
-            style: subTitleTextStyle.copyWith(color: fontColor ?? greyColor),
+            style: titleTextStyle ??
+                subTitleTextStyle.copyWith(
+                  color: fontColor ?? greyColor,
+                  fontSize: fontSize,
+                ),
           ),
           Text(
             value.toUpperCase(),
@@ -39,7 +49,11 @@ class CustomLabelText extends StatelessWidget {
             maxLines: 1,
             softWrap: true,
             textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
-            style: listTitleTextStyle.copyWith(color: fontColor ?? valueColor ?? greyDarkColor1),
+            style: valueTextStyle ??
+                listTitleTextStyle.copyWith(
+                  color: fontColor ?? valueColor ?? greyDarkColor1,
+                  fontSize: fontSize,
+                ),
           )
         ],
       ),
