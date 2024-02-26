@@ -224,6 +224,7 @@ class LanguageEN {
       "Tanggal Pesanan": "Transaction Date",
       "Lihat Resi": "View Receipt",
       "Edit Kiriman": "Edit Shipment",
+      "Cetak Label": "Print Label"
     };
   }
 }
