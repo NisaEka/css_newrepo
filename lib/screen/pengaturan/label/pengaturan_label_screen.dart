@@ -1,12 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customswitch.dart';
+import 'package:css_mobile/widgets/items/sticker_list_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class PengaturanLabelScreen extends StatelessWidget {
@@ -48,7 +53,7 @@ class PengaturanLabelScreen extends StatelessWidget {
                       ),
                     ],
                     onChanged: (value) {
-                      controller.selectedTampil = value ?? '';
+                      controller.selectedSticker = value ?? '';
                       controller.update();
                     },
                   ),
@@ -57,18 +62,26 @@ class PengaturanLabelScreen extends StatelessWidget {
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: [
-                        Image.asset(ImageConstant.labelSample),
-                        Image.asset(ImageConstant.labelSample),
-                        Image.asset(ImageConstant.labelSample),
-                        Image.asset(ImageConstant.labelSample),
-                      ],
+                      children: controller.labelList
+                          .map(
+                            (e) => StickerListItem(
+                              img: e.image ?? '',
+                              isSelected: controller.selectedSticker == e.name,
+                              onTap: () {
+                                controller.selectedSticker = e.name.toString();
+                                controller.update();
+                              },
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
-                  const CustomFilledButton(
+                  CustomFilledButton(
                     color: blueJNE,
                     title: 'Simpan Perubahan',
-                  )
+                    onPressed: () => controller.saveLabel(),
+                  ),
+
                 ],
               ),
             ),

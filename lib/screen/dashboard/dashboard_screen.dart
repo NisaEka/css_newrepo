@@ -12,6 +12,7 @@ import 'package:css_mobile/widgets/dashboard/dashboard_carousel.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_marquee.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_menu2.dart';
 import 'package:css_mobile/widgets/dashboard/jlcpoint_widget.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -76,11 +77,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   ? Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        CustomLabelText(
-                                          title: 'Selamat Datang'.tr,
-                                          value: controller.userName ?? '',
-                                          fontColor: whiteColor,
-                                        ),
+                                        controller.isLoading
+                                            ? Shimmer(
+                                                child: ShimmerLoading(
+                                                    isLoading: controller.isLoading,
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Container(
+                                                          width: 80,
+                                                          height: 10,
+                                                          color: greyColor,
+                                                        ),
+                                                        Container(
+                                                          margin: const EdgeInsets.only(top: 5),
+                                                          width: 100,
+                                                          height: 10,
+                                                          color: greyColor,
+                                                        ),
+                                                      ],
+                                                    )),
+                                              )
+                                            : CustomLabelText(
+                                                title: 'Selamat Datang'.tr,
+                                                value: controller.userName ?? '',
+                                                fontColor: whiteColor,
+                                              ),
                                         GestureDetector(
                                           onTap: () => Get.to(const BonusKamuScreen()),
                                           child: const JLCPointWidget(),

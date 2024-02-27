@@ -74,6 +74,7 @@ class Account {
     String? accountStatus,
     String? accountCodFee,
     String? accountTransaction,
+    String? accountType,
     AvailableService? availableService,
   }) {
     _accountId = accountId;
@@ -86,6 +87,7 @@ class Account {
     _accountStatus = accountStatus;
     _accountCodFee = accountCodFee;
     _accountTransaction = accountTransaction;
+    _accountType = accountType;
     _availableService = availableService;
   }
 
@@ -100,6 +102,7 @@ class Account {
     _accountStatus = json['account_status'];
     _accountCodFee = json['account_cod_fee'];
     _accountTransaction = json['account_transaction'];
+    _accountType = json['account_type'];
     _availableService = json['available_service'] != null ? AvailableService.fromJson(json['available_service']) : null;
   }
 
@@ -113,6 +116,7 @@ class Account {
   String? _accountStatus;
   String? _accountCodFee;
   String? _accountTransaction;
+  String? _accountType;
   AvailableService? _availableService;
 
   Account copyWith({
@@ -126,6 +130,7 @@ class Account {
     String? accountStatus,
     String? accountCodFee,
     String? accountTransaction,
+    String? accountType,
     AvailableService? availableService,
   }) =>
       Account(
@@ -139,6 +144,7 @@ class Account {
         accountStatus: accountStatus ?? _accountStatus,
         accountCodFee: accountCodFee ?? _accountCodFee,
         accountTransaction: accountTransaction ?? _accountTransaction,
+        accountType: accountType ?? _accountType,
         availableService: availableService ?? _availableService,
       );
 
@@ -162,6 +168,8 @@ class Account {
 
   String? get accountTransaction => _accountTransaction;
 
+  String? get accountType => _accountType;
+
   AvailableService? get availableService => _availableService;
 
   Map<String, dynamic> toJson() {
@@ -176,6 +184,7 @@ class Account {
     map['account_status'] = _accountStatus;
     map['account_cod_fee'] = _accountCodFee;
     map['account_transaction'] = _accountTransaction;
+    map['account_type'] = _accountType;
     if (_availableService != null) {
       map['available_service'] = _availableService?.toJson();
     }

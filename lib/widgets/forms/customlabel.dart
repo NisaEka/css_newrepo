@@ -13,6 +13,10 @@ class CustomLabelText extends StatelessWidget {
   final double? fontSize;
   final TextStyle? titleTextStyle;
   final TextStyle? valueTextStyle;
+  final bool isHorizontal;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
+  final int? valueMaxline;
 
   const CustomLabelText({
     super.key,
@@ -25,38 +29,79 @@ class CustomLabelText extends StatelessWidget {
     this.fontSize,
     this.titleTextStyle,
     this.valueTextStyle,
+    this.isHorizontal = false,
+    this.margin,
+    this.padding,
+    this.valueMaxline,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      padding: padding,
+      margin: margin,
       width: width,
-      child: Column(
-        crossAxisAlignment: alignment == 'end' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: titleTextStyle ??
-                subTitleTextStyle.copyWith(
-                  color: fontColor ?? greyColor,
-                  fontSize: fontSize,
+      child: isHorizontal
+          ? Row(
+              crossAxisAlignment: alignment == 'end'
+                  ? CrossAxisAlignment.end
+                  : alignment == 'center'
+                      ? CrossAxisAlignment.center
+                      : CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "$title ",
+                  style: titleTextStyle ??
+                      subTitleTextStyle.copyWith(
+                        color: fontColor ?? greyColor,
+                        fontSize: fontSize,
+                      ),
                 ),
-          ),
-          Text(
-            value.toUpperCase(),
-            // "This is a long text This is a long text This is a long text",
-            // overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            softWrap: true,
-            textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
-            style: valueTextStyle ??
-                listTitleTextStyle.copyWith(
-                  color: fontColor ?? valueColor ?? greyDarkColor1,
-                  fontSize: fontSize,
+                Text(
+                  value.toUpperCase(),
+                  // "This is a long text This is a long text This is a long text",
+                  // overflow: TextOverflow.ellipsis,
+                  maxLines: valueMaxline ?? 1,
+                  softWrap: true,
+                  textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
+                  style: valueTextStyle ??
+                      listTitleTextStyle.copyWith(
+                        color: fontColor ?? valueColor ?? greyDarkColor1,
+                        fontSize: fontSize,
+                      ),
+                )
+              ],
+            )
+          : Column(
+              crossAxisAlignment: alignment == 'end'
+                  ? CrossAxisAlignment.end
+                  : alignment == 'center'
+                      ? CrossAxisAlignment.center
+                      : CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: titleTextStyle ??
+                      subTitleTextStyle.copyWith(
+                        color: fontColor ?? greyColor,
+                        fontSize: fontSize,
+                      ),
                 ),
-          )
-        ],
-      ),
+                Text(
+                  value.toUpperCase(),
+                  // "This is a long text This is a long text This is a long text",
+                  // overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  softWrap: true,
+                  textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
+                  style: valueTextStyle ??
+                      listTitleTextStyle.copyWith(
+                        color: fontColor ?? valueColor ?? greyDarkColor1,
+                        fontSize: fontSize,
+                      ),
+                )
+              ],
+            ),
     );
   }
 }

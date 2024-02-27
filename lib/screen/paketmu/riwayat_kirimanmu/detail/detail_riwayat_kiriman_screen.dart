@@ -182,7 +182,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                     style: itemTextStyle,
                                   ),
                                   Text(
-                                    '${controller.transactionModel?.account?.accountNumber}/${controller.transactionModel?.account?.accountName}/${controller.transactionModel?.apiType}',
+                                    '${controller.transactionModel?.account?.accountNumber}/${controller.transactionModel?.account?.accountName}/${controller.transactionModel?.account?.accountCustType}',
                                     style: itemTextStyle,
                                   ),
                                 ],

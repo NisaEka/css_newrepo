@@ -7,6 +7,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/widgets/bar/solid_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -20,8 +21,8 @@ class StickerMegahub1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return ListView(
+      // crossAxisAlignment: CrossAxisAlignment.center,
       // mainAxisAlignment: ,
       children: [
         Container(
@@ -98,6 +99,7 @@ class StickerMegahub1 extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text('Pengirim: ${data.shipper?.name}\n${data.shipper?.address}\nTelp.${data.shipper?.phone}', style: labelTextStyle),
+                    const Divider(),
                     Text('Penerima: ${data.receiver?.name}\n${data.receiver?.address}\nTelp.${data.receiver?.phone}\n', style: labelTextStyle),
                   ],
                 ),
@@ -221,10 +223,7 @@ class StickerMegahub1 extends StatelessWidget {
                                 ImageConstant.logoJNE,
                                 height: 15,
                               ),
-                              const Divider(height: 1),
-                              Container(
-                                height: 1,
-                                color: Colors.black,
+                              const SolidBorder(
                                 width: 55,
                               ),
                               Text(
@@ -269,9 +268,11 @@ class StickerMegahub1 extends StatelessWidget {
             ],
           ),
         ),
-        Text(
-          'Untuk informasi dan pengecekan status kiriman silahkan mengunjungi www.jne.co.id',
-          style: labelTextStyle,
+        Center(
+          child: Text(
+            'Untuk informasi dan pengecekan status kiriman silahkan mengunjungi www.jne.co.id',
+            style: labelTextStyle,
+          ),
         )
       ],
     );
@@ -287,7 +288,7 @@ class StickerMegahub1 extends StatelessWidget {
       pw.Page(
         pageFormat: format,
         build: (context) {
-          return  pw.Column(
+          return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.center,
             // mainAxisAlignment: ,
             children: [

@@ -20,12 +20,17 @@ class NoAkunController extends BaseController {
 
   Future<void> initData() async {
     isLoading = true;
+    accountList = [];
     try {
-      var accounts = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
-      accountList.addAll(accounts.payload ?? []);
+      await transaction.getAccountNumber().then((value) {
+        accountList.addAll(value.payload ?? []);
+        update();
+      });
     } catch (e, i) {
       e.printError();
       i.printError();
+      var accounts = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
+      accountList.addAll(accounts.payload ?? []);
     }
 
     isLoading = false;

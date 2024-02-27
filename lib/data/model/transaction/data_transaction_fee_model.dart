@@ -1,19 +1,23 @@
 import 'dart:convert';
+
 DataTransactionFeeModel transactionFeeDataModelFromJson(String str) => DataTransactionFeeModel.fromJson(json.decode(str));
+
 String transactionFeeDataModelToJson(DataTransactionFeeModel data) => json.encode(data.toJson());
+
 class DataTransactionFeeModel {
   DataTransactionFeeModel({
-      String? originCode, 
-      String? destinationCode, 
-      String? serviceCode, 
-      num? weight, 
-      String? custNo,}){
+    String? originCode,
+    String? destinationCode,
+    String? serviceCode,
+    num? weight,
+    String? custNo,
+  }) {
     _originCode = originCode;
     _destinationCode = destinationCode;
     _serviceCode = serviceCode;
     _weight = weight;
     _custNo = custNo;
-}
+  }
 
   DataTransactionFeeModel.fromJson(dynamic json) {
     _originCode = json['origin_code'];
@@ -22,26 +26,36 @@ class DataTransactionFeeModel {
     _weight = json['weight'];
     _custNo = json['cust_no'];
   }
+
   String? _originCode;
   String? _destinationCode;
   String? _serviceCode;
   num? _weight;
   String? _custNo;
-DataTransactionFeeModel copyWith({  String? originCode,
-  String? destinationCode,
-  String? serviceCode,
-  num? weight,
-  String? custNo,
-}) => DataTransactionFeeModel(  originCode: originCode ?? _originCode,
-  destinationCode: destinationCode ?? _destinationCode,
-  serviceCode: serviceCode ?? _serviceCode,
-  weight: weight ?? _weight,
-  custNo: custNo ?? _custNo,
-);
+
+  DataTransactionFeeModel copyWith({
+    String? originCode,
+    String? destinationCode,
+    String? serviceCode,
+    num? weight,
+    String? custNo,
+  }) =>
+      DataTransactionFeeModel(
+        originCode: originCode ?? _originCode,
+        destinationCode: destinationCode ?? _destinationCode,
+        serviceCode: serviceCode ?? _serviceCode,
+        weight: weight ?? _weight,
+        custNo: custNo ?? _custNo,
+      );
+
   String? get originCode => _originCode;
+
   String? get destinationCode => _destinationCode;
+
   String? get serviceCode => _serviceCode;
+
   num? get weight => _weight;
+
   String? get custNo => _custNo;
 
   Map<String, dynamic> toJson() {
@@ -53,5 +67,4 @@ DataTransactionFeeModel copyWith({  String? originCode,
     map['cust_no'] = _custNo;
     return map;
   }
-
 }

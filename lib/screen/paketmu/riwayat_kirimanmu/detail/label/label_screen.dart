@@ -1,8 +1,10 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_controller.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_a6.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_default.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub1.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub_hybrid.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,9 +37,7 @@ class LabelScreen extends StatelessWidget {
               controller: controller.screenshotController,
               child: Container(
                 margin: const EdgeInsets.all(25),
-                child: StickerMegahub1(
-                  data: data,
-                ),
+                child: StickerMegahubHybrid(data: data),
               ),
             ),
             // floatingActionButton: FloatingActionButton(
