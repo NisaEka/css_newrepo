@@ -60,7 +60,7 @@ class TransactionModel {
     String? awb,
     String? awbType,
     String? registrationId,
-    String? apiType,
+    String? type,
     String? createdDate,
     String? service,
     String? status,
@@ -75,7 +75,7 @@ class TransactionModel {
     _awb = awb;
     _awbType = awbType;
     _registrationId = registrationId;
-    _apiType = apiType;
+    _type = type;
     _createdDate = createdDate;
     _service = service;
     _status = status;
@@ -92,7 +92,7 @@ class TransactionModel {
     _awb = json['awb'];
     _awbType = json['awb_type'];
     _registrationId = json['registration_id'];
-    _apiType = json['api_type'] ?? json['type'];
+    _type = json['api_type'] ?? json['type'];
     // _apiType = json['type'];
     _createdDate = json['created_date'];
     _service = json['service'];
@@ -109,7 +109,7 @@ class TransactionModel {
   String? _awb;
   String? _awbType;
   String? _registrationId;
-  String? _apiType;
+  String? _type;
   String? _createdDate;
   String? _service;
   String? _status;
@@ -125,7 +125,7 @@ class TransactionModel {
     String? awb,
     String? awbType,
     String? registrationId,
-    String? apiType,
+    String? type,
     String? createdDate,
     String? service,
     String? status,
@@ -141,7 +141,7 @@ class TransactionModel {
         awb: awb ?? _awb,
         awbType: awbType ?? _awbType,
         registrationId: registrationId ?? _registrationId,
-        apiType: apiType ?? _apiType,
+        type: type ?? _type,
         createdDate: createdDate ?? _createdDate,
         service: service ?? _service,
         status: status ?? _status,
@@ -160,7 +160,7 @@ class TransactionModel {
 
   String? get registrationId => _registrationId;
 
-  String? get apiType => _apiType;
+  String? get type => _type;
 
   String? get createdDate => _createdDate;
 
@@ -187,8 +187,8 @@ class TransactionModel {
     map['awb'] = _awb;
     map['awb_type'] = _awbType;
     map['registration_id'] = _registrationId;
-    map['type'] = _apiType;
-    map['api_type'] = _apiType;
+    map['type'] = _type;
+    map['api_type'] = _type;
     map['created_date'] = _createdDate;
     map['service'] = _service;
     map['status'] = _status;

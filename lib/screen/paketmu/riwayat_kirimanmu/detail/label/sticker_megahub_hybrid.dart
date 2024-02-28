@@ -62,16 +62,16 @@ class StickerMegahubHybrid extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: (Get.width / 1.5) - 50,
+                    width: (Get.width - 51) / 1.5,
                     child: Text(
-                      'Pengirim: ${data.shipper?.name}\n${data.shipper?.address}\nTelp.${data.shipper?.phone}',
+                      'Pengirim: ${data.shipper?.name}\n${data.shipper?.address}, ${data.shipper?.city ?? data.shipper?.origin?.originName}, ${data.shipper?.zip}, Telp.${data.shipper?.phone}',
                       style: labelTextStyle,
                     ),
                   ),
                   const SolidBorder(width: 1, height: 40),
                   Text(data.service ?? '', style: TextStyle(fontWeight: bold)),
                   const SolidBorder(width: 1, height: 40),
-                  Text(data.apiType ?? '', style: TextStyle(fontWeight: bold)),
+                  Text(data.type ?? '', style: TextStyle(fontWeight: bold)),
                   const SolidBorder(width: 0, height: 40),
                 ],
               ),
@@ -81,11 +81,15 @@ class StickerMegahubHybrid extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: (Get.width / 1.5) - 54.5,
-                    child: Text('Penerima: ${data.receiver?.name}\n${data.receiver?.address}\nTelp.${data.receiver?.phone}\n', style: labelTextStyle),
+                    width: (Get.width - 48) / 1.5,
+                    child: Text(
+                        'Penerima: ${data.receiver?.name}\n${data.receiver?.address}, ${data.receiver?.city}, ${data.receiver?.zip}, Telp.${data.receiver?.phone}\n',
+                        style: labelTextStyle),
                   ),
                   const SolidBorder(width: 1, height: 50),
+                  const SolidBorder(width: 0, height: 50),
                   Center(child: Text("Rp ${data.codAmount?.toInt().toCurrency()}", style: TextStyle(fontSize: 15, fontWeight: bold))),
+                  const SolidBorder(width: 0, height: 50),
                   const SolidBorder(width: 0, height: 50),
                 ],
               ),
@@ -109,9 +113,9 @@ class StickerMegahubHybrid extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Deskripsi: ', style: labelTextStyle),
+                                Text('Deskripsi: -\n\n\n', style: labelTextStyle),
                                 const SolidBorder(),
-                                Text('Intruksi Khusus:', style: labelTextStyle),
+                                Text('Intruksi Khusus: -\n\n\n', style: labelTextStyle),
                               ],
                             ),
                             Container(
@@ -126,10 +130,10 @@ class StickerMegahubHybrid extends StatelessWidget {
                                 children: [
                                   Text('Tanggal: ${data.createdDate?.toLongDateFormat()}', style: labelTextStyle),
                                   Text('No. Pelanggan: ${data.receiver?.registrationId}', style: labelTextStyle),
-                                  Text('Kota Asal: ${data.shipper?.city}', style: labelTextStyle),
-                                  Text('Berat:', style: labelTextStyle),
-                                  Text('Jumlah Kiriman:', style: labelTextStyle),
-                                  Text('Pembayaran: ${data.apiType == 'COD' ? 'COD' : 'NON COD'}', style: labelTextStyle),
+                                  Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName}', style: labelTextStyle),
+                                  Text('Berat: -', style: labelTextStyle),
+                                  Text('Jumlah Kiriman: -', style: labelTextStyle),
+                                  Text('Pembayaran: ${data.type}', style: labelTextStyle),
                                   Text('Order ID: ${data.orderId}', style: labelTextStyle),
                                 ],
                               ),
@@ -140,7 +144,9 @@ class StickerMegahubHybrid extends StatelessWidget {
                     ),
                   ),
                   const SolidBorder(width: 1, height: 94),
-                  Center(child: Text("Rp ${data.codAmount?.toInt().toCurrency()}", style: TextStyle(fontSize: 15, fontWeight: bold))),
+                  Center(
+                      child: Text("${data.receiver?.destinationCode?.substring(0, 3)} - \n${data.receiver?.zip}",
+                          style: TextStyle(fontSize: 15, fontWeight: bold))),
                   const SolidBorder(width: 0, height: 94),
                 ],
               )

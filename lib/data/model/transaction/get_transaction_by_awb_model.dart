@@ -48,4 +48,3 @@ class GetTransactionByAwbModel {
     return map;
   }
 }
-

@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,23 @@ class LabelController extends BaseController {
   ScreenshotController screenshotController = ScreenshotController();
   GlobalKey previewContainer = new GlobalKey();
 
+  String? stickerLabel;
+
+  @override
+  void onInit() {
+    super.onInit();
+    Future.wait([initData()]);
+  }
+
+  Future<void> initData() async {
+    try {
+      stickerLabel = await storage.readString(StorageCore.transactionLabel);
+      update();
+    } catch (e) {
+      e.printError();
+    }
+  }
+
   Future getPdf(Uint8List screenShot, TransactionModel data) async {
     final img = await rootBundle.load(ImageConstant.logoJNE);
     final logoJNE = img.buffer.asUint8List();
@@ -29,7 +48,7 @@ class LabelController extends BaseController {
       pw.Page(
         // pageFormat: format,
         build: (context) {
-          return  pw.Column(
+          return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.center,
             // mainAxisAlignment: ,
             children: [
@@ -79,7 +98,7 @@ class LabelController extends BaseController {
                         textAlign: pw.TextAlign.center,
                       ),
                       pw.Text(
-                        data.apiType ?? '-',
+                        data.type ?? '-',
                         style: const pw.TextStyle(fontSize: 10),
                         textAlign: pw.TextAlign.center,
                       ),
@@ -162,7 +181,7 @@ class LabelController extends BaseController {
                             pw.Text('Kota Asal: ${data.shipper?.city}', style: const pw.TextStyle(fontSize: 8)),
                             pw.Text('Berat:', style: const pw.TextStyle(fontSize: 8)),
                             pw.Text('Jumlah Kiriman:', style: const pw.TextStyle(fontSize: 8)),
-                            pw.Text('Pembayaran: ${data.apiType == 'COD' ? 'COD' : 'NON COD'}', style: const pw.TextStyle(fontSize: 8)),
+                            pw.Text('Pembayaran: ${data.type == 'COD' ? 'COD' : 'NON COD'}', style: const pw.TextStyle(fontSize: 8)),
                             pw.Text('Order ID: ${data.orderId}', style: const pw.TextStyle(fontSize: 8)),
                           ],
                         ),
@@ -300,14 +319,14 @@ class LabelController extends BaseController {
     pdfFile.writeAsBytesSync(pdf.save() as List<int>);
   }
 
-  // takeScreenShot() async{
-  //   RenderObject? boundary = previewContainer.currentContext?.findRenderObject();
-  //   ui.Image image = await boundary?.toImage();
-  //   final directory = (await getApplicationDocumentsDirectory()).path;
-  //   ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-  //   Uint8List? pngBytes = byteData?.buffer.asUint8List();
-  //   print(pngBytes);
-  //   File imgFile =new File('$directory/screenshot.png');
-  //   imgFile.writeAsBytes(pngBytes as List<int>);
-  // }
+// takeScreenShot() async{
+//   RenderObject? boundary = previewContainer.currentContext?.findRenderObject();
+//   ui.Image image = await boundary?.toImage();
+//   final directory = (await getApplicationDocumentsDirectory()).path;
+//   ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+//   Uint8List? pngBytes = byteData?.buffer.asUint8List();
+//   print(pngBytes);
+//   File imgFile =new File('$directory/screenshot.png');
+//   imgFile.writeAsBytes(pngBytes as List<int>);
+// }
 }

@@ -13,8 +13,10 @@ import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class DetailRiwayatKirimanScreen extends StatelessWidget {
@@ -32,7 +34,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                 title: 'Detail Kiriman'.tr,
               ),
               body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.all(20),
                 child: ListView(
                   children: [
                     Row(
@@ -58,9 +60,15 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Image.asset(
-                          ImageConstant.userPic,
-                          height: 119,
+                        Container(
+                          child: BarcodeWidget(
+                            barcode: Barcode.qrCode(),
+                            data: controller.transactionModel?.awb ?? '',
+                            drawText: false,
+                            height: 120,
+                            width: 120,
+                            color: blueJNE,
+                          ),
                         ),
                       ],
                     ),
@@ -146,7 +154,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    controller.transactionModel?.apiType ?? '-',
+                                    controller.transactionModel?.type ?? '-',
                                     style: itemTextStyle,
                                   ),
                                   Text(
@@ -182,7 +190,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                     style: itemTextStyle,
                                   ),
                                   Text(
-                                    '${controller.transactionModel?.account?.accountNumber}/${controller.transactionModel?.account?.accountName}/${controller.transactionModel?.account?.accountCustType}',
+                                    '${controller.transactionModel?.account?.accountNumber}/${controller.transactionModel?.account?.accountName}/${controller.transactionModel?.account?.accountType}',
                                     style: itemTextStyle,
                                   ),
                                 ],

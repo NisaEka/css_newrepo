@@ -10,7 +10,6 @@ import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';

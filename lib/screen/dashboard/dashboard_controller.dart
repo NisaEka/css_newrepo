@@ -102,6 +102,7 @@ class DashboardController extends BaseController {
       ),
     ];
     var favMenu = await storage.readString(StorageCore.favoriteMenu);
+    var stickerLabel = await storage.readString(StorageCore.transactionLabel);
     print('menu kosong : ${favMenu.isEmpty}');
     update();
     if (favMenu.isEmpty == true) {
@@ -115,6 +116,10 @@ class DashboardController extends BaseController {
       var menu = MenuItemModel.fromJson(jsonDecode(favMenu));
       print('fav menu kosong : ${menu.items != null} ${favMenu.isEmpty}');
       menuItems.addAll(menu.items ?? []);
+    }
+
+    if (stickerLabel.isEmpty == true) {
+      await storage.writeString(StorageCore.transactionLabel, "/sticker_megahub1");
     }
     update();
   }
@@ -161,39 +166,39 @@ class DashboardController extends BaseController {
     marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
 
     // if (isLogin == true) {
-      try {
-        await transaction.getSender().then((value) async => await storage.saveData(
-              StorageCore.shipper,
-              value.payload,
-            ));
+    try {
+      await transaction.getSender().then((value) async => await storage.saveData(
+            StorageCore.shipper,
+            value.payload,
+          ));
 
-        await transaction.getAccountNumber().then((value) async => await storage.saveData(
-              StorageCore.accounts,
-              value,
-            ));
+      await transaction.getAccountNumber().then((value) async => await storage.saveData(
+            StorageCore.accounts,
+            value,
+          ));
 
-        var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
-        userName = shipper.name;
+      var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+      userName = shipper.name;
 
-        await transaction.getDropshipper().then((value) async => await storage.saveData(
-              StorageCore.dropshipper,
-              value,
-            ));
+      await transaction.getDropshipper().then((value) async => await storage.saveData(
+            StorageCore.dropshipper,
+            value,
+          ));
 
-        await transaction.getReceiver().then((value) async => await storage.saveData(
-              StorageCore.receiver,
-              value,
-            ));
+      await transaction.getReceiver().then((value) async => await storage.saveData(
+            StorageCore.receiver,
+            value,
+          ));
 
-        await profil.getBasicProfil().then((value) async => await storage.saveData(
-              StorageCore.userProfil,
-              value.payload,
-            ));
+      await profil.getBasicProfil().then((value) async => await storage.saveData(
+            StorageCore.userProfil,
+            value.payload,
+          ));
 
-        update();
-      } catch (e) {
-        e.printError();
-      }
+      update();
+    } catch (e) {
+      e.printError();
+    }
     // }
 
     isLoading = false;

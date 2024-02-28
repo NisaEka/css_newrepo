@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
 
 DataTransactionModel transactionDataModelFromJson(String str) => DataTransactionModel.fromJson(json.decode(str));
@@ -202,14 +203,12 @@ class Receiver {
     _country = json['country'];
     _contact = json['contact'];
     _phone = json['phone'];
-    _district = json['district'];
-    _subDistrict = json['sub_district'];
+    _district = json['district'] ?? json['receiver_district'];
+    _subDistrict = json['sub_district'] ?? json['receiver_sub_district'];
     _destinationCode = json['destination_code'];
     _destinationDescription = json['destination_description'];
     _idDestination = json['id_destination'];
     _idReceive = json['id_receive'];
-    _district = json['receiver_district'];
-    _subDistrict = json['receiver_sub_district'];
     _registrationId = json['registration_id'];
   }
 
@@ -355,7 +354,7 @@ class Shipper {
     String? contact,
     String? phone,
     bool? dropship,
-    String? origin,
+    OriginModel? origin,
   }) {
     _name = name;
     _address = address;
@@ -386,7 +385,7 @@ class Shipper {
     _phone = json['phone'];
     _dropship = json['dropship'];
     _zip = json['zip_code'];
-    _origin = json['origin'];
+    _origin = json['origin'] != null ? OriginModel.fromJson(json['origin']) : json['origin'];
   }
 
   String? _name;
@@ -401,7 +400,7 @@ class Shipper {
   String? _contact;
   String? _phone;
   bool? _dropship;
-  String? _origin;
+  OriginModel? _origin;
 
   Shipper copyWith({
     String? name,
@@ -416,7 +415,7 @@ class Shipper {
     String? contact,
     String? phone,
     bool? dropship,
-    String? origin,
+    OriginModel? origin,
   }) =>
       Shipper(
         name: name ?? _name,
@@ -458,7 +457,7 @@ class Shipper {
 
   bool? get dropship => _dropship;
 
-  String? get origin => _origin;
+  OriginModel? get origin => _origin;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -475,7 +474,11 @@ class Shipper {
     map['phone'] = _phone;
     map['dropship'] = _dropship;
     map['zip_code'] = _zip;
-    map['origin'] = _origin;
+    if (_origin != null) {
+      map['origin'] = _origin?.toJson();
+    } else {
+      map['origin'] = _origin;
+    }
 
     return map;
   }

@@ -391,7 +391,7 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                           orderID: item.orderId ?? '-',
                           service: item.service.toString(),
                           noResi: item.awb.toString(),
-                          apiType: item.apiType.toString(),
+                          apiType: item.type.toString(),
                           penerima: item.receiver?.name ?? '',
                           status: item.status.toString().tr,
                           isSelected: controller.selectedTransaction.where((e) => e == item).isNotEmpty,

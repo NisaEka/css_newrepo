@@ -38,6 +38,13 @@ class LabelScreen extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.all(25),
                 child: StickerMegahubHybrid(data: data),
+                // child: controller.stickerLabel == "/sticker_default"
+                //     ? StickerDefault(data: data)
+                //     : controller.stickerLabel == "/sticker_A6"
+                //         ? StickerA6(data: data)
+                //         : controller.stickerLabel == "/sticker_megahub1"
+                //             ? StickerMegahub1(data: data)
+                //             : StickerMegahubHybrid(data: data),
               ),
             ),
             // floatingActionButton: FloatingActionButton(

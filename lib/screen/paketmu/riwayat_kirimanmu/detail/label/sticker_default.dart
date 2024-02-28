@@ -65,8 +65,8 @@ class StickerDefault extends StatelessWidget {
                     children: [
                       Text("From :", style: TextStyle(fontWeight: bold)),
                       Text(data.shipper?.name ?? ''),
-                      Text(data.shipper?.origin ?? ''),
-                      Text(data.shipper?.city ?? ''),
+                      Text(data.shipper?.origin?.originName ?? ''),
+                      Text(data.shipper?.city ?? data.shipper?.origin?.originName ?? ''),
                       Text(data.shipper?.address ?? ''),
                       Text("\n\nKode Pos : ${data.shipper?.zip}"),
                       Text(data.shipper?.phone ?? '')
@@ -77,14 +77,14 @@ class StickerDefault extends StatelessWidget {
                     children: [
                       Text("To :", style: TextStyle(fontWeight: bold)),
                       Text("${data.receiver?.name}\n"),
-                      Text(data.receiver?.subDistrict ?? ''),
+                      Text(data.receiver?.destinationDescription ?? ''),
                       Text(data.receiver?.city ?? ''),
                       Text(data.receiver?.address ?? ''),
                       Text("\n\nKode Pos : ${data.receiver?.zip}"),
                       Text(data.receiver?.phone ?? ''),
-                      Text(data.receiver?.destinationCode ?? '-', style: TextStyle(fontSize: 38, fontWeight: bold)),
+                      Text(data.receiver?.destinationCode?.substring(0, 3) ?? '-', style: TextStyle(fontSize: 38, fontWeight: bold)),
                       Text(
-                        'NON CASHLESS',
+                        data.account?.accountType ?? '',
                         style: TextStyle(fontWeight: bold),
                       )
                     ],
@@ -99,7 +99,7 @@ class StickerDefault extends StatelessWidget {
               ),
               CustomLabelText(
                 title: "Contact Person:",
-                value: data.shipper?.name ?? '',
+                value: data.shipper?.contact ?? data.shipper?.name ?? '-',
                 titleTextStyle: TextStyle(fontWeight: bold),
                 valueTextStyle: const TextStyle(),
               ),
@@ -119,7 +119,7 @@ class StickerDefault extends StatelessWidget {
                     children: [
                       CustomLabelText(
                         title: "Qty:",
-                        value: '1',
+                        value: '-',
                         titleTextStyle: TextStyle(fontWeight: bold),
                         valueTextStyle: const TextStyle(),
                         isHorizontal: true,
@@ -135,7 +135,7 @@ class StickerDefault extends StatelessWidget {
                         children: [
                           CustomLabelText(
                             title: "Goods Type:   ",
-                            value: 'Paket',
+                            value: '-',
                             titleTextStyle: TextStyle(fontWeight: bold),
                             valueTextStyle: const TextStyle(),
                           ),
@@ -152,7 +152,7 @@ class StickerDefault extends StatelessWidget {
                 children: [
                   CustomLabelText(
                     title: "Insurance:",
-                    value: "NO",
+                    value: "-",
                     titleTextStyle: TextStyle(fontWeight: bold),
                     valueTextStyle: const TextStyle(),
                     isHorizontal: true,
@@ -161,7 +161,7 @@ class StickerDefault extends StatelessWidget {
                     children: [
                       CustomLabelText(
                         title: "Packing Kayu:   ",
-                        value: 'NO',
+                        value: '-',
                         titleTextStyle: TextStyle(fontWeight: bold),
                         valueTextStyle: const TextStyle(),
                       ),
@@ -175,7 +175,7 @@ class StickerDefault extends StatelessWidget {
                 children: [
                   CustomLabelText(
                     title: "Estimasi Ongkir: Rp",
-                    value: "140.000,00",
+                    value: "-",
                     titleTextStyle: TextStyle(fontWeight: bold),
                     valueTextStyle: const TextStyle(),
                   ),
