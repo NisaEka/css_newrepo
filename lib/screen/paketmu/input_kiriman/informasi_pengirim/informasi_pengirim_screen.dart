@@ -7,13 +7,13 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/infor
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/bar/offlinebar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customswitch.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
+import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -44,9 +44,36 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                     steps: controller.steps,
                   ),
                   const SizedBox(height: 15),
-                  controller.isOnline ? const SizedBox() : const OfflineBar(),
+                  // controller.isOnline ? const SizedBox() : const OfflineBar(),
                 ],
               ),
+              action: [
+                controller.isOnline
+                    ? const SizedBox()
+                    : Tooltip(
+                        key: controller.offlineTooltipKey,
+                        triggerMode: TooltipTriggerMode.tap,
+                        showDuration: const Duration(seconds: 3),
+                        decoration: ShapeDecoration(
+                          color: greyColor,
+                          shape: ToolTipCustomShape(usePadding: false),
+                        ),
+                        // textStyle: listTitleTextStyle.copyWith(color: whiteColor),
+                        message: 'Offline Mode',
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 20),
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: successColor,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: const Icon(
+                            Icons.cloud_off,
+                            color: whiteColor,
+                          ),
+                        ),
+                      )
+              ],
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -79,13 +106,19 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                               (e) => AccountListItem(
                                                 accountID: e.accountId.toString(),
                                                 accountNumber: e.accountNumber.toString(),
-                                                accountName: e.accountName.toString(),
+                                                accountName: "${e.accountName.toString()} / ${e.accountType ?? e.accountService}",
                                                 accountType: e.accountService.toString(),
                                                 // isSelected: e.isSelected ?? false,
                                                 isSelected: controller.selectedAccount == e ? true : false,
                                                 onTap: () {
-                                                  controller.selectedAccount = e;
-                                                  controller.codOgkir = false;
+                                                  if (controller.selectedAccount == e && controller.selectedAccount != null) {
+                                                    controller.selectedAccount = null;
+                                                    controller.update();
+                                                  } else {
+                                                    controller.selectedAccount = e;
+                                                    controller.codOgkir = false;
+                                                    controller.update();
+                                                  }
                                                   controller.getOriginList('', e.accountId.toString());
                                                   controller.formValidate();
                                                   controller.update();

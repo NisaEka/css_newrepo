@@ -95,10 +95,10 @@ class Account {
     _accountId = json['account_id'];
     _accountName = json['account_name'];
     _accountBranch = json['account_branch'];
-    _accountService = json['account_service'];
+    _accountService = json['account_service'] ?? json['service'];
     _accountCategory = json['account_category'];
     _accountCustType = json['account_cust_type'];
-    _accountNumber = json['account_number'];
+    _accountNumber = json['account_number'] ?? json['number'];
     _accountStatus = json['account_status'];
     _accountCodFee = json['account_cod_fee'];
     _accountTransaction = json['account_transaction'];
@@ -178,9 +178,11 @@ class Account {
     map['account_name'] = _accountName;
     map['account_branch'] = _accountBranch;
     map['account_service'] = _accountService;
+    map['service'] = _accountService;
     map['account_category'] = _accountCategory;
     map['account_cust_type'] = _accountCustType;
     map['account_number'] = _accountNumber;
+    map['number'] = _accountNumber;
     map['account_status'] = _accountStatus;
     map['account_cod_fee'] = _accountCodFee;
     map['account_transaction'] = _accountTransaction;

@@ -26,8 +26,7 @@ class LabelScreen extends StatelessWidget {
               title: "Cetak Label".tr,
             ),
             // body: PdfPreview(
-            //   // maxPageWidth: Get.width
-            //
+            //   maxPageWidth: Get.width,
             //   build: (format) => StickerMegahub1(data: data).generatePdf(format),
             //   // actions: actions,
             //   // onPrinted: _showPrintedToast,
@@ -37,14 +36,14 @@ class LabelScreen extends StatelessWidget {
               controller: controller.screenshotController,
               child: Container(
                 margin: const EdgeInsets.all(25),
-                child: StickerMegahubHybrid(data: data),
-                // child: controller.stickerLabel == "/sticker_default"
-                //     ? StickerDefault(data: data)
-                //     : controller.stickerLabel == "/sticker_A6"
-                //         ? StickerA6(data: data)
-                //         : controller.stickerLabel == "/sticker_megahub1"
-                //             ? StickerMegahub1(data: data)
-                //             : StickerMegahubHybrid(data: data),
+                // child: StickerMegahubHybrid(data: data),
+                child: controller.stickerLabel == "/sticker_default"
+                    ? StickerDefault(data: data)
+                    : controller.stickerLabel == "/sticker_A6"
+                        ? StickerA6(data: data)
+                        : controller.stickerLabel == "/sticker_megahub1"
+                            ? StickerMegahub1(data: data)
+                            : StickerMegahubHybrid(data: data),
               ),
             ),
             // floatingActionButton: FloatingActionButton(

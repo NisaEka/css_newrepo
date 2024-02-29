@@ -7,6 +7,7 @@ import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_cont
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
+import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcheckbox.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
@@ -74,6 +75,8 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                                       onPressed: () {
                                         if (!controller.isFiltered) {
                                           controller.resetFilter();
+                                        }else{
+                                          Get.back();
                                         }
                                       },
                                       icon: const Icon(Icons.close),
@@ -140,7 +143,11 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                                           delegate: SliverChildBuilderDelegate(
                                             (context, index) => GestureDetector(
                                               onTap: () => setState(() {
-                                                controller.selectedStatusKiriman = controller.listStatusKiriman[index];
+                                                if (controller.selectedStatusKiriman != controller.listStatusKiriman[index]) {
+                                                  controller.selectedStatusKiriman = controller.listStatusKiriman[index];
+                                                } else {
+                                                  controller.selectedStatusKiriman = null;
+                                                }
                                                 controller.update();
                                               }),
                                               child: Container(
@@ -221,7 +228,13 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                                             controller.selectedPetugasEntry != null ||
                                             controller.selectedStatusKiriman != null) {
                                           controller.isFiltered = true;
+                                          if (controller.startDate != null && controller.endDate != null) {
+                                            controller.transDate =
+                                                "${controller.startDate?.millisecondsSinceEpoch ?? ''}-${controller.endDate?.millisecondsSinceEpoch ?? ''}";
+                                          }
                                           controller.update();
+
+                                          controller.pagingController.refresh();
                                           Get.back();
                                         }
                                       },
@@ -251,11 +264,16 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
               child: Column(
                 children: [
                   CustomSearchField(
-                    controller: TextEditingController(),
+                    controller: controller.searchField,
                     hintText: 'Cari Transaksimu'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
                     ),
+                    onSubmit: (value) {
+                      controller.searchField.text = value;
+                      controller.update();
+                      controller.pagingController.refresh();
+                    },
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -387,6 +405,7 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                       builderDelegate: PagedChildBuilderDelegate<TransactionModel>(
                         transitionDuration: const Duration(milliseconds: 500),
                         itemBuilder: (context, item, index) => RiwayatKirimanListItem(
+                          index: index,
                           tanggalEntry: item.createdDate?.toShortDateTimeFormat() ?? '',
                           orderID: item.orderId ?? '-',
                           service: item.service.toString(),
@@ -401,6 +420,21 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                           onTap: () {
                             controller.unselect(item);
                           },
+                          onDelete: (context) => showDialog(
+                            context: context,
+                            builder: (c) => DeleteAlertDialog(
+                              onDelete: () {
+                                controller.delete(item);
+                                controller.initData();
+                                Get.back();
+                              },
+                              onBack: () {
+                                Get.back();
+                                controller.pagingController.refresh();
+                                controller.initData();
+                              },
+                            ),
+                          ),
                         ),
                         firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                         firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(

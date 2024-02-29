@@ -7,18 +7,21 @@ import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InformasiPenerimaController extends BaseController {
+  TransactionModel? data = Get.arguments['data'];
   Shipper shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
   Origin origin = Get.arguments['origin'];
   Account account = Get.arguments['account'];
 
+  final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
   final formKey = GlobalKey<FormState>();
   final namaPenerima = TextEditingController();
   final nomorTelpon = TextEditingController();
@@ -38,7 +41,7 @@ class InformasiPenerimaController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([getDestinationList('')]);
+    Future.wait([getDestinationList(''), initData()]);
     connection.isOnline().then((value) => isOnline = value);
 
     connection.checkConnection();
@@ -50,6 +53,26 @@ class InformasiPenerimaController extends BaseController {
       });
       update();
     }));
+  }
+
+  Future<void> initData() async {
+    if (data != null) {
+      namaPenerima.text = data?.receiver?.name ?? '';
+      nomorTelpon.text = data?.receiver?.phone ?? '';
+      selectedDestination = DestinationModel(
+        id: data?.receiver?.idDestination?.toInt(),
+        destinationCode: data?.receiver?.destinationCode,
+        cityName: data?.receiver?.city,
+        countryName: data?.receiver?.country,
+        districtName: data?.receiver?.district,
+        provinceName: data?.receiver?.region,
+        subDistrictName: data?.receiver?.subDistrict,
+        zipCode: data?.receiver?.zip,
+      );
+      alamatLengkap.text = data?.receiver?.address ?? '';
+
+      update();
+    }
   }
 
   FutureOr<ReceiverModel?> getSelectedReceiver(ReceiverModel receiver) async {
@@ -79,7 +102,7 @@ class InformasiPenerimaController extends BaseController {
     try {
       var response = await transaction.getDestination(keyword);
       destinationModel = response;
-    } catch (e,i) {
+    } catch (e, i) {
       e.printError();
       i.printError();
     }

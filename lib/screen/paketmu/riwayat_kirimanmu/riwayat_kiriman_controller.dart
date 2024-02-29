@@ -12,8 +12,9 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 class RiwayatKirimanController extends BaseController {
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
+  final searchField = TextEditingController();
   final PagingController<int, TransactionModel> pagingController = PagingController(firstPageKey: 1);
-  static const pageSize = 2;
+  static const pageSize = 10;
 
   int selectedKiriman = 0;
   int total = 0;
@@ -25,20 +26,13 @@ class RiwayatKirimanController extends BaseController {
   String? selectedPetugasEntry;
   String? transType;
   String? transDate;
-  String? transStatus;
 
   bool isFiltered = false;
   bool isLoading = false;
   bool isSelect = false;
   bool isSelectAll = false;
 
-  List<String> listStatusKiriman = [
-    "Masih Di Kamu",
-    "Sudah Dijemput",
-    "Dalam Perjalanan",
-    "Sukses Diterima",
-    "Sukses Dikembalikan",
-  ];
+  List<String> listStatusKiriman = [];
 
   List<TransactionModel> selectedTransaction = [];
 
@@ -58,11 +52,17 @@ class RiwayatKirimanController extends BaseController {
   Future<void> initData() async {
     // transactionList = [];
     selectedTransaction = [];
+    listStatusKiriman = [];
     try {
       await transaction.getTransactionCount().then((value) {
         total = value.payload?.total?.toInt() ?? 0;
         cod = value.payload?.cod?.toInt() ?? 0;
         noncod = value.payload?.nonCod?.toInt() ?? 0;
+      });
+
+      await transaction.getTransactionStatus().then((value) {
+        listStatusKiriman.addAll(value.payload ?? []);
+        update();
       });
 
       // await transaction.getTransaction(1, pageSize, '', '', '').then(
@@ -83,7 +83,8 @@ class RiwayatKirimanController extends BaseController {
         pageSize,
         transType ?? '',
         transDate ?? '',
-        transStatus ?? '',
+        selectedStatusKiriman ?? '',
+        searchField.text,
       );
 
       final isLastPage = (trans.payload?.length ?? 0) < pageSize;
@@ -142,6 +143,10 @@ class RiwayatKirimanController extends BaseController {
     selectedPetugasEntry = null;
     selectedStatusKiriman = null;
     isFiltered = false;
+    searchField.clear();
+    transDate = null;
+
+    pagingController.refresh();
     update();
     Get.back();
   }
@@ -180,6 +185,20 @@ class RiwayatKirimanController extends BaseController {
         'awb': item.awb,
       });
     }
+  }
+
+  Future<void> delete(TransactionModel item) async {
+    try {
+      await transaction.deleteTransaction(item.awb.toString()).then((value) {
+        pagingController.refresh();
+        initData();
+        update();
+      });
+    } catch (e) {
+      e.printError();
+    }
+
+    update();
   }
 
   @override

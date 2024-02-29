@@ -151,7 +151,7 @@ class StickerMegahub1 extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Tanggal: ${data.createdDate?.toLongDateFormat()}', style: labelTextStyle),
-                      Text('No. Pelanggan: ${data.receiver?.registrationId}', style: labelTextStyle),
+                      Text('No. Pelanggan: ${data.account?.accountNumber}', style: labelTextStyle),
                       Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName}', style: labelTextStyle),
                       Text('Berat: -', style: labelTextStyle),
                       Text('Jumlah Kiriman: -', style: labelTextStyle),
@@ -260,7 +260,7 @@ class StickerMegahub1 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Tanggal: ${data.createdDate}', style: labelTextStyle),
-                  Text('No. Pelanggan: ${data.receiver?.registrationId}', style: labelTextStyle),
+                  Text('No. Pelanggan: ${data.account?.accountNumber}', style: labelTextStyle),
                   Text('Deskripsi: -', style: labelTextStyle),
                   Text('Berat: -', style: labelTextStyle),
                   Text('Biaya Kirim: -', style: labelTextStyle),

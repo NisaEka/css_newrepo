@@ -5,10 +5,10 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/infor
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/bar/offlinebar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,9 +36,36 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                     steps: controller.steps,
                   ),
                   const SizedBox(height: 15),
-                  !controller.isOnline ? const OfflineBar() : const SizedBox(),
+                  // !controller.isOnline ? const OfflineBar() : const SizedBox(),
                 ],
               ),
+              action: [
+                controller.isOnline
+                    ? const SizedBox()
+                    : Tooltip(
+                  key: controller.offlineTooltipKey,
+                  triggerMode: TooltipTriggerMode.tap,
+                  showDuration: const Duration(seconds: 3),
+                  decoration: ShapeDecoration(
+                    color: greyColor,
+                    shape: ToolTipCustomShape(usePadding: false),
+                  ),
+                  // textStyle: listTitleTextStyle.copyWith(color: whiteColor),
+                  message: 'Offline Mode',
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 20),
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: successColor,
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: const Icon(
+                      Icons.cloud_off,
+                      color: whiteColor,
+                    ),
+                  ),
+                )
+              ],
             ),
             body: SingleChildScrollView(
               child: Column(

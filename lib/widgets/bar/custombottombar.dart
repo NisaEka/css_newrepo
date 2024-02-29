@@ -75,7 +75,7 @@ class BottomBar extends StatelessWidget {
             backgroundColor: isLogin ? redJNE : errorLightColor2,
             // onPressed: () => Get.to(const InputKirimanScreen()),
             onPressed: () => isLogin
-                ? Get.to(const InformasiPengirimScreen())
+                ? Get.to(const InformasiPengirimScreen(), arguments: {})
                 : showDialog(
                     context: context,
                     builder: (context) => const LoginAlertDialog(),

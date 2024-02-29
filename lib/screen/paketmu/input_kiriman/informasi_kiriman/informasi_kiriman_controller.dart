@@ -10,6 +10,7 @@ import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
@@ -21,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InformasiKirimaController extends BaseController {
+  TransactionModel? data = Get.arguments['data'];
   Shipper shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
@@ -294,6 +296,15 @@ class InformasiKirimaController extends BaseController {
     goods != null ? loadDraft() : null;
     isServiceLoad = false;
     update();
+
+    if(data!=null){
+      // jenisBarang.text = data?.goods.tye
+      // noReference.text = data?.orderId
+      // namaBarang.text data?.goods.name
+      // hargaBarang.text = data?.goods.value
+      // jumlahPacking.text = data?.qty
+      update();
+    }
   }
 
   Future<void> saveDraft() async {

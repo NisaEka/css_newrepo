@@ -1,11 +1,9 @@
-import 'package:barcode/barcode.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_controller.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_screen.dart';
-import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub1.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -13,10 +11,8 @@ import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class DetailRiwayatKirimanScreen extends StatelessWidget {
@@ -60,15 +56,13 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Container(
-                          child: BarcodeWidget(
-                            barcode: Barcode.qrCode(),
-                            data: controller.transactionModel?.awb ?? '',
-                            drawText: false,
-                            height: 120,
-                            width: 120,
-                            color: blueJNE,
-                          ),
+                        BarcodeWidget(
+                          barcode: Barcode.qrCode(),
+                          data: controller.transactionModel?.awb ?? '',
+                          drawText: false,
+                          height: 120,
+                          width: 120,
+                          color: blueJNE,
                         ),
                       ],
                     ),
@@ -214,6 +208,16 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                 title: controller.transactionModel?.status == "MASIH DI KAMU" ? "Edit Kiriman".tr : "Hubungi Aku".tr,
                 color: controller.transactionModel?.status == "MASIH DI KAMU" ? successLightColor3 : errorLightColor3,
                 margin: const EdgeInsets.all(20),
+                onPressed: () {
+                  if (controller.transactionModel?.status == "MASIH DI KAMU") {
+                    Get.to(
+                      const InformasiPengirimScreen(),
+                      arguments: {
+                        'data': controller.transactionModel,
+                      },
+                    );
+                  }
+                },
               ),
             ),
             controller.isLoading == true ? const LoadingDialog() : Container(),

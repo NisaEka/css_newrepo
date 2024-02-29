@@ -13,6 +13,7 @@ import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.d
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_status_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
@@ -294,6 +295,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     String transType,
     String transDate,
     String transStatus,
+    String keyword,
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
@@ -304,6 +306,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
           "transaction_status": transStatus,
           "transaction_date": transDate,
           "transaction_type": transType,
+          "keyword": keyword,
           "page": page,
           "limit": limit,
         },
@@ -351,6 +354,42 @@ class TransactionRepositoryImpl extends TransactionRepository {
       print("response error: ${e.response?.data}");
       // return e.error;
       return GetTransactionCountModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<PostTransactionModel> deleteTransaction(String awb) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.delete(
+        "/transaction/$awb",
+      );
+      print(response.data);
+      // return response.data;
+      return PostTransactionModel.fromJson(response.data);
+    } on DioError catch (e) {
+      print("response error: ${e.response?.data}");
+      // return e.error;
+      return PostTransactionModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<GetTransactionStatusModel> getTransactionStatus() async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.get(
+        "/transaction/status",
+      );
+      // print(response.data);
+      // return response.data;
+      return GetTransactionStatusModel.fromJson(response.data);
+    } on DioError catch (e) {
+      print("response error: ${e.response?.data}");
+      // return e.error;
+      return GetTransactionStatusModel.fromJson(e.response?.data);
     }
   }
 }

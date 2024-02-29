@@ -8,12 +8,15 @@ import 'package:css_mobile/data/model/transaction/get_account_number_model.dart'
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InformasiPengirimController extends BaseController {
+  final TransactionModel? data = Get.arguments['data'];
+
   final formKey = GlobalKey<FormState>();
   final nomorAkun = TextEditingController();
   final namaPengirim = TextEditingController();
@@ -21,6 +24,9 @@ class InformasiPengirimController extends BaseController {
   final kotaPengirim = TextEditingController();
   final kodePos = TextEditingController();
   final alamatLengkap = TextEditingController();
+
+  final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
+
 
   bool dropshipper = false;
   bool codOgkir = false;
@@ -87,6 +93,7 @@ class InformasiPengirimController extends BaseController {
 
     try {
       await transaction.getAccountNumber().then((value) => accountList.addAll(value.payload ?? []));
+      update();
       await transaction.getSender().then((value) {
         senderOrigin = value.payload;
         namaPengirim.text = value.payload?.name ?? '';
@@ -121,6 +128,41 @@ class InformasiPengirimController extends BaseController {
 
     isLoading = false;
     update();
+
+    if (data != null) {
+      selectedAccount = accountList.where((element) => element.accountNumber == data?.account?.accountNumber).first;
+      namaPengirim.text = data?.shipper?.name ?? '';
+      nomorTelpon.text = data?.shipper?.phone ?? '';
+      selectedOrigin = data?.shipper?.origin;
+      kotaPengirim.text = data?.shipper?.city ?? data?.shipper?.origin?.originName ?? '';
+      kodePos.text = data?.shipper?.zip ?? '';
+      alamatLengkap.text = data?.shipper?.address ?? '';
+
+      senderOrigin = ShipperModel(
+        origin: data?.shipper?.origin,
+        name: data?.shipper?.name,
+        address: data?.shipper?.address,
+        phone: data?.shipper?.phone,
+        region: Region(
+          name: data?.shipper?.region,
+        ),
+        zipCode: data?.shipper?.zip,
+      );
+      update();
+
+      // Get.showSnackbar(
+      //   GetSnackBar(
+      //     icon: const Icon(
+      //       Icons.info,
+      //       color: whiteColor,
+      //     ),
+      //     message: selectedAccount.toString(),
+      //     isDismissible: true,
+      //     duration: const Duration(seconds: 3),
+      //     backgroundColor: Colors.red,
+      //   ),
+      // );
+    }
   }
 
   Future<List<OriginModel>> getOriginList(String keyword, String accountID) async {
@@ -164,6 +206,7 @@ class InformasiPengirimController extends BaseController {
         phone: senderOrigin?.phone,
         dropship: dropshipper,
       ),
+      "data": data,
     });
   }
 

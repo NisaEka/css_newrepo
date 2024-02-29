@@ -8,7 +8,6 @@ import 'package:css_mobile/util/input_formatter/thousand_separator_input_formate
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/bar/offlinebar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -105,7 +104,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                             child: AccountListItem(
                               accountID: controller.account.accountId ?? '',
                               accountNumber: controller.account.accountNumber ?? '',
-                              accountName: controller.account.accountName ?? '',
+                              accountName:
+                                  "${controller.account.accountName.toString()} / ${controller.account.accountType ?? controller.account.accountService}",
                               accountType: controller.account.accountService ?? '',
                               isSelected: true,
                               width: Get.width,
