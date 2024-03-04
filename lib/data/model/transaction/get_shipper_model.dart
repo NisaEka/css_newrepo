@@ -65,7 +65,7 @@ class ShipperModel {
     String? phone,
     String? zipCode,
     String? address,
-    OriginModel? origin,
+    Origin? origin,
     Region? region,
   }) {
     _name = name;
@@ -81,7 +81,7 @@ class ShipperModel {
     _phone = json['phone'];
     _zipCode = json['zip_code'];
     _address = json['address'];
-    _origin = json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
+    _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
     _region = json['region'] != null ? Region.fromJson(json['region']) : null;
   }
 
@@ -89,7 +89,7 @@ class ShipperModel {
   String? _phone;
   String? _zipCode;
   String? _address;
-  OriginModel? _origin;
+  Origin? _origin;
   Region? _region;
 
   ShipperModel copyWith({
@@ -97,7 +97,7 @@ class ShipperModel {
     String? phone,
     String? zipCode,
     String? address,
-    OriginModel? origin,
+    Origin? origin,
     Region? region,
   }) =>
       ShipperModel(
@@ -117,7 +117,7 @@ class ShipperModel {
 
   String? get address => _address;
 
-  OriginModel? get origin => _origin;
+  Origin? get origin => _origin;
 
   Region? get region => _region;
 

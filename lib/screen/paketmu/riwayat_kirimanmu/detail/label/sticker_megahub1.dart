@@ -4,7 +4,8 @@ import 'dart:typed_data';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub_hybrid_1.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/solid_border.dart';
@@ -15,7 +16,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class StickerMegahub1 extends StatelessWidget {
-  final TransactionModel data;
+  final DataTransactionModel data;
 
   const StickerMegahub1({super.key, required this.data});
 
@@ -25,13 +26,31 @@ class StickerMegahub1 extends StatelessWidget {
       // crossAxisAlignment: CrossAxisAlignment.center,
       // mainAxisAlignment: ,
       children: [
+        sticker1(),
+        const SizedBox(height: 25),
+        StickerMegahubHybrid1(data: data).sticker2(),
+        Center(
+          child: Text(
+            'Untuk informasi dan pengecekan status kiriman silahkan mengunjungi www.jne.co.id',
+            style: labelTextStyle,
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget sticker1() {
+    return Column(
+      children: [
         Container(
+          width: Get.width - 51,
           padding: const EdgeInsets.all(15),
           decoration: const BoxDecoration(
             border: Border(
               left: BorderSide(),
               top: BorderSide(),
               right: BorderSide(),
+              bottom: BorderSide()
             ),
           ),
           child: Column(
@@ -58,13 +77,18 @@ class StickerMegahub1 extends StatelessWidget {
           ),
         ),
         Table(
-          border: TableBorder.all(),
+          border: const TableBorder(
+            verticalInside: BorderSide(),
+            right: BorderSide(),
+            left: BorderSide(),
+            bottom: BorderSide()
+          ),
           children: <TableRow>[
             TableRow(
-              decoration: BoxDecoration(border: Border.all()),
+              // decoration: BoxDecoration(border: Border.all()),
               children: <Widget>[
                 Text(
-                  data.service ?? '-',
+                  data.delivery?.serviceCode ?? '-',
                   style: itemTextStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -74,8 +98,8 @@ class StickerMegahub1 extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Rp. ${data.codAmount?.toInt().toCurrency()}',
-                  style: itemTextStyle,
+                  'Rp ${data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}',
+                  style: itemTextStyle.copyWith(fontWeight: bold),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -99,11 +123,11 @@ class StickerMegahub1 extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                        'Pengirim: ${data.shipper?.name}\n${data.shipper?.address}, ${data.shipper?.city ?? data.shipper?.origin?.originName}, ${data.shipper?.zip}, Telp.${data.shipper?.phone}',
+                        'Pengirim: ${data.shipper?.name}\n${data.shipper?.address}, ${data.shipper?.city ?? data.shipper?.origin?.originName}, ${data.shipper?.zip}, Telp.${data.shipper?.phone}\n\n',
                         style: labelTextStyle),
-                    const Divider(),
+                    const Divider(height: 1),
                     Text(
-                        'Penerima: ${data.receiver?.name}\n${data.receiver?.address}, ${data.receiver?.city}, ${data.receiver?.zip}. Telp.${data.receiver?.phone}\n',
+                        'Penerima: ${data.receiver?.name}\n${data.receiver?.address}, ${data.receiver?.city}, ${data.receiver?.zip}. Telp.${data.receiver?.phone}\n\n',
                         style: labelTextStyle),
                   ],
                 ),
@@ -111,7 +135,7 @@ class StickerMegahub1 extends StatelessWidget {
               SizedBox(
                 width: Get.width / 3.6,
                 child: Text(
-                  '${data.receiver?.destinationCode?.substring(0,3)} - \n${data.receiver?.zip}',
+                  '${data.destination?.destinationCode?.substring(0, 3)}-${data.receiver?.destinationCode} \n${data.receiver?.zip}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -120,7 +144,7 @@ class StickerMegahub1 extends StatelessWidget {
           ),
         ),
         Table(
-          border: TableBorder.all(),
+          border: const TableBorder(right: BorderSide(), verticalInside: BorderSide()),
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: <TableRow>[
             TableRow(
@@ -140,9 +164,15 @@ class StickerMegahub1 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('Deskripsi: ', style: itemTextStyle),
-                    const Divider(),
-                    Text('Intruksi Khusus:', style: itemTextStyle),
+                    Padding(
+                      padding: const EdgeInsets.all(3),
+                      child: Text('Deskripsi: \n${data.goods?.desc}\n', style: labelTextStyle),
+                    ),
+                    const Divider(height: 1),
+                    Padding(
+                      padding: const EdgeInsets.all(3),
+                      child: Text('Intruksi Khusus: \n${data.delivery?.specialInstruction}\n', style: labelTextStyle),
+                    ),
                   ],
                 ),
                 Container(
@@ -150,11 +180,11 @@ class StickerMegahub1 extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Tanggal: ${data.createdDate?.toLongDateFormat()}', style: labelTextStyle),
+                      Text('Tanggal: ${data.createdDate?.toShortDateFormat()}', style: labelTextStyle),
                       Text('No. Pelanggan: ${data.account?.accountNumber}', style: labelTextStyle),
                       Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName}', style: labelTextStyle),
-                      Text('Berat: -', style: labelTextStyle),
-                      Text('Jumlah Kiriman: -', style: labelTextStyle),
+                      Text('Berat: ${data.goods?.weight} Kg', style: labelTextStyle),
+                      Text('Jumlah Kiriman: ${data.goods?.quantity}', style: labelTextStyle),
                       Text('Pembayaran: ${data.type}', style: labelTextStyle),
                       Text('Order ID: ${data.orderId}', style: labelTextStyle),
                     ],
@@ -164,123 +194,11 @@ class StickerMegahub1 extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 25),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                children: [
-                  Container(
-                    width: Get.width / 2,
-                    padding: const EdgeInsets.only(
-                      left: 10,
-                      right: 10,
-                      top: 10,
-                      bottom: 5,
-                    ),
-                    decoration: const BoxDecoration(
-                      border: Border(right: BorderSide(), bottom: BorderSide()),
-                    ),
-                    child: Column(
-                      children: [
-                        BarcodeWidget(
-                          barcode: Barcode.code128(
-                            useCode128A: true,
-                            escapes: true,
-                          ),
-                          data: data.awb ?? '',
-                          drawText: false,
-                          height: 20,
-                        ),
-                        Text(
-                          data.awb ?? '-',
-                          style: itemTextStyle,
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: Get.width / 2,
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        right: BorderSide(),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(top: 5),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              right: BorderSide(),
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                ImageConstant.logoJNE,
-                                height: 15,
-                              ),
-                              const SolidBorder(
-                                width: 55,
-                              ),
-                              Text(
-                                data.service ?? '-',
-                                style: itemTextStyle,
-                              )
-                            ],
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Pengirim : ${data.shipper?.name}",
-                              style: labelTextStyle,
-                            ),
-                            Text(
-                              "Penerima : ${data.receiver?.name}",
-                              style: labelTextStyle,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(width: 5),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Tanggal: ${data.createdDate}', style: labelTextStyle),
-                  Text('No. Pelanggan: ${data.account?.accountNumber}', style: labelTextStyle),
-                  Text('Deskripsi: -', style: labelTextStyle),
-                  Text('Berat: -', style: labelTextStyle),
-                  Text('Biaya Kirim: -', style: labelTextStyle),
-                  Text('Kota Tujuan: ${data.receiver?.city}', style: labelTextStyle),
-                  Text('Asuransi: - ', style: labelTextStyle),
-                  Text('Order ID: ${data.orderId}', style: labelTextStyle),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Center(
-          child: Text(
-            'Untuk informasi dan pengecekan status kiriman silahkan mengunjungi www.jne.co.id',
-            style: labelTextStyle,
-          ),
-        )
       ],
     );
   }
+
+
 
   Future<Uint8List> generatePdf(PdfPageFormat format) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
@@ -336,7 +254,7 @@ class StickerMegahub1 extends StatelessWidget {
                   pw.TableRow(
                     children: [
                       pw.Text(
-                        data.service ?? '-',
+                        data.account?.accountService ?? '-',
                         style: const pw.TextStyle(fontSize: 10),
                         textAlign: pw.TextAlign.center,
                       ),
@@ -346,7 +264,7 @@ class StickerMegahub1 extends StatelessWidget {
                         textAlign: pw.TextAlign.center,
                       ),
                       pw.Text(
-                        'Rp. ${data.codAmount?.toInt().toCurrency()}',
+                        'Rp. ${data.delivery?.flatRate?.toInt().toCurrency()}',
                         style: const pw.TextStyle(fontSize: 10),
                         textAlign: pw.TextAlign.center,
                       ),
@@ -508,7 +426,7 @@ class StickerMegahub1 extends StatelessWidget {
                                       width: 55,
                                     ),
                                     pw.Text(
-                                      data.service ?? '-',
+                                      data.account?.accountService ?? '-',
                                       style: const pw.TextStyle(fontSize: 10),
                                     )
                                   ],

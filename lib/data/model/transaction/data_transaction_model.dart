@@ -11,6 +11,15 @@ String transactionDataModelToJson(DataTransactionModel data) => json.encode(data
 
 class DataTransactionModel {
   DataTransactionModel({
+    String? awb,
+    String? awbType,
+    String? registrationId,
+    String? type,
+    String? createdDate,
+    String? status,
+    String? orderId,
+    String? officerEntry,
+    String? pickupStatus,
     Delivery? delivery,
     Account? account,
     Origin? origin,
@@ -19,10 +28,19 @@ class DataTransactionModel {
     Shipper? shipper,
     Receiver? receiver,
     Account? dataAccount,
-    DestinationModel? dataDestination,
+    Destination? dataDestination,
     String? createAt,
     String? updateAt,
   }) {
+    _awb = awb;
+    _awbType = awbType;
+    _registrationId = registrationId;
+    _type = type;
+    _createdDate = createdDate;
+    _status = status;
+    _orderId = orderId;
+    _officerEntry = officerEntry;
+    _pickupStatus = pickupStatus;
     _delivery = delivery;
     _account = account;
     _origin = origin;
@@ -37,7 +55,22 @@ class DataTransactionModel {
   }
 
   DataTransactionModel.fromJson(dynamic json) {
-    _delivery = json['delivery'] != null ? Delivery.fromJson(json['delivery']) : null;
+    _awb = json['awb'];
+    _awbType = json['awb_type'];
+    _registrationId = json['registration_id'];
+    _type = json['api_type'] ?? json['type'];
+    _createdDate = json['created_date'];
+    _status = json['status'];
+    _orderId = json['order_id'];
+    _officerEntry = json['officer_entry'];
+    _pickupStatus = json['pickup_status'];
+    _delivery = json['delivery'] != null
+        ? Delivery.fromJson(json['delivery'])
+        : json['info'] != null
+            ? Delivery.fromJson(json['info'])
+            : json['transaction'] != null
+                ? Delivery.fromJson(json['transaction'])
+                : null;
     _account = json['account'] != null ? Account.fromJson(json['account']) : null;
     _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
     _destination = json['destination'] != null ? Destination.fromJson(json['destination']) : null;
@@ -45,11 +78,20 @@ class DataTransactionModel {
     _shipper = json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
     _receiver = json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
     _dataAccount = json['data_account'] != null ? Account.fromJson(json['data_account']) : null;
-    _dataDestination = json['data_destination'] != null ? DestinationModel.fromJson(json['data_destination']) : null;
+    _dataDestination = json['data_destination'] != null ? Destination.fromJson(json['data_destination']) : null;
     _createAt = json['create_at'];
     _updateAt = json['update_at'];
   }
 
+  String? _awb;
+  String? _awbType;
+  String? _registrationId;
+  String? _type;
+  String? _createdDate;
+  String? _status;
+  String? _orderId;
+  String? _officerEntry;
+  String? _pickupStatus;
   Delivery? _delivery;
   Account? _account;
   Origin? _origin;
@@ -58,11 +100,20 @@ class DataTransactionModel {
   Shipper? _shipper;
   Receiver? _receiver;
   Account? _dataAccount;
-  DestinationModel? _dataDestination;
+  Destination? _dataDestination;
   String? _createAt;
   String? _updateAt;
 
   DataTransactionModel copyWith({
+    String? awb,
+    String? awbType,
+    String? registrationId,
+    String? type,
+    String? createdDate,
+    String? status,
+    String? orderId,
+    String? officerEntry,
+    String? pickupStatus,
     Delivery? delivery,
     Account? account,
     Origin? origin,
@@ -71,11 +122,20 @@ class DataTransactionModel {
     Shipper? shipper,
     Receiver? receiver,
     Account? dataAccount,
-    DestinationModel? dataDestination,
+    Destination? dataDestination,
     String? createAt,
     String? updateAt,
   }) =>
       DataTransactionModel(
+        awb: awb ?? _awb,
+        awbType: awbType ?? _awbType,
+        registrationId: registrationId ?? _registrationId,
+        type: type ?? _type,
+        createdDate: createdDate ?? _createdDate,
+        status: status ?? _status,
+        orderId: orderId ?? _orderId,
+        officerEntry: officerEntry ?? _officerEntry,
+        pickupStatus: pickupStatus ?? _pickupStatus,
         delivery: delivery ?? _delivery,
         account: account ?? _account,
         origin: origin ?? _origin,
@@ -88,6 +148,24 @@ class DataTransactionModel {
         createAt: createAt ?? _createAt,
         updateAt: updateAt ?? _updateAt,
       );
+
+  String? get awb => _awb;
+
+  String? get awbType => _awbType;
+
+  String? get registrationId => _registrationId;
+
+  String? get type => _type;
+
+  String? get createdDate => _createdDate;
+
+  String? get status => _status;
+
+  String? get orderId => _orderId;
+
+  String? get officerEntry => _officerEntry;
+
+  String? get pickupStatus => _pickupStatus;
 
   Delivery? get delivery => _delivery;
 
@@ -105,7 +183,7 @@ class DataTransactionModel {
 
   Account? get dataAccount => _dataAccount;
 
-  DestinationModel? get dataDestination => _dataDestination;
+  Destination? get dataDestination => _dataDestination;
 
   String? get createAt => _createAt;
 
@@ -113,8 +191,19 @@ class DataTransactionModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['awb'] = _awb;
+    map['awb_type'] = _awbType;
+    map['registration_id'] = _registrationId;
+    map['type'] = _type;
+    map['api_type'] = _type;
+    map['created_date'] = _createdDate;
+    map['order_id'] = _orderId;
+    map['officer_entry'] = _officerEntry;
+    map['pickup_status'] = _pickupStatus;
     if (_delivery != null) {
       map['delivery'] = _delivery?.toJson();
+      map['info'] = _delivery?.toJson();
+      map['transaction'] = _delivery?.toJson();
     }
     if (_account != null) {
       map['account'] = _account?.toJson();
@@ -354,7 +443,7 @@ class Shipper {
     String? contact,
     String? phone,
     bool? dropship,
-    OriginModel? origin,
+    Origin? origin,
   }) {
     _name = name;
     _address = address;
@@ -378,14 +467,14 @@ class Shipper {
     _address2 = json['address2'];
     _address3 = json['address3'];
     _city = json['city'];
-    _zip = json['zip'];
+    _zip = json['zip'] ?? json['zip_code'];
     _region = json['region'];
     _country = json['country'];
     _contact = json['contact'];
     _phone = json['phone'];
     _dropship = json['dropship'];
-    _zip = json['zip_code'];
-    _origin = json['origin'] != null ? OriginModel.fromJson(json['origin']) : json['origin'];
+    // _zip = json['zip_code'];
+    _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : json['origin'];
   }
 
   String? _name;
@@ -400,7 +489,7 @@ class Shipper {
   String? _contact;
   String? _phone;
   bool? _dropship;
-  OriginModel? _origin;
+  Origin? _origin;
 
   Shipper copyWith({
     String? name,
@@ -415,7 +504,7 @@ class Shipper {
     String? contact,
     String? phone,
     bool? dropship,
-    OriginModel? origin,
+    Origin? origin,
   }) =>
       Shipper(
         name: name ?? _name,
@@ -457,7 +546,7 @@ class Shipper {
 
   bool? get dropship => _dropship;
 
-  OriginModel? get origin => _origin;
+  Origin? get origin => _origin;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -549,99 +638,6 @@ class Goods {
     map['amount'] = _amount;
     map['quantity'] = _quantity;
     map['weight'] = _weight;
-    return map;
-  }
-}
-
-Destination destinationFromJson(String str) => Destination.fromJson(json.decode(str));
-
-String destinationToJson(Destination data) => json.encode(data.toJson());
-
-class Destination {
-  Destination({
-    String? code,
-    String? desc,
-  }) {
-    _code = code;
-    _desc = desc;
-  }
-
-  Destination.fromJson(dynamic json) {
-    _code = json['code'];
-    _desc = json['desc'];
-  }
-
-  String? _code;
-  String? _desc;
-
-  Destination copyWith({
-    String? code,
-    String? desc,
-  }) =>
-      Destination(
-        code: code ?? _code,
-        desc: desc ?? _desc,
-      );
-
-  String? get code => _code;
-
-  String? get desc => _desc;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['desc'] = _desc;
-    return map;
-  }
-}
-
-Origin originFromJson(String str) => Origin.fromJson(json.decode(str));
-
-String originToJson(Origin data) => json.encode(data.toJson());
-
-class Origin {
-  Origin({
-    String? code,
-    String? desc,
-    String? branch,
-  }) {
-    _code = code;
-    _desc = desc;
-    _branch = branch;
-  }
-
-  Origin.fromJson(dynamic json) {
-    _code = json['code'];
-    _desc = json['desc'];
-    _branch = json['branch'];
-  }
-
-  String? _code;
-  String? _desc;
-  String? _branch;
-
-  Origin copyWith({
-    String? code,
-    String? desc,
-    String? branch,
-  }) =>
-      Origin(
-        code: code ?? _code,
-        desc: desc ?? _desc,
-        branch: branch ?? _branch,
-      );
-
-  String? get code => _code;
-
-  String? get desc => _desc;
-
-  String? get branch => _branch;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['desc'] = _desc;
-    map['branch'] = _branch;
     return map;
   }
 }

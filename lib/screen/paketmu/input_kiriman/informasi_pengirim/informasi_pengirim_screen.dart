@@ -148,7 +148,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     controller.kotaPengirim.text = controller.senderOrigin?.origin?.originName ?? '';
                                     controller.kodePos.text = controller.senderOrigin?.zipCode ?? '';
                                     controller.alamatLengkap.text = controller.senderOrigin?.address ?? '';
-                                    controller.selectedOrigin = OriginModel(
+                                    controller.selectedOrigin = Origin(
                                       originCode: controller.senderOrigin?.origin?.originCode,
                                       branchCode: controller.senderOrigin?.origin?.branchCode,
                                       originName: controller.senderOrigin?.origin?.originName,
@@ -218,7 +218,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 isRequired: true,
                                 prefixIcon: const Icon(Icons.phone),
                               ),
-                              CustomSearchDropdownField<OriginModel>(
+                              CustomSearchDropdownField<Origin>(
                                 asyncItems: (String filter) => controller.getOriginList(filter, controller.selectedAccount?.accountId ?? ''),
                                 itemBuilder: (context, e, b) {
                                   return Container(
@@ -228,7 +228,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     ),
                                   );
                                 },
-                                itemAsString: (OriginModel e) => e.originName.toString(),
+                                itemAsString: (Origin e) => e.originName.toString(),
                                 onChanged: (value) {
                                   controller.selectedOrigin = value;
                                   controller.kotaPengirim.text = controller.selectedOrigin?.originName ?? '';

@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InformasiPengirimController extends BaseController {
-  final TransactionModel? data = Get.arguments['data'];
+  final DataTransactionModel? data = Get.arguments['data'];
 
   final formKey = GlobalKey<FormState>();
   final nomorAkun = TextEditingController();
@@ -27,7 +27,6 @@ class InformasiPengirimController extends BaseController {
 
   final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
 
-
   bool dropshipper = false;
   bool codOgkir = false;
   bool isLoading = false;
@@ -37,11 +36,11 @@ class InformasiPengirimController extends BaseController {
 
   List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
   List<Account> accountList = [];
-  List<OriginModel> originList = [];
+  List<Origin> originList = [];
 
   Account? selectedAccount;
   GetOriginModel? originModel;
-  OriginModel? selectedOrigin;
+  Origin? selectedOrigin;
   ShipperModel? senderOrigin;
 
   @override
@@ -67,13 +66,13 @@ class InformasiPengirimController extends BaseController {
     kotaPengirim.text = dropshipper.city ?? '';
     alamatLengkap.text = dropshipper.address ?? '';
     kodePos.text = dropshipper.zipCode ?? '';
-    getOriginList(dropshipper.city ?? '', selectedAccount?.accountId ?? '');
-    selectedOrigin = OriginModel(
-      originName: dropshipper.city,
-      originCode: dropshipper.origin,
-    );
+    getOriginList(dropshipper.city ?? '', selectedAccount?.accountId ?? '').then((value) {
+      selectedOrigin = value.first;
 
+      update();
+    });
     update();
+
     return dropshipper;
   }
 
@@ -101,7 +100,7 @@ class InformasiPengirimController extends BaseController {
         kotaPengirim.text = value.payload?.origin?.originName ?? '';
         kodePos.text = value.payload?.zipCode ?? '';
         alamatLengkap.text = value.payload?.address ?? '';
-        selectedOrigin = OriginModel(
+        selectedOrigin = Origin(
           originCode: senderOrigin?.origin?.originCode,
           branchCode: senderOrigin?.origin?.branchCode,
           originName: senderOrigin?.origin?.originName,
@@ -119,7 +118,7 @@ class InformasiPengirimController extends BaseController {
       kotaPengirim.text = senderOrigin?.origin?.originName ?? '';
       kodePos.text = senderOrigin?.zipCode ?? '';
       alamatLengkap.text = senderOrigin?.address ?? '';
-      selectedOrigin = OriginModel(
+      selectedOrigin = Origin(
         originCode: senderOrigin?.origin?.originCode,
         branchCode: senderOrigin?.origin?.branchCode,
         originName: senderOrigin?.origin?.originName,
@@ -133,21 +132,26 @@ class InformasiPengirimController extends BaseController {
       selectedAccount = accountList.where((element) => element.accountNumber == data?.account?.accountNumber).first;
       namaPengirim.text = data?.shipper?.name ?? '';
       nomorTelpon.text = data?.shipper?.phone ?? '';
-      selectedOrigin = data?.shipper?.origin;
-      kotaPengirim.text = data?.shipper?.city ?? data?.shipper?.origin?.originName ?? '';
       kodePos.text = data?.shipper?.zip ?? '';
       alamatLengkap.text = data?.shipper?.address ?? '';
 
-      senderOrigin = ShipperModel(
-        origin: data?.shipper?.origin,
-        name: data?.shipper?.name,
-        address: data?.shipper?.address,
-        phone: data?.shipper?.phone,
-        region: Region(
-          name: data?.shipper?.region,
-        ),
-        zipCode: data?.shipper?.zip,
-      );
+      getOriginList(data?.shipper?.city ?? '', selectedAccount?.accountId ?? '').then((value) {
+        selectedOrigin = value.first;
+        kotaPengirim.text = value.first.originName ?? '';
+        senderOrigin = ShipperModel(
+          origin: value.first,
+          name: data?.shipper?.name,
+          address: data?.shipper?.address,
+          phone: data?.shipper?.phone,
+          region: Region(
+            name: data?.shipper?.region,
+          ),
+          zipCode: data?.shipper?.zip,
+        );
+        update();
+      });
+
+      isValidate = true;
       update();
 
       // Get.showSnackbar(
@@ -165,7 +169,7 @@ class InformasiPengirimController extends BaseController {
     }
   }
 
-  Future<List<OriginModel>> getOriginList(String keyword, String accountID) async {
+  Future<List<Origin>> getOriginList(String keyword, String accountID) async {
     originList = [];
     isLoadOrigin = true;
     try {
@@ -184,12 +188,13 @@ class InformasiPengirimController extends BaseController {
     Get.to(const InformasiPenerimaScreen(), arguments: {
       "cod_ongkir": codOgkir,
       "account": selectedAccount,
-      "origin": Origin(
-        // origin code kalo sender bukan dropshipper?
-        code: selectedOrigin?.originCode ?? senderOrigin?.origin?.originCode,
-        desc: selectedOrigin?.originName ?? senderOrigin?.origin?.originName,
-        branch: selectedOrigin?.branchCode ?? senderOrigin?.origin?.branchCode,
-      ),
+      "origin": selectedOrigin ?? senderOrigin?.origin,
+      // "origin": Origin(
+      //   // origin code kalo sender bukan dropshipper?
+      //   originCode: selectedOrigin?.originCode ?? senderOrigin?.origin?.originCode,
+      //   originName: selectedOrigin?.originName ?? senderOrigin?.origin?.originName,
+      //   branchCode: selectedOrigin?.branchCode ?? senderOrigin?.origin?.branchCode,
+      // ),
       "dropship": dropshipper,
       "shipper": Shipper(
         name: namaPengirim.text.toUpperCase(),

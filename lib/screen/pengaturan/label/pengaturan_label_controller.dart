@@ -21,11 +21,23 @@ class PengaturanLabelController extends BaseController {
     ),
     StickerLabel(
       image: "https://css.jne.co.id//assets/img/label_default3-webp.webp",
-      name: "/sticker_megahub1",
+      name: "/sticker_megahub_1",
+    ),
+    StickerLabel(
+      image: "https://css.jne.co.id//assets/img/vertical-megahub-webp.webp",
+      name: "/sticker_vertical_megahub1",
     ),
     StickerLabel(
       image: "https://css.jne.co.id//assets/img/argox-webp.webp",
-      name: "/sticker_megahub_hybrid1",
+      name: "/sticker_megahub_hybrid_1",
+    ),
+    StickerLabel(
+      image: "https://css.jne.co.id//assets/img/argox2-webp.webp",
+      name: "/sticker_megahub_hybrid_2",
+    ),
+    StickerLabel(
+      image: "https://css.jne.co.id//assets/img/vertical-megahub-hybrid-webp.webp",
+      name: "/sticker_vertical_megahub_hybrid",
     ),
   ];
 
@@ -50,14 +62,14 @@ class PengaturanLabelController extends BaseController {
   Future<void> saveLabel() async {
     await storage.writeString(StorageCore.transactionLabel, selectedSticker).then(
           (value) => Get.showSnackbar(
-            const GetSnackBar(
-              icon: Icon(
+            GetSnackBar(
+              icon: const Icon(
                 Icons.info,
                 color: whiteColor,
               ),
-              message: 'Label di update',
+              message: 'Label di update'.tr,
               isDismissible: true,
-              duration: Duration(seconds: 3),
+              duration: const Duration(seconds: 3),
               backgroundColor: successColor,
             ),
           ),

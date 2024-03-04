@@ -229,7 +229,11 @@ class LanguageEN {
       "Tanggal Pesanan": "Transaction Date",
       "Lihat Resi": "View Receipt",
       "Edit Kiriman": "Edit Shipment",
-      "Cetak Label": "Print Label"
+      "Cetak Label": "Print Label",
+      "Label di update": "Label Updated",
+      "Update Berhasil": "Data Updated",
+      "Edit Resi": "Update Transaction",
+      "Bad Request": "something went wrong, please try again later",
     };
   }
 }

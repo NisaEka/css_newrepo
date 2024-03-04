@@ -6,6 +6,7 @@ class NetworkCore {
   Dio dio = Dio();
   Dio city = Dio();
   Dio jne = Dio();
+  Dio myJNE = Dio();
 
   NetworkCore() {
     dio.options = BaseOptions(
@@ -32,6 +33,17 @@ class NetworkCore {
 
     jne.options = BaseOptions(
       baseUrl: AppConst.jneUrl,
+      connectTimeout: 20000,
+      receiveTimeout: 20000,
+      sendTimeout: 20000,
+      headers: {
+        // 'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    );
+
+    myJNE.options = BaseOptions(
+      baseUrl: AppConst.myJneUrl,
       connectTimeout: 20000,
       receiveTimeout: 20000,
       sendTimeout: 20000,

@@ -1,7 +1,7 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StickerA6 extends StatelessWidget {
-  final TransactionModel data;
+  final DataTransactionModel data;
 
   const StickerA6({super.key, required this.data});
 
@@ -71,7 +71,7 @@ class StickerA6 extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            data.service ?? '-',
+                            data.account?.accountService ?? '-',
                             textAlign: TextAlign.center,
                             style: TextStyle(fontWeight: bold),
                           ),
@@ -81,13 +81,13 @@ class StickerA6 extends StatelessWidget {
                       ),
                       CustomLabelText(
                         title: 'Origin',
-                        value: data.shipper?.origin?.originCode ?? '-',
+                        value: data.origin?.originCode ?? '-',
                         fontColor: Colors.black,
                         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                       ),
                       CustomLabelText(
                         title: 'Dest',
-                        value: data.receiver?.destinationCode ?? '-',
+                        value: data.destination?.destinationCode ?? '-',
                         fontColor: Colors.black,
                         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                       ),
@@ -106,7 +106,7 @@ class StickerA6 extends StatelessWidget {
                       ),
                       CustomLabelText(
                         title: 'Qty',
-                        value: '-',
+                        value: data.goods?.quantity.toString() ?? '-',
                         fontColor: Colors.black,
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         alignment: 'center',
@@ -115,7 +115,7 @@ class StickerA6 extends StatelessWidget {
                       ),
                       CustomLabelText(
                         title: 'Weight',
-                        value: '-',
+                        value: '${data.goods?.weight} Kg',
                         fontColor: Colors.black,
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         alignment: 'center',
@@ -148,7 +148,7 @@ class StickerA6 extends StatelessWidget {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: 'City \t\t\t\t\t\t\t\t\t: ',
+                                  text: 'City : ',
                                   style: sublistTitleTextStyle.copyWith(fontWeight: bold),
                                 ),
                                 TextSpan(
@@ -160,21 +160,19 @@ class StickerA6 extends StatelessWidget {
                                   style: sublistTitleTextStyle.copyWith(fontWeight: bold),
                                 ),
                                 TextSpan(
-                                  text: 'City \t\t\t\t\t\t\t\t\t: ',
-                                  style: sublistTitleTextStyle.copyWith(fontWeight: bold, color: Colors.white),
-                                ),
-                                TextSpan(
-                                  text: data.shipper?.region ?? '',
+                                  text: data.shipper?.region,
                                   style: sublistTitleTextStyle.copyWith(),
                                 ),
-                              ],
-                            ),
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              children: [
+                                // TextSpan(
+                                //   text: 'City \t\t\t\t\t\t\t\t\t: ',
+                                //   style: sublistTitleTextStyle.copyWith(fontWeight: bold, color: Colors.white),
+                                // ),
+                                // TextSpan(
+                                //   text: data.shipper?.region ?? '',
+                                //   style: sublistTitleTextStyle.copyWith(),
+                                // ),
                                 TextSpan(
-                                  text: 'Phone \t\t\t\t: ',
+                                  text: ' Phone : ',
                                   style: sublistTitleTextStyle.copyWith(fontWeight: bold),
                                 ),
                                 TextSpan(
@@ -197,7 +195,7 @@ class StickerA6 extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        Text(data.service ?? '-', style: TextStyle(fontSize: 38, fontWeight: bold)),
+                        Text(data.delivery?.serviceCode ?? '-', style: TextStyle(fontSize: 38, fontWeight: bold)),
                         Text(data.type ?? '-', style: TextStyle(fontSize: 38, fontWeight: bold)),
                       ],
                     )
@@ -227,7 +225,7 @@ class StickerA6 extends StatelessWidget {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: 'City \t\t\t\t\t\t\t\t\t: ',
+                                  text: 'City : ',
                                   style: sublistTitleTextStyle.copyWith(fontWeight: bold),
                                 ),
                                 TextSpan(
@@ -238,22 +236,16 @@ class StickerA6 extends StatelessWidget {
                                   text: ' Province : ',
                                   style: sublistTitleTextStyle.copyWith(fontWeight: bold),
                                 ),
-                                TextSpan(
-                                  text: 'City \t\t\t\t\t\t\t\t\t: ',
-                                  style: sublistTitleTextStyle.copyWith(fontWeight: bold, color: Colors.white),
-                                ),
+                                // TextSpan(
+                                //   text: 'City \t\t\t\t\t\t\t\t\t: ',
+                                //   style: sublistTitleTextStyle.copyWith(fontWeight: bold, color: Colors.white),
+                                // ),
                                 TextSpan(
                                   text: data.receiver?.region ?? '',
                                   style: sublistTitleTextStyle.copyWith(),
                                 ),
-                              ],
-                            ),
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              children: [
                                 TextSpan(
-                                  text: 'Phone \t\t\t\t: ',
+                                  text: ' Phone : ',
                                   style: sublistTitleTextStyle.copyWith(fontWeight: bold),
                                 ),
                                 TextSpan(
@@ -268,24 +260,34 @@ class StickerA6 extends StatelessWidget {
                                   text: data.receiver?.zip ?? '',
                                   style: sublistTitleTextStyle.copyWith(),
                                 ),
+                                TextSpan(
+                                  text: ' Contact Person : ',
+                                  style: sublistTitleTextStyle.copyWith(fontWeight: bold),
+                                ),
+                                TextSpan(
+                                  text: data.receiver?.contact ?? '',
+                                  style: sublistTitleTextStyle.copyWith(),
+                                ),
                               ],
                             ),
                           ),
-                          CustomLabelText(
-                            title: 'Contact\nPerson ',
-                            value: "\t: ${data.receiver?.contact ?? data.receiver?.name}",
-                            titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
-                            valueTextStyle: sublistTitleTextStyle.copyWith(),
-                            isHorizontal: true,
-                            valueMaxline: 5,
-                            alignment: 'center',
-                          ),
+
+                          // CustomLabelText(
+                          //   title: 'Contact\nPerson ',
+                          //   value: "\t: ${data.receiver?.contact ?? data.receiver?.name}",
+                          //   titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
+                          //   valueTextStyle: sublistTitleTextStyle.copyWith(),
+                          //   isHorizontal: true,
+                          //   valueMaxline: 5,
+                          //   alignment: 'center',
+                          // ),
                         ],
                       ),
                     ),
                     Column(
                       children: [
-                        Text(data.receiver?.destinationCode ?? '-', style: TextStyle(fontSize: 20, fontWeight: bold)),
+                        Text("${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.receiver?.destinationCode}",
+                            style: TextStyle(fontSize: 20, fontWeight: bold)),
                         Text(data.account?.accountType ?? '-', style: TextStyle(fontSize: 12.5, fontWeight: bold)),
                       ],
                     )
@@ -320,7 +322,7 @@ class StickerA6 extends StatelessWidget {
                     ),
                     child: CustomLabelText(
                       title: 'Good Description',
-                      value: "-",
+                      value: data.goods?.desc ?? '-',
                       titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                       valueTextStyle: sublistTitleTextStyle.copyWith(),
                       valueMaxline: 5,
@@ -329,7 +331,7 @@ class StickerA6 extends StatelessWidget {
                   const SizedBox(width: 5),
                   CustomLabelText(
                     title: 'Goods Value',
-                    value: "Rp -",
+                    value: "Rp ${data.goods?.amount?.toInt().toCurrency()}",
                     titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                     valueTextStyle: sublistTitleTextStyle.copyWith(),
                     valueMaxline: 5,
@@ -339,11 +341,13 @@ class StickerA6 extends StatelessWidget {
               const Divider(height: 1),
               CustomLabelText(
                 title: 'Instruction : ',
-                value: "-",
+                value: data.delivery?.specialInstruction ?? '-',
                 titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                 valueTextStyle: sublistTitleTextStyle.copyWith(),
-                isHorizontal: true,
+                // isHorizontal: true,
                 margin: const EdgeInsets.all(5),
+                valueMaxline: 5,
+                // width: 50,
               ),
               Table(
                 border: const TableBorder(
@@ -357,21 +361,21 @@ class StickerA6 extends StatelessWidget {
                     children: <Widget>[
                       CustomLabelText(
                         title: 'Insurance ',
-                        value: "-",
+                        value: data.delivery?.insuranceFlag == "Y" ? "YES" : "NO",
                         titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                         valueTextStyle: sublistTitleTextStyle.copyWith(),
                         margin: const EdgeInsets.all(5),
                       ),
                       CustomLabelText(
                         title: 'Insurance Amount',
-                        value: "Rp -",
+                        value: "Rp ${data.delivery?.insuranceFee}",
                         titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                         valueTextStyle: sublistTitleTextStyle.copyWith(),
                         margin: const EdgeInsets.all(5),
                       ),
                       CustomLabelText(
                         title: 'Packing Kayu  ',
-                        value: "-",
+                        value: data.delivery?.woodPackaging == "Y" ? "YES" : "NO",
                         titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                         valueTextStyle: sublistTitleTextStyle.copyWith(),
                         margin: const EdgeInsets.all(5),
@@ -384,7 +388,7 @@ class StickerA6 extends StatelessWidget {
                 children: [
                   CustomLabelText(
                     title: 'Est.Ongkir',
-                    value: "Rp -",
+                    value: "Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}",
                     titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                     valueTextStyle: sublistTitleTextStyle.copyWith(),
                     margin: const EdgeInsets.all(5),
@@ -392,7 +396,7 @@ class StickerA6 extends StatelessWidget {
                   ),
                   CustomLabelText(
                     title: 'COD Amountr',
-                    value: "Rp ${data.codAmount?.toInt().toCurrency()},00",
+                    value: "Rp ${data.delivery?.codFee?.toInt().toCurrency()},00",
                     titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                     valueTextStyle: sublistTitleTextStyle.copyWith(),
                     margin: const EdgeInsets.all(5),

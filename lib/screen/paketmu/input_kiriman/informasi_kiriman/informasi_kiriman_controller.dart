@@ -9,27 +9,28 @@ import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InformasiKirimaController extends BaseController {
-  TransactionModel? data = Get.arguments['data'];
+  DataTransactionModel? dataEdit = Get.arguments['data'];
   Shipper shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
   Origin origin = Get.arguments['origin'];
   Account account = Get.arguments['account'];
   Receiver receiver = Get.arguments['receiver'];
-  DestinationModel destination = Get.arguments['destination'];
+  Destination destination = Get.arguments['destination'];
   Delivery? delivery = Get.arguments['delivery'];
   Goods? goods = Get.arguments['goods'];
   int? draftIndex = Get.arguments['index'];
@@ -77,7 +78,6 @@ class InformasiKirimaController extends BaseController {
   void onInit() {
     super.onInit();
     Future.wait([initData()]);
-
     connection.checkConnection();
 
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
@@ -140,6 +140,7 @@ class InformasiKirimaController extends BaseController {
     isr = 0;
     isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
     flatRateISR = flatRate + isr;
+    freightChargeISR = freightCharge + isr;
     update();
 
     if (isOnline) {
@@ -148,7 +149,7 @@ class InformasiKirimaController extends BaseController {
       if (isOnline) {
         // if (asuransi) {
         // isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
-        // flatRateISR = flatRate + isr;
+        flatRateISR = flatRate + isr;
         freightChargeISR = freightCharge + isr;
         update();
         // }
@@ -156,7 +157,7 @@ class InformasiKirimaController extends BaseController {
         hargacod = (codfee * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) +
             (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt()) +
             totalOngkir;
-        hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1100;
+        hargacCODOngkir = flatRate + (asuransi ? isr : 0) + 1100;
 
         update();
       }
@@ -169,13 +170,19 @@ class InformasiKirimaController extends BaseController {
   Future<void> getCODfee() async {
     if (isOnline) {
       isCalculate = true;
+      try {
+        await transaction.getCODFee(account.accountId.toString()).then(
+          (value) {
+            codfee = value.payload?.disc?.toDouble() ?? 0;
+            update();
+          },
+        );
+        isCalculate = false;
 
-      await transaction.getCODFee(account.accountId.toString()).then(
-            (value) => codfee = value.payload?.disc?.toDouble() ?? 0,
-          );
-      isCalculate = false;
-
-      update();
+        update();
+      } catch (e) {
+        e.printError();
+      }
     }
   }
 
@@ -186,7 +193,7 @@ class InformasiKirimaController extends BaseController {
           .getTransactionFee(
         DataTransactionFeeModel(
           destinationCode: destination.destinationCode,
-          originCode: origin.code,
+          originCode: origin.originCode,
           serviceCode: selectedService?.serviceCode,
           weight: beratKiriman.text == '' ? 1 : beratKiriman.text.split('.').first.toInt(),
           custNo: account.accountNumber,
@@ -264,12 +271,13 @@ class InformasiKirimaController extends BaseController {
           .getService(
         DataServiceModel(
           accountId: account.accountId,
-          originCode: origin.code,
+          originCode: origin.originCode,
           destinationCode: destination.destinationCode,
         ),
       )
           .then((value) {
         serviceList.addAll(value.payload ?? []);
+        update();
         if (value.code != 200) {
           Get.showSnackbar(
             GetSnackBar(
@@ -284,27 +292,35 @@ class InformasiKirimaController extends BaseController {
             ),
           );
           isOnline = false;
+          update();
         }
       });
       getCODfee();
+      update();
     } catch (e) {
       e.printError();
       // isOnline = false;
+    }
+    if (dataEdit != null) {
+      jenisBarang.text = dataEdit?.goods?.type ?? '';
+      noReference.text = dataEdit?.orderId ?? '';
+      namaBarang.text = dataEdit?.goods?.desc ?? '';
+      hargaBarang.text = dataEdit?.goods?.amount?.toInt().toCurrency().toString() ?? '';
+      jumlahPacking.text = dataEdit?.goods?.quantity.toString() ?? '';
+      asuransi = dataEdit?.delivery?.insuranceFlag == "Y";
+      intruksiKhusus.text = dataEdit?.delivery?.specialInstruction ?? '';
+      packingKayu = dataEdit?.delivery?.woodPackaging == "Y";
+      beratKiriman.text = dataEdit?.goods?.weight.toString() ?? '';
+      selectedService = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).first;
+
+      update();
+      getOngkir();
     }
     hitungOngkir();
 
     goods != null ? loadDraft() : null;
     isServiceLoad = false;
     update();
-
-    if(data!=null){
-      // jenisBarang.text = data?.goods.tye
-      // noReference.text = data?.orderId
-      // namaBarang.text data?.goods.name
-      // hargaBarang.text = data?.goods.value
-      // jumlahPacking.text = data?.qty
-      update();
-    }
   }
 
   Future<void> saveDraft() async {
@@ -333,7 +349,8 @@ class InformasiKirimaController extends BaseController {
         accountService: account.accountService,
       ),
       origin: origin,
-      destination: Destination(code: destination.destinationCode, desc: destination.cityName),
+      destination: destination,
+      // destination: Destination(code: destination.destinationCode, desc: destination.cityName),
       goods: Goods(
           type: jenisBarang.text,
           desc: namaBarang.text,
@@ -376,9 +393,94 @@ class InformasiKirimaController extends BaseController {
         );
   }
 
+  Future<void> updateTransaction() async {
+    isLoading = true;
+    update();
+
+    try {
+      await transaction
+          .putTransaction(
+        DataTransactionModel(
+          delivery: Delivery(
+            serviceCode: selectedService?.serviceDisplay,
+            woodPackaging: packingKayu ? "Y" : "N",
+            specialInstruction: intruksiKhusus.text,
+            codFlag: account.accountService == "COD" ? "YES" : "NO",
+            codOngkir: codOngkir ? "YES" : "NO",
+            insuranceFlag: asuransi ? "Y" : "N",
+            insuranceFee: isr,
+            flatRate: flatRate,
+            codFee: codfee,
+            flatRateWithInsurance: flatRateISR,
+            freightCharge: freightCharge,
+            freightChargeWithInsurance: freightChargeISR,
+          ),
+          account: Account(
+            accountNumber: account.accountNumber,
+            accountService: account.accountService,
+          ),
+          origin: origin,
+          destination: destination,
+          // destination: Destination(code: destination.destinationCode, desc: destination.cityName),
+          goods: Goods(
+              type: jenisBarang.text,
+              desc: namaBarang.text,
+              amount: hargaBarang.text.digitOnly().toInt(),
+              quantity: jumlahPacking.text.toInt(),
+              weight: berat),
+          shipper: shipper,
+          receiver: receiver,
+        ),
+        dataEdit?.awb ?? '',
+      )
+          .then((v) {
+        if (v.code == 400) {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.warning,
+                color: warningColor,
+              ),
+              message: v.message?.tr,
+              isDismissible: true,
+              margin: const EdgeInsets.only(bottom: 0),
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.red,
+              snackPosition: SnackPosition.BOTTOM,
+              snackStyle: SnackStyle.FLOATING,
+              animationDuration: const Duration(milliseconds: 500),
+            ),
+          );
+        } else {
+          Get.to(
+            SuccessScreen(
+              message: 'Update Berhasil'.tr,
+              buttonTitle: "Kembali ke Beranda".tr,
+              nextAction: () => Get.offAll(
+                const DashboardScreen(),
+                arguments: {
+                  'awb': v.payload?.awb,
+                },
+              ),
+              thirdButtonTitle: "Lihat Transaksi",
+              thirdAction: () => Get.offAll(const RiwayatKirimanScreen()),
+            ),
+          );
+        }
+      });
+    } catch (e, i) {
+      e.printError();
+      i.printError();
+      saveDraft();
+    }
+    isLoading = false;
+    update();
+  }
+
   Future<void> saveTransaction() async {
     isLoading = true;
     update();
+
     try {
       await transaction
           .postTransaction(DataTransactionModel(
@@ -401,7 +503,8 @@ class InformasiKirimaController extends BaseController {
           accountService: account.accountService,
         ),
         origin: origin,
-        destination: Destination(code: destination.destinationCode, desc: destination.cityName),
+        destination: destination,
+        // destination: Destination(code: destination.destinationCode, desc: destination.cityName),
         goods: Goods(
             type: jenisBarang.text,
             desc: namaBarang.text,

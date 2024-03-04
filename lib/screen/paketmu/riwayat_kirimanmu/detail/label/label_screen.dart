@@ -1,14 +1,15 @@
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_controller.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_a6.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_default.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub1.dart';
-import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub_hybrid.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub2.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub_hybrid_1.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub_hybrid_2.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub_hybrid_3.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:printing/printing.dart';
 import 'package:screenshot/screenshot.dart';
 
 class LabelScreen extends StatelessWidget {
@@ -16,7 +17,7 @@ class LabelScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TransactionModel data = Get.arguments['data'];
+    DataTransactionModel data = Get.arguments['data'];
 
     return GetBuilder<LabelController>(
         init: LabelController(),
@@ -36,14 +37,20 @@ class LabelScreen extends StatelessWidget {
               controller: controller.screenshotController,
               child: Container(
                 margin: const EdgeInsets.all(25),
-                // child: StickerMegahubHybrid(data: data),
+                // child: StickerMegahubHybrid3(data: data),
                 child: controller.stickerLabel == "/sticker_default"
                     ? StickerDefault(data: data)
                     : controller.stickerLabel == "/sticker_A6"
                         ? StickerA6(data: data)
                         : controller.stickerLabel == "/sticker_megahub1"
                             ? StickerMegahub1(data: data)
-                            : StickerMegahubHybrid(data: data),
+                            : controller.stickerLabel == "/sticker_vertical_megahub_1"
+                                ? StickerMegahub2(data: data)
+                                : controller.stickerLabel == "/sticker_megahub_hybrid_1"
+                                    ? StickerMegahubHybrid1(data: data)
+                                    : controller.stickerLabel == "/sticker_megahub_hybrid_2"
+                                        ? StickerMegahubHybrid2(data: data)
+                                        : StickerMegahubHybrid3(data: data),
               ),
             ),
             // floatingActionButton: FloatingActionButton(

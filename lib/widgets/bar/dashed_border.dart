@@ -15,7 +15,7 @@ class DashedBorder extends StatelessWidget {
             Get.width ~/ 5,
             (_) => Container(
               width: 2,
-                height: 1,
+              height: 1,
               color: Colors.black,
               margin: const EdgeInsets.only(left: 2, right: 2),
             ),

@@ -14,16 +14,16 @@ class AddPenerimaController extends BaseController {
 
   bool isLoading = false;
 
-  List<DestinationModel> destinationList = [];
+  List<Destination> destinationList = [];
 
-  DestinationModel? selectedDestination;
+  Destination? selectedDestination;
 
   @override
   void onInit() {
     super.onInit();
   }
 
-  Future<List<DestinationModel>> getDestinationList(String keyword) async {
+  Future<List<Destination>> getDestinationList(String keyword) async {
     isLoading = true;
     destinationList = [];
     var response = await transaction.getDestination(keyword);

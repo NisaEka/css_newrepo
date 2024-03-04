@@ -35,7 +35,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
       );
       return GetAccountNumberModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
       return e.error;
     }
   }
@@ -50,7 +49,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
       );
       return GetDropshipperModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
       return e.error;
     }
   }
@@ -65,7 +63,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
       );
       return GetShipperModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
       return e.error;
     }
   }
@@ -84,7 +81,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
       );
       return GetOriginModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
       return e.error;
     }
   }
@@ -102,7 +98,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
       );
       return GetDestinationModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
       return e.error;
     }
   }
@@ -117,7 +112,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
       );
       return GetReceiverModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
       return e.error;
     }
   }
@@ -130,7 +124,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.dio.get(
         "/transaction/service",
-        // queryParameters: param,
         queryParameters: {
           'account_id': param.accountId,
           'origin_code': param.originCode,
@@ -139,8 +132,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
       );
       return GetServiceModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
-      // return e.error;
       return GetServiceModel.fromJson(e.response?.data);
     }
   }
@@ -153,14 +144,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.dio.get(
         "/transaction/fee",
-        // queryParameters: {
-        //   "origin_code": "AMI10000",
-        //   "destination_code": "CGK10302",
-        //   "service_code": "JTR",
-        //   "weight": 1,
-        //   "cust_no": "1624166223" //account number
-        // }
-        // options: Options(method: "GET"),
         queryParameters: {
           "origin_code": params.originCode,
           "destination_code": params.destinationCode,
@@ -169,10 +152,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
           "cust_no": params.custNo,
         },
       );
-      print(response.data);
       return GetTransactionFeeModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
       return e.error;
     }
   }
@@ -187,29 +168,24 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/transaction",
         data: data,
       );
-      print(response.data);
-      // return response.data;
       return PostTransactionModel.fromJson(response.data);
-      // return PostTransactionModel();
     } on DioError catch (e) {
-      print("response error: ${e.response?.data}");
       return e.error;
     }
   }
 
   @override
-  Future<GetCodFeeModel> getCODFee(String accountId) async {
+  Future<GetCodFeeModel> getCODFee(String accountID) async {
     try {
       Response response = await network.dio.get(
         "/account/cod/fee",
         queryParameters: {
-          'account_id': accountId,
+          'account_id': accountID,
         },
       );
       return GetCodFeeModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
-      return e.error;
+      return e.response?.data;
     }
   }
 
@@ -223,12 +199,9 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/dropshipper",
         data: data,
       );
-      print(response.data);
       return PostTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
-      print("response error: ${e.response?.data}");
       return PostTransactionModel.fromJson(e.response?.data);
-      // return e.error;
     }
   }
 
@@ -242,12 +215,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/receiver",
         data: data,
       );
-      print(response.data);
-      // return response.data;
       return PostTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
-      print("response error: ${e.response?.data}");
-      // return e.error;
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -260,12 +229,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.dio.delete(
         "/dropshipper/$id",
       );
-      print(response.data);
-      // return response.data;
       return PostTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
-      print("response error: ${e.response?.data}");
-      // return e.error;
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -278,12 +243,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.dio.delete(
         "/receiver/$id",
       );
-      print(response.data);
-      // return response.data;
       return PostTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
-      print("response error: ${e.response?.data}");
-      // return e.error;
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -311,12 +272,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
           "limit": limit,
         },
       );
-      print(response.data);
-      // return response.data;
       return GetTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
-      print("response error: ${e.response?.data}");
-      // return e.error;
       return GetTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -329,12 +286,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.dio.get(
         "/transaction/$awb",
       );
-      print(response.data);
-      // return response.data;
       return GetTransactionByAwbModel.fromJson(response.data);
     } on DioError catch (e) {
-      print("response error: ${e.response?.data}");
-      // return e.error;
       return GetTransactionByAwbModel.fromJson(e.response?.data);
     }
   }
@@ -347,12 +300,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.dio.get(
         "/transaction/count",
       );
-      print(response.data);
-      // return response.data;
       return GetTransactionCountModel.fromJson(response.data);
     } on DioError catch (e) {
-      print("response error: ${e.response?.data}");
-      // return e.error;
       return GetTransactionCountModel.fromJson(e.response?.data);
     }
   }
@@ -365,12 +314,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.dio.delete(
         "/transaction/$awb",
       );
-      print(response.data);
-      // return response.data;
       return PostTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
-      print("response error: ${e.response?.data}");
-      // return e.error;
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -383,13 +328,29 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.dio.get(
         "/transaction/status",
       );
-      // print(response.data);
-      // return response.data;
       return GetTransactionStatusModel.fromJson(response.data);
     } on DioError catch (e) {
-      print("response error: ${e.response?.data}");
-      // return e.error;
       return GetTransactionStatusModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<PostTransactionModel> putTransaction(
+    DataTransactionModel data,
+    String awb,
+  ) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.put(
+        "/transaction/$awb",
+      );
+      print("updatetransaksi ${response.data}");
+      return PostTransactionModel.fromJson(response.data);
+    } on DioError catch (e) {
+      print("updatetransaksi ${e.response?.data}");
+
+      return PostTransactionModel.fromJson(e.response?.data);
     }
   }
 }

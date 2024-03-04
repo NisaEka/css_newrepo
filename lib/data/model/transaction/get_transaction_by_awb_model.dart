@@ -1,10 +1,11 @@
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 
 class GetTransactionByAwbModel {
   GetTransactionByAwbModel({
     num? code,
     String? message,
-    TransactionModel? payload,
+    DataTransactionModel? payload,
   }) {
     _code = code;
     _message = message;
@@ -14,17 +15,18 @@ class GetTransactionByAwbModel {
   GetTransactionByAwbModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
-    _payload = json['payload'] != null ? TransactionModel.fromJson(json['payload']) : null;
+    // _payload = json['payload'] != null ? TransactionModel.fromJson(json['payload']) : null;
+    _payload = json['payload'] != null ? DataTransactionModel.fromJson(json['payload']) : null;
   }
 
   num? _code;
   String? _message;
-  TransactionModel? _payload;
+  DataTransactionModel? _payload;
 
   GetTransactionByAwbModel copyWith({
     num? code,
     String? message,
-    TransactionModel? payload,
+    DataTransactionModel? payload,
   }) =>
       GetTransactionByAwbModel(
         code: code ?? _code,
@@ -36,7 +38,7 @@ class GetTransactionByAwbModel {
 
   String? get message => _message;
 
-  TransactionModel? get payload => _payload;
+  DataTransactionModel? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

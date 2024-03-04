@@ -49,7 +49,7 @@ class AddDropshipperScreen extends StatelessWidget {
                         isRequired: true,
                         prefixIcon: const Icon(Icons.phone),
                       ),
-                      CustomSearchDropdownField<OriginModel>(
+                      CustomSearchDropdownField<Origin>(
                         asyncItems: (String filter) => controller.getOriginList(filter, controller.account?.accountId ?? ''),
                         itemBuilder: (context, e, b) {
                           return Container(
@@ -59,7 +59,7 @@ class AddDropshipperScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        itemAsString: (OriginModel e) => e.originName.toString(),
+                        itemAsString: (Origin e) => e.originName.toString(),
                         onChanged: (value) {
                           controller.selectedOrigin = value;
                           controller.kotaPengirim.text = controller.selectedOrigin?.originName ?? '';

@@ -516,9 +516,13 @@ class InformasiKirimanScreen extends StatelessWidget {
                                   controller.isOnline
                                       ? CustomFilledButton(
                                           color: controller.formValidate && controller.selectedService != null ? blueJNE : greyColor,
-                                          title: 'Buat Resi'.tr,
+                                          title: controller.dataEdit != null ? 'Edit Resi'.tr : 'Buat Resi'.tr,
                                           onPressed: () {
-                                            controller.formValidate && controller.selectedService != null ? controller.saveTransaction() : null;
+                                            controller.formValidate && controller.selectedService != null
+                                                ? controller.dataEdit != null
+                                                    ? controller.updateTransaction()
+                                                    : controller.saveTransaction()
+                                                : null;
                                           },
                                         )
                                       : const SizedBox(),

@@ -1,10 +1,11 @@
-import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
@@ -42,6 +43,9 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
           return Scaffold(
             appBar: CustomTopBar(
               title: 'Riwayat Kiriman'.tr,
+              leading: CustomBackButton(
+                onPressed: () => Get.offAll(const DashboardScreen()),
+              ),
               action: [
                 Container(
                   margin: const EdgeInsets.only(right: 10),
@@ -75,7 +79,7 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                                       onPressed: () {
                                         if (!controller.isFiltered) {
                                           controller.resetFilter();
-                                        }else{
+                                        } else {
                                           Get.back();
                                         }
                                       },
@@ -190,7 +194,7 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                                             const SizedBox(height: 10),
                                             // const CustomFormLabel(label: 'Petugas Entry'),
                                             CustomDropDownField(
-                                              items: [],
+                                              items: const [],
                                               label: 'Petugas Entry'.tr,
                                               hintText: 'Petugas Entry'.tr,
                                             )
@@ -269,6 +273,7 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
                     ),
+
                     onSubmit: (value) {
                       controller.searchField.text = value;
                       controller.update();
@@ -400,60 +405,65 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                         )
                       : const SizedBox(),
                   Expanded(
-                    child: PagedListView<int, TransactionModel>(
-                      pagingController: controller.pagingController,
-                      builderDelegate: PagedChildBuilderDelegate<TransactionModel>(
-                        transitionDuration: const Duration(milliseconds: 500),
-                        itemBuilder: (context, item, index) => RiwayatKirimanListItem(
-                          index: index,
-                          tanggalEntry: item.createdDate?.toShortDateTimeFormat() ?? '',
-                          orderID: item.orderId ?? '-',
-                          service: item.service.toString(),
-                          noResi: item.awb.toString(),
-                          apiType: item.type.toString(),
-                          penerima: item.receiver?.name ?? '',
-                          status: item.status.toString().tr,
-                          isSelected: controller.selectedTransaction.where((e) => e == item).isNotEmpty,
-                          onLongPress: () {
-                            controller.select(item);
-                          },
-                          onTap: () {
-                            controller.unselect(item);
-                          },
-                          onDelete: (context) => showDialog(
-                            context: context,
-                            builder: (c) => DeleteAlertDialog(
-                              onDelete: () {
-                                controller.delete(item);
-                                controller.initData();
-                                Get.back();
-                              },
-                              onBack: () {
-                                Get.back();
-                                controller.pagingController.refresh();
-                                controller.initData();
-                              },
+                    child: RefreshIndicator(
+                      onRefresh: () => Future.sync(
+                        () => controller.pagingController.refresh(),
+                      ),
+                      child: PagedListView<int, TransactionModel>(
+                        pagingController: controller.pagingController,
+                        builderDelegate: PagedChildBuilderDelegate<TransactionModel>(
+                          transitionDuration: const Duration(milliseconds: 500),
+                          itemBuilder: (context, item, index) => RiwayatKirimanListItem(
+                            index: index,
+                            tanggalEntry: item.createdDate?.toShortDateTimeFormat() ?? '',
+                            orderID: item.orderId ?? '-',
+                            service: item.service.toString(),
+                            noResi: item.awb.toString(),
+                            apiType: item.type.toString(),
+                            penerima: item.receiver?.name ?? '',
+                            status: item.status.toString().tr,
+                            isSelected: controller.selectedTransaction.where((e) => e == item).isNotEmpty,
+                            onLongPress: () {
+                              controller.select(item);
+                            },
+                            onTap: () {
+                              controller.unselect(item);
+                            },
+                            onDelete: (context) => showDialog(
+                              context: context,
+                              builder: (c) => DeleteAlertDialog(
+                                onDelete: () {
+                                  controller.delete(item);
+                                  controller.initData();
+                                  Get.back();
+                                },
+                                onBack: () {
+                                  Get.back();
+                                  controller.pagingController.refresh();
+                                  controller.initData();
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
-                        firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                          height: 100,
-                          background: Colors.transparent,
-                        ),
-                        noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
-                        noMoreItemsIndicatorBuilder: (context) => const Center(
-                          child: Divider(
-                            indent: 100,
-                            endIndent: 100,
-                            thickness: 2,
-                            color: blueJNE,
+                          firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                          firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                            height: 100,
+                            background: Colors.transparent,
                           ),
-                        ),
-                        newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                          background: Colors.transparent,
-                          height: 50,
-                          size: 30,
+                          noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
+                          noMoreItemsIndicatorBuilder: (context) => const Center(
+                            child: Divider(
+                              indent: 100,
+                              endIndent: 100,
+                              thickness: 2,
+                              color: blueJNE,
+                            ),
+                          ),
+                          newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                            background: Colors.transparent,
+                            height: 50,
+                            size: 30,
+                          ),
                         ),
                       ),
                     ),

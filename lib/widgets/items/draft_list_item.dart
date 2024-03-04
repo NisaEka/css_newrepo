@@ -131,7 +131,7 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                               children: [
                                 CustomLabelText(
                                   title: 'Origin'.tr,
-                                  value: widget.data.origin?.desc ?? '',
+                                  value: widget.data.origin?.originName ?? '',
                                 ),
                                 CustomLabelText(
                                   alignment: 'end',

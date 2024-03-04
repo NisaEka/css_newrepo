@@ -31,14 +31,14 @@ class PengaturanLabelScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: ListView(
                 children: [
-                  CustomSwitch(
-                    value: controller.copyLabel,
-                    label: 'Salin Label'.tr,
-                    onChange: (value) {
-                      controller.copyLabel = value;
-                      controller.update();
-                    },
-                  ),
+                  // CustomSwitch(
+                  //   value: controller.copyLabel,
+                  //   label: 'Salin Label'.tr,
+                  //   onChange: (value) {
+                  //     controller.copyLabel = value;
+                  //     controller.update();
+                  //   },
+                  // ),
                   CustomDropDownField(
                     // value: controller.selectedTampil,
                     hintText: 'Biaya Kirim'.tr,
@@ -59,6 +59,17 @@ class PengaturanLabelScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 11),
                   CustomFormLabel(label: 'Pilih Jenis Label Anda'.tr),
+                  TextField(
+                    readOnly: true,
+                    controller: TextEditingController(
+                      text: controller.selectedSticker
+                          .splitMapJoin(
+                            '_',
+                            onMatch: (p0) => ' ',
+                          )
+                          .substring(1),
+                    ),
+                  ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -81,7 +92,6 @@ class PengaturanLabelScreen extends StatelessWidget {
                     title: 'Simpan Perubahan',
                     onPressed: () => controller.saveLabel(),
                   ),
-
                 ],
               ),
             ),

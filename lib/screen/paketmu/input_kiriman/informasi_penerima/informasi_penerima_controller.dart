@@ -6,6 +6,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
@@ -14,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InformasiPenerimaController extends BaseController {
-  TransactionModel? data = Get.arguments['data'];
+  DataTransactionModel? data = Get.arguments['data'];
   Shipper shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
@@ -32,10 +33,10 @@ class InformasiPenerimaController extends BaseController {
   bool isOnline = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
-  List<DestinationModel> destinationList = [];
+  List<Destination> destinationList = [];
 
   GetDestinationModel? destinationModel;
-  DestinationModel? selectedDestination;
+  Destination? selectedDestination;
   ReceiverModel? selectedReceiver;
 
   @override
@@ -59,17 +60,11 @@ class InformasiPenerimaController extends BaseController {
     if (data != null) {
       namaPenerima.text = data?.receiver?.name ?? '';
       nomorTelpon.text = data?.receiver?.phone ?? '';
-      selectedDestination = DestinationModel(
-        id: data?.receiver?.idDestination?.toInt(),
-        destinationCode: data?.receiver?.destinationCode,
-        cityName: data?.receiver?.city,
-        countryName: data?.receiver?.country,
-        districtName: data?.receiver?.district,
-        provinceName: data?.receiver?.region,
-        subDistrictName: data?.receiver?.subDistrict,
-        zipCode: data?.receiver?.zip,
-      );
       alamatLengkap.text = data?.receiver?.address ?? '';
+      getDestinationList(data?.destination?.cityName ?? '').then((value) {
+        selectedDestination = value.first;
+        update();
+      });
 
       update();
     }
@@ -81,7 +76,7 @@ class InformasiPenerimaController extends BaseController {
     kotaTujuan.text = receiver.idDestination ?? '';
     alamatLengkap.text = receiver.address ?? '';
     getDestinationList(receiver.city ?? '');
-    selectedDestination = DestinationModel(
+    selectedDestination = Destination(
       id: receiver.idDestination?.toInt(),
       destinationCode: receiver.destinationCode,
       cityName: receiver.city,
@@ -96,7 +91,7 @@ class InformasiPenerimaController extends BaseController {
     return receiver;
   }
 
-  Future<List<DestinationModel>> getDestinationList(String keyword) async {
+  Future<List<Destination>> getDestinationList(String keyword) async {
     isLoading = true;
     destinationList = [];
     try {
@@ -114,6 +109,7 @@ class InformasiPenerimaController extends BaseController {
 
   void nextStep() {
     Get.to(const InformasiKirimanScreen(), arguments: {
+      "data": data,
       "cod_ongkir": codOngkir,
       "account": account,
       "origin": origin,

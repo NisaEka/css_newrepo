@@ -7,6 +7,7 @@ class LanguageID {
       "return_info": "Data ini dipergunakan dalam proses pengembalian barang kiriman kamu.",
       "bank_info": "Data ini dipergunakan dalam proses transfer uang COD kamu.",
       "access_denied": "Anda harus mempunyai akun CSS untuk menggunakan fitur ini",
+      "Bad Request": "Terjadi kesalahan, silahkan coba lagi nanti",
     };
   }
 }

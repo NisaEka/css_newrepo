@@ -5,7 +5,7 @@ class GetDestinationModel {
   GetDestinationModel({
     num? code,
     String? message,
-    List<DestinationModel>? payload,
+    List<Destination>? payload,
   }) {
     _code = code;
     _message = message;
@@ -18,19 +18,19 @@ class GetDestinationModel {
     if (json['payload'] != null) {
       _payload = [];
       json['payload'].forEach((v) {
-        _payload?.add(DestinationModel.fromJson(v));
+        _payload?.add(Destination.fromJson(v));
       });
     }
   }
 
   num? _code;
   String? _message;
-  List<DestinationModel>? _payload;
+  List<Destination>? _payload;
 
   GetDestinationModel copyWith({
     num? code,
     String? message,
-    List<DestinationModel>? payload,
+    List<Destination>? payload,
   }) =>
       GetDestinationModel(
         code: code ?? _code,
@@ -42,7 +42,7 @@ class GetDestinationModel {
 
   String? get message => _message;
 
-  List<DestinationModel>? get payload => _payload;
+  List<Destination>? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -55,12 +55,12 @@ class GetDestinationModel {
   }
 }
 
-DestinationModel payloadFromJson(String str) => DestinationModel.fromJson(json.decode(str));
+Destination payloadFromJson(String str) => Destination.fromJson(json.decode(str));
 
-String payloadToJson(DestinationModel data) => json.encode(data.toJson());
+String payloadToJson(Destination data) => json.encode(data.toJson());
 
-class DestinationModel {
-  DestinationModel({
+class Destination {
+  Destination({
     num? id,
     String? destinationCode,
     String? countryName,
@@ -80,12 +80,12 @@ class DestinationModel {
     _zipCode = zipCode;
   }
 
-  DestinationModel.fromJson(dynamic json) {
+  Destination.fromJson(dynamic json) {
     _id = json['id'];
-    _destinationCode = json['destination_code'];
+    _destinationCode = json['destination_code'] ?? json['code'];
     _countryName = json['country_name'];
     _provinceName = json['province_name'];
-    _cityName = json['city_name'];
+    _cityName = json['city_name'] ?? json['desc'];
     _districtName = json['district_name'];
     _subDistrictName = json['sub_district_name'];
     _zipCode = json['zip_code'];
@@ -100,7 +100,7 @@ class DestinationModel {
   String? _subDistrictName;
   String? _zipCode;
 
-  DestinationModel copyWith({
+  Destination copyWith({
     num? id,
     String? destinationCode,
     String? countryName,
@@ -110,7 +110,7 @@ class DestinationModel {
     String? subDistrictName,
     String? zipCode,
   }) =>
-      DestinationModel(
+      Destination(
         id: id ?? _id,
         destinationCode: destinationCode ?? _destinationCode,
         countryName: countryName ?? _countryName,
@@ -141,9 +141,11 @@ class DestinationModel {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['destination_code'] = _destinationCode;
+    map['code'] = _destinationCode;
     map['country_name'] = _countryName;
     map['province_name'] = _provinceName;
     map['city_name'] = _cityName;
+    map['desc'] = _cityName;
     map['district_name'] = _districtName;
     map['sub_district_name'] = _subDistrictName;
     map['zip_code'] = _zipCode;

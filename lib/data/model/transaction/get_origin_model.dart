@@ -9,7 +9,7 @@ class GetOriginModel {
     num? code,
     String? message,
     String? regId,
-    List<OriginModel>? payload,
+    List<Origin>? payload,
   }) {
     _code = code;
     _message = message;
@@ -24,7 +24,7 @@ class GetOriginModel {
     if (json['payload'] != null) {
       _payload = [];
       json['payload'].forEach((v) {
-        _payload?.add(OriginModel.fromJson(v));
+        _payload?.add(Origin.fromJson(v));
       });
     }
   }
@@ -32,13 +32,13 @@ class GetOriginModel {
   num? _code;
   String? _message;
   String? _regId;
-  List<OriginModel>? _payload;
+  List<Origin>? _payload;
 
   GetOriginModel copyWith({
     num? code,
     String? message,
     String? regId,
-    List<OriginModel>? payload,
+    List<Origin>? payload,
   }) =>
       GetOriginModel(
         code: code ?? _code,
@@ -53,7 +53,7 @@ class GetOriginModel {
 
   String? get regId => _regId;
 
-  List<OriginModel>? get payload => _payload;
+  List<Origin>? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -67,12 +67,12 @@ class GetOriginModel {
   }
 }
 
-OriginModel payloadFromJson(String str) => OriginModel.fromJson(json.decode(str));
+Origin payloadFromJson(String str) => Origin.fromJson(json.decode(str));
 
-String payloadToJson(OriginModel data) => json.encode(data.toJson());
+String payloadToJson(Origin data) => json.encode(data.toJson());
 
-class OriginModel {
-  OriginModel({
+class Origin {
+  Origin({
     String? originCode,
     String? originName,
     String? branchCode,
@@ -82,22 +82,22 @@ class OriginModel {
     _branchCode = branchCode;
   }
 
-  OriginModel.fromJson(dynamic json) {
-    _originCode = json['origin_code'];
-    _originName = json['origin_name'];
-    _branchCode = json['branch_code'];
+  Origin.fromJson(dynamic json) {
+    _originCode = json['origin_code'] ?? json['code'];
+    _originName = json['origin_name'] ?? json['desc'];
+    _branchCode = json['branch_code'] ?? json['branch'];
   }
 
   String? _originCode;
   String? _originName;
   String? _branchCode;
 
-  OriginModel copyWith({
+  Origin copyWith({
     String? originCode,
     String? originName,
     String? branchCode,
   }) =>
-      OriginModel(
+      Origin(
         originCode: originCode ?? _originCode,
         originName: originName ?? _originName,
         branchCode: branchCode ?? _branchCode,
@@ -114,6 +114,9 @@ class OriginModel {
     map['origin_code'] = _originCode;
     map['origin_name'] = _originName;
     map['branch_code'] = _branchCode;
+    map['code'] = _originCode;
+    map['desc'] = _originName;
+    map['branch'] = _branchCode;
     return map;
   }
 }

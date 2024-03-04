@@ -59,14 +59,16 @@ class SuccessScreen extends StatelessWidget {
                         radius: 10,
                         onPressed: secondAction,
                       )
-                    : SizedBox(),
-                CustomFilledButton(
-                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  color: blueJNE,
-                  radius: 10,
-                  title: thirdButtonTitle,
-                  onPressed: thirdAction,
-                ),
+                    : const SizedBox(),
+                thirdAction != null
+                    ? CustomFilledButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        color: blueJNE,
+                        radius: 10,
+                        title: thirdButtonTitle,
+                        onPressed: thirdAction,
+                      )
+                    : const SizedBox(),
                 CustomFilledButton(
                   margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   color: Colors.white,

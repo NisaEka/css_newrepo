@@ -16,16 +16,16 @@ class AddDropshipperController extends BaseController {
   final alamatPengirim = TextEditingController();
   final kodePos = TextEditingController();
 
-  List<OriginModel> originList = [];
+  List<Origin> originList = [];
   bool isLoadOrigin = false;
-  OriginModel? selectedOrigin;
+  Origin? selectedOrigin;
 
   @override
   void onInit() {
     super.onInit();
   }
 
-  Future<List<OriginModel>> getOriginList(String keyword, String accountID) async {
+  Future<List<Origin>> getOriginList(String keyword, String accountID) async {
     originList = [];
     isLoadOrigin = true;
     var response = await transaction.getOrigin(keyword, accountID);

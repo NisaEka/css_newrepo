@@ -122,7 +122,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   isRequired: true,
 
                                 ),
-                                CustomSearchDropdownField<DestinationModel>(
+                                CustomSearchDropdownField<Destination>(
                                   asyncItems: (String filter) => controller.getDestinationList(filter),
                                   itemBuilder: (context, e, b) {
                                     return GestureDetector(
@@ -135,7 +135,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                       ),
                                     );
                                   },
-                                  itemAsString: (DestinationModel e) =>
+                                  itemAsString: (Destination e) =>
                                       '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
                                   onChanged: (value) {
                                     controller.selectedDestination = value;

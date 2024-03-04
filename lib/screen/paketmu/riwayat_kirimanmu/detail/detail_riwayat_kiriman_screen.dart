@@ -152,11 +152,11 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                     style: itemTextStyle,
                                   ),
                                   Text(
-                                    controller.transactionModel?.service ?? '-',
+                                    controller.transactionModel?.delivery?.serviceCode ?? '-',
                                     style: itemTextStyle,
                                   ),
                                   Text(
-                                    'Rp. ${controller.transactionModel?.codAmount?.toInt().toCurrency() ?? '-'}',
+                                    'Rp. ${controller.transactionModel?.delivery?.flatRate?.toInt().toCurrency() ?? '-'}',
                                     style: itemTextStyle,
                                   ),
                                   Text(
@@ -220,7 +220,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                 },
               ),
             ),
-            controller.isLoading == true ? const LoadingDialog() : Container(),
+            controller.isLoading == true || controller.transactionModel == null ? const LoadingDialog() : Container(),
           ],
         );
       },

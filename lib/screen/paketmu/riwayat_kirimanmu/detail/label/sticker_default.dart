@@ -1,7 +1,7 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/dashed_border.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StickerDefault extends StatelessWidget {
-  final TransactionModel data;
+  final DataTransactionModel data;
 
   const StickerDefault({super.key, required this.data});
 
@@ -65,7 +65,7 @@ class StickerDefault extends StatelessWidget {
                     children: [
                       Text("From :", style: TextStyle(fontWeight: bold)),
                       Text(data.shipper?.name ?? ''),
-                      Text(data.shipper?.origin?.originName ?? ''),
+                      Text(data.origin?.originName ?? ''),
                       Text(data.shipper?.city ?? data.shipper?.origin?.originName ?? ''),
                       Text(data.shipper?.address ?? ''),
                       Text("\n\nKode Pos : ${data.shipper?.zip}"),
@@ -77,12 +77,12 @@ class StickerDefault extends StatelessWidget {
                     children: [
                       Text("To :", style: TextStyle(fontWeight: bold)),
                       Text("${data.receiver?.name}\n"),
-                      Text(data.receiver?.destinationDescription ?? ''),
+                      Text(data.destination?.cityName ?? ''),
                       Text(data.receiver?.city ?? ''),
                       Text(data.receiver?.address ?? ''),
                       Text("\n\nKode Pos : ${data.receiver?.zip}"),
                       Text(data.receiver?.phone ?? ''),
-                      Text(data.receiver?.destinationCode?.substring(0, 3) ?? '-', style: TextStyle(fontSize: 38, fontWeight: bold)),
+                      Text(data.destination?.destinationCode?.substring(0, 3) ?? '-', style: TextStyle(fontSize: 38, fontWeight: bold)),
                       Text(
                         data.account?.accountType ?? '',
                         style: TextStyle(fontWeight: bold),
@@ -105,7 +105,7 @@ class StickerDefault extends StatelessWidget {
               ),
               CustomLabelText(
                 title: "Detail Goods:",
-                value: '-',
+                value: data.goods?.desc ?? '-',
                 titleTextStyle: TextStyle(fontWeight: bold),
                 valueTextStyle: const TextStyle(),
               ),
@@ -119,7 +119,7 @@ class StickerDefault extends StatelessWidget {
                     children: [
                       CustomLabelText(
                         title: "Qty:",
-                        value: '-',
+                        value: data.goods?.quantity.toString() ?? '-',
                         titleTextStyle: TextStyle(fontWeight: bold),
                         valueTextStyle: const TextStyle(),
                         isHorizontal: true,
@@ -135,12 +135,12 @@ class StickerDefault extends StatelessWidget {
                         children: [
                           CustomLabelText(
                             title: "Goods Type:   ",
-                            value: '-',
+                            value: data.goods?.type ?? '-',
                             titleTextStyle: TextStyle(fontWeight: bold),
                             valueTextStyle: const TextStyle(),
                           ),
                           const SizedBox(width: 25),
-                          Text("${data.service}", style: TextStyle(fontSize: 38, fontWeight: bold)),
+                          Text("${data.delivery?.serviceCode}", style: TextStyle(fontSize: 38, fontWeight: bold)),
                         ],
                       ),
                     ],
@@ -152,7 +152,7 @@ class StickerDefault extends StatelessWidget {
                 children: [
                   CustomLabelText(
                     title: "Insurance:",
-                    value: "-",
+                    value: data.delivery?.insuranceFlag == "Y" ? "YES" : "NO",
                     titleTextStyle: TextStyle(fontWeight: bold),
                     valueTextStyle: const TextStyle(),
                     isHorizontal: true,
@@ -161,10 +161,11 @@ class StickerDefault extends StatelessWidget {
                     children: [
                       CustomLabelText(
                         title: "Packing Kayu:   ",
-                        value: '-',
+                        value: data.delivery?.woodPackaging == "Y" ? "YES" : "NO",
                         titleTextStyle: TextStyle(fontWeight: bold),
                         valueTextStyle: const TextStyle(),
                       ),
+                      const SizedBox(width: 10),
                       Text(data.account?.accountService ?? '', style: TextStyle(fontSize: 38, fontWeight: bold)),
                     ],
                   ),
@@ -175,14 +176,15 @@ class StickerDefault extends StatelessWidget {
                 children: [
                   CustomLabelText(
                     title: "Estimasi Ongkir: Rp",
-                    value: "-",
+                    value:
+                        '${data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}',
                     titleTextStyle: TextStyle(fontWeight: bold),
                     valueTextStyle: const TextStyle(),
                   ),
                   const SizedBox(width: 15),
                   CustomLabelText(
                     title: "Weight:   ",
-                    value: '1Kg',
+                    value: '${data.goods?.weight} Kg',
                     titleTextStyle: TextStyle(fontWeight: bold),
                     valueTextStyle: const TextStyle(),
                     isHorizontal: true,
@@ -191,21 +193,21 @@ class StickerDefault extends StatelessWidget {
               ),
               CustomLabelText(
                 title: "Goods Value  :   ",
-                value: 'Rp 1,00',
+                value: 'Rp ${data.goods?.amount?.toInt().toCurrency()}',
                 titleTextStyle: TextStyle(fontWeight: bold),
                 valueTextStyle: const TextStyle(),
                 isHorizontal: true,
               ),
               CustomLabelText(
                 title: "COD Amount :   ",
-                value: "Rp ${data.codAmount?.toInt().toCurrency()}",
+                value: "Rp ${data.delivery?.codFee?.toInt().toCurrency()}",
                 titleTextStyle: TextStyle(fontWeight: bold),
                 valueTextStyle: const TextStyle(),
                 isHorizontal: true,
               ),
               Center(
                 child: Text(
-                  data.receiver?.destinationCode ?? 'DTB10102',
+                  "${data.destination?.destinationCode?.substring(0, 3)}-${data.receiver?.destinationCode}",
                   style: TextStyle(
                     fontWeight: bold,
                     fontSize: 21,
@@ -242,17 +244,16 @@ class StickerDefault extends StatelessWidget {
               const SizedBox(height: 10),
               CustomLabelText(
                 title: "Special Instruction :   ",
-                value: "-",
+                value: data.delivery?.specialInstruction ?? '-',
                 titleTextStyle: TextStyle(fontWeight: bold),
                 valueTextStyle: const TextStyle(),
-                isHorizontal: true,
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       "This Label Copyright By JNE",
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),

@@ -35,11 +35,11 @@ class CustomSearchField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hintText,
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-              color: validate ? redJNE : blueJNE,
-              width: 2,
-            )),
+                  color: validate ? redJNE : blueJNE,
+                  width: 2,
+                )),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
               color: validate ? redJNE : blueJNE,
