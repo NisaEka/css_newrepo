@@ -9,6 +9,7 @@ class PengaturanLabelController extends BaseController {
   bool copyLabel = false;
 
   String selectedSticker = '';
+  String shipcost = "";
 
   List<StickerLabel> labelList = [
     StickerLabel(
@@ -50,6 +51,7 @@ class PengaturanLabelController extends BaseController {
   Future<void> initData() async {
     try {
       selectedSticker = await storage.readString(StorageCore.transactionLabel);
+      shipcost = await storage.readString(StorageCore.shippingCost);
       update();
       var sticker = labelList.where((e) => e.name == selectedSticker).first;
     } catch (e) {
@@ -60,6 +62,7 @@ class PengaturanLabelController extends BaseController {
   }
 
   Future<void> saveLabel() async {
+    await storage.writeString(StorageCore.shippingCost, shipcost);
     await storage.writeString(StorageCore.transactionLabel, selectedSticker).then(
           (value) => Get.showSnackbar(
             GetSnackBar(

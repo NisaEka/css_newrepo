@@ -17,8 +17,13 @@ import 'package:pdf/widgets.dart' as pw;
 
 class StickerMegahub1 extends StatelessWidget {
   final DataTransactionModel data;
+  final bool shippingCost;
 
-  const StickerMegahub1({super.key, required this.data});
+  const StickerMegahub1({
+    super.key,
+    required this.data,
+    this.shippingCost = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +51,7 @@ class StickerMegahub1 extends StatelessWidget {
           width: Get.width - 51,
           padding: const EdgeInsets.all(15),
           decoration: const BoxDecoration(
-            border: Border(
-              left: BorderSide(),
-              top: BorderSide(),
-              right: BorderSide(),
-              bottom: BorderSide()
-            ),
+            border: Border(left: BorderSide(), top: BorderSide(), right: BorderSide(), bottom: BorderSide()),
           ),
           child: Column(
             children: [
@@ -77,12 +77,7 @@ class StickerMegahub1 extends StatelessWidget {
           ),
         ),
         Table(
-          border: const TableBorder(
-            verticalInside: BorderSide(),
-            right: BorderSide(),
-            left: BorderSide(),
-            bottom: BorderSide()
-          ),
+          border: const TableBorder(verticalInside: BorderSide(), right: BorderSide(), left: BorderSide(), bottom: BorderSide()),
           children: <TableRow>[
             TableRow(
               // decoration: BoxDecoration(border: Border.all()),
@@ -98,7 +93,7 @@ class StickerMegahub1 extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Rp ${data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}',
+                  'Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}',
                   style: itemTextStyle.copyWith(fontWeight: bold),
                   textAlign: TextAlign.center,
                 ),
@@ -197,8 +192,6 @@ class StickerMegahub1 extends StatelessWidget {
       ],
     );
   }
-
-
 
   Future<Uint8List> generatePdf(PdfPageFormat format) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);

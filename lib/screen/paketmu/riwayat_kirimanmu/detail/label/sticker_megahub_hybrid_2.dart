@@ -2,6 +2,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/solid_border.dart';
@@ -10,8 +11,9 @@ import 'package:get/get.dart';
 
 class StickerMegahubHybrid2 extends StatelessWidget {
   final DataTransactionModel data;
+  final bool shippingCost;
 
-  const StickerMegahubHybrid2({super.key, required this.data});
+  const StickerMegahubHybrid2({super.key, required this.data, this.shippingCost = false});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +123,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                 width: (Get.width - 51) / 3.2,
                 alignment: Alignment.center,
                 child: Text(
-                  "Rp ${data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}",
+                  "Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}",
                   style: TextStyle(fontSize: 15, fontWeight: bold),
                 ),
               ),

@@ -10,8 +10,13 @@ import 'package:get/get.dart';
 
 class StickerA6 extends StatelessWidget {
   final DataTransactionModel data;
+  final bool shippingCost;
 
-  const StickerA6({super.key, required this.data});
+  const StickerA6({
+    super.key,
+    required this.data,
+    this.shippingCost = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -388,7 +393,8 @@ class StickerA6 extends StatelessWidget {
                 children: [
                   CustomLabelText(
                     title: 'Est.Ongkir',
-                    value: "Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}",
+                    value:
+                        "Rp ${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}",
                     titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                     valueTextStyle: sublistTitleTextStyle.copyWith(),
                     margin: const EdgeInsets.all(5),

@@ -13,8 +13,13 @@ import 'package:get/get.dart';
 
 class StickerMegahubHybrid1 extends StatelessWidget {
   final DataTransactionModel data;
+  final bool shippingCost;
 
-  const StickerMegahubHybrid1({super.key, required this.data});
+  const StickerMegahubHybrid1({
+    super.key,
+    required this.data,
+    this.shippingCost = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,10 @@ class StickerMegahubHybrid1 extends StatelessWidget {
         StickerMegahubHybrid2(data: data).sticker(),
         RotatedBox(
           quarterTurns: 1,
-          child: StickerMegahubHybrid2(data: data).sticker(),
+          child: StickerMegahubHybrid2(
+            data: data,
+            shippingCost: shippingCost,
+          ).sticker(),
         ),
         const SizedBox(height: 20),
         sticker2(),

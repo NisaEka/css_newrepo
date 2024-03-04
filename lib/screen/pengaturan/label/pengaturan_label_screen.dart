@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
@@ -40,20 +42,21 @@ class PengaturanLabelScreen extends StatelessWidget {
                   //   },
                   // ),
                   CustomDropDownField(
-                    // value: controller.selectedTampil,
+                    label: 'Biaya Kirim'.tr,
+                    value: controller.shipcost.isNotEmpty ? controller.shipcost : "PUBLISH",
                     hintText: 'Biaya Kirim'.tr,
                     items: [
                       DropdownMenuItem(
-                        value: 'PUBLISH RATE',
-                        child: Text('Publish Rate'.tr.toUpperCase()),
+                        value: 'PUBLISH',
+                        child: Text('Publish Rate'.tr.toUpperCase(), style: subTitleTextStyle,),
                       ),
                       DropdownMenuItem(
-                        value: 'SEMBUNYIKAN',
-                        child: Text('Sembunyikan'.tr.toUpperCase()),
+                        value: 'HIDE',
+                        child: Text('Sembunyikan'.tr.toUpperCase(), style: subTitleTextStyle,),
                       ),
                     ],
                     onChanged: (value) {
-                      controller.selectedSticker = value ?? '';
+                      controller.shipcost = value ?? '';
                       controller.update();
                     },
                   ),
@@ -89,7 +92,7 @@ class PengaturanLabelScreen extends StatelessWidget {
                   ),
                   CustomFilledButton(
                     color: blueJNE,
-                    title: 'Simpan Perubahan',
+                    title: 'Simpan Perubahan'.tr,
                     onPressed: () => controller.saveLabel(),
                   ),
                 ],

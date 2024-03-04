@@ -20,8 +20,13 @@ import 'package:pdf/widgets.dart' as pw;
 
 class StickerMegahub2 extends StatelessWidget {
   final DataTransactionModel data;
+  final bool shippingCost;
 
-  const StickerMegahub2({super.key, required this.data});
+  const StickerMegahub2({
+    super.key,
+    required this.data,
+    this.shippingCost = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,10 @@ class StickerMegahub2 extends StatelessWidget {
         Transform.rotate(
           // quarterTurns: 1,
           angle: 90 * 3.14 / 180,
-          child: StickerMegahub1(data: data).sticker1(),
+          child: StickerMegahub1(
+            data: data,
+            shippingCost: shippingCost,
+          ).sticker1(),
         ),
         const SizedBox(height: 25),
         StickerMegahubHybrid1(data: data).sticker2(),

@@ -103,6 +103,7 @@ class DashboardController extends BaseController {
     ];
     var favMenu = await storage.readString(StorageCore.favoriteMenu);
     var stickerLabel = await storage.readString(StorageCore.transactionLabel);
+    var shipcost = await storage.readString(StorageCore.shippingCost);
     print('menu kosong : ${favMenu.isEmpty}');
     update();
     if (favMenu.isEmpty == true) {
@@ -118,8 +119,9 @@ class DashboardController extends BaseController {
       menuItems.addAll(menu.items ?? []);
     }
 
-    if (stickerLabel.isEmpty == true) {
+    if (stickerLabel.isEmpty == true || shipcost.isEmpty) {
       await storage.writeString(StorageCore.transactionLabel, "/sticker_megahub1");
+      await storage.writeString(StorageCore.shippingCost, "PUBLISH");
     }
     update();
   }

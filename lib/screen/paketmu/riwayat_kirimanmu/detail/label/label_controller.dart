@@ -23,6 +23,7 @@ class LabelController extends BaseController {
   GlobalKey previewContainer = new GlobalKey();
 
   String? stickerLabel;
+  bool shippingCost = false;
 
   @override
   void onInit() {
@@ -33,6 +34,8 @@ class LabelController extends BaseController {
   Future<void> initData() async {
     try {
       stickerLabel = await storage.readString(StorageCore.transactionLabel);
+      var shipcost = await storage.readString(StorageCore.shippingCost);
+      shippingCost = shipcost == "HIDE";
       update();
     } catch (e) {
       e.printError();

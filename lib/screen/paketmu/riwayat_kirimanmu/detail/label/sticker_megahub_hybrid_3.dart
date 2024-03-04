@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 class StickerMegahubHybrid3 extends StatelessWidget {
   final DataTransactionModel data;
+  final bool shippingCost;
 
-  const StickerMegahubHybrid3({super.key, required this.data});
+  const StickerMegahubHybrid3({super.key, required this.data, this.shippingCost = false});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,10 @@ class StickerMegahubHybrid3 extends StatelessWidget {
         Transform.rotate(
           // quarterTurns: 1,
           angle: 90 * 3.14 / 180,
-          child: StickerMegahubHybrid2(data: data).sticker(),
+          child: StickerMegahubHybrid2(
+            data: data,
+            shippingCost: shippingCost,
+          ).sticker(),
         ),
         const SizedBox(height: 20),
         StickerMegahubHybrid1(data: data).sticker2(),

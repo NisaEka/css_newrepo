@@ -16,6 +16,7 @@ class StorageCore {
   static const String receiver = 'receiver';
   static const String userProfil = 'user_profil';
   static const String transactionLabel = "transaction_label";
+  static const String shippingCost = "shipping_const";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);

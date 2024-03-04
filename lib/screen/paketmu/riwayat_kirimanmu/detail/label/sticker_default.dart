@@ -12,8 +12,13 @@ import 'package:get/get.dart';
 
 class StickerDefault extends StatelessWidget {
   final DataTransactionModel data;
+  final bool shippingCost;
 
-  const StickerDefault({super.key, required this.data});
+  const StickerDefault({
+    super.key,
+    required this.data,
+    this.shippingCost = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +182,7 @@ class StickerDefault extends StatelessWidget {
                   CustomLabelText(
                     title: "Estimasi Ongkir: Rp",
                     value:
-                        '${data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}',
+                        '${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}',
                     titleTextStyle: TextStyle(fontWeight: bold),
                     valueTextStyle: const TextStyle(),
                   ),
