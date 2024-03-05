@@ -2,10 +2,10 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/jlcpoint/jlcpoint_box.dart';
 import 'package:css_mobile/widgets/jlcpoint/point_list_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +27,10 @@ class BonusKamuScreen extends StatelessWidget {
                   height: 100,
                   child: Stack(
                     children: [
-                      const JlcPointBox(),
+                      JlcPointBox(
+                        totalTransaksi: controller.totalTransaksi ?? '0',
+                        jlcPoint: controller.jlcPoint ?? '0',
+                      ),
                       Positioned(
                         bottom: 0,
                         right: 25,
@@ -93,50 +96,60 @@ class BonusKamuScreen extends StatelessWidget {
                   ],
                 ),
                 Expanded(
-                  child: ListView(
-                    children: controller.tabIndex == 0
-                        ? [
-                            PointListItem(
-                              dateTime: '2024-01-03 20:06:25 PM',
-                              point: 0.56,
-                              title: 'Resi'.tr,
-                              subtitle: "021440000279424",
-                              amount: 'Rp. 177.000',
-                              status: "Valid",
-                            ),
-                            PointListItem(
-                              dateTime: '2024-01-03 20:06:25 PM',
-                              point: 0.56,
-                              title: 'Resi'.tr,
-                              subtitle: "021440000279424",
-                              amount: 'Rp. 177.000',
-                              status: "Valid",
-                            ),
-                            PointListItem(
-                              dateTime: '2024-01-03 20:06:25 PM',
-                              point: -0.56,
-                              title: 'Resi'.tr,
-                              subtitle: "021440000279424",
-                              amount: 'Rp. 177.000',
-                              status: "Cancel",
-                            ),
-                          ]
-                        : [
-                            PointListItem(
-                              dateTime: '2024-01-03 20:06:25 PM',
-                              point: 1680,
-                              title: 'Nomor'.tr,
-                              subtitle: "JLCM0324727",
-                              rewards: '1',
-                            ),
-                            PointListItem(
-                              dateTime: '2024-01-03 20:06:25 PM',
-                              point: 1680,
-                              title: 'Nomor'.tr,
-                              subtitle: "JLCM0324727",
-                              rewards: '1',
-                            ),
-                          ],
+                  child: Center(
+                    child: controller.tabIndex == 0
+                        ? ListView(
+                            shrinkWrap: controller.totalTransaksiList.isEmpty,
+                            children: controller.totalTransaksiList.isNotEmpty
+                                ? [
+                                    PointListItem(
+                                      dateTime: '2024-01-03 20:06:25 PM',
+                                      point: 0.56,
+                                      title: 'Resi'.tr,
+                                      subtitle: "021440000279424",
+                                      amount: 'Rp. 177.000',
+                                      status: "Valid",
+                                    ),
+                                    PointListItem(
+                                      dateTime: '2024-01-03 20:06:25 PM',
+                                      point: 0.56,
+                                      title: 'Resi'.tr,
+                                      subtitle: "021440000279424",
+                                      amount: 'Rp. 177.000',
+                                      status: "Valid",
+                                    ),
+                                    PointListItem(
+                                      dateTime: '2024-01-03 20:06:25 PM',
+                                      point: -0.56,
+                                      title: 'Resi'.tr,
+                                      subtitle: "021440000279424",
+                                      amount: 'Rp. 177.000',
+                                      status: "Cancel",
+                                    ),
+                                  ]
+                                : [DataEmpty(text: 'Belum ada riwayat transaksi point'.tr)],
+                          )
+                        : ListView(
+                            shrinkWrap: controller.reedemPointList.isEmpty,
+                            children: controller.reedemPointList.isNotEmpty
+                                ? [
+                                    PointListItem(
+                                      dateTime: '2024-01-03 20:06:25 PM',
+                                      point: 1680,
+                                      title: 'Nomor'.tr,
+                                      subtitle: "JLCM0324727",
+                                      rewards: '1',
+                                    ),
+                                    PointListItem(
+                                      dateTime: '2024-01-03 20:06:25 PM',
+                                      point: 1680,
+                                      title: 'Nomor'.tr,
+                                      subtitle: "JLCM0324727",
+                                      rewards: '1',
+                                    ),
+                                  ]
+                                : [DataEmpty(text: "Belum ada riwayat penukaran point".tr)],
+                          ),
                   ),
                 ),
               ],

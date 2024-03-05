@@ -21,6 +21,7 @@ class DashboardController extends BaseController {
 
   String? marqueeText;
   String? userName;
+  String? jlcPoint;
 
   List<Widget> widgetOptions = <Widget>[
     const DashboardScreen(),
@@ -181,6 +182,11 @@ class DashboardController extends BaseController {
 
       var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
       userName = shipper.name;
+
+      await jlc.postTotalPoint().then((value) {
+        jlcPoint = value.data?.first.sisaPoint;
+        update();
+      });
 
       await transaction.getDropshipper().then((value) async => await storage.saveData(
             StorageCore.dropshipper,

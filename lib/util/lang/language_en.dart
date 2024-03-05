@@ -234,6 +234,8 @@ class LanguageEN {
       "Update Berhasil": "Data Updated",
       "Edit Resi": "Update Transaction",
       "Bad Request": "something went wrong, please try again later",
+      "Belum ada riwayat transaksi point": "There is no point transaction history yet",
+      "Belum ada riwayat penukaran point": "There is no history of point reedem",
     };
   }
 }

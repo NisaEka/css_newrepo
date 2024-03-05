@@ -105,7 +105,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               ),
                                         GestureDetector(
                                           onTap: () => Get.to(const BonusKamuScreen()),
-                                          child: const JLCPointWidget(),
+                                          child: JLCPointWidget(
+                                            point: controller.jlcPoint ?? '0',
+                                          ),
                                         ),
                                       ],
                                     )

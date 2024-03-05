@@ -22,7 +22,6 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   bool isRequired;
-  FormFieldValidator<T>? validator;
 
   CustomSearchDropdownField(
       {super.key,
@@ -50,25 +49,33 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
     }
   }
 
+  FormFieldValidator<T>? validator;
+
   @override
   Widget build(BuildContext context) {
     if (readOnly) {
-      return TextField(
-        controller: TextEditingController(text: selectedItem.toString()),
-        enabled: false,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: 16,
-              color: Colors.black,
-              // fontWeight: FontWeight.w600,
+      return Column(
+        children: [
+          const SizedBox(height: 10),
+          TextField(
+            controller: TextEditingController(text: selectedItem.toString()),
+            enabled: false,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontSize: 16,
+                  color: Colors.black,
+                  // fontWeight: FontWeight.w600,
+                ),
+            decoration: InputDecoration(
+              label: Text(hintText ?? ''),
+              fillColor: neutralColor,
+              prefixIcon: prefixIcon,
+              suffixIcon: suffixIcon,
+              prefixIconColor: greyDarkColor1,
+              suffixIconColor: greyDarkColor1,
             ),
-        decoration: InputDecoration(
-          label: Text(hintText ?? ''),
-          fillColor: neutralColor,
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
-          prefixIconColor: greyDarkColor1,
-          suffixIconColor: greyDarkColor1,
-        ),
+          ),
+          const SizedBox(height: 10)
+        ],
       );
     }
     return DropdownSearch<T>(
@@ -79,6 +86,7 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
             return "This field is required";
           }
         }
+        return null;
       },
       popupProps: PopupProps.menu(
         constraints: const BoxConstraints(maxHeight: 200),
@@ -92,7 +100,6 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
       dropdownButtonProps: const DropdownButtonProps(
         icon: Icon(Icons.keyboard_arrow_down),
       ),
-
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
           label: Text(hintText ?? ''),
@@ -108,25 +115,5 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
       onChanged: onChanged,
       selectedItem: value,
     );
-  }
-
-  dynamic _getIdSelectedValue(T selected) {
-    DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => (item.child as Text).data == selected) as DropdownMenuItem;
-    return item.value;
-  }
-
-  String _getSelectedValue() {
-    if (items != null) {
-      if (items!.isNotEmpty) {
-        if (value != null) {
-          DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => item.value == value, orElse: () => items!.first) as DropdownMenuItem;
-          Text textView = item.child as Text;
-
-          return textView.data ?? hintText ?? label ?? '';
-        }
-      }
-    }
-
-    return hintText ?? label ?? '';
   }
 }

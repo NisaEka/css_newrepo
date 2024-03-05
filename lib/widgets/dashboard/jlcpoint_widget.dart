@@ -1,9 +1,13 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 
 class JLCPointWidget extends StatelessWidget {
-  const JLCPointWidget({super.key});
+  final String point;
+
+  const JLCPointWidget({super.key, required this.point});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class JLCPointWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(ImageConstant.logoJLC, height: 14),
-          const Text(' 1.000 Point'),
+          Text(' ${point.toInt().toCurrency()} Point'),
           // const Padding(
           //   padding: EdgeInsets.symmetric(horizontal: 8),
           //   child: Icon(

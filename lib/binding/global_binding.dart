@@ -4,6 +4,8 @@ import 'package:css_mobile/data/repository/auth/auth_impl.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_impl.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
+import 'package:css_mobile/data/repository/jlc/jlc_impl.dart';
+import 'package:css_mobile/data/repository/jlc/jlc_repository.dart';
 import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_impl.dart';
 import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_repository.dart';
 import 'package:css_mobile/data/repository/profil/profil_impl.dart';
@@ -24,5 +26,6 @@ class GlobalBinding extends Bindings {
     Get.put<ProfilRepository>(ProfilRepositoryImpl(), permanent: true);
     Get.put<CekOngkirRepository>(CekOngkirRepositoryImpl(), permanent: false);
     Get.put<LacakKirimanRepository>(LacakKirimanRepositoryImpl(), permanent: false);
+    Get.put<JLCRepository>(JLCRepositoryImpl(), permanent: false);
   }
 }

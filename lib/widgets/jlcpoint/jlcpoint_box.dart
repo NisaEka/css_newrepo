@@ -1,12 +1,21 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marquee/marquee.dart';
 
 class JlcPointBox extends StatelessWidget {
-  const JlcPointBox({super.key});
+  final String totalTransaksi;
+  final String jlcPoint;
+
+  const JlcPointBox({
+    super.key,
+    required this.totalTransaksi,
+    required this.jlcPoint,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +45,7 @@ class JlcPointBox extends StatelessWidget {
             children: [
               Text("Total Transaksi".tr, style: subformLabelTextStyle),
               Text(
-                "Rp. 3.910.000",
+                "Rp. ${totalTransaksi.toInt().toCurrency()}",
                 style: formLabelTextStyle.copyWith(color: blueJNE),
               ),
             ],
@@ -47,7 +56,7 @@ class JlcPointBox extends StatelessWidget {
             children: [
               Text("Poin JLC".tr, style: subformLabelTextStyle),
               Text(
-                "112",
+                jlcPoint,
                 style: formLabelTextStyle.copyWith(color: Colors.green),
               ),
             ],
