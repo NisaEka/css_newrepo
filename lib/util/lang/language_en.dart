@@ -236,6 +236,7 @@ class LanguageEN {
       "Bad Request": "something went wrong, please try again later",
       "Belum ada riwayat transaksi point": "There is no point transaction history yet",
       "Belum ada riwayat penukaran point": "There is no history of point reedem",
+      "Email atau nomor telepon sudah terdaftar": "Email or phone number is registered",
     };
   }
 }

@@ -5,6 +5,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_city_model.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -30,13 +31,13 @@ class CekOngkirController extends BaseController {
   bool isLoading = false;
 
   List<City> cityList = [];
-  List<City> originList = [];
-  List<City> destinationList = [];
+  List<Origin> originList = [];
+  List<Origin> destinationList = [];
   List<Price> ongkirList = [];
 
-  PostCekongkirCityModel? cityModel;
-  City? selectedDestination;
-  City? selectedOrigin;
+  GetOriginModel? cityModel;
+  Origin? selectedDestination;
+  Origin? selectedOrigin;
 
   @override
   void onInit() {
@@ -55,8 +56,8 @@ class CekOngkirController extends BaseController {
     try {
       await ongkir
           .postCekOngkir(
-        selectedOrigin?.code ?? '',
-        selectedDestination?.code ?? '',
+        selectedOrigin?.originCode ?? '',
+        selectedDestination?.originCode ?? '',
         beratKiriman.text,
       )
           .then((value) {
@@ -70,13 +71,13 @@ class CekOngkirController extends BaseController {
     update();
   }
 
-  Future<List<City>> getOriginList(String keyword) async {
+  Future<List<Origin>> getOriginList(String keyword) async {
     originList = [];
     isLoading = true;
     try {
       var response = await ongkir.postOrigin(keyword);
       cityModel = response;
-      originList.addAll(cityModel?.detail ?? []);
+      originList.addAll(cityModel?.payload ?? []);
       // print(cityModel?.detail);
     } catch (e, i) {
       e.printError();
@@ -85,17 +86,17 @@ class CekOngkirController extends BaseController {
 
     isLoading = false;
     update();
-    return cityModel?.detail?.toList() ?? [];
+    return cityModel?.payload?.toList() ?? [];
     // return originList;
   }
 
-  Future<List<City>> getDestinationList(String keyword) async {
+  Future<List<Origin>> getDestinationList(String keyword) async {
     isLoading = true;
     destinationList = [];
     try {
       var response = await ongkir.postDestination(keyword);
       cityModel = response;
-      destinationList.addAll(response.detail ?? []);
+      destinationList.addAll(response.payload ?? []);
       update();
     } catch (e, i) {
       e.printError();
@@ -104,8 +105,7 @@ class CekOngkirController extends BaseController {
 
     isLoading = false;
     update();
-    // return destinationList;
-    return cityModel?.detail?.toList() ?? [];
+    return cityModel?.payload?.toList() ?? [];
   }
 
   void hitungAsuransi() {
@@ -213,21 +213,21 @@ class CekOngkirController extends BaseController {
     );
   }
 
-  Widget buildPosts(List<City> data, String title) {
+  Widget buildPosts(List<Origin> data, String title) {
     print('title $title');
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {
         final post = data[index];
         return ListTile(
-          title: Text(post.label!),
+          title: Text(post.originName!),
           onTap: () {
             if (title == "Kota Asal" || title == "Origin") {
               selectedOrigin = post;
-              kotaPengirim.text = post.label.toString();
+              kotaPengirim.text = post.originName.toString();
             } else if (title == "Kota Tujuan" || title == "Destination") {
               selectedDestination = post;
-              kotaTujuan.text = post.label.toString();
+              kotaTujuan.text = post.originName.toString();
             }
             update();
             Get.back();

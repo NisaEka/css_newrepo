@@ -1,6 +1,7 @@
 import 'package:css_mobile/config/api_config.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_city_model.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
 import 'package:dio/dio.dart';
@@ -33,7 +34,7 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
   }
 
   @override
-  Future<PostCekongkirCityModel> postDestination(String keyword) async {
+  Future<GetOriginModel> postDestination(String keyword) async {
     try {
       // Response response = await network.city.post(
       // '/dest/key/$keyword',
@@ -48,34 +49,26 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
           'keyword': keyword,
         },
       );
-      return PostCekongkirCityModel.fromJson(response.data);
+      return GetOriginModel.fromJson(response.data);
     } on DioError catch (e) {
       print("error ${e.response?.data}");
-      return PostCekongkirCityModel.fromJson(e.response?.data);
+      return GetOriginModel.fromJson(e.response?.data);
     }
   }
 
   @override
-  Future<PostCekongkirCityModel> postOrigin(String keyword) async {
+  Future<GetOriginModel> postOrigin(String keyword) async {
     try {
-      // Response response = await network.city.post(
-      //   '/orig/key/$keyword',
-      //   data: {
-      //     'username': ApiConfig.ctUsername,
-      //     'api_key': ApiConfig.ctApiKey,
-      //   },
-      // );
-      // print(' origin ${response.data}');
       Response response = await network.dio.get(
         '/origin/tracing',
         queryParameters: {
           'keyword': keyword,
         },
       );
-      return PostCekongkirCityModel.fromJson(response.data);
+      return GetOriginModel.fromJson(response.data);
     } on DioError catch (e) {
       print('error origin ${e.response?.data}');
-      return PostCekongkirCityModel.fromJson(e.response?.data);
+      return GetOriginModel.fromJson(e.response?.data);
     }
   }
 }

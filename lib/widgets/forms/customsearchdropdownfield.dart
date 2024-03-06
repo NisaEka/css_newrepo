@@ -62,7 +62,7 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
             enabled: false,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16,
-                  color: Colors.black,
+                  color: greyDarkColor1,
                   // fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(
@@ -78,42 +78,48 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
         ],
       );
     }
-    return DropdownSearch<T>(
-      validator: (value) {
-        if (isRequired) {
-          if (value == null || value == hintText || value == label) {
-            // return validator!(value as T);
-            return "This field is required";
-          }
-        }
-        return null;
-      },
-      popupProps: PopupProps.menu(
-        constraints: const BoxConstraints(maxHeight: 200),
-        fit: FlexFit.loose,
-        showSelectedItems: false,
-        showSearchBox: true,
-        searchDelay: const Duration(milliseconds: 500),
-        isFilterOnline: true,
-        itemBuilder: itemBuilder,
-      ),
-      dropdownButtonProps: const DropdownButtonProps(
-        icon: Icon(Icons.keyboard_arrow_down),
-      ),
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
-          label: Text(hintText ?? ''),
-          hintText: hintText ?? label,
-          hintStyle: hintTextStyle,
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        DropdownSearch<T>(
+          validator: (value) {
+            if (isRequired) {
+              if (value == null || value == hintText || value == label) {
+                // return validator!(value as T);
+                return "This field is required";
+              }
+            }
+            return null;
+          },
+          popupProps: PopupProps.menu(
+            constraints: const BoxConstraints(maxHeight: 200),
+            fit: FlexFit.loose,
+            showSelectedItems: false,
+            showSearchBox: true,
+            searchDelay: const Duration(milliseconds: 500),
+            isFilterOnline: true,
+            itemBuilder: itemBuilder,
+          ),
+          dropdownButtonProps: const DropdownButtonProps(
+            icon: Icon(Icons.keyboard_arrow_down),
+          ),
+          dropdownDecoratorProps: DropDownDecoratorProps(
+            dropdownSearchDecoration: InputDecoration(
+              label: Text(hintText ?? ''),
+              hintText: hintText ?? label,
+              hintStyle: hintTextStyle,
+              prefixIcon: prefixIcon,
+              suffixIcon: suffixIcon,
+            ),
+            baseStyle: textStyle,
+          ),
+          asyncItems: asyncItems,
+          itemAsString: itemAsString,
+          onChanged: onChanged,
+          selectedItem: value,
         ),
-        baseStyle: textStyle,
-      ),
-      asyncItems: asyncItems,
-      itemAsString: itemAsString,
-      onChanged: onChanged,
-      selectedItem: value,
+        const SizedBox(height: 10),
+      ],
     );
   }
 }
