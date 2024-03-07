@@ -7,7 +7,6 @@ import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class SignUpController extends BaseController {
   final formKey = GlobalKey<FormState>();
@@ -68,6 +67,7 @@ class SignUpController extends BaseController {
 
   Future<void> saveRegistration() async {
     isLoading = true;
+    update();
     try {
       await auth
           .postRegister(
@@ -84,6 +84,18 @@ class SignUpController extends BaseController {
       )
           .then((value) {
         if (value.code == 201) {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.info,
+                color: whiteColor,
+              ),
+              message: 'Silahkan cek email anda'.tr,
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: successColor,
+            ),
+          );
           Get.to(const SignUpOTPScreen(), arguments: {
             'email': email.text,
           });

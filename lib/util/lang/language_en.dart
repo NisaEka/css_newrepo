@@ -237,6 +237,9 @@ class LanguageEN {
       "Belum ada riwayat transaksi point": "There is no point transaction history yet",
       "Belum ada riwayat penukaran point": "There is no history of point reedem",
       "Email atau nomor telepon sudah terdaftar": "Email or phone number is registered",
+      "Selamat, kamu sudah berhasil mendaftar": "Congratulations, you have successfully registered",
+      "Silahkan cek email anda": "Please check your email",
+      "PIN tidak sesuai": "PIN does not match",
     };
   }
 }
