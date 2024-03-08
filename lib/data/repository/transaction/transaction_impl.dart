@@ -13,6 +13,7 @@ import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.d
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_officer_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_status_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -257,6 +258,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     String transDate,
     String transStatus,
     String keyword,
+    String officer,
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
@@ -268,6 +270,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
           "transaction_date": transDate,
           "transaction_type": transType,
           "keyword": keyword,
+          "officer": officer,
           "page": page,
           "limit": limit,
         },
@@ -345,12 +348,23 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.dio.put(
         "/transaction/$awb",
       );
-      print("updatetransaksi ${response.data}");
       return PostTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
-      print("updatetransaksi ${e.response?.data}");
-
       return PostTransactionModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<GetTransactionOfficerModel> getTransOfficer() async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.get(
+        "/transaction/officer",
+      );
+      return GetTransactionOfficerModel.fromJson(response.data);
+    } on DioError catch (e) {
+      return GetTransactionOfficerModel.fromJson(e.response?.data);
     }
   }
 }

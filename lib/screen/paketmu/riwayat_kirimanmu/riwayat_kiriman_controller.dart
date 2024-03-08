@@ -1,10 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -33,10 +29,8 @@ class RiwayatKirimanController extends BaseController {
   bool isSelectAll = false;
 
   List<String> listStatusKiriman = [];
-
+  List<String> listOfficerEntry = [];
   List<TransactionModel> selectedTransaction = [];
-
-  // List<TransactionModel> transactionList = [];
 
   @override
   void onInit() {
@@ -65,9 +59,11 @@ class RiwayatKirimanController extends BaseController {
         update();
       });
 
-      // await transaction.getTransaction(1, pageSize, '', '', '').then(
-      //       (value) => transactionList.addAll(value.payload ?? []),
-      //     );
+      await transaction.getTransOfficer().then((value) {
+        listOfficerEntry.addAll(value.payload ?? []);
+        update();
+      });
+
       update();
     } catch (e) {
       e.printError();
@@ -85,6 +81,7 @@ class RiwayatKirimanController extends BaseController {
         transDate ?? '',
         selectedStatusKiriman ?? '',
         searchField.text,
+        selectedPetugasEntry ?? '',
       );
 
       final isLastPage = (trans.payload?.length ?? 0) < pageSize;

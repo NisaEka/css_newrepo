@@ -10,6 +10,7 @@ import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.d
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_officer_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_status_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
@@ -55,6 +56,7 @@ abstract class TransactionRepository {
     String transDate,
     String transStatus,
     String keyword,
+    String officer,
   );
 
   Future<GetTransactionByAwbModel> getTransactionByAWB(String awb);
@@ -66,4 +68,6 @@ abstract class TransactionRepository {
   Future<GetTransactionStatusModel> getTransactionStatus();
 
   Future<PostTransactionModel> putTransaction(DataTransactionModel data, String awb);
+
+  Future<GetTransactionOfficerModel> getTransOfficer();
 }

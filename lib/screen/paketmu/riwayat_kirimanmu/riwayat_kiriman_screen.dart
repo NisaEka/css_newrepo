@@ -194,9 +194,23 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                                             const SizedBox(height: 10),
                                             // const CustomFormLabel(label: 'Petugas Entry'),
                                             CustomDropDownField(
-                                              items: const [],
+                                              items: controller.listOfficerEntry
+                                                  .map(
+                                                    (e) => DropdownMenuItem(
+                                                      value: e,
+                                                      child: Text(e),
+                                                    ),
+                                                  )
+                                                  .toList(),
                                               label: 'Petugas Entry'.tr,
                                               hintText: 'Petugas Entry'.tr,
+                                              value: controller.selectedPetugasEntry,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  controller.selectedPetugasEntry = value;
+                                                  controller.update();
+                                                });
+                                              },
                                             )
                                           ],
                                         ),
@@ -273,7 +287,6 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
                     ),
-
                     onSubmit: (value) {
                       controller.searchField.text = value;
                       controller.update();
