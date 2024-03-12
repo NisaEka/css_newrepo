@@ -71,7 +71,6 @@ class RiwayatKirimanController extends BaseController {
   }
 
   Future<void> getTransaction(int page) async {
-    // transactionList = [];
     isLoading = true;
     try {
       final trans = await transaction.getTransaction(
@@ -93,16 +92,6 @@ class RiwayatKirimanController extends BaseController {
         pagingController.appendPage(trans.payload ?? [], nextPageKey);
         // transactionList.addAll(pagingController.itemList ?? []);
       }
-
-      // var trans = await transaction.getTransaction(1, pageSize, transType, transDate, transStatus);
-      // final isLastPage = (trans.payload?.length ?? 0) < pageSize;
-      // if (isLastPage) {
-      //   pagingappendLastPage(trans.payload ?? []);
-      // } else {
-      //   final nextPageKey = page + 1;
-      //   pagingController.appendPage(trans.payload ?? [], nextPageKey);
-      // }
-      // update();
     } catch (e) {
       e.printError();
       pagingController.error = e;

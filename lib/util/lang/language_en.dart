@@ -6,7 +6,7 @@ class LanguageEN {
       "Lupa kata sandi?": "Forgot Password?",
       "Belum punya akun?": "Don't have an account yet?",
       "Daftar": "Register",
-      "Beranda": "home",
+      "Beranda": "Home",
       "Profil": "Profile",
       "Selamat Datang": "Welcome back",
       "lacak_resi": "Add Receipt Number to track your shipment",
@@ -95,7 +95,7 @@ class LanguageEN {
       "Nama Petugas": "Officer name",
       "Alamat Email": "Email",
       "Konfirmasi Kata Sandi": "Confirm Password",
-      "Tentukan Hak Akses": "Access Rights",
+      "Tentukan Hak Akses": "authority",
       "Asurans": "Insurance",
       "Layanan": "Services",
       "Jenis Barang": "Goods Type",
@@ -240,6 +240,15 @@ class LanguageEN {
       "Selamat, kamu sudah berhasil mendaftar": "Congratulations, you have successfully registered",
       "Silahkan cek email anda": "Please check your email",
       "PIN tidak sesuai": "PIN does not match",
+      "Saldo Kamu": "Your Balance",
+      "Tagihan Kamu": "Your Invoice",
+      "Laporanku": "My Report",
+      "Laporan Return": "Return Reports",
+      "Serah Terima": "Handover",
+      "Cetak Pesanan": "Print Transaction",
+      "Hapus Transaksi": "Delete Transaction",
+      "Minta Dijemput": "Request Pickup",
+      "Simpan Petugas": "Save Officer"
     };
   }
 }

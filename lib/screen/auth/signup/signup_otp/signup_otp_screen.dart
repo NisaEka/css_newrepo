@@ -34,7 +34,7 @@ class SignUpOTPScreen extends StatelessWidget {
                             Text(controller.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
                             Pinput(
                               controller: controller.otpPin,
-                              length: 4,
+                              length: 6,
                               focusNode: controller.focusNode,
                               defaultPinTheme: controller.defaultPinTheme,
                               showCursor: true,

@@ -66,7 +66,7 @@ class PengaturanScreen extends StatelessWidget {
                   SettingListItem(
                     title: 'Pengaturan Petugas'.tr,
                     icon: Icons.label_outline,
-                    onTap: () => Get.to(const PengaturanPetugasscreen()),
+                    onTap: () => Get.to(const PengaturanPetugasScreen()),
                   ),
                   SettingListItem(
                     title: 'Ubah Kata Sandi'.tr,

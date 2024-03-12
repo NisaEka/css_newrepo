@@ -37,7 +37,7 @@ class AccountCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(account.accountNumber ?? '', style: listTitleTextStyle.copyWith(color: blueJNE)),
-              Text("${account.accountName ?? ''} / ${account.accountType ?? 'JLC'}", style: listTitleTextStyle.copyWith(color: blueJNE)),
+              Text("${account.accountName ?? ''} / ${account.accountType ?? account.accountService}", style: listTitleTextStyle.copyWith(color: blueJNE)),
               Row(
                 children: [
                   Text(account.availableService?.ss == "Y" ? "SS " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
