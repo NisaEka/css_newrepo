@@ -1,3 +1,5 @@
+import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+
 class DataPetugasModel {
   DataPetugasModel({
     String? id,
@@ -9,7 +11,7 @@ class DataPetugasModel {
     String? zipCode,
     Menu? menu,
     Transaction? transaction,
-    List<Accounts>? accounts,
+    List<Account>? accounts,
     List<String>? origins,
   }) {
     _id = id;
@@ -38,7 +40,7 @@ class DataPetugasModel {
     if (json['accounts'] != null) {
       _accounts = [];
       json['accounts'].forEach((v) {
-        _accounts?.add(Accounts.fromJson(v));
+        _accounts?.add(Account.fromJson(v));
       });
     }
     _origins = json['origins'] != null ? json['origins'].cast<String>() : [];
@@ -53,7 +55,7 @@ class DataPetugasModel {
   String? _zipCode;
   Menu? _menu;
   Transaction? _transaction;
-  List<Accounts>? _accounts;
+  List<Account>? _accounts;
   List<String>? _origins;
 
   DataPetugasModel copyWith({
@@ -66,7 +68,7 @@ class DataPetugasModel {
     String? zipCode,
     Menu? menu,
     Transaction? transaction,
-    List<Accounts>? accounts,
+    List<Account>? accounts,
     List<String>? origins,
   }) =>
       DataPetugasModel(
@@ -101,7 +103,7 @@ class DataPetugasModel {
 
   Transaction? get transaction => _transaction;
 
-  List<Accounts>? get accounts => _accounts;
+  List<Account>? get accounts => _accounts;
 
   List<String>? get origins => _origins;
 
@@ -124,44 +126,6 @@ class DataPetugasModel {
       map['accounts'] = _accounts?.map((v) => v.toJson()).toList();
     }
     map['origins'] = _origins;
-    return map;
-  }
-}
-
-class Accounts {
-  Accounts({
-    String? number,
-    String? category,
-  }) {
-    _number = number;
-    _category = category;
-  }
-
-  Accounts.fromJson(dynamic json) {
-    _number = json['number'];
-    _category = json['category'];
-  }
-
-  String? _number;
-  String? _category;
-
-  Accounts copyWith({
-    String? number,
-    String? category,
-  }) =>
-      Accounts(
-        number: number ?? _number,
-        category: category ?? _category,
-      );
-
-  String? get number => _number;
-
-  String? get category => _category;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['number'] = _number;
-    map['category'] = _category;
     return map;
   }
 }

@@ -1,6 +1,8 @@
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
@@ -81,6 +83,37 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
     try {
       Response response = await network.dio.put("/officer/${data.id}", data: data);
       return PostTransactionModel.fromJson(response.data);
+    } on DioError catch (e) {
+      return e.error;
+    }
+  }
+
+  @override
+  Future<GetBranchModel> getBranch() async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.put(
+        "/branch",
+      );
+      return GetBranchModel.fromJson(response.data);
+    } on DioError catch (e) {
+      return e.error;
+    }
+  }
+
+  @override
+  Future<GetOriginModel> getOriginGroup(List<String> keyword) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.get(
+        "/origin/group",
+        queryParameters: {
+          'keyword': keyword.toString(),
+        },
+      );
+      return GetOriginModel.fromJson(response.data);
     } on DioError catch (e) {
       return e.error;
     }

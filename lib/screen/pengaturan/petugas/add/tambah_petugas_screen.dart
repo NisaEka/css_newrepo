@@ -1,13 +1,17 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/add/tambah_petugas_controller.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customcheckbox.dart';
+import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class TambahPetugasScreen extends StatelessWidget {
   const TambahPetugasScreen({super.key});
@@ -33,25 +37,185 @@ class TambahPetugasScreen extends StatelessWidget {
                         CustomTextFormField(
                           controller: controller.namaPetugas,
                           hintText: 'Nama Petugas'.tr,
+                          isRequired: true,
                         ),
                         CustomTextFormField(
                           controller: controller.alamatEmail,
                           hintText: 'Alamat Email'.tr,
+                          isRequired: true,
+                          validator: ValidationBuilder().email().minLength(10).build(),
                         ),
                         CustomTextFormField(
                           controller: controller.nomorTelepon,
                           hintText: 'Nomor Telepon'.tr,
+                          isRequired: true,
                         ),
                         CustomTextFormField(
                           controller: controller.password,
                           hintText: 'Kata Sandi'.tr,
-                          suffixIcon: const Icon(Icons.visibility),
+                          isRequired: true,
+                          validator: ValidationBuilder().password().build(),
+                          isObscure: controller.isObscurePassword,
+                          multiLine: false,
+                          suffixIcon: IconButton(
+                            icon: controller.showIcon,
+                            onPressed: () {
+                              controller.isObscurePassword ? controller.isObscurePassword = false : controller.isObscurePassword = true;
+                              controller.isObscurePassword != false
+                                  ? controller.showIcon = const Icon(
+                                      Icons.visibility,
+                                      color: greyDarkColor1,
+                                    )
+                                  : controller.showIcon = const Icon(
+                                      Icons.visibility_off,
+                                      color: Colors.black,
+                                    );
+                              controller.update();
+                            },
+                          ),
                         ),
                         CustomTextFormField(
                           controller: controller.passwordConfirm,
                           hintText: 'Konfirmasi Kata Sandi'.tr,
-                          suffixIcon: const Icon(Icons.visibility),
+                          isRequired: true,
+                          validator: (value) {
+                            if (value != controller.password.text) {
+                              return "Password tidak sama".tr;
+                            }
+                            return null;
+                          },
+                          isObscure: controller.isObscurePassword,
+                          multiLine: false,
+                          suffixIcon: IconButton(
+                            icon: controller.showConfirmIcon,
+                            onPressed: () {
+                              controller.isObscurePasswordConfirm
+                                  ? controller.isObscurePasswordConfirm = false
+                                  : controller.isObscurePasswordConfirm = true;
+                              controller.isObscurePasswordConfirm != false
+                                  ? controller.showConfirmIcon = const Icon(
+                                      Icons.visibility,
+                                      color: greyDarkColor1,
+                                    )
+                                  : controller.showConfirmIcon = const Icon(
+                                      Icons.visibility_off,
+                                      color: Colors.black,
+                                    );
+                              controller.update();
+                            },
+                          ),
                         ),
+                        controller.buatPesanan
+                            ? Column(
+                                children: [
+                                  MultiSelectDialogField(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    searchable: true,
+                                    buttonIcon: const Icon(Icons.keyboard_arrow_down),
+                                    buttonText: Text('Akun'.tr),
+                                    dialogWidth: Get.width,
+                                    items: controller.accountList
+                                        .map((e) => MultiSelectItem(
+                                              e,
+                                              '${e.accountNumber}/${e.accountName}/${e.accountType ?? e.accountService}',
+                                            ))
+                                        .toList(),
+                                    listType: MultiSelectListType.CHIP,
+                                    backgroundColor: whiteColor,
+                                    onConfirm: (values) {
+                                      controller.selectedAccountList = values;
+                                    },
+                                    onSelectionChanged: (values) {
+                                      controller.selectedAccountList = values;
+                                      controller.update();
+                                    },
+                                  ),
+                                  const SizedBox(height: 10),
+                                  MultiSelectDialogField(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    searchable: true,
+                                    buttonIcon: const Icon(Icons.keyboard_arrow_down),
+                                    buttonText: Text('Branch'.tr),
+                                    items: controller.branchList
+                                        .map((e) => MultiSelectItem(
+                                              e,
+                                              '${e.code}-${e.desc}',
+                                            ))
+                                        .toList(),
+                                    listType: MultiSelectListType.CHIP,
+                                    backgroundColor: whiteColor,
+                                    onConfirm: (values) {
+                                      controller.selectedBranchList = values;
+                                    },
+                                    onSelectionChanged: (values) {
+                                      controller.selectedBranchList = values;
+                                      controller.update();
+                                    },
+                                  ),
+                                  const SizedBox(height: 10),
+                                  MultiSelectDialogField(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    searchable: true,
+                                    buttonIcon: const Icon(Icons.keyboard_arrow_down),
+                                    buttonText: Text('Origin'.tr),
+                                    items: controller.originList
+                                        .map((e) => MultiSelectItem(
+                                              e,
+                                              '${e.originCode}-${e.originName}',
+                                            ))
+                                        .toList(),
+                                    listType: MultiSelectListType.CHIP,
+                                    backgroundColor: whiteColor,
+                                    onConfirm: (values) {
+                                      controller.selectedOrigin = values;
+                                    },
+                                    onSelectionChanged: (values) {
+                                      controller.selectedOrigin = values;
+                                      controller.update();
+                                    },
+                                  ),
+                                  const SizedBox(height: 5),
+                                  CustomTextFormField(
+                                    controller: controller.alamat,
+                                    hintText: 'Alamat'.tr,
+                                  ),
+                                  CustomTextFormField(
+                                    controller: controller.zipCode,
+                                    hintText: 'Kode Pos'.tr,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox(),
+                        controller.beranda
+                            ? CustomDropDownFormField(
+                                hintText: 'Tampilkan transaksi'.tr,
+                                items: [
+                                  DropdownMenuItem(
+                                    value: "Y",
+                                    child: Text('Semua'.tr.toUpperCase()),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: "N",
+                                    child: Text('Dibatasi'.tr.toUpperCase()),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  if (value == "Y") {
+                                    controller.semuaTransaksi = true;
+                                    controller.update();
+                                  }
+                                },
+                              )
+                            : const SizedBox(),
                         const SizedBox(height: 35),
                         Container(
                           decoration: BoxDecoration(
@@ -284,7 +448,11 @@ class TambahPetugasScreen extends StatelessWidget {
                         CustomFilledButton(
                           color: blueJNE,
                           title: controller.isEdit ? "Edit Petugas".tr : "Simpan Petugas".tr,
-                          onPressed: () => controller.isEdit ? controller.updateOfficer : controller.saveOfficer(),
+                          onPressed: () => controller.formKey.currentState?.validate() == true
+                              ? controller.isEdit
+                                  ? controller.updateOfficer()
+                                  : controller.saveOfficer()
+                              : null,
                         )
                       ],
                     ),

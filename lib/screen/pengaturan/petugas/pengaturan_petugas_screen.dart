@@ -71,6 +71,10 @@ class PengaturanPetugasScreen extends StatelessWidget {
                             ),
                             title: item.name ?? '',
                             subtitle: '${item.email}\n${item.phone}\n${item.branch} - ${item.origin}',
+                            onTap: () => Get.to(const TambahPetugasScreen(), arguments: {
+                              'isEdit': true,
+                              'data': item,
+                            }),
                             onDelete: (context) => showDialog(
                               context: context,
                               builder: (c) => DeleteAlertDialog(

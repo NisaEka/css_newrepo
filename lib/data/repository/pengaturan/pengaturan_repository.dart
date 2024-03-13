@@ -1,6 +1,8 @@
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 
 abstract class PengaturanRepository {
@@ -13,4 +15,8 @@ abstract class PengaturanRepository {
   Future<PostTransactionModel> deleteOfficer(String id);
 
   Future<PostTransactionModel> putOfficer(DataPetugasModel data);
+
+  Future<GetBranchModel> getBranch();
+
+  Future<GetOriginModel> getOriginGroup(List<String> keyword);
 }

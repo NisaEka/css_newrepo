@@ -248,7 +248,13 @@ class LanguageEN {
       "Cetak Pesanan": "Print Transaction",
       "Hapus Transaksi": "Delete Transaction",
       "Minta Dijemput": "Request Pickup",
-      "Simpan Petugas": "Save Officer"
+      "Simpan Petugas": "Save Officer",
+      "Password tidak sama": "Password does not match",
+      "Tampilkan transaksi": "Show Transaction",
+      "Semua": "All",
+      "Dibatasi": "Restricted",
+      "Akun": 'Account',
+      "Edit Petugas": "Update Officer",
     };
   }
 }
