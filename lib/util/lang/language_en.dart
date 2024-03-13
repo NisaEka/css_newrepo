@@ -255,6 +255,8 @@ class LanguageEN {
       "Dibatasi": "Restricted",
       "Akun": 'Account',
       "Edit Petugas": "Update Officer",
+      "Aktif": "Active",
+      "Tidak Aktif":"Non Active"
     };
   }
 }

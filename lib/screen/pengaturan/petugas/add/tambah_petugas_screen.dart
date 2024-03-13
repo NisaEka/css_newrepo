@@ -216,6 +216,27 @@ class TambahPetugasScreen extends StatelessWidget {
                                 },
                               )
                             : const SizedBox(),
+                        controller.isEdit
+                            ? CustomDropDownFormField(
+                                hintText: 'Status'.tr,
+                                items: [
+                                  DropdownMenuItem(
+                                    value: "Y",
+                                    child: Text('Aktif'.tr.toUpperCase()),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: "N",
+                                    child: Text('Tidak Aktif'.tr.toUpperCase()),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  if (value == "Y") {
+                                    controller.semuaTransaksi = true;
+                                    controller.update();
+                                  }
+                                },
+                              )
+                            : const SizedBox(),
                         const SizedBox(height: 35),
                         Container(
                           decoration: BoxDecoration(
