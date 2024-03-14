@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
@@ -24,6 +25,7 @@ class TambahPetugasController extends BaseController {
   bool isEdit = Get.arguments['isEdit'];
   PetugasModel? data = Get.arguments['data'];
   bool isLoading = false;
+  bool isLoadOrigin = false;
   bool isObscurePassword = true;
   bool isObscurePasswordConfirm = true;
   Widget showIcon = const Icon(
@@ -66,10 +68,11 @@ class TambahPetugasController extends BaseController {
   List<Account> selectedAccountList = [];
   List<Origin> originList = [];
   List<Origin> selectedOrigin = [];
-  List<String> origins = [];
+  List<String> originCodes = [];
   List<BranchModel> branchList = [];
   List<BranchModel> selectedBranchList = [];
   List<String> branchs = [];
+  String? status;
 
   @override
   void onInit() {
@@ -83,37 +86,95 @@ class TambahPetugasController extends BaseController {
     originList = [];
     branchList = [];
     update();
-    try {
-      await transaction.getAccountNumber().then((value) {
-        accountList.addAll(value.payload ?? []);
+    // try {
+    await transaction.getAccountNumber().then((value) {
+      accountList.addAll(value.payload ?? []);
+      update();
+    });
+
+    await setting.getBranch().then((value) {
+      branchList.addAll(value.payload ?? []);
+      update();
+    });
+
+    if (isEdit) {
+      var dataPetugas = await setting.getOfficerByID(data?.id ?? '');
+
+      dataPetugas.payload?.accounts?.forEach((account) {
+        selectedAccountList.add(accountList.where((e) => e.accountId == account.accountId).first);
+      });
+      dataPetugas.payload?.branches?.forEach((branch) {
+        selectedBranchList.add(branchList.where((e) => e.code == branch.code).first);
         update();
       });
 
-      // await setting.getBranch().then((value) {
-      //   branchList.addAll(value.payload ?? []);
-      //   update();
-      // });
+      dataPetugas.payload?.origins?.forEach((origin) {
+        originCodes.add(origin.originCode ?? '');
+        // selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).first);
+        update();
+      });
 
-      if (isEdit) {
-        await setting.getOfficerByID(data?.id ?? '').then((value) {
-          namaPetugas.text = value.payload?.name ?? '';
-          alamatEmail.text = value.payload?.email ?? '';
-          nomorTelepon.text = value.payload?.phone ?? '';
-          update();
-        });
-      }
-    } catch (e) {
-      e.printError();
+      dataPetugas.payload?.origins?.forEachIndexed((index, origin) {
+        // originCodes.add(origin.originCode ?? '');
+        // selectedOrigin.add(originList.where((e) => e.originCode == origin).first);
+        print('origs ${originCodes[index]}');
+        update();
+      });
+
+      namaPetugas.text = dataPetugas.payload?.name ?? '';
+      alamatEmail.text = dataPetugas.payload?.email ?? '';
+      nomorTelepon.text = dataPetugas.payload?.phone ?? '';
+      status = dataPetugas.payload?.status ?? '';
+      alamat.text = dataPetugas.payload?.address ?? '';
+      zipCode.text = dataPetugas.payload?.zipCode ?? '';
+      status = dataPetugas.payload?.status ?? 'N';
+
+      profilku = dataPetugas.payload?.menu?.profil == "Y";
+      fasilitas = dataPetugas.payload?.menu?.fasilitas == "Y";
+      katasandi = dataPetugas.payload?.menu?.katasandi == "Y";
+      beranda = dataPetugas.payload?.menu?.beranda == "Y";
+      buatPesanan = dataPetugas.payload?.menu?.buatPesanan == "Y";
+      lacakPesanan = dataPetugas.payload?.menu?.lacakPesanan == "Y";
+      mintaDijemput = dataPetugas.payload?.menu?.mintaDijemput == "Y";
+      serahTerima = dataPetugas.payload?.menu?.serahTerima == "Y";
+      saldo = dataPetugas.payload?.menu?.saldo == "Y";
+      uangCod = dataPetugas.payload?.menu?.uangCod == "Y";
+      tagihan = dataPetugas.payload?.menu?.tagihan == "Y";
+      bonus = dataPetugas.payload?.menu?.bonus == "Y";
+      pantauPaketmu = dataPetugas.payload?.menu?.pantauPaketmu == "Y";
+      laporan = dataPetugas.payload?.menu?.laporan == "Y";
+      eclaim = dataPetugas.payload?.menu?.eclaim == "Y";
+      tema = dataPetugas.payload?.menu?.tema == "Y";
+      label = dataPetugas.payload?.menu?.label == "Y";
+      petugas = dataPetugas.payload?.menu?.petugas == "Y";
+      riwayatPesanan = dataPetugas.payload?.menu?.riwayatPesanan == "Y";
+      cekOngkir = dataPetugas.payload?.menu?.cekOngkir == "Y";
+      semuaTransaksi = dataPetugas.payload?.menu?.semuaTransaksi == "Y";
+      hapusPesanan = dataPetugas.payload?.menu?.hapusPesanan == "Y";
+      semuaHapus = dataPetugas.payload?.menu?.semuaHapus == "Y";
+      cetakPesanan = dataPetugas.payload?.menu?.cetakPesanan == "Y";
+      monitoringAgg = dataPetugas.payload?.menu?.monitoringAgg == "Y";
+      monitoringAggMinus = dataPetugas.payload?.menu?.monitoringAggMinus == "Y";
+      selectedOrigin = dataPetugas.payload?.origins ?? [];
+      update();
     }
+    // } catch (e, i) {
+    //   e.printError();
+    //   i.printError();
+    // }
 
     isLoading = false;
     update();
   }
 
-  Future<void> loadOrigin() async {
+  Future<void> loadOrigin(List<BranchModel> branches) async {
     originList = [];
-    for (var element in selectedBranchList) {
-      branchs.add(element.desc ?? '');
+    selectedOrigin = [];
+    branchs = [];
+    isLoadOrigin = true;
+    update();
+    for (var element in branches) {
+      branchs.add(element.code ?? '');
       update();
     }
     try {
@@ -124,11 +185,16 @@ class TambahPetugasController extends BaseController {
     } catch (e) {
       e.printError();
     }
+    // originCodes.forEach((value) {
+    //   selectedOrigin.add(originList.where((e) => e.originCode == value).first);
+    // });
+    isLoadOrigin = false;
+    update();
   }
 
   Future<void> saveOfficer() async {
     for (var element in selectedOrigin) {
-      origins.add(element.originCode ?? '');
+      originCodes.add(element.originCode ?? '');
       update();
     }
     try {
@@ -174,7 +240,7 @@ class TambahPetugasController extends BaseController {
                 delete: "RESTRICTED",
               ),
               accounts: selectedAccountList,
-              origins: origins,
+              originCodes: originCodes.toSet().toList(),
             ),
           )
           .then((value) => Get.back());
@@ -184,10 +250,15 @@ class TambahPetugasController extends BaseController {
   }
 
   Future<void> updateOfficer() async {
+    for (var element in selectedOrigin) {
+      originCodes.add(element.originCode ?? '');
+      update();
+    }
     try {
       await setting
           .putOfficer(
             DataPetugasModel(
+              id: data?.id ?? '',
               name: namaPetugas.text,
               email: alamatEmail.text,
               phone: nomorTelepon.text,
@@ -227,7 +298,7 @@ class TambahPetugasController extends BaseController {
                 delete: "RESTRICTED",
               ),
               accounts: selectedAccountList,
-              origins: origins,
+              originCodes: originCodes.toSet().toList(),
             ),
           )
           .then((value) => Get.back());

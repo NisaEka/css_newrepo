@@ -93,12 +93,12 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.put(
+      Response response = await network.dio.get(
         "/branch",
       );
       return GetBranchModel.fromJson(response.data);
     } on DioError catch (e) {
-      return e.error;
+      return e. error;
     }
   }
 
@@ -106,11 +106,12 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   Future<GetOriginModel> getOriginGroup(List<String> keyword) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
+    print("keyword : ${keyword.join(",")}");
     try {
       Response response = await network.dio.get(
         "/origin/group",
         queryParameters: {
-          'keyword': keyword.toString(),
+          'keyword': keyword.join(","),
         },
       );
       return GetOriginModel.fromJson(response.data);

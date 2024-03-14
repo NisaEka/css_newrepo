@@ -1,4 +1,6 @@
+import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 
 class DataPetugasModel {
   DataPetugasModel({
@@ -9,10 +11,13 @@ class DataPetugasModel {
     String? password,
     String? address,
     String? zipCode,
+    String? status,
     Menu? menu,
     Transaction? transaction,
     List<Account>? accounts,
-    List<String>? origins,
+    List<String>? originCodes,
+    List<BranchModel>? branches,
+    List<Origin>? origins,
   }) {
     _id = id;
     _name = name;
@@ -21,9 +26,12 @@ class DataPetugasModel {
     _password = password;
     _address = address;
     _zipCode = zipCode;
+    _status = status;
     _menu = menu;
     _transaction = transaction;
     _accounts = accounts;
+    _originCodes = originCodes;
+    _branches = branches;
     _origins = origins;
   }
 
@@ -33,8 +41,9 @@ class DataPetugasModel {
     _email = json['email'];
     _phone = json['phone'];
     _password = json['password'];
-    _address = json['address'];
+    _address = json['address'] ?? json['branch'];
     _zipCode = json['zip_code'];
+    _status = json['status'];
     _menu = json['menu'] != null ? Menu.fromJson(json['menu']) : null;
     _transaction = json['transaction'] != null ? Transaction.fromJson(json['transaction']) : null;
     if (json['accounts'] != null) {
@@ -43,7 +52,19 @@ class DataPetugasModel {
         _accounts?.add(Account.fromJson(v));
       });
     }
-    _origins = json['origins'] != null ? json['origins'].cast<String>() : [];
+    if (json['branches'] != null) {
+      _branches = [];
+      json['branches'].forEach((v) {
+        _branches?.add(BranchModel.fromJson(v));
+      });
+    }
+    if (json['origins'] != null) {
+      _origins = [];
+      json['origins'].forEach((v) {
+        _origins?.add(Origin.fromJson(v));
+      });
+    }
+    _originCodes = json['origins'] != null ? json['origins'].cast<String>() : [];
   }
 
   String? _id;
@@ -53,10 +74,13 @@ class DataPetugasModel {
   String? _password;
   String? _address;
   String? _zipCode;
+  String? _status;
   Menu? _menu;
   Transaction? _transaction;
   List<Account>? _accounts;
-  List<String>? _origins;
+  List<String>? _originCodes;
+  List<BranchModel>? _branches;
+  List<Origin>? _origins;
 
   DataPetugasModel copyWith({
     String? id,
@@ -66,10 +90,13 @@ class DataPetugasModel {
     String? password,
     String? address,
     String? zipCode,
+    String? status,
     Menu? menu,
     Transaction? transaction,
     List<Account>? accounts,
-    List<String>? origins,
+    List<String>? originCodes,
+    List<BranchModel>? branches,
+    List<Origin>? origins,
   }) =>
       DataPetugasModel(
         id: id ?? _id,
@@ -79,9 +106,12 @@ class DataPetugasModel {
         password: password ?? _password,
         address: address ?? _address,
         zipCode: zipCode ?? _zipCode,
+        status: status ?? _status,
         menu: menu ?? _menu,
         transaction: transaction ?? _transaction,
         accounts: accounts ?? _accounts,
+        originCodes: originCodes ?? _originCodes,
+        branches: branches ?? _branches,
         origins: origins ?? _origins,
       );
 
@@ -99,13 +129,19 @@ class DataPetugasModel {
 
   String? get zipCode => _zipCode;
 
+  String? get status => _status;
+
   Menu? get menu => _menu;
 
   Transaction? get transaction => _transaction;
 
   List<Account>? get accounts => _accounts;
 
-  List<String>? get origins => _origins;
+  List<String>? get originCodes => _originCodes;
+
+  List<BranchModel>? get branches => _branches;
+
+  List<Origin>? get origins => _origins;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -115,7 +151,9 @@ class DataPetugasModel {
     map['phone'] = _phone;
     map['password'] = _password;
     map['address'] = _address;
+    map['branch'] = _address;
     map['zip_code'] = _zipCode;
+    map['status'] = _status;
     if (_menu != null) {
       map['menu'] = _menu?.toJson();
     }
@@ -125,6 +163,10 @@ class DataPetugasModel {
     if (_accounts != null) {
       map['accounts'] = _accounts?.map((v) => v.toJson()).toList();
     }
+    if (_branches != null) {
+      map['branches'] = _branches?.map((v) => v.toJson()).toList();
+    }
+    map['origins'] = _originCodes;
     map['origins'] = _origins;
     return map;
   }

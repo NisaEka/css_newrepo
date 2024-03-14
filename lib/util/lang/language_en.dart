@@ -256,7 +256,8 @@ class LanguageEN {
       "Akun": 'Account',
       "Edit Petugas": "Update Officer",
       "Aktif": "Active",
-      "Tidak Aktif":"Non Active"
+      "Tidak Aktif": "Non Active",
+      "Profilku": "My Profile",
     };
   }
 }

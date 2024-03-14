@@ -1,10 +1,10 @@
-import 'package:css_mobile/data/model/pengaturan/get_petugas_model.dart';
+import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
 
 class GetPetugasByidModel {
   GetPetugasByidModel({
     num? code,
     String? message,
-    PetugasModel? payload,
+    DataPetugasModel? payload,
   }) {
     _code = code;
     _message = message;
@@ -14,17 +14,17 @@ class GetPetugasByidModel {
   GetPetugasByidModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
-    _payload = json['payload'] != null ? PetugasModel.fromJson(json['payload']) : null;
+    _payload = json['payload'] != null ? DataPetugasModel.fromJson(json['payload']) : null;
   }
 
   num? _code;
   String? _message;
-  PetugasModel? _payload;
+  DataPetugasModel? _payload;
 
   GetPetugasByidModel copyWith({
     num? code,
     String? message,
-    PetugasModel? payload,
+    DataPetugasModel? payload,
   }) =>
       GetPetugasByidModel(
         code: code ?? _code,
@@ -36,7 +36,7 @@ class GetPetugasByidModel {
 
   String? get message => _message;
 
-  PetugasModel? get payload => _payload;
+  DataPetugasModel? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
