@@ -4,6 +4,7 @@ import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_screen.dart'
 import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:flutter/material.dart';
@@ -58,20 +59,36 @@ class PengaturanScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SettingListItem(
-                    title: 'Pengaturan Label'.tr,
-                    icon: Icons.label_outline,
-                    onTap: () => Get.to(const PengaturanLabelScreen()),
-                  ),
-                  SettingListItem(
-                    title: 'Pengaturan Petugas'.tr,
-                    icon: Icons.label_outline,
-                    onTap: () => Get.to(const PengaturanPetugasScreen()),
-                  ),
-                  SettingListItem(
-                    title: 'Ubah Kata Sandi'.tr,
-                    icon: Icons.lock_open_outlined,
-                  )
+                  controller.allow.label == "Y"
+                      ? SettingListItem(
+                          title: 'Pengaturan Label'.tr,
+                          icon: Icons.label_outline,
+                          onTap: () => controller.isLogin
+                              ? Get.to(const PengaturanLabelScreen())
+                              : showDialog(
+                                  context: context,
+                                  builder: (context) => const LoginAlertDialog(),
+                                ),
+                        )
+                      : const SizedBox(),
+                  controller.allow.petugas == "Y"
+                      ? SettingListItem(
+                          title: 'Pengaturan Petugas'.tr,
+                          icon: Icons.label_outline,
+                          onTap: () => controller.isLogin
+                              ? Get.to(const PengaturanPetugasScreen())
+                              : showDialog(
+                                  context: context,
+                                  builder: (context) => const LoginAlertDialog(),
+                                ),
+                        )
+                      : const SizedBox(),
+                  controller.isLogin && controller.allow.katasandi == "Y"
+                      ? SettingListItem(
+                          title: 'Ubah Kata Sandi'.tr,
+                          icon: Icons.lock_open_outlined,
+                        )
+                      : const SizedBox()
                 ],
               ),
             ),

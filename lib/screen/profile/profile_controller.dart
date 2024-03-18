@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/profile/profil_list_model.dart';
@@ -16,6 +17,7 @@ class ProfileController extends BaseController {
   List<Account> accountList = [];
   BasicProfilModel? basicProfil;
   CcrfProfilModel? ccrfProfil;
+  AllowedMenu allow = AllowedMenu();
 
   @override
   void onInit() {
@@ -39,6 +41,10 @@ class ProfileController extends BaseController {
       await profil.getCcrfProfil().then(
             (value) => ccrfProfil = value.payload,
           );
+
+      allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+
+      update();
     } catch (e, i) {
       e.printError();
       i.printError();

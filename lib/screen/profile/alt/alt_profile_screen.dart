@@ -63,39 +63,47 @@ class AltProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SettingListItem(
-                    title: 'Fasilitasku'.tr,
-                    icon: Icons.format_list_numbered_rounded,
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (context) => const ComingSoonDialog(),
-                    ),
-                  ),
-                  SettingListItem(
-                    title: 'Lihat Akun'.tr,
-                    icon: Icons.account_tree_rounded,
-                    onTap: () => Get.to(const NoAkunScreen()),
-                  ),
-                  SettingListItem(
-                    title: 'Data Umum'.tr,
-                    icon: Icons.person_pin_outlined,
-                    onTap: () => Get.to(const DataUmumScreen()),
-                  ),
-                  SettingListItem(
-                    title: 'Alamat Pengembalian'.tr,
-                    icon: Icons.cached_rounded,
-                    onTap: () => Get.to(const AlamatReturnScreen()),
-                  ),
-                  SettingListItem(
-                    title: 'Data Rekening'.tr,
-                    icon: Icons.credit_card_rounded,
-                    onTap: () => Get.to(const AkunBankScreen()),
-                  ),
-                  SettingListItem(
-                    title: 'Dokumen'.tr,
-                    icon: Icons.file_present_rounded,
-                    onTap: () => Get.to(const DokumenScreen()),
-                  )
+                  controller.allow.fasilitas == "Y"
+                      ? SettingListItem(
+                          title: 'Fasilitasku'.tr,
+                          icon: Icons.format_list_numbered_rounded,
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (context) => const ComingSoonDialog(),
+                          ),
+                        )
+                      : const SizedBox(),
+                  controller.allow.profil == "Y"
+                      ? Column(
+                          children: [
+                            SettingListItem(
+                              title: 'Lihat Akun'.tr,
+                              icon: Icons.account_tree_rounded,
+                              onTap: () => Get.to(const NoAkunScreen()),
+                            ),
+                            SettingListItem(
+                              title: 'Data Umum'.tr,
+                              icon: Icons.person_pin_outlined,
+                              onTap: () => Get.to(const DataUmumScreen()),
+                            ),
+                            SettingListItem(
+                              title: 'Alamat Pengembalian'.tr,
+                              icon: Icons.cached_rounded,
+                              onTap: () => Get.to(const AlamatReturnScreen()),
+                            ),
+                            SettingListItem(
+                              title: 'Data Rekening'.tr,
+                              icon: Icons.credit_card_rounded,
+                              onTap: () => Get.to(const AkunBankScreen()),
+                            ),
+                            SettingListItem(
+                              title: 'Dokumen'.tr,
+                              icon: Icons.file_present_rounded,
+                              onTap: () => Get.to(const DokumenScreen()),
+                            )
+                          ],
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),

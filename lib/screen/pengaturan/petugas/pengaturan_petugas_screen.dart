@@ -65,9 +65,9 @@ class PengaturanPetugasScreen extends StatelessWidget {
                           transitionDuration: const Duration(milliseconds: 500),
                           itemBuilder: (context, item, index) => PetugasListItem(
                             index: index,
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.shield_outlined,
-                              color: successColor,
+                              color: item.status == "Y" ? successColor : errorColor,
                             ),
                             title: item.name ?? '',
                             subtitle: '${item.email}\n${item.phone}\n${item.branch} - ${item.origin}',

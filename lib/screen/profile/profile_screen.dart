@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
@@ -8,7 +7,6 @@ import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/profile/profile_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/custombottombar.dart';
-import 'package:css_mobile/widgets/items/document_image_item.dart';
 import 'package:css_mobile/widgets/profile/account_card.dart';
 import 'package:css_mobile/widgets/profile/user_info_card.dart';
 import 'package:flutter/material.dart';
@@ -366,6 +364,7 @@ class ProfileScreen extends StatelessWidget {
             bottomNavigationBar: BottomBar(
               menu: 1,
               isLogin: controller.isLogin,
+              allowedMenu: controller.allow,
             ),
           );
         });

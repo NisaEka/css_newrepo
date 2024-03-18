@@ -40,7 +40,7 @@ class StorageCore {
 
   Future<void> saveToken(String token, AllowedMenu allowedMenu) async {
     await storage.write(key: 'token', value: token);
-    await storage.write(key: 'allowed_menu', value: jsonEncode(allowedMenu).toString());
+    await storage.write(key: 'allowed_menu', value: jsonEncode(allowedMenu));
   }
 
   Future<String?> readToken() async {

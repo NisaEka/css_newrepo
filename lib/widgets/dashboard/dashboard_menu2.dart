@@ -41,44 +41,6 @@ class DashboardMenu2 extends StatelessWidget {
                       ))
                   .toList(),
             ),
-            // MenuItem(
-            //   menuTitle: 'Input Kirimanmu'.tr,
-            //   menuImg: ImageConstant.paketmuIcon,
-            //   isActive: isLogin,
-            //   onTap: () => isLogin
-            //       ? Get.to(const InformasiPengirimScreen())
-            //       : showDialog(
-            //           context: context,
-            //           builder: (context) => const LoginAlertDialog(),
-            //         ),
-            // ),
-            // MenuItem(
-            //   menuTitle: 'Cek Ongkir'.tr,
-            //   menuImg: ImageConstant.cekOngkirIcon,
-            //   onTap: () => Get.to(const CekOngkirScreen()),
-            // ),
-            // MenuItem(
-            //   menuTitle: 'Draft Transaksi'.tr,
-            //   menuImg: ImageConstant.paketmuIcon,
-            //   isActive: isLogin,
-            //   onTap: () => isLogin
-            //       ? Get.to(const DraftTransaksiScreen())
-            //       : showDialog(
-            //           context: context,
-            //           builder: (context) => const LoginAlertDialog(),
-            //         ),
-            // ),
-            // MenuItem(
-            //   menuTitle: 'Riwayat Kiriman'.tr,
-            //   menuImg: ImageConstant.paketmuIcon,
-            //   isActive: isLogin,
-            //   onTap: () => isLogin
-            //       ? Get.to(const RiwayatKirimanScreen())
-            //       : showDialog(
-            //           context: context,
-            //           builder: (context) => const LoginAlertDialog(),
-            //         ),
-            // ),
             MenuItem(
               menuTitle: 'Lainnya'.tr,
               onTap: getOtherMenu,

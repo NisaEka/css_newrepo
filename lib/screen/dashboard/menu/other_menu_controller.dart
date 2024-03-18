@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class OtherMenuCotroller extends BaseController {
   List<Items> otherList = [];
 
   MenuItemModel? menuData;
+  AllowedMenu allowedMenu = AllowedMenu();
 
   bool isLogin = false;
   bool isEdit = false;
@@ -38,6 +40,9 @@ class OtherMenuCotroller extends BaseController {
     try {
       var menu = MenuItemModel.fromJson(await storage.readData(StorageCore.favoriteMenu));
       favoritList.addAll(menu.items ?? []);
+      update();
+
+      allowedMenu = await AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
       update();
     } catch (e) {
       e.printError();
@@ -103,7 +108,6 @@ class OtherMenuCotroller extends BaseController {
         isEdit: isEdit,
         route: "/uangCODKamu",
       ),
-
     ];
 
     otherList = [
@@ -116,6 +120,40 @@ class OtherMenuCotroller extends BaseController {
         route: "/cekOngkir",
       ),
     ];
+
+    update();
+    removeMenu(allowedMenu);
+  }
+
+  void removeMenu(AllowedMenu allow) {
+    if (allow.buatPesanan != "Y") {
+      paketmuList.removeWhere((e) => e.title == "Input Kirimanmu");
+      favoritList.removeWhere((e) => e.title == "Input Kirimanmu");
+    }
+    if (allow.riwayatPesanan != "Y") {
+      paketmuList.removeWhere((e) => e.title == "Riwayat Kiriman");
+      paketmuList.removeWhere((e) => e.title == "Draft Transaksi");
+      favoritList.removeWhere((e) => e.title == "Riwayat Kiriman");
+      favoritList.removeWhere((e) => e.title == "Draft Transaksi");
+    }
+    if (allow.lacakPesanan != "Y") {
+      paketmuList.removeWhere((e) => e.title == "Lacak Kiriman");
+      favoritList.removeWhere((e) => e.title == "Lacak Kiriman");
+    }
+    if (allow.uangCod != "Y") {
+      keuanganmuList.removeWhere((e) => e.title == "Uang_COD Kamu");
+      favoritList.removeWhere((e) => e.title == "Uang_COD Kamu");
+    }
+    if (allow.monitoringAgg != "Y") {
+      keuanganmuList.removeWhere((e) => e.title == "Pembayaran Aggregasi");
+    }
+    if (allow.monitoringAggMinus != "Y") {
+      keuanganmuList.removeWhere((e) => e.title == "Aggregasi Minus");
+    }
+    if (allow.cekOngkir != "Y") {
+      otherList.removeWhere((e) => e.title == "Cek Ongkir");
+      favoritList.removeWhere((e) => e.title == "Cek Ongkir");
+    }
 
     update();
   }

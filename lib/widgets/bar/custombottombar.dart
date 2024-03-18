@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
@@ -12,6 +13,7 @@ class BottomBar extends StatelessWidget {
   final String? label;
   final void Function(int)? onTap;
   final bool isLogin;
+  final AllowedMenu allowedMenu;
 
   const BottomBar({
     Key? key,
@@ -19,6 +21,7 @@ class BottomBar extends StatelessWidget {
     this.label,
     this.onTap,
     required this.isLogin,
+    required this.allowedMenu,
   }) : super(key: key);
 
   @override
@@ -70,21 +73,23 @@ class BottomBar extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
-          child: FloatingActionButton(
-            shape: const CircleBorder(),
-            backgroundColor: isLogin ? redJNE : errorLightColor2,
-            // onPressed: () => Get.to(const InputKirimanScreen()),
-            onPressed: () => isLogin
-                ? Get.to(const InformasiPengirimScreen(), arguments: {})
-                : showDialog(
-                    context: context,
-                    builder: (context) => const LoginAlertDialog(),
+          child: allowedMenu.buatPesanan == "Y"
+              ? FloatingActionButton(
+                  shape: const CircleBorder(),
+                  backgroundColor: isLogin ? redJNE : errorLightColor2,
+                  // onPressed: () => Get.to(const InputKirimanScreen()),
+                  onPressed: () => isLogin
+                      ? Get.to(const InformasiPengirimScreen(), arguments: {})
+                      : showDialog(
+                          context: context,
+                          builder: (context) => const LoginAlertDialog(),
+                        ),
+                  child: const Icon(
+                    Icons.add,
+                    color: whiteColor,
                   ),
-            child: const Icon(
-              Icons.add,
-              color: whiteColor,
-            ),
-          ),
+                )
+              : const SizedBox(),
         ),
       ],
     );

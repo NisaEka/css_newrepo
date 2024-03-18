@@ -85,76 +85,76 @@ class TambahPetugasController extends BaseController {
     originList.clear();
     branchList = [];
     update();
-    // try {
-    await transaction.getAccountNumber().then((value) {
-      accountList.addAll(value.payload ?? []);
-      update();
-    });
-
-    await setting.getBranch().then((value) {
-      branchList.addAll(value.payload ?? []);
-      update();
-    });
-
-    if (isEdit) {
-      dataPetugas = await setting.getOfficerByID(data?.id ?? '');
-      update();
-      loadOrigin(dataPetugas.payload?.branches ?? []);
-      dataPetugas.payload?.accounts?.forEach((account) {
-        selectedAccountList.add(accountList.where((e) => e.accountId == account.accountId).first);
-      });
-      dataPetugas.payload?.branches?.forEach((branch) {
-        selectedBranchList.add(branchList.where((e) => e.code == branch.code).first);
-        update();
-      });
-      // selectedOrigin = dataPetugas.payload?.origins ?? [];
-
-      dataPetugas.payload?.origins?.forEach((origin) {
-        originCodes.add(origin.originCode ?? '');
-        // selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).first);
+    try {
+      await transaction.getAccountNumber().then((value) {
+        accountList.addAll(value.payload ?? []);
         update();
       });
 
-      namaPetugas.text = dataPetugas.payload?.name ?? '';
-      alamatEmail.text = dataPetugas.payload?.email ?? '';
-      nomorTelepon.text = dataPetugas.payload?.phone ?? '';
-      status = dataPetugas.payload?.status ?? '';
-      alamat.text = dataPetugas.payload?.branch ?? '';
-      zipCode.text = dataPetugas.payload?.zipCode ?? '';
-      status = dataPetugas.payload?.status ?? 'N';
+      await setting.getBranch().then((value) {
+        branchList.addAll(value.payload ?? []);
+        update();
+      });
 
-      profilku = dataPetugas.payload?.menu?.profil == "Y";
-      fasilitas = dataPetugas.payload?.menu?.fasilitas == "Y";
-      katasandi = dataPetugas.payload?.menu?.katasandi == "Y";
-      beranda = dataPetugas.payload?.menu?.beranda == "Y";
-      buatPesanan = dataPetugas.payload?.menu?.buatPesanan == "Y";
-      lacakPesanan = dataPetugas.payload?.menu?.lacakPesanan == "Y";
-      mintaDijemput = dataPetugas.payload?.menu?.mintaDijemput == "Y";
-      serahTerima = dataPetugas.payload?.menu?.serahTerima == "Y";
-      saldo = dataPetugas.payload?.menu?.saldo == "Y";
-      uangCod = dataPetugas.payload?.menu?.uangCod == "Y";
-      tagihan = dataPetugas.payload?.menu?.tagihan == "Y";
-      bonus = dataPetugas.payload?.menu?.bonus == "Y";
-      pantauPaketmu = dataPetugas.payload?.menu?.pantauPaketmu == "Y";
-      laporan = dataPetugas.payload?.menu?.laporan == "Y";
-      eclaim = dataPetugas.payload?.menu?.eclaim == "Y";
-      tema = dataPetugas.payload?.menu?.tema == "Y";
-      label = dataPetugas.payload?.menu?.label == "Y";
-      petugas = dataPetugas.payload?.menu?.petugas == "Y";
-      riwayatPesanan = dataPetugas.payload?.menu?.riwayatPesanan == "Y";
-      cekOngkir = dataPetugas.payload?.menu?.cekOngkir == "Y";
-      semuaTransaksi = dataPetugas.payload?.menu?.semuaTransaksi == "Y";
-      hapusPesanan = dataPetugas.payload?.menu?.hapusPesanan == "Y";
-      semuaHapus = dataPetugas.payload?.menu?.semuaHapus == "Y";
-      cetakPesanan = dataPetugas.payload?.menu?.cetakPesanan == "Y";
-      monitoringAgg = dataPetugas.payload?.menu?.monitoringAgg == "Y";
-      monitoringAggMinus = dataPetugas.payload?.menu?.monitoringAggMinus == "Y";
-      update();
+      if (isEdit) {
+        dataPetugas = await setting.getOfficerByID(data?.id ?? '');
+        update();
+        loadOrigin(dataPetugas.payload?.branches ?? []);
+        dataPetugas.payload?.accounts?.forEach((account) {
+          selectedAccountList.add(accountList.where((e) => e.accountId == account.accountId).first);
+        });
+        dataPetugas.payload?.branches?.forEach((branch) {
+          selectedBranchList.add(branchList.where((e) => e.code == branch.code).first);
+          update();
+        });
+        // selectedOrigin = dataPetugas.payload?.origins ?? [];
+
+        dataPetugas.payload?.origins?.forEach((origin) {
+          originCodes.add(origin.originCode ?? '');
+          // selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).first);
+          update();
+        });
+
+        namaPetugas.text = dataPetugas.payload?.name ?? '';
+        alamatEmail.text = dataPetugas.payload?.email ?? '';
+        nomorTelepon.text = dataPetugas.payload?.phone ?? '';
+        status = dataPetugas.payload?.status ?? '';
+        alamat.text = dataPetugas.payload?.branch ?? '';
+        zipCode.text = dataPetugas.payload?.zipCode ?? '';
+        status = dataPetugas.payload?.status ?? 'N';
+
+        profilku = dataPetugas.payload?.menu?.profil == "Y";
+        fasilitas = dataPetugas.payload?.menu?.fasilitas == "Y";
+        katasandi = dataPetugas.payload?.menu?.katasandi == "Y";
+        beranda = dataPetugas.payload?.menu?.beranda == "Y";
+        buatPesanan = dataPetugas.payload?.menu?.buatPesanan == "Y";
+        lacakPesanan = dataPetugas.payload?.menu?.lacakPesanan == "Y";
+        mintaDijemput = dataPetugas.payload?.menu?.mintaDijemput == "Y";
+        serahTerima = dataPetugas.payload?.menu?.serahTerima == "Y";
+        saldo = dataPetugas.payload?.menu?.saldo == "Y";
+        uangCod = dataPetugas.payload?.menu?.uangCod == "Y";
+        tagihan = dataPetugas.payload?.menu?.tagihan == "Y";
+        bonus = dataPetugas.payload?.menu?.bonus == "Y";
+        pantauPaketmu = dataPetugas.payload?.menu?.pantauPaketmu == "Y";
+        laporan = dataPetugas.payload?.menu?.laporan == "Y";
+        eclaim = dataPetugas.payload?.menu?.eclaim == "Y";
+        tema = dataPetugas.payload?.menu?.tema == "Y";
+        label = dataPetugas.payload?.menu?.label == "Y";
+        petugas = dataPetugas.payload?.menu?.petugas == "Y";
+        riwayatPesanan = dataPetugas.payload?.menu?.riwayatPesanan == "Y";
+        cekOngkir = dataPetugas.payload?.menu?.cekOngkir == "Y";
+        semuaTransaksi = dataPetugas.payload?.menu?.semuaTransaksi == "Y";
+        hapusPesanan = dataPetugas.payload?.menu?.hapusPesanan == "Y";
+        semuaHapus = dataPetugas.payload?.menu?.semuaHapus == "Y";
+        cetakPesanan = dataPetugas.payload?.menu?.cetakPesanan == "Y";
+        monitoringAgg = dataPetugas.payload?.menu?.monitoringAgg == "Y";
+        monitoringAggMinus = dataPetugas.payload?.menu?.monitoringAggMinus == "Y";
+        update();
+      }
+    } catch (e, i) {
+      e.printError();
+      i.printError();
     }
-    // } catch (e, i) {
-    //   e.printError();
-    //   i.printError();
-    // }
 
     isLoading = false;
     update();

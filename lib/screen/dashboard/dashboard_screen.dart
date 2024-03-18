@@ -62,7 +62,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Stack(
                       children: [
                         Container(
-                          height: controller.isLogin ? 160 : 120,
+                          height: controller.isLogin && controller.allow.lacakPesanan == "Y" ? 160 : 120,
                           padding: const EdgeInsets.all(20),
                           decoration: const BoxDecoration(
                             color: blueJNE,
@@ -103,42 +103,46 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 value: controller.userName ?? '',
                                                 fontColor: whiteColor,
                                               ),
-                                        GestureDetector(
-                                          onTap: () => Get.to(const BonusKamuScreen()),
-                                          child: JLCPointWidget(
-                                            point: controller.jlcPoint ?? '0',
-                                          ),
-                                        ),
+                                        controller.allow.bonus == "Y"
+                                            ? GestureDetector(
+                                                onTap: () => Get.to(const BonusKamuScreen()),
+                                                child: JLCPointWidget(
+                                                  point: controller.jlcPoint ?? '0',
+                                                ),
+                                              )
+                                            : const SizedBox(),
                                       ],
                                     )
                                   : const SizedBox(),
                               const SizedBox(height: 18),
-                              TextField(
-                                controller: controller.nomorResi,
-                                decoration: InputDecoration(
-                                  hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
-                                  hintStyle: hintTextStyle,
-                                  suffixIcon: GestureDetector(
-                                    onTap: () => Get.to(const BarcodeScanScreen(), arguments: {
-                                      "cek_resi": true,
-                                    })?.then((result) {
-                                      controller.nomorResi.clear();
-                                      controller.update();
-                                    }),
-                                    child: const Icon(
-                                      Icons.qr_code,
-                                      color: redJNE,
-                                    ),
-                                  ),
-                                ),
-                                // readOnly: true,
-                                onSubmitted: (value) => Get.to(const LacakKirimanScreen(), arguments: {
-                                  'nomor_resi': value,
-                                })?.then((value) {
-                                  controller.nomorResi.clear();
-                                  controller.update();
-                                }),
-                              ),
+                              controller.allow.lacakPesanan == "Y"
+                                  ? TextField(
+                                      controller: controller.nomorResi,
+                                      decoration: InputDecoration(
+                                        hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
+                                        hintStyle: hintTextStyle,
+                                        suffixIcon: GestureDetector(
+                                          onTap: () => Get.to(const BarcodeScanScreen(), arguments: {
+                                            "cek_resi": true,
+                                          })?.then((result) {
+                                            controller.nomorResi.clear();
+                                            controller.update();
+                                          }),
+                                          child: const Icon(
+                                            Icons.qr_code,
+                                            color: redJNE,
+                                          ),
+                                        ),
+                                      ),
+                                      // readOnly: true,
+                                      onSubmitted: (value) => Get.to(const LacakKirimanScreen(), arguments: {
+                                        'nomor_resi': value,
+                                      })?.then((value) {
+                                        controller.nomorResi.clear();
+                                        controller.update();
+                                      }),
+                                    )
+                                  : const SizedBox(),
                             ],
                           ),
                         ),
@@ -166,6 +170,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           bottomNavigationBar: BottomBar(
             menu: 0,
             isLogin: controller.isLogin,
+            allowedMenu: controller.allow,
             // onTap: (index) {
             //   controller.selectedIndex.value = index;
             //   controller.update();

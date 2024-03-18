@@ -1,4 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class PengaturanController extends BaseController {
   bool isLogin = false;
   String? version;
   String? lang;
+  AllowedMenu allow = AllowedMenu();
 
   @override
   void onInit() {
@@ -24,6 +26,8 @@ class PengaturanController extends BaseController {
     isLogin = token != null;
 
     lang = await storage.readString(StorageCore.localeApp);
+
+    allow = await AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
 
     update();
   }
