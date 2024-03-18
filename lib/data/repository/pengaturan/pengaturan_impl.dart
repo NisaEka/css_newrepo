@@ -1,4 +1,4 @@
-import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
+import 'package:css_mobile/data/model/pengaturan/DataPetugasModel.dart';
 import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_model.dart';
@@ -65,6 +65,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   Future<PostTransactionModel> postOfficer(DataPetugasModel data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
+    print('data petugas : ${data.toJson().toString()}');
     try {
       Response response = await network.dio.post(
         "/officer",
@@ -72,7 +73,9 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
       );
       return PostTransactionModel.fromJson(response.data);
     } on DioError catch (e) {
-      return e.error;
+      print("api error: ${e.error}");
+      print("api error : ${e.response?.data}");
+      return e.response?.data;
     }
   }
 
@@ -98,7 +101,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
       );
       return GetBranchModel.fromJson(response.data);
     } on DioError catch (e) {
-      return e. error;
+      return e.error;
     }
   }
 

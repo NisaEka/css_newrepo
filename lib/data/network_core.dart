@@ -11,9 +11,9 @@ class NetworkCore {
   NetworkCore() {
     dio.options = BaseOptions(
       baseUrl: AppConst.baseUrl,
-      connectTimeout: 20000,
-      receiveTimeout: 20000,
-      sendTimeout: 20000,
+      connectTimeout: 10000,
+      receiveTimeout: 10000,
+      sendTimeout: 10000,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -22,9 +22,9 @@ class NetworkCore {
 
     city.options = BaseOptions(
       baseUrl: AppConst.cityUrl,
-      connectTimeout: 20000,
-      receiveTimeout: 20000,
-      sendTimeout: 20000,
+      connectTimeout: 10000,
+      receiveTimeout: 10000,
+      sendTimeout: 10000,
       headers: {
         // 'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -33,9 +33,9 @@ class NetworkCore {
 
     jne.options = BaseOptions(
       baseUrl: AppConst.jneUrl,
-      connectTimeout: 20000,
-      receiveTimeout: 20000,
-      sendTimeout: 20000,
+      connectTimeout: 10000,
+      receiveTimeout: 10000,
+      sendTimeout: 10000,
       headers: {
         // 'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -44,9 +44,9 @@ class NetworkCore {
 
     myJNE.options = BaseOptions(
       baseUrl: AppConst.myJneUrl,
-      connectTimeout: 20000,
-      receiveTimeout: 20000,
-      sendTimeout: 20000,
+      connectTimeout: 10000,
+      receiveTimeout: 10000,
+      sendTimeout: 10000,
       headers: {
         // 'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',

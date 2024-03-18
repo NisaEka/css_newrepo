@@ -1,13 +1,11 @@
 import 'dart:core';
-import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
+import 'package:css_mobile/data/model/pengaturan/DataPetugasModel.dart';
 import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
-import 'package:css_mobile/data/model/pengaturan/get_petugas_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -66,13 +64,14 @@ class TambahPetugasController extends BaseController {
 
   List<Account> accountList = [];
   List<Account> selectedAccountList = [];
-  List<Origin> originList = [];
-  List<Origin> selectedOrigin = [];
+  RxList<Origin> originList = <Origin>[].obs;
+  final selectedOrigin = <Origin>[].obs;
   List<String> originCodes = [];
   List<BranchModel> branchList = [];
   List<BranchModel> selectedBranchList = [];
   List<String> branchs = [];
   String? status;
+  GetPetugasByidModel dataPetugas = GetPetugasByidModel();
 
   @override
   void onInit() {
@@ -83,7 +82,7 @@ class TambahPetugasController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     accountList = [];
-    originList = [];
+    originList.clear();
     branchList = [];
     update();
     // try {
@@ -98,8 +97,9 @@ class TambahPetugasController extends BaseController {
     });
 
     if (isEdit) {
-      var dataPetugas = await setting.getOfficerByID(data?.id ?? '');
-
+      dataPetugas = await setting.getOfficerByID(data?.id ?? '');
+      update();
+      loadOrigin(dataPetugas.payload?.branches ?? []);
       dataPetugas.payload?.accounts?.forEach((account) {
         selectedAccountList.add(accountList.where((e) => e.accountId == account.accountId).first);
       });
@@ -107,6 +107,7 @@ class TambahPetugasController extends BaseController {
         selectedBranchList.add(branchList.where((e) => e.code == branch.code).first);
         update();
       });
+      // selectedOrigin = dataPetugas.payload?.origins ?? [];
 
       dataPetugas.payload?.origins?.forEach((origin) {
         originCodes.add(origin.originCode ?? '');
@@ -114,18 +115,11 @@ class TambahPetugasController extends BaseController {
         update();
       });
 
-      dataPetugas.payload?.origins?.forEachIndexed((index, origin) {
-        // originCodes.add(origin.originCode ?? '');
-        // selectedOrigin.add(originList.where((e) => e.originCode == origin).first);
-        print('origs ${originCodes[index]}');
-        update();
-      });
-
       namaPetugas.text = dataPetugas.payload?.name ?? '';
       alamatEmail.text = dataPetugas.payload?.email ?? '';
       nomorTelepon.text = dataPetugas.payload?.phone ?? '';
       status = dataPetugas.payload?.status ?? '';
-      alamat.text = dataPetugas.payload?.address ?? '';
+      alamat.text = dataPetugas.payload?.branch ?? '';
       zipCode.text = dataPetugas.payload?.zipCode ?? '';
       status = dataPetugas.payload?.status ?? 'N';
 
@@ -155,7 +149,6 @@ class TambahPetugasController extends BaseController {
       cetakPesanan = dataPetugas.payload?.menu?.cetakPesanan == "Y";
       monitoringAgg = dataPetugas.payload?.menu?.monitoringAgg == "Y";
       monitoringAggMinus = dataPetugas.payload?.menu?.monitoringAggMinus == "Y";
-      selectedOrigin = dataPetugas.payload?.origins ?? [];
       update();
     }
     // } catch (e, i) {
@@ -168,8 +161,8 @@ class TambahPetugasController extends BaseController {
   }
 
   Future<void> loadOrigin(List<BranchModel> branches) async {
-    originList = [];
-    selectedOrigin = [];
+    originList.clear();
+    selectedOrigin.clear();
     branchs = [];
     isLoadOrigin = true;
     update();
@@ -181,9 +174,23 @@ class TambahPetugasController extends BaseController {
       await setting.getOriginGroup(branchs).then((value) {
         originList.addAll(value.payload ?? []);
         update();
+      }).then((value) {
+        if (dataPetugas.payload?.origins?.isNotEmpty ?? false) {
+          print("punya origin");
+          dataPetugas.payload?.origins?.forEach((origin) {
+            selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).first);
+            update();
+          });
+          print(selectedOrigin.map((e) => e.originCode));
+          print(originList.where((element) => element == selectedOrigin.first).isNotEmpty);
+
+          update();
+        }
       });
-    } catch (e) {
+      update();
+    } catch (e, i) {
       e.printError();
+      i.printError();
     }
     // originCodes.forEach((value) {
     //   selectedOrigin.add(originList.where((e) => e.originCode == value).first);
@@ -193,6 +200,8 @@ class TambahPetugasController extends BaseController {
   }
 
   Future<void> saveOfficer() async {
+    isLoading = true;
+    update();
     for (var element in selectedOrigin) {
       originCodes.add(element.originCode ?? '');
       update();
@@ -240,16 +249,34 @@ class TambahPetugasController extends BaseController {
                 delete: "RESTRICTED",
               ),
               accounts: selectedAccountList,
-              originCodes: originCodes.toSet().toList(),
+              origins: originCodes.toSet().toList(),
             ),
           )
           .then((value) => Get.back());
-    } catch (e) {
+    } catch (e, i) {
       e.printError();
+      i.printError();
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(
+            Icons.warning,
+            color: whiteColor,
+          ),
+          message: 'Bad Request'.tr,
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: errorColor,
+        ),
+      );
     }
+
+    isLoading = false;
+    update();
   }
 
   Future<void> updateOfficer() async {
+    isLoading = true;
+    update();
     for (var element in selectedOrigin) {
       originCodes.add(element.originCode ?? '');
       update();
@@ -298,12 +325,26 @@ class TambahPetugasController extends BaseController {
                 delete: "RESTRICTED",
               ),
               accounts: selectedAccountList,
-              originCodes: originCodes.toSet().toList(),
+              origins: originCodes.toSet().toList(),
             ),
           )
           .then((value) => Get.back());
     } catch (e) {
       e.printError();
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(
+            Icons.warning,
+            color: whiteColor,
+          ),
+          message: 'Bad Request'.tr,
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: errorColor,
+        ),
+      );
     }
+    isLoading = false;
+    update();
   }
 }

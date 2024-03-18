@@ -1,3 +1,5 @@
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
+
 class GetPetugasModel {
   GetPetugasModel({
     num? code,
@@ -52,85 +54,4 @@ class GetPetugasModel {
   }
 }
 
-class PetugasModel {
-  PetugasModel({
-    String? id,
-    String? name,
-    String? email,
-    String? phone,
-    String? branch,
-    String? origin,
-    String? status,
-  }) {
-    _id = id;
-    _name = name;
-    _email = email;
-    _phone = phone;
-    _branch = branch;
-    _origin = origin;
-    _status = status;
-  }
 
-  PetugasModel.fromJson(dynamic json) {
-    _id = json['id'];
-    _name = json['name'];
-    _email = json['email'];
-    _phone = json['phone'];
-    _branch = json['branch'];
-    _origin = json['origin'];
-    _status = json['status'];
-  }
-
-  String? _id;
-  String? _name;
-  String? _email;
-  String? _phone;
-  String? _branch;
-  String? _origin;
-  String? _status;
-
-  PetugasModel copyWith({
-    String? id,
-    String? name,
-    String? email,
-    String? phone,
-    String? branch,
-    String? origin,
-    String? status,
-  }) =>
-      PetugasModel(
-        id: id ?? _id,
-        name: name ?? _name,
-        email: email ?? _email,
-        phone: phone ?? _phone,
-        branch: branch ?? _branch,
-        origin: origin ?? _origin,
-        status: status ?? _status,
-      );
-
-  String? get id => _id;
-
-  String? get name => _name;
-
-  String? get email => _email;
-
-  String? get phone => _phone;
-
-  String? get branch => _branch;
-
-  String? get origin => _origin;
-
-  String? get status => _status;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = _id;
-    map['name'] = _name;
-    map['email'] = _email;
-    map['phone'] = _phone;
-    map['branch'] = _branch;
-    map['origin'] = _origin;
-    map['status'] = _status;
-    return map;
-  }
-}

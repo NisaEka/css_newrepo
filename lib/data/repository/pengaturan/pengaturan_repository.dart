@@ -1,4 +1,4 @@
-import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
+import 'package:css_mobile/data/model/pengaturan/DataPetugasModel.dart';
 import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_model.dart';

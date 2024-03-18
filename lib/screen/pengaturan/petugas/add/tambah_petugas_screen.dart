@@ -13,6 +13,7 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class TambahPetugasScreen extends StatelessWidget {
@@ -172,31 +173,35 @@ class TambahPetugasScreen extends StatelessWidget {
                                         },
                                       ),
                                       const SizedBox(height: 10),
-                                      MultiSelectDialogField<Origin>(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(),
-                                          borderRadius: BorderRadius.circular(8),
+                                      Obx(
+                                        () => MultiSelectDialogField<Origin>(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          searchable: true,
+                                          buttonIcon: const Icon(Icons.keyboard_arrow_down),
+                                          buttonText: Text(controller.isLoadOrigin ? 'Loading...' : 'Origin'.tr),
+                                          initialValue: controller.selectedOrigin,
+                                          items: controller.originList
+                                              .map((e) => MultiSelectItem(
+                                                    e,
+                                                    '${e.originCode}-${e.originName}',
+                                                  ))
+                                              .toList(),
+                                          listType: MultiSelectListType.CHIP,
+                                          backgroundColor: whiteColor,
+                                          onConfirm: (values) {
+                                            // controller.selectedOrigin = values;
+                                            controller.selectedOrigin.addAll(values);
+                                            controller.update();
+                                          },
+                                          onSelectionChanged: (values) {
+                                            // controller.selectedOrigin = values;
+                                            controller.selectedOrigin.addAll(values);
+                                            controller.update();
+                                          },
                                         ),
-                                        searchable: true,
-                                        buttonIcon: const Icon(Icons.keyboard_arrow_down),
-                                        buttonText: Text(controller.isLoadOrigin ? 'Loading...' : 'Origin'.tr),
-                                        initialValue: controller.selectedOrigin,
-                                        items: controller.originList
-                                            .map((e) => MultiSelectItem(
-                                                  e,
-                                                  '${e.originCode}-${e.originName}',
-                                                ))
-                                            .toList(),
-                                        listType: MultiSelectListType.CHIP,
-                                        backgroundColor: whiteColor,
-                                        onConfirm: (values) {
-                                          controller.selectedOrigin = values;
-                                          controller.update();
-                                        },
-                                        onSelectionChanged: (values) {
-                                          controller.selectedOrigin = values;
-                                          controller.update();
-                                        },
                                       ),
                                       // Column(
                                       //   children: controller.selectedOrigin.toSet().toList().map((e) => Text("${e.originCode.toString()}-${e.originName}")).toList(),
@@ -317,7 +322,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                             controller.selectedBranchList = [];
                                             controller.selectedBranchList = [];
                                             controller.selectedAccountList = [];
-                                            controller.selectedOrigin = [];
+                                            controller.selectedOrigin.clear();
                                             controller.update();
                                           }
 

@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/data/model/pengaturan/get_petugas_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/add/tambah_petugas_screen.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -74,7 +74,7 @@ class PengaturanPetugasScreen extends StatelessWidget {
                             onTap: () => Get.to(const TambahPetugasScreen(), arguments: {
                               'isEdit': true,
                               'data': item,
-                            }),
+                            })?.then((value) => controller.pagingController.refresh()),
                             onDelete: (context) => showDialog(
                               context: context,
                               builder: (c) => DeleteAlertDialog(
