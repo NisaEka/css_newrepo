@@ -219,26 +219,26 @@ class DashboardController extends BaseController {
 
     isLoading = false;
     update();
-    if (allow.buatPesanan != "Y") {
+    if (isLogin && allow.buatPesanan != "Y") {
       menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (allow.riwayatPesanan != "Y") {
+    if (isLogin && allow.riwayatPesanan != "Y") {
       menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
       menuItems.removeWhere((e) => e.title == "Draft Transaksi");
     }
-    if (allow.lacakPesanan != "Y") {
+    if (isLogin && allow.lacakPesanan != "Y") {
       menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
     }
-    if (allow.uangCod != "Y") {
+    if (isLogin && allow.uangCod != "Y") {
       menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (allow.monitoringAgg != "Y") {
+    if (isLogin && allow.monitoringAgg != "Y") {
       menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (allow.monitoringAggMinus != "Y") {
+    if (isLogin && allow.monitoringAggMinus != "Y") {
       menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
     }
-    if (allow.cekOngkir != "Y") {
+    if (isLogin && allow.cekOngkir != "Y") {
       menuItems.removeWhere((e) => e.title == "Cek Ongkir");
     }
   }

@@ -9,6 +9,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 class AltProfileController extends BaseController {
   bool isLogin = false;
+  bool isEdit = false;
   BasicProfilModel? basicProfil;
   String? version;
   AllowedMenu allow = AllowedMenu();

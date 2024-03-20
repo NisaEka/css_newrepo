@@ -8,6 +8,7 @@ class LanguageID {
       "bank_info": "Data ini dipergunakan dalam proses transfer uang COD kamu.",
       "access_denied": "Anda harus mempunyai akun CSS untuk menggunakan fitur ini",
       "Bad Request": "Terjadi kesalahan, silahkan coba lagi nanti",
+      "forgot_password":"Masukan email anda dan kami akan mengirimkan pin untuk reset password anda"
     };
   }
 }

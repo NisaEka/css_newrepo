@@ -3,11 +3,15 @@ import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
+import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
 class ForgotPasswordOTPController extends BaseController {
+  String email = Get.arguments['email'];
+  bool isLoading = false;
   final formKey = GlobalKey<FormState>();
   final otpPin = TextEditingController();
   final focusNode = FocusNode();
@@ -83,5 +87,72 @@ class ForgotPasswordOTPController extends BaseController {
         update();
       }
     });
+  }
+
+  String getMail() {
+    var nameuser = email.split("@");
+    var emailcaracter = email.replaceRange(2, nameuser[0].length, "*" * (nameuser[0].length - 2));
+    return emailcaracter;
+  }
+
+  Future<void> pinConfirmation() async {
+    isLoading = true;
+    try {
+      await auth.postPasswordPinConfirm(InputPinconfirmModel(email: email, pin: otpPin.text)).then((value) {
+        if (value.code == 201) {
+          Get.to(
+            const NewPasswordScreen(),
+            arguments: {
+              'token': value.payload?.token ?? '',
+            },
+          );
+        } else {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.warning,
+                color: whiteColor,
+              ),
+              message: 'PIN tidak sesuai'.tr,
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: errorColor,
+            ),
+          );
+        }
+      });
+    } catch (e) {
+      e.printError();
+    }
+
+    isLoading = false;
+    update();
+  }
+
+  Future<void> resendPin() async {
+    isLoading = true;
+    try {
+      await auth.postEmailForgotPassword(email).then((value) {
+        if (value.code == 201) {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.info,
+                color: whiteColor,
+              ),
+              message: 'Silahkan cek email anda'.tr,
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: successColor,
+            ),
+          );
+        }
+      });
+    } catch (e) {
+      e.printError();
+    }
+
+    isLoading = false;
+    update();
   }
 }

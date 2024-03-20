@@ -76,7 +76,6 @@ class SignUpOTPController extends BaseController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
   }
 

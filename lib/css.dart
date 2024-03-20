@@ -9,6 +9,7 @@ import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
+import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -128,6 +129,7 @@ class App extends StatelessWidget {
         GetPage(name: "/pembayaranAggregasi", page: () => const PembayaranAggergasiScreen()),
         GetPage(name: "/aggregasiMinus", page: () => const AggregasiMinusScreen()),
         GetPage(name: "/uangCODKamu", page: () => const UangCODScreen()),
+        GetPage(name: "/profileGeneral", page: () => const DataUmumScreen()),
       ],
       // home: const LoginScreen(),
       home: const DashboardScreen(),

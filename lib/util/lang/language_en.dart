@@ -258,6 +258,11 @@ class LanguageEN {
       "Aktif": "Active",
       "Tidak Aktif": "Non Active",
       "Profilku": "My Profile",
+      "Edit Profil": "Edit Profile",
+      "Kota/Kecamatan/Kelurahan/Kode Pos": "City/District/Sub District/ZipCode",
+      "Berikutnya": "Next",
+      "Batal": "Cancel",
+      "forgot_password": "Enter your email and we will send you a pin to reset your password",
     };
   }
 }

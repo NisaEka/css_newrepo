@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
+import 'package:css_mobile/screen/auth/forgot_password/input_email_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
@@ -86,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                               Container(
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
-                                  onPressed: () => Get.to(const ForgotPasswordOTPScreen()),
+                                  onPressed: () => Get.to(const InputEmailScreen()),
                                   child: Text("Lupa kata sandi?".tr, style: listTitleTextStyle.copyWith(color: infoColor)),
                                 ),
                               ),

@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_controller.dart';
 import 'package:flutter/material.dart';
@@ -42,13 +43,13 @@ class PasswordRecoveryScreen extends StatelessWidget {
                           groupValue: controller.recovery,
                           onChanged: (value) {},
                         ),
-                        Container(
+                        SizedBox(
                           width: Get.width / 1.5,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('Kode OTP sudah dikirimkan ke alamat email berikut :'.tr),
-                              Text('ari*********@live.com', textAlign: TextAlign.left, style: formLabelTextStyle),
+                              Text(controller.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
                             ],
                           ),
                         )
@@ -58,6 +59,12 @@ class PasswordRecoveryScreen extends StatelessWidget {
                   onTap: () {
                     controller.recovery = 1;
                     controller.update();
+                    Get.to(
+                      const ForgotPasswordOTPScreen(),
+                      arguments: {
+                        'email': controller.email,
+                      },
+                    );
                   },
                 ),
                 GestureDetector(
@@ -78,10 +85,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
                           groupValue: controller.recovery,
                           onChanged: (value) {},
                         ),
-                        Container(
-                          width: Get.width / 1.5,
-                          child: Text('Hubungi sales cabang kota anda'.tr)
-                        )
+                        SizedBox(width: Get.width / 1.5, child: Text('Hubungi sales cabang kota anda'.tr))
                       ],
                     ),
                   ),
@@ -90,7 +94,6 @@ class PasswordRecoveryScreen extends StatelessWidget {
                     controller.update();
                   },
                 ),
-
               ],
             ),
           );

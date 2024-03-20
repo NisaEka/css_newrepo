@@ -30,10 +30,10 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text('Kode OTP sudah dikirimkan ke alamat email berikut :'.tr),
-                        Text('ari*********@live.com', textAlign: TextAlign.left, style: formLabelTextStyle),
+                        Text(controller.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
                         Pinput(
                           controller: controller.otpPin,
-                          length: 4,
+                          length: 6,
                           focusNode: controller.focusNode,
                           defaultPinTheme: controller.defaultPinTheme,
                           showCursor: true,
@@ -50,7 +50,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () => controller.remainingSeconds == 0 ? controller.resendPin() : null,
                           child: Text(
                             'Kirim ulang kode'.tr,
                             style: formLabelTextStyle.copyWith(color: controller.remainingSeconds != 0 ? greyColor : blueJNE),
@@ -61,13 +61,15 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                           color: blueJNE,
                           title: 'Selanjutnya'.tr,
                           radius: 50,
-                          onPressed: () => Get.to(const NewPasswordScreen()),
+                          onPressed: () => controller.pinConfirmation(),
                         ),
                         CustomFilledButton(
                           color: Colors.transparent,
                           title: 'Gunakan cara lain'.tr,
                           fontColor: blueJNE,
-                          onPressed: () => Get.to(const PasswordRecoveryScreen()),
+                          onPressed: () => Get.to(const PasswordRecoveryScreen(), arguments: {
+                            'email': controller.email,
+                          }),
                         )
                       ],
                     ),

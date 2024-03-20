@@ -1,5 +1,6 @@
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
+import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
 import 'package:dio/dio.dart';
@@ -20,7 +21,6 @@ class ProfilRepositoryImpl extends ProfilRepository {
       );
       return GetBasicProfilModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
       return e.error;
     }
   }
@@ -35,7 +35,21 @@ class ProfilRepositoryImpl extends ProfilRepository {
       );
       return GetCcrfProfilModel.fromJson(response.data);
     } on DioError catch (e) {
-      //print("response error: ${e.response?.data}");
+      return e.error;
+    }
+  }
+
+  @override
+  Future<PostTransactionModel> putProfileCCRF(GeneralInfo data) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.put(
+        "/profile/ccrf",
+        data: data,
+      );
+      return PostTransactionModel.fromJson(response.data);
+    } on DioError catch (e) {
       return e.error;
     }
   }

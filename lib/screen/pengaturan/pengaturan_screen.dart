@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
 import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_screen.dart';
@@ -74,7 +75,7 @@ class PengaturanScreen extends StatelessWidget {
                   controller.allow.petugas == "Y"
                       ? SettingListItem(
                           title: 'Pengaturan Petugas'.tr,
-                          icon: Icons.label_outline,
+                          icon: Icons.account_circle,
                           onTap: () => controller.isLogin
                               ? Get.to(const PengaturanPetugasScreen())
                               : showDialog(
@@ -83,12 +84,19 @@ class PengaturanScreen extends StatelessWidget {
                                 ),
                         )
                       : const SizedBox(),
+                  controller.isLogin && controller.allow.profil == "Y"
+                      ? SettingListItem(
+                          title: 'Edit Profil'.tr,
+                          icon: Icons.person,
+                          onTap: () => Get.to(const EditProfilScreen()),
+                        )
+                      : const SizedBox(),
                   controller.isLogin && controller.allow.katasandi == "Y"
                       ? SettingListItem(
                           title: 'Ubah Kata Sandi'.tr,
                           icon: Icons.lock_open_outlined,
                         )
-                      : const SizedBox()
+                      : const SizedBox(),
                 ],
               ),
             ),

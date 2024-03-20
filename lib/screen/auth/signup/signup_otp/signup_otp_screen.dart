@@ -60,7 +60,12 @@ class SignUpOTPScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 60),
-                            CustomFilledButton(color: blueJNE, title: 'Selanjutnya'.tr, radius: 50, onPressed: () => controller.pinConfirmation()),
+                            CustomFilledButton(
+                              color: blueJNE,
+                              title: 'Selanjutnya'.tr,
+                              radius: 50,
+                              onPressed: () => controller.pinConfirmation(),
+                            ),
                           ],
                         ),
                       ),

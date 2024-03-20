@@ -1,15 +1,14 @@
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_agent_model.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
+import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 
@@ -90,6 +89,47 @@ class AuthRepositoryImpl extends AuthRepository {
       return GetReferalModel.fromJson(response.data);
     } on DioError catch (e) {
       return GetReferalModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<PostTransactionModel> postEmailForgotPassword(String email) async {
+    try {
+      Response response = await network.dio.post(
+        '/auth/password/forgot',
+        data: {
+          "email": email,
+        },
+      );
+      return PostTransactionModel.fromJson(response.data);
+    } on DioError catch (e) {
+      return PostTransactionModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<PostTransactionModel> postPasswordChage(InputNewPasswordModel data) async {
+    try {
+      Response response = await network.dio.post(
+        '/auth/password/change',
+        data: data,
+      );
+      return PostTransactionModel.fromJson(response.data);
+    } on DioError catch (e) {
+      return PostTransactionModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<LoginModel> postPasswordPinConfirm(InputPinconfirmModel data) async {
+    try {
+      Response response = await network.dio.post(
+        '/auth/password/pin/confirm',
+        data: data,
+      );
+      return LoginModel.fromJson(response.data);
+    } on DioError catch (e) {
+      return LoginModel.fromJson(e.response?.data);
     }
   }
 }

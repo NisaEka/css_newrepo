@@ -36,32 +36,30 @@ class AltProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: ListView(
                 children: [
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        AltUserInfoCard(
-                          name: controller.basicProfil?.name ?? '-',
-                          brand: controller.basicProfil?.brand ?? '-',
-                          mail: controller.basicProfil?.email ?? '-',
-                          type: controller.basicProfil?.userType?.capitalizeFirst ?? '-',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AltUserInfoCard(
+                        name: controller.basicProfil?.name ?? '-',
+                        brand: controller.basicProfil?.brand ?? '-',
+                        mail: controller.basicProfil?.email ?? '-',
+                        type: controller.basicProfil?.userType?.capitalizeFirst ?? '-',
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(color: blueJNE)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Image.asset(
+                              ImageConstant.userPic,
+                              height: 50,
+                            ),
+                          ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          margin: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(color: blueJNE)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Image.asset(
-                                ImageConstant.userPic,
-                                height: 50,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   controller.allow.fasilitas == "Y"
                       ? SettingListItem(
@@ -103,7 +101,7 @@ class AltProfileScreen extends StatelessWidget {
                             )
                           ],
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                 ],
               ),
             ),

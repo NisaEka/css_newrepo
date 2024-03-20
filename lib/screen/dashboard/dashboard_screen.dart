@@ -103,7 +103,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 value: controller.userName ?? '',
                                                 fontColor: whiteColor,
                                               ),
-                                        controller.allow.bonus == "Y"
+                                        controller.isLogin && controller.allow.bonus != "Y"
                                             ? GestureDetector(
                                                 onTap: () => Get.to(const BonusKamuScreen()),
                                                 child: JLCPointWidget(
@@ -115,7 +115,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     )
                                   : const SizedBox(),
                               const SizedBox(height: 18),
-                              controller.allow.lacakPesanan == "Y"
+                              !controller.isLogin || controller.allow.lacakPesanan == "Y"
                                   ? TextField(
                                       controller: controller.nomorResi,
                                       decoration: InputDecoration(

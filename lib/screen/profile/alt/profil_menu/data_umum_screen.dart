@@ -3,6 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/items/data_umum_list_item.dart';
 import 'package:flutter/material.dart';
@@ -96,28 +97,29 @@ class DataUmumScreen extends StatelessWidget {
                       DataUmumListItem(
                         title: controller.ccrfProfil?.generalInfo?.name ?? '-',
                         subtitle: controller.ccrfProfil?.generalInfo?.idCardNumber ?? '-',
-                        icon: Icons.person_pin_rounded,
+                        icon: Icons.person,
                       ),
                       DataUmumListItem(
                         title: controller.ccrfProfil?.generalInfo?.secondaryPhone ?? controller.ccrfProfil?.generalInfo?.phone ?? '-',
                         subtitle: controller.ccrfProfil?.generalInfo?.phone ?? '-',
-                        icon: Icons.contact_phone_rounded,
+                        icon: Icons.phone,
                       ),
                       DataUmumListItem(
                         title: controller.ccrfProfil?.generalInfo?.address ?? '-',
                         subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
-                        icon: Icons.folder_zip_rounded,
+                        icon: Icons.home,
                       ),
                       DataUmumListItem(
                         title: controller.ccrfProfil?.generalInfo?.district ?? '-',
                         subtitle: controller.ccrfProfil?.generalInfo?.subDistrict ?? '-',
-                        icon: Icons.location_city_rounded,
+                        icon: Icons.location_pin,
                       ),
                       DataUmumListItem(
                         title: controller.ccrfProfil?.generalInfo?.city ?? '-',
                         subtitle: controller.ccrfProfil?.generalInfo?.province ?? '-',
-                        icon: Icons.location_city_rounded,
-                      )
+                        icon: Icons.location_on,
+                      ),
+                      // CustomFilledButton(color: blueJNE, title: "Edit Profil".tr,)
                     ],
                   ),
                 ),

@@ -16,6 +16,7 @@ class CustomFilledButton extends StatelessWidget {
   final EdgeInsets? padding;
   final TextStyle? fontStyle;
   final List<BoxShadow>? boxShadow;
+  final bool isTransparent;
 
   const CustomFilledButton(
       {Key? key,
@@ -32,7 +33,8 @@ class CustomFilledButton extends StatelessWidget {
       this.margin,
       this.padding,
       this.fontStyle,
-      this.boxShadow})
+      this.boxShadow,
+      this.isTransparent = false})
       : super(key: key);
 
   @override
@@ -46,9 +48,9 @@ class CustomFilledButton extends StatelessWidget {
         width: width,
         height: height ?? 40,
         decoration: BoxDecoration(
-          color: color,
+          color: isTransparent ? Colors.transparent : color,
           borderRadius: BorderRadius.circular(radius),
-          border: Border.all(color: borderColor!),
+          border: Border.all(color: isTransparent ? color : borderColor!),
           boxShadow: boxShadow,
         ),
         child: Row(
@@ -57,14 +59,14 @@ class CustomFilledButton extends StatelessWidget {
             icon != null
                 ? Icon(
                     icon,
-                    color: fontColor,
+                    color: isTransparent ? color : fontColor,
                     size: fontSize! + 2,
                   )
                 : Container(),
             title != null
                 ? Text(
                     ' $title',
-                    style: fontStyle ?? TextStyle(color: fontColor, fontWeight: FontWeight.w900, fontSize: fontSize),
+                    style: fontStyle ?? TextStyle(color: isTransparent ? color : fontColor, fontWeight: FontWeight.w900, fontSize: fontSize),
                     textAlign: TextAlign.center,
                   )
                 : Container(),
