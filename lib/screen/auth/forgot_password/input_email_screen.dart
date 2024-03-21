@@ -32,12 +32,12 @@ class InputEmailScreen extends StatelessWidget {
                           const SizedBox(height: 50),
                           Center(
                             child: Text(
-                              'Lupa kata sandi?'.tr,
+                              controller.isChange ? 'Ubah Kata Sandi'.tr : 'Lupa kata sandi?'.tr,
                               style: appTitleTextStyle.copyWith(color: Colors.black),
                             ),
                           ),
                           Text(
-                            "forgot_password".tr,
+                            controller.isChange ? "change_password".tr : "forgot_password".tr,
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 25),

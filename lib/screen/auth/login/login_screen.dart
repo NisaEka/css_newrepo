@@ -86,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                               Container(
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
-                                  onPressed: () => Get.to(const InputEmailScreen()),
+                                  onPressed: () => Get.to(const InputEmailScreen(), arguments: {}),
                                   child: Text("Lupa kata sandi?".tr, style: listTitleTextStyle.copyWith(color: infoColor)),
                                 ),
                               ),

@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/screen/auth/forgot_password/input_email_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
 import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_screen.dart';
@@ -95,6 +96,7 @@ class PengaturanScreen extends StatelessWidget {
                       ? SettingListItem(
                           title: 'Ubah Kata Sandi'.tr,
                           icon: Icons.lock_open_outlined,
+                          onTap: () => Get.to(const InputEmailScreen(), arguments: {'isChange': true}),
                         )
                       : const SizedBox(),
                 ],

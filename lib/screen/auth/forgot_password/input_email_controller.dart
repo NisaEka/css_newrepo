@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InputEmailController extends BaseController {
+  bool isChange = Get.arguments['isChange'];
   final email = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
