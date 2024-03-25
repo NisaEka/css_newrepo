@@ -13,7 +13,6 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class TambahPetugasScreen extends StatelessWidget {

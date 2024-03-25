@@ -10,6 +10,7 @@ class LanguageID {
       "Bad Request": "Terjadi kesalahan, silahkan coba lagi nanti",
       "forgot_password": "Masukan email anda dan kami akan mengirimkan pin untuk reset password anda",
       "change_password": "Masukan email anda dan kami akan mengirimkan pin untuk mengubah password anda",
+      "login_failed": "email atau password anda salah"
     };
   }
 }

@@ -49,6 +49,15 @@ class StorageCore {
   }
 
   void deleteToken() async {
-    await storage.delete(key: 'token');
+    await storage.delete(key: token);
+    await storage.delete(key: allowedMenu);
+    await storage.delete(key: shipper);
+    await storage.delete(key: accounts);
+    await storage.delete(key: draftTransaction);
+    await storage.delete(key: dropshipper);
+    await storage.delete(key: receiver);
+    await storage.delete(key: userProfil);
+    await storage.delete(key: transactionLabel);
+    await storage.delete(key: shippingCost);
   }
 }

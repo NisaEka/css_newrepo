@@ -73,7 +73,7 @@ class BottomBar extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
-          child: allowedMenu.buatPesanan == "Y"
+          child: allowedMenu.buatPesanan == "Y" || !isLogin
               ? FloatingActionButton(
                   shape: const CircleBorder(),
                   backgroundColor: isLogin ? redJNE : errorLightColor2,
