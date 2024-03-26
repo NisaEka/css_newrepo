@@ -14,6 +14,7 @@ class NewPasswordController extends BaseController {
 
   bool isObscurePassword = true;
   bool isObscurePasswordConfirm = true;
+  bool isLoading = false;
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
     color: greyDarkColor1,
@@ -24,8 +25,10 @@ class NewPasswordController extends BaseController {
   );
 
   Future<void> changePassword() async {
+    isLoading = true;
+    update();
     try {
-      await auth.postPasswordChage(InputNewPasswordModel(password: newPW.text, token: token)).then((value) => value.code == 201
+      await auth.postPasswordChage(InputNewPasswordModel(password: newPW.text, token: token)).then((value) => value.code == 200
           ? Get.to(
               SuccessScreen(
                 message: "Password berhasil diperbaharui".tr,
@@ -48,5 +51,8 @@ class NewPasswordController extends BaseController {
     } catch (e) {
       e.printError();
     }
+
+    isLoading = false;
+    update();
   }
 }

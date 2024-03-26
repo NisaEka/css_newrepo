@@ -102,7 +102,12 @@ class CustomTextFormField extends StatelessWidget {
             validator: validator,
             keyboardType: inputType,
             obscureText: isObscure ?? false,
-            inputFormatters: inputFormatters,
+            inputFormatters: inputFormatters ??
+                [
+                  TextInputFormatter.withFunction((oldValue, newValue) {
+                    return newValue.copyWith(text: newValue.text.toUpperCase());
+                  })
+                ],
             autovalidateMode: AutovalidateMode.onUserInteraction,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16,
@@ -110,6 +115,7 @@ class CustomTextFormField extends StatelessWidget {
                   // fontWeight: FontWeight.w600,
                 ),
             textInputAction: TextInputAction.next,
+            textCapitalization: TextCapitalization.characters,
             decoration: InputDecoration(
                 label: label == null ? Text(hintText ?? '') : const SizedBox(),
                 fillColor: backgroundColor ?? (onTap != null || !readOnly ? whiteColor : neutralColor),

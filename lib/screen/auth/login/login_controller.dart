@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -16,8 +14,8 @@ class LoginController extends BaseController {
   final formKey = GlobalKey<FormState>();
   final emailTextField = TextEditingController();
   final passwordTextField = TextEditingController();
-  final emailFocus = FocusNode();
-  final passFocus = FocusNode();
+  FocusNode? emailFocus = FocusNode();
+  FocusNode? passFocus = FocusNode();
   final emailFieldKey = GlobalKey<FormFieldState>();
   final passFieldKey = GlobalKey<FormFieldState>();
 
@@ -31,18 +29,20 @@ class LoginController extends BaseController {
     super.onClose();
     emailTextField.dispose();
     passwordTextField.dispose();
-    emailFocus.dispose();
-    passFocus.dispose();
+    emailFocus?.dispose();
+    passFocus?.dispose();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    emailTextField.dispose();
-    passwordTextField.dispose();
-    emailFocus.dispose();
-    passFocus.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   emailTextField.dispose();
+  //   passwordTextField.dispose();
+  //   emailFocus?.dispose();
+  //   passFocus?.dispose();
+  //   emailFocus = null;
+  //   passFocus = null;
+  // }
 
   // Future<bool> onWillPop() {
   //   DateTime now = DateTime.now();
@@ -125,7 +125,6 @@ class LoginController extends BaseController {
           backgroundColor: Colors.red,
         ),
       );
-
     }
     isLoading = false;
     update();

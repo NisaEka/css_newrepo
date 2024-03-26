@@ -12,6 +12,7 @@ import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/auth/signup/signup_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -81,6 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 prefixIcon: const Icon(Icons.person),
                                 hintText: 'Nama Lengkap'.tr,
                                 isRequired: true,
+
                               ),
                               CustomTextFormField(
                                 controller: controller.namaBrand,
@@ -93,6 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 prefixIcon: const Icon(Icons.phone),
                                 hintText: 'No Handphone'.tr,
                                 isRequired: true,
+                                inputType: TextInputType.number,
                               ),
                               CustomTextFormField(
                                 controller: controller.email,

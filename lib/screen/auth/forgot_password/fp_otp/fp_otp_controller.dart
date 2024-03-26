@@ -21,7 +21,7 @@ class ForgotPasswordOTPController extends BaseController {
     textStyle: titleTextStyle.copyWith(color: redJNE),
     decoration: const BoxDecoration(
       border: Border(
-        bottom: BorderSide(width: 1.5, color: redJNE),
+        bottom: BorderSide(width: 1.5, color: greyColor),
       ),
     ),
   );
@@ -33,7 +33,7 @@ class ForgotPasswordOTPController extends BaseController {
         width: 56,
         height: 3,
         decoration: BoxDecoration(
-          color: blueJNE,
+          // color: blueJNE,
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -47,7 +47,7 @@ class ForgotPasswordOTPController extends BaseController {
         width: 56,
         height: 3,
         decoration: BoxDecoration(
-          color: blueJNE,
+          // color: blueJNE,
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -99,7 +99,7 @@ class ForgotPasswordOTPController extends BaseController {
     isLoading = true;
     try {
       await auth.postPasswordPinConfirm(InputPinconfirmModel(email: email, pin: otpPin.text)).then((value) {
-        if (value.code == 201) {
+        if (value.code == 200) {
           Get.to(
             const NewPasswordScreen(),
             arguments: {

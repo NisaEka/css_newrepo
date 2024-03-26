@@ -45,14 +45,14 @@ class LoginScreen extends StatelessWidget {
                               )),
                               const SizedBox(height: 25),
                               CustomTextFormField(
-                                controller: controller.emailTextField,
-                                hintText: "Alamat email".tr,
-                                prefixIcon: const Icon(Icons.person),
-                                isRequired: true,
-                                focusNode: controller.emailFocus,
-                                onSubmit: (_) {},
-                                validator: ValidationBuilder().email().minLength(10).build(),
-                              ),
+                                  controller: controller.emailTextField,
+                                  hintText: "Alamat email".tr,
+                                  prefixIcon: const Icon(Icons.person),
+                                  isRequired: true,
+                                  // focusNode: controller.emailFocus,
+                                  onSubmit: (_) {},
+                                  validator: ValidationBuilder().email().minLength(10).build(),
+                                  inputFormatters: const []),
                               CustomTextFormField(
                                 controller: controller.passwordTextField,
                                 hintText: "Kata Sandi".tr,
@@ -63,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                                 validator: ValidationBuilder().password().build(),
                                 isObscure: controller.isObscurePasswordLogin,
                                 multiLine: false,
-                                focusNode: controller.passFocus,
+                                // focusNode: controller.passFocus,
                                 suffixIcon: IconButton(
                                   icon: controller.showIcon,
                                   onPressed: () {
@@ -86,7 +86,12 @@ class LoginScreen extends StatelessWidget {
                               Container(
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
-                                  onPressed: () => Get.to(const InputEmailScreen(), arguments: {}),
+                                  onPressed: () {
+                                    // Get.delete<LoginController>();
+                                    controller.emailTextField.clear();
+                                    controller.passwordTextField.clear();
+                                    Get.to(const InputEmailScreen(), arguments: {'isChange': false});
+                                  },
                                   child: Text("Lupa kata sandi?".tr, style: listTitleTextStyle.copyWith(color: infoColor)),
                                 ),
                               ),
@@ -110,7 +115,7 @@ class LoginScreen extends StatelessWidget {
                               // ),
                               Container(
                                 alignment: Alignment.center,
-                                margin: const EdgeInsets.only(top: 60),
+                                // margin: const EdgeInsets.only(top: 40),
                                 child: Text("Belum punya akun?".tr, style: listTitleTextStyle),
                               ),
                               CustomFilledButton(
@@ -119,7 +124,12 @@ class LoginScreen extends StatelessWidget {
                                 borderColor: blueJNE,
                                 fontColor: blueJNE,
                                 title: "Daftar".tr,
-                                onPressed: () => Get.to(const SignUpScreen())?.then((_) => controller.formKey.currentState?.reset()),
+                                onPressed: () {
+                                  // Get.delete<LoginController>();
+                                  controller.emailTextField.clear();
+                                  controller.passwordTextField.clear();
+                                  Get.to(const SignUpScreen())?.then((_) => controller.formKey.currentState?.reset());
+                                },
                               ),
                               const SizedBox(height: 10),
                             ],

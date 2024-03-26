@@ -29,8 +29,8 @@ class _VersionAppState extends State<VersionApp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 50),
-      height: 110,
+      margin: const EdgeInsets.only(top: 50),
+      height: 70,
       color: Colors.transparent,
       child: Column(
         children: [

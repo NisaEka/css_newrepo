@@ -103,7 +103,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 value: controller.userName ?? '',
                                                 fontColor: whiteColor,
                                               ),
-                                        controller.isLogin && controller.allow.bonus != "Y"
+                                        controller.isLogin || controller.allow.bonus != "Y"
                                             ? GestureDetector(
                                                 onTap: () => Get.to(const BonusKamuScreen()),
                                                 child: JLCPointWidget(

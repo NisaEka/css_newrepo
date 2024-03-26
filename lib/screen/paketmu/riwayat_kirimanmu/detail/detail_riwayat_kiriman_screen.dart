@@ -186,6 +186,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                   Text(
                                     '${controller.transactionModel?.account?.accountNumber}/${controller.transactionModel?.account?.accountName}/${controller.transactionModel?.account?.accountType}',
                                     style: itemTextStyle,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
                               )

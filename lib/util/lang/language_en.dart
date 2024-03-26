@@ -265,6 +265,8 @@ class LanguageEN {
       "forgot_password": "Enter your email and we will send you a pin to reset your password",
       "change_password": "Enter your email and we will send you a pin to change your password",
       "login_failed": "The email and password you entered don't match",
+      "User Not Found": "The email you entered is not registered",
+      "Password berhasil diperbaharui": "Your password is updated",
     };
   }
 }

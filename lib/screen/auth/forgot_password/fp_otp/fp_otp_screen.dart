@@ -3,7 +3,6 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_controller.dart';
-import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_screen.dart';
 import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +18,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
         init: ForgotPasswordOTPController(),
         builder: (controller) {
           return Scaffold(
-            body: Column(
+            body: ListView(
               children: [
                 const LogoHeader(),
                 Form(

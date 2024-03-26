@@ -74,11 +74,6 @@ class SignUpOTPController extends BaseController {
     super.onClose();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   String getMail() {
     var nameuser = email.split("@");
     var emailcaracter = email.replaceRange(2, nameuser[0].length, "*" * (nameuser[0].length - 2));
@@ -89,13 +84,13 @@ class SignUpOTPController extends BaseController {
     isLoading = true;
     try {
       await auth.postRegistPinConfirm(InputPinconfirmModel(email: email, pin: otpPin.text)).then((value) {
-        if (value.code == 201) {
+        if (value.code == 200) {
           Get.to(SuccessScreen(
             message: "Selamat, kamu sudah berhasil mendaftar".tr,
             buttonTitle: "Masuk",
             nextAction: () => Get.offAll(const LoginScreen()),
           ));
-        } else{
+        } else {
           Get.showSnackbar(
             GetSnackBar(
               icon: const Icon(
@@ -120,9 +115,10 @@ class SignUpOTPController extends BaseController {
 
   Future<void> resendPin() async {
     isLoading = true;
+    otpPin.clear();
     try {
       await auth.postRegistPinResend(InputPinconfirmModel(email: email)).then((value) {
-        if (value.code == 201) {
+        if (value.code == 200) {
           Get.showSnackbar(
             GetSnackBar(
               icon: const Icon(

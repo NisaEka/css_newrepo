@@ -9,29 +9,44 @@ class InputEmailController extends BaseController {
   bool isChange = Get.arguments['isChange'];
   final email = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   Future<void> sendEmail() async {
+    isLoading = true;
     try {
       await auth.postEmailForgotPassword(email.text).then(
-            (value) => value.code == 201
+            (value) => value.code == 200
                 ? Get.to(
                     const ForgotPasswordOTPScreen(),
                     arguments: {
                       'email': email.text,
                     },
                   )
-                : Get.showSnackbar(
-                    GetSnackBar(
-                      icon: const Icon(
-                        Icons.warning,
-                        color: whiteColor,
+                : value.code == 404
+                    ? Get.showSnackbar(
+                        GetSnackBar(
+                          icon: const Icon(
+                            Icons.warning,
+                            color: whiteColor,
+                          ),
+                          message: 'User Not Found'.tr,
+                          isDismissible: true,
+                          duration: const Duration(seconds: 3),
+                          backgroundColor: errorColor,
+                        ),
+                      )
+                    : Get.showSnackbar(
+                        GetSnackBar(
+                          icon: const Icon(
+                            Icons.warning,
+                            color: whiteColor,
+                          ),
+                          message: 'Bad Request'.tr,
+                          isDismissible: true,
+                          duration: const Duration(seconds: 3),
+                          backgroundColor: errorColor,
+                        ),
                       ),
-                      message: 'Bad Request'.tr,
-                      isDismissible: true,
-                      duration: const Duration(seconds: 3),
-                      backgroundColor: errorColor,
-                    ),
-                  ),
           );
     } catch (e) {
       e.printError();
