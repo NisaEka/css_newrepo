@@ -75,7 +75,7 @@ class ListPenerimaScreen extends StatelessWidget {
                                         result: controller.selectedReceiver,
                                       );
                                     },
-                                    onDelete: () => showDialog(
+                                    onDelete: (value) => showDialog(
                                       context: context,
                                       builder: (context) => DeleteAlertDialog(
                                         onDelete: () {

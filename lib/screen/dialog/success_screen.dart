@@ -35,56 +35,53 @@ class SuccessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: 50),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const LogoHeader(),
-              icon ?? Lottie.asset(ImageConstant.successLottie),
-              Text(
-                message.tr,
-                style: appTitleTextStyle.copyWith(color: fontColor ?? greyDarkColor1),
-                textAlign: TextAlign.center,
-              ),
-              Column(
-                children: [
-                  secondAction != null
-                      ? CustomFilledButton(
-                          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          color: whiteColor,
-                          fontColor: blueJNE,
-                          borderColor: blueJNE,
-                          title: secondButtonTitle,
-                          radius: 10,
-                          onPressed: secondAction,
-                        )
-                      : const SizedBox(),
-                  thirdAction != null
-                      ? CustomFilledButton(
-                          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          color: blueJNE,
-                          radius: 10,
-                          title: thirdButtonTitle,
-                          onPressed: thirdAction,
-                        )
-                      : const SizedBox(),
-                  buttonTitle != null
-                      ? CustomFilledButton(
-                          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          color: Colors.white,
-                          borderColor: blueJNE,
-                          fontColor: blueJNE,
-                          radius: 10,
-                          title: buttonTitle?.tr,
-                          onPressed: nextAction,
-                        )
-                      : const SizedBox(),
-                ],
-              ),
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const LogoHeader(),
+            icon ?? Lottie.asset(ImageConstant.successLottie),
+            Text(
+              message.tr,
+              style: appTitleTextStyle.copyWith(color: fontColor ?? greyDarkColor1),
+              textAlign: TextAlign.center,
+            ),
+            Column(
+              children: [
+                secondAction != null
+                    ? CustomFilledButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        color: whiteColor,
+                        fontColor: blueJNE,
+                        borderColor: blueJNE,
+                        title: secondButtonTitle,
+                        radius: 10,
+                        onPressed: secondAction,
+                      )
+                    : const SizedBox(),
+                thirdAction != null
+                    ? CustomFilledButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        color: blueJNE,
+                        radius: 10,
+                        title: thirdButtonTitle,
+                        onPressed: thirdAction,
+                      )
+                    : const SizedBox(),
+                buttonTitle != null
+                    ? CustomFilledButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        color: Colors.white,
+                        borderColor: blueJNE,
+                        fontColor: blueJNE,
+                        radius: 10,
+                        title: buttonTitle?.tr,
+                        onPressed: nextAction,
+                      )
+                    : const SizedBox(),
+              ],
+            ),
+          ],
         ),
       ),
     );

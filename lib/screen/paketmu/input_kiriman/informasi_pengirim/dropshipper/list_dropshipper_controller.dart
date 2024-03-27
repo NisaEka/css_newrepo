@@ -3,14 +3,20 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
+import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListDropshipperController extends BaseController {
   Account account = Get.arguments['account'];
 
+  final search = TextEditingController();
   bool isLoading = false;
   bool isOnline = false;
   List<DropshipperModel> dropshipperList = [];
+  List<DropshipperModel> searchResultList = [];
 
   DropshipperModel? selectedDropshipper;
 
@@ -38,6 +44,7 @@ class ListDropshipperController extends BaseController {
 
     try {
       await transaction.getDropshipper().then((value) => dropshipperList.addAll(value.payload ?? []));
+      update();
     } catch (e) {
       e.printError();
       var dropshipper = GetDropshipperModel.fromJson(await storage.readData(StorageCore.dropshipper));
@@ -45,6 +52,25 @@ class ListDropshipperController extends BaseController {
     }
 
     isLoading = false;
+    update();
+  }
+
+  void searchDropshipper(String text) {
+    searchResultList = [];
+    if (text.isEmpty) {
+      searchResultList = [];
+      update();
+    } else {
+      dropshipperList.forEach((dropshipper) {
+        if (dropshipper.name?.contains(text) ?? false) {
+          searchResultList.add(dropshipper);
+          update();
+        }
+      });
+      update();
+    }
+
+    print('droppp : ${searchResultList.length}');
     update();
   }
 
@@ -58,5 +84,34 @@ class ListDropshipperController extends BaseController {
     }
     initData();
   }
-}
 
+  Widget dropshipperItem(DropshipperModel e, int i, BuildContext context) {
+    return ContactRadioListItem(
+      index: i,
+      groupValue: dropshipperList,
+      value: e,
+      name: e.name,
+      phone: e.phone,
+      city: e.city,
+      address: e.address,
+      onChanged: (value) {
+        selectedDropshipper = value as DropshipperModel?;
+        update();
+        Get.back(result: selectedDropshipper);
+      },
+      onDelete: (value) => showDialog(
+        context: context,
+        builder: (context) => DeleteAlertDialog(
+          onDelete: () {
+            delete(e);
+            Get.back();
+          },
+          onBack: () {
+            Get.back();
+            initData();
+          },
+        ),
+      ),
+    );
+  }
+}

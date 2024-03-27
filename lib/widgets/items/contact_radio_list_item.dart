@@ -14,7 +14,7 @@ class ContactRadioListItem extends StatelessWidget {
   final String? city;
   final String? address;
   final int index;
-  final VoidCallback? onDelete;
+  final void Function(BuildContext)? onDelete;
 
   const ContactRadioListItem({
     super.key,
@@ -35,12 +35,12 @@ class ContactRadioListItem extends StatelessWidget {
     return Slidable(
       key: ValueKey(index),
       startActionPane: ActionPane(
-        dragDismissible: true,
-        dismissible: DismissiblePane(onDismissed: onDelete ?? () {}),
+        dragDismissible: false,
+        // dismissible: DismissiblePane(onDismissed: onDelete ?? () {}),
         motion: const DrawerMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) => onDelete,
+            onPressed: onDelete,
             // backgroundColor: errorColor,
             foregroundColor: errorColor,
             icon: Icons.delete,

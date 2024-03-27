@@ -48,12 +48,15 @@ class ListDropshipperScreen extends StatelessWidget {
                 children: [
                   // !controller.isOnline ? const OfflineBar() : const SizedBox(),
                   CustomSearchField(
-                    controller: TextEditingController(),
+                    controller: controller.search,
                     hintText: 'Cari Data Dropshipper'.tr,
                     prefixIcon: const Icon(
                       Icons.search,
                       color: whiteColor,
                     ),
+                    onSubmit: (value) {
+                      controller.searchDropshipper(value);
+                    },
                   ),
                   const SizedBox(height: 20),
                   controller.isLoading
@@ -62,35 +65,9 @@ class ListDropshipperScreen extends StatelessWidget {
                         )
                       : Expanded(
                           child: ListView(
-                            children: controller.dropshipperList
-                                .mapIndexed((i, e) => ContactRadioListItem(
-                                      index: i,
-                                      groupValue: controller.dropshipperList,
-                                      value: e,
-                                      name: e.name,
-                                      phone: e.phone,
-                                      city: e.city,
-                                      address: e.address,
-                                      onChanged: (value) {
-                                        controller.selectedDropshipper = value as DropshipperModel?;
-                                        controller.update();
-                                        Get.back(result: controller.selectedDropshipper);
-                                      },
-                                      onDelete: () => showDialog(
-                                        context: context,
-                                        builder: (context) => DeleteAlertDialog(
-                                          onDelete: () {
-                                            controller.delete(e);
-                                            Get.back();
-                                          },
-                                          onBack: () {
-                                            Get.back();
-                                            controller.initData();
-                                          },
-                                        ),
-                                      ),
-                                    ))
-                                .toList(),
+                            children: controller.searchResultList.isNotEmpty
+                                ? controller.searchResultList.mapIndexed((i, e) => controller.dropshipperItem(e, i, context)).toList()
+                                : controller.dropshipperList.mapIndexed((i, e) => controller.dropshipperItem(e, i, context)).toList(),
                           ),
                         )
                 ],

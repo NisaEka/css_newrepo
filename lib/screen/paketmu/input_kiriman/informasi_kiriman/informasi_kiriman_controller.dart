@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
@@ -384,7 +383,7 @@ class InformasiKirimaController extends BaseController {
               secondButtonTitle: "Lihat Draft".tr,
               secondAction: () => Get.offAll(const DraftTransaksiScreen()),
               thirdButtonTitle: "Buat Transaksi Lainnya".tr,
-              thirdAction: () => Get.offAll(const InformasiPengirimScreen()),
+              thirdAction: () => Get.offAll(const InformasiPengirimScreen(), arguments: {}),
             ),
             arguments: {
               'transaction': true,
@@ -530,7 +529,7 @@ class InformasiKirimaController extends BaseController {
               },
             ),
             thirdButtonTitle: "Buat Transaksi Lainnya".tr,
-            thirdAction: () => Get.offAll(const InformasiPengirimScreen()),
+            thirdAction: () => Get.offAll(const InformasiPengirimScreen(), arguments: {}),
           ),
         );
       });

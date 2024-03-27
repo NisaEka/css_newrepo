@@ -72,7 +72,7 @@ class AddPenerimaScreen extends StatelessWidget {
                             onChanged: (value) {
                               controller.selectedDestination = value;
                               controller.update();
-                              // print(jsonEncode(value));
+                              print(controller.selectedDestination?.cityName ?? '');
                             },
                             value: controller.selectedDestination,
                             isRequired: controller.selectedDestination == null ? true : false,
