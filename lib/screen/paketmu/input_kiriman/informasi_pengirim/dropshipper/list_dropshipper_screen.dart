@@ -1,14 +1,13 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/add/add_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:collection/collection.dart';
-import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
-import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ListDropshipperScreen extends StatelessWidget {
@@ -50,12 +49,21 @@ class ListDropshipperScreen extends StatelessWidget {
                   CustomSearchField(
                     controller: controller.search,
                     hintText: 'Cari Data Dropshipper'.tr,
+                    inputFormatters: [
+                      TextInputFormatter.withFunction((oldValue, newValue) {
+                        return newValue.copyWith(text: newValue.text.toUpperCase());
+                      })
+                    ],
                     prefixIcon: const Icon(
                       Icons.search,
                       color: whiteColor,
                     ),
-                    onSubmit: (value) {
+                    onChanged: (value) {
                       controller.searchDropshipper(value);
+                    },
+                    onClear: () {
+                      controller.search.clear();
+                      controller.initData();
                     },
                   ),
                   const SizedBox(height: 20),
@@ -65,9 +73,27 @@ class ListDropshipperScreen extends StatelessWidget {
                         )
                       : Expanded(
                           child: ListView(
-                            children: controller.searchResultList.isNotEmpty
-                                ? controller.searchResultList.mapIndexed((i, e) => controller.dropshipperItem(e, i, context)).toList()
-                                : controller.dropshipperList.mapIndexed((i, e) => controller.dropshipperItem(e, i, context)).toList(),
+                            shrinkWrap: true,
+                            children: controller.search.text.isNotEmpty
+                                ? controller.searchResultList.isNotEmpty
+                                    ? controller.searchResultList
+                                        .mapIndexed(
+                                          (i, e) => controller.dropshipperItem(e, i, context),
+                                        )
+                                        .toList()
+                                    : [
+                                        Center(
+                                            child: DataEmpty(
+                                          text: "Petugas Tidak Ditemukan".tr,
+                                        ))
+                                      ]
+                                : controller.dropshipperList.isNotEmpty
+                                    ? controller.dropshipperList
+                                        .mapIndexed(
+                                          (i, e) => controller.dropshipperItem(e, i, context),
+                                        )
+                                        .toList()
+                                    : [const Center(child: DataEmpty())],
                           ),
                         )
                 ],

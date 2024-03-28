@@ -8,6 +8,7 @@ import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:collection/collection.dart';
 
@@ -43,12 +44,24 @@ class ListPenerimaScreen extends StatelessWidget {
               child: Column(
                 children: [
                   CustomSearchField(
-                    controller: TextEditingController(),
+                    controller: controller.search,
                     hintText: 'Cari Data Penerima'.tr,
                     prefixIcon: const Icon(
                       Icons.search,
                       color: whiteColor,
                     ),
+                    inputFormatters: [
+                      TextInputFormatter.withFunction((oldValue, newValue) {
+                        return newValue.copyWith(text: newValue.text.toUpperCase());
+                      })
+                    ],
+                    onChanged: (value) {
+                      controller.searchReceiver(value);
+                    },
+                    onClear: () {
+                      controller.search.clear();
+                      controller.initData();
+                    },
                   ),
                   const SizedBox(height: 30),
                   controller.isLoading
@@ -57,40 +70,17 @@ class ListPenerimaScreen extends StatelessWidget {
                         )
                       : Expanded(
                           child: ListView(
-                            children: controller.receiverList
-                                .mapIndexed(
-                                  (i, e) => ContactRadioListItem(
-                                    index: i,
-                                    value: e,
-                                    name: e.name,
-                                    phone: e.phone,
-                                    city: e.city,
-                                    address: e.address,
-                                    groupValue: controller.selectedReceiver,
-                                    isSelected: e == controller.selectedReceiver ? true : false,
-                                    onChanged: (value) {
-                                      controller.selectedReceiver = value as ReceiverModel?;
-                                      controller.update();
-                                      Get.back(
-                                        result: controller.selectedReceiver,
-                                      );
-                                    },
-                                    onDelete: (value) => showDialog(
-                                      context: context,
-                                      builder: (context) => DeleteAlertDialog(
-                                        onDelete: () {
-                                          controller.delete(e);
-                                          Get.back();
-                                        },
-                                        onBack: () {
-                                          Get.back();
-                                          controller.initData();
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
+                            children: controller.search.text.isNotEmpty
+                                ? controller.searchResultList
+                                    .mapIndexed(
+                                      (i, e) => controller.receiverItem(e, i, context),
+                                    )
+                                    .toList()
+                                : controller.receiverList
+                                    .mapIndexed(
+                                      (i, e) => controller.receiverItem(e, i, context),
+                                    )
+                                    .toList(),
                           ),
                         )
                 ],

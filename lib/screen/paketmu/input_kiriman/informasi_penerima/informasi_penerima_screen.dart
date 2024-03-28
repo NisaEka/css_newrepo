@@ -43,28 +43,28 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                 controller.isOnline
                     ? const SizedBox()
                     : Tooltip(
-                  key: controller.offlineTooltipKey,
-                  triggerMode: TooltipTriggerMode.tap,
-                  showDuration: const Duration(seconds: 3),
-                  decoration: ShapeDecoration(
-                    color: greyColor,
-                    shape: ToolTipCustomShape(usePadding: false),
-                  ),
-                  // textStyle: listTitleTextStyle.copyWith(color: whiteColor),
-                  message: 'Offline Mode',
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 20),
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: successColor,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: const Icon(
-                      Icons.cloud_off,
-                      color: whiteColor,
-                    ),
-                  ),
-                )
+                        key: controller.offlineTooltipKey,
+                        triggerMode: TooltipTriggerMode.tap,
+                        showDuration: const Duration(seconds: 3),
+                        decoration: ShapeDecoration(
+                          color: greyColor,
+                          shape: ToolTipCustomShape(usePadding: false),
+                        ),
+                        // textStyle: listTitleTextStyle.copyWith(color: whiteColor),
+                        message: 'Offline Mode',
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 20),
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: successColor,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: const Icon(
+                            Icons.cloud_off,
+                            color: whiteColor,
+                          ),
+                        ),
+                      )
               ],
             ),
             body: SingleChildScrollView(
@@ -112,7 +112,6 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   hintText: "Nama Penerima".tr,
                                   prefixIcon: const Icon(Icons.person),
                                   isRequired: true,
-
                                 ),
                                 CustomTextFormField(
                                   controller: controller.nomorTelpon,
@@ -120,7 +119,6 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   inputType: TextInputType.number,
                                   prefixIcon: const Icon(Icons.phone),
                                   isRequired: true,
-
                                 ),
                                 CustomSearchDropdownField<Destination>(
                                   asyncItems: (String filter) => controller.getDestinationList(filter),
@@ -157,7 +155,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   multiLine: true,
                                   isRequired: true,
                                 ),
-                                controller.isOnline
+                                controller.isOnline && controller.selectedReceiver == null
                                     ? CustomFilledButton(
                                         color: whiteColor,
                                         title: 'Simpan Data Penerima'.tr,

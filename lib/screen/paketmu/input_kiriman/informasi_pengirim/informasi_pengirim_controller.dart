@@ -25,7 +25,7 @@ class InformasiPengirimController extends BaseController {
 
   final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
 
-  bool dropshipper = false;
+  bool isDropshipper = false;
   bool codOgkir = false;
   bool isLoading = false;
   bool isLoadOrigin = false;
@@ -40,6 +40,7 @@ class InformasiPengirimController extends BaseController {
   GetOriginModel? originModel;
   Origin? selectedOrigin;
   ShipperModel? senderOrigin;
+  DropshipperModel? dropshipper;
 
   @override
   void onInit() {
@@ -58,24 +59,28 @@ class InformasiPengirimController extends BaseController {
     }));
   }
 
-  FutureOr<DropshipperModel?> getSelectedDropshipper(DropshipperModel dropshipper) async {
-    namaPengirim.text = dropshipper.name ?? '';
-    nomorTelpon.text = dropshipper.phone ?? '';
-    kotaPengirim.text = dropshipper.city ?? '';
-    alamatLengkap.text = dropshipper.address ?? '';
-    kodePos.text = dropshipper.zipCode ?? '';
-    getOriginList(dropshipper.city ?? '', selectedAccount?.accountId ?? '').then((value) {
+  FutureOr<void> getSelectedDropshipper() async {
+    namaPengirim.text = dropshipper?.name ?? '';
+    nomorTelpon.text = dropshipper?.phone ?? '';
+    kotaPengirim.text = dropshipper?.city ?? '';
+    alamatLengkap.text = dropshipper?.address ?? '';
+    kodePos.text = dropshipper?.zipCode ?? '';
+    getOriginList(dropshipper?.city ?? '', selectedAccount?.accountId ?? '').then((value) {
       selectedOrigin = value.first;
-
       update();
     });
     update();
 
-    return dropshipper;
+    // return dropshipper;
   }
 
   void formValidate() {
-    isValidate = formKey.currentState?.validate() == true && selectedAccount != null && selectedOrigin != null;
+    if(isOnline){
+      isValidate = formKey.currentState?.validate() == true && selectedAccount != null && selectedOrigin != null;
+    }else{
+      isValidate = formKey.currentState?.validate() == true && selectedAccount != null ;
+    }
+
     update();
   }
 
@@ -184,13 +189,8 @@ class InformasiPengirimController extends BaseController {
       "cod_ongkir": codOgkir,
       "account": selectedAccount,
       "origin": selectedOrigin ?? senderOrigin?.origin,
-      // "origin": Origin(
-      //   // origin code kalo sender bukan dropshipper?
-      //   originCode: selectedOrigin?.originCode ?? senderOrigin?.origin?.originCode,
-      //   originName: selectedOrigin?.originName ?? senderOrigin?.origin?.originName,
-      //   branchCode: selectedOrigin?.branchCode ?? senderOrigin?.origin?.branchCode,
-      // ),
-      "dropship": dropshipper,
+      "dropship": isDropshipper,
+      "dropshipper": dropshipper,
       "shipper": Shipper(
         name: namaPengirim.text.toUpperCase(),
         address: alamatLengkap.text.toUpperCase(),
@@ -204,7 +204,7 @@ class InformasiPengirimController extends BaseController {
         country: "ID",
         contact: senderOrigin?.name?.toUpperCase(),
         phone: senderOrigin?.phone,
-        dropship: dropshipper,
+        dropship: isDropshipper,
       ),
       "data": data,
     });

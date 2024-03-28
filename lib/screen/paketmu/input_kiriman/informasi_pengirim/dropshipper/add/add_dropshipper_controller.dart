@@ -20,11 +20,6 @@ class AddDropshipperController extends BaseController {
   bool isLoadOrigin = false;
   Origin? selectedOrigin;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   Future<List<Origin>> getOriginList(String keyword, String accountID) async {
     originList = [];
     isLoadOrigin = true;
@@ -45,6 +40,7 @@ class AddDropshipperController extends BaseController {
             origin: selectedOrigin?.originCode,
             zipCode: kodePos.text,
             address: alamatPengirim.text,
+            city: selectedOrigin?.originName,
           ))
           .then(
             (value) => Get.showSnackbar(
@@ -56,11 +52,11 @@ class AddDropshipperController extends BaseController {
                 message: value.message,
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
-                backgroundColor: value.code == 200 ? successColor : errorColor,
+                backgroundColor: value.code == 201 ? successColor : errorColor,
               ),
             ),
           )
-          .then((_) => Get.close(2));
+          .then((_) => Get.close(1));
     } catch (e) {
       e.printError();
     }

@@ -1,11 +1,11 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,6 +38,7 @@ class ListDropshipperController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     dropshipperList = [];
+    searchResultList = [];
 
     connection.isOnline().then((value) => isOnline = value);
     update();
@@ -61,23 +62,33 @@ class ListDropshipperController extends BaseController {
       searchResultList = [];
       update();
     } else {
-      dropshipperList.forEach((dropshipper) {
+      for (var dropshipper in dropshipperList) {
         if (dropshipper.name?.contains(text) ?? false) {
           searchResultList.add(dropshipper);
           update();
         }
-      });
+      }
       update();
     }
 
-    print('droppp : ${searchResultList.length}');
     update();
   }
 
   void delete(DropshipperModel data) async {
     try {
       await transaction.deleteDropshipper(data.id ?? '').then(
-            (value) => null,
+            (value) => Get.showSnackbar(
+              GetSnackBar(
+                icon: Icon(
+                  value.code == 200 ? Icons.info : Icons.warning,
+                  color: whiteColor,
+                ),
+                message: value.code == 200 ? 'Data Dihapus'.tr : "Bad Request".tr,
+                isDismissible: true,
+                duration: const Duration(seconds: 3),
+                backgroundColor: value.code == 200 ? successColor : errorColor,
+              ),
+            ),
           );
     } catch (e) {
       e.printError();

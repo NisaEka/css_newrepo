@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomSearchField extends StatelessWidget {
   final String hintText;
@@ -12,6 +13,9 @@ class CustomSearchField extends StatelessWidget {
   final TextEditingController controller;
   final String? validationText;
   final bool validate;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? inputType;
+  final VoidCallback? onClear;
 
   const CustomSearchField({
     super.key,
@@ -24,6 +28,9 @@ class CustomSearchField extends StatelessWidget {
     required this.controller,
     this.validationText,
     this.validate = false,
+    this.inputFormatters,
+    this.inputType,
+    this.onClear,
   });
 
   @override
@@ -32,6 +39,8 @@ class CustomSearchField extends StatelessWidget {
       children: [
         TextField(
           controller: controller,
+          keyboardType: inputType,
+          inputFormatters: inputFormatters,
           decoration: InputDecoration(
             hintText: hintText,
             enabledBorder: OutlineInputBorder(
@@ -84,7 +93,12 @@ class CustomSearchField extends StatelessWidget {
                     ),
                     child: suffixIcon,
                   )
-                : null,
+                : controller.text.isNotEmpty
+                    ? IconButton(
+                        onPressed: onClear,
+                        icon: Icon(Icons.close),
+                      )
+                    : null,
           ),
           onTap: onTap,
           onSubmitted: onSubmit,

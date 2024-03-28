@@ -267,6 +267,9 @@ class LanguageEN {
       "login_failed": "The email and password you entered don't match",
       "User Not Found": "The email you entered is not registered",
       "Password berhasil diperbaharui": "Your password is updated",
+      "Petugas Tidak Ditemukan": "Officer Not Found",
+      "Data Tidak Ditemukan": "Data Not Found",
+      "Data Dihapus": "Data Deleted",
     };
   }
 }

@@ -129,10 +129,10 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                       ),
                               ),
                               CustomSwitch(
-                                value: controller.dropshipper,
+                                value: controller.isDropshipper,
                                 label: 'Kirim sebagai dropshipper'.tr,
                                 onChange: (bool? value) {
-                                  controller.dropshipper = value!;
+                                  controller.isDropshipper = value!;
 
                                   if (value == true) {
                                     controller.namaPengirim.clear();
@@ -168,13 +168,17 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                       },
                                     )
                                   : const SizedBox(),
-                              controller.dropshipper
+                              controller.isDropshipper
                                   ? GestureDetector(
                                       onTap: () => controller.selectedAccount != null
                                           ? Get.to(const ListDropshipperScreen(), arguments: {
                                               'account': controller.selectedAccount,
                                             })?.then(
-                                              (result) => controller.getSelectedDropshipper(result),
+                                              (result) {
+                                                controller.dropshipper = result;
+                                                controller.update();
+                                                controller.getSelectedDropshipper();
+                                              },
                                             )
                                           : Get.showSnackbar(
                                               GetSnackBar(
@@ -206,7 +210,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               CustomTextFormField(
                                 controller: controller.namaPengirim,
                                 hintText: "Nama Pengirim".tr,
-                                readOnly: !controller.dropshipper,
+                                readOnly: !controller.isDropshipper,
                                 isRequired: true,
                                 prefixIcon: const Icon(Icons.person),
                               ),
@@ -214,7 +218,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 controller: controller.nomorTelpon,
                                 hintText: "Nomor Telepon".tr,
                                 inputType: TextInputType.number,
-                                readOnly: !controller.dropshipper,
+                                readOnly: !controller.isDropshipper,
                                 isRequired: true,
                                 prefixIcon: const Icon(Icons.phone),
                               ),
@@ -237,9 +241,9 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                   // print(jsonEncode(value));
                                 },
                                 value: controller.selectedOrigin,
-                                isRequired: true,
+                                isRequired: controller.isOnline,
                                 selectedItem: controller.kotaPengirim.text,
-                                readOnly: controller.selectedAccount == null ? true : !controller.dropshipper,
+                                readOnly: controller.selectedAccount == null ? true : !controller.isDropshipper,
                                 hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
                                 prefixIcon: const Icon(Icons.location_city),
                                 textStyle: controller.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
@@ -247,19 +251,19 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               CustomTextFormField(
                                 controller: controller.kodePos,
                                 hintText: "Kode Pos".tr,
-                                readOnly: !controller.dropshipper,
+                                readOnly: !controller.isDropshipper,
                                 isRequired: true,
                                 prefixIcon: const Icon(Icons.line_style),
                               ),
                               CustomTextFormField(
                                 controller: controller.alamatLengkap,
                                 hintText: "Alamat".tr,
-                                readOnly: !controller.dropshipper,
+                                readOnly: !controller.isDropshipper,
                                 isRequired: true,
                                 multiLine: true,
                                 prefixIcon: const Icon(Icons.location_city),
                               ),
-                              controller.dropshipper && controller.isOnline
+                              controller.isDropshipper && controller.isOnline && controller.dropshipper == null
                                   ? CustomFilledButton(
                                       color: whiteColor,
                                       borderColor: controller.isValidate ? blueJNE : greyColor,
