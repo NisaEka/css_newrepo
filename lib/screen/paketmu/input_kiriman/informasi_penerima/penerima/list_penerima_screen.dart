@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/add/add_penerima_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
@@ -70,17 +71,27 @@ class ListPenerimaScreen extends StatelessWidget {
                         )
                       : Expanded(
                           child: ListView(
+                            shrinkWrap: true,
                             children: controller.search.text.isNotEmpty
-                                ? controller.searchResultList
-                                    .mapIndexed(
-                                      (i, e) => controller.receiverItem(e, i, context),
-                                    )
-                                    .toList()
-                                : controller.receiverList
-                                    .mapIndexed(
-                                      (i, e) => controller.receiverItem(e, i, context),
-                                    )
-                                    .toList(),
+                                ? controller.searchResultList.isNotEmpty
+                                    ? controller.searchResultList
+                                        .mapIndexed(
+                                          (i, e) => controller.receiverItem(e, i, context),
+                                        )
+                                        .toList()
+                                    : [
+                                        Center(
+                                            child: DataEmpty(
+                                          text: "Penerima Tidak Ditemukan".tr,
+                                        ))
+                                      ]
+                                : controller.receiverList.isNotEmpty
+                                    ? controller.receiverList
+                                        .mapIndexed(
+                                          (i, e) => controller.receiverItem(e, i, context),
+                                        )
+                                        .toList()
+                                    : [const Center(child: DataEmpty())],
                           ),
                         )
                 ],

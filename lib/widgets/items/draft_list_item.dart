@@ -147,7 +147,7 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                             ),
                             CustomFilledButton(
                               color: blueJNE,
-                              title: 'Validate'.tr,
+                              title: 'Validasi'.tr,
                               onPressed: widget.onValidate,
                             )
                           ],

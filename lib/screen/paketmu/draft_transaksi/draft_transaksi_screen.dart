@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
@@ -13,6 +12,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/items/draft_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -59,38 +59,41 @@ class DraftTransaksiScreen extends StatelessWidget {
                       //   },
                       // ),
                       CustomSearchField(
-                        controller: TextEditingController(),
+                        controller: controller.search,
                         hintText: 'Cari transaksimu'.tr,
                         prefixIcon: SvgPicture.asset(IconsConstant.search),
+                        inputFormatters: [
+                          TextInputFormatter.withFunction((oldValue, newValue) {
+                            return newValue.copyWith(text: newValue.text.toUpperCase());
+                          })
+                        ],
+                        onChanged: (value) {
+                          controller.searchDraft(value);
+                        },
+                        onClear: () {
+                          controller.search.clear();
+                          controller.initData();
+                        },
                       ),
                       Expanded(
-                        child: controller.draftList.isNotEmpty
-                            ? ListView(
-                                children: controller.draftList
-                                    .mapIndexed(
-                                      (i, e) => DraftTransactionListItem(
-                                        data: e,
-                                        index: i,
-                                        onDelete: () => showDialog(
-                                          context: context,
-                                          builder: (context) => DeleteAlertDialog(
-                                            onDelete: () {
-                                              controller.delete(i);
-                                              controller.initData();
-                                              Get.back();
-                                            },
-                                            onBack: () {
-                                              Get.back();
-                                              controller.initData();
-                                            },
-                                          ),
-                                        ),
-                                        onValidate: () => controller.validate(i),
-                                      ),
-                                    )
-                                    .toList(),
-                              )
-                            : DataEmpty(text: "Draft Kosong".tr),
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: controller.search.text.isNotEmpty
+                              ? controller.searchList.isNotEmpty
+                                  ? controller.searchList
+                                      .mapIndexed(
+                                        (i, e) => controller.draftItem(e, i, context),
+                                      )
+                                      .toList()
+                                  : [Center(child: DataEmpty(text: "Draft Kosong".tr))]
+                              : controller.draftList.isNotEmpty
+                                  ? controller.draftList
+                                      .mapIndexed(
+                                        (i, e) => controller.draftItem(e, i, context),
+                                      )
+                                      .toList()
+                                  : [Center(child: DataEmpty(text: "Draft Kosong".tr))],
+                        ),
                       ),
                     ],
                   ),

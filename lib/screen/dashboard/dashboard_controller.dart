@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
@@ -9,7 +8,6 @@ import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/dashboard/menu/other_menu_controller.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,6 +18,7 @@ class DashboardController extends BaseController {
 
   bool isLogin = false;
   bool isLoading = false;
+  bool isOnline = false;
 
   String? marqueeText;
   String? userName;
@@ -108,7 +107,6 @@ class DashboardController extends BaseController {
     var favMenu = await storage.readString(StorageCore.favoriteMenu);
     var stickerLabel = await storage.readString(StorageCore.transactionLabel);
     var shipcost = await storage.readString(StorageCore.shippingCost);
-    print('menu kosong : ${favMenu.isEmpty}');
     update();
     if (favMenu.isEmpty == true) {
       await storage.saveData(
@@ -119,9 +117,7 @@ class DashboardController extends BaseController {
     } else {
       menuItems = [];
       var menu = MenuItemModel.fromJson(jsonDecode(favMenu));
-      print('fav menu kosong : ${menu.items != null} ${favMenu.isEmpty}');
       menuItems.addAll(menu.items ?? []);
-
     }
 
     update();
@@ -161,6 +157,7 @@ class DashboardController extends BaseController {
   }
 
   Future<void> initData() async {
+    connection.isOnline().then((value) => isOnline = value);
     cekFavoritMenu();
     update();
     cekLocalLanguage();
@@ -209,7 +206,7 @@ class DashboardController extends BaseController {
             value.payload,
           ));
 
-      allow = await AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+      allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
 
       update();
     } catch (e) {
@@ -219,26 +216,26 @@ class DashboardController extends BaseController {
 
     isLoading = false;
     update();
-    if (isLogin && allow.buatPesanan != "Y") {
+    if (isLogin && allow.buatPesanan != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (isLogin && allow.riwayatPesanan != "Y") {
+    if (isLogin && allow.riwayatPesanan != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
       menuItems.removeWhere((e) => e.title == "Draft Transaksi");
     }
-    if (isLogin && allow.lacakPesanan != "Y") {
+    if (isLogin && allow.lacakPesanan != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
     }
-    if (isLogin && allow.uangCod != "Y") {
+    if (isLogin && allow.uangCod != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (isLogin && allow.monitoringAgg != "Y") {
+    if (isLogin && allow.monitoringAgg != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (isLogin && allow.monitoringAggMinus != "Y") {
+    if (isLogin && allow.monitoringAggMinus != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
     }
-    if (isLogin && allow.cekOngkir != "Y") {
+    if (isLogin && allow.cekOngkir != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Cek Ongkir");
     }
   }

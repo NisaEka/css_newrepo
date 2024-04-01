@@ -86,7 +86,7 @@ class LanguageEN {
       "kembali": "Back",
       "Anda harus login untuk menggunakan fitur ini": "You must be logged in to use this feature",
       "Akses Terbatas": "Access Denied",
-      "Anda yakin menghapus data ini ?": "Are you sure you deleted this data?",
+      "Anda yakin akan menghapus data ini ?": "Are you sure you want to delete this data ?",
       "Data akan dihapus": "Data will be deleted",
       "Tidak": "Decline",
       "Ya": "Yes",
@@ -270,6 +270,8 @@ class LanguageEN {
       "Petugas Tidak Ditemukan": "Officer Not Found",
       "Data Tidak Ditemukan": "Data Not Found",
       "Data Dihapus": "Data Deleted",
+      "Validasi": "Validate",
+      "Harus lebih dari 8 karakter": "Must be more than 8 characters",
     };
   }
 }

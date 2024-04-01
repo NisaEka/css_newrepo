@@ -31,43 +31,10 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   }) : super(key: key);
 
   @override
-  Size get preferredSize => flexibleSpace != null ? const Size.fromHeight(215) : const Size.fromHeight(120);
+  Size get preferredSize => flexibleSpace != null ? const Size.fromHeight(215) : const Size.fromHeight(130);
 
   @override
   Widget build(BuildContext context) {
-    // return AppBar(
-    //   backgroundColor: Colors.transparent,
-    //   toolbarHeight: 100,
-    //   title: title,
-    //   leading: leading ?? const CustomBackButton(),
-    //   actions: action ??
-    //       [
-    //         Transform.flip(
-    //           flipY: true,
-    //           child: SvgPicture.asset(ImageConstant.vector4),
-    //         ),
-    //       ],
-    //   flexibleSpace: Column(
-    //     children: [
-    //       Transform.flip(
-    //         flipY: true,
-    //         child: SvgPicture.asset(ImageConstant.vector4),
-    //       ),
-    //       Container(
-    //         margin: const EdgeInsets.only(top: 100, left: 20),
-    //         width: Get.width,
-    //         decoration: const BoxDecoration(
-    //           color: Colors.transparent,
-    //         ),
-    //         child: screenTittle != null
-    //             ? Text(screenTittle!.tr, style: appTitleTextStyle.copyWith(color: greyDarkColor1))
-    //             : SizedBox(),
-    //       ),
-    //       flexibleSpace ?? const SizedBox(),
-    //
-    //     ],
-    //   ),
-    // );
     return Container(
       color: backgroundColor ?? greyLightColor2,
       child: Column(

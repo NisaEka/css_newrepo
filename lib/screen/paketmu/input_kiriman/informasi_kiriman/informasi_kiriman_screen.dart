@@ -209,9 +209,11 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         inputType: TextInputType.number,
                                         width: Get.width / 2.3,
                                         height: 46,
-                                        validator: (value) {
-                                          ValidationBuilder().min(8).build();
-                                        },
+                                        validator: (value) => value?.isNotEmpty ?? false
+                                            ? value!.length <= 8
+                                                ? "Harus lebih dari 8 karakter".tr
+                                                : null
+                                            : null,
                                       ),
                                     ],
                                   ),
@@ -527,7 +529,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         )
                                       : const SizedBox(),
 
-                                  controller.goods == null && !controller.isOnline
+                                  controller.goods == null && !controller.isOnline || controller.draft != null
                                       ? CustomFilledButton(
                                           color: whiteColor,
                                           borderColor: controller.formValidate ? blueJNE : greyColor,

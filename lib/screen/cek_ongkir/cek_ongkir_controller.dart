@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -111,7 +110,6 @@ class CekOngkirController extends BaseController {
   void hitungAsuransi() {
     isr = 0;
     isr = (0.002 * (estimasiHargaBarang.text == '' ? 0 : estimasiHargaBarang.text.digitOnly().toInt())) + 5000;
-    print('isr $isr');
     update();
   }
 
@@ -214,7 +212,6 @@ class CekOngkirController extends BaseController {
   }
 
   Widget buildPosts(List<Origin> data, String title) {
-    print('title $title');
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {

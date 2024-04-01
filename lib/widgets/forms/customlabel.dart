@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,7 @@ class CustomLabelText extends StatelessWidget {
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final int? valueMaxline;
+  final bool isLoading;
 
   const CustomLabelText({
     super.key,
@@ -33,6 +35,7 @@ class CustomLabelText extends StatelessWidget {
     this.margin,
     this.padding,
     this.valueMaxline,
+    this.isLoading = false,
   });
 
   @override
@@ -49,27 +52,39 @@ class CustomLabelText extends StatelessWidget {
                       ? CrossAxisAlignment.center
                       : CrossAxisAlignment.start,
               children: [
-                Text(
-                  "$title ",
-                  style: titleTextStyle ??
-                      subTitleTextStyle.copyWith(
-                        color: fontColor ?? greyColor,
-                        fontSize: fontSize,
-                      ),
+                Shimmer(
+                  isLoading: isLoading,
+                  child: Container(
+                    color: isLoading ? greyColor : Colors.transparent,
+                    child: Text(
+                      title,
+                      style: titleTextStyle ??
+                          subTitleTextStyle.copyWith(
+                            color: fontColor ?? greyColor,
+                            fontSize: fontSize,
+                          ),
+                    ),
+                  ),
                 ),
-                Text(
-                  value.toUpperCase(),
-                  // "This is a long text This is a long text This is a long text",
-                  // overflow: TextOverflow.ellipsis,
-                  maxLines: valueMaxline ?? 1,
-                  softWrap: true,
-                  textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
-                  style: valueTextStyle ??
-                      listTitleTextStyle.copyWith(
-                        color: fontColor ?? valueColor ?? greyDarkColor1,
-                        fontSize: fontSize,
-                      ),
-                )
+                Shimmer(
+                  isLoading: isLoading,
+                  child: Container(
+                    color: isLoading ? greyColor : Colors.transparent,
+                    child: Text(
+                      value.toUpperCase(),
+                      // "This is a long text This is a long text This is a long text",
+                      // overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
+                      style: valueTextStyle ??
+                          listTitleTextStyle.copyWith(
+                            color: fontColor ?? valueColor ?? greyDarkColor1,
+                            fontSize: fontSize,
+                          ),
+                    ),
+                  ),
+                ),
               ],
             )
           : Column(
@@ -79,27 +94,39 @@ class CustomLabelText extends StatelessWidget {
                       ? CrossAxisAlignment.center
                       : CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: titleTextStyle ??
-                      subTitleTextStyle.copyWith(
-                        color: fontColor ?? greyColor,
-                        fontSize: fontSize,
-                      ),
+                Shimmer(
+                  isLoading: isLoading,
+                  child: Container(
+                    color: isLoading ? greyColor : Colors.transparent,
+                    child: Text(
+                      title,
+                      style: titleTextStyle ??
+                          subTitleTextStyle.copyWith(
+                            color: fontColor ?? greyColor,
+                            fontSize: fontSize,
+                          ),
+                    ),
+                  ),
                 ),
-                Text(
-                  value.toUpperCase(),
-                  // "This is a long text This is a long text This is a long text",
-                  // overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  softWrap: true,
-                  textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
-                  style: valueTextStyle ??
-                      listTitleTextStyle.copyWith(
-                        color: fontColor ?? valueColor ?? greyDarkColor1,
-                        fontSize: fontSize,
-                      ),
-                )
+                Shimmer(
+                  isLoading: isLoading,
+                  child: Container(
+                    color: isLoading ? greyColor : Colors.transparent,
+                    child: Text(
+                      value.toUpperCase(),
+                      // "This is a long text This is a long text This is a long text",
+                      // overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
+                      style: valueTextStyle ??
+                          listTitleTextStyle.copyWith(
+                            color: fontColor ?? valueColor ?? greyDarkColor1,
+                            fontSize: fontSize,
+                          ),
+                    ),
+                  ),
+                ),
               ],
             ),
     );

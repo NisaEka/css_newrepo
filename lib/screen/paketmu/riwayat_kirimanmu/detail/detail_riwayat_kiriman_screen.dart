@@ -7,7 +7,7 @@ import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_s
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -23,40 +23,49 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
     return GetBuilder<DetailRiwayatKirimanController>(
       init: DetailRiwayatKirimanController(),
       builder: (controller) {
-        return Stack(
-          children: [
-            Scaffold(
-              appBar: CustomTopBar(
-                title: 'Detail Kiriman'.tr,
-              ),
-              body: Padding(
-                padding: const EdgeInsets.all(20),
-                child: ListView(
+        return Scaffold(
+          appBar: CustomTopBar(
+            title: 'Detail Kiriman'.tr,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(20),
+            child: ListView(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
                       children: [
-                        Column(
-                          children: [
-                            CustomTextFormField(
-                              controller: TextEditingController(text: controller.transactionModel?.status.toString()),
-                              label: 'Status Transaksi'.tr,
-                              width: Get.width / 2.5,
-                              readOnly: true,
-                              backgroundColor: greyLightColor2,
-                              noBorder: true,
-                            ),
-                            CustomTextFormField(
-                              controller: TextEditingController(text: controller.transactionModel?.pickupStatus ?? ''),
-                              label: 'Status Pickup'.tr,
-                              width: Get.width / 2.5,
-                              readOnly: true,
-                              backgroundColor: greyLightColor2,
-                              noBorder: true,
-                            ),
-                          ],
+                        CustomTextFormField(
+                          controller: TextEditingController(text: controller.transactionModel?.status.toString()),
+                          label: 'Status Transaksi'.tr,
+                          width: Get.width / 2.5,
+                          readOnly: true,
+                          backgroundColor: greyLightColor2,
+                          noBorder: true,
+                          isLoading: controller.isLoading,
                         ),
-                        BarcodeWidget(
+                        CustomTextFormField(
+                          controller: TextEditingController(text: controller.transactionModel?.pickupStatus ?? ''),
+                          label: 'Status Pickup'.tr,
+                          width: Get.width / 2.5,
+                          readOnly: true,
+                          backgroundColor: greyLightColor2,
+                          noBorder: true,
+                          isLoading: controller.isLoading,
+                        ),
+                      ],
+                    ),
+                    Shimmer(
+                      isLoading: controller.isLoading,
+                      child: Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          color: controller.isLoading ? greyColor : Colors.transparent,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: BarcodeWidget(
                           barcode: Barcode.qrCode(),
                           data: controller.transactionModel?.awb ?? '',
                           drawText: false,
@@ -64,165 +73,172 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                           width: 120,
                           color: blueJNE,
                         ),
+                      ),
+                    )
+                  ],
+                ),
+                Shimmer(
+                  isLoading: controller.isLoading,
+                  child: Container(
+                    padding: const EdgeInsets.all(13),
+                    decoration: BoxDecoration(
+                      color: controller.isLoading ? greyColor : whiteColor,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: greyLightColor3,
+                          spreadRadius: 1,
+                          offset: Offset(-2, 2),
+                        ),
                       ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(13),
-                      decoration: BoxDecoration(
-                        color: whiteColor,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: greyLightColor3,
-                            spreadRadius: 1,
-                            offset: Offset(-2, 2),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          CustomLabelText(
-                            title: 'Tanggal Pesanan'.tr,
-                            value: controller.transactionModel?.createdDate?.toLongDateTimeFormat() ?? '',
-                            titleTextStyle: listTitleTextStyle.copyWith(fontSize: 10, fontWeight: medium),
-                            valueTextStyle: sublistTitleTextStyle.copyWith(fontSize: 10, color: greyColor),
-                            alignment: 'end',
-                          ),
-                          Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text("No Resi".tr, style: itemTextStyle),
-                                      GestureDetector(
-                                        onTap: () => Clipboard.setData(ClipboardData(text: controller.transactionModel?.awb ?? '')),
-                                        child: Container(
-                                          margin: const EdgeInsets.only(left: 10),
-                                          child: const Icon(
-                                            size: 10,
-                                            Icons.copy_rounded,
-                                            color: blueJNE,
-                                          ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        CustomLabelText(
+                          title: 'Tanggal Pesanan'.tr,
+                          value: controller.transactionModel?.createdDate?.toLongDateTimeFormat() ?? '',
+                          titleTextStyle: listTitleTextStyle.copyWith(fontSize: 10, fontWeight: medium),
+                          valueTextStyle: sublistTitleTextStyle.copyWith(fontSize: 10, color: greyColor),
+                          alignment: 'end',
+                        ),
+                        Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text("No Resi".tr, style: itemTextStyle),
+                                    GestureDetector(
+                                      onTap: () => Clipboard.setData(ClipboardData(text: controller.transactionModel?.awb ?? '')),
+                                      child: Container(
+                                        margin: const EdgeInsets.only(left: 10),
+                                        child: const Icon(
+                                          size: 10,
+                                          Icons.copy_rounded,
+                                          color: blueJNE,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  Text("Tipe".tr, style: itemTextStyle),
-                                  Text("Service".tr, style: itemTextStyle),
-                                  Text("Dana COD".tr, style: itemTextStyle),
-                                  Text("Petugas Entry".tr, style: itemTextStyle),
-                                  Text("Pengirim".tr, style: itemTextStyle),
-                                  Text("Kota Pengiriman".tr, style: itemTextStyle),
-                                  Text("Penerima".tr, style: itemTextStyle),
-                                  Text("Kontak Penerima".tr, style: itemTextStyle),
-                                  Row(
-                                    children: [
-                                      Text("Order ID".tr, style: itemTextStyle),
-                                      GestureDetector(
-                                        onTap: () => Clipboard.setData(ClipboardData(text: controller.transactionModel?.orderId ?? '')),
-                                        child: Container(
-                                          margin: const EdgeInsets.only(left: 10),
-                                          child: const Icon(
-                                            size: 10,
-                                            Icons.copy_rounded,
-                                            color: blueJNE,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text("Account".tr, style: itemTextStyle),
-                                ],
-                              ),
-                              const SizedBox(width: 15),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    controller.transactionModel?.awb ?? '-',
-                                    style: itemTextStyle.copyWith(
-                                      fontWeight: medium,
                                     ),
+                                  ],
+                                ),
+                                Text("Tipe".tr, style: itemTextStyle),
+                                Text("Service".tr, style: itemTextStyle),
+                                Text("Dana COD".tr, style: itemTextStyle),
+                                Text("Petugas Entry".tr, style: itemTextStyle),
+                                Text("Pengirim".tr, style: itemTextStyle),
+                                Text("Kota Pengiriman".tr, style: itemTextStyle),
+                                Text("Penerima".tr, style: itemTextStyle),
+                                Text("Kontak Penerima".tr, style: itemTextStyle),
+                                Row(
+                                  children: [
+                                    Text("Order ID".tr, style: itemTextStyle),
+                                    GestureDetector(
+                                      onTap: () => Clipboard.setData(ClipboardData(text: controller.transactionModel?.orderId ?? '')),
+                                      child: Container(
+                                        margin: const EdgeInsets.only(left: 10),
+                                        child: const Icon(
+                                          size: 10,
+                                          Icons.copy_rounded,
+                                          color: blueJNE,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text("Account".tr, style: itemTextStyle),
+                              ],
+                            ),
+                            const SizedBox(width: 15),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  controller.transactionModel?.awb ?? '-',
+                                  style: itemTextStyle.copyWith(
+                                    fontWeight: medium,
                                   ),
-                                  Text(
-                                    controller.transactionModel?.type ?? '-',
-                                    style: itemTextStyle,
-                                  ),
-                                  Text(
-                                    controller.transactionModel?.delivery?.serviceCode ?? '-',
-                                    style: itemTextStyle,
-                                  ),
-                                  Text(
-                                    'Rp. ${controller.transactionModel?.delivery?.flatRate?.toInt().toCurrency() ?? '-'}',
-                                    style: itemTextStyle,
-                                  ),
-                                  Text(
-                                    controller.transactionModel?.officerEntry ?? '-',
-                                    style: itemTextStyle,
-                                  ),
-                                  Text(
-                                    controller.transactionModel?.shipper?.name ?? '-',
-                                    style: itemTextStyle.copyWith(fontWeight: medium),
-                                  ),
-                                  Text(
-                                    "${controller.transactionModel?.receiver?.city} / ${controller.transactionModel?.receiver?.district}",
-                                    style: itemTextStyle,
-                                  ),
-                                  Text(
-                                    controller.transactionModel?.receiver?.name ?? '-',
-                                    style: itemTextStyle,
-                                  ),
-                                  Text(
-                                    controller.transactionModel?.receiver?.phone ?? '-',
-                                    style: itemTextStyle,
-                                  ),
-                                  Text(
-                                    controller.transactionModel?.orderId ?? '-',
-                                    style: itemTextStyle,
-                                  ),
-                                  Text(
+                                ),
+                                Text(
+                                  controller.transactionModel?.type ?? '-',
+                                  style: itemTextStyle,
+                                ),
+                                Text(
+                                  controller.transactionModel?.delivery?.serviceCode ?? '-',
+                                  style: itemTextStyle,
+                                ),
+                                Text(
+                                  'Rp. ${controller.transactionModel?.delivery?.flatRate?.toInt().toCurrency() ?? '-'}',
+                                  style: itemTextStyle,
+                                ),
+                                Text(
+                                  controller.transactionModel?.officerEntry ?? '-',
+                                  style: itemTextStyle,
+                                ),
+                                Text(
+                                  controller.transactionModel?.shipper?.name ?? '-',
+                                  style: itemTextStyle.copyWith(fontWeight: medium),
+                                ),
+                                Text(
+                                  "${controller.transactionModel?.receiver?.city} / ${controller.transactionModel?.receiver?.district}",
+                                  style: itemTextStyle,
+                                ),
+                                Text(
+                                  controller.transactionModel?.receiver?.name ?? '-',
+                                  style: itemTextStyle,
+                                ),
+                                Text(
+                                  controller.transactionModel?.receiver?.phone ?? '-',
+                                  style: itemTextStyle,
+                                ),
+                                Text(
+                                  controller.transactionModel?.orderId ?? '-',
+                                  style: itemTextStyle,
+                                ),
+                                SizedBox(
+                                  width: Get.width - 200,
+                                  child: Text(
                                     '${controller.transactionModel?.account?.accountNumber}/${controller.transactionModel?.account?.accountName}/${controller.transactionModel?.account?.accountType}',
                                     style: itemTextStyle,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                ],
-                              )
-                            ],
-                          )
-                        ],
-                      ),
+                                ),
+                              ],
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                    CustomFilledButton(
-                      color: blueJNE,
-                      title: 'Lihat Resi'.tr,
-                      onPressed: () => Get.to(const LabelScreen(), arguments: {
-                        'data': controller.transactionModel,
-                      }),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              bottomNavigationBar: CustomFilledButton(
-                title: controller.transactionModel?.status == "MASIH DI KAMU" ? "Edit Kiriman".tr : "Hubungi Aku".tr,
-                color: controller.transactionModel?.status == "MASIH DI KAMU" ? successLightColor3 : errorLightColor3,
-                margin: const EdgeInsets.all(20),
-                onPressed: () {
-                  if (controller.transactionModel?.status == "MASIH DI KAMU") {
-                    Get.to(
-                      const InformasiPengirimScreen(),
-                      arguments: {
-                        'data': controller.transactionModel,
-                      },
-                    );
-                  }
-                },
-              ),
+                CustomFilledButton(
+                  color: blueJNE,
+                  title: 'Lihat Resi'.tr,
+                  onPressed: () => Get.to(const LabelScreen(), arguments: {
+                    'data': controller.transactionModel,
+                  }),
+                  isLoading: controller.isLoading,
+                ),
+              ],
             ),
-            controller.isLoading == true || controller.transactionModel == null ? const LoadingDialog() : Container(),
-          ],
+          ),
+          bottomNavigationBar: CustomFilledButton(
+            title: controller.transactionModel?.status == "MASIH DI KAMU" ? "Edit Kiriman".tr : "Hubungi Aku".tr,
+            color: controller.transactionModel?.status == "MASIH DI KAMU" ? successLightColor3 : errorLightColor3,
+            margin: const EdgeInsets.all(20),
+            isLoading: controller.isLoading,
+            onPressed: () {
+              if (controller.transactionModel?.status == "MASIH DI KAMU") {
+                Get.to(
+                  const InformasiPengirimScreen(),
+                  arguments: {
+                    'data': controller.transactionModel,
+                  },
+                );
+              }
+            },
+          ),
         );
       },
     );

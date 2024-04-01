@@ -6,6 +6,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
@@ -18,6 +19,7 @@ class InformasiPenerimaController extends BaseController {
   DataTransactionModel? data = Get.arguments['data'];
   Shipper shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
+  DropshipperModel? dropshipper = Get.arguments['dropshipper'];
   bool codOngkir = Get.arguments['cod_ongkir'];
   Origin origin = Get.arguments['origin'];
   Account account = Get.arguments['account'];
@@ -65,6 +67,7 @@ class InformasiPenerimaController extends BaseController {
         selectedDestination = value.first;
         update();
       });
+      // kotaTujuan.text = data?.destination?.cityName
 
       update();
     }
@@ -114,6 +117,7 @@ class InformasiPenerimaController extends BaseController {
       "account": account,
       "origin": origin,
       "dropship": dropship,
+      "dropshipper": dropshipper,
       "shipper": shipper,
       "receiver": Receiver(
         name: namaPenerima.text.toUpperCase(),

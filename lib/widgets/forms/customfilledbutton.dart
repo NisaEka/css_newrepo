@@ -1,5 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomFilledButton extends StatelessWidget {
   final String? title;
@@ -17,6 +19,7 @@ class CustomFilledButton extends StatelessWidget {
   final TextStyle? fontStyle;
   final List<BoxShadow>? boxShadow;
   final bool isTransparent;
+  final bool isLoading;
 
   const CustomFilledButton(
       {Key? key,
@@ -34,43 +37,53 @@ class CustomFilledButton extends StatelessWidget {
       this.padding,
       this.fontStyle,
       this.boxShadow,
-      this.isTransparent = false})
+      this.isTransparent = false,
+      this.isLoading = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
-      child: Container(
-        alignment: Alignment.center,
-        margin: margin ?? const EdgeInsets.symmetric(vertical: 10),
-        padding: padding ?? const EdgeInsets.symmetric(vertical: 10),
-        width: width,
-        height: height ?? 40,
-        decoration: BoxDecoration(
-          color: isTransparent ? Colors.transparent : color,
-          borderRadius: BorderRadius.circular(radius),
-          border: Border.all(color: isTransparent ? color : borderColor!),
-          boxShadow: boxShadow,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            icon != null
-                ? Icon(
-                    icon,
-                    color: isTransparent ? color : fontColor,
-                    size: fontSize! + 2,
-                  )
-                : Container(),
-            title != null
-                ? Text(
-                    ' $title',
-                    style: fontStyle ?? TextStyle(color: isTransparent ? color : fontColor, fontWeight: FontWeight.w900, fontSize: fontSize),
-                    textAlign: TextAlign.center,
-                  )
-                : Container(),
-          ],
+      child: Shimmer(
+        child: ShimmerLoading(
+          isLoading: isLoading,
+          child: Container(
+            alignment: Alignment.center,
+            margin: margin ?? const EdgeInsets.symmetric(vertical: 10),
+            padding: padding ?? const EdgeInsets.symmetric(vertical: 10),
+            width: width,
+            height: height ?? 40,
+            decoration: BoxDecoration(
+              color: isLoading
+                  ? greyColor
+                  : isTransparent
+                      ? Colors.transparent
+                      : color,
+              borderRadius: BorderRadius.circular(radius),
+              border: Border.all(color: isTransparent ? color : borderColor!),
+              boxShadow: boxShadow,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                icon != null
+                    ? Icon(
+                        icon,
+                        color: isTransparent ? color : fontColor,
+                        size: fontSize! + 2,
+                      )
+                    : Container(),
+                title != null
+                    ? Text(
+                        ' $title',
+                        style: fontStyle ?? TextStyle(color: isTransparent ? color : fontColor, fontWeight: FontWeight.w900, fontSize: fontSize),
+                        textAlign: TextAlign.center,
+                      )
+                    : Container(),
+              ],
+            ),
+          ),
         ),
       ),
     );

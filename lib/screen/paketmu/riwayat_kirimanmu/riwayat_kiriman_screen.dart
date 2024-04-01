@@ -287,9 +287,13 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
                     ),
-                    onSubmit: (value) {
+                    onChanged: (value) {
                       controller.searchField.text = value;
                       controller.update();
+                      controller.pagingController.refresh();
+                    },
+                    onClear: () {
+                      controller.searchField.clear();
                       controller.pagingController.refresh();
                     },
                   ),

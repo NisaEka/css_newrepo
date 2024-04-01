@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
 
@@ -26,11 +27,13 @@ class DataTransactionModel {
     Destination? destination,
     Goods? goods,
     Shipper? shipper,
+    DropshipperModel? dropshipper,
     Receiver? receiver,
     Account? dataAccount,
     Destination? dataDestination,
     String? createAt,
     String? updateAt,
+
   }) {
     _awb = awb;
     _awbType = awbType;

@@ -1,8 +1,10 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:get/get.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -28,6 +30,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? autofocus;
   final EdgeInsets? contentPadding;
   final bool noBorder;
+  final bool isLoading;
 
   CustomTextFormField(
       {super.key,
@@ -53,7 +56,8 @@ class CustomTextFormField extends StatelessWidget {
       this.focusNode,
       this.autofocus,
       this.contentPadding,
-      this.noBorder = false}) {
+      this.noBorder = false,
+      this.isLoading = false}) {
     if (isRequired && !readOnly) {
       validator ??= ValidationBuilder().required().build();
     }
@@ -82,69 +86,73 @@ class CustomTextFormField extends StatelessWidget {
         SizedBox(
           height: helperText != null ? 16 : 0,
         ),
-        Container(
-          width: width ?? null,
-          height: height != null && multiLine == false ? height ?? 39 : null,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            minLines: multiLine ? 3 : 1,
-            maxLines: !multiLine ? 1 : 3,
-            onTap: onTap,
-            enabled: onTap != null ? true : !readOnly,
-            controller: controller,
-            readOnly: readOnly,
-            onChanged: onChanged,
-            onFieldSubmitted: onSubmit,
-            autofocus: autofocus ?? false,
-            focusNode: focusNode,
-            validator: validator,
-            keyboardType: inputType,
-            obscureText: isObscure ?? false,
-            inputFormatters: inputFormatters ??
-                [
-                  TextInputFormatter.withFunction((oldValue, newValue) {
-                    return newValue.copyWith(text: newValue.text.toUpperCase());
-                  })
-                ],
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 16,
-                  color: Colors.black,
-                  // fontWeight: FontWeight.w600,
-                ),
-            textInputAction: TextInputAction.next,
-            textCapitalization: TextCapitalization.characters,
-            decoration: InputDecoration(
-                label: label == null ? Text(hintText ?? '') : const SizedBox(),
-                fillColor: backgroundColor ?? (onTap != null || !readOnly ? whiteColor : neutralColor),
-                //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
-                suffixIcon: suffixIcon,
-                prefixIcon: prefixIcon,
-                prefixIconColor: greyDarkColor1,
-                suffixIconColor: greyDarkColor1,
-                contentPadding: contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                hintText: hintText ?? label,
-                disabledBorder: noBorder
-                    ? OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(
-                          color: readOnly ? Colors.white : Theme.of(context).primaryColor,
-                          width: readOnly ? 1 : 2,
-                          style: BorderStyle.solid,
-                        ),
-                      )
-                    : null,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(
-                    color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor,
-                    width: readOnly ? 1 : 2,
-                    style: BorderStyle.solid,
+        Shimmer(
+          isLoading: isLoading,
+          child: Container(
+            width: width ?? Get.width,
+            height: height != null && multiLine == false ? height ?? 39 : null,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: isLoading ? greyColor : Colors.transparent,
+            ),
+            child: TextFormField(
+              minLines: multiLine ? 3 : 1,
+              maxLines: !multiLine ? 1 : 3,
+              onTap: onTap,
+              enabled: onTap != null ? true : !readOnly,
+              controller: controller,
+              readOnly: readOnly,
+              onChanged: onChanged,
+              onFieldSubmitted: onSubmit,
+              autofocus: autofocus ?? false,
+              focusNode: focusNode,
+              validator: validator,
+              keyboardType: inputType,
+              obscureText: isObscure ?? false,
+              inputFormatters: inputFormatters ??
+                  [
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+                      return newValue.copyWith(text: newValue.text.toUpperCase());
+                    })
+                  ],
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: 16,
+                    color: Colors.black,
+                    // fontWeight: FontWeight.w600,
                   ),
-                ),
-                hintStyle: hintTextStyle),
+              textInputAction: TextInputAction.next,
+              textCapitalization: TextCapitalization.characters,
+              decoration: InputDecoration(
+                  label: label == null ? Text(hintText ?? '') : const SizedBox(),
+                  fillColor: backgroundColor ?? (onTap != null || !readOnly ? whiteColor : neutralColor),
+                  //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
+                  suffixIcon: suffixIcon,
+                  prefixIcon: prefixIcon,
+                  prefixIconColor: greyDarkColor1,
+                  suffixIconColor: greyDarkColor1,
+                  contentPadding: contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                  hintText: hintText ?? label,
+                  disabledBorder: noBorder
+                      ? OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(
+                            color: readOnly ? Colors.white : Theme.of(context).primaryColor,
+                            width: readOnly ? 1 : 2,
+                            style: BorderStyle.solid,
+                          ),
+                        )
+                      : null,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(
+                      color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor,
+                      width: readOnly ? 1 : 2,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                  hintStyle: hintTextStyle),
+            ),
           ),
         ),
         const SizedBox(

@@ -135,13 +135,26 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                   controller.isDropshipper = value!;
 
                                   if (value == true) {
-                                    controller.namaPengirim.clear();
-                                    controller.nomorTelpon.clear();
-                                    controller.kotaPengirim.clear();
-                                    controller.kodePos.clear();
-                                    controller.alamatLengkap.clear();
-                                    controller.selectedOrigin = null;
-                                    controller.isValidate = false;
+                                    if (controller.dropshipper != null && controller.data != null) {
+                                      controller.namaPengirim.text = controller.dropshipper?.name ?? '';
+                                      controller.nomorTelpon.text = controller.dropshipper?.phone ?? '';
+                                      controller.kotaPengirim.text = controller.dropshipper?.city ?? '';
+                                      controller.kodePos.text = controller.dropshipper?.zipCode ?? '';
+                                      controller.alamatLengkap.text = controller.dropshipper?.address ?? '';
+                                      controller
+                                          .getOriginList(controller.dropshipper?.city ?? '', controller.selectedAccount?.accountId ?? '')
+                                          .then((value) => controller.selectedOrigin = value.first);
+
+                                      controller.isValidate = true;
+                                    } else {
+                                      controller.namaPengirim.clear();
+                                      controller.nomorTelpon.clear();
+                                      controller.kotaPengirim.clear();
+                                      controller.kodePos.clear();
+                                      controller.alamatLengkap.clear();
+                                      controller.selectedOrigin = null;
+                                      controller.isValidate = false;
+                                    }
                                   } else {
                                     controller.namaPengirim.text = controller.senderOrigin?.name ?? '';
                                     controller.nomorTelpon.text = controller.senderOrigin?.phone ?? '';
@@ -223,7 +236,10 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 prefixIcon: const Icon(Icons.phone),
                               ),
                               CustomSearchDropdownField<Origin>(
-                                asyncItems: (String filter) => controller.getOriginList(filter, controller.selectedAccount?.accountId ?? ''),
+                                asyncItems: (String filter) => controller.getOriginList(
+                                  filter.isNotEmpty ? filter : controller.kotaPengirim.text,
+                                  controller.selectedAccount?.accountId ?? '',
+                                ),
                                 itemBuilder: (context, e, b) {
                                   return Container(
                                     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -243,7 +259,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 value: controller.selectedOrigin,
                                 isRequired: controller.isOnline,
                                 selectedItem: controller.kotaPengirim.text,
-                                readOnly: controller.selectedAccount == null ? true : !controller.isDropshipper,
+                                readOnly: controller.selectedAccount == null || controller.isOnline == false ? true : !controller.isDropshipper,
                                 hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
                                 prefixIcon: const Icon(Icons.location_city),
                                 textStyle: controller.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
@@ -263,7 +279,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 multiLine: true,
                                 prefixIcon: const Icon(Icons.location_city),
                               ),
-                              controller.isDropshipper && controller.isOnline && controller.dropshipper == null
+                              controller.isDropshipper && controller.isOnline
                                   ? CustomFilledButton(
                                       color: whiteColor,
                                       borderColor: controller.isValidate ? blueJNE : greyColor,

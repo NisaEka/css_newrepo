@@ -8,11 +8,13 @@ import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
@@ -34,6 +36,7 @@ class InformasiKirimaController extends BaseController {
   Goods? goods = Get.arguments['goods'];
   int? draftIndex = Get.arguments['index'];
   DataTransactionModel? draft = Get.arguments['draft'];
+  DropshipperModel? dropshipper = Get.arguments['dropshipper'];
 
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
   final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
@@ -237,7 +240,7 @@ class InformasiKirimaController extends BaseController {
     asuransi = delivery?.insuranceFlag == "Y" ? true : false;
     intruksiKhusus.text = delivery?.specialInstruction ?? '';
     packingKayu = delivery?.woodPackaging == "Y" ? true : false;
-    beratKiriman.text = goods?.weight.toString() ?? '1';
+    beratKiriman.text = goods?.weight.toString().split('.').first ?? '1';
     selectedService = serviceList.where((e) => e.serviceCode == delivery?.serviceCode).first;
 
     if (delivery?.flatRate != null) {
@@ -315,6 +318,10 @@ class InformasiKirimaController extends BaseController {
       update();
       getOngkir();
     }
+    if (draft != null) {
+      beratKiriman.text = draft?.goods?.weight.toString().split('.').first ?? '';
+      update();
+    }
     hitungOngkir();
 
     goods != null ? loadDraft() : null;
@@ -355,7 +362,7 @@ class InformasiKirimaController extends BaseController {
           desc: namaBarang.text,
           amount: hargaBarang.text.digitOnly().toInt(),
           quantity: jumlahPacking.text.toInt(),
-          weight: berat ?? beratKiriman.text.toInt()),
+          weight: berat != 0 ? berat : beratKiriman.text.toInt()),
       shipper: shipper,
       receiver: receiver,
       dataAccount: account,
@@ -381,7 +388,7 @@ class InformasiKirimaController extends BaseController {
                 const DashboardScreen(),
               ),
               secondButtonTitle: "Lihat Draft".tr,
-              secondAction: () => Get.offAll(const DraftTransaksiScreen()),
+              secondAction: () => Get.delete<DraftTransaksiController>().then((value) => Get.offAll(const DraftTransaksiScreen())),
               thirdButtonTitle: "Buat Transaksi Lainnya".tr,
               thirdAction: () => Get.offAll(const InformasiPengirimScreen(), arguments: {}),
             ),

@@ -90,10 +90,12 @@ class Shimmer extends StatefulWidget {
     super.key,
     this.linearGradient = _shimmerGradient,
     this.child,
+    this.isLoading = false,
   });
 
   final LinearGradient linearGradient;
   final Widget? child;
+  final bool isLoading;
 
   @override
   ShimmerState createState() => ShimmerState();
@@ -114,7 +116,6 @@ const _shimmerGradient = LinearGradient(
   end: Alignment(1.0, 0.3),
   tileMode: TileMode.clamp,
 );
-
 
 class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
   late AnimationController _shimmerController;
@@ -158,7 +159,10 @@ class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return widget.child ?? const SizedBox();
+    return ShimmerLoading(
+      isLoading: widget.isLoading,
+      child: widget.child ?? const SizedBox(),
+    );
   }
 }
 

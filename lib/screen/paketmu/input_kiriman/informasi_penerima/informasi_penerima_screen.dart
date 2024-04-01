@@ -121,7 +121,8 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   isRequired: true,
                                 ),
                                 CustomSearchDropdownField<Destination>(
-                                  asyncItems: (String filter) => controller.getDestinationList(filter),
+                                  asyncItems: (String filter) =>
+                                      controller.getDestinationList(filter.isNotEmpty ? filter : controller.selectedDestination?.cityName ?? ''),
                                   itemBuilder: (context, e, b) {
                                     return GestureDetector(
                                       onTap: () => controller.update(),
@@ -155,7 +156,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   multiLine: true,
                                   isRequired: true,
                                 ),
-                                controller.isOnline && controller.selectedReceiver == null
+                                controller.isOnline
                                     ? CustomFilledButton(
                                         color: whiteColor,
                                         title: 'Simpan Data Penerima'.tr,

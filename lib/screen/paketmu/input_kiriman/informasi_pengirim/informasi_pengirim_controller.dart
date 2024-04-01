@@ -75,10 +75,10 @@ class InformasiPengirimController extends BaseController {
   }
 
   void formValidate() {
-    if(isOnline){
+    if (isOnline) {
       isValidate = formKey.currentState?.validate() == true && selectedAccount != null && selectedOrigin != null;
-    }else{
-      isValidate = formKey.currentState?.validate() == true && selectedAccount != null ;
+    } else {
+      isValidate = formKey.currentState?.validate() == true && selectedAccount != null;
     }
 
     update();
@@ -134,20 +134,35 @@ class InformasiPengirimController extends BaseController {
       nomorTelpon.text = data?.shipper?.phone ?? '';
       kodePos.text = data?.shipper?.zip ?? '';
       alamatLengkap.text = data?.shipper?.address ?? '';
+      isDropshipper = data?.shipper?.name != senderOrigin?.name;
 
       getOriginList(data?.shipper?.city ?? '', selectedAccount?.accountId ?? '').then((value) {
         selectedOrigin = value.first;
         kotaPengirim.text = value.first.originName ?? '';
-        senderOrigin = ShipperModel(
-          origin: value.first,
-          name: data?.shipper?.name,
-          address: data?.shipper?.address,
-          phone: data?.shipper?.phone,
-          region: Region(
-            name: data?.shipper?.region,
-          ),
-          zipCode: data?.shipper?.zip,
-        );
+        update();
+
+        if (isDropshipper) {
+          dropshipper = DropshipperModel(
+            name: data?.shipper?.name,
+            address: data?.shipper?.address,
+            city: data?.shipper?.city,
+            phone: data?.shipper?.phone,
+            zipCode: data?.shipper?.zip,
+            origin: selectedOrigin?.branchCode,
+          );
+        } else {
+          senderOrigin = ShipperModel(
+            origin: value.first,
+            name: data?.shipper?.name,
+            address: data?.shipper?.address,
+            phone: data?.shipper?.phone,
+            region: Region(
+              name: data?.shipper?.region,
+            ),
+            zipCode: data?.shipper?.zip,
+          );
+        }
+
         update();
       });
 
