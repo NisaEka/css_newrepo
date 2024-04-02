@@ -128,15 +128,19 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomLabelText(
+                                  width: Get.width / 2,
                                   title: 'Origin'.tr,
                                   value: widget.data.origin?.originName ?? '',
+                                  valueMaxline: 3,
                                 ),
                                 CustomLabelText(
                                   alignment: 'end',
                                   title: 'Destination'.tr,
                                   value: widget.data.dataDestination?.cityName ?? '',
+                                  valueMaxline: 3,
                                 ),
                               ],
                             ),

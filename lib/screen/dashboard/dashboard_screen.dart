@@ -78,7 +78,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       children: [
                                         CustomLabelText(
                                           title: 'Selamat Datang'.tr,
-                                          value: controller.userName ?? '',
+                                          value: controller.userName ?? 'USERNAME',
                                           fontColor: whiteColor,
                                           isLoading: controller.isLoading,
                                         ),

@@ -521,9 +521,9 @@ class InformasiKirimanScreen extends StatelessWidget {
                                           title: controller.dataEdit != null ? 'Edit Resi'.tr : 'Buat Resi'.tr,
                                           onPressed: () {
                                             controller.formValidate && controller.selectedService != null
-                                                ? controller.dataEdit != null
-                                                    ? controller.updateTransaction()
-                                                    : controller.saveTransaction()
+                                                ? controller.dataEdit == null
+                                                    ? controller.saveTransaction()
+                                                    : controller.updateTransaction()
                                                 : null;
                                           },
                                         )

@@ -2,7 +2,6 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomLabelText extends StatelessWidget {
   final String title;
@@ -11,6 +10,7 @@ class CustomLabelText extends StatelessWidget {
   final Color? fontColor;
   final String? alignment;
   final double? width;
+  final double? maxline;
   final double? fontSize;
   final TextStyle? titleTextStyle;
   final TextStyle? valueTextStyle;
@@ -35,7 +35,7 @@ class CustomLabelText extends StatelessWidget {
     this.margin,
     this.padding,
     this.valueMaxline,
-    this.isLoading = false,
+    this.isLoading = false, this.maxline,
   });
 
   @override
@@ -55,7 +55,7 @@ class CustomLabelText extends StatelessWidget {
                 Shimmer(
                   isLoading: isLoading,
                   child: Container(
-                    color: isLoading ? greyColor : Colors.transparent,
+                    decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                     child: Text(
                       title,
                       style: titleTextStyle ??
@@ -69,13 +69,13 @@ class CustomLabelText extends StatelessWidget {
                 Shimmer(
                   isLoading: isLoading,
                   child: Container(
-                    color: isLoading ? greyColor : Colors.transparent,
+                    decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                     child: Text(
                       value.toUpperCase(),
                       // "This is a long text This is a long text This is a long text",
                       // overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
                       softWrap: true,
+                      maxLines: valueMaxline ?? 1,
                       textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
                       style: valueTextStyle ??
                           listTitleTextStyle.copyWith(
@@ -97,7 +97,8 @@ class CustomLabelText extends StatelessWidget {
                 Shimmer(
                   isLoading: isLoading,
                   child: Container(
-                    color: isLoading ? greyColor : Colors.transparent,
+                    margin: const EdgeInsets.only(bottom: 5),
+                    decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                     child: Text(
                       title,
                       style: titleTextStyle ??
@@ -111,12 +112,13 @@ class CustomLabelText extends StatelessWidget {
                 Shimmer(
                   isLoading: isLoading,
                   child: Container(
-                    color: isLoading ? greyColor : Colors.transparent,
+                    width: width,
+                    decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                     child: Text(
                       value.toUpperCase(),
                       // "This is a long text This is a long text This is a long text",
-                      // overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+                      // overflow: TextOverflow.fade,
+                      // maxLines: 1,
                       softWrap: true,
                       textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
                       style: valueTextStyle ??

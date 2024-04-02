@@ -170,7 +170,7 @@ class InformasiKirimaController extends BaseController {
   }
 
   Future<void> getCODfee() async {
-    if (isOnline) {
+    if (isOnline && account.accountService == "COD") {
       isCalculate = true;
       try {
         await transaction.getCODFee(account.accountId.toString()).then(
@@ -313,8 +313,11 @@ class InformasiKirimaController extends BaseController {
       intruksiKhusus.text = dataEdit?.delivery?.specialInstruction ?? '';
       packingKayu = dataEdit?.delivery?.woodPackaging == "Y";
       beratKiriman.text = dataEdit?.goods?.weight.toString() ?? '';
-      selectedService = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).first;
-
+      var servicecode = serviceList.where((element) => element.serviceCode == dataEdit?.delivery?.serviceCode);
+      var servicrdisplay = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode);
+      selectedService = servicecode.isNotEmpty
+          ? servicecode.first
+          : servicrdisplay.first;
       update();
       getOngkir();
     }

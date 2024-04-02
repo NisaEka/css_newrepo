@@ -195,6 +195,9 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                 Text(
                                   controller.transactionModel?.orderId ?? '-',
                                   style: itemTextStyle,
+                                ),Text(
+                                  controller.transactionModel?.orderId ?? '-',
+                                  style: itemTextStyle,
                                 ),
                                 SizedBox(
                                   width: Get.width - 200,
