@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 
 class ShimmerLoading extends StatefulWidget {
@@ -103,9 +104,12 @@ class Shimmer extends StatefulWidget {
 
 const _shimmerGradient = LinearGradient(
   colors: [
-    Color(0xFFAFAFB1),
-    Color(0xFFF4F4F4),
-    Color(0xFFEBEBF4),
+    greyLightColor3,
+    greyLightColor2,
+    greyLightColor1,
+    // Color(0xFFAFAFB1),
+    // Color(0xFFF4F4F4),
+    // Color(0xFFEBEBF4),
   ],
   stops: [
     0.1,

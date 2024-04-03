@@ -20,8 +20,8 @@ class ProfilRepositoryImpl extends ProfilRepository {
         "/profile",
       );
       return GetBasicProfilModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -34,8 +34,8 @@ class ProfilRepositoryImpl extends ProfilRepository {
         "/profile/ccrf",
       );
       return GetCcrfProfilModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -49,8 +49,8 @@ class ProfilRepositoryImpl extends ProfilRepository {
         data: data,
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 }

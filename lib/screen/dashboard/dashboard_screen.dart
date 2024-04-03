@@ -61,7 +61,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Stack(
                       children: [
                         Container(
-                          height: controller.isLogin && controller.allow.lacakPesanan == "Y" ? 160 : 120,
+                          // height: controller.isLogin && controller.allow.lacakPesanan == "Y" ? 160 : 120,
+                          height: controller.isLogin ? 160 : 120,
                           padding: const EdgeInsets.all(20),
                           decoration: const BoxDecoration(
                             color: blueJNE,
@@ -94,8 +95,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     )
                                   : const SizedBox(),
                               const SizedBox(height: 18),
-                              !controller.isLogin || controller.allow.lacakPesanan == "Y"
-                                  ? TextField(
+                              /*!controller.isLogin || controller.allow.lacakPesanan == "Y"
+                                  ? */TextField(
                                       controller: controller.nomorResi,
                                       decoration: InputDecoration(
                                         hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
@@ -121,7 +122,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         controller.update();
                                       }),
                                     )
-                                  : const SizedBox(),
+                                  // : const SizedBox(),
                             ],
                           ),
                         ),

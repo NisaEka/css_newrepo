@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/add/add_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
@@ -68,9 +69,11 @@ class ListDropshipperScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   controller.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        )
+                      ? Expanded(
+                          child: ListView.builder(
+                          itemBuilder: (context, i) => controller.dropshipperItem(DropshipperModel(), i, context),
+                          itemCount: 5,
+                        ))
                       : Expanded(
                           child: ListView(
                             shrinkWrap: true,

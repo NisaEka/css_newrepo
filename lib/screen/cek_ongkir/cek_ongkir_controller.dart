@@ -32,7 +32,7 @@ class CekOngkirController extends BaseController {
   List<City> cityList = [];
   List<Origin> originList = [];
   List<Origin> destinationList = [];
-  List<Price> ongkirList = [];
+  List<Ongkir> ongkirList = [];
 
   GetOriginModel? cityModel;
   Origin? selectedDestination;
@@ -60,10 +60,11 @@ class CekOngkirController extends BaseController {
         beratKiriman.text,
       )
           .then((value) {
-        ongkirList.addAll(value.price ?? []);
+        ongkirList.addAll(value.ongkir ?? []);
       });
-    } catch (e) {
+    } catch (e,i) {
       e.printError();
+      i.printError();
     }
 
     isLoading = false;

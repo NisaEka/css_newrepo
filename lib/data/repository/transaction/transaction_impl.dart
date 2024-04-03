@@ -35,8 +35,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/account",
       );
       return GetAccountNumberModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -49,8 +49,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/dropshipper",
       );
       return GetDropshipperModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -63,8 +63,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/shipper",
       );
       return GetShipperModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -81,8 +81,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         },
       );
       return GetOriginModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -98,8 +98,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         },
       );
       return GetDestinationModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -112,8 +112,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/receiver",
       );
       return GetReceiverModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -132,7 +132,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         },
       );
       return GetServiceModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return GetServiceModel.fromJson(e.response?.data);
     }
   }
@@ -154,8 +154,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         },
       );
       return GetTransactionFeeModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -170,8 +170,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         data: data,
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -185,7 +185,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         },
       );
       return GetCodFeeModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return e.response?.data;
     }
   }
@@ -201,7 +201,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         data: data,
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -217,7 +217,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         data: data,
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -231,7 +231,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/dropshipper/$id",
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -245,7 +245,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/receiver/$id",
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -276,7 +276,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         },
       );
       return GetTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return GetTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -290,7 +290,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/transaction/$awb",
       );
       return GetTransactionByAwbModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return GetTransactionByAwbModel.fromJson(e.response?.data);
     }
   }
@@ -304,7 +304,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/transaction/count",
       );
       return GetTransactionCountModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return GetTransactionCountModel.fromJson(e.response?.data);
     }
   }
@@ -318,7 +318,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/transaction/$awb",
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -332,7 +332,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/transaction/status",
       );
       return GetTransactionStatusModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return GetTransactionStatusModel.fromJson(e.response?.data);
     }
   }
@@ -349,7 +349,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/transaction/$awb",
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -363,7 +363,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/transaction/officer",
       );
       return GetTransactionOfficerModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return GetTransactionOfficerModel.fromJson(e.response?.data);
     }
   }

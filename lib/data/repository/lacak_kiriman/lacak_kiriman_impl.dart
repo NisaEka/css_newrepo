@@ -20,7 +20,7 @@ class LacakKirimanRepositoryImpl extends LacakKirimanRepository {
       );
       print(response.data);
       return PostLacakKirimanModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostLacakKirimanModel.fromJson(e.response?.data);
     }
   }
@@ -37,7 +37,7 @@ class LacakKirimanRepositoryImpl extends LacakKirimanRepository {
         },
       );
       return PostLacakKirimanModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostLacakKirimanModel.fromJson(e.response?.data);
     }
   }

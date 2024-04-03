@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class ContactRadioListItem extends StatelessWidget {
   final String? address;
   final int index;
   final void Function(BuildContext)? onDelete;
+  final bool isLoading;
 
   const ContactRadioListItem({
     super.key,
@@ -28,6 +30,7 @@ class ContactRadioListItem extends StatelessWidget {
     this.address,
     required this.index,
     this.onDelete,
+    this.isLoading = false,
   });
 
   @override
@@ -49,18 +52,24 @@ class ContactRadioListItem extends StatelessWidget {
           ),
         ],
       ),
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        child: RadioListTile(
-          value: value,
-          groupValue: groupValue,
-          onChanged: onChanged,
-          shape: Border.all(color: isSelected ? redJNE : greyColor),
-          selectedTileColor: redJNE,
-          title: Text(name ?? '', style: listTitleTextStyle),
-          subtitle: Text(
-            '$phone \n$city \n$address',
-            style: subTitleTextStyle,
+      child: Shimmer(
+        isLoading: isLoading,
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 5),
+          decoration: BoxDecoration(
+            color: isLoading ? greyColor : Colors.transparent,
+          ),
+          child: RadioListTile(
+            value: value,
+            groupValue: groupValue,
+            onChanged: onChanged,
+            shape: Border.all(color: isSelected ? redJNE : greyColor),
+            selectedTileColor: redJNE,
+            title: Text(name ?? '', style: listTitleTextStyle),
+            subtitle: Text(
+              '$phone \n$city \n$address',
+              style: subTitleTextStyle,
+            ),
           ),
         ),
       ),

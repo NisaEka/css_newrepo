@@ -52,7 +52,8 @@ class LoginScreen extends StatelessWidget {
                                   // focusNode: controller.emailFocus,
                                   onSubmit: (_) {},
                                   validator: ValidationBuilder().email().minLength(10).build(),
-                                  inputFormatters: const []),
+                                inputFormatters: const [],
+                              ),
                               CustomTextFormField(
                                 controller: controller.passwordTextField,
                                 hintText: "Kata Sandi".tr,

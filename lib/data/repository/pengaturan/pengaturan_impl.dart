@@ -28,8 +28,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
         },
       );
       return GetPetugasModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -42,8 +42,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
         "/officer/$id",
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -56,8 +56,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
         "/officer/$id",
       );
       return GetPetugasByidModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -72,8 +72,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
         data: data,
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
-      print("api error: ${e.error}");
+    } on DioException catch (e) {
+      print("api error: ${e.response?.data}");
       print("api error : ${e.response?.data}");
       return e.response?.data;
     }
@@ -86,8 +86,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
     try {
       Response response = await network.dio.put("/officer/${data.id}", data: data);
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -100,8 +100,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
         "/branch",
       );
       return GetBranchModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 
@@ -118,8 +118,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
         },
       );
       return GetOriginModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return e.error;
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 }

@@ -28,7 +28,7 @@ class JLCRepositoryImpl extends JLCRepository {
         },
       );
       return PostTotalPointModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTotalPointModel.fromJson(e.response?.data);
     }
   }
@@ -45,7 +45,7 @@ class JLCRepositoryImpl extends JLCRepository {
         },
       );
       return PostTotalPointModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTotalPointModel.fromJson(e.response?.data);
     }
   }
@@ -62,7 +62,7 @@ class JLCRepositoryImpl extends JLCRepository {
         },
       );
       return PostTotalPointModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTotalPointModel.fromJson(e.response?.data);
     }
   }

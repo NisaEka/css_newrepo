@@ -60,58 +60,59 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
           children: [
             Text(widget.title.tr, style: subTitleTextStyle),
             SizedBox(
-                height: 62,
-                width: 153,
-                child: widget.lat != null
-                    ? GoogleMap(
-                        // onMapCreated: _onMapCreated,
-                        onMapCreated: (controller) => googleMapController?.complete(controller),
+              height: 62,
+              width: 153,
+              child: widget.img != null
+                  ? Image.network(
+                      widget.img ?? '',
+                      fit: BoxFit.fill,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        height: 62,
+                        width: 153,
+                        decoration: BoxDecoration(
+                          color: greyLightColor3,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: const Center(child: Icon(Icons.image_not_supported_outlined)),
+                      ),
+                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
+                    )
+                  : GoogleMap(
+                      // onMapCreated: _onMapCreated,
+                      onMapCreated: (controller) => googleMapController?.complete(controller),
 
-                        zoomControlsEnabled: false,
-                        myLocationButtonEnabled: false,
-                        markers: <Marker>{
-                          Marker(
-                            draggable: false,
-                            markerId: const MarkerId('SomeId'),
-                            position: LatLng(
-                              widget.lat!,
-                              widget.lng!,
-                            ),
-                          )
-                        },
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(
+                      zoomControlsEnabled: false,
+                      myLocationButtonEnabled: false,
+                      markers: <Marker>{
+                        Marker(
+                          draggable: false,
+                          markerId: const MarkerId('SomeId'),
+                          position: LatLng(
                             widget.lat!,
                             widget.lng!,
                           ),
-                          zoom: 16.0,
+                        )
+                      },
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(
+                          widget.lat!,
+                          widget.lng!,
                         ),
-                      )
-                    : Image.network(
-                        widget.img ?? '',
-                        fit: BoxFit.fill,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          height: 62,
-                          width: 153,
-                          decoration: BoxDecoration(
-                            color: greyLightColor3,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Center(child: Icon(Icons.image_not_supported_outlined)),
-                        ),
-                        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          );
-                        },
-                      )),
+                        zoom: 16.0,
+                      ),
+                    ),
+            ),
           ],
         ),
       ),

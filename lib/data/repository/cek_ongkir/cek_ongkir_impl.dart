@@ -1,5 +1,4 @@
 import 'package:css_mobile/config/api_config.dart';
-import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_city_model.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -17,19 +16,22 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
     String weight,
   ) async {
     try {
-      Response response = await network.jne.post(
-        '/pricedev',
-        data: {
-          'username': ApiConfig.username,
-          'api_key': ApiConfig.apikey,
-          'from': from,
-          'thru': to,
-          'weight': weight,
-        },
-      );
+      Response response = await network.jne.post('/pricedev',
+          data: {
+            'username': ApiConfig.username,
+            'api_key': ApiConfig.apikey,
+            'from': from,
+            'thru': to,
+            'weight': weight,
+          },
+          options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+          ));
       return PostCekongkirModel.fromJson(response.data);
-    } on DioError catch (e) {
-      return PostCekongkirModel.fromJson(e.response?.data);
+    } on DioException catch (e) {
+      print('error ongkir : ${e.response?.data.printError}');
+      // return PostCekongkirModel.fromJson(e.response?.data);
+      return e.response?.data;
     }
   }
 
@@ -50,8 +52,7 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
         },
       );
       return GetOriginModel.fromJson(response.data);
-    } on DioError catch (e) {
-      print("error ${e.response?.data}");
+    } on DioException catch (e) {
       return GetOriginModel.fromJson(e.response?.data);
     }
   }
@@ -66,8 +67,7 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
         },
       );
       return GetOriginModel.fromJson(response.data);
-    } on DioError catch (e) {
-      print('error origin ${e.response?.data}');
+    } on DioException catch (e) {
       return GetOriginModel.fromJson(e.response?.data);
     }
   }

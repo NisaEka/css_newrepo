@@ -89,6 +89,7 @@ class ListPenerimaController extends BaseController {
 
   Widget receiverItem(ReceiverModel e, int i, BuildContext context) {
     return ContactRadioListItem(
+      isLoading: isLoading,
       index: i,
       value: e,
       name: e.name,

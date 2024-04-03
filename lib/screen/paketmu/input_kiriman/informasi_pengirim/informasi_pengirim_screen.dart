@@ -7,6 +7,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/infor
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
@@ -99,7 +100,23 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: controller.isLoading
-                                    ? const Text('Loading data...')
+                                    ? Shimmer(
+                                        isLoading: controller.isLoading,
+                                        child: Row(
+                                          children: List.generate(
+                                            3,
+                                            (index) => Container(
+                                              width: Get.width / 2,
+                                              height: 80,
+                                              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                                              decoration:  BoxDecoration(
+                                                color: greyColor,
+                                                borderRadius: BorderRadius.circular(4),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
                                     : Row(
                                         children: controller.accountList
                                             .map(

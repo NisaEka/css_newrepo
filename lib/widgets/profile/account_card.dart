@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AccountCard extends StatelessWidget {
   final Account account;
@@ -37,7 +38,10 @@ class AccountCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(account.accountNumber ?? '', style: listTitleTextStyle.copyWith(color: blueJNE)),
-              Text("${account.accountName ?? ''} / ${account.accountType ?? account.accountService}", style: listTitleTextStyle.copyWith(color: blueJNE)),
+              SizedBox(
+                  width: Get.width / 2,
+                  child: Text("${account.accountName ?? ''} / ${account.accountType ?? account.accountService}",
+                      style: listTitleTextStyle.copyWith(color: blueJNE))),
               Row(
                 children: [
                   Text(account.availableService?.ss == "Y" ? "SS " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),

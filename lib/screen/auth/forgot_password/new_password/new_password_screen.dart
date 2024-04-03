@@ -7,7 +7,6 @@ import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_controller.dart';
-import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -46,6 +45,7 @@ class NewPasswordScreen extends StatelessWidget {
                                 hintText: 'Password baru'.tr,
                                 validator: ValidationBuilder().password().build(),
                                 isObscure: controller.isObscurePassword,
+                                inputFormatters: const [],
                                 multiLine: false,
                                 suffixIcon: IconButton(
                                   icon: controller.showIcon,
@@ -68,6 +68,7 @@ class NewPasswordScreen extends StatelessWidget {
                                 controller: controller.confirmPW,
                                 prefixIcon: const Icon(Icons.lock),
                                 hintText: 'Konfirmasi password baru'.tr,
+                                inputFormatters: const [],
                                 validator: (value) {
                                   if (value != controller.newPW.text) {
                                     return "Password tidak sama".tr;

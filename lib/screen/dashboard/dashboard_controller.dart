@@ -170,9 +170,14 @@ class DashboardController extends BaseController {
     ];
 
     marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
-
+    var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+    userName = shipper.name;
     // if (isLogin == true) {
     try {
+      await jlc.postTotalPoint().then((value) {
+        jlcPoint = value.data?.first.sisaPoint;
+        update();
+      });
       await transaction.getSender().then((value) async => await storage.saveData(
             StorageCore.shipper,
             value.payload,
@@ -182,14 +187,6 @@ class DashboardController extends BaseController {
             StorageCore.accounts,
             value,
           ));
-
-      var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
-      userName = shipper.name;
-
-      await jlc.postTotalPoint().then((value) {
-        jlcPoint = value.data?.first.sisaPoint;
-        update();
-      });
 
       await transaction.getDropshipper().then((value) async => await storage.saveData(
             StorageCore.dropshipper,
@@ -216,27 +213,27 @@ class DashboardController extends BaseController {
 
     isLoading = false;
     update();
-    if (isLogin && allow.buatPesanan != "Y" && isOnline) {
-      menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
-    }
-    if (isLogin && allow.riwayatPesanan != "Y" && isOnline) {
-      menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
-      menuItems.removeWhere((e) => e.title == "Draft Transaksi");
-    }
-    if (isLogin && allow.lacakPesanan != "Y" && isOnline) {
-      menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
-    }
-    if (isLogin && allow.uangCod != "Y" && isOnline) {
-      menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
-    }
-    if (isLogin && allow.monitoringAgg != "Y" && isOnline) {
-      menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
-    }
-    if (isLogin && allow.monitoringAggMinus != "Y" && isOnline) {
-      menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
-    }
-    if (isLogin && allow.cekOngkir != "Y" && isOnline) {
-      menuItems.removeWhere((e) => e.title == "Cek Ongkir");
-    }
+    // if (isLogin && allow.buatPesanan != "Y" && isOnline) {
+    //   menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
+    // }
+    // if (isLogin && allow.riwayatPesanan != "Y" && isOnline) {
+    //   menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
+    //   menuItems.removeWhere((e) => e.title == "Draft Transaksi");
+    // }
+    // if (isLogin && allow.lacakPesanan != "Y" && isOnline) {
+    //   menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
+    // }
+    // if (isLogin && allow.uangCod != "Y" && isOnline) {
+    //   menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
+    // }
+    // if (isLogin && allow.monitoringAgg != "Y" && isOnline) {
+    //   menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
+    // }
+    // if (isLogin && allow.monitoringAggMinus != "Y" && isOnline) {
+    //   menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
+    // }
+    // if (isLogin && allow.cekOngkir != "Y" && isOnline) {
+    //   menuItems.removeWhere((e) => e.title == "Cek Ongkir");
+    // }
   }
 }

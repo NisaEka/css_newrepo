@@ -1,41 +1,41 @@
 class PostCekongkirModel {
   PostCekongkirModel({
-    List<Price>? price,
+    List<Ongkir>? ongkir,
   }) {
-    _price = price;
+    _ongkir = ongkir;
   }
 
   PostCekongkirModel.fromJson(dynamic json) {
     if (json['price'] != null) {
-      _price = [];
+      _ongkir = [];
       json['price'].forEach((v) {
-        _price?.add(Price.fromJson(v));
+        _ongkir?.add(Ongkir.fromJson(v));
       });
     }
   }
 
-  List<Price>? _price;
+  List<Ongkir>? _ongkir;
 
   PostCekongkirModel copyWith({
-    List<Price>? price,
+    List<Ongkir>? ongkir,
   }) =>
       PostCekongkirModel(
-        price: price ?? _price,
+        ongkir: ongkir ?? _ongkir,
       );
 
-  List<Price>? get price => _price;
+  List<Ongkir>? get ongkir => _ongkir;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (_price != null) {
-      map['price'] = _price?.map((v) => v.toJson()).toList();
+    if (_ongkir != null) {
+      map['price'] = _ongkir?.map((v) => v.toJson()).toList();
     }
     return map;
   }
 }
 
-class Price {
-  Price({
+class Ongkir {
+  Ongkir({
     String? originName,
     String? destinationName,
     String? serviceDisplay,
@@ -59,7 +59,7 @@ class Price {
     _times = times;
   }
 
-  Price.fromJson(dynamic json) {
+  Ongkir.fromJson(dynamic json) {
     _originName = json['origin_name'];
     _destinationName = json['destination_name'];
     _serviceDisplay = json['service_display'];
@@ -83,7 +83,7 @@ class Price {
   String? _etdThru;
   String? _times;
 
-  Price copyWith({
+  Ongkir copyWith({
     String? originName,
     String? destinationName,
     String? serviceDisplay,
@@ -95,7 +95,7 @@ class Price {
     String? etdThru,
     String? times,
   }) =>
-      Price(
+      Ongkir(
         originName: originName ?? _originName,
         destinationName: destinationName ?? _destinationName,
         serviceDisplay: serviceDisplay ?? _serviceDisplay,

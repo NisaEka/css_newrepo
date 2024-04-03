@@ -92,6 +92,7 @@ class AkunBankScreen extends StatelessWidget {
                         child: ListView(
                           children: [
                             BankAccountListItem(
+                              isLoading: controller.isLoading,
                               icon: const Icon(
                                 Icons.credit_card_rounded,
                                 color: blueJNE,
@@ -106,7 +107,7 @@ class AkunBankScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                controller.isLoading ? const LoadingDialog() : Container(),
+                // controller.isLoading ? const LoadingDialog() : Container(),
               ],
             ),
           );

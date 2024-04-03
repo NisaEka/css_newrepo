@@ -24,7 +24,7 @@ class AuthRepositoryImpl extends AuthRepository {
         data: loginData,
       );
       return LoginModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return LoginModel.fromJson(e.response?.data);
     }
   }
@@ -37,7 +37,7 @@ class AuthRepositoryImpl extends AuthRepository {
         data: data,
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -50,7 +50,7 @@ class AuthRepositoryImpl extends AuthRepository {
         data: data,
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -63,7 +63,7 @@ class AuthRepositoryImpl extends AuthRepository {
         data: data,
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -75,7 +75,7 @@ class AuthRepositoryImpl extends AuthRepository {
         '/agent?branch_code=$branchCode',
       );
       return GetAgentModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return GetAgentModel.fromJson(e.response?.data);
     }
   }
@@ -87,7 +87,7 @@ class AuthRepositoryImpl extends AuthRepository {
         '/referral?keyword=$keyword',
       );
       return GetReferalModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return GetReferalModel.fromJson(e.response?.data);
     }
   }
@@ -102,7 +102,7 @@ class AuthRepositoryImpl extends AuthRepository {
         },
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -115,7 +115,7 @@ class AuthRepositoryImpl extends AuthRepository {
         data: data,
       );
       return PostTransactionModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }
@@ -128,7 +128,7 @@ class AuthRepositoryImpl extends AuthRepository {
         data: data,
       );
       return LoginModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return LoginModel.fromJson(e.response?.data);
     }
   }

@@ -66,9 +66,11 @@ class ListPenerimaScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   controller.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        )
+                      ?  Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, i) => controller.receiverItem(ReceiverModel(), i, context),
+                        itemCount: 5,
+                      ))
                       : Expanded(
                           child: ListView(
                             shrinkWrap: true,

@@ -48,6 +48,7 @@ class TambahPetugasScreen extends StatelessWidget {
                               hintText: 'Alamat Email'.tr,
                               isRequired: true,
                               validator: ValidationBuilder().email().minLength(10).build(),
+                              inputFormatters: const [],
                             ),
                             CustomTextFormField(
                               controller: controller.nomorTelepon,
@@ -62,7 +63,8 @@ class TambahPetugasScreen extends StatelessWidget {
                                     validator: ValidationBuilder().password().build(),
                                     isObscure: controller.isObscurePassword,
                                     multiLine: false,
-                                    suffixIcon: IconButton(
+                                    inputFormatters: const [],
+                                      suffixIcon: IconButton(
                                       icon: controller.showIcon,
                                       onPressed: () {
                                         controller.isObscurePassword ? controller.isObscurePassword = false : controller.isObscurePassword = true;

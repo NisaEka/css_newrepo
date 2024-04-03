@@ -5,10 +5,10 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/inform
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
-import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
@@ -18,7 +18,6 @@ import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class InformasiKirimanScreen extends StatelessWidget {
@@ -122,7 +121,11 @@ class InformasiKirimanScreen extends StatelessWidget {
                             child: CustomFormLabel(label: 'Services'.tr),
                           ),
                           const SizedBox(height: 10),
-                          controller.isServiceLoad ? const Center(child: Text('Loading services...')) : const SizedBox()
+                          // controller.isServiceLoad
+                          //     ? const Center(
+                          //         child: Text('Loading services...'),
+                          //       )
+                          //     : const SizedBox(),
                         ],
                       ),
                     ),
@@ -145,21 +148,30 @@ class InformasiKirimanScreen extends StatelessWidget {
                                 controller.formValidate = controller.formKey.currentState?.validate() ?? false;
                                 controller.update();
                               },
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: controller.selectedService == controller.serviceList[index] ? blueJNE : greyLightColor3,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Text(
-                                  controller.serviceList[index].serviceDisplay ?? '',
-                                  style: listTitleTextStyle.copyWith(
-                                      color: controller.selectedService == controller.serviceList[index] ? whiteColor : blueJNE),
+                              child: Shimmer(
+                                isLoading: controller.isServiceLoad,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: controller.isServiceLoad
+                                        ? greyColor
+                                        : controller.selectedService == controller.serviceList[index]
+                                            ? blueJNE
+                                            : greyLightColor3,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: controller.serviceList.isEmpty
+                                      ? const SizedBox()
+                                      : Text(
+                                          controller.serviceList[index].serviceDisplay ?? '',
+                                          style: listTitleTextStyle.copyWith(
+                                              color: controller.selectedService == controller.serviceList[index] ? whiteColor : blueJNE),
+                                        ),
                                 ),
                               ),
                             );
                           },
-                          childCount: controller.serviceList.length,
+                          childCount: controller.isServiceLoad ? 6 : controller.serviceList.length,
                         ),
                       ),
                     ),
@@ -432,95 +444,118 @@ class InformasiKirimanScreen extends StatelessWidget {
                                           ],
                                         )
                                       : const SizedBox(),
-                                  controller.isCalculate
-                                      ? Container(
-                                          width: Get.width,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
-                                            border: Border.all(color: greyDarkColor2),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
-                                              Text('Menghitung...'.tr),
-                                            ],
-                                          ),
-                                        )
-                                      : controller.isOnline
+                                  controller.isOnline
+                                      ? /*controller.isCalculate
                                           ? Container(
+                                              width: Get.width,
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(8),
                                                 border: Border.all(color: greyDarkColor2),
                                               ),
-                                              padding: const EdgeInsets.all(10),
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
-                                                  controller.account.accountService?.toUpperCase() == 'COD'
-                                                      // &&
-                                                      //     (controller.account.accountCustType?.toUpperCase() == "990" ||
-                                                      //         controller.account.accountCustType?.toUpperCase() == "992")
-                                                      ? Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            const Text('COD fee'),
-                                                            Text('${controller.codfee * 100}%'.replaceAll('.', ','), style: listTitleTextStyle),
-                                                          ],
-                                                        )
-                                                      : const SizedBox(),
-                                                  controller.account.accountService?.toUpperCase() == 'COD'
-                                                      ? Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Text('Harga COD'.tr),
-                                                            Text('Rp. ${controller.hargacod.toInt().toCurrency()}', style: listTitleTextStyle),
-                                                          ],
-                                                        )
-                                                      : const SizedBox(),
-                                                  controller.codOngkir
-                                                      ? Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Text('COD Ongkir'.tr),
-                                                            Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
-                                                          ],
-                                                        )
-                                                      : const SizedBox(),
-                                                  controller.asuransi
-                                                      ? Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Text('Asuransi Pengiriman'.tr),
-                                                            Text('Rp. ${controller.isr.toInt().toCurrency()}', style: listTitleTextStyle),
-                                                          ],
-                                                        )
-                                                      : const SizedBox(),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text('Ongkos Kirim'.tr),
-                                                      Text('Rp. ${controller.flatRate.toInt().toCurrency()}', style: listTitleTextStyle),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text('Total Ongkos Kirim'.tr),
-                                                      Text('Rp. ${(controller.totalOngkir).toInt().toCurrency()}', style: listTitleTextStyle),
-                                                    ],
-                                                  )
+                                                  Text('Menghitung...'.tr),
                                                 ],
                                               ),
                                             )
-                                          : const SizedBox(),
+                                          : */
+                                      Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            border: Border.all(color: greyDarkColor2),
+                                          ),
+                                          padding: const EdgeInsets.all(10),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
+                                              controller.isCalculate
+                                                  ? Column(
+                                                      children: List.generate(
+                                                        2,
+                                                        (index) => Shimmer(
+                                                          isLoading: controller.isCalculate,
+                                                          child: Container(
+                                                            width: Get.width,
+                                                            height: 15,
+                                                            margin: const EdgeInsets.symmetric(vertical: 5),
+                                                            color: greyLightColor3,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Column(
+                                                      children: [
+                                                        controller.account.accountService?.toUpperCase() == 'COD'
+                                                            // &&
+                                                            //     (controller.account.accountCustType?.toUpperCase() == "990" ||
+                                                            //         controller.account.accountCustType?.toUpperCase() == "992")
+                                                            ? Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  const Text('COD fee'),
+                                                                  Text('${controller.codfee * 100}%'.replaceAll('.', ','), style: listTitleTextStyle),
+                                                                ],
+                                                              )
+                                                            : const SizedBox(),
+                                                        controller.account.accountService?.toUpperCase() == 'COD'
+                                                            ? Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  Text('Harga COD'.tr),
+                                                                  Text('Rp. ${controller.hargacod.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                                ],
+                                                              )
+                                                            : const SizedBox(),
+                                                        controller.codOngkir
+                                                            ? Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  Text('COD Ongkir'.tr),
+                                                                  Text('Rp. ${controller.freightCharge.toInt().toCurrency()}',
+                                                                      style: listTitleTextStyle),
+                                                                ],
+                                                              )
+                                                            : const SizedBox(),
+                                                        controller.asuransi
+                                                            ? Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  Text('Asuransi Pengiriman'.tr),
+                                                                  Text('Rp. ${controller.isr.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                                ],
+                                                              )
+                                                            : const SizedBox(),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text('Ongkos Kirim'.tr),
+                                                            Text('Rp. ${controller.flatRate.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text('Total Ongkos Kirim'.tr),
+                                                            Text('Rp. ${(controller.totalOngkir).toInt().toCurrency()}', style: listTitleTextStyle),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                            ],
+                                          ),
+                                        )
+                                      : const SizedBox(),
                                   controller.isOnline
                                       ? CustomFilledButton(
-                                          color: controller.formValidate && controller.selectedService != null ? blueJNE : greyColor,
+                                          color: controller.formValidate && controller.selectedService != null && !controller.isCalculate
+                                              ? blueJNE
+                                              : greyColor,
                                           title: controller.dataEdit != null ? 'Edit Resi'.tr : 'Buat Resi'.tr,
                                           onPressed: () {
-                                            controller.formValidate && controller.selectedService != null
+                                            controller.formValidate && controller.selectedService != null && !controller.isCalculate
                                                 ? controller.dataEdit == null
                                                     ? controller.saveTransaction()
                                                     : controller.updateTransaction()
@@ -550,7 +585,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              controller.isLoading || controller.isCalculate || controller.isServiceLoad ? const LoadingDialog() : Container(),
+              controller.isLoading ? const LoadingDialog() : Container(),
             ],
           );
         });

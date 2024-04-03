@@ -2,8 +2,6 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/items/data_umum_list_item.dart';
 import 'package:flutter/material.dart';
@@ -83,48 +81,57 @@ class DataUmumScreen extends StatelessWidget {
                 )
               ],
             ),
-            body: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: ListView(
-                    children: [
-                      DataUmumListItem(
-                        title: controller.ccrfProfil?.generalInfo?.brand ?? '-',
-                        subtitle: controller.ccrfProfil?.generalInfo?.email ?? '-',
-                        icon: Icons.store_mall_directory_rounded,
-                      ),
-                      DataUmumListItem(
-                        title: controller.ccrfProfil?.generalInfo?.name ?? '-',
-                        subtitle: controller.ccrfProfil?.generalInfo?.idCardNumber ?? '-',
-                        icon: Icons.person,
-                      ),
-                      DataUmumListItem(
-                        title: controller.ccrfProfil?.generalInfo?.secondaryPhone ?? controller.ccrfProfil?.generalInfo?.phone ?? '-',
-                        subtitle: controller.ccrfProfil?.generalInfo?.phone ?? '-',
-                        icon: Icons.phone,
-                      ),
-                      DataUmumListItem(
-                        title: controller.ccrfProfil?.generalInfo?.address ?? '-',
-                        subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
-                        icon: Icons.home,
-                      ),
-                      DataUmumListItem(
-                        title: controller.ccrfProfil?.generalInfo?.district ?? '-',
-                        subtitle: controller.ccrfProfil?.generalInfo?.subDistrict ?? '-',
-                        icon: Icons.location_pin,
-                      ),
-                      DataUmumListItem(
-                        title: controller.ccrfProfil?.generalInfo?.city ?? '-',
-                        subtitle: controller.ccrfProfil?.generalInfo?.province ?? '-',
-                        icon: Icons.location_on,
-                      ),
-                      // CustomFilledButton(color: blueJNE, title: "Edit Profil".tr,)
-                    ],
-                  ),
-                ),
-                controller.isLoading ? const LoadingDialog() : Container(),
-              ],
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: ListView(
+                children: controller.isLoading
+                    ? List.generate(
+                        4,
+                        (index) => DataUmumListItem(
+                          isLoading: controller.isLoading,
+                          title: "",
+                          icon: Icons.account_circle,
+                        ),
+                      )
+                    : [
+                        DataUmumListItem(
+                          title: controller.ccrfProfil?.generalInfo?.brand ?? '-',
+                          subtitle: controller.ccrfProfil?.generalInfo?.email ?? '-',
+                          icon: Icons.store_mall_directory_rounded,
+                        ),
+                        DataUmumListItem(
+                          title: controller.ccrfProfil?.generalInfo?.name ?? '-',
+                          subtitle: controller.ccrfProfil?.generalInfo?.idCardNumber ?? '-',
+                          icon: Icons.person,
+                        ),
+                        DataUmumListItem(
+                          title: controller.ccrfProfil?.generalInfo?.secondaryPhone ?? controller.ccrfProfil?.generalInfo?.phone ?? '-',
+                          subtitle: controller.ccrfProfil?.generalInfo?.phone ?? '-',
+                          icon: Icons.phone,
+                        ),
+                        DataUmumListItem(
+                          title: "${controller.ccrfProfil?.generalInfo?.address ?? '-'}"
+                              ",  ${controller.ccrfProfil?.generalInfo?.subDistrict ?? '-'}"
+                              ", ${controller.ccrfProfil?.generalInfo?.district ?? '-'}"
+                              ", ${controller.ccrfProfil?.generalInfo?.city ?? '-'}"
+                              ", ${controller.ccrfProfil?.generalInfo?.province ?? '-'}"
+                              ", ${controller.ccrfProfil?.generalInfo?.zipCode ?? '-'}",
+                          // subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
+                          icon: Icons.home,
+                        ),
+                        // DataUmumListItem(
+                        //   title: controller.ccrfProfil?.generalInfo?.district ?? '-',
+                        //   subtitle: controller.ccrfProfil?.generalInfo?.subDistrict ?? '-',
+                        //   icon: Icons.location_pin,
+                        // ),
+                        // DataUmumListItem(
+                        //   title: controller.ccrfProfil?.generalInfo?.city ?? '-',
+                        //   subtitle: controller.ccrfProfil?.generalInfo?.province ?? '-',
+                        //   icon: Icons.location_on,
+                        // ),
+                        // CustomFilledButton(color: blueJNE, title: "Edit Profil".tr,)
+                      ],
+              ),
             ),
           );
         });

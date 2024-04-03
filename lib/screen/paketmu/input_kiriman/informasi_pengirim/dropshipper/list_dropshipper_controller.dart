@@ -98,6 +98,7 @@ class ListDropshipperController extends BaseController {
 
   Widget dropshipperItem(DropshipperModel e, int i, BuildContext context) {
     return ContactRadioListItem(
+      isLoading: isLoading,
       index: i,
       groupValue: dropshipperList,
       value: e,

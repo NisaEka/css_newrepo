@@ -28,16 +28,19 @@ class AltProfileController extends BaseController {
       String? token = await storage.readToken();
       debugPrint("token : $token");
       isLogin = token != null;
-
-      basicProfil = BasicProfilModel.fromJson(
-        await storage.readData(StorageCore.userProfil),
-      );
+      await profil.getBasicProfil().then((value) async {
+        basicProfil = value.payload;
+        update();
+      });
 
       allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
       update();
     } catch (e, i) {
       e.printError();
       i.printError();
+      basicProfil = BasicProfilModel.fromJson(
+        await storage.readData(StorageCore.userProfil),
+      );
     }
 
     update();
