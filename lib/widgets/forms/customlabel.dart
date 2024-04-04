@@ -35,7 +35,8 @@ class CustomLabelText extends StatelessWidget {
     this.margin,
     this.padding,
     this.valueMaxline,
-    this.isLoading = false, this.maxline,
+    this.isLoading = false,
+    this.maxline,
   });
 
   @override
@@ -55,7 +56,11 @@ class CustomLabelText extends StatelessWidget {
                 Shimmer(
                   isLoading: isLoading,
                   child: Container(
-                    decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
+                    decoration: BoxDecoration(
+                      color: isLoading ? greyColor : Colors.transparent,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    margin: const EdgeInsets.only(bottom: 2),
                     child: Text(
                       title,
                       style: titleTextStyle ??
@@ -70,6 +75,7 @@ class CustomLabelText extends StatelessWidget {
                   isLoading: isLoading,
                   child: Container(
                     decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
+                    margin: const EdgeInsets.only(bottom: 2),
                     child: Text(
                       value.toUpperCase(),
                       // "This is a long text This is a long text This is a long text",
@@ -114,6 +120,7 @@ class CustomLabelText extends StatelessWidget {
                   child: Container(
                     width: width,
                     decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
+                    margin: const EdgeInsets.only(bottom: 2),
                     child: Text(
                       value.toUpperCase(),
                       // "This is a long text This is a long text This is a long text",

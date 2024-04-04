@@ -195,14 +195,15 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                 Text(
                                   controller.transactionModel?.orderId ?? '-',
                                   style: itemTextStyle,
-                                ),Text(
+                                ),
+                                Text(
                                   controller.transactionModel?.orderId ?? '-',
                                   style: itemTextStyle,
                                 ),
                                 SizedBox(
                                   width: Get.width - 200,
                                   child: Text(
-                                    '${controller.transactionModel?.account?.accountNumber}/${controller.transactionModel?.account?.accountName}/${controller.transactionModel?.account?.accountType}',
+                                    '${controller.transactionModel?.account?.accountNumber}/${controller.transactionModel?.account?.accountName}/${controller.transactionModel?.account?.accountType ?? 'JLC'}',
                                     style: itemTextStyle,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -227,12 +228,25 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: CustomFilledButton(
-            title: controller.transactionModel?.status == "MASIH DI KAMU" ? "Edit Kiriman".tr : "Hubungi Aku".tr,
-            color: controller.transactionModel?.status == "MASIH DI KAMU" ? successLightColor3 : errorLightColor3,
+            title: controller.transactionModel?.status == "MASIH DI KAMU" &&
+                    controller.transactionModel?.account?.accountType != "CASHLESS" &&
+                    controller.transactionModel?.account?.accountService != "JLC" &&
+                    controller.transactionModel?.account?.accountNumber?.substring(0, 1) != "3"
+                ? "Edit Kiriman".tr
+                : "Hubungi Aku".tr,
+            color: controller.transactionModel?.status == "MASIH DI KAMU" &&
+                    controller.transactionModel?.account?.accountService != "JLC" &&
+                    controller.transactionModel?.account?.accountType != "CASHLESS" &&
+                    controller.transactionModel?.account?.accountNumber?.substring(0, 1) != "3"
+                ? successLightColor3
+                : errorLightColor3,
             margin: const EdgeInsets.all(20),
             isLoading: controller.isLoading,
             onPressed: () {
-              if (controller.transactionModel?.status == "MASIH DI KAMU") {
+              if (controller.transactionModel?.status == "MASIH DI KAMU" &&
+                  controller.transactionModel?.account?.accountService != "JLC" &&
+                  controller.transactionModel?.account?.accountType != "CASHLESS" &&
+                  controller.transactionModel?.account?.accountNumber?.substring(0, 1) != "3") {
                 Get.to(
                   const InformasiPengirimScreen(),
                   arguments: {

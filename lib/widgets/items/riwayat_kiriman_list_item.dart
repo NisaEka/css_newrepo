@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
   final bool isSelected;
   final int index;
   final void Function(BuildContext)? onDelete;
+  final bool isLoading;
 
   const RiwayatKirimanListItem({
     super.key,
@@ -32,7 +34,9 @@ class RiwayatKirimanListItem extends StatelessWidget {
     this.onLongPress,
     this.isSelected = false,
     required this.orderID,
-    required this.index, this.onDelete,
+    required this.index,
+    this.onDelete,
+    this.isLoading = false,
   });
 
   @override
@@ -67,149 +71,104 @@ class RiwayatKirimanListItem extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Order ID : $orderID', style: sublistTitleTextStyle),
-                  Text(tanggalEntry, style: sublistTitleTextStyle),
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 10),
-                  Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: apiType == "COD" ? successColor : errorColor,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Text(
-                          apiType,
-                          style: sublistTitleTextStyle.copyWith(
-                            color: whiteColor,
-                            fontSize: 8,
+          child: Shimmer(
+            isLoading: isLoading,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      color: isLoading ? greyLightColor3 : Colors.transparent,
+                      width: isLoading ? Get.width / 3 : null,
+                      child: Text('Order ID : $orderID', style: sublistTitleTextStyle),
+                    ),
+                    Container(
+                      color: isLoading ? greyLightColor3 : Colors.transparent,
+                      width: isLoading ? Get.width / 5 : null,
+                      child: Text(tanggalEntry, style: sublistTitleTextStyle),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 2),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: 10),
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          width: isLoading ? 50 : null,
+                          decoration: BoxDecoration(
+                            color: apiType == "COD" ? successColor : errorColor,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Text(
+                            apiType,
+                            style: sublistTitleTextStyle.copyWith(
+                              color: whiteColor,
+                              fontSize: 8,
+                            ),
                           ),
                         ),
-                      ),
-                      // Text(ImageConstant.paket),
-                      // Image.asset(IconsConstant.paket),
-                      CachedNetworkImage(
-                        imageUrl: IconsConstant.paket,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(noResi, style: listTitleTextStyle),
-                      Text(penerima, style: sublistTitleTextStyle),
-                      Text(service, style: sublistTitleTextStyle),
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                            margin: const EdgeInsets.only(bottom: 10),
-                            decoration: BoxDecoration(
-                              color: apiType == "MASIH DI KAMU" ? successLightColor2 : errorLightColor2,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Text(
-                              status,
-                              style: sublistTitleTextStyle.copyWith(
-                                color: whiteColor,
-                                fontSize: 8,
+                        // Text(ImageConstant.paket),
+                        // Image.asset(IconsConstant.paket),
+                        CachedNetworkImage(
+                          imageUrl: IconsConstant.paket,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          color: isLoading ? greyLightColor3 : Colors.transparent,
+                          width: isLoading ? Get.width / 3 : null,
+                          margin: const EdgeInsets.only(bottom: 2),
+                          child: Text(noResi, style: listTitleTextStyle),
+                        ),
+                        Container(
+                          color: isLoading ? greyLightColor3 : Colors.transparent,
+                          width: isLoading ? Get.width / 5 : null,
+                          margin: const EdgeInsets.only(bottom: 2),
+                          child: Text(penerima, style: sublistTitleTextStyle),
+                        ),
+                        Container(
+                          color: isLoading ? greyLightColor3 : Colors.transparent,
+                          width: isLoading ? Get.width / 10 : null,
+                          margin: const EdgeInsets.only(bottom: 2),
+                          child: Text(service, style: sublistTitleTextStyle),
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              margin: const EdgeInsets.only(bottom: 10),
+                              width: isLoading ? Get.width / 5 : null,
+                              decoration: BoxDecoration(
+                                color: apiType == "MASIH DI KAMU" ? successLightColor2 : errorLightColor2,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Text(
+                                status,
+                                style: sublistTitleTextStyle.copyWith(
+                                  color: whiteColor,
+                                  fontSize: 8,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          // child: Column(
-          //   children: [
-          //     Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Text(
-          //           tanggalEntry.toLongDateFormat(),
-          //           style: sublistTitleTextStyle,
-          //         ),
-          //         Container(
-          //           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          //           decoration: BoxDecoration(
-          //             color: errorColor,
-          //             borderRadius: BorderRadius.circular(15),
-          //           ),
-          //           child: Text(
-          //             status,
-          //             style: sublistTitleTextStyle.copyWith(
-          //               color: whiteColor,
-          //               fontSize: 8,
-          //             ),
-          //           ),
-          //         )
-          //       ],
-          //     ),
-          //     Row(
-          //       children: [
-          //         Column(
-          //           crossAxisAlignment: CrossAxisAlignment.start,
-          //           children: [
-          //             Text(
-          //               'Order ID'.tr,
-          //               style: sublistTitleTextStyle.copyWith(fontSize: 10),
-          //             ),
-          //             Text(
-          //               'No Resi'.tr,
-          //               style: sublistTitleTextStyle.copyWith(fontSize: 10),
-          //             ),
-          //             Text(
-          //               'Petugas Entry'.tr,
-          //               style: sublistTitleTextStyle.copyWith(fontSize: 10),
-          //             ),
-          //             Text(
-          //               'Penerima'.tr,
-          //               style: sublistTitleTextStyle.copyWith(fontSize: 10),
-          //             ),
-          //           ],
-          //         ),
-          //         const SizedBox(width: 10),
-          //         Column(
-          //           crossAxisAlignment: CrossAxisAlignment.start,
-          //           children: [
-          //             Text(
-          //               ': $orderID',
-          //               style: listTitleTextStyle.copyWith(fontSize: 10),
-          //             ),
-          //             Text(
-          //               ': $noResi',
-          //               style: listTitleTextStyle.copyWith(fontSize: 10),
-          //             ),
-          //             Text(
-          //               ': $petugas',
-          //               style: listTitleTextStyle.copyWith(fontSize: 10),
-          //             ),
-          //             Text(
-          //               ': $penerima',
-          //               style: listTitleTextStyle.copyWith(fontSize: 10),
-          //             ),
-          //           ],
-          //         ),
-          //       ],
-          //     )
-          //   ],
-          // ),
         ),
       ),
     );

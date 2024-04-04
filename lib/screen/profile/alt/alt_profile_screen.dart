@@ -61,18 +61,18 @@ class AltProfileScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  controller.allow.fasilitas == "Y"
-                      ? SettingListItem(
+                  /*controller.allow.fasilitas == "Y"
+                      ? */SettingListItem(
                           title: 'Fasilitasku'.tr,
                           icon: Icons.format_list_numbered_rounded,
                           onTap: () => showDialog(
                             context: context,
                             builder: (context) => const ComingSoonDialog(),
                           ),
-                        )
-                      : const SizedBox(),
-                  controller.allow.profil == "Y"
-                      ? Column(
+                        ),
+                      // : const SizedBox(),
+                  /*controller.allow.profil == "Y"
+                      ?*/ Column(
                           children: [
                             SettingListItem(
                               title: 'Lihat Akun'.tr,
@@ -100,21 +100,22 @@ class AltProfileScreen extends StatelessWidget {
                               onTap: () => Get.to(const DokumenScreen()),
                             )
                           ],
-                        )
-                      : const SizedBox(),
+                        ),
+                      // : const SizedBox(),
                 ],
               ),
             ),
             bottomNavigationBar: Container(
               margin: const EdgeInsets.only(bottom: 50),
+              color: whiteColor,
               child: ListTile(
                 onTap: () => controller.isLogin ? controller.doLogout() : Get.to(const LoginScreen()),
                 leading: Icon(controller.isLogin ? Icons.logout : Icons.login),
                 title: Text(controller.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
                 trailing: Text('v ${controller.version.toString()}'.tr),
                 shape: const Border(
-                  bottom: BorderSide(color: greyColor),
-                  top: BorderSide(color: greyColor),
+                  bottom: BorderSide(color: Colors.black ),
+                  top: BorderSide(color: Colors.black),
                 ),
               ),
             ),

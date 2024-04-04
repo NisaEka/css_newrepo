@@ -1,24 +1,38 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class CustomFormLabel extends StatelessWidget{
-  const CustomFormLabel({super.key, required this.label, this.showRequired = false});
+class CustomFormLabel extends StatelessWidget {
+  const CustomFormLabel({
+    super.key,
+    required this.label,
+    this.showRequired = false,
+    this.isLoading = false,
+  });
 
   final String label;
   final bool showRequired;
+  final bool isLoading;
+
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: label,
-        style: subformLabelTextStyle,
-        children: <TextSpan>[
-          TextSpan(
-              text: showRequired ? "*" : "",
-              style: const TextStyle(color: Colors.red)),
-        ],
+    return Shimmer(
+      isLoading: isLoading,
+      child: Container(
+        color: isLoading ? greyLightColor3 : Colors.transparent,
+        width: isLoading ? Get.width / 3 : null,
+        child: RichText(
+          text: TextSpan(
+            text: label,
+            style: subformLabelTextStyle,
+            children: <TextSpan>[
+              TextSpan(text: showRequired ? "*" : "", style: const TextStyle(color: Colors.red)),
+            ],
+          ),
+        ),
       ),
     );
   }
-
 }

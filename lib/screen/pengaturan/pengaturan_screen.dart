@@ -32,7 +32,7 @@ class PengaturanScreen extends StatelessWidget {
                   ListTile(
                     title: Text('Bahasa'.tr),
                     contentPadding: EdgeInsets.zero,
-                    trailing: Container(
+                    trailing: SizedBox(
                       width: 90,
                       child: Row(
                         children: [

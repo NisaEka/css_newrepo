@@ -39,8 +39,7 @@ class NetworkCore {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': '<calculated when request is sent>',
-        'Host': '<calculated when request is sent>',
+
       },
     );
 

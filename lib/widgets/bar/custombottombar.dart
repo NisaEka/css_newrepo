@@ -61,36 +61,51 @@ class BottomBar extends StatelessWidget {
                 const SizedBox(width: 30, height: 30),
                 const SizedBox(width: 30, height: 30),
                 BottomMenuItem(
-                  icon: Icon(Icons.person, color: menu == 1 ? redJNE : blueJNE),
+                  icon: Icon(Icons.person,
+                      color: isLogin
+                          ? menu == 1
+                              ? redJNE
+                              : blueJNE
+                          : blueJNE.withOpacity(0.5)),
                   title: "Profil".tr,
-                  color: menu == 1 ? redJNE : blueJNE,
+                  color: isLogin
+                      ? menu == 1
+                          ? redJNE
+                          : blueJNE
+                      : blueJNE.withOpacity(0.5),
                   // onTap: () => Get.offAll(const ProfileScreen()),
-                  onTap: () => Get.offAll(const AltProfileScreen()),
+                  onTap: () => isLogin
+                      ? Get.offAll(const AltProfileScreen())
+                      : showDialog(
+                          context: context,
+                          builder: (context) => const LoginAlertDialog(),
+                        ),
                 ),
               ],
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 40.0),
-          child: /*allowedMenu.buatPesanan == "Y" || !isLogin
-              ? */FloatingActionButton(
-                  shape: const CircleBorder(),
-                  backgroundColor: isLogin ? redJNE : errorLightColor2,
-                  // onPressed: () => Get.to(const InputKirimanScreen()),
-                  onPressed: () => isLogin
-                      ? Get.to(const InformasiPengirimScreen(), arguments: {})
-                      : showDialog(
-                          context: context,
-                          builder: (context) => const LoginAlertDialog(),
-                        ),
-                  child: const Icon(
-                    Icons.add,
-                    color: whiteColor,
-                  ),
-                )
-              // : const SizedBox(),
-        ),
+            padding: const EdgeInsets.only(bottom: 40.0),
+            child: /*allowedMenu.buatPesanan == "Y" || !isLogin
+              ? */
+                FloatingActionButton(
+              shape: const CircleBorder(),
+              backgroundColor: isLogin ? redJNE : errorLightColor2,
+              // onPressed: () => Get.to(const InputKirimanScreen()),
+              onPressed: () => isLogin
+                  ? Get.to(const InformasiPengirimScreen(), arguments: {})
+                  : showDialog(
+                      context: context,
+                      builder: (context) => const LoginAlertDialog(),
+                    ),
+              child: const Icon(
+                Icons.add,
+                color: whiteColor,
+              ),
+            )
+            // : const SizedBox(),
+            ),
       ],
     );
   }

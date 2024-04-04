@@ -10,6 +10,7 @@ import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:css_mobile/widgets/forms/customcheckbox.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -431,6 +432,7 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                         builderDelegate: PagedChildBuilderDelegate<TransactionModel>(
                           transitionDuration: const Duration(milliseconds: 500),
                           itemBuilder: (context, item, index) => RiwayatKirimanListItem(
+                            isLoading: false,
                             index: index,
                             tanggalEntry: item.createdDate?.toShortDateTimeFormat() ?? '',
                             orderID: item.orderId ?? '-',
@@ -463,10 +465,26 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                             ),
                           ),
                           firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
-                          firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                            height: 100,
-                            background: Colors.transparent,
+                          firstPageProgressIndicatorBuilder: (context) => Column(
+                            children: List.generate(
+                              3,
+                              (index) => const RiwayatKirimanListItem(
+                                isLoading: true,
+                                tanggalEntry: '',
+                                service: '',
+                                noResi: '',
+                                apiType: "",
+                                penerima: "",
+                                status: "",
+                                orderID: "",
+                                index: 0,
+                              ),
+                            ),
                           ),
+                          // firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                          //   height: 100,
+                          //   background: Colors.transparent,
+                          // ),
                           noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
                           noMoreItemsIndicatorBuilder: (context) => const Center(
                             child: Divider(
