@@ -31,7 +31,11 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   }) : super(key: key);
 
   @override
-  Size get preferredSize => flexibleSpace != null ? const Size.fromHeight(215) : const Size.fromHeight(130);
+  Size get preferredSize => flexibleSpace != null
+      ? const Size.fromHeight(215)
+      : action?.isNotEmpty ?? false
+          ? const Size.fromHeight(150)
+          : const Size.fromHeight(130);
 
   @override
   Widget build(BuildContext context) {

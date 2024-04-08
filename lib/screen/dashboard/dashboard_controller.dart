@@ -122,7 +122,7 @@ class DashboardController extends BaseController {
 
     update();
 
-    if (stickerLabel.isEmpty == true || shipcost.isEmpty) {
+    if (stickerLabel.isEmpty || shipcost.isEmpty) {
       await storage.writeString(StorageCore.transactionLabel, "/sticker_megahub1");
       await storage.writeString(StorageCore.shippingCost, "PUBLISH");
     }

@@ -10,7 +10,6 @@ import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:css_mobile/widgets/forms/customcheckbox.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';

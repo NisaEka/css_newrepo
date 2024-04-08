@@ -212,7 +212,7 @@ class StickerDefault extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  "${data.destination?.destinationCode?.substring(0, 3)}-${data.receiver?.destinationCode}",
+                  "${data.destination?.destinationCode?.substring(0, 3)}-${data.receiver?.destinationCode ?? ''}",
                   style: TextStyle(
                     fontWeight: bold,
                     fontSize: 21,

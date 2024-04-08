@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class StickerListItem extends StatelessWidget {
   final bool isSelected;
@@ -27,15 +28,13 @@ class StickerListItem extends StatelessWidget {
         ),
         child: CachedNetworkImage(
           imageUrl: img,
-          height: 400,
+          height: Get.height / 2,
           placeholder: (context, url) => Shimmer(
-            child: ShimmerLoading(
-              isLoading: true,
-              child: Container(
-                height: 400,
-                width: 300,
-                color: Colors.grey,
-              ),
+            isLoading: true,
+            child: Container(
+              height: Get.height / 2,
+              width: 300,
+              color: Colors.grey,
             ),
           ),
           errorWidget: (context, url, error) => const Icon(Icons.image_not_supported),

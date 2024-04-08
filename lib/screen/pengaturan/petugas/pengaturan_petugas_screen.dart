@@ -64,6 +64,7 @@ class PengaturanPetugasScreen extends StatelessWidget {
                         builderDelegate: PagedChildBuilderDelegate<PetugasModel>(
                           transitionDuration: const Duration(milliseconds: 500),
                           itemBuilder: (context, item, index) => PetugasListItem(
+                            // isLoading: true,
                             index: index,
                             icon: Icon(
                               Icons.shield_outlined,
@@ -90,9 +91,16 @@ class PengaturanPetugasScreen extends StatelessWidget {
                             ),
                           ),
                           firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
-                          firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                            height: 100,
-                            background: Colors.transparent,
+                          firstPageProgressIndicatorBuilder: (context) => Column(
+                            children: List.generate(
+                              3,
+                              (index) => PetugasListItem(
+                                isLoading: controller.isLoading,
+                                title: '',
+                                icon: const Icon(Icons.shield),
+                                index: 0,
+                              ),
+                            ),
                           ),
                           noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
                           noMoreItemsIndicatorBuilder: (context) => const Center(
