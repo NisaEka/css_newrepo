@@ -64,7 +64,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                     isObscure: controller.isObscurePassword,
                                     multiLine: false,
                                     inputFormatters: const [],
-                                      suffixIcon: IconButton(
+                                    suffixIcon: IconButton(
                                       icon: controller.showIcon,
                                       onPressed: () {
                                         controller.isObscurePassword ? controller.isObscurePassword = false : controller.isObscurePassword = true;
@@ -87,6 +87,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                     controller: controller.passwordConfirm,
                                     hintText: 'Konfirmasi Kata Sandi'.tr,
                                     isRequired: true,
+                                    inputFormatters: const [],
                                     validator: (value) {
                                       if (value != controller.password.text) {
                                         return "Password tidak sama".tr;
@@ -194,11 +195,13 @@ class TambahPetugasScreen extends StatelessWidget {
                                           backgroundColor: whiteColor,
                                           onConfirm: (values) {
                                             // controller.selectedOrigin = values;
+                                            controller.selectedOrigin.clear();
                                             controller.selectedOrigin.addAll(values);
                                             controller.update();
                                           },
                                           onSelectionChanged: (values) {
                                             // controller.selectedOrigin = values;
+                                            controller.selectedOrigin.clear();
                                             controller.selectedOrigin.addAll(values);
                                             controller.update();
                                           },

@@ -98,16 +98,19 @@ class DataUmumScreen extends StatelessWidget {
                           title: controller.ccrfProfil?.generalInfo?.brand ?? '-',
                           subtitle: controller.ccrfProfil?.generalInfo?.email ?? '-',
                           icon: Icons.store_mall_directory_rounded,
+                          tooltip: '${'Nama Brand / Bisnis'.tr}\n${'Alamat email'.tr}',
                         ),
                         DataUmumListItem(
                           title: controller.ccrfProfil?.generalInfo?.name ?? '-',
                           subtitle: controller.ccrfProfil?.generalInfo?.idCardNumber ?? '-',
                           icon: Icons.person,
+                          tooltip: '${'Nama Lengkap'.tr}\n${'Nomor Identitas / KTP'.tr}',
                         ),
                         DataUmumListItem(
                           title: controller.ccrfProfil?.generalInfo?.secondaryPhone ?? controller.ccrfProfil?.generalInfo?.phone ?? '-',
                           subtitle: controller.ccrfProfil?.generalInfo?.phone ?? '-',
                           icon: Icons.phone,
+                          tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                         ),
                         DataUmumListItem(
                           title: "${controller.ccrfProfil?.generalInfo?.address ?? '-'}"
@@ -118,6 +121,7 @@ class DataUmumScreen extends StatelessWidget {
                               ", ${controller.ccrfProfil?.generalInfo?.zipCode ?? '-'}",
                           // subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
                           icon: Icons.home,
+                          tooltip: 'Alamat Lengkap'.tr,
                         ),
                         // DataUmumListItem(
                         //   title: controller.ccrfProfil?.generalInfo?.district ?? '-',

@@ -98,21 +98,25 @@ class AlamatReturnScreen extends StatelessWidget {
                           title: controller.ccrfProfil?.returnAddress?.responsibleName ?? '-',
                           subtitle: controller.ccrfProfil?.returnAddress?.npwpName ?? '-',
                           icon: Icons.person_pin,
+                          tooltip: '${'Nama Penanggung Jawab'.tr}\n${'Nama NPWP'.tr}',
                         ),
                         DataUmumListItem(
                           title: controller.ccrfProfil?.returnAddress?.npwpType ?? '-',
                           subtitle: controller.ccrfProfil?.returnAddress?.npwpNumber ?? '-',
                           icon: Icons.credit_score_rounded,
+                          tooltip: '${'Jenis NPWP'.tr}\n${'Nomor NPWP'.tr}',
                         ),
                         DataUmumListItem(
                           title: controller.ccrfProfil?.returnAddress?.jlcNumber ?? '-',
                           subtitle: controller.ccrfProfil?.returnAddress?.counter ?? '-',
                           icon: Icons.card_membership_rounded,
+                          tooltip: '${'Nomor JLC'.tr}\n${'Nomor Counter Pengiriman'.tr}',
                         ),
                         DataUmumListItem(
                           title: controller.ccrfProfil?.returnAddress?.secondaryPhone ?? controller.ccrfProfil?.returnAddress?.phone ?? '-',
                           subtitle: controller.ccrfProfil?.returnAddress?.phone ?? '-',
                           icon: Icons.contact_phone_rounded,
+                          tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                         ),
                         DataUmumListItem(
                           title: "${controller.ccrfProfil?.returnAddress?.address ?? '-'}"
@@ -123,6 +127,7 @@ class AlamatReturnScreen extends StatelessWidget {
                               ", ${controller.ccrfProfil?.returnAddress?.zipCode ?? '-'}",
                           // subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
                           icon: Icons.home,
+                          tooltip: 'Alamat Lengkap'.tr,
                         ),
                         // DataUmumListItem(
                         //   title: controller.ccrfProfil?.returnAddress?.district ?? '-',

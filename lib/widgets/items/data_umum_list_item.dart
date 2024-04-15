@@ -8,6 +8,7 @@ class DataUmumListItem extends StatelessWidget {
   final String subtitle;
   final IconData icon;
   final bool isLoading;
+  final String? tooltip;
 
   const DataUmumListItem({
     super.key,
@@ -15,6 +16,7 @@ class DataUmumListItem extends StatelessWidget {
     this.subtitle = '',
     required this.icon,
     this.isLoading = false,
+    this.tooltip,
   });
 
   @override
@@ -28,16 +30,22 @@ class DataUmumListItem extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 5),
               color: greyLightColor3,
             )
-          : ListTile(
-              leading: Icon(
-                icon,
-                size: 24,
-                color: blueJNE,
+          : Tooltip(
+              message: tooltip ?? '',
+              child: ListTile(
+                leading: Tooltip(
+                  message: tooltip ?? '',
+                  child: Icon(
+                    icon,
+                    size: 24,
+                    color: blueJNE,
+                  ),
+                ),
+                title: Text(title.tr, maxLines: 3, overflow: TextOverflow.ellipsis),
+                subtitle: subtitle.isNotEmpty ? Text(subtitle ?? '', maxLines: 2, overflow: TextOverflow.ellipsis) : null,
+                shape: const Border(bottom: BorderSide(color: greyColor)),
+                contentPadding: EdgeInsets.zero,
               ),
-              title: Text(title.tr, maxLines: 3, overflow: TextOverflow.ellipsis),
-              subtitle: subtitle.isNotEmpty ? Text(subtitle ?? '', maxLines: 2, overflow: TextOverflow.ellipsis) : null,
-              shape: const Border(bottom: BorderSide(color: greyColor)),
-              contentPadding: EdgeInsets.zero,
             ),
     );
   }

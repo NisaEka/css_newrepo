@@ -85,47 +85,5 @@ class PetugasListItem extends StatelessWidget {
         ),
       ),
     );
-    // return Slidable(
-    //   key: ValueKey(index),
-    //   startActionPane: ActionPane(
-    //     dragDismissible: false,
-    //     // dismissible: DismissiblePane(onDismissed: onDelete ?? () {}),
-    //     motion: const DrawerMotion(),
-    //     children: [
-    //       SlidableAction(
-    //         onPressed: onDelete,
-    //         // backgroundColor: errorColor,
-    //         foregroundColor: errorColor,
-    //         icon: Icons.delete,
-    //         label: 'Hapus'.tr,
-    //         borderRadius: BorderRadius.circular(8),
-    //       ),
-    //     ],
-    //   ),
-    //   child: Container(
-    //     margin: const EdgeInsets.symmetric(vertical: 6),
-    //     padding: const EdgeInsets.all(10),
-    //     decoration: BoxDecoration(
-    //       border: Border.all(color: greyColor),
-    //     ),
-    //     child: Row(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       // mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //       children: [
-    //         Container(
-    //           margin: const EdgeInsets.symmetric(horizontal: 3),
-    //           child: icon,
-    //         ),
-    //         Column(
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: [
-    //             Text(title, style: listTitleTextStyle),
-    //             Text(subtitle ?? '', style: sublistTitleTextStyle),
-    //           ],
-    //         )
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }

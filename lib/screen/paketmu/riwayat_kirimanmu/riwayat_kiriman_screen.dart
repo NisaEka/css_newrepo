@@ -157,8 +157,9 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                                               child: Container(
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
-                                                  color:
-                                                      controller.selectedStatusKiriman == controller.listStatusKiriman[index] ? blueJNE : whiteColor,
+                                                  color: controller.selectedStatusKiriman == controller.listStatusKiriman[index]
+                                                      ? blueJNE
+                                                      : whiteColor,
                                                   border: Border.all(
                                                     color: controller.selectedStatusKiriman != controller.listStatusKiriman[index]
                                                         ? blueJNE

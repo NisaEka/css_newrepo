@@ -22,7 +22,7 @@ class PengaturanLabelController extends BaseController {
     ),
     StickerLabel(
       image: "https://css.jne.co.id//assets/img/label_default3-webp.webp",
-      name: "/sticker_megahub_1",
+      name: "/sticker_megahub1",
     ),
     StickerLabel(
       image: "https://css.jne.co.id//assets/img/vertical-megahub-webp.webp",

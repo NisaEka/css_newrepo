@@ -47,8 +47,13 @@ class PengaturanPetugasScreen extends StatelessWidget {
                     controller: controller.searchOfficer,
                     hintText: 'Cari Data Petugas'.tr,
                     prefixIcon: SvgPicture.asset(IconsConstant.search),
-                    onSubmit: (value) {
+                    onChanged: (value) {
                       controller.searchOfficer.text = value;
+                      controller.update();
+                      controller.pagingController.refresh();
+                    },
+                    onClear: () {
+                      controller.searchOfficer.clear();
                       controller.update();
                       controller.pagingController.refresh();
                     },
@@ -71,7 +76,7 @@ class PengaturanPetugasScreen extends StatelessWidget {
                               color: item.status == "Y" ? successColor : errorColor,
                             ),
                             title: item.name ?? '',
-                            subtitle: '${item.email}\n${item.phone}\n${item.branch} - ${item.origin}',
+                            subtitle: '${item.email ?? '-'}\n${item.phone ?? '-'}\n${item.branch ?? ''} - ${item.origin ?? ''}',
                             onTap: () => Get.to(const TambahPetugasScreen(), arguments: {
                               'isEdit': true,
                               'data': item,

@@ -178,10 +178,17 @@ class DashboardController extends BaseController {
         jlcPoint = value.data?.first.sisaPoint;
         update();
       });
-      await transaction.getSender().then((value) async => await storage.saveData(
-            StorageCore.shipper,
-            value.payload,
-          ));
+      await transaction
+          .getSender()
+          .then((value) async => await storage.saveData(
+                StorageCore.shipper,
+                value.payload,
+              ))
+          .then((_) async {
+        var data = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+        userName = data.name;
+        update();
+      });
 
       await transaction.getAccountNumber().then((value) async => await storage.saveData(
             StorageCore.accounts,
