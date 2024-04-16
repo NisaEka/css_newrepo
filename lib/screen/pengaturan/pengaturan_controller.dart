@@ -1,6 +1,9 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +14,7 @@ class PengaturanController extends BaseController {
   String? version;
   String? lang;
   AllowedMenu allow = AllowedMenu();
+  BasicProfilModel? basicProfil;
 
   @override
   void onInit() {
@@ -27,7 +31,11 @@ class PengaturanController extends BaseController {
 
     lang = await storage.readString(StorageCore.localeApp);
 
-    allow = await AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+    allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+
+    basicProfil = BasicProfilModel.fromJson(
+      await storage.readData(StorageCore.userProfil),
+    );
 
     update();
   }
@@ -51,5 +59,47 @@ class PengaturanController extends BaseController {
 
     initData();
     update();
+  }
+
+  Future<void> sendEmail() async {
+    try {
+      await auth.postEmailForgotPassword(basicProfil?.email ?? '').then(
+            (value) => value.code == 200
+                ? Get.to(
+                    const ForgotPasswordOTPScreen(),
+                    arguments: {
+                      'email': basicProfil?.email ?? '',
+                      'isChange': true,
+                    },
+                  )
+                : value.code == 404
+                    ? Get.showSnackbar(
+                        GetSnackBar(
+                          icon: const Icon(
+                            Icons.warning,
+                            color: whiteColor,
+                          ),
+                          message: 'User Not Found'.tr,
+                          isDismissible: true,
+                          duration: const Duration(seconds: 3),
+                          backgroundColor: errorColor,
+                        ),
+                      )
+                    : Get.showSnackbar(
+                        GetSnackBar(
+                          icon: const Icon(
+                            Icons.warning,
+                            color: whiteColor,
+                          ),
+                          message: 'Bad Request'.tr,
+                          isDismissible: true,
+                          duration: const Duration(seconds: 3),
+                          backgroundColor: errorColor,
+                        ),
+                      ),
+          );
+    } catch (e) {
+      e.printError();
+    }
   }
 }

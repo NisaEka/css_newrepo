@@ -15,6 +15,7 @@ import 'package:get/get.dart';
 class DashboardController extends BaseController {
   final selectedIndex = 0.obs;
   final nomorResi = TextEditingController();
+  DateTime? currentBackPressTime;
 
   bool isLogin = false;
   bool isLoading = false;
@@ -242,5 +243,28 @@ class DashboardController extends BaseController {
     // if (isLogin && allow.cekOngkir != "Y" && isOnline) {
     //   menuItems.removeWhere((e) => e.title == "Cek Ongkir");
     // }
+  }
+
+  bool onPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(
+            Icons.info,
+            color: whiteColor,
+          ),
+          message: 'Double click back button to exit',
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: greyColor.withOpacity(0.8),
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+        ),
+      );
+      return false;
+    }
+    return true;
   }
 }

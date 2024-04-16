@@ -96,7 +96,11 @@ class PengaturanScreen extends StatelessWidget {
                       ? SettingListItem(
                           title: 'Ubah Kata Sandi'.tr,
                           icon: Icons.lock_open_outlined,
-                          onTap: () => Get.to(const InputEmailScreen(), arguments: {'isChange': true}),
+                          // onTap: () => Get.to(const InputEmailScreen(), arguments: {
+                          //   'isChange': true,
+                          //   'email': controller.basicProfil?.email,
+                          // }),
+                          onTap: () => controller.sendEmail(),
                         )
                       : const SizedBox(),
                 ],

@@ -11,6 +11,7 @@ import 'package:pinput/pinput.dart';
 
 class ForgotPasswordOTPController extends BaseController {
   String email = Get.arguments['email'];
+  bool? isChange = Get.arguments['isChange'];
   bool isLoading = false;
   final formKey = GlobalKey<FormState>();
   final otpPin = TextEditingController();
@@ -97,6 +98,7 @@ class ForgotPasswordOTPController extends BaseController {
 
   Future<void> pinConfirmation() async {
     isLoading = true;
+    update();
     try {
       await auth.postPasswordPinConfirm(InputPinconfirmModel(email: email, pin: otpPin.text)).then((value) {
         if (value.code == 200) {
@@ -104,6 +106,7 @@ class ForgotPasswordOTPController extends BaseController {
             const NewPasswordScreen(),
             arguments: {
               'token': value.payload?.token ?? '',
+              'isChange': isChange,
             },
           );
         } else {
@@ -130,10 +133,12 @@ class ForgotPasswordOTPController extends BaseController {
   }
 
   Future<void> resendPin() async {
+    otpPin.clear();
     isLoading = true;
+    update();
     try {
       await auth.postEmailForgotPassword(email).then((value) {
-        if (value.code == 201) {
+        if (value.code == 200) {
           Get.showSnackbar(
             GetSnackBar(
               icon: const Icon(

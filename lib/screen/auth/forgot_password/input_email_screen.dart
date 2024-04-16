@@ -50,10 +50,11 @@ class InputEmailScreen extends StatelessWidget {
                                 isRequired: true,
                                 validator: ValidationBuilder().email().minLength(10).build(),
                                 inputFormatters: const [],
+                                onChanged: (value) => controller.update(),
                               ),
                               const SizedBox(height: 30),
                               CustomFilledButton(
-                                color: blueJNE,
+                                color: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,
                                 title: "Berikutnya".tr,
                                 onPressed: () => controller.formKey.currentState?.validate() == true ? controller.sendEmail() : null,
                               ),

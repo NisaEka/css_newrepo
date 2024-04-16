@@ -29,133 +29,138 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return GetBuilder<DashboardController>(
       init: DashboardController(),
       builder: (controller) {
-        return Scaffold(
-          backgroundColor: greyLightColor1,
-          appBar: AppBar(
-            titleTextStyle: titleTextStyle,
-            // title: Text('Beranda'.tr),
-            title: Image.asset(
-              ImageConstant.logoCSS_white,
-              height: 30,
+        return PopScope(
+          canPop: false,
+          onPopInvoked: (didPop) => controller.onPop(),
+          child: Scaffold(
+            backgroundColor: greyLightColor1,
+            appBar: AppBar(
+              titleTextStyle: titleTextStyle,
+              // title: Text('Beranda'.tr),
+              title: Image.asset(
+                ImageConstant.logoCSS_white,
+                height: 30,
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.notifications),
+                ),
+                IconButton(
+                  onPressed: () => Get.to(const PengaturanScreen()),
+                  icon: const Icon(Icons.settings),
+                ),
+              ],
             ),
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.notifications),
-              ),
-              IconButton(
-                onPressed: () => Get.to(const PengaturanScreen()),
-                icon: const Icon(Icons.settings),
-              ),
-            ],
-          ),
-          // body: ListView(
-          //   children: [
-          //   ],
-          // ),
-          body: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          // height: controller.isLogin && controller.allow.lacakPesanan == "Y" ? 160 : 120,
-                          height: controller.isLogin ? 160 : 120,
-                          padding: const EdgeInsets.all(20),
-                          decoration: const BoxDecoration(
-                            color: blueJNE,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(40),
-                              bottomRight: Radius.circular(40),
+            // body: ListView(
+            //   children: [
+            //   ],
+            // ),
+            body: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            // height: controller.isLogin && controller.allow.lacakPesanan == "Y" ? 160 : 120,
+                            height: controller.isLogin ? 160 : 120,
+                            padding: const EdgeInsets.all(20),
+                            decoration: const BoxDecoration(
+                              color: blueJNE,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40),
+                              ),
                             ),
-                          ),
-                          child: Column(
-                            children: [
-                              controller.isLogin
-                                  ? Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        CustomLabelText(
-                                          title: 'Selamat Datang'.tr,
-                                          value: controller.userName ?? 'USERNAME',
-                                          fontColor: whiteColor,
-                                          isLoading: controller.isLoading,
-                                        ),
-                                        controller.isLogin || controller.allow.bonus != "Y"
-                                            ? GestureDetector(
-                                                onTap: () => Get.to(const BonusKamuScreen()),
-                                                child: JLCPointWidget(
-                                                  point: controller.jlcPoint ?? '0',
-                                                ),
-                                              )
-                                            : const SizedBox(),
-                                      ],
-                                    )
-                                  : const SizedBox(),
-                              const SizedBox(height: 18),
-                              /*!controller.isLogin || controller.allow.lacakPesanan == "Y"
-                                  ? */TextField(
-                                      controller: controller.nomorResi,
-                                      decoration: InputDecoration(
-                                        hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
-                                        hintStyle: hintTextStyle,
-                                        suffixIcon: GestureDetector(
-                                          onTap: () => Get.to(const BarcodeScanScreen(), arguments: {
-                                            "cek_resi": true,
-                                          })?.then((result) {
-                                            controller.nomorResi.clear();
-                                            controller.update();
-                                          }),
-                                          child: const Icon(
-                                            Icons.qr_code,
-                                            color: redJNE,
+                            child: Column(
+                              children: [
+                                controller.isLogin
+                                    ? Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          CustomLabelText(
+                                            title: 'Selamat Datang'.tr,
+                                            value: controller.userName ?? 'USERNAME',
+                                            fontColor: whiteColor,
+                                            isLoading: controller.isLoading,
                                           ),
-                                        ),
-                                      ),
-                                      // readOnly: true,
-                                      onSubmitted: (value) => Get.to(const LacakKirimanScreen(), arguments: {
-                                        'nomor_resi': value,
-                                      })?.then((value) {
+                                          controller.isLogin || controller.allow.bonus != "Y"
+                                              ? GestureDetector(
+                                                  onTap: () => Get.to(const BonusKamuScreen()),
+                                                  child: JLCPointWidget(
+                                                    point: controller.jlcPoint ?? '0',
+                                                  ),
+                                                )
+                                              : const SizedBox(),
+                                        ],
+                                      )
+                                    : const SizedBox(),
+                                const SizedBox(height: 18),
+                                /*!controller.isLogin || controller.allow.lacakPesanan == "Y"
+                                    ? */
+                                TextField(
+                                  controller: controller.nomorResi,
+                                  decoration: InputDecoration(
+                                    hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
+                                    hintStyle: hintTextStyle,
+                                    suffixIcon: GestureDetector(
+                                      onTap: () => Get.to(const BarcodeScanScreen(), arguments: {
+                                        "cek_resi": true,
+                                      })?.then((result) {
                                         controller.nomorResi.clear();
                                         controller.update();
                                       }),
-                                    )
-                                  // : const SizedBox(),
-                            ],
+                                      child: const Icon(
+                                        Icons.qr_code,
+                                        color: redJNE,
+                                      ),
+                                    ),
+                                  ),
+                                  // readOnly: true,
+                                  onSubmitted: (value) => Get.to(const LacakKirimanScreen(), arguments: {
+                                    'nomor_resi': value,
+                                  })?.then((value) {
+                                    controller.nomorResi.clear();
+                                    controller.update();
+                                  }),
+                                )
+                                // : const SizedBox(),
+                              ],
+                            ),
                           ),
-                        ),
-                        DashboardCarousel(
-                          isLogin: controller.isLogin,
-                          bannerList: controller.bannerList,
-                        ),
-                      ],
-                    ),
-                    DashboardMarquee(
-                      marqueeText: controller.marqueeText ?? '',
-                    ),
-                    DashboardMenu2(
-                      isLogin: controller.isLogin,
-                      menu: controller.menuItems,
-                      getOtherMenu: () => Get.to(const OtherMenuScreen())?.then(
-                        (result) => controller.cekFavoritMenu(),
+                          DashboardCarousel(
+                            isLogin: controller.isLogin,
+                            bannerList: controller.bannerList,
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      DashboardMarquee(
+                        marqueeText: controller.marqueeText ?? '',
+                      ),
+                      DashboardMenu2(
+                        isLogin: controller.isLogin,
+                        menu: controller.menuItems,
+                        getOtherMenu: () => Get.to(const OtherMenuScreen())?.then(
+                          (result) => controller.cekFavoritMenu(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          bottomNavigationBar: BottomBar(
-            menu: 0,
-            isLogin: controller.isLogin,
-            allowedMenu: controller.allow,
-            // onTap: (index) {
-            //   controller.selectedIndex.value = index;
-            //   controller.update();
-            //   // Get.offAll(const DashboardScreen(), arguments: index);
-            // },
+              ],
+            ),
+            bottomNavigationBar: BottomBar(
+              menu: 0,
+              isLogin: controller.isLogin,
+              allowedMenu: controller.allow,
+              // onTap: (index) {
+              //   controller.selectedIndex.value = index;
+              //   controller.update();
+              //   // Get.offAll(const DashboardScreen(), arguments: index);
+              // },
+            ),
           ),
         );
       },

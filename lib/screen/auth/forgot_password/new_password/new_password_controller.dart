@@ -1,13 +1,17 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
+import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NewPasswordController extends BaseController {
   String token = Get.arguments['token'];
+  bool? isChange = Get.arguments['isChange'];
+
   final formKey = GlobalKey<FormState>();
   final newPW = TextEditingController();
   final confirmPW = TextEditingController();
@@ -32,8 +36,10 @@ class NewPasswordController extends BaseController {
           ? Get.to(
               SuccessScreen(
                 message: "Password berhasil diperbaharui".tr,
-                buttonTitle: "Masuk".tr,
-                nextAction: () => Get.offAll(const LoginScreen()),
+                buttonTitle: isChange ?? false ? "Kembali ke Beranda".tr : "Masuk".tr,
+                nextAction: () => Get.delete<LoginController>().then(
+                  (value) => Get.offAll(isChange ?? false ? const DashboardScreen() : const LoginScreen()),
+                ),
               ),
             )
           : Get.showSnackbar(

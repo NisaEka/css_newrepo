@@ -24,13 +24,20 @@ class LoginController extends BaseController {
   Locale? lang;
   DateTime? currentBackPressTime;
 
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  //   emailTextField.dispose();
+  //   passwordTextField.dispose();
+  //   emailFocus?.dispose();
+  //   passFocus?.dispose();
+  // }
+
   @override
-  void onClose() {
-    super.onClose();
-    emailTextField.dispose();
-    passwordTextField.dispose();
-    emailFocus?.dispose();
-    passFocus?.dispose();
+  void onInit() {
+    super.onInit();
+    emailTextField.text;
+    passwordTextField.text;
   }
 
   // @override
@@ -44,17 +51,30 @@ class LoginController extends BaseController {
   //   passFocus = null;
   // }
 
-  // Future<bool> onWillPop() {
-  //   DateTime now = DateTime.now();
-  //   if (currentBackPressTime == null || now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
-  //     currentBackPressTime = now;
-  //     Get.showSnackbar(GetSnackBar(
-  //       message: exit_warning,
-  //     ));
-  //     return Future.value(false);
-  //   }
-  //   return Future.value(true);
-  // }
+
+
+  bool onPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(
+            Icons.info,
+            color: whiteColor,
+          ),
+          message: 'Double click back button to exit',
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: greyColor.withOpacity(0.8),
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+        ),
+      );
+      return false;
+    }
+    return true;
+  }
 
   Widget showIcon = const Icon(
     Icons.remove_red_eye,

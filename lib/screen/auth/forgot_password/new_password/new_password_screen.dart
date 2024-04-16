@@ -1,6 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
@@ -35,6 +34,11 @@ class NewPasswordScreen extends StatelessWidget {
                       ),
                       Form(
                         key: controller.formKey,
+                        autovalidateMode: AutovalidateMode.always,
+                        onChanged: () {
+                          controller.formKey.currentState?.validate();
+                          controller.update();
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(30),
                           child: Column(
@@ -75,6 +79,10 @@ class NewPasswordScreen extends StatelessWidget {
                                   }
                                   return null;
                                 },
+                                onChanged: (value) {
+                                  controller.formKey.currentState?.validate().printInfo();
+                                  controller.update();
+                                },
                                 isObscure: controller.isObscurePasswordConfirm,
                                 multiLine: false,
                                 suffixIcon: IconButton(
@@ -97,7 +105,7 @@ class NewPasswordScreen extends StatelessWidget {
                                 ),
                               ),
                               CustomFilledButton(
-                                color: blueJNE,
+                                color: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,
                                 title: 'Selanjutnya'.tr,
                                 radius: 50,
                                 onPressed: () => controller.formKey.currentState?.validate() == true ? controller.changePassword() : null,

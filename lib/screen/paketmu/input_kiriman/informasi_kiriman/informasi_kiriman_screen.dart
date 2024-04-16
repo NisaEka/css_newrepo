@@ -67,27 +67,13 @@ class InformasiKirimanScreen extends StatelessWidget {
                         totalStep: controller.steps.length,
                         steps: controller.steps,
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 10),
                       // !controller.isOnline ? const SizedBox() : const OfflineBar(),
                     ],
                   ),
                 ),
                 body: CustomScrollView(
                   slivers: [
-                    // SliverPersistentHeader(
-                    //   delegate: SliverAppBarDelegate(
-                    //     minHeight: 150,
-                    //     maxHeight: 32,
-                    //     child: CustomTopBar(
-                    //       screenTittle: 'Input Transaksi'.tr,
-                    //       flexibleSpace: CustomStepper(
-                    //         currentStep: 2,
-                    //         totalStep: controller.steps.length,
-                    //         steps: controller.steps,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     SliverToBoxAdapter(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,

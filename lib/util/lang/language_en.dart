@@ -273,6 +273,8 @@ class LanguageEN {
       "Data Dihapus": "Data Deleted",
       "Validasi": "Validate",
       "Harus lebih dari 8 karakter": "Must be more than 8 characters",
+      "Kirim ulang kode": "Resend code",
+      "Gunakan cara lain": "Use another method",
     };
   }
 }

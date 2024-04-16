@@ -35,7 +35,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                     totalStep: controller.steps.length,
                     steps: controller.steps,
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
                   // !controller.isOnline ? const OfflineBar() : const SizedBox(),
                 ],
               ),

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 
 class PasswordRecoveryController extends BaseController {
   String email = Get.arguments['email'];
+  bool? isChange = Get.arguments['isChange'];
+
   final formKey = GlobalKey<FormState>();
 
   int? recovery;
