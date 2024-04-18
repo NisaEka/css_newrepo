@@ -499,9 +499,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                             ? Row(
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
-                                                                  Text('COD Ongkir'.tr),
-                                                                  Text('Rp. ${controller.freightCharge.toInt().toCurrency()}',
-                                                                      style: listTitleTextStyle),
+                                                                  Text('Fee COD Ongkir'.tr),
+                                                                  Text('Rp. ${1000.toCurrency()}', style: listTitleTextStyle),
                                                                 ],
                                                               )
                                                             : const SizedBox(),
@@ -518,13 +517,14 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
                                                             Text('Ongkos Kirim'.tr),
-                                                            Text('Rp. ${controller.flatRate.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                            Text('Rp. ${controller.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
                                                           ],
                                                         ),
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
                                                             Text('Total Ongkos Kirim'.tr),
+                                                            //gak boleh lebih dari 1jt //kalo cod ongkir true // kasih notif gak bisa di simpan transaksi // button transaksi disable
                                                             Text('Rp. ${(controller.totalOngkir).toInt().toCurrency()}', style: listTitleTextStyle),
                                                           ],
                                                         )
@@ -536,12 +536,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       : const SizedBox(),
                                   controller.isOnline
                                       ? CustomFilledButton(
-                                          color: controller.formValidate && controller.selectedService != null && !controller.isCalculate
-                                              ? blueJNE
-                                              : greyColor,
+                                          color: controller.isValidate() ? blueJNE : greyColor,
                                           title: controller.dataEdit != null ? 'Edit Resi'.tr : 'Buat Resi'.tr,
                                           onPressed: () {
-                                            controller.formValidate && controller.selectedService != null && !controller.isCalculate
+                                            controller.isValidate()
                                                 ? controller.dataEdit == null
                                                     ? controller.saveTransaction()
                                                     : controller.updateTransaction()
@@ -572,6 +570,52 @@ class InformasiKirimanScreen extends StatelessWidget {
                 ),
               ),
               controller.isLoading ? const LoadingDialog() : Container(),
+              controller.isShowDialog
+                  ? Container(
+                      height: Get.height,
+                      width: Get.width,
+                      color: greyDarkColor2.withOpacity(0.5),
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          width: Get.width - 50,
+                          height: Get.width / 1.5,
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Peringatan'.tr,
+                                style: appTitleTextStyle.copyWith(color: greyDarkColor1),
+                              ),
+                              Icon(
+                                Icons.warning,
+                                color: warningColor,
+                                size: Get.width / 4,
+                              ),
+                              Text(
+                                "Total Ongkos Kirim tidak bisa lebih dari Rp.1000.000".tr,
+                                style: subTitleTextStyle.copyWith(color: greyDarkColor1),
+                                textAlign: TextAlign.center,
+                              ),
+                              CustomFilledButton(
+                                color: blueJNE,
+                                isTransparent: true,
+                                title: 'OK',
+                                onPressed: () {
+                                  controller.isShowDialog = false;
+                                  controller.update();
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox()
             ],
           );
         });

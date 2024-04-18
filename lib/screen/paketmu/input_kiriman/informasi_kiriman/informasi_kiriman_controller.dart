@@ -68,6 +68,7 @@ class InformasiKirimaController extends BaseController {
   bool dimensi = false;
   bool formValidate = false;
   bool isOnline = true;
+  bool isShowDialog = false;
 
   List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
   List<ServiceModel> serviceList = [];
@@ -101,6 +102,7 @@ class InformasiKirimaController extends BaseController {
   double berat = 0;
   double hargacod = 0;
   double hargacCODOngkir = 0;
+  double hargacCODOngkirISR = 0;
   double codfee = 0;
 
   void hitungBerat(double p, double l, double t) {
@@ -155,18 +157,56 @@ class InformasiKirimaController extends BaseController {
         freightChargeISR = freightCharge + isr;
         update();
         // }
-        totalOngkir = asuransi ? flatRateISR.toInt() : flatRate.toInt();
         hargacod = (codfee * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) +
             (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt()) +
             totalOngkir;
-        hargacCODOngkir = flatRate + (asuransi ? isr : 0) + 1100;
+        hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1000;
+        hargacCODOngkirISR = freightCharge + isr;
+        update();
+
+        totalOngkir = codOngkir
+            ? hargacCODOngkir.toInt()
+            : asuransi
+                ? freightChargeISR.toInt()
+                : freightCharge.toInt();
 
         update();
       }
+      if (totalOngkir > 1000000) {
+        isShowDialog = true;
+        update();
+        // Get.showSnackbar(
+        //   const GetSnackBar(
+        //     message: "Total Ongkos Kirim tidak bisa lebih dari Rp. 1000.000,-",
+        //     isDismissible: true,
+        //     margin: EdgeInsets.only(bottom: 0),
+        //     duration: Duration(seconds: 3),
+        //     backgroundColor: Colors.red,
+        //     snackPosition: SnackPosition.BOTTOM,
+        //     snackStyle: SnackStyle.FLOATING,
+        //     animationDuration: Duration(milliseconds: 500),
+        //   ),
+        // );
+      } else {
+        isShowDialog = false;
+        update();
+      }
+
+      isValidate();
 
       isCalculate = false;
       update();
     }
+  }
+
+  bool isValidate() {
+    if (formValidate && selectedService != null && !isCalculate && totalOngkir <= 1000000) {
+      return true;
+    }
+
+
+
+    return false;
   }
 
   Future<void> getCODfee() async {
@@ -315,9 +355,7 @@ class InformasiKirimaController extends BaseController {
       beratKiriman.text = dataEdit?.goods?.weight.toString() ?? '';
       var servicecode = serviceList.where((element) => element.serviceCode == dataEdit?.delivery?.serviceCode);
       var servicrdisplay = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode);
-      selectedService = servicecode.isNotEmpty
-          ? servicecode.first
-          : servicrdisplay.first;
+      selectedService = servicecode.isNotEmpty ? servicecode.first : servicrdisplay.first;
       update();
       getOngkir();
     }

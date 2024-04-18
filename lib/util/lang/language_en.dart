@@ -275,6 +275,8 @@ class LanguageEN {
       "Harus lebih dari 8 karakter": "Must be more than 8 characters",
       "Kirim ulang kode": "Resend code",
       "Gunakan cara lain": "Use another method",
+      "Peringatan": "Alert",
+      "Total Ongkos Kirim tidak bisa lebih dari Rp.1000.000": "Total shipping costs cannot exceed Rp. 1000,000",
     };
   }
 }
