@@ -17,7 +17,7 @@ class DashboardMarquee extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: whiteColor,
+        color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: greyDarkColor1),
         boxShadow: const [
@@ -30,7 +30,9 @@ class DashboardMarquee extends StatelessWidget {
       ),
       child: Marquee(
         text: marqueeText,
-        style: sublistTitleTextStyle,
+        style: sublistTitleTextStyle.copyWith(
+          color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : whiteColor,
+        ),
         scrollAxis: Axis.horizontal,
         crossAxisAlignment: CrossAxisAlignment.start,
         blankSpace: 20.0,

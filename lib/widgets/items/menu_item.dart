@@ -53,7 +53,10 @@ class MenuItem extends StatelessWidget {
                   // width: 65,
                   child: Text(
                     menuTitle.splitMapJoin(' ', onMatch: (p0) => '\n').splitMapJoin('_', onMatch: (p0) => ' '),
-                    style: sublistTitleTextStyle,
+                    style: sublistTitleTextStyle.copyWith(
+                      color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : whiteColor,
+
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),

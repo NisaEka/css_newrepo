@@ -34,7 +34,7 @@ class BottomBar extends StatelessWidget {
           height: 70,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: whiteColor,
+              color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyDarkColor2,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -65,13 +65,17 @@ class BottomBar extends StatelessWidget {
                       color: isLogin
                           ? menu == 1
                               ? redJNE
-                              : blueJNE
+                              : Theme.of(context).brightness == Brightness.light
+                                  ? blueJNE
+                                  : whiteColor
                           : blueJNE.withOpacity(0.5)),
                   title: "Profil".tr,
                   color: isLogin
                       ? menu == 1
                           ? redJNE
-                          : blueJNE
+                          : Theme.of(context).brightness == Brightness.light
+                              ? blueJNE
+                              : whiteColor
                       : blueJNE.withOpacity(0.5),
                   // onTap: () => Get.offAll(const ProfileScreen()),
                   onTap: () => isLogin

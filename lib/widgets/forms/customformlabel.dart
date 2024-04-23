@@ -26,7 +26,7 @@ class CustomFormLabel extends StatelessWidget {
         child: RichText(
           text: TextSpan(
             text: label,
-            style: subformLabelTextStyle,
+            style: subformLabelTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2),
             children: <TextSpan>[
               TextSpan(text: showRequired ? "*" : "", style: const TextStyle(color: Colors.red)),
             ],

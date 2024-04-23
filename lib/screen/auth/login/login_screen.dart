@@ -22,8 +22,9 @@ class LoginScreen extends StatelessWidget {
         init: LoginController(),
         builder: (controller) {
           return PopScope(
-            canPop: false,
+            canPop: true,
             onPopInvoked: (didPop) => controller.onPop(),
+
             child: Stack(
               children: [
                 Scaffold(

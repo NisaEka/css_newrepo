@@ -73,7 +73,7 @@ class StickerDefault extends StatelessWidget {
                       Text(data.origin?.originName ?? ''),
                       Text(data.shipper?.city ?? data.shipper?.origin?.originName ?? ''),
                       Text(data.shipper?.address ?? ''),
-                      Text("\n\nKode Pos : ${data.shipper?.zip}"),
+                      Text("\n\nKode Pos : ${data.shipper?.zip ?? ''}"),
                       Text(data.shipper?.phone ?? '')
                     ],
                   ),
@@ -81,13 +81,16 @@ class StickerDefault extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("To :", style: TextStyle(fontWeight: bold)),
-                      Text("${data.receiver?.name}\n"),
+                      Text("${data.receiver?.name ?? ''}\n"),
                       Text(data.destination?.cityName ?? ''),
                       Text(data.receiver?.city ?? ''),
                       Text(data.receiver?.address ?? ''),
-                      Text("\n\nKode Pos : ${data.receiver?.zip}"),
+                      Text("\n\nKode Pos : ${data.receiver?.zip ?? ''}"),
                       Text(data.receiver?.phone ?? ''),
-                      Text(data.destination?.destinationCode?.substring(0, 3) ?? '-', style: TextStyle(fontSize: 38, fontWeight: bold)),
+                      Text(
+                        data.destination?.destinationCode?.substring(0, 3) ?? '-',
+                        style: TextStyle(fontSize: 38, fontWeight: bold),
+                      ),
                       Text(
                         data.account?.accountType ?? '',
                         style: TextStyle(fontWeight: bold),
@@ -145,7 +148,7 @@ class StickerDefault extends StatelessWidget {
                             valueTextStyle: const TextStyle(),
                           ),
                           const SizedBox(width: 25),
-                          Text("${data.delivery?.serviceCode}", style: TextStyle(fontSize: 38, fontWeight: bold)),
+                          Text(data.delivery?.serviceCode ?? '', style: TextStyle(fontSize: 38, fontWeight: bold)),
                         ],
                       ),
                     ],
@@ -182,14 +185,14 @@ class StickerDefault extends StatelessWidget {
                   CustomLabelText(
                     title: "Estimasi Ongkir: Rp",
                     value:
-                        '${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}',
+                        '${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}',
                     titleTextStyle: TextStyle(fontWeight: bold),
                     valueTextStyle: const TextStyle(),
                   ),
                   const SizedBox(width: 15),
                   CustomLabelText(
                     title: "Weight:   ",
-                    value: '${data.goods?.weight} Kg',
+                    value: '${data.goods?.weight ?? '0'} Kg',
                     titleTextStyle: TextStyle(fontWeight: bold),
                     valueTextStyle: const TextStyle(),
                     isHorizontal: true,
@@ -198,21 +201,21 @@ class StickerDefault extends StatelessWidget {
               ),
               CustomLabelText(
                 title: "Goods Value  :   ",
-                value: 'Rp ${data.goods?.amount?.toInt().toCurrency()}',
+                value: 'Rp ${data.goods?.amount?.toInt().toCurrency() ?? '0'}',
                 titleTextStyle: TextStyle(fontWeight: bold),
                 valueTextStyle: const TextStyle(),
                 isHorizontal: true,
               ),
               CustomLabelText(
                 title: "COD Amount :   ",
-                value: "Rp ${data.delivery?.codFee?.toInt().toCurrency()}",
+                value: "Rp ${data.delivery?.codFee?.toInt().toCurrency() ?? '0'}",
                 titleTextStyle: TextStyle(fontWeight: bold),
                 valueTextStyle: const TextStyle(),
                 isHorizontal: true,
               ),
               Center(
                 child: Text(
-                  "${data.destination?.destinationCode?.substring(0, 3)}-${data.receiver?.destinationCode ?? ''}",
+                  "${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.receiver?.destinationCode ?? ''}",
                   style: TextStyle(
                     fontWeight: bold,
                     fontSize: 21,

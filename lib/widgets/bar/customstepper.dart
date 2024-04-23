@@ -95,7 +95,11 @@ class CustomStepper extends StatelessWidget {
                   child: Text(
                     steps?[index].tr ?? '',
                     style: sublistTitleTextStyle.copyWith(
-                      color: currentStep == index ? blueJNE : Colors.transparent,
+                      color: currentStep == index
+                          ? Theme.of(context).brightness == Brightness.light
+                              ? blueJNE
+                              : whiteColor
+                          : Colors.transparent,
                     ),
                   ),
                 ),

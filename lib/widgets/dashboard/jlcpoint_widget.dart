@@ -14,7 +14,7 @@ class JLCPointWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: whiteColor,
+        color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
         borderRadius: BorderRadius.circular(50),
         boxShadow: const [
           BoxShadow(

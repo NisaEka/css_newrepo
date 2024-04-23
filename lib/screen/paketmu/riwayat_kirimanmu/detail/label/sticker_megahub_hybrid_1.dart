@@ -127,6 +127,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                                 child: Text(
                                   data.account?.accountService ?? '-',
                                   style: sublistTitleTextStyle,
+                                  textAlign: TextAlign.center,
                                 ),
                               )
                             ],
@@ -148,11 +149,11 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                             // mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                "Pengirim : ${data.shipper?.name}",
+                                "Pengirim : ${data.shipper?.name ?? ''}",
                                 style: labelTextStyle,
                               ),
                               Text(
-                                "Penerima : ${data.receiver?.name}",
+                                "Penerima : ${data.receiver?.name ?? ''}",
                                 style: labelTextStyle,
                               ),
                             ],
@@ -177,19 +178,22 @@ class StickerMegahubHybrid1 extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Tanggal: ${data.createdDate?.toShortDateFormat()}', style: labelTextStyle),
-                Text('No. Pelanggan: ${data.account?.accountNumber}', style: labelTextStyle),
-                Text('Deskripsi: ${data.goods?.desc}', style: labelTextStyle),
-                Text('Berat: ${data.goods?.weight} Kg', style: labelTextStyle),
+                Text('Tanggal: ${data.createdDate?.toShortDateFormat() ?? ''}', style: labelTextStyle),
+                Text('No. Pelanggan: ${data.account?.accountNumber ?? ''}', style: labelTextStyle),
+                SizedBox(
+                  width: Get.width / 2.9,
+                  child: Text('Deskripsi: ${data.goods?.desc ?? ''}', style: labelTextStyle),
+                ),
+                Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
                 Text(
-                    'Biaya Kirim: Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}',
+                    'Biaya Kirim: Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}',
                     style: labelTextStyle),
-                Text('Kota Tujuan: ${data.receiver?.city}', style: labelTextStyle),
-                Text('Order ID: ${data.orderId}', style: labelTextStyle),
+                Text('Kota Tujuan: ${data.receiver?.city ?? ''}', style: labelTextStyle),
+                Text('Order ID: ${data.orderId ?? ''}', style: labelTextStyle),
                 Text("Biaya Asuransi : Rp 600", style: labelTextStyle),
                 Text("Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceFee?.toInt() ?? 0) - 600 : 0}",
                     style: labelTextStyle),
-                Text("Total Biaya Asuransi : Rp ${data.delivery?.insuranceFee}", style: labelTextStyle),
+                Text("Total Biaya Asuransi : Rp ${data.delivery?.insuranceFee ?? '0'}", style: labelTextStyle),
                 const SizedBox(height: 5)
               ],
             ),

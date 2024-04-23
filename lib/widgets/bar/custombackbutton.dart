@@ -23,7 +23,10 @@ class CustomBackButton<T> extends StatelessWidget {
       onTap: onPressed ?? () => Get.back(),
       child: Container(
         margin: const EdgeInsets.all(10),
-        child: SvgPicture.asset(IconsConstant.arrowCircle),
+        child: SvgPicture.asset(
+          IconsConstant.arrowCircle,
+          color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+        ),
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/solid_border.dart';
@@ -79,7 +78,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
               SizedBox(
                 width: (Get.width - 51) / 1.5,
                 child: Text(
-                  'Pengirim: ${data.shipper?.name}\n${data.shipper?.address}, ${data.shipper?.city ?? data.shipper?.origin?.originName}, ${data.shipper?.zip ?? ''}, Telp.${data.shipper?.phone}',
+                  'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zip ?? ''}, Telp.${data.shipper?.phone ?? ''}',
                   style: labelTextStyle,
                 ),
               ),
@@ -113,7 +112,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
               SizedBox(
                 width: (Get.width - 51) / 1.5,
                 child: Text(
-                    'Penerima: ${data.receiver?.name}\n${data.receiver?.address}, ${data.receiver?.city}, ${data.receiver?.zip}, Telp.${data.receiver?.phone}\n',
+                    'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zip ?? ''}, Telp.${data.receiver?.phone ?? ''}\n',
                     style: labelTextStyle),
               ),
               const SolidBorder(width: 1, height: 50),
@@ -123,7 +122,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                 width: (Get.width - 51) / 3.2,
                 alignment: Alignment.center,
                 child: Text(
-                  "Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency()}",
+                  "Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() ?? '0' : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}",
                   style: TextStyle(fontSize: 15, fontWeight: bold),
                 ),
               ),
@@ -155,9 +154,9 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Deskripsi: \n${data.goods?.desc}\n\n', style: labelTextStyle),
+                            Text('Deskripsi: \n${data.goods?.desc ?? '-'}\n\n', style: labelTextStyle),
                             const SolidBorder(),
-                            Text('Intruksi Khusus: \n${data.delivery?.specialInstruction}\n\n', style: labelTextStyle),
+                            Text('Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n\n', style: labelTextStyle),
                           ],
                         ),
                         Container(
@@ -170,12 +169,12 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Tanggal: ${data.createdDate?.toShortDateFormat()}', style: labelTextStyle),
-                              Text('No. Pelanggan: ${data.account?.accountNumber}', style: labelTextStyle),
-                              Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName}', style: labelTextStyle),
-                              Text('Berat: ${data.goods?.weight} Kg', style: labelTextStyle),
-                              Text('Jumlah Kiriman: ${data.goods?.quantity}', style: labelTextStyle),
-                              Text('Pembayaran: ${data.type}', style: labelTextStyle),
+                              Text('Tanggal: ${data.createdDate?.toShortDateFormat() ?? '-'}', style: labelTextStyle),
+                              Text('No. Pelanggan: ${data.account?.accountNumber ?? '-'}', style: labelTextStyle),
+                              Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? '-'}', style: labelTextStyle),
+                              Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
+                              Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}', style: labelTextStyle),
+                              Text('Pembayaran: ${data.type ?? '-'}', style: labelTextStyle),
                               // Text('Order ID: ${data.orderId}', style: labelTextStyle),
                             ],
                           ),

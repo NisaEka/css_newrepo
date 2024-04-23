@@ -30,10 +30,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       init: DashboardController(),
       builder: (controller) {
         return PopScope(
-          canPop: false,
+          canPop: controller.pop,
           onPopInvoked: (didPop) => controller.onPop(),
           child: Scaffold(
-            backgroundColor: greyLightColor1,
+            // backgroundColor: greyLightColor1,
             appBar: AppBar(
               titleTextStyle: titleTextStyle,
               // title: Text('Beranda'.tr),
@@ -67,9 +67,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             // height: controller.isLogin && controller.allow.lacakPesanan == "Y" ? 160 : 120,
                             height: controller.isLogin ? 160 : 120,
                             padding: const EdgeInsets.all(20),
-                            decoration: const BoxDecoration(
-                              color: blueJNE,
-                              borderRadius: BorderRadius.only(
+                            decoration:  BoxDecoration(
+                              // color: blueJNE,
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(40),
                                 bottomRight: Radius.circular(40),
                               ),

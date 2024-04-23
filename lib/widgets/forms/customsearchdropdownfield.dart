@@ -62,7 +62,7 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
             enabled: false,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16,
-                  color: greyDarkColor1,
+                  color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
                   // fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(
@@ -70,8 +70,8 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
               fillColor: neutralColor,
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
-              prefixIconColor: greyDarkColor1,
-              suffixIconColor: greyDarkColor1,
+              prefixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
+              suffixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
             ),
           ),
           const SizedBox(height: 10)

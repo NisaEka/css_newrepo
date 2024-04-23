@@ -62,14 +62,14 @@ class _AccountListItemState extends State<AccountListItem> {
                   children: [
                     Text(
                       widget.accountNumber,
-                      style: listTitleTextStyle.copyWith(color: blueJNE),
+                      style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE),
                     ),
                     widget.isSelected ? const Icon(Icons.check, color: successColor) : const SizedBox()
                   ],
                 ),
                 Text(
                   widget.accountName,
-                  style: sublistTitleTextStyle,
+                  style: sublistTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2),
                 ),
                 Container(
                   padding: const EdgeInsets.all(5),

@@ -245,6 +245,8 @@ class DashboardController extends BaseController {
     // }
   }
 
+  bool pop = false;
+
   bool onPop() {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
@@ -263,8 +265,12 @@ class DashboardController extends BaseController {
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
         ),
       );
+      pop = false;
+      update();
       return false;
     }
+    pop = true;
+    update();
     return true;
   }
 }

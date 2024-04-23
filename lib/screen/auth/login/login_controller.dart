@@ -73,6 +73,7 @@ class LoginController extends BaseController {
       );
       return false;
     }
+    Get.off(DashboardScreen());
     return true;
   }
 

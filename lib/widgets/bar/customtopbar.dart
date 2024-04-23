@@ -40,7 +40,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backgroundColor ?? greyLightColor2,
+      color: backgroundColor ?? Theme.of(context).colorScheme.secondary,
       child: Column(
         children: [
           Row(
@@ -62,7 +62,15 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                title != null ? Text(title!.tr, style: subappTitleTextStyle.copyWith(color: greyDarkColor1)) : const SizedBox(),
+                title != null
+                    ? Text(
+                        title!.tr,
+                        style: subappTitleTextStyle.copyWith(
+                          color:
+                            Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor2,
+                        ),
+                      )
+                    : const SizedBox(),
                 Row(
                   children: action?.toList() ?? [],
                 )

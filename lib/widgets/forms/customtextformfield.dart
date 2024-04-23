@@ -118,7 +118,7 @@ class CustomTextFormField extends StatelessWidget {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
                     // fontWeight: FontWeight.w600,
                   ),
               textInputAction: TextInputAction.next,
@@ -129,15 +129,19 @@ class CustomTextFormField extends StatelessWidget {
                   //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
                   suffixIcon: suffixIcon,
                   prefixIcon: prefixIcon,
-                  prefixIconColor: greyDarkColor1,
-                  suffixIconColor: greyDarkColor1,
+                  prefixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
+                  suffixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
                   contentPadding: contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                   hintText: hintText ?? label,
                   disabledBorder: noBorder
                       ? OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(
-                            color: readOnly ? Colors.white : Theme.of(context).primaryColor,
+                            color: readOnly
+                                ? Colors.white
+                                : Theme.of(context).brightness == Brightness.light
+                                    ? Theme.of(context).primaryColor
+                                    : greyLightColor1,
                             width: readOnly ? 1 : 2,
                             style: BorderStyle.solid,
                           ),
@@ -146,7 +150,11 @@ class CustomTextFormField extends StatelessWidget {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                      color: readOnly ? greyDarkColor1 : Theme.of(context).primaryColor,
+                      color: readOnly
+                          ? greyDarkColor1
+                          : Theme.of(context).brightness == Brightness.light
+                              ? Theme.of(context).primaryColor
+                              : whiteColor,
                       width: readOnly ? 1 : 2,
                       style: BorderStyle.solid,
                     ),

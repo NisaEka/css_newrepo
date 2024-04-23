@@ -37,41 +37,41 @@ class LabelScreen extends StatelessWidget {
               controller: controller.screenshotController,
               child: Container(
                 margin: const EdgeInsets.all(25),
-                // child: StickerMegahubHybrid3(data: data),
-                child: controller.stickerLabel == "/sticker_default"
-                    ? StickerDefault(
-                        data: data,
-                        shippingCost: controller.shippingCost,
-                      )
-                    : controller.stickerLabel == "/sticker_A6"
-                        ? StickerA6(
-                            data: data,
-                            shippingCost: controller.shippingCost,
-                          )
-                        : controller.stickerLabel == "/sticker_megahub1"
-                            ? StickerMegahub1(
-                                data: data,
-                                shippingCost: controller.shippingCost,
-                              )
-                            : controller.stickerLabel == "/sticker_vertical_megahub_1"
-                                ? StickerMegahub2(
-                                    data: data,
-                                    shippingCost: controller.shippingCost,
-                                  )
-                                : controller.stickerLabel == "/sticker_megahub_hybrid_1"
-                                    ? StickerMegahubHybrid1(
-                                        data: data,
-                                        shippingCost: controller.shippingCost,
-                                      )
-                                    : controller.stickerLabel == "/sticker_megahub_hybrid_2"
-                                        ? StickerMegahubHybrid2(
-                                            data: data,
-                                            shippingCost: controller.shippingCost,
-                                          )
-                                        : StickerMegahubHybrid3(
-                                            data: data,
-                                            shippingCost: controller.shippingCost,
-                                          ),
+                child: StickerDefault(data: data),
+                // child: controller.stickerLabel == "/sticker_default"
+                //     ? StickerDefault(
+                //         data: data,
+                //         shippingCost: controller.shippingCost,
+                //       )
+                //     : controller.stickerLabel == "/sticker_A6"
+                //         ? StickerA6(
+                //             data: data,
+                //             shippingCost: controller.shippingCost,
+                //           )
+                //         : controller.stickerLabel == "/sticker_megahub1"
+                //             ? StickerMegahub1(
+                //                 data: data,
+                //                 shippingCost: controller.shippingCost,
+                //               )
+                //             : controller.stickerLabel == "/sticker_vertical_megahub_1"
+                //                 ? StickerMegahub2(
+                //                     data: data,
+                //                     shippingCost: controller.shippingCost,
+                //                   )
+                //                 : controller.stickerLabel == "/sticker_megahub_hybrid_1"
+                //                     ? StickerMegahubHybrid1(
+                //                         data: data,
+                //                         shippingCost: controller.shippingCost,
+                //                       )
+                //                     : controller.stickerLabel == "/sticker_megahub_hybrid_2"
+                //                         ? StickerMegahubHybrid2(
+                //                             data: data,
+                //                             shippingCost: controller.shippingCost,
+                //                           )
+                //                         : StickerMegahubHybrid3(
+                //                             data: data,
+                //                             shippingCost: controller.shippingCost,
+                //                           ),
               ),
             ),
             // floatingActionButton: FloatingActionButton(

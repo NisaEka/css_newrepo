@@ -57,7 +57,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                       ],
                     ),
                     Shimmer(
-                      isLoading: controller.isLoading,
+                      isLoading: controller.transactionModel == null,
                       child: Container(
                         width: 120,
                         height: 120,
@@ -78,7 +78,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                   ],
                 ),
                 Shimmer(
-                  isLoading: controller.isLoading,
+                  isLoading: controller.transactionModel == null,
                   child: Container(
                     padding: const EdgeInsets.all(13),
                     decoration: BoxDecoration(
