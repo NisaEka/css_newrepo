@@ -98,6 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 hintText: 'No Handphone'.tr,
                                 isRequired: true,
                                 inputType: TextInputType.number,
+                                validator: ValidationBuilder().phone().build(),
                               ),
                               CustomTextFormField(
                                 controller: controller.email,

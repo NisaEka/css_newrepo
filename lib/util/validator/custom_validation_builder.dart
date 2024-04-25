@@ -16,6 +16,15 @@ extension CustomValidationBuilder on ValidationBuilder {
         return null;
       });
 
+  phone() => add((value) {
+        if (value?.isEmpty ?? false) {
+          return 'This field is required';
+        } else if (value!.length < 10) {
+          return 'the phone number must be more than 10 characters';
+        }
+        return null;
+      });
+
   ValidationBuilder min(int minValue) => add((value) {
         if (int.parse(value!) < minValue) {
           return "form_min_value".trParams({"min": minValue.toString()});

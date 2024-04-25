@@ -16,6 +16,7 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class InformasiPengirimScreen extends StatefulWidget {
@@ -251,14 +252,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 readOnly: !controller.isDropshipper,
                                 isRequired: true,
                                 prefixIcon: const Icon(Icons.phone),
-                                validator: (value) {
-                                  if (value?.isEmpty ?? false) {
-                                    return 'This field is required';
-                                  } else if (value!.length < 10) {
-                                    return 'the phone number must be more than 10 characters';
-                                  }
-                                  return null;
-                                },
+                                validator: ValidationBuilder().phone().build(),
                               ),
                               CustomSearchDropdownField<Origin>(
                                 asyncItems: (String filter) => controller.getOriginList(

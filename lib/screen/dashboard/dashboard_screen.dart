@@ -8,6 +8,7 @@ import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.da
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar.dart';
+import 'package:css_mobile/widgets/bar/custombottombar2.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_carousel.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_marquee.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_menu2.dart';
@@ -180,7 +181,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ],
             ),
-            bottomNavigationBar: BottomBar(
+            bottomNavigationBar: BottomBar2(
               menu: 0,
               isLogin: controller.isLogin,
               allowedMenu: controller.allow,

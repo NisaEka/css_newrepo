@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class BottomMenuItem extends StatelessWidget {
   final Widget icon;
-  final String title;
+  final String? title;
   final Color? color;
   final VoidCallback? onTap;
 
-  const BottomMenuItem({super.key, required this.icon, required this.title, this.color, this.onTap});
+  const BottomMenuItem({super.key, required this.icon, this.title, this.color, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +15,17 @@ class BottomMenuItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         alignment: Alignment.bottomCenter,
-        height: 55,
+        height: 50,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             icon,
-            Text(
-              title,
-              style: TextStyle(color: color),
-            )
+            title?.isNotEmpty ?? false
+                ? Text(
+                    title ?? '',
+                    style: TextStyle(color: color),
+                  )
+                : const SizedBox()
           ],
         ),
       ),
