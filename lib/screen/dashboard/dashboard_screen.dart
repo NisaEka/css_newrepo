@@ -65,36 +65,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 20, right: 20, top: 35),
-                        color: Theme.of(context).brightness == Brightness.light ? blueJNE : primaryDarkColor,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Image.asset(
-                              ImageConstant.logoCSS_white,
-                              height: 30,
-                            ),
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.notifications),
-                                ),
-                                IconButton(
-                                  onPressed: () => Get.to(const PengaturanScreen()),
-                                  icon: const Icon(Icons.settings),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
                       Stack(
                         children: [
                           Container(
                             // height: controller.isLogin && controller.allow.lacakPesanan == "Y" ? 160 : 120,
-                            height: controller.isLogin ? 160 : 120,
+                            height: controller.isLogin ? 220 : 180,
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
                               // color: blueJNE,
@@ -106,6 +81,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                             child: Column(
                               children: [
+                                Container(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  color: Theme.of(context).brightness == Brightness.light ? blueJNE : primaryDarkColor,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Image.asset(
+                                        ImageConstant.logoCSS_white,
+                                        height: 30,
+                                      ),
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                              Icons.notifications,
+                                              color: whiteColor,
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () => Get.to(const PengaturanScreen()),
+                                            icon: const Icon(
+                                              Icons.settings,
+                                              color: whiteColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 controller.isLogin
                                     ? Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +133,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ],
                                       )
                                     : const SizedBox(),
-                                const SizedBox(height: 18),
+                                const SizedBox(height: 15),
                                 /*!controller.isLogin || controller.allow.lacakPesanan == "Y"
                                     ? */
                                 TextField(
@@ -160,9 +166,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ],
                             ),
                           ),
-                          DashboardCarousel(
-                            isLogin: controller.isLogin,
-                            bannerList: controller.bannerList,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 60),
+                            child: DashboardCarousel(
+                              isLogin: controller.isLogin,
+                              bannerList: controller.bannerList,
+                            ),
                           ),
                         ],
                       ),

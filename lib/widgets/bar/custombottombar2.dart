@@ -1,11 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -147,10 +149,19 @@ class BottomBar2 extends StatelessWidget {
                   )
                 ]),
                 alignment: Alignment.center,
-                child: const Icon(
-                  Icons.add,
-                  color: whiteColor,
+                child: Image.asset(
+                  ImageConstant.paketmuIcon,
+                  height: Get.width / 12,
                 ),
+                // child: SvgPicture.asset(
+                //   IconsConstant.paket,
+                //   height: 30,
+                //   color: whiteColor,
+                // )
+                // child: const Icon(
+                //   Icons.add,
+                //   color: whiteColor,
+                // ),
               ),
             )
             // : const SizedBox(),
