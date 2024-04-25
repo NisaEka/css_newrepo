@@ -17,7 +17,6 @@ class AlamatReturnScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              backgroundColor: whiteColor,
               title: 'Alamat Pengembalian'.tr,
               action: [
                 Container(
@@ -68,7 +67,7 @@ class AlamatReturnScreen extends StatelessWidget {
                             ),
                           );
                         }),
-                        backgroundColor: Colors.white,
+                        backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),

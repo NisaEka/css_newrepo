@@ -29,7 +29,7 @@ class BankAccountListItem extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: isLoading ? greyLightColor3 : whiteColor,
+          color: isLoading ? greyLightColor3 : (Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor),
           border: Border.all(color: greyDarkColor1),
           borderRadius: BorderRadius.circular(12),
           boxShadow: isLoading

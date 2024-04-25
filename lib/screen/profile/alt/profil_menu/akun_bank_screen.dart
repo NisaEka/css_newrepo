@@ -68,7 +68,7 @@ class AkunBankScreen extends StatelessWidget {
                             ),
                           );
                         }),
-                        backgroundColor: Colors.white,
+                        backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),

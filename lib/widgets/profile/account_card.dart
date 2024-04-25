@@ -23,7 +23,7 @@ class AccountCard extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-          color: whiteColor,
+          color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
           border: Border.all(color: greyDarkColor1),
           borderRadius: BorderRadius.circular(12),
           boxShadow: const [

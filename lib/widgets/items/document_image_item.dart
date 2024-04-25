@@ -61,14 +61,14 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
             Text(widget.title.tr, style: subTitleTextStyle),
             SizedBox(
               height: 62,
-              width: 153,
+              width: 120,
               child: widget.img != null
                   ? Image.network(
                       widget.img ?? '',
                       fit: BoxFit.fill,
                       errorBuilder: (context, error, stackTrace) => Container(
                         height: 62,
-                        width: 153,
+                        width: 150,
                         decoration: BoxDecoration(
                           color: greyLightColor3,
                           borderRadius: BorderRadius.circular(5),
