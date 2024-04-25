@@ -124,8 +124,14 @@ class CustomTextFormField extends StatelessWidget {
               textInputAction: TextInputAction.next,
               textCapitalization: TextCapitalization.characters,
               decoration: InputDecoration(
+                  filled: true,
                   label: label == null ? Text(hintText ?? '') : const SizedBox(),
-                  fillColor: backgroundColor ?? (onTap != null || !readOnly ? whiteColor : neutralColor),
+                  fillColor: backgroundColor ??
+                      (onTap != null || !readOnly
+                          ? Colors.transparent
+                          : Theme.of(context).brightness == Brightness.light
+                              ? greyLightColor3
+                              : greyColor),
                   //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
                   suffixIcon: suffixIcon,
                   prefixIcon: prefixIcon,
@@ -133,6 +139,7 @@ class CustomTextFormField extends StatelessWidget {
                   suffixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
                   contentPadding: contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                   hintText: hintText ?? label,
+                  errorMaxLines: 3,
                   disabledBorder: noBorder
                       ? OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),

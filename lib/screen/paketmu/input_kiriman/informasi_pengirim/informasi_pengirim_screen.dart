@@ -109,7 +109,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                               width: Get.width / 2,
                                               height: 80,
                                               margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                                              decoration:  BoxDecoration(
+                                              decoration: BoxDecoration(
                                                 color: greyColor,
                                                 borderRadius: BorderRadius.circular(4),
                                               ),
@@ -251,6 +251,14 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 readOnly: !controller.isDropshipper,
                                 isRequired: true,
                                 prefixIcon: const Icon(Icons.phone),
+                                validator: (value) {
+                                  if (value?.isEmpty ?? false) {
+                                    return 'This field is required';
+                                  } else if (value!.length < 10) {
+                                    return 'the phone number must be more than 10 characters';
+                                  }
+                                  return null;
+                                },
                               ),
                               CustomSearchDropdownField<Origin>(
                                 asyncItems: (String filter) => controller.getOriginList(

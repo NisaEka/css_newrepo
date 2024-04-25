@@ -53,28 +53,34 @@ class App extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         colorScheme: const ColorScheme.dark(
-          primary: Color(0xff171717),
+          primary: primaryDarkColor,
           secondary: greyDarkColor2,
-          background: Color(0xff2B2B2B),
+          background: bgDarkColor,
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
+        textTheme: const TextTheme(
+          labelLarge: TextStyle(
+            color: greyColor,
+          ),
+        ),
         fontFamily: 'Ubuntu',
         // backgroundColor: greyColor,
         appBarTheme: AppBarTheme(
-          backgroundColor: const Color(0xff171717),
+          // backgroundColor: const Color(0xff171717),
           elevation: 0,
           titleTextStyle: appTitleTextStyle,
           iconTheme: const IconThemeData(color: whiteColor),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          filled: false,
-          fillColor: whiteColor,
+          // filled: true,
+          // fillColor: Colors.transparent,
           labelStyle: hintTextStyle.copyWith(color: greyLightColor1),
           hintStyle: hintTextStyle.copyWith(color: whiteColor),
           counterStyle: hintTextStyle.copyWith(color: whiteColor),
           prefixIconColor: greyLightColor1,
           suffixIconColor: greyLightColor1,
+          errorMaxLines: 3,
           contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -103,7 +109,7 @@ class App extends StatelessWidget {
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(
-              color: whiteColor,
+              color: greyColor,
               width: 1,
             ),
           ),
@@ -153,7 +159,7 @@ class App extends StatelessWidget {
         fontFamily: 'Ubuntu',
         // backgroundColor: baseColor,
         appBarTheme: AppBarTheme(
-          backgroundColor: blueJNE,
+          backgroundColor: whiteColor,
           elevation: 0,
           titleTextStyle: appTitleTextStyle,
           iconTheme: const IconThemeData(color: whiteColor),

@@ -25,7 +25,6 @@ class TambahPetugasScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              backgroundColor: whiteColor,
               title: controller.isEdit ? 'Edit Petugas' : 'Tambah Petugas'.tr,
             ),
             body: Stack(
@@ -121,7 +120,8 @@ class TambahPetugasScreen extends StatelessWidget {
                                     children: [
                                       MultiSelectDialogField(
                                         decoration: BoxDecoration(
-                                          border: Border.all(),
+                                          border:
+                                              Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
                                           borderRadius: BorderRadius.circular(8),
                                         ),
                                         searchable: true,
@@ -129,6 +129,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                         buttonText: Text('Akun'.tr),
                                         dialogWidth: Get.width,
                                         initialValue: controller.selectedAccountList,
+
                                         items: controller.accountList
                                             .map((e) => MultiSelectItem(
                                                   e,
@@ -136,7 +137,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                 ))
                                             .toList(),
                                         listType: MultiSelectListType.CHIP,
-                                        backgroundColor: whiteColor,
+                                        backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
                                         onConfirm: (values) {
                                           controller.selectedAccountList = values;
                                         },
@@ -148,7 +149,8 @@ class TambahPetugasScreen extends StatelessWidget {
                                       const SizedBox(height: 10),
                                       MultiSelectDialogField(
                                         decoration: BoxDecoration(
-                                          border: Border.all(),
+                                          border:
+                                              Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
                                           borderRadius: BorderRadius.circular(8),
                                         ),
                                         searchable: true,
@@ -162,7 +164,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                 ))
                                             .toList(),
                                         listType: MultiSelectListType.CHIP,
-                                        backgroundColor: whiteColor,
+                                        backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
                                         onConfirm: (values) {
                                           controller.selectedBranchList = values;
                                           controller.update();
@@ -178,7 +180,8 @@ class TambahPetugasScreen extends StatelessWidget {
                                       Obx(
                                         () => MultiSelectDialogField<Origin>(
                                           decoration: BoxDecoration(
-                                            border: Border.all(),
+                                            border: Border.all(
+                                                color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
                                             borderRadius: BorderRadius.circular(8),
                                           ),
                                           searchable: true,
@@ -192,7 +195,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                   ))
                                               .toList(),
                                           listType: MultiSelectListType.CHIP,
-                                          backgroundColor: whiteColor,
+                                          backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
                                           onConfirm: (values) {
                                             // controller.selectedOrigin = values;
                                             controller.selectedOrigin.clear();

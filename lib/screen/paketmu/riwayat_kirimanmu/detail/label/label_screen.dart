@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_controller.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_a6.dart';
@@ -25,7 +26,38 @@ class LabelScreen extends StatelessWidget {
           return Scaffold(
             appBar: CustomTopBar(
               title: "Cetak Label".tr,
+              action: const [
+                // IconButton(
+                //   onPressed: () async {
+                //     // final directory = (await getApplicationDocumentsDirectory ()).path; //from path_provide package
+                //     // String fileName = DateTime.now().microsecondsSinceEpoch.toString();
+                //     // path = '$directory';
+                //     controller.screenshotController
+                //         .capture(
+                //       delay: const Duration(milliseconds: 10),
+                //     )
+                //         .then((capturedImage) async {
+                //       controller.showCapturedWidget(context, capturedImage!);
+                //     })
+                //         //     .then((value) {
+                //         //   if (image != null) {
+                //         //     final directory = await getApplicationDocumentsDirectory();
+                //         //     final imagePath = await File('${directory.path}/image.png').create();
+                //         //     await imagePath.writeAsBytes(image);
+                //         //
+                //         //     /// Share Plugin
+                //         //     await Share.shareFiles([imagePath.path]);
+                //         //   }
+                //         // })
+                //         .catchError((onError) {
+                //       printError(info: onError);
+                //     });
+                //   },
+                //   icon: const Icon(Icons.print),
+                // ),
+              ],
             ),
+            backgroundColor: whiteColor,
             // body: PdfPreview(
             //   maxPageWidth: Get.width,
             //   build: (format) => StickerMegahub1(data: data).generatePdf(format),
@@ -37,41 +69,42 @@ class LabelScreen extends StatelessWidget {
               controller: controller.screenshotController,
               child: Container(
                 margin: const EdgeInsets.all(25),
-                child: StickerDefault(data: data),
-                // child: controller.stickerLabel == "/sticker_default"
-                //     ? StickerDefault(
-                //         data: data,
-                //         shippingCost: controller.shippingCost,
-                //       )
-                //     : controller.stickerLabel == "/sticker_A6"
-                //         ? StickerA6(
-                //             data: data,
-                //             shippingCost: controller.shippingCost,
-                //           )
-                //         : controller.stickerLabel == "/sticker_megahub1"
-                //             ? StickerMegahub1(
-                //                 data: data,
-                //                 shippingCost: controller.shippingCost,
-                //               )
-                //             : controller.stickerLabel == "/sticker_vertical_megahub_1"
-                //                 ? StickerMegahub2(
-                //                     data: data,
-                //                     shippingCost: controller.shippingCost,
-                //                   )
-                //                 : controller.stickerLabel == "/sticker_megahub_hybrid_1"
-                //                     ? StickerMegahubHybrid1(
-                //                         data: data,
-                //                         shippingCost: controller.shippingCost,
-                //                       )
-                //                     : controller.stickerLabel == "/sticker_megahub_hybrid_2"
-                //                         ? StickerMegahubHybrid2(
-                //                             data: data,
-                //                             shippingCost: controller.shippingCost,
-                //                           )
-                //                         : StickerMegahubHybrid3(
-                //                             data: data,
-                //                             shippingCost: controller.shippingCost,
-                //                           ),
+                color: Colors.white,
+                // child: StickerMegahubHybrid3(data: data),
+                child: controller.stickerLabel == "/sticker_default"
+                    ? StickerDefault(
+                        data: data,
+                        shippingCost: controller.shippingCost,
+                      )
+                    : controller.stickerLabel == "/sticker_A6"
+                        ? StickerA6(
+                            data: data,
+                            shippingCost: controller.shippingCost,
+                          )
+                        : controller.stickerLabel == "/sticker_megahub1"
+                            ? StickerMegahub1(
+                                data: data,
+                                shippingCost: controller.shippingCost,
+                              )
+                            : controller.stickerLabel == "/sticker_vertical_megahub_1"
+                                ? StickerMegahub2(
+                                    data: data,
+                                    shippingCost: controller.shippingCost,
+                                  )
+                                : controller.stickerLabel == "/sticker_megahub_hybrid_1"
+                                    ? StickerMegahubHybrid1(
+                                        data: data,
+                                        shippingCost: controller.shippingCost,
+                                      )
+                                    : controller.stickerLabel == "/sticker_megahub_hybrid_2"
+                                        ? StickerMegahubHybrid2(
+                                            data: data,
+                                            shippingCost: controller.shippingCost,
+                                          )
+                                        : StickerMegahubHybrid3(
+                                            data: data,
+                                            shippingCost: controller.shippingCost,
+                                          ),
               ),
             ),
             // floatingActionButton: FloatingActionButton(

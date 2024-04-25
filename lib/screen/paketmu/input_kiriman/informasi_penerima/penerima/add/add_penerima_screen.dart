@@ -20,11 +20,10 @@ class AddPenerimaScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               elevation: 1,
-              backgroundColor: whiteColor,
               title: Text(
                 'Tambah Data Penerima'.tr,
                 style: appTitleTextStyle.copyWith(
-                  color: blueJNE,
+                  color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
                 ),
               ),
               leading: const CustomBackButton(),
@@ -32,7 +31,7 @@ class AddPenerimaScreen extends StatelessWidget {
             body: SingleChildScrollView(
               child: Container(
                   // padding: const EdgeInsets.all(30),
-                  margin: EdgeInsets.all(30),
+                  margin: const EdgeInsets.all(30),
                   child: Form(
                       key: controller.formKey,
                       onChanged: () {

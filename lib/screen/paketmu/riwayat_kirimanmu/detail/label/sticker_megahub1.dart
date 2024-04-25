@@ -23,169 +23,187 @@ class StickerMegahub1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      // crossAxisAlignment: CrossAxisAlignment.center,
-      // mainAxisAlignment: ,
-      children: [
-        sticker1(),
-        const SizedBox(height: 25),
-        StickerMegahubHybrid1(data: data).sticker2(),
-        Center(
-          child: Text(
-            'Untuk informasi dan pengecekan status kiriman silahkan mengunjungi www.jne.co.id',
-            style: labelTextStyle,
-          ),
-        )
-      ],
+    return DefaultTextStyle(
+      style: const TextStyle(color: Colors.black),
+      child: Container(
+        color: Colors.white,
+        child: ListView(
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisAlignment: ,
+          children: [
+            sticker1(),
+            const SizedBox(height: 25),
+            StickerMegahubHybrid1(data: data).sticker2(),
+            Center(
+              child: Text(
+                'Untuk informasi dan pengecekan status kiriman silahkan mengunjungi www.jne.co.id',
+                style: labelTextStyle,
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
   Widget sticker1() {
-    return Column(
-      children: [
-        Container(
-          width: Get.width - 51,
-          padding: const EdgeInsets.all(15),
-          decoration: const BoxDecoration(
-            border: Border(left: BorderSide(), top: BorderSide(), right: BorderSide(), bottom: BorderSide()),
-          ),
-          child: Column(
-            children: [
-              Image.asset(
-                ImageConstant.logoJNE,
-                height: 30,
+    return DefaultTextStyle(
+      style: const TextStyle(color: Colors.black),
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Container(
+              width: Get.width - 51,
+              padding: const EdgeInsets.all(15),
+              decoration: const BoxDecoration(
+                border: Border(
+                  left: BorderSide(),
+                  top: BorderSide(),
+                  right: BorderSide(),
+                  bottom: BorderSide(),
+                ),
+                color: Colors.white
               ),
-              const SizedBox(height: 10),
-              BarcodeWidget(
-                barcode: Barcode.code128(
-                  useCode128A: true,
-                  escapes: true,
-                ),
-                data: data.awb ?? '',
-                drawText: false,
-                height: 60,
-              ),
-              Text(
-                'Nomor Connote : ${data.awb}',
-                style: itemTextStyle,
-              )
-            ],
-          ),
-        ),
-        Table(
-          border: const TableBorder(verticalInside: BorderSide(), right: BorderSide(), left: BorderSide(), bottom: BorderSide()),
-          children: <TableRow>[
-            TableRow(
-              // decoration: BoxDecoration(border: Border.all()),
-              children: <Widget>[
-                Text(
-                  data.delivery?.serviceCode ?? '-',
-                  style: itemTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  data.type ?? '-',
-                  style: itemTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}',
-                  style: itemTextStyle.copyWith(fontWeight: bold),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ],
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              left: BorderSide(),
-              right: BorderSide(),
-            ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: (Get.width - 50.5) / 1.5,
-                decoration: const BoxDecoration(border: Border(right: BorderSide())),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                        'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zip ?? ''}, Telp.${data.shipper?.phone ?? ''}\n\n',
-                        style: labelTextStyle),
-                    const Divider(height: 1),
-                    Text(
-                        'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zip ?? ''}. Telp.${data.receiver?.phone ?? ''}\n\n',
-                        style: labelTextStyle),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: Get.width / 3.6,
-                child: Text(
-                  '${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.receiver?.destinationCode ?? ''} \n${data.receiver?.zip ?? ''}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Table(
-          border: const TableBorder(right: BorderSide(), verticalInside: BorderSide()),
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: <TableRow>[
-            TableRow(
-              decoration: BoxDecoration(border: Border.all()),
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.all(10),
-                  child: BarcodeWidget(
-                    barcode: Barcode.qrCode(),
+              child: Column(
+                children: [
+                  Image.asset(
+                    ImageConstant.logoJNE,
+                    height: 30,
+                  ),
+                  const SizedBox(height: 10),
+                  BarcodeWidget(
+                    barcode: Barcode.code128(
+                      useCode128A: true,
+                      escapes: true,
+                    ),
                     data: data.awb ?? '',
                     drawText: false,
-                    height: 70,
+                    height: 60,
                   ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(3),
-                      child: Text('Deskripsi: \n${data.goods?.desc ?? '-'}\n', style: labelTextStyle),
+                  Text(
+                    'Nomor Connote : ${data.awb}',
+                    style: itemTextStyle,
+                  )
+                ],
+              ),
+            ),
+            Table(
+              border: const TableBorder(verticalInside: BorderSide(), right: BorderSide(), left: BorderSide(), bottom: BorderSide()),
+              children: <TableRow>[
+                TableRow(
+                  // decoration: BoxDecoration(border: Border.all()),
+                  children: <Widget>[
+                    Text(
+                      data.delivery?.serviceCode ?? '-',
+                      style: itemTextStyle,
+                      textAlign: TextAlign.center,
                     ),
-                    const Divider(height: 1),
-                    Padding(
-                      padding: const EdgeInsets.all(3),
-                      child: Text('Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n', style: labelTextStyle),
+                    Text(
+                      data.type ?? '-',
+                      style: itemTextStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}',
+                      style: itemTextStyle.copyWith(fontWeight: bold),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-                Container(
-                  margin: const EdgeInsets.all(3),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Tanggal: ${data.createdDate?.toShortDateFormat() ?? ''}', style: labelTextStyle),
-                      Text('No. Pelanggan: ${data.account?.accountNumber ?? ''}', style: labelTextStyle),
-                      Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}', style: labelTextStyle),
-                      Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
-                      Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}', style: labelTextStyle),
-                      Text('Pembayaran: ${data.type ?? ''}', style: labelTextStyle),
-                      Text('Order ID: ${data.orderId ?? ''}', style: labelTextStyle),
-                    ],
+              ],
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  left: BorderSide(),
+                  right: BorderSide(),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: (Get.width - 50.5) / 1.5,
+                    decoration: const BoxDecoration(border: Border(right: BorderSide())),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                            'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zip ?? ''}, Telp.${data.shipper?.phone ?? ''}\n\n',
+                            style: labelTextStyle),
+                        const Divider(height: 1),
+                        Text(
+                            'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zip ?? ''}. Telp.${data.receiver?.phone ?? ''}\n\n',
+                            style: labelTextStyle),
+                      ],
+                    ),
                   ),
+                  SizedBox(
+                    width: Get.width / 3.6,
+                    child: Text(
+                      '${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.receiver?.destinationCode ?? ''} \n${data.receiver?.zip ?? ''}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Table(
+              border: const TableBorder(right: BorderSide(), verticalInside: BorderSide()),
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              children: <TableRow>[
+                TableRow(
+                  decoration: BoxDecoration(border: Border.all()),
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(10),
+                      child: BarcodeWidget(
+                        barcode: Barcode.qrCode(),
+                        data: data.awb ?? '',
+                        drawText: false,
+                        height: 70,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: Text('Deskripsi: \n${data.goods?.desc ?? '-'}\n', style: labelTextStyle),
+                        ),
+                        const Divider(height: 1),
+                        Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: Text('Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n', style: labelTextStyle),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(3),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Tanggal: ${data.createdDate?.toShortDateFormat() ?? ''}', style: labelTextStyle),
+                          Text('No. Pelanggan: ${data.account?.accountNumber ?? ''}', style: labelTextStyle),
+                          Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}', style: labelTextStyle),
+                          Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
+                          Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}', style: labelTextStyle),
+                          Text('Pembayaran: ${data.type ?? ''}', style: labelTextStyle),
+                          Text('Order ID: ${data.orderId ?? ''}', style: labelTextStyle),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 

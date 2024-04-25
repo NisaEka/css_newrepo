@@ -62,7 +62,7 @@ class CekOngkirController extends BaseController {
           .then((value) {
         ongkirList.addAll(value.ongkir ?? []);
       });
-    } catch (e,i) {
+    } catch (e, i) {
       e.printError();
       i.printError();
     }
@@ -149,9 +149,9 @@ class CekOngkirController extends BaseController {
       StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          decoration: const BoxDecoration(
-            color: whiteColor,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyDarkColor1,
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
             ),
@@ -162,7 +162,7 @@ class CekOngkirController extends BaseController {
               Text(
                 '$title\n',
                 style: appTitleTextStyle.copyWith(
-                  color: greyDarkColor1,
+                  color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
                 ),
               ),
               CustomSearchField(

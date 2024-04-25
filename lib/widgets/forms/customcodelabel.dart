@@ -24,14 +24,14 @@ class CustomCodeLabel extends StatelessWidget {
           child: Container(
             color: isLoading ? greyLightColor2 : Colors.transparent,
             width: isLoading ? Get.width / 2 : null,
-            child: Text(label, style: appTitleTextStyle.copyWith(color: blueJNE)),
+            child: Text(label, style: appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor)),
           ),
         ),
         IconButton(
           onPressed: () => Clipboard.setData(ClipboardData(text: label)),
-          icon: const Icon(
+          icon: Icon(
             Icons.copy_rounded,
-            color: blueJNE,
+            color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
           ),
         ),
       ],

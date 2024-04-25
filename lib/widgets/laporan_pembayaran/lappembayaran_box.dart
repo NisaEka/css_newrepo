@@ -1,9 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:marquee/marquee.dart';
 
 class PaymentBox extends StatelessWidget {
   final String title;
@@ -23,7 +21,7 @@ class PaymentBox extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 20),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: whiteColor,
+        color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: greyDarkColor1),
         boxShadow: const [
@@ -39,7 +37,7 @@ class PaymentBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               children: [
                 Text(title.capitalize ?? '', style: subformLabelTextStyle),

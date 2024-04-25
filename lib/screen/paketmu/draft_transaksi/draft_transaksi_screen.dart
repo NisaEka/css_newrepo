@@ -6,11 +6,9 @@ import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_contro
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
-import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
-import 'package:css_mobile/widgets/items/draft_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -61,7 +59,10 @@ class DraftTransaksiScreen extends StatelessWidget {
                       CustomSearchField(
                         controller: controller.search,
                         hintText: 'Cari transaksimu'.tr,
-                        prefixIcon: SvgPicture.asset(IconsConstant.search),
+                        prefixIcon: SvgPicture.asset(
+                          IconsConstant.search,
+                          color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+                        ),
                         inputFormatters: [
                           TextInputFormatter.withFunction((oldValue, newValue) {
                             return newValue.copyWith(text: newValue.text.toUpperCase());

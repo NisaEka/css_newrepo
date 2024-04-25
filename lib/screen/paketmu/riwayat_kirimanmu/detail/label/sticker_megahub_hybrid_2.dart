@@ -31,174 +31,177 @@ class StickerMegahubHybrid2 extends StatelessWidget {
   }
 
   Widget sticker() {
-    return Container(
-      decoration: BoxDecoration(border: Border.all()),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: Image.asset(
-                  ImageConstant.logoJNE,
-                  height: 20,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "Nomor Connote: ${data.awb ?? ''}",
-                  style: listTitleTextStyle.copyWith(color: Colors.black),
-                ),
-              )
-            ],
-          ),
-          Container(
-            width: Get.width - 51,
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-            child: BarcodeWidget(
-              barcode: Barcode.code128(
-                useCode128A: true,
-                // escapes: true,
-              ),
-              data: data.awb ?? '',
-              drawText: false,
-              style: const TextStyle(fontSize: 20),
-              height: 87,
-              // width: Get.width ,
-            ),
-          ),
-          // const Divider(height: 1),
-          SolidBorder(height: 1, width: Get.width - 51),
-          Row(
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: (Get.width - 51) / 1.5,
-                child: Text(
-                  'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zip ?? ''}, Telp.${data.shipper?.phone ?? ''}',
-                  style: labelTextStyle,
-                ),
-              ),
-              const SolidBorder(width: 1, height: 50),
-              Container(
-                width: (Get.width - 51) / 6.5,
-                alignment: Alignment.center,
-                child: Text(
-                  data.delivery?.serviceCode.toString() ?? '-',
-                  style: TextStyle(fontWeight: bold),
-                ),
-              ),
-              const SolidBorder(width: 1, height: 50),
-              Container(
-                width: (Get.width - 51) / 6.5,
-                alignment: Alignment.center,
-                child: Text(
-                  data.type ?? '',
-                  style: TextStyle(fontWeight: bold),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              // const SolidBorder(width: 0, height: 50),
-            ],
-          ),
-          SolidBorder(height: 1, width: Get.width - 51),
-          Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: (Get.width - 51) / 1.5,
-                child: Text(
-                    'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zip ?? ''}, Telp.${data.receiver?.phone ?? ''}\n',
-                    style: labelTextStyle),
-              ),
-              const SolidBorder(width: 1, height: 50),
-              // const SolidBorder(width: 0, height: 50),
-              // const SolidBorder(width: 0, height: 50),
-              Container(
-                width: (Get.width - 51) / 3.2,
-                alignment: Alignment.center,
-                child: Text(
-                  "Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() ?? '0' : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}",
-                  style: TextStyle(fontSize: 15, fontWeight: bold),
-                ),
-              ),
-              // const SolidBorder(width: 0, height: 50),
-              // const SolidBorder(width: 0, height: 50),
-            ],
-          ),
-          SolidBorder(height: 1, width: Get.width - 51),
-          Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: (Get.width - 50) / 1.5,
-                // decoration: const BoxDecoration(
-                //   border: Border(
-                //     right: BorderSide(),
-                //   ),
-                // ),
-                child: Table(
-                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                  border: const TableBorder(
-                    verticalInside: BorderSide(),
-                    right: BorderSide(),
+    return DefaultTextStyle(
+      style: const TextStyle(color: Colors.black),
+      child: Container(
+        decoration: BoxDecoration(border: Border.all()),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Image.asset(
+                    ImageConstant.logoJNE,
+                    height: 20,
                   ),
-                  children: [
-                    TableRow(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Deskripsi: \n${data.goods?.desc ?? '-'}\n\n', style: labelTextStyle),
-                            const SolidBorder(),
-                            Text('Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n\n', style: labelTextStyle),
-                          ],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(3),
-                          // decoration: const BoxDecoration(
-                          //   border: Border(
-                          //     left: BorderSide(),
-                          //   ),
-                          // ),
-                          child: Column(
+                ),
+                const SizedBox(width: 10),
+                Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Nomor Connote: ${data.awb ?? ''}",
+                    style: listTitleTextStyle.copyWith(color: Colors.black),
+                  ),
+                )
+              ],
+            ),
+            Container(
+              width: Get.width - 51,
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+              child: BarcodeWidget(
+                barcode: Barcode.code128(
+                  useCode128A: true,
+                  // escapes: true,
+                ),
+                data: data.awb ?? '',
+                drawText: false,
+                style: const TextStyle(fontSize: 20),
+                height: 87,
+                // width: Get.width ,
+              ),
+            ),
+            // const Divider(height: 1),
+            SolidBorder(height: 1, width: Get.width - 51),
+            Row(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: (Get.width - 51) / 1.5,
+                  child: Text(
+                    'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zip ?? ''}, Telp.${data.shipper?.phone ?? ''}',
+                    style: labelTextStyle,
+                  ),
+                ),
+                const SolidBorder(width: 1, height: 50),
+                Container(
+                  width: (Get.width - 51) / 6.5,
+                  alignment: Alignment.center,
+                  child: Text(
+                    data.delivery?.serviceCode.toString() ?? '-',
+                    style: TextStyle(fontWeight: bold),
+                  ),
+                ),
+                const SolidBorder(width: 1, height: 50),
+                Container(
+                  width: (Get.width - 51) / 6.5,
+                  alignment: Alignment.center,
+                  child: Text(
+                    data.type ?? '',
+                    style: TextStyle(fontWeight: bold),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                // const SolidBorder(width: 0, height: 50),
+              ],
+            ),
+            SolidBorder(height: 1, width: Get.width - 51),
+            Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: (Get.width - 51) / 1.5,
+                  child: Text(
+                      'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zip ?? ''}, Telp.${data.receiver?.phone ?? ''}\n',
+                      style: labelTextStyle),
+                ),
+                const SolidBorder(width: 1, height: 50),
+                // const SolidBorder(width: 0, height: 50),
+                // const SolidBorder(width: 0, height: 50),
+                Container(
+                  width: (Get.width - 51) / 3.2,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() ?? '0' : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}",
+                    style: TextStyle(fontSize: 15, fontWeight: bold),
+                  ),
+                ),
+                // const SolidBorder(width: 0, height: 50),
+                // const SolidBorder(width: 0, height: 50),
+              ],
+            ),
+            SolidBorder(height: 1, width: Get.width - 51),
+            Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: (Get.width - 50) / 1.5,
+                  // decoration: const BoxDecoration(
+                  //   border: Border(
+                  //     right: BorderSide(),
+                  //   ),
+                  // ),
+                  child: Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    border: const TableBorder(
+                      verticalInside: BorderSide(),
+                      right: BorderSide(),
+                    ),
+                    children: [
+                      TableRow(
+                        children: [
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Tanggal: ${data.createdDate?.toShortDateFormat() ?? '-'}', style: labelTextStyle),
-                              Text('No. Pelanggan: ${data.account?.accountNumber ?? '-'}', style: labelTextStyle),
-                              Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? '-'}', style: labelTextStyle),
-                              Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
-                              Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}', style: labelTextStyle),
-                              Text('Pembayaran: ${data.type ?? '-'}', style: labelTextStyle),
-                              // Text('Order ID: ${data.orderId}', style: labelTextStyle),
+                              Text('Deskripsi: \n${data.goods?.desc ?? '-'}\n\n', style: labelTextStyle),
+                              const SolidBorder(),
+                              Text('Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n\n', style: labelTextStyle),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Container(
+                            padding: const EdgeInsets.all(3),
+                            // decoration: const BoxDecoration(
+                            //   border: Border(
+                            //     left: BorderSide(),
+                            //   ),
+                            // ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Tanggal: ${data.createdDate?.toShortDateFormat() ?? '-'}', style: labelTextStyle),
+                                Text('No. Pelanggan: ${data.account?.accountNumber ?? '-'}', style: labelTextStyle),
+                                Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? '-'}', style: labelTextStyle),
+                                Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
+                                Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}', style: labelTextStyle),
+                                Text('Pembayaran: ${data.type ?? '-'}', style: labelTextStyle),
+                                // Text('Order ID: ${data.orderId}', style: labelTextStyle),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              // const SolidBorder(width: 1, height: 94),
-              Container(
-                width: (Get.width - 51) / 3.2,
-                alignment: Alignment.center,
-                // color: Colors.grey,
-                child: Text(
-                  "${data.destination?.destinationCode?.substring(0, 3)}-${data.receiver?.destinationCode?.substring(0, 3)}\n${data.receiver?.zip}",
-                  style: TextStyle(fontSize: 15, fontWeight: bold),
-                  textAlign: TextAlign.center,
+                // const SolidBorder(width: 1, height: 94),
+                Container(
+                  width: (Get.width - 51) / 3.2,
+                  alignment: Alignment.center,
+                  // color: Colors.grey,
+                  child: Text(
+                    "${data.destination?.destinationCode?.substring(0, 3)}-${data.receiver?.destinationCode?.substring(0, 3)}\n${data.receiver?.zip}",
+                    style: TextStyle(fontSize: 15, fontWeight: bold),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-              // const SolidBorder(width: 0, height: 94),
-            ],
-          )
-        ],
+                // const SolidBorder(width: 0, height: 94),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

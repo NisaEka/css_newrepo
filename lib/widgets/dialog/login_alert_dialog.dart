@@ -11,7 +11,7 @@ class LoginAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       elevation: 0,
-      backgroundColor: whiteColor,
+      backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
       title: Text('Akses Terbatas'.tr),
       content: Text(
         'access_denied'.tr,

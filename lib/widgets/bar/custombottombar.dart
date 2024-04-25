@@ -68,7 +68,9 @@ class BottomBar extends StatelessWidget {
                               : Theme.of(context).brightness == Brightness.light
                                   ? blueJNE
                                   : whiteColor
-                          : blueJNE.withOpacity(0.5)),
+                          : Theme.of(context).brightness == Brightness.light
+                              ? blueJNE.withOpacity(0.5)
+                              : whiteColor.withOpacity(0.5)),
                   title: "Profil".tr,
                   color: isLogin
                       ? menu == 1
@@ -76,7 +78,9 @@ class BottomBar extends StatelessWidget {
                           : Theme.of(context).brightness == Brightness.light
                               ? blueJNE
                               : whiteColor
-                      : blueJNE.withOpacity(0.5),
+                      : Theme.of(context).brightness == Brightness.light
+                          ? blueJNE.withOpacity(0.5)
+                          : whiteColor.withOpacity(0.5),
                   // onTap: () => Get.offAll(const ProfileScreen()),
                   onTap: () => isLogin
                       ? Get.offAll(const AltProfileScreen())

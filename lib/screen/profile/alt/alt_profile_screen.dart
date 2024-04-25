@@ -29,7 +29,6 @@ class AltProfileScreen extends StatelessWidget {
               leading: CustomBackButton(
                 onPressed: () => Get.offAll(const DashboardScreen()),
               ),
-              backgroundColor: whiteColor,
               title: 'Profil'.tr,
             ),
             body: Padding(
@@ -62,60 +61,62 @@ class AltProfileScreen extends StatelessWidget {
                     ],
                   ),
                   /*controller.allow.fasilitas == "Y"
-                      ? */SettingListItem(
-                          title: 'Fasilitasku'.tr,
-                          icon: Icons.format_list_numbered_rounded,
-                          onTap: () => showDialog(
-                            context: context,
-                            builder: (context) => const ComingSoonDialog(),
-                          ),
-                        ),
-                      // : const SizedBox(),
+                      ? */
+                  SettingListItem(
+                    title: 'Fasilitasku'.tr,
+                    icon: Icons.format_list_numbered_rounded,
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => const ComingSoonDialog(),
+                    ),
+                  ),
+                  // : const SizedBox(),
                   /*controller.allow.profil == "Y"
-                      ?*/ Column(
-                          children: [
-                            SettingListItem(
-                              title: 'Lihat Akun'.tr,
-                              icon: Icons.account_tree_rounded,
-                              onTap: () => Get.to(const NoAkunScreen()),
-                            ),
-                            SettingListItem(
-                              title: 'Data Umum'.tr,
-                              icon: Icons.person_pin_outlined,
-                              onTap: () => Get.to(const DataUmumScreen()),
-                            ),
-                            SettingListItem(
-                              title: 'Alamat Pengembalian'.tr,
-                              icon: Icons.cached_rounded,
-                              onTap: () => Get.to(const AlamatReturnScreen()),
-                            ),
-                            SettingListItem(
-                              title: 'Data Rekening'.tr,
-                              icon: Icons.credit_card_rounded,
-                              onTap: () => Get.to(const AkunBankScreen()),
-                            ),
-                            SettingListItem(
-                              title: 'Dokumen'.tr,
-                              icon: Icons.file_present_rounded,
-                              onTap: () => Get.to(const DokumenScreen()),
-                            )
-                          ],
-                        ),
-                      // : const SizedBox(),
+                      ?*/
+                  Column(
+                    children: [
+                      SettingListItem(
+                        title: 'Lihat Akun'.tr,
+                        icon: Icons.account_tree_rounded,
+                        onTap: () => Get.to(const NoAkunScreen()),
+                      ),
+                      SettingListItem(
+                        title: 'Data Umum'.tr,
+                        icon: Icons.person_pin_outlined,
+                        onTap: () => Get.to(const DataUmumScreen()),
+                      ),
+                      SettingListItem(
+                        title: 'Alamat Pengembalian'.tr,
+                        icon: Icons.cached_rounded,
+                        onTap: () => Get.to(const AlamatReturnScreen()),
+                      ),
+                      SettingListItem(
+                        title: 'Data Rekening'.tr,
+                        icon: Icons.credit_card_rounded,
+                        onTap: () => Get.to(const AkunBankScreen()),
+                      ),
+                      SettingListItem(
+                        title: 'Dokumen'.tr,
+                        icon: Icons.file_present_rounded,
+                        onTap: () => Get.to(const DokumenScreen()),
+                      )
+                    ],
+                  ),
+                  // : const SizedBox(),
                 ],
               ),
             ),
             bottomNavigationBar: Container(
               margin: const EdgeInsets.only(bottom: 50),
-              color: whiteColor,
+              // color: whiteColor,
               child: ListTile(
                 onTap: () => controller.isLogin ? controller.doLogout() : Get.to(const LoginScreen()),
                 leading: Icon(controller.isLogin ? Icons.logout : Icons.login),
                 title: Text(controller.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
                 trailing: Text('v ${controller.version.toString()}'.tr),
-                shape: const Border(
-                  bottom: BorderSide(color: Colors.black ),
-                  top: BorderSide(color: Colors.black),
+                shape: Border(
+                  bottom: BorderSide(color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white),
+                  top: BorderSide(color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white),
                 ),
               ),
             ),

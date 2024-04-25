@@ -41,7 +41,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                           label: 'Status Transaksi'.tr,
                           width: Get.width / 2.5,
                           readOnly: true,
-                          backgroundColor: greyLightColor2,
+                          backgroundColor: Theme.of(context).brightness == Brightness.light ? greyLightColor2 : greyDarkColor2,
                           noBorder: true,
                           isLoading: controller.isLoading,
                         ),
@@ -50,7 +50,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                           label: 'Status Pickup'.tr,
                           width: Get.width / 2.5,
                           readOnly: true,
-                          backgroundColor: greyLightColor2,
+                          backgroundColor: Theme.of(context).brightness == Brightness.light ? greyLightColor2 : greyDarkColor2,
                           noBorder: true,
                           isLoading: controller.isLoading,
                         ),
@@ -71,7 +71,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                           drawText: false,
                           height: 120,
                           width: 120,
-                          color: blueJNE,
+                          color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
                         ),
                       ),
                     )
@@ -82,7 +82,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(13),
                     decoration: BoxDecoration(
-                      color: controller.isLoading ? greyColor : whiteColor,
+                      color: controller.isLoading ? greyColor : (Theme.of(context).brightness == Brightness.light ? whiteColor : greyDarkColor2),
                       borderRadius: BorderRadius.circular(5),
                       boxShadow: const [
                         BoxShadow(
@@ -114,10 +114,10 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                       onTap: () => Clipboard.setData(ClipboardData(text: controller.transactionModel?.awb ?? '')),
                                       child: Container(
                                         margin: const EdgeInsets.only(left: 10),
-                                        child: const Icon(
+                                        child: Icon(
                                           size: 10,
                                           Icons.copy_rounded,
-                                          color: blueJNE,
+                                          color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
                                         ),
                                       ),
                                     ),
@@ -138,10 +138,10 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                       onTap: () => Clipboard.setData(ClipboardData(text: controller.transactionModel?.orderId ?? '')),
                                       child: Container(
                                         margin: const EdgeInsets.only(left: 10),
-                                        child: const Icon(
+                                        child: Icon(
                                           size: 10,
                                           Icons.copy_rounded,
-                                          color: blueJNE,
+                                          color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
                                         ),
                                       ),
                                     ),
@@ -219,9 +219,11 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                 CustomFilledButton(
                   color: blueJNE,
                   title: 'Lihat Resi'.tr,
-                  onPressed: () => Get.to(const LabelScreen(), arguments: {
-                    'data': controller.transactionModel,
-                  }),
+                  onPressed: () => controller.transactionModel != null
+                      ? Get.to(const LabelScreen(), arguments: {
+                          'data': controller.transactionModel,
+                        })
+                      : null,
                   isLoading: controller.isLoading,
                 ),
               ],

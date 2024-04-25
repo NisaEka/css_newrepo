@@ -22,9 +22,8 @@ class LoginScreen extends StatelessWidget {
         init: LoginController(),
         builder: (controller) {
           return PopScope(
-            canPop: true,
+            canPop: controller.pop,
             onPopInvoked: (didPop) => controller.onPop(),
-
             child: Stack(
               children: [
                 Scaffold(
@@ -78,11 +77,9 @@ class LoginScreen extends StatelessWidget {
                                       controller.isObscurePasswordLogin != false
                                           ? controller.showIcon = const Icon(
                                               Icons.visibility,
-                                              color: greyDarkColor1,
                                             )
                                           : controller.showIcon = const Icon(
                                               Icons.visibility_off,
-                                              color: Colors.black,
                                             );
                                       controller.update();
                                     },
@@ -124,10 +121,8 @@ class LoginScreen extends StatelessWidget {
                                   child: Text("Belum punya akun?".tr, style: listTitleTextStyle),
                                 ),
                                 CustomFilledButton(
-                                  // color: blueJNE,
-                                  color: Colors.transparent,
-                                  borderColor: blueJNE,
-                                  fontColor: blueJNE,
+                                  color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                                  isTransparent: true,
                                   title: "Daftar".tr,
                                   onPressed: () {
                                     // Get.delete<LoginController>();

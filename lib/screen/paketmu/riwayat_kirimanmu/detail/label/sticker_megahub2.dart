@@ -18,28 +18,31 @@ class StickerMegahub2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      // crossAxisAlignment: CrossAxisAlignment.center,
-      // mainAxisAlignment: ,
-      children: [
-        // StickerMegahub1(data: data).sticker1(),
-        Transform.rotate(
-          // quarterTurns: 1,
-          angle: 90 * 3.14 / 180,
-          child: StickerMegahub1(
-            data: data,
-            shippingCost: shippingCost,
-          ).sticker1(),
-        ),
-        const SizedBox(height: 25),
-        StickerMegahubHybrid1(data: data).sticker2(),
-        Center(
-          child: Text(
-            'Untuk informasi dan pengecekan status kiriman silahkan mengunjungi www.jne.co.id',
-            style: labelTextStyle,
+    return Container(
+      color: Colors.white,
+      child: ListView(
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        // mainAxisAlignment: ,
+        children: [
+          // StickerMegahub1(data: data).sticker1(),
+          Transform.rotate(
+            // quarterTurns: 1,
+            angle: 90 * 3.14 / 180,
+            child: StickerMegahub1(
+              data: data,
+              shippingCost: shippingCost,
+            ).sticker1(),
           ),
-        )
-      ],
+          const SizedBox(height: 25),
+          StickerMegahubHybrid1(data: data).sticker2(),
+          Center(
+            child: Text(
+              'Untuk informasi dan pengecekan status kiriman silahkan mengunjungi www.jne.co.id',
+              style: labelTextStyle,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

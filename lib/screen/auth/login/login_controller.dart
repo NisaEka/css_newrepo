@@ -21,6 +21,8 @@ class LoginController extends BaseController {
 
   bool isObscurePasswordLogin = true;
   bool isLoading = false;
+  bool pop = false;
+
   Locale? lang;
   DateTime? currentBackPressTime;
 
@@ -71,15 +73,18 @@ class LoginController extends BaseController {
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
         ),
       );
+      pop = false;
+      update();
       return false;
     }
+    pop = true;
+    update();
     Get.off(DashboardScreen());
     return true;
   }
 
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
-    color: greyDarkColor1,
   );
 
   Future<void> doLogin() async {

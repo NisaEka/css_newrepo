@@ -39,7 +39,7 @@ class ValueItem extends StatelessWidget {
             style: valueTextStyle ??
                 listTitleTextStyle.copyWith(
                   fontSize: fontSize ?? 8,
-                  color: valueFontColor ?? greyDarkColor1,
+                  color: valueFontColor ?? (Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
                 ),
             textAlign: TextAlign.end,
           ),

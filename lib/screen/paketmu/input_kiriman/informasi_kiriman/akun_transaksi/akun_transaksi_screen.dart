@@ -18,11 +18,11 @@ class AkunTransaksiScreen extends StatelessWidget {
             appBar: AppBar(
               shadowColor: greyColor,
               elevation: 1,
-              backgroundColor: whiteColor,
+              // backgroundColor: whiteColor,
               leading: const CustomBackButton(),
               title: Text(
                 'Pilih Akun Transaksi'.tr,
-                style: appTitleTextStyle.copyWith(color: blueJNE),
+                style: appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor),
               ),
             ),
             body: Padding(

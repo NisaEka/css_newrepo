@@ -39,7 +39,7 @@ class ReportListItem extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: greyDarkColor1),
+            border: Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
           ),
           child: Column(
             children: [
@@ -49,11 +49,11 @@ class ReportListItem extends StatelessWidget {
                     margin: const EdgeInsets.only(right: 8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(3),
-                      border: Border.all(color: blueJNE, width: 2),
+                      border: Border.all(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE, width: 2),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.playlist_add_check_rounded,
-                      color: blueJNE,
+                      color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
                       size: 20,
                     ),
                   ),
@@ -66,7 +66,7 @@ class ReportListItem extends StatelessWidget {
                       ),
                       Text(
                         "# JNEPWD2400000662",
-                        style: listTitleTextStyle.copyWith(color: blueJNE),
+                        style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE),
                       ),
                     ],
                   )

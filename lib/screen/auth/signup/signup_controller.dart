@@ -24,10 +24,12 @@ class SignUpController extends BaseController {
   String? branchCode;
   bool pakaiJNE = false;
   bool isLoadOrigin = false;
+  bool isLoadReferal = false;
   bool isLoadAgent = false;
   bool isLoading = false;
   Origin? selectedOrigin;
   AgentModel? selectedAgent;
+  ReferalModel? selectedReferal;
 
   @override
   void onInit() {

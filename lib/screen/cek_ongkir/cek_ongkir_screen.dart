@@ -151,7 +151,7 @@ class CekOngkirScreen extends StatelessWidget {
                                     title: 'Rp',
                                     isPrefix: true,
                                   ),
-                                  contentPadding: EdgeInsets.only(left: 40),
+                                  contentPadding: const EdgeInsets.only(left: 40),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.digitsOnly,
                                     ThousandsSeparatorInputFormatter(),
@@ -172,14 +172,16 @@ class CekOngkirScreen extends StatelessWidget {
                     ),
                     const Divider(),
                     controller.isLoading
-                        ? const CircularProgressIndicator()
+                        ? CircularProgressIndicator(
+                            color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                          )
                         : Column(
                             children: controller.ongkirList
                                 .map(
                                   (e) => OngkirListItem(
                                     serviceTitle: e.serviceDisplay.toString(),
                                     serviceSubtitle: e.goodsType.toString(),
-                                    servicePrice: (e.price!.toInt() + controller.isr).toInt().toCurrency().toString() ?? '',
+                                    servicePrice: (e.price!.toInt() + controller.isr).toInt().toCurrency().toString(),
                                     serviceDuration: '${e.etdFrom ?? ''} - ${e.etdThru ?? ''} ${e.times ?? ''}',
                                   ),
                                 )

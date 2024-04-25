@@ -5,7 +5,6 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -13,7 +12,6 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/lappembayaran_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -167,7 +165,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                                               controller.endDate != null ||
                                               !controller.accountList.equals(controller.selectedAccount)
                                           ? blueJNE
-                                          : greyColor,
+                                          : (Theme.of(context).brightness == Brightness.light ? greyColor : greyLightColor3),
                                       width: controller.isFiltered ? Get.width / 2.5 : Get.width - 40,
                                       title: 'Terapkan'.tr,
                                       onPressed: () {
@@ -186,7 +184,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                             ),
                           );
                         }),
-                        backgroundColor: Colors.white,
+                        backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.white : greyColor,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -213,6 +211,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                     hintText: 'Cari Data Agregasi'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
+                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
                     ),
                   ),
                   Expanded(

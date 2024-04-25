@@ -62,6 +62,7 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                         StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
                           return Container(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
+                            color: Theme.of(context).brightness == Brightness.light ? greyLightColor2 : greyDarkColor2,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -72,7 +73,7 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                                     Text(
                                       'Filter',
                                       style: appTitleTextStyle.copyWith(
-                                        color: blueJNE,
+                                        color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
                                       ),
                                     ),
                                     IconButton(
@@ -157,9 +158,8 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                                               child: Container(
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
-                                                  color: controller.selectedStatusKiriman == controller.listStatusKiriman[index]
-                                                      ? blueJNE
-                                                      : whiteColor,
+                                                  color:
+                                                      controller.selectedStatusKiriman == controller.listStatusKiriman[index] ? blueJNE : whiteColor,
                                                   border: Border.all(
                                                     color: controller.selectedStatusKiriman != controller.listStatusKiriman[index]
                                                         ? blueJNE
@@ -287,6 +287,7 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                     hintText: 'Cari Transaksimu'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
+                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
                     ),
                     onChanged: (value) {
                       controller.searchField.text = value;

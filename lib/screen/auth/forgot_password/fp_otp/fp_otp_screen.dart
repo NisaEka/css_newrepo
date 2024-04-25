@@ -33,7 +33,10 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text('Kode OTP sudah dikirimkan ke alamat email berikut :'.tr),
-                              Text(controller.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
+                              Text(controller.getMail(),
+                                  textAlign: TextAlign.left,
+                                  style: formLabelTextStyle.copyWith(
+                                      color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2)),
                               Pinput(
                                 controller: controller.otpPin,
                                 length: 6,
@@ -57,7 +60,12 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                                 onPressed: () => controller.remainingSeconds == 0 ? controller.resendPin() : null,
                                 child: Text(
                                   'Kirim ulang kode'.tr,
-                                  style: formLabelTextStyle.copyWith(color: controller.remainingSeconds != 0 ? greyColor : blueJNE),
+                                  style: formLabelTextStyle.copyWith(
+                                      color: controller.remainingSeconds != 0
+                                          ? greyColor
+                                          : Theme.of(context).brightness == Brightness.light
+                                              ? blueJNE
+                                              : greyLightColor2),
                                 ),
                               ),
                               const SizedBox(height: 60),
@@ -69,9 +77,9 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                                     controller.otpPin.text.isNotEmpty && controller.otpPin.length >= 6 ? controller.pinConfirmation() : null,
                               ),
                               CustomFilledButton(
-                                color: Colors.transparent,
+                                color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                                isTransparent: true,
                                 title: 'Gunakan cara lain'.tr,
-                                fontColor: blueJNE,
                                 onPressed: () => Get.to(const PasswordRecoveryScreen(), arguments: {
                                   'email': controller.email,
                                   'isChange': controller.isChange,

@@ -39,10 +39,21 @@ class MenuItem extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: isActive ? blueJNE : blueJNE.withOpacity(0.8),
+                    color: isActive
+                        ? blueJNE
+                        : Theme.of(context).brightness == Brightness.light
+                            ? blueJNE.withOpacity(0.8)
+                            : greyColor.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).brightness == Brightness.dark ? greyColor : Colors.transparent,
+                        spreadRadius: 1,
+                        offset: const Offset(3, -2),
+                        blurRadius: 2,
+                      ),
+                    ],
                   ),
-                  // child: Icon(Icons.more_horiz),
                   child: menuIcon ??
                       Image.asset(
                         menuImg ?? '',
@@ -55,7 +66,6 @@ class MenuItem extends StatelessWidget {
                     menuTitle.splitMapJoin(' ', onMatch: (p0) => '\n').splitMapJoin('_', onMatch: (p0) => ' '),
                     style: sublistTitleTextStyle.copyWith(
                       color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : whiteColor,
-
                     ),
                     textAlign: TextAlign.center,
                   ),

@@ -22,15 +22,15 @@ class SatuanFieldIcon extends StatelessWidget {
       height: 39,
       margin: EdgeInsets.only(right: isPrefix! ? 10 : 0, left: isSuffix! ? 5 : 0),
       decoration: BoxDecoration(
-        color: blueJNE,
+        color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
         borderRadius: BorderRadius.only(
-          topRight: isSuffix! ? Radius.circular(8) : Radius.zero,
-          bottomRight: isSuffix! ? Radius.circular(8) : Radius.zero,
-          topLeft: isPrefix! ? Radius.circular(8) : Radius.zero,
-          bottomLeft: isPrefix! ? Radius.circular(8) : Radius.zero,
+          topRight: isSuffix! ? const Radius.circular(8) : Radius.zero,
+          bottomRight: isSuffix! ? const Radius.circular(8) : Radius.zero,
+          topLeft: isPrefix! ? const Radius.circular(8) : Radius.zero,
+          bottomLeft: isPrefix! ? const Radius.circular(8) : Radius.zero,
         ),
       ),
-      child: Text(title, style: listTitleTextStyle.copyWith(color: whiteColor)),
+      child: Text(title, style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE)),
     );
   }
 }

@@ -1,13 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregasi_minus_controller.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
-import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggminus_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +31,7 @@ class AggregasiMinusScreen extends StatelessWidget {
                     hintText: 'Cari Data Aggregasi Minus'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
+                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
                     ),
                   ),
                   Expanded(

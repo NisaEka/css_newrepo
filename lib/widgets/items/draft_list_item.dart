@@ -49,7 +49,7 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
           children: [
             SlidableAction(
               onPressed: (context) => widget.onDelete,
-              // backgroundColor: errorColor,
+              backgroundColor: Colors.transparent,
               foregroundColor: errorColor,
               icon: Icons.delete,
               label: 'Hapus'.tr,
@@ -65,7 +65,7 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
               child: Container(
                 padding: const EdgeInsets.only(top: 5, right: 5, left: 20, bottom: 2),
                 decoration: BoxDecoration(
-                    color: widget.data.delivery?.flatRate == 0 ? infoColor : successColor,
+                    color: widget.data.delivery?.freightCharge == 0 ? infoColor : successColor,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(8),
                       bottomLeft: Radius.circular(20),

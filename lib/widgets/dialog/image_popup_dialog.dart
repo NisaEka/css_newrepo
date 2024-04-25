@@ -37,7 +37,7 @@ class _ImagePopupDialogState extends State<ImagePopupDialog> {
     print('lat lng ${widget.lat}');
     return AlertDialog(
       contentPadding: const EdgeInsets.all(5),
-      backgroundColor: whiteColor,
+      backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
       title: Text(widget.title.tr),
       content: widget.lat != null
           ? GoogleMap(

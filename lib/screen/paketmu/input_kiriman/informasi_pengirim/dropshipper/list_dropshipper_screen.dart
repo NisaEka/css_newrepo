@@ -21,12 +21,11 @@ class ListDropshipperScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: whiteColor,
               elevation: 2,
               leading: const CustomBackButton(),
               title: Text(
                 'Pilih Data Dropshipper'.tr,
-                style: appTitleTextStyle.copyWith(color: blueJNE),
+                style: appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor),
               ),
               actions: [
                 controller.isOnline
@@ -34,9 +33,9 @@ class ListDropshipperScreen extends StatelessWidget {
                         onPressed: () => Get.to(const AddDropshipperScreen(), arguments: {
                           'account': controller.account,
                         })?.then((value) => controller.initData()),
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.add,
-                          color: blueJNE,
+                          color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
                         ),
                       )
                     : const SizedBox()
@@ -55,9 +54,9 @@ class ListDropshipperScreen extends StatelessWidget {
                         return newValue.copyWith(text: newValue.text.toUpperCase());
                       })
                     ],
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.search,
-                      color: whiteColor,
+                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
                     ),
                     onChanged: (value) {
                       controller.searchDropshipper(value);

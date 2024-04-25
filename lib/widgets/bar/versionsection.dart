@@ -37,6 +37,7 @@ class _VersionAppState extends State<VersionApp> {
           Image.asset(
             ImageConstant.logoJNE,
             height: 30,
+            color: Theme.of(context).brightness == Brightness.light ? null : Colors.white,
           ),
           Text('v $version')
         ],

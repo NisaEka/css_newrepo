@@ -22,7 +22,7 @@ class PengaturanScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              backgroundColor: whiteColor,
+              // backgroundColor: whiteColor,
               title: 'Pengaturan'.tr,
             ),
             body: Padding(

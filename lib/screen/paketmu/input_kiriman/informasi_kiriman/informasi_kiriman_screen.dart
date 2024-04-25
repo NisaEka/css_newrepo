@@ -142,7 +142,9 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     color: controller.isServiceLoad
                                         ? greyColor
                                         : controller.selectedService == controller.serviceList[index]
-                                            ? blueJNE
+                                            ? Theme.of(context).brightness == Brightness.light
+                                                ? blueJNE
+                                                : redJNE
                                             : greyLightColor3,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
@@ -220,7 +222,6 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     hintText: 'Nama Barang'.tr,
                                     isRequired: true,
                                   ),
-
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -264,7 +265,9 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       ),
                                       title: Text(
                                         '${'Gunakan Asuransi Pengiriman'.tr} ( Rp. ${controller.isr.toInt().toCurrency()} )',
-                                        style: sublistTitleTextStyle,
+                                        style: sublistTitleTextStyle.copyWith(
+                                          color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2,
+                                        ),
                                       ),
                                       trailing: Checkbox(
                                         checkColor: whiteColor,
@@ -280,29 +283,17 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-
                                   CustomTextFormField(
                                     controller: controller.intruksiKhusus,
                                     hintText: 'Instruksi Khusus (Opsional)'.tr,
                                   ),
-                                  // controller.asuransi
-                                  //     ? CustomTextFormField(
-                                  //   controller: controller.hargaAsuransi,
-                                  //   hintText: 'Harga Asuransi'.tr,
-                                  // )
-                                  //     : const SizedBox(),
                                   Container(
-                                    decoration: const BoxDecoration(
-                                        // borderRadius: BorderRadius.circular(8),
-                                        // border: Border(
-                                        //   bottom: BorderSide(color: greyLightColor3, width: 5),
-                                        //   top: BorderSide(color: greyLightColor3, width: 5),
-                                        // ),
-                                        ),
+                                    decoration: const BoxDecoration(),
                                     child: ListTile(
                                       contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                                       leading: Switch(
                                         value: controller.packingKayu,
+                                        activeColor: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
                                         onChanged: (bool? value) {
                                           controller.packingKayu = value!;
                                           controller.intruksiKhusus.text = value == true ? "MOHON DIPACKING KAYU" : "";
@@ -354,6 +345,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       Text('Dimensi Kiriman'.tr),
                                       Switch(
                                         value: controller.dimensi,
+                                        activeColor: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
                                         onChanged: (value) {
                                           controller.dimensi = value;
                                           controller.dimensiPanjang.clear();
@@ -450,7 +442,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(8),
-                                            border: Border.all(color: greyDarkColor2),
+                                            border: Border.all(
+                                                color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2),
                                           ),
                                           padding: const EdgeInsets.all(10),
                                           child: Column(
@@ -547,7 +540,6 @@ class InformasiKirimanScreen extends StatelessWidget {
                                           },
                                         )
                                       : const SizedBox(),
-
                                   controller.goods == null && !controller.isOnline || controller.draft != null
                                       ? CustomFilledButton(
                                           color: whiteColor,

@@ -13,14 +13,14 @@ class DataEmpty extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(
+        Icon(
           Icons.folder_off_outlined,
           size: 50,
-          color: blueJNE,
+          color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
         ),
         Text(
           text.tr,
-          style: appTitleTextStyle.copyWith(color: blueJNE),
+          style: appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor),
         ),
       ],
     );

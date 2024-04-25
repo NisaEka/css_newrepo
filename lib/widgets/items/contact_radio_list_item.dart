@@ -44,7 +44,7 @@ class ContactRadioListItem extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: onDelete,
-            // backgroundColor: errorColor,
+            backgroundColor: Colors.transparent,
             foregroundColor: errorColor,
             icon: Icons.delete,
             label: 'Hapus'.tr,

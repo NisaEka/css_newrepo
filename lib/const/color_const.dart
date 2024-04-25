@@ -30,3 +30,5 @@ const Color greyDarkColor1 = Color(0xff4E4F54);
 const Color greyLightColor3 = Color(0xffE1E2E3);
 const Color greyLightColor2 = Color(0xffF4F4F4);
 const Color greyLightColor1 = Color(0xffF9F9FB);
+const Color primaryDarkColor = Color(0xff171717);
+const Color bgDarkColor = Color(0xff2B2B2B);

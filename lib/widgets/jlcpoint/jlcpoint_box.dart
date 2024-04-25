@@ -25,9 +25,9 @@ class JlcPointBox extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.only(right: 15, top: 10, bottom: 10, left: 10),
       decoration: BoxDecoration(
-        color: whiteColor,
+        color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: greyDarkColor1),
+        border: Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
         boxShadow: const [
           BoxShadow(
             color: blueJNE,

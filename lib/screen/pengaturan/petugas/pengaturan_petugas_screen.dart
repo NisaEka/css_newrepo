@@ -24,7 +24,6 @@ class PengaturanPetugasScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              backgroundColor: whiteColor,
               title: 'Pengaturan Petugas'.tr,
               action: [
                 IconButton(
@@ -32,9 +31,9 @@ class PengaturanPetugasScreen extends StatelessWidget {
                   onPressed: () => Get.to(const TambahPetugasScreen(), arguments: {
                     'isEdit': false,
                   })?.then((value) => controller.pagingController.refresh()),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.add,
-                    color: blueJNE,
+                    color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
                   ),
                 ),
               ],
@@ -46,7 +45,10 @@ class PengaturanPetugasScreen extends StatelessWidget {
                   CustomSearchField(
                     controller: controller.searchOfficer,
                     hintText: 'Cari Data Petugas'.tr,
-                    prefixIcon: SvgPicture.asset(IconsConstant.search),
+                    prefixIcon: SvgPicture.asset(
+                      IconsConstant.search,
+                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+                    ),
                     onChanged: (value) {
                       controller.searchOfficer.text = value;
                       controller.update();

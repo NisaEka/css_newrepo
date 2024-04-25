@@ -21,11 +21,11 @@ class NewPasswordController extends BaseController {
   bool isLoading = false;
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
-    color: greyDarkColor1,
+    // color: greyDarkColor1,
   );
   Widget showConfirmIcon = const Icon(
     Icons.remove_red_eye,
-    color: greyDarkColor1,
+    // color: greyDarkColor1,
   );
 
   Future<void> changePassword() async {

@@ -36,7 +36,8 @@ class InputEmailScreen extends StatelessWidget {
                               Center(
                                 child: Text(
                                   controller.isChange ? 'Ubah Kata Sandi'.tr : 'Lupa kata sandi?'.tr,
-                                  style: appTitleTextStyle.copyWith(color: Colors.black),
+                                  style:
+                                      appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? Colors.black : whiteColor),
                                 ),
                               ),
                               Text(
@@ -59,7 +60,7 @@ class InputEmailScreen extends StatelessWidget {
                                 onPressed: () => controller.formKey.currentState?.validate() == true ? controller.sendEmail() : null,
                               ),
                               CustomFilledButton(
-                                color: blueJNE,
+                                color: Theme.of(context).brightness == Brightness.light ? blueJNE : Colors.white,
                                 isTransparent: true,
                                 title: "Batal".tr,
                                 onPressed: () => Get.back(),

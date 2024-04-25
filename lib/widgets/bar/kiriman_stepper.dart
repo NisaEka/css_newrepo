@@ -45,7 +45,7 @@ class KirimanStepper extends StatelessWidget {
               child: SvgPicture.asset(
                 IconsConstant.box,
                 // height: 100,
-                color: currentStep == 0 ? blueJNE : null,
+                color: currentStep == 0 ? (Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE) : null,
               ),
             ),
             Container(
@@ -87,53 +87,55 @@ class KirimanStepper extends StatelessWidget {
                         isDismissible: true,
                         // isScrollControlled: true,
                         StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-                          return Column(
-                            children: [
-                              DocumentImageItem(
-                                title: 'Foto Pengiriman'.tr,
-                                img: cnote?.photo ?? '',
-                                onTap: () => showDialog(
-                                  context: context,
-                                  builder: (context) => ImagePopupDialog(
-                                    title: 'Foto Pengiriman'.tr,
-                                    img: cnote?.photo ?? '',
+                          return Container(
+                            child: Column(
+                              children: [
+                                DocumentImageItem(
+                                  title: 'Foto Pengiriman'.tr,
+                                  img: cnote?.photo ?? '',
+                                  onTap: () => showDialog(
+                                    context: context,
+                                    builder: (context) => ImagePopupDialog(
+                                      title: 'Foto Pengiriman'.tr,
+                                      img: cnote?.photo ?? '',
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DocumentImageItem(
-                                title: 'Tanda Tangan'.tr,
-                                img: cnote?.signature ?? '',
-                                onTap: () => showDialog(
-                                  context: context,
-                                  builder: (context) => ImagePopupDialog(
-                                    title: 'Tanda Tangan'.tr,
-                                    img: cnote?.signature ?? '',
+                                DocumentImageItem(
+                                  title: 'Tanda Tangan'.tr,
+                                  img: cnote?.signature ?? '',
+                                  onTap: () => showDialog(
+                                    context: context,
+                                    builder: (context) => ImagePopupDialog(
+                                      title: 'Tanda Tangan'.tr,
+                                      img: cnote?.signature ?? '',
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DocumentImageItem(
-                                title: 'Lokasi Penerima'.tr,
-                                // img: cnote?.signature ?? '',
-                                lat: cnote?.lat?.toDouble(),
-                                lng: cnote?.long?.toDouble(),
-                                onTap: () => showDialog(
-                                  context: context,
-                                  builder: (context) => ImagePopupDialog(
-                                    title: 'Lokasi Penerima'.tr,
-                                    // img: cnote?.signature ?? '',
-                                    lat: cnote?.lat?.toDouble(),
-                                    lng: cnote?.long?.toDouble(),
+                                DocumentImageItem(
+                                  title: 'Lokasi Penerima'.tr,
+                                  // img: cnote?.signature ?? '',
+                                  lat: cnote?.lat?.toDouble(),
+                                  lng: cnote?.long?.toDouble(),
+                                  onTap: () => showDialog(
+                                    context: context,
+                                    builder: (context) => ImagePopupDialog(
+                                      title: 'Lokasi Penerima'.tr,
+                                      // img: cnote?.signature ?? '',
+                                      lat: cnote?.lat?.toDouble(),
+                                      lng: cnote?.long?.toDouble(),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
                         }),
-                        backgroundColor: Colors.white,
+                        backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.white : Colors.black87,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(color: Theme.of(context).brightness == Brightness.light ? Colors.transparent : whiteColor)),
                       );
                     },
                     child: Container(

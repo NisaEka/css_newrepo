@@ -27,6 +27,18 @@ class LabelController extends BaseController {
     Future.wait([initData()]);
   }
 
+  Future<dynamic> showCapturedWidget(
+      BuildContext context, Uint8List capturedImage) async => showDialog(
+      useSafeArea: false,
+      context: context,
+      builder: (context) => Scaffold(
+        appBar: AppBar(
+          title: const Text("Captured Label"),
+        ),
+        body: Center(child: Image.memory(capturedImage)),
+      ),
+    );
+
   Future<void> initData() async {
     try {
       stickerLabel = await storage.readString(StorageCore.transactionLabel);

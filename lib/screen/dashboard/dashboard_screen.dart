@@ -34,24 +34,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
           onPopInvoked: (didPop) => controller.onPop(),
           child: Scaffold(
             // backgroundColor: greyLightColor1,
-            appBar: AppBar(
-              titleTextStyle: titleTextStyle,
-              // title: Text('Beranda'.tr),
-              title: Image.asset(
-                ImageConstant.logoCSS_white,
-                height: 30,
-              ),
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.notifications),
-                ),
-                IconButton(
-                  onPressed: () => Get.to(const PengaturanScreen()),
-                  icon: const Icon(Icons.settings),
-                ),
-              ],
-            ),
+            // appBar: AppBar(
+            //   backgroundColor: Theme.of(context).brightness == Brightness.light
+            //       ? blueJNE : primaryDarkColor,
+            //   titleTextStyle: titleTextStyle,
+            //   // title: Text('Beranda'.tr),
+            //   title: Image.asset(
+            //     ImageConstant.logoCSS_white,
+            //     height: 30,
+            //   ),
+            //   leading: null,
+            //   actions: [
+            //     IconButton(
+            //       onPressed: () {},
+            //       icon: const Icon(Icons.notifications),
+            //     ),
+            //     IconButton(
+            //       onPressed: () => Get.to(const PengaturanScreen()),
+            //       icon: const Icon(Icons.settings),
+            //     ),
+            //   ],
+            // ),
             // body: ListView(
             //   children: [
             //   ],
@@ -61,13 +64,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 20, right: 20, top: 35),
+                        color: Theme.of(context).brightness == Brightness.light ? blueJNE : primaryDarkColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(
+                              ImageConstant.logoCSS_white,
+                              height: 30,
+                            ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.notifications),
+                                ),
+                                IconButton(
+                                  onPressed: () => Get.to(const PengaturanScreen()),
+                                  icon: const Icon(Icons.settings),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       Stack(
                         children: [
                           Container(
                             // height: controller.isLogin && controller.allow.lacakPesanan == "Y" ? 160 : 120,
                             height: controller.isLogin ? 160 : 120,
                             padding: const EdgeInsets.all(20),
-                            decoration:  BoxDecoration(
+                            decoration: BoxDecoration(
                               // color: blueJNE,
                               color: Theme.of(context).primaryColor,
                               borderRadius: const BorderRadius.only(

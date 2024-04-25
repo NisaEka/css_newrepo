@@ -56,7 +56,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           top: 140,
                           left: 0,
                           right: 0,
-                          child: Image.asset(ImageConstant.logoCSS_blue, height: 67),
+                          child: Image.asset(
+                            ImageConstant.logoCSS_blue,
+                            height: 67,
+                            color: Theme.of(context).brightness == Brightness.light ? null : Colors.white,
+                          ),
                         ),
                       ],
                     )),
@@ -81,7 +85,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 prefixIcon: const Icon(Icons.person),
                                 hintText: 'Nama Lengkap'.tr,
                                 isRequired: true,
-
                               ),
                               CustomTextFormField(
                                 controller: controller.namaBrand,
@@ -104,22 +107,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 validator: ValidationBuilder().email().minLength(10).build(),
                                 inputFormatters: const [],
                               ),
-                              Autocomplete<ReferalModel>(
-                                optionsBuilder: (code) async => await controller.getReferalList(code.text.toUpperCase()),
-                                displayStringForOption: (option) => option.name ?? '',
-                                fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) => CustomTextFormField(
-                                  controller: textEditingController,
-                                  prefixIcon: const Icon(Icons.line_style),
-                                  hintText: 'Kode Referal'.tr,
-                                  onChanged: (value) => onFieldSubmitted,
-                                  focusNode: focusNode,
-                                ),
-                                // optionsViewOpenDirection: OptionsViewOpenDirection.up,
-                                // optionsMaxHeight: 100,
-                                onSelected: (ReferalModel selection) {
-                                  controller.kodeReferal.text = selection.name ?? '';
+                              // Autocomplete<ReferalModel>(
+                              //   optionsBuilder: (code) async => await controller.getReferalList(code.text.toUpperCase()),
+                              //   displayStringForOption: (option) => option.name ?? '',
+                              //   fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) => CustomTextFormField(
+                              //     controller: textEditingController,
+                              //     prefixIcon: const Icon(Icons.line_style),
+                              //     hintText: 'Kode Referal'.tr,
+                              //     onChanged: (value) => onFieldSubmitted,
+                              //     focusNode: focusNode,
+                              //   ),
+                              //   // optionsViewOpenDirection: OptionsViewOpenDirection.up,
+                              //   // optionsMaxHeight: 100,
+                              //   onSelected: (ReferalModel selection) {
+                              //     controller.kodeReferal.text = selection.name ?? '';
+                              //     controller.update();
+                              //   },
+                              // ),
+                              CustomSearchDropdownField<ReferalModel>(
+                                asyncItems: (String filter) => controller.getReferalList(filter),
+                                itemBuilder: (context, e, b) {
+                                  return Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                    child: Text(
+                                      e.name.toString(),
+                                    ),
+                                  );
+                                },
+                                itemAsString: (ReferalModel e) => e.name.toString(),
+                                onChanged: (value) {
+                                  controller.kodeReferal.text = value.name ?? '';
+                                  controller.selectedReferal = value;
                                   controller.update();
                                 },
+                                value: controller.selectedReferal,
+                                selectedItem: controller.kotaPengirim.text,
+                                hintText: controller.isLoadReferal ? "Loading..." : "Kode Referal".tr,
+                                prefixIcon: const Icon(Icons.line_style),
+                                textStyle: controller.selectedReferal != null ? subTitleTextStyle : hintTextStyle,
+                                readOnly: false,
+                                isRequired: true,
                               ),
                               CustomSearchDropdownField<Origin>(
                                 asyncItems: (String filter) => controller.getOriginList(filter),
@@ -154,6 +181,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   Text('Sudah menggunakan JNE'.tr),
                                   Switch(
                                     value: controller.pakaiJNE,
+                                    activeColor: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
                                     onChanged: (value) {
                                       controller.pakaiJNE = value;
                                       controller.update();

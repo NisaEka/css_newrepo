@@ -46,12 +46,20 @@ class CustomSearchField extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: validate ? redJNE : blueJNE,
+                  color: validate
+                      ? redJNE
+                      : Theme.of(context).brightness == Brightness.light
+                          ? blueJNE
+                          : whiteColor,
                   width: 2,
                 )),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-              color: validate ? redJNE : blueJNE,
+              color: validate
+                  ? redJNE
+                  : Theme.of(context).brightness == Brightness.light
+                      ? blueJNE
+                      : whiteColor,
               width: 2,
             )),
             border: OutlineInputBorder(
@@ -68,9 +76,9 @@ class CustomSearchField extends StatelessWidget {
                     width: 40,
                     height: 39,
                     margin: const EdgeInsets.only(right: 10),
-                    decoration: const BoxDecoration(
-                      color: blueJNE,
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(8),
                         bottomLeft: Radius.circular(8),
                       ),
@@ -84,9 +92,9 @@ class CustomSearchField extends StatelessWidget {
                     width: 30,
                     height: 39,
                     margin: const EdgeInsets.only(left: 10),
-                    decoration: const BoxDecoration(
-                      color: blueJNE,
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                      borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(8),
                         bottomRight: Radius.circular(8),
                       ),
@@ -96,7 +104,7 @@ class CustomSearchField extends StatelessWidget {
                 : controller.text.isNotEmpty
                     ? IconButton(
                         onPressed: onClear,
-                        icon: Icon(Icons.close),
+                        icon: const Icon(Icons.close),
                       )
                     : null,
           ),

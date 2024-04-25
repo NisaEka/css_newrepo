@@ -18,7 +18,7 @@ class LogoHeader extends StatelessWidget {
           top: 120,
           left: 0,
           right: 0,
-          child: Image.asset(ImageConstant.logoCSS_blue, height: 67),
+          child: Image.asset(Theme.of(context).brightness == Brightness.light ? ImageConstant.logoCSS_blue : ImageConstant.logoCSS_white, height: 67),
         ),
       ],
     );

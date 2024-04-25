@@ -1,4 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
 import 'package:flutter/material.dart';
@@ -107,10 +108,36 @@ class RiwayatKirimanController extends BaseController {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).brightness == Brightness.light ? const ColorScheme.light() : const ColorScheme.dark(),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     ).then(
       (selectedDate) => showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: Theme.of(context).brightness == Brightness.light ? const ColorScheme.light() : const ColorScheme.dark(),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.red, // button text color
+                ),
+              ),
+            ),
+            child: child!,
+          );
+        },
       ).then((selectedTime) => DateTime(
             selectedDate!.year,
             selectedDate.month,
@@ -186,8 +213,6 @@ class RiwayatKirimanController extends BaseController {
 
     update();
   }
-
-
 
   @override
   void dispose() {

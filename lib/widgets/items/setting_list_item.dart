@@ -20,11 +20,9 @@ class SettingListItem extends StatelessWidget {
       leading: Icon(
         icon,
         size: 24,
-        color: blueJNE,
+        color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
       ),
-      title: Text(title.tr,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis),
+      title: Text(title.tr, maxLines: 2, overflow: TextOverflow.ellipsis),
       shape: const Border(bottom: BorderSide(color: greyColor)),
       contentPadding: EdgeInsets.zero,
       onTap: onTap,

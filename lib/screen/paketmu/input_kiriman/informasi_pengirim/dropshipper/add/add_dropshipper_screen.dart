@@ -21,9 +21,9 @@ class AddDropshipperScreen extends StatelessWidget {
             appBar: AppBar(
               shadowColor: greyColor,
               elevation: 1,
-              backgroundColor: whiteColor,
               leading: const CustomBackButton(),
-              title: Text('Tambah Data Dropshipper'.tr, style: appTitleTextStyle.copyWith(color: blueJNE)),
+              title: Text('Tambah Data Dropshipper'.tr,
+                  style: appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor)),
             ),
             body: SingleChildScrollView(
               child: Padding(

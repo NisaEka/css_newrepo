@@ -58,11 +58,11 @@ class NewPasswordScreen extends StatelessWidget {
                                     controller.isObscurePassword != false
                                         ? controller.showIcon = const Icon(
                                             Icons.visibility,
-                                            color: greyDarkColor1,
+                                            // color: greyDarkColor1,
                                           )
                                         : controller.showIcon = const Icon(
                                             Icons.visibility_off,
-                                            color: Colors.black,
+                                            // color: Colors.black,
                                           );
                                     controller.update();
                                   },
@@ -94,11 +94,11 @@ class NewPasswordScreen extends StatelessWidget {
                                     controller.isObscurePasswordConfirm != false
                                         ? controller.showConfirmIcon = const Icon(
                                             Icons.visibility,
-                                            color: greyDarkColor1,
+                                            // color: greyDarkColor1,
                                           )
                                         : controller.showConfirmIcon = const Icon(
                                             Icons.visibility_off,
-                                            color: Colors.black,
+                                            // color: Colors.black,
                                           );
                                     controller.update();
                                   },

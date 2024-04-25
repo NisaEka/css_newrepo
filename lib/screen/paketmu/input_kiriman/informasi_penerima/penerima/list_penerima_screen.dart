@@ -23,19 +23,18 @@ class ListPenerimaScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: whiteColor,
               elevation: 2,
               leading: const CustomBackButton(),
               title: Text(
                 'Pilih Data Penerima'.tr,
-                style: appTitleTextStyle.copyWith(color: blueJNE),
+                style: appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor),
               ),
               actions: [
                 IconButton(
                   onPressed: () => Get.to(const AddPenerimaScreen()),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.add,
-                    color: blueJNE,
+                    color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
                   ),
                 )
               ],
@@ -47,9 +46,9 @@ class ListPenerimaScreen extends StatelessWidget {
                   CustomSearchField(
                     controller: controller.search,
                     hintText: 'Cari Data Penerima'.tr,
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.search,
-                      color: whiteColor,
+                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
                     ),
                     inputFormatters: [
                       TextInputFormatter.withFunction((oldValue, newValue) {
@@ -66,11 +65,11 @@ class ListPenerimaScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   controller.isLoading
-                      ?  Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, i) => controller.receiverItem(ReceiverModel(), i, context),
-                        itemCount: 5,
-                      ))
+                      ? Expanded(
+                          child: ListView.builder(
+                          itemBuilder: (context, i) => controller.receiverItem(ReceiverModel(), i, context),
+                          itemCount: 5,
+                        ))
                       : Expanded(
                           child: ListView(
                             shrinkWrap: true,
