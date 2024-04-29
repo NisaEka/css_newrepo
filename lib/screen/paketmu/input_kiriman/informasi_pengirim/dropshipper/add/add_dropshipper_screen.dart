@@ -2,11 +2,13 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/add/add_dropshipper_controller.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class AddDropshipperScreen extends StatelessWidget {
@@ -48,9 +50,10 @@ class AddDropshipperScreen extends StatelessWidget {
                         inputType: TextInputType.number,
                         isRequired: true,
                         prefixIcon: const Icon(Icons.phone),
+                        validator: ValidationBuilder().phone().build(),
                       ),
                       CustomSearchDropdownField<Origin>(
-                        asyncItems: (String filter) => controller.getOriginList(filter, controller.account?.accountId ?? ''),
+                        asyncItems: (String filter) => controller.getOriginList(filter, controller.account.accountId ?? ''),
                         itemBuilder: (context, e, b) {
                           return Container(
                             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -80,6 +83,9 @@ class AddDropshipperScreen extends StatelessWidget {
                         hintText: "Kode Pos".tr,
                         isRequired: true,
                         prefixIcon: const Icon(Icons.line_style),
+                        validator: ValidationBuilder().zipCode().build(),
+                        inputType: TextInputType.number,
+
                       ),
                       CustomTextFormField(
                         controller: controller.alamatPengirim,

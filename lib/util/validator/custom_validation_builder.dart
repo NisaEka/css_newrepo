@@ -25,6 +25,12 @@ extension CustomValidationBuilder on ValidationBuilder {
         return null;
       });
 
+  zipCode() => add((value) {
+        if (value!.length < 5) {
+          return 'Zip Code must be 5 characters';
+        }
+      });
+
   ValidationBuilder min(int minValue) => add((value) {
         if (int.parse(value!) < minValue) {
           return "form_min_value".trParams({"min": minValue.toString()});

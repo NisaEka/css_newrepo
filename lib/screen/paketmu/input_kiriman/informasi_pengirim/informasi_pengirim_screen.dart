@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_controller.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -289,6 +290,8 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                 readOnly: !controller.isDropshipper,
                                 isRequired: true,
                                 prefixIcon: const Icon(Icons.line_style),
+                                validator: ValidationBuilder().zipCode().build(),
+                                inputType: TextInputType.number,
                               ),
                               CustomTextFormField(
                                 controller: controller.alamatLengkap,

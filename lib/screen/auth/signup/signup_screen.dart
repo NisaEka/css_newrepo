@@ -12,6 +12,7 @@ import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/auth/signup/signup_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -106,7 +107,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 hintText: 'Email'.tr,
                                 isRequired: true,
                                 validator: ValidationBuilder().email().minLength(10).build(),
-                                inputFormatters: const [],
+                                inputFormatters: [
+                                  TextInputFormatter.withFunction((oldValue, newValue) {
+                                    return newValue.copyWith(text: newValue.text.toLowerCase());
+                                  })
+                                ],
                               ),
                               // Autocomplete<ReferalModel>(
                               //   optionsBuilder: (code) async => await controller.getReferalList(code.text.toUpperCase()),
@@ -136,11 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   );
                                 },
                                 itemAsString: (ReferalModel e) => e.name.toString(),
-                                onChanged: (value) {
-                                  controller.kodeReferal.text = value.name ?? '';
-                                  controller.selectedReferal = value;
-                                  controller.update();
-                                },
+                                onChanged: (value) => controller.onSelectReferal(value),
                                 value: controller.selectedReferal,
                                 selectedItem: controller.kotaPengirim.text,
                                 hintText: controller.isLoadReferal ? "Loading..." : "Kode Referal".tr,
@@ -173,7 +174,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
                                 prefixIcon: const Icon(Icons.location_city),
                                 textStyle: controller.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
-                                readOnly: false,
+                                readOnly: controller.pickOrigin,
                                 isRequired: true,
                               ),
                               Row(
@@ -209,7 +210,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     )
                                   : const SizedBox(),
                               CustomFilledButton(
-                                color: blueJNE,
+                                color: controller.formKey.currentState?.validate() == true && controller.selectedOrigin != null ? blueJNE : greyColor,
                                 title: 'Daftar'.tr,
                                 radius: 50,
                                 onPressed: () {

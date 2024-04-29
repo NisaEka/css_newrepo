@@ -8,6 +8,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class EditProfilScreen extends StatelessWidget {
@@ -79,6 +80,8 @@ class EditProfilScreen extends StatelessWidget {
                             controller: controller.phone,
                             hintText: "Nomor Telepon".tr,
                             readOnly: true,
+                            validator: ValidationBuilder().phone().build(),
+
                           ),
                           CustomTextFormField(
                             controller: controller.whatsapp,

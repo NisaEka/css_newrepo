@@ -7,6 +7,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class AddPenerimaScreen extends StatelessWidget {
@@ -52,6 +53,8 @@ class AddPenerimaScreen extends StatelessWidget {
                             inputType: TextInputType.number,
                             prefixIcon: const Icon(Icons.phone),
                             isRequired: true,
+                            validator: ValidationBuilder().phone().build(),
+
                           ),
                           CustomSearchDropdownField<Destination>(
                             asyncItems: (String filter) => controller.getDestinationList(filter),
