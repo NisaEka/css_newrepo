@@ -10,7 +10,7 @@ extension CustomValidationBuilder on ValidationBuilder {
           return 'Password should not "password"';
         } else if (value!.length <= 8) {
           return 'Password must have more than 8 characters';
-        } else if (!regex.hasMatch(value ?? '')) {
+        } else if (!regex.hasMatch(value)) {
           return 'Password should contain upper,lower,digit and Special character';
         }
         return null;
@@ -20,7 +20,9 @@ extension CustomValidationBuilder on ValidationBuilder {
         if (value?.isEmpty ?? false) {
           return 'This field is required';
         } else if (value!.length < 10) {
-          return 'the phone number must be more than 10 characters';
+          return 'Phone number must be more than 10 characters';
+        } else if (value.length > 12) {
+          return "Phone number can't be more than 12 characters";
         }
         return null;
       });
@@ -29,6 +31,7 @@ extension CustomValidationBuilder on ValidationBuilder {
         if (value!.length < 5) {
           return 'Zip Code must be 5 characters';
         }
+        return null;
       });
 
   ValidationBuilder min(int minValue) => add((value) {
