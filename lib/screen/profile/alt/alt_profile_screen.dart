@@ -7,6 +7,7 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/akun_bank_screen.dart'
 import 'package:css_mobile/screen/profile/alt/profil_menu/alamat_return_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_screen.dart';
+import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -60,21 +61,13 @@ class AltProfileScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  /*controller.allow.fasilitas == "Y"
-                      ? */
-                  SettingListItem(
-                    title: 'Fasilitasku'.tr,
-                    icon: Icons.format_list_numbered_rounded,
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (context) => const ComingSoonDialog(),
-                    ),
-                  ),
-                  // : const SizedBox(),
-                  /*controller.allow.profil == "Y"
-                      ?*/
                   Column(
                     children: [
+                      SettingListItem(
+                        title: 'Fasilitasku'.tr,
+                        icon: Icons.format_list_numbered_rounded,
+                        onTap: () => Get.to(const FacilityScreen()),
+                      ),
                       SettingListItem(
                         title: 'Lihat Akun'.tr,
                         icon: Icons.account_tree_rounded,
