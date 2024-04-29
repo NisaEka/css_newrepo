@@ -50,11 +50,6 @@ class NewPasswordScreen extends StatelessWidget {
                                 hintText: 'Password baru'.tr,
                                 validator: ValidationBuilder().password().build(),
                                 isObscure: controller.isObscurePassword,
-                                inputFormatters: [
-                                  TextInputFormatter.withFunction((oldValue, newValue) {
-                                    return newValue.copyWith(text: newValue.text.toLowerCase());
-                                  })
-                                ],
                                 multiLine: false,
                                 suffixIcon: IconButton(
                                   icon: controller.showIcon,
@@ -77,11 +72,6 @@ class NewPasswordScreen extends StatelessWidget {
                                 controller: controller.confirmPW,
                                 prefixIcon: const Icon(Icons.lock),
                                 hintText: 'Konfirmasi password baru'.tr,
-                                inputFormatters: [
-                                  TextInputFormatter.withFunction((oldValue, newValue) {
-                                    return newValue.copyWith(text: newValue.text.toLowerCase());
-                                  })
-                                ],
                                 validator: (value) {
                                   if (value != controller.newPW.text) {
                                     return "Password tidak sama".tr;

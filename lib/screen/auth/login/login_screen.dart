@@ -65,11 +65,6 @@ class LoginScreen extends StatelessWidget {
                                 CustomTextFormField(
                                   controller: controller.passwordTextField,
                                   hintText: "Kata Sandi".tr,
-                                  inputFormatters: [
-                                    TextInputFormatter.withFunction((oldValue, newValue) {
-                                      return newValue.copyWith(text: newValue.text.toLowerCase());
-                                    })
-                                  ],
                                   // focusNode: controller.passwordField,
                                   prefixIcon: const Icon(Icons.lock),
                                   isRequired: true,

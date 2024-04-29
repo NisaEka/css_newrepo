@@ -116,11 +116,13 @@ class CustomTextFormField extends StatelessWidget {
                             return newValue.copyWith(text: newValue.text.toLowerCase());
                           })
                         ]
-                      : [
-                          TextInputFormatter.withFunction((oldValue, newValue) {
-                            return newValue.copyWith(text: newValue.text.toUpperCase());
-                          })
-                        ]),
+                      : (hintText!.contains('sandi') || hintText!.contains('password'))
+                          ? []
+                          : [
+                              TextInputFormatter.withFunction((oldValue, newValue) {
+                                return newValue.copyWith(text: newValue.text.toUpperCase());
+                              })
+                            ]),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
