@@ -148,7 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 prefixIcon: const Icon(Icons.line_style),
                                 textStyle: controller.selectedReferal != null ? subTitleTextStyle : hintTextStyle,
                                 readOnly: false,
-                                isRequired: true,
+                                isRequired: false,
                               ),
                               CustomSearchDropdownField<Origin>(
                                 asyncItems: (String filter) => controller.getOriginList(filter),

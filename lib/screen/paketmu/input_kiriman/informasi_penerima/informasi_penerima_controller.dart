@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
@@ -9,7 +8,6 @@ import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +31,7 @@ class InformasiPenerimaController extends BaseController {
 
   bool isLoading = false;
   bool isOnline = false;
+  bool isLoadSave = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<Destination> destinationList = [];
@@ -74,11 +73,11 @@ class InformasiPenerimaController extends BaseController {
   }
 
   FutureOr<ReceiverModel?> getSelectedReceiver(ReceiverModel receiver) async {
-    namaPenerima.text = receiver.name ?? '';
+    namaPenerima.text = receiver.name?.toUpperCase() ?? '';
     nomorTelpon.text = receiver.phone ?? '';
     kotaTujuan.text = receiver.idDestination ?? '';
-    alamatLengkap.text = receiver.address ?? '';
-    getDestinationList(receiver.city ?? '');
+    alamatLengkap.text = receiver.address?.toUpperCase() ?? '';
+    getDestinationList(receiver.city?.split(',').first ?? '');
     selectedDestination = Destination(
       id: receiver.idDestination?.toInt(),
       destinationCode: receiver.destinationCode,
@@ -139,6 +138,8 @@ class InformasiPenerimaController extends BaseController {
   }
 
   Future<void> saveReceiver() async {
+    isLoadSave = true;
+    update();
     try {
       await transaction
           .postReceiver(ReceiverModel(
@@ -172,6 +173,21 @@ class InformasiPenerimaController extends BaseController {
           );
     } catch (e) {
       e.printError();
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(
+            Icons.info,
+            color: whiteColor,
+          ),
+          message: 'Tidak dapat menyimpan data'.tr,
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: errorColor,
+        ),
+      );
     }
+
+    isLoadSave = false;
+    update();
   }
 }

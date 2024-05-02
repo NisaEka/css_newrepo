@@ -72,7 +72,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                               CustomFilledButton(
                                 color: controller.otpPin.text.isNotEmpty && controller.otpPin.length >= 6 ? blueJNE : greyColor,
                                 title: 'Selanjutnya'.tr,
-                                radius: 50,
+                                // radius: 50,
                                 onPressed: () =>
                                     controller.otpPin.text.isNotEmpty && controller.otpPin.length >= 6 ? controller.pinConfirmation() : null,
                               ),

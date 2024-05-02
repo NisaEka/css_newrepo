@@ -58,6 +58,7 @@ class TambahPetugasScreen extends StatelessWidget {
                               controller: controller.nomorTelepon,
                               hintText: 'Nomor Telepon'.tr,
                               isRequired: true,
+                              inputType: TextInputType.number,
                               validator: ValidationBuilder().phone().build(),
                             ),
                             !controller.isEdit
@@ -68,6 +69,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                     validator: ValidationBuilder().password().build(),
                                     isObscure: controller.isObscurePassword,
                                     multiLine: false,
+                                    inputFormatters: const [],
                                     suffixIcon: IconButton(
                                       icon: controller.showIcon,
                                       onPressed: () {
@@ -91,6 +93,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                     controller: controller.passwordConfirm,
                                     hintText: 'Konfirmasi Kata Sandi'.tr,
                                     isRequired: true,
+                                    inputFormatters: const [],
                                     validator: (value) {
                                       if (value != controller.password.text) {
                                         return "Password tidak sama".tr;

@@ -68,9 +68,10 @@ class LoginScreen extends StatelessWidget {
                                   // focusNode: controller.passwordField,
                                   prefixIcon: const Icon(Icons.lock),
                                   isRequired: true,
-                                  validator: ValidationBuilder().password().build(),
+                                  // validator: ValidationBuilder().password().build(),
                                   isObscure: controller.isObscurePasswordLogin,
                                   multiLine: false,
+                                  inputFormatters: [],
                                   // focusNode: controller.passFocus,
                                   suffixIcon: IconButton(
                                     icon: controller.showIcon,

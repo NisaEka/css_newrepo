@@ -39,6 +39,7 @@ class AltProfileScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AltUserInfoCard(
+                        isLoading: controller.basicProfil == null,
                         name: controller.basicProfil?.name ?? '-',
                         brand: controller.basicProfil?.brand ?? '-',
                         mail: controller.basicProfil?.email ?? '-',

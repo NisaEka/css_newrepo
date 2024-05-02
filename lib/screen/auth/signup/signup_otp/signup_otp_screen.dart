@@ -63,7 +63,7 @@ class SignUpOTPScreen extends StatelessWidget {
                             CustomFilledButton(
                               color: blueJNE,
                               title: 'Selanjutnya'.tr,
-                              radius: 50,
+                              // radius: 50,
                               onPressed: () => controller.pinConfirmation(),
                             ),
                           ],

@@ -72,6 +72,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   Future<GetOriginModel> getOrigin(String? keyword, String accountID) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
+    keyword.printInfo(info: "keyword");
     try {
       Response response = await network.dio.get(
         "/origin",
@@ -163,7 +164,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   Future<PostTransactionModel> postTransaction(DataTransactionModel data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
-    data.toJson().printInfo();
+    data.toJson().printInfo(info: "kiriman data");
     try {
       Response response = await network.dio.post(
         "/transaction",
@@ -210,7 +211,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   Future<PostTransactionModel> postReceiver(ReceiverModel data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
-    data.toJson().printInfo();
+    data.toJson().printInfo(info: 'receiverData');
     try {
       Response response = await network.dio.post(
         "/receiver",

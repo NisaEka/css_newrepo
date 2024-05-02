@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String? label;
   final String? hintText;
@@ -64,14 +64,19 @@ class CustomTextFormField extends StatelessWidget {
   }
 
   @override
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        label != null
+        widget.label != null
             ? RichText(
                 text: TextSpan(
-                  text: label,
+                  text: widget.label,
                   style: formLabelTextStyle,
                   children: const <TextSpan>[
                     // TextSpan(text: isRequired ? "*" : "", style: const TextStyle(color: Colors.red)),
@@ -80,49 +85,49 @@ class CustomTextFormField extends StatelessWidget {
               )
             : const SizedBox(),
         SizedBox(
-          height: helperText != null ? 16 : 8,
+          height: widget.helperText != null ? 16 : 8,
         ),
-        helperText != null ? Text(helperText ?? "") : const SizedBox(),
+        widget.helperText != null ? Text(widget.helperText ?? "") : const SizedBox(),
         SizedBox(
-          height: helperText != null ? 16 : 0,
+          height: widget.helperText != null ? 16 : 0,
         ),
         Shimmer(
-          isLoading: isLoading,
+          isLoading: widget.isLoading,
           child: Container(
-            width: width ?? Get.width,
-            height: height != null && multiLine == false ? height ?? 39 : null,
+            width: widget.width ?? Get.width,
+            height: widget.height != null && widget.multiLine == false ? widget.height ?? 39 : null,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: isLoading ? greyColor : Colors.transparent,
+              color: widget.isLoading ? greyColor : Colors.transparent,
             ),
             child: TextFormField(
-              minLines: multiLine ? 3 : 1,
-              maxLines: !multiLine ? 1 : 3,
-              onTap: onTap,
-              enabled: onTap != null ? true : !readOnly,
-              controller: controller,
-              readOnly: readOnly,
-              onChanged: onChanged,
-              onFieldSubmitted: onSubmit,
-              autofocus: autofocus ?? false,
-              focusNode: focusNode,
-              validator: validator,
-              keyboardType: inputType,
-              obscureText: isObscure ?? false,
-              inputFormatters: inputFormatters ??
-                  (hintText!.contains('email')
+              minLines: widget.multiLine ? 3 : 1,
+              maxLines: !widget.multiLine ? 1 : 3,
+              onTap: widget.onTap,
+              enabled: widget.onTap != null ? true : !widget.readOnly,
+              controller: widget.controller,
+              readOnly: widget.readOnly,
+              onChanged: widget.onChanged,
+              onFieldSubmitted: widget.onSubmit,
+              autofocus: widget.autofocus ?? false,
+              focusNode: widget.focusNode,
+              validator: widget.validator,
+              keyboardType: widget.inputType,
+              obscureText: widget.isObscure ?? false,
+              inputFormatters: widget.inputFormatters ??
+                  (widget.hintText!.contains('email')
                       ? [
                           TextInputFormatter.withFunction((oldValue, newValue) {
                             return newValue.copyWith(text: newValue.text.toLowerCase());
                           })
                         ]
-                      : (hintText!.contains('sandi') || hintText!.contains('password'))
-                          ? []
-                          : [
+                      : (!widget.hintText!.contains('Kata Sandi') || !widget.hintText!.contains('Password'))
+                          ? [
                               TextInputFormatter.withFunction((oldValue, newValue) {
                                 return newValue.copyWith(text: newValue.text.toUpperCase());
                               })
-                            ]),
+                            ]
+                          : []),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
@@ -130,34 +135,33 @@ class CustomTextFormField extends StatelessWidget {
                     // fontWeight: FontWeight.w600,
                   ),
               textInputAction: TextInputAction.next,
-              textCapitalization: TextCapitalization.characters,
               decoration: InputDecoration(
                   filled: true,
-                  label: label == null ? Text(hintText ?? '') : const SizedBox(),
-                  fillColor: backgroundColor ??
-                      (onTap != null || !readOnly
+                  label: widget.label == null ? Text(widget.hintText ?? '') : const SizedBox(),
+                  fillColor: widget.backgroundColor ??
+                      (widget.onTap != null || !widget.readOnly
                           ? Colors.transparent
                           : Theme.of(context).brightness == Brightness.light
                               ? greyLightColor3
                               : greyColor),
                   //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
-                  suffixIcon: suffixIcon,
-                  prefixIcon: prefixIcon,
+                  suffixIcon: widget.suffixIcon,
+                  prefixIcon: widget.prefixIcon,
                   prefixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
                   suffixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
-                  contentPadding: contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                  hintText: hintText ?? label,
+                  contentPadding: widget.contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                  hintText: widget.hintText ?? widget.label,
                   errorMaxLines: 3,
-                  disabledBorder: noBorder
+                  disabledBorder: widget.noBorder
                       ? OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(
-                            color: readOnly
+                            color: widget.readOnly
                                 ? Colors.white
                                 : Theme.of(context).brightness == Brightness.light
                                     ? Theme.of(context).primaryColor
                                     : greyLightColor1,
-                            width: readOnly ? 1 : 2,
+                            width: widget.readOnly ? 1 : 2,
                             style: BorderStyle.solid,
                           ),
                         )
@@ -165,12 +169,12 @@ class CustomTextFormField extends StatelessWidget {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                      color: readOnly
+                      color: widget.readOnly
                           ? greyDarkColor1
                           : Theme.of(context).brightness == Brightness.light
                               ? Theme.of(context).primaryColor
                               : whiteColor,
-                      width: readOnly ? 1 : 2,
+                      width: widget.readOnly ? 1 : 2,
                       style: BorderStyle.solid,
                     ),
                   ),

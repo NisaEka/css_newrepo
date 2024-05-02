@@ -7,7 +7,6 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -51,6 +50,7 @@ class NewPasswordScreen extends StatelessWidget {
                                 validator: ValidationBuilder().password().build(),
                                 isObscure: controller.isObscurePassword,
                                 multiLine: false,
+                                inputFormatters: const [],
                                 suffixIcon: IconButton(
                                   icon: controller.showIcon,
                                   onPressed: () {
@@ -72,6 +72,8 @@ class NewPasswordScreen extends StatelessWidget {
                                 controller: controller.confirmPW,
                                 prefixIcon: const Icon(Icons.lock),
                                 hintText: 'Konfirmasi password baru'.tr,
+                                inputFormatters: const [],
+
                                 validator: (value) {
                                   if (value != controller.newPW.text) {
                                     return "Password tidak sama".tr;
@@ -106,7 +108,7 @@ class NewPasswordScreen extends StatelessWidget {
                               CustomFilledButton(
                                 color: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,
                                 title: 'Selanjutnya'.tr,
-                                radius: 50,
+                                // radius: 50,
                                 onPressed: () => controller.formKey.currentState?.validate() == true ? controller.changePassword() : null,
                               )
                             ],
