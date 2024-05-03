@@ -6,6 +6,9 @@ class FacilityModel {
   String _name = "";
   String get name => _name;
 
+  String _type = "";
+  String get type => _type;
+
   bool _enabled = false;
   bool get enabled => _enabled;
 
@@ -15,11 +18,13 @@ class FacilityModel {
   FacilityModel({
     String icon = "",
     String name = "",
+    String type = "",
     bool enabled = false,
     bool canUse = false
   }) {
     _icon = icon;
     _name = name;
+    _type = type;
     _enabled = enabled;
     _canUse = canUse;
   }
@@ -69,6 +74,14 @@ class FacilityModel {
     ));
 
     return facilities;
+  }
+
+  FacilityModel.fromJson(dynamic json) {
+    _icon = json["image_url"];
+    _name = json["name"];
+    _type = json["type"];
+    _enabled = json["enabled"];
+    _canUse = json["can_use"];
   }
 
 }

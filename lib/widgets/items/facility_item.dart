@@ -69,8 +69,8 @@ class FacilityItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Image(
-            image: AssetImage(facility.icon),
-            fit: BoxFit.fill
+            image: NetworkImage(facility.icon),
+            fit: BoxFit.cover
         ),
       )
     );

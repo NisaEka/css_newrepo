@@ -2,6 +2,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/facility/facility_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:get/get.dart';
 
 class FacilityController extends BaseController {
 
@@ -10,8 +11,8 @@ class FacilityController extends BaseController {
   bool showMainContent = false;
   bool showErrorContent = false;
 
-  List<FacilityModel> codFacilities = FacilityModel().getCodFacilities();
-  List<FacilityModel> nonCodFacilities = FacilityModel().getNonCodFacilities();
+  List<FacilityModel> codFacilities = [];
+  List<FacilityModel> nonCodFacilities = [];
 
   @override
   void onInit() {
@@ -26,10 +27,26 @@ class FacilityController extends BaseController {
           await storage.readData(StorageCore.allowedMenu)
       );
       if (allowedMenu.fasilitas == 'Y') {
-        showMainContent = true;
+        await facility.getFacilities()
+            .then((response) async {
+              if (response.code == 200) {
+                response.payload?.forEach((facility) {
+                  if (facility.type == "COD") {
+                    codFacilities.add(facility);
+                  } else {
+                    nonCodFacilities.add(facility);
+                  }
+                });
+                showMainContent = true;
+              } else {
+                showErrorContent = true;
+              }
+        });
       } else {
         showProhibitedContent = true;
       }
+
+
     } catch(e) {
       showErrorContent = true;
       update();
