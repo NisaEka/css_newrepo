@@ -67,7 +67,7 @@ class InformasiPengirimController extends BaseController {
     alamatLengkap.text = dropshipper?.address?.toUpperCase() ?? '';
     kodePos.text = dropshipper?.zipCode ?? '';
     getOriginList(dropshipper?.city?.split(',').first ?? '', selectedAccount?.accountId ?? '').then((value) {
-      selectedOrigin = value.first;
+      selectedOrigin = value.where((element) => element.originName == dropshipper?.city).first;
       update();
     });
     update();

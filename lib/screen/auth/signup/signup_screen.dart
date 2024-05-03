@@ -3,6 +3,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
@@ -99,7 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 hintText: 'No Handphone'.tr,
                                 isRequired: true,
                                 inputType: TextInputType.number,
-                                validator: ValidationBuilder().phone().build(),
+                                validator: ValidationBuilder().phoneNumber().build(),
                               ),
                               CustomTextFormField(
                                 controller: controller.email,

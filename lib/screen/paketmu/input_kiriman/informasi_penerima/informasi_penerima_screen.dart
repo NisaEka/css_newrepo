@@ -132,7 +132,11 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                                             child: Text(
-                                              '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
+                                              '${e.zipCode ?? ''}; ${e.provinceName ?? ''}; ${e.cityName ?? ''}; ${e.districtName ?? ''}; ${e.subDistrictName ?? ''}; ${e.destinationCode ?? ''}'
+                                                  .splitMapJoin(
+                                                ';',
+                                                onMatch: (p0) => '; ',
+                                              ),
                                             ),
                                           ),
                                         );

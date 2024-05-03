@@ -16,7 +16,7 @@ extension CustomValidationBuilder on ValidationBuilder {
         return null;
       });
 
-  phone() => add((value) {
+  phoneNumber() => add((value) {
         if (value?.isEmpty ?? false) {
           return 'This field is required';
         } else if (value!.length < 10) {

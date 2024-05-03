@@ -206,11 +206,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       CustomTextFormField(
                                         controller: controller.noReference,
                                         hintText: 'No Referensi (opsional)'.tr,
-                                        inputType: TextInputType.number,
                                         width: Get.width / 2.3,
-                                        height: 46,
+                                        // height: 46,
                                         validator: (value) => value?.isNotEmpty ?? false
-                                            ? value!.length <= 8
+                                            ? value!.length < 8
                                                 ? "Harus lebih dari 8 karakter".tr
                                                 : null
                                             : null,

@@ -13,6 +13,7 @@ class AddPenerimaController extends BaseController {
   final alamat = TextEditingController();
 
   bool isLoading = false;
+  bool isLoadDestination = false;
 
   List<Destination> destinationList = [];
 
@@ -35,6 +36,8 @@ class AddPenerimaController extends BaseController {
   }
 
   Future<void> saveReceiver() async {
+    isLoading = true;
+    update();
     try {
       await transaction
           .postReceiver(ReceiverModel(
@@ -70,5 +73,8 @@ class AddPenerimaController extends BaseController {
     } catch (e) {
       e.printError();
     }
+
+    isLoading = false;
+    update();
   }
 }

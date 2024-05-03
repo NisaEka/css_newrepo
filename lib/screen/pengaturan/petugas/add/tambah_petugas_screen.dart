@@ -59,7 +59,7 @@ class TambahPetugasScreen extends StatelessWidget {
                               hintText: 'Nomor Telepon'.tr,
                               isRequired: true,
                               inputType: TextInputType.number,
-                              validator: ValidationBuilder().phone().build(),
+                              validator: ValidationBuilder().phoneNumber().build(),
                             ),
                             !controller.isEdit
                                 ? CustomTextFormField(

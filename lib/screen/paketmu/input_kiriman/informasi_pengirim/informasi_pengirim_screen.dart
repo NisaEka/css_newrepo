@@ -257,7 +257,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     readOnly: !controller.isDropshipper,
                                     isRequired: true,
                                     prefixIcon: const Icon(Icons.phone),
-                                    validator: ValidationBuilder().phone().build(),
+                                    validator: ValidationBuilder().phoneNumber().build(),
                                   ),
                                   CustomSearchDropdownField<Origin>(
                                     asyncItems: (String filter) => controller.getOriginList(

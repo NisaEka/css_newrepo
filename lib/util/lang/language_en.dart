@@ -278,6 +278,7 @@ class LanguageEN {
       "Peringatan": "Alert",
       "Total Ongkos Kirim tidak bisa lebih dari Rp.1000.000": "Total shipping costs cannot exceed Rp. 1000,000",
       "Tidak dapat menyimpan data": "Cannot save data",
+      "Draft Kosong": "Draft Empty"
     };
   }
 }
