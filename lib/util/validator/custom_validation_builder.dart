@@ -8,7 +8,7 @@ extension CustomValidationBuilder on ValidationBuilder {
 
         if (value == 'password') {
           return 'Password should not "password"';
-        } else if (value!.length <= 8) {
+        } else if (value!.length < 8) {
           return 'Password must have more than 8 characters';
         } else if (!regex.hasMatch(value)) {
           return 'Password should contain upper,lower,digit and Special character';
