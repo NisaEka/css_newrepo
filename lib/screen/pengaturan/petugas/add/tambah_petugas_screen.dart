@@ -11,6 +11,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -47,12 +48,18 @@ class TambahPetugasScreen extends StatelessWidget {
                               hintText: 'Alamat Email'.tr,
                               isRequired: true,
                               validator: ValidationBuilder().email().minLength(10).build(),
-                              inputFormatters: const [],
+                              inputFormatters: [
+                                TextInputFormatter.withFunction((oldValue, newValue) {
+                                  return newValue.copyWith(text: newValue.text.toLowerCase());
+                                })
+                              ],
                             ),
                             CustomTextFormField(
                               controller: controller.nomorTelepon,
                               hintText: 'Nomor Telepon'.tr,
                               isRequired: true,
+                              inputType: TextInputType.number,
+                              validator: ValidationBuilder().phoneNumber().build(),
                             ),
                             !controller.isEdit
                                 ? CustomTextFormField(
@@ -129,7 +136,6 @@ class TambahPetugasScreen extends StatelessWidget {
                                         buttonText: Text('Akun'.tr),
                                         dialogWidth: Get.width,
                                         initialValue: controller.selectedAccountList,
-
                                         items: controller.accountList
                                             .map((e) => MultiSelectItem(
                                                   e,
@@ -224,6 +230,8 @@ class TambahPetugasScreen extends StatelessWidget {
                                       CustomTextFormField(
                                         controller: controller.zipCode,
                                         hintText: 'Kode Pos'.tr,
+                                        validator: ValidationBuilder().zipCode().build(),
+                                        inputType: TextInputType.number,
                                       ),
                                     ],
                                   )

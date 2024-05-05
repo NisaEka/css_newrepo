@@ -31,6 +31,7 @@ class InformasiPengirimController extends BaseController {
   bool isLoadOrigin = false;
   bool isValidate = false;
   bool isOnline = true;
+  bool isLoadSave = false;
 
   List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
   List<Account> accountList = [];
@@ -60,13 +61,13 @@ class InformasiPengirimController extends BaseController {
   }
 
   FutureOr<void> getSelectedDropshipper() async {
-    namaPengirim.text = dropshipper?.name ?? '';
+    namaPengirim.text = dropshipper?.name?.toUpperCase() ?? '';
     nomorTelpon.text = dropshipper?.phone ?? '';
-    kotaPengirim.text = dropshipper?.city ?? '';
-    alamatLengkap.text = dropshipper?.address ?? '';
+    kotaPengirim.text = dropshipper?.city?.toUpperCase() ?? '';
+    alamatLengkap.text = dropshipper?.address?.toUpperCase() ?? '';
     kodePos.text = dropshipper?.zipCode ?? '';
-    getOriginList(dropshipper?.city ?? '', selectedAccount?.accountId ?? '').then((value) {
-      selectedOrigin = value.first;
+    getOriginList(dropshipper?.city?.split(',').first ?? '', selectedAccount?.accountId ?? '').then((value) {
+      selectedOrigin = value.where((element) => element.originName == dropshipper?.city).first;
       update();
     });
     update();
@@ -226,6 +227,8 @@ class InformasiPengirimController extends BaseController {
   }
 
   Future<void> saveDropshipper() async {
+    isLoadSave = true;
+    update();
     try {
       await transaction
           .postDropshipper(DropshipperModel(
@@ -234,6 +237,7 @@ class InformasiPengirimController extends BaseController {
             origin: selectedOrigin?.originCode,
             zipCode: kodePos.text,
             address: alamatLengkap.text,
+            city: selectedOrigin?.originName,
           ))
           .then(
             (value) => Get.showSnackbar(
@@ -245,12 +249,27 @@ class InformasiPengirimController extends BaseController {
                 message: value.message,
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
-                backgroundColor: value.code == 200 ? successColor : errorColor,
+                backgroundColor: value.code == 201 ? successColor : errorColor,
               ),
             ),
           );
     } catch (e) {
       e.printError();
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(
+            Icons.info,
+            color: whiteColor,
+          ),
+          message: 'Tidak dapat menyimpan data'.tr,
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: errorColor,
+        ),
+      );
     }
+
+    isLoadSave = false;
+    update();
   }
 }

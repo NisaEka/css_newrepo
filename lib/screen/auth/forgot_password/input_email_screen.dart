@@ -6,6 +6,7 @@ import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -50,7 +51,11 @@ class InputEmailScreen extends StatelessWidget {
                                 hintText: "Email".tr,
                                 isRequired: true,
                                 validator: ValidationBuilder().email().minLength(10).build(),
-                                inputFormatters: const [],
+                                inputFormatters: [
+                                  TextInputFormatter.withFunction((oldValue, newValue) {
+                                    return newValue.copyWith(text: newValue.text.toLowerCase());
+                                  })
+                                ],
                                 onChanged: (value) => controller.update(),
                               ),
                               const SizedBox(height: 30),

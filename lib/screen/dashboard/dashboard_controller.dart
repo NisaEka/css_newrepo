@@ -8,7 +8,7 @@ import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/profile/profile_screen.dart';
+import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +27,7 @@ class DashboardController extends BaseController {
 
   List<Widget> widgetOptions = <Widget>[
     const DashboardScreen(),
-    const ProfileScreen(),
+    const AltProfileScreen(),
   ];
 
   List<Items> menuItems = [];

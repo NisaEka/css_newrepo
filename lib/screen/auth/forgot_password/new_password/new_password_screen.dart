@@ -49,8 +49,8 @@ class NewPasswordScreen extends StatelessWidget {
                                 hintText: 'Password baru'.tr,
                                 validator: ValidationBuilder().password().build(),
                                 isObscure: controller.isObscurePassword,
-                                inputFormatters: const [],
                                 multiLine: false,
+                                inputFormatters: const [],
                                 suffixIcon: IconButton(
                                   icon: controller.showIcon,
                                   onPressed: () {
@@ -73,6 +73,7 @@ class NewPasswordScreen extends StatelessWidget {
                                 prefixIcon: const Icon(Icons.lock),
                                 hintText: 'Konfirmasi password baru'.tr,
                                 inputFormatters: const [],
+
                                 validator: (value) {
                                   if (value != controller.newPW.text) {
                                     return "Password tidak sama".tr;
@@ -107,7 +108,7 @@ class NewPasswordScreen extends StatelessWidget {
                               CustomFilledButton(
                                 color: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,
                                 title: 'Selanjutnya'.tr,
-                                radius: 50,
+                                // radius: 50,
                                 onPressed: () => controller.formKey.currentState?.validate() == true ? controller.changePassword() : null,
                               )
                             ],

@@ -18,6 +18,7 @@ class AddDropshipperController extends BaseController {
 
   List<Origin> originList = [];
   bool isLoadOrigin = false;
+  bool isLoading = false;
   Origin? selectedOrigin;
 
   Future<List<Origin>> getOriginList(String keyword, String accountID) async {
@@ -32,6 +33,8 @@ class AddDropshipperController extends BaseController {
   }
 
   Future<void> saveDropshipper() async {
+    isLoading = true;
+    update();
     try {
       await transaction
           .postDropshipper(DropshipperModel(
@@ -60,5 +63,8 @@ class AddDropshipperController extends BaseController {
     } catch (e) {
       e.printError();
     }
+
+    isLoading = false;
+    update();
   }
 }

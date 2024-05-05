@@ -40,7 +40,7 @@ class SuccessScreen extends StatelessWidget {
           const LogoHeader(),
           Column(
             children: [
-              icon ?? Lottie.asset(ImageConstant.successLottie, height: Get.width - 50),
+              icon ?? Lottie.asset(ImageConstant.successLottie, height: Get.width / 1.2),
               Text(
                 message.tr,
                 style: appTitleTextStyle.copyWith(

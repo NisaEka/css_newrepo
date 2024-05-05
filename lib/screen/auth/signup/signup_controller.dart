@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_agent_model.dart';
@@ -27,6 +29,7 @@ class SignUpController extends BaseController {
   bool isLoadReferal = false;
   bool isLoadAgent = false;
   bool isLoading = false;
+  bool pickOrigin = false;
   Origin? selectedOrigin;
   AgentModel? selectedAgent;
   ReferalModel? selectedReferal;
@@ -122,5 +125,21 @@ class SignUpController extends BaseController {
 
     isLoading = false;
     update();
+  }
+
+  Future<void> onSelectReferal(ReferalModel value)async{
+    kodeReferal.text = value.name ?? '';
+    selectedReferal = value;
+    update();
+
+    if(value.name == "SR12"){
+      pickOrigin = true;
+      update();
+      // selectedOrigin =
+    }
+    else{
+      pickOrigin = false;
+      update();
+    }
   }
 }

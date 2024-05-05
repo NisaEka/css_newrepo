@@ -204,8 +204,6 @@ class InformasiKirimaController extends BaseController {
       return true;
     }
 
-
-
     return false;
   }
 
@@ -307,7 +305,7 @@ class InformasiKirimaController extends BaseController {
     serviceList = [];
     // print('account id : ${account.accountId}');
     connection.isOnline().then((value) => isOnline = value);
-
+    jenisBarang.text = "PAKET";
     try {
       await transaction
           .getService(

@@ -10,6 +10,7 @@ import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -55,18 +56,22 @@ class LoginScreen extends StatelessWidget {
                                   // focusNode: controller.emailFocus,
                                   onSubmit: (_) {},
                                   validator: ValidationBuilder().email().minLength(10).build(),
-                                  inputFormatters: const [],
+                                  inputFormatters: [
+                                    TextInputFormatter.withFunction((oldValue, newValue) {
+                                      return newValue.copyWith(text: newValue.text.toLowerCase());
+                                    })
+                                  ],
                                 ),
                                 CustomTextFormField(
                                   controller: controller.passwordTextField,
                                   hintText: "Kata Sandi".tr,
-                                  inputFormatters: const [],
                                   // focusNode: controller.passwordField,
                                   prefixIcon: const Icon(Icons.lock),
                                   isRequired: true,
-                                  validator: ValidationBuilder().password().build(),
+                                  // validator: ValidationBuilder().password().build(),
                                   isObscure: controller.isObscurePasswordLogin,
                                   multiLine: false,
+                                  inputFormatters: [],
                                   // focusNode: controller.passFocus,
                                   suffixIcon: IconButton(
                                     icon: controller.showIcon,
