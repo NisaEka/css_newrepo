@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/facility_form_info_controller.dart';
+import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/facility_form_return_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -29,7 +30,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
                         totalStep: controller.steps.length,
                         steps: controller.steps,
                       ),
-                      const SizedBox(height: 10)
+                      const SizedBox(height: 8)
                     ],
                   ),
                 ),
@@ -39,7 +40,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
                     color: redJNE,
                     title: 'Selanjutnya'.tr,
                     onPressed: () {
-
+                      Get.to(const FacilityFormReturnScreen());
                     },
                   )
                 ),
