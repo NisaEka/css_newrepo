@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class FacilityFormInfoController extends BaseController {
 
@@ -18,5 +21,18 @@ class FacilityFormInfoController extends BaseController {
   final phone = TextEditingController();
   final whatsAppPhone = TextEditingController();
   final email = TextEditingController();
+
+  File? pickedImage;
+
+  pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+
+    if (image != null) {
+      File file = File(image.path);
+      pickedImage = file;
+      update();
+    }
+  }
 
 }

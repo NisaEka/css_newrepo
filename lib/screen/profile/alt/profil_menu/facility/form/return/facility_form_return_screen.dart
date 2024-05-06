@@ -4,6 +4,7 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/return/f
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
+import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -37,14 +38,14 @@ class FacilityFormReturnScreen extends StatelessWidget {
                   ),
                 ),
                 bottomNavigationBar: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: CustomFilledButton(
-                      color: redJNE,
-                      title: 'Selanjutnya'.tr,
-                      onPressed: () {
-                        Get.to(const FacilityFormBankScreen());
-                      },
-                    ),
+                  padding: const EdgeInsets.all(16),
+                  child: CustomFilledButton(
+                    color: redJNE,
+                    title: 'Selanjutnya'.tr,
+                    onPressed: () {
+                      Get.to(const FacilityFormBankScreen());
+                    },
+                  ),
                 ),
                 body: CustomScrollView(
                   slivers: [
@@ -75,7 +76,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
                               controller: controller.returnResponsibleName,
                               hintText: 'Nama Penanggung Jawab',
                             ),
-                            CustomDropDownField(
+                            CustomDropDownFormField(
                               hintText: 'Jenis NPWP'.tr,
                               width: Get.width,
                               value: controller.npwpType.text,

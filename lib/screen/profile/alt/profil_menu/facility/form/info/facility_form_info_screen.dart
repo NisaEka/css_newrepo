@@ -63,6 +63,21 @@ class FacilityFormInfoScreen extends StatelessWidget {
                               controller: controller.idCardNumber,
                               hintText: 'No Identitas / KTP',
                             ),
+                            Container(
+                              width: Get.width,
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.black)
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  controller.pickImage();
+                                },
+                                child: const Text('Pilih Gambar'),
+                              ),
+                            ),
                             CustomTextFormField(
                               controller: controller.fullName,
                               hintText: 'Nama Lengkap',
