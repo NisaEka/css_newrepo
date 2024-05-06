@@ -1,14 +1,14 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_form_bank_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/return/facility_form_return_controller.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -60,9 +60,49 @@ class FacilityFormReturnScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            ListTile(
+                              title: Text(
+                                'Ceklis bila informasi pengembalian barang sama dengan data pemohon',
+                                textAlign: TextAlign.start,
+                                style: sublistTitleTextStyle.copyWith(
+                                  color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2,
+                                ),
+                              ),
+                              leading: Checkbox(
+                                checkColor: whiteColor,
+                                activeColor: redJNE,
+                                value: controller.sameWithOwner,
+                                onChanged: (value) {
+                                  controller.sameWithOwner = value!;
+                                  controller.update();
+                                },
+                              ),
+                            ),
                             CustomTextFormField(
                               controller: controller.returnAddress,
                               hintText: 'Alamat Pelanggan'.tr,
+                            ),
+                            CustomSearchDropdownField<Destination>(
+                              asyncItems: (String filter) => controller.getDestinationList(filter),
+                              itemBuilder: (context, e, b) {
+                                return GestureDetector(
+                                  onTap: () => controller.update(),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                    child: Text(e.asFacilityFormFormat()),
+                                  ),
+                                );
+                              },
+                              itemAsString: (Destination e) => e.asFacilityFormFormat(),
+                              onChanged: (value) {
+                                controller.selectedDestination = value;
+                                controller.update();
+                              },
+                              value: controller.selectedDestination,
+                              isRequired: controller.selectedDestination == null ? true : false,
+                              readOnly: false,
+                              hintText: controller.isLoadDestination ? "Loading..." : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
+                              textStyle: controller.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
                             ),
                             CustomTextFormField(
                               controller: controller.returnPhone,
@@ -86,8 +126,8 @@ class FacilityFormReturnScreen extends StatelessWidget {
                                   child: Text('Pribadi'.tr),
                                 ),
                                 DropdownMenuItem(
-                                  value: 'PERUSAHAAN'.tr,
-                                  child: Text('Perusahaan'.tr)
+                                  value: 'BADAN USAHA'.tr,
+                                  child: Text('Badan Usaha'.tr)
                                 )
                               ],
                               onChanged: (value) {
@@ -102,7 +142,16 @@ class FacilityFormReturnScreen extends StatelessWidget {
                             CustomTextFormField(
                               controller: controller.npwpName,
                               hintText: 'Nama NPWP'.tr,
-                            )
+                            ),
+                            Container(
+                                width: Get.width,
+                                margin: const EdgeInsets.symmetric(vertical: 8),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: Colors.black)
+                                ),
+                                child: _imagePickerContent(controller)
+                            ),
                           ],
                         ),
                       )
@@ -113,6 +162,27 @@ class FacilityFormReturnScreen extends StatelessWidget {
             ],
           );
         });
+  }
+
+  Widget _imagePickerContent(FacilityFormReturnController controller) {
+    if (controller.pickedImage != null) {
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8)
+        ),
+        child: Image(
+            image: FileImage(controller.pickedImage!),
+            fit: BoxFit.fitWidth
+        ),
+      );
+    } else {
+      return TextButton(
+        onPressed: () {
+          controller.pickImage();
+        },
+        child: const Text('Pilih Gambar NPWP'),
+      );
+    }
   }
 
 }

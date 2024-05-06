@@ -100,6 +100,10 @@ class Destination {
   String? _subDistrictName;
   String? _zipCode;
 
+  String asFacilityFormFormat() {
+    return '$_cityName / $_districtName / $_subDistrictName / $_zipCode';
+  }
+
   Destination copyWith({
     num? id,
     String? destinationCode,

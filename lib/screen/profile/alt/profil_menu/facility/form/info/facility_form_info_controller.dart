@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,15 +25,33 @@ class FacilityFormInfoController extends BaseController {
 
   File? pickedImage;
 
+  bool isLoading = false;
+  bool isLoadDestination = false;
+
+  List<Destination> destinationList = [];
+  Destination? selectedDestination;
+
   pickImage() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
-      File file = File(image.path);
-      pickedImage = file;
+      pickedImage = File(image.path);
       update();
     }
+  }
+
+  Future<List<Destination>> getDestinationList(String keyword) async {
+    isLoading = true;
+    destinationList.clear();
+
+    var response = await transaction.getDestination(keyword);
+    var models = response.payload?.toList();
+
+    isLoading = false;
+    update();
+
+    return models ?? List.empty();
   }
 
 }

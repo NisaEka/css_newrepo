@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,25 @@ class FacilityFormBankScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          CustomDropDownFormField(
+                            hintText: 'Pilih Nama Bank'.tr,
+                            width: Get.width,
+                            value: controller.bankName.text,
+                            items: [
+                              DropdownMenuItem(
+                                value: 'BCA'.tr,
+                                child: Text('BCA'.tr),
+                              ),
+                              DropdownMenuItem(
+                                  value: 'BNI'.tr,
+                                  child: Text('BNI'.tr)
+                              )
+                            ],
+                            onChanged: (value) {
+                              controller.bankName.text = value!;
+                              controller.update();
+                            },
+                          ),
                           CustomTextFormField(
                             controller: controller.accountNumber,
                             hintText: 'Nomor Rekening',
@@ -61,6 +81,15 @@ class FacilityFormBankScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: controller.accountName,
                             hintText: 'Atas Nama',
+                          ),
+                          Container(
+                              width: Get.width,
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: Colors.black)
+                              ),
+                              child: _imagePickerContent(controller)
                           ),
                         ],
                       )
@@ -72,6 +101,27 @@ class FacilityFormBankScreen extends StatelessWidget {
           ],
         );
       });
+  }
+
+  Widget _imagePickerContent(FacilityFormBankController controller) {
+    if (controller.pickedImage != null) {
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8)
+        ),
+        child: Image(
+            image: FileImage(controller.pickedImage!),
+            fit: BoxFit.fitWidth
+        ),
+      );
+    } else {
+      return TextButton(
+        onPressed: () {
+          controller.pickImage();
+        },
+        child: const Text('Pilih Gambar Buku Rekening'),
+      );
+    }
   }
 
 }
