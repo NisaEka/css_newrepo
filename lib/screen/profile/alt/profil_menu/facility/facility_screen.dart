@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/facility/facility_model.dart';
+import 'package:css_mobile/screen/profile/alt/profil_menu/facility/detail/facility_detail_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/items/facility_item.dart';
@@ -98,7 +99,12 @@ class FacilityScreen extends StatelessWidget {
   Widget facilityGrid(List<FacilityModel> facilities) {
     return SliverGrid(
         delegate: SliverChildBuilderDelegate((context, index) =>
-            FacilityItem(facility: facilities[index]), childCount: facilities.length
+            FacilityItem(
+              facility: facilities[index],
+              onTap: () => Get.to(const FacilityDetailScreen(), arguments: {
+                'facility': facilities[index]
+              }),
+            ), childCount: facilities.length
         ),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
