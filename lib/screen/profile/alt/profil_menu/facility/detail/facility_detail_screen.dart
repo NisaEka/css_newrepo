@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/detail/facility_detail_controller.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/facility_form_info_screen.dart';
+import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/info/facility_form_info_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
