@@ -89,8 +89,12 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                 child: Column(
                                   children: [
                                     GestureDetector(
-                                      onTap: () async => controller.selectedReceiver = await Get.to(const ListPenerimaScreen())?.then(
-                                        (result) => controller.getSelectedReceiver(result),
+                                      onTap: () => Get.to(const ListPenerimaScreen())?.then(
+                                        (result) {
+                                          controller.receiver = result;
+                                          controller.update();
+                                          controller.getSelectedReceiver();
+                                        },
                                       ),
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
@@ -146,8 +150,6 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                       onChanged: (value) {
                                         controller.selectedDestination = value;
                                         controller.update();
-                                        print(controller.selectedDestination?.id);
-                                        // print(jsonEncode(value));
                                       },
                                       value: controller.selectedDestination,
                                       isRequired: controller.selectedDestination == null ? true : false,
@@ -163,7 +165,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                       multiLine: true,
                                       isRequired: true,
                                     ),
-                                    controller.isOnline
+                                    controller.isOnline && controller.isSaveReceiver()
                                         ? CustomFilledButton(
                                             color: whiteColor,
                                             title: 'Simpan Data Penerima'.tr,

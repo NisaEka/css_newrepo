@@ -5,6 +5,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/inform
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
@@ -18,6 +19,7 @@ import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class InformasiKirimanScreen extends StatelessWidget {
@@ -220,6 +222,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     controller: controller.namaBarang,
                                     hintText: 'Nama Barang'.tr,
                                     isRequired: true,
+                                    validator: ValidationBuilder().minLength(3).build(),
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -285,6 +288,11 @@ class InformasiKirimanScreen extends StatelessWidget {
                                   CustomTextFormField(
                                     controller: controller.intruksiKhusus,
                                     hintText: 'Instruksi Khusus (Opsional)'.tr,
+                                    validator: (value) => value!.isNotEmpty
+                                        ? value.length < 8
+                                            ? 'This field must be at least 8 characters long'
+                                            : null
+                                        : null,
                                   ),
                                   Container(
                                     decoration: const BoxDecoration(),
@@ -334,6 +342,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                         inputType: TextInputType.number,
                                         width: Get.width / 3,
                                         isRequired: true,
+                                        validator: ValidationBuilder().min(1).build(),
                                         suffixIcon: const SatuanFieldIcon(title: 'KG', isSuffix: true),
                                         onChanged: (value) {
                                           controller.berat = value.toDouble();

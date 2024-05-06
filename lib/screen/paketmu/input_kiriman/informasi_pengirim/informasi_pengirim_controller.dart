@@ -71,8 +71,14 @@ class InformasiPengirimController extends BaseController {
       update();
     });
     update();
-
     // return dropshipper;
+  }
+
+  bool isSaveDropshipper() {
+    if (dropshipper?.name != namaPengirim.text && dropshipper?.phone != nomorTelpon.text) {
+      return true;
+    }
+    return false;
   }
 
   void formValidate() {

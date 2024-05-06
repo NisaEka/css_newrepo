@@ -38,7 +38,7 @@ class InformasiPenerimaController extends BaseController {
 
   GetDestinationModel? destinationModel;
   Destination? selectedDestination;
-  ReceiverModel? selectedReceiver;
+  ReceiverModel? receiver;
 
   @override
   void onInit() {
@@ -72,25 +72,32 @@ class InformasiPenerimaController extends BaseController {
     }
   }
 
-  FutureOr<ReceiverModel?> getSelectedReceiver(ReceiverModel receiver) async {
-    namaPenerima.text = receiver.name?.toUpperCase() ?? '';
-    nomorTelpon.text = receiver.phone ?? '';
-    kotaTujuan.text = receiver.idDestination ?? '';
-    alamatLengkap.text = receiver.address?.toUpperCase() ?? '';
-    getDestinationList(receiver.city?.split(',').first ?? '');
+  FutureOr<ReceiverModel?> getSelectedReceiver() async {
+    namaPenerima.text = receiver?.name?.toUpperCase() ?? '';
+    nomorTelpon.text = receiver?.phone ?? '';
+    kotaTujuan.text = receiver?.idDestination ?? '';
+    alamatLengkap.text = receiver?.address?.toUpperCase() ?? '';
+    getDestinationList(receiver?.city?.split(',').first ?? '');
     selectedDestination = Destination(
-      id: receiver.idDestination?.toInt(),
-      destinationCode: receiver.destinationCode,
-      cityName: receiver.city,
-      countryName: receiver.country,
-      districtName: receiver.receiverDistrict,
-      provinceName: receiver.region,
-      subDistrictName: receiver.receiverSubDistrict,
-      zipCode: receiver.zipCode,
+      id: receiver?.idDestination?.toInt(),
+      destinationCode: receiver?.destinationCode,
+      cityName: receiver?.city,
+      countryName: receiver?.country,
+      districtName: receiver?.receiverDistrict,
+      provinceName: receiver?.region,
+      subDistrictName: receiver?.receiverSubDistrict,
+      zipCode: receiver?.zipCode,
     );
 
     update();
     return receiver;
+  }
+
+  bool isSaveReceiver() {
+    if (receiver?.name != namaPenerima.text && receiver?.phone != nomorTelpon.text) {
+      return true;
+    }
+    return false;
   }
 
   Future<List<Destination>> getDestinationList(String keyword) async {

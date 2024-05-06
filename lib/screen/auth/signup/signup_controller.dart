@@ -127,19 +127,20 @@ class SignUpController extends BaseController {
     update();
   }
 
-  Future<void> onSelectReferal(ReferalModel value)async{
+  Future<void> onSelectReferal(ReferalModel value) async {
     kodeReferal.text = value.name ?? '';
     selectedReferal = value;
+    selectedOrigin = value.origin;
     update();
 
-    if(value.name == "SR12"){
+    if (value.name == "SR12") {
       pickOrigin = true;
       update();
       // selectedOrigin =
-    }
-    else{
+    } else {
       pickOrigin = false;
       update();
     }
+
   }
 }

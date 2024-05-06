@@ -144,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 itemAsString: (ReferalModel e) => e.name.toString(),
                                 onChanged: (value) => controller.onSelectReferal(value),
                                 value: controller.selectedReferal,
-                                selectedItem: controller.kotaPengirim.text,
+                                selectedItem: controller.selectedReferal?.name,
                                 hintText: controller.isLoadReferal ? "Loading..." : "Kode Referal".tr,
                                 prefixIcon: const Icon(Icons.line_style),
                                 textStyle: controller.selectedReferal != null ? subTitleTextStyle : hintTextStyle,

@@ -305,7 +305,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     multiLine: true,
                                     prefixIcon: const Icon(Icons.location_city),
                                   ),
-                                  controller.isDropshipper && controller.isOnline
+                                  controller.isDropshipper && controller.isOnline && controller.isSaveDropshipper()
                                       ? CustomFilledButton(
                                           color: whiteColor,
                                           borderColor: controller.isValidate ? blueJNE : greyColor,

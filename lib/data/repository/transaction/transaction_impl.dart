@@ -172,7 +172,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
       );
       return PostTransactionModel.fromJson(response.data);
     } on DioException catch (e) {
-      return e.response?.data;
+      return PostTransactionModel.fromJson(e.response?.data);
     }
   }
 
