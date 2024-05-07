@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_agent_model.dart';
@@ -29,15 +27,11 @@ class SignUpController extends BaseController {
   bool isLoadReferal = false;
   bool isLoadAgent = false;
   bool isLoading = false;
-  bool pickOrigin = false;
+  bool isDefaultOrigin = false;
+  bool isSelectCounter = true;
   Origin? selectedOrigin;
   AgentModel? selectedAgent;
   ReferalModel? selectedReferal;
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<List<Origin>> getOriginList(String keyword) async {
     isLoadOrigin = true;
@@ -131,16 +125,21 @@ class SignUpController extends BaseController {
     kodeReferal.text = value.name ?? '';
     selectedReferal = value;
     selectedOrigin = value.origin;
+    isDefaultOrigin = value.defaultOrigin == "FIXED" ? true : false;
+    isSelectCounter = value.counter == null ? true : false;
     update();
-
-    if (value.name == "SR12") {
-      pickOrigin = true;
+    kotaPengirim.text = selectedOrigin?.originName ?? '';
+    branchCode = selectedOrigin?.branchCode;
+    pakaiJNE = value.counter != null;
+    update();
+    getAgentList();
+    if (value.counter != null) {
+      selectedAgent = agenList.where((e) => e.custName == value.counter).first;
       update();
-      // selectedOrigin =
-    } else {
-      pickOrigin = false;
+      selectedAgent?.custName.printInfo(info: "selectedAgent");
+    } else{
+      selectedAgent = null;
       update();
     }
-
   }
 }

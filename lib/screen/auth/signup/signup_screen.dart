@@ -175,24 +175,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
                                 prefixIcon: const Icon(Icons.location_city),
                                 textStyle: controller.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
-                                readOnly: controller.pickOrigin,
+                                readOnly: controller.isDefaultOrigin,
                                 isRequired: true,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Sudah menggunakan JNE'.tr),
-                                  Switch(
-                                    value: controller.pakaiJNE,
-                                    activeColor: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
-                                    onChanged: (value) {
-                                      controller.pakaiJNE = value;
-                                      controller.update();
-                                    },
-                                  )
-                                ],
-                              ),
-                              controller.pakaiJNE
+                              controller.isSelectCounter
+                                  ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Sudah menggunakan JNE'.tr),
+                                        Switch(
+                                          value: controller.pakaiJNE,
+                                          activeColor: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                                          onChanged: (value) {
+                                            controller.pakaiJNE = value;
+                                            controller.update();
+                                          },
+                                        )
+                                      ],
+                                    )
+                                  : const SizedBox(),
+                              controller.pakaiJNE && controller.isSelectCounter
                                   ? CustomDropDownFormField(
                                       isRequired: controller.pakaiJNE,
                                       items: controller.agenList
@@ -208,6 +210,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         controller.selectedAgent = value;
                                         controller.update();
                                       },
+                                      value: controller.selectedAgent,
+                                      selectedItem: controller.selectedAgent?.custName ?? '',
                                     )
                                   : const SizedBox(),
                               CustomFilledButton(

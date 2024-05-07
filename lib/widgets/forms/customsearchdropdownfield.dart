@@ -66,7 +66,7 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
                   // fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(
-              label: Text(hintText ?? ''),
+              label: Text(selectedItem ?? hintText ?? ''),
               filled: true,
               fillColor: Theme.of(context).brightness == Brightness.light ? neutralColor : greyColor,
               prefixIcon: prefixIcon,
