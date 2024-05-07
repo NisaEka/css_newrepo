@@ -8,6 +8,7 @@ import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/bar/offlinebar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -50,35 +51,35 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                         steps: controller.steps,
                       ),
                       const SizedBox(height: 10),
-                      // controller.isOnline ? const SizedBox() : const OfflineBar(),
+                      controller.isOnline ? const SizedBox() : const OfflineBar(),
                     ],
                   ),
                   action: [
-                    controller.isOnline
-                        ? const SizedBox()
-                        : Tooltip(
-                            key: controller.offlineTooltipKey,
-                            triggerMode: TooltipTriggerMode.tap,
-                            showDuration: const Duration(seconds: 3),
-                            decoration: ShapeDecoration(
-                              color: greyColor,
-                              shape: ToolTipCustomShape(usePadding: false),
-                            ),
-                            // textStyle: listTitleTextStyle.copyWith(color: whiteColor),
-                            message: 'Offline Mode',
-                            child: Container(
-                              margin: const EdgeInsets.only(right: 20),
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: successColor,
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: const Icon(
-                                Icons.cloud_off,
-                                color: whiteColor,
-                              ),
-                            ),
-                          )
+                    // controller.isOnline
+                    //     ? const SizedBox()
+                    //     : Tooltip(
+                    //         key: controller.offlineTooltipKey,
+                    //         triggerMode: TooltipTriggerMode.tap,
+                    //         showDuration: const Duration(seconds: 3),
+                    //         decoration: ShapeDecoration(
+                    //           color: greyColor,
+                    //           shape: ToolTipCustomShape(usePadding: false),
+                    //         ),
+                    //         // textStyle: listTitleTextStyle.copyWith(color: whiteColor),
+                    //         message: 'Offline Mode',
+                    //         child: Container(
+                    //           margin: const EdgeInsets.only(right: 20),
+                    //           padding: const EdgeInsets.all(5),
+                    //           decoration: BoxDecoration(
+                    //             color: successColor,
+                    //             borderRadius: BorderRadius.circular(50),
+                    //           ),
+                    //           child: const Icon(
+                    //             Icons.cloud_off,
+                    //             color: whiteColor,
+                    //           ),
+                    //         ),
+                    //       )
                   ],
                 ),
                 body: SingleChildScrollView(

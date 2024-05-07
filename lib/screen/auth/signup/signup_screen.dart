@@ -220,7 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 radius: 50,
                                 onPressed: () {
                                   if (controller.formKey.currentState?.validate() == true && controller.selectedOrigin != null) {
-                                    controller.saveRegistration();
+                                    controller.mailValidation();
                                   }
                                 },
                               ),

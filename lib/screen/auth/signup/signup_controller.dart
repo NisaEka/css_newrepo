@@ -64,6 +64,31 @@ class SignUpController extends BaseController {
     update();
   }
 
+  Future<void> mailValidation() async {
+    isLoading = true;
+    update();
+    try {
+      await auth.getCheckMail(email.text).then((value) => value.disposable == true && value.publicDomain == true
+          ? Get.showSnackbar(
+              GetSnackBar(
+                icon: const Icon(
+                  Icons.warning,
+                  color: whiteColor,
+                ),
+                message: 'CSS tidak menerima pendaftaran menggunakan email temporary'.tr,
+                isDismissible: true,
+                duration: const Duration(seconds: 3),
+                backgroundColor: errorColor,
+              ),
+            )
+          : saveRegistration());
+    } catch (e) {
+      e.printError();
+    }
+    isLoading = false;
+    update();
+  }
+
   Future<void> saveRegistration() async {
     isLoading = true;
     update();
@@ -137,7 +162,7 @@ class SignUpController extends BaseController {
       selectedAgent = agenList.where((e) => e.custName == value.counter).first;
       update();
       selectedAgent?.custName.printInfo(info: "selectedAgent");
-    } else{
+    } else {
       selectedAgent = null;
       update();
     }

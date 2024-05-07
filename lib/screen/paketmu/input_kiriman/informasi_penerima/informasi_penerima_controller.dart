@@ -30,7 +30,7 @@ class InformasiPenerimaController extends BaseController {
   final alamatLengkap = TextEditingController();
 
   bool isLoading = false;
-  bool isOnline = false;
+  bool isOnline = true;
   bool isLoadSave = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];

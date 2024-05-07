@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/auth/get_agent_model.dart';
+import 'package:css_mobile/data/model/auth/get_check_mail_model.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
@@ -130,6 +131,18 @@ class AuthRepositoryImpl extends AuthRepository {
       return LoginModel.fromJson(response.data);
     } on DioException catch (e) {
       return LoginModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<GetCheckMailModel> getCheckMail(String email) async {
+    try {
+      Response response = await Dio().get(
+        'https://api.mailcheck.ai/email/$email',
+      );
+      return GetCheckMailModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return GetCheckMailModel.fromJson(e.response?.data);
     }
   }
 }
