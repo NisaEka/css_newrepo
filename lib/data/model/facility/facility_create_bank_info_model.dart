@@ -12,6 +12,22 @@ class FacilityCreateBankInfoModel {
   String _accountImageUrl = '';
   String get accountImageUrl => _accountImageUrl;
 
+  setBankId(String bankId) {
+    _bankId = bankId;
+  }
+
+  setAccountNumber(String accountNumber) {
+    _accountNumber = accountNumber;
+  }
+
+  setAccountName(String accountName) {
+    _accountName = _accountName;
+  }
+
+  setAccountImageUrl(String accountImageUrl) {
+    _accountImageUrl = accountImageUrl;
+  }
+
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
 

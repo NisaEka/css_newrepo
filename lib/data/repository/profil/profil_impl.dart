@@ -63,7 +63,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
     try {
       var response = await network.dio.post(
         '/profile/ccrf',
-        data: data
+        data: data.toJson()
       );
       return DefaultResponseModel.fromJson(response.data, '');
     } on DioException catch (e) {

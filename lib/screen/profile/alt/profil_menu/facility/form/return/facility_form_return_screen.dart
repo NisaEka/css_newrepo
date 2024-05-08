@@ -43,7 +43,9 @@ class FacilityFormReturnScreen extends StatelessWidget {
                     color: redJNE,
                     title: 'Selanjutnya'.tr,
                     onPressed: () {
-                      Get.to(const FacilityFormBankScreen());
+                      Get.to(const FacilityFormBankScreen(), arguments: {
+                        'data': controller.submitData()
+                      });
                     },
                   ),
                 ),

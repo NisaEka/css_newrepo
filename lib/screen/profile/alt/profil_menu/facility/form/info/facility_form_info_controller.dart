@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/facility/facility_create_address_model.dart';
+import 'package:css_mobile/data/model/facility/facility_create_id_card_model.dart';
+import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -22,6 +25,8 @@ class FacilityFormInfoController extends BaseController {
   final phone = TextEditingController();
   final whatsAppPhone = TextEditingController();
   final email = TextEditingController();
+
+  final requestData = FacilityCreateModel();
 
   File? pickedImage;
 
@@ -52,6 +57,31 @@ class FacilityFormInfoController extends BaseController {
     update();
 
     return models ?? List.empty();
+  }
+
+  FacilityCreateModel submitData() {
+    requestData.setBrand(brand.text);
+    requestData.setName(fullName.text);
+    requestData.setEmail(email.text);
+    requestData.setFacilityType("Gak Mau Ribet");
+
+    final FacilityCreateIdCardModel idCard = FacilityCreateIdCardModel();
+    idCard.setNumber(idCardNumber.text);
+    idCard.setImageUrl("https://storage.api.css.jne.co.id/mbckdiwjwkerjwp.png");
+    requestData.setIdCard(idCard);
+
+    final FacilityCreateAddressModel address = FacilityCreateAddressModel();
+    address.setAddress(fullAddress.text);
+    address.setProvince(selectedDestination!.provinceName!);
+    address.setCity(selectedDestination!.cityName!);
+    address.setDistrict(selectedDestination!.districtName!);
+    address.setSubDistrict(selectedDestination!.subDistrictName!);
+    address.setZipCode(selectedDestination!.zipCode!);
+    address.setPhone(phone.text);
+    address.setHandPhone(whatsAppPhone.text);
+    requestData.setAddress(address);
+
+    return requestData;
   }
 
 }

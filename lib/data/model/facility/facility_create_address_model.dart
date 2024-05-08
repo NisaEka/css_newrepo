@@ -24,6 +24,38 @@ class FacilityCreateAddressModel {
   String _handphone = '';
   String get handphone => _handphone;
 
+  setAddress(String address) {
+    _address = address;
+  }
+
+  setProvince(String province) {
+    _province = province;
+  }
+
+  setCity(String city) {
+    _city = city;
+  }
+
+  setDistrict(String district) {
+    _district = district;
+  }
+
+  setSubDistrict(String subDistrict) {
+    _subDistrict = subDistrict;
+  }
+
+  setZipCode(String zipCode) {
+    _zipCode = zipCode;
+  }
+
+  setPhone(String phone) {
+    _phone = phone;
+  }
+
+  setHandPhone(String handPhone) {
+    _handphone = handPhone;
+  }
+
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
 

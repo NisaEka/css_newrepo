@@ -39,7 +39,7 @@ class FacilityFormBankScreen extends StatelessWidget {
                   color: redJNE,
                   title: 'Ajukan'.tr,
                   onPressed: () {
-                    // TODO: Handle button action
+                    controller.submitData();
                   },
                 )
               ),

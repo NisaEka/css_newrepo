@@ -15,6 +15,26 @@ class FacilityCreateTaxInfoModel {
   String _imageUrl = '';
   String get imageUrl => _imageUrl;
 
+  setType(String type) {
+    _type = type;
+  }
+
+  setName(String name) {
+    _name = name;
+  }
+
+  setNumber(String number) {
+    _number = number;
+  }
+
+  setAddress(String address) {
+    _address = address;
+  }
+
+  setImageUrl(String imageUrl) {
+    _imageUrl = imageUrl;
+  }
+
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
 

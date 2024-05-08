@@ -17,6 +17,46 @@ class FacilityCreateModel {
   FacilityCreateTaxInfoModel? _taxInfo;
   FacilityCreateBankInfoModel? _bankInfo;
 
+  setBrand(String brand) {
+    _brand = brand;
+  }
+
+  setName(String name) {
+    _name = name;
+  }
+
+  setEmail(String email) {
+    _email = email;
+  }
+
+  setFacilityType(String facilityType) {
+    _facilityType = facilityType;
+  }
+
+  setTermsAndConditions(String termsAndConditions) {
+    _termsAndConditions = termsAndConditions;
+  }
+
+  setIdCard(FacilityCreateIdCardModel idCard) {
+    _idCard = idCard;
+  }
+
+  setAddress(FacilityCreateAddressModel address) {
+    _address = address;
+  }
+
+  setReturnAddress(FacilityCreateReturnAddress returnAddress) {
+    _returnAddress = returnAddress;
+  }
+
+  setTaxInfo(FacilityCreateTaxInfoModel taxInfo) {
+    _taxInfo = taxInfo;
+  }
+
+  setBankInfo(FacilityCreateBankInfoModel bankInfo) {
+    _bankInfo = bankInfo;
+  }
+
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
 
