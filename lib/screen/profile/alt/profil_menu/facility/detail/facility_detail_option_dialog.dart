@@ -1,0 +1,32 @@
+import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/existing/facility_form_existing_screen.dart';
+import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/info/facility_form_info_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class FacilityDetailOptionDialog extends StatelessWidget {
+
+  const FacilityDetailOptionDialog({ super.key });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Text('Sudah punya akun kerjasama dengan JNE?'.tr),
+      actions: [
+        TextButton(
+            onPressed: () {
+              Get.off(const FacilityFormInfoScreen());
+            },
+            child: Text('Belum')
+        ),
+        TextButton(
+            onPressed: () {
+              Get.off(const FacilityFormExistingScreen());
+            },
+            child: Text('Sudah')
+        )
+      ],
+    );
+  }
+
+}
