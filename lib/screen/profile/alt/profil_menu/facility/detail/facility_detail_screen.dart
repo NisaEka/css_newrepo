@@ -25,15 +25,17 @@ class FacilityDetailScreen extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.all(16),
                   child: CustomFilledButton(
-                    color: redJNE,
-                    title: 'Gunakan'.tr,
+                    color: controller.buttonEnabled ? redJNE : greyColor,
+                    title: controller.buttonText.tr,
                     onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => FacilityDetailOptionDialog(
-                            facilityType: controller.facilityArgs.name
-                          )
-                      );
+                      if (controller.buttonEnabled) {
+                        showDialog(
+                            context: context,
+                            builder: (context) => FacilityDetailOptionDialog(
+                                facilityType: controller.facilityArgs.name
+                            )
+                        );
+                      }
                     },
                   ),
               ),

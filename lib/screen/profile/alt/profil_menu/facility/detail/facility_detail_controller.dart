@@ -6,4 +6,23 @@ class FacilityDetailController extends BaseController {
 
   FacilityModel facilityArgs = Get.arguments['facility'];
 
+  bool buttonEnabled = true;
+  String buttonText = 'Gunakan'.tr;
+
+  @override
+  void onInit() {
+    super.onInit();
+    Future.wait([_initState()]);
+  }
+
+  Future<void> _initState() async {
+    if (!facilityArgs.canUse) {
+      buttonEnabled = false;
+    }
+
+    if (facilityArgs.enabled) {
+      buttonText = 'Info';
+    }
+  }
+
 }
