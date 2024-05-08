@@ -2,6 +2,8 @@ import 'package:css_mobile/data/connection_test.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_impl.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
+import 'package:css_mobile/data/repository/bank/bank_impl.dart';
+import 'package:css_mobile/data/repository/bank/bank_repository.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_impl.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
 import 'package:css_mobile/data/repository/facility/facility_impl.dart';
@@ -33,5 +35,6 @@ class GlobalBinding extends Bindings {
     Get.put<JLCRepository>(JLCRepositoryImpl(), permanent: false);
     Get.put<PengaturanRepository>(PengaturanRepositoryImpl(), permanent: true);
     Get.put<FacilityRepository>(FacilityImpl(), permanent: true);
+    Get.put<BankRepository>(BankImpl(), permanent: true);
   }
 }

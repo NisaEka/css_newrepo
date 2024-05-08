@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/bank/bank_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_bank_info_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
@@ -19,7 +20,6 @@ class FacilityFormBankController extends BaseController {
     'Data Rekening'.tr
   ];
 
-  final bankName = TextEditingController();
   final accountNumber = TextEditingController();
   final accountName = TextEditingController();
   final accountUrl = TextEditingController();
@@ -28,6 +28,31 @@ class FacilityFormBankController extends BaseController {
 
   bool _showLoadingIndicator = false;
   bool get showLoadingIndicator => _showLoadingIndicator;
+
+  final List<BankModel> banks = [];
+  BankModel? selectedBank;
+
+  @override
+  void onInit() {
+    super.onInit();
+    Future.wait([getBanks()]);
+  }
+
+  Future<void> getBanks() async {
+    bank.getBanks().then((response) {
+      if (response.code == HttpStatus.ok &&
+          response.payload!.isNotEmpty
+      ) {
+        banks.addAll(response.payload!);
+        update();
+      }
+    });
+  }
+
+  setSelectedBank(BankModel bank) {
+    selectedBank = bank;
+    update();
+  }
 
   pickImage() async {
     final ImagePicker picker = ImagePicker();
@@ -41,7 +66,7 @@ class FacilityFormBankController extends BaseController {
 
   _composeData() {
     final bankInfo = FacilityCreateBankInfoModel();
-    bankInfo.setBankId(bankName.text);
+    bankInfo.setBankId(selectedBank!.id);
     bankInfo.setAccountNumber(accountNumber.text);
     bankInfo.setAccountName(accountName.text);
     bankInfo.setAccountImageUrl("https://storage.api.css.jne.co.id/mbckdiwjwkerjwp.png");

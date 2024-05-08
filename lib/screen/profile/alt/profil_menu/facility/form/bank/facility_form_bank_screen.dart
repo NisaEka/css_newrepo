@@ -1,4 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/bank/bank_model.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -71,23 +73,18 @@ class FacilityFormBankScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomDropDownFormField(
+                    CustomDropDownFormField<BankModel>(
                       hintText: 'Pilih Nama Bank'.tr,
                       width: Get.width,
-                      value: controller.bankName.text,
-                      items: [
-                        DropdownMenuItem(
-                          value: 'BCA'.tr,
-                          child: Text('BCA'.tr),
-                        ),
-                        DropdownMenuItem(
-                            value: 'BNI'.tr,
-                            child: Text('BNI'.tr)
-                        )
-                      ],
+                      value: controller.selectedBank,
+                      items: controller.banks.map((bank) {
+                        return DropdownMenuItem(
+                          value: bank,
+                          child: Text(bank.name),
+                        );
+                      }).toList(),
                       onChanged: (value) {
-                        controller.bankName.text = value!;
-                        controller.update();
+                        controller.setSelectedBank(value!);
                       },
                     ),
                     CustomTextFormField(
