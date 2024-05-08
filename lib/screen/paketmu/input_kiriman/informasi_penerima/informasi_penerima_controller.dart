@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
@@ -52,6 +53,24 @@ class InformasiPenerimaController extends BaseController {
       connection.isOnline().then((value) {
         isOnline = value && (result != ConnectivityResult.none);
         update();
+        if (isOnline) {
+          Get.showSnackbar(
+            GetSnackBar(
+              padding: const EdgeInsets.symmetric(vertical: 1.5),
+              margin: const EdgeInsets.only(top: 195),
+              snackPosition: SnackPosition.TOP,
+              messageText: Center(
+                child: Text(
+                  'Online Mode'.tr,
+                  style: listTitleTextStyle.copyWith(color: whiteColor),
+                ),
+              ),
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: successColor.withOpacity(0.7),
+            ),
+          );
+        }
       });
       update();
     }));

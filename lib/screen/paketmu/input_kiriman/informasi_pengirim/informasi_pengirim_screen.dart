@@ -17,7 +17,6 @@ import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customswitch.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
-import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -54,7 +53,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                       controller.isOnline ? const SizedBox() : const OfflineBar(),
                     ],
                   ),
-                  action: [
+                  action: const [
                     // controller.isOnline
                     //     ? const SizedBox()
                     //     : Tooltip(

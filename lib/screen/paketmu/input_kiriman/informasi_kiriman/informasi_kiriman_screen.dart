@@ -38,13 +38,13 @@ class InformasiKirimanScreen extends StatelessWidget {
                   title: 'Input Transaksi'.tr,
                   flexibleSpace: Column(
                     children: [
+                      !controller.isOnline ? const SizedBox() : const OfflineBar(),
                       CustomStepper(
                         currentStep: 2,
                         totalStep: controller.steps.length,
                         steps: controller.steps,
                       ),
                       const SizedBox(height: 10),
-                      controller.isOnline ? const SizedBox() : const OfflineBar(),
                     ],
                   ),
                   action: [

@@ -14,7 +14,7 @@ class OfflineBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 2),
       // margin: const EdgeInsets.only(bottom: 5),
       decoration:  BoxDecoration(
-        color: redJNE.withOpacity(0.7),
+        color: redJNE.withOpacity(0.5),
       ),
       child: Text(
         'Mode offline'.tr,

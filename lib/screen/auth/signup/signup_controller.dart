@@ -123,7 +123,7 @@ class SignUpController extends BaseController {
           Get.to(const SignUpOTPScreen(), arguments: {
             'email': email.text,
           });
-        } else {
+        } else if (value.code == 409 || value.message == "Conflict") {
           Get.showSnackbar(
             GetSnackBar(
               icon: const Icon(

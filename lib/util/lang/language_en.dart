@@ -279,7 +279,9 @@ class LanguageEN {
       "Total Ongkos Kirim tidak bisa lebih dari Rp.1000.000": "Total shipping costs cannot exceed Rp. 1000,000",
       "Tidak dapat menyimpan data": "Cannot save data",
       "Draft Kosong": "Draft Empty",
-      "Mode offline": "Offline Mode"
+      "Mode offline": "Offline Mode",
+      "CSS tidak menerima pendaftaran menggunakan email temporary": "CSS does not accept registration using temporary email",
+
     };
   }
 }
