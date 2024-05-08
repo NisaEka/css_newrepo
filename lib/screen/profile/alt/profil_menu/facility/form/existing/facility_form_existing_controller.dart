@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
@@ -24,6 +23,7 @@ class FacilityFormExistingController extends BaseController {
 
   onSubmit() async {
     _showLoadingIndicator = true;
+    update();
     final data = _composeData();
     profil.createProfileCcrfExisting(data)
       .then((response) {
@@ -43,6 +43,7 @@ class FacilityFormExistingController extends BaseController {
         }
       });
     _showLoadingIndicator = false;
+    update();
   }
 
   FacilityCreateExistingModel _composeData() {

@@ -11,6 +11,8 @@ import 'package:image_picker/image_picker.dart';
 
 class FacilityFormInfoController extends BaseController {
 
+  final String _facilityType = Get.arguments['facility_type'];
+
   List<String> steps = [
     'Data Pemohon'.tr,
     'Alamat Pengembalian'.tr,
@@ -63,7 +65,7 @@ class FacilityFormInfoController extends BaseController {
     requestData.setBrand(brand.text);
     requestData.setName(fullName.text);
     requestData.setEmail(email.text);
-    requestData.setFacilityType("Gak Mau Ribet");
+    requestData.setFacilityType(_facilityType);
 
     final FacilityCreateIdCardModel idCard = FacilityCreateIdCardModel();
     idCard.setNumber(idCardNumber.text);

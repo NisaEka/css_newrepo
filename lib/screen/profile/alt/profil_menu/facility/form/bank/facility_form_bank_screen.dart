@@ -20,87 +20,99 @@ class FacilityFormBankScreen extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              appBar: CustomTopBar(
-                title: 'Upgrade Profil Kamu'.tr,
-                flexibleSpace: Column(
-                  children: [
-                    CustomStepper(
-                      currentStep: 2,
-                      totalStep: controller.steps.length,
-                      steps: controller.steps,
-                    ),
-                    const SizedBox(height: 8)
-                  ],
-                ),
-              ),
-              bottomNavigationBar: Padding(
-                padding: const EdgeInsets.all(16),
-                child: CustomFilledButton(
-                  color: redJNE,
-                  title: 'Ajukan'.tr,
-                  onPressed: () {
-                    controller.submitData();
-                  },
-                )
-              ),
-              body: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 16,
-                          right: 16,
-                          top: 16
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomDropDownFormField(
-                            hintText: 'Pilih Nama Bank'.tr,
-                            width: Get.width,
-                            value: controller.bankName.text,
-                            items: [
-                              DropdownMenuItem(
-                                value: 'BCA'.tr,
-                                child: Text('BCA'.tr),
-                              ),
-                              DropdownMenuItem(
-                                  value: 'BNI'.tr,
-                                  child: Text('BNI'.tr)
-                              )
-                            ],
-                            onChanged: (value) {
-                              controller.bankName.text = value!;
-                              controller.update();
-                            },
-                          ),
-                          CustomTextFormField(
-                            controller: controller.accountNumber,
-                            hintText: 'Nomor Rekening',
-                          ),
-                          CustomTextFormField(
-                            controller: controller.accountName,
-                            hintText: 'Atas Nama',
-                          ),
-                          Container(
-                              width: Get.width,
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: Colors.black)
-                              ),
-                              child: _imagePickerContent(controller)
-                          ),
-                        ],
-                      )
-                    )
-                  )
-                ],
-              )
+              appBar: _formAppbar(controller),
+              bottomNavigationBar: _formNavBar(controller),
+              body: _formBody(controller)
             )
           ],
         );
       });
+  }
+
+  PreferredSizeWidget _formAppbar(FacilityFormBankController controller) {
+    return CustomTopBar(
+      title: 'Upgrade Profil Kamu'.tr,
+      flexibleSpace: Column(
+        children: [
+          CustomStepper(
+            currentStep: 2,
+            totalStep: controller.steps.length,
+            steps: controller.steps,
+          ),
+          const SizedBox(height: 8)
+        ],
+      ),
+    );
+  }
+
+  Widget _formNavBar(FacilityFormBankController controller) {
+    return Padding(
+        padding: const EdgeInsets.all(16),
+        child: CustomFilledButton(
+          color: redJNE,
+          title: 'Ajukan'.tr,
+          onPressed: () {
+            controller.submitData();
+          },
+        )
+    );
+  }
+
+  Widget _formBody(FacilityFormBankController controller) {
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+            child: Container(
+                padding: const EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                    top: 16
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomDropDownFormField(
+                      hintText: 'Pilih Nama Bank'.tr,
+                      width: Get.width,
+                      value: controller.bankName.text,
+                      items: [
+                        DropdownMenuItem(
+                          value: 'BCA'.tr,
+                          child: Text('BCA'.tr),
+                        ),
+                        DropdownMenuItem(
+                            value: 'BNI'.tr,
+                            child: Text('BNI'.tr)
+                        )
+                      ],
+                      onChanged: (value) {
+                        controller.bankName.text = value!;
+                        controller.update();
+                      },
+                    ),
+                    CustomTextFormField(
+                      controller: controller.accountNumber,
+                      hintText: 'Nomor Rekening',
+                    ),
+                    CustomTextFormField(
+                      controller: controller.accountName,
+                      hintText: 'Atas Nama',
+                    ),
+                    Container(
+                        width: Get.width,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.black)
+                        ),
+                        child: _imagePickerContent(controller)
+                    ),
+                  ],
+                )
+            )
+        )
+      ],
+    );
   }
 
   Widget _imagePickerContent(FacilityFormBankController controller) {

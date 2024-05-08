@@ -9,6 +9,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class FacilityFormInfoScreen extends StatelessWidget {
@@ -43,7 +44,8 @@ class FacilityFormInfoScreen extends StatelessWidget {
                     title: 'Selanjutnya'.tr,
                     onPressed: () {
                       Get.to(const FacilityFormReturnScreen(), arguments: {
-                        'data': controller.submitData()
+                        'data': controller.submitData(),
+                        'destination': controller.selectedDestination
                       });
                     },
                   )
@@ -67,6 +69,8 @@ class FacilityFormInfoScreen extends StatelessWidget {
                             CustomTextFormField(
                               controller: controller.idCardNumber,
                               hintText: 'No Identitas / KTP',
+                              inputType: TextInputType.number,
+                              inputFormatters: const [],
                             ),
                             Container(
                               width: Get.width,
@@ -80,10 +84,12 @@ class FacilityFormInfoScreen extends StatelessWidget {
                             CustomTextFormField(
                               controller: controller.fullName,
                               hintText: 'Nama Lengkap',
+                              inputType: TextInputType.name,
                             ),
                             CustomTextFormField(
                               controller: controller.fullAddress,
                               hintText: 'Alamat Lengkap',
+                              inputType: TextInputType.streetAddress,
                             ),
                             CustomSearchDropdownField<Destination>(
                               asyncItems: (String filter) => controller.getDestinationList(filter),
@@ -110,14 +116,18 @@ class FacilityFormInfoScreen extends StatelessWidget {
                             CustomTextFormField(
                               controller: controller.phone,
                               hintText: 'No. Telp',
+                              inputType: TextInputType.phone,
                             ),
                             CustomTextFormField(
                               controller: controller.whatsAppPhone,
                               hintText: 'No. WhatsApp',
+                              inputType: TextInputType.phone,
                             ),
                             CustomTextFormField(
                               controller: controller.email,
                               hintText: 'Email',
+                              inputType: TextInputType.emailAddress,
+                              inputFormatters: const [],
                             )
                           ],
                         ),

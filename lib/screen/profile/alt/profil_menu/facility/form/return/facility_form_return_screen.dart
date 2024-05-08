@@ -75,8 +75,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
                                 activeColor: redJNE,
                                 value: controller.sameWithOwner,
                                 onChanged: (value) {
-                                  controller.sameWithOwner = value!;
-                                  controller.update();
+                                  controller.onAddressSameCheck();
                                 },
                               ),
                             ),

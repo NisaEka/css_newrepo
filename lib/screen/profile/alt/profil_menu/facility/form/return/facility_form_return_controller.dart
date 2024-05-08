@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 class FacilityFormReturnController extends BaseController {
 
   FacilityCreateModel facilityCreateArgs = Get.arguments['data'];
+  Destination shipperDestination = Get.arguments['destination'];
 
   List<String> steps = [
     'Data Pemohon'.tr,
@@ -56,6 +57,17 @@ class FacilityFormReturnController extends BaseController {
     update();
 
     return models ?? List.empty();
+  }
+
+  onAddressSameCheck() async {
+    sameWithOwner = !sameWithOwner;
+    if (sameWithOwner) {
+      returnAddress.text = facilityCreateArgs.address!.address;
+      selectedDestination = shipperDestination;
+      returnPhone.text = facilityCreateArgs.address!.phone;
+      returnWhatsAppNumber.text = facilityCreateArgs.address!.handphone;
+    }
+    update();
   }
 
   pickImage() async {

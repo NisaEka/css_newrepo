@@ -13,6 +13,7 @@ class FacilityCreateModel {
   String _termsAndConditions = '';
   FacilityCreateIdCardModel? _idCard;
   FacilityCreateAddressModel? _address;
+  FacilityCreateAddressModel? get address => _address;
   FacilityCreateReturnAddress? _returnAddress;
   FacilityCreateTaxInfoModel? _taxInfo;
   FacilityCreateBankInfoModel? _bankInfo;
