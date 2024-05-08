@@ -6,7 +6,12 @@ import 'package:get/get.dart';
 
 class FacilityDetailOptionDialog extends StatelessWidget {
 
-  const FacilityDetailOptionDialog({ super.key });
+  final String facilityType;
+
+  const FacilityDetailOptionDialog({
+    super.key,
+    required this.facilityType
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +20,19 @@ class FacilityDetailOptionDialog extends StatelessWidget {
       actions: [
         TextButton(
             onPressed: () {
-              Get.off(const FacilityFormInfoScreen());
+              Get.off(const FacilityFormInfoScreen(), arguments: {
+                'facility_type': facilityType
+              });
             },
-            child: Text('Belum')
+            child: const Text('Belum')
         ),
         TextButton(
             onPressed: () {
-              Get.off(const FacilityFormExistingScreen());
+              Get.off(const FacilityFormExistingScreen(), arguments: {
+                'facility_type': facilityType
+              });
             },
-            child: Text('Sudah')
+            child: const Text('Sudah')
         )
       ],
     );

@@ -1,6 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/existing/facility_form_existing_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,8 @@ class FacilityFormExistingScreen extends StatelessWidget {
               appBar: _formAppBar(),
               bottomNavigationBar: _formBottomNavBar(controller),
               body: _formBody(controller)
-            )
+            ),
+            controller.showLoadingIndicator ? const LoadingDialog() : Container()
           ],
         );
       }
@@ -41,7 +44,7 @@ class FacilityFormExistingScreen extends StatelessWidget {
           color: redJNE,
           title: 'Simpan'.tr,
           onPressed: () {
-
+            controller.onSubmit();
           },
         )
     );

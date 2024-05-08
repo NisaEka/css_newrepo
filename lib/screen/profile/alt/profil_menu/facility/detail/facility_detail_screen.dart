@@ -30,7 +30,9 @@ class FacilityDetailScreen extends StatelessWidget {
                     onPressed: () {
                       showDialog(
                           context: context,
-                          builder: (context) => const FacilityDetailOptionDialog()
+                          builder: (context) => FacilityDetailOptionDialog(
+                            facilityType: controller.facilityArgs.name
+                          )
                       );
                     },
                   ),
