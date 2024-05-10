@@ -26,10 +26,10 @@ class FacilityDetailScreen extends StatelessWidget {
         });
   }
 
-  Widget _detailBottomAppBar(BuildContext context, FacilityDetailController controller) {
+  Widget? _detailBottomAppBar(BuildContext context, FacilityDetailController controller) {
 
     if (!controller.facilityArgs.canUse) {
-      return Container();
+      return null;
     }
 
     return Padding(
