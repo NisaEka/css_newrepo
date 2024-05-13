@@ -32,6 +32,7 @@ class FacilityFormReturnController extends BaseController {
   bool sameWithOwner = false;
 
   File? pickedImage;
+  String? pickedImageUrl;
 
   bool isLoading = false;
   bool isLoadDestination = false;
@@ -77,6 +78,16 @@ class FacilityFormReturnController extends BaseController {
     if (image != null) {
       pickedImage = File(image.path);
       update();
+      sendImageToServer();
+    }
+  }
+
+  sendImageToServer() async {
+    if (pickedImage != null) {
+      storageRepository.postStorage(pickedImage!)
+          .then((storage) {
+        pickedImageUrl = storage.payload?.fileAbsolutePath;
+      });
     }
   }
 
@@ -98,7 +109,7 @@ class FacilityFormReturnController extends BaseController {
     taxInfo.setName(npwpName.text);
     taxInfo.setNumber(npwpNumber.text);
     taxInfo.setAddress("-");
-    taxInfo.setImageUrl("https://storage.api.css.jne.co.id/mbckdiwjwkerjwp.png");
+    taxInfo.setImageUrl(pickedImageUrl!);
     facilityCreateArgs.setTaxInfo(taxInfo);
 
     return facilityCreateArgs;

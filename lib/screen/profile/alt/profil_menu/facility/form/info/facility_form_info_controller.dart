@@ -31,6 +31,7 @@ class FacilityFormInfoController extends BaseController {
   final requestData = FacilityCreateModel();
 
   File? pickedImage;
+  String? pickedImageUrl;
 
   bool isLoading = false;
   bool isLoadDestination = false;
@@ -45,6 +46,16 @@ class FacilityFormInfoController extends BaseController {
     if (image != null) {
       pickedImage = File(image.path);
       update();
+      sendImageToServer();
+    }
+  }
+
+  sendImageToServer() async {
+    if (pickedImage != null) {
+      storageRepository.postStorage(pickedImage!)
+          .then((storage) {
+            pickedImageUrl = storage.payload?.fileAbsolutePath;
+          });
     }
   }
 
@@ -69,7 +80,7 @@ class FacilityFormInfoController extends BaseController {
 
     final FacilityCreateIdCardModel idCard = FacilityCreateIdCardModel();
     idCard.setNumber(idCardNumber.text);
-    idCard.setImageUrl("https://storage.api.css.jne.co.id/mbckdiwjwkerjwp.png");
+    idCard.setImageUrl(pickedImageUrl!);
     requestData.setIdCard(idCard);
 
     final FacilityCreateAddressModel address = FacilityCreateAddressModel();

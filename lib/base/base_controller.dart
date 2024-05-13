@@ -9,6 +9,7 @@ import 'package:css_mobile/data/repository/jlc/jlc_repository.dart';
 import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_repository.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
+import 'package:css_mobile/data/repository/storage/storage_repository.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:get/get.dart';
@@ -25,5 +26,6 @@ abstract class BaseController extends GetxController {
   final setting = Get.find<PengaturanRepository>();
   final facility = Get.find<FacilityRepository>();
   final bank = Get.find<BankRepository>();
+  final storageRepository = Get.find<StorageRepository>();
   late StreamSubscription<ConnectivityResult> connectivitySubscription;
 }
