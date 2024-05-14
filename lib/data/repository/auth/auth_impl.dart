@@ -6,6 +6,7 @@ import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
+import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
@@ -135,14 +136,17 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<GetCheckMailModel> getCheckMail(String email) async {
+  Future<ResponseModel> getCheckMail(String email) async {
     try {
-      Response response = await Dio().get(
-        'https://api.mailcheck.ai/email/$email',
+      Response response = await network.dio.get(
+        '//auth/registration/mail_check/$email',
       );
-      return GetCheckMailModel.fromJson(response.data);
+      // Response response = await Dio().get(
+      //   'https://api.mailcheck.ai/email/$email',
+      // );
+      return ResponseModel.fromJson(response.data);
     } on DioException catch (e) {
-      return GetCheckMailModel.fromJson(e.response?.data);
+      return ResponseModel.fromJson(e.response?.data);
     }
   }
 }

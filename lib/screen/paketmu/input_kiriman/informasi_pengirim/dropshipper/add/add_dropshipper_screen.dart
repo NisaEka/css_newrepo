@@ -46,6 +46,7 @@ class AddDropshipperScreen extends StatelessWidget {
                             hintText: "Nama Pengirim".tr,
                             isRequired: true,
                             prefixIcon: const Icon(Icons.person),
+                            validator: ValidationBuilder().name().build(),
                           ),
                           CustomTextFormField(
                             controller: controller.noHP,
@@ -95,6 +96,7 @@ class AddDropshipperScreen extends StatelessWidget {
                             isRequired: true,
                             multiLine: true,
                             prefixIcon: const Icon(Icons.location_city),
+                            validator: ValidationBuilder().address().build(),
                           ),
                           CustomFilledButton(
                               color: controller.formKey.currentState?.validate() ?? false ? blueJNE : greyColor,

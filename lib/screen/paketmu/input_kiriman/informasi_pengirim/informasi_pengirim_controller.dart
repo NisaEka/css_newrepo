@@ -11,6 +11,7 @@ import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class InformasiPengirimController extends BaseController {
@@ -43,6 +44,7 @@ class InformasiPengirimController extends BaseController {
   Origin? selectedOrigin;
   ShipperModel? senderOrigin;
   DropshipperModel? dropshipper;
+  String? locale;
 
   @override
   void onInit() {
@@ -101,7 +103,7 @@ class InformasiPengirimController extends BaseController {
     return false;
   }
 
-  void formValidate() {
+  void formValidate() async {
     if (isOnline) {
       isValidate = formKey.currentState?.validate() == true && selectedAccount != null && selectedOrigin != null;
     } else {
@@ -109,6 +111,10 @@ class InformasiPengirimController extends BaseController {
     }
 
     update();
+
+    locale = await storage.readString(StorageCore.localeApp);
+    update();
+    ValidationBuilder.setLocale(locale!);
   }
 
   Future<void> initData() async {
@@ -236,9 +242,9 @@ class InformasiPengirimController extends BaseController {
       "shipper": Shipper(
         name: namaPengirim.text.toUpperCase(),
         address: alamatLengkap.text.toUpperCase(),
-        address1: alamatLengkap.text.length >= 30 ? alamatLengkap.text.substring(0, 30) : '',
-        address2: alamatLengkap.text.length >= 60 ? alamatLengkap.text.substring(31, 60) : '',
-        address3: alamatLengkap.text.length >= 90 ? alamatLengkap.text.substring(60, 90) : '',
+        address1: alamatLengkap.text.length <= 30 ? alamatLengkap.text.substring(0, alamatLengkap.text.length) : '',
+        address2: alamatLengkap.text.length >= 31 ? alamatLengkap.text.substring(31, alamatLengkap.text.length) : '',
+        address3: alamatLengkap.text.length >= 60 ? alamatLengkap.text.substring(60, alamatLengkap.text.length) : '',
         city: kotaPengirim.text.toUpperCase(),
         zip: kodePos.text,
         region: senderOrigin?.region?.name,

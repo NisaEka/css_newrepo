@@ -1,12 +1,9 @@
-class ResponseModel {
-  ResponseModel({
-    num? code,
-    String? message,
-    List<ErrorResponse>? error,
-  }) {
+class ResponseModel<T> {
+  ResponseModel({num? code, String? message, List<ErrorResponse>? error, dynamic payload}) {
     _code = code;
     _message = message;
     _error = error;
+    _payload = payload;
   }
 
   ResponseModel.fromJson(dynamic json) {
@@ -18,21 +15,19 @@ class ResponseModel {
         _error?.add(ErrorResponse.fromJson(v));
       });
     }
+    _payload = json['payload'];
   }
 
   num? _code;
   String? _message;
   List<ErrorResponse>? _error;
+  dynamic _payload;
 
-  ResponseModel copyWith({
-    num? code,
-    String? message,
-    List<ErrorResponse>? error,
-  }) =>
-      ResponseModel(
+  ResponseModel copyWith({num? code, String? message, List<ErrorResponse>? error, dynamic payload}) => ResponseModel(
         code: code ?? _code,
         message: message ?? _message,
         error: error ?? _error,
+        payload: payload ?? payload,
       );
 
   num? get code => _code;
@@ -41,6 +36,8 @@ class ResponseModel {
 
   List<ErrorResponse>? get error => _error;
 
+  dynamic get payload => _payload;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['code'] = _code;
@@ -48,6 +45,7 @@ class ResponseModel {
     if (_error != null) {
       map['error'] = _error?.map((v) => v.toJson()).toList();
     }
+    map['payload'] = _payload;
     return map;
   }
 }

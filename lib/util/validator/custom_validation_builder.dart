@@ -1,4 +1,5 @@
 import 'package:form_validator/form_validator.dart';
+import 'package:get/get.dart';
 
 extension CustomValidationBuilder on ValidationBuilder {
   password() => add((value) {
@@ -6,29 +7,43 @@ extension CustomValidationBuilder on ValidationBuilder {
         RegExp regex = RegExp(pattern);
 
         if (value == 'password') {
-          return 'Password should not "password"';
+          return 'Kata sandi tidak boleh "password"'.tr;
         } else if (value!.length < 8) {
-          return 'Password must have more than 8 characters';
+          return 'Kata sandi harus lebih dari 8 karakter'.tr;
         } else if (!regex.hasMatch(value)) {
-          return 'Password should contain upper,lower,digit and Special character';
+          return 'Kata sandi harus mengandung huruf besar, huruf kecil, angka dan karakter khusus'.tr;
         }
         return null;
       });
 
   phoneNumber() => add((value) {
         if (value?.isEmpty ?? false) {
-          return 'This field is required';
+          return 'Masukan tidak boleh kosong'.tr;
         } else if (value!.length < 10) {
-          return 'Phone number must be more than 10 characters';
+          return 'Nomor telepon harus lebih dari 10 karakter'.tr;
         } else if (value.length > 12) {
-          return "Phone number can't be more than 12 characters";
+          return "Nomor telepon tidak boleh lebih dari 12 karakter".tr;
         }
         return null;
       });
 
   zipCode() => add((value) {
         if (value!.length < 5) {
-          return 'Zip Code must be 5 characters';
+          return 'Kode Pos harus terdiri dari 5 karakter'.tr;
+        }
+        return null;
+      });
+
+  name() => add((value) {
+        if (value!.length > 30) {
+          return 'Nama tidak boleh lebih dari 30 karakter'.tr;
+        }
+        return null;
+      });
+
+  address() => add((value) {
+        if (value!.length > 90) {
+          return 'Alamat tidak boleh lebih dari 90 karakter'.tr;
         }
         return null;
       });
@@ -54,7 +69,7 @@ extension CustomValidationBuilder on ValidationBuilder {
       String pattern = r'(http|https)://[\w]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
       RegExp regExp = RegExp(pattern);
       if (!regExp.hasMatch(value!)) {
-        return 'Please enter valid url';
+        return 'Silakan masukkan url yang valid'.tr;
       }
       return null;
     });

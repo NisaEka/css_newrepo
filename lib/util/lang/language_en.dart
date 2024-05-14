@@ -281,7 +281,18 @@ class LanguageEN {
       "Draft Kosong": "Draft Empty",
       "Mode offline": "Offline Mode",
       "CSS tidak menerima pendaftaran menggunakan email temporary": "CSS does not accept registration using temporary email",
-
+      "Masukan tidak boleh kosong": "This field is required",
+      "Nomor telepon harus lebih dari 10 karakter": "Phone number must be more than 10 characters",
+      "Nomor telepon tidak boleh lebih dari 12 karakter": "Phone number can't be more than 12 characters",
+      "Kode Pos harus terdiri dari 5 karakter": "Zip Code must be 5 characters",
+      "Silakan masukkan url yang valid": "Please enter valid url",
+      'Kata sandi tidak boleh "password"': 'Password should not "password"',
+      "Kata sandi harus lebih dari 8 karakter": "Password must have more than 8 characters",
+      "Kata sandi harus mengandung huruf besar, huruf kecil, angka dan karakter khusus":
+          "Password should contain upper,lower,digit and Special character",
+      "Nama tidak boleh lebih dari 30 karakter": "Names cannot be more than 30 characters",
+      "Alamat tidak boleh lebih dari 100 karakter": "Address cannot be more than 100 characters",
+      "Bidang ini harus terdiri dari minimal 8 karakter":"This field must be at least 8 characters long",
     };
   }
 }

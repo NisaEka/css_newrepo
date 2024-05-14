@@ -38,10 +38,12 @@ class EditProfilScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: controller.brand,
                             hintText: "Nama Brand / Bisnis".tr,
+                            validator: ValidationBuilder().name().build(),
                           ),
                           CustomTextFormField(
                             controller: controller.name,
                             hintText: "Nama Lengkap".tr,
+                            validator: ValidationBuilder().name().build(),
                           ),
                           CustomTextFormField(
                             controller: controller.ktp,
@@ -51,6 +53,7 @@ class EditProfilScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: controller.address,
                             hintText: "Alamat Lengkap".tr,
+                            validator: ValidationBuilder().address().build(),
                           ),
                           CustomSearchDropdownField<Destination>(
                             asyncItems: (String filter) => controller.getDestinationList(filter),
@@ -82,7 +85,6 @@ class EditProfilScreen extends StatelessWidget {
                             hintText: "Nomor Telepon".tr,
                             readOnly: true,
                             validator: ValidationBuilder().phoneNumber().build(),
-
                           ),
                           CustomTextFormField(
                             controller: controller.whatsapp,

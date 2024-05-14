@@ -6,7 +6,9 @@ import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class TambahPetugasController extends BaseController {
@@ -78,6 +80,14 @@ class TambahPetugasController extends BaseController {
     super.onInit();
     Future.wait([initData()]);
   }
+  String? locale;
+
+  Future<void> setLocale() async {
+    locale = await storage.readString(StorageCore.localeApp);
+    update();
+    ValidationBuilder.setLocale(locale!);
+  }
+
 
   Future<void> initData() async {
     isLoading = true;

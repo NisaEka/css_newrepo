@@ -3,10 +3,12 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
@@ -22,8 +24,8 @@ class LoginController extends BaseController {
   bool isObscurePasswordLogin = true;
   bool isLoading = false;
   bool pop = false;
+  String? lang;
 
-  Locale? lang;
   DateTime? currentBackPressTime;
 
   // @override
@@ -36,10 +38,17 @@ class LoginController extends BaseController {
   // }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    // initData();
     emailTextField.text;
     passwordTextField.text;
+  }
+
+  Future<void> initData() async {
+    lang = await storage.readString(StorageCore.localeApp);
+    update();
+    ValidationBuilder.setLocale(lang!);
   }
 
   // @override
@@ -52,8 +61,6 @@ class LoginController extends BaseController {
   //   emailFocus = null;
   //   passFocus = null;
   // }
-
-
 
   bool onPop() {
     DateTime now = DateTime.now();
@@ -79,7 +86,7 @@ class LoginController extends BaseController {
     }
     pop = true;
     update();
-    Get.off(DashboardScreen());
+    Get.off(const DashboardScreen());
     return true;
   }
 

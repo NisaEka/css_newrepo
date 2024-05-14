@@ -3,6 +3,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
@@ -26,6 +27,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SignUpController>(
@@ -72,8 +74,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // const LogoHeader(),
                       Form(
                         key: controller.formKey,
-                        onChanged: () {
-                          // controller.formValidate();
+                        onChanged: () async{
+                          controller.initData();
                           controller.update();
                         },
                         child: Padding(
@@ -87,12 +89,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 prefixIcon: const Icon(Icons.person),
                                 hintText: 'Nama Lengkap'.tr,
                                 isRequired: true,
+                                validator: ValidationBuilder().name().build(),
                               ),
                               CustomTextFormField(
                                 controller: controller.namaBrand,
                                 prefixIcon: const Icon(Icons.storefront_sharp),
                                 hintText: 'Nama Brand / Bisnis'.tr,
                                 isRequired: true,
+                                validator: ValidationBuilder().name().build(),
                               ),
                               CustomTextFormField(
                                 controller: controller.noHp,
@@ -107,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 prefixIcon: const Icon(Icons.mail_outline),
                                 hintText: 'Email'.tr,
                                 isRequired: true,
-                                validator: ValidationBuilder().email().minLength(10).build(),
+                                validator: ValidationBuilder(localeName: controller.locale).email().minLength(10).maxLength(50).build(),
                                 inputFormatters: [
                                   TextInputFormatter.withFunction((oldValue, newValue) {
                                     return newValue.copyWith(text: newValue.text.toLowerCase());

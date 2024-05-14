@@ -249,6 +249,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     readOnly: !controller.isDropshipper,
                                     isRequired: true,
                                     prefixIcon: const Icon(Icons.person),
+                                    validator: ValidationBuilder().name().build(),
                                   ),
                                   CustomTextFormField(
                                     controller: controller.nomorTelpon,
@@ -304,6 +305,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                     isRequired: true,
                                     multiLine: true,
                                     prefixIcon: const Icon(Icons.location_city),
+                                    validator: ValidationBuilder().address().build(),
                                   ),
                                   controller.isDropshipper && controller.isOnline && controller.isSaveDropshipper()
                                       ? CustomFilledButton(

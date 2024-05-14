@@ -16,6 +16,7 @@ class OtherMenuScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: blueJNE,
             title: Text('Lihat Semua Layanan'.tr),
             centerTitle: true,
           ),

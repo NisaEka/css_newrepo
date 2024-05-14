@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,34 +33,36 @@ class CustomTextFormField extends StatefulWidget {
   final bool noBorder;
   final bool isLoading;
 
-  CustomTextFormField(
-      {super.key,
-      required this.controller,
-      this.label,
-      this.helperText,
-      this.hintText,
-      this.readOnly = false,
-      this.onChanged,
-      this.isRequired = false,
-      this.validator,
-      this.inputFormatters,
-      this.onTap,
-      this.suffixIcon,
-      this.backgroundColor,
-      this.multiLine = false,
-      this.inputType,
-      this.prefixIcon,
-      this.isObscure,
-      this.width,
-      this.height,
-      this.onSubmit,
-      this.focusNode,
-      this.autofocus,
-      this.contentPadding,
-      this.noBorder = false,
-      this.isLoading = false}) {
+  CustomTextFormField({
+    super.key,
+    required this.controller,
+    this.label,
+    this.helperText,
+    this.hintText,
+    this.readOnly = false,
+    this.onChanged,
+    this.isRequired = false,
+    this.validator,
+    this.inputFormatters,
+    this.onTap,
+    this.suffixIcon,
+    this.backgroundColor,
+    this.multiLine = false,
+    this.inputType,
+    this.prefixIcon,
+    this.isObscure,
+    this.width,
+    this.height,
+    this.onSubmit,
+    this.focusNode,
+    this.autofocus,
+    this.contentPadding,
+    this.noBorder = false,
+    this.isLoading = false,
+  }) {
     if (isRequired && !readOnly) {
-      validator ??= ValidationBuilder().required().build();
+      StorageCore().readData(StorageCore.localeApp).then((value) => ValidationBuilder.setLocale(value));
+      validator ??= ValidationBuilder(requiredMessage: 'Masukan tidak boleh kosong'.tr).required().build();
     }
   }
 

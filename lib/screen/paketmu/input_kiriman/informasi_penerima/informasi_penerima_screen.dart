@@ -3,6 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_controller.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_screen.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/offlinebar.dart';
@@ -12,6 +13,7 @@ import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class InformasiPenerimaScreen extends StatefulWidget {
@@ -120,6 +122,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                       hintText: "Nama Penerima".tr,
                                       prefixIcon: const Icon(Icons.person),
                                       isRequired: true,
+                                      validator: ValidationBuilder().name().build(),
                                     ),
                                     CustomTextFormField(
                                       controller: controller.nomorTelpon,
@@ -127,6 +130,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                       inputType: TextInputType.number,
                                       prefixIcon: const Icon(Icons.phone),
                                       isRequired: true,
+                                      validator: ValidationBuilder().phoneNumber().build(),
                                     ),
                                     CustomSearchDropdownField<Destination>(
                                       asyncItems: (String filter) =>
@@ -165,6 +169,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                       prefixIcon: const Icon(Icons.location_city),
                                       multiLine: true,
                                       isRequired: true,
+                                      validator: ValidationBuilder().address().build(),
                                     ),
                                     controller.isOnline && controller.isSaveReceiver()
                                         ? CustomFilledButton(

@@ -4,8 +4,10 @@ import 'package:css_mobile/data/model/auth/get_agent_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends BaseController {
@@ -32,6 +34,21 @@ class SignUpController extends BaseController {
   Origin? selectedOrigin;
   AgentModel? selectedAgent;
   ReferalModel? selectedReferal;
+  String? locale;
+
+  @override
+  void onInit() {
+    super.onInit();
+    // initData();
+  }
+
+  Future<void> initData() async{
+    locale = await storage.readString(StorageCore.localeApp);
+    ValidationBuilder.setLocale(locale!);
+
+    update();
+
+  }
 
   Future<List<Origin>> getOriginList(String keyword) async {
     isLoadOrigin = true;
@@ -68,7 +85,7 @@ class SignUpController extends BaseController {
     isLoading = true;
     update();
     try {
-      await auth.getCheckMail(email.text).then((value) => value.disposable == true && value.publicDomain == true
+      await auth.getCheckMail(email.text).then((value) => value.payload.disposable == true && value.payload.publicDomain == true
           ? Get.showSnackbar(
               GetSnackBar(
                 icon: const Icon(
@@ -167,4 +184,6 @@ class SignUpController extends BaseController {
       update();
     }
   }
+
+
 }

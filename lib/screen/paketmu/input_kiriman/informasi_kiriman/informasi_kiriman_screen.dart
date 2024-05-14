@@ -38,7 +38,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                   title: 'Input Transaksi'.tr,
                   flexibleSpace: Column(
                     children: [
-                      !controller.isOnline ? const SizedBox() : const OfflineBar(),
+                      controller.isOnline ? const SizedBox() : const OfflineBar(),
                       CustomStepper(
                         currentStep: 2,
                         totalStep: controller.steps.length,
@@ -223,7 +223,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     controller: controller.namaBarang,
                                     hintText: 'Nama Barang'.tr,
                                     isRequired: true,
-                                    validator: ValidationBuilder().minLength(3).build(),
+                                    validator: ValidationBuilder().minLength(3).maxLength(100).build(),
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -291,7 +291,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     hintText: 'Instruksi Khusus (Opsional)'.tr,
                                     validator: (value) => value!.isNotEmpty
                                         ? value.length < 8
-                                            ? 'This field must be at least 8 characters long'
+                                            ? 'Masukan ini harus terdiri dari minimal 8 karakter'.tr
                                             : null
                                         : null,
                                   ),
