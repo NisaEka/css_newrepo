@@ -136,17 +136,17 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<ResponseModel> getCheckMail(String email) async {
+  Future<GetCheckMailModel> getCheckMail(String email) async {
     try {
       Response response = await network.dio.get(
-        '//auth/registration/mail_check/$email',
+        '/auth/registration/mail_check/$email',
       );
       // Response response = await Dio().get(
       //   'https://api.mailcheck.ai/email/$email',
       // );
-      return ResponseModel.fromJson(response.data);
+      return GetCheckMailModel.fromJson(response.data);
     } on DioException catch (e) {
-      return ResponseModel.fromJson(e.response?.data);
+      return GetCheckMailModel.fromJson(e.response?.data);
     }
   }
 }

@@ -28,5 +28,5 @@ abstract class AuthRepository {
 
   Future<PostTransactionModel> postPasswordChage(InputNewPasswordModel data);
 
-  Future<ResponseModel> getCheckMail(String email);
+  Future<GetCheckMailModel> getCheckMail(String email);
 }

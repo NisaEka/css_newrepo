@@ -36,18 +36,11 @@ class SignUpController extends BaseController {
   ReferalModel? selectedReferal;
   String? locale;
 
-  @override
-  void onInit() {
-    super.onInit();
-    // initData();
-  }
-
-  Future<void> initData() async{
+  Future<void> initData() async {
     locale = await storage.readString(StorageCore.localeApp);
     ValidationBuilder.setLocale(locale!);
 
     update();
-
   }
 
   Future<List<Origin>> getOriginList(String keyword) async {
@@ -85,20 +78,22 @@ class SignUpController extends BaseController {
     isLoading = true;
     update();
     try {
-      await auth.getCheckMail(email.text).then((value) => value.payload.disposable == true && value.payload.publicDomain == true
-          ? Get.showSnackbar(
-              GetSnackBar(
-                icon: const Icon(
-                  Icons.warning,
-                  color: whiteColor,
-                ),
-                message: 'CSS tidak menerima pendaftaran menggunakan email temporary'.tr,
-                isDismissible: true,
-                duration: const Duration(seconds: 3),
-                backgroundColor: errorColor,
-              ),
-            )
-          : saveRegistration());
+      await auth
+          .getCheckMail(email.text)
+          .then((value) => value.payload?.disposable == true || value.payload?.publicDomain == false || value.payload?.mx == false
+              ? Get.showSnackbar(
+                  GetSnackBar(
+                    icon: const Icon(
+                      Icons.warning,
+                      color: whiteColor,
+                    ),
+                    message: 'CSS tidak menerima pendaftaran menggunakan email temporary'.tr,
+                    isDismissible: true,
+                    duration: const Duration(seconds: 3),
+                    backgroundColor: errorColor,
+                  ),
+                )
+              : saveRegistration());
     } catch (e) {
       e.printError();
     }
@@ -184,6 +179,4 @@ class SignUpController extends BaseController {
       update();
     }
   }
-
-
 }
