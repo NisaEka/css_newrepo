@@ -80,7 +80,7 @@ class FacilityFormInfoController extends BaseController {
 
     final FacilityCreateIdCardModel idCard = FacilityCreateIdCardModel();
     idCard.setNumber(idCardNumber.text);
-    idCard.setImageUrl(pickedImageUrl!);
+    idCard.setImageUrl(pickedImageUrl ?? "");
     requestData.setIdCard(idCard);
 
     final FacilityCreateAddressModel address = FacilityCreateAddressModel();

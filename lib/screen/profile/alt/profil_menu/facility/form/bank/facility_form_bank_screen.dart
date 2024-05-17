@@ -8,6 +8,7 @@ import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class FacilityFormBankScreen extends StatelessWidget {
@@ -90,10 +91,17 @@ class FacilityFormBankScreen extends StatelessWidget {
                     CustomTextFormField(
                       controller: controller.accountNumber,
                       hintText: 'Nomor Rekening',
+                      inputType: TextInputType.number,
+                      validator: ValidationBuilder()
+                        .maxLength(15)
+                        .build()
                     ),
                     CustomTextFormField(
                       controller: controller.accountName,
                       hintText: 'Atas Nama',
+                      validator: ValidationBuilder()
+                        .maxLength(32)
+                        .build()
                     ),
                     Container(
                         width: Get.width,

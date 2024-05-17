@@ -79,7 +79,7 @@ class FacilityFormBankController extends BaseController {
     bankInfo.setBankId(selectedBank!.id);
     bankInfo.setAccountNumber(accountNumber.text);
     bankInfo.setAccountName(accountName.text);
-    bankInfo.setAccountImageUrl(pickedImageUrl!);
+    bankInfo.setAccountImageUrl(pickedImageUrl ?? "");
     facilityCreateArgs.setBankInfo(bankInfo);
   }
 
