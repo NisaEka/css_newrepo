@@ -126,11 +126,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                                             children: controller.accountList
                                                 .map(
                                                   (e) => AccountListItem(
-                                                    accountID: e.accountId.toString(),
-                                                    accountNumber: e.accountNumber.toString(),
-                                                    accountName: "${e.accountName.toString()} / ${e.accountType ?? e.accountService}",
-                                                    accountType: e.accountService.toString(),
-                                                    // isSelected: e.isSelected ?? false,
+                                                    data: e,
                                                     isSelected: controller.selectedAccount == e ? true : false,
                                                     onTap: () {
                                                       if (controller.selectedAccount == e && controller.selectedAccount != null) {

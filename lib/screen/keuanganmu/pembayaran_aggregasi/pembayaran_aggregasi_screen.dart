@@ -2,9 +2,12 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -15,6 +18,7 @@ import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class PembayaranAggergasiScreen extends StatelessWidget {
   const PembayaranAggergasiScreen({super.key});
@@ -57,6 +61,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                                       ),
                                     ),
                                     IconButton(
+                                      // onPressed: () => controller.resetFilter(),
                                       onPressed: () {
                                         if (!controller.isFiltered) {
                                           controller.resetFilter();
@@ -82,11 +87,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                                                 children: controller.accountList
                                                     .map(
                                                       (e) => AccountListItem(
-                                                        accountID: e.accountId.toString(),
-                                                        accountNumber: e.accountNumber.toString(),
-                                                        accountName: e.accountName.toString(),
-                                                        accountType: e.accountService.toString(),
-                                                        // isSelected: e.isSelected ?? false,
+                                                        data: e,
                                                         isSelected: controller.selectedAccount.where((accounts) => accounts == e).isNotEmpty,
                                                         onTap: () {
                                                           setState(() {
@@ -173,7 +174,13 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                                             controller.endDate != null ||
                                             !controller.accountList.equals(controller.selectedAccount)) {
                                           controller.isFiltered = true;
+                                          if (controller.startDate != null && controller.endDate != null) {
+                                            controller.transDate =
+                                                "${controller.startDate?.millisecondsSinceEpoch ?? ''}-${controller.endDate?.millisecondsSinceEpoch ?? ''}";
+                                          }
                                           controller.update();
+
+                                          controller.pagingController.refresh();
                                           Get.back();
                                         }
                                       },
@@ -207,26 +214,60 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                     value: "Rp. 3.910.000",
                   ),
                   CustomSearchField(
-                    controller: TextEditingController(),
+                    controller: controller.searchField,
                     hintText: 'Cari Data Agregasi'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
                       color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
                     ),
+                    onChanged: (value) {
+                      controller.searchField.text = value;
+                      controller.update();
+                      controller.pagingController.refresh();
+                    },
+                    onClear: () {
+                      controller.searchField.clear();
+                      controller.pagingController.refresh();
+                    },
                   ),
                   Expanded(
-                    child: ListView(
-                      children: const [
-                        ReportListItem(
-                          status: "Success",
+                    child: RefreshIndicator(
+                      onRefresh: () => Future.sync(
+                        () => controller.pagingController.refresh(),
+                      ),
+                      child: PagedListView<int, AggregationModel>(
+                        pagingController: controller.pagingController,
+                        builderDelegate: PagedChildBuilderDelegate<AggregationModel>(
+                          transitionDuration: const Duration(milliseconds: 500),
+                          itemBuilder: (context, item, index) => ReportListItem(
+                            status: item.statusGv,
+                            data: item,
+                          ),
+                          firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                          firstPageProgressIndicatorBuilder: (context) => Column(
+                            children: List.generate(
+                              3,
+                              (index) => const ReportListItem(
+                                isLoading: true,
+                              ),
+                            ),
+                          ),
+                          noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
+                          noMoreItemsIndicatorBuilder: (context) => const Center(
+                            child: Divider(
+                              indent: 100,
+                              endIndent: 100,
+                              thickness: 2,
+                              color: blueJNE,
+                            ),
+                          ),
+                          newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                            background: Colors.transparent,
+                            height: 50,
+                            size: 30,
+                          ),
                         ),
-                        ReportListItem(
-                          status: "Success",
-                        ),
-                        ReportListItem(
-                          status: "Success",
-                        ),
-                      ],
+                      ),
                     ),
                   )
                 ],

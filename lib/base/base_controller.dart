@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/data/connection_test.dart';
+import 'package:css_mobile/data/repository/aggregasi/aggregasi_repository.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/repository/bank/bank_repository.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
@@ -27,5 +28,6 @@ abstract class BaseController extends GetxController {
   final facility = Get.find<FacilityRepository>();
   final bank = Get.find<BankRepository>();
   final storageRepository = Get.find<StorageRepository>();
+  final aggregation = Get.find<AggregasiRepository>();
   late StreamSubscription<ConnectivityResult> connectivitySubscription;
 }

@@ -107,7 +107,6 @@ class _RiwayatKirimanScreenState extends State<RiwayatKirimanScreen> {
                                                   readOnly: true,
                                                   width: Get.width / 2.3,
                                                   hintText: 'Tanggal Awal'.tr,
-                                                  // label: ,
                                                   onTap: () => controller.selectDate(context).then((value) {
                                                     setState(() {
                                                       controller.startDate = value;

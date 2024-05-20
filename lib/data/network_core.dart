@@ -7,6 +7,7 @@ class NetworkCore {
   Dio city = Dio();
   Dio jne = Dio();
   Dio myJNE = Dio();
+  Dio local = Dio();
 
   NetworkCore() {
     dio.options = BaseOptions(
@@ -14,10 +15,21 @@ class NetworkCore {
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 10),
       sendTimeout: const Duration(seconds: 10),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+    );
+
+    local.options = BaseOptions(
+      baseUrl: "http://10.0.2.2:3000",
+      connectTimeout: const Duration(seconds: 20),
+      receiveTimeout: const Duration(seconds: 10),
+      sendTimeout: const Duration(seconds: 10),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
     );
 
     city.options = BaseOptions(

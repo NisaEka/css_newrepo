@@ -1,5 +1,7 @@
 import 'package:css_mobile/data/connection_test.dart';
 import 'package:css_mobile/data/network_core.dart';
+import 'package:css_mobile/data/repository/aggregasi/aggregasi_impl.dart';
+import 'package:css_mobile/data/repository/aggregasi/aggregasi_repository.dart';
 import 'package:css_mobile/data/repository/auth/auth_impl.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/repository/bank/bank_impl.dart';
@@ -39,5 +41,6 @@ class GlobalBinding extends Bindings {
     Get.put<FacilityRepository>(FacilityImpl(), permanent: true);
     Get.put<BankRepository>(BankImpl(), permanent: true);
     Get.put<StorageRepository>(StorageImpl(), permanent: true);
+    Get.put<AggregasiRepository>(AggregasiRepositoryImpl(), permanent: true);
   }
 }

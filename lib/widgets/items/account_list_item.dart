@@ -1,31 +1,34 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AccountListItem extends StatefulWidget {
-  final String accountNumber;
-  final String accountName;
-  final String accountType;
-  final String accountID;
+  final String? accountNumber;
+  final String? accountName;
+  final String? accountType;
+  final String? accountID;
   final VoidCallback? onTap;
-  bool isSelected;
+  late bool isSelected;
   final int? index;
   final double? width;
   final bool isLoading;
+  final Account? data;
 
   AccountListItem({
     super.key,
-    required this.accountNumber,
-    required this.accountName,
-    required this.accountType,
+    this.accountNumber,
+    this.accountName,
+    this.accountType,
     this.onTap,
     this.isSelected = false,
     this.index,
     this.width,
-    required this.accountID,
+    this.accountID,
     this.isLoading = false,
+    this.data,
   });
 
   @override
@@ -61,14 +64,15 @@ class _AccountListItemState extends State<AccountListItem> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.accountNumber,
+                      widget.data?.accountNumber ?? widget.accountNumber ?? '',
                       style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE),
                     ),
                     widget.isSelected ? const Icon(Icons.check, color: successColor) : const SizedBox()
                   ],
                 ),
                 Text(
-                  widget.accountName,
+                  "${widget.data?.accountName ?? ''} / ${widget.data?.accountType ?? widget.data?.accountService}",
+                  // widget.data?.accountName ?? widget.accountName ?? '',
                   style: sublistTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2),
                 ),
                 Container(
@@ -79,7 +83,7 @@ class _AccountListItemState extends State<AccountListItem> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    widget.accountType,
+                    widget.data?.accountType ?? widget.accountType ?? '',
                     style: sublistTitleTextStyle.copyWith(color: whiteColor),
                   ),
                 )
