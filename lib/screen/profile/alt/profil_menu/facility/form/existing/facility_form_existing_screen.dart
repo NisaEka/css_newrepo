@@ -5,6 +5,7 @@ import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class FacilityFormExistingScreen extends StatelessWidget {
@@ -60,6 +61,9 @@ class FacilityFormExistingScreen extends StatelessWidget {
                   controller: controller.name,
                   hintText: 'Nama'.tr,
                   helperText: 'Nama customer yang terdaftar'.tr,
+                  validator: ValidationBuilder()
+                    .maxLength(32)
+                    .build()
                 ),
                 CustomTextFormField(
                   controller: controller.email,
@@ -67,12 +71,18 @@ class FacilityFormExistingScreen extends StatelessWidget {
                   helperText: 'Email terdaftar saat kerjasama'.tr,
                   inputType: TextInputType.emailAddress,
                   inputFormatters: const [],
+                  validator: ValidationBuilder()
+                    .email()
+                    .build()
                 ),
                 CustomTextFormField(
                   controller: controller.phone,
                   hintText: 'No Telp'.tr,
                   helperText: 'Nomor telepon yang terdaftar di akun JNE'.tr,
                   inputType: TextInputType.phone,
+                  validator: ValidationBuilder()
+                    .phone()
+                    .build(),
                 )
               ],
             )
