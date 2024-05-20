@@ -1,4 +1,6 @@
+import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
+import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/aggregasi/aggregasi_repository.dart';
 import 'package:dio/dio.dart';
@@ -38,4 +40,19 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
       return GetAggregationReportModel.fromJson(e.response?.data);
     }
   }
+
+  @override
+  Future<DefaultResponseModel<List<AggregationMinusModel>>> getAggregationMinus() async {
+    try {
+      var response = await network.dio.get("/aggregation/minus");
+      List<AggregationMinusModel> aggregations = [];
+      response.data["payload"].forEach((aggregation) {
+        aggregations.add(AggregationMinusModel.fromJson(aggregation));
+      });
+      return DefaultResponseModel.fromJson(response.data, aggregations);
+    } on DioException catch (e) {
+      return DefaultResponseModel.fromJson(e.response?.data, List.empty());
+    }
+  }
+
 }

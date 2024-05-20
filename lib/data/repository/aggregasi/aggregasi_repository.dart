@@ -1,4 +1,6 @@
+import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
+import 'package:css_mobile/data/model/default_response_model.dart';
 
 abstract class AggregasiRepository {
   Future<GetAggregationReportModel> getAggregationReport(
@@ -7,4 +9,5 @@ abstract class AggregasiRepository {
     String keyword,
     String transDate,
   );
+  Future<DefaultResponseModel<List<AggregationMinusModel>>> getAggregationMinus();
 }
