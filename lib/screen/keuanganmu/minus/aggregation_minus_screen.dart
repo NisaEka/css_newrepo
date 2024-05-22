@@ -1,17 +1,20 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/screen/keuanganmu/minus/aggregasi_minus_controller.dart';
+import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
+import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_controller.dart';
+import 'package:css_mobile/screen/keuanganmu/minus/detail/doc/aggregation_minus_doc_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggminus_box.dart';
+import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_item.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class AggregasiMinusScreen extends StatelessWidget {
-  const AggregasiMinusScreen({super.key});
+class AggregationMinusScreen extends StatelessWidget {
+  const AggregationMinusScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class AggregasiMinusScreen extends StatelessWidget {
               title: 'Laporan Aggregasi Minus'.tr,
             ),
             body: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
               child: Column(
                 children: [
                   const AggMinusBox(),
@@ -37,11 +40,9 @@ class AggregasiMinusScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: ListView(
-                      children: const [
-                        ReportListItem(),
-                        ReportListItem(),
-                        ReportListItem(),
-                      ],
+                      children: controller.aggregations.map((aggregation) {
+                        return _aggregationItem(aggregation);
+                      }).toList()
                     ),
                   )
                 ],
@@ -50,4 +51,16 @@ class AggregasiMinusScreen extends StatelessWidget {
           );
         });
   }
+
+  Widget _aggregationItem(AggregationMinusModel aggregation) {
+    return AggregationMinusItem(
+      data: aggregation,
+      onTap: () => {
+        Get.to(const AggregationMinusDocScreen(), arguments: {
+          "doc": aggregation.aggMinDoc
+        })
+      }
+    );
+  }
+
 }
