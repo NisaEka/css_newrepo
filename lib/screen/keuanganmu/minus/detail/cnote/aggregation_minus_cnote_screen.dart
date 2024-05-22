@@ -135,7 +135,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _titleText("Detail Aggregasi".tr),
-        _rowText("Shipping Fee".tr, data.shipFee.toString()),
+        _rowText("Shipping Fee".tr, data.shipFee?.toString() ?? ""),
         _rowText("Insurance Charge".tr, data.insuranceCharge?.toString() ?? ""),
         _rowText("COD Fee".tr, data.codFee?.toString() ?? ""),
         _rowText("Return Fee".tr, data.returnFee?.toString() ?? ""),
@@ -146,7 +146,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
         _rowText("Packing Fee".tr, data.packingFee?.toString() ?? ""),
         _rowText("Surcharge".tr, data.surcharge?.toString() ?? ""),
         const Divider(thickness: 0.5),
-        _rowText("Return Freight Charge After Discount".tr, 0.toString()),
+        _rowText("Return Freight Charge After Discount".tr, data.returnFreightChargeAfterDisc?.toString() ?? ""),
         _rowText("Return Freight Charge VAT".tr, data.returnFreightChargeVat?.toString() ?? ""),
         _rowText("COD Fee Include VAT".tr, data.codFeeIncludeVat?.toString() ?? ""),
         const Divider(thickness: 0.5),

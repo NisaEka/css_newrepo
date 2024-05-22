@@ -78,6 +78,9 @@ class AggregationMinusDocModel {
   num? _surcharge = 0;
   num? get surcharge => _surcharge;
 
+  num? _returnFreightChargeAfterDisc = 0;
+  num? get returnFreightChargeAfterDisc => _returnFreightChargeAfterDisc;
+
   num? _returnFreightChargeVat = 0;
   num? get returnFreightChargeVat => _returnFreightChargeVat;
 
@@ -129,6 +132,7 @@ class AggregationMinusDocModel {
     _freightChargeVat = json["freight_charge_vat"];
     _packingFee = json["packing_fee"];
     _surcharge = json["surcharge"];
+    _returnFreightChargeAfterDisc = json["return_freight_charge_after_disc"];
     _returnFreightChargeVat = json["return_freight_charge_vat"];
     _codFeeIncludeVat = json["cod_fee_include_vat"];
     _netAwbAmount = json["net_awb_amount"];
