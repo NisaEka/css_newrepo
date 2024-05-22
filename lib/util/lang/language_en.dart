@@ -292,7 +292,8 @@ class LanguageEN {
           "Password should contain upper,lower,digit and Special character",
       "Nama tidak boleh lebih dari 30 karakter": "Names cannot be more than 30 characters",
       "Alamat tidak boleh lebih dari 100 karakter": "Address cannot be more than 100 characters",
-      "Bidang ini harus terdiri dari minimal 8 karakter":"This field must be at least 8 characters long",
+      "Bidang ini harus terdiri dari minimal 8 karakter": "This field must be at least 8 characters long",
+      "Lihat Detail": "View Detail",
     };
   }
 }

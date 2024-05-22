@@ -179,7 +179,6 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                                                 "${controller.startDate?.millisecondsSinceEpoch ?? ''}-${controller.endDate?.millisecondsSinceEpoch ?? ''}";
                                           }
                                           controller.update();
-
                                           controller.pagingController.refresh();
                                           Get.back();
                                         }
@@ -242,6 +241,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                           itemBuilder: (context, item, index) => ReportListItem(
                             status: item.statusGv,
                             data: item,
+
                           ),
                           firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                           firstPageProgressIndicatorBuilder: (context) => Column(

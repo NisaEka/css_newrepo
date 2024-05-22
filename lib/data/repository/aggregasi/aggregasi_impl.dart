@@ -2,6 +2,7 @@ import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/default_response_model.dart';
+import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/aggregasi/aggregasi_repository.dart';
 import 'package:dio/dio.dart';
@@ -17,20 +18,24 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     int page,
     int limit,
     String keyword,
-    String transDate,
+    String aggDate,
+    List<Account> accounts,
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     network.local.options.headers['Authorization'] = 'Bearer $token';
     try {
+      List<String> accountNumber = [];
+      accounts.forEach((e) => accountNumber.add(e.accountNumber.toString()));
+
       Response response = await network.local.get(
         "/aggregation",
         queryParameters: {
           "keyword": keyword,
           "page": page,
           "limit": limit,
-          "agg_date": transDate,
-
+          "agg_date": aggDate,
+          // "account_number": accountNumber,
         },
       );
       print('aggregation response: ${response.data}');

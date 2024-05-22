@@ -42,6 +42,7 @@ class PembayaranAggergasiController extends BaseController {
         pageSize,
         searchField.text,
         transDate ?? '',
+        selectedAccount,
       );
 
       final isLastPage = (agg.payload?.length ?? 0) < pageSize;
@@ -128,18 +129,18 @@ class PembayaranAggergasiController extends BaseController {
 
   void resetFilter() {
     // if (!isFiltered) {
-      startDate = null;
-      endDate = null;
-      startDateField.clear();
-      endDateField.clear();
-      isFiltered = false;
-      selectedAccount = [];
-      selectedAccount.addAll(accountList);
-      transDate = '';
-      update();
+    startDate = null;
+    endDate = null;
+    startDateField.clear();
+    endDateField.clear();
+    isFiltered = false;
+    selectedAccount = [];
+    selectedAccount.addAll(accountList);
+    transDate = '';
+    update();
 
-      pagingController.refresh();
-      Get.back();
+    pagingController.refresh();
+    Get.back();
     // }
   }
 }
