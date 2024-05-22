@@ -52,9 +52,9 @@ class AggregationMinusDocScreen extends StatelessWidget {
             child: ListView(
               children: controller.aggregations.map((aggregation) {
                 return AggregationMinusDocItem(
-                  data: aggregation,
+                  data: aggregation
                 );
-              }).toList(),
+              }).toList()
             ),
           )
         ],

@@ -15,7 +15,7 @@ class AggregationMinusDocItem extends StatefulWidget {
 
   final String? status;
   final bool isLoading;
-  final AggregationMinusDetailModel? data;
+  final AggregationMinusDocModel? data;
 
   const AggregationMinusDocItem({
     super.key,
@@ -104,7 +104,7 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                             height: widget.isLoading ? 15 : null,
                             margin: widget.isLoading ? const EdgeInsets.only(top: 2) : EdgeInsets.zero,
                             child: Text(
-                              "# ${widget.data?.aggMinDoc ?? ''}",
+                              "# ${widget.data?.cnoteNo ?? ''}",
                               style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE),
                             ),
                           ),

@@ -11,6 +11,36 @@ class AggregationMinusDocController extends BaseController {
   bool showMainContent = false;
   bool showErrorContent = false;
 
-  List<AggregationMinusDetailModel> aggregations = [];
+  List<AggregationMinusDocModel> aggregations = [];
+
+  @override
+  void onInit() {
+    super.onInit();
+    Future.wait([initData()]);
+  }
+
+  Future<void> initData() async {
+    showLoadingIndicator = true;
+    update();
+    try {
+      await aggregation.getAggregationMinusDetail(docArgs)
+        .then((response) async {
+          if (response.code == 200) {
+            aggregations.addAll(response.payload ?? List.empty());
+            showMainContent = true;
+            update();
+          } else {
+            showErrorContent = true;
+            update();
+          }
+        });
+    } catch (e) {
+      showErrorContent = true;
+      update();
+    }
+
+    showLoadingIndicator = false;
+    update();
+  }
 
 }
