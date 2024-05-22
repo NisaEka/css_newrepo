@@ -25,7 +25,7 @@ class AggregationMinusScreen extends StatelessWidget {
               title: 'Laporan Aggregasi Minus'.tr,
             ),
             body: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
               child: Column(
                 children: [
                   const AggMinusBox(),

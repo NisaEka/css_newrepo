@@ -1,5 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/aggregasi/aggregation_minus_detail_model.dart';
+import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart';
 import 'package:get/get.dart';
 
 class AggregationMinusDocController extends BaseController {
@@ -23,7 +23,7 @@ class AggregationMinusDocController extends BaseController {
     showLoadingIndicator = true;
     update();
     try {
-      await aggregation.getAggregationMinusDetail(docArgs)
+      await aggregation.getAggregationMinusDoc(docArgs)
         .then((response) async {
           if (response.code == 200) {
             aggregations.addAll(response.payload ?? List.empty());

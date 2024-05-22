@@ -3,20 +3,21 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AggregationMinusDocBox extends StatelessWidget {
+class AggregationMinusBox extends StatelessWidget {
 
-  final String documentNumber;
+  final String title;
+  final String value;
 
-  const AggregationMinusDocBox({
+  const AggregationMinusBox({
     super.key,
-    this.documentNumber = ""
+    required this.title,
+    required this.value
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: Get.size.width,
-      margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: whiteColor,
@@ -34,13 +35,8 @@ class AggregationMinusDocBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            "Document no".tr,
-            style: subformLabelTextStyle,
-          ),
-          Text(
-            documentNumber,
-          )
+          Text(title.tr, style: subformLabelTextStyle),
+          Text(value)
         ],
       ),
     );

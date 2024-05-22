@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/aggregasi/aggregation_minus_detail_model.dart';
+import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -16,12 +16,14 @@ class AggregationMinusDocItem extends StatefulWidget {
   final String? status;
   final bool isLoading;
   final AggregationMinusDocModel? data;
+  final Function onTap;
 
   const AggregationMinusDocItem({
     super.key,
     this.status,
     this.isLoading = false,
     this.data,
+    required this.onTap
   });
 
   @override
@@ -43,23 +45,24 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
             top: 0,
             child: widget.status != null
                 ? Container(
-              padding: const EdgeInsets.only(top: 5, right: 5, left: 20, bottom: 2),
-              decoration: BoxDecoration(
-                  color: widget.status == 'Success' ? successLightColor2 : errorLightColor2,
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(8),
-                    bottomLeft: Radius.circular(20),
-                  )),
-              child: Text(
-                widget.status ?? '',
-                style: listTitleTextStyle.copyWith(color: whiteColor),
-              ),
-            )
+                    padding: const EdgeInsets.only(top: 5, right: 5, left: 20, bottom: 2),
+                    decoration: BoxDecoration(
+                      color: widget.status == 'Success' ? successLightColor2 : errorLightColor2,
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(8),
+                        bottomLeft: Radius.circular(20),
+                      ),
+                    ),
+                    child: Text(
+                      widget.status ?? '',
+                      style: listTitleTextStyle.copyWith(color: whiteColor),
+                    ),
+                  )
                 : const SizedBox(),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            margin: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            margin: const EdgeInsets.only(bottom: 16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
@@ -67,11 +70,7 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
             child: Column(
               children: [
                 GestureDetector(
-                  onTap: () => setState(() {
-                    if (widget.isLoading == false) {
-                      showDetail = showDetail ? false : true;
-                    }
-                  }),
+                  onTap: () => { widget.onTap() },
                   child: Row(
                     children: [
                       Container(
@@ -94,7 +93,7 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                             width: widget.isLoading ? Get.width / 3 : null,
                             height: widget.isLoading ? 10 : null,
                             child: Text(
-                              widget.data?.docDate.toDateTimeFormat() ?? '',
+                              widget.data?.docDate?.toDateTimeFormat() ?? '',
                               style: sublistTitleTextStyle,
                             ),
                           ),
