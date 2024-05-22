@@ -27,6 +27,9 @@ class AggregationMinusModel {
   String _payType = "";
   String get payType => _payType;
 
+  String _createdDate = "";
+  String get createdDate => _createdDate;
+
   AggregationMinusModel.fromJson(dynamic json) {
     _aggMinDoc = json["agg_min_doc"];
     _custGroupId = json["cust_group_id"];
@@ -37,6 +40,7 @@ class AggregationMinusModel {
     _netAmount = json["net_amount"];
     _codType = json["cod_type"];
     _payType = json["pay_type"];
+    _createdDate = json["created_date"];
   }
 
 }
