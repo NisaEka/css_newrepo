@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -63,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Image.asset(
                             ImageConstant.logoCSS_blue,
                             height: 67,
-                            color: Theme.of(context).brightness == Brightness.light ? null : Colors.white,
+                            color: AppConst.isLightTheme(context) ? null : Colors.white,
                           ),
                         ),
                       ],
@@ -189,7 +190,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         Text('Sudah menggunakan JNE'.tr),
                                         Switch(
                                           value: controller.pakaiJNE,
-                                          activeColor: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                                          activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                                           onChanged: (value) {
                                             controller.pakaiJNE = value;
                                             controller.update();

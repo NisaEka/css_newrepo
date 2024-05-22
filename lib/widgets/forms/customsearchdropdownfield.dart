@@ -1,11 +1,12 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomSearchDropdownField<T> extends StatelessWidget {
+//ignore: must_be_immutable
+class CustomSearchDropdownField<T> extends StatefulWidget {
   final Future<List<T>> Function(String) asyncItems;
 
   final void Function(dynamic) onChanged;
@@ -51,28 +52,33 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
     }
   }
 
+  @override
+  State<CustomSearchDropdownField<T>> createState() => _CustomSearchDropdownFieldState<T>();
+}
+
+class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField<T>> {
   FormFieldValidator<T>? validator;
 
   @override
   Widget build(BuildContext context) {
-    if (readOnly) {
+    if (widget.readOnly) {
       return Column(
         children: [
           const SizedBox(height: 10),
           TextField(
-            controller: TextEditingController(text: selectedItem.toString()),
+            controller: TextEditingController(text: widget.selectedItem.toString()),
             enabled: false,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16,
-                  color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
+                  color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
                   // fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(
-              label: Text(selectedItem ?? hintText ?? ''),
+              label: Text(widget.selectedItem ?? widget.hintText ?? ''),
               filled: true,
               fillColor: Theme.of(context).brightness == Brightness.light ? neutralColor : greyColor,
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
+              prefixIcon: widget.prefixIcon,
+              suffixIcon: widget.suffixIcon,
               prefixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
               suffixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
             ),
@@ -86,8 +92,8 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
         const SizedBox(height: 10),
         DropdownSearch<T>(
           validator: (value) {
-            if (isRequired) {
-              if (value == null || value == hintText || value == label) {
+            if (widget.isRequired) {
+              if (value == null || value == widget.hintText || value == widget.label) {
                 // return validator!(value as T);
                 // StorageCore().readString(StorageCore.localeApp).then((value) {
                 //   if (value == 'id') {
@@ -107,25 +113,25 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
             showSearchBox: true,
             searchDelay: const Duration(milliseconds: 500),
             isFilterOnline: true,
-            itemBuilder: itemBuilder,
+            itemBuilder: widget.itemBuilder,
           ),
           dropdownButtonProps: const DropdownButtonProps(
             icon: Icon(Icons.keyboard_arrow_down),
           ),
           dropdownDecoratorProps: DropDownDecoratorProps(
             dropdownSearchDecoration: InputDecoration(
-              label: Text(hintText ?? ''),
-              hintText: hintText ?? label,
+              label: Text(widget.hintText ?? ''),
+              hintText: widget.hintText ?? widget.label,
               hintStyle: hintTextStyle,
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
+              prefixIcon: widget.prefixIcon,
+              suffixIcon: widget.suffixIcon,
             ),
-            baseStyle: textStyle,
+            baseStyle: widget.textStyle,
           ),
-          asyncItems: asyncItems,
-          itemAsString: itemAsString,
-          onChanged: onChanged,
-          selectedItem: value,
+          asyncItems: widget.asyncItems,
+          itemAsString: widget.itemAsString,
+          onChanged: widget.onChanged,
+          selectedItem: widget.value,
         ),
         const SizedBox(height: 10),
       ],

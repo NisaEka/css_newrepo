@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
@@ -130,7 +131,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                       MultiSelectDialogField(
                                         decoration: BoxDecoration(
                                           border:
-                                              Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
+                                              Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
                                           borderRadius: BorderRadius.circular(8),
                                         ),
                                         searchable: true,
@@ -145,7 +146,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                 ))
                                             .toList(),
                                         listType: MultiSelectListType.CHIP,
-                                        backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+                                        backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
                                         onConfirm: (values) {
                                           controller.selectedAccountList = values;
                                         },
@@ -158,7 +159,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                       MultiSelectDialogField(
                                         decoration: BoxDecoration(
                                           border:
-                                              Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
+                                              Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
                                           borderRadius: BorderRadius.circular(8),
                                         ),
                                         searchable: true,
@@ -172,7 +173,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                 ))
                                             .toList(),
                                         listType: MultiSelectListType.CHIP,
-                                        backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+                                        backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
                                         onConfirm: (values) {
                                           controller.selectedBranchList = values;
                                           controller.update();
@@ -189,7 +190,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                         () => MultiSelectDialogField<Origin>(
                                           decoration: BoxDecoration(
                                             border: Border.all(
-                                                color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
+                                                color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
                                             borderRadius: BorderRadius.circular(8),
                                           ),
                                           searchable: true,
@@ -203,7 +204,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                   ))
                                               .toList(),
                                           listType: MultiSelectListType.CHIP,
-                                          backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+                                          backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
                                           onConfirm: (values) {
                                             // controller.selectedOrigin = values;
                                             controller.selectedOrigin.clear();

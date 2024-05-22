@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/akun_transaksi/akun_transaksi_screen.dart';
@@ -47,7 +48,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                       const SizedBox(height: 10),
                     ],
                   ),
-                  action: [
+                  action: const [
                     // controller.isOnline
                     //     ? const SizedBox()
                     //     : Tooltip(
@@ -145,7 +146,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                     color: controller.isServiceLoad
                                         ? greyColor
                                         : controller.selectedService == controller.serviceList[index]
-                                            ? Theme.of(context).brightness == Brightness.light
+                                            ? AppConst.isLightTheme(context)
                                                 ? blueJNE
                                                 : redJNE
                                             : greyLightColor3,
@@ -269,7 +270,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       title: Text(
                                         '${'Gunakan Asuransi Pengiriman'.tr} ( Rp. ${controller.isr.toInt().toCurrency()} )',
                                         style: sublistTitleTextStyle.copyWith(
-                                          color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2,
+                                          color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2,
                                         ),
                                       ),
                                       trailing: Checkbox(
@@ -301,7 +302,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                                       leading: Switch(
                                         value: controller.packingKayu,
-                                        activeColor: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                                        activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                                         onChanged: (bool? value) {
                                           controller.packingKayu = value!;
                                           controller.intruksiKhusus.text = value == true ? "MOHON DIPACKING KAYU" : "";
@@ -354,7 +355,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                       Text('Dimensi Kiriman'.tr),
                                       Switch(
                                         value: controller.dimensi,
-                                        activeColor: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                                        activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                                         onChanged: (value) {
                                           controller.dimensi = value;
                                           controller.dimensiPanjang.clear();
@@ -452,7 +453,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(8),
                                             border: Border.all(
-                                                color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2),
+                                                color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2),
                                           ),
                                           padding: const EdgeInsets.all(10),
                                           child: Column(

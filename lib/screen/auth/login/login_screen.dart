@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/auth/forgot_password/input_email_screen.dart';
@@ -127,7 +128,7 @@ class LoginScreen extends StatelessWidget {
                                   child: Text("Belum punya akun?".tr, style: listTitleTextStyle),
                                 ),
                                 CustomFilledButton(
-                                  color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                                  color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                                   isTransparent: true,
                                   title: "Daftar".tr,
                                   onPressed: () {

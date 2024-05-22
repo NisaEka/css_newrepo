@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -61,7 +62,7 @@ class DraftTransaksiScreen extends StatelessWidget {
                         hintText: 'Cari transaksimu'.tr,
                         prefixIcon: SvgPicture.asset(
                           IconsConstant.search,
-                          color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+                          color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
                         ),
                         inputFormatters: [
                           TextInputFormatter.withFunction((oldValue, newValue) {

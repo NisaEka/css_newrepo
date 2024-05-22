@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -44,7 +45,7 @@ class SuccessScreen extends StatelessWidget {
               Text(
                 message.tr,
                 style: appTitleTextStyle.copyWith(
-                    color: fontColor ?? (Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1)),
+                    color: fontColor ?? (AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1)),
                 textAlign: TextAlign.center,
               ),
             ],

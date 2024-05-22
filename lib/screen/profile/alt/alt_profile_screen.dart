@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
@@ -11,7 +12,6 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_scre
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/comingsoon_dialog.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
 import 'package:flutter/material.dart';
@@ -112,8 +112,8 @@ class AltProfileScreen extends StatelessWidget {
                   title: Text(controller.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
                   trailing: Text('v ${controller.version.toString()}'.tr),
                   shape: Border(
-                    bottom: BorderSide(color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white),
-                    top: BorderSide(color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white),
+                    bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
+                    top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
                   ),
                 ),
               ),

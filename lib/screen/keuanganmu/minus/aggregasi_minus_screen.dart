@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregasi_minus_controller.dart';
@@ -31,7 +32,7 @@ class AggregasiMinusScreen extends StatelessWidget {
                     hintText: 'Cari Data Aggregasi Minus'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
-                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+                      color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
                     ),
                   ),
                   Expanded(

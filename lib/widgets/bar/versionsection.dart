@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -37,7 +38,7 @@ class _VersionAppState extends State<VersionApp> {
           Image.asset(
             ImageConstant.logoJNE,
             height: 30,
-            color: Theme.of(context).brightness == Brightness.light ? null : Colors.white,
+            color: AppConst.isLightTheme(context) ? null : Colors.white,
           ),
           Text('v $version')
         ],

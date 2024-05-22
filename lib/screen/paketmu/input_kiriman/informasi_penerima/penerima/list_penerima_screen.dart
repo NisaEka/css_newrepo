@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
@@ -5,9 +6,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/pener
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
-import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
-import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -27,14 +26,14 @@ class ListPenerimaScreen extends StatelessWidget {
               leading: const CustomBackButton(),
               title: Text(
                 'Pilih Data Penerima'.tr,
-                style: appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor),
+                style: appTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
               ),
               actions: [
                 IconButton(
                   onPressed: () => Get.to(const AddPenerimaScreen()),
                   icon: Icon(
                     Icons.add,
-                    color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                    color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                   ),
                 )
               ],
@@ -48,7 +47,7 @@ class ListPenerimaScreen extends StatelessWidget {
                     hintText: 'Cari Data Penerima'.tr,
                     prefixIcon: Icon(
                       Icons.search,
-                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+                      color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
                     ),
                     inputFormatters: [
                       TextInputFormatter.withFunction((oldValue, newValue) {

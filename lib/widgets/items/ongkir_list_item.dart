@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class OngkirListItem extends StatelessWidget {
                 ),
                 Text(
                   serviceSubtitle,
-                  style: sublistTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? greyColor : whiteColor),
+                  style: sublistTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? greyColor : whiteColor),
                 )
               ],
             ),

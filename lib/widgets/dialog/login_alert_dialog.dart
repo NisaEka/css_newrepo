@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
@@ -11,7 +12,7 @@ class LoginAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       elevation: 0,
-      backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+      backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
       title: Text('Akses Terbatas'.tr),
       content: Text(
         'access_denied'.tr,

@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
@@ -36,7 +37,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                               Text(controller.getMail(),
                                   textAlign: TextAlign.left,
                                   style: formLabelTextStyle.copyWith(
-                                      color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2)),
+                                      color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2)),
                               Pinput(
                                 controller: controller.otpPin,
                                 length: 6,
@@ -63,7 +64,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                                   style: formLabelTextStyle.copyWith(
                                       color: controller.remainingSeconds != 0
                                           ? greyColor
-                                          : Theme.of(context).brightness == Brightness.light
+                                          : AppConst.isLightTheme(context)
                                               ? blueJNE
                                               : greyLightColor2),
                                 ),
@@ -77,7 +78,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                                     controller.otpPin.text.isNotEmpty && controller.otpPin.length >= 6 ? controller.pinConfirmation() : null,
                               ),
                               CustomFilledButton(
-                                color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                                color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                                 isTransparent: true,
                                 title: 'Gunakan cara lain'.tr,
                                 onPressed: () => Get.to(const PasswordRecoveryScreen(), arguments: {

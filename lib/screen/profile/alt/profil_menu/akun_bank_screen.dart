@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/akun_bank_controller.dart';
@@ -68,7 +69,7 @@ class AkunBankScreen extends StatelessWidget {
                             ),
                           );
                         }),
-                        backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+                        backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),

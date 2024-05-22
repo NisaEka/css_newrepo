@@ -1,6 +1,6 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/lacak_kiriman/post_lacak_kiriman_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -45,7 +45,7 @@ class KirimanStepper extends StatelessWidget {
               child: SvgPicture.asset(
                 IconsConstant.box,
                 // height: 100,
-                color: currentStep == 0 ? (Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE) : null,
+                color: currentStep == 0 ? (AppConst.isLightTheme(context) ? blueJNE : redJNE) : null,
               ),
             ),
             Container(
@@ -87,55 +87,53 @@ class KirimanStepper extends StatelessWidget {
                         isDismissible: true,
                         // isScrollControlled: true,
                         StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-                          return Container(
-                            child: Column(
-                              children: [
-                                DocumentImageItem(
-                                  title: 'Foto Pengiriman'.tr,
-                                  img: cnote?.photo ?? '',
-                                  onTap: () => showDialog(
-                                    context: context,
-                                    builder: (context) => ImagePopupDialog(
-                                      title: 'Foto Pengiriman'.tr,
-                                      img: cnote?.photo ?? '',
-                                    ),
+                          return Column(
+                            children: [
+                              DocumentImageItem(
+                                title: 'Foto Pengiriman'.tr,
+                                img: cnote?.photo ?? '',
+                                onTap: () => showDialog(
+                                  context: context,
+                                  builder: (context) => ImagePopupDialog(
+                                    title: 'Foto Pengiriman'.tr,
+                                    img: cnote?.photo ?? '',
                                   ),
                                 ),
-                                DocumentImageItem(
-                                  title: 'Tanda Tangan'.tr,
-                                  img: cnote?.signature ?? '',
-                                  onTap: () => showDialog(
-                                    context: context,
-                                    builder: (context) => ImagePopupDialog(
-                                      title: 'Tanda Tangan'.tr,
-                                      img: cnote?.signature ?? '',
-                                    ),
+                              ),
+                              DocumentImageItem(
+                                title: 'Tanda Tangan'.tr,
+                                img: cnote?.signature ?? '',
+                                onTap: () => showDialog(
+                                  context: context,
+                                  builder: (context) => ImagePopupDialog(
+                                    title: 'Tanda Tangan'.tr,
+                                    img: cnote?.signature ?? '',
                                   ),
                                 ),
-                                DocumentImageItem(
-                                  title: 'Lokasi Penerima'.tr,
-                                  // img: cnote?.signature ?? '',
-                                  lat: cnote?.lat?.toDouble(),
-                                  lng: cnote?.long?.toDouble(),
-                                  onTap: () => showDialog(
-                                    context: context,
-                                    builder: (context) => ImagePopupDialog(
-                                      title: 'Lokasi Penerima'.tr,
-                                      // img: cnote?.signature ?? '',
-                                      lat: cnote?.lat?.toDouble(),
-                                      lng: cnote?.long?.toDouble(),
-                                    ),
+                              ),
+                              DocumentImageItem(
+                                title: 'Lokasi Penerima'.tr,
+                                // img: cnote?.signature ?? '',
+                                lat: cnote?.lat?.toDouble(),
+                                lng: cnote?.long?.toDouble(),
+                                onTap: () => showDialog(
+                                  context: context,
+                                  builder: (context) => ImagePopupDialog(
+                                    title: 'Lokasi Penerima'.tr,
+                                    // img: cnote?.signature ?? '',
+                                    lat: cnote?.lat?.toDouble(),
+                                    lng: cnote?.long?.toDouble(),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           );
                         }),
-                        backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.white : Colors.black87,
+                        backgroundColor: AppConst.isLightTheme(context) ? Colors.white : Colors.black87,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(color: Theme.of(context).brightness == Brightness.light ? Colors.transparent : whiteColor)),
+                            side: BorderSide(color: AppConst.isLightTheme(context) ? Colors.transparent : whiteColor)),
                       );
                     },
                     child: Container(

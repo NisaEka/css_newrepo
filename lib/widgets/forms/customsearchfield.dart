@@ -3,7 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CustomSearchField extends StatelessWidget {
+class CustomSearchField<T> extends StatelessWidget {
   final String hintText;
   final VoidCallback? onTap;
   final void Function(String)? onSubmit;

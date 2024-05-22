@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -67,7 +68,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
                         title!.tr,
                         style: subappTitleTextStyle.copyWith(
                           color:
-                            Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor2,
+                            AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor2,
                         ),
                       )
                     : const SizedBox(),

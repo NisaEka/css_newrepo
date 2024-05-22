@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class CustomBackButton<T> extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: SvgPicture.asset(
           IconsConstant.arrowCircle,
-          color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+          color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
         ),
       ),
     );

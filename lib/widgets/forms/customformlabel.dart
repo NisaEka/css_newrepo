@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
@@ -26,7 +27,7 @@ class CustomFormLabel extends StatelessWidget {
         child: RichText(
           text: TextSpan(
             text: label,
-            style: subformLabelTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2),
+            style: subformLabelTextStyle.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2),
             children: <TextSpan>[
               TextSpan(text: showRequired ? "*" : "", style: const TextStyle(color: Colors.red)),
             ],

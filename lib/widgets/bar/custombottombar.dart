@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -34,7 +35,7 @@ class BottomBar extends StatelessWidget {
           height: 70,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyDarkColor2,
+              color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -65,10 +66,10 @@ class BottomBar extends StatelessWidget {
                       color: isLogin
                           ? menu == 1
                               ? redJNE
-                              : Theme.of(context).brightness == Brightness.light
+                              : AppConst.isLightTheme(context)
                                   ? blueJNE
                                   : whiteColor
-                          : Theme.of(context).brightness == Brightness.light
+                          : AppConst.isLightTheme(context)
                               ? blueJNE.withOpacity(0.5)
                               : whiteColor.withOpacity(0.5)),
                   title: "Profil".tr,

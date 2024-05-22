@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
@@ -23,7 +24,7 @@ class AccountCard extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+          color: AppConst.isLightTheme(context) ? whiteColor : greyColor,
           border: Border.all(color: greyDarkColor1),
           borderRadius: BorderRadius.circular(12),
           boxShadow: const [

@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -37,7 +37,7 @@ class _ImagePopupDialogState extends State<ImagePopupDialog> {
     print('lat lng ${widget.lat}');
     return AlertDialog(
       contentPadding: const EdgeInsets.all(5),
-      backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+      backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
       title: Text(widget.title.tr),
       content: widget.lat != null
           ? GoogleMap(

@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
@@ -5,6 +6,7 @@ import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+//ignore: must_be_immutable
 class AccountListItem extends StatefulWidget {
   final String? accountNumber;
   final String? accountName;
@@ -65,7 +67,7 @@ class _AccountListItemState extends State<AccountListItem> {
                   children: [
                     Text(
                       widget.data?.accountNumber ?? widget.accountNumber ?? '',
-                      style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE),
+                      style: listTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : redJNE),
                     ),
                     widget.isSelected ? const Icon(Icons.check, color: successColor) : const SizedBox()
                   ],
@@ -73,7 +75,7 @@ class _AccountListItemState extends State<AccountListItem> {
                 Text(
                   "${widget.data?.accountName ?? ''} / ${widget.data?.accountType ?? widget.data?.accountService}",
                   // widget.data?.accountName ?? widget.accountName ?? '',
-                  style: sublistTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2),
+                  style: sublistTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2),
                 ),
                 Container(
                   padding: const EdgeInsets.all(5),
@@ -83,7 +85,7 @@ class _AccountListItemState extends State<AccountListItem> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    widget.data?.accountType ?? widget.accountType ?? '',
+                    widget.data?.accountType ?? widget.data?.accountService ?? widget.accountType ?? '',
                     style: sublistTitleTextStyle.copyWith(color: whiteColor),
                   ),
                 )

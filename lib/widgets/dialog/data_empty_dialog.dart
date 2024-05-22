@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class DataEmpty extends StatelessWidget {
         Icon(
           Icons.folder_off_outlined,
           size: 50,
-          color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+          color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
         ),
         Text(
           text.tr,

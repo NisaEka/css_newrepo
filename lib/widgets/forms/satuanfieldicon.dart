@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class SatuanFieldIcon extends StatelessWidget {
       height: 39,
       margin: EdgeInsets.only(right: isPrefix! ? 10 : 0, left: isSuffix! ? 5 : 0),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+        color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
         borderRadius: BorderRadius.only(
           topRight: isSuffix! ? const Radius.circular(8) : Radius.zero,
           bottomRight: isSuffix! ? const Radius.circular(8) : Radius.zero,
@@ -30,7 +31,7 @@ class SatuanFieldIcon extends StatelessWidget {
           bottomLeft: isPrefix! ? const Radius.circular(8) : Radius.zero,
         ),
       ),
-      child: Text(title, style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE)),
+      child: Text(title, style: listTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? whiteColor : blueJNE)),
     );
   }
 }

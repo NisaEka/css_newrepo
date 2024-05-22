@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
@@ -41,13 +42,13 @@ class MenuItem extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isActive
                         ? blueJNE
-                        : Theme.of(context).brightness == Brightness.light
+                        : AppConst.isLightTheme(context)
                             ? blueJNE.withOpacity(0.8)
                             : greyColor.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).brightness == Brightness.dark ? greyColor : Colors.transparent,
+                        color: AppConst.isDarkTheme(context) ? greyColor : Colors.transparent,
                         spreadRadius: 1,
                         offset: const Offset(3, -2),
                         blurRadius: 2,
@@ -65,7 +66,7 @@ class MenuItem extends StatelessWidget {
                   child: Text(
                     menuTitle.splitMapJoin(' ', onMatch: (p0) => '\n').splitMapJoin('_', onMatch: (p0) => ' '),
                     style: sublistTitleTextStyle.copyWith(
-                      color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : whiteColor,
+                      color: AppConst.isLightTheme(context) ? greyDarkColor1 : whiteColor,
                     ),
                     textAlign: TextAlign.center,
                   ),

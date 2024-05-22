@@ -36,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Scaffold(
             // backgroundColor: greyLightColor1,
             // appBar: AppBar(
-            //   backgroundColor: Theme.of(context).brightness == Brightness.light
+            //   backgroundColor: AppConst.isLightTheme(context)
             //       ? blueJNE : primaryDarkColor,
             //   titleTextStyle: titleTextStyle,
             //   // title: Text('Beranda'.tr),

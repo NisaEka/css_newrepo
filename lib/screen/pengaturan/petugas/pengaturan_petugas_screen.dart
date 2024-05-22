@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
@@ -33,7 +34,7 @@ class PengaturanPetugasScreen extends StatelessWidget {
                   })?.then((value) => controller.pagingController.refresh()),
                   icon: Icon(
                     Icons.add,
-                    color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                    color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                   ),
                 ),
               ],
@@ -47,7 +48,7 @@ class PengaturanPetugasScreen extends StatelessWidget {
                     hintText: 'Cari Data Petugas'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
-                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+                      color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
                     ),
                     onChanged: (value) {
                       controller.searchOfficer.text = value;

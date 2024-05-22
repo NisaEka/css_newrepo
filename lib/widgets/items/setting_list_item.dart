@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class SettingListItem extends StatelessWidget {
       leading: Icon(
         icon,
         size: 24,
-        color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+        color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
       ),
       title: Text(title.tr, maxLines: 2, overflow: TextOverflow.ellipsis),
       shape: const Border(bottom: BorderSide(color: greyColor)),

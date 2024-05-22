@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
@@ -28,7 +29,7 @@ class AddPenerimaScreen extends StatelessWidget {
                   title: Text(
                     'Tambah Data Penerima'.tr,
                     style: appTitleTextStyle.copyWith(
-                      color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                      color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                     ),
                   ),
                   leading: const CustomBackButton(),
@@ -79,7 +80,6 @@ class AddPenerimaScreen extends StatelessWidget {
                                 onChanged: (value) {
                                   controller.selectedDestination = value;
                                   controller.update();
-                                  print(controller.selectedDestination?.cityName ?? '');
                                 },
                                 value: controller.selectedDestination,
                                 isRequired: controller.selectedDestination == null ? true : false,

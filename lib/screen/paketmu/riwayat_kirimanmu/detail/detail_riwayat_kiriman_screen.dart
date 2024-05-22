@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -41,7 +42,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                           label: 'Status Transaksi'.tr,
                           width: Get.width / 2.5,
                           readOnly: true,
-                          backgroundColor: Theme.of(context).brightness == Brightness.light ? greyLightColor2 : greyDarkColor2,
+                          backgroundColor: AppConst.isLightTheme(context) ? greyLightColor2 : greyDarkColor2,
                           noBorder: true,
                           isLoading: controller.isLoading,
                         ),
@@ -50,7 +51,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                           label: 'Status Pickup'.tr,
                           width: Get.width / 2.5,
                           readOnly: true,
-                          backgroundColor: Theme.of(context).brightness == Brightness.light ? greyLightColor2 : greyDarkColor2,
+                          backgroundColor: AppConst.isLightTheme(context) ? greyLightColor2 : greyDarkColor2,
                           noBorder: true,
                           isLoading: controller.isLoading,
                         ),
@@ -71,7 +72,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                           drawText: false,
                           height: 120,
                           width: 120,
-                          color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                          color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                         ),
                       ),
                     )
@@ -82,7 +83,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(13),
                     decoration: BoxDecoration(
-                      color: controller.isLoading ? greyColor : (Theme.of(context).brightness == Brightness.light ? whiteColor : greyDarkColor2),
+                      color: controller.isLoading ? greyColor : (AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2),
                       borderRadius: BorderRadius.circular(5),
                       boxShadow: const [
                         BoxShadow(
@@ -117,7 +118,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                         child: Icon(
                                           size: 10,
                                           Icons.copy_rounded,
-                                          color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                                          color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                                         ),
                                       ),
                                     ),
@@ -141,7 +142,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                                         child: Icon(
                                           size: 10,
                                           Icons.copy_rounded,
-                                          color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                                          color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                                         ),
                                       ),
                                     ),

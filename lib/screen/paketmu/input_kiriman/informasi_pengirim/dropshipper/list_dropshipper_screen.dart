@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
@@ -25,7 +26,7 @@ class ListDropshipperScreen extends StatelessWidget {
               leading: const CustomBackButton(),
               title: Text(
                 'Pilih Data Dropshipper'.tr,
-                style: appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor),
+                style: appTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
               ),
               actions: [
                 controller.isOnline
@@ -35,7 +36,7 @@ class ListDropshipperScreen extends StatelessWidget {
                         })?.then((value) => controller.initData()),
                         icon: Icon(
                           Icons.add,
-                          color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                          color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                         ),
                       )
                     : const SizedBox()
@@ -56,7 +57,7 @@ class ListDropshipperScreen extends StatelessWidget {
                     ],
                     prefixIcon: Icon(
                       Icons.search,
-                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+                      color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
                     ),
                     onChanged: (value) {
                       controller.searchDropshipper(value);

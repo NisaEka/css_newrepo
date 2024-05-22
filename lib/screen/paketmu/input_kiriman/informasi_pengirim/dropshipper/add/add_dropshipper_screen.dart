@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
@@ -27,8 +28,12 @@ class AddDropshipperScreen extends StatelessWidget {
                   shadowColor: greyColor,
                   elevation: 1,
                   leading: const CustomBackButton(),
-                  title: Text('Tambah Data Dropshipper'.tr,
-                      style: appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor)),
+                  title: Text(
+                    'Tambah Data Dropshipper'.tr,
+                    style: appTitleTextStyle.copyWith(
+                      color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                    ),
+                  ),
                 ),
                 body: SingleChildScrollView(
                   child: Padding(

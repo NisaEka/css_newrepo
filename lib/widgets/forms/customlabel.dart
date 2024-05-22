@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
@@ -65,7 +66,7 @@ class CustomLabelText extends StatelessWidget {
                       title,
                       style: titleTextStyle ??
                           subTitleTextStyle.copyWith(
-                            color: fontColor ?? (Theme.of(context).brightness == Brightness.light ? greyColor : whiteColor),
+                            color: fontColor ?? (AppConst.isLightTheme(context) ? greyColor : whiteColor),
                             fontSize: fontSize,
                           ),
                     ),
@@ -86,7 +87,7 @@ class CustomLabelText extends StatelessWidget {
                       textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
                       style: valueTextStyle ??
                           listTitleTextStyle.copyWith(
-                            color: fontColor ?? valueColor ?? (Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
+                            color: fontColor ?? valueColor ?? (AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
                             fontSize: fontSize,
                           ),
                     ),
@@ -110,7 +111,7 @@ class CustomLabelText extends StatelessWidget {
                       title,
                       style: titleTextStyle ??
                           subTitleTextStyle.copyWith(
-                            color: fontColor ?? (Theme.of(context).brightness == Brightness.light ? greyColor : whiteColor),
+                            color: fontColor ?? (AppConst.isLightTheme(context) ? greyColor : whiteColor),
                             fontSize: fontSize,
                           ),
                     ),
@@ -131,7 +132,7 @@ class CustomLabelText extends StatelessWidget {
                       textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
                       style: valueTextStyle ??
                           listTitleTextStyle.copyWith(
-                            color: fontColor ?? valueColor ?? (Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
+                            color: fontColor ?? valueColor ?? (AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
                             fontSize: fontSize,
                           ),
                     ),

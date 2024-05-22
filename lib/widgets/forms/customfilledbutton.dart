@@ -1,7 +1,7 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomFilledButton extends StatelessWidget {
   final String? title;
@@ -63,7 +63,7 @@ class CustomFilledButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(radius),
               border: Border.all(
                   color: isTransparent
-                      ? Theme.of(context).brightness == Brightness.light
+                      ? AppConst.isLightTheme(context)
                           ? color
                           : whiteColor
                       : borderColor!),
@@ -76,7 +76,7 @@ class CustomFilledButton extends StatelessWidget {
                     ? Icon(
                         icon,
                         color: isTransparent
-                            ? Theme.of(context).brightness == Brightness.light
+                            ? AppConst.isLightTheme(context)
                                 ? color
                                 : whiteColor
                             : fontColor,
@@ -89,7 +89,7 @@ class CustomFilledButton extends StatelessWidget {
                         style: fontStyle ??
                             TextStyle(
                                 color: isTransparent
-                                    ? Theme.of(context).brightness == Brightness.light
+                                    ? AppConst.isLightTheme(context)
                                         ? color
                                         : whiteColor
                                     : fontColor,

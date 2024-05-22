@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
+//ignore: must_be_immutable
 class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String? label;
@@ -134,7 +136,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
-                    color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+                    color: AppConst.isLightTheme(context) ? Colors.black : Colors.white,
                     // fontWeight: FontWeight.w600,
                   ),
               textInputAction: TextInputAction.next,
@@ -144,14 +146,14 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   fillColor: widget.backgroundColor ??
                       (widget.onTap != null || !widget.readOnly
                           ? Colors.transparent
-                          : Theme.of(context).brightness == Brightness.light
+                          : AppConst.isLightTheme(context)
                               ? greyLightColor3
                               : greyColor),
                   //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
                   suffixIcon: widget.suffixIcon,
                   prefixIcon: widget.prefixIcon,
-                  prefixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
-                  suffixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
+                  prefixIconColor: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
+                  suffixIconColor: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
                   contentPadding: widget.contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                   hintText: widget.hintText ?? widget.label,
                   errorMaxLines: 3,
@@ -161,7 +163,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                           borderSide: BorderSide(
                             color: widget.readOnly
                                 ? Colors.white
-                                : Theme.of(context).brightness == Brightness.light
+                                : AppConst.isLightTheme(context)
                                     ? Theme.of(context).primaryColor
                                     : greyLightColor1,
                             width: widget.readOnly ? 1 : 2,
@@ -174,7 +176,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     borderSide: BorderSide(
                       color: widget.readOnly
                           ? greyDarkColor1
-                          : Theme.of(context).brightness == Brightness.light
+                          : AppConst.isLightTheme(context)
                               ? Theme.of(context).primaryColor
                               : whiteColor,
                       width: widget.readOnly ? 1 : 2,

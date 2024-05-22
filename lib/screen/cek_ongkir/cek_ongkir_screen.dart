@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_controller.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
@@ -173,7 +174,7 @@ class CekOngkirScreen extends StatelessWidget {
                     const Divider(),
                     controller.isLoading
                         ? CircularProgressIndicator(
-                            color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                            color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                           )
                         : Column(
                             children: controller.ongkirList

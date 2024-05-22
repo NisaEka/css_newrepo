@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +32,6 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
   @override
   void initState() {
     super.initState();
-    print('lat: ${widget.lat}');
   }
 
   @override
@@ -43,14 +42,14 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyDarkColor2,
+          color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2,
           border: Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
               spreadRadius: 1,
-              offset: Offset(-2, 2),
+              offset: const Offset(-2, 2),
             ),
           ],
         ),

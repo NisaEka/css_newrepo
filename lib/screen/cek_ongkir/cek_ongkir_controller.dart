@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_city_model.dart';
@@ -150,7 +151,7 @@ class CekOngkirController extends BaseController {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyDarkColor1,
+            color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor1,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
@@ -162,7 +163,7 @@ class CekOngkirController extends BaseController {
               Text(
                 '$title\n',
                 style: appTitleTextStyle.copyWith(
-                  color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
+                  color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
                 ),
               ),
               CustomSearchField(

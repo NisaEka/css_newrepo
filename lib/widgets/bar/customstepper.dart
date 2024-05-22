@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class CustomStepper extends StatelessWidget {
                     steps?[index].tr ?? '',
                     style: sublistTitleTextStyle.copyWith(
                       color: currentStep == index
-                          ? Theme.of(context).brightness == Brightness.light
+                          ? AppConst.isLightTheme(context)
                               ? blueJNE
                               : whiteColor
                           : Colors.transparent,

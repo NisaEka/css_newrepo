@@ -1,6 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -90,7 +93,7 @@ class PembayaranAggergasiController extends BaseController {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: Theme.of(context).brightness == Brightness.light ? const ColorScheme.light() : const ColorScheme.dark(),
+            colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                 foregroundColor: Colors.red, // button text color
@@ -107,7 +110,7 @@ class PembayaranAggergasiController extends BaseController {
         builder: (context, child) {
           return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: Theme.of(context).brightness == Brightness.light ? const ColorScheme.light() : const ColorScheme.dark(),
+              colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.red, // button text color
@@ -127,6 +130,29 @@ class PembayaranAggergasiController extends BaseController {
     );
   }
 
+  void onSearch(String value) {
+    searchField.text = value;
+    update();
+    pagingController.refresh();
+  }
+
+  void onSearchClear() {
+    searchField.clear();
+    pagingController.refresh();
+  }
+
+  void applyFilter() {
+    if (startDate != null || endDate != null || !accountList.equals(selectedAccount)) {
+      isFiltered = true;
+      if (startDate != null && endDate != null) {
+        transDate = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+      }
+      update();
+      pagingController.refresh();
+      Get.back();
+    }
+  }
+
   void resetFilter() {
     // if (!isFiltered) {
     startDate = null;
@@ -142,5 +168,29 @@ class PembayaranAggergasiController extends BaseController {
     pagingController.refresh();
     Get.back();
     // }
+  }
+
+  void onSelectAccount(Account e) {
+    if (selectedAccount.where((accounts) => accounts == e).isNotEmpty) {
+      selectedAccount.removeWhere((accounts) => accounts == e);
+    } else {
+      selectedAccount.add(e);
+    }
+    update();
+  }
+
+  void onSelectStartDate(DateTime value) {
+    startDate = value;
+    startDateField.text = value.toString().toDateTimeFormat();
+    endDate = value;
+    endDateField.text = value.toString().toDateTimeFormat();
+
+    update();
+  }
+
+  void onSelectEndDate(DateTime value) {
+    endDate = value;
+    endDateField.text = value.toString().toDateTimeFormat();
+    update();
   }
 }

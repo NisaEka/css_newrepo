@@ -6,7 +6,6 @@ import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/value_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +13,7 @@ class ReportListItem extends StatefulWidget {
   final String? status;
   final bool isLoading;
   final AggregationModel? data;
+  final VoidCallback? onTapButton;
   final VoidCallback? onTap;
   final bool isShowDetail;
 
@@ -22,8 +22,9 @@ class ReportListItem extends StatefulWidget {
     this.status,
     this.isLoading = false,
     this.data,
-    this.onTap,
+    this.onTapButton,
     this.isShowDetail = true,
+    this.onTap,
   });
 
   @override
@@ -38,11 +39,13 @@ class _ReportListItemState extends State<ReportListItem> {
     return Shimmer(
       isLoading: widget.isLoading,
       child: GestureDetector(
-        onTap: () => setState(() {
-          if (widget.isLoading == false) {
-            showDetail = showDetail ? false : true;
-          }
-        }),
+        onTap: () =>
+            widget.onTap ??
+            setState(() {
+              if (widget.isLoading == false) {
+                showDetail = showDetail ? false : true;
+              }
+            }),
         child: Stack(
           children: [
             Positioned(
@@ -109,14 +112,14 @@ class _ReportListItemState extends State<ReportListItem> {
                               style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE),
                             ),
                           ),
-                          !showDetail
+                          !showDetail && widget.isShowDetail
                               ? Container(
                                   color: widget.isLoading ? greyLightColor3 : Colors.transparent,
                                   width: widget.isLoading ? Get.width / 4 : null,
                                   height: widget.isLoading ? 12 : null,
                                   margin: widget.isLoading ? const EdgeInsets.only(top: 2) : EdgeInsets.zero,
                                   child: Text(
-                                    "RP. ${widget.data?.paidAmt?.toInt().toCurrency() ?? '-'}",
+                                    "RP. ${widget.data?.paidAmt?.toInt().toCurrency() ?? widget.data?.netAmt?.toInt().toCurrency() ?? '-'}",
                                     style: listTitleTextStyle.copyWith(
                                       color: successColor,
                                     ),
@@ -127,7 +130,7 @@ class _ReportListItemState extends State<ReportListItem> {
                       )
                     ],
                   ),
-                  showDetail
+                  showDetail && widget.isShowDetail
                       ? Column(
                           children: [
                             const Divider(thickness: 0.5),
@@ -183,7 +186,7 @@ class _ReportListItemState extends State<ReportListItem> {
                               color: blueJNE,
                               title: "Lihat Detail".tr,
                               margin: const EdgeInsets.only(top: 20),
-                              onPressed: widget.onTap,
+                              onPressed: widget.onTapButton,
                             )
                           ],
                         )

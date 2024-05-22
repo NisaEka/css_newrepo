@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
@@ -29,7 +30,7 @@ class BankAccountListItem extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: isLoading ? greyLightColor3 : (Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor),
+          color: isLoading ? greyLightColor3 : (AppConst.isLightTheme(context) ? whiteColor : greyColor),
           border: Border.all(color: greyDarkColor1),
           borderRadius: BorderRadius.circular(12),
           boxShadow: isLoading

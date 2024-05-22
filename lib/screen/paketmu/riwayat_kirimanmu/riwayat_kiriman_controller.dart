@@ -1,5 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +111,7 @@ class RiwayatKirimanController extends BaseController {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: Theme.of(context).brightness == Brightness.light ? const ColorScheme.light() : const ColorScheme.dark(),
+            colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                 foregroundColor: Colors.red, // button text color
@@ -128,7 +128,7 @@ class RiwayatKirimanController extends BaseController {
         builder: (context, child) {
           return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: Theme.of(context).brightness == Brightness.light ? const ColorScheme.light() : const ColorScheme.dark(),
+              colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.red, // button text color

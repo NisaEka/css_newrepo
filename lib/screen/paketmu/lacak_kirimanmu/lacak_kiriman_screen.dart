@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:collection/collection.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
@@ -41,7 +42,7 @@ class LacakKirimanScreen extends StatelessWidget {
                     }),
                     child: Icon(
                       Icons.qr_code_scanner,
-                      color: Theme.of(context).brightness == Brightness.light ? whiteColor : redJNE,
+                      color: AppConst.isLightTheme(context) ? whiteColor : redJNE,
                       size: 30,
                     ),
                   ),
