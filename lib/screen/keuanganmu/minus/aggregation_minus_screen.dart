@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_controller.dart';
+import 'package:css_mobile/screen/keuanganmu/minus/detail/doc/aggregation_minus_doc_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggminus_box.dart';
@@ -52,7 +53,12 @@ class AggregationMinusScreen extends StatelessWidget {
 
   Widget _aggregationItem(AggregationMinusModel aggregation) {
     return AggregationMinusItem(
-      data: aggregation
+      data: aggregation,
+      onTap: () => {
+        Get.to(const AggregationMinusDocScreen(), arguments: {
+          "doc": aggregation.aggMinDoc
+        })
+      }
     );
   }
 

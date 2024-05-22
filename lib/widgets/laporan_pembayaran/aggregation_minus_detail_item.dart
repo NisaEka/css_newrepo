@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/aggregasi/aggregation_minus_detail_model.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
-import 'package:css_mobile/screen/keuanganmu/minus/detail/doc/aggregation_minus_doc_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
@@ -11,27 +11,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AggregationMinusItem extends StatefulWidget {
+class AggregationMinusDocItem extends StatefulWidget {
 
   final String? status;
   final bool isLoading;
-  final AggregationMinusModel? data;
-  final Function onTap;
+  final AggregationMinusDetailModel? data;
 
-  const AggregationMinusItem({
+  const AggregationMinusDocItem({
     super.key,
     this.status,
     this.isLoading = false,
     this.data,
-    required this.onTap
   });
 
   @override
-  State<StatefulWidget> createState() => _AggregationMinusItemState();
+  State<StatefulWidget> createState() => _AggregationMinusDocItemState();
 
 }
 
-class _AggregationMinusItemState extends State<AggregationMinusItem> {
+class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
   bool showDetail = false;
 
   @override
@@ -96,7 +94,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                             width: widget.isLoading ? Get.width / 3 : null,
                             height: widget.isLoading ? 10 : null,
                             child: Text(
-                              widget.data?.createdDate.toDateTimeFormat() ?? '',
+                              widget.data?.docDate.toDateTimeFormat() ?? '',
                               style: sublistTitleTextStyle,
                             ),
                           ),
@@ -114,45 +112,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                       )
                     ],
                   ),
-                ),
-                showDetail
-                    ? Column(
-                  children: [
-                    const Divider(thickness: 0.5),
-                    ValueItem(
-                      title: "CUST GROUP",
-                      value: widget.data?.custGroupId ?? '-',
-                    ),
-                    ValueItem(
-                      title: "CUST ID",
-                      value: widget.data?.custId ?? '-',
-                    ),
-                    ValueItem(
-                      title: "CUST NAME",
-                      value: widget.data?.custName ?? '-',
-                    ),
-                    const Divider(thickness: 0.5),
-                    ValueItem(
-                      title: "COD AMOUNT",
-                      value: "RP. ${widget.data?.codAmount.toCurrency() ?? '-'}",
-                    ),
-                    ValueItem(
-                      title: "COD FEE ( ONGKIR DLL )",
-                      value: "RP. ${widget.data?.codFee.toCurrency() ?? '-'}",
-                      valueFontColor: errorColor,
-                    ),
-                    ValueItem(
-                      title: "NET AMOUNT",
-                      value: "RP. ${widget.data?.netAmount.toCurrency() ?? '-'}",
-                    ),
-                    CustomFilledButton(
-                      title: "Lihat Detail".tr,
-                      color: Colors.blue,
-                      onPressed: () => { widget.onTap() }
-                    )
-                  ],
                 )
-                    : const SizedBox()
               ],
             ),
           ),
