@@ -48,9 +48,19 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<DefaultResponseModel<List<AggregationMinusModel>>> getAggregationMinus() async {
+  Future<DefaultResponseModel<List<AggregationMinusModel>>> getAggregationMinus(
+    int page,
+    int limit,
+    String? keyword,
+  ) async {
     try {
-      var response = await network.dio.get("/aggregation/minus");
+      var response = await network.dio.get("/aggregation/minus",
+        queryParameters: {
+          "page": page,
+          "limit": limit,
+          "keyword": keyword
+        }
+      );
       List<AggregationMinusModel> aggregations = [];
       response.data["payload"].forEach((aggregation) {
         aggregations.add(AggregationMinusModel.fromJson(aggregation));
@@ -62,9 +72,20 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<DefaultResponseModel<List<AggregationMinusDocModel>>> getAggregationMinusDoc(String doc) async {
+  Future<DefaultResponseModel<List<AggregationMinusDocModel>>> getAggregationMinusDoc(
+    String doc,
+    int page,
+    int limit,
+    String? keyword
+  ) async {
     try {
-      var response = await network.dio.get("/aggregation/minus/$doc");
+      var response = await network.dio.get("/aggregation/minus/$doc",
+        queryParameters: {
+          "page": page,
+          "limit": limit,
+          "keyword": keyword
+        }
+      );
       List<AggregationMinusDocModel> aggregations = [];
       response.data["payload"].forEach((aggregation) {
         aggregations.add(AggregationMinusDocModel.fromJson(aggregation));

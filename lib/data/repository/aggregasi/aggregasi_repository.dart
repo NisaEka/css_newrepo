@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 
 abstract class AggregasiRepository {
+
   Future<GetAggregationReportModel> getAggregationReport(
     int page,
     int limit,
@@ -12,6 +13,17 @@ abstract class AggregasiRepository {
     String aggDate,
     List<Account> accounts,
   );
-  Future<DefaultResponseModel<List<AggregationMinusModel>>> getAggregationMinus();
-  Future<DefaultResponseModel<List<AggregationMinusDocModel>>> getAggregationMinusDoc(String doc);
+
+  Future<DefaultResponseModel<List<AggregationMinusModel>>> getAggregationMinus(
+    int page,
+    int limit,
+    String? keyword,
+  );
+
+  Future<DefaultResponseModel<List<AggregationMinusDocModel>>> getAggregationMinusDoc(
+    String doc,
+    int page,
+    int limit,
+    String? keyword,
+  );
 }
