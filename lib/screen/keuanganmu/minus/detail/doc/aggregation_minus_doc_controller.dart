@@ -23,7 +23,7 @@ class AggregationMinusDocController extends BaseController {
     showLoadingIndicator = true;
     update();
     try {
-      await aggregation.getAggregationMinusDoc(docArgs)
+      await aggregation.getAggregationMinusDoc(docArgs, 1, 10, "")
         .then((response) async {
           if (response.code == 200) {
             aggregations.addAll(response.payload ?? List.empty());

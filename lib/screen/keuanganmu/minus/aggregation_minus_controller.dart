@@ -2,11 +2,13 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class AggregasiMinusController extends BaseController {
 
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
+  final searchField = TextEditingController();
 
   DateTime? startDate;
   DateTime? endDate;
@@ -17,30 +19,38 @@ class AggregasiMinusController extends BaseController {
   bool showMainContent = false;
   bool showErrorContent = false;
 
-  List<AggregationMinusModel> aggregations = [];
+  final PagingController<int, AggregationMinusModel> pagingController = PagingController(firstPageKey: 1);
+  static const pageSize = 20;
+
+  // List<AggregationMinusModel> aggregations = [];
 
   @override
   void onInit() {
     super.onInit();
-    Future.wait([initData()]);
+    pagingController.addPageRequestListener((pageKey) {
+      getAggregationMinuses(pageKey);
+    });
   }
 
-  Future<void> initData() async {
+  Future<void> getAggregationMinuses(int page) async {
     showLoadingIndicator = true;
-    update();
+
     try {
-      await aggregation.getAggregationMinus()
-          .then((response) async {
-            if (response.code == 200) {
-              aggregations.addAll(response.payload ?? List.empty());
-              showMainContent = true;
-              update();
-            } else {
-              showErrorContent = true;
-              update();
-            }
-          });
-    } catch (e) {
+      final aggregations = await aggregation.getAggregationMinus(
+        page, pageSize, searchField.text
+      );
+
+      final payload = aggregations.payload ?? List.empty();
+      final isLastPage = payload.length < pageSize;
+
+      if (isLastPage) {
+        pagingController.appendLastPage(payload);
+      } else {
+        final nextPageKey = page + 1;
+        pagingController.appendPage(payload, nextPageKey);
+      }
+
+    } catch (e, i) {
       showErrorContent = true;
       update();
     }
