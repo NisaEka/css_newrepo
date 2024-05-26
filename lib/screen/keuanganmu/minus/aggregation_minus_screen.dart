@@ -41,12 +41,21 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
                 children: [
                   const AggMinusBox(),
                   CustomSearchField(
-                    controller: TextEditingController(),
+                    controller: controller.searchField,
                     hintText: 'Cari Data Aggregasi Minus'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
                       color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
                     ),
+                    onChanged: (value) {
+                      controller.searchField.text = value;
+                      controller.update();
+                      controller.pagingController.refresh();
+                    },
+                    onClear: () {
+                      controller.searchField.clear();
+                      controller.pagingController.refresh();
+                    },
                   ),
                   Expanded(
                     child: RefreshIndicator(

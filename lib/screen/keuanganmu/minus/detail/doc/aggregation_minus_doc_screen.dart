@@ -78,6 +78,15 @@ class AggregationMinusDocScreen extends StatelessWidget {
               ? whiteColor
               : blueJNE,
         ),
+        onChanged: (value) {
+          controller.searchField.text = value;
+          controller.update();
+          controller.pagingController.refresh();
+        },
+        onClear: () {
+          controller.searchField.clear();
+          controller.pagingController.refresh();
+        },
       ),
     );
   }
