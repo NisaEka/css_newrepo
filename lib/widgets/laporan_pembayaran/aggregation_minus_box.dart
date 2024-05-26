@@ -20,7 +20,7 @@ class AggregationMinusBox extends StatelessWidget {
       width: Get.size.width,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: whiteColor,
+        color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: greyDarkColor1),
         boxShadow: const [
