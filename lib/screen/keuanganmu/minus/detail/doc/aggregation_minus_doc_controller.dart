@@ -1,39 +1,48 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class AggregationMinusDocController extends BaseController {
 
   String docArgs = Get.arguments["doc"];
+
+  final searchField = TextEditingController();
 
   bool showLoadingIndicator = false;
   bool showProhibitedContent = false;
   bool showMainContent = false;
   bool showErrorContent = false;
 
-  List<AggregationMinusDocModel> aggregations = [];
+  final PagingController<int, AggregationMinusDocModel> pagingController = PagingController(firstPageKey: 1);
+  static const pageSize = 20;
 
   @override
   void onInit() {
     super.onInit();
-    Future.wait([initData()]);
+    pagingController.addPageRequestListener((pageKey) {
+      getAggregationMinusesByDoc(pageKey);
+    });
   }
 
-  Future<void> initData() async {
+  Future<void> getAggregationMinusesByDoc(int page) async {
     showLoadingIndicator = true;
-    update();
     try {
-      await aggregation.getAggregationMinusDoc(docArgs, 1, 10, "")
-        .then((response) async {
-          if (response.code == 200) {
-            aggregations.addAll(response.payload ?? List.empty());
-            showMainContent = true;
-            update();
-          } else {
-            showErrorContent = true;
-            update();
-          }
-        });
+      final aggregations = await aggregation.getAggregationMinusDoc(
+          docArgs, page, pageSize, searchField.text
+      );
+
+      final payload = aggregations.payload ?? List.empty();
+      final isLastPage = payload.length < pageSize;
+
+      if (isLastPage) {
+        pagingController.appendLastPage(payload);
+      } else {
+        final nextPageKey = page + 1;
+        pagingController.appendPage(payload, nextPageKey);
+      }
+
     } catch (e) {
       showErrorContent = true;
       update();
