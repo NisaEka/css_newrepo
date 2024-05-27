@@ -169,8 +169,10 @@ class FacilityFormReturnScreen extends StatelessWidget {
                                 width: Get.width,
                                 margin: const EdgeInsets.symmetric(vertical: 8),
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: Colors.black)
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+                                  ),
                                 ),
                                 child: _imagePickerContent(context, controller)
                             ),
