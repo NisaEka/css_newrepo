@@ -109,7 +109,7 @@ class FacilityFormReturnController extends BaseController {
     taxInfo.setName(npwpName.text);
     taxInfo.setNumber(npwpNumber.text);
     taxInfo.setAddress("-");
-    taxInfo.setImageUrl(pickedImageUrl!);
+    taxInfo.setImageUrl(pickedImageUrl ?? "-");
     facilityCreateArgs.setTaxInfo(taxInfo);
 
     return facilityCreateArgs;

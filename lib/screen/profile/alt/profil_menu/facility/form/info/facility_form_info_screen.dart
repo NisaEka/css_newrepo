@@ -10,6 +10,7 @@ import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class FacilityFormInfoScreen extends StatelessWidget {
@@ -65,12 +66,19 @@ class FacilityFormInfoScreen extends StatelessWidget {
                             CustomTextFormField(
                               controller: controller.brand,
                               hintText: 'Nama Toko / Perusahaan',
+                              validator: ValidationBuilder()
+                                .maxLength(32)
+                                .build()
                             ),
                             CustomTextFormField(
                               controller: controller.idCardNumber,
                               hintText: 'No Identitas / KTP',
                               inputType: TextInputType.number,
                               inputFormatters: const [],
+                              validator: ValidationBuilder()
+                                .maxLength(16)
+                                .minLength(16)
+                                .build()
                             ),
                             Container(
                               width: Get.width,
@@ -87,11 +95,17 @@ class FacilityFormInfoScreen extends StatelessWidget {
                               controller: controller.fullName,
                               hintText: 'Nama Lengkap',
                               inputType: TextInputType.name,
+                              validator: ValidationBuilder()
+                                .maxLength(32)
+                                .build(),
                             ),
                             CustomTextFormField(
                               controller: controller.fullAddress,
                               hintText: 'Alamat Lengkap',
                               inputType: TextInputType.streetAddress,
+                              validator: ValidationBuilder()
+                                .maxLength(128)
+                                .build(),
                             ),
                             CustomSearchDropdownField<Destination>(
                               asyncItems: (String filter) => controller.getDestinationList(filter),
@@ -119,17 +133,29 @@ class FacilityFormInfoScreen extends StatelessWidget {
                               controller: controller.phone,
                               hintText: 'No. Telp',
                               inputType: TextInputType.phone,
+                              validator: ValidationBuilder()
+                                .maxLength(15)
+                                .phone()
+                                .build(),
                             ),
                             CustomTextFormField(
                               controller: controller.whatsAppPhone,
                               hintText: 'No. WhatsApp',
                               inputType: TextInputType.phone,
+                              validator: ValidationBuilder()
+                                .maxLength(15)
+                                .phone()
+                                .build()
                             ),
                             CustomTextFormField(
                               controller: controller.email,
                               hintText: 'Email',
                               inputType: TextInputType.emailAddress,
                               inputFormatters: const [],
+                              validator: ValidationBuilder()
+                                  .maxLength(64)
+                                  .email()
+                                  .build()
                             )
                           ],
                         ),
