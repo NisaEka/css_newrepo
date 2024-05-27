@@ -21,7 +21,7 @@ class FacilityDetailScreen extends StatelessWidget {
           return Scaffold(
               appBar: CustomTopBar(title: controller.facilityArgs.name),
               bottomNavigationBar: _detailBottomAppBar(context, controller),
-              body: _detailBody(controller)
+              body: _detailBody(controller, context)
           );
         });
   }
@@ -49,7 +49,7 @@ class FacilityDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _detailBody(FacilityDetailController controller) {
+  Widget _detailBody(FacilityDetailController controller, BuildContext context) {
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -73,7 +73,9 @@ class FacilityDetailScreen extends StatelessWidget {
                 child: Text(
                   'Skema Pembayaran'.tr,
                   textAlign: TextAlign.center,
-                  style: appTitleTextStyle.copyWith(color: Colors.black),
+                  style: appTitleTextStyle.copyWith(
+                    color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
+                  ),
                 ),
               )),
         ),

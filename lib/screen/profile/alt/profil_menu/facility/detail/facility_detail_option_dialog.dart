@@ -1,3 +1,5 @@
+import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/existing/facility_form_existing_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/info/facility_form_info_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +26,12 @@ class FacilityDetailOptionDialog extends StatelessWidget {
                 'facility_type': facilityType
               });
             },
-            child: const Text('Belum')
+            child: Text(
+              'Belum',
+              style: sublistTitleTextStyle.copyWith(
+                color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
+              ),
+            )
         ),
         TextButton(
             onPressed: () {
@@ -32,7 +39,12 @@ class FacilityDetailOptionDialog extends StatelessWidget {
                 'facility_type': facilityType
               });
             },
-            child: const Text('Sudah')
+            child: Text(
+              'Sudah',
+              style: sublistTitleTextStyle.copyWith(
+                color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
+              ),
+            )
         )
       ],
     );

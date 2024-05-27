@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/facility/facility_model.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class FacilityItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
+      color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
       child: InkWell(
         onTap: onTap,
         child: SizedBox(

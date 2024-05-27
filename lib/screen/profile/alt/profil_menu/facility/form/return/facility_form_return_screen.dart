@@ -151,7 +151,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(8),
                                     border: Border.all(color: Colors.black)
                                 ),
-                                child: _imagePickerContent(controller)
+                                child: _imagePickerContent(context, controller)
                             ),
                           ],
                         ),
@@ -165,7 +165,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
         });
   }
 
-  Widget _imagePickerContent(FacilityFormReturnController controller) {
+  Widget _imagePickerContent(BuildContext context, FacilityFormReturnController controller) {
     if (controller.pickedImage != null) {
       return Container(
         decoration: BoxDecoration(
@@ -181,7 +181,12 @@ class FacilityFormReturnScreen extends StatelessWidget {
         onPressed: () {
           controller.pickImage();
         },
-        child: const Text('Pilih Gambar NPWP'),
+        child: Text(
+          'Pilih Gambar NPWP',
+          style:  sublistTitleTextStyle.copyWith(
+            color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+          ),
+        ),
       );
     }
   }

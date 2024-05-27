@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/bank/bank_model.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
@@ -24,7 +25,7 @@ class FacilityFormBankScreen extends StatelessWidget {
             Scaffold(
               appBar: _formAppbar(controller),
               bottomNavigationBar: _formNavBar(controller),
-              body: _formBody(controller)
+              body: _formBody(context, controller)
             )
           ],
         );
@@ -60,7 +61,7 @@ class FacilityFormBankScreen extends StatelessWidget {
     );
   }
 
-  Widget _formBody(FacilityFormBankController controller) {
+  Widget _formBody(BuildContext context, FacilityFormBankController controller) {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
@@ -102,7 +103,7 @@ class FacilityFormBankScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(color: Colors.black)
                         ),
-                        child: _imagePickerContent(controller)
+                        child: _imagePickerContent(context, controller)
                     ),
                   ],
                 )
@@ -112,7 +113,7 @@ class FacilityFormBankScreen extends StatelessWidget {
     );
   }
 
-  Widget _imagePickerContent(FacilityFormBankController controller) {
+  Widget _imagePickerContent(BuildContext context, FacilityFormBankController controller) {
     if (controller.pickedImage != null) {
       return Container(
         decoration: BoxDecoration(
@@ -128,7 +129,12 @@ class FacilityFormBankScreen extends StatelessWidget {
         onPressed: () {
           controller.pickImage();
         },
-        child: const Text('Pilih Gambar Buku Rekening'),
+        child: Text(
+          'Pilih Gambar Buku Rekening',
+          style: sublistTitleTextStyle.copyWith(
+            color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+          ),
+        ),
       );
     }
   }

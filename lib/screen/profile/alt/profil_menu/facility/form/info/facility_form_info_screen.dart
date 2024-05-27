@@ -77,9 +77,11 @@ class FacilityFormInfoScreen extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.black)
+                                border: Border.all(
+                                  color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+                                )
                               ),
-                              child: _imagePickerContent(controller)
+                              child: _imagePickerContent(context, controller)
                             ),
                             CustomTextFormField(
                               controller: controller.fullName,
@@ -142,7 +144,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget _imagePickerContent(FacilityFormInfoController controller) {
+  Widget _imagePickerContent(BuildContext context, FacilityFormInfoController controller) {
     if (controller.pickedImage != null) {
       return Container(
         decoration: BoxDecoration(
@@ -158,7 +160,12 @@ class FacilityFormInfoScreen extends StatelessWidget {
         onPressed: () {
           controller.pickImage();
         },
-        child: const Text('Pilih Gambar Identitas / KTP'),
+        child: Text(
+          'Pilih Gambar Identitas / KTP',
+          style:  sublistTitleTextStyle.copyWith(
+            color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
+          ),
+        ),
       );
     }
   }
