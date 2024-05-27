@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
@@ -87,6 +88,24 @@ class InformasiKirimaController extends BaseController {
       connection.isOnline().then((value) {
         isOnline = value && (result != ConnectivityResult.none);
         update();
+        if (isOnline) {
+          Get.showSnackbar(
+            GetSnackBar(
+              padding: const EdgeInsets.symmetric(vertical: 1.5),
+              margin: const EdgeInsets.only(top: 195),
+              snackPosition: SnackPosition.TOP,
+              messageText: Center(
+                child: Text(
+                  'Online Mode'.tr,
+                  style: listTitleTextStyle.copyWith(color: whiteColor),
+                ),
+              ),
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: successColor.withOpacity(0.7),
+            ),
+          );
+        }
       });
       initData();
       update();
@@ -369,6 +388,8 @@ class InformasiKirimaController extends BaseController {
   }
 
   Future<void> saveDraft() async {
+    isLoading = true;
+    update();
     draftList = [];
     DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
     draftList.addAll(temp.draft);
@@ -399,7 +420,7 @@ class InformasiKirimaController extends BaseController {
       goods: Goods(
           type: jenisBarang.text,
           desc: namaBarang.text,
-          amount: hargaBarang.text.digitOnly().toInt(),
+          amount: hargaBarang.text.isNotEmpty ? hargaBarang.text.digitOnly().toInt() : 0,
           quantity: jumlahPacking.text.toInt(),
           weight: berat != 0 ? berat : beratKiriman.text.toInt()),
       shipper: shipper,
@@ -436,6 +457,9 @@ class InformasiKirimaController extends BaseController {
             },
           ),
         );
+
+    isLoading = false;
+    update();
   }
 
   Future<void> updateTransaction() async {
@@ -553,7 +577,7 @@ class InformasiKirimaController extends BaseController {
         goods: Goods(
             type: jenisBarang.text,
             desc: namaBarang.text,
-            amount: hargaBarang.text.digitOnly().toInt(),
+            amount: hargaBarang.text.isNotEmpty ? hargaBarang.text.digitOnly().toInt() : 0,
             quantity: jumlahPacking.text.toInt(),
             weight: berat),
         shipper: shipper,
@@ -563,21 +587,39 @@ class InformasiKirimaController extends BaseController {
         if (goods != null) {
           deleteDraft(draftIndex!);
         }
-
-        Get.to(
-          SuccessScreen(
-            message: "${'Transaksi Berhasil'.tr}\n${v.payload?.awb}",
-            buttonTitle: "Kembali ke Beranda".tr,
-            nextAction: () => Get.offAll(
-              const DashboardScreen(),
-              arguments: {
-                'awb': v.payload?.awb,
-              },
+        if (v.code == 400) {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.warning,
+                color: warningColor,
+              ),
+              message: v.error?.first.message?.tr,
+              isDismissible: true,
+              margin: const EdgeInsets.only(bottom: 0),
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.red,
+              snackPosition: SnackPosition.BOTTOM,
+              snackStyle: SnackStyle.FLOATING,
+              animationDuration: const Duration(milliseconds: 500),
             ),
-            thirdButtonTitle: "Buat Transaksi Lainnya".tr,
-            thirdAction: () => Get.offAll(const InformasiPengirimScreen(), arguments: {}),
-          ),
-        );
+          );
+        } else {
+          Get.to(
+            SuccessScreen(
+              message: "${'Transaksi Berhasil'.tr}\n${v.payload?.awb}",
+              buttonTitle: "Kembali ke Beranda".tr,
+              nextAction: () => Get.offAll(
+                const DashboardScreen(),
+                arguments: {
+                  'awb': v.payload?.awb,
+                },
+              ),
+              thirdButtonTitle: "Buat Transaksi Lainnya".tr,
+              thirdAction: () => Get.offAll(const InformasiPengirimScreen(), arguments: {}),
+            ),
+          );
+        }
       });
     } catch (e, i) {
       e.printError();

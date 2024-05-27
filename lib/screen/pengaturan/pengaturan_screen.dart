@@ -37,9 +37,9 @@ class PengaturanScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           CustomFilledButton(
-                            color: controller.lang == "id_ID" ? blueJNE : whiteColor,
-                            fontColor: controller.lang == "id_ID" ? whiteColor : greyColor,
-                            borderColor: controller.lang == "id_ID" ? Colors.transparent : greyColor,
+                            color: controller.lang == "id" ? blueJNE : whiteColor,
+                            fontColor: controller.lang == "id" ? whiteColor : greyColor,
+                            borderColor: controller.lang == "id" ? Colors.transparent : greyColor,
                             title: 'ID',
                             width: 40,
                             margin: EdgeInsets.zero,
@@ -48,9 +48,9 @@ class PengaturanScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 10),
                           CustomFilledButton(
-                            color: controller.lang == "en_US" ? blueJNE : whiteColor,
-                            fontColor: controller.lang == "en_US" ? whiteColor : greyColor,
-                            borderColor: controller.lang == "en_US" ? Colors.transparent : greyColor,
+                            color: controller.lang == "en" ? blueJNE : whiteColor,
+                            fontColor: controller.lang == "en" ? whiteColor : greyColor,
+                            borderColor: controller.lang == "en" ? Colors.transparent : greyColor,
                             margin: EdgeInsets.zero,
                             padding: EdgeInsets.zero,
                             title: 'EN',

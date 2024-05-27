@@ -3,6 +3,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
@@ -26,6 +27,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SignUpController>(
@@ -72,8 +74,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // const LogoHeader(),
                       Form(
                         key: controller.formKey,
-                        onChanged: () {
-                          // controller.formValidate();
+                        onChanged: () async{
+                          controller.initData();
                           controller.update();
                         },
                         child: Padding(
@@ -87,12 +89,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 prefixIcon: const Icon(Icons.person),
                                 hintText: 'Nama Lengkap'.tr,
                                 isRequired: true,
+                                validator: ValidationBuilder().name().build(),
                               ),
                               CustomTextFormField(
                                 controller: controller.namaBrand,
                                 prefixIcon: const Icon(Icons.storefront_sharp),
                                 hintText: 'Nama Brand / Bisnis'.tr,
                                 isRequired: true,
+                                validator: ValidationBuilder().name().build(),
                               ),
                               CustomTextFormField(
                                 controller: controller.noHp,
@@ -107,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 prefixIcon: const Icon(Icons.mail_outline),
                                 hintText: 'Email'.tr,
                                 isRequired: true,
-                                validator: ValidationBuilder().email().minLength(10).build(),
+                                validator: ValidationBuilder(localeName: controller.locale).email().minLength(10).maxLength(50).build(),
                                 inputFormatters: [
                                   TextInputFormatter.withFunction((oldValue, newValue) {
                                     return newValue.copyWith(text: newValue.text.toLowerCase());
@@ -144,7 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 itemAsString: (ReferalModel e) => e.name.toString(),
                                 onChanged: (value) => controller.onSelectReferal(value),
                                 value: controller.selectedReferal,
-                                selectedItem: controller.kotaPengirim.text,
+                                selectedItem: controller.selectedReferal?.name,
                                 hintText: controller.isLoadReferal ? "Loading..." : "Kode Referal".tr,
                                 prefixIcon: const Icon(Icons.line_style),
                                 textStyle: controller.selectedReferal != null ? subTitleTextStyle : hintTextStyle,
@@ -175,24 +179,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
                                 prefixIcon: const Icon(Icons.location_city),
                                 textStyle: controller.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
-                                readOnly: controller.pickOrigin,
+                                readOnly: controller.isDefaultOrigin,
                                 isRequired: true,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Sudah menggunakan JNE'.tr),
-                                  Switch(
-                                    value: controller.pakaiJNE,
-                                    activeColor: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
-                                    onChanged: (value) {
-                                      controller.pakaiJNE = value;
-                                      controller.update();
-                                    },
-                                  )
-                                ],
-                              ),
-                              controller.pakaiJNE
+                              controller.isSelectCounter
+                                  ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Sudah menggunakan JNE'.tr),
+                                        Switch(
+                                          value: controller.pakaiJNE,
+                                          activeColor: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                                          onChanged: (value) {
+                                            controller.pakaiJNE = value;
+                                            controller.update();
+                                          },
+                                        )
+                                      ],
+                                    )
+                                  : const SizedBox(),
+                              controller.pakaiJNE && controller.isSelectCounter
                                   ? CustomDropDownFormField(
                                       isRequired: controller.pakaiJNE,
                                       items: controller.agenList
@@ -208,6 +214,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         controller.selectedAgent = value;
                                         controller.update();
                                       },
+                                      value: controller.selectedAgent,
+                                      selectedItem: controller.selectedAgent?.custName ?? '',
                                     )
                                   : const SizedBox(),
                               CustomFilledButton(
@@ -216,7 +224,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 radius: 50,
                                 onPressed: () {
                                   if (controller.formKey.currentState?.validate() == true && controller.selectedOrigin != null) {
-                                    controller.saveRegistration();
+                                    controller.mailValidation();
                                   }
                                 },
                               ),

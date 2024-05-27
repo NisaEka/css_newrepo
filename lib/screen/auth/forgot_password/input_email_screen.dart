@@ -27,6 +27,7 @@ class InputEmailScreen extends StatelessWidget {
                       const LogoHeader(),
                       Form(
                         key: controller.formKey,
+                        onChanged: () => controller.initData(),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
@@ -50,13 +51,12 @@ class InputEmailScreen extends StatelessWidget {
                                 controller: controller.email,
                                 hintText: "Email".tr,
                                 isRequired: true,
-                                validator: ValidationBuilder().email().minLength(10).build(),
+                                validator: ValidationBuilder(localeName: controller.locale).email().minLength(10).maxLength(50).build(),
                                 inputFormatters: [
                                   TextInputFormatter.withFunction((oldValue, newValue) {
                                     return newValue.copyWith(text: newValue.text.toLowerCase());
                                   })
                                 ],
-                                onChanged: (value) => controller.update(),
                               ),
                               const SizedBox(height: 30),
                               CustomFilledButton(

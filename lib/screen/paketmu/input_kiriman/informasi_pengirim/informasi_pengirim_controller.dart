@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
@@ -10,6 +11,7 @@ import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class InformasiPengirimController extends BaseController {
@@ -42,6 +44,7 @@ class InformasiPengirimController extends BaseController {
   Origin? selectedOrigin;
   ShipperModel? senderOrigin;
   DropshipperModel? dropshipper;
+  String? locale;
 
   @override
   void onInit() {
@@ -54,6 +57,25 @@ class InformasiPengirimController extends BaseController {
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       connection.isOnline().then((value) {
         isOnline = value && (result != ConnectivityResult.none);
+        if (isOnline) {
+          Get.showSnackbar(
+            GetSnackBar(
+              padding: const EdgeInsets.symmetric(vertical: 1.5),
+              margin: const EdgeInsets.only(top: 195),
+              snackPosition: SnackPosition.TOP,
+              messageText: Center(
+                child: Text(
+                  'Online Mode'.tr,
+                  style: listTitleTextStyle.copyWith(color: whiteColor),
+                ),
+              ),
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: successColor.withOpacity(0.7),
+            ),
+          );
+        }
+
         update();
       });
       update();
@@ -71,11 +93,17 @@ class InformasiPengirimController extends BaseController {
       update();
     });
     update();
-
     // return dropshipper;
   }
 
-  void formValidate() {
+  bool isSaveDropshipper() {
+    if (dropshipper?.name != namaPengirim.text && dropshipper?.phone != nomorTelpon.text) {
+      return true;
+    }
+    return false;
+  }
+
+  void formValidate() async {
     if (isOnline) {
       isValidate = formKey.currentState?.validate() == true && selectedAccount != null && selectedOrigin != null;
     } else {
@@ -83,6 +111,10 @@ class InformasiPengirimController extends BaseController {
     }
 
     update();
+
+    locale = await storage.readString(StorageCore.localeApp);
+    update();
+    ValidationBuilder.setLocale(locale!);
   }
 
   Future<void> initData() async {
@@ -210,9 +242,9 @@ class InformasiPengirimController extends BaseController {
       "shipper": Shipper(
         name: namaPengirim.text.toUpperCase(),
         address: alamatLengkap.text.toUpperCase(),
-        address1: alamatLengkap.text.length >= 30 ? alamatLengkap.text.substring(0, 30) : '',
-        address2: alamatLengkap.text.length >= 60 ? alamatLengkap.text.substring(31, 60) : '',
-        address3: alamatLengkap.text.length >= 90 ? alamatLengkap.text.substring(60, 90) : '',
+        address1: alamatLengkap.text.length <= 30 ? alamatLengkap.text.substring(0, alamatLengkap.text.length) : '',
+        address2: alamatLengkap.text.length >= 31 ? alamatLengkap.text.substring(31, alamatLengkap.text.length) : '',
+        address3: alamatLengkap.text.length >= 60 ? alamatLengkap.text.substring(60, alamatLengkap.text.length) : '',
         city: kotaPengirim.text.toUpperCase(),
         zip: kodePos.text,
         region: senderOrigin?.region?.name,

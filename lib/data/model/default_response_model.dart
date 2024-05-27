@@ -19,7 +19,7 @@ class DefaultResponseModel <T> {
     this._payload = payload;
   }
 
-  DefaultResponseModel.fromJson(dynamic json, T payload) {
+  DefaultResponseModel.fromJson(dynamic json, T? payload) {
     this._code = json["code"];
     this._message = json["message"];
     this._payload = payload;

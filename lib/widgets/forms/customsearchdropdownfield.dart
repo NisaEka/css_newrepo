@@ -1,7 +1,9 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomSearchDropdownField<T> extends StatelessWidget {
   final Future<List<T>> Function(String) asyncItems;
@@ -66,7 +68,7 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
                   // fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(
-              label: Text(hintText ?? ''),
+              label: Text(selectedItem ?? hintText ?? ''),
               filled: true,
               fillColor: Theme.of(context).brightness == Brightness.light ? neutralColor : greyColor,
               prefixIcon: prefixIcon,
@@ -87,7 +89,13 @@ class CustomSearchDropdownField<T> extends StatelessWidget {
             if (isRequired) {
               if (value == null || value == hintText || value == label) {
                 // return validator!(value as T);
-                return "This field is required";
+                // StorageCore().readString(StorageCore.localeApp).then((value) {
+                //   if (value == 'id') {
+                //     return "Masukan tidak boleh kosong";
+                //   } else {
+                    return "Masukan tidak boleh kosong".tr;
+                //   }
+                // });
               }
             }
             return null;

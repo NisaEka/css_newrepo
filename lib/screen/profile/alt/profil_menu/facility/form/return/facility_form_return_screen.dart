@@ -10,6 +10,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class FacilityFormReturnScreen extends StatelessWidget {
@@ -82,6 +83,9 @@ class FacilityFormReturnScreen extends StatelessWidget {
                             CustomTextFormField(
                               controller: controller.returnAddress,
                               hintText: 'Alamat Pelanggan'.tr,
+                              validator: ValidationBuilder()
+                                .maxLength(128)
+                                .build(),
                             ),
                             CustomSearchDropdownField<Destination>(
                               asyncItems: (String filter) => controller.getDestinationList(filter),
@@ -108,14 +112,23 @@ class FacilityFormReturnScreen extends StatelessWidget {
                             CustomTextFormField(
                               controller: controller.returnPhone,
                               hintText: 'No. Telepon',
+                              validator: ValidationBuilder()
+                                .phone()
+                                .build(),
                             ),
                             CustomTextFormField(
                               controller: controller.returnWhatsAppNumber,
                               hintText: 'No. WhatsApp',
+                              validator: ValidationBuilder()
+                                .phone()
+                                .build(),
                             ),
                             CustomTextFormField(
                               controller: controller.returnResponsibleName,
                               hintText: 'Nama Penanggung Jawab',
+                              validator: ValidationBuilder()
+                                .maxLength(32)
+                                .build(),
                             ),
                             CustomDropDownFormField(
                               hintText: 'Jenis NPWP'.tr,
@@ -139,10 +152,18 @@ class FacilityFormReturnScreen extends StatelessWidget {
                             CustomTextFormField(
                               controller: controller.npwpNumber,
                               hintText: 'Nomor NPWP'.tr,
+                              inputType: TextInputType.number,
+                              validator: ValidationBuilder()
+                                .minLength(15)
+                                .maxLength(15)
+                                .build(),
                             ),
                             CustomTextFormField(
                               controller: controller.npwpName,
                               hintText: 'Nama NPWP'.tr,
+                              validator: ValidationBuilder()
+                                .maxLength(32)
+                                .build()
                             ),
                             Container(
                                 width: Get.width,

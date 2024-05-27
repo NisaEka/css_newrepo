@@ -1,3 +1,5 @@
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+
 class GetReferalModel {
   GetReferalModel({
     num? code,
@@ -54,47 +56,49 @@ class GetReferalModel {
 
 class ReferalModel {
   ReferalModel({
+    String? counter,
     String? id,
     String? name,
     String? defaultOrigin,
-    String? origin,
-    String? counter,
+    Origin? origin,
   }) {
+    _counter = counter;
     _id = id;
     _name = name;
     _defaultOrigin = defaultOrigin;
     _origin = origin;
-    _counter = counter;
   }
 
   ReferalModel.fromJson(dynamic json) {
+    _counter = json['counter'];
     _id = json['id'];
     _name = json['name'];
     _defaultOrigin = json['default_origin'];
-    _origin = json['origin'];
-    _counter = json['counter'];
+    _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
   }
 
+  String? _counter;
   String? _id;
   String? _name;
   String? _defaultOrigin;
-  String? _origin;
-  String? _counter;
+  Origin? _origin;
 
   ReferalModel copyWith({
+    String? counter,
     String? id,
     String? name,
     String? defaultOrigin,
-    String? origin,
-    String? counter,
+    Origin? origin,
   }) =>
       ReferalModel(
+        counter: counter ?? _counter,
         id: id ?? _id,
         name: name ?? _name,
         defaultOrigin: defaultOrigin ?? _defaultOrigin,
         origin: origin ?? _origin,
-        counter: counter ?? _counter,
       );
+
+  String? get counter => _counter;
 
   String? get id => _id;
 
@@ -102,17 +106,17 @@ class ReferalModel {
 
   String? get defaultOrigin => _defaultOrigin;
 
-  String? get origin => _origin;
-
-  String? get counter => _counter;
+  Origin? get origin => _origin;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['counter'] = _counter;
     map['id'] = _id;
     map['name'] = _name;
     map['default_origin'] = _defaultOrigin;
-    map['origin'] = _origin;
-    map['counter'] = _counter;
+    if (_origin != null) {
+      map['origin'] = _origin?.toJson();
+    }
     return map;
   }
 }

@@ -3,14 +3,17 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_controller.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_screen.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/bar/offlinebar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class InformasiPenerimaScreen extends StatefulWidget {
@@ -39,35 +42,35 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                         steps: controller.steps,
                       ),
                       const SizedBox(height: 10),
-                      // !controller.isOnline ? const OfflineBar() : const SizedBox(),
+                      controller.isOnline ? const SizedBox() : const OfflineBar(),
                     ],
                   ),
                   action: [
-                    controller.isOnline
-                        ? const SizedBox()
-                        : Tooltip(
-                            key: controller.offlineTooltipKey,
-                            triggerMode: TooltipTriggerMode.tap,
-                            showDuration: const Duration(seconds: 3),
-                            decoration: ShapeDecoration(
-                              color: greyColor,
-                              shape: ToolTipCustomShape(usePadding: false),
-                            ),
-                            // textStyle: listTitleTextStyle.copyWith(color: whiteColor),
-                            message: 'Offline Mode',
-                            child: Container(
-                              margin: const EdgeInsets.only(right: 20),
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: successColor,
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: const Icon(
-                                Icons.cloud_off,
-                                color: whiteColor,
-                              ),
-                            ),
-                          )
+                    // controller.isOnline
+                    //     ? const SizedBox()
+                    //     : Tooltip(
+                    //         key: controller.offlineTooltipKey,
+                    //         triggerMode: TooltipTriggerMode.tap,
+                    //         showDuration: const Duration(seconds: 3),
+                    //         decoration: ShapeDecoration(
+                    //           color: greyColor,
+                    //           shape: ToolTipCustomShape(usePadding: false),
+                    //         ),
+                    //         // textStyle: listTitleTextStyle.copyWith(color: whiteColor),
+                    //         message: 'Offline Mode',
+                    //         child: Container(
+                    //           margin: const EdgeInsets.only(right: 20),
+                    //           padding: const EdgeInsets.all(5),
+                    //           decoration: BoxDecoration(
+                    //             color: successColor,
+                    //             borderRadius: BorderRadius.circular(50),
+                    //           ),
+                    //           child: const Icon(
+                    //             Icons.cloud_off,
+                    //             color: whiteColor,
+                    //           ),
+                    //         ),
+                    //       )
                   ],
                 ),
                 body: SingleChildScrollView(
@@ -89,8 +92,12 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                 child: Column(
                                   children: [
                                     GestureDetector(
-                                      onTap: () async => controller.selectedReceiver = await Get.to(const ListPenerimaScreen())?.then(
-                                        (result) => controller.getSelectedReceiver(result),
+                                      onTap: () => Get.to(const ListPenerimaScreen())?.then(
+                                        (result) {
+                                          controller.receiver = result;
+                                          controller.update();
+                                          controller.getSelectedReceiver();
+                                        },
                                       ),
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
@@ -115,6 +122,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                       hintText: "Nama Penerima".tr,
                                       prefixIcon: const Icon(Icons.person),
                                       isRequired: true,
+                                      validator: ValidationBuilder().name().build(),
                                     ),
                                     CustomTextFormField(
                                       controller: controller.nomorTelpon,
@@ -122,6 +130,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                       inputType: TextInputType.number,
                                       prefixIcon: const Icon(Icons.phone),
                                       isRequired: true,
+                                      validator: ValidationBuilder().phoneNumber().build(),
                                     ),
                                     CustomSearchDropdownField<Destination>(
                                       asyncItems: (String filter) =>
@@ -146,8 +155,6 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                       onChanged: (value) {
                                         controller.selectedDestination = value;
                                         controller.update();
-                                        print(controller.selectedDestination?.id);
-                                        // print(jsonEncode(value));
                                       },
                                       value: controller.selectedDestination,
                                       isRequired: controller.selectedDestination == null ? true : false,
@@ -162,8 +169,9 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                       prefixIcon: const Icon(Icons.location_city),
                                       multiLine: true,
                                       isRequired: true,
+                                      validator: ValidationBuilder().address().build(),
                                     ),
-                                    controller.isOnline
+                                    controller.isOnline && controller.isSaveReceiver()
                                         ? CustomFilledButton(
                                             color: whiteColor,
                                             title: 'Simpan Data Penerima'.tr,

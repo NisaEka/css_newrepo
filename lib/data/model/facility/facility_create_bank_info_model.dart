@@ -21,7 +21,7 @@ class FacilityCreateBankInfoModel {
   }
 
   setAccountName(String accountName) {
-    _accountName = _accountName;
+    _accountName = accountName;
   }
 
   setAccountImageUrl(String accountImageUrl) {

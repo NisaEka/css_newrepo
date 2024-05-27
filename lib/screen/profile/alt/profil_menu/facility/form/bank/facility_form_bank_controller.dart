@@ -4,6 +4,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/bank/bank_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_bank_info_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,9 +23,9 @@ class FacilityFormBankController extends BaseController {
 
   final accountNumber = TextEditingController();
   final accountName = TextEditingController();
-  final accountUrl = TextEditingController();
 
   File? pickedImage;
+  String? pickedImageUrl;
 
   bool _showLoadingIndicator = false;
   bool get showLoadingIndicator => _showLoadingIndicator;
@@ -61,6 +62,16 @@ class FacilityFormBankController extends BaseController {
     if (image != null) {
       pickedImage = File(image.path);
       update();
+      sendImageToServer();
+    }
+  }
+
+  sendImageToServer() async {
+    if (pickedImage != null) {
+      storageRepository.postStorage(pickedImage!)
+          .then((storage) {
+        pickedImageUrl = storage.payload?.fileAbsolutePath;
+      });
     }
   }
 
@@ -69,7 +80,7 @@ class FacilityFormBankController extends BaseController {
     bankInfo.setBankId(selectedBank!.id);
     bankInfo.setAccountNumber(accountNumber.text);
     bankInfo.setAccountName(accountName.text);
-    bankInfo.setAccountImageUrl("https://storage.api.css.jne.co.id/mbckdiwjwkerjwp.png");
+    bankInfo.setAccountImageUrl(pickedImageUrl ?? "-");
     facilityCreateArgs.setBankInfo(bankInfo);
   }
 
@@ -83,8 +94,8 @@ class FacilityFormBankController extends BaseController {
           SuccessScreen(
             message: 'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'.tr,
             buttonTitle: 'Selesai'.tr,
-            nextAction: () => Get.off(
-                const FacilityScreen()
+            nextAction: () => Get.offAll(
+                const DashboardScreen()
             ),
           ),
         );

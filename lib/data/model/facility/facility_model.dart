@@ -9,6 +9,9 @@ class FacilityModel {
   String _type = "";
   String get type => _type;
 
+  String _description = "description";
+  String get description => _description;
+
   bool _enabled = false;
   bool get enabled => _enabled;
 
@@ -29,57 +32,11 @@ class FacilityModel {
     _canUse = canUse;
   }
 
-  List<FacilityModel> getCodFacilities() {
-    final List<FacilityModel> facilities = [];
-
-    facilities.add(FacilityModel(
-      icon: "assets/images/img_cod_gak_mau_ribet.png",
-      name: "Gak Mau Ribet",
-      enabled: false,
-      canUse: true
-    ));
-
-    facilities.add(FacilityModel(
-        icon: "assets/images/img_cod_bayar_ongkir_diawal.png",
-        name: "Bayar Ongkir diawal",
-        enabled: false,
-        canUse: true
-    ));
-
-    facilities.add(FacilityModel(
-        icon: "assets/images/img_cod_bayar_ongkir_diakhir.png",
-        name: "Bayar Ongkir diakhir",
-        enabled: false,
-        canUse: true
-    ));
-
-    return facilities;
-  }
-
-  List<FacilityModel> getNonCodFacilities() {
-    final List<FacilityModel> facilities = [];
-
-    facilities.add(FacilityModel(
-        icon: "assets/images/img_ncod_gak_mau_ribet.png",
-        name: "Gak Mau Ribet",
-        enabled: true,
-        canUse: false
-    ));
-
-    facilities.add(FacilityModel(
-        icon: "assets/images/img_ncod_bayar_ongkir_nanti.png",
-        name: "Bayar Ongkir Nanti",
-        enabled: false,
-        canUse: true
-    ));
-
-    return facilities;
-  }
-
   FacilityModel.fromJson(dynamic json) {
     _icon = json["image_url"];
     _name = json["name"];
     _type = json["type"];
+    _description = json["description"];
     _enabled = json["enabled"];
     _canUse = json["can_use"];
   }

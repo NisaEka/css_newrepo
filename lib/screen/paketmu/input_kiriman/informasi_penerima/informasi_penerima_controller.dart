@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
@@ -30,7 +31,7 @@ class InformasiPenerimaController extends BaseController {
   final alamatLengkap = TextEditingController();
 
   bool isLoading = false;
-  bool isOnline = false;
+  bool isOnline = true;
   bool isLoadSave = false;
 
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
@@ -38,7 +39,7 @@ class InformasiPenerimaController extends BaseController {
 
   GetDestinationModel? destinationModel;
   Destination? selectedDestination;
-  ReceiverModel? selectedReceiver;
+  ReceiverModel? receiver;
 
   @override
   void onInit() {
@@ -52,6 +53,24 @@ class InformasiPenerimaController extends BaseController {
       connection.isOnline().then((value) {
         isOnline = value && (result != ConnectivityResult.none);
         update();
+        if (isOnline) {
+          Get.showSnackbar(
+            GetSnackBar(
+              padding: const EdgeInsets.symmetric(vertical: 1.5),
+              margin: const EdgeInsets.only(top: 195),
+              snackPosition: SnackPosition.TOP,
+              messageText: Center(
+                child: Text(
+                  'Online Mode'.tr,
+                  style: listTitleTextStyle.copyWith(color: whiteColor),
+                ),
+              ),
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: successColor.withOpacity(0.7),
+            ),
+          );
+        }
       });
       update();
     }));
@@ -72,25 +91,32 @@ class InformasiPenerimaController extends BaseController {
     }
   }
 
-  FutureOr<ReceiverModel?> getSelectedReceiver(ReceiverModel receiver) async {
-    namaPenerima.text = receiver.name?.toUpperCase() ?? '';
-    nomorTelpon.text = receiver.phone ?? '';
-    kotaTujuan.text = receiver.idDestination ?? '';
-    alamatLengkap.text = receiver.address?.toUpperCase() ?? '';
-    getDestinationList(receiver.city?.split(',').first ?? '');
+  FutureOr<ReceiverModel?> getSelectedReceiver() async {
+    namaPenerima.text = receiver?.name?.toUpperCase() ?? '';
+    nomorTelpon.text = receiver?.phone ?? '';
+    kotaTujuan.text = receiver?.idDestination ?? '';
+    alamatLengkap.text = receiver?.address?.toUpperCase() ?? '';
+    getDestinationList(receiver?.city?.split(',').first ?? '');
     selectedDestination = Destination(
-      id: receiver.idDestination?.toInt(),
-      destinationCode: receiver.destinationCode,
-      cityName: receiver.city,
-      countryName: receiver.country,
-      districtName: receiver.receiverDistrict,
-      provinceName: receiver.region,
-      subDistrictName: receiver.receiverSubDistrict,
-      zipCode: receiver.zipCode,
+      id: receiver?.idDestination?.toInt(),
+      destinationCode: receiver?.destinationCode,
+      cityName: receiver?.city,
+      countryName: receiver?.country,
+      districtName: receiver?.receiverDistrict,
+      provinceName: receiver?.region,
+      subDistrictName: receiver?.receiverSubDistrict,
+      zipCode: receiver?.zipCode,
     );
 
     update();
     return receiver;
+  }
+
+  bool isSaveReceiver() {
+    if (receiver?.name != namaPenerima.text && receiver?.phone != nomorTelpon.text) {
+      return true;
+    }
+    return false;
   }
 
   Future<List<Destination>> getDestinationList(String keyword) async {

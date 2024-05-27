@@ -1,10 +1,12 @@
 import 'package:css_mobile/data/model/auth/get_agent_model.dart';
+import 'package:css_mobile/data/model/auth/get_check_mail_model.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
+import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
@@ -130,6 +132,21 @@ class AuthRepositoryImpl extends AuthRepository {
       return LoginModel.fromJson(response.data);
     } on DioException catch (e) {
       return LoginModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<GetCheckMailModel> getCheckMail(String email) async {
+    try {
+      Response response = await network.dio.get(
+        '/auth/registration/mail_check/$email',
+      );
+      // Response response = await Dio().get(
+      //   'https://api.mailcheck.ai/email/$email',
+      // );
+      return GetCheckMailModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return GetCheckMailModel.fromJson(e.response?.data);
     }
   }
 }

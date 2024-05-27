@@ -12,6 +12,7 @@ class LanguageID {
       "change_password": "Masukan email anda dan kami akan mengirimkan pin untuk mengubah password anda",
       "login_failed": "Email atau password anda salah",
       "User Not Found": "Email yang anda masukan tidak terdaftar",
+      "Online Mode": "Mode Online",
     };
   }
 }

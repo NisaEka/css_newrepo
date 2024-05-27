@@ -50,6 +50,8 @@ class AddPenerimaScreen extends StatelessWidget {
                                 hintText: "Nama Penerima".tr,
                                 prefixIcon: const Icon(Icons.person),
                                 isRequired: true,
+                                validator: ValidationBuilder().name().build(),
+
                               ),
                               CustomTextFormField(
                                 controller: controller.noHP,
@@ -92,6 +94,8 @@ class AddPenerimaScreen extends StatelessWidget {
                                 prefixIcon: const Icon(Icons.location_city),
                                 multiLine: true,
                                 isRequired: true,
+                                validator: ValidationBuilder().address().build(),
+
                               ),
                               CustomFilledButton(
                                 color: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,

@@ -36,18 +36,20 @@ class TambahPetugasScreen extends StatelessWidget {
                     children: [
                       Form(
                         key: controller.formKey,
+                        onChanged: () => controller.setLocale(),
                         child: Column(
                           children: [
                             CustomTextFormField(
                               controller: controller.namaPetugas,
                               hintText: 'Nama Petugas'.tr,
                               isRequired: true,
+                              validator: ValidationBuilder().name().build(),
                             ),
                             CustomTextFormField(
                               controller: controller.alamatEmail,
                               hintText: 'Alamat Email'.tr,
                               isRequired: true,
-                              validator: ValidationBuilder().email().minLength(10).build(),
+                              validator: ValidationBuilder(localeName: controller.locale).email().minLength(10).build(),
                               inputFormatters: [
                                 TextInputFormatter.withFunction((oldValue, newValue) {
                                   return newValue.copyWith(text: newValue.text.toLowerCase());
@@ -226,6 +228,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                       CustomTextFormField(
                                         controller: controller.alamat,
                                         hintText: 'Alamat'.tr,
+                                        validator: ValidationBuilder().address().build(),
                                       ),
                                       CustomTextFormField(
                                         controller: controller.zipCode,

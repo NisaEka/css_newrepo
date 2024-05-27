@@ -1,13 +1,13 @@
-import 'dart:math';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_agent_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends BaseController {
@@ -29,14 +29,18 @@ class SignUpController extends BaseController {
   bool isLoadReferal = false;
   bool isLoadAgent = false;
   bool isLoading = false;
-  bool pickOrigin = false;
+  bool isDefaultOrigin = false;
+  bool isSelectCounter = true;
   Origin? selectedOrigin;
   AgentModel? selectedAgent;
   ReferalModel? selectedReferal;
+  String? locale;
 
-  @override
-  void onInit() {
-    super.onInit();
+  Future<void> initData() async {
+    locale = await storage.readString(StorageCore.localeApp);
+    ValidationBuilder.setLocale(locale!);
+
+    update();
   }
 
   Future<List<Origin>> getOriginList(String keyword) async {
@@ -67,6 +71,33 @@ class SignUpController extends BaseController {
     });
 
     isLoadAgent = false;
+    update();
+  }
+
+  Future<void> mailValidation() async {
+    isLoading = true;
+    update();
+    try {
+      await auth
+          .getCheckMail(email.text)
+          .then((value) => value.payload?.disposable == true || value.payload?.publicDomain == false || value.payload?.mx == false
+              ? Get.showSnackbar(
+                  GetSnackBar(
+                    icon: const Icon(
+                      Icons.warning,
+                      color: whiteColor,
+                    ),
+                    message: 'CSS tidak menerima pendaftaran menggunakan email temporary'.tr,
+                    isDismissible: true,
+                    duration: const Duration(seconds: 3),
+                    backgroundColor: errorColor,
+                  ),
+                )
+              : saveRegistration());
+    } catch (e) {
+      e.printError();
+    }
+    isLoading = false;
     update();
   }
 
@@ -104,7 +135,7 @@ class SignUpController extends BaseController {
           Get.to(const SignUpOTPScreen(), arguments: {
             'email': email.text,
           });
-        } else {
+        } else if (value.code == 409 || value.message == "Conflict") {
           Get.showSnackbar(
             GetSnackBar(
               icon: const Icon(
@@ -127,18 +158,24 @@ class SignUpController extends BaseController {
     update();
   }
 
-  Future<void> onSelectReferal(ReferalModel value)async{
+  Future<void> onSelectReferal(ReferalModel value) async {
     kodeReferal.text = value.name ?? '';
     selectedReferal = value;
+    selectedOrigin = value.origin;
+    isDefaultOrigin = value.defaultOrigin == "FIXED" ? true : false;
+    isSelectCounter = value.counter == null ? true : false;
     update();
-
-    if(value.name == "SR12"){
-      pickOrigin = true;
+    kotaPengirim.text = selectedOrigin?.originName ?? '';
+    branchCode = selectedOrigin?.branchCode;
+    pakaiJNE = value.counter != null;
+    update();
+    getAgentList();
+    if (value.counter != null) {
+      selectedAgent = agenList.where((e) => e.custName == value.counter).first;
       update();
-      // selectedOrigin =
-    }
-    else{
-      pickOrigin = false;
+      selectedAgent?.custName.printInfo(info: "selectedAgent");
+    } else {
+      selectedAgent = null;
       update();
     }
   }

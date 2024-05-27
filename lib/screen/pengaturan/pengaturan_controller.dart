@@ -49,12 +49,12 @@ class PengaturanController extends BaseController {
   void changeLanguage(String language) async {
     if (language == "ID") {
       Get.updateLocale(const Locale("id", "ID"));
-      await storage.writeString(StorageCore.localeApp, "id_ID");
-      lang = "id_ID";
+      await storage.writeString(StorageCore.localeApp, "id");
+      lang = "id";
     } else {
       Get.updateLocale(const Locale("en", "US"));
-      await storage.writeString(StorageCore.localeApp, "en_US");
-      lang = "en_US";
+      await storage.writeString(StorageCore.localeApp, "en");
+      lang = "en";
     }
 
     initData();

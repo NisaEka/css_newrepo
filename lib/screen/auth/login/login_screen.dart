@@ -3,7 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/auth/forgot_password/input_email_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
-import 'package:css_mobile/util/validator/custom_validation_builder.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: controller.pop,
-            onPopInvoked: (didPop) => controller.onPop(),
+            onPopInvoked: (didPop) => Get.off(const DashboardScreen()),
             child: Stack(
               children: [
                 Scaffold(
@@ -36,6 +36,7 @@ class LoginScreen extends StatelessWidget {
                         const LogoHeader(),
                         Form(
                           key: controller.formKey,
+                          onChanged: () => controller.initData(),
                           autovalidateMode: AutovalidateMode.always,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 40, right: 40, top: 30),
@@ -55,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                                   isRequired: true,
                                   // focusNode: controller.emailFocus,
                                   onSubmit: (_) {},
-                                  validator: ValidationBuilder().email().minLength(10).build(),
+                                  validator: ValidationBuilder(localeName: controller.lang).email().minLength(10).maxLength(50).build(),
                                   inputFormatters: [
                                     TextInputFormatter.withFunction((oldValue, newValue) {
                                       return newValue.copyWith(text: newValue.text.toLowerCase());
@@ -71,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                                   // validator: ValidationBuilder().password().build(),
                                   isObscure: controller.isObscurePasswordLogin,
                                   multiLine: false,
-                                  inputFormatters: [],
+                                  inputFormatters: const [],
                                   // focusNode: controller.passFocus,
                                   suffixIcon: IconButton(
                                     icon: controller.showIcon,
