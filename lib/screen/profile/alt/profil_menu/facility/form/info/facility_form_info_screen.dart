@@ -10,6 +10,7 @@ import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class FacilityFormInfoScreen extends StatelessWidget {
@@ -65,31 +66,46 @@ class FacilityFormInfoScreen extends StatelessWidget {
                             CustomTextFormField(
                               controller: controller.brand,
                               hintText: 'Nama Toko / Perusahaan',
+                              validator: ValidationBuilder()
+                                .maxLength(32)
+                                .build()
                             ),
                             CustomTextFormField(
                               controller: controller.idCardNumber,
                               hintText: 'No Identitas / KTP',
                               inputType: TextInputType.number,
                               inputFormatters: const [],
+                              validator: ValidationBuilder()
+                                .maxLength(16)
+                                .minLength(16)
+                                .build()
                             ),
                             Container(
                               width: Get.width,
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.black)
+                                border: Border.all(
+                                  color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+                                )
                               ),
-                              child: _imagePickerContent(controller)
+                              child: _imagePickerContent(context, controller)
                             ),
                             CustomTextFormField(
                               controller: controller.fullName,
                               hintText: 'Nama Lengkap',
                               inputType: TextInputType.name,
+                              validator: ValidationBuilder()
+                                .maxLength(32)
+                                .build(),
                             ),
                             CustomTextFormField(
                               controller: controller.fullAddress,
                               hintText: 'Alamat Lengkap',
                               inputType: TextInputType.streetAddress,
+                              validator: ValidationBuilder()
+                                .maxLength(128)
+                                .build(),
                             ),
                             CustomSearchDropdownField<Destination>(
                               asyncItems: (String filter) => controller.getDestinationList(filter),
@@ -117,17 +133,29 @@ class FacilityFormInfoScreen extends StatelessWidget {
                               controller: controller.phone,
                               hintText: 'No. Telp',
                               inputType: TextInputType.phone,
+                              validator: ValidationBuilder()
+                                .maxLength(15)
+                                .phone()
+                                .build(),
                             ),
                             CustomTextFormField(
                               controller: controller.whatsAppPhone,
                               hintText: 'No. WhatsApp',
                               inputType: TextInputType.phone,
+                              validator: ValidationBuilder()
+                                .maxLength(15)
+                                .phone()
+                                .build()
                             ),
                             CustomTextFormField(
                               controller: controller.email,
                               hintText: 'Email',
                               inputType: TextInputType.emailAddress,
                               inputFormatters: const [],
+                              validator: ValidationBuilder()
+                                  .maxLength(64)
+                                  .email()
+                                  .build()
                             )
                           ],
                         ),
@@ -142,7 +170,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget _imagePickerContent(FacilityFormInfoController controller) {
+  Widget _imagePickerContent(BuildContext context, FacilityFormInfoController controller) {
     if (controller.pickedImage != null) {
       return Container(
         decoration: BoxDecoration(
@@ -158,7 +186,12 @@ class FacilityFormInfoScreen extends StatelessWidget {
         onPressed: () {
           controller.pickImage();
         },
-        child: const Text('Pilih Gambar Identitas / KTP'),
+        child: Text(
+          'Pilih Gambar Identitas / KTP',
+          style:  sublistTitleTextStyle.copyWith(
+            color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
+          ),
+        ),
       );
     }
   }

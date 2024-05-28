@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_controller.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/detail/doc/aggregation_minus_doc_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggminus_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_item.dart';
@@ -12,9 +13,18 @@ import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class AggregationMinusScreen extends StatelessWidget {
+class AggregationMinusScreen extends StatefulWidget {
+
   const AggregationMinusScreen({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _AggregationMinusScreenState();
+
+}
+
+class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +41,34 @@ class AggregationMinusScreen extends StatelessWidget {
                 children: [
                   const AggMinusBox(),
                   CustomSearchField(
-                    controller: TextEditingController(),
+                    controller: controller.searchField,
                     hintText: 'Cari Data Aggregasi Minus'.tr,
                     prefixIcon: SvgPicture.asset(
                       IconsConstant.search,
                       color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
                     ),
+                    onChanged: (value) {
+                      controller.searchField.text = value;
+                      controller.update();
+                      controller.pagingController.refresh();
+                    },
+                    onClear: () {
+                      controller.searchField.clear();
+                      controller.pagingController.refresh();
+                    },
                   ),
                   Expanded(
-                    child: ListView(
-                      children: controller.aggregations.map((aggregation) {
-                        return _aggregationItem(aggregation);
-                      }).toList()
+                    child: RefreshIndicator(
+                      onRefresh: () => Future.sync(() => controller.pagingController.refresh()),
+                      child: PagedListView<int, AggregationMinusModel>(
+                        pagingController: controller.pagingController,
+                        builderDelegate: PagedChildBuilderDelegate<AggregationMinusModel>(
+                            transitionDuration: const Duration(milliseconds: 500),
+                            itemBuilder: (context, item, index) => _aggregationItem(item),
+                          firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+
+                        ),
+                      ),
                     ),
                   )
                 ],
@@ -54,12 +80,12 @@ class AggregationMinusScreen extends StatelessWidget {
 
   Widget _aggregationItem(AggregationMinusModel aggregation) {
     return AggregationMinusItem(
-      data: aggregation,
-      onTap: () => {
-        Get.to(const AggregationMinusDocScreen(), arguments: {
-          "doc": aggregation.aggMinDoc
-        })
-      }
+        data: aggregation,
+        onTap: () => {
+          Get.to(const AggregationMinusDocScreen(), arguments: {
+            "doc": aggregation.aggMinDoc
+          })
+        }
     );
   }
 
