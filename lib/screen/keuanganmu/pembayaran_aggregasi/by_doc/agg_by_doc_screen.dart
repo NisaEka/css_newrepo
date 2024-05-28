@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_cnote/agg_by_cnote_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_doc/agg_by_doc_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -37,7 +38,7 @@ class AggByDocScreen extends StatelessWidget {
         children: [
           PaymentBox(
             title: "Document No".tr,
-            value: "# JNEPWD2400000662",
+            value: "# ${c.aggregationID}",
           ),
           CustomSearchField(
             controller: c.searchField,
@@ -56,24 +57,24 @@ class AggByDocScreen extends StatelessWidget {
               c.pagingController.refresh();
             },
           ),
-          ReportListItem(
-            isShowDetail: false,
-            onTap: () => Get.to(const AggByCnoteScreen()),
-          ),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () => Future.sync(
                 () => c.pagingController.refresh(),
               ),
-              child: PagedListView<int, dynamic>(
+              child: PagedListView<int, AggregationDetailModel>(
                 pagingController: c.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                builderDelegate: PagedChildBuilderDelegate<AggregationDetailModel>(
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => ReportListItem(
-                    status: item.statusGv,
-                    data: item,
+                    det: item,
                     isShowDetail: false,
-                    onTap: () => Get.to(const AggByCnoteScreen()),
+                    onTap: () => Get.to(
+                      const AggByCnoteScreen(),
+                      arguments: {
+                        "cnote_data": item,
+                      },
+                    ),
                   ),
                   firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(

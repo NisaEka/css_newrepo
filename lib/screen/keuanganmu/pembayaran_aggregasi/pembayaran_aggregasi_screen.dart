@@ -73,7 +73,12 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                   itemBuilder: (context, item, index) => ReportListItem(
                     status: item.statusGv,
                     data: item,
-                    onTapButton: () => Get.to(const AggByDocScreen()),
+                    onTapButton: () => Get.to(
+                      const AggByDocScreen(),
+                      arguments: {
+                        'aggregationID': item.aggDocNo ?? '',
+                      },
+                    ),
                   ),
                   firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(

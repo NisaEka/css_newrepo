@@ -2,6 +2,7 @@ import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_existing_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -62,10 +63,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
     var token = await storageSecure.read(key: 'token');
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {
-      var response = await network.dio.post(
-        '/profile/ccrf',
-        data: data.toJson()
-      );
+      var response = await network.dio.post('/profile/ccrf', data: data.toJson());
       return DefaultResponseModel.fromJson(response.data, '');
     } on DioException catch (e) {
       return DefaultResponseModel.fromJson(e.response?.data, '');
@@ -78,14 +76,26 @@ class ProfilRepositoryImpl extends ProfilRepository {
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      var response = await network.dio.post(
-        '/profile/ccrf/existing',
-        data: data.toJson()
-      );
+      var response = await network.dio.post('/profile/ccrf/existing', data: data.toJson());
       return DefaultResponseModel.fromJson(response.data, '');
     } on DioException catch (e) {
       return DefaultResponseModel.fromJson(e.response?.data, '');
     }
+  }
 
+  @override
+  Future<GetCcrfActivityModel> getCcrfActivity() async {
+    var token = await storageSecure.read(key: 'token');
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.local.options.headers['Authorization'] = 'Bearer $token';
+
+    try {
+      var response = await network.dio.get(
+        '/ccrf-activity',
+      );
+      return GetCcrfActivityModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return GetCcrfActivityModel.fromJson(e.response?.data);
+    }
   }
 }

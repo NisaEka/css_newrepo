@@ -300,6 +300,8 @@ class LanguageEN {
       "Informasi Kiriman": "Shipment Info",
       "Informasi Aggregasi": "Aggregation Info",
       "Detail Aggregasi": "Aggregation Detail",
+      "Log Aktivitas": "Log Activity",
+      "Log Aktivitas Kosong": "No Log Activity"
     };
   }
 }

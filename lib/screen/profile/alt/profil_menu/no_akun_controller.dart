@@ -1,5 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -11,6 +12,7 @@ class NoAkunController extends BaseController {
   bool isLoading = false;
 
   List<Account> accountList = [];
+  List<CcrfActivityModel> logActivityList = [];
 
   @override
   void onInit() {
@@ -24,6 +26,11 @@ class NoAkunController extends BaseController {
     try {
       await transaction.getAccountNumber().then((value) {
         accountList.addAll(value.payload ?? []);
+        update();
+      });
+
+      await profil.getCcrfActivity().then((value) {
+        logActivityList.addAll(value.payload ?? []);
         update();
       });
     } catch (e, i) {

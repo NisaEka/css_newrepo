@@ -1,6 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_cnote/agg_by_cnote_controller.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/lappembayaran_box.dart';
@@ -30,8 +32,8 @@ class AggByCnoteScreen extends StatelessWidget {
       child: Column(
         children: [
           PaymentBox(
-            title: "Document No".tr,
-            value: "# JNEPWD2400000662",
+            title: "Connote No".tr,
+            value: "# ${c.data.cnoteNo}",
           ),
           Expanded(
             child: ListView(
@@ -40,29 +42,29 @@ class AggByCnoteScreen extends StatelessWidget {
                   label: "Informasi Kiriman".tr,
                   isBold: true,
                 ),
-                const ValueItem(
-                  title: "80774504 - HUDA MUSLIM / COD",
+                ValueItem(
+                  title: c.data.custName ?? '',
                   fontSize: 12,
                   width: 0,
                 ),
                 ValueItem(
                   title: "Tanggal Cnote".tr,
-                  value: '24-APR-24',
+                  value: c.data.cnoteDate?.toShortDateFormat() ?? '-',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Order ID".tr,
-                  value: '191613172',
+                  value: c.data.orderIdTmp ?? '-',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "POD".tr,
-                  value: 'D01 - D - Delivered',
+                  value: '${c.data.podCode ?? ''} - ${c.data.podGroupName ?? '-'}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Tanggal POD".tr,
-                  value: '13-05-2024 22:32:06',
+                  value: c.data.podDateSys?.toDateTimeFormat(),
                   fontSize: 12,
                 ),
                 const Divider(
@@ -75,17 +77,17 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 ValueItem(
                   title: "Document No".tr,
-                  value: 'JNEPWD2400026931',
+                  value: c.data.aggDocNo ?? '-',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Pay Reff".tr,
-                  value: 'JNEPNW2400023328',
+                  value: c.data.aggPayReff ?? '-',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Tanggal Aggregasi".tr,
-                  value: '14-MAY-24',
+                  value: c.data.aggDocDate?.toShortDateFormat() ?? '-',
                   fontSize: 12,
                 ),
                 const Divider(
@@ -98,79 +100,84 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 ValueItem(
                   title: "COD Amount".tr,
-                  value: 'Rp165.000',
+                  value: 'Rp ${c.data.codAmount?.toInt().toCurrency()}',
                   fontSize: 12,
                   valueFontColor: blueJNE,
                 ),
                 const Divider(),
                 ValueItem(
                   title: "Freight Charge".tr,
-                  value: 'Rp165.000',
+                  value: 'Rp ${c.data.freightCharge?.toInt().toCurrency()}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Insurance Charge".tr,
-                  value: 'Rp165.000',
+                  value: 'Rp ${c.data.insuranceCharge?.toInt().toCurrency()}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Discount".tr,
-                  value: 'Rp165.000',
+                  value: 'Rp ${c.data.discount?.toInt().toCurrency()}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Freight Charge After Discount".tr,
-                  value: '-Rp165.000',
+                  value: '-Rp ${c.data.fchargeDisc?.toInt().toCurrency()}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Freight Charge VAT".tr,
-                  value: '-Rp165.000',
+                  value: '-Rp ${c.data.fchargeVat?.toInt().toCurrency()}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Packing Fee".tr,
-                  value: '-Rp165.000',
+                  value: 'Rp ${c.data.packingFee?.toInt().toCurrency()}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Surcharge".tr,
-                  value: '-Rp165.000',
+                  value: 'Rp ${c.data.surcharge?.toInt().toCurrency()}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Return Freight Charge After Discount".tr,
-                  value: '-Rp165.000',
+                  value: 'Rp ${c.data.rtfChargeDisc?.toInt().toCurrency()}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Return Freight Charge VAT".tr,
-                  value: '-Rp165.000',
+                  value: 'Rp ${c.data.rtfChargeVat?.toInt().toCurrency()}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 const Divider(),
                 ValueItem(
                   title: "COD Fee Include VAT".tr,
-                  value: '-Rp165.000',
+                  value: 'Rp ${c.data.codFeeVat?.toInt().toCurrency()}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Netto AWB Amount".tr,
-                  value: 'Rp165.000',
-                  valueTextStyle: listTitleTextStyle.copyWith(fontSize: 12, color: successColor, fontWeight: FontWeight.bold),
+                  value: 'Rp ${c.data.netAwbAmt?.toInt().toCurrency()}',
+                  fontSize: 12,
+                  valueFontColor: successColor,
                 ),
-                const ValueItem(
+                ValueItem(
                   title: 'Paid Date',
-                  value: '14-05-2024 20:38:00',
+                  value: c.data.paidDate?.toDateTimeFormat() ?? '-',
+                  fontSize: 12,
+                  valueTextStyle: TextStyle(fontWeight: regular, fontSize: 12),
                 ),
-                const SizedBox(height: 50,)
+                const SizedBox(
+                  height: 50,
+                )
               ],
             ),
           )

@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -13,6 +14,7 @@ class ReportListItem extends StatefulWidget {
   final String? status;
   final bool isLoading;
   final AggregationModel? data;
+  final AggregationDetailModel? det;
   final VoidCallback? onTapButton;
   final VoidCallback? onTap;
   final bool isShowDetail;
@@ -25,6 +27,7 @@ class ReportListItem extends StatefulWidget {
     this.onTapButton,
     this.isShowDetail = true,
     this.onTap,
+    this.det,
   });
 
   @override
@@ -97,7 +100,7 @@ class _ReportListItemState extends State<ReportListItem> {
                             width: widget.isLoading ? Get.width / 3 : null,
                             height: widget.isLoading ? 10 : null,
                             child: Text(
-                              widget.data?.aggDocDate?.toDateTimeFormat() ?? '',
+                              widget.data?.aggDocDate?.toDateTimeFormat() ?? widget.det?.cnoteDate?.toDateTimeFormat() ?? '',
                               style: sublistTitleTextStyle,
                             ),
                           ),
@@ -107,7 +110,7 @@ class _ReportListItemState extends State<ReportListItem> {
                             height: widget.isLoading ? 15 : null,
                             margin: widget.isLoading ? const EdgeInsets.only(top: 2) : EdgeInsets.zero,
                             child: Text(
-                              "# ${widget.data?.aggDocNo ?? ''}",
+                              "# ${widget.data?.aggDocNo ?? widget.det?.cnoteNo ?? ''}",
                               style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE),
                             ),
                           ),
