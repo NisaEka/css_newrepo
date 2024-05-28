@@ -5,20 +5,24 @@ import 'package:get/get.dart';
 
 class ValueItem extends StatelessWidget {
   final String title;
-  final String value;
+  final String? value;
   final Color? valueFontColor;
   final TextStyle? valueTextStyle;
   final TextStyle? titleTextStyle;
   final double? fontSize;
+  final double? width;
+  final double? titleWidth;
 
   const ValueItem({
     super.key,
     required this.title,
-    required this.value,
+    this.value,
     this.valueFontColor,
     this.fontSize,
     this.valueTextStyle,
     this.titleTextStyle,
+    this.width,
+    this.titleWidth,
   });
 
   @override
@@ -27,15 +31,18 @@ class ValueItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: titleTextStyle ?? subTitleTextStyle.copyWith(fontSize: fontSize ?? 8),
+        SizedBox(
+          width: titleWidth,
+          child: Text(
+            title,
+            style: titleTextStyle ?? subTitleTextStyle.copyWith(fontSize: fontSize ?? 8),
+          ),
         ),
         Container(
           alignment: Alignment.centerRight,
-          width: Get.width / 2,
+          // width: width ?? Get.width / 2,
           child: Text(
-            value,
+            value ?? '',
             style: valueTextStyle ??
                 listTitleTextStyle.copyWith(
                   fontSize: fontSize ?? 8,

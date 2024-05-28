@@ -23,6 +23,7 @@ class PembayaranAggergasiController extends BaseController {
   bool isSelectAll = false;
 
   String? transDate;
+  int? aggTotal;
 
   List<Account> accountList = [];
   List<Account> selectedAccount = [];
@@ -76,6 +77,10 @@ class PembayaranAggergasiController extends BaseController {
           );
       update();
       selectedAccount.addAll(accountList);
+
+      await aggregation.getAggregationTotal().then((value) {
+        aggTotal = value.payload?.total?.toInt() ?? 0;
+      });
       // print("sama ${}");
     } catch (e) {
       e.printError();

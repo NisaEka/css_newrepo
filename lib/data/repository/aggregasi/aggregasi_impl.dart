@@ -1,6 +1,7 @@
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
+import 'package:css_mobile/data/model/aggregasi/get_aggregation_total_model.dart';
 import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -75,4 +76,30 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     }
   }
 
+  @override
+  Future<GetAggregationTotalModel> getAggregationTotal() async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.local.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.local.get(
+        "/aggregation/total",
+      );
+      print('aggregation response: ${response.data}');
+
+      return GetAggregationTotalModel.fromJson(response.data);
+    } on DioException catch (e) {
+      print("aggregation error : ${e.response?.data}");
+      return GetAggregationTotalModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future getAggregationByDoc(
+    int page,
+    int limit,
+  ) {
+    // TODO: implement getAggregationByDoc
+    throw UnimplementedError();
+  }
 }

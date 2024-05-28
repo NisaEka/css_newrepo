@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_cnote/agg_by_cnote_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_doc/agg_by_doc_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
@@ -55,6 +56,10 @@ class AggByDocScreen extends StatelessWidget {
               c.pagingController.refresh();
             },
           ),
+          ReportListItem(
+            isShowDetail: false,
+            onTap: () => Get.to(const AggByCnoteScreen()),
+          ),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () => Future.sync(
@@ -68,7 +73,7 @@ class AggByDocScreen extends StatelessWidget {
                     status: item.statusGv,
                     data: item,
                     isShowDetail: false,
-                    // onTap: () => Get.to(const AggByDocScreen()),
+                    onTap: () => Get.to(const AggByCnoteScreen()),
                   ),
                   firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(

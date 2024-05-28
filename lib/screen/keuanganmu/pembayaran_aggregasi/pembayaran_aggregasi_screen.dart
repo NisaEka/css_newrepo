@@ -6,6 +6,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_doc/agg_by_doc_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_controller.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
@@ -48,7 +49,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
         children: [
           PaymentBox(
             title: "Total nilai yang sudah dibayarkan".tr,
-            value: "Rp. 3.910.000",
+            value: "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
           ),
           CustomSearchField(
             controller: c.searchField,

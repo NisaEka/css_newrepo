@@ -39,13 +39,12 @@ class _ReportListItemState extends State<ReportListItem> {
     return Shimmer(
       isLoading: widget.isLoading,
       child: GestureDetector(
-        onTap: () =>
-            widget.onTap ??
-            setState(() {
-              if (widget.isLoading == false) {
-                showDetail = showDetail ? false : true;
-              }
-            }),
+        onTap: widget.onTap ??
+            () => setState(() {
+                  if (widget.isLoading == false) {
+                    showDetail = showDetail ? false : true;
+                  }
+                }),
         child: Stack(
           children: [
             Positioned(

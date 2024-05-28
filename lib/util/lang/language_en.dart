@@ -294,6 +294,12 @@ class LanguageEN {
       "Alamat tidak boleh lebih dari 100 karakter": "Address cannot be more than 100 characters",
       "Bidang ini harus terdiri dari minimal 8 karakter": "This field must be at least 8 characters long",
       "Lihat Detail": "View Detail",
+      "Tanggal Cnote": "Cnote Date",
+      "Tanggal POD": "POD Date",
+      "Tanggal Aggregasi": "Aggregation Date",
+      "Informasi Kiriman": "Shipment Info",
+      "Informasi Aggregasi": "Aggregation Info",
+      "Detail Aggregasi": "Aggregation Detail",
     };
   }
 }
