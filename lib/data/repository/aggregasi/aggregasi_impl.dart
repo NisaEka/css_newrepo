@@ -21,30 +21,28 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     int limit,
     String keyword,
     String aggDate,
-    List<Account> accounts,
+    List<String> accounts,
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     network.local.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      List<String> accountNumber = [];
-      for (var e in accounts) {
-        accountNumber.add(e.accountNumber.toString());
-      }
 
-      Response response = await network.dio.get(
+    try {
+      Response response = await network.local.get(
         "/aggregation",
         queryParameters: {
           "keyword": keyword,
           "page": page,
           "limit": limit,
           "agg_date": aggDate,
-          // "account_number": accountNumber,
+          // "account_number": accounts.toString().splitMapJoin(',').replaceAll('[', '').replaceAll(']', '').toString(),
+          "account_number": "80563317,80563320",
         },
       );
 
       return GetAggregationReportModel.fromJson(response.data);
     } on DioException catch (e) {
+
       return GetAggregationReportModel.fromJson(e.response?.data);
     }
   }
@@ -109,7 +107,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     network.local.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.get(
+      Response response = await network.local.get(
         "/aggregation/$aggregationID",
       );
 

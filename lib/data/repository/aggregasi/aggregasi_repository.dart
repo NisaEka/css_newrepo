@@ -12,7 +12,7 @@ abstract class AggregasiRepository {
     int limit,
     String keyword,
     String aggDate,
-    List<Account> accounts,
+    List<String> accounts,
   );
 
   Future<GetAggregationTotalModel> getAggregationTotal();

@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_cnote/agg_by_cnote_controller.dart';
@@ -102,70 +103,70 @@ class AggByCnoteScreen extends StatelessWidget {
                   title: "COD Amount".tr,
                   value: 'Rp ${c.data.codAmount?.toInt().toCurrency()}',
                   fontSize: 12,
-                  valueFontColor: blueJNE,
+                  valueFontColor: AppConst.isLightTheme(context) ? blueJNE : infoColor,
                 ),
                 const Divider(),
                 ValueItem(
                   title: "Freight Charge".tr,
-                  value: 'Rp ${c.data.freightCharge?.toInt().toCurrency()}',
+                  value: 'Rp ${c.data.freightCharge?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Insurance Charge".tr,
-                  value: 'Rp ${c.data.insuranceCharge?.toInt().toCurrency()}',
+                  value: 'Rp ${c.data.insuranceCharge?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Discount".tr,
-                  value: 'Rp ${c.data.discount?.toInt().toCurrency()}',
+                  value: 'Rp ${c.data.discount?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Freight Charge After Discount".tr,
-                  value: '-Rp ${c.data.fchargeDisc?.toInt().toCurrency()}',
+                  value: '-Rp ${c.data.fchargeDisc?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Freight Charge VAT".tr,
-                  value: '-Rp ${c.data.fchargeVat?.toInt().toCurrency()}',
+                  value: '-Rp ${c.data.fchargeVat?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Packing Fee".tr,
-                  value: 'Rp ${c.data.packingFee?.toInt().toCurrency()}',
+                  value: 'Rp ${c.data.packingFee?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Surcharge".tr,
-                  value: 'Rp ${c.data.surcharge?.toInt().toCurrency()}',
+                  value: 'Rp ${c.data.surcharge?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Return Freight Charge After Discount".tr,
-                  value: 'Rp ${c.data.rtfChargeDisc?.toInt().toCurrency()}',
+                  value: 'Rp ${c.data.rtfChargeDisc?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Return Freight Charge VAT".tr,
-                  value: 'Rp ${c.data.rtfChargeVat?.toInt().toCurrency()}',
+                  value: 'Rp ${c.data.rtfChargeVat?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 const Divider(),
                 ValueItem(
                   title: "COD Fee Include VAT".tr,
-                  value: 'Rp ${c.data.codFeeVat?.toInt().toCurrency()}',
+                  value: 'Rp ${c.data.codFeeVat?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Netto AWB Amount".tr,
-                  value: 'Rp ${c.data.netAwbAmt?.toInt().toCurrency()}',
+                  value: 'Rp ${c.data.netAwbAmt?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: successColor,
                 ),

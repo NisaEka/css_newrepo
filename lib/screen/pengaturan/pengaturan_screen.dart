@@ -61,8 +61,8 @@ class PengaturanScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  controller.allow.label == "Y"
-                      ? SettingListItem(
+                  /*controller.allow.label == "Y"
+                      ?*/ SettingListItem(
                           title: 'Pengaturan Label'.tr,
                           icon: Icons.label_outline,
                           onTap: () => controller.isLogin
@@ -71,10 +71,10 @@ class PengaturanScreen extends StatelessWidget {
                                   context: context,
                                   builder: (context) => const LoginAlertDialog(),
                                 ),
-                        )
-                      : const SizedBox(),
-                  controller.allow.petugas == "Y"
-                      ? SettingListItem(
+                        ),
+                      // : const SizedBox(),
+                  /*controller.allow.petugas == "Y"
+                      ?*/ SettingListItem(
                           title: 'Pengaturan Petugas'.tr,
                           icon: Icons.account_circle,
                           onTap: () => controller.isLogin
@@ -83,8 +83,8 @@ class PengaturanScreen extends StatelessWidget {
                                   context: context,
                                   builder: (context) => const LoginAlertDialog(),
                                 ),
-                        )
-                      : const SizedBox(),
+                        ),
+                      // : const SizedBox(),
                   controller.isLogin && controller.allow.profil == "Y"
                       ? SettingListItem(
                           title: 'Edit Profil'.tr,

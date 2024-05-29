@@ -40,13 +40,18 @@ class PembayaranAggergasiController extends BaseController {
 
   Future<void> getAggregation(int page) async {
     isLoading = true;
+    List<String> accountNumber = [];
+    for (var e in selectedAccount) {
+      accountNumber.add(e.accountNumber.toString());
+    }
+    update();
     try {
       final agg = await aggregation.getAggregationReport(
         page,
         pageSize,
         searchField.text,
         transDate ?? '',
-        selectedAccount,
+        accountNumber,
       );
 
       final isLastPage = (agg.payload?.length ?? 0) < pageSize;
