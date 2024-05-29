@@ -35,8 +35,8 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
           "page": page,
           "limit": limit,
           "agg_date": aggDate,
-          // "account_number": accounts.toString().splitMapJoin(',').replaceAll('[', '').replaceAll(']', '').toString(),
-          "account_number": "80563317,80563320",
+          "account_number": accounts.toString().splitMapJoin(',').replaceAll('[', '').replaceAll(']', '').toString(),
+          // "account_number": "80563317,80563320",
         },
       );
 
