@@ -1,4 +1,4 @@
-import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,7 +19,11 @@ class LogoHeader extends StatelessWidget {
           top: 120,
           left: 0,
           right: 0,
-          child: Image.asset(AppConst.isLightTheme(context) ? ImageConstant.logoCSS_blue : ImageConstant.logoCSS_white, height: 67),
+          child: Image.asset(
+            ImageConstant.logoCSS,
+            height: 67,
+            color: CustomTheme().logoColor(context),
+          ),
         ),
       ],
     );

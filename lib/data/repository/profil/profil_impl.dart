@@ -90,7 +90,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
     network.local.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      var response = await network.dio.get(
+      var response = await network.local.get(
         '/ccrf-activity',
       );
       return GetCcrfActivityModel.fromJson(response.data);

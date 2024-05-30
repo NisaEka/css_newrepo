@@ -1,3 +1,4 @@
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class DashboardMarquee extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+        color: Theme.of(context).colorScheme.onBackground,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: greyDarkColor1),
         boxShadow: const [
@@ -31,7 +32,7 @@ class DashboardMarquee extends StatelessWidget {
       child: Marquee(
         text: marqueeText,
         style: sublistTitleTextStyle.copyWith(
-          color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : whiteColor,
+          color: CustomTheme().textColor(context),
         ),
         scrollAxis: Axis.horizontal,
         crossAxisAlignment: CrossAxisAlignment.start,

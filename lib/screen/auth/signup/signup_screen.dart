@@ -4,7 +4,6 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
@@ -62,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           left: 0,
                           right: 0,
                           child: Image.asset(
-                            ImageConstant.logoCSS_blue,
+                            ImageConstant.logoCSS,
                             height: 67,
                             color: AppConst.isLightTheme(context) ? null : Colors.white,
                           ),

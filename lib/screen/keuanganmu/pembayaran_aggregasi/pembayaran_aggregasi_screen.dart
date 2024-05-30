@@ -48,6 +48,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
       child: Column(
         children: [
           PaymentBox(
+            isLoading: c.aggTotal == null,
             title: "Total nilai yang sudah dibayarkan".tr,
             value: "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
           ),

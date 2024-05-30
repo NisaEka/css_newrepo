@@ -22,106 +22,107 @@ class NewPasswordScreen extends StatelessWidget {
             body: SingleChildScrollView(
               child: Stack(
                 children: [
-                  Column(
-                    children: [
-                      const LogoHeader(),
-                      Container(
-                        margin: const EdgeInsets.all(14),
-                        child: Text(
-                          "Buat password baru anda".tr,
-                          style: appTitleTextStyle.copyWith(color: greyColor),
-                        ),
-                      ),
-                      Form(
-                        key: controller.formKey,
-                        autovalidateMode: AutovalidateMode.always,
-                        onChanged: () {
-                          controller.formKey.currentState?.validate();
-                          controller.update();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(30),
-                          child: Column(
-                            children: [
-                              CustomTextFormField(
-                                controller: controller.newPW,
-                                prefixIcon: const Icon(Icons.lock),
-                                hintText: 'Password baru'.tr,
-                                validator: ValidationBuilder().password().build(),
-                                isObscure: controller.isObscurePassword,
-                                multiLine: false,
-                                inputFormatters: const [],
-                                suffixIcon: IconButton(
-                                  icon: controller.showIcon,
-                                  onPressed: () {
-                                    controller.isObscurePassword ? controller.isObscurePassword = false : controller.isObscurePassword = true;
-                                    controller.isObscurePassword != false
-                                        ? controller.showIcon = const Icon(
-                                            Icons.visibility,
-                                            // color: greyDarkColor1,
-                                          )
-                                        : controller.showIcon = const Icon(
-                                            Icons.visibility_off,
-                                            // color: Colors.black,
-                                          );
-                                    controller.update();
-                                  },
-                                ),
-                              ),
-                              CustomTextFormField(
-                                controller: controller.confirmPW,
-                                prefixIcon: const Icon(Icons.lock),
-                                hintText: 'Konfirmasi password baru'.tr,
-                                inputFormatters: const [],
-
-                                validator: (value) {
-                                  if (value != controller.newPW.text) {
-                                    return "Password tidak sama".tr;
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  controller.formKey.currentState?.validate().printInfo();
-                                  controller.update();
-                                },
-                                isObscure: controller.isObscurePasswordConfirm,
-                                multiLine: false,
-                                suffixIcon: IconButton(
-                                  icon: controller.showConfirmIcon,
-                                  onPressed: () {
-                                    controller.isObscurePasswordConfirm
-                                        ? controller.isObscurePasswordConfirm = false
-                                        : controller.isObscurePasswordConfirm = true;
-                                    controller.isObscurePasswordConfirm != false
-                                        ? controller.showConfirmIcon = const Icon(
-                                            Icons.visibility,
-                                            // color: greyDarkColor1,
-                                          )
-                                        : controller.showConfirmIcon = const Icon(
-                                            Icons.visibility_off,
-                                            // color: Colors.black,
-                                          );
-                                    controller.update();
-                                  },
-                                ),
-                              ),
-                              CustomFilledButton(
-                                color: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,
-                                title: 'Selanjutnya'.tr,
-                                // radius: 50,
-                                onPressed: () => controller.formKey.currentState?.validate() == true ? controller.changePassword() : null,
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  controller.isLoading ? const LoadingDialog() : const SizedBox()
+                  _bodyContent(controller, context),
+                  controller.isLoading ? const LoadingDialog() : const SizedBox(),
                 ],
               ),
             ),
           );
         });
+  }
+
+  Widget _bodyContent(NewPasswordController c, BuildContext ctx) {
+    return Column(
+      children: [
+        const LogoHeader(),
+        Container(
+          margin: const EdgeInsets.all(14),
+          child: Text(
+            "Buat password baru anda".tr,
+            style: appTitleTextStyle.copyWith(color: greyColor),
+          ),
+        ),
+        Form(
+          key: c.formKey,
+          autovalidateMode: AutovalidateMode.always,
+          onChanged: () {
+            c.formKey.currentState?.validate();
+            c.update();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              children: [
+                CustomTextFormField(
+                  controller: c.newPW,
+                  prefixIcon: const Icon(Icons.lock),
+                  hintText: 'Password baru'.tr,
+                  validator: ValidationBuilder().password().build(),
+                  isObscure: c.isObscurePassword,
+                  multiLine: false,
+                  inputFormatters: const [],
+                  suffixIcon: IconButton(
+                    icon: c.showIcon,
+                    onPressed: () {
+                      c.isObscurePassword ? c.isObscurePassword = false : c.isObscurePassword = true;
+                      c.isObscurePassword != false
+                          ? c.showIcon = const Icon(
+                              Icons.visibility,
+                              // color: greyDarkColor1,
+                            )
+                          : c.showIcon = const Icon(
+                              Icons.visibility_off,
+                              // color: Colors.black,
+                            );
+                      c.update();
+                    },
+                  ),
+                ),
+                CustomTextFormField(
+                  controller: c.confirmPW,
+                  prefixIcon: const Icon(Icons.lock),
+                  hintText: 'Konfirmasi password baru'.tr,
+                  inputFormatters: const [],
+                  validator: (value) {
+                    if (value != c.newPW.text) {
+                      return "Password tidak sama".tr;
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    c.formKey.currentState?.validate().printInfo();
+                    c.update();
+                  },
+                  isObscure: c.isObscurePasswordConfirm,
+                  multiLine: false,
+                  suffixIcon: IconButton(
+                    icon: c.showConfirmIcon,
+                    onPressed: () {
+                      c.isObscurePasswordConfirm ? c.isObscurePasswordConfirm = false : c.isObscurePasswordConfirm = true;
+                      c.isObscurePasswordConfirm != false
+                          ? c.showConfirmIcon = const Icon(
+                              Icons.visibility,
+                              // color: greyDarkColor1,
+                            )
+                          : c.showConfirmIcon = const Icon(
+                              Icons.visibility_off,
+                              // color: Colors.black,
+                            );
+                      c.update();
+                    },
+                  ),
+                ),
+                CustomFilledButton(
+                  color: c.formKey.currentState?.validate() == true ? blueJNE : greyColor,
+                  title: 'Selanjutnya'.tr,
+                  // radius: 50,
+                  onPressed: () => c.formKey.currentState?.validate() == true ? c.changePassword() : null,
+                )
+              ],
+            ),
+          ),
+        )
+      ],
+    );
   }
 }

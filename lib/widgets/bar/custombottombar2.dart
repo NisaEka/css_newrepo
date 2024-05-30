@@ -1,6 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -38,7 +37,7 @@ class BottomBar2 extends StatelessWidget {
           alignment: Alignment.center,
           margin: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
-              color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyDarkColor2,
+              color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2,
               borderRadius: BorderRadius.circular(25),
               boxShadow: [
                 BoxShadow(
@@ -70,19 +69,19 @@ class BottomBar2 extends StatelessWidget {
                       color: isLogin
                           ? menu == 1
                               ? redJNE
-                              : Theme.of(context).brightness == Brightness.light
+                              : AppConst.isLightTheme(context)
                                   ? blueJNE
                                   : whiteColor
-                          : Theme.of(context).brightness == Brightness.light
+                          : AppConst.isLightTheme(context)
                               ? blueJNE.withOpacity(0.5)
                               : whiteColor.withOpacity(0.5)),
                   color: isLogin
                       ? menu == 1
                           ? redJNE
-                          : Theme.of(context).brightness == Brightness.light
+                          : AppConst.isLightTheme(context)
                               ? blueJNE
                               : whiteColor
-                      : Theme.of(context).brightness == Brightness.light
+                      : AppConst.isLightTheme(context)
                           ? blueJNE.withOpacity(0.5)
                           : whiteColor.withOpacity(0.5),
                   // onTap: () => Get.offAll(const ProfileScreen()),
@@ -142,7 +141,7 @@ class BottomBar2 extends StatelessWidget {
                 width: 60,
                 decoration: BoxDecoration(color: isLogin ? redJNE : errorLightColor2, borderRadius: BorderRadius.circular(100), boxShadow: [
                   BoxShadow(
-                    color: Theme.of(context).brightness == Brightness.light ? Colors.grey.withOpacity(0.5) : greyLightColor3.withOpacity(0.5),
+                    color: AppConst.isLightTheme(context) ? Colors.grey.withOpacity(0.5) : greyLightColor3.withOpacity(0.5),
                     // spreadRadius: 5,
                     blurRadius: 7,
                     offset: const Offset(2, 3),

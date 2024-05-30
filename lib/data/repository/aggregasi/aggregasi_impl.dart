@@ -21,12 +21,17 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     int limit,
     String keyword,
     String aggDate,
-    List<String> accounts,
+    List<Account> accounts,
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     network.local.options.headers['Authorization'] = 'Bearer $token';
 
+    List<String> accountNumber = [];
+    for (var e in accounts) {
+      accountNumber.add(e.accountNumber.toString());
+    }
+    print("accounts : ${accountNumber.toString().splitMapJoin(',').replaceAll('[', '').replaceAll(']', '').toString()}");
     try {
       Response response = await network.local.get(
         "/aggregation",
@@ -35,14 +40,13 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
           "page": page,
           "limit": limit,
           "agg_date": aggDate,
-          "account_number": accounts.toString().splitMapJoin(',').replaceAll('[', '').replaceAll(']', '').toString(),
+          "account_number": accountNumber.toString().splitMapJoin(',').replaceAll('[', '').replaceAll(']', '').toString(),
           // "account_number": "80563317,80563320",
         },
       );
 
       return GetAggregationReportModel.fromJson(response.data);
     } on DioException catch (e) {
-
       return GetAggregationReportModel.fromJson(e.response?.data);
     }
   }
@@ -85,12 +89,14 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     network.local.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.get(
+      Response response = await network.local.get(
         "/aggregation/total",
       );
       print('aggregation response: ${response.data}');
+      GetAggregationTotalModel resp = GetAggregationTotalModel.fromJson(response.data);
+      print("agg payload : ${resp.payload}");
 
-      return GetAggregationTotalModel.fromJson(response.data);
+      return resp;
     } on DioException catch (e) {
       print("aggregation error : ${e.response?.data}");
       return GetAggregationTotalModel.fromJson(e.response?.data);

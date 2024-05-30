@@ -74,11 +74,10 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                   child: Text(
                     'Kirim ulang kode'.tr,
                     style: formLabelTextStyle.copyWith(
-                        color: c.remainingSeconds != 0
-                            ? greyColor
-                            : AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : greyLightColor2),
+                      color: c.remainingSeconds != 0
+                          ? greyColor
+                          : Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 60),

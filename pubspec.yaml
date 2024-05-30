@@ -45,6 +45,7 @@ dependencies:
   path_provider: ^2.1.3
   image_picker: ^1.1.1
   flutter_html: ^3.0.0-beta.2
+  google_fonts: ^6.2.0
 
 
 
@@ -59,13 +60,3 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lottie/
-
-  fonts:
-    - family: Ubuntu
-      fonts:
-        - asset: assets/fonts/Ubuntu-Regular.ttf
-        - asset: assets/fonts/Ubuntu-Italic.ttf
-          style: italic
-        - asset: assets/fonts/Ubuntu-Bold.ttf
-        - asset: assets/fonts/Ubuntu-Light.ttf
-        - asset: assets/fonts/Ubuntu-Medium.ttf

@@ -1,3 +1,4 @@
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -65,9 +66,7 @@ class MenuItem extends StatelessWidget {
                   // width: 65,
                   child: Text(
                     menuTitle.splitMapJoin(' ', onMatch: (p0) => '\n').splitMapJoin('_', onMatch: (p0) => ' '),
-                    style: sublistTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? greyDarkColor1 : whiteColor,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall,
                     textAlign: TextAlign.center,
                   ),
                 ),
