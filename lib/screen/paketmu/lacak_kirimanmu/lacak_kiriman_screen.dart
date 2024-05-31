@@ -23,188 +23,188 @@ class LacakKirimanScreen extends StatelessWidget {
       init: LacakKirimanController(),
       builder: (controller) {
         return Scaffold(
-          appBar: CustomTopBar(
-            // title: Text('Lacak Kiriman'.tr),
-            title: 'Lacak Kiriman'.tr,
-          ),
-          body: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-            child: Column(
-              children: [
-                CustomSearchField(
-                  controller: controller.searchField,
-                  hintText: 'Masukan Nomor Resimu'.tr,
-                  suffixIcon: GestureDetector(
-                    onTap: () => Get.to(const BarcodeScanScreen(), arguments: {})?.then((result) {
-                      controller.searchField.text = result;
-                      controller.update();
-                      controller.cekResi(result);
-                    }),
-                    child: Icon(
-                      Icons.qr_code_scanner,
-                      color: AppConst.isLightTheme(context) ? whiteColor : redJNE,
-                      size: 30,
-                    ),
-                  ),
-                  onSubmit: (value) => controller.cekResi(value),
-                ),
-                Expanded(
-                  child: controller.trackModel != null && controller.trackModel?.error == null || controller.isLoading
-                      ? ListView(
-                          children: [
-                            const SizedBox(height: 22),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomCodeLabel(
-                                  label: controller.trackModel?.cnote?.cnoteNo ?? '',
-                                  isLoading: controller.isLoading,
-                                ),
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Service',
-                                  value: controller.trackModel?.cnote?.cnoteServicesCode ?? '',
-                                  valueColor: redJNE,
-                                  alignment: 'end',
-                                )
-                              ],
-                            ),
-                            const Divider(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Dari'.tr,
-                                  value: controller.trackModel?.detail?.first.cnoteShipperCity ?? '',
-                                  width: Get.width / 2,
-                                ),
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Status Kiriman'.tr,
-                                  value: controller.trackModel?.cnote?.podStatus ?? '',
-                                  valueColor: redJNE,
-                                  width: Get.width / 3,
-                                  alignment: 'end',
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Menuju'.tr,
-                                  value: controller.trackModel?.cnote?.cityName ?? '',
-                                  // width: Get.width / 1.5,
-                                ),
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Perkiraan sampai tujuan'.tr,
-                                  value: controller.trackModel?.cnote?.estimateDelivery ?? '',
-                                  valueColor: redJNE,
-                                  // width: Get.width / 4,
-                                  alignment: 'end',
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            CustomFormLabel(
-                              isLoading: controller.isLoading,
-                              label: 'Detail Kiriman'.tr,
-                            ),
-                            const Divider(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Tanggal Kirim'.tr,
-                                  value: controller.trackModel?.cnote?.cnoteDate?.toLongDateTimeFormat() ?? '',
-                                  width: Get.width / 2,
-                                ),
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Berat Kiriman'.tr,
-                                  value: '${controller.trackModel?.cnote?.cnoteWeight} KG',
-                                  width: Get.width / 3,
-                                  alignment: 'end',
-                                ),
-                              ],
-                            ),
-                            CustomLabelText(
-                              isLoading: controller.isLoading,
-                              title: 'Deskripsi'.tr,
-                              value: controller.trackModel?.cnote?.cnoteGoodsDescr ?? '',
-                              width: Get.width / 2,
-                            ),
-                            const Divider(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Nama Pengirim'.tr,
-                                  value: controller.trackModel?.detail?.first.cnoteShipperName ?? '',
-                                  width: Get.width / 3,
-                                ),
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Nama Penerima'.tr,
-                                  value: controller.trackModel?.detail?.first.cnoteReceiverName ?? '',
-                                  width: Get.width / 3,
-                                  alignment: 'end',
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Kota Pengirim'.tr,
-                                  value: controller.trackModel?.detail?.first.cnoteShipperCity ?? '',
-                                  // width: Get.width / 2,
-                                ),
-                                CustomLabelText(
-                                  isLoading: controller.isLoading,
-                                  title: 'Kota Penerima'.tr,
-                                  value: controller.trackModel?.detail?.first.cnoteReceiverCity ?? '',
-                                  // width: Get.width / 3,
-                                  alignment: 'end',
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            CustomFormLabel(label: 'Riwayat Kiriman'.tr),
-                            const Divider(),
-                            Column(
-                              children: controller.trackModel?.history?.isNotEmpty ?? false
-                                  ? controller.trackModel?.history!.reversed
-                                          .mapIndexed((i, e) => KirimanStepper(
-                                                currentStep: i,
-                                                length: controller.trackModel?.history?.length,
-                                                history: e,
-                                                cnote: controller.trackModel?.cnote,
-                                                isLogin: controller.isLogin,
-                                              ))
-                                          .toList() ??
-                                      []
-                                  : [],
-                            ),
-                          ],
-                        )
-                      : Center(
-                          child: DataEmpty(
-                          text: controller.trackModel?.error ?? 'Data Kosong',
-                        )),
-                )
-              ],
-            ),
-          ),
+          appBar: CustomTopBar(title: 'Lacak Kiriman'.tr),
+          body: _bodyContent(controller, context),
         );
       },
+    );
+  }
+
+  Widget _bodyContent(LacakKirimanController c, BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      child: Column(
+        children: [
+          CustomSearchField(
+            controller: c.searchField,
+            hintText: 'Masukan Nomor Resimu'.tr,
+            suffixIcon: GestureDetector(
+              onTap: () => Get.to(const BarcodeScanScreen(), arguments: {})?.then((result) {
+                c.searchField.text = result;
+                c.update();
+                c.cekResi(result);
+              }),
+              child: Icon(
+                Icons.qr_code_scanner,
+                color: AppConst.isLightTheme(context) ? whiteColor : redJNE,
+                size: 30,
+              ),
+            ),
+            onSubmit: (value) => c.cekResi(value),
+          ),
+          Expanded(
+            child: c.trackModel != null && c.trackModel?.error == null || c.isLoading
+                ? ListView(
+                    children: [
+                      const SizedBox(height: 22),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomCodeLabel(
+                            label: c.trackModel?.cnote?.cnoteNo ?? '',
+                            isLoading: c.isLoading,
+                          ),
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Service',
+                            value: c.trackModel?.cnote?.cnoteServicesCode ?? '',
+                            valueColor: redJNE,
+                            alignment: 'end',
+                          )
+                        ],
+                      ),
+                      const Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Dari'.tr,
+                            value: c.trackModel?.detail?.first.cnoteShipperCity ?? '',
+                            width: Get.width / 2,
+                          ),
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Status Kiriman'.tr,
+                            value: c.trackModel?.cnote?.podStatus ?? '',
+                            valueColor: redJNE,
+                            width: Get.width / 3,
+                            alignment: 'end',
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Menuju'.tr,
+                            value: c.trackModel?.cnote?.cityName ?? '',
+                            // width: Get.width / 1.5,
+                          ),
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Perkiraan sampai tujuan'.tr,
+                            value: c.trackModel?.cnote?.estimateDelivery ?? '',
+                            valueColor: redJNE,
+                            // width: Get.width / 4,
+                            alignment: 'end',
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      CustomFormLabel(
+                        isLoading: c.isLoading,
+                        label: 'Detail Kiriman'.tr,
+                      ),
+                      const Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Tanggal Kirim'.tr,
+                            value: c.trackModel?.cnote?.cnoteDate?.toLongDateTimeFormat() ?? '',
+                            width: Get.width / 2,
+                          ),
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Berat Kiriman'.tr,
+                            value: '${c.trackModel?.cnote?.cnoteWeight} KG',
+                            width: Get.width / 3,
+                            alignment: 'end',
+                          ),
+                        ],
+                      ),
+                      CustomLabelText(
+                        isLoading: c.isLoading,
+                        title: 'Deskripsi'.tr,
+                        value: c.trackModel?.cnote?.cnoteGoodsDescr ?? '',
+                        width: Get.width / 2,
+                      ),
+                      const Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Nama Pengirim'.tr,
+                            value: c.trackModel?.detail?.first.cnoteShipperName ?? '',
+                            width: Get.width / 3,
+                          ),
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Nama Penerima'.tr,
+                            value: c.trackModel?.detail?.first.cnoteReceiverName ?? '',
+                            width: Get.width / 3,
+                            alignment: 'end',
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Kota Pengirim'.tr,
+                            value: c.trackModel?.detail?.first.cnoteShipperCity ?? '',
+                            // width: Get.width / 2,
+                          ),
+                          CustomLabelText(
+                            isLoading: c.isLoading,
+                            title: 'Kota Penerima'.tr,
+                            value: c.trackModel?.detail?.first.cnoteReceiverCity ?? '',
+                            // width: Get.width / 3,
+                            alignment: 'end',
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      CustomFormLabel(label: 'Riwayat Kiriman'.tr),
+                      const Divider(),
+                      Column(
+                        children: c.trackModel?.history?.isNotEmpty ?? false
+                            ? c.trackModel?.history!.reversed
+                                    .mapIndexed((i, e) => KirimanStepper(
+                                          currentStep: i,
+                                          length: c.trackModel?.history?.length,
+                                          history: e,
+                                          cnote: c.trackModel?.cnote,
+                                          isLogin: c.isLogin,
+                                        ))
+                                    .toList() ??
+                                []
+                            : [],
+                      ),
+                    ],
+                  )
+                : Center(
+                    child: DataEmpty(text: c.trackModel?.error ?? 'Data Kosong'),
+                  ),
+          )
+        ],
+      ),
     );
   }
 }

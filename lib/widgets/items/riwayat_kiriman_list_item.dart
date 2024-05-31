@@ -2,47 +2,50 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 class RiwayatKirimanListItem extends StatelessWidget {
-  final String tanggalEntry;
-  final String service;
-  final String noResi;
-  final String apiType;
-  final String penerima;
-  final String status;
-  final String orderID;
+  final String? tanggalEntry;
+  final String? service;
+  final String? noResi;
+  final String? apiType;
+  final String? penerima;
+  final String? status;
+  final String? orderID;
+  final TransactionModel? data;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
   final bool isSelected;
-  final int index;
+  final int? index;
   final void Function(BuildContext)? onDelete;
   final bool isLoading;
 
   const RiwayatKirimanListItem({
     super.key,
-    required this.tanggalEntry,
-    required this.service,
-    required this.noResi,
-    required this.apiType,
-    required this.penerima,
-    required this.status,
+    this.tanggalEntry,
+    this.service,
+    this.noResi,
+    this.apiType,
+    this.penerima,
+    this.status,
     this.onTap,
     this.onLongPress,
     this.isSelected = false,
-    required this.orderID,
-    required this.index,
+    this.orderID,
+    this.index,
     this.onDelete,
     this.isLoading = false,
+    this.data,
   });
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      key: ValueKey(index),
+      key: ValueKey(index ?? 0),
       startActionPane: ActionPane(
         dragDismissible: false,
         // dismissible: DismissiblePane(onDismissed: onDelete ?? () {}),
@@ -82,12 +85,12 @@ class RiwayatKirimanListItem extends StatelessWidget {
                     Container(
                       color: isLoading ? greyLightColor3 : Colors.transparent,
                       width: isLoading ? Get.width / 3 : null,
-                      child: Text('Order ID : $orderID', style: sublistTitleTextStyle),
+                      child: Text('Order ID : ${data?.orderId ?? orderID ?? ''}', style: sublistTitleTextStyle),
                     ),
                     Container(
                       color: isLoading ? greyLightColor3 : Colors.transparent,
                       width: isLoading ? Get.width / 5 : null,
-                      child: Text(tanggalEntry, style: sublistTitleTextStyle),
+                      child: Text(data?.createdDate ?? tanggalEntry ?? '', style: sublistTitleTextStyle),
                     ),
                   ],
                 ),
@@ -106,7 +109,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Text(
-                            apiType,
+                            data?.type ?? apiType ?? '',
                             style: sublistTitleTextStyle.copyWith(
                               color: whiteColor,
                               fontSize: 8,
@@ -128,19 +131,19 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           color: isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 3 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(noResi, style: listTitleTextStyle),
+                          child: Text(data?.awb ?? noResi ?? '', style: listTitleTextStyle),
                         ),
                         Container(
                           color: isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 5 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(penerima, style: sublistTitleTextStyle),
+                          child: Text(data?.receiver?.name ?? penerima ?? '', style: sublistTitleTextStyle),
                         ),
                         Container(
                           color: isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 10 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(service, style: sublistTitleTextStyle),
+                          child: Text(data?.service ?? service ?? '', style: sublistTitleTextStyle),
                         ),
                         Column(
                           children: [
@@ -153,7 +156,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Text(
-                                status,
+                                data?.status?.tr ?? status?.tr ?? '',
                                 style: sublistTitleTextStyle.copyWith(
                                   color: whiteColor,
                                   fontSize: 8,

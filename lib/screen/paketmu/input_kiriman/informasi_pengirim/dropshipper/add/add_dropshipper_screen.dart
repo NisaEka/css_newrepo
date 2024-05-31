@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
@@ -24,99 +23,107 @@ class AddDropshipperScreen extends StatelessWidget {
           return Stack(
             children: [
               Scaffold(
-                appBar: AppBar(
-                  shadowColor: greyColor,
-                  elevation: 1,
-                  leading: const CustomBackButton(),
-                  title: Text(
-                    'Tambah Data Dropshipper'.tr,
-                    style: appTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                    ),
-                  ),
-                ),
-                body: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: Form(
-                      key: controller.formKey,
-                      onChanged: () {
-                        controller.update();
-                      },
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomTextFormField(
-                            controller: controller.namaPengirim,
-                            hintText: "Nama Pengirim".tr,
-                            isRequired: true,
-                            prefixIcon: const Icon(Icons.person),
-                            validator: ValidationBuilder().name().build(),
-                          ),
-                          CustomTextFormField(
-                            controller: controller.noHP,
-                            hintText: "Nomor Telepon".tr,
-                            inputType: TextInputType.number,
-                            isRequired: true,
-                            prefixIcon: const Icon(Icons.phone),
-                            validator: ValidationBuilder().phoneNumber().build(),
-                          ),
-                          CustomSearchDropdownField<Origin>(
-                            asyncItems: (String filter) => controller.getOriginList(filter, controller.account.accountId ?? ''),
-                            itemBuilder: (context, e, b) {
-                              return Container(
-                                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                child: Text(
-                                  e.originName.toString(),
-                                ),
-                              );
-                            },
-                            itemAsString: (Origin e) => e.originName.toString(),
-                            onChanged: (value) {
-                              controller.selectedOrigin = value;
-                              controller.kotaPengirim.text = controller.selectedOrigin?.originName ?? '';
-                              // controller.kodePos.text = controller.selectedOrigin?.
-                              controller.update();
-                              // print(jsonEncode(value));
-                            },
-                            value: controller.selectedOrigin,
-                            selectedItem: controller.kotaPengirim.text,
-                            hintText: controller.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
-                            prefixIcon: const Icon(Icons.location_city),
-                            textStyle: controller.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
-                            readOnly: false,
-                            isRequired: true,
-                          ),
-                          CustomTextFormField(
-                            controller: controller.kodePos,
-                            hintText: "Kode Pos".tr,
-                            isRequired: true,
-                            prefixIcon: const Icon(Icons.line_style),
-                            validator: ValidationBuilder().zipCode().build(),
-                            inputType: TextInputType.number,
-                          ),
-                          CustomTextFormField(
-                            controller: controller.alamatPengirim,
-                            hintText: "Alamat".tr,
-                            isRequired: true,
-                            multiLine: true,
-                            prefixIcon: const Icon(Icons.location_city),
-                            validator: ValidationBuilder().address().build(),
-                          ),
-                          CustomFilledButton(
-                              color: controller.formKey.currentState?.validate() ?? false ? blueJNE : greyColor,
-                              title: "Simpan Data Dropshipper".tr,
-                              // radius: 20,
-                              onPressed: () => controller.formKey.currentState?.validate() == true ? controller.saveDropshipper() : null),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                appBar: _appBarContent(context),
+                body: _bodyContent(controller, context),
               ),
               controller.isLoading ? const LoadingDialog() : const SizedBox()
             ],
           );
         });
+  }
+
+  AppBar _appBarContent(BuildContext context) {
+    return AppBar(
+      shadowColor: greyColor,
+      elevation: 1,
+      leading: const CustomBackButton(),
+      title: Text(
+        'Tambah Data Dropshipper'.tr,
+        // style: appTitleTextStyle.copyWith(
+          // color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+        // ),
+      ),
+    );
+  }
+
+  Widget _bodyContent(AddDropshipperController c, BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(30),
+        child: Form(
+          key: c.formKey,
+          onChanged: () {
+            c.update();
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomTextFormField(
+                controller: c.namaPengirim,
+                hintText: "Nama Pengirim".tr,
+                isRequired: true,
+                prefixIcon: const Icon(Icons.person),
+                validator: ValidationBuilder().name().build(),
+              ),
+              CustomTextFormField(
+                controller: c.noHP,
+                hintText: "Nomor Telepon".tr,
+                inputType: TextInputType.number,
+                isRequired: true,
+                prefixIcon: const Icon(Icons.phone),
+                validator: ValidationBuilder().phoneNumber().build(),
+              ),
+              CustomSearchDropdownField<Origin>(
+                asyncItems: (String filter) => c.getOriginList(filter, c.account.accountId ?? ''),
+                itemBuilder: (context, e, b) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    child: Text(
+                      e.originName.toString(),
+                    ),
+                  );
+                },
+                itemAsString: (Origin e) => e.originName.toString(),
+                onChanged: (value) {
+                  c.selectedOrigin = value;
+                  c.kotaPengirim.text = c.selectedOrigin?.originName ?? '';
+                  // controller.kodePos.text = controller.selectedOrigin?.
+                  c.update();
+                  // print(jsonEncode(value));
+                },
+                value: c.selectedOrigin,
+                selectedItem: c.kotaPengirim.text,
+                hintText: c.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
+                prefixIcon: const Icon(Icons.location_city),
+                textStyle: c.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
+                readOnly: false,
+                isRequired: true,
+              ),
+              CustomTextFormField(
+                controller: c.kodePos,
+                hintText: "Kode Pos".tr,
+                isRequired: true,
+                prefixIcon: const Icon(Icons.line_style),
+                validator: ValidationBuilder().zipCode().build(),
+                inputType: TextInputType.number,
+              ),
+              CustomTextFormField(
+                controller: c.alamatPengirim,
+                hintText: "Alamat".tr,
+                isRequired: true,
+                multiLine: true,
+                prefixIcon: const Icon(Icons.location_city),
+                validator: ValidationBuilder().address().build(),
+              ),
+              CustomFilledButton(
+                  color: c.formKey.currentState?.validate() ?? false ? blueJNE : greyColor,
+                  title: "Simpan Data Dropshipper".tr,
+                  // radius: 20,
+                  onPressed: () => c.formKey.currentState?.validate() == true ? c.saveDropshipper() : null),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

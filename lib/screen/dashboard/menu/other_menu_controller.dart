@@ -4,6 +4,8 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OtherMenuCotroller extends BaseController {
@@ -205,5 +207,14 @@ class OtherMenuCotroller extends BaseController {
       });
     }
     update();
+  }
+
+  void routeToMenu(Items menuItem, BuildContext context) {
+    (menuItem.isAuth == true && !isLogin)
+        ? showDialog(
+            context: context,
+            builder: (context) => const LoginAlertDialog(),
+          )
+        : Get.toNamed(menuItem.route.toString(), arguments: {});
   }
 }

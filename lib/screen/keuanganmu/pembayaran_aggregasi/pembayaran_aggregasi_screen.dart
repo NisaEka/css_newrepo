@@ -129,7 +129,10 @@ class PembayaranAggergasiScreen extends StatelessWidget {
             StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                color: AppConst.isDarkTheme(context) ? greyDarkColor2 : greyLightColor2,
+                decoration: BoxDecoration(
+                  color: AppConst.isDarkTheme(context) ? greyDarkColor2 : greyLightColor2,
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

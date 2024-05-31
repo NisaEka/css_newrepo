@@ -24,91 +24,99 @@ class AddPenerimaScreen extends StatelessWidget {
           return Stack(
             children: [
               Scaffold(
-                appBar: AppBar(
-                  elevation: 1,
-                  title: Text(
-                    'Tambah Data Penerima'.tr,
-                    style: appTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                    ),
-                  ),
-                  leading: const CustomBackButton(),
-                ),
-                body: SingleChildScrollView(
-                  child: Container(
-                      // padding: const EdgeInsets.all(30),
-                      margin: const EdgeInsets.all(30),
-                      child: Form(
-                          key: controller.formKey,
-                          onChanged: () {
-                            controller.formKey.currentState?.validate();
-                            controller.update();
-                          },
-                          child: Column(
-                            children: [
-                              CustomTextFormField(
-                                controller: controller.namaPenerima,
-                                hintText: "Nama Penerima".tr,
-                                prefixIcon: const Icon(Icons.person),
-                                isRequired: true,
-                                validator: ValidationBuilder().name().build(),
-
-                              ),
-                              CustomTextFormField(
-                                controller: controller.noHP,
-                                hintText: "Nomor Telepon".tr,
-                                inputType: TextInputType.number,
-                                prefixIcon: const Icon(Icons.phone),
-                                isRequired: true,
-                                validator: ValidationBuilder().phoneNumber().build(),
-                              ),
-                              CustomSearchDropdownField<Destination>(
-                                asyncItems: (String filter) => controller.getDestinationList(filter),
-                                itemBuilder: (context, e, b) {
-                                  return GestureDetector(
-                                    onTap: () => controller.update(),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                      child: Text(
-                                        '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
-                                      ),
-                                    ),
-                                  );
-                                },
-                                itemAsString: (Destination e) =>
-                                    '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
-                                onChanged: (value) {
-                                  controller.selectedDestination = value;
-                                  controller.update();
-                                },
-                                value: controller.selectedDestination,
-                                isRequired: controller.selectedDestination == null ? true : false,
-                                readOnly: false,
-                                hintText: controller.isLoadDestination ? "Loading..." : "Kota Tujuan".tr,
-                                prefixIcon: const Icon(Icons.location_city),
-                                textStyle: controller.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
-                              ),
-                              CustomTextFormField(
-                                controller: controller.alamat,
-                                hintText: "Alamat".tr,
-                                prefixIcon: const Icon(Icons.location_city),
-                                multiLine: true,
-                                isRequired: true,
-                                validator: ValidationBuilder().address().build(),
-
-                              ),
-                              CustomFilledButton(
-                                color: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,
-                                title: 'Simpan Data Penerima'.tr,
-                                onPressed: () => controller.formKey.currentState?.validate() == true ? controller.saveReceiver() : null,
-                              ),
-                            ],
-                          ))),
-                ),
+                appBar: _appBarContent(context),
+                body: _bodyContent(controller, context),
               ),
               controller.isLoading ? const LoadingDialog() : const SizedBox()
             ],
           );
         });
+  }
+
+  AppBar _appBarContent(BuildContext context) {
+    return AppBar(
+      elevation: 1,
+      title: Text(
+        'Tambah Data Penerima'.tr,
+        style: appTitleTextStyle.copyWith(
+          color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+        ),
+      ),
+      leading: const CustomBackButton(),
+    );
+  }
+
+  Widget _bodyContent(AddPenerimaController c, BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        // padding: const EdgeInsets.all(30),
+        margin: const EdgeInsets.all(30),
+        child: Form(
+          key: c.formKey,
+          onChanged: () {
+            c.formKey.currentState?.validate();
+            c.update();
+          },
+          child: Column(
+            children: [
+              CustomTextFormField(
+                controller: c.namaPenerima,
+                hintText: "Nama Penerima".tr,
+                prefixIcon: const Icon(Icons.person),
+                isRequired: true,
+                validator: ValidationBuilder().name().build(),
+              ),
+              CustomTextFormField(
+                controller: c.noHP,
+                hintText: "Nomor Telepon".tr,
+                inputType: TextInputType.number,
+                prefixIcon: const Icon(Icons.phone),
+                isRequired: true,
+                validator: ValidationBuilder().phoneNumber().build(),
+              ),
+              CustomSearchDropdownField<Destination>(
+                asyncItems: (String filter) => c.getDestinationList(filter),
+                itemBuilder: (context, e, b) {
+                  return GestureDetector(
+                    onTap: () => c.update(),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      child: Text(
+                        '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
+                      ),
+                    ),
+                  );
+                },
+                itemAsString: (Destination e) =>
+                    '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
+                onChanged: (value) {
+                  c.selectedDestination = value;
+                  c.update();
+                },
+                value: c.selectedDestination,
+                isRequired: c.selectedDestination == null ? true : false,
+                readOnly: false,
+                hintText: c.isLoadDestination ? "Loading..." : "Kota Tujuan".tr,
+                prefixIcon: const Icon(Icons.location_city),
+                textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
+              ),
+              CustomTextFormField(
+                controller: c.alamat,
+                hintText: "Alamat".tr,
+                prefixIcon: const Icon(Icons.location_city),
+                multiLine: true,
+                isRequired: true,
+                validator: ValidationBuilder().address().build(),
+              ),
+              CustomFilledButton(
+                color: c.formKey.currentState?.validate() == true ? blueJNE : greyColor,
+                title: 'Simpan Data Penerima'.tr,
+                onPressed: () => c.formKey.currentState?.validate() == true ? c.saveReceiver() : null,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

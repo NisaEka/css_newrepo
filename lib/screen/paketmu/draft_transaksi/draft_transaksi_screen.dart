@@ -26,84 +26,92 @@ class DraftTransaksiScreen extends StatelessWidget {
           return Stack(
             children: [
               Scaffold(
-                appBar: CustomTopBar(
-                  title: 'Draft Transaksi'.tr,
-                  leading: CustomBackButton(
-                    onPressed: () => Get.offAll(const DashboardScreen()),
-                  ),
-                  action: [
-                    controller.isOnline && controller.isSync
-                        ? CustomFilledButton(
-                            color: successColor,
-                            icon: Icons.sync,
-                            width: 100,
-                            title: 'Sync Data'.tr,
-                            onPressed: () => controller.syncData(),
-                          )
-                        : const SizedBox(),
-                    const SizedBox(width: 20)
-                  ],
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      // CustomFilledButton(
-                      //   color: errorColor,
-                      //   title: 'clear draft',
-                      //   onPressed: () {
-                      //     controller.storage.deleteString(StorageCore.draftTransaction);
-                      //     controller.initData();
-                      //     controller.update();
-                      //   },
-                      // ),
-                      CustomSearchField(
-                        controller: controller.search,
-                        hintText: 'Cari transaksimu'.tr,
-                        prefixIcon: SvgPicture.asset(
-                          IconsConstant.search,
-                          color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
-                        ),
-                        inputFormatters: [
-                          TextInputFormatter.withFunction((oldValue, newValue) {
-                            return newValue.copyWith(text: newValue.text.toUpperCase());
-                          })
-                        ],
-                        onChanged: (value) {
-                          controller.searchDraft(value);
-                        },
-                        onClear: () {
-                          controller.search.clear();
-                          controller.initData();
-                        },
-                      ),
-                      Expanded(
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: controller.search.text.isNotEmpty
-                              ? controller.searchList.isNotEmpty
-                                  ? controller.searchList
-                                      .mapIndexed(
-                                        (i, e) => controller.draftItem(e, i, context),
-                                      )
-                                      .toList()
-                                  : [Center(child: DataEmpty(text: "Draft Kosong".tr))]
-                              : controller.draftList.isNotEmpty
-                                  ? controller.draftList
-                                      .mapIndexed(
-                                        (i, e) => controller.draftItem(e, i, context),
-                                      )
-                                      .toList()
-                                  : [Center(child: DataEmpty(text: "Draft Kosong".tr))],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                appBar: _appBarContent(controller),
+                body: _bodyContent(controller, context),
               ),
               controller.isLoading ? const LoadingDialog() : Container(),
             ],
           );
         });
+  }
+
+  CustomTopBar _appBarContent(DraftTransaksiController c) {
+    return CustomTopBar(
+      title: 'Draft Transaksi'.tr,
+      leading: CustomBackButton(
+        onPressed: () => Get.offAll(const DashboardScreen()),
+      ),
+      action: [
+        c.isOnline && c.isSync
+            ? CustomFilledButton(
+                color: successColor,
+                icon: Icons.sync,
+                width: 100,
+                title: 'Sync Data'.tr,
+                onPressed: () => c.syncData(),
+              )
+            : const SizedBox(),
+        const SizedBox(width: 20)
+      ],
+    );
+  }
+
+  Widget _bodyContent(DraftTransaksiController c, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          // CustomFilledButton(
+          //   color: errorColor,
+          //   title: 'clear draft',
+          //   onPressed: () {
+          //     controller.storage.deleteString(StorageCore.draftTransaction);
+          //     controller.initData();
+          //     controller.update();
+          //   },
+          // ),
+          CustomSearchField(
+            controller: c.search,
+            hintText: 'Cari transaksimu'.tr,
+            prefixIcon: SvgPicture.asset(
+              IconsConstant.search,
+              color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
+            ),
+            inputFormatters: [
+              TextInputFormatter.withFunction((oldValue, newValue) {
+                return newValue.copyWith(text: newValue.text.toUpperCase());
+              })
+            ],
+            onChanged: (value) {
+              c.searchDraft(value);
+            },
+            onClear: () {
+              c.search.clear();
+              c.initData();
+            },
+          ),
+          Expanded(
+            child: ListView(
+              shrinkWrap: true,
+              children: c.search.text.isNotEmpty
+                  ? c.searchList.isNotEmpty
+                      ? c.searchList
+                          .mapIndexed(
+                            (i, e) => c.draftItem(e, i, context),
+                          )
+                          .toList()
+                      : [Center(child: DataEmpty(text: "Draft Kosong".tr))]
+                  : c.draftList.isNotEmpty
+                      ? c.draftList
+                          .mapIndexed(
+                            (i, e) => c.draftItem(e, i, context),
+                          )
+                          .toList()
+                      : [Center(child: DataEmpty(text: "Draft Kosong".tr))],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

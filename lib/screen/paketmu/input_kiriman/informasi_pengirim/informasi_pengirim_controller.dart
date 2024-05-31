@@ -304,4 +304,56 @@ class InformasiPengirimController extends BaseController {
     isLoadSave = false;
     update();
   }
+
+  selectAccount(Account e) {
+    if (selectedAccount == e && selectedAccount != null) {
+      selectedAccount = null;
+      update();
+    } else {
+      selectedAccount = e;
+      codOgkir = false;
+      update();
+    }
+    getOriginList('', e.accountId.toString());
+    formValidate();
+    update();
+  }
+
+  sendAsDropshipper(bool? value) {
+    isDropshipper = value!;
+
+    if (value == true) {
+      if (dropshipper != null && data != null) {
+        namaPengirim.text = dropshipper?.name ?? '';
+        nomorTelpon.text = dropshipper?.phone ?? '';
+        kotaPengirim.text = dropshipper?.city ?? '';
+        kodePos.text = dropshipper?.zipCode ?? '';
+        alamatLengkap.text = dropshipper?.address ?? '';
+        getOriginList(dropshipper?.city ?? '', selectedAccount?.accountId ?? '').then((value) => selectedOrigin = value.first);
+
+        isValidate = true;
+      } else {
+        namaPengirim.clear();
+        nomorTelpon.clear();
+        kotaPengirim.clear();
+        kodePos.clear();
+        alamatLengkap.clear();
+        selectedOrigin = null;
+        isValidate = false;
+      }
+    } else {
+      namaPengirim.text = senderOrigin?.name ?? '';
+      nomorTelpon.text = senderOrigin?.phone ?? '';
+      kotaPengirim.text = senderOrigin?.origin?.originName ?? '';
+      kodePos.text = senderOrigin?.zipCode ?? '';
+      alamatLengkap.text = senderOrigin?.address ?? '';
+      selectedOrigin = Origin(
+        originCode: senderOrigin?.origin?.originCode,
+        branchCode: senderOrigin?.origin?.branchCode,
+        originName: senderOrigin?.origin?.originName,
+      );
+      isValidate = true;
+    }
+    update();
+  }
 }

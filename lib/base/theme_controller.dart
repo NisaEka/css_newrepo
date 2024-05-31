@@ -15,6 +15,9 @@ class CustomTheme {
         onPrimary: blueJNE,
         onBackground: whiteColor,
       ),
+      bottomSheetTheme: const BottomSheetThemeData(
+        backgroundColor: whiteColor,
+      ),
       useMaterial3: true,
       fontFamily: 'Ubuntu',
       // backgroundColor: baseColor,
@@ -29,6 +32,8 @@ class CustomTheme {
           color: greyDarkColor1,
         ),
       ),
+      switchTheme: SwitchThemeData(
+          trackColor: MaterialStateColor.resolveWith((states) => greyColor), thumbColor: MaterialStateColor.resolveWith((states) => blueJNE)),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: whiteColor,
@@ -90,12 +95,14 @@ class CustomTheme {
     return ThemeData(
       brightness: Brightness.dark,
       colorScheme: const ColorScheme.dark(
-          primary: primaryDarkColor,
-          secondary: greyDarkColor2,
-          background: bgDarkColor,
-          brightness: Brightness.dark,
-          onPrimary: infoColor,
-          onBackground: greyColor),
+        primary: primaryDarkColor,
+        secondary: greyDarkColor2,
+        background: bgDarkColor,
+        brightness: Brightness.dark,
+        onPrimary: infoColor,
+        onBackground: greyColor,
+      ),
+
       useMaterial3: true,
       textTheme: TextTheme(
         labelLarge: const TextStyle(
@@ -111,8 +118,11 @@ class CustomTheme {
       appBarTheme: AppBarTheme(
         // backgroundColor: const Color(0xff171717),
         elevation: 0,
-        titleTextStyle: appTitleTextStyle,
+        titleTextStyle: appTitleTextStyle.copyWith(color: whiteColor),
         iconTheme: const IconThemeData(color: whiteColor),
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateColor.resolveWith((states) => redJNE),
       ),
       inputDecorationTheme: InputDecorationTheme(
         // filled: true,

@@ -20,62 +20,66 @@ class SignUpOTPScreen extends StatelessWidget {
           return Stack(
             children: [
               Scaffold(
-                body: ListView(
-                  children: [
-                    const LogoHeader(),
-                    Form(
-                      key: controller.formKey,
-                      child: Container(
-                        padding: const EdgeInsets.all(50),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('Kode OTP sudah dikirimkan ke alamat email berikut :'.tr),
-                            Text(controller.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
-                            Pinput(
-                              controller: controller.otpPin,
-                              length: 6,
-                              focusNode: controller.focusNode,
-                              defaultPinTheme: controller.defaultPinTheme,
-                              showCursor: true,
-                              cursor: controller.cursor,
-                              preFilledWidget: controller.preFilledWidget,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                            ),
-                            const SizedBox(height: 50),
-                            Obx(
-                              () => Center(
-                                child: Text(controller.remainingSeconds != 0 ? controller.time.value : '00.00'),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () => controller.remainingSeconds == 0 ? controller.resendPin() : null,
-                              child: Text(
-                                'Kirim ulang kode'.tr,
-                                style: formLabelTextStyle.copyWith(
-                                  color: controller.remainingSeconds != 0 ? greyColor : blueJNE,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 60),
-                            CustomFilledButton(
-                              color: blueJNE,
-                              title: 'Selanjutnya'.tr,
-                              // radius: 50,
-                              onPressed: () => controller.pinConfirmation(),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                body: _bodyContent(controller, context),
               ),
               controller.isLoading ? const LoadingDialog() : const SizedBox()
             ],
           );
         });
+  }
+
+  Widget _bodyContent(SignUpOTPController c, BuildContext context) {
+    return ListView(
+      children: [
+        const LogoHeader(),
+        Form(
+          key: c.formKey,
+          child: Container(
+            padding: const EdgeInsets.all(50),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('Kode OTP sudah dikirimkan ke alamat email berikut :'.tr),
+                Text(c.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
+                Pinput(
+                  controller: c.otpPin,
+                  length: 6,
+                  focusNode: c.focusNode,
+                  defaultPinTheme: c.defaultPinTheme,
+                  showCursor: true,
+                  cursor: c.cursor,
+                  preFilledWidget: c.preFilledWidget,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Obx(
+                  () => Center(
+                    child: Text(c.remainingSeconds != 0 ? c.time.value : '00.00'),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => c.remainingSeconds == 0 ? c.resendPin() : null,
+                  child: Text(
+                    'Kirim ulang kode'.tr,
+                    style: formLabelTextStyle.copyWith(
+                      color: c.remainingSeconds != 0 ? greyColor : blueJNE,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 60),
+                CustomFilledButton(
+                  color: blueJNE,
+                  title: 'Selanjutnya'.tr,
+                  // radius: 50,
+                  onPressed: () => c.pinConfirmation(),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
   }
 }

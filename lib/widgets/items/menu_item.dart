@@ -2,22 +2,25 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MenuItem extends StatelessWidget {
-  final String menuTitle;
+  final String? menuTitle;
   final String? menuImg;
   final Icon? menuIcon;
   final VoidCallback? onTap;
   final bool isActive;
   final bool? isFavorite;
   final bool isEdit;
+  final bool isLogin;
   final VoidCallback? onEdit;
+  final Items? data;
 
   const MenuItem({
     super.key,
-    required this.menuTitle,
+    this.menuTitle,
     this.menuImg,
     this.onTap,
     this.menuIcon,
@@ -25,6 +28,8 @@ class MenuItem extends StatelessWidget {
     this.isFavorite,
     this.isEdit = false,
     this.onEdit,
+    this.data,
+    this.isLogin = false,
   });
 
   @override
@@ -58,14 +63,16 @@ class MenuItem extends StatelessWidget {
                   ),
                   child: menuIcon ??
                       Image.asset(
-                        menuImg ?? '',
+                        data?.icon ?? menuImg ?? '',
                         height: Get.width / 9,
                       ),
                 ),
                 SizedBox(
                   // width: 65,
                   child: Text(
-                    menuTitle.splitMapJoin(' ', onMatch: (p0) => '\n').splitMapJoin('_', onMatch: (p0) => ' '),
+                    data?.title?.tr.splitMapJoin(' ', onMatch: (p0) => '\n').splitMapJoin('_', onMatch: (p0) => ' ') ??
+                        menuTitle?.splitMapJoin(' ', onMatch: (p0) => '\n').splitMapJoin('_', onMatch: (p0) => ' ') ??
+                        '',
                     style: Theme.of(context).textTheme.titleSmall,
                     textAlign: TextAlign.center,
                   ),
@@ -81,8 +88,8 @@ class MenuItem extends StatelessWidget {
                 child: IconButton(
                   onPressed: onEdit,
                   icon: Icon(
-                    isFavorite == true ? Icons.remove_circle : Icons.add_circle_rounded,
-                    color: isFavorite == true ? errorColor : successColor,
+                    isFavorite == true || (data?.isFavorite ?? false) ? Icons.remove_circle : Icons.add_circle_rounded,
+                    color: isFavorite == true || (data?.isFavorite ?? false) ? errorColor : successColor,
                   ),
                 ),
               )

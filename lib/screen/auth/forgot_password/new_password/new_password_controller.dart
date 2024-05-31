@@ -61,4 +61,32 @@ class NewPasswordController extends BaseController {
     isLoading = false;
     update();
   }
+
+  showPassword() {
+    isObscurePassword ? isObscurePassword = false : isObscurePassword = true;
+    isObscurePassword != false
+        ? showIcon = const Icon(
+            Icons.visibility,
+            // color: greyDarkColor1,
+          )
+        : showIcon = const Icon(
+            Icons.visibility_off,
+            // color: Colors.black,
+          );
+    update();
+  }
+
+  showConfirmPassword() {
+    isObscurePasswordConfirm ? isObscurePasswordConfirm = false : isObscurePasswordConfirm = true;
+    isObscurePasswordConfirm != false
+        ? showConfirmIcon = const Icon(
+            Icons.visibility,
+            // color: greyDarkColor1,
+          )
+        : showConfirmIcon = const Icon(
+            Icons.visibility_off,
+            // color: Colors.black,
+          );
+    update();
+  }
 }

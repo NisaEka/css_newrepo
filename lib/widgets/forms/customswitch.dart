@@ -22,6 +22,7 @@ class CustomSwitch extends StatelessWidget {
           onChanged: onChange,
           activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
           // inactiveThumbColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+
         )
       ],
     );

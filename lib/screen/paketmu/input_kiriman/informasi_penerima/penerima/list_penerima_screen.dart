@@ -21,83 +21,91 @@ class ListPenerimaScreen extends StatelessWidget {
         init: ListPenerimaController(),
         builder: (controller) {
           return Scaffold(
-            appBar: AppBar(
-              elevation: 2,
-              leading: const CustomBackButton(),
-              title: Text(
-                'Pilih Data Penerima'.tr,
-                style: appTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
-              ),
-              actions: [
-                IconButton(
-                  onPressed: () => Get.to(const AddPenerimaScreen()),
-                  icon: Icon(
-                    Icons.add,
-                    color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                  ),
-                )
-              ],
-            ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Column(
-                children: [
-                  CustomSearchField(
-                    controller: controller.search,
-                    hintText: 'Cari Data Penerima'.tr,
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
-                    ),
-                    inputFormatters: [
-                      TextInputFormatter.withFunction((oldValue, newValue) {
-                        return newValue.copyWith(text: newValue.text.toUpperCase());
-                      })
-                    ],
-                    onChanged: (value) {
-                      controller.searchReceiver(value);
-                    },
-                    onClear: () {
-                      controller.search.clear();
-                      controller.initData();
-                    },
-                  ),
-                  const SizedBox(height: 30),
-                  controller.isLoading
-                      ? Expanded(
-                          child: ListView.builder(
-                          itemBuilder: (context, i) => controller.receiverItem(ReceiverModel(), i, context),
-                          itemCount: 5,
-                        ))
-                      : Expanded(
-                          child: ListView(
-                            shrinkWrap: true,
-                            children: controller.search.text.isNotEmpty
-                                ? controller.searchResultList.isNotEmpty
-                                    ? controller.searchResultList
-                                        .mapIndexed(
-                                          (i, e) => controller.receiverItem(e, i, context),
-                                        )
-                                        .toList()
-                                    : [
-                                        Center(
-                                            child: DataEmpty(
-                                          text: "Penerima Tidak Ditemukan".tr,
-                                        ))
-                                      ]
-                                : controller.receiverList.isNotEmpty
-                                    ? controller.receiverList
-                                        .mapIndexed(
-                                          (i, e) => controller.receiverItem(e, i, context),
-                                        )
-                                        .toList()
-                                    : [const Center(child: DataEmpty())],
-                          ),
-                        )
-                ],
-              ),
-            ),
+            appBar: _appBarContent(context),
+            body: _bodyContent(controller, context),
           );
         });
+  }
+
+  AppBar _appBarContent(BuildContext context) {
+    return AppBar(
+      elevation: 2,
+      leading: const CustomBackButton(),
+      title: Text(
+        'Pilih Data Penerima'.tr,
+        style: appTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
+      ),
+      actions: [
+        IconButton(
+          onPressed: () => Get.to(const AddPenerimaScreen()),
+          icon: Icon(
+            Icons.add,
+            color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _bodyContent(ListPenerimaController c, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Column(
+        children: [
+          CustomSearchField(
+            controller: c.search,
+            hintText: 'Cari Data Penerima'.tr,
+            prefixIcon: Icon(
+              Icons.search,
+              color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
+            ),
+            inputFormatters: [
+              TextInputFormatter.withFunction((oldValue, newValue) {
+                return newValue.copyWith(text: newValue.text.toUpperCase());
+              })
+            ],
+            onChanged: (value) {
+              c.searchReceiver(value);
+            },
+            onClear: () {
+              c.search.clear();
+              c.initData();
+            },
+          ),
+          const SizedBox(height: 30),
+          c.isLoading
+              ? Expanded(
+                  child: ListView.builder(
+                  itemBuilder: (context, i) => c.receiverItem(ReceiverModel(), i, context),
+                  itemCount: 5,
+                ))
+              : Expanded(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: c.search.text.isNotEmpty
+                        ? c.searchResultList.isNotEmpty
+                            ? c.searchResultList
+                                .mapIndexed(
+                                  (i, e) => c.receiverItem(e, i, context),
+                                )
+                                .toList()
+                            : [
+                                Center(
+                                    child: DataEmpty(
+                                  text: "Penerima Tidak Ditemukan".tr,
+                                ))
+                              ]
+                        : c.receiverList.isNotEmpty
+                            ? c.receiverList
+                                .mapIndexed(
+                                  (i, e) => c.receiverItem(e, i, context),
+                                )
+                                .toList()
+                            : [const Center(child: DataEmpty())],
+                  ),
+                )
+        ],
+      ),
+    );
   }
 }

@@ -10,22 +10,20 @@ import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggminus_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_item.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class AggregationMinusScreen extends StatefulWidget {
-
   const AggregationMinusScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _AggregationMinusScreenState();
-
 }
 
 class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AggregasiMinusController>(
@@ -35,58 +33,57 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
             appBar: CustomTopBar(
               title: 'Laporan Aggregasi Minus'.tr,
             ),
-            body: Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-              child: Column(
-                children: [
-                  const AggMinusBox(),
-                  CustomSearchField(
-                    controller: controller.searchField,
-                    hintText: 'Cari Data Aggregasi Minus'.tr,
-                    prefixIcon: SvgPicture.asset(
-                      IconsConstant.search,
-                      color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
-                    ),
-                    onChanged: (value) {
-                      controller.searchField.text = value;
-                      controller.update();
-                      controller.pagingController.refresh();
-                    },
-                    onClear: () {
-                      controller.searchField.clear();
-                      controller.pagingController.refresh();
-                    },
-                  ),
-                  Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: () => Future.sync(() => controller.pagingController.refresh()),
-                      child: PagedListView<int, AggregationMinusModel>(
-                        pagingController: controller.pagingController,
-                        builderDelegate: PagedChildBuilderDelegate<AggregationMinusModel>(
-                            transitionDuration: const Duration(milliseconds: 500),
-                            itemBuilder: (context, item, index) => _aggregationItem(item),
-                          firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
-
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+            body: _bodyContent(controller, context),
           );
         });
+  }
+
+  Widget _bodyContent(AggregasiMinusController c, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+      child: Column(
+        children: [
+          const AggMinusBox(),
+          CustomSearchField(
+            controller: c.searchField,
+            hintText: 'Cari Data Aggregasi Minus'.tr,
+            prefixIcon: SvgPicture.asset(
+              IconsConstant.search,
+              color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
+            ),
+            onChanged: (value) {
+              c.searchField.text = value;
+              c.update();
+              c.pagingController.refresh();
+            },
+            onClear: () {
+              c.searchField.clear();
+              c.pagingController.refresh();
+            },
+          ),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () => Future.sync(() => c.pagingController.refresh()),
+              child: PagedListView<int, AggregationMinusModel>(
+                pagingController: c.pagingController,
+                builderDelegate: PagedChildBuilderDelegate<AggregationMinusModel>(
+                  transitionDuration: const Duration(milliseconds: 500),
+                  itemBuilder: (context, item, index) => _aggregationItem(item),
+                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget _aggregationItem(AggregationMinusModel aggregation) {
     return AggregationMinusItem(
         data: aggregation,
         onTap: () => {
-          Get.to(const AggregationMinusDocScreen(), arguments: {
-            "doc": aggregation.aggMinDoc
-          })
-        }
-    );
+              Get.to(const AggregationMinusDocScreen(), arguments: {"doc": aggregation.aggMinDoc})
+            });
   }
-
 }

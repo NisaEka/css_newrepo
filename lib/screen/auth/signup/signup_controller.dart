@@ -179,4 +179,15 @@ class SignUpController extends BaseController {
       update();
     }
   }
+
+  selectOrigin(value) {
+    {
+      selectedOrigin = value;
+      kotaPengirim.text = selectedOrigin?.originName ?? '';
+      branchCode = selectedOrigin?.branchCode;
+      update();
+
+      getAgentList();
+    }
+  }
 }

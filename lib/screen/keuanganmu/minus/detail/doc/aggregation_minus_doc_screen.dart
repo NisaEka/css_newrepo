@@ -6,7 +6,6 @@ import 'package:css_mobile/screen/keuanganmu/minus/detail/doc/aggregation_minus_
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
-import 'package:css_mobile/widgets/laporan_pembayaran/aggminus_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_doc_item.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,7 @@ class AggregationMinusDocScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: _aggregationMinusDocAppBar(),
-          body: _aggregationMinusDocBody(context, controller),
+          body: _bodyContent(context, controller),
         );
       }
     );
@@ -37,7 +36,7 @@ class AggregationMinusDocScreen extends StatelessWidget {
     );
   }
 
-  Widget _aggregationMinusDocBody(BuildContext context, AggregationMinusDocController controller) {
+  Widget _bodyContent(BuildContext context, AggregationMinusDocController controller) {
     return Column(
       children: [
         _topBox(controller.docArgs),

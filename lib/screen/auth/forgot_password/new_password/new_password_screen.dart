@@ -63,19 +63,7 @@ class NewPasswordScreen extends StatelessWidget {
                   inputFormatters: const [],
                   suffixIcon: IconButton(
                     icon: c.showIcon,
-                    onPressed: () {
-                      c.isObscurePassword ? c.isObscurePassword = false : c.isObscurePassword = true;
-                      c.isObscurePassword != false
-                          ? c.showIcon = const Icon(
-                              Icons.visibility,
-                              // color: greyDarkColor1,
-                            )
-                          : c.showIcon = const Icon(
-                              Icons.visibility_off,
-                              // color: Colors.black,
-                            );
-                      c.update();
-                    },
+                    onPressed: () => c.showPassword(),
                   ),
                 ),
                 CustomTextFormField(
@@ -97,19 +85,7 @@ class NewPasswordScreen extends StatelessWidget {
                   multiLine: false,
                   suffixIcon: IconButton(
                     icon: c.showConfirmIcon,
-                    onPressed: () {
-                      c.isObscurePasswordConfirm ? c.isObscurePasswordConfirm = false : c.isObscurePasswordConfirm = true;
-                      c.isObscurePasswordConfirm != false
-                          ? c.showConfirmIcon = const Icon(
-                              Icons.visibility,
-                              // color: greyDarkColor1,
-                            )
-                          : c.showConfirmIcon = const Icon(
-                              Icons.visibility_off,
-                              // color: Colors.black,
-                            );
-                      c.update();
-                    },
+                    onPressed: () => c.showConfirmPassword(),
                   ),
                 ),
                 CustomFilledButton(

@@ -1,12 +1,9 @@
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart';
-import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_box.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class AggregationMinusCnoteScreen extends StatelessWidget {
@@ -22,7 +19,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _aggregationMinusCnoteAppBar(),
-      body: _aggregationMinusCnoteBody()
+      body: _bodyContent()
     );
   }
 
@@ -32,7 +29,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
     );
   }
 
-  Widget _aggregationMinusCnoteBody() {
+  Widget _bodyContent() {
     return Column(
       children: [
         Padding(

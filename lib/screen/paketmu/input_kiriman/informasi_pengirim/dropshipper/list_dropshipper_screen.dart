@@ -21,88 +21,95 @@ class ListDropshipperScreen extends StatelessWidget {
         init: ListDropshipperController(),
         builder: (controller) {
           return Scaffold(
-            appBar: AppBar(
-              elevation: 2,
-              leading: const CustomBackButton(),
-              title: Text(
-                'Pilih Data Dropshipper'.tr,
-                style: appTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
-              ),
-              actions: [
-                controller.isOnline
-                    ? IconButton(
-                        onPressed: () => Get.to(const AddDropshipperScreen(), arguments: {
-                          'account': controller.account,
-                        })?.then((value) => controller.initData()),
-                        icon: Icon(
-                          Icons.add,
-                          color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                        ),
-                      )
-                    : const SizedBox()
-              ],
-            ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Column(
-                children: [
-                  // !controller.isOnline ? const OfflineBar() : const SizedBox(),
-                  CustomSearchField(
-                    controller: controller.search,
-                    hintText: 'Cari Data Dropshipper'.tr,
-                    inputFormatters: [
-                      TextInputFormatter.withFunction((oldValue, newValue) {
-                        return newValue.copyWith(text: newValue.text.toUpperCase());
-                      })
-                    ],
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
-                    ),
-                    onChanged: (value) {
-                      controller.searchDropshipper(value);
-                    },
-                    onClear: () {
-                      controller.search.clear();
-                      controller.initData();
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  controller.isLoading
-                      ? Expanded(
-                          child: ListView.builder(
-                          itemBuilder: (context, i) => controller.dropshipperItem(DropshipperModel(), i, context),
-                          itemCount: 5,
-                        ))
-                      : Expanded(
-                          child: ListView(
-                            shrinkWrap: true,
-                            children: controller.search.text.isNotEmpty
-                                ? controller.searchResultList.isNotEmpty
-                                    ? controller.searchResultList
-                                        .mapIndexed(
-                                          (i, e) => controller.dropshipperItem(e, i, context),
-                                        )
-                                        .toList()
-                                    : [
-                                        Center(
-                                            child: DataEmpty(
-                                          text: "Petugas Tidak Ditemukan".tr,
-                                        ))
-                                      ]
-                                : controller.dropshipperList.isNotEmpty
-                                    ? controller.dropshipperList
-                                        .mapIndexed(
-                                          (i, e) => controller.dropshipperItem(e, i, context),
-                                        )
-                                        .toList()
-                                    : [const Center(child: DataEmpty())],
-                          ),
-                        )
-                ],
-              ),
-            ),
+            appBar: _appBarContent(controller, context),
+            body: _bodyContent(controller, context),
           );
         });
+  }
+
+  AppBar _appBarContent(ListDropshipperController c, BuildContext context) {
+    return AppBar(
+      elevation: 2,
+      leading: const CustomBackButton(),
+      title: Text(
+        'Pilih Data Dropshipper'.tr,
+        style: appTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
+      ),
+      actions: [
+        c.isOnline
+            ? IconButton(
+                onPressed: () => Get.to(const AddDropshipperScreen(), arguments: {
+                  'account': c.account,
+                })?.then((value) => c.initData()),
+                icon: Icon(
+                  Icons.add,
+                  color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                ),
+              )
+            : const SizedBox()
+      ],
+    );
+  }
+
+  Widget _bodyContent(ListDropshipperController c, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Column(
+        children: [
+          // !controller.isOnline ? const OfflineBar() : const SizedBox(),
+          CustomSearchField(
+            controller: c.search,
+            hintText: 'Cari Data Dropshipper'.tr,
+            inputFormatters: [
+              TextInputFormatter.withFunction((oldValue, newValue) {
+                return newValue.copyWith(text: newValue.text.toUpperCase());
+              })
+            ],
+            prefixIcon: Icon(
+              Icons.search,
+              color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
+            ),
+            onChanged: (value) {
+              c.searchDropshipper(value);
+            },
+            onClear: () {
+              c.search.clear();
+              c.initData();
+            },
+          ),
+          const SizedBox(height: 20),
+          c.isLoading
+              ? Expanded(
+                  child: ListView.builder(
+                  itemBuilder: (context, i) => c.dropshipperItem(DropshipperModel(), i, context),
+                  itemCount: 5,
+                ))
+              : Expanded(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: c.search.text.isNotEmpty
+                        ? c.searchResultList.isNotEmpty
+                            ? c.searchResultList
+                                .mapIndexed(
+                                  (i, e) => c.dropshipperItem(e, i, context),
+                                )
+                                .toList()
+                            : [
+                                Center(
+                                  child: DataEmpty(text: "Petugas Tidak Ditemukan".tr),
+                                )
+                              ]
+                        : c.dropshipperList.isNotEmpty
+                            ? c.dropshipperList
+                                .mapIndexed(
+                                  (i, e) => c.dropshipperItem(e, i, context),
+                                )
+                                .toList()
+                            : [const Center(child: DataEmpty())],
+                  ),
+                )
+        ],
+      ),
+    );
   }
 }

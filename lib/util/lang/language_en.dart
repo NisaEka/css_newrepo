@@ -301,7 +301,8 @@ class LanguageEN {
       "Informasi Aggregasi": "Aggregation Info",
       "Detail Aggregasi": "Aggregation Detail",
       "Log Aktivitas": "Log Activity",
-      "Log Aktivitas Kosong": "No Log Activity"
+      "Log Aktivitas Kosong": "No Log Activity",
+      "Favorit": "Favorite"
     };
   }
 }
