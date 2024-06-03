@@ -24,114 +24,122 @@ class PengaturanPetugasScreen extends StatelessWidget {
         init: PengaturanPetugasController(),
         builder: (controller) {
           return Scaffold(
-            appBar: CustomTopBar(
-              title: 'Pengaturan Petugas'.tr,
-              action: [
-                IconButton(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  onPressed: () => Get.to(const TambahPetugasScreen(), arguments: {
-                    'isEdit': false,
-                  })?.then((value) => controller.pagingController.refresh()),
-                  icon: Icon(
-                    Icons.add,
-                    color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-                  ),
-                ),
-              ],
-            ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  CustomSearchField(
-                    controller: controller.searchOfficer,
-                    hintText: 'Cari Data Petugas'.tr,
-                    prefixIcon: SvgPicture.asset(
-                      IconsConstant.search,
-                      color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
-                    ),
-                    onChanged: (value) {
-                      controller.searchOfficer.text = value;
-                      controller.update();
-                      controller.pagingController.refresh();
-                    },
-                    onClear: () {
-                      controller.searchOfficer.clear();
-                      controller.update();
-                      controller.pagingController.refresh();
-                    },
-                  ),
-                  const SizedBox(height: 21),
-                  Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: () => Future.sync(
-                        () => controller.pagingController.refresh(),
-                      ),
-                      child: PagedListView<int, PetugasModel>(
-                        pagingController: controller.pagingController,
-                        builderDelegate: PagedChildBuilderDelegate<PetugasModel>(
-                          transitionDuration: const Duration(milliseconds: 500),
-                          itemBuilder: (context, item, index) => PetugasListItem(
-                            // isLoading: true,
-                            index: index,
-                            icon: Icon(
-                              Icons.shield_outlined,
-                              color: item.status == "Y" ? successColor : errorColor,
-                            ),
-                            title: item.name ?? '',
-                            subtitle: '${item.email ?? '-'}\n${item.phone ?? '-'}\n${item.branch ?? ''} - ${item.origin ?? ''}',
-                            onTap: () => Get.to(const TambahPetugasScreen(), arguments: {
-                              'isEdit': true,
-                              'data': item,
-                            })?.then((value) => controller.pagingController.refresh()),
-                            onDelete: (context) => showDialog(
-                              context: context,
-                              builder: (c) => DeleteAlertDialog(
-                                onDelete: () {
-                                  controller.delete(item);
-                                  Get.back();
-                                },
-                                onBack: () {
-                                  Get.back();
-                                  controller.pagingController.refresh();
-                                },
-                              ),
-                            ),
-                          ),
-                          firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
-                          firstPageProgressIndicatorBuilder: (context) => Column(
-                            children: List.generate(
-                              3,
-                              (index) => PetugasListItem(
-                                isLoading: controller.isLoading,
-                                title: '',
-                                icon: const Icon(Icons.shield),
-                                index: 0,
-                              ),
-                            ),
-                          ),
-                          noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
-                          noMoreItemsIndicatorBuilder: (context) => const Center(
-                            child: Divider(
-                              indent: 100,
-                              endIndent: 100,
-                              thickness: 2,
-                              color: blueJNE,
-                            ),
-                          ),
-                          newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                            background: Colors.transparent,
-                            height: 50,
-                            size: 30,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            appBar: _appBarContent(controller, context),
+            body: _bodyContent(controller, context),
           );
         });
+  }
+
+  CustomTopBar _appBarContent(PengaturanPetugasController c, BuildContext context){
+    return CustomTopBar(
+      title: 'Pengaturan Petugas'.tr,
+      action: [
+        IconButton(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          onPressed: () => Get.to(const TambahPetugasScreen(), arguments: {
+            'isEdit': false,
+          })?.then((value) => c.pagingController.refresh()),
+          icon: Icon(
+            Icons.add,
+            color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _bodyContent(PengaturanPetugasController c, BuildContext context){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          CustomSearchField(
+            controller: c.searchOfficer,
+            hintText: 'Cari Data Petugas'.tr,
+            prefixIcon: SvgPicture.asset(
+              IconsConstant.search,
+              color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
+            ),
+            onChanged: (value) {
+              c.searchOfficer.text = value;
+              c.update();
+              c.pagingController.refresh();
+            },
+            onClear: () {
+              c.searchOfficer.clear();
+              c.update();
+              c.pagingController.refresh();
+            },
+          ),
+          const SizedBox(height: 21),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () => Future.sync(
+                    () => c.pagingController.refresh(),
+              ),
+              child: PagedListView<int, PetugasModel>(
+                pagingController: c.pagingController,
+                builderDelegate: PagedChildBuilderDelegate<PetugasModel>(
+                  transitionDuration: const Duration(milliseconds: 500),
+                  itemBuilder: (context, item, index) => PetugasListItem(
+                    // isLoading: true,
+                    index: index,
+                    icon: Icon(
+                      Icons.shield_outlined,
+                      color: item.status == "Y" ? successColor : errorColor,
+                    ),
+                    title: item.name ?? '',
+                    subtitle: '${item.email ?? '-'}\n${item.phone ?? '-'}\n${item.branch ?? ''} - ${item.origin ?? ''}',
+                    onTap: () => Get.to(const TambahPetugasScreen(), arguments: {
+                      'isEdit': true,
+                      'data': item,
+                    })?.then((value) => c.pagingController.refresh()),
+                    onDelete: (context) => showDialog(
+                      context: context,
+                      builder: (context) => DeleteAlertDialog(
+                        onDelete: () {
+                          c.delete(item);
+                          Get.back();
+                        },
+                        onBack: () {
+                          Get.back();
+                          c.pagingController.refresh();
+                        },
+                      ),
+                    ),
+                  ),
+                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                  firstPageProgressIndicatorBuilder: (context) => Column(
+                    children: List.generate(
+                      3,
+                          (index) => PetugasListItem(
+                        isLoading: c.isLoading,
+                        title: '',
+                        icon: const Icon(Icons.shield),
+                        index: 0,
+                      ),
+                    ),
+                  ),
+                  noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
+                  noMoreItemsIndicatorBuilder: (context) => const Center(
+                    child: Divider(
+                      indent: 100,
+                      endIndent: 100,
+                      thickness: 2,
+                      color: blueJNE,
+                    ),
+                  ),
+                  newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                    background: Colors.transparent,
+                    height: 50,
+                    size: 30,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

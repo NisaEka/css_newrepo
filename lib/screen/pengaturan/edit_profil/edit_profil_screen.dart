@@ -29,83 +29,87 @@ class EditProfilScreen extends StatelessWidget {
                 ? const LoadingDialog(
                     background: Colors.transparent,
                   )
-                : Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Form(
-                      key: controller.formKey,
-                      child: ListView(
-                        children: [
-                          CustomTextFormField(
-                            controller: controller.brand,
-                            hintText: "Nama Brand / Bisnis".tr,
-                            validator: ValidationBuilder().name().build(),
-                          ),
-                          CustomTextFormField(
-                            controller: controller.name,
-                            hintText: "Nama Lengkap".tr,
-                            validator: ValidationBuilder().name().build(),
-                          ),
-                          CustomTextFormField(
-                            controller: controller.ktp,
-                            hintText: "Nomor Identitas / KTP".tr,
-                            readOnly: true,
-                          ),
-                          CustomTextFormField(
-                            controller: controller.address,
-                            hintText: "Alamat Lengkap".tr,
-                            validator: ValidationBuilder().address().build(),
-                          ),
-                          CustomSearchDropdownField<Destination>(
-                            asyncItems: (String filter) => controller.getDestinationList(filter),
-                            itemBuilder: (context, e, b) {
-                              return GestureDetector(
-                                onTap: () => controller.update(),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                  child: Text(
-                                    '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
-                                  ),
-                                ),
-                              );
-                            },
-                            itemAsString: (Destination e) => '${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.zipCode}',
-                            onChanged: (value) {
-                              controller.selectedCity = value;
-                              controller.update();
-                            },
-                            value: controller.selectedCity,
-                            isRequired: controller.selectedCity == null ? true : false,
-                            readOnly: false,
-                            hintText: controller.isLoading ? "Loading..." : "Kota/Kecamatan/Kelurahan/Kode Pos".tr,
-                            // prefixIcon: const Icon(Icons.location_city),
-                            textStyle: controller.selectedCity != null ? subTitleTextStyle : hintTextStyle,
-                          ),
-                          CustomTextFormField(
-                            controller: controller.phone,
-                            hintText: "Nomor Telepon".tr,
-                            readOnly: true,
-                            validator: ValidationBuilder().phoneNumber().build(),
-                          ),
-                          CustomTextFormField(
-                            controller: controller.whatsapp,
-                            hintText: "Nomor Whatsapp".tr,
-                            readOnly: true,
-                          ),
-                          CustomTextFormField(
-                            controller: controller.email,
-                            hintText: "Email",
-                            readOnly: true,
-                          ),
-                          CustomFilledButton(
-                            color: blueJNE,
-                            title: "Edit Profil".tr,
-                            onPressed: () => controller.updateData(),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                : _bodyContent(controller, context),
           );
         });
+  }
+
+  Widget _bodyContent(EditProfileController c, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Form(
+        key: c.formKey,
+        child: ListView(
+          children: [
+            CustomTextFormField(
+              controller: c.brand,
+              hintText: "Nama Brand / Bisnis".tr,
+              validator: ValidationBuilder().name().build(),
+            ),
+            CustomTextFormField(
+              controller: c.name,
+              hintText: "Nama Lengkap".tr,
+              validator: ValidationBuilder().name().build(),
+            ),
+            CustomTextFormField(
+              controller: c.ktp,
+              hintText: "Nomor Identitas / KTP".tr,
+              readOnly: true,
+            ),
+            CustomTextFormField(
+              controller: c.address,
+              hintText: "Alamat Lengkap".tr,
+              validator: ValidationBuilder().address().build(),
+            ),
+            CustomSearchDropdownField<Destination>(
+              asyncItems: (String filter) => c.getDestinationList(filter),
+              itemBuilder: (context, e, b) {
+                return GestureDetector(
+                  onTap: () => c.update(),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    child: Text(
+                      '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
+                    ),
+                  ),
+                );
+              },
+              itemAsString: (Destination e) => '${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.zipCode}',
+              onChanged: (value) {
+                c.selectedCity = value;
+                c.update();
+              },
+              value: c.selectedCity,
+              isRequired: c.selectedCity == null ? true : false,
+              readOnly: false,
+              hintText: c.isLoading ? "Loading..." : "Kota/Kecamatan/Kelurahan/Kode Pos".tr,
+              // prefixIcon: const Icon(Icons.location_city),
+              textStyle: c.selectedCity != null ? subTitleTextStyle : hintTextStyle,
+            ),
+            CustomTextFormField(
+              controller: c.phone,
+              hintText: "Nomor Telepon".tr,
+              readOnly: true,
+              validator: ValidationBuilder().phoneNumber().build(),
+            ),
+            CustomTextFormField(
+              controller: c.whatsapp,
+              hintText: "Nomor Whatsapp".tr,
+              readOnly: true,
+            ),
+            CustomTextFormField(
+              controller: c.email,
+              hintText: "Email",
+              readOnly: true,
+            ),
+            CustomFilledButton(
+              color: blueJNE,
+              title: "Edit Profil".tr,
+              onPressed: () => c.updateData(),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

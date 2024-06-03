@@ -21,76 +21,86 @@ class PengaturanLabelScreen extends StatelessWidget {
             appBar: CustomTopBar(
               title: 'Pengaturan Label'.tr,
             ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: ListView(
-                children: [
-                  // CustomSwitch(
-                  //   value: controller.copyLabel,
-                  //   label: 'Salin Label'.tr,
-                  //   onChange: (value) {
-                  //     controller.copyLabel = value;
-                  //     controller.update();
-                  //   },
-                  // ),
-                  CustomDropDownField(
-                    label: 'Biaya Kirim'.tr,
-                    value: controller.shipcost.isNotEmpty ? controller.shipcost : "PUBLISH",
-                    hintText: 'Biaya Kirim'.tr,
-                    items: [
-                      DropdownMenuItem(
-                        value: 'PUBLISH',
-                        child: Text('Publish Rate'.tr.toUpperCase(), style: subTitleTextStyle,),
-                      ),
-                      DropdownMenuItem(
-                        value: 'HIDE',
-                        child: Text('Sembunyikan'.tr.toUpperCase(), style: subTitleTextStyle,),
-                      ),
-                    ],
-                    onChanged: (value) {
-                      controller.shipcost = value ?? '';
-                      controller.update();
-                    },
-                  ),
-                  const SizedBox(height: 11),
-                  CustomFormLabel(label: 'Pilih Jenis Label Anda'.tr),
-                  TextField(
-                    readOnly: true,
-                    controller: TextEditingController(
-                      text: controller.selectedSticker
-                          .splitMapJoin(
-                            '_',
-                            onMatch: (p0) => ' ',
-                          )
-                          .substring(1),
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: controller.labelList
-                          .map(
-                            (e) => StickerListItem(
-                              img: e.image ?? '',
-                              isSelected: controller.selectedSticker == e.name,
-                              onTap: () {
-                                controller.selectedSticker = e.name.toString();
-                                controller.update();
-                              },
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                  CustomFilledButton(
-                    color: blueJNE,
-                    title: 'Simpan Perubahan'.tr,
-                    onPressed: () => controller.saveLabel(),
-                  ),
-                ],
-              ),
-            ),
+            body: _bodyContent(controller, context),
           );
         });
+  }
+
+  Widget _bodyContent(PengaturanLabelController c, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: ListView(
+        children: [
+          // CustomSwitch(
+          //   value: controller.copyLabel,
+          //   label: 'Salin Label'.tr,
+          //   onChange: (value) {
+          //     controller.copyLabel = value;
+          //     controller.update();
+          //   },
+          // ),
+          CustomDropDownField(
+            label: 'Biaya Kirim'.tr,
+            value: c.shipcost.isNotEmpty ? c.shipcost : "PUBLISH",
+            hintText: 'Biaya Kirim'.tr,
+            items: [
+              DropdownMenuItem(
+                value: 'PUBLISH',
+                child: Text(
+                  'Publish Rate'.tr.toUpperCase(),
+                  style: subTitleTextStyle,
+                ),
+              ),
+              DropdownMenuItem(
+                value: 'HIDE',
+                child: Text(
+                  'Sembunyikan'.tr.toUpperCase(),
+                  style: subTitleTextStyle,
+                ),
+              ),
+            ],
+            onChanged: (value) {
+              c.shipcost = value ?? '';
+              c.update();
+            },
+          ),
+          const SizedBox(height: 11),
+          CustomFormLabel(label: 'Pilih Jenis Label Anda'.tr),
+          TextField(
+            readOnly: true,
+            controller: TextEditingController(
+              text: c.selectedSticker
+                  .splitMapJoin(
+                    '_',
+                    onMatch: (p0) => ' ',
+                  )
+                  .substring(1),
+            ),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: c.labelList
+                  .map(
+                    (e) => StickerListItem(
+                      img: e.image ?? '',
+                      isSelected: c.selectedSticker == e.name,
+                      onTap: () {
+                        c.selectedSticker = e.name.toString();
+                        c.update();
+                      },
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          CustomFilledButton(
+            color: blueJNE,
+            title: 'Simpan Perubahan'.tr,
+            onPressed: () => c.saveLabel(),
+          ),
+        ],
+      ),
+    );
   }
 }
