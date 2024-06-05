@@ -120,13 +120,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               keyboardType: widget.inputType,
               obscureText: widget.isObscure ?? false,
               inputFormatters: widget.inputFormatters ??
-                  (widget.hintText!.contains('email')
+                  (widget.hintText?.contains('email') ?? false
                       ? [
                           TextInputFormatter.withFunction((oldValue, newValue) {
                             return newValue.copyWith(text: newValue.text.toLowerCase());
                           })
                         ]
-                      : (!widget.hintText!.contains('Kata Sandi') || !widget.hintText!.contains('Password'))
+                      : (!(widget.hintText?.contains('Kata Sandi') ?? false) || !(widget.hintText?.contains('Password') ?? false))
                           ? [
                               TextInputFormatter.withFunction((oldValue, newValue) {
                                 return newValue.copyWith(text: newValue.text.toUpperCase());

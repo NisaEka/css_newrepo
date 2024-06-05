@@ -3,6 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -90,7 +91,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                     Container(
                       color: isLoading ? greyLightColor3 : Colors.transparent,
                       width: isLoading ? Get.width / 5 : null,
-                      child: Text(data?.createdDate ?? tanggalEntry ?? '', style: sublistTitleTextStyle),
+                      child: Text(data?.createdDate?.toDateTimeFormat() ?? tanggalEntry?.toDateTimeFormat() ?? '', style: sublistTitleTextStyle),
                     ),
                   ],
                 ),

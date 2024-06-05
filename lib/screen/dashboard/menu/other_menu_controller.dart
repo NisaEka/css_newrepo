@@ -89,7 +89,7 @@ class OtherMenuCotroller extends BaseController {
       Items(
         title: "Pembayaran Aggregasi",
         icon: ImageConstant.keuanganmuIcon,
-        isAuth: false,
+        isAuth: true,
         isFavorite: favoritList.where((e) => e.title == "Laporan Pembayaran Aggregasi").isNotEmpty,
         isEdit: isEdit,
         route: "/pembayaranAggregasi",
@@ -97,7 +97,7 @@ class OtherMenuCotroller extends BaseController {
       Items(
         title: "Aggregasi Minus",
         icon: ImageConstant.keuanganmuIcon,
-        isAuth: false,
+        isAuth: true,
         isFavorite: favoritList.where((e) => e.title == "Laporan Pembayaran Aggregasi").isNotEmpty,
         isEdit: isEdit,
         route: "/aggregasiMinus",

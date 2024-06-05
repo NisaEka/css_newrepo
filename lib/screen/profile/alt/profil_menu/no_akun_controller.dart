@@ -1,10 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
-import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NoAkunController extends BaseController {
@@ -17,7 +14,7 @@ class NoAkunController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([initData()]);
+    Future.wait([initData(), loadActivity()]);
   }
 
   Future<void> initData() async {
@@ -28,19 +25,26 @@ class NoAkunController extends BaseController {
         accountList.addAll(value.payload ?? []);
         update();
       });
-
-      await profil.getCcrfActivity().then((value) {
-        logActivityList.addAll(value.payload ?? []);
-        update();
-      });
     } catch (e, i) {
       e.printError();
       i.printError();
+      accountList = [];
       var accounts = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
       accountList.addAll(accounts.payload ?? []);
     }
 
     isLoading = false;
     update();
+  }
+
+  Future<void> loadActivity() async {
+    try {
+      await profil.getCcrfActivity().then((value) {
+        logActivityList.addAll(value.payload ?? []);
+        update();
+      });
+    } catch (e) {
+      e.printError();
+    }
   }
 }

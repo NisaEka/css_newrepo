@@ -1,5 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
 import 'package:flutter/material.dart';
@@ -203,12 +204,39 @@ class RiwayatKirimanController extends BaseController {
   Future<void> delete(TransactionModel item) async {
     try {
       await transaction.deleteTransaction(item.awb.toString()).then((value) {
-        pagingController.refresh();
-        initData();
-        update();
+        if (value.code == 400) {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.warning,
+                color: whiteColor,
+              ),
+              message: value.message?.tr,
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: errorColor,
+            ),
+          );
+        } else {
+          pagingController.refresh();
+          initData();
+          update();
+        }
       });
     } catch (e) {
       e.printError();
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(
+            Icons.warning,
+            color: whiteColor,
+          ),
+          message: 'Bad Request'.tr,
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: errorColor,
+        ),
+      );
     }
 
     update();

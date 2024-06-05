@@ -132,6 +132,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     textStyle: c.selectedReferal != null ? subTitleTextStyle : hintTextStyle,
                     readOnly: false,
                     isRequired: false,
+                    suffixIcon: IconButton(icon: Icon(Icons.clear), onPressed: () {
+
+                    },),
                   ),
                   CustomSearchDropdownField<Origin>(
                     asyncItems: (String filter) => c.getOriginList(filter),

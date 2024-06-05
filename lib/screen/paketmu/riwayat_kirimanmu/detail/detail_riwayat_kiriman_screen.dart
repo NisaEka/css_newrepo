@@ -45,19 +45,22 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
               Column(
                 children: [
                   CustomTextFormField(
-                    controller: TextEditingController(text: c.transactionModel?.status.toString()),
+                    controller: c.transStatus,
+                    // controller: TextEditingController(text: c.transactionModel?.status?.isNotEmpty.toString() ?? ''),
                     label: 'Status Transaksi'.tr,
                     width: Get.width / 2.5,
                     readOnly: true,
+                    hintText: '',
                     backgroundColor: AppConst.isLightTheme(context) ? greyLightColor2 : greyDarkColor2,
                     noBorder: true,
                     isLoading: c.isLoading,
                   ),
                   CustomTextFormField(
-                    controller: TextEditingController(text: c.transactionModel?.pickupStatus ?? ''),
+                    controller: c.pickupStatus,
                     label: 'Status Pickup'.tr,
                     width: Get.width / 2.5,
                     readOnly: true,
+                    hintText: '',
                     backgroundColor: AppConst.isLightTheme(context) ? greyLightColor2 : greyDarkColor2,
                     noBorder: true,
                     isLoading: c.isLoading,
