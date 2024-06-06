@@ -15,6 +15,7 @@ class StorageCore {
   static const String dropshipper = 'dropshipper';
   static const String receiver = 'receiver';
   static const String userProfil = 'user_profil';
+  static const String ccrfProfil = 'ccrf_profil';
   static const String transactionLabel = "transaction_label";
   static const String shippingCost = "shipping_const";
 

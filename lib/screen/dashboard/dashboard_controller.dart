@@ -172,7 +172,7 @@ class DashboardController extends BaseController {
 
     marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
     var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
-    userName = shipper.name;
+    userName = shipper.name ?? "USERNAME";
     // if (isLogin == true) {
     try {
       await jlc.postTotalPoint().then((value) {
@@ -213,9 +213,15 @@ class DashboardController extends BaseController {
 
       allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
 
+      // await profil.getCcrfProfil().then((value) async => await storage.saveData(
+      //       StorageCore.ccrfProfil,
+      //       value.payload,
+      //     ));
+
       update();
-    } catch (e) {
+    } catch (e, i) {
       e.printError();
+      i.printError();
     }
     // }
 

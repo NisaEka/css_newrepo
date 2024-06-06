@@ -116,6 +116,7 @@ class SignUpOTPController extends BaseController {
   Future<void> resendPin() async {
     isLoading = true;
     otpPin.clear();
+    _startTimer(120);
     try {
       await auth.postRegistPinResend(InputPinconfirmModel(email: email)).then((value) {
         if (value.code == 200) {

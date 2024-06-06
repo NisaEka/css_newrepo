@@ -132,9 +132,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     textStyle: c.selectedReferal != null ? subTitleTextStyle : hintTextStyle,
                     readOnly: false,
                     isRequired: false,
-                    suffixIcon: IconButton(icon: Icon(Icons.clear), onPressed: () {
-
-                    },),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {},
+                    ),
+                    showClearButton: true,
+                    showDropdownButton: c.selectedReferal == null,
+                    onClear: () => c.unSelectReferal(),
                   ),
                   CustomSearchDropdownField<Origin>(
                     asyncItems: (String filter) => c.getOriginList(filter),
@@ -151,6 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     value: c.selectedOrigin,
                     selectedItem: c.kotaPengirim.text,
                     hintText: c.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
+                    searchHintText: 'Masukan Kota Pengiriman'.tr,
                     prefixIcon: const Icon(Icons.location_city),
                     textStyle: c.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
                     readOnly: c.isDefaultOrigin,

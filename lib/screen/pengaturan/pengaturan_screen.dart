@@ -90,13 +90,6 @@ class PengaturanScreen extends StatelessWidget {
             ),
           ),
           // : const SizedBox(),
-          c.isLogin && c.allow.profil == "Y"
-              ? SettingListItem(
-            title: 'Edit Profil'.tr,
-            icon: Icons.person,
-            onTap: () => Get.to(const EditProfilScreen()),
-          )
-              : const SizedBox(),
           c.isLogin && c.allow.katasandi == "Y"
               ? SettingListItem(
             title: 'Ubah Kata Sandi'.tr,

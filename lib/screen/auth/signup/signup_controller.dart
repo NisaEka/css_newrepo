@@ -180,6 +180,15 @@ class SignUpController extends BaseController {
     }
   }
 
+  void unSelectReferal() {
+    kodeReferal.clear();
+    selectedReferal = null;
+    selectedOrigin = null;
+    isDefaultOrigin = false;
+    isSelectCounter = false;
+    update();
+  }
+
   selectOrigin(value) {
     {
       selectedOrigin = value;

@@ -302,7 +302,15 @@ class LanguageEN {
       "Detail Aggregasi": "Aggregation Detail",
       "Log Aktivitas": "Log Activity",
       "Log Aktivitas Kosong": "No Log Activity",
-      "Favorit": "Favorite"
+      "Favorit": "Favorite",
+      "Masukan Kota Pengiriman": "Type Shipment City",
+      "tutup": "close",
+      "Akun recovery belum tersedia": "Account recovery is not available",
+      "Kode OTP akan dikirimkan ke alamat email berikut :": "OTP Code will be sent to this email:",
+      "Kode OTP sudah dikirimkan ke alamat email berikut :": "OTP code was sent to this email :",
+      "Akun Pemulihan": "Recovery Account",
+      "Favorit tidak dapat lebih dari 4 item": "Favorite can't more than 4 items"
+
     };
   }
 }

@@ -1,10 +1,14 @@
 import 'dart:async';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_screen.dart';
+import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_screen.dart';
+import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
@@ -136,6 +140,7 @@ class ForgotPasswordOTPController extends BaseController {
     otpPin.clear();
     isLoading = true;
     update();
+    _startTimer(120);
     try {
       await auth.postEmailForgotPassword(email).then((value) {
         if (value.code == 200) {
@@ -159,5 +164,18 @@ class ForgotPasswordOTPController extends BaseController {
 
     isLoading = false;
     update();
+  }
+
+  void useOtherMethod(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const InfoDialog(
+        infoText: "Akun recovery belum tersedia",
+      ),
+    );
+    // Get.to(const PasswordRecoveryScreen(), arguments: {
+    //   'email': email,
+    //   'isChange': isChange,
+    // });
   }
 }

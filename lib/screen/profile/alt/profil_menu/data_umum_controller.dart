@@ -1,7 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,6 +30,18 @@ class DataUmumController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
+
+      var basic = BasicProfilModel.fromJson(await storage.readData(StorageCore.userProfil));
+
+      ccrfProfil = CcrfProfilModel(
+        generalInfo: GeneralInfo(
+          name: basic.name,
+          brand: basic.brand,
+          address: basic.address,
+          email: basic.email,
+          phone: basic.phone,
+        ),
+      );
     }
 
     isLoading = false;

@@ -25,7 +25,10 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   bool isRequired;
-
+  final bool showClearButton;
+  final bool showDropdownButton;
+  final VoidCallback? onClear;
+  final String? searchHintText;
 
   CustomSearchDropdownField(
       {super.key,
@@ -43,7 +46,11 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
       this.suffixIcon,
       this.prefixIcon,
       this.isRequired = false,
-      this.value}) {
+      this.value,
+      this.showClearButton = false,
+      this.showDropdownButton = true,
+      this.onClear,
+      this.searchHintText}) {
     if (isRequired) {
       if (value == null || value == hintText || value == label) {
         // return validator!(value as T);
@@ -100,7 +107,7 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
                 //   if (value == 'id') {
                 //     return "Masukan tidak boleh kosong";
                 //   } else {
-                    return "Masukan tidak boleh kosong".tr;
+                return "Masukan tidak boleh kosong".tr;
                 //   }
                 // });
               }
@@ -115,9 +122,16 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
             searchDelay: const Duration(milliseconds: 500),
             isFilterOnline: true,
             itemBuilder: widget.itemBuilder,
+            searchFieldProps: TextFieldProps(
+              autofocus: true,
+              decoration: InputDecoration(
+                hintText: widget.searchHintText,
+              ),
+            ),
           ),
-          dropdownButtonProps: const DropdownButtonProps(
-            icon: Icon(Icons.keyboard_arrow_down),
+          dropdownButtonProps: DropdownButtonProps(
+            icon: const Icon(Icons.keyboard_arrow_down),
+            isVisible: widget.showDropdownButton,
           ),
           dropdownDecoratorProps: DropDownDecoratorProps(
             dropdownSearchDecoration: InputDecoration(
@@ -133,6 +147,7 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
           itemAsString: widget.itemAsString,
           onChanged: widget.onChanged,
           selectedItem: widget.value,
+          clearButtonProps: ClearButtonProps(icon: const Icon(Icons.close), isVisible: widget.showClearButton, onPressed: widget.onClear),
         ),
         const SizedBox(height: 10),
       ],

@@ -1,4 +1,3 @@
-import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -111,7 +110,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 children: [
                                   CustomLabelText(
                                     title: 'Selamat Datang'.tr,
-                                    value: c.userName ?? 'USERNAME',
+                                    value: c.userName ?? '',
                                     fontColor: whiteColor,
                                     isLoading: c.isLoading,
                                   ),

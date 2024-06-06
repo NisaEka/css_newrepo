@@ -5,7 +5,6 @@ import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_controller.dart';
-import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -74,9 +73,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                   child: Text(
                     'Kirim ulang kode'.tr,
                     style: formLabelTextStyle.copyWith(
-                      color: c.remainingSeconds != 0
-                          ? greyColor
-                          : Theme.of(context).colorScheme.onPrimary,
+                      color: c.remainingSeconds != 0 ? greyColor : Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                 ),
@@ -91,10 +88,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                   color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                   isTransparent: true,
                   title: 'Gunakan cara lain'.tr,
-                  onPressed: () => Get.to(const PasswordRecoveryScreen(), arguments: {
-                    'email': c.email,
-                    'isChange': c.isChange,
-                  }),
+                  onPressed: () => c.useOtherMethod(context),
                 )
               ],
             ),

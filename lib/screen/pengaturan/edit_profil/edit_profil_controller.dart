@@ -1,6 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +18,7 @@ class EditProfileController extends BaseController {
   final email = TextEditingController();
 
   bool isLoading = false;
+  bool isCcrf = false;
   GetDestinationModel? destinationModel;
   Destination? selectedCity;
 
@@ -29,6 +32,7 @@ class EditProfileController extends BaseController {
     isLoading = true;
     try {
       await profil.getCcrfProfil().then((value) {
+        isCcrf = value.payload != null;
         brand.text = value.payload?.generalInfo?.brand ?? '';
         name.text = value.payload?.generalInfo?.name ?? '';
         address.text = value.payload?.generalInfo?.address ?? '';
@@ -53,6 +57,15 @@ class EditProfileController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
+
+      var basic = BasicProfilModel.fromJson(await storage.readData(StorageCore.userProfil));
+
+      brand.text = basic.brand ?? '';
+      name.text = basic.name ?? '';
+      address.text = basic.address ?? '';
+      phone.text = basic.phone ?? '';
+      email.text = basic.email ?? '';
+      update();
     }
 
     isLoading = false;

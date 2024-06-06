@@ -57,6 +57,8 @@ class InputEmailScreen extends StatelessWidget {
                                     return newValue.copyWith(text: newValue.text.toLowerCase());
                                   })
                                 ],
+                                onSubmit: (value) => controller.formKey.currentState?.validate() == true ? controller.sendEmail() : null,
+
                               ),
                               const SizedBox(height: 30),
                               CustomFilledButton(

@@ -53,7 +53,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Kode OTP sudah dikirimkan ke alamat email berikut :'.tr),
+                      Text('Kode OTP akan dikirimkan ke alamat email berikut :'.tr),
                       Text(controller.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
                     ],
                   ),

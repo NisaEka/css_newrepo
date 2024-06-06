@@ -18,6 +18,7 @@ class CustomTheme {
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: whiteColor,
       ),
+      dialogBackgroundColor: Colors.white,
       useMaterial3: true,
       fontFamily: 'Ubuntu',
       // backgroundColor: baseColor,
@@ -29,6 +30,9 @@ class CustomTheme {
       ),
       textTheme: TextTheme(
         titleSmall: sublistTitleTextStyle.copyWith(
+          color: greyDarkColor1,
+        ),
+        labelLarge: const TextStyle(
           color: greyDarkColor1,
         ),
       ),
@@ -102,17 +106,16 @@ class CustomTheme {
         onPrimary: infoColor,
         onBackground: greyColor,
       ),
-
       useMaterial3: true,
       textTheme: TextTheme(
         labelLarge: const TextStyle(
-          color: greyColor,
+          color: greyLightColor1,
         ),
         titleSmall: sublistTitleTextStyle.copyWith(
           color: greyLightColor1,
         ),
       ),
-
+      dialogBackgroundColor: greyColor,
       fontFamily: 'Ubuntu',
       // backgroundColor: greyColor,
       appBarTheme: AppBarTheme(

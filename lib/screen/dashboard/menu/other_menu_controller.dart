@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
@@ -90,7 +91,7 @@ class OtherMenuCotroller extends BaseController {
         title: "Pembayaran Aggregasi",
         icon: ImageConstant.keuanganmuIcon,
         isAuth: true,
-        isFavorite: favoritList.where((e) => e.title == "Laporan Pembayaran Aggregasi").isNotEmpty,
+        isFavorite: favoritList.where((e) => e.title == "Pembayaran Aggregasi").isNotEmpty,
         isEdit: isEdit,
         route: "/pembayaranAggregasi",
       ),
@@ -98,7 +99,7 @@ class OtherMenuCotroller extends BaseController {
         title: "Aggregasi Minus",
         icon: ImageConstant.keuanganmuIcon,
         isAuth: true,
-        isFavorite: favoritList.where((e) => e.title == "Laporan Pembayaran Aggregasi").isNotEmpty,
+        isFavorite: favoritList.where((e) => e.title == "Aggregasi Minus").isNotEmpty,
         isEdit: isEdit,
         route: "/aggregasiMinus",
       ),
@@ -106,7 +107,7 @@ class OtherMenuCotroller extends BaseController {
         title: "Uang_COD Kamu",
         icon: ImageConstant.keuanganmuIcon,
         isAuth: false,
-        isFavorite: favoritList.where((e) => e.title == "Laporan Pembayaran Aggregasi").isNotEmpty,
+        isFavorite: favoritList.where((e) => e.title == "Uang_COD Kamu").isNotEmpty,
         isEdit: isEdit,
         route: "/uangCODKamu",
       ),
@@ -173,13 +174,27 @@ class OtherMenuCotroller extends BaseController {
   }
 
   void addFavorit(int i, Items menu) {
-    if (favoritList.where((e) => e.title == menu.title).isEmpty) {
-      paketmuList.where((e) => e == menu).isNotEmpty ? paketmuList.where((e) => e == menu).first.isFavorite = true : null;
-      otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = true : null;
-      keuanganmuList.where((e) => e == menu).isNotEmpty ? keuanganmuList.where((e) => e == menu).first.isFavorite = true : null;
-
-      update();
-      favoritList.add(menu);
+    if ((favoritList.where((e) => e.title == menu.title).isEmpty)) {
+      if (favoritList.length < 4) {
+        paketmuList.where((e) => e == menu).isNotEmpty ? paketmuList.where((e) => e == menu).first.isFavorite = true : null;
+        otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = true : null;
+        keuanganmuList.where((e) => e == menu).isNotEmpty ? keuanganmuList.where((e) => e == menu).first.isFavorite = true : null;
+        update();
+        favoritList.add(menu);
+      } else {
+        Get.showSnackbar(
+          GetSnackBar(
+            icon: const Icon(
+              Icons.warning,
+              color: whiteColor,
+            ),
+            message: 'Favorit tidak dapat lebih dari 4 item'.tr,
+            isDismissible: true,
+            duration: const Duration(seconds: 3),
+            backgroundColor: errorColor,
+          ),
+        );
+      }
     } else {
       paketmuList.where((e) => e == menu).isNotEmpty ? paketmuList.where((e) => e == menu).first.isFavorite = false : null;
       otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = false : null;
@@ -188,6 +203,7 @@ class OtherMenuCotroller extends BaseController {
 
       favoritList.removeWhere((e) => e.title == menu.title);
     }
+    // }
 
     update();
   }
