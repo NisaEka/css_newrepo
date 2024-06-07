@@ -267,7 +267,24 @@ class TambahPetugasController extends BaseController {
               origins: originCodes.toSet().toList(),
             ),
           )
-          .then((value) => Get.back());
+          .then((value) => {
+            if (value.code == 201) {
+              Get.back()
+            } else if (value.code == 409) {
+              Get.showSnackbar(
+                GetSnackBar(
+                  icon: const Icon(
+                    Icons.warning,
+                    color: whiteColor,
+                  ),
+                  message: 'Alamat email atau nomor telepon sudah digunakan'.tr,
+                  isDismissible: true,
+                  duration: const Duration(seconds: 3),
+                  backgroundColor: errorColor,
+                ),
+              )
+            }
+      });
     } catch (e, i) {
       e.printError();
       i.printError();

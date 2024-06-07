@@ -77,7 +77,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
       // return PostTransactionModel();
     } on DioException catch (e) {
       print("api error: ${e.response?.data}");
-      return e.response?.data;
+      return PostTransactionModel.fromJson(e.response?.data);
     }
   }
 
