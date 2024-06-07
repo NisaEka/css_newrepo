@@ -37,16 +37,17 @@ class BottomBar2 extends StatelessWidget {
           alignment: Alignment.center,
           margin: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
-              color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2,
-              borderRadius: BorderRadius.circular(25),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 2,
-                  offset: const Offset(0, 3),
-                )
-              ]),
+            color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2,
+            borderRadius: BorderRadius.circular(25),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 2,
+                offset: const Offset(0, 3),
+              )
+            ],
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Row(

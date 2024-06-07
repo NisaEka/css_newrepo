@@ -110,7 +110,12 @@ class TambahPetugasController extends BaseController {
         dataPetugas = await setting.getOfficerByID(data?.id ?? '');
         update();
         loadOrigin(dataPetugas.payload?.branches ?? []);
+        print("akuns: ${dataPetugas.payload?.accounts?.length}");
+        print("akuns: ${accountList.length}");
+        print("akuns: ${accountList.first.accountId}");
         dataPetugas.payload?.accounts?.forEach((account) {
+          // print("akun terpilih : ${ account.accountId}");
+          print("akunss: ${account.accountId}");
           selectedAccountList.add(accountList.where((e) => e.accountId == account.accountId).first);
         });
         dataPetugas.payload?.branches?.forEach((branch) {
@@ -200,7 +205,7 @@ class TambahPetugasController extends BaseController {
       update();
     } catch (e, i) {
       e.printError();
-      i.printError();
+      i.printError(info: "error load origin:");
     }
     // originCodes.forEach((value) {
     //   selectedOrigin.add(originList.where((e) => e.originCode == value).first);

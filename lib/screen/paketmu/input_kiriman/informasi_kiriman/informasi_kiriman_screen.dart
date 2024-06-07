@@ -19,7 +19,6 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
@@ -153,10 +152,7 @@ class InformasiKirimanScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: AccountListItem(
-                  accountID: c.account.accountId ?? '',
-                  accountNumber: c.account.accountNumber ?? '',
-                  accountName: "${c.account.accountName.toString()} / ${c.account.accountType ?? c.account.accountService}",
-                  accountType: c.account.accountService ?? '',
+                  data: c.account,
                   isSelected: true,
                   width: Get.width,
                   onTap: () => c.dropship == false
@@ -365,7 +361,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                             activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                             onChanged: (bool? value) {
                               c.packingKayu = value!;
-                              c.intruksiKhusus.text = value == true ? "MOHON DIPACKING KAYU" : "";
+                              var temp = c.intruksiKhusus.text;
+                              c.intruksiKhusus.text = value == true ? "MOHON DIPACKING KAYU $temp" : temp.substring(21, temp.length);
                               c.update();
                             },
                           ),

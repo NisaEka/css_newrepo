@@ -112,7 +112,7 @@ class TambahPetugasScreen extends StatelessWidget {
                     }
                     return null;
                   },
-                  isObscure: c.isObscurePassword,
+                  isObscure: c.isObscurePasswordConfirm,
                   multiLine: false,
                   suffixIcon: IconButton(
                     icon: c.showConfirmIcon,

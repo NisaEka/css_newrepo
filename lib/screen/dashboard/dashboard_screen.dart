@@ -180,6 +180,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   (result) => c.cekFavoritMenu(),
                 ),
               ),
+              c.isCcrf
+                  ? const SizedBox()
+                  : Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: warningColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        'Lengkapi profil Kamu untuk menikmati semua fitur unggulan.'.tr,
+                        textAlign: TextAlign.center,
+                      ),
+                    )
             ],
           ),
         ),

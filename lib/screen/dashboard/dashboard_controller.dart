@@ -5,6 +5,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
+import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -20,6 +21,9 @@ class DashboardController extends BaseController {
   bool isLogin = false;
   bool isLoading = false;
   bool isOnline = false;
+  bool isCcrf = true;
+
+  GetCcrfProfilModel? ccrf;
 
   String? marqueeText;
   String? userName;
@@ -213,11 +217,13 @@ class DashboardController extends BaseController {
 
       allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
 
-      // await profil.getCcrfProfil().then((value) async => await storage.saveData(
-      //       StorageCore.ccrfProfil,
-      //       value.payload,
-      //     ));
+      await profil.getCcrfProfil().then((value) async {
+        ccrf = value;
+        update();
+      });
 
+      isCcrf = ccrf?.payload != null;
+      storage.saveData(StorageCore.ccrfProfil, ccrf?.payload);
       update();
     } catch (e, i) {
       e.printError();

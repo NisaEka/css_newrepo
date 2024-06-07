@@ -39,7 +39,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
       );
       return GetCcrfProfilModel.fromJson(response.data);
     } on DioException catch (e) {
-      return e.response?.data;
+      return GetCcrfProfilModel.fromJson(e.response?.data);
     }
   }
 

@@ -309,7 +309,8 @@ class LanguageEN {
       "Kode OTP akan dikirimkan ke alamat email berikut :": "OTP Code will be sent to this email:",
       "Kode OTP sudah dikirimkan ke alamat email berikut :": "OTP code was sent to this email :",
       "Akun Pemulihan": "Recovery Account",
-      "Favorit tidak dapat lebih dari 4 item": "Favorite can't more than 4 items"
+      "Favorit tidak dapat lebih dari 4 item": "Favorite can't more than 4 items",
+      "Lengkapi profil Kamu untuk menikmati semua fitur unggulan.": "Complete your profile to enjoy all the features.",
 
     };
   }

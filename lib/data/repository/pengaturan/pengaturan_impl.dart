@@ -51,6 +51,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   Future<GetPetugasByidModel> getOfficerByID(String id) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
+    print("OfficerID:$id");
     try {
       Response response = await network.dio.get(
         "/officer/$id",
@@ -66,12 +67,14 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     print('data petugas : ${data.toJson().toString()}');
+    print('data petugas account ${data.accounts?.length}');
     try {
       Response response = await network.dio.post(
         "/officer",
         data: data,
       );
       return PostTransactionModel.fromJson(response.data);
+      // return PostTransactionModel();
     } on DioException catch (e) {
       print("api error: ${e.response?.data}");
       return e.response?.data;
