@@ -153,7 +153,7 @@ class InformasiPenerimaController extends BaseController {
         phone: nomorTelpon.text,
         city: selectedDestination?.cityName,
         zip: selectedDestination?.zipCode,
-        region: selectedDestination?.cityName,
+        region: selectedDestination?.provinceName,
         country: selectedDestination?.countryName,
         contact: namaPenerima.text.toUpperCase(),
         district: selectedDestination?.districtName,
