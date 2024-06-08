@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
+
 GetOriginModel getOriginModelFromJson(String str) => GetOriginModel.fromJson(json.decode(str));
 
 String getOriginModelToJson(GetOriginModel data) => json.encode(data.toJson());
@@ -76,21 +78,27 @@ class Origin {
     String? originCode,
     String? originName,
     String? branchCode,
+    Region? region,
   }) {
     _originCode = originCode;
     _originName = originName;
     _branchCode = branchCode;
+    _region = region;
   }
 
   Origin.fromJson(dynamic json) {
     _originCode = json['origin_code'] ?? json['code'];
     _originName = json['origin_name'] ?? json['desc'] ?? json['label'];
     _branchCode = json['branch_code'] ?? json['branch'];
+    if (json["region"] != null) {
+      _region = Region.fromJson(json["region"]);
+    }
   }
 
   String? _originCode;
   String? _originName;
   String? _branchCode;
+  Region? _region;
 
   Origin copyWith({
     String? originCode,
@@ -108,6 +116,8 @@ class Origin {
   String? get originName => _originName;
 
   String? get branchCode => _branchCode;
+
+  Region? get region => _region;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

@@ -42,7 +42,7 @@ class InformasiPengirimController extends BaseController {
   Account? selectedAccount;
   GetOriginModel? originModel;
   Origin? selectedOrigin;
-  ShipperModel? senderOrigin;
+  ShipperModel? shipper;
   DropshipperModel? dropshipper;
   String? locale;
 
@@ -127,16 +127,17 @@ class InformasiPengirimController extends BaseController {
       await transaction.getAccountNumber().then((value) => accountList.addAll(value.payload ?? []));
       update();
       await transaction.getSender().then((value) {
-        senderOrigin = value.payload;
+        shipper = value.payload;
         namaPengirim.text = value.payload?.name ?? '';
         nomorTelpon.text = value.payload?.phone ?? '';
         kotaPengirim.text = value.payload?.origin?.originName ?? '';
         kodePos.text = value.payload?.zipCode ?? '';
         alamatLengkap.text = value.payload?.address ?? '';
         selectedOrigin = Origin(
-          originCode: senderOrigin?.origin?.originCode,
-          branchCode: senderOrigin?.origin?.branchCode,
-          originName: senderOrigin?.origin?.originName,
+          originCode: shipper?.origin?.originCode,
+          branchCode: shipper?.origin?.branchCode,
+          originName: shipper?.origin?.originName,
+          region: shipper?.origin?.region
         );
       });
       update();
@@ -145,16 +146,16 @@ class InformasiPengirimController extends BaseController {
       var accounts = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
       accountList.addAll(accounts.payload ?? []);
       // accountList.addAll(GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts)) );
-      senderOrigin = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
-      namaPengirim.text = senderOrigin?.name ?? '';
-      nomorTelpon.text = senderOrigin?.phone ?? '';
-      kotaPengirim.text = senderOrigin?.origin?.originName ?? '';
-      kodePos.text = senderOrigin?.zipCode ?? '';
-      alamatLengkap.text = senderOrigin?.address ?? '';
+      shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+      namaPengirim.text = shipper?.name ?? '';
+      nomorTelpon.text = shipper?.phone ?? '';
+      kotaPengirim.text = shipper?.origin?.originName ?? '';
+      kodePos.text = shipper?.zipCode ?? '';
+      alamatLengkap.text = shipper?.address ?? '';
       selectedOrigin = Origin(
-        originCode: senderOrigin?.origin?.originCode,
-        branchCode: senderOrigin?.origin?.branchCode,
-        originName: senderOrigin?.origin?.originName,
+        originCode: shipper?.origin?.originCode,
+        branchCode: shipper?.origin?.branchCode,
+        originName: shipper?.origin?.originName
       );
     }
 
@@ -167,7 +168,7 @@ class InformasiPengirimController extends BaseController {
       nomorTelpon.text = data?.shipper?.phone ?? '';
       kodePos.text = data?.shipper?.zip ?? '';
       alamatLengkap.text = data?.shipper?.address ?? '';
-      isDropshipper = data?.shipper?.name != senderOrigin?.name;
+      isDropshipper = data?.shipper?.name != shipper?.name;
 
       getOriginList(data?.shipper?.city ?? '', selectedAccount?.accountId ?? '').then((value) {
         selectedOrigin = value.first;
@@ -184,7 +185,7 @@ class InformasiPengirimController extends BaseController {
             origin: selectedOrigin?.branchCode,
           );
         } else {
-          senderOrigin = ShipperModel(
+          shipper = ShipperModel(
             origin: value.first,
             name: data?.shipper?.name,
             address: data?.shipper?.address,
@@ -236,7 +237,7 @@ class InformasiPengirimController extends BaseController {
     Get.to(const InformasiPenerimaScreen(), arguments: {
       "cod_ongkir": codOgkir,
       "account": selectedAccount,
-      "origin": selectedOrigin ?? senderOrigin?.origin,
+      "origin": selectedOrigin ?? shipper?.origin,
       "dropship": isDropshipper,
       "dropshipper": dropshipper,
       "shipper": Shipper(
@@ -247,11 +248,11 @@ class InformasiPengirimController extends BaseController {
         address3: alamatLengkap.text.length >= 60 ? alamatLengkap.text.substring(60, alamatLengkap.text.length) : '',
         city: kotaPengirim.text.toUpperCase(),
         zip: kodePos.text,
-        region: senderOrigin?.region?.name,
+        region: isDropshipper ? selectedOrigin?.region?.name : shipper?.region?.name,
         //province
         country: "ID",
-        contact: senderOrigin?.name?.toUpperCase(),
-        phone: senderOrigin?.phone,
+        contact: shipper?.name?.toUpperCase(),
+        phone: shipper?.phone,
         dropship: isDropshipper,
       ),
       "data": data,
@@ -342,15 +343,16 @@ class InformasiPengirimController extends BaseController {
         isValidate = false;
       }
     } else {
-      namaPengirim.text = senderOrigin?.name ?? '';
-      nomorTelpon.text = senderOrigin?.phone ?? '';
-      kotaPengirim.text = senderOrigin?.origin?.originName ?? '';
-      kodePos.text = senderOrigin?.zipCode ?? '';
-      alamatLengkap.text = senderOrigin?.address ?? '';
+      namaPengirim.text = shipper?.name ?? '';
+      nomorTelpon.text = shipper?.phone ?? '';
+      kotaPengirim.text = shipper?.origin?.originName ?? '';
+      kodePos.text = shipper?.zipCode ?? '';
+      alamatLengkap.text = shipper?.address ?? '';
       selectedOrigin = Origin(
-        originCode: senderOrigin?.origin?.originCode,
-        branchCode: senderOrigin?.origin?.branchCode,
-        originName: senderOrigin?.origin?.originName,
+        originCode: shipper?.origin?.originCode,
+        branchCode: shipper?.origin?.branchCode,
+        originName: shipper?.origin?.originName,
+        region: shipper?.region
       );
       isValidate = true;
     }
