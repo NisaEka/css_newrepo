@@ -251,8 +251,8 @@ class InformasiPengirimController extends BaseController {
         region: isDropshipper ? selectedOrigin?.region?.name : shipper?.region?.name,
         //province
         country: "ID",
-        contact: shipper?.name?.toUpperCase(),
-        phone: shipper?.phone,
+        contact: namaPengirim.text.toUpperCase(),
+        phone: nomorTelpon.text,
         dropship: isDropshipper,
       ),
       "data": data,
