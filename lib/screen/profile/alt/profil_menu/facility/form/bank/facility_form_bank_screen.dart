@@ -52,7 +52,7 @@ class FacilityFormBankScreen extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.all(16),
         child: CustomFilledButton(
-          color: redJNE,
+          color: controller.buttonEnabled ? redJNE : greyColor,
           title: 'Ajukan'.tr,
           onPressed: () {
             controller.submitData();
@@ -114,6 +114,23 @@ class FacilityFormBankScreen extends StatelessWidget {
                         ),
                         child: _imagePickerContent(context, controller)
                     ),
+                    ListTile(
+                      title: Text(
+                        'Saya Setuju dengan Syarat & Ketentuan Pengiriman JNE',
+                        textAlign: TextAlign.start,
+                        style: sublistTitleTextStyle.copyWith(
+                          color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2,
+                        ),
+                      ),
+                      leading: Checkbox(
+                        checkColor: whiteColor,
+                        activeColor: redJNE,
+                        value: controller.termsAndConditionsCheck,
+                        onChanged: (value) {
+                          controller.onTermsAndConditionsCheck();
+                        },
+                      ),
+                    )
                   ],
                 )
             )
