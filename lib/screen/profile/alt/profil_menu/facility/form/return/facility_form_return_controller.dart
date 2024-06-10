@@ -27,6 +27,7 @@ class FacilityFormReturnController extends BaseController {
   final npwpNumber = TextEditingController();
   final npwpType = TextEditingController();
   final npwpName = TextEditingController();
+  final npwpAddress = TextEditingController();
   final npwpImageUrl = TextEditingController();
 
   bool sameWithOwner = false;
@@ -108,7 +109,7 @@ class FacilityFormReturnController extends BaseController {
     taxInfo.setType(npwpType.text);
     taxInfo.setName(npwpName.text);
     taxInfo.setNumber(npwpNumber.text);
-    taxInfo.setAddress("-");
+    taxInfo.setAddress(npwpAddress.text);
     taxInfo.setImageUrl(pickedImageUrl ?? "-");
     facilityCreateArgs.setTaxInfo(taxInfo);
 
