@@ -24,6 +24,9 @@ class FacilityFormBankController extends BaseController {
   final accountNumber = TextEditingController();
   final accountName = TextEditingController();
 
+  bool termsAndConditionsCheck = false;
+  bool buttonEnabled = false;
+
   File? pickedImage;
   String? pickedImageUrl;
 
@@ -72,6 +75,19 @@ class FacilityFormBankController extends BaseController {
           .then((storage) {
         pickedImageUrl = storage.payload?.fileAbsolutePath;
       });
+    }
+  }
+
+  onTermsAndConditionsCheck() {
+    termsAndConditionsCheck = !termsAndConditionsCheck;
+    if (termsAndConditionsCheck) {
+      buttonEnabled = true;
+      update();
+      facilityCreateArgs.setTermsAndConditions('Y');
+    } else {
+      buttonEnabled = false;
+      update();
+      facilityCreateArgs.setTermsAndConditions('');
     }
   }
 

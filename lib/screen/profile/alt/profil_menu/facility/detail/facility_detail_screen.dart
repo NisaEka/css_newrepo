@@ -30,6 +30,55 @@ class FacilityDetailScreen extends StatelessWidget {
       return null;
     }
 
+    if (controller.facilityArgs.name == "Bayar Ongkir Nanti") {
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Expanded(
+              child: FilledButton(
+                onPressed: () {
+                  if (controller.buttonEnabled) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => FacilityDetailOptionDialog(
+                        facilityType: "${controller.facilityArgs.name} (Mingguan)",
+                      ),
+                    );
+                  }
+                },
+                child: Text(
+                  "Mingguan".tr,
+                  style: const TextStyle(color: whiteColor),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 16,
+            ),
+            Expanded(
+              child: FilledButton(
+                onPressed: () {
+                  if (controller.buttonEnabled) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => FacilityDetailOptionDialog(
+                        facilityType: "${controller.facilityArgs.name} (Bulanan)",
+                      ),
+                    );
+                  }
+                },
+                child: Text(
+                  "Bulanan".tr,
+                  style: const TextStyle(color: whiteColor),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: CustomFilledButton(

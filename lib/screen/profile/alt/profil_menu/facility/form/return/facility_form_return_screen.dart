@@ -3,6 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_form_bank_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/return/facility_form_return_controller.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
@@ -139,7 +140,16 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 inputType: TextInputType.number,
                 validator: ValidationBuilder().minLength(15).maxLength(15).build(),
               ),
-              CustomTextFormField(controller: c.npwpName, hintText: 'Nama NPWP'.tr, validator: ValidationBuilder().maxLength(32).build()),
+              CustomTextFormField(
+                controller: c.npwpName,
+                hintText: 'Nama NPWP'.tr,
+                validator: ValidationBuilder().maxLength(32).build(),
+              ),
+              CustomTextFormField(
+                controller: c.npwpAddress,
+                hintText: 'Alamat NPWP'.tr,
+                validator: ValidationBuilder().minLength(4).build(),
+              ),
               Container(
                   width: Get.width,
                   margin: const EdgeInsets.symmetric(vertical: 8),
