@@ -137,7 +137,7 @@ class DashboardController extends BaseController {
   Future<void> cekLocalLanguage() async {
     String local = await storage.readString(StorageCore.localeApp);
     local.isEmpty.printInfo();
-    if (local.isEmpty || local == 'id_ID' || local == 'en_US') {
+    if (local.isEmpty || local == 'id_ID' || local == 'en_US' || local == "id" || local == "en") {
       (Get.deviceLocale == const Locale("id", "ID")).printInfo(info: "local");
       if (Get.deviceLocale == const Locale("id", "ID")) {
         await storage.writeString(StorageCore.localeApp, "id");
@@ -176,11 +176,12 @@ class DashboardController extends BaseController {
 
     marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
     var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
-    userName = shipper.name ?? "USERNAME";
+    userName = shipper.name ?? "";
     // if (isLogin == true) {
     try {
       await jlc.postTotalPoint().then((value) {
-        jlcPoint = value.data?.first.sisaPoint;
+        print("jlc point : ${value.data?.first.sisaPoint}");
+        jlcPoint = value.data?.first.sisaPoint.toString();
         update();
       });
       await transaction

@@ -30,16 +30,13 @@ class TambahPetugasScreen extends StatelessWidget {
               title: controller.isEdit ? 'Edit Petugas' : 'Tambah Petugas'.tr,
             ),
             body: Stack(
-              children: [
-                _bodyContent(controller, context),
-                controller.isLoading ? const LoadingDialog() : const SizedBox()
-              ],
+              children: [_bodyContent(controller, context), controller.isLoading ? const LoadingDialog() : const SizedBox()],
             ),
           );
         });
   }
 
-  Widget _bodyContent(TambahPetugasController c, BuildContext context){
+  Widget _bodyContent(TambahPetugasController c, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: ListView(
@@ -73,223 +70,228 @@ class TambahPetugasScreen extends StatelessWidget {
                   inputType: TextInputType.number,
                   validator: ValidationBuilder().phoneNumber().build(),
                 ),
-                !c.isEdit
-                    ? CustomTextFormField(
-                  controller: c.password,
-                  hintText: 'Kata Sandi'.tr,
-                  isRequired: c.isEdit ? false : true,
-                  validator: ValidationBuilder().password().build(),
-                  isObscure: c.isObscurePassword,
-                  multiLine: false,
-                  inputFormatters: const [],
-                  suffixIcon: IconButton(
-                    icon: c.showIcon,
-                    onPressed: () {
-                      c.isObscurePassword ? c.isObscurePassword = false : c.isObscurePassword = true;
-                      c.isObscurePassword != false
-                          ? c.showIcon = const Icon(
-                        Icons.visibility,
-                        color: greyDarkColor1,
+                c.isEdit
+                    ? CustomFilledButton(
+                        color: warningColor,
+                        title: "Ubah Kata Sandi".tr,
+                        onPressed: () {
+                          c.isEditPassword = c.isEditPassword ? false : true;
+                          c.update();
+                        },
                       )
-                          : c.showIcon = const Icon(
-                        Icons.visibility_off,
-                        color: Colors.black,
-                      );
-                      c.update();
-                    },
-                  ),
-                )
                     : const SizedBox(),
-                !c.isEdit
+                !c.isEdit || c.isEditPassword
                     ? CustomTextFormField(
-                  controller: c.passwordConfirm,
-                  hintText: 'Konfirmasi Kata Sandi'.tr,
-                  isRequired: true,
-                  inputFormatters: const [],
-                  validator: (value) {
-                    if (value != c.password.text) {
-                      return "Password tidak sama".tr;
-                    }
-                    return null;
-                  },
-                  isObscure: c.isObscurePasswordConfirm,
-                  multiLine: false,
-                  suffixIcon: IconButton(
-                    icon: c.showConfirmIcon,
-                    onPressed: () {
-                      c.isObscurePasswordConfirm
-                          ? c.isObscurePasswordConfirm = false
-                          : c.isObscurePasswordConfirm = true;
-                      c.isObscurePasswordConfirm != false
-                          ? c.showConfirmIcon = const Icon(
-                        Icons.visibility,
-                        color: greyDarkColor1,
+                        controller: c.password,
+                        hintText: 'Kata Sandi'.tr,
+                        isRequired: c.isEdit ? false : true,
+                        validator: ValidationBuilder().password().build(),
+                        isObscure: c.isObscurePassword,
+                        multiLine: false,
+                        inputFormatters: const [],
+                        suffixIcon: IconButton(
+                          icon: c.showIcon,
+                          onPressed: () {
+                            c.isObscurePassword ? c.isObscurePassword = false : c.isObscurePassword = true;
+                            c.isObscurePassword != false
+                                ? c.showIcon = const Icon(
+                                    Icons.visibility,
+                                    color: greyDarkColor1,
+                                  )
+                                : c.showIcon = const Icon(
+                                    Icons.visibility_off,
+                                    color: Colors.black,
+                                  );
+                            c.update();
+                          },
+                        ),
                       )
-                          : c.showConfirmIcon = const Icon(
-                        Icons.visibility_off,
-                        color: Colors.black,
-                      );
-                      c.update();
-                    },
-                  ),
-                )
+                    : const SizedBox(),
+                !c.isEdit || c.isEditPassword
+                    ? CustomTextFormField(
+                        controller: c.passwordConfirm,
+                        hintText: 'Konfirmasi Kata Sandi'.tr,
+                        isRequired: true,
+                        inputFormatters: const [],
+                        validator: (value) {
+                          if (value != c.password.text) {
+                            return "Kata sandi tidak sama".tr;
+                          }
+                          return null;
+                        },
+                        isObscure: c.isObscurePasswordConfirm,
+                        multiLine: false,
+                        suffixIcon: IconButton(
+                          icon: c.showConfirmIcon,
+                          onPressed: () {
+                            c.isObscurePasswordConfirm ? c.isObscurePasswordConfirm = false : c.isObscurePasswordConfirm = true;
+                            c.isObscurePasswordConfirm != false
+                                ? c.showConfirmIcon = const Icon(
+                                    Icons.visibility,
+                                    color: greyDarkColor1,
+                                  )
+                                : c.showConfirmIcon = const Icon(
+                                    Icons.visibility_off,
+                                    color: Colors.black,
+                                  );
+                            c.update();
+                          },
+                        ),
+                      )
                     : const SizedBox(),
                 c.buatPesanan
                     ? Column(
-                  children: [
-                    MultiSelectDialogField(
-                      decoration: BoxDecoration(
-                        border:
-                        Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      searchable: true,
-                      buttonIcon: const Icon(Icons.keyboard_arrow_down),
-                      buttonText: Text('Akun'.tr),
-                      dialogWidth: Get.width,
-                      initialValue: c.selectedAccountList,
-                      items: c.accountList
-                          .map((e) => MultiSelectItem(
-                        e,
-                        '${e.accountNumber}/${e.accountName}/${e.accountType ?? e.accountService}',
-                      ))
-                          .toList(),
-                      listType: MultiSelectListType.CHIP,
-                      backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
-                      onConfirm: (values) {
-                        c.selectedAccountList = values;
-                      },
-                      onSelectionChanged: (values) {
-                        c.selectedAccountList = values;
-                        c.update();
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    MultiSelectDialogField(
-                      decoration: BoxDecoration(
-                        border:
-                        Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      searchable: true,
-                      buttonIcon: const Icon(Icons.keyboard_arrow_down),
-                      buttonText: Text('Branch'.tr),
-                      initialValue: c.selectedBranchList,
-                      items: c.branchList
-                          .map((e) => MultiSelectItem(
-                        e,
-                        '${e.code}-${e.desc}',
-                      ))
-                          .toList(),
-                      listType: MultiSelectListType.CHIP,
-                      backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
-                      onConfirm: (values) {
-                        c.selectedBranchList = values;
-                        c.update();
-                        c.loadOrigin(values);
-                      },
-                      onSelectionChanged: (values) {
-                        c.selectedBranchList = values;
-                        c.update();
-                        c.loadOrigin(values);
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    Obx(
-                          () => MultiSelectDialogField<Origin>(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        searchable: true,
-                        buttonIcon: const Icon(Icons.keyboard_arrow_down),
-                        buttonText: Text(c.isLoadOrigin ? 'Loading...' : 'Origin'.tr),
-                        initialValue: c.selectedOrigin,
-                        items: c.originList
-                            .map((e) => MultiSelectItem(
-                          e,
-                          '${e.originCode}-${e.originName}',
-                        ))
-                            .toList(),
-                        listType: MultiSelectListType.CHIP,
-                        backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
-                        onConfirm: (values) {
-                          // controller.selectedOrigin = values;
-                          c.selectedOrigin.clear();
-                          c.selectedOrigin.addAll(values);
-                          c.update();
-                        },
-                        onSelectionChanged: (values) {
-                          // controller.selectedOrigin = values;
-                          c.selectedOrigin.clear();
-                          c.selectedOrigin.addAll(values);
-                          c.update();
-                        },
-                      ),
-                    ),
-                    // Column(
-                    //   children: controller.selectedOrigin.toSet().toList().map((e) => Text("${e.originCode.toString()}-${e.originName}")).toList(),
-                    // ),
-                    // Column(
-                    //   children: controller.originCodes.map((e) => Text(e.toString())).toList(),
-                    // ),
-                    const SizedBox(height: 5),
-                    CustomTextFormField(
-                      controller: c.alamat,
-                      hintText: 'Alamat'.tr,
-                      validator: ValidationBuilder().address().build(),
-                    ),
-                    CustomTextFormField(
-                      controller: c.zipCode,
-                      hintText: 'Kode Pos'.tr,
-                      validator: ValidationBuilder().zipCode().build(),
-                      inputType: TextInputType.number,
-                    ),
-                  ],
-                )
+                        children: [
+                          MultiSelectDialogField(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            searchable: true,
+                            buttonIcon: const Icon(Icons.keyboard_arrow_down),
+                            buttonText: Text('Akun'.tr),
+                            dialogWidth: Get.width,
+                            initialValue: c.selectedAccountList,
+                            items: c.accountList
+                                .map((e) => MultiSelectItem(
+                                      e,
+                                      '${e.accountNumber}/${e.accountName}/${e.accountType ?? e.accountService}',
+                                    ))
+                                .toList(),
+                            listType: MultiSelectListType.CHIP,
+                            backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                            onConfirm: (values) {
+                              c.selectedAccountList = values;
+                            },
+                            onSelectionChanged: (values) {
+                              c.selectedAccountList = values;
+                              c.update();
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          MultiSelectDialogField(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            searchable: true,
+                            buttonIcon: const Icon(Icons.keyboard_arrow_down),
+                            buttonText: Text('Branch'.tr),
+                            initialValue: c.selectedBranchList,
+                            items: c.branchList
+                                .map((e) => MultiSelectItem(
+                                      e,
+                                      '${e.code}-${e.desc}',
+                                    ))
+                                .toList(),
+                            listType: MultiSelectListType.CHIP,
+                            backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                            onConfirm: (values) {
+                              c.selectedBranchList = values;
+                              c.update();
+                              c.loadOrigin(values);
+                            },
+                            onSelectionChanged: (values) {
+                              c.selectedBranchList = values;
+                              c.update();
+                              c.loadOrigin(values);
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          Obx(
+                            () => MultiSelectDialogField<Origin>(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              searchable: true,
+                              buttonIcon: const Icon(Icons.keyboard_arrow_down),
+                              buttonText: Text(c.isLoadOrigin ? 'Loading...' : 'Origin'.tr),
+                              initialValue: c.selectedOrigin,
+                              items: c.originList
+                                  .map((e) => MultiSelectItem(
+                                        e,
+                                        '${e.originCode}-${e.originName}',
+                                      ))
+                                  .toList(),
+                              listType: MultiSelectListType.CHIP,
+                              backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                              onConfirm: (values) {
+                                // controller.selectedOrigin = values;
+                                c.selectedOrigin.clear();
+                                c.selectedOrigin.addAll(values);
+                                c.update();
+                              },
+                              onSelectionChanged: (values) {
+                                // controller.selectedOrigin = values;
+                                c.selectedOrigin.clear();
+                                c.selectedOrigin.addAll(values);
+                                c.update();
+                              },
+                            ),
+                          ),
+                          // Column(
+                          //   children: controller.selectedOrigin.toSet().toList().map((e) => Text("${e.originCode.toString()}-${e.originName}")).toList(),
+                          // ),
+                          // Column(
+                          //   children: controller.originCodes.map((e) => Text(e.toString())).toList(),
+                          // ),
+                          const SizedBox(height: 5),
+                          CustomTextFormField(
+                            controller: c.alamat,
+                            hintText: 'Alamat'.tr,
+                            validator: ValidationBuilder().address().build(),
+                          ),
+                          CustomTextFormField(
+                            controller: c.zipCode,
+                            hintText: 'Kode Pos'.tr,
+                            validator: ValidationBuilder().zipCode().build(),
+                            inputType: TextInputType.number,
+                          ),
+                        ],
+                      )
                     : const SizedBox(),
                 c.beranda
                     ? CustomDropDownFormField(
-                  hintText: 'Tampilkan transaksi'.tr,
-                  value: c.semuaTransaksi ? "Y" : "N",
-                  items: [
-                    DropdownMenuItem(
-                      value: "Y",
-                      child: Text('Semua'.tr.toUpperCase()),
-                    ),
-                    DropdownMenuItem(
-                      value: "N",
-                      child: Text('Dibatasi'.tr.toUpperCase()),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    if (value == "Y") {
-                      c.semuaTransaksi = true;
-                      c.update();
-                    }
-                  },
-                )
+                        hintText: 'Tampilkan transaksi'.tr,
+                        value: c.semuaTransaksi ? "Y" : "N",
+                        items: [
+                          DropdownMenuItem(
+                            value: "Y",
+                            child: Text('Semua'.tr.toUpperCase()),
+                          ),
+                          DropdownMenuItem(
+                            value: "N",
+                            child: Text('Dibatasi'.tr.toUpperCase()),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          if (value == "Y") {
+                            c.semuaTransaksi = true;
+                            c.update();
+                          }
+                        },
+                      )
                     : const SizedBox(),
                 c.isEdit
                     ? CustomDropDownFormField(
-                  hintText: 'Status'.tr,
-                  value: c.status,
-                  items: [
-                    DropdownMenuItem(
-                      value: "Y",
-                      child: Text('Aktif'.tr.toUpperCase()),
-                    ),
-                    DropdownMenuItem(
-                      value: "N",
-                      child: Text('Tidak Aktif'.tr.toUpperCase()),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    c.status = value;
-                    c.update();
-                  },
-                )
+                        hintText: 'Status'.tr,
+                        value: c.status,
+                        items: [
+                          DropdownMenuItem(
+                            value: "Y",
+                            child: Text('Aktif'.tr.toUpperCase()),
+                          ),
+                          DropdownMenuItem(
+                            value: "N",
+                            child: Text('Tidak Aktif'.tr.toUpperCase()),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          c.status = value;
+                          c.update();
+                        },
+                      )
                     : const SizedBox(),
                 const SizedBox(height: 35),
                 Container(
@@ -533,8 +535,8 @@ class TambahPetugasScreen extends StatelessWidget {
                   title: c.isEdit ? "Edit Petugas".tr : "Simpan Petugas".tr,
                   onPressed: () => c.formKey.currentState?.validate() == true
                       ? c.isEdit
-                      ? c.updateOfficer()
-                      : c.saveOfficer()
+                          ? c.updateOfficer()
+                          : c.saveOfficer()
                       : null,
                 )
               ],

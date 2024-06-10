@@ -4,6 +4,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+//ignore: must_be_immutable
 class CustomDropDownFormField<T> extends StatelessWidget {
   CustomDropDownFormField(
       {super.key,
@@ -49,6 +50,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
           // return validator!(value as T);
           return "This field is required";
         }
+        return null;
       },
       popupProps: PopupProps.menu(
         constraints: const BoxConstraints(maxHeight: 200),
@@ -56,7 +58,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
         showSelectedItems: true,
         showSearchBox: items!.length >= 15,
         searchDelay: const Duration(milliseconds: 500),
-        itemBuilder: (context, item, bool) {
+        itemBuilder: (context, item, bool bool ) {
           return Container(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), child: Text(item));
         },
@@ -120,7 +122,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
                   ],
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         const SizedBox(
           height: 8,
         ),

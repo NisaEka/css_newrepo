@@ -1,4 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/jlc/post_jlc_point_reedem_model.dart';
+import 'package:css_mobile/data/model/jlc/post_jlc_transactions_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,8 +12,8 @@ class BonusKamuController extends BaseController {
 
   bool isLoading = false;
 
-  List totalTransaksiList = [];
-  List reedemPointList = [];
+  List<JLCTransactions> totalTransaksiList = [];
+  List<JlcPointReedem> reedemPointList = [];
 
   @override
   void onInit() {
@@ -31,7 +33,6 @@ class BonusKamuController extends BaseController {
 
       await jlc.postTransPoint().then((value) {
         totalTransaksiList.addAll(value.data ?? []);
-
         update();
       });
 
@@ -39,8 +40,9 @@ class BonusKamuController extends BaseController {
         reedemPointList.addAll(value.data ?? []);
         update();
       });
-    } catch (e) {
+    } catch (e, i) {
       e.printError();
+      i.printError();
     }
 
     isLoading = false;

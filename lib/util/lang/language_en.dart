@@ -250,7 +250,7 @@ class LanguageEN {
       "Hapus Transaksi": "Delete Transaction",
       "Minta Dijemput": "Request Pickup",
       "Simpan Petugas": "Save Officer",
-      "Password tidak sama": "Password does not match",
+      "Kata sandi tidak sama": "Password does not match",
       "Tampilkan transaksi": "Show Transaction",
       "Semua": "All",
       "Dibatasi": "Restricted",
@@ -311,7 +311,8 @@ class LanguageEN {
       "Akun Pemulihan": "Recovery Account",
       "Favorit tidak dapat lebih dari 4 item": "Favorite can't more than 4 items",
       "Lengkapi profil Kamu untuk menikmati semua fitur unggulan.": "Complete your profile to enjoy all the features.",
-
+      "Buat kata sandi baru anda": "Create your new password",
+      "Konfirmasi Kata Sandi Baru": "Confirm New Password",
     };
   }
 }

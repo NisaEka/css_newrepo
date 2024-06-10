@@ -63,7 +63,7 @@ class CustomTextFormField extends StatefulWidget {
     this.isLoading = false,
   }) {
     if (isRequired && !readOnly) {
-      StorageCore().readData(StorageCore.localeApp).then((value) => ValidationBuilder.setLocale(value));
+      StorageCore().readString(StorageCore.localeApp).then((value) => ValidationBuilder.setLocale(value));
       validator ??= ValidationBuilder(requiredMessage: 'Masukan tidak boleh kosong'.tr).required().build();
     }
   }

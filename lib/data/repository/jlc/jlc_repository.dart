@@ -1,9 +1,11 @@
+import 'package:css_mobile/data/model/jlc/post_jlc_point_reedem_model.dart';
+import 'package:css_mobile/data/model/jlc/post_jlc_transactions_model.dart';
 import 'package:css_mobile/data/model/jlc/post_total_point_model.dart';
 
 abstract class JLCRepository {
   Future<PostTotalPointModel> postTotalPoint();
 
-  Future<PostTotalPointModel> postTukarPoint();
+  Future<PostJlcPointReedemModel> postTukarPoint();
 
-  Future<PostTotalPointModel> postTransPoint();
+  Future<PostJlcTransactionsModel> postTransPoint();
 }

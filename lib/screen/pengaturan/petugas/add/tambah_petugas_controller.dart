@@ -4,6 +4,8 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/pengaturan/DataPetugasModel.dart';
 import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
+import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -23,11 +25,14 @@ class TambahPetugasController extends BaseController {
   final multiSelectKey = GlobalKey<FormFieldState>();
 
   bool isEdit = Get.arguments['isEdit'];
+  bool isEditPassword = false;
   PetugasModel? data = Get.arguments['data'];
   bool isLoading = false;
   bool isLoadOrigin = false;
   bool isObscurePassword = true;
   bool isObscurePasswordConfirm = true;
+  BasicProfilModel? basic;
+  CcrfProfilModel? ccrf;
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
     color: greyDarkColor1,
@@ -80,6 +85,7 @@ class TambahPetugasController extends BaseController {
     super.onInit();
     Future.wait([initData()]);
   }
+
   String? locale;
 
   Future<void> setLocale() async {
@@ -87,7 +93,6 @@ class TambahPetugasController extends BaseController {
     update();
     ValidationBuilder.setLocale(locale!);
   }
-
 
   Future<void> initData() async {
     isLoading = true;
@@ -164,6 +169,16 @@ class TambahPetugasController extends BaseController {
         cetakPesanan = dataPetugas.payload?.menu?.cetakPesanan == "Y";
         monitoringAgg = dataPetugas.payload?.menu?.monitoringAgg == "Y";
         monitoringAggMinus = dataPetugas.payload?.menu?.monitoringAggMinus == "Y";
+        update();
+      } else {
+        basic = BasicProfilModel.fromJson(
+          await storage.readData(StorageCore.userProfil),
+        );
+        ccrf = CcrfProfilModel.fromJson(
+          await storage.readData(StorageCore.ccrfProfil),
+        );
+        alamat.text = basic?.address ?? '';
+        zipCode.text = ccrf?.generalInfo?.zipCode ?? '';
         update();
       }
     } catch (e, i) {
@@ -268,23 +283,24 @@ class TambahPetugasController extends BaseController {
             ),
           )
           .then((value) => {
-            if (value.code == 201) {
-              Get.back()
-            } else if (value.code == 409) {
-              Get.showSnackbar(
-                GetSnackBar(
-                  icon: const Icon(
-                    Icons.warning,
-                    color: whiteColor,
-                  ),
-                  message: 'Alamat email atau nomor telepon sudah digunakan'.tr,
-                  isDismissible: true,
-                  duration: const Duration(seconds: 3),
-                  backgroundColor: errorColor,
-                ),
-              )
-            }
-      });
+                if (value.code == 201)
+                  {Get.back()}
+                else if (value.code == 409)
+                  {
+                    Get.showSnackbar(
+                      GetSnackBar(
+                        icon: const Icon(
+                          Icons.warning,
+                          color: whiteColor,
+                        ),
+                        message: 'Alamat email atau nomor telepon sudah digunakan'.tr,
+                        isDismissible: true,
+                        duration: const Duration(seconds: 3),
+                        backgroundColor: errorColor,
+                      ),
+                    )
+                  }
+              });
     } catch (e, i) {
       e.printError();
       i.printError();

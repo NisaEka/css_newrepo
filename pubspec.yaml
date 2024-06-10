@@ -2,7 +2,7 @@ name: css_mobile
 description: CSS (Customer Self Service) merupakan one stop aplikasi untuk memenuhi kebutuhan customer terbaik JNE. Dengan power apps CSS, kamu akan mendapatkan pengalaman luar biasa dalam berkirim paket. Bisa mendapatkan fasilitas Poin, Diskon, Pickup, Monitoring, COD, hingga Cashless didalam satu genggaman. Cukup dengan 10 menit langsung bisa dipakai dan siap menjadi partner bisnis online kamu.
 publish_to: 'none'
 
-version: 1.0.32+33
+version: 1.0.33+34
 
 environment:
   sdk: '>=3.1.2 <4.0.0'

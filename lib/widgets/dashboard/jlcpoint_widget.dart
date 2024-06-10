@@ -30,7 +30,7 @@ class JLCPointWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(ImageConstant.logoJLC, height: 14),
-          Text(' ${point.toInt().toCurrency()} Point'),
+          Text(' ${point != '0' ? point.toDouble() : 0} Point'),
           // const Padding(
           //   padding: EdgeInsets.symmetric(horizontal: 8),
           //   child: Icon(

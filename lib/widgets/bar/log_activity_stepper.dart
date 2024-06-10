@@ -2,7 +2,6 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/calculate_text_width.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';

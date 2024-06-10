@@ -24,6 +24,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
   final int? index;
   final void Function(BuildContext)? onDelete;
   final bool isLoading;
+  final bool isDelete;
 
   const RiwayatKirimanListItem({
     super.key,
@@ -41,27 +42,32 @@ class RiwayatKirimanListItem extends StatelessWidget {
     this.onDelete,
     this.isLoading = false,
     this.data,
+    this.isDelete = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
       key: ValueKey(index ?? 0),
-      startActionPane: ActionPane(
-        dragDismissible: false,
-        // dismissible: DismissiblePane(onDismissed: onDelete ?? () {}),
-        motion: const DrawerMotion(),
-        children: [
-          SlidableAction(
-            onPressed: onDelete,
-            // backgroundColor: errorColor,
-            foregroundColor: errorColor,
-            icon: Icons.delete,
-            label: 'Hapus'.tr,
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ],
-      ),
+      startActionPane: isDelete
+          ? ActionPane(
+              dragDismissible: false,
+              // dismissible: DismissiblePane(onDismissed: onDelete ?? () {}),
+              motion: const DrawerMotion(),
+              children: [
+                isDelete
+                    ? SlidableAction(
+                        onPressed: onDelete,
+                        // backgroundColor: errorColor,
+                        foregroundColor: errorColor,
+                        icon: Icons.delete,
+                        label: 'Hapus'.tr,
+                        borderRadius: BorderRadius.circular(8),
+                      )
+                    : const SizedBox(),
+              ],
+            )
+          : null,
       child: GestureDetector(
         onTap: onTap,
         onLongPress: onLongPress,

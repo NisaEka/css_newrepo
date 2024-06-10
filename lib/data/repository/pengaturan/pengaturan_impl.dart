@@ -66,7 +66,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   Future<PostTransactionModel> postOfficer(DataPetugasModel data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
-    print('data petugas : ${data.toJson().toString()}');
+    print('data petugas : ${data.accounts?.length}');
     print('data petugas account ${data.accounts?.length}');
     try {
       Response response = await network.dio.post(

@@ -3,6 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+//ignore: must_be_immutable
 class DashboardCarousel extends StatelessWidget {
   final bool isLogin;
   final List<Widget> bannerList;

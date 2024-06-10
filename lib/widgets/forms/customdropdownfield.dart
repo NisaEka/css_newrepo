@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
+//ignore: must_be_immutable
 class CustomDropDownField<T> extends StatelessWidget {
   CustomDropDownField(
       {super.key,
@@ -53,24 +54,7 @@ class CustomDropDownField<T> extends StatelessWidget {
     );
   }
 
-  String _getIdSelectedValue(String selected) {
-    DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => (item.child as Text).data == selected) as DropdownMenuItem;
-    return item.value;
-  }
 
-  String _getSelectedValue() {
-    if (items != null) {
-      if (items!.isNotEmpty) {
-        if (value != null) {
-          DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => item.value == value) as DropdownMenuItem;
-          Text textView = item.child as Text;
-          return textView.data ?? hintText ?? label ?? '';
-        }
-      }
-    }
-
-    return hintText ?? label ?? '';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +81,7 @@ class CustomDropDownField<T> extends StatelessWidget {
               ? TextField(
                   controller: TextEditingController(text: selectedItem.toString()),
                   enabled: false,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 16,
                         color: Colors.black,
                         // fontWeight: FontWeight.w600,

@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_controller.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -105,56 +106,47 @@ class BonusKamuScreen extends StatelessWidget {
           child: Center(
             child: c.tabIndex == 0
                 ? ListView(
-                    shrinkWrap: c.totalTransaksiList.isEmpty,
-                    children: c.totalTransaksiList.isNotEmpty
-                        ? [
-                            PointListItem(
-                              dateTime: '2024-01-03 20:06:25 PM',
-                              point: 0.56,
-                              title: 'Resi'.tr,
-                              subtitle: "021440000279424",
-                              amount: 'Rp. 177.000',
-                              status: "Valid",
-                            ),
-                            PointListItem(
-                              dateTime: '2024-01-03 20:06:25 PM',
-                              point: 0.56,
-                              title: 'Resi'.tr,
-                              subtitle: "021440000279424",
-                              amount: 'Rp. 177.000',
-                              status: "Valid",
-                            ),
-                            PointListItem(
-                              dateTime: '2024-01-03 20:06:25 PM',
-                              point: -0.56,
-                              title: 'Resi'.tr,
-                              subtitle: "021440000279424",
-                              amount: 'Rp. 177.000',
-                              status: "Cancel",
-                            ),
-                          ]
-                        : [DataEmpty(text: 'Belum ada riwayat transaksi point'.tr)],
+                    shrinkWrap: c.totalTransaksiList.isEmpty || c.isLoading,
+                    children: c.isLoading
+                        ? List.generate(
+                            5,
+                            (index) => const PointListItem(isLoading: true),
+                          )
+                        : c.totalTransaksiList.isNotEmpty
+                            ? c.totalTransaksiList
+                                .map(
+                                  (e) => PointListItem(
+                                    dateTime: e.tglTransaksi ?? '',
+                                    point: e.point?.toDouble() ?? 0,
+                                    title: 'Resi'.tr,
+                                    subtitle: e.noConnote ?? '',
+                                    status: e.status == "N" ? "Valid" : "Cancel",
+                                    amount: e.jmlTransaksi,
+                                  ),
+                                )
+                                .toList()
+                            : [DataEmpty(text: 'Belum ada riwayat transaksi point'.tr)],
                   )
                 : ListView(
                     shrinkWrap: c.reedemPointList.isEmpty,
-                    children: c.reedemPointList.isNotEmpty
-                        ? [
-                            PointListItem(
-                              dateTime: '2024-01-03 20:06:25 PM',
-                              point: 1680,
-                              title: 'Nomor'.tr,
-                              subtitle: "JLCM0324727",
-                              rewards: '1',
-                            ),
-                            PointListItem(
-                              dateTime: '2024-01-03 20:06:25 PM',
-                              point: 1680,
-                              title: 'Nomor'.tr,
-                              subtitle: "JLCM0324727",
-                              rewards: '1',
-                            ),
-                          ]
-                        : [DataEmpty(text: "Belum ada riwayat penukaran point".tr)],
+                    children: c.isLoading
+                        ? List.generate(
+                            5,
+                            (index) => const PointListItem(isLoading: true),
+                          )
+                        : c.reedemPointList.isNotEmpty
+                            ? c.reedemPointList
+                                .map(
+                                  (e) => PointListItem(
+                                    dateTime: e.tglPenukaran ?? '',
+                                    point: e.penukaranPoint?.toDouble() ?? 0,
+                                    title: 'Nomor'.tr,
+                                    subtitle: e.noPenukaran ?? '',
+                                    rewards: e.jmlHadiah ?? '0',
+                                  ),
+                                )
+                                .toList()
+                            : [DataEmpty(text: "Belum ada riwayat penukaran point".tr)],
                   ),
           ),
         ),

@@ -38,7 +38,7 @@ class NewPasswordScreen extends StatelessWidget {
         Container(
           margin: const EdgeInsets.all(14),
           child: Text(
-            "Buat password baru anda".tr,
+            "Buat kata sandi baru anda".tr,
             style: appTitleTextStyle.copyWith(color: greyColor),
           ),
         ),
@@ -56,7 +56,7 @@ class NewPasswordScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: c.newPW,
                   prefixIcon: const Icon(Icons.lock),
-                  hintText: 'Password baru'.tr,
+                  hintText: 'Kata sandi baru'.tr,
                   validator: ValidationBuilder().password().build(),
                   isObscure: c.isObscurePassword,
                   multiLine: false,
@@ -69,11 +69,11 @@ class NewPasswordScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: c.confirmPW,
                   prefixIcon: const Icon(Icons.lock),
-                  hintText: 'Konfirmasi password baru'.tr,
+                  hintText: 'Konfirmasi Kata Sandi baru'.tr,
                   inputFormatters: const [],
                   validator: (value) {
                     if (value != c.newPW.text) {
-                      return "Password tidak sama".tr;
+                      return "Kata sandi tidak sama".tr;
                     }
                     return null;
                   },

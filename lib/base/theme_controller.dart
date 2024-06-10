@@ -35,6 +35,10 @@ class CustomTheme {
         labelLarge: const TextStyle(
           color: greyDarkColor1,
         ),
+        titleMedium: listTitleTextStyle.copyWith(
+          fontSize: 11,
+          color: greyDarkColor1,
+        ),
       ),
       switchTheme: SwitchThemeData(
           trackColor: MaterialStateColor.resolveWith((states) => greyColor), thumbColor: MaterialStateColor.resolveWith((states) => blueJNE)),
@@ -112,6 +116,10 @@ class CustomTheme {
           color: greyLightColor1,
         ),
         titleSmall: sublistTitleTextStyle.copyWith(
+          color: greyLightColor1,
+        ),
+        titleMedium: listTitleTextStyle.copyWith(
+          fontSize: 11,
           color: greyLightColor1,
         ),
       ),
