@@ -6,8 +6,15 @@ import 'package:get/get.dart';
 
 class InfoDialog extends StatelessWidget {
   final String? infoText;
+  final VoidCallback? nextButton;
+  final String? nextButtonTitle;
 
-  const InfoDialog({super.key, this.infoText});
+  const InfoDialog({
+    super.key,
+    this.infoText,
+    this.nextButton,
+    this.nextButtonTitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +25,13 @@ class InfoDialog extends StatelessWidget {
       // backgroundColor: Colors.white,
       elevation: 0,
       content: SizedBox(
-        height: Get.width / 1.6,
+        height: Get.width / 1.3,
         // color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: BoxDecoration(
                 color: AppConst.isDarkTheme(context) ? infoDarkColor : infoLightColor1,
@@ -33,6 +40,7 @@ class InfoDialog extends StatelessWidget {
               child: Text(
                 infoText?.tr ?? '',
                 style: Theme.of(context).textTheme.labelLarge,
+                textAlign: TextAlign.center,
               ),
             ),
             Image.asset(ImageConstant.mascotPic)
@@ -44,11 +52,11 @@ class InfoDialog extends StatelessWidget {
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelLarge,
           ),
+          onPressed: nextButton ?? () => Get.back(),
           child: Text(
-            'tutup'.tr,
+            nextButton != null ? 'OK' : 'tutup'.tr,
             style: Theme.of(context).textTheme.labelLarge,
           ),
-          onPressed: () => Get.back(),
         ),
       ],
     );

@@ -2,6 +2,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/calculate_text_width.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
@@ -62,10 +63,10 @@ class LogActivityStepper extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Text(
-            //   data?.activityCreateDate?.toDateTimeFormat() ?? '',
-            //   style: sublistTitleTextStyle,
-            // ),
+            Text(
+              data?.activityCreateDate.toString().toDateTimeFormat() ?? '',
+              style: sublistTitleTextStyle,
+            ),
             SizedBox(
               width: Get.width / 1.5,
               child: Text(

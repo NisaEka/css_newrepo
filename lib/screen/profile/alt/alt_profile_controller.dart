@@ -5,6 +5,8 @@ import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
+import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -98,5 +100,17 @@ class AltProfileController extends BaseController {
     storage.deleteToken();
 
     Get.offAll(const LoginScreen());
+  }
+
+  void isCcrfAction(dynamic screen, BuildContext context) {
+    isCcrf
+        ? Get.to(screen)
+        : showDialog(
+            context: context,
+            builder: (context) => InfoDialog(
+              infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas",
+              nextButton: () => Get.off(const FacilityScreen()),
+            ),
+          );
   }
 }

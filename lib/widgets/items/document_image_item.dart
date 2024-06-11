@@ -12,6 +12,7 @@ class DocumentImageItem extends StatefulWidget {
   final VoidCallback onTap;
   final double? lat;
   final double? lng;
+  final bool isLoading;
 
   const DocumentImageItem({
     super.key,
@@ -20,6 +21,7 @@ class DocumentImageItem extends StatefulWidget {
     required this.title,
     this.lat,
     this.lng,
+    this.isLoading = false,
   });
 
   @override
@@ -72,19 +74,22 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
                           color: greyLightColor3,
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: const Center(child: Icon(Icons.image_not_supported_outlined)),
+                        child: Center(
+                          child: widget.isLoading ? const CircularProgressIndicator.adaptive() : const Icon(Icons.image_not_supported_outlined),
+                        ),
                       ),
                       loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) {
                           return child;
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
                         }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        );
                       },
                     )
                   : GoogleMap(

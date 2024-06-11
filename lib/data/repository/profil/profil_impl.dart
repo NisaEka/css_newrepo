@@ -19,7 +19,6 @@ class ProfilRepositoryImpl extends ProfilRepository {
   Future<GetBasicProfilModel> getBasicProfil() async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
-    network.local.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.dio.get(
         "/profile",
@@ -88,7 +87,6 @@ class ProfilRepositoryImpl extends ProfilRepository {
   Future<GetCcrfActivityModel> getCcrfActivity() async {
     var token = await storageSecure.read(key: 'token');
     network.dio.options.headers['Authorization'] = 'Bearer $token';
-    network.local.options.headers['Authorization'] = 'Bearer $token';
 
     try {
       var response = await network.dio.get(

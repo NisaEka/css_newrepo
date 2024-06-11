@@ -117,7 +117,7 @@ class BonusKamuScreen extends StatelessWidget {
                                 .map(
                                   (e) => PointListItem(
                                     dateTime: e.tglTransaksi ?? '',
-                                    point: e.point?.toDouble() ?? 0,
+                                    point: e.point == '0' ? 0 : e.point?.toDouble(),
                                     title: 'Resi'.tr,
                                     subtitle: e.noConnote ?? '',
                                     status: e.status == "N" ? "Valid" : "Cancel",

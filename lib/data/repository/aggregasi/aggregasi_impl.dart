@@ -25,15 +25,13 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
-    network.local.options.headers['Authorization'] = 'Bearer $token';
 
     List<String> accountNumber = [];
     for (var e in accounts) {
       accountNumber.add(e.accountNumber.toString());
     }
-    print("accounts : ${accountNumber.toString().splitMapJoin(',').replaceAll('[', '').replaceAll(']', '').toString()}");
     try {
-      Response response = await network.local.get(
+      Response response = await network.dio.get(
         "/aggregation",
         queryParameters: {
           "keyword": keyword,
@@ -87,18 +85,14 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   Future<GetAggregationTotalModel> getAggregationTotal() async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
-    network.local.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.local.get(
+      Response response = await network.dio.get(
         "/aggregation/total",
       );
-      print('aggregation response: ${response.data}');
       GetAggregationTotalModel resp = GetAggregationTotalModel.fromJson(response.data);
-      print("agg payload : ${resp.payload}");
 
       return resp;
     } on DioException catch (e) {
-      print("aggregation error : ${e.response?.data}");
       return GetAggregationTotalModel.fromJson(e.response?.data);
     }
   }
@@ -111,9 +105,8 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
-    network.local.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.local.get(
+      Response response = await network.dio.get(
         "/aggregation/$aggregationID",
       );
 

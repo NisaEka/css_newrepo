@@ -13,11 +13,10 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_scre
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class AltProfileScreen extends StatelessWidget {
@@ -108,17 +107,17 @@ class AltProfileScreen extends StatelessWidget {
               SettingListItem(
                 title: 'Alamat Pengembalian'.tr,
                 icon: Icons.cached_rounded,
-                onTap: () => c.isCcrf ? Get.to(const AlamatReturnScreen()) : Get.to(const FacilityScreen()),
+                onTap: () => c.isCcrfAction(const AlamatReturnScreen(), context),
               ),
               SettingListItem(
                 title: 'Data Rekening'.tr,
                 icon: Icons.credit_card_rounded,
-                onTap: () => c.isCcrf ? Get.to(const AkunBankScreen()) : Get.to(const FacilityScreen()),
+                onTap: () => c.isCcrfAction(const AkunBankScreen(), context),
               ),
               SettingListItem(
                 title: 'Dokumen'.tr,
                 icon: Icons.file_present_rounded,
-                onTap: () => c.isCcrf ? Get.to(const DokumenScreen()) : Get.to(const FacilityScreen()),
+                onTap: () => c.isCcrfAction(const DokumenScreen(), context),
               ),
               SettingListItem(
                 title: 'Edit Profil'.tr,

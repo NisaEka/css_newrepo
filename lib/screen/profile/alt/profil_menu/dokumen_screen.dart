@@ -29,6 +29,7 @@ class DokumenScreen extends StatelessWidget {
       child: ListView(
         children: [
           DocumentImageItem(
+            isLoading: c.isLoading,
             title: 'Lampiran Dokumen KTP'.tr,
             img: c.ccrfProfil?.document?.idCard ?? '',
             onTap: () => showDialog(
@@ -40,6 +41,7 @@ class DokumenScreen extends StatelessWidget {
             ),
           ),
           DocumentImageItem(
+            isLoading: c.isLoading,
             title: 'Lampiran Dokumen NPWP'.tr,
             img: c.ccrfProfil?.document?.npwp ?? '',
             onTap: () => showDialog(
@@ -51,6 +53,7 @@ class DokumenScreen extends StatelessWidget {
             ),
           ),
           DocumentImageItem(
+            isLoading: c.isLoading,
             title: 'Lampiran Dokumen Rekening'.tr,
             img: c.ccrfProfil?.document?.bankAccount ?? '',
             onTap: () => showDialog(

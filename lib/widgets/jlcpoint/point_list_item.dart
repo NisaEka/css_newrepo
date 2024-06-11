@@ -72,7 +72,7 @@ class PointListItem extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: (point ?? 0) > 0 ? successLightColor2 : errorLightColor2,
+                    color: status == "Valid" ? successLightColor2 : errorLightColor2,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
