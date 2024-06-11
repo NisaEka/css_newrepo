@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_screen.dart';
@@ -17,6 +14,7 @@ class ForgotPasswordOTPController extends BaseController {
   String email = Get.arguments['email'];
   bool? isChange = Get.arguments['isChange'];
   bool isLoading = false;
+  bool isLogin = false;
   final formKey = GlobalKey<FormState>();
   final otpPin = TextEditingController();
   final focusNode = FocusNode();
@@ -75,6 +73,12 @@ class ForgotPasswordOTPController extends BaseController {
       _timer!.cancel();
     }
     super.onClose();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    cekToken();
   }
 
   _startTimer(int seconds) {
@@ -166,16 +170,37 @@ class ForgotPasswordOTPController extends BaseController {
     update();
   }
 
-  void useOtherMethod(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const InfoDialog(
-        infoText: "Akun recovery belum tersedia",
-      ),
-    );
-    // Get.to(const PasswordRecoveryScreen(), arguments: {
-    //   'email': email,
-    //   'isChange': isChange,
-    // });
+  Future<bool> cekToken() async {
+    String? token = await storage.readToken();
+    debugPrint("token : $token");
+    isLogin = token != null;
+    update();
+
+    return isLogin;
+  }
+
+  Future<void> useOtherMethod(BuildContext context) async {
+    isLoading = true;
+    update();
+    if (isLogin) {
+      var basic = await profil.getBasicProfil();
+
+      if ((basic.payload?.emailRecovery?.isNotEmpty ?? false)) {
+        Get.off(const PasswordRecoveryScreen(), arguments: {
+          'email': basic.payload?.emailRecovery,
+          'isChange': isChange,
+        });
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) => const InfoDialog(
+            infoText: "Akun recovery belum tersedia",
+          ),
+        );
+      }
+    } else {}
+
+    isLoading = false;
+    update();
   }
 }

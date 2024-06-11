@@ -43,8 +43,9 @@ class NoAkunController extends BaseController {
         logActivityList.addAll(value.payload ?? []);
         update();
       });
-    } catch (e) {
+    } catch (e,i) {
       e.printError();
+      i.printError(info: "Error info:");
     }
   }
 }

@@ -18,9 +18,7 @@ class ConnectionTest {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         online = true;
       }
-      // update();
     } on SocketException catch (_) {
-      // print('phone is offline');
       online = false;
     }
 
@@ -28,16 +26,9 @@ class ConnectionTest {
   }
 
   Future<void> checkConnection() async {
-    // try {
-      connectionStatus = await (Connectivity().checkConnectivity());
-      // if (connectionStatus != ConnectivityResult.none) {
-        isOnline().then((value) => online = value);
-        online.printInfo(info: 'isOnline');
-      // }
-    // } on PlatformException catch (e) {
-    //   print('Couldn\'t check connectivity status\n $e');
-    //   return;
-    // }
+    connectionStatus = await (Connectivity().checkConnectivity());
+    isOnline().then((value) => online = value);
+    online.printInfo(info: 'isOnline');
 
     connectionStatus.printInfo(info: 'connection status');
   }

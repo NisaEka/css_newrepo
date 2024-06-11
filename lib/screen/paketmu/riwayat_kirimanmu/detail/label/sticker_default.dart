@@ -24,8 +24,6 @@ class StickerDefault extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("reference:${data.orderId}");
-
     return ListView(
       children: [
         DefaultTextStyle(

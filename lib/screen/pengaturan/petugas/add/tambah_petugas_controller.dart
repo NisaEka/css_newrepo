@@ -206,13 +206,10 @@ class TambahPetugasController extends BaseController {
         update();
       }).then((value) {
         if (dataPetugas.payload?.origins?.isNotEmpty ?? false) {
-          print("punya origin");
           dataPetugas.payload?.origins?.forEach((origin) {
             selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).first);
             update();
           });
-          print(selectedOrigin.map((e) => e.originCode));
-          print(originList.where((element) => element == selectedOrigin.first).isNotEmpty);
 
           update();
         }

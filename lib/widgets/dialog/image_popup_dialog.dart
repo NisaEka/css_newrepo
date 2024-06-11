@@ -34,7 +34,6 @@ class _ImagePopupDialogState extends State<ImagePopupDialog> {
 
   @override
   Widget build(BuildContext context) {
-    print('lat lng ${widget.lat}');
     return AlertDialog(
       contentPadding: const EdgeInsets.all(5),
       backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,

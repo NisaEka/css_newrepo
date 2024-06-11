@@ -188,7 +188,6 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                           c.kotaPengirim.text = c.selectedOrigin?.originName ?? '';
                           // controller.kodePos.text = controller.selectedOrigin?.
                           c.update();
-                          // print(jsonEncode(value));
                         },
                         value: c.selectedOrigin,
                         isRequired: c.isOnline,

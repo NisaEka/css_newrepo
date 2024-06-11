@@ -87,9 +87,8 @@ class AddDropshipperScreen extends StatelessWidget {
                 onChanged: (value) {
                   c.selectedOrigin = value;
                   c.kotaPengirim.text = c.selectedOrigin?.originName ?? '';
-                  // controller.kodePos.text = controller.selectedOrigin?.
+                  // c.kodePos.text = c.selectedOrigin?. ?? '';
                   c.update();
-                  // print(jsonEncode(value));
                 },
                 value: c.selectedOrigin,
                 selectedItem: c.kotaPengirim.text,

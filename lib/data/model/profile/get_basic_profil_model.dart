@@ -57,6 +57,7 @@ class BasicProfilModel {
     String? username,
     String? email,
     String? userType,
+    String? emailRecovery,
   }) {
     _id = id;
     _name = name;
@@ -66,6 +67,7 @@ class BasicProfilModel {
     _username = username;
     _email = email;
     _userType = userType;
+    _emailRecovery = emailRecovery;
   }
 
   BasicProfilModel.fromJson(dynamic json) {
@@ -77,6 +79,7 @@ class BasicProfilModel {
     _username = json['username'];
     _email = json['email'];
     _userType = json['user_type'];
+    _emailRecovery = json['email_recovery'];
   }
 
   String? _id;
@@ -87,6 +90,7 @@ class BasicProfilModel {
   String? _username;
   String? _email;
   String? _userType;
+  String? _emailRecovery;
 
   BasicProfilModel copyWith({
     String? id,
@@ -97,6 +101,7 @@ class BasicProfilModel {
     String? username,
     String? email,
     String? userType,
+    String? emailRecovery,
   }) =>
       BasicProfilModel(
         id: id ?? _id,
@@ -107,6 +112,7 @@ class BasicProfilModel {
         username: username ?? _username,
         email: email ?? _email,
         userType: userType ?? _userType,
+        emailRecovery: emailRecovery ?? _emailRecovery,
       );
 
   String? get id => _id;
@@ -125,6 +131,8 @@ class BasicProfilModel {
 
   String? get userType => _userType;
 
+  String? get emailRecovery => _emailRecovery;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
@@ -135,6 +143,7 @@ class BasicProfilModel {
     map['username'] = _username;
     map['email'] = _email;
     map['user_type'] = _userType;
+    map['email_recovery'] = _emailRecovery;
     return map;
   }
 }

@@ -62,7 +62,7 @@ class CcrfActivityModel {
     String? activityNote,
     String? activityCreateDate,
     String? ccrfId,
-    String? feedbackId,
+    num? feedbackId,
   }) {
     _activityId = activityId;
     _activityName = activityName;
@@ -95,7 +95,7 @@ class CcrfActivityModel {
   String? _activityNote;
   String? _activityCreateDate;
   String? _ccrfId;
-  String? _feedbackId;
+  num? _feedbackId;
 
   CcrfActivityModel copyWith({
     String? activityId,
@@ -106,7 +106,7 @@ class CcrfActivityModel {
     String? activityNote,
     String? activityCreateDate,
     String? ccrfId,
-    String? feedbackId,
+    num? feedbackId,
   }) =>
       CcrfActivityModel(
         activityId: activityId ?? _activityId,
@@ -136,7 +136,7 @@ class CcrfActivityModel {
 
   String? get ccrfId => _ccrfId;
 
-  String? get feedbackId => _feedbackId;
+  num? get feedbackId => _feedbackId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

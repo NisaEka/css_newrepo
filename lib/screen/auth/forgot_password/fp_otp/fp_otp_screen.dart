@@ -84,12 +84,14 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                   // radius: 50,
                   onPressed: () => c.otpPin.text.isNotEmpty && c.otpPin.length >= 6 ? c.pinConfirmation() : null,
                 ),
-                CustomFilledButton(
-                  color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                  isTransparent: true,
-                  title: 'Gunakan cara lain'.tr,
-                  onPressed: () => c.useOtherMethod(context),
-                )
+                c.isLogin
+                    ? CustomFilledButton(
+                        color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                        isTransparent: true,
+                        title: 'Gunakan cara lain'.tr,
+                        onPressed: () => c.useOtherMethod(context),
+                      )
+                    : const SizedBox()
               ],
             ),
           ),

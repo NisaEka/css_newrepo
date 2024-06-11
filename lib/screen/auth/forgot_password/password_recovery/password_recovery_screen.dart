@@ -3,6 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_controller.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,12 +15,18 @@ class PasswordRecoveryScreen extends StatelessWidget {
     return GetBuilder<PasswordRecoveryController>(
         init: PasswordRecoveryController(),
         builder: (controller) {
-          return Scaffold(
-            body: _bodyContent(controller, context),
+          return Stack(
+            children: [
+              Scaffold(
+                body: _bodyContent(controller, context),
+              ),
+              controller.isLoading ? const LoadingDialog() : const SizedBox()
+            ],
           );
         });
   }
-  Widget _bodyContent(PasswordRecoveryController controller, BuildContext context){
+
+  Widget _bodyContent(PasswordRecoveryController c, BuildContext context) {
     return Column(
       children: [
         const LogoHeader(),
@@ -36,7 +43,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               border: Border.all(
-                color: controller.recovery == 1 ? blueJNE : greyColor,
+                color: c.recovery == 1 ? blueJNE : greyColor,
                 width: 2,
               ),
             ),
@@ -45,7 +52,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
               children: [
                 Radio(
                   value: 1,
-                  groupValue: controller.recovery,
+                  groupValue: c.recovery,
                   onChanged: (value) {},
                 ),
                 SizedBox(
@@ -54,7 +61,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Kode OTP akan dikirimkan ke alamat email berikut :'.tr),
-                      Text(controller.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
+                      Text(c.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
                     ],
                   ),
                 )
@@ -62,14 +69,9 @@ class PasswordRecoveryScreen extends StatelessWidget {
             ),
           ),
           onTap: () {
-            controller.recovery = 1;
-            controller.update();
-            Get.to(
-              const ForgotPasswordOTPScreen(),
-              arguments: {
-                'email': controller.email,
-              },
-            );
+            c.recovery = 1;
+            c.update();
+            c.sendEmail();
           },
         ),
         GestureDetector(
@@ -78,7 +80,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               border: Border.all(
-                color: controller.recovery == 2 ? blueJNE : greyColor,
+                color: c.recovery == 2 ? blueJNE : greyColor,
                 width: 2,
               ),
             ),
@@ -87,7 +89,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
               children: [
                 Radio(
                   value: 2,
-                  groupValue: controller.recovery,
+                  groupValue: c.recovery,
                   onChanged: (value) {},
                 ),
                 SizedBox(width: Get.width / 1.5, child: Text('Hubungi sales cabang kota anda'.tr))
@@ -95,8 +97,8 @@ class PasswordRecoveryScreen extends StatelessWidget {
             ),
           ),
           onTap: () {
-            controller.recovery = 2;
-            controller.update();
+            c.recovery = 2;
+            c.update();
           },
         ),
       ],

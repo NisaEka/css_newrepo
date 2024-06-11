@@ -108,8 +108,6 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                             setState(() {
                                               c.startDate = value;
                                               c.startDateField.text = value.toString().toDateTimeFormat();
-                                              // controller.startDateField.text = value?.millisecondsSinceEpoch.toString() ?? '';
-                                              // print(value?.millisecondsSinceEpoch.toString() ?? '');
                                               c.endDate = DateTime.now();
                                               c.endDateField.text = DateTime.now().toString().toDateTimeFormat();
                                               c.update();

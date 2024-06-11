@@ -318,11 +318,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.dio.delete(
         "/transaction/$awb",
       );
-      print('delete: ${response.data}');
       return PostTransactionModel.fromJson(response.data);
     } on DioException catch (e) {
-      print('delete: ${e.response?.data}');
-
       return PostTransactionModel.fromJson(e.response?.data);
     }
   }

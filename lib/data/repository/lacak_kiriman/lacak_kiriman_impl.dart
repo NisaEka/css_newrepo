@@ -18,7 +18,6 @@ class LacakKirimanRepositoryImpl extends LacakKirimanRepository {
           'api_key': ApiConfig.traceApikey,
         },
       );
-      print(response.data);
       return PostLacakKirimanModel.fromJson(response.data);
     } on DioException catch (e) {
       return PostLacakKirimanModel.fromJson(e.response?.data);

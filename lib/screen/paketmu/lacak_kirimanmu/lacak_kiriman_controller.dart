@@ -36,7 +36,6 @@ class LacakKirimanController extends BaseController {
   Future<PostLacakKirimanModel> cekResi(String nomorResi) async {
     isLoading = true;
     update();
-    print('lacak');
     try {
       await trace.postTracingByCnote(nomorResi).then(
             (value) => trackModel = value,

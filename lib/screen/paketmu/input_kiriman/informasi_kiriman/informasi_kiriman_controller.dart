@@ -322,7 +322,6 @@ class InformasiKirimaController extends BaseController {
   Future<void> initData() async {
     isServiceLoad = true;
     serviceList = [];
-    // print('account id : ${account.accountId}');
     connection.isOnline().then((value) => isOnline = value);
     jenisBarang.text = "PAKET";
     try {

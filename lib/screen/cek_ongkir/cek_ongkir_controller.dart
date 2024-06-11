@@ -79,7 +79,6 @@ class CekOngkirController extends BaseController {
       var response = await ongkir.postOrigin(keyword);
       cityModel = response;
       originList.addAll(cityModel?.payload ?? []);
-      // print(cityModel?.detail);
     } catch (e, i) {
       e.printError();
       i.printError();

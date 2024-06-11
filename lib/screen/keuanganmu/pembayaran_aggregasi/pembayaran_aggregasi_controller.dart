@@ -80,7 +80,6 @@ class PembayaranAggergasiController extends BaseController {
       selectedAccount.addAll(accountList);
 
       await aggregation.getAggregationTotal().then((value) {
-        // print("total : ${value.payload?.total}");
         aggTotal = value.payload?.total?.toInt() ?? 0;
         update();
       });

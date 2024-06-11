@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 extension StringExt on String {
@@ -23,7 +24,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      print("ERROR toDateFormat $e");
+      debugPrint("ERROR toDateFormat $e");
       return "-";
     }
   }
@@ -34,11 +35,10 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      print("ERROR toLongDateFormat $e");
+      debugPrint("ERROR toLongDateFormat $e");
       return "-";
     }
   }
-
 
   String toShortDateTimeFormat({String targetFormat = "dd MMM yyyy HH:mmzzz", String originFormat = "dd/MM/yyyy"}) {
     try {
@@ -46,7 +46,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      print("ERROR toLongDateFormat $e");
+      debugPrint("ERROR toLongDateFormat $e");
       return "-";
     }
   }
@@ -57,11 +57,10 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      print("ERROR toLongDateFormat $e");
+      debugPrint("ERROR toLongDateFormat $e");
       return "-";
     }
   }
-
 
   String toShortDateFormat({String targetFormat = "dd MMM yyyy", String originFormat = "dd/MM/yyyy"}) {
     try {
@@ -69,7 +68,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      print("ERROR toLongDateFormat $e");
+      debugPrint("ERROR toLongDateFormat $e");
       return "-";
     }
   }
@@ -80,7 +79,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      print("ERROR toDateFormat $e");
+      debugPrint("ERROR toDateFormat $e");
       return "-";
     }
   }
@@ -91,17 +90,17 @@ extension StringExt on String {
 
       return dateTime;
     } on FormatException catch (e) {
-      print("ERROR toDateFormat $e");
+      debugPrint("ERROR toDateFormat $e");
       rethrow;
     } catch (e) {
-      print("ERROR toDateFormat $e");
+      debugPrint("ERROR toDateFormat $e");
       return null;
     }
   }
 
   bool isNumeric() {
-    RegExp _numeric = RegExp(r'^-?[0-9]+$');
-    return _numeric.hasMatch(this);
+    RegExp numeric = RegExp(r'^-?[0-9]+$');
+    return numeric.hasMatch(this);
   }
 
   bool isImage() {

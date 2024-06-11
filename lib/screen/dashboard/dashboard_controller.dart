@@ -176,17 +176,16 @@ class DashboardController extends BaseController {
 
     marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
     var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
-    userName = shipper.name ?? "";
+    userName = shipper.name ?? "         ";
     // if (isLogin == true) {
     try {
       await jlc.postTotalPoint().then((value) {
-        print("jlc point : ${value.data?.first.sisaPoint}");
         jlcPoint = value.data?.first.sisaPoint.toString();
         update();
       });
       await transaction
           .getSender()
-          .then((value) async => await storage.saveData(
+            .then((value) async => await storage.saveData(
                 StorageCore.shipper,
                 value.payload,
               ))

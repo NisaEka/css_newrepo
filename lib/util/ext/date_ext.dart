@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -68,16 +69,16 @@ extension DateExt on DateTime {
     }
 
     int diffInSeconds = firstDate.difference(secondDate).inSeconds;
-    print("FIRSTDATE $firstDate");
-    print("SEECONDDATE $secondDate");
-    print("SECONDS $diffInSeconds");
+    debugPrint("FIRSTDATE $firstDate");
+    debugPrint("SEECONDDATE $secondDate");
+    debugPrint("SECONDS $diffInSeconds");
 
     int days = (diffInSeconds / (60 * 60 * 24)).floor();
     int hours = ((diffInSeconds - days * 60 * 60 * 24) / (60 * 60)).floor();
     int minutes = ((diffInSeconds - days * 60 * 60 * 24 - hours * 60 * 60) / 60).floor();
     int seconds = ((diffInSeconds - days * 60 * 60 * 24 - hours * 60 * 60 - minutes * 60)).floor();
 
-    print("days $days hours $hours minutes $minutes seconds $seconds");
+    debugPrint("days $days hours $hours minutes $minutes seconds $seconds");
     String result = "";
     if (days > 0) {
       result += "$days d";

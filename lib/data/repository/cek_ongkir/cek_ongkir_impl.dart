@@ -29,8 +29,6 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
           ));
       return PostCekongkirModel.fromJson(response.data);
     } on DioException catch (e) {
-      print('error ongkir : ${e.response?.data.printError}');
-      // return PostCekongkirModel.fromJson(e.response?.data);
       return e.response?.data;
     }
   }
