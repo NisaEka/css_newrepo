@@ -3,16 +3,15 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_form_bank_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/return/facility_form_return_controller.dart';
-import 'package:css_mobile/util/validator/custom_validation_builder.dart';
+import 'package:css_mobile/util/input_formatter/npwp_separator_input_formater.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -139,6 +138,10 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 hintText: 'Nomor NPWP'.tr,
                 inputType: TextInputType.number,
                 validator: ValidationBuilder().minLength(15).maxLength(15).build(),
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(15),
+                  NpwpSeparatorInputFormatter(),
+                ],
               ),
               CustomTextFormField(
                 controller: c.npwpName,

@@ -18,6 +18,7 @@ class RiwayatKirimanController extends BaseController {
   int total = 0;
   int cod = 0;
   int noncod = 0;
+  int codOngkir = 0;
   DateTime? startDate;
   DateTime? endDate;
   String? selectedStatusKiriman;
@@ -37,7 +38,7 @@ class RiwayatKirimanController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([initData()]);
+    Future.wait([transactionCount(), initData()]);
     pagingController.addPageRequestListener((pageKey) {
       getTransaction(pageKey);
     });
@@ -45,17 +46,33 @@ class RiwayatKirimanController extends BaseController {
     update();
   }
 
+  Future<void> transactionCount() async {
+    try {
+      await transaction
+          .getTransactionCount(
+        transType ?? '',
+        transDate ?? '',
+        selectedStatusKiriman ?? '',
+        searchField.text,
+        selectedPetugasEntry ?? '',
+      )
+          .then((value) {
+        total = value.payload?.total?.toInt() ?? 0;
+        cod = value.payload?.cod?.toInt() ?? 0;
+        noncod = value.payload?.nonCod?.toInt() ?? 0;
+        codOngkir = value.payload?.codOngkir?.toInt() ?? 0;
+        update();
+      });
+    } catch (e) {
+      e.printError();
+    }
+  }
+
   Future<void> initData() async {
     // transactionList = [];
     selectedTransaction = [];
     listStatusKiriman = [];
     try {
-      await transaction.getTransactionCount().then((value) {
-        total = value.payload?.total?.toInt() ?? 0;
-        cod = value.payload?.cod?.toInt() ?? 0;
-        noncod = value.payload?.nonCod?.toInt() ?? 0;
-      });
-
       await transaction.getTransactionStatus().then((value) {
         listStatusKiriman.addAll(value.payload ?? []);
         update();

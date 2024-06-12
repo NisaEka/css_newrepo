@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-class ThousandsSeparatorInputFormatter extends TextInputFormatter {
+class NpwpSeparatorInputFormatter extends TextInputFormatter {
   static const separator = '.';
 
   @override
@@ -25,8 +25,12 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
 
       String newString = '';
       for (int i = chars.length - 1; i >= 0; i--) {
-        if ((chars.length - 1 - i) % 3 == 0 && i != chars.length - 1) {
+        if (i == 1 || i == 4 || i == 7 || i == 11) {
           newString = separator + newString;
+        } else if (i == 8 ) {
+          newString = "-" + newString;
+        } else if(i>=9){
+          newString = newString;
         }
         newString = chars[i] + newString;
       }

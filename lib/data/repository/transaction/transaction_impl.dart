@@ -297,12 +297,25 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<GetTransactionCountModel> getTransactionCount() async {
+  Future<GetTransactionCountModel> getTransactionCount(
+    String transType,
+    String transDate,
+    String transStatus,
+    String keyword,
+    String officer,
+  ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.dio.get(
         "/transaction/count",
+        queryParameters: {
+          "transaction_status": transStatus,
+          "transaction_date": transDate,
+          "transaction_type": transType,
+          "keyword": keyword,
+          "officer": officer,
+        },
       );
       return GetTransactionCountModel.fromJson(response.data);
     } on DioException catch (e) {

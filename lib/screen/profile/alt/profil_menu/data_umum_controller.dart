@@ -10,6 +10,8 @@ class DataUmumController extends BaseController {
   bool isLoading = false;
 
   CcrfProfilModel? ccrfProfil;
+  BasicProfilModel? basicProfil;
+  bool isCcrf = false;
 
   @override
   void onInit() {
@@ -23,10 +25,26 @@ class DataUmumController extends BaseController {
       String? token = await storage.readToken();
       debugPrint("token : $token");
       isLogin = token != null;
-
-      await profil.getCcrfProfil().then(
-            (value) => ccrfProfil = value.payload,
+      await profil.getBasicProfil().then((value) => basicProfil = value.payload);
+      update();
+      await profil.getCcrfProfil().then((value) {
+        if (value.payload != null) {
+          ccrfProfil = value.payload;
+        } else {
+          ccrfProfil ??= CcrfProfilModel(
+            generalInfo: GeneralInfo(
+              name: basicProfil?.name,
+              brand: basicProfil?.brand,
+              address: basicProfil?.address,
+              email: basicProfil?.email,
+              phone: basicProfil?.phone,
+            ),
           );
+        }
+
+        isCcrf = true;
+        update();
+      });
     } catch (e, i) {
       e.printError();
       i.printError();

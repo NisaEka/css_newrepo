@@ -61,7 +61,13 @@ abstract class TransactionRepository {
 
   Future<GetTransactionByAwbModel> getTransactionByAWB(String awb);
 
-  Future<GetTransactionCountModel> getTransactionCount();
+  Future<GetTransactionCountModel> getTransactionCount(
+    String transType,
+    String transDate,
+    String transStatus,
+    String keyword,
+    String officer,
+  );
 
   Future<PostTransactionModel> deleteTransaction(String awb);
 

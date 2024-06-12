@@ -55,12 +55,14 @@ class DataUmumScreen extends StatelessWidget {
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
                 DataUmumListItem(
-                  title: "${c.ccrfProfil?.generalInfo?.address ?? '-'}"
-                      ",  ${c.ccrfProfil?.generalInfo?.subDistrict ?? '-'}"
-                      ", ${c.ccrfProfil?.generalInfo?.district ?? '-'}"
-                      ", ${c.ccrfProfil?.generalInfo?.city ?? '-'}"
-                      ", ${c.ccrfProfil?.generalInfo?.province ?? '-'}"
-                      ", ${c.ccrfProfil?.generalInfo?.zipCode ?? '-'}",
+                  title: (c.ccrfProfil?.generalInfo?.address == null)
+                      ? "-"
+                      : "${c.ccrfProfil?.generalInfo?.address ?? '-'}"
+                          ",  ${c.ccrfProfil?.generalInfo?.subDistrict ?? '-'}"
+                          ", ${c.ccrfProfil?.generalInfo?.district ?? '-'}"
+                          ", ${c.ccrfProfil?.generalInfo?.city ?? '-'}"
+                          ", ${c.ccrfProfil?.generalInfo?.province ?? '-'}"
+                          ", ${c.ccrfProfil?.generalInfo?.zipCode ?? '-'}",
                   // subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
                   icon: Icons.home,
                   tooltip: 'Alamat Lengkap'.tr,

@@ -108,7 +108,7 @@ class AltProfileController extends BaseController {
         : showDialog(
             context: context,
             builder: (context) => InfoDialog(
-              infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas",
+              infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas".tr,
               nextButton: () => Get.off(const FacilityScreen()),
             ),
           );

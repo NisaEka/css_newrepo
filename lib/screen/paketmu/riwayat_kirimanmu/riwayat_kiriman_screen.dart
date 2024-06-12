@@ -234,8 +234,8 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                     c.transDate = "${c.startDate?.millisecondsSinceEpoch ?? ''}-${c.endDate?.millisecondsSinceEpoch ?? ''}";
                                   }
                                   c.update();
-
                                   c.pagingController.refresh();
+                                  c.transactionCount();
                                   Get.back();
                                 }
                               },
@@ -295,7 +295,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                   c.pagingController.refresh();
                 },
                 child: Container(
-                  width: Get.width / 4,
+                  width: Get.width / 5,
                   margin: const EdgeInsets.symmetric(vertical: 15),
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   decoration: BoxDecoration(
@@ -304,7 +304,11 @@ class RiwayatKirimanScreen extends StatelessWidget {
                       topLeft: Radius.circular(8),
                       bottomLeft: Radius.circular(8),
                     ),
-                    border: Border.all(color: greyDarkColor1),
+                    border: const Border(
+                      top: BorderSide(color: greyDarkColor1),
+                      bottom: BorderSide(color: greyDarkColor1),
+                      left: BorderSide(color: greyDarkColor1),
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -332,14 +336,12 @@ class RiwayatKirimanScreen extends StatelessWidget {
                   c.pagingController.refresh();
                 },
                 child: Container(
-                  width: Get.width / 4,
+                  width: Get.width / 5,
                   margin: const EdgeInsets.symmetric(vertical: 15),
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   decoration: BoxDecoration(
                     color: c.selectedKiriman == 1 ? blueJNE : whiteColor,
-                    border: const Border.symmetric(
-                      horizontal: BorderSide(color: greyDarkColor1),
-                    ),
+                    border: Border.all(color: greyDarkColor1),
                   ),
                   child: Column(
                     children: [
@@ -367,16 +369,14 @@ class RiwayatKirimanScreen extends StatelessWidget {
                   c.pagingController.refresh();
                 },
                 child: Container(
-                  width: Get.width / 4,
+                  width: Get.width / 5,
                   margin: const EdgeInsets.symmetric(vertical: 15),
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   decoration: BoxDecoration(
                     color: c.selectedKiriman == 2 ? blueJNE : whiteColor,
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(8),
-                      bottomRight: Radius.circular(8),
+                    border: const Border.symmetric(
+                      horizontal: BorderSide(color: greyDarkColor1),
                     ),
-                    border: Border.all(color: greyDarkColor1),
                   ),
                   child: Column(
                     children: [
@@ -390,6 +390,43 @@ class RiwayatKirimanScreen extends StatelessWidget {
                         'NON COD'.tr,
                         style: sublistTitleTextStyle.copyWith(
                           color: c.selectedKiriman == 2 ? whiteColor : greyColor,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  c.selectedKiriman = 3;
+                  c.transType = 'COD ONGKIR';
+                  c.update();
+                  c.pagingController.refresh();
+                },
+                child: Container(
+                  width: Get.width / 5,
+                  margin: const EdgeInsets.symmetric(vertical: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  decoration: BoxDecoration(
+                    color: c.selectedKiriman == 3 ? blueJNE : whiteColor,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    ),
+                    border: Border.all(color: greyDarkColor1),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        c.codOngkir.toString(),
+                        style: listTitleTextStyle.copyWith(
+                          color: c.selectedKiriman == 3 ? whiteColor : blueJNE,
+                        ),
+                      ),
+                      Text(
+                        'COD ONGKIR'.tr,
+                        style: sublistTitleTextStyle.copyWith(
+                          color: c.selectedKiriman == 3 ? whiteColor : greyColor,
                         ),
                       ),
                     ],

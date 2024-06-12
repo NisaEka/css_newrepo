@@ -21,6 +21,8 @@ class EditProfileController extends BaseController {
   bool isCcrf = false;
   GetDestinationModel? destinationModel;
   Destination? selectedCity;
+  BasicProfilModel? basicProfil;
+  CcrfProfilModel? ccrfProfil;
 
   @override
   void onInit() {
@@ -31,29 +33,26 @@ class EditProfileController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     try {
+      await profil.getBasicProfil().then((value) => basicProfil = value.payload);
+      update();
+
       await profil.getCcrfProfil().then((value) {
-        isCcrf = value.payload != null;
-        brand.text = value.payload?.generalInfo?.brand ?? '';
-        name.text = value.payload?.generalInfo?.name ?? '';
-        address.text = value.payload?.generalInfo?.address ?? '';
-        city.text = '${value.payload?.generalInfo?.city}; '
-            '${value.payload?.generalInfo?.district}; '
-            '${value.payload?.generalInfo?.subDistrict}; '
-            '${value.payload?.generalInfo?.zipCode}';
-        selectedCity = Destination(
-          cityName: value.payload?.generalInfo?.city,
-          countryName: value.payload?.generalInfo?.country,
-          districtName: value.payload?.generalInfo?.district,
-          subDistrictName: value.payload?.generalInfo?.subDistrict,
-          zipCode: value.payload?.generalInfo?.zipCode,
-          provinceName: value.payload?.generalInfo?.province,
-        );
-        ktp.text = value.payload?.generalInfo?.idCardNumber ?? '';
-        phone.text = value.payload?.generalInfo?.phone ?? '';
-        whatsapp.text = value.payload?.generalInfo?.secondaryPhone ?? '';
-        email.text = value.payload?.generalInfo?.email ?? '';
-        update();
+        if (value.payload != null) {
+          ccrfProfil = value.payload;
+          isCcrf = value.payload != null;
+        } else {
+          ccrfProfil ??= CcrfProfilModel(
+            generalInfo: GeneralInfo(
+              name: basicProfil?.name,
+              brand: basicProfil?.brand,
+              address: basicProfil?.address,
+              email: basicProfil?.email,
+              phone: basicProfil?.phone,
+            ),
+          );
+        }
       });
+      update();
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -67,7 +66,26 @@ class EditProfileController extends BaseController {
       email.text = basic.email ?? '';
       update();
     }
-
+    brand.text = ccrfProfil?.generalInfo?.brand ?? '';
+    name.text = ccrfProfil?.generalInfo?.name ?? '';
+    address.text = ccrfProfil?.generalInfo?.address ?? '';
+    city.text = '${ccrfProfil?.generalInfo?.city}; '
+        '${ccrfProfil?.generalInfo?.district}; '
+        '${ccrfProfil?.generalInfo?.subDistrict}; '
+        '${ccrfProfil?.generalInfo?.zipCode}';
+    selectedCity = Destination(
+      cityName: ccrfProfil?.generalInfo?.city,
+      countryName: ccrfProfil?.generalInfo?.country,
+      districtName: ccrfProfil?.generalInfo?.district,
+      subDistrictName: ccrfProfil?.generalInfo?.subDistrict,
+      zipCode: ccrfProfil?.generalInfo?.zipCode,
+      provinceName: ccrfProfil?.generalInfo?.province,
+    );
+    ktp.text = ccrfProfil?.generalInfo?.idCardNumber ?? '';
+    phone.text = ccrfProfil?.generalInfo?.phone ?? '';
+    whatsapp.text = ccrfProfil?.generalInfo?.secondaryPhone ?? '';
+    email.text = ccrfProfil?.generalInfo?.email ?? '';
+    update();
     isLoading = false;
     update();
   }

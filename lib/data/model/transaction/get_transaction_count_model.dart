@@ -2,7 +2,7 @@ class GetTransactionCountModel {
   GetTransactionCountModel({
     num? code,
     String? message,
-    Payload? payload,
+    TransactionCount? payload,
   }) {
     _code = code;
     _message = message;
@@ -12,17 +12,17 @@ class GetTransactionCountModel {
   GetTransactionCountModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
-    _payload = json['payload'] != null ? Payload.fromJson(json['payload']) : null;
+    _payload = json['payload'] != null ? TransactionCount.fromJson(json['payload']) : null;
   }
 
   num? _code;
   String? _message;
-  Payload? _payload;
+  TransactionCount? _payload;
 
   GetTransactionCountModel copyWith({
     num? code,
     String? message,
-    Payload? payload,
+    TransactionCount? payload,
   }) =>
       GetTransactionCountModel(
         code: code ?? _code,
@@ -34,7 +34,7 @@ class GetTransactionCountModel {
 
   String? get message => _message;
 
-  Payload? get payload => _payload;
+  TransactionCount? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -47,36 +47,42 @@ class GetTransactionCountModel {
   }
 }
 
-class Payload {
-  Payload({
+class TransactionCount {
+  TransactionCount({
     num? total,
     num? cod,
     num? nonCod,
+    num? codOngkir,
   }) {
     _total = total;
     _cod = cod;
     _nonCod = nonCod;
+    _codOngkir = codOngkir;
   }
 
-  Payload.fromJson(dynamic json) {
+  TransactionCount.fromJson(dynamic json) {
     _total = json['total'];
     _cod = json['cod'];
     _nonCod = json['non_cod'];
+    _codOngkir = json['cod_ongkir'];
   }
 
   num? _total;
   num? _cod;
   num? _nonCod;
+  num? _codOngkir;
 
-  Payload copyWith({
+  TransactionCount copyWith({
     num? total,
     num? cod,
     num? nonCod,
+    num? codOngkir,
   }) =>
-      Payload(
+      TransactionCount(
         total: total ?? _total,
         cod: cod ?? _cod,
         nonCod: nonCod ?? _nonCod,
+        codOngkir: codOngkir ?? _codOngkir,
       );
 
   num? get total => _total;
@@ -85,11 +91,14 @@ class Payload {
 
   num? get nonCod => _nonCod;
 
+  num? get codOngkir => _codOngkir;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['total'] = _total;
     map['cod'] = _cod;
     map['non_cod'] = _nonCod;
+    map['cod_ongkir'] = _codOngkir;
     return map;
   }
 }
