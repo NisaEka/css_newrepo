@@ -77,18 +77,9 @@ class FacilityFormReturnController extends BaseController {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
-      pickedImage = File(image.path);
+      pickedImageUrl = image.path;
+      pickedImage = File(pickedImageUrl!);
       update();
-      sendImageToServer();
-    }
-  }
-
-  sendImageToServer() async {
-    if (pickedImage != null) {
-      storageRepository.postStorage(pickedImage!)
-          .then((storage) {
-        pickedImageUrl = storage.payload?.fileAbsolutePath;
-      });
     }
   }
 

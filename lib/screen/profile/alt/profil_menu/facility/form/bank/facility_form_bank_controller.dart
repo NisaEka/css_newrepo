@@ -4,11 +4,12 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/bank/bank_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_bank_info_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
+import 'package:css_mobile/data/model/storage/ccrf_file_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 
 class FacilityFormBankController extends BaseController {
@@ -63,18 +64,9 @@ class FacilityFormBankController extends BaseController {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
+      pickedImageUrl = image.path;
       pickedImage = File(image.path);
       update();
-      sendImageToServer();
-    }
-  }
-
-  sendImageToServer() async {
-    if (pickedImage != null) {
-      storageRepository.postStorage(pickedImage!)
-          .then((storage) {
-        pickedImageUrl = storage.payload?.fileAbsolutePath;
-      });
     }
   }
 
@@ -100,10 +92,35 @@ class FacilityFormBankController extends BaseController {
     facilityCreateArgs.setBankInfo(bankInfo);
   }
 
+  CcrfFileModel? ktpUrl;
+  CcrfFileModel? npwpUrl;
+  CcrfFileModel? rekeningUrl;
+
+  _uploadFiles() async {
+    File idFile = File(facilityCreateArgs.getIdCardPath());
+    File npwpFile = File(facilityCreateArgs.getTaxInfoPath());
+    var fileMap = {
+      "KTP": MultipartFile.fromFileSync(idFile.path),
+      "NPWP": MultipartFile.fromFileSync(npwpFile.path),
+      "REKENING": MultipartFile.fromFileSync(pickedImage?.path ?? '')
+    };
+    var response = await storageRepository.postCcrfFile(fileMap);
+    if (response.code == HttpStatus.ok) {
+      ktpUrl = response.payload?.firstWhere((element) => element.fileType == "KTP");
+      npwpUrl = response.payload?.firstWhere((element) => element.fileType == "NPWP");
+      rekeningUrl = response.payload?.firstWhere((element) => element.fileType == "REKENING");
+
+      facilityCreateArgs.setIdCardPath(ktpUrl?.fileUrl ?? '');
+      facilityCreateArgs.setTaxInfoPath(npwpUrl?.fileUrl ?? '');
+      facilityCreateArgs.setBankInfoPath(rekeningUrl?.fileUrl ?? '');
+    }
+  }
+
   submitData() async {
     _showLoadingIndicator = true;
     update();
     _composeData();
+    await _uploadFiles();
     profil.createProfileCcrf(facilityCreateArgs).then((response) {
       if (response.code == HttpStatus.created) {
         Get.to(
