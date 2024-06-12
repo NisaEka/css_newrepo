@@ -42,6 +42,14 @@ class FacilityCreateModel {
     _idCard = idCard;
   }
 
+  String getIdCardPath() {
+    return _idCard?.imageUrl ?? '';
+  }
+
+  setIdCardPath(String path) {
+    _idCard?.setImageUrl(path);
+  }
+
   setAddress(FacilityCreateAddressModel address) {
     _address = address;
   }
@@ -54,8 +62,20 @@ class FacilityCreateModel {
     _taxInfo = taxInfo;
   }
 
+  String getTaxInfoPath() {
+    return _taxInfo?.imageUrl ?? '';
+  }
+
+  setTaxInfoPath(String path) {
+    _taxInfo?.setImageUrl(path);
+  }
+
   setBankInfo(FacilityCreateBankInfoModel bankInfo) {
     _bankInfo = bankInfo;
+  }
+
+  setBankInfoPath(String path) {
+    _bankInfo?.setAccountImageUrl(path);
   }
 
   Map<String, dynamic> toJson() {
