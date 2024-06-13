@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_controller.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -25,11 +26,12 @@ class EditProfilScreen extends StatelessWidget {
               title: "Edit Profil".tr,
               backgroundColor: Colors.transparent,
             ),
-            body: controller.isLoading
-                ? const LoadingDialog(
-                    background: Colors.transparent,
-                  )
-                : _bodyContent(controller, context),
+            body: Stack(
+              children: [
+                _bodyContent(controller, context),
+                controller.isLoading ? const LoadingDialog() : const SizedBox(),
+              ],
+            ),
           );
         });
   }
@@ -63,37 +65,72 @@ class EditProfilScreen extends StatelessWidget {
               hintText: "Alamat Lengkap".tr,
               validator: ValidationBuilder().address().build(),
             ),
-            c.isCcrf
-                ? CustomSearchDropdownField<Destination>(
-                    asyncItems: (String filter) => c.getDestinationList(filter),
+            !c.isCcrf
+                ? CustomSearchDropdownField<Origin>(
+                    asyncItems: (String filter) => c.getOriginList(filter),
                     itemBuilder: (context, e, b) {
-                      return GestureDetector(
-                        onTap: () => c.update(),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                          child: Text(
-                            '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
-                          ),
+                      return Container(
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        child: Text(
+                          e.originName.toString(),
                         ),
                       );
                     },
-                    itemAsString: (Destination e) => '${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.zipCode}',
-                    onChanged: (value) {
-                      c.selectedCity = value;
-                      c.update();
-                    },
-                    value: c.selectedCity,
-                    isRequired: c.selectedCity == null ? true : false,
+                    itemAsString: (Origin e) => e.originName.toString(),
+                    onChanged: (value) => c.selectOrigin(value),
+                    value: c.selectedOrigin,
+                    // selectedItem: c.kotaPengirim.text,
+                    hintText: c.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
+                    searchHintText: 'Masukan Kota Pengiriman'.tr,
+                    textStyle: c.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
+                    isRequired: true,
                     readOnly: false,
-                    hintText: c.isLoading ? "Loading..." : "Kota/Kecamatan/Kelurahan/Kode Pos".tr,
-                    // prefixIcon: const Icon(Icons.location_city),
-                    textStyle: c.selectedCity != null ? subTitleTextStyle : hintTextStyle,
                   )
                 : const SizedBox(),
+            CustomSearchDropdownField<Destination>(
+              asyncItems: (String filter) => c.getDestinationList(filter),
+              itemBuilder: (context, e, b) {
+                return GestureDetector(
+                  onTap: () => c.update(),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    child: Text(
+                      '${e.zipCode ?? ''}; '
+                      '${e.provinceName ?? ''}; '
+                      '${e.cityName ?? ''}; '
+                      '${e.districtName ?? ''}; '
+                      '${e.subDistrictName ?? ''}; '
+                      '${e.destinationCode ?? ''}; ',
+                    ),
+                  ),
+                );
+              },
+              selectedItem: c.ccrfProfil?.generalInfo?.zipCode,
+              itemAsString: (Destination e) => c.isCcrf
+                  ? '${e.cityName ?? ''}; '
+                      '${e.districtName ?? ''}; '
+                      '${e.subDistrictName ?? ''}; '
+                      '${e.zipCode ?? ''}'
+                  : e.zipCode.toString(),
+              onChanged: (value) {
+                c.selectedCity = value;
+                c.update();
+              },
+              value: c.selectedCity,
+              isRequired: c.selectedCity == null ? true : false,
+              readOnly: false,
+              hintText: c.isLoading
+                  ? "Loading..."
+                  : c.isCcrf
+                      ? "Kota/Kecamatan/Kelurahan/Kode Pos".tr
+                      : "Kode Pos".tr,
+              // prefixIcon: const Icon(Icons.location_city),
+              textStyle: c.selectedCity != null ? subTitleTextStyle : hintTextStyle,
+            ),
             CustomTextFormField(
               controller: c.phone,
               hintText: "Nomor Telepon".tr,
-              readOnly: true,
+              readOnly: c.isCcrf,
               validator: ValidationBuilder().phoneNumber().build(),
             ),
             c.isCcrf
@@ -111,7 +148,7 @@ class EditProfilScreen extends StatelessWidget {
             CustomFilledButton(
               color: blueJNE,
               title: "Edit Profil".tr,
-              onPressed: () => c.updateData(),
+              onPressed: () => c.isCcrf ? c.updateData() : c.updateBasic(),
             )
           ],
         ),

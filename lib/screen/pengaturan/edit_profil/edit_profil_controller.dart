@@ -2,6 +2,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -19,8 +20,10 @@ class EditProfileController extends BaseController {
 
   bool isLoading = false;
   bool isCcrf = false;
+  bool isLoadOrigin = false;
   GetDestinationModel? destinationModel;
   Destination? selectedCity;
+  Origin? selectedOrigin;
   BasicProfilModel? basicProfil;
   CcrfProfilModel? ccrfProfil;
 
@@ -43,13 +46,15 @@ class EditProfileController extends BaseController {
         } else {
           ccrfProfil ??= CcrfProfilModel(
             generalInfo: GeneralInfo(
-              name: basicProfil?.name,
-              brand: basicProfil?.brand,
-              address: basicProfil?.address,
+              name: basicProfil?.name?.toUpperCase(),
+              brand: basicProfil?.brand?.toUpperCase(),
+              address: basicProfil?.address?.toUpperCase(),
               email: basicProfil?.email,
               phone: basicProfil?.phone,
+              zipCode: basicProfil?.zipCode,
             ),
           );
+          selectedOrigin = basicProfil?.origin;
         }
       });
       update();
@@ -105,7 +110,45 @@ class EditProfileController extends BaseController {
     return destinationModel?.payload?.toList() ?? [];
   }
 
+  Future<List<Origin>> getOriginList(String keyword) async {
+    isLoadOrigin = true;
+    var response = await ongkir.postOrigin(keyword);
+    var models = response.payload?.toList();
+
+    isLoadOrigin = false;
+    update();
+    return models ?? [];
+  }
+
+  Future<void> updateBasic() async {
+    isLoading = true;
+    update();
+    try {
+      await profil
+          .putProfileBasic(
+            BasicProfilModel(
+              name: name.text,
+              brand: brand.text,
+              phone: phone.text,
+              address: address.text,
+              origin: selectedOrigin,
+              zipCode: selectedCity?.zipCode,
+            ),
+          )
+          .then(
+            (value) => Get.offAndToNamed("/profileGeneral"),
+          );
+    } catch (e) {
+      e.printError();
+    }
+
+    isLoading = false;
+    update();
+  }
+
   Future<void> updateData() async {
+    isLoading = true;
+    update();
     try {
       await profil
           .putProfileCCRF(GeneralInfo(
@@ -124,6 +167,16 @@ class EditProfileController extends BaseController {
           );
     } catch (e) {
       e.printError();
+    }
+
+    isLoading = false;
+    update();
+  }
+
+  selectOrigin(value) {
+    {
+      selectedOrigin = value;
+      update();
     }
   }
 }

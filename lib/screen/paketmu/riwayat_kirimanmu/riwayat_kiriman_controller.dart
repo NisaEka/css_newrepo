@@ -180,6 +180,7 @@ class RiwayatKirimanController extends BaseController {
     pagingController.refresh();
     update();
     Get.back();
+    transactionCount();
   }
 
   void selectAll(bool value) {
@@ -263,5 +264,19 @@ class RiwayatKirimanController extends BaseController {
   void dispose() {
     super.dispose();
     pagingController.dispose();
+  }
+
+  applyFilter() {
+    if (startDate != null || endDate != null || selectedPetugasEntry != null || selectedStatusKiriman != null) {
+      isFiltered = true;
+      if (startDate != null && endDate != null) {
+        transDate = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+      }
+      update();
+      transactionCount();
+      pagingController.refresh();
+      update();
+      Get.back();
+    }
   }
 }

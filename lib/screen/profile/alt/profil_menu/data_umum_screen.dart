@@ -55,15 +55,20 @@ class DataUmumScreen extends StatelessWidget {
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
                 DataUmumListItem(
-                  title: (c.ccrfProfil?.generalInfo?.address == null)
-                      ? "-"
-                      : "${c.ccrfProfil?.generalInfo?.address ?? '-'}"
-                          ",  ${c.ccrfProfil?.generalInfo?.subDistrict ?? '-'}"
-                          ", ${c.ccrfProfil?.generalInfo?.district ?? '-'}"
-                          ", ${c.ccrfProfil?.generalInfo?.city ?? '-'}"
-                          ", ${c.ccrfProfil?.generalInfo?.province ?? '-'}"
-                          ", ${c.ccrfProfil?.generalInfo?.zipCode ?? '-'}",
-                  // subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
+                  title: "${c.ccrfProfil?.generalInfo?.address ?? '-'}"
+                      "${(c.ccrfProfil?.generalInfo?.subDistrict == null) ? ""
+                          ", ${c.basicProfil?.origin?.originName}" : ""
+                          ",  ${c.ccrfProfil?.generalInfo?.subDistrict ?? '-'}"}"
+                      "${(c.ccrfProfil?.generalInfo?.district == null) ? "" : ""
+                          ", ${c.ccrfProfil?.generalInfo?.district ?? '-'}"}"
+                      "${(c.ccrfProfil?.generalInfo?.city == null) ? "" : ""
+                          ", ${c.ccrfProfil?.generalInfo?.city ?? '-'}"}"
+                      "${(c.ccrfProfil?.generalInfo?.province == null) ? "" : ""
+                          ", ${c.ccrfProfil?.generalInfo?.province ?? '-'}"}"
+                      "${(c.ccrfProfil?.generalInfo?.zipCode == null) ? ""
+                          ", ${c.basicProfil?.zipCode}" : ""
+                          ", ${c.ccrfProfil?.generalInfo?.zipCode ?? '-'}"}",
+                  // subtitle: c.ccrfProfil?.generalInfo?.zipCode ?? '-',
                   icon: Icons.home,
                   tooltip: 'Alamat Lengkap'.tr,
                 ),

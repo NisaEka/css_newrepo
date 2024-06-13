@@ -139,6 +139,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 inputType: TextInputType.number,
                 validator: ValidationBuilder().minLength(15).maxLength(15).build(),
                 inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
                   LengthLimitingTextInputFormatter(15),
                   NpwpSeparatorInputFormatter(),
                 ],

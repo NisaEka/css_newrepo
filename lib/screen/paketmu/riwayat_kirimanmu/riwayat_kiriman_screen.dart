@@ -227,18 +227,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                                   : greyColor,
                               width: c.isFiltered ? Get.width / 2.5 : Get.width - 40,
                               title: 'Terapkan'.tr,
-                              onPressed: () {
-                                if (c.startDate != null || c.endDate != null || c.selectedPetugasEntry != null || c.selectedStatusKiriman != null) {
-                                  c.isFiltered = true;
-                                  if (c.startDate != null && c.endDate != null) {
-                                    c.transDate = "${c.startDate?.millisecondsSinceEpoch ?? ''}-${c.endDate?.millisecondsSinceEpoch ?? ''}";
-                                  }
-                                  c.update();
-                                  c.pagingController.refresh();
-                                  c.transactionCount();
-                                  Get.back();
-                                }
-                              },
+                              onPressed: () => c.applyFilter(),
                             ),
                           ],
                         )

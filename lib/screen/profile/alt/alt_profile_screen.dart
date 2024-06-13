@@ -90,6 +90,11 @@ class AltProfileScreen extends StatelessWidget {
           Column(
             children: [
               SettingListItem(
+                title: 'Edit Profil'.tr,
+                icon: Icons.person,
+                onTap: () => Get.to(const EditProfilScreen()),
+              ),
+              SettingListItem(
                 title: 'Fasilitasku'.tr,
                 icon: Icons.format_list_numbered_rounded,
                 onTap: () => Get.to(const FacilityScreen()),
@@ -119,11 +124,7 @@ class AltProfileScreen extends StatelessWidget {
                 icon: Icons.file_present_rounded,
                 onTap: () => c.isCcrfAction(const DokumenScreen(), context),
               ),
-              SettingListItem(
-                title: 'Edit Profil'.tr,
-                icon: Icons.person,
-                onTap: () => Get.to(const EditProfilScreen()),
-              )
+
             ],
           ),
           // : const SizedBox(),

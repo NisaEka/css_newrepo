@@ -1,3 +1,5 @@
+import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+
 class GetBasicProfilModel {
   GetBasicProfilModel({
     num? code,
@@ -58,6 +60,8 @@ class BasicProfilModel {
     String? email,
     String? userType,
     String? emailRecovery,
+    Origin? origin,
+    String? zipCode,
   }) {
     _id = id;
     _name = name;
@@ -68,6 +72,8 @@ class BasicProfilModel {
     _email = email;
     _userType = userType;
     _emailRecovery = emailRecovery;
+    _origin = origin;
+    _zipCode = zipCode;
   }
 
   BasicProfilModel.fromJson(dynamic json) {
@@ -80,6 +86,8 @@ class BasicProfilModel {
     _email = json['email'];
     _userType = json['user_type'];
     _emailRecovery = json['email_recovery'];
+    _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
+    _zipCode = json['zip_code'];
   }
 
   String? _id;
@@ -91,6 +99,8 @@ class BasicProfilModel {
   String? _email;
   String? _userType;
   String? _emailRecovery;
+  Origin? _origin;
+  String? _zipCode;
 
   BasicProfilModel copyWith({
     String? id,
@@ -102,6 +112,8 @@ class BasicProfilModel {
     String? email,
     String? userType,
     String? emailRecovery,
+    Origin? origin,
+    String? zipCode,
   }) =>
       BasicProfilModel(
         id: id ?? _id,
@@ -113,6 +125,8 @@ class BasicProfilModel {
         email: email ?? _email,
         userType: userType ?? _userType,
         emailRecovery: emailRecovery ?? _emailRecovery,
+        origin: origin ?? _origin,
+        zipCode: zipCode ?? _zipCode,
       );
 
   String? get id => _id;
@@ -133,6 +147,10 @@ class BasicProfilModel {
 
   String? get emailRecovery => _emailRecovery;
 
+  Origin? get origin => _origin;
+
+  String? get zipCode => _zipCode;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
@@ -144,6 +162,10 @@ class BasicProfilModel {
     map['email'] = _email;
     map['user_type'] = _userType;
     map['email_recovery'] = _emailRecovery;
+    if (_origin != null) {
+      map['origin'] = _origin?.toJson();
+    }
+    map['zip_code'] = _zipCode;
     return map;
   }
 }

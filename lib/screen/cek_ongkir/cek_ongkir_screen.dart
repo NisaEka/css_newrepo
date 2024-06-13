@@ -168,6 +168,7 @@ class CekOngkirScreen extends StatelessWidget {
                             title: 'Rp',
                             isPrefix: true,
                           ),
+                          inputType: TextInputType.number,
                           contentPadding: const EdgeInsets.only(left: 40),
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,

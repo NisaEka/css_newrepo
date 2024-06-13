@@ -97,4 +97,26 @@ class ProfilRepositoryImpl extends ProfilRepository {
       return GetCcrfActivityModel.fromJson(e.response?.data);
     }
   }
+
+  @override
+  Future putProfileBasic(BasicProfilModel data) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.put(
+        "/profile",
+        data: {
+          "brand": data.brand,
+          "name": data.name,
+          "phone": data.phone,
+          "address": data.address,
+          "origin_code": data.origin?.originCode,
+          "zip_code": data.zipCode
+        },
+      );
+      return PostTransactionModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return e.response?.data;
+    }
+  }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class NpwpSeparatorInputFormatter extends TextInputFormatter {
   static const separator = '.';
+  static const separatorr = '-';
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -13,8 +15,7 @@ class NpwpSeparatorInputFormatter extends TextInputFormatter {
     // Handle "deletion" of separator character
     String oldValueText = oldValue.text.replaceAll(separator, '');
     String newValueText = newValue.text.replaceAll(separator, '');
-
-    if (oldValue.text.endsWith(separator) && oldValue.text.length == newValue.text.length + 1) {
+    if ((oldValue.text.endsWith(separator) || oldValue.text.endsWith(separatorr)) && oldValue.text.length == newValue.text.length + 1) {
       newValueText = newValueText.substring(0, newValueText.length - 1);
     }
 
@@ -27,9 +28,15 @@ class NpwpSeparatorInputFormatter extends TextInputFormatter {
       for (int i = chars.length - 1; i >= 0; i--) {
         if (i == 1 || i == 4 || i == 7 || i == 11) {
           newString = separator + newString;
-        } else if (i == 8 ) {
-          newString = "-" + newString;
-        } else if(i>=9){
+          if (newString.endsWith('.')) {
+            newString = newString.replaceAll('.', '');
+          }
+        } else if (i == 8) {
+          newString = separatorr + newString;
+          if (newString.endsWith('-')) {
+            newString = newString.replaceAll('-', '');
+          }
+        } else if (i >= 9) {
           newString = newString;
         }
         newString = chars[i] + newString;

@@ -18,4 +18,6 @@ abstract class ProfilRepository {
   Future<DefaultResponseModel<String>> createProfileCcrfExisting(FacilityCreateExistingModel data);
 
   Future<GetCcrfActivityModel> getCcrfActivity();
+
+  Future putProfileBasic(BasicProfilModel data);
 }

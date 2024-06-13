@@ -306,6 +306,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
+    print("transStatus${transStatus}");
     try {
       Response response = await network.dio.get(
         "/transaction/count",
