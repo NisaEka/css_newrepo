@@ -8,6 +8,7 @@ import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pinput/pinput.dart';
 
 class FacilityFormInfoController extends BaseController {
 
@@ -38,6 +39,26 @@ class FacilityFormInfoController extends BaseController {
 
   List<Destination> destinationList = [];
   Destination? selectedDestination;
+
+  @override
+  void onInit() {
+    super.onInit();
+    Future.wait([
+      _getUserProfile()
+    ]);
+  }
+
+  Future<void> _getUserProfile() async {
+    await profil.getBasicProfil().then((result) {
+      if (result.code == HttpStatus.ok) {
+        var payload = result.payload;
+        brand.setText(payload?.brand ?? '');
+        fullName.setText(payload?.name ?? '');
+        whatsAppPhone.setText(payload?.phone ?? '');
+        email.setText(payload?.email ?? '');
+      }
+    });
+  }
 
   pickImage() async {
     final ImagePicker picker = ImagePicker();
