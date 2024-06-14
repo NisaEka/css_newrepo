@@ -71,7 +71,7 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                       bottomLeft: Radius.circular(20),
                     )),
                 child: Text(
-                  widget.data.delivery?.flatRate == 0 ? 'Draft' : 'Ready to Upload',
+                  widget.data.delivery?.freightCharge == 0 ? 'Draft' : 'Ready to Upload',
                   style: listTitleTextStyle.copyWith(color: whiteColor),
                 ),
               ),

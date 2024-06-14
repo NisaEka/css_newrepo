@@ -132,6 +132,7 @@ class EditProfilScreen extends StatelessWidget {
               hintText: "Nomor Telepon".tr,
               readOnly: c.isCcrf,
               validator: ValidationBuilder().phoneNumber().build(),
+              inputType: TextInputType.number,
             ),
             c.isCcrf
                 ? CustomTextFormField(

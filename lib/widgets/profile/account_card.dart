@@ -46,7 +46,7 @@ class AccountCard extends StatelessWidget {
                 Text(account.accountNumber ?? '', style: listTitleTextStyle.copyWith(color: blueJNE)),
                 SizedBox(
                     width: Get.width / 2,
-                    child: Text("${account.accountName ?? ''} / ${account.accountType ?? account.accountService}",
+                    child: Text("${account.accountName?.toUpperCase() ?? ''} / ${account.accountType?.toUpperCase() ?? account.accountService?.toUpperCase()}",
                         style: listTitleTextStyle.copyWith(color: blueJNE))),
                 Row(
                   children: [

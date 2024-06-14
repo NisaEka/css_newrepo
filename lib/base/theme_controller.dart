@@ -25,7 +25,7 @@ class CustomTheme {
       appBarTheme: AppBarTheme(
         backgroundColor: whiteColor,
         elevation: 0,
-        titleTextStyle: appTitleTextStyle,
+        titleTextStyle: appTitleTextStyle.copyWith(color: greyDarkColor1),
         iconTheme: const IconThemeData(color: whiteColor),
       ),
       textTheme: TextTheme(

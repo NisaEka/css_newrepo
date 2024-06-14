@@ -73,7 +73,7 @@ class _AccountListItemState extends State<AccountListItem> {
                   ],
                 ),
                 Text(
-                  "${widget.data?.accountName ?? ''} / ${widget.data?.accountType ?? widget.data?.accountService}",
+                  "${widget.data?.accountName?.toUpperCase() ?? ''} / ${widget.data?.accountType ?? widget.data?.accountService}",
                   // widget.data?.accountName ?? widget.accountName ?? '',
                   style: sublistTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2),
                 ),

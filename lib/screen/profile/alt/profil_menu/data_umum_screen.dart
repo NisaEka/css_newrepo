@@ -49,8 +49,8 @@ class DataUmumScreen extends StatelessWidget {
                   tooltip: '${'Nama Lengkap'.tr}\n${'Nomor Identitas / KTP'.tr}',
                 ),
                 DataUmumListItem(
-                  title: c.ccrfProfil?.generalInfo?.secondaryPhone ?? c.ccrfProfil?.generalInfo?.phone ?? '-',
-                  subtitle: c.ccrfProfil?.generalInfo?.phone ?? '-',
+                  title: c.ccrfProfil?.generalInfo?.phone ?? c.ccrfProfil?.generalInfo?.secondaryPhone ?? '-',
+                  subtitle: c.ccrfProfil?.generalInfo?.secondaryPhone ?? '-',
                   icon: Icons.phone,
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),

@@ -94,11 +94,13 @@ class AltProfileScreen extends StatelessWidget {
                 icon: Icons.person,
                 onTap: () => Get.to(const EditProfilScreen()),
               ),
-              SettingListItem(
-                title: 'Fasilitasku'.tr,
-                icon: Icons.format_list_numbered_rounded,
-                onTap: () => Get.to(const FacilityScreen()),
-              ),
+              c.allow.fasilitas == 'Y'
+                  ? SettingListItem(
+                      title: 'Fasilitasku'.tr,
+                      icon: Icons.format_list_numbered_rounded,
+                      onTap: () => Get.to(const FacilityScreen()),
+                    )
+                  : SizedBox(),
               SettingListItem(
                 title: 'Lihat Akun'.tr,
                 icon: Icons.account_tree_rounded,
@@ -124,7 +126,6 @@ class AltProfileScreen extends StatelessWidget {
                 icon: Icons.file_present_rounded,
                 onTap: () => c.isCcrfAction(const DokumenScreen(), context),
               ),
-
             ],
           ),
           // : const SizedBox(),

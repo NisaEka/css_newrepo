@@ -161,8 +161,13 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                             ),
                           );
                         },
-                        itemAsString: (Destination e) =>
-                            '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
+                        itemAsString: (Destination e) => ''
+                            '${e.zipCode == null ? '' : '${e.zipCode}; '}'
+                            '${e.provinceName == null ? '' : '${e.provinceName}; '}'
+                            '${e.cityName == null ? '' : '${e.cityName}; '}'
+                            '${e.districtName == null ? '' : '${e.districtName}; '}'
+                            '${e.subDistrictName == null ? '' : '${e.subDistrictName}; '}'
+                            '${e.destinationCode == null ? '' : '${e.destinationCode}'}',
                         onChanged: (value) {
                           c.selectedDestination = value;
                           c.update();
