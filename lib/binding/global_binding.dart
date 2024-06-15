@@ -18,6 +18,8 @@ import 'package:css_mobile/data/repository/pengaturan/pengaturan_impl.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/data/repository/profil/profil_impl.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
+import 'package:css_mobile/data/repository/request_pickup/request_pickup_impl.dart';
+import 'package:css_mobile/data/repository/request_pickup/request_pickup_repository.dart';
 import 'package:css_mobile/data/repository/storage/storage_impl.dart';
 import 'package:css_mobile/data/repository/storage/storage_repository.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_impl.dart';
@@ -42,5 +44,6 @@ class GlobalBinding extends Bindings {
     Get.put<BankRepository>(BankImpl(), permanent: true);
     Get.put<StorageRepository>(StorageImpl(), permanent: true);
     Get.put<AggregasiRepository>(AggregasiRepositoryImpl(), permanent: true);
+    Get.put<RequestPickupRepository>(RequestPickupImpl(), permanent: true);
   }
 }

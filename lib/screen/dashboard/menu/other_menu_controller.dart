@@ -84,6 +84,14 @@ class OtherMenuCotroller extends BaseController {
         isEdit: isEdit,
         route: "/lacakKiriman",
       ),
+      Items(
+        title: "Request Pickup",
+        icon: ImageConstant.paketmuIcon,
+        isAuth: true,
+        isFavorite: favoritList.where((e) => e.title == "Request Pickup").isNotEmpty,
+        isEdit: isEdit,
+        route: "/requestPickup"
+      ),
     ];
 
     keuanganmuList = [

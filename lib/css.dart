@@ -9,6 +9,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/infor
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_screen.dart';
+import 'package:css_mobile/screen/request_pickup/request_pickup_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,6 +63,7 @@ class App extends StatelessWidget {
         GetPage(name: "/aggregasiMinus", page: () => const AggregationMinusScreen()),
         GetPage(name: "/uangCODKamu", page: () => const UangCODScreen()),
         GetPage(name: "/profileGeneral", page: () => const DataUmumScreen()),
+        GetPage(name: "/requestPickup", page: () => const RequestPickupScreen())
       ],
       // home: const LoginScreen(),
       home: const DashboardScreen(),
