@@ -19,9 +19,8 @@ class OtherMenuCotroller extends BaseController {
   List<Items> otherList = [];
 
   MenuItemModel? menuData;
-  AllowedMenu allowedMenu = AllowedMenu();
-
-  bool isLogin = false;
+  AllowedMenu allow = Get.arguments['allowance'];
+  bool isLogin = Get.arguments['isLogin'];
   bool isEdit = false;
 
   @override
@@ -45,7 +44,7 @@ class OtherMenuCotroller extends BaseController {
       favoritList.addAll(menu.items ?? []);
       update();
 
-      allowedMenu = await AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+      allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
       update();
     } catch (e) {
       e.printError();
@@ -125,7 +124,42 @@ class OtherMenuCotroller extends BaseController {
     ];
 
     update();
-    removeMenu(allowedMenu);
+    cekAllowance();
+  }
+
+  void cekAllowance() {
+    if (isLogin && allow.buatPesanan != "Y") {
+      paketmuList.removeWhere((e) => e.title == "Input Kirimanmu");
+      favoritList.removeWhere((e) => e.title == "Input Kirimanmu");
+    }
+    if (isLogin && allow.riwayatPesanan != "Y") {
+      paketmuList.removeWhere((e) => e.title == "Riwayat Kiriman");
+      paketmuList.removeWhere((e) => e.title == "Draft Transaksi");
+      favoritList.removeWhere((e) => e.title == "Riwayat Kiriman");
+      favoritList.removeWhere((e) => e.title == "Draft Transaksi");
+    }
+    if (isLogin && allow.lacakPesanan != "Y") {
+      paketmuList.removeWhere((e) => e.title == "Lacak Kiriman");
+      favoritList.removeWhere((e) => e.title == "Lacak Kiriman");
+    }
+    if (isLogin && allow.uangCod != "Y") {
+      keuanganmuList.removeWhere((e) => e.title == "Uang_COD Kamu");
+      favoritList.removeWhere((e) => e.title == "Uang_COD Kamu");
+    }
+    if (isLogin && allow.monitoringAgg != "Y") {
+      keuanganmuList.removeWhere((e) => e.title == "Pembayaran Aggregasi");
+      favoritList.removeWhere((e) => e.title == "Pembayaran Aggregasi");
+    }
+    if (isLogin && allow.monitoringAggMinus != "Y") {
+      keuanganmuList.removeWhere((e) => e.title == "Aggregasi Minus");
+      favoritList.removeWhere((e) => e.title == "Aggregasi Minus");
+    }
+    if (isLogin && allow.cekOngkir != "Y") {
+      otherList.removeWhere((e) => e.title == "Cek Ongkir");
+      favoritList.removeWhere((e) => e.title == "Cek Ongkir");
+    }
+
+    update();
   }
 
   void removeMenu(AllowedMenu allow) {
@@ -215,14 +249,18 @@ class OtherMenuCotroller extends BaseController {
     } else {
       isEdit = false;
       update();
-      var data = '{"items" : ${jsonEncode(favoritList)}}';
-      menuData = MenuItemModel.fromJson(jsonDecode(data));
-      update();
-      await storage.saveData(StorageCore.favoriteMenu, menuData).then((value) {
-        initData();
-      });
+      updateStorage();
     }
     update();
+  }
+
+  void updateStorage() async {
+    var data = '{"items" : ${jsonEncode(favoritList)}}';
+    menuData = MenuItemModel.fromJson(jsonDecode(data));
+    update();
+    await storage.saveData(StorageCore.favoriteMenu, menuData).then((value) {
+      initData();
+    });
   }
 
   void routeToMenu(Items menuItem, BuildContext context) {

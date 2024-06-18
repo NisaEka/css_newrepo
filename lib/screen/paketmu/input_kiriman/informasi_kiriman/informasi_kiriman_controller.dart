@@ -369,9 +369,9 @@ class InformasiKirimaController extends BaseController {
       intruksiKhusus.text = dataEdit?.delivery?.specialInstruction ?? '';
       packingKayu = dataEdit?.delivery?.woodPackaging == "Y";
       beratKiriman.text = dataEdit?.goods?.weight.toString() ?? '';
-      var servicecode = serviceList.where((element) => element.serviceCode == dataEdit?.delivery?.serviceCode);
-      var servicrdisplay = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode);
-      selectedService = servicecode.isNotEmpty ? servicecode.first : servicrdisplay.first;
+      // ServiceModel servicecode = serviceList.where((element) => element.serviceCode == dataEdit?.delivery?.serviceCode).first;
+      ServiceModel servicrdisplay = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).first;
+      selectedService = servicrdisplay;
       update();
       getOngkir();
     }
@@ -502,7 +502,7 @@ class InformasiKirimaController extends BaseController {
         dataEdit?.awb ?? '',
       )
           .then((v) {
-        if (v.code == 400) {
+        if (v.code != 200) {
           Get.showSnackbar(
             GetSnackBar(
               icon: const Icon(

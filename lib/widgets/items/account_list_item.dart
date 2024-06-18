@@ -48,7 +48,7 @@ class _AccountListItemState extends State<AccountListItem> {
       child: Shimmer(
         isLoading: widget.isLoading,
         child: Container(
-            width: widget.width ?? Get.width / 2,
+            width: widget.width ?? Get.width / 1.5,
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(

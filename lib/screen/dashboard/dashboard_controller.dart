@@ -134,6 +134,31 @@ class DashboardController extends BaseController {
     update();
   }
 
+  void cekAllowance() {
+    if (isLogin && allow.buatPesanan != "Y" && isOnline) {
+      menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
+    }
+    if (isLogin && allow.riwayatPesanan != "Y" && isOnline) {
+      menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
+      menuItems.removeWhere((e) => e.title == "Draft Transaksi");
+    }
+    if (isLogin && allow.lacakPesanan != "Y" && isOnline) {
+      menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
+    }
+    if (isLogin && allow.uangCod != "Y" && isOnline) {
+      menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
+    }
+    if (isLogin && allow.monitoringAgg != "Y" && isOnline) {
+      menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
+    }
+    if (isLogin && allow.monitoringAggMinus != "Y" && isOnline) {
+      menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
+    }
+    if (isLogin && allow.cekOngkir != "Y" && isOnline) {
+      menuItems.removeWhere((e) => e.title == "Cek Ongkir");
+    }
+  }
+
   Future<void> cekLocalLanguage() async {
     String local = await storage.readString(StorageCore.localeApp);
     local.isEmpty.printInfo();
@@ -185,7 +210,7 @@ class DashboardController extends BaseController {
       });
       await transaction
           .getSender()
-            .then((value) async => await storage.saveData(
+          .then((value) async => await storage.saveData(
                 StorageCore.shipper,
                 value.payload,
               ))
@@ -216,6 +241,7 @@ class DashboardController extends BaseController {
           ));
 
       allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+      update();
 
       await profil.getCcrfProfil().then((value) async {
         ccrf = value;
@@ -233,28 +259,7 @@ class DashboardController extends BaseController {
 
     isLoading = false;
     update();
-    // if (isLogin && allow.buatPesanan != "Y" && isOnline) {
-    //   menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
-    // }
-    // if (isLogin && allow.riwayatPesanan != "Y" && isOnline) {
-    //   menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
-    //   menuItems.removeWhere((e) => e.title == "Draft Transaksi");
-    // }
-    // if (isLogin && allow.lacakPesanan != "Y" && isOnline) {
-    //   menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
-    // }
-    // if (isLogin && allow.uangCod != "Y" && isOnline) {
-    //   menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
-    // }
-    // if (isLogin && allow.monitoringAgg != "Y" && isOnline) {
-    //   menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
-    // }
-    // if (isLogin && allow.monitoringAggMinus != "Y" && isOnline) {
-    //   menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
-    // }
-    // if (isLogin && allow.cekOngkir != "Y" && isOnline) {
-    //   menuItems.removeWhere((e) => e.title == "Cek Ongkir");
-    // }
+    cekAllowance();
   }
 
   bool pop = false;

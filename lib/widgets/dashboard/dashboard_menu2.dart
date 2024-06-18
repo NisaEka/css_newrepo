@@ -9,12 +9,14 @@ class DashboardMenu2 extends StatelessWidget {
   final bool isLogin;
   final List<Items> menu;
   final VoidCallback? getOtherMenu;
+  final bool isLoading;
 
   const DashboardMenu2({
     super.key,
     required this.isLogin,
     required this.menu,
     this.getOtherMenu,
+    this.isLoading = true,
   });
 
   @override
@@ -23,35 +25,53 @@ class DashboardMenu2 extends StatelessWidget {
       height: 150,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: menu
-                  .map((e) => MenuItem(
-                        menuTitle: e.title?.tr ?? '',
-                        menuImg: e.icon,
-                        isActive: (e.isAuth ?? false) ? isLogin : true,
-                        onTap: () => (e.isAuth == true && !isLogin)
-                            ? showDialog(
-                                context: context,
-                                builder: (context) => const LoginAlertDialog(),
-                              )
-                            : Get.toNamed(e.route.toString(), arguments: {}),
-                      ))
-                  .toList(),
-            ),
-            MenuItem(
-              menuTitle: 'Lainnya'.tr,
-              onTap: getOtherMenu,
-              menuIcon: const Icon(
-                Icons.more_horiz,
-                color: whiteColor,
-                size: 40,
+        child: isLoading
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  5,
+                  (index) => const MenuItem(
+                    isLoading: true,
+                    menuIcon: Icon(
+                      Icons.more_horiz,
+                      size: 40,
+                    ),
+                  ),
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: menu
+                        .map((e) => MenuItem(
+                              menuTitle: e.title?.tr ?? '',
+                              menuImg: e.icon,
+                              isLoading: isLoading,
+                              isActive: (e.isAuth ?? false) ? isLogin : true,
+                              onTap: () => (e.isAuth == true && !isLogin)
+                                  ? showDialog(
+                                      context: context,
+                                      builder: (context) => const LoginAlertDialog(),
+                                    )
+                                  : !isLoading
+                                      ? Get.toNamed(e.route.toString(), arguments: {})
+                                      : null,
+                            ))
+                        .toList(),
+                  ),
+                  MenuItem(
+                    menuTitle: 'Lainnya'.tr,
+                    isLoading: isLoading,
+                    onTap: getOtherMenu,
+                    menuIcon: const Icon(
+                      Icons.more_horiz,
+                      color: whiteColor,
+                      size: 40,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

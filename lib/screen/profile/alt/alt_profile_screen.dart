@@ -13,7 +13,6 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_scre
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
 import 'package:flutter/material.dart';
@@ -89,43 +88,55 @@ class AltProfileScreen extends StatelessWidget {
           ),
           Column(
             children: [
-              SettingListItem(
-                title: 'Edit Profil'.tr,
-                icon: Icons.person,
-                onTap: () => Get.to(const EditProfilScreen()),
-              ),
+              c.allow.profil == "Y"
+                  ? SettingListItem(
+                      title: 'Edit Profil'.tr,
+                      icon: Icons.person,
+                      onTap: () => Get.to(const EditProfilScreen()),
+                    )
+                  : const SizedBox(),
               c.allow.fasilitas == 'Y'
                   ? SettingListItem(
                       title: 'Fasilitasku'.tr,
                       icon: Icons.format_list_numbered_rounded,
                       onTap: () => Get.to(const FacilityScreen()),
                     )
-                  : SizedBox(),
-              SettingListItem(
-                title: 'Lihat Akun'.tr,
-                icon: Icons.account_tree_rounded,
-                onTap: () => Get.to(const NoAkunScreen()),
-              ),
-              SettingListItem(
-                title: 'Data Umum'.tr,
-                icon: Icons.person_pin_outlined,
-                onTap: () => Get.to(const DataUmumScreen()),
-              ),
-              SettingListItem(
-                title: 'Alamat Pengembalian'.tr,
-                icon: Icons.cached_rounded,
-                onTap: () => c.isCcrfAction(const AlamatReturnScreen(), context),
-              ),
-              SettingListItem(
-                title: 'Data Rekening'.tr,
-                icon: Icons.credit_card_rounded,
-                onTap: () => c.isCcrfAction(const AkunBankScreen(), context),
-              ),
-              SettingListItem(
-                title: 'Dokumen'.tr,
-                icon: Icons.file_present_rounded,
-                onTap: () => c.isCcrfAction(const DokumenScreen(), context),
-              ),
+                  : const SizedBox(),
+              c.allow.profil == "Y"
+                  ? SettingListItem(
+                      title: 'Lihat Akun'.tr,
+                      icon: Icons.account_tree_rounded,
+                      onTap: () => Get.to(const NoAkunScreen()),
+                    )
+                  : const SizedBox(),
+              c.allow.profil == "Y"
+                  ? SettingListItem(
+                      title: 'Data Umum'.tr,
+                      icon: Icons.person_pin_outlined,
+                      onTap: () => Get.to(const DataUmumScreen()),
+                    )
+                  : const SizedBox(),
+              c.allow.profil == "Y"
+                  ? SettingListItem(
+                      title: 'Alamat Pengembalian'.tr,
+                      icon: Icons.cached_rounded,
+                      onTap: () => c.isCcrfAction(const AlamatReturnScreen(), context),
+                    )
+                  : const SizedBox(),
+              c.allow.profil == "Y"
+                  ? SettingListItem(
+                      title: 'Data Rekening'.tr,
+                      icon: Icons.credit_card_rounded,
+                      onTap: () => c.isCcrfAction(const AkunBankScreen(), context),
+                    )
+                  : const SizedBox(),
+              c.allow.profil == "Y"
+                  ? SettingListItem(
+                      title: 'Dokumen'.tr,
+                      icon: Icons.file_present_rounded,
+                      onTap: () => c.isCcrfAction(const DokumenScreen(), context),
+                    )
+                  : const SizedBox(),
             ],
           ),
           // : const SizedBox(),

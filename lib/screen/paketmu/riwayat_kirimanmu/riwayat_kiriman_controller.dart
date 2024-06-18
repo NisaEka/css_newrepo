@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,8 @@ class RiwayatKirimanController extends BaseController {
   List<String> listOfficerEntry = [];
   List<TransactionModel> selectedTransaction = [];
 
+  BasicProfilModel? basic;
+
   @override
   void onInit() {
     super.onInit();
@@ -44,6 +47,16 @@ class RiwayatKirimanController extends BaseController {
     });
     // categoryList();
     update();
+  }
+
+  void cekAllowance() {
+    if (basic?.userType != "PEMILIK") {
+      selectedPetugasEntry = basic?.name;
+      listOfficerEntry.add(basic?.name ?? '');
+    }
+    update();
+    pagingController.refresh();
+    transactionCount();
   }
 
   Future<void> transactionCount() async {
@@ -73,20 +86,26 @@ class RiwayatKirimanController extends BaseController {
     selectedTransaction = [];
     listStatusKiriman = [];
     try {
+      await profil.getBasicProfil().then((value) async => basic = value.payload);
+
       await transaction.getTransactionStatus().then((value) {
         listStatusKiriman.addAll(value.payload ?? []);
         update();
       });
 
-      await transaction.getTransOfficer().then((value) {
-        listOfficerEntry.addAll(value.payload ?? []);
-        update();
-      });
+      if (basic?.userType == "PEMILIK") {
+        await transaction.getTransOfficer().then((value) {
+          listOfficerEntry.addAll(value.payload ?? []);
+          update();
+        });
+      }
 
       update();
     } catch (e) {
       e.printError();
     }
+
+    cekAllowance();
   }
 
   Future<void> getTransaction(int page) async {
@@ -171,7 +190,7 @@ class RiwayatKirimanController extends BaseController {
     endDate = null;
     startDateField.clear();
     endDateField.clear();
-    selectedPetugasEntry = null;
+    selectedPetugasEntry = basic?.userType == "PEMILIK" ? null : basic?.name;
     selectedStatusKiriman = null;
     isFiltered = false;
     searchField.clear();
