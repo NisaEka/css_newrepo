@@ -51,9 +51,9 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
           children: [
             _requestPickupCheckbox(),
             _requestPickupImage(),
-            const SizedBox(width: 16,),
+            const SizedBox(width: 16),
             _requestPickupContent(requestPickup),
-            const SizedBox(width: 16,),
+            const SizedBox(width: 16),
             _requestPickupExtraInfo(requestPickup)
           ],
         ),
@@ -62,15 +62,22 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
   }
 
   Widget _requestPickupCheckbox() {
+    final isTristate = widget.data?.status == "Dijemput";
+
     if (widget.checkMode) {
-      return Checkbox(
-        value: _checked,
-        tristate: widget.data?.status == "Dijemput",
-        onChanged: (newValue) {
-          setState(() {
-            _checked = newValue ?? _checked;
-          });
-        },
+      return Row(
+        children: [
+          Checkbox(
+            value: isTristate ? null : _checked,
+            tristate: isTristate,
+            onChanged: (newValue) {
+              setState(() {
+                _checked = newValue ?? _checked;
+              });
+            },
+          ),
+          const SizedBox(width: 16),
+        ],
       );
     } else {
       return Container();

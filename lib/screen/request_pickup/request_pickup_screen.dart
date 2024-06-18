@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -16,6 +17,7 @@ class RequestPickupScreen extends StatefulWidget {
 class _RequestPickupScreenState extends State<RequestPickupScreen> {
 
   bool _checkMode = false;
+  bool _checkAll = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +73,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
   Widget _mainContent(List<RequestPickupModel> requestPickups) {
     return Column(
       children: [
+        _checkAllItemBox(),
         Expanded(child: ListView(
           children: requestPickups.map((requestPickup) {
             return RequestPickupItem(
@@ -79,6 +82,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
                 if (_checkMode) {
                   setState(() {
                     _checkMode = false;
+                    _checkAll = false;
                   });
                 }
               },
@@ -94,4 +98,31 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
       ],
     );
   }
+
+  Widget _checkAllItemBox() {
+    if (_checkMode) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            Checkbox(
+              value: _checkAll,
+              onChanged: (newValue) {
+                setState(() {
+                  _checkAll = newValue ?? _checkAll;
+                });
+              },
+            ),
+            Text(
+              "Pilih Semua".tr,
+              style: inputTextStyle,
+            )
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+
 }
