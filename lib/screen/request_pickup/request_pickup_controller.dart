@@ -15,6 +15,13 @@ class RequestPickupController extends BaseController {
   bool showEmptyContent = false;
 
   List<RequestPickupModel> requestPickups = [];
+  List<String> cities = [
+    "Semua Kota Pengiriman",
+    "Bandung",
+    "Subang",
+    "Jakarta",
+    "Yogyakarta"
+  ];
 
   String filterDateText = "Semua Tanggal";
   String filterStatusText = "Semua Status";
@@ -45,6 +52,13 @@ class RequestPickupController extends BaseController {
     if (deliveryType != null) {
       selectedFilterDeliveryType = deliveryType;
       filterDeliveryTypeText = deliveryType.asName();
+      update();
+    }
+  }
+
+  setSelectedFilterCity(String? city) {
+    if (city != null) {
+      filterDeliveryCityText = city;
       update();
     }
   }
