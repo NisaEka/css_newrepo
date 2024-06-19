@@ -4,12 +4,14 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -145,7 +147,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
             ),
             const SizedBox(width: 16),
             _buttonFilter(
-              controller.filterStatusText.tr, () { _filterStatusBottomSheet(); }
+              controller.filterStatusText.tr, () { _filterStatusBottomSheet(controller); }
             ),
             const SizedBox(width: 16),
             _buttonFilter(
@@ -199,11 +201,42 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
         )),);
   }
 
-  _filterStatusBottomSheet() {
-    _requestPickupBottomSheetScaffold("Pilih Status", Container(
-        child: Expanded(
-          child: Text("hello")
-        )),);
+  _filterStatusBottomSheet(RequestPickupController controller) {
+    const items = RequestPickupStatus.values;
+
+    _requestPickupBottomSheetScaffold("Pilih Status".tr, Expanded(
+      child: ListView.separated(
+        separatorBuilder: (BuildContext context, int index) {
+          if (index <= items.length) {
+            return const SizedBox(
+              height: 16,
+            );
+          } else {
+            return Container();
+          }
+        },
+        padding: const EdgeInsets.all(16),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          bool isSelected = controller.selectedFilterStatus == items[index];
+          return GestureDetector(
+            onTap: () {
+              controller.setSelectedFilterStatus(items[index]);
+              Get.back();
+            },
+            child: Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(items[index].asName().tr),
+                  Icon(isSelected ? Icons.circle : Icons.circle_outlined)
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    ));
   }
 
   _filterDeliveryTypeBottomSheet() {
