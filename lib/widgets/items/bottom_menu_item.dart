@@ -7,7 +7,13 @@ class BottomMenuItem extends StatelessWidget {
   final Color? color;
   final VoidCallback? onTap;
 
-  const BottomMenuItem({super.key, required this.icon, this.title, this.color, this.onTap});
+  const BottomMenuItem({
+    super.key,
+    required this.icon,
+    this.title,
+    this.color,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

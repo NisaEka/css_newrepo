@@ -9,7 +9,10 @@ import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.d
 import 'package:css_mobile/screen/pengaturan/pengaturan_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar.dart';
 import 'package:css_mobile/widgets/bar/custombottombar2.dart';
+import 'package:css_mobile/widgets/bar/custombottombar3.dart';
+import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_carousel.dart';
+import 'package:css_mobile/widgets/dashboard/dashboard_info.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_marquee.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_menu2.dart';
 import 'package:css_mobile/widgets/dashboard/jlcpoint_widget.dart';
@@ -36,7 +39,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           onPopInvoked: (didPop) => controller.onPop(),
           child: Scaffold(
             body: _bodyContent(controller, context),
-            bottomNavigationBar: BottomBar(
+            bottomNavigationBar: BottomBar4(
               menu: 0,
               isLogin: controller.isLogin,
               allowedMenu: controller.allow,
@@ -172,9 +175,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ],
               ),
-              DashboardMarquee(
-                marqueeText: c.marqueeText ?? '',
-              ),
+              // DashboardMarquee(
+              //   marqueeText: c.marqueeText ?? '',
+              // ),
+              c.isCcrf ? const SizedBox() : const DashboardInfo(),
               DashboardMenu2(
                 isLogin: c.isLogin,
                 isLoading: c.isLoading,
@@ -189,19 +193,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   },
                 ),
               ),
-              c.isCcrf
-                  ? const SizedBox()
-                  : Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: warningColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        'Lengkapi profil Kamu untuk menikmati semua fitur unggulan.'.tr,
-                        textAlign: TextAlign.center,
-                      ),
-                    )
             ],
           ),
         ),

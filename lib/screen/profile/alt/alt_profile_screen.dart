@@ -12,6 +12,7 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
+import 'package:css_mobile/widgets/bar/custombottombar3.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
@@ -40,17 +41,27 @@ class AltProfileScreen extends StatelessWidget {
 
   Widget _logoutButton(AltProfileController c, BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 50),
+      // margin: const EdgeInsets.only(bottom: 20),
+      height: 100,
       // color: whiteColor,
-      child: ListTile(
-        onTap: () => c.isLogin ? c.doLogout() : Get.to(const LoginScreen()),
-        leading: Icon(c.isLogin ? Icons.logout : Icons.login),
-        title: Text(c.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
-        trailing: Text('v ${c.version.toString()}'.tr),
-        shape: Border(
-          bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
-          top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
-        ),
+      child: Column(
+        children: [
+          ListTile(
+            onTap: () => c.isLogin ? c.doLogout() : Get.to(const LoginScreen()),
+            leading: Icon(c.isLogin ? Icons.logout : Icons.login),
+            title: Text(c.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
+            trailing: Text('v ${c.version.toString()}'.tr),
+            shape: Border(
+              bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
+              top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
+            ),
+          ),
+          // BottomBar3(
+          //   menu: 4,
+          //   isLogin: c.isLogin,
+          //   allowedMenu: c.allow,
+          // )
+        ],
       ),
     );
   }
