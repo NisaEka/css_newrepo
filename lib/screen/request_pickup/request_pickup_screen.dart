@@ -5,9 +5,11 @@ import 'package:css_mobile/data/model/request_pickup/request_pickup_delivery_typ
 import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
 import 'package:css_mobile/screen/request_pickup/detail/request_pickup_detail_screen.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
+import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,6 +33,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
         return Scaffold(
           appBar: _requestPickupAppBar(),
           body: _requestPickupBody(controller),
+          bottomNavigationBar: _requestPickupBottomBar(controller),
         );
       },
     );
@@ -40,6 +43,49 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
     return CustomTopBar(
       title: "Minta Dijemput".tr
     );
+  }
+
+  Widget? _requestPickupBottomBar(RequestPickupController controller) {
+    if (_checkMode) {
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Total kiriman dipilih",
+                    style: sublistTitleTextStyle.copyWith(
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "2",
+                    style: sublistTitleTextStyle.copyWith(
+                        fontWeight: FontWeight.bold
+                    ),
+                  )
+                ],
+              ),
+            ),
+            FilledButton(
+              onPressed: () {
+                _pickupAddressBottomSheet();
+              },
+              child: Text(
+                "Minta Dijemput".tr,
+                style: const TextStyle(color: whiteColor),),
+            )
+          ],
+        ),
+      );
+    }
+
+    return null;
   }
 
   Widget _requestPickupBody(RequestPickupController controller) {
@@ -339,6 +385,14 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
           );
         },
       ),
+    ));
+  }
+  
+  _pickupAddressBottomSheet() {
+    _requestPickupBottomSheetScaffold("Pilih Alamat Penjemputan".tr, RequestPickupSelectAddressContent(
+      onAddNewAddressClick: () {
+
+      },
     ));
   }
 
