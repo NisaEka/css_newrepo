@@ -3,6 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_delivery_type_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
+import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_screen.dart';
 import 'package:css_mobile/screen/request_pickup/detail/request_pickup_detail_screen.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
@@ -391,7 +392,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
   _pickupAddressBottomSheet() {
     _requestPickupBottomSheetScaffold("Pilih Alamat Penjemputan".tr, RequestPickupSelectAddressContent(
       onAddNewAddressClick: () {
-
+        Get.to(const RequestPickupAddressUpsertScreen());
       },
     ));
   }
