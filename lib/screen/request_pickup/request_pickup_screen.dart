@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_delivery_type_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
@@ -151,7 +152,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
             ),
             const SizedBox(width: 16),
             _buttonFilter(
-              controller.filterDeliveryTypeText.tr, () { _filterDeliveryTypeBottomSheet(); }
+              controller.filterDeliveryTypeText.tr, () { _filterDeliveryTypeBottomSheet(controller); }
             ),
             const SizedBox(width: 16),
             _buttonFilter(
@@ -239,11 +240,42 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
     ));
   }
 
-  _filterDeliveryTypeBottomSheet() {
-    _requestPickupBottomSheetScaffold("Pilih Tipe Kiriman", Container(
-        child: Expanded(
-          child: Text("hello")
-        )),);
+  _filterDeliveryTypeBottomSheet(RequestPickupController controller) {
+    const items = RequestPickupDeliveryType.values;
+
+    _requestPickupBottomSheetScaffold("Pilih Tipe Kiriman".tr, Expanded(
+      child: ListView.separated(
+        separatorBuilder: (BuildContext context, int index) {
+          if (index <= items.length) {
+            return const SizedBox(
+              height: 16,
+            );
+          } else {
+            return Container();
+          }
+        },
+        padding: const EdgeInsets.all(16),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          bool isSelected = controller.selectedDeliveryType == items[index];
+          return GestureDetector(
+            onTap: () {
+              controller.setSelectedDeliveryType(items[index]);
+              Get.back();
+            },
+            child: Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(items[index].asName().tr),
+                  Icon(isSelected ? Icons.circle : Icons.circle_outlined)
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    ));
   }
 
   _filterDeliveryCityBottomSheet() {

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_delivery_type_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,11 +21,20 @@ class RequestPickupController extends BaseController {
   String filterDeliveryCityText = "Semua Kota Pengiriman";
 
   RequestPickupStatus selectedFilterStatus = RequestPickupStatus.semua;
+  RequestPickupDeliveryType selectedDeliveryType = RequestPickupDeliveryType.semua_tipe_kiriman;
 
   setSelectedFilterStatus(RequestPickupStatus? status) {
     if (status != null) {
       selectedFilterStatus = status;
       filterStatusText = status.asName();
+      update();
+    }
+  }
+
+  setSelectedDeliveryType(RequestPickupDeliveryType? deliveryType) {
+    if (deliveryType != null) {
+      selectedDeliveryType = deliveryType;
+      filterDeliveryTypeText = deliveryType.asName();
       update();
     }
   }
