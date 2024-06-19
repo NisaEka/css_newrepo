@@ -12,6 +12,11 @@ class RequestPickupController extends BaseController {
 
   List<RequestPickupModel> requestPickups = [];
 
+  String filterDateText = "Semua Tanggal";
+  String filterStatusText = "Semua Status";
+  String filterDeliveryTypeText = "Semua Tipe Kiriman";
+  String filterDeliveryCityText = "Semua Kota Pengiriman";
+
   @override
   void onInit() {
     super.onInit();

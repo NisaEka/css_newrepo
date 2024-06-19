@@ -1,10 +1,16 @@
+import 'dart:ui';
+
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class RequestPickupScreen extends StatefulWidget {
@@ -55,8 +61,8 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
       return Center(
         child: Column(
           children: [
-            Text("Terjadi kesalahan ketika mengambil data"),
-            Padding(padding: EdgeInsets.only(top: 16)),
+            Text("Terjadi kesalahan ketika mengambil data".tr),
+            const Padding(padding: EdgeInsets.only(top: 16)),
             FilledButton(onPressed: () => controller.requireRetry(), child: Text("Muat ulang"))
           ],
         )
@@ -64,18 +70,19 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
     }
 
     if (controller.showMainContent) {
-      return _mainContent(controller.requestPickups);
+      return _mainContent(controller);
     }
 
-    return Text("No Content");
+    return Text("No Content".tr);
   }
 
-  Widget _mainContent(List<RequestPickupModel> requestPickups) {
+  Widget _mainContent(RequestPickupController controller) {
     return Column(
       children: [
+        _buttonFilters(controller),
         _checkAllItemBox(),
         Expanded(child: ListView(
-          children: requestPickups.map((requestPickup) {
+          children: controller.requestPickups.map((requestPickup) {
             return RequestPickupItem(
               data: requestPickup,
               onTap: () {
@@ -123,6 +130,104 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
     } else {
       return Container();
     }
+  }
+
+  Widget _buttonFilters(RequestPickupController controller) {
+    return SizedBox(
+      height: 64,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            const SizedBox(width: 16),
+            _buttonFilter(
+              controller.filterDateText.tr, () { _filterDateBottomSheet(); }
+            ),
+            const SizedBox(width: 16),
+            _buttonFilter(
+              controller.filterStatusText.tr, () { _filterStatusBottomSheet(); }
+            ),
+            const SizedBox(width: 16),
+            _buttonFilter(
+              controller.filterDeliveryTypeText.tr, () { _filterDeliveryTypeBottomSheet(); }
+            ),
+            const SizedBox(width: 16),
+            _buttonFilter(
+              controller.filterDeliveryCityText.tr, () { _filterDeliveryCityBottomSheet(); }
+            ),
+            const SizedBox(width: 16),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buttonFilter(String text , Function onPressed) {
+    return OutlinedButton(
+      onPressed: () { onPressed(); },
+      style: OutlinedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        side: const BorderSide(width: 1, color: greyColor),
+      ),
+      child: Row(
+        children: [
+          Text(
+            text.tr,
+            style: sublistTitleTextStyle.copyWith(
+                fontWeight: semiBold
+            ),
+          ),
+          const SizedBox(width: 8),
+          const Icon(
+            Icons.keyboard_arrow_down,
+            size: 24,
+            color: Colors.black,
+          )
+        ],
+      ),
+    );
+  }
+
+  _filterDateBottomSheet() {
+    _requestPickupBottomSheetScaffold("Pilih Tanggal", Container(
+        child: Expanded(
+          child: Row(
+            children: [
+              Text("hello")
+            ],
+          )
+        )),);
+  }
+
+  _filterStatusBottomSheet() {
+    _requestPickupBottomSheetScaffold("Pilih Status", Container(
+        child: Expanded(
+          child: Text("hello")
+        )),);
+  }
+
+  _filterDeliveryTypeBottomSheet() {
+    _requestPickupBottomSheetScaffold("Pilih Tipe Kiriman", Container(
+        child: Expanded(
+          child: Text("hello")
+        )),);
+  }
+
+  _filterDeliveryCityBottomSheet() {
+    _requestPickupBottomSheetScaffold("Pilih Kota Pengiriman", Container(
+        child: Expanded(
+          child: Text("hello")
+        )),);
+  }
+
+  _requestPickupBottomSheetScaffold(String title, Widget content) {
+    Get.bottomSheet(
+      enableDrag: true,
+      isDismissible: true ,
+      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+        return RequestPickupBottomSheetScaffold(content: content, title: title);
+      }),
+    );
   }
 
 }
