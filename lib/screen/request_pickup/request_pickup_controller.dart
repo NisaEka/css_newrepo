@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_delivery_type_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
@@ -20,8 +21,17 @@ class RequestPickupController extends BaseController {
   String filterDeliveryTypeText = "Semua Tipe Kiriman";
   String filterDeliveryCityText = "Semua Kota Pengiriman";
 
+  RequestPickupDateEnum selectedFilterDate = RequestPickupDateEnum.all;
   RequestPickupStatus selectedFilterStatus = RequestPickupStatus.semua;
-  RequestPickupDeliveryType selectedDeliveryType = RequestPickupDeliveryType.semua_tipe_kiriman;
+  RequestPickupDeliveryType selectedFilterDeliveryType = RequestPickupDeliveryType.semua_tipe_kiriman;
+
+  setSelectedFilterDate(RequestPickupDateEnum? date) {
+    if (date != null) {
+      selectedFilterDate = date;
+      filterDateText = date.asName();
+      update();
+    }
+  }
 
   setSelectedFilterStatus(RequestPickupStatus? status) {
     if (status != null) {
@@ -33,7 +43,7 @@ class RequestPickupController extends BaseController {
 
   setSelectedDeliveryType(RequestPickupDeliveryType? deliveryType) {
     if (deliveryType != null) {
-      selectedDeliveryType = deliveryType;
+      selectedFilterDeliveryType = deliveryType;
       filterDeliveryTypeText = deliveryType.asName();
       update();
     }

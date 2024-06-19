@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_delivery_type_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
@@ -144,7 +145,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
           children: [
             const SizedBox(width: 16),
             _buttonFilter(
-              controller.filterDateText.tr, () { _filterDateBottomSheet(); }
+              controller.filterDateText.tr, () { _filterDateBottomSheet(controller); }
             ),
             const SizedBox(width: 16),
             _buttonFilter(
@@ -191,15 +192,42 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
     );
   }
 
-  _filterDateBottomSheet() {
-    _requestPickupBottomSheetScaffold("Pilih Tanggal", Container(
-        child: Expanded(
-          child: Row(
-            children: [
-              Text("hello")
-            ],
-          )
-        )),);
+  _filterDateBottomSheet(RequestPickupController controller) {
+    const items = RequestPickupDateEnum.values;
+
+    _requestPickupBottomSheetScaffold("Pilih Tanggal".tr, Expanded(
+      child: ListView.separated(
+        separatorBuilder: (BuildContext context, int index) {
+          if (index <= items.length) {
+            return const SizedBox(
+              height: 16,
+            );
+          } else {
+            return Container();
+          }
+        },
+        padding: const EdgeInsets.all(16),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          bool isSelected = controller.selectedFilterDate == items[index];
+          return GestureDetector(
+            onTap: () {
+              controller.setSelectedFilterDate(items[index]);
+              Get.back();
+            },
+            child: Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(items[index].asName().tr),
+                  Icon(isSelected ? Icons.circle : Icons.circle_outlined)
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    ));
   }
 
   _filterStatusBottomSheet(RequestPickupController controller) {
@@ -257,7 +285,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
         padding: const EdgeInsets.all(16),
         itemCount: items.length,
         itemBuilder: (context, index) {
-          bool isSelected = controller.selectedDeliveryType == items[index];
+          bool isSelected = controller.selectedFilterDeliveryType == items[index];
           return GestureDetector(
             onTap: () {
               controller.setSelectedDeliveryType(items[index]);
