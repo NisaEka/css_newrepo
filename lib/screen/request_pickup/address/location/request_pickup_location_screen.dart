@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class RequestPickupLocationScreen extends StatelessWidget {
   const RequestPickupLocationScreen({super.key});
@@ -38,12 +41,28 @@ class RequestPickupLocationScreen extends StatelessWidget {
   }
 
   Widget _mapsView() {
+    final Completer<GoogleMapController> googleMapController =
+      Completer<GoogleMapController>();
+
+    const CameraPosition kGooglePlex = CameraPosition(
+      target: LatLng(-6.9506528, 107.6234307),
+      zoom: 16.0
+    );
+
     return Container(
       width: Get.width,
       height: Get.width / 2,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: greyColor,
         borderRadius: BorderRadius.circular(16)
+      ),
+      child: GoogleMap(
+        zoomControlsEnabled: false,
+        myLocationButtonEnabled: false,
+        initialCameraPosition: kGooglePlex,
+        onMapCreated: (GoogleMapController controller) {
+          googleMapController.complete(controller);
+        }
       ),
     );
   }
