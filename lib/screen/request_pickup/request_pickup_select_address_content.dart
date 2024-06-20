@@ -9,10 +9,12 @@ import 'package:get/get.dart';
 class RequestPickupSelectAddressContent extends StatelessWidget {
 
   final Function onAddNewAddressClick;
+  final Function onPickupClick;
 
   const RequestPickupSelectAddressContent({
     super.key,
-    required this.onAddNewAddressClick
+    required this.onAddNewAddressClick,
+    required this.onPickupClick
   });
 
   @override
@@ -74,7 +76,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
             ),
           ),
           FilledButton(
-            onPressed: () {}, 
+            onPressed: () { },
             style: ButtonStyle(
               padding: MaterialStateProperty.resolveWith((states) {
                 return const EdgeInsets.symmetric(horizontal: 8, vertical: 4);
@@ -96,7 +98,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
       child: SizedBox(
         width: Get.width,
         child: FilledButton(
-          onPressed: () {},
+          onPressed: () { onPickupClick(); },
           child: Text(
             "Jemput".tr,
             style: const TextStyle(color: whiteColor),
