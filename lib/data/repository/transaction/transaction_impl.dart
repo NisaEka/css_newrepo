@@ -357,11 +357,13 @@ class TransactionRepositoryImpl extends TransactionRepository {
     DataTransactionModel data,
     String awb,
   ) async {
+    print("weigh: ${data.goods?.weight}");
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.dio.put(
         "/transaction/$awb",
+        data: data
       );
       return PostTransactionModel.fromJson(response.data);
     } on DioException catch (e) {

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RiwayatKirimanController extends BaseController {
+  bool? isLastScreen = Get.arguments['isLastScreen'];
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
   final searchField = TextEditingController();

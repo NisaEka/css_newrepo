@@ -369,6 +369,7 @@ class InformasiKirimaController extends BaseController {
       intruksiKhusus.text = dataEdit?.delivery?.specialInstruction ?? '';
       packingKayu = dataEdit?.delivery?.woodPackaging == "Y";
       beratKiriman.text = dataEdit?.goods?.weight.toString() ?? '';
+      berat = dataEdit?.goods?.weight?.toDouble() ?? 0;
       // ServiceModel servicecode = serviceList.where((element) => element.serviceCode == dataEdit?.delivery?.serviceCode).first;
       ServiceModel? servicedisplay = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).isNotEmpty
           ? serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).first
@@ -534,7 +535,7 @@ class InformasiKirimaController extends BaseController {
                 },
               ),
               thirdButtonTitle: "Lihat Transaksi",
-              thirdAction: () => Get.offAll(const RiwayatKirimanScreen()),
+              thirdAction: () => Get.offAll(const RiwayatKirimanScreen(), arguments: {"isLastScreen": true}),
             ),
           );
         }
