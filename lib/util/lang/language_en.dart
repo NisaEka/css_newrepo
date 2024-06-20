@@ -314,7 +314,8 @@ class LanguageEN {
       "Buat kata sandi baru anda": "Create your new password",
       "Konfirmasi Kata Sandi Baru": "Confirm New Password",
       "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas":
-          "To access this menu, please activate it first in the facilities menu"
+          "To access this menu, please activate it first in the facilities menu",
+      "Notifikasi": "Notification",
     };
   }
 }
