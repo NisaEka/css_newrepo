@@ -49,7 +49,7 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
     return CustomTopBar(
       title: 'Input Transaksi'.tr,
       leading: CustomBackButton(
-        onPressed: () => Get.offAll(const DashboardScreen()),
+        onPressed: () => c.data != null ? Get.back() : Get.offAll(const DashboardScreen()),
       ),
       flexibleSpace: Column(
         children: [

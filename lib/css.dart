@@ -4,6 +4,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/uang_cod_kamu/uang_cod_screen.dart';
+import 'package:css_mobile/screen/notification/notification_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
@@ -63,7 +64,8 @@ class App extends StatelessWidget {
         GetPage(name: "/aggregasiMinus", page: () => const AggregationMinusScreen()),
         GetPage(name: "/uangCODKamu", page: () => const UangCODScreen()),
         GetPage(name: "/profileGeneral", page: () => const DataUmumScreen()),
-        GetPage(name: "/requestPickup", page: () => const RequestPickupScreen())
+        GetPage(name: "/requestPickup", page: () => const RequestPickupScreen()),
+        GetPage(name: "/notification", page: () => const NotificationScreen()),
       ],
       // home: const LoginScreen(),
       home: const DashboardScreen(),
