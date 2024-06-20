@@ -27,7 +27,7 @@ class PengaturanScreen extends StatelessWidget {
         });
   }
 
-  Widget _bodyContent(PengaturanController c, BuildContext context){
+  Widget _bodyContent(PengaturanController c, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: ListView(
@@ -72,9 +72,9 @@ class PengaturanScreen extends StatelessWidget {
             onTap: () => c.isLogin
                 ? Get.to(const PengaturanLabelScreen())
                 : showDialog(
-              context: context,
-              builder: (context) => const LoginAlertDialog(),
-            ),
+                    context: context,
+                    builder: (context) => const LoginAlertDialog(),
+                  ),
           ),
           // : const SizedBox(),
           /*controller.allow.petugas == "Y"
@@ -85,28 +85,28 @@ class PengaturanScreen extends StatelessWidget {
             onTap: () => c.isLogin
                 ? Get.to(const PengaturanPetugasScreen())
                 : showDialog(
-              context: context,
-              builder: (context) => const LoginAlertDialog(),
-            ),
+                    context: context,
+                    builder: (context) => const LoginAlertDialog(),
+                  ),
           ),
           // : const SizedBox(),
           c.isLogin && c.allow.katasandi == "Y"
               ? SettingListItem(
-            title: 'Ubah Kata Sandi'.tr,
-            icon: Icons.lock_open_outlined,
-            // onTap: () => Get.to(const InputEmailScreen(), arguments: {
-            //   'isChange': true,
-            //   'email': controller.basicProfil?.email,
-            // }),
-            onTap: () => c.sendEmail(),
-          )
+                  title: 'Ubah Kata Sandi'.tr,
+                  icon: Icons.lock_open_outlined,
+                  // onTap: () => Get.to(const InputEmailScreen(), arguments: {
+                  //   'isChange': true,
+                  //   'email': controller.basicProfil?.email,
+                  // }),
+                  onTap: () => c.sendEmail(),
+                )
               : const SizedBox(),
         ],
       ),
     );
   }
 
-  Widget _logoutButton(PengaturanController c){
+  Widget _logoutButton(PengaturanController c) {
     return Container(
       margin: const EdgeInsets.only(bottom: 50),
       child: ListTile(
@@ -121,5 +121,4 @@ class PengaturanScreen extends StatelessWidget {
       ),
     );
   }
-
 }

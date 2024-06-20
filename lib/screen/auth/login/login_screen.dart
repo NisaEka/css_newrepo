@@ -1,9 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/auth/forgot_password/input_email_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
-import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
@@ -33,7 +31,6 @@ class LoginScreen extends StatelessWidget {
                     child: _bodyContent(controller, context),
                   ),
                   bottomNavigationBar: const VersionApp(),
-
                 ),
                 controller.isLoading == true ? const LoadingDialog() : Container(),
               ],
@@ -93,6 +90,7 @@ class LoginScreen extends StatelessWidget {
                     icon: c.showIcon,
                     onPressed: () => c.showPassword(),
                   ),
+                  onSubmit: (value) => (c.formKey.currentState?.validate() == true) ? c.doLogin() : null,
                 ),
                 Container(
                   alignment: Alignment.centerRight,

@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
@@ -20,6 +21,7 @@ class OtherMenuScreen extends StatelessWidget {
             backgroundColor: blueJNE,
             title: Text('Lihat Semua Layanan'.tr),
             centerTitle: true,
+            titleTextStyle: appTitleTextStyle.copyWith(color: whiteColor),
           ),
           body: _bodyContent(controller, context),
         );
@@ -35,11 +37,11 @@ class OtherMenuScreen extends StatelessWidget {
             slivers: [
               _menu("Favorit".tr, c),
               _menuItems(c.favoritList, c),
-              _menu("Paketmu".tr, c),
+              c.paketmuList.isNotEmpty ? _menu("Paketmu".tr, c) : const SliverPadding(padding: EdgeInsets.zero),
               _menuItems(c.paketmuList, c),
-              _menu("Keuanganmu".tr, c),
+              c.keuanganmuList.isNotEmpty ? _menu("Keuanganmu".tr, c) : const SliverPadding(padding: EdgeInsets.zero),
               _menuItems(c.keuanganmuList, c),
-              _menu("Lainnya".tr, c),
+              c.otherList.isNotEmpty ? _menu("Lainnya".tr, c) : const SliverPadding(padding: EdgeInsets.zero),
               _menuItems(c.otherList, c),
             ],
           ),

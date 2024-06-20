@@ -112,7 +112,13 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           padding: const EdgeInsets.all(5),
                           width: isLoading ? 50 : null,
                           decoration: BoxDecoration(
-                            color: apiType == "COD" ? successColor : errorColor,
+                            color: data?.type == "COD" || apiType == "COD"
+                                ? successColor
+                                : data?.type == "NON COD" || apiType == "NON COD"
+                                    ? warningColor
+                                    : data?.type == "COD ONGKIR" || apiType == "COD ONGKIR"
+                                        ? infoColor
+                                        : errorColor,
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Text(
@@ -159,7 +165,21 @@ class RiwayatKirimanListItem extends StatelessWidget {
                               margin: const EdgeInsets.only(bottom: 10),
                               width: isLoading ? Get.width / 5 : null,
                               decoration: BoxDecoration(
-                                color: apiType == "MASIH DI KAMU" ? successLightColor2 : errorLightColor2,
+                                color: data?.status == "MASIH DI KAMU" ||
+                                        apiType == "MASIH DI KAMU" ||
+                                        data?.status == "DIBATALKAN OLEH KAMU" ||
+                                        apiType == "DIBATALKAN OLEH KAMU"
+                                    ? warningColor
+                                    : data?.status == "SUDAH DIJEMPUT" ||
+                                            apiType == "SUDAH DIJEMPUT" ||
+                                            data?.status == "DALAM PERJALANAN" ||
+                                            apiType == "DALAM PERJALANAN" ||
+                                            data?.status == "SUKSES DITERIMA" ||
+                                            apiType == "SUKSES DITERIMA" ||
+                                            data?.status == "SUDAH DI JNE" ||
+                                            apiType == "SUDAH DI JNE"
+                                        ? warningColor
+                                        : errorLightColor2,
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Text(

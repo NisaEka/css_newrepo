@@ -98,7 +98,7 @@ class AltProfileController extends BaseController {
 
   void doLogout() async {
     storage.deleteToken();
-
+    storage.deleteString(StorageCore.favoriteMenu);
     Get.offAll(const LoginScreen());
   }
 
