@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_screen.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -49,7 +50,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: () { },
+          onTap: () { Get.to(const RequestPickupLocationScreen()); },
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
