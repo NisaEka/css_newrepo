@@ -12,8 +12,7 @@ void main() {
 
   WidgetsFlutterBinding.ensureInitialized();
   GlobalBinding().dependencies();
-
-
+  CssFirebaseConfig.init();
 
   runApp(const CSS());
 }

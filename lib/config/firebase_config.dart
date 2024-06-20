@@ -8,6 +8,6 @@ class CssFirebaseConfig{
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    await FirebaseApi().initNotofication();
+    await FirebaseApi().initNotification();
   }
 }
