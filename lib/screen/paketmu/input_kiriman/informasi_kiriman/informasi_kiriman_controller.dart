@@ -370,8 +370,11 @@ class InformasiKirimaController extends BaseController {
       packingKayu = dataEdit?.delivery?.woodPackaging == "Y";
       beratKiriman.text = dataEdit?.goods?.weight.toString() ?? '';
       // ServiceModel servicecode = serviceList.where((element) => element.serviceCode == dataEdit?.delivery?.serviceCode).first;
-      ServiceModel servicrdisplay = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).first;
-      selectedService = servicrdisplay;
+      ServiceModel? servicedisplay = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).isNotEmpty
+          ? serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).first
+          : ServiceModel();
+      selectedService = servicedisplay;
+
       update();
       getOngkir();
     }
