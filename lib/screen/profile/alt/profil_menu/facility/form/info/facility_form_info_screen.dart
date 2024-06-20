@@ -147,6 +147,9 @@ class FacilityFormInfoScreen extends StatelessWidget {
   Widget _imagePickerContent(BuildContext context, FacilityFormInfoController controller) {
     if (controller.pickedImage != null) {
       return Container(
+        width: Get.width,
+        height: Get.width / 2,
+        clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
         child: Image(image: FileImage(controller.pickedImage!), fit: BoxFit.fitWidth),
       );
