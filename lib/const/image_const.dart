@@ -21,6 +21,7 @@ class ImageConstant {
   static const String pengaturanIcon = "assets/icons/Pengaturan.png";
   static const String scanIcon = "assets/icons/Scan.png";
   static const String truckIcon = "assets/icons/truck.png";
+  static const String arrowDownIcon = "assets/icons/keyboard-arrow-down.svg";
 
   static const String successLottie = "assets/lottie/success_lottie.json";
   static const String failedLottie = "assets/lottie/failed_lottie.json";
