@@ -450,8 +450,10 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
       onAddNewAddressClick: () {
         Get.to(() => const RequestPickupAddressUpsertScreen());
       },
-      onPickupClick: () {
-        Get.dialog(const RequestPickupConfirmationDialog());
+      onPickupClick: (String selectedTime) {
+        Get.dialog(RequestPickupConfirmationDialog(
+          pickupTime: selectedTime,
+        ));
       },
     ));
   }
