@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -6,16 +9,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RequestPickupSelectAddressContent extends StatelessWidget {
+class RequestPickupSelectAddressContent extends StatefulWidget {
 
   final Function onAddNewAddressClick;
-  final Function onPickupClick;
+  final Function(String selectedTime) onPickupClick;
+  String selectedTime = "Sekarang";
 
-  const RequestPickupSelectAddressContent({
+  RequestPickupSelectAddressContent({
     super.key,
     required this.onAddNewAddressClick,
     required this.onPickupClick
   });
+
+  @override
+  State<StatefulWidget> createState() => _RequestPickupSelectAddressContentState();
+}
+
+class _RequestPickupSelectAddressContentState extends State<RequestPickupSelectAddressContent> {
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +41,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
 
   Widget _addNewAddressWidget() {
     return GestureDetector(
-      onTap: () { onAddNewAddressClick(); },
+      onTap: () { widget.onAddNewAddressClick(); },
       child: const Padding(
         padding: EdgeInsets.all(16),
         child: Row(
@@ -72,21 +82,37 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
           Text(
             "Jam Pickup",
             style: sublistTitleTextStyle.copyWith(
-              fontWeight: FontWeight.bold
+                fontWeight: FontWeight.bold
             ),
           ),
-          FilledButton(
-            onPressed: () { },
+          OutlinedButton(
+            onPressed: () {
+              _selectedTime(context).then((value) {
+                if (value?.hour != null && value?.minute != null) {
+                  setState(() {
+                    widget.selectedTime = "${value!.hour}:${value.minute}";
+                  });
+                }
+              });
+            },
             style: ButtonStyle(
-              padding: MaterialStateProperty.resolveWith((states) {
-                return const EdgeInsets.symmetric(horizontal: 8, vertical: 4);
-              })
+                padding: MaterialStateProperty.resolveWith((states) {
+                  return const EdgeInsets.symmetric(horizontal: 4, vertical: 2);
+                }),
+                side: MaterialStateProperty.resolveWith((states) {
+                  return const BorderSide(
+                      color: blueJNE
+                  );
+                })
             ),
             child: Text(
-              "Sekarang".tr,
-              style: const TextStyle(color: whiteColor),
+              widget.selectedTime.tr,
+              style: const TextStyle(
+                color: blueJNE,
+                fontWeight: FontWeight.normal
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -98,13 +124,40 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
       child: SizedBox(
         width: Get.width,
         child: FilledButton(
-          onPressed: () { onPickupClick(); },
+          onPressed: () {
+            String pickupTime = widget.selectedTime;
+            if (pickupTime == "Sekarang") {
+              TimeOfDay currentTime = TimeOfDay.now();
+              pickupTime = "${currentTime.hour}:${currentTime.minute}";
+            }
+            widget.onPickupClick(pickupTime);
+          },
           child: Text(
             "Jemput".tr,
             style: const TextStyle(color: whiteColor),
           ),
         ),
       ),
+    );
+  }
+
+  Future<TimeOfDay?> _selectedTime(BuildContext context) {
+    return showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      }
     );
   }
 

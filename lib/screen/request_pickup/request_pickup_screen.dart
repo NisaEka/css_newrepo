@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
@@ -8,6 +9,7 @@ import 'package:css_mobile/screen/request_pickup/detail/request_pickup_detail_sc
 import 'package:css_mobile/screen/request_pickup/request_pickup_confirmation_dialog.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
+import 'package:css_mobile/util/ext/date_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
@@ -241,39 +243,92 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
   _filterDateBottomSheet(RequestPickupController controller) {
     const items = RequestPickupDateEnum.values;
 
-    _requestPickupBottomSheetScaffold("Pilih Tanggal".tr, Expanded(
-      child: ListView.separated(
-        separatorBuilder: (BuildContext context, int index) {
-          if (index <= items.length) {
-            return const SizedBox(
-              height: 16,
-            );
-          } else {
-            return Container();
-          }
-        },
-        padding: const EdgeInsets.all(16),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          bool isSelected = controller.selectedFilterDate == items[index];
-          return GestureDetector(
-            onTap: () {
-              controller.setSelectedFilterDate(items[index]);
-              Get.back();
-            },
-            child: Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(items[index].asName().tr),
-                  Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-                ],
-              ),
+    Get.bottomSheet(
+      enableDrag: true,
+      isDismissible: true ,
+      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+
+        return RequestPickupBottomSheetScaffold(
+          title: "Pilih Tanggal".tr,
+          content:  Expanded(
+            child: ListView.separated(
+              separatorBuilder: (BuildContext context, int index) {
+                if (index <= items.length) {
+                  return const SizedBox(
+                    height: 16,
+                  );
+                } else {
+                  return Container();
+                }
+              },
+              padding: const EdgeInsets.all(16),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                bool isSelected = controller.selectedFilterDate == items[index];
+                bool isCustom = controller.selectedFilterDate == RequestPickupDateEnum.custom;
+                bool showDatePickerContent = isCustom && isSelected;
+
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      controller.setSelectedFilterDate(items[index]);
+                    });
+                  },
+                  child: showDatePickerContent ? Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(items[index].asName().tr),
+                          Icon(isSelected ? Icons.circle : Icons.circle_outlined)
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FilledButton(
+                            onPressed: () {
+                              _selectDate(context).then((value) {
+                                setState(() {
+                                  controller.setSelectedDateStart(value);
+                                });
+                              });
+                            },
+                            child: Text(
+                              controller.selectedDateStartText.tr,
+                              style: const TextStyle(color: whiteColor),
+                            ),
+                          ),
+                          FilledButton(
+                            onPressed: () {
+                              _selectDate(context).then((value) {
+                                setState(() {
+                                  controller.setSelectedDateEnd(value);
+                                });
+                              });
+                            },
+                            child: Text(
+                              controller.selectedDateEndText.tr,
+                              style: const TextStyle(color: whiteColor),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ) : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(items[index].asName().tr),
+                      Icon(isSelected ? Icons.circle : Icons.circle_outlined)
+                    ],
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
-    ));
+          ),
+        );
+      }),
+    );
   }
 
   _filterStatusBottomSheet(RequestPickupController controller) {
@@ -395,8 +450,10 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
       onAddNewAddressClick: () {
         Get.to(() => const RequestPickupAddressUpsertScreen());
       },
-      onPickupClick: () {
-        Get.dialog(const RequestPickupConfirmationDialog());
+      onPickupClick: (String selectedTime) {
+        Get.dialog(RequestPickupConfirmationDialog(
+          pickupTime: selectedTime,
+        ));
       },
     ));
   }
@@ -408,6 +465,28 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
       StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
         return RequestPickupBottomSheetScaffold(content: content, title: title);
       }),
+    );
+  }
+
+  Future<DateTime?> _selectDate(BuildContext context) {
+    return showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      }
     );
   }
 

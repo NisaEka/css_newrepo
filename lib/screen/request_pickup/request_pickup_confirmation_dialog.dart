@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RequestPickupConfirmationDialog extends StatelessWidget {
-  const RequestPickupConfirmationDialog({ super.key });
+
+  final String pickupTime;
+
+  const RequestPickupConfirmationDialog({
+    super.key,
+    required this.pickupTime
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,7 @@ class RequestPickupConfirmationDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "Apakah kamu sudah yakin untuk melakukan penjemputan di jam 14:30".tr,
+            "Apakah kamu sudah yakin untuk melakukan penjemputan di jam $pickupTime".tr,
             style: sublistTitleTextStyle.copyWith(
               fontWeight: FontWeight.bold
             ),
