@@ -92,10 +92,36 @@ class AllowedMenu {
     String? profil,
     String? fasilitas,
     String? katasandi,
-    String? semuaTransaksi,
-    String? semuaHapus,
-    String? hapusPesanan,
     String? beranda,
+    String? buatPesanan,
+    String? lacakPesanan,
+    String? mintaDijemput,
+    String? serahTerima,
+    String? saldo,
+    String? uangCod,
+    String? tagihan,
+    String? bonus,
+    String? pantauPaketmu,
+    String? laporan,
+    String? eclaim,
+    String? tema,
+    String? label,
+    String? petugas,
+    String? riwayatPesanan,
+    String? cekOngkir,
+    String? semuaTransaksi,
+    String? hapusPesanan,
+    String? semuaHapus,
+    String? cetakPesanan,
+    String? monitoringAgg,
+    String? monitoringAggMinus,
+    String? dashReferralTrans,
+    String? dashReferralDseller,
+    String? dashReferralSeller,
+    String? groupOwner,
+    String? laporanReturn,
+    String? summaryOrigin,
+    String? summaryDestination,
     String? paketmuInput,
     String? paketmuRiwayat,
     String? paketmuLacak,
@@ -108,13 +134,10 @@ class AllowedMenu {
     String? keuanganAggregasiMinus,
     String? keuanganTagihan,
     String? keuanganBonus,
-    String? pantauPaketmu,
     String? hubungiLaporan,
     String? hubungiEclaim,
-    String? laporanReturn,
     String? laporanSummaryOrigin,
     String? laporanSummaryDestination,
-    String? cekOngkir,
     String? dukunganTeknis,
     String? pengaturanTema,
     String? pengaturanLabel,
@@ -123,10 +146,36 @@ class AllowedMenu {
     _profil = profil;
     _fasilitas = fasilitas;
     _katasandi = katasandi;
-    _semuaTransaksi = semuaTransaksi;
-    _semuaHapus = semuaHapus;
-    _hapusPesanan = hapusPesanan;
     _beranda = beranda;
+    _buatPesanan = buatPesanan;
+    _lacakPesanan = lacakPesanan;
+    _mintaDijemput = mintaDijemput;
+    _serahTerima = serahTerima;
+    _saldo = saldo;
+    _uangCod = uangCod;
+    _tagihan = tagihan;
+    _bonus = bonus;
+    _pantauPaketmu = pantauPaketmu;
+    _laporan = laporan;
+    _eclaim = eclaim;
+    _tema = tema;
+    _label = label;
+    _petugas = petugas;
+    _riwayatPesanan = riwayatPesanan;
+    _cekOngkir = cekOngkir;
+    _semuaTransaksi = semuaTransaksi;
+    _hapusPesanan = hapusPesanan;
+    _semuaHapus = semuaHapus;
+    _cetakPesanan = cetakPesanan;
+    _monitoringAgg = monitoringAgg;
+    _monitoringAggMinus = monitoringAggMinus;
+    _dashReferralTrans = dashReferralTrans;
+    _dashReferralDseller = dashReferralDseller;
+    _dashReferralSeller = dashReferralSeller;
+    _groupOwner = groupOwner;
+    _laporanReturn = laporanReturn;
+    _summaryOrigin = summaryOrigin;
+    _summaryDestination = summaryDestination;
     _paketmuInput = paketmuInput;
     _paketmuRiwayat = paketmuRiwayat;
     _paketmuLacak = paketmuLacak;
@@ -139,13 +188,10 @@ class AllowedMenu {
     _keuanganAggregasiMinus = keuanganAggregasiMinus;
     _keuanganTagihan = keuanganTagihan;
     _keuanganBonus = keuanganBonus;
-    _pantauPaketmu = pantauPaketmu;
     _hubungiLaporan = hubungiLaporan;
     _hubungiEclaim = hubungiEclaim;
-    _laporanReturn = laporanReturn;
     _laporanSummaryOrigin = laporanSummaryOrigin;
     _laporanSummaryDestination = laporanSummaryDestination;
-    _cekOngkir = cekOngkir;
     _dukunganTeknis = dukunganTeknis;
     _pengaturanTema = pengaturanTema;
     _pengaturanLabel = pengaturanLabel;
@@ -156,10 +202,36 @@ class AllowedMenu {
     _profil = json['profil'];
     _fasilitas = json['fasilitas'];
     _katasandi = json['katasandi'];
-    _semuaTransaksi = json['semua_transaksi'];
-    _semuaHapus = json['semua_hapus'];
-    _hapusPesanan = json['hapus_pesanan'];
     _beranda = json['beranda'];
+    _buatPesanan = json['buat_pesanan'];
+    _lacakPesanan = json['lacak_pesanan'];
+    _mintaDijemput = json['minta_dijemput'];
+    _serahTerima = json['serah_terima'];
+    _saldo = json['saldo'];
+    _uangCod = json['uang_cod'];
+    _tagihan = json['tagihan'];
+    _bonus = json['bonus'];
+    _pantauPaketmu = json['pantau_paketmu'];
+    _laporan = json['laporan'];
+    _eclaim = json['eclaim'];
+    _tema = json['tema'];
+    _label = json['label'];
+    _petugas = json['petugas'];
+    _riwayatPesanan = json['riwayat_pesanan'];
+    _cekOngkir = json['cek_ongkir'];
+    _semuaTransaksi = json['semua_transaksi'];
+    _hapusPesanan = json['hapus_pesanan'];
+    _semuaHapus = json['semua_hapus'];
+    _cetakPesanan = json['cetak_pesanan'];
+    _monitoringAgg = json['monitoring_agg'];
+    _monitoringAggMinus = json['monitoring_agg_minus'];
+    _dashReferralTrans = json['dash_referral_trans'];
+    _dashReferralDseller = json['dash_referral_dseller'];
+    _dashReferralSeller = json['dash_referral_seller'];
+    _groupOwner = json['group_owner'];
+    _laporanReturn = json['laporan_return'];
+    _summaryOrigin = json['summary_origin'];
+    _summaryDestination = json['summary_destination'];
     _paketmuInput = json['paketmu_input'];
     _paketmuRiwayat = json['paketmu_riwayat'];
     _paketmuLacak = json['paketmu_lacak'];
@@ -172,13 +244,10 @@ class AllowedMenu {
     _keuanganAggregasiMinus = json['keuangan_aggregasi_minus'];
     _keuanganTagihan = json['keuangan_tagihan'];
     _keuanganBonus = json['keuangan_bonus'];
-    _pantauPaketmu = json['pantau_paketmu'];
     _hubungiLaporan = json['hubungi_laporan'];
     _hubungiEclaim = json['hubungi_eclaim'];
-    _laporanReturn = json['laporan_return'];
     _laporanSummaryOrigin = json['laporan_summary_origin'];
     _laporanSummaryDestination = json['laporan_summary_destination'];
-    _cekOngkir = json['cek_ongkir'];
     _dukunganTeknis = json['dukungan_teknis'];
     _pengaturanTema = json['pengaturan_tema'];
     _pengaturanLabel = json['pengaturan_label'];
@@ -188,10 +257,36 @@ class AllowedMenu {
   String? _profil;
   String? _fasilitas;
   String? _katasandi;
-  String? _semuaTransaksi;
-  String? _semuaHapus;
-  String? _hapusPesanan;
   String? _beranda;
+  String? _buatPesanan;
+  String? _lacakPesanan;
+  String? _mintaDijemput;
+  String? _serahTerima;
+  String? _saldo;
+  String? _uangCod;
+  String? _tagihan;
+  String? _bonus;
+  String? _pantauPaketmu;
+  String? _laporan;
+  String? _eclaim;
+  String? _tema;
+  String? _label;
+  String? _petugas;
+  String? _riwayatPesanan;
+  String? _cekOngkir;
+  String? _semuaTransaksi;
+  String? _hapusPesanan;
+  String? _semuaHapus;
+  String? _cetakPesanan;
+  String? _monitoringAgg;
+  String? _monitoringAggMinus;
+  String? _dashReferralTrans;
+  String? _dashReferralDseller;
+  String? _dashReferralSeller;
+  String? _groupOwner;
+  String? _laporanReturn;
+  String? _summaryOrigin;
+  String? _summaryDestination;
   String? _paketmuInput;
   String? _paketmuRiwayat;
   String? _paketmuLacak;
@@ -204,13 +299,10 @@ class AllowedMenu {
   String? _keuanganAggregasiMinus;
   String? _keuanganTagihan;
   String? _keuanganBonus;
-  String? _pantauPaketmu;
   String? _hubungiLaporan;
   String? _hubungiEclaim;
-  String? _laporanReturn;
   String? _laporanSummaryOrigin;
   String? _laporanSummaryDestination;
-  String? _cekOngkir;
   String? _dukunganTeknis;
   String? _pengaturanTema;
   String? _pengaturanLabel;
@@ -220,10 +312,36 @@ class AllowedMenu {
     String? profil,
     String? fasilitas,
     String? katasandi,
-    String? semuaTransaksi,
-    String? semuaHapus,
-    String? hapusPesanan,
     String? beranda,
+    String? buatPesanan,
+    String? lacakPesanan,
+    String? mintaDijemput,
+    String? serahTerima,
+    String? saldo,
+    String? uangCod,
+    String? tagihan,
+    String? bonus,
+    String? pantauPaketmu,
+    String? laporan,
+    String? eclaim,
+    String? tema,
+    String? label,
+    String? petugas,
+    String? riwayatPesanan,
+    String? cekOngkir,
+    String? semuaTransaksi,
+    String? hapusPesanan,
+    String? semuaHapus,
+    String? cetakPesanan,
+    String? monitoringAgg,
+    String? monitoringAggMinus,
+    String? dashReferralTrans,
+    String? dashReferralDseller,
+    String? dashReferralSeller,
+    String? groupOwner,
+    String? laporanReturn,
+    String? summaryOrigin,
+    String? summaryDestination,
     String? paketmuInput,
     String? paketmuRiwayat,
     String? paketmuLacak,
@@ -236,13 +354,10 @@ class AllowedMenu {
     String? keuanganAggregasiMinus,
     String? keuanganTagihan,
     String? keuanganBonus,
-    String? pantauPaketmu,
     String? hubungiLaporan,
     String? hubungiEclaim,
-    String? laporanReturn,
     String? laporanSummaryOrigin,
     String? laporanSummaryDestination,
-    String? cekOngkir,
     String? dukunganTeknis,
     String? pengaturanTema,
     String? pengaturanLabel,
@@ -252,10 +367,36 @@ class AllowedMenu {
         profil: profil ?? _profil,
         fasilitas: fasilitas ?? _fasilitas,
         katasandi: katasandi ?? _katasandi,
-        semuaTransaksi: semuaTransaksi ?? _semuaTransaksi,
-        semuaHapus: semuaHapus ?? _semuaHapus,
-        hapusPesanan: hapusPesanan ?? _hapusPesanan,
         beranda: beranda ?? _beranda,
+        buatPesanan: buatPesanan ?? _buatPesanan,
+        lacakPesanan: lacakPesanan ?? _lacakPesanan,
+        mintaDijemput: mintaDijemput ?? _mintaDijemput,
+        serahTerima: serahTerima ?? _serahTerima,
+        saldo: saldo ?? _saldo,
+        uangCod: uangCod ?? _uangCod,
+        tagihan: tagihan ?? _tagihan,
+        bonus: bonus ?? _bonus,
+        pantauPaketmu: pantauPaketmu ?? _pantauPaketmu,
+        laporan: laporan ?? _laporan,
+        eclaim: eclaim ?? _eclaim,
+        tema: tema ?? _tema,
+        label: label ?? _label,
+        petugas: petugas ?? _petugas,
+        riwayatPesanan: riwayatPesanan ?? _riwayatPesanan,
+        cekOngkir: cekOngkir ?? _cekOngkir,
+        semuaTransaksi: semuaTransaksi ?? _semuaTransaksi,
+        hapusPesanan: hapusPesanan ?? _hapusPesanan,
+        semuaHapus: semuaHapus ?? _semuaHapus,
+        cetakPesanan: cetakPesanan ?? _cetakPesanan,
+        monitoringAgg: monitoringAgg ?? _monitoringAgg,
+        monitoringAggMinus: monitoringAggMinus ?? _monitoringAggMinus,
+        dashReferralTrans: dashReferralTrans ?? _dashReferralTrans,
+        dashReferralDseller: dashReferralDseller ?? _dashReferralDseller,
+        dashReferralSeller: dashReferralSeller ?? _dashReferralSeller,
+        groupOwner: groupOwner ?? _groupOwner,
+        laporanReturn: laporanReturn ?? _laporanReturn,
+        summaryOrigin: summaryOrigin ?? _summaryOrigin,
+        summaryDestination: summaryDestination ?? _summaryDestination,
         paketmuInput: paketmuInput ?? _paketmuInput,
         paketmuRiwayat: paketmuRiwayat ?? _paketmuRiwayat,
         paketmuLacak: paketmuLacak ?? _paketmuLacak,
@@ -268,13 +409,10 @@ class AllowedMenu {
         keuanganAggregasiMinus: keuanganAggregasiMinus ?? _keuanganAggregasiMinus,
         keuanganTagihan: keuanganTagihan ?? _keuanganTagihan,
         keuanganBonus: keuanganBonus ?? _keuanganBonus,
-        pantauPaketmu: pantauPaketmu ?? _pantauPaketmu,
         hubungiLaporan: hubungiLaporan ?? _hubungiLaporan,
         hubungiEclaim: hubungiEclaim ?? _hubungiEclaim,
-        laporanReturn: laporanReturn ?? _laporanReturn,
         laporanSummaryOrigin: laporanSummaryOrigin ?? _laporanSummaryOrigin,
         laporanSummaryDestination: laporanSummaryDestination ?? _laporanSummaryDestination,
-        cekOngkir: cekOngkir ?? _cekOngkir,
         dukunganTeknis: dukunganTeknis ?? _dukunganTeknis,
         pengaturanTema: pengaturanTema ?? _pengaturanTema,
         pengaturanLabel: pengaturanLabel ?? _pengaturanLabel,
@@ -287,13 +425,65 @@ class AllowedMenu {
 
   String? get katasandi => _katasandi;
 
-  String? get semuaTransaksi => _semuaTransaksi;
+  String? get beranda => _beranda;
 
-  String? get semuaHapus => _semuaHapus;
+  String? get buatPesanan => _buatPesanan;
+
+  String? get lacakPesanan => _lacakPesanan;
+
+  String? get mintaDijemput => _mintaDijemput;
+
+  String? get serahTerima => _serahTerima;
+
+  String? get saldo => _saldo;
+
+  String? get uangCod => _uangCod;
+
+  String? get tagihan => _tagihan;
+
+  String? get bonus => _bonus;
+
+  String? get pantauPaketmu => _pantauPaketmu;
+
+  String? get laporan => _laporan;
+
+  String? get eclaim => _eclaim;
+
+  String? get tema => _tema;
+
+  String? get label => _label;
+
+  String? get petugas => _petugas;
+
+  String? get riwayatPesanan => _riwayatPesanan;
+
+  String? get cekOngkir => _cekOngkir;
+
+  String? get semuaTransaksi => _semuaTransaksi;
 
   String? get hapusPesanan => _hapusPesanan;
 
-  String? get beranda => _beranda;
+  String? get semuaHapus => _semuaHapus;
+
+  String? get cetakPesanan => _cetakPesanan;
+
+  String? get monitoringAgg => _monitoringAgg;
+
+  String? get monitoringAggMinus => _monitoringAggMinus;
+
+  String? get dashReferralTrans => _dashReferralTrans;
+
+  String? get dashReferralDseller => _dashReferralDseller;
+
+  String? get dashReferralSeller => _dashReferralSeller;
+
+  String? get groupOwner => _groupOwner;
+
+  String? get laporanReturn => _laporanReturn;
+
+  String? get summaryOrigin => _summaryOrigin;
+
+  String? get summaryDestination => _summaryDestination;
 
   String? get paketmuInput => _paketmuInput;
 
@@ -319,19 +509,13 @@ class AllowedMenu {
 
   String? get keuanganBonus => _keuanganBonus;
 
-  String? get pantauPaketmu => _pantauPaketmu;
-
   String? get hubungiLaporan => _hubungiLaporan;
 
   String? get hubungiEclaim => _hubungiEclaim;
 
-  String? get laporanReturn => _laporanReturn;
-
   String? get laporanSummaryOrigin => _laporanSummaryOrigin;
 
   String? get laporanSummaryDestination => _laporanSummaryDestination;
-
-  String? get cekOngkir => _cekOngkir;
 
   String? get dukunganTeknis => _dukunganTeknis;
 
@@ -346,10 +530,36 @@ class AllowedMenu {
     map['profil'] = _profil;
     map['fasilitas'] = _fasilitas;
     map['katasandi'] = _katasandi;
-    map['semua_transaksi'] = _semuaTransaksi;
-    map['semua_hapus'] = _semuaHapus;
-    map['hapus_pesanan'] = _hapusPesanan;
     map['beranda'] = _beranda;
+    map['buat_pesanan'] = _buatPesanan;
+    map['lacak_pesanan'] = _lacakPesanan;
+    map['minta_dijemput'] = _mintaDijemput;
+    map['serah_terima'] = _serahTerima;
+    map['saldo'] = _saldo;
+    map['uang_cod'] = _uangCod;
+    map['tagihan'] = _tagihan;
+    map['bonus'] = _bonus;
+    map['pantau_paketmu'] = _pantauPaketmu;
+    map['laporan'] = _laporan;
+    map['eclaim'] = _eclaim;
+    map['tema'] = _tema;
+    map['label'] = _label;
+    map['petugas'] = _petugas;
+    map['riwayat_pesanan'] = _riwayatPesanan;
+    map['cek_ongkir'] = _cekOngkir;
+    map['semua_transaksi'] = _semuaTransaksi;
+    map['hapus_pesanan'] = _hapusPesanan;
+    map['semua_hapus'] = _semuaHapus;
+    map['cetak_pesanan'] = _cetakPesanan;
+    map['monitoring_agg'] = _monitoringAgg;
+    map['monitoring_agg_minus'] = _monitoringAggMinus;
+    map['dash_referral_trans'] = _dashReferralTrans;
+    map['dash_referral_dseller'] = _dashReferralDseller;
+    map['dash_referral_seller'] = _dashReferralSeller;
+    map['group_owner'] = _groupOwner;
+    map['laporan_return'] = _laporanReturn;
+    map['summary_origin'] = _summaryOrigin;
+    map['summary_destination'] = _summaryDestination;
     map['paketmu_input'] = _paketmuInput;
     map['paketmu_riwayat'] = _paketmuRiwayat;
     map['paketmu_lacak'] = _paketmuLacak;
@@ -362,13 +572,10 @@ class AllowedMenu {
     map['keuangan_aggregasi_minus'] = _keuanganAggregasiMinus;
     map['keuangan_tagihan'] = _keuanganTagihan;
     map['keuangan_bonus'] = _keuanganBonus;
-    map['pantau_paketmu'] = _pantauPaketmu;
     map['hubungi_laporan'] = _hubungiLaporan;
     map['hubungi_eclaim'] = _hubungiEclaim;
-    map['laporan_return'] = _laporanReturn;
     map['laporan_summary_origin'] = _laporanSummaryOrigin;
     map['laporan_summary_destination'] = _laporanSummaryDestination;
-    map['cek_ongkir'] = _cekOngkir;
     map['dukungan_teknis'] = _dukunganTeknis;
     map['pengaturan_tema'] = _pengaturanTema;
     map['pengaturan_label'] = _pengaturanLabel;

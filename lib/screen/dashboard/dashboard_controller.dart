@@ -31,7 +31,7 @@ class DashboardController extends BaseController {
 
   List<Widget> widgetOptions = <Widget>[
     const DashboardScreen(),
-    const AltProfileScreen(),
+    AltProfileScreen(),
   ];
 
   List<Items> menuItems = [];
@@ -135,23 +135,23 @@ class DashboardController extends BaseController {
   }
 
   void cekAllowance() {
-    if (isLogin && allow.paketmuInput != "Y" && isOnline) {
+    if (isLogin && allow.paketmuInput != "Y" && isOnline && allow.buatPesanan != "Y") {
       menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (isLogin && allow.paketmuRiwayat != "Y" && isOnline) {
+    if (isLogin && allow.paketmuRiwayat != "Y" && isOnline && allow.riwayatPesanan != "Y") {
       menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
       menuItems.removeWhere((e) => e.title == "Draft Transaksi");
     }
-    if (isLogin && allow.paketmuLacak != "Y" && isOnline) {
+    if (isLogin && allow.paketmuLacak != "Y" && isOnline && allow.lacakPesanan != "Y") {
       menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
     }
-    if (isLogin && allow.keuanganCod != "Y" && isOnline) {
+    if (isLogin && allow.keuanganCod != "Y" && isOnline && allow.uangCod != "Y") {
       menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (isLogin && allow.keuanganAggregasi != "Y" && isOnline) {
+    if (isLogin && allow.keuanganAggregasi != "Y" && isOnline && allow.monitoringAgg != "Y") {
       menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (isLogin && allow.keuanganAggregasiMinus != "Y" && isOnline) {
+    if (isLogin && allow.keuanganAggregasiMinus != "Y" && isOnline && allow.monitoringAggMinus != "Y") {
       menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
     }
     if (isLogin && allow.cekOngkir != "Y" && isOnline) {

@@ -64,32 +64,30 @@ class PengaturanScreen extends StatelessWidget {
               ),
             ),
           ),
-          /*controller.allow.label == "Y"
-                      ?*/
-          SettingListItem(
-            title: 'Pengaturan Label'.tr,
-            icon: Icons.label_outline,
-            onTap: () => c.isLogin
-                ? Get.to(const PengaturanLabelScreen())
-                : showDialog(
-                    context: context,
-                    builder: (context) => const LoginAlertDialog(),
-                  ),
-          ),
-          // : const SizedBox(),
-          /*controller.allow.petugas == "Y"
-                      ?*/
-          SettingListItem(
-            title: 'Pengaturan Petugas'.tr,
-            icon: Icons.account_circle,
-            onTap: () => c.isLogin
-                ? Get.to(const PengaturanPetugasScreen())
-                : showDialog(
-                    context: context,
-                    builder: (context) => const LoginAlertDialog(),
-                  ),
-          ),
-          // : const SizedBox(),
+          c.allow.label == "Y" || c.allow.pengaturanLabel == "Y"
+              ? SettingListItem(
+                  title: 'Pengaturan Label'.tr,
+                  icon: Icons.label_outline,
+                  onTap: () => c.isLogin
+                      ? Get.to(const PengaturanLabelScreen())
+                      : showDialog(
+                          context: context,
+                          builder: (context) => const LoginAlertDialog(),
+                        ),
+                )
+              : const SizedBox(),
+          c.allow.petugas == "Y" || c.allow.pengaturanPetugas == "Y"
+              ? SettingListItem(
+                  title: 'Pengaturan Petugas'.tr,
+                  icon: Icons.account_circle,
+                  onTap: () => c.isLogin
+                      ? Get.to(const PengaturanPetugasScreen())
+                      : showDialog(
+                          context: context,
+                          builder: (context) => const LoginAlertDialog(),
+                        ),
+                )
+              : const SizedBox(),
           c.isLogin && c.allow.katasandi == "Y"
               ? SettingListItem(
                   title: 'Ubah Kata Sandi'.tr,

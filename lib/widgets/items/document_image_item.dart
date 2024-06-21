@@ -92,30 +92,33 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
                         }
                       },
                     )
-                  : GoogleMap(
-                      // onMapCreated: _onMapCreated,
-                      onMapCreated: (controller) => googleMapController?.complete(controller),
-
-                      zoomControlsEnabled: false,
-                      myLocationButtonEnabled: false,
-                      markers: <Marker>{
-                        Marker(
-                          draggable: false,
-                          markerId: const MarkerId('SomeId'),
-                          position: LatLng(
-                            widget.lat!,
-                            widget.lng!,
-                          ),
+                  : widget.isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator.adaptive(),
                         )
-                      },
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(
-                          widget.lat!,
-                          widget.lng!,
+                      : GoogleMap(
+                          // onMapCreated: _onMapCreated,
+                          onMapCreated: (controller) => googleMapController?.complete(controller),
+                          zoomControlsEnabled: false,
+                          myLocationButtonEnabled: false,
+                          markers: <Marker>{
+                            Marker(
+                              draggable: false,
+                              markerId: const MarkerId('SomeId'),
+                              position: LatLng(
+                                widget.lat!,
+                                widget.lng!,
+                              ),
+                            )
+                          },
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(
+                              widget.lat!,
+                              widget.lng!,
+                            ),
+                            zoom: 16.0,
+                          ),
                         ),
-                        zoom: 16.0,
-                      ),
-                    ),
             ),
           ],
         ),

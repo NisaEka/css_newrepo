@@ -55,9 +55,9 @@ class BottomBar4 extends StatelessWidget {
             title: "Lacak Kiriman".tr,
             isSelected: menu == 1,
             color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-            onTap: () => Get.offAll(const LacakKirimanScreen(), arguments: {}),
+            onTap: () => Get.to(const LacakKirimanScreen(), arguments: {}),
           ),
-          allowedMenu.paketmuInput == "Y" || !isLogin
+          allowedMenu.paketmuInput == "Y" || !isLogin || allowedMenu.buatPesanan == "Y"
               ? FloatingActionButton(
                   shape: const CircleBorder(),
                   backgroundColor: isLogin ? redJNE : errorLightColor2,
@@ -88,7 +88,7 @@ class BottomBar4 extends StatelessWidget {
             color: (AppConst.isLightTheme(context) ? blueJNE : redJNE).withOpacity(1),
             // onTap: () => Get.offAll(const ProfileScreen()),
             onTap: () => isLogin
-                ? Get.offAll(const AltProfileScreen())
+                ? Get.offAll(AltProfileScreen())
                 : showDialog(
                     context: context,
                     builder: (context) => const LoginAlertDialog(),

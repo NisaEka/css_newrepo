@@ -192,6 +192,7 @@ class LacakKirimanScreen extends StatelessWidget {
                                           history: e,
                                           cnote: c.trackModel?.cnote,
                                           isLogin: c.isLogin,
+                                          isLoading: c.isLoading,
                                         ))
                                     .toList() ??
                                 []

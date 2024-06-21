@@ -111,7 +111,7 @@ class EditProfilScreen extends StatelessWidget {
                       '${e.districtName ?? ''}; '
                       '${e.subDistrictName ?? ''}; '
                       '${e.zipCode ?? ''}'
-                  : e.zipCode.toString(),
+                  : e.zipCode ?? '',
               onChanged: (value) {
                 c.selectedCity = value;
                 c.update();

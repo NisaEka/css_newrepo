@@ -12,7 +12,7 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
-import 'package:css_mobile/widgets/bar/custombottombar3.dart';
+import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
@@ -33,7 +33,15 @@ class AltProfileScreen extends StatelessWidget {
             child: Scaffold(
               appBar: _appBarContent(),
               body: _bodyContent(controller, context),
-              bottomNavigationBar: _logoutButton(controller, context),
+              bottomNavigationBar: ValueListenableBuilder(
+                  valueListenable: controller.bottom.visible,
+                  builder: (context, bool value, child) {
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      height: value ? 113 : kBottomNavigationBarHeight,
+                      child: _logoutButton(controller, context),
+                    );
+                  }),
             ),
           );
         });
@@ -42,25 +50,27 @@ class AltProfileScreen extends StatelessWidget {
   Widget _logoutButton(AltProfileController c, BuildContext context) {
     return Container(
       // margin: const EdgeInsets.only(bottom: 20),
-      height: 100,
-      // color: whiteColor,
-      child: Column(
+      height: 113,
+      decoration: BoxDecoration(
+          color: whiteColor,
+          border: Border(
+            bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
+            top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
+          )),
+      child: Wrap(
         children: [
           ListTile(
+            tileColor: whiteColor,
             onTap: () => c.isLogin ? c.doLogout() : Get.to(const LoginScreen()),
             leading: Icon(c.isLogin ? Icons.logout : Icons.login),
             title: Text(c.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
             trailing: Text('v ${c.version.toString()}'.tr),
-            shape: Border(
-              bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
-              top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
-            ),
           ),
-          // BottomBar3(
-          //   menu: 4,
-          //   isLogin: c.isLogin,
-          //   allowedMenu: c.allow,
-          // )
+          BottomBar4(
+            menu: 3,
+            isLogin: c.isLogin,
+            allowedMenu: c.allow,
+          )
         ],
       ),
     );
@@ -70,6 +80,7 @@ class AltProfileScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: ListView(
+        controller: c.bottom.controller,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

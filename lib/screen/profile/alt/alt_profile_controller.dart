@@ -1,4 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/base/bottombar_controller.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
@@ -12,6 +13,8 @@ import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class AltProfileController extends BaseController {
+  final HideNavbar bottom = HideNavbar();
+
   bool isLogin = false;
   bool isEdit = false;
   bool pop = false;

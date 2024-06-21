@@ -16,6 +16,7 @@ class KirimanStepper extends StatelessWidget {
   final int currentStep;
   final int? length;
   final bool isLogin;
+  final bool isLoading;
 
   const KirimanStepper({
     super.key,
@@ -24,6 +25,7 @@ class KirimanStepper extends StatelessWidget {
     this.length,
     this.cnote,
     this.isLogin = false,
+    this.isLoading = false,
   });
 
   @override
@@ -92,6 +94,7 @@ class KirimanStepper extends StatelessWidget {
                               DocumentImageItem(
                                 title: 'Foto Pengiriman'.tr,
                                 img: cnote?.photo ?? '',
+                                isLoading: isLoading,
                                 onTap: () => showDialog(
                                   context: context,
                                   builder: (context) => ImagePopupDialog(
@@ -103,6 +106,7 @@ class KirimanStepper extends StatelessWidget {
                               DocumentImageItem(
                                 title: 'Tanda Tangan'.tr,
                                 img: cnote?.signature ?? '',
+                                isLoading: isLoading,
                                 onTap: () => showDialog(
                                   context: context,
                                   builder: (context) => ImagePopupDialog(
@@ -116,6 +120,7 @@ class KirimanStepper extends StatelessWidget {
                                 // img: cnote?.signature ?? '',
                                 lat: cnote?.lat?.toDouble(),
                                 lng: cnote?.long?.toDouble(),
+                                isLoading: isLoading || (cnote?.lat?.isEmpty ?? false),
                                 onTap: () => showDialog(
                                   context: context,
                                   builder: (context) => ImagePopupDialog(

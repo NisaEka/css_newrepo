@@ -7,17 +7,12 @@ import 'package:css_mobile/screen/dashboard/menu/other_menu_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_screen.dart';
-import 'package:css_mobile/widgets/bar/custombottombar.dart';
-import 'package:css_mobile/widgets/bar/custombottombar2.dart';
-import 'package:css_mobile/widgets/bar/custombottombar3.dart';
 import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_carousel.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_info.dart';
-import 'package:css_mobile/widgets/dashboard/dashboard_marquee.dart';
 import 'package:css_mobile/widgets/dashboard/dashboard_menu2.dart';
 import 'package:css_mobile/widgets/dashboard/jlcpoint_widget.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
-import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -119,7 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     fontColor: whiteColor,
                                     isLoading: c.isLoading,
                                   ),
-                                  c.isLogin && c.allow.keuanganBonus == "Y"
+                                  c.isLogin && (c.allow.keuanganBonus == "Y" || c.allow.bonus == "Y")
                                       ? GestureDetector(
                                           onTap: () => Get.to(const BonusKamuScreen()),
                                           child: JLCPointWidget(
@@ -131,38 +126,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               )
                             : const SizedBox(),
                         const SizedBox(height: 15),
-                        /*!controller.isLogin || controller.allow.lacakPesanan == "Y"
-                                    ? */
-                        TextField(
-                          controller: c.nomorResi,
-                          decoration: InputDecoration(
-                            hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
-                            hintStyle: hintTextStyle,
-                            suffixIcon: GestureDetector(
-                              onTap: () => Get.to(
-                                const BarcodeScanScreen(),
-                                arguments: {
-                                  "cek_resi": true,
-                                },
-                              )?.then((result) {
-                                c.nomorResi.clear();
-                                c.update();
-                              }),
-                              child: const Icon(
-                                Icons.qr_code,
-                                color: redJNE,
-                              ),
-                            ),
-                          ),
-                          // readOnly: true,
-                          onSubmitted: (value) => Get.to(const LacakKirimanScreen(), arguments: {
-                            'nomor_resi': value,
-                          })?.then((value) {
-                            c.nomorResi.clear();
-                            c.update();
-                          }),
-                        )
-                        // : const SizedBox(),
+                        c.isLogin && (c.allow.lacakPesanan == "Y" || c.allow.keuanganBonus == "Y")
+                            ? TextField(
+                                controller: c.nomorResi,
+                                decoration: InputDecoration(
+                                  hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
+                                  hintStyle: hintTextStyle,
+                                  suffixIcon: GestureDetector(
+                                    onTap: () => Get.to(
+                                      const BarcodeScanScreen(),
+                                      arguments: {
+                                        "cek_resi": true,
+                                      },
+                                    )?.then((result) {
+                                      c.nomorResi.clear();
+                                      c.update();
+                                    }),
+                                    child: const Icon(
+                                      Icons.qr_code,
+                                      color: redJNE,
+                                    ),
+                                  ),
+                                ),
+                                // readOnly: true,
+                                onSubmitted: (value) => Get.to(const LacakKirimanScreen(), arguments: {
+                                  'nomor_resi': value,
+                                })?.then((value) {
+                                  c.nomorResi.clear();
+                                  c.update();
+                                }),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   ),
