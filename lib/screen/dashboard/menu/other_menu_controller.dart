@@ -44,8 +44,6 @@ class OtherMenuCotroller extends BaseController {
       favoritList.addAll(menu.items ?? []);
       update();
 
-      allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
-      update();
     } catch (e) {
       e.printError();
     }
@@ -136,29 +134,29 @@ class OtherMenuCotroller extends BaseController {
   }
 
   void cekAllowance() {
-    if (isLogin && allow.buatPesanan != "Y") {
+    if (isLogin && allow.paketmuInput != "Y") {
       paketmuList.removeWhere((e) => e.title == "Input Kirimanmu");
       favoritList.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (isLogin && allow.riwayatPesanan != "Y") {
+    if (isLogin && allow.paketmuRiwayat != "Y") {
       paketmuList.removeWhere((e) => e.title == "Riwayat Kiriman");
       paketmuList.removeWhere((e) => e.title == "Draft Transaksi");
       favoritList.removeWhere((e) => e.title == "Riwayat Kiriman");
       favoritList.removeWhere((e) => e.title == "Draft Transaksi");
     }
-    if (isLogin && allow.lacakPesanan != "Y") {
+    if (isLogin && allow.paketmuLacak != "Y") {
       paketmuList.removeWhere((e) => e.title == "Lacak Kiriman");
       favoritList.removeWhere((e) => e.title == "Lacak Kiriman");
     }
-    if (isLogin && allow.uangCod != "Y") {
+    if (isLogin && allow.keuanganCod != "Y") {
       keuanganmuList.removeWhere((e) => e.title == "Uang_COD Kamu");
       favoritList.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (isLogin && allow.monitoringAgg != "Y") {
+    if (isLogin && allow.keuanganAggregasi != "Y") {
       keuanganmuList.removeWhere((e) => e.title == "Pembayaran Aggregasi");
       favoritList.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (isLogin && allow.monitoringAggMinus != "Y") {
+    if (isLogin && allow.keuanganAggregasiMinus != "Y") {
       keuanganmuList.removeWhere((e) => e.title == "Aggregasi Minus");
       favoritList.removeWhere((e) => e.title == "Aggregasi Minus");
     }
@@ -171,28 +169,28 @@ class OtherMenuCotroller extends BaseController {
   }
 
   void removeMenu(AllowedMenu allow) {
-    if (allow.buatPesanan != "Y" && allow.riwayatPesanan != null) {
+    if (allow.paketmuInput != "Y" && allow.paketmuRiwayat != null) {
       paketmuList.removeWhere((e) => e.title == "Input Kirimanmu");
       favoritList.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (allow.riwayatPesanan != "Y" && allow.riwayatPesanan != null) {
+    if (allow.paketmuRiwayat != "Y" && allow.paketmuRiwayat != null) {
       paketmuList.removeWhere((e) => e.title == "Riwayat Kiriman");
       paketmuList.removeWhere((e) => e.title == "Draft Transaksi");
       favoritList.removeWhere((e) => e.title == "Riwayat Kiriman");
       favoritList.removeWhere((e) => e.title == "Draft Transaksi");
     }
-    if (allow.lacakPesanan != "Y" && allow.lacakPesanan != null) {
+    if (allow.paketmuLacak != "Y" && allow.paketmuLacak != null) {
       paketmuList.removeWhere((e) => e.title == "Lacak Kiriman");
       favoritList.removeWhere((e) => e.title == "Lacak Kiriman");
     }
-    if (allow.uangCod != "Y" && allow.uangCod != null) {
+    if (allow.keuanganCod != "Y" && allow.keuanganCod != null) {
       keuanganmuList.removeWhere((e) => e.title == "Uang_COD Kamu");
       favoritList.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (allow.monitoringAgg != "Y" && allow.monitoringAgg != null) {
+    if (allow.keuanganAggregasi != "Y" && allow.keuanganAggregasi != null) {
       keuanganmuList.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (allow.monitoringAggMinus != "Y" && allow.monitoringAggMinus != null) {
+    if (allow.keuanganAggregasiMinus != "Y" && allow.keuanganAggregasiMinus != null) {
       keuanganmuList.removeWhere((e) => e.title == "Aggregasi Minus");
     }
     if (allow.cekOngkir != "Y" && allow.cekOngkir != null) {

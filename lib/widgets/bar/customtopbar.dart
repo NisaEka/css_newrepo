@@ -66,6 +66,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
                 title != null
                     ? Text(
                         title!.tr,
+                        style: appTitleTextStyle,
                       )
                     : const SizedBox(),
                 Row(

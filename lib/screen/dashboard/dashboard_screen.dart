@@ -119,7 +119,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     fontColor: whiteColor,
                                     isLoading: c.isLoading,
                                   ),
-                                  c.isLogin && c.allow.bonus == "Y"
+                                  c.isLogin && c.allow.keuanganBonus == "Y"
                                       ? GestureDetector(
                                           onTap: () => Get.to(const BonusKamuScreen()),
                                           child: JLCPointWidget(

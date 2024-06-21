@@ -42,7 +42,7 @@ class LogActivityStepper extends StatelessWidget {
                 width: 23,
                 height: 23,
                 decoration: BoxDecoration(
-                    color: currentStep == 0 ? (AppConst.isLightTheme(context) ? blueJNE : redJNE) : greyColor,
+                    color: currentStep == 0 ? (AppConst.isLightTheme(context) ? blueJNE : redJNE) : (AppConst.isLightTheme(context) ? greyColor : greyDarkColor1),
                     borderRadius: BorderRadius.circular(20)),
               ),
             ),

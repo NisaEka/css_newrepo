@@ -135,23 +135,23 @@ class DashboardController extends BaseController {
   }
 
   void cekAllowance() {
-    if (isLogin && allow.buatPesanan != "Y" && isOnline) {
+    if (isLogin && allow.paketmuInput != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (isLogin && allow.riwayatPesanan != "Y" && isOnline) {
+    if (isLogin && allow.paketmuRiwayat != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
       menuItems.removeWhere((e) => e.title == "Draft Transaksi");
     }
-    if (isLogin && allow.lacakPesanan != "Y" && isOnline) {
+    if (isLogin && allow.paketmuLacak != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
     }
-    if (isLogin && allow.uangCod != "Y" && isOnline) {
+    if (isLogin && allow.keuanganCod != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (isLogin && allow.monitoringAgg != "Y" && isOnline) {
+    if (isLogin && allow.keuanganAggregasi != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (isLogin && allow.monitoringAggMinus != "Y" && isOnline) {
+    if (isLogin && allow.keuanganAggregasiMinus != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
     }
     if (isLogin && allow.cekOngkir != "Y" && isOnline) {

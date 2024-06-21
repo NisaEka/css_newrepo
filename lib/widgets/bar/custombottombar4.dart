@@ -57,7 +57,7 @@ class BottomBar4 extends StatelessWidget {
             color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
             onTap: () => Get.offAll(const LacakKirimanScreen(), arguments: {}),
           ),
-          allowedMenu.buatPesanan == "Y" || !isLogin
+          allowedMenu.paketmuInput == "Y" || !isLogin
               ? FloatingActionButton(
                   shape: const CircleBorder(),
                   backgroundColor: isLogin ? redJNE : errorLightColor2,

@@ -37,7 +37,7 @@ class BottomBar2 extends StatelessWidget {
           alignment: Alignment.center,
           margin: EdgeInsets.symmetric(
             horizontal: 20,
-            vertical: (allowedMenu.buatPesanan != "Y" && isLogin) ? 20 : 0,
+            vertical: (allowedMenu.paketmuInput != "Y" && isLogin) ? 20 : 0,
           ),
           padding: const EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
@@ -125,7 +125,7 @@ class BottomBar2 extends StatelessWidget {
         // )
         Padding(
           padding: const EdgeInsets.only(bottom: 50.0),
-          child: allowedMenu.buatPesanan == "Y" || !isLogin
+          child: allowedMenu.paketmuInput == "Y" || !isLogin
               ? FloatingActionButton(
                   shape: const CircleBorder(),
                   backgroundColor: isLogin ? redJNE : errorLightColor2,
