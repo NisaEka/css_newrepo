@@ -104,7 +104,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
             ),
           ),
           Text(
-            requestPickup.name,
+            requestPickup.receiverName,
             style: itemTextStyle,
           ),
           _requestPickupServiceAndType(requestPickup)
@@ -117,7 +117,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
     return Row(
       children: [
         Text(
-          requestPickup.transactionType,
+          requestPickup.type,
           style: itemTextStyle,
         ),
         Text(
@@ -125,7 +125,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
           style: itemTextStyle,
         ),
         Text(
-          requestPickup.transactionService,
+          requestPickup.serviceCode,
           style: itemTextStyle,
         )
       ],
@@ -137,7 +137,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          requestPickup.transactionDate,
+          requestPickup.date,
           style: labelTextStyle,
         ),
         const SizedBox(height: 8,),

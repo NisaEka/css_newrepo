@@ -3,6 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_delivery_type_enum.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_screen.dart';
 import 'package:css_mobile/screen/request_pickup/detail/request_pickup_detail_screen.dart';
@@ -16,16 +17,16 @@ import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart'
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RequestPickupScreen extends StatefulWidget {
-  const RequestPickupScreen({ super.key });
+  const RequestPickupScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _RequestPickupScreenState();
 }
 
 class _RequestPickupScreenState extends State<RequestPickupScreen> {
-
   bool _checkMode = false;
   bool _checkAll = false;
 
@@ -44,9 +45,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
   }
 
   PreferredSizeWidget _requestPickupAppBar() {
-    return CustomTopBar(
-      title: "Minta Dijemput".tr
-    );
+    return CustomTopBar(title: "Minta Dijemput".tr);
   }
 
   Widget? _requestPickupBottomBar(RequestPickupController controller) {
@@ -63,15 +62,13 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
                   Text(
                     "Total kiriman dipilih",
                     style: sublistTitleTextStyle.copyWith(
-                        fontWeight: FontWeight.bold
-                    ),
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     "2",
                     style: sublistTitleTextStyle.copyWith(
-                        fontWeight: FontWeight.bold
-                    ),
+                        fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -82,7 +79,8 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
               },
               child: Text(
                 "Minta Dijemput".tr,
-                style: const TextStyle(color: whiteColor),),
+                style: const TextStyle(color: whiteColor),
+              ),
             )
           ],
         ),
@@ -94,27 +92,24 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
 
   Widget _requestPickupBody(RequestPickupController controller) {
     if (controller.showLoadingIndicator) {
-      return const Center(
-        child: CircularProgressIndicator()
-      );
+      return const Center(child: CircularProgressIndicator());
     }
 
     if (controller.showEmptyContent) {
-      return const Center(
-        child: Text("Tidak ada data tersedia")
-      );
+      return const Center(child: Text("Tidak ada data tersedia"));
     }
 
     if (controller.showErrorContent) {
       return Center(
-        child: Column(
-          children: [
-            Text("Terjadi kesalahan ketika mengambil data".tr),
-            const Padding(padding: EdgeInsets.only(top: 16)),
-            FilledButton(onPressed: () => controller.requireRetry(), child: const Text("Muat ulang"))
-          ],
-        )
-      );
+          child: Column(
+        children: [
+          Text("Terjadi kesalahan ketika mengambil data".tr),
+          const Padding(padding: EdgeInsets.only(top: 16)),
+          FilledButton(
+              onPressed: () => controller.requireRetry(),
+              child: const Text("Muat ulang"))
+        ],
+      ));
     }
 
     if (controller.showMainContent) {
@@ -129,30 +124,51 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
       children: [
         _buttonFilters(controller),
         _checkAllItemBox(),
-        Expanded(child: ListView(
-          children: controller.requestPickups.map((requestPickup) {
-            return RequestPickupItem(
-              data: requestPickup,
-              onTap: () {
-                if (_checkMode) {
-                  setState(() {
-                    _checkMode = false;
-                    _checkAll = false;
-                  });
-                } else {
-                  Get.to(const RequestPickupDetailScreen(), arguments: {
-                    "data": requestPickup
-                  });
-                }
-              },
-              onLongTap: () {
-                setState(() {
-                  _checkMode = true;
-                });
-              },
-              checkMode: _checkMode,
-            );
-          }).toList(),
+        Expanded(
+            child: RefreshIndicator(
+          onRefresh: () =>
+              Future.sync(() => controller.pagingController.refresh()),
+          child: PagedListView<int, RequestPickupModel>(
+            pagingController: controller.pagingController,
+            builderDelegate: PagedChildBuilderDelegate<RequestPickupModel>(
+                transitionDuration: const Duration(milliseconds: 500),
+                itemBuilder: (context, item, index) {
+                  return RequestPickupItem(
+                    data: item,
+                    onTap: () {
+                      if (_checkMode) {
+                        setState(() {
+                          _checkMode = false;
+                          _checkAll = false;
+                        });
+                      } else {
+                        Get.to(const RequestPickupDetailScreen(),
+                            arguments: {"data": item});
+                      }
+                    },
+                    onLongTap: () {
+                      setState(() {
+                        _checkMode = true;
+                      });
+                    },
+                    checkMode: _checkMode,
+                  );
+                },
+                firstPageErrorIndicatorBuilder: (context) {
+                  return Center(
+                      child: Column(
+                    children: [
+                      Text("Terjadi kesalahan ketika mengambil data".tr),
+                      const Padding(padding: EdgeInsets.only(top: 16)),
+                      FilledButton(
+                        onPressed: () => controller.requireRetry(),
+                        child: const Text("Muat ulang"),
+                      )
+                    ],
+                  )
+                  );
+                }),
+          ),
         ))
       ],
     );
@@ -192,21 +208,21 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
         child: Row(
           children: [
             const SizedBox(width: 16),
-            _buttonFilter(
-              controller.filterDateText.tr, () { _filterDateBottomSheet(controller); }
-            ),
+            _buttonFilter(controller.filterDateText.tr, () {
+              _filterDateBottomSheet(controller);
+            }),
             const SizedBox(width: 16),
-            _buttonFilter(
-              controller.filterStatusText.tr, () { _filterStatusBottomSheet(controller); }
-            ),
+            _buttonFilter(controller.filterStatusText.tr, () {
+              _filterStatusBottomSheet(controller);
+            }),
             const SizedBox(width: 16),
-            _buttonFilter(
-              controller.filterDeliveryTypeText.tr, () { _filterDeliveryTypeBottomSheet(controller); }
-            ),
+            _buttonFilter(controller.filterDeliveryTypeText.tr, () {
+              _filterDeliveryTypeBottomSheet(controller);
+            }),
             const SizedBox(width: 16),
-            _buttonFilter(
-              controller.filterDeliveryCityText.tr, () { _filterDeliveryCityBottomSheet(controller); }
-            ),
+            _buttonFilter(controller.filterDeliveryCityText.tr, () {
+              _filterDeliveryCityBottomSheet(controller);
+            }),
             const SizedBox(width: 16),
           ],
         ),
@@ -214,9 +230,11 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
     );
   }
 
-  Widget _buttonFilter(String text , Function onPressed) {
+  Widget _buttonFilter(String text, Function onPressed) {
     return OutlinedButton(
-      onPressed: () { onPressed(); },
+      onPressed: () {
+        onPressed();
+      },
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         side: const BorderSide(width: 1, color: greyColor),
@@ -225,9 +243,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
         children: [
           Text(
             text.tr,
-            style: sublistTitleTextStyle.copyWith(
-                fontWeight: semiBold
-            ),
+            style: sublistTitleTextStyle.copyWith(fontWeight: semiBold),
           ),
           const SizedBox(width: 8),
           const Icon(
@@ -245,12 +261,11 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
 
     Get.bottomSheet(
       enableDrag: true,
-      isDismissible: true ,
+      isDismissible: true,
       StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-
         return RequestPickupBottomSheetScaffold(
           title: "Pilih Tanggal".tr,
-          content:  Expanded(
+          content: Expanded(
             child: ListView.separated(
               separatorBuilder: (BuildContext context, int index) {
                 if (index <= items.length) {
@@ -265,7 +280,8 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
               itemCount: items.length,
               itemBuilder: (context, index) {
                 bool isSelected = controller.selectedFilterDate == items[index];
-                bool isCustom = controller.selectedFilterDate == RequestPickupDateEnum.custom;
+                bool isCustom = controller.selectedFilterDate ==
+                    RequestPickupDateEnum.custom;
                 bool showDatePickerContent = isCustom && isSelected;
 
                 return GestureDetector(
@@ -274,54 +290,60 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
                       controller.setSelectedFilterDate(items[index]);
                     });
                   },
-                  child: showDatePickerContent ? Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(items[index].asName().tr),
-                          Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FilledButton(
-                            onPressed: () {
-                              _selectDate(context).then((value) {
-                                setState(() {
-                                  controller.setSelectedDateStart(value);
-                                });
-                              });
-                            },
-                            child: Text(
-                              controller.selectedDateStartText.tr,
-                              style: const TextStyle(color: whiteColor),
+                  child: showDatePickerContent
+                      ? Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(items[index].asName().tr),
+                                Icon(isSelected
+                                    ? Icons.circle
+                                    : Icons.circle_outlined)
+                              ],
                             ),
-                          ),
-                          FilledButton(
-                            onPressed: () {
-                              _selectDate(context).then((value) {
-                                setState(() {
-                                  controller.setSelectedDateEnd(value);
-                                });
-                              });
-                            },
-                            child: Text(
-                              controller.selectedDateEndText.tr,
-                              style: const TextStyle(color: whiteColor),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ) : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(items[index].asName().tr),
-                      Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-                    ],
-                  ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                FilledButton(
+                                  onPressed: () {
+                                    _selectDate(context).then((value) {
+                                      setState(() {
+                                        controller.setSelectedDateStart(value);
+                                      });
+                                    });
+                                  },
+                                  child: Text(
+                                    controller.selectedDateStartText.tr,
+                                    style: const TextStyle(color: whiteColor),
+                                  ),
+                                ),
+                                FilledButton(
+                                  onPressed: () {
+                                    _selectDate(context).then((value) {
+                                      setState(() {
+                                        controller.setSelectedDateEnd(value);
+                                      });
+                                    });
+                                  },
+                                  child: Text(
+                                    controller.selectedDateEndText.tr,
+                                    style: const TextStyle(color: whiteColor),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(items[index].asName().tr),
+                            Icon(isSelected
+                                ? Icons.circle
+                                : Icons.circle_outlined)
+                          ],
+                        ),
                 );
               },
             ),
@@ -334,134 +356,144 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
   _filterStatusBottomSheet(RequestPickupController controller) {
     const items = RequestPickupStatus.values;
 
-    _requestPickupBottomSheetScaffold("Pilih Status".tr, Expanded(
-      child: ListView.separated(
-        separatorBuilder: (BuildContext context, int index) {
-          if (index <= items.length) {
-            return const SizedBox(
-              height: 16,
-            );
-          } else {
-            return Container();
-          }
-        },
-        padding: const EdgeInsets.all(16),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          bool isSelected = controller.selectedFilterStatus == items[index];
-          return GestureDetector(
-            onTap: () {
-              controller.setSelectedFilterStatus(items[index]);
-              Get.back();
+    _requestPickupBottomSheetScaffold(
+        "Pilih Status".tr,
+        Expanded(
+          child: ListView.separated(
+            separatorBuilder: (BuildContext context, int index) {
+              if (index <= items.length) {
+                return const SizedBox(
+                  height: 16,
+                );
+              } else {
+                return Container();
+              }
             },
-            child: Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(items[index].asName().tr),
-                  Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    ));
+            padding: const EdgeInsets.all(16),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              bool isSelected = controller.selectedFilterStatus == items[index];
+              return GestureDetector(
+                onTap: () {
+                  controller.setSelectedFilterStatus(items[index]);
+                  Get.back();
+                },
+                child: Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(items[index].asName().tr),
+                      Icon(isSelected ? Icons.circle : Icons.circle_outlined)
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ));
   }
 
   _filterDeliveryTypeBottomSheet(RequestPickupController controller) {
     const items = RequestPickupDeliveryType.values;
 
-    _requestPickupBottomSheetScaffold("Pilih Tipe Kiriman".tr, Expanded(
-      child: ListView.separated(
-        separatorBuilder: (BuildContext context, int index) {
-          if (index <= items.length) {
-            return const SizedBox(
-              height: 16,
-            );
-          } else {
-            return Container();
-          }
-        },
-        padding: const EdgeInsets.all(16),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          bool isSelected = controller.selectedFilterDeliveryType == items[index];
-          return GestureDetector(
-            onTap: () {
-              controller.setSelectedDeliveryType(items[index]);
-              Get.back();
+    _requestPickupBottomSheetScaffold(
+        "Pilih Tipe Kiriman".tr,
+        Expanded(
+          child: ListView.separated(
+            separatorBuilder: (BuildContext context, int index) {
+              if (index <= items.length) {
+                return const SizedBox(
+                  height: 16,
+                );
+              } else {
+                return Container();
+              }
             },
-            child: Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(items[index].asName().tr),
-                  Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    ));
+            padding: const EdgeInsets.all(16),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              bool isSelected =
+                  controller.selectedFilterDeliveryType == items[index];
+              return GestureDetector(
+                onTap: () {
+                  controller.setSelectedDeliveryType(items[index]);
+                  Get.back();
+                },
+                child: Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(items[index].asName().tr),
+                      Icon(isSelected ? Icons.circle : Icons.circle_outlined)
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ));
   }
 
   _filterDeliveryCityBottomSheet(RequestPickupController controller) {
     List<String> items = controller.cities;
 
-    _requestPickupBottomSheetScaffold("Pilih Kota Pengiriman", Expanded(
-      child: ListView.separated(
-        separatorBuilder: (BuildContext context, int index) {
-          if (index <= items.length) {
-            return const SizedBox(
-              height: 16,
-            );
-          } else {
-            return Container();
-          }
-        },
-        padding: const EdgeInsets.all(16),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          bool isSelected = controller.filterDeliveryCityText == items[index];
-          return GestureDetector(
-            onTap: () {
-              controller.setSelectedFilterCity(items[index]);
-              Get.back();
+    _requestPickupBottomSheetScaffold(
+        "Pilih Kota Pengiriman",
+        Expanded(
+          child: ListView.separated(
+            separatorBuilder: (BuildContext context, int index) {
+              if (index <= items.length) {
+                return const SizedBox(
+                  height: 16,
+                );
+              } else {
+                return Container();
+              }
             },
-            child: Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(items[index]),
-                  Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    ));
-  }
-  
-  _pickupAddressBottomSheet() {
-    _requestPickupBottomSheetScaffold("Pilih Alamat Penjemputan".tr, RequestPickupSelectAddressContent(
-      onAddNewAddressClick: () {
-        Get.to(() => const RequestPickupAddressUpsertScreen());
-      },
-      onPickupClick: (String selectedTime) {
-        Get.dialog(RequestPickupConfirmationDialog(
-          pickupTime: selectedTime,
+            padding: const EdgeInsets.all(16),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              bool isSelected =
+                  controller.filterDeliveryCityText == items[index];
+              return GestureDetector(
+                onTap: () {
+                  controller.setSelectedFilterCity(items[index]);
+                  Get.back();
+                },
+                child: Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(items[index]),
+                      Icon(isSelected ? Icons.circle : Icons.circle_outlined)
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ));
-      },
-    ));
+  }
+
+  _pickupAddressBottomSheet() {
+    _requestPickupBottomSheetScaffold(
+        "Pilih Alamat Penjemputan".tr,
+        RequestPickupSelectAddressContent(
+          onAddNewAddressClick: () {
+            Get.to(() => const RequestPickupAddressUpsertScreen());
+          },
+          onPickupClick: (String selectedTime) {
+            Get.dialog(RequestPickupConfirmationDialog(
+              pickupTime: selectedTime,
+            ));
+          },
+        ));
   }
 
   _requestPickupBottomSheetScaffold(String title, Widget content) {
     Get.bottomSheet(
       enableDrag: true,
-      isDismissible: true ,
+      isDismissible: true,
       StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
         return RequestPickupBottomSheetScaffold(content: content, title: title);
       }),
@@ -470,24 +502,24 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
 
   Future<DateTime?> _selectDate(BuildContext context) {
     return showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.red, // button text color
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: AppConst.isLightTheme(context)
+                  ? const ColorScheme.light()
+                  : const ColorScheme.dark(),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.red, // button text color
+                ),
               ),
             ),
-          ),
-          child: child!,
-        );
-      }
-    );
+            child: child!,
+          );
+        });
   }
-
 }

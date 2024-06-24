@@ -1,17 +1,16 @@
-import 'dart:io';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_delivery_type_enum.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_filter_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
 import 'package:css_mobile/util/ext/date_ext.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RequestPickupController extends BaseController {
 
   bool showLoadingIndicator = false;
-  bool showMainContent = false;
+  bool showMainContent = true;
   bool showErrorContent = false;
   bool showEmptyContent = false;
 
@@ -37,6 +36,17 @@ class RequestPickupController extends BaseController {
   DateTime? selectedDateEnd;
   String selectedDateStartText = "Pilih Tanggal Awal";
   String selectedDateEndText = "Pilih Tanggal Akhir";
+
+  final PagingController<int, RequestPickupModel> pagingController = PagingController(firstPageKey: 1);
+  static const pageSize = 10;
+
+  @override
+  void onInit() {
+    super.onInit();
+    pagingController.addPageRequestListener((pageKey) {
+      getRequestPickups(pageKey);
+    });
+  }
 
   setSelectedFilterDate(RequestPickupDateEnum? date) {
     if (date != null) {
@@ -98,32 +108,28 @@ class RequestPickupController extends BaseController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    Future.wait([getRequestPickups()]);
-  }
-
-  Future<void> getRequestPickups() async {
+  Future<void> getRequestPickups(int pageKey) async {
     showLoadingIndicator = true;
-    update();
 
     try {
-      final response = await requestPickupRepository.getRequestPickups();
+      final filter = RequestPickupFilterModel(
+        page: pageKey,
+        limit: pageSize
+      );
+      final response = await requestPickupRepository.getRequestPickups(filter);
 
-      if (response.code == HttpStatus.ok) {
-        if (response.payload != null || response.payload!.isNotEmpty) {
-          requestPickups.addAll(response.payload!);
-          showMainContent = true;
-          update();
-        } else {
-          showEmptyContent = true;
-          update();
-        }
+      final payload = response.payload ?? List.empty();
+      final isLastPage = payload.length < pageSize;
+
+      if (isLastPage) {
+        pagingController.appendLastPage(payload);
       } else {
-        showErrorContent = true;
-        update();
+        final nextPageKey = pageKey + 1;
+        pagingController.appendPage(payload, nextPageKey);
       }
+
+      showMainContent = true;
+      update();
     } catch (e) {
       showErrorContent = true;
       update();
@@ -134,7 +140,7 @@ class RequestPickupController extends BaseController {
   }
 
   requireRetry() {
-
+    getRequestPickups(1);
   }
 
 }
