@@ -4,7 +4,6 @@ import 'package:css_mobile/data/model/transaction/get_account_number_model.dart'
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
 
 DataTransactionModel transactionDataModelFromJson(String str) => DataTransactionModel.fromJson(json.decode(str));
 

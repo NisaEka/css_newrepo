@@ -205,9 +205,6 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
                         prefixIcon: const Icon(Icons.line_style),
                         validator: ValidationBuilder().zipCode().build(),
                         inputType: TextInputType.number,
-                        onTap: () {
-                          c.kodePos.text.isEmpty ? Get.to(const EditProfilScreen()) : null;
-                        },
                       ),
                       CustomTextFormField(
                         controller: c.alamatLengkap,

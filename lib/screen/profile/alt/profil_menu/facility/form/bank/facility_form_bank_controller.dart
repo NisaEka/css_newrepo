@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/bank/bank_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_bank_info_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/storage/ccrf_file_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:dio/dio.dart';
@@ -13,14 +14,9 @@ import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 
 class FacilityFormBankController extends BaseController {
-
   FacilityCreateModel facilityCreateArgs = Get.arguments['data'];
 
-  List<String> steps = [
-    'Data Pemohon'.tr,
-    'Alamat Pengembalian'.tr,
-    'Data Rekening'.tr
-  ];
+  List<String> steps = ['Data Pemohon'.tr, 'Alamat Pengembalian'.tr, 'Data Rekening'.tr];
 
   final accountNumber = TextEditingController();
   final accountName = TextEditingController();
@@ -32,6 +28,7 @@ class FacilityFormBankController extends BaseController {
   String? pickedImageUrl;
 
   bool _showLoadingIndicator = false;
+
   bool get showLoadingIndicator => _showLoadingIndicator;
 
   final List<BankModel> banks = [];
@@ -45,9 +42,7 @@ class FacilityFormBankController extends BaseController {
 
   Future<void> getBanks() async {
     bank.getBanks().then((response) {
-      if (response.code == HttpStatus.ok &&
-          response.payload!.isNotEmpty
-      ) {
+      if (response.code == HttpStatus.ok && response.payload!.isNotEmpty) {
         banks.addAll(response.payload!);
         update();
       }
@@ -127,16 +122,14 @@ class FacilityFormBankController extends BaseController {
           SuccessScreen(
             message: 'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'.tr,
             buttonTitle: 'Selesai'.tr,
-            nextAction: () => Get.offAll(
-                const DashboardScreen()
+            nextAction: () => Get.delete<DashboardController>().then(
+              (_) => Get.offAll(const DashboardScreen()),
             ),
           ),
         );
-      } else {
-      }
+      } else {}
     });
     _showLoadingIndicator = false;
     update();
   }
-
 }

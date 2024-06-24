@@ -3,6 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/notification/notification_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
@@ -79,7 +80,7 @@ class BottomBar4 extends StatelessWidget {
             title: "Notifikasi".tr,
             isSelected: menu == 2,
             color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-            onTap: () => Get.offAll(const DashboardScreen()),
+            onTap: () => Get.to(const NotificationScreen(), arguments: {}),
           ),
           BottomMenuItem2(
             icon: Icons.person,

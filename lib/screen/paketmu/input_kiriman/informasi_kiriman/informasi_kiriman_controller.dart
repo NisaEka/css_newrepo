@@ -590,14 +590,14 @@ class InformasiKirimaController extends BaseController {
         if (goods != null) {
           deleteDraft(draftIndex!);
         }
-        if (v.code == 400) {
+        if (v.code == 400 || v.code == 500) {
           Get.showSnackbar(
             GetSnackBar(
               icon: const Icon(
                 Icons.warning,
                 color: warningColor,
               ),
-              message: v.error?.first.message?.tr,
+              message: v.error?.first.message?.tr ?? v.message,
               isDismissible: true,
               margin: const EdgeInsets.only(bottom: 0),
               duration: const Duration(seconds: 3),

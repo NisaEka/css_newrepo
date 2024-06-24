@@ -117,7 +117,6 @@ class KirimanStepper extends StatelessWidget {
                               ),
                               DocumentImageItem(
                                 title: 'Lokasi Penerima'.tr,
-                                // img: cnote?.signature ?? '',
                                 lat: cnote?.lat?.toDouble(),
                                 lng: cnote?.long?.toDouble(),
                                 isLoading: isLoading || (cnote?.lat?.isEmpty ?? false),

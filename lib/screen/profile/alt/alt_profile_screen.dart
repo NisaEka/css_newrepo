@@ -52,7 +52,7 @@ class AltProfileScreen extends StatelessWidget {
       // margin: const EdgeInsets.only(bottom: 20),
       height: 113,
       decoration: BoxDecoration(
-          color: whiteColor,
+          color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
           border: Border(
             bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
             top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
@@ -60,7 +60,7 @@ class AltProfileScreen extends StatelessWidget {
       child: Wrap(
         children: [
           ListTile(
-            tileColor: whiteColor,
+            // tileColor: whiteColor,
             onTap: () => c.isLogin ? c.doLogout() : Get.to(const LoginScreen()),
             leading: Icon(c.isLogin ? Icons.logout : Icons.login),
             title: Text(c.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
@@ -159,6 +159,7 @@ class AltProfileScreen extends StatelessWidget {
                       onTap: () => c.isCcrfAction(const DokumenScreen(), context),
                     )
                   : const SizedBox(),
+              const SizedBox(height: 50),
             ],
           ),
           // : const SizedBox(),

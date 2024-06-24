@@ -24,7 +24,7 @@ class BottomMenuItem2 extends StatelessWidget {
       child: Container(
         alignment: Alignment.bottomCenter,
         margin: EdgeInsets.only(
-          left: isSelected ? 4 : 0,
+          left: isSelected ? 4 : 10,
           right: !isSelected ? 10 : 4,
         ),
         height: 55,

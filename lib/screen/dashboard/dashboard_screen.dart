@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -15,6 +17,7 @@ import 'package:css_mobile/widgets/dashboard/jlcpoint_widget.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -24,6 +27,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
@@ -126,7 +130,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               )
                             : const SizedBox(),
                         const SizedBox(height: 15),
-                        c.isLogin && (c.allow.lacakPesanan == "Y" || c.allow.keuanganBonus == "Y")
+                        !c.isLogin || (c.allow.lacakPesanan == "Y" || c.allow.keuanganBonus == "Y")
                             ? TextField(
                                 controller: c.nomorResi,
                                 decoration: InputDecoration(
@@ -190,6 +194,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ],
           ),
         ),
+
       ],
     );
   }

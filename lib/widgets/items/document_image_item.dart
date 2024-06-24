@@ -101,6 +101,7 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
                           onMapCreated: (controller) => googleMapController?.complete(controller),
                           zoomControlsEnabled: false,
                           myLocationButtonEnabled: false,
+                          mapType: MapType.none,
                           markers: <Marker>{
                             Marker(
                               draggable: false,
