@@ -403,7 +403,7 @@ class InformasiKirimaController extends BaseController {
         serviceCode: selectedService?.serviceCode,
         woodPackaging: packingKayu ? "Y" : "N",
         specialInstruction: intruksiKhusus.text,
-        codFlag: account.accountService == "COD" ? "YES" : "NO",
+        codFlag: account.accountService == "COD" || codOngkir ? "YES" : "NO",
         codOngkir: codOngkir ? "YES" : "NO",
         insuranceFlag: asuransi ? "Y" : "N",
         insuranceFee: isr,

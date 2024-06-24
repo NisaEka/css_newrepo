@@ -441,7 +441,10 @@ class RiwayatKirimanScreen extends StatelessWidget {
           Expanded(
             child: RefreshIndicator(
               onRefresh: () => Future.sync(
-                () => c.pagingController.refresh(),
+                () {
+                  c.pagingController.refresh();
+                  c.transactionCount();
+                },
               ),
               child: PagedListView<int, TransactionModel>(
                 pagingController: c.pagingController,
