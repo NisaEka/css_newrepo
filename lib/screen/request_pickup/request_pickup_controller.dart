@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.da
 import 'package:css_mobile/data/model/request_pickup/request_pickup_delivery_type_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
+import 'package:css_mobile/util/ext/date_ext.dart';
 import 'package:flutter/cupertino.dart';
 
 class RequestPickupController extends BaseController {
@@ -32,10 +33,28 @@ class RequestPickupController extends BaseController {
   RequestPickupStatus selectedFilterStatus = RequestPickupStatus.semua;
   RequestPickupDeliveryType selectedFilterDeliveryType = RequestPickupDeliveryType.semua_tipe_kiriman;
 
+  DateTime? selectedDateStart;
+  DateTime? selectedDateEnd;
+  String selectedDateStartText = "Pilih Tanggal Awal";
+  String selectedDateEndText = "Pilih Tanggal Akhir";
+
   setSelectedFilterDate(RequestPickupDateEnum? date) {
     if (date != null) {
       selectedFilterDate = date;
-      filterDateText = date.asName();
+
+      if (date == RequestPickupDateEnum.custom) {
+        if (selectedDateStart != null && selectedDateEnd != null) {
+          filterDateText = "$selectedDateStartText - $selectedDateEndText";
+        } else if (selectedDateStart != null) {
+          filterDateText = selectedDateStartText;
+        } else if (selectedDateEnd != null) {
+          filterDateText = selectedDateEndText;
+        }
+        filterDateText = date.asName();
+      } else {
+        filterDateText = date.asName();
+      }
+
       update();
     }
   }
@@ -59,6 +78,22 @@ class RequestPickupController extends BaseController {
   setSelectedFilterCity(String? city) {
     if (city != null) {
       filterDeliveryCityText = city;
+      update();
+    }
+  }
+
+  setSelectedDateStart(DateTime? dateTime) {
+    if (dateTime != null) {
+      selectedDateStart = dateTime;
+      selectedDateStartText = dateTime.toStringWithFormat(format: "dd-MM-yyyy");
+      update();
+    }
+  }
+
+  setSelectedDateEnd(DateTime? dateTime) {
+    if (dateTime != null) {
+      selectedDateEnd = dateTime;
+      selectedDateEndText = dateTime.toStringWithFormat(format: "dd-MM-yyyy");
       update();
     }
   }
