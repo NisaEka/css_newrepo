@@ -134,11 +134,10 @@ class InformasiPengirimController extends BaseController {
         kodePos.text = value.payload?.zipCode ?? '';
         alamatLengkap.text = value.payload?.address ?? '';
         selectedOrigin = Origin(
-          originCode: shipper?.origin?.originCode,
-          branchCode: shipper?.origin?.branchCode,
-          originName: shipper?.origin?.originName,
-          region: shipper?.origin?.region
-        );
+            originCode: shipper?.origin?.originCode,
+            branchCode: shipper?.origin?.branchCode,
+            originName: shipper?.origin?.originName,
+            region: shipper?.origin?.region);
       });
       update();
     } catch (e) {
@@ -152,11 +151,8 @@ class InformasiPengirimController extends BaseController {
       kotaPengirim.text = shipper?.origin?.originName ?? '';
       kodePos.text = shipper?.zipCode ?? '';
       alamatLengkap.text = shipper?.address ?? '';
-      selectedOrigin = Origin(
-        originCode: shipper?.origin?.originCode,
-        branchCode: shipper?.origin?.branchCode,
-        originName: shipper?.origin?.originName
-      );
+      selectedOrigin =
+          Origin(originCode: shipper?.origin?.originCode, branchCode: shipper?.origin?.branchCode, originName: shipper?.origin?.originName);
     }
 
     isLoading = false;
@@ -234,29 +230,33 @@ class InformasiPengirimController extends BaseController {
   }
 
   void nextStep() {
-    Get.to(const InformasiPenerimaScreen(), arguments: {
-      "cod_ongkir": codOgkir,
-      "account": selectedAccount,
-      "origin": selectedOrigin ?? shipper?.origin,
-      "dropship": isDropshipper,
-      "dropshipper": dropshipper,
-      "shipper": Shipper(
-        name: namaPengirim.text.toUpperCase(),
-        address: alamatLengkap.text.toUpperCase(),
-        address1: alamatLengkap.text.length <= 30 ? alamatLengkap.text.substring(0, alamatLengkap.text.length) : '',
-        address2: alamatLengkap.text.length >= 31 ? alamatLengkap.text.substring(31, alamatLengkap.text.length) : '',
-        address3: alamatLengkap.text.length >= 60 ? alamatLengkap.text.substring(60, alamatLengkap.text.length) : '',
-        city: kotaPengirim.text.toUpperCase(),
-        zip: kodePos.text,
-        region: isDropshipper ? selectedOrigin?.region?.name : shipper?.region?.name,
-        //province
-        country: "ID",
-        contact: namaPengirim.text.toUpperCase(),
-        phone: nomorTelpon.text,
-        dropship: isDropshipper,
-      ),
-      "data": data,
-    });
+    Get.to(
+      const InformasiPenerimaScreen(),
+      arguments: {
+        "cod_ongkir": codOgkir,
+        "account": selectedAccount,
+        "origin": selectedOrigin ?? shipper?.origin,
+        "dropship": isDropshipper,
+        "dropshipper": dropshipper,
+        "shipper": Shipper(
+          name: namaPengirim.text.toUpperCase(),
+          address: alamatLengkap.text.toUpperCase(),
+          address1: alamatLengkap.text.length <= 30 ? alamatLengkap.text.substring(0, alamatLengkap.text.length) : '',
+          address2: alamatLengkap.text.length >= 31 ? alamatLengkap.text.substring(31, alamatLengkap.text.length) : '',
+          address3: alamatLengkap.text.length >= 60 ? alamatLengkap.text.substring(60, alamatLengkap.text.length) : '',
+          city: kotaPengirim.text.toUpperCase(),
+          zip: kodePos.text,
+          region: isDropshipper ? selectedOrigin?.region?.name : shipper?.region?.name,
+          //province
+          country: "ID",
+          contact: namaPengirim.text.toUpperCase(),
+          phone: nomorTelpon.text,
+          dropship: isDropshipper,
+        ),
+        "data": data,
+      },
+      transition: Transition.rightToLeft
+    );
   }
 
   Future<void> saveDropshipper() async {
@@ -349,11 +349,10 @@ class InformasiPengirimController extends BaseController {
       kodePos.text = shipper?.zipCode ?? '';
       alamatLengkap.text = shipper?.address ?? '';
       selectedOrigin = Origin(
-        originCode: shipper?.origin?.originCode,
-        branchCode: shipper?.origin?.branchCode,
-        originName: shipper?.origin?.originName,
-        region: shipper?.region
-      );
+          originCode: shipper?.origin?.originCode,
+          branchCode: shipper?.origin?.branchCode,
+          originName: shipper?.origin?.originName,
+          region: shipper?.region);
       isValidate = true;
     }
     update();

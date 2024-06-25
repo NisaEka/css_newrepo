@@ -49,7 +49,7 @@ class BottomBar4 extends StatelessWidget {
             title: "Beranda".tr,
             isSelected: menu == 0,
             color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-            onTap: () => Get.offAll(const DashboardScreen()),
+            onTap: () => Get.offAll(const DashboardScreen(), transition: Transition.leftToRight),
           ),
           BottomMenuItem2(
             icon: Icons.qr_code,
@@ -58,8 +58,9 @@ class BottomBar4 extends StatelessWidget {
             color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
             onTap: () => Get.to(const LacakKirimanScreen(), arguments: {}),
           ),
-          allowedMenu.paketmuInput == "Y" || !isLogin || allowedMenu.buatPesanan == "Y"
-              ? FloatingActionButton(
+          (allowedMenu.paketmuInput != "Y" || allowedMenu.buatPesanan != "Y") && isLogin
+              ? const SizedBox()
+              : FloatingActionButton(
                   shape: const CircleBorder(),
                   backgroundColor: isLogin ? redJNE : errorLightColor2,
                   // onPressed: () => Get.to(const InputKirimanScreen()),
@@ -73,8 +74,7 @@ class BottomBar4 extends StatelessWidget {
                     ImageConstant.paketmuIcon,
                     height: Get.width / 12,
                   ),
-                )
-              : const SizedBox(),
+                ),
           BottomMenuItem2(
             icon: Icons.notifications,
             title: "Notifikasi".tr,
@@ -89,7 +89,7 @@ class BottomBar4 extends StatelessWidget {
             color: (AppConst.isLightTheme(context) ? blueJNE : redJNE).withOpacity(1),
             // onTap: () => Get.offAll(const ProfileScreen()),
             onTap: () => isLogin
-                ? Get.offAll(AltProfileScreen())
+                ? Get.offAll(const AltProfileScreen(), transition: Transition.rightToLeft)
                 : showDialog(
                     context: context,
                     builder: (context) => const LoginAlertDialog(),

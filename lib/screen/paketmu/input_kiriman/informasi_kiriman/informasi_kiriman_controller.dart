@@ -403,7 +403,11 @@ class InformasiKirimaController extends BaseController {
         serviceCode: selectedService?.serviceCode,
         woodPackaging: packingKayu ? "Y" : "N",
         specialInstruction: intruksiKhusus.text,
-        codFlag: account.accountService == "COD" || codOngkir ? "YES" : "NO",
+        codFlag: account.accountService == "COD"
+            ? "YES"
+            : codOngkir
+                ? "YES"
+                : "NO",
         codOngkir: codOngkir ? "YES" : "NO",
         insuranceFlag: asuransi ? "Y" : "N",
         insuranceFee: isr,
@@ -455,6 +459,7 @@ class InformasiKirimaController extends BaseController {
               thirdButtonTitle: "Buat Transaksi Lainnya".tr,
               thirdAction: () => Get.offAll(const InformasiPengirimScreen(), arguments: {}),
             ),
+            transition: Transition.rightToLeft,
             arguments: {
               'transaction': true,
             },
@@ -477,7 +482,11 @@ class InformasiKirimaController extends BaseController {
             serviceCode: selectedService?.serviceDisplay,
             woodPackaging: packingKayu ? "Y" : "N",
             specialInstruction: intruksiKhusus.text,
-            codFlag: account.accountService == "COD" ? "YES" : "NO",
+            codFlag: account.accountService == "COD"
+                ? "YES"
+                : codOngkir
+                    ? "YES"
+                    : "NO",
             codOngkir: codOngkir ? "YES" : "NO",
             insuranceFlag: asuransi ? "Y" : "N",
             insuranceFee: isr,
@@ -530,6 +539,7 @@ class InformasiKirimaController extends BaseController {
               buttonTitle: "Kembali ke Beranda".tr,
               nextAction: () => Get.offAll(
                 const DashboardScreen(),
+                transition: Transition.rightToLeft,
                 arguments: {
                   'awb': v.payload?.awb,
                 },
@@ -560,7 +570,11 @@ class InformasiKirimaController extends BaseController {
           serviceCode: selectedService?.serviceDisplay,
           woodPackaging: packingKayu ? "Y" : "N",
           specialInstruction: intruksiKhusus.text,
-          codFlag: account.accountService == "COD" ? "YES" : "NO",
+          codFlag: account.accountService == "COD"
+              ? "YES"
+              : codOngkir
+                  ? "YES"
+                  : "NO",
           codOngkir: codOngkir ? "YES" : "NO",
           insuranceFlag: asuransi ? "Y" : "N",
           insuranceFee: isr,
@@ -614,6 +628,7 @@ class InformasiKirimaController extends BaseController {
               buttonTitle: "Kembali ke Beranda".tr,
               nextAction: () => Get.offAll(
                 const DashboardScreen(),
+                transition: Transition.rightToLeft,
                 arguments: {
                   'awb': v.payload?.awb,
                 },

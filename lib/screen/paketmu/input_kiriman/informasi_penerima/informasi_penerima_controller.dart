@@ -136,31 +136,35 @@ class InformasiPenerimaController extends BaseController {
   }
 
   void nextStep() {
-    Get.to(const InformasiKirimanScreen(), arguments: {
-      "data": data,
-      "cod_ongkir": codOngkir,
-      "account": account,
-      "origin": origin,
-      "dropship": dropship,
-      "dropshipper": dropshipper,
-      "shipper": shipper,
-      "receiver": Receiver(
-        name: namaPenerima.text.toUpperCase(),
-        address: alamatLengkap.text.toUpperCase(),
-        address1: '',
-        address2: '',
-        address3: '',
-        phone: nomorTelpon.text,
-        city: selectedDestination?.cityName,
-        zip: selectedDestination?.zipCode,
-        region: selectedDestination?.provinceName,
-        country: selectedDestination?.countryName,
-        contact: namaPenerima.text.toUpperCase(),
-        district: selectedDestination?.districtName,
-        subDistrict: selectedDestination?.subDistrictName,
-      ),
-      "destination": selectedDestination,
-    });
+    Get.to(
+      const InformasiKirimanScreen(),
+      transition: Transition.rightToLeft,
+      arguments: {
+        "data": data,
+        "cod_ongkir": codOngkir,
+        "account": account,
+        "origin": origin,
+        "dropship": dropship,
+        "dropshipper": dropshipper,
+        "shipper": shipper,
+        "receiver": Receiver(
+          name: namaPenerima.text.toUpperCase(),
+          address: alamatLengkap.text.toUpperCase(),
+          address1: '',
+          address2: '',
+          address3: '',
+          phone: nomorTelpon.text,
+          city: selectedDestination?.cityName,
+          zip: selectedDestination?.zipCode,
+          region: selectedDestination?.provinceName,
+          country: selectedDestination?.countryName,
+          contact: namaPenerima.text.toUpperCase(),
+          district: selectedDestination?.districtName,
+          subDistrict: selectedDestination?.subDistrictName,
+        ),
+        "destination": selectedDestination,
+      },
+    );
   }
 
   Future<void> saveReceiver() async {

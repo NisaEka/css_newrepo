@@ -121,7 +121,9 @@ class TambahPetugasController extends BaseController {
         dataPetugas.payload?.accounts?.forEach((account) {
           // print("akun terpilih : ${ account.accountId}");
           print("akunss: ${account.accountId}");
-          selectedAccountList.add(accountList.where((e) => e.accountId == account.accountId).first);
+          selectedAccountList.add((accountList.where((e) => e.accountId == account.accountId).isNotEmpty
+              ? (accountList.where((e) => e.accountId == account.accountId).first)
+              : Account()));
         });
         dataPetugas.payload?.branches?.forEach((branch) {
           selectedBranchList.add(branchList.where((e) => e.code == branch.code).first);
