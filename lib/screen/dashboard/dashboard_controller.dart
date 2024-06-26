@@ -157,6 +157,9 @@ class DashboardController extends BaseController {
     if (isLogin && allow.cekOngkir != "Y" && isOnline) {
       menuItems.removeWhere((e) => e.title == "Cek Ongkir");
     }
+    if (isLogin && allow.pantauPaketmu != "Y" && isOnline) {
+      menuItems.removeWhere((e) => e.title == "Pantau Paketmu");
+    }
   }
 
   Future<void> cekLocalLanguage() async {

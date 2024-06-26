@@ -125,6 +125,14 @@ class OtherMenuCotroller extends BaseController {
         isEdit: isEdit,
         route: "/cekOngkir",
       ),
+      Items(
+        title: "Pantau Paketmu",
+        icon: ImageConstant.pantauPaketmuIcon,
+        isAuth: false,
+        isFavorite: favoritList.where((e) => e.title == "Pantau Paketmu").isNotEmpty,
+        isEdit: isEdit,
+        route: "/pantauPaketmu",
+      ),
     ];
 
     update();
@@ -161,6 +169,10 @@ class OtherMenuCotroller extends BaseController {
     if (isLogin && allow.cekOngkir != "Y") {
       otherList.removeWhere((e) => e.title == "Cek Ongkir");
       favoritList.removeWhere((e) => e.title == "Cek Ongkir");
+    }
+    if (isLogin && allow.pantauPaketmu != "Y") {
+      otherList.removeWhere((e) => e.title == "Pantau Paketmu");
+      favoritList.removeWhere((e) => e.title == "Pantau Paketmu");
     }
 
     update();

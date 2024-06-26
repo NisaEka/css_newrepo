@@ -9,6 +9,7 @@ import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_screen.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
@@ -66,6 +67,7 @@ class App extends StatelessWidget {
         GetPage(name: "/profileGeneral", page: () => const DataUmumScreen()),
         GetPage(name: "/requestPickup", page: () => const RequestPickupScreen()),
         GetPage(name: "/notification", page: () => const NotificationScreen()),
+        GetPage(name: "/pantauPaketmu", page: () => const PantauPaketmuScreen()),
       ],
       // home: const LoginScreen(),
       home: const DashboardScreen(),
