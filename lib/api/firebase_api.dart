@@ -27,7 +27,7 @@ class FirebaseApi {
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel',
       'High Importance Notifications',
-      description: 'This channel is used for important notifications for GAIS app.',
+      description: 'This channel is used for important notification for GAIS app.',
       importance: Importance.max,
     );
 

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/notification/notification_controller.dart';
+import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,8 +17,8 @@ class NotificationScreen extends StatelessWidget {
         init: NotificationController(),
         builder: (controller) {
           return Scaffold(
-            appBar: AppBar(
-              title: Text("Notifikasi".tr),
+            appBar: CustomTopBar(
+              title: "Notifikasi".tr,
             ),
             body: _bodyContent(controller, context),
           );
