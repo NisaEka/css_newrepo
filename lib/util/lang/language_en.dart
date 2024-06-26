@@ -316,6 +316,7 @@ class LanguageEN {
       "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas":
           "To access this menu, please activate it first in the facilities menu",
       "Notifikasi": "Notification",
+      "Belum ada notifikasi tersedia":"No notifications available yet"
     };
   }
 }
