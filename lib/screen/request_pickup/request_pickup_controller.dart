@@ -37,6 +37,8 @@ class RequestPickupController extends BaseController {
   final PagingController<int, RequestPickupModel> pagingController = PagingController(firstPageKey: Constant.defaultPage);
   static const pageSize = Constant.defaultLimit;
 
+  List<String> selectedAwbs = [];
+
   @override
   void onInit() {
     super.onInit();
@@ -191,6 +193,26 @@ class RequestPickupController extends BaseController {
     } catch (e) {
       // Do nothing for now.
     }
+  }
+
+  selectItem(String awb) {
+    if (isItemChecked(awb)) {
+      selectedAwbs.remove(awb);
+    } else {
+      selectedAwbs.add(awb);
+    }
+  }
+
+  bool isItemChecked(String awb) {
+    return selectedAwbs.contains(awb);
+  }
+
+  void onCheckAll() {
+    // selectedAwbs.addAll(iterable);
+  }
+
+  void onCancel() {
+    selectedAwbs.clear();
   }
 
   refreshPickups() {

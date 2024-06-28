@@ -66,7 +66,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "2",
+                    controller.selectedAwbs.length.toString(),
                     style: sublistTitleTextStyle.copyWith(
                         fontWeight: FontWeight.bold),
                   )
@@ -123,7 +123,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
     return Column(
       children: [
         _buttonFilters(controller),
-        _checkAllItemBox(),
+        _checkAllItemBox(controller),
         Expanded(
             child: RefreshIndicator(
           onRefresh: () =>
@@ -135,11 +135,10 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
                 itemBuilder: (context, item, index) {
                   return RequestPickupItem(
                     data: item,
-                    onTap: () {
+                    onTap: (String awb) {
                       if (_checkMode) {
                         setState(() {
-                          _checkMode = false;
-                          _checkAll = false;
+                          controller.selectItem(awb);
                         });
                       } else {
                         Get.to(const RequestPickupDetailScreen(),
@@ -147,11 +146,10 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
                       }
                     },
                     onLongTap: () {
-                      setState(() {
-                        _checkMode = true;
-                      });
+                      setState(() { _checkMode = true; });
                     },
                     checkMode: _checkMode,
+                    checked: controller.isItemChecked(item.awb),
                   );
                 },
                 firstPageErrorIndicatorBuilder: (context) {
@@ -173,26 +171,45 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
     );
   }
 
-  Widget _checkAllItemBox() {
+  Widget _checkAllItemBox(RequestPickupController controller) {
     if (_checkMode) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Checkbox(
-              value: _checkAll,
-              onChanged: (newValue) {
+            Row(
+              children: [
+                Checkbox(
+                  value: _checkAll,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _checkAll = newValue ?? _checkAll;
+                      if (_checkAll) {
+                        controller.onCheckAll();
+                      } else {
+                        controller.onCancel();
+                      }
+                    });
+                  },
+                ),
+                Text(
+                  "Pilih Semua".tr,
+                  style: inputTextStyle,
+                )
+              ],
+            ),
+            TextButton(
+              onPressed: () {
                 setState(() {
-                  _checkAll = newValue ?? _checkAll;
+                  _checkMode = false;
+                  controller.onCancel();
                 });
               },
-            ),
-            Text(
-              "Pilih Semua".tr,
-              style: inputTextStyle,
+              child: Text("Batal".tr),
             )
           ],
-        ),
+        )
       );
     } else {
       return Container();
