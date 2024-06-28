@@ -55,7 +55,13 @@ class RequestPickupImpl extends RequestPickupRepository {
   Future<DefaultResponseModel<List<String>>> getRequestPickupTypes() async {
      try {
        var response = await network.dio.get('/transaction/pickup/type');
-       return DefaultResponseModel.fromJson(response.data, response.data["payload"]);
+       List<String> types = [];
+
+       response.data['payload'].forEach((type) {
+         types.add(type);
+       });
+
+       return DefaultResponseModel.fromJson(response.data, types);
     } on DioException catch (e) {
        return DefaultResponseModel.fromJson(e.response?.data, List.empty());
     }
@@ -92,7 +98,13 @@ class RequestPickupImpl extends RequestPickupRepository {
   Future<DefaultResponseModel<List<String>>> getRequestPickupCities(DefaultPageFilterModel filterModel) async {
      try {
        var response = await network.dio.get('/transaction/pickup/city', queryParameters: filterModel.toJson());
-       return DefaultResponseModel.fromJson(response.data, response.data['payload']);
+       List<String> cities = [];
+
+       response.data['payload'].forEach((city) {
+         cities.add(city);
+       });
+
+       return DefaultResponseModel.fromJson(response.data, cities);
     } on DioException catch (e) {
        return DefaultResponseModel.fromJson(e.response?.data, List.empty());
     }
@@ -102,7 +114,13 @@ class RequestPickupImpl extends RequestPickupRepository {
   Future<DefaultResponseModel<List<String>>> getRequestPickupStatuses() async {
      try {
        var response = await network.dio.get('/transaction/pickup/status');
-      return DefaultResponseModel.fromJson(response.data, response.data['payload']);
+       List<String> statuses = [];
+
+       response.data['payload'].forEach((status) {
+         statuses.add(status);
+       });
+
+      return DefaultResponseModel.fromJson(response.data, statuses);
     } on DioException catch (e) {
       return DefaultResponseModel.fromJson(e.response?.data, List.empty());
     }

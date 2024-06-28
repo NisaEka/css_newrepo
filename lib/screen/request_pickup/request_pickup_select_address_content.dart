@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_address_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,12 +12,14 @@ import 'package:get/get.dart';
 
 class RequestPickupSelectAddressContent extends StatefulWidget {
 
+  final List<RequestPickupAddressModel> addresses;
   final Function onAddNewAddressClick;
   final Function(String selectedTime) onPickupClick;
   String selectedTime = "Sekarang";
 
   RequestPickupSelectAddressContent({
     super.key,
+    required this.addresses,
     required this.onAddNewAddressClick,
     required this.onPickupClick
   });
@@ -62,13 +65,14 @@ class _RequestPickupSelectAddressContentState extends State<RequestPickupSelectA
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return RequestPickupAddressItem(
-            lastItem: index == 4,
+            address: widget.addresses[index],
+            lastItem: index == widget.addresses.length - 1,
           );
         },
         separatorBuilder: (BuildContext context, int index) {
           return Container();
         },
-        itemCount: 5,
+        itemCount: widget.addresses.length,
       ),
     );
   }

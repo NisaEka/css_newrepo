@@ -1,13 +1,16 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:flutter/material.dart';
 
 class RequestPickupAddressItem extends StatelessWidget {
 
+  final RequestPickupAddressModel address;
   final bool lastItem;
 
   const RequestPickupAddressItem({
     super.key,
+    required this.address,
     required this.lastItem
   });
 
@@ -30,7 +33,7 @@ class RequestPickupAddressItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "ZAIM",
+                address.name,
                 maxLines: 1,
                 textAlign: TextAlign.start,
                 style: sublistTitleTextStyle.copyWith(
@@ -38,13 +41,13 @@ class RequestPickupAddressItem extends StatelessWidget {
                 ),
               ),
               Text(
-                "085315903382",
+                address.phone,
                 maxLines: 1,
                 textAlign: TextAlign.start,
                 style: itemTextStyle,
               ),
               Text(
-                "No.12 Jalan Ir. H. Juanda Panyingkiran 46151; JAWA BARAT; KOTATASIKMALAYA",
+                address.address,
                 maxLines: 4,
                 textAlign: TextAlign.start,
                 style: itemTextStyle,

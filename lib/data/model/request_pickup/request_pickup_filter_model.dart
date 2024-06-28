@@ -34,6 +34,22 @@ class RequestPickupFilterModel {
     _city = city;
   }
 
+  setDate(String newDate) {
+    _date = newDate;
+  }
+
+  setPickupStatus(String newStatus) {
+    _pickupStatus = newStatus;
+  }
+
+  setTransactionType(String newType) {
+    _transactionType = newType;
+  }
+
+  setTransactionCity(String newCity) {
+    _city = newCity;
+  }
+
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
 

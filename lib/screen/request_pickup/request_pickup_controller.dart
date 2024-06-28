@@ -1,10 +1,12 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/default_page_filter_model.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
-import 'package:css_mobile/data/model/request_pickup/request_pickup_delivery_type_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_filter_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
-import 'package:css_mobile/data/model/request_pickup/request_pickup_status_enum.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/date_ext.dart';
+import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RequestPickupController extends BaseController {
@@ -14,35 +16,36 @@ class RequestPickupController extends BaseController {
   bool showErrorContent = false;
   bool showEmptyContent = false;
 
-  List<RequestPickupModel> requestPickups = [];
-  List<String> cities = [
-    "Semua Kota Pengiriman",
-    "Bandung",
-    "Subang",
-    "Jakarta",
-    "Yogyakarta"
-  ];
+  List<RequestPickupAddressModel> addresses = [];
+  List<String> cities = [];
+  List<String> statuses = [];
+  List<String> types = [];
 
-  String filterDateText = "Semua Tanggal";
-  String filterStatusText = "Semua Status";
-  String filterDeliveryTypeText = "Semua Tipe Kiriman";
-  String filterDeliveryCityText = "Semua Kota Pengiriman";
+  RequestPickupFilterModel filter = RequestPickupFilterModel() ;
+  String filterDateText = Constant.allDate;
+  String filterStatusText = Constant.allStatus;
+  String filterDeliveryTypeText = Constant.allDeliveryType;
+  String filterDeliveryCityText = Constant.allDeliveryCity;
 
   RequestPickupDateEnum selectedFilterDate = RequestPickupDateEnum.all;
-  RequestPickupStatus selectedFilterStatus = RequestPickupStatus.semua;
-  RequestPickupDeliveryType selectedFilterDeliveryType = RequestPickupDeliveryType.semua_tipe_kiriman;
 
   DateTime? selectedDateStart;
   DateTime? selectedDateEnd;
   String selectedDateStartText = "Pilih Tanggal Awal";
   String selectedDateEndText = "Pilih Tanggal Akhir";
 
-  final PagingController<int, RequestPickupModel> pagingController = PagingController(firstPageKey: 1);
-  static const pageSize = 10;
+  final PagingController<int, RequestPickupModel> pagingController = PagingController(firstPageKey: Constant.defaultPage);
+  static const pageSize = Constant.defaultLimit;
 
   @override
   void onInit() {
     super.onInit();
+    Future.wait([
+      getAddresses(),
+      getCities(),
+      getStatuses(),
+      getTypes(),
+    ]);
     pagingController.addPageRequestListener((pageKey) {
       getRequestPickups(pageKey);
     });
@@ -51,42 +54,55 @@ class RequestPickupController extends BaseController {
   setSelectedFilterDate(RequestPickupDateEnum? date) {
     if (date != null) {
       selectedFilterDate = date;
+      filterDateText = date.asName();
+    }
+  }
 
-      if (date == RequestPickupDateEnum.custom) {
-        if (selectedDateStart != null && selectedDateEnd != null) {
-          filterDateText = "$selectedDateStartText - $selectedDateEndText";
-        } else if (selectedDateStart != null) {
-          filterDateText = selectedDateStartText;
-        } else if (selectedDateEnd != null) {
-          filterDateText = selectedDateEndText;
-        }
-        filterDateText = date.asName();
-      } else {
-        filterDateText = date.asName();
+  applyFilterDate() {
+    bool startDateAvailable = selectedDateStart != null;
+    bool endDateAvailable = selectedDateEnd != null;
+
+    if (selectedFilterDate == RequestPickupDateEnum.custom) {
+      if (startDateAvailable && endDateAvailable) {
+        filter.setDate('${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
+        filterDateText = '$selectedDateStartText - $selectedDateEndText';
+      } else if (startDateAvailable) {
+        filter.setDate('${selectedDateStart?.millisecondsSinceEpoch}');
+        filterDateText = selectedDateStartText;
+      } else if (endDateAvailable) {
+        filter.setDate('${selectedDateEnd?.millisecondsSinceEpoch}');
+        filterDateText = selectedDateEndText;
       }
-
-      update();
+    } else if (selectedFilterDate == RequestPickupDateEnum.all) {
+      filter.setDate('');
     }
+
+    refreshPickups();
+    update();
   }
 
-  setSelectedFilterStatus(RequestPickupStatus? status) {
+  setSelectedFilterStatus(String? status) {
     if (status != null) {
-      selectedFilterStatus = status;
-      filterStatusText = status.asName();
+      filter.setPickupStatus(status);
+      refreshPickups();
+      filterStatusText = status;
       update();
     }
   }
 
-  setSelectedDeliveryType(RequestPickupDeliveryType? deliveryType) {
+  setSelectedDeliveryType(String? deliveryType) {
     if (deliveryType != null) {
-      selectedFilterDeliveryType = deliveryType;
-      filterDeliveryTypeText = deliveryType.asName();
+      filter.setTransactionType(deliveryType);
+      refreshPickups();
+      filterDeliveryTypeText = deliveryType;
       update();
     }
   }
 
   setSelectedFilterCity(String? city) {
     if (city != null) {
+      filter.setTransactionCity(city);
+      refreshPickups();
       filterDeliveryCityText = city;
       update();
     }
@@ -95,16 +111,14 @@ class RequestPickupController extends BaseController {
   setSelectedDateStart(DateTime? dateTime) {
     if (dateTime != null) {
       selectedDateStart = dateTime;
-      selectedDateStartText = dateTime.toStringWithFormat(format: "dd-MM-yyyy");
-      update();
+      selectedDateStartText = dateTime.toStringWithFormat(format: "dd MMM yyyy");
     }
   }
 
   setSelectedDateEnd(DateTime? dateTime) {
     if (dateTime != null) {
       selectedDateEnd = dateTime;
-      selectedDateEndText = dateTime.toStringWithFormat(format: "dd-MM-yyyy");
-      update();
+      selectedDateEndText = dateTime.toStringWithFormat(format: "dd MMM yyyy");
     }
   }
 
@@ -112,10 +126,6 @@ class RequestPickupController extends BaseController {
     showLoadingIndicator = true;
 
     try {
-      final filter = RequestPickupFilterModel(
-        page: pageKey,
-        limit: pageSize
-      );
       final response = await requestPickupRepository.getRequestPickups(filter);
 
       final payload = response.payload ?? List.empty();
@@ -139,8 +149,56 @@ class RequestPickupController extends BaseController {
     update();
   }
 
+  Future<void> getAddresses() async {
+    try {
+      final response = await requestPickupRepository.getRequestPickupAddresses();
+      final payload = response.payload ?? List.empty();
+      addresses.addAll(payload);
+    } catch (e) {
+      // Do nothing for now.
+    }
+  }
+
+  Future<void> getCities() async {
+    try {
+      final response = await requestPickupRepository.getRequestPickupCities(DefaultPageFilterModel());
+      final payload = response.payload ?? List.empty();
+      cities.add(Constant.allDeliveryCity);
+      cities.addAll(payload);
+    } catch (e) {
+      // Do nothing for now.
+    }
+  }
+
+  Future<void> getStatuses() async {
+    try {
+      final response = await requestPickupRepository.getRequestPickupStatuses();
+      final payload = response.payload ?? List.empty();
+      statuses.add(Constant.allStatus);
+      statuses.addAll(payload);
+    } catch (e) {
+      e.printError();
+      // Do nothing for now.
+    }
+  }
+
+  Future<void> getTypes() async {
+    try {
+      final response = await requestPickupRepository.getRequestPickupTypes();
+      final payload = response.payload ?? List.empty();
+      types.add(Constant.allDeliveryType);
+      types.addAll(payload);
+    } catch (e) {
+      // Do nothing for now.
+    }
+  }
+
+  refreshPickups() {
+    pagingController.refresh();
+  }
+
   requireRetry() {
-    getRequestPickups(1);
+    getRequestPickups(Constant.defaultPage);
   }
 
 }
