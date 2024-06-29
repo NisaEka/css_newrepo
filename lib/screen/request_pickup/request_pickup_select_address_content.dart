@@ -4,6 +4,8 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
+import 'package:css_mobile/util/constant.dart';
+import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_address_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +17,7 @@ class RequestPickupSelectAddressContent extends StatefulWidget {
   final List<RequestPickupAddressModel> addresses;
   final Function onAddNewAddressClick;
   final Function(String selectedTime) onPickupClick;
-  String selectedTime = "Sekarang";
+  String selectedTime = Constant.defaultPickupTime;
 
   RequestPickupSelectAddressContent({
     super.key,
@@ -59,22 +61,51 @@ class _RequestPickupSelectAddressContentState extends State<RequestPickupSelectA
   }
 
   Widget _addressesWidget() {
-    return SizedBox(
-      height: 136,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return RequestPickupAddressItem(
-            address: widget.addresses[index],
-            lastItem: index == widget.addresses.length - 1,
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return Container();
-        },
-        itemCount: widget.addresses.length,
-      ),
-    );
+    if (widget.addresses.isNotEmpty) {
+      return SizedBox(
+        height: 136,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return RequestPickupAddressItem(
+              address: widget.addresses[index],
+              lastItem: index == widget.addresses.length - 1,
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Container();
+          },
+          itemCount: widget.addresses.length,
+        ),
+      );
+    } else {
+      return Container(
+        width: Get.width,
+        height: 136,
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).colorScheme.outline),
+          borderRadius: BorderRadius.circular(16)
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Alamat masih kosong".tr,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 8,),
+            Text(
+              "Tambah alamat baru untuk melakukan permintaan penjemputan".tr,
+              style: Theme.of(context).textTheme.labelMedium,
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      );
+    }
   }
 
   Widget _pickupTime() {
@@ -84,17 +115,15 @@ class _RequestPickupSelectAddressContentState extends State<RequestPickupSelectA
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Jam Pickup",
-            style: sublistTitleTextStyle.copyWith(
-                fontWeight: FontWeight.bold
-            ),
+            "Jam Pickup".tr,
+            style: Theme.of(context).textTheme.bodyLarge
           ),
           OutlinedButton(
             onPressed: () {
               _selectedTime(context).then((value) {
                 if (value?.hour != null && value?.minute != null) {
                   setState(() {
-                    widget.selectedTime = "${value!.hour}:${value.minute}";
+                    widget.selectedTime = value!.asPickupTimeFormat();
                   });
                 }
               });
@@ -130,19 +159,27 @@ class _RequestPickupSelectAddressContentState extends State<RequestPickupSelectA
         child: FilledButton(
           onPressed: () {
             String pickupTime = widget.selectedTime;
-            if (pickupTime == "Sekarang") {
+            if (pickupTime == Constant.defaultPickupTime) {
               TimeOfDay currentTime = TimeOfDay.now();
-              pickupTime = "${currentTime.hour}:${currentTime.minute}";
+              pickupTime = currentTime.asPickupTimeFormat();
             }
             widget.onPickupClick(pickupTime);
           },
           child: Text(
-            "Jemput".tr,
+            _pickupButtonText(),
             style: const TextStyle(color: whiteColor),
           ),
         ),
       ),
     );
+  }
+
+  String _pickupButtonText() {
+    if (widget.selectedTime == Constant.defaultPickupTime) {
+      return "Jemput Sekarang".tr;
+    } else {
+      return "Jemput".tr;
+    }
   }
 
   Future<TimeOfDay?> _selectedTime(BuildContext context) {

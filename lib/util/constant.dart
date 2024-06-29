@@ -9,4 +9,6 @@ class Constant {
 
   static const int defaultFirstYear = 2000;
   static const int defaultLastYear = 2100;
+
+  static const String defaultPickupTime = '00:00';
 }

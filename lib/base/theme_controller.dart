@@ -14,6 +14,7 @@ class CustomTheme {
         background: whiteColor,
         onPrimary: blueJNE,
         onBackground: whiteColor,
+        outline: greyColor
       ),
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: whiteColor,
@@ -109,6 +110,7 @@ class CustomTheme {
         brightness: Brightness.dark,
         onPrimary: infoColor,
         onBackground: greyColor,
+        outline: whiteColor
       ),
       useMaterial3: true,
       textTheme: TextTheme(
