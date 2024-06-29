@@ -8,8 +8,8 @@ class RequestPickupAddressCreateRequestModel {
   final String district;
   final String subDistrict;
   final String region;
-  final double lat;
-  final double lng;
+  final double? lat;
+  final double? lng;
 
   RequestPickupAddressCreateRequestModel({
     required this.name,

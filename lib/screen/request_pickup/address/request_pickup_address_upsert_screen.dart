@@ -1,8 +1,14 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_screen.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/info_dialog.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,33 +21,36 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: RequestPickupAddressUpsertController(),
-      builder: (controller) {
-        return Scaffold(
-          appBar: CustomTopBar(
-            title: "Tambah Alamat Penjemputan".tr,
-          ),
-          body: _bodyContent(controller),
-        );
-      }
-    );
+        init: RequestPickupAddressUpsertController(),
+        builder: (controller) {
+          return Scaffold(
+            appBar: CustomTopBar(
+              title: "Tambah Alamat Penjemputan".tr,
+            ),
+            body: _bodyContent(controller),
+          );
+        });
   }
 
   Widget _bodyContent(RequestPickupAddressUpsertController controller) {
-    return CustomScrollView(
-      slivers: [
-        const SliverToBoxAdapter(
-          child: SizedBox(height: 16)
+    return Stack(
+      children: [
+        CustomScrollView(
+          slivers: [
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: _bodyForm(controller),
+              ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 16))
+          ],
         ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: _bodyForm(controller),
-          ),
-        ),
-        const SliverToBoxAdapter(
-          child: SizedBox(height: 16)
-        )
+        controller.createDataLoading ? const LoadingDialog() : Container(),
+        controller.createDataFailed ? const MessageInfoDialog(
+          message: "Data gagal ditambahkan",
+        ) : Container()
       ],
     );
   }
@@ -50,7 +59,9 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: () { Get.to(const RequestPickupLocationScreen()); },
+          onTap: () {
+            Get.to(const RequestPickupLocationScreen());
+          },
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -73,27 +84,45 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           inputType: TextInputType.phone,
         ),
         CustomTextFormField(
-          controller: controller.name,
+          controller: controller.address,
           label: "Alamat Penjemputan".tr,
           hintText: "Masukkan alamat penjemputan".tr,
           inputType: TextInputType.streetAddress,
         ),
-        CustomTextFormField(
-          controller: controller.name,
-          label: "Kota Penjemputan".tr,
-          hintText: "Masukkan kota penjemputan".tr,
-          inputType: TextInputType.streetAddress,
+        CustomSearchDropdownField<Destination>(
+          asyncItems: (String filter) => controller.getDestinationList(filter),
+          itemBuilder: (context, e, b) {
+            return GestureDetector(
+              onTap: () => controller.update(),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                child: Text(e.asFacilityFormFormat()),
+              ),
+            );
+          },
+          itemAsString: (Destination e) => e.asFacilityFormFormat(),
+          onChanged: (value) {
+            controller.selectedDestination = value;
+            controller.update();
+          },
+          value: controller.selectedDestination,
+          isRequired: controller.selectedDestination == null ? true : false,
+          readOnly: false,
+          hintText: controller.isLoadDestination
+              ? "Loading..."
+              : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
+          textStyle: controller.selectedDestination != null
+              ? subTitleTextStyle
+              : hintTextStyle,
         ),
         const SizedBox(height: 16),
         CustomFilledButton(
           color: redJNE,
           title: 'Simpan Alamat'.tr,
-          onPressed: () {
-            Get.back();
-          },
+          onPressed: () => controller.onSubmitAction(),
         )
       ],
     );
   }
-
 }

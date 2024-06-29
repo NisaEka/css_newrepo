@@ -27,11 +27,11 @@ class RequestPickupAddressModel {
   String _region = "";
   String get region => _region;
 
-  double _lat = 0.0;
-  double get lat => _lat;
+  num _lat = 0.0;
+  num get lat => _lat;
 
-  double _lng = 0.0;
-  double get lng => _lng;
+  num _lng = 0.0;
+  num get lng => _lng;
 
   RequestPickupAddressModel.fromJson(dynamic json) {
     _id = json["id"];

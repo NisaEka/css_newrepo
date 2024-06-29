@@ -53,14 +53,14 @@ class RequestPickupController extends BaseController {
     });
   }
 
-  setSelectedFilterDate(RequestPickupDateEnum? date) {
+  void setSelectedFilterDate(RequestPickupDateEnum? date) {
     if (date != null) {
       selectedFilterDate = date;
       filterDateText = date.asName();
     }
   }
 
-  applyFilterDate() {
+  void applyFilterDate() {
     bool startDateAvailable = selectedDateStart != null;
     bool endDateAvailable = selectedDateEnd != null;
 
@@ -83,7 +83,7 @@ class RequestPickupController extends BaseController {
     update();
   }
 
-  setSelectedFilterStatus(String? status) {
+  void setSelectedFilterStatus(String? status) {
     if (status != null) {
       filter.setPickupStatus(status);
       refreshPickups();
@@ -92,7 +92,7 @@ class RequestPickupController extends BaseController {
     }
   }
 
-  setSelectedDeliveryType(String? deliveryType) {
+  void setSelectedDeliveryType(String? deliveryType) {
     if (deliveryType != null) {
       filter.setTransactionType(deliveryType);
       refreshPickups();
@@ -101,7 +101,7 @@ class RequestPickupController extends BaseController {
     }
   }
 
-  setSelectedFilterCity(String? city) {
+  void setSelectedFilterCity(String? city) {
     if (city != null) {
       filter.setTransactionCity(city);
       refreshPickups();
@@ -110,14 +110,14 @@ class RequestPickupController extends BaseController {
     }
   }
 
-  setSelectedDateStart(DateTime? dateTime) {
+  void setSelectedDateStart(DateTime? dateTime) {
     if (dateTime != null) {
       selectedDateStart = dateTime;
       selectedDateStartText = dateTime.toStringWithFormat(format: "dd MMM yyyy");
     }
   }
 
-  setSelectedDateEnd(DateTime? dateTime) {
+  void setSelectedDateEnd(DateTime? dateTime) {
     if (dateTime != null) {
       selectedDateEnd = dateTime;
       selectedDateEndText = dateTime.toStringWithFormat(format: "dd MMM yyyy");
@@ -155,8 +155,12 @@ class RequestPickupController extends BaseController {
     try {
       final response = await requestPickupRepository.getRequestPickupAddresses();
       final payload = response.payload ?? List.empty();
+      addresses.clear();
       addresses.addAll(payload);
+      update();
     } catch (e) {
+      e.toString();
+      print("payload error");
       // Do nothing for now.
     }
   }
@@ -195,7 +199,7 @@ class RequestPickupController extends BaseController {
     }
   }
 
-  selectItem(String awb) {
+  void selectItem(String awb) {
     if (isItemChecked(awb)) {
       selectedAwbs.remove(awb);
     } else {
@@ -215,11 +219,15 @@ class RequestPickupController extends BaseController {
     selectedAwbs.clear();
   }
 
-  refreshPickups() {
+  void onUpdateAddresses() {
+    getAddresses();
+  }
+
+  void refreshPickups() {
     pagingController.refresh();
   }
 
-  requireRetry() {
+  void requireRetry() {
     getRequestPickups(Constant.defaultPage);
   }
 

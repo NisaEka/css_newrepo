@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -470,12 +472,17 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
   }
 
   _pickupAddressBottomSheet(RequestPickupController controller) {
+    print("controller addresses length: ");
+    print(controller.addresses.length);
     _requestPickupBottomSheetScaffold(
         "Pilih Alamat Penjemputan".tr,
         RequestPickupSelectAddressContent(
           addresses: controller.addresses,
-          onAddNewAddressClick: () {
-            Get.to(() => const RequestPickupAddressUpsertScreen());
+          onAddNewAddressClick: () async {
+            var upsertResult = await Get.to(() => const RequestPickupAddressUpsertScreen());
+            if (upsertResult == HttpStatus.created) {
+              controller.onUpdateAddresses();
+            }
           },
           onPickupClick: (String selectedTime) {
             Get.dialog(RequestPickupConfirmationDialog(
