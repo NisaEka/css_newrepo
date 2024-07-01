@@ -225,6 +225,10 @@ class RequestPickupController extends BaseController {
     }
   }
 
+  void onSelectAddress(String id) {
+    selectedAddressId = id;
+  }
+
   void selectItem(String awb) {
     if (isItemChecked(awb)) {
       selectedAwbs.remove(awb);

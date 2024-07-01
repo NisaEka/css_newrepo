@@ -12,10 +12,14 @@ import 'package:get/get.dart';
 class RequestPickupSelectAddressContent extends StatelessWidget {
 
   final List<RequestPickupAddressModel> addresses;
+
   final Function onAddNewAddressClick;
   final Function onPickupClick;
   final Function(String) onTimeSet;
+  final Function(String) onSelectAddress;
+
   final String selectedTime;
+  final String? selectedAddressId;
 
   const RequestPickupSelectAddressContent({
     super.key,
@@ -23,7 +27,9 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
     required this.onAddNewAddressClick,
     required this.onPickupClick,
     required this.onTimeSet,
-    required this.selectedTime
+    required this.onSelectAddress,
+    required this.selectedTime,
+    required this.selectedAddressId
   });
 
   @override
@@ -41,13 +47,13 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
   Widget _addNewAddressWidget() {
     return GestureDetector(
       onTap: () { onAddNewAddressClick(); },
-      child: const Padding(
-        padding: EdgeInsets.all(16),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Tambah alamat penjemputan"),
-            Icon(Icons.keyboard_arrow_right)
+            Text('Tambah alamat penjemputan'.tr),
+            const Icon(Icons.keyboard_arrow_right)
           ],
         ),
       ),
@@ -64,6 +70,8 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
             return RequestPickupAddressItem(
               address: addresses[index],
               lastItem: index == addresses.length - 1,
+              selected: selectedAddressId == addresses[index].id,
+              onItemClick: () => onSelectAddress(addresses[index].id),
             );
           },
           separatorBuilder: (BuildContext context, int index) {

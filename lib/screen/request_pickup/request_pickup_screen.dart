@@ -116,8 +116,14 @@ class RequestPickupScreen extends StatelessWidget {
       children: [
         _mainContent(controller),
         controller.createDataLoading ? const LoadingDialog() : Container(),
-        controller.createDataFailed ? const MessageInfoDialog(message: 'Gagal membuat permintaan pickup') : Container(),
-        controller.createDataSuccess ? const MessageInfoDialog(message: 'Berhasil membuat permintaan pickup') : Container()
+        controller.createDataFailed
+            ? const MessageInfoDialog(
+                message: 'Gagal membuat permintaan pickup')
+            : Container(),
+        controller.createDataSuccess
+            ? const MessageInfoDialog(
+                message: 'Berhasil membuat permintaan pickup')
+            : Container()
       ],
     );
   }
@@ -462,34 +468,45 @@ class RequestPickupScreen extends StatelessWidget {
   }
 
   _pickupAddressBottomSheet(RequestPickupController controller) {
-    _requestPickupBottomSheetScaffold(
-        "Pilih Alamat Penjemputan".tr,
-        RequestPickupSelectAddressContent(
-          addresses: controller.addresses,
-          onAddNewAddressClick: () async {
-            var upsertResult =
-                await Get.to(() => const RequestPickupAddressUpsertScreen());
-            if (upsertResult == HttpStatus.created) {
-              controller.onUpdateAddresses();
-            }
-          },
-          onPickupClick: () {
-            Get.dialog(RequestPickupConfirmationDialog(
-              pickupTime: controller.selectedPickupTime,
-              onConfirmAction: () {
-                controller.onPickupAction();
-                Get.back();
-              },
-              onCancelAction: () {
-                Get.back();
-              },
-            ));
-          },
-          onTimeSet: (String newTime) {
-            controller.onSetPickupTime(newTime);
-          },
-          selectedTime: controller.selectedPickupTime,
-        ));
+    Get.bottomSheet(
+      enableDrag: true,
+      isDismissible: true,
+      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+        return RequestPickupBottomSheetScaffold(
+          title: 'Pilih Alamat Penjemputan'.tr,
+          content: RequestPickupSelectAddressContent(
+            addresses: controller.addresses,
+            onAddNewAddressClick: () async {
+              var upsertResult =
+              await Get.to(() => const RequestPickupAddressUpsertScreen());
+              if (upsertResult == HttpStatus.created) {
+                setState(() => controller.onUpdateAddresses());
+              }
+            },
+            onPickupClick: () {
+              Get.dialog(RequestPickupConfirmationDialog(
+                pickupTime: controller.selectedPickupTime,
+                onConfirmAction: () {
+                  controller.onPickupAction();
+                  Get.back();
+                },
+                onCancelAction: () {
+                  Get.back();
+                },
+              ));
+            },
+            onTimeSet: (String newTime) {
+              setState(() => controller.onSetPickupTime(newTime));
+            },
+            selectedTime: controller.selectedPickupTime,
+            onSelectAddress: (String addressId) {
+              setState(() => controller.onSelectAddress(addressId));
+            },
+            selectedAddressId: controller.selectedAddressId,
+          ),
+        );
+      })
+    );
   }
 
   _requestPickupBottomSheetScaffold(String title, Widget content) {
