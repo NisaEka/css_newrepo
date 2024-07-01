@@ -23,26 +23,27 @@ class FacilityFormReturnScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-        init: FacilityFormReturnController(),
-        builder: (controller) {
-          return Stack(
-            children: [
-              Scaffold(
-                appBar: _appBarContent(controller),
-                body: _bodyContent(controller, context),
-                bottomNavigationBar: _nextButton(controller),
-              ),
-              controller.pickImageFailed
-                  ? MessageInfoDialog(
-                      message:
-                          'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
-                              .tr,
-                      onClickAction: () => controller.onRefreshPickImageState(),
-                    )
-                  : Container()
-            ],
-          );
-        });
+      init: FacilityFormReturnController(),
+      builder: (controller) {
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: _appBarContent(controller),
+              body: _bodyContent(controller, context),
+              bottomNavigationBar: _nextButton(controller),
+            ),
+            controller.pickImageFailed
+                ? MessageInfoDialog(
+                    message:
+                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                            .tr,
+                    onClickAction: () => controller.onRefreshPickImageState(),
+                  )
+                : Container()
+          ],
+        );
+      },
+    );
   }
 
   Widget _nextButton(FacilityFormReturnController c) {
@@ -92,6 +93,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 controller: c.returnAddress,
                 hintText: 'Alamat Pelanggan'.tr,
                 validator: ValidationBuilder().maxLength(128).build(),
+                readOnly: c.addressSectionReadOnly,
               ),
               CustomSearchDropdownField<Destination>(
                 asyncItems: (String filter) => c.getDestinationList(filter),
@@ -100,7 +102,9 @@ class FacilityFormReturnScreen extends StatelessWidget {
                     onTap: () => c.update(),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 16),
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
                       child: Text(e.asFacilityFormFormat()),
                     ),
                   );
@@ -111,8 +115,9 @@ class FacilityFormReturnScreen extends StatelessWidget {
                   c.update();
                 },
                 value: c.selectedDestination,
+                selectedItem: c.selectedDestination?.asFacilityFormFormat(),
                 isRequired: c.selectedDestination == null ? true : false,
-                readOnly: false,
+                readOnly: c.addressSectionReadOnly,
                 hintText: c.isLoadDestination
                     ? "Loading..."
                     : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
@@ -124,11 +129,13 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 controller: c.returnPhone,
                 hintText: 'No. Telepon',
                 validator: ValidationBuilder().phone().build(),
+                readOnly: c.addressSectionReadOnly,
               ),
               CustomTextFormField(
                 controller: c.returnWhatsAppNumber,
                 hintText: 'No. WhatsApp',
                 validator: ValidationBuilder().phone().build(),
+                readOnly: c.addressSectionReadOnly,
               ),
               CustomTextFormField(
                 controller: c.returnResponsibleName,
@@ -145,7 +152,9 @@ class FacilityFormReturnScreen extends StatelessWidget {
                     child: Text('Pribadi'.tr),
                   ),
                   DropdownMenuItem(
-                      value: 'BADAN USAHA'.tr, child: Text('Badan Usaha'.tr))
+                    value: 'BADAN USAHA'.tr,
+                    child: Text('Badan Usaha'.tr),
+                  )
                 ],
                 onChanged: (value) {
                   c.npwpType.text = value!;

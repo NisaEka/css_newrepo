@@ -45,9 +45,11 @@ class FacilityFormReturnController extends BaseController {
   bool _pickImageFailed = false;
   bool get pickImageFailed => _pickImageFailed;
 
+  bool _addressSectionReadOnly = false;
+  bool get addressSectionReadOnly => _addressSectionReadOnly;
+
   @override
   void onInit() {
-    print(facilityCreateArgs.toJson());
     npwpType.text = 'PRIBADI';
     super.onInit();
   }
@@ -65,14 +67,22 @@ class FacilityFormReturnController extends BaseController {
     return models ?? List.empty();
   }
 
-  onAddressSameCheck() async {
+  void onAddressSameCheck() async {
     sameWithOwner = !sameWithOwner;
     if (sameWithOwner) {
       returnAddress.text = facilityCreateArgs.address!.address;
       selectedDestination = shipperDestination;
       returnPhone.text = facilityCreateArgs.address!.phone;
       returnWhatsAppNumber.text = facilityCreateArgs.address!.handphone;
+      _addressSectionReadOnly = true;
+    } else {
+      returnAddress.clear();
+      selectedDestination = null;
+      returnPhone.clear();
+      returnWhatsAppNumber.clear();
+      _addressSectionReadOnly = false;
     }
+
     update();
   }
 
