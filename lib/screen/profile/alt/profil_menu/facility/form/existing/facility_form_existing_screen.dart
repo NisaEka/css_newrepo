@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/existing/facility_form_existing_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,8 @@ class FacilityFormExistingScreen extends StatelessWidget {
               bottomNavigationBar: _formBottomNavBar(controller),
               body: _formBody(controller)
             ),
-            controller.showLoadingIndicator ? const LoadingDialog() : Container()
+            controller.showLoadingIndicator ? const LoadingDialog() : Container(),
+            controller.showInvalidInputMessage ? MessageInfoDialog(message: 'Terdapat input yang tidak valid, periksa kembali data yang telah anda masukkan.', onClickAction: () => controller.onRestartValidationState()) : Container()
           ],
         );
       }
@@ -62,8 +64,9 @@ class FacilityFormExistingScreen extends StatelessWidget {
                   hintText: 'Nama'.tr,
                   helperText: 'Nama customer yang terdaftar'.tr,
                   validator: ValidationBuilder()
+                    .minLength(3)
                     .maxLength(32)
-                    .build()
+                    .build(),
                 ),
                 CustomTextFormField(
                   controller: controller.email,
@@ -73,7 +76,7 @@ class FacilityFormExistingScreen extends StatelessWidget {
                   inputFormatters: const [],
                   validator: ValidationBuilder()
                     .email()
-                    .build()
+                    .build(),
                 ),
                 CustomTextFormField(
                   controller: controller.phone,

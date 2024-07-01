@@ -22,12 +22,17 @@ class FacilityFormExistingController extends BaseController {
   bool _createDataSuccess = false;
   bool get createDataSuccess => _createDataSuccess;
 
+  bool _showInvalidInputMessage = false;
+  bool get showInvalidInputMessage => _showInvalidInputMessage;
+
   onSubmit() async {
     _showLoadingIndicator = true;
     update();
-    final data = _composeData();
-    profil.createProfileCcrfExisting(data)
-      .then((response) {
+
+    if (_dataIsValid()) {
+      final data = _composeData();
+      profil.createProfileCcrfExisting(data)
+          .then((response) {
         if (response.code == HttpStatus.created) {
           _createDataSuccess = true;
           Get.to(
@@ -41,10 +46,27 @@ class FacilityFormExistingController extends BaseController {
           );
         } else {
           _createDataSuccess = false;
+          update();
         }
       });
+    } else {
+      _showInvalidInputMessage = true;
+      update();
+    }
+
     _showLoadingIndicator = false;
     update();
+  }
+
+  void onRestartValidationState() {
+    _showInvalidInputMessage = false;
+    update();
+  }
+
+  bool _dataIsValid() {
+    return name.text.length > 3 &&
+        phone.text.isPhoneNumber &&
+        email.text.isEmail;
   }
 
   FacilityCreateExistingModel _composeData() {

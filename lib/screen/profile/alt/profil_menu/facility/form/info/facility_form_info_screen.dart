@@ -126,19 +126,19 @@ class FacilityFormInfoScreen extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   controller: c.phone,
-                  hintText: 'No. Telp',
+                  hintText: 'No. Telp'.tr,
                   inputType: TextInputType.phone,
                   validator: ValidationBuilder().maxLength(15).phone().build(),
                 ),
                 CustomTextFormField(
                   controller: c.whatsAppPhone,
-                  hintText: 'No. WhatsApp',
+                  hintText: 'No. WhatsApp'.tr,
                   inputType: TextInputType.phone,
                   validator: ValidationBuilder().maxLength(15).phone().build(),
                 ),
                 CustomTextFormField(
                   controller: c.email,
-                  hintText: 'Email',
+                  hintText: 'Email'.tr,
                   inputType: TextInputType.emailAddress,
                   inputFormatters: const [],
                   validator: ValidationBuilder().maxLength(64).email().build(),
