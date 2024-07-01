@@ -1,11 +1,78 @@
+import 'dart:io';
+
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_address_create_request_model.dart';
+import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
 class RequestPickupAddressUpsertController extends BaseController {
-
   final name = TextEditingController();
   final phone = TextEditingController();
   final address = TextEditingController();
-  final city = TextEditingController();
 
+  bool isLoadDestination = false;
+
+  List<Destination> destinationList = [];
+  Destination? selectedDestination;
+
+  bool createDataLoading = false;
+  bool createDataFailed = false;
+  bool createDataSuccess = false;
+
+  double? selectedLat;
+  double? selectedLng;
+
+  /// Internal methods.
+
+  Future<RequestPickupAddressCreateRequestModel> _prepareRequestData() async {
+    return RequestPickupAddressCreateRequestModel(
+      name: name.text,
+      phone: phone.text,
+      address: address.text,
+      zipCode: selectedDestination?.zipCode ?? '',
+      city: selectedDestination?.cityName ?? '',
+      district: selectedDestination?.districtName ?? '',
+      subDistrict: selectedDestination?.subDistrictName ?? '',
+      region: selectedDestination?.provinceName ?? '',
+      lat: selectedLat,
+      lng: selectedLng,
+    );
+  }
+
+  /// Screen methods.
+
+  Future<List<Destination>> getDestinationList(String keyword) async {
+    isLoadDestination = true;
+    destinationList.clear();
+
+    var response = await transaction.getDestination(keyword);
+    var models = response.payload?.toList();
+
+    isLoadDestination = false;
+    update();
+
+    return models ?? List.empty();
+  }
+
+  void onSubmitAction() async {
+    createDataLoading = true;
+    update();
+
+    requestPickupRepository
+        .createRequestPickupAddress(await _prepareRequestData())
+        .then((response) {
+      if (response.code == HttpStatus.created) {
+        Get.back(result: HttpStatus.created);
+        createDataSuccess = true;
+      } else {
+        createDataFailed = true;
+      }
+    }).catchError((error) {
+      createDataFailed = true;
+    });
+    createDataLoading = false;
+    update();
+  }
 }

@@ -3,6 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
@@ -10,16 +11,18 @@ import 'package:get/get.dart';
 class RequestPickupItem extends StatefulWidget {
 
   final RequestPickupModel? data;
-  final Function onTap;
+  final Function(String) onTap;
   final Function onLongTap;
   final bool checkMode;
+  final bool checked;
 
   const RequestPickupItem({
     super.key,
     required this.data,
     required this.onTap,
     required this.onLongTap,
-    this.checkMode = false
+    this.checkMode = false,
+    required this.checked
   });
 
   @override
@@ -29,8 +32,6 @@ class RequestPickupItem extends StatefulWidget {
 
 class _RequestPickupItemState extends State<RequestPickupItem> {
 
-  bool _checked = false;
-
   @override
   Widget build(BuildContext context) {
     final requestPickup = widget.data!;
@@ -38,7 +39,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () => {
-        widget.onTap()
+        widget.onTap(requestPickup.awb)
       },
       onLongPress: () => {
         widget.onLongTap()
@@ -62,23 +63,23 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
   }
 
   Widget _requestPickupCheckbox() {
-    final isTristate = widget.data?.status == "Dijemput";
+    final isTristate = widget.data?.status == Constant.statusAlreadyRequestPickedUp;
 
-    if (widget.checkMode) {
+    if (widget.checkMode && !isTristate) {
       return Row(
         children: [
           Checkbox(
-            value: isTristate ? null : _checked,
+            value: widget.checked,
             tristate: isTristate,
             onChanged: (newValue) {
-              setState(() {
-                _checked = newValue ?? _checked;
-              });
+              widget.onTap(widget.data!.awb);
             },
           ),
           const SizedBox(width: 16),
         ],
       );
+    } else if (widget.checkMode) {
+      return const SizedBox(width: 64,);
     } else {
       return Container();
     }
@@ -104,7 +105,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
             ),
           ),
           Text(
-            requestPickup.name,
+            requestPickup.receiverName,
             style: itemTextStyle,
           ),
           _requestPickupServiceAndType(requestPickup)
@@ -117,7 +118,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
     return Row(
       children: [
         Text(
-          requestPickup.transactionType,
+          requestPickup.type,
           style: itemTextStyle,
         ),
         Text(
@@ -125,7 +126,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
           style: itemTextStyle,
         ),
         Text(
-          requestPickup.transactionService,
+          requestPickup.serviceCode,
           style: itemTextStyle,
         )
       ],
@@ -137,7 +138,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          requestPickup.transactionDate,
+          requestPickup.date,
           style: labelTextStyle,
         ),
         const SizedBox(height: 8,),
@@ -163,7 +164,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
   }
 
   Color _chipColor(RequestPickupModel requestPickup) {
-    if (requestPickup.status == "Belum Dijemput") {
+    if (requestPickup.status == Constant.statusNotRequestPickedUpYet) {
       return warningDarkColor;
     } else {
       return successColor;
