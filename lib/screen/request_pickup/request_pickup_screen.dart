@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
@@ -11,26 +10,17 @@ import 'package:css_mobile/screen/request_pickup/detail/request_pickup_filter_it
 import 'package:css_mobile/screen/request_pickup/request_pickup_confirmation_dialog.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
-import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class RequestPickupScreen extends StatefulWidget {
+class RequestPickupScreen extends StatelessWidget {
   const RequestPickupScreen({super.key});
-
-  @override
-  State<StatefulWidget> createState() => _RequestPickupScreenState();
-}
-
-class _RequestPickupScreenState extends State<RequestPickupScreen> {
-  bool _checkMode = false;
-  bool _checkAll = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +41,7 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
   }
 
   Widget? _requestPickupBottomBar(RequestPickupController controller) {
-    if (_checkMode) {
+    if (controller.checkMode) {
       return Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -115,10 +105,21 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
     }
 
     if (controller.showMainContent) {
-      return _mainContent(controller);
+      return _mainContentStack(controller);
     }
 
     return Text("No Content".tr);
+  }
+
+  Widget _mainContentStack(RequestPickupController controller) {
+    return Stack(
+      children: [
+        _mainContent(controller),
+        controller.createDataLoading ? const LoadingDialog() : Container(),
+        controller.createDataFailed ? const MessageInfoDialog(message: 'Gagal membuat permintaan pickup') : Container(),
+        controller.createDataSuccess ? const MessageInfoDialog(message: 'Berhasil membuat permintaan pickup') : Container()
+      ],
+    );
   }
 
   Widget _mainContent(RequestPickupController controller) {
@@ -138,19 +139,17 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
                   return RequestPickupItem(
                     data: item,
                     onTap: (String awb) {
-                      if (_checkMode) {
-                        setState(() {
-                          controller.selectItem(awb);
-                        });
+                      if (controller.checkMode) {
+                        controller.selectItem(awb);
                       } else {
                         Get.to(const RequestPickupDetailScreen(),
                             arguments: {"data": item});
                       }
                     },
                     onLongTap: () {
-                      setState(() { _checkMode = true; });
+                      controller.setCheckMode(true);
                     },
-                    checkMode: _checkMode,
+                    checkMode: controller.checkMode,
                     checked: controller.isItemChecked(item.awb),
                   );
                 },
@@ -174,45 +173,33 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
   }
 
   Widget _checkAllItemBox(RequestPickupController controller) {
-    if (_checkMode) {
+    if (controller.checkMode) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Checkbox(
-                  value: _checkAll,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _checkAll = newValue ?? _checkAll;
-                      if (_checkAll) {
-                        controller.onCheckAll();
-                      } else {
-                        controller.onCancel();
-                      }
-                    });
-                  },
-                ),
-                Text(
-                  "Pilih Semua".tr,
-                  style: inputTextStyle,
-                )
-              ],
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _checkMode = false;
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Checkbox(
+                    value: false,
+                    onChanged: (newValue) {},
+                  ),
+                  Text(
+                    "Pilih Semua".tr,
+                    style: inputTextStyle,
+                  )
+                ],
+              ),
+              TextButton(
+                onPressed: () {
+                  controller.setCheckMode(false);
                   controller.onCancel();
-                });
-              },
-              child: Text("Batal".tr),
-            )
-          ],
-        )
-      );
+                },
+                child: Text("Batal".tr),
+              )
+            ],
+          ));
     } else {
       return Container();
     }
@@ -309,7 +296,8 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
 
                     return RequestPickupFilterItem(
                       onItemSelected: () {
-                        setState(() => controller.setSelectedFilterDate(items[index]));
+                        setState(() =>
+                            controller.setSelectedFilterDate(items[index]));
                       },
                       itemName: items[index].asName(),
                       isSelected: isSelected,
@@ -317,10 +305,12 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
                       startDate: controller.selectedDateStartText,
                       endDate: controller.selectedDateEndText,
                       onStartDateChange: (newDateTime) {
-                        setState(() => controller.setSelectedDateStart(newDateTime));
+                        setState(
+                            () => controller.setSelectedDateStart(newDateTime));
                       },
                       onEndDateChange: (newDateTime) {
-                        setState(() => controller.setSelectedDateEnd(newDateTime));
+                        setState(
+                            () => controller.setSelectedDateEnd(newDateTime));
                       },
                     );
                   },
@@ -472,23 +462,33 @@ class _RequestPickupScreenState extends State<RequestPickupScreen> {
   }
 
   _pickupAddressBottomSheet(RequestPickupController controller) {
-    print("controller addresses length: ");
-    print(controller.addresses.length);
     _requestPickupBottomSheetScaffold(
         "Pilih Alamat Penjemputan".tr,
         RequestPickupSelectAddressContent(
           addresses: controller.addresses,
           onAddNewAddressClick: () async {
-            var upsertResult = await Get.to(() => const RequestPickupAddressUpsertScreen());
+            var upsertResult =
+                await Get.to(() => const RequestPickupAddressUpsertScreen());
             if (upsertResult == HttpStatus.created) {
               controller.onUpdateAddresses();
             }
           },
-          onPickupClick: (String selectedTime) {
+          onPickupClick: () {
             Get.dialog(RequestPickupConfirmationDialog(
-              pickupTime: selectedTime,
+              pickupTime: controller.selectedPickupTime,
+              onConfirmAction: () {
+                controller.onPickupAction();
+                Get.back();
+              },
+              onCancelAction: () {
+                Get.back();
+              },
             ));
           },
+          onTimeSet: (String newTime) {
+            controller.onSetPickupTime(newTime);
+          },
+          selectedTime: controller.selectedPickupTime,
         ));
   }
 

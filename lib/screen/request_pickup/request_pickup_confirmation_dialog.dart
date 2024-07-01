@@ -6,10 +6,14 @@ import 'package:get/get.dart';
 class RequestPickupConfirmationDialog extends StatelessWidget {
 
   final String pickupTime;
+  final Function onConfirmAction;
+  final Function onCancelAction;
 
   const RequestPickupConfirmationDialog({
     super.key,
-    required this.pickupTime
+    required this.pickupTime,
+    required this.onConfirmAction,
+    required this.onCancelAction
   });
 
   @override
@@ -34,7 +38,7 @@ class RequestPickupConfirmationDialog extends StatelessWidget {
             children: [
               Expanded(
                 child: OutlinedButton(
-                  onPressed: () { Get.back(); },
+                  onPressed: () => onCancelAction(),
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(
                       width: 1,
@@ -52,7 +56,7 @@ class RequestPickupConfirmationDialog extends StatelessWidget {
               const SizedBox(width: 16),
               Expanded(
                 child: FilledButton(
-                  onPressed: () { Get.back(); },
+                  onPressed: () => onConfirmAction(),
                   child: Text(
                     "Ya".tr,
                     style: const TextStyle(color: whiteColor),

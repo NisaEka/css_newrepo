@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/default_page_filter_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_create_request_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_filter_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
@@ -10,6 +13,13 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RequestPickupController extends BaseController {
+  bool _checkMode = false;
+  bool get checkMode => _checkMode;
+
+  void setCheckMode(bool newState) {
+    _checkMode = newState;
+    update();
+  }
 
   bool showLoadingIndicator = false;
   bool showMainContent = true;
@@ -21,7 +31,7 @@ class RequestPickupController extends BaseController {
   List<String> statuses = [];
   List<String> types = [];
 
-  RequestPickupFilterModel filter = RequestPickupFilterModel() ;
+  RequestPickupFilterModel filter = RequestPickupFilterModel();
   String filterDateText = Constant.allDate;
   String filterStatusText = Constant.allStatus;
   String filterDeliveryTypeText = Constant.allDeliveryType;
@@ -34,10 +44,22 @@ class RequestPickupController extends BaseController {
   String selectedDateStartText = "Pilih Tanggal Awal";
   String selectedDateEndText = "Pilih Tanggal Akhir";
 
-  final PagingController<int, RequestPickupModel> pagingController = PagingController(firstPageKey: Constant.defaultPage);
+  final PagingController<int, RequestPickupModel> pagingController =
+      PagingController(firstPageKey: Constant.defaultPage);
   static const pageSize = Constant.defaultLimit;
 
   List<String> selectedAwbs = [];
+  String selectedPickupTime = Constant.defaultPickupTime;
+  String? selectedAddressId;
+
+  bool _createDataLoading = false;
+  bool get createDataLoading => _createDataLoading;
+
+  bool _createDataFailed = false;
+  bool get createDataFailed => _createDataFailed;
+
+  bool _createDataSuccess = false;
+  bool get createDataSuccess => _createDataSuccess;
 
   @override
   void onInit() {
@@ -66,7 +88,8 @@ class RequestPickupController extends BaseController {
 
     if (selectedFilterDate == RequestPickupDateEnum.custom) {
       if (startDateAvailable && endDateAvailable) {
-        filter.setDate('${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
+        filter.setDate(
+            '${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
         filterDateText = '$selectedDateStartText - $selectedDateEndText';
       } else if (startDateAvailable) {
         filter.setDate('${selectedDateStart?.millisecondsSinceEpoch}');
@@ -113,7 +136,8 @@ class RequestPickupController extends BaseController {
   void setSelectedDateStart(DateTime? dateTime) {
     if (dateTime != null) {
       selectedDateStart = dateTime;
-      selectedDateStartText = dateTime.toStringWithFormat(format: "dd MMM yyyy");
+      selectedDateStartText =
+          dateTime.toStringWithFormat(format: "dd MMM yyyy");
     }
   }
 
@@ -153,7 +177,8 @@ class RequestPickupController extends BaseController {
 
   Future<void> getAddresses() async {
     try {
-      final response = await requestPickupRepository.getRequestPickupAddresses();
+      final response =
+          await requestPickupRepository.getRequestPickupAddresses();
       final payload = response.payload ?? List.empty();
       addresses.clear();
       addresses.addAll(payload);
@@ -167,7 +192,8 @@ class RequestPickupController extends BaseController {
 
   Future<void> getCities() async {
     try {
-      final response = await requestPickupRepository.getRequestPickupCities(DefaultPageFilterModel());
+      final response = await requestPickupRepository
+          .getRequestPickupCities(DefaultPageFilterModel());
       final payload = response.payload ?? List.empty();
       cities.add(Constant.allDeliveryCity);
       cities.addAll(payload);
@@ -205,6 +231,8 @@ class RequestPickupController extends BaseController {
     } else {
       selectedAwbs.add(awb);
     }
+
+    update();
   }
 
   bool isItemChecked(String awb) {
@@ -227,8 +255,53 @@ class RequestPickupController extends BaseController {
     pagingController.refresh();
   }
 
+  void refreshState() {
+    _createDataLoading = false;
+    _createDataSuccess = false;
+    _createDataFailed = false;
+    update();
+  }
+
   void requireRetry() {
     getRequestPickups(Constant.defaultPage);
   }
 
+  void onSetPickupTime(String newTime) {
+    selectedPickupTime = newTime;
+    update();
+  }
+
+  void onPickupAction() async {
+    _createDataLoading = true;
+    update();
+
+    requestPickupRepository
+        .createRequestPickup(_prepareCreateData())
+        .then((response) {
+      if (response.code == HttpStatus.created) {
+        _createDataSuccess = true;
+        refreshPickups();
+        refreshState();
+      } else {
+        _createDataFailed = true;
+      }
+      update();
+    }).catchError((error) {
+      _createDataFailed = true;
+      update();
+    });
+
+    _createDataLoading = false;
+    update();
+  }
+
+  /// Internal methods.
+
+  RequestPickupCreateRequestModel _prepareCreateData() {
+    return RequestPickupCreateRequestModel(
+      awbs: selectedAwbs,
+      pickupAddressId: addresses.first.id,
+      pickupTime: selectedPickupTime,
+    );
+  }
 }

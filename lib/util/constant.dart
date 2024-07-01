@@ -11,4 +11,7 @@ class Constant {
   static const int defaultLastYear = 2100;
 
   static const String defaultPickupTime = '00:00';
+
+  static const String statusNotRequestPickedUpYet = 'BELUM MINTA DIJEMPUT';
+  static const String statusAlreadyRequestPickedUp = 'SUDAH MINTA DIJEMPUT';
 }

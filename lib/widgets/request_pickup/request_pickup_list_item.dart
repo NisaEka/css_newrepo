@@ -3,6 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
@@ -62,7 +63,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
   }
 
   Widget _requestPickupCheckbox() {
-    final isTristate = widget.data?.status == "SUDAH MINTA DIJEMPUT";
+    final isTristate = widget.data?.status == Constant.statusAlreadyRequestPickedUp;
 
     if (widget.checkMode && !isTristate) {
       return Row(
@@ -78,7 +79,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
         ],
       );
     } else if (widget.checkMode) {
-      return const SizedBox(width: 32,);
+      return const SizedBox(width: 64,);
     } else {
       return Container();
     }
@@ -163,7 +164,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
   }
 
   Color _chipColor(RequestPickupModel requestPickup) {
-    if (requestPickup.status == "Belum Dijemput") {
+    if (requestPickup.status == Constant.statusNotRequestPickedUpYet) {
       return warningDarkColor;
     } else {
       return successColor;
