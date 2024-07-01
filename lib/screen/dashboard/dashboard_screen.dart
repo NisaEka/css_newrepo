@@ -6,6 +6,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/menu/other_menu_screen.dart';
+import 'package:css_mobile/screen/notification/notification_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_screen.dart';
@@ -90,7 +91,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Row(
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => Get.to(const NotificationScreen()),
                                     icon: const Icon(
                                       Icons.notifications,
                                       color: whiteColor,

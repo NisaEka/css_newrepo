@@ -62,7 +62,7 @@ class SignUpOTPController extends BaseController {
 
   @override
   void onReady() {
-    _startTimer(60);
+    _startTimer(120);
     super.onReady();
   }
 

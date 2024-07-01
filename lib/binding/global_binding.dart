@@ -16,6 +16,8 @@ import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_impl.dart
 import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_repository.dart';
 import 'package:css_mobile/data/repository/notification/notification_impl.dart';
 import 'package:css_mobile/data/repository/notification/notification_repository.dart';
+import 'package:css_mobile/data/repository/pantau/pantau_impl.dart';
+import 'package:css_mobile/data/repository/pantau/pantau_repository.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_impl.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/data/repository/profil/profil_impl.dart';
@@ -48,5 +50,6 @@ class GlobalBinding extends Bindings {
     Get.put<AggregasiRepository>(AggregasiRepositoryImpl(), permanent: true);
     Get.put<RequestPickupRepository>(RequestPickupImpl(), permanent: true);
     Get.put<NotificationRepository>(NotificationRepositoryImpl(), permanent: true);
+    Get.put<PantauRepository>(PantauRepositoryImpl(), permanent: true);
   }
 }

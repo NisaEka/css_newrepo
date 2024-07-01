@@ -122,7 +122,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Text(
-                            data?.type ?? apiType ?? '',
+                            data?.type ?? apiType ?? '-',
                             style: sublistTitleTextStyle.copyWith(
                               color: whiteColor,
                               fontSize: 8,
@@ -144,52 +144,56 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           color: isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 3 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(data?.awb ?? noResi ?? '', style: listTitleTextStyle),
+                          child: Text(data?.awb ?? noResi ?? '-', style: listTitleTextStyle),
                         ),
                         Container(
                           color: isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 5 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(data?.receiver?.name ?? penerima ?? '', style: sublistTitleTextStyle),
+                          child: Text(data?.receiver?.name ?? penerima ?? '-', style: sublistTitleTextStyle),
                         ),
                         Container(
                           color: isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 10 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(data?.service ?? service ?? '', style: sublistTitleTextStyle),
+                          child: Text(data?.service ?? service ?? '-', style: sublistTitleTextStyle),
                         ),
                         Column(
                           children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                              margin: const EdgeInsets.only(bottom: 10),
-                              width: isLoading ? Get.width / 5 : null,
-                              decoration: BoxDecoration(
-                                color: data?.status == "MASIH DI KAMU" ||
-                                        apiType == "MASIH DI KAMU" ||
-                                        data?.status == "DIBATALKAN OLEH KAMU" ||
-                                        apiType == "DIBATALKAN OLEH KAMU"
-                                    ? warningColor
-                                    : data?.status == "SUDAH DIJEMPUT" ||
-                                            apiType == "SUDAH DIJEMPUT" ||
-                                            data?.status == "DALAM PERJALANAN" ||
-                                            apiType == "DALAM PERJALANAN" ||
-                                            data?.status == "SUKSES DITERIMA" ||
-                                            apiType == "SUKSES DITERIMA" ||
-                                            data?.status == "SUDAH DI JNE" ||
-                                            apiType == "SUDAH DI JNE"
-                                        ? warningColor
-                                        : errorLightColor2,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Text(
-                                data?.status?.tr ?? status?.tr ?? '',
-                                style: sublistTitleTextStyle.copyWith(
-                                  color: whiteColor,
-                                  fontSize: 8,
-                                ),
-                              ),
-                            ),
+                            (data?.status?.isNotEmpty ?? false)
+                                ? Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    width: isLoading ? Get.width / 5 : null,
+                                    decoration: BoxDecoration(
+                                      color: data?.status == "MASIH DI KAMU" ||
+                                              apiType == "MASIH DI KAMU" ||
+                                              data?.status == "DIBATALKAN OLEH KAMU" ||
+                                              apiType == "DIBATALKAN OLEH KAMU"
+                                          ? warningColor
+                                          : data?.status == "SUDAH DIJEMPUT" ||
+                                                  apiType == "SUDAH DIJEMPUT" ||
+                                                  data?.status == "DALAM PERJALANAN" ||
+                                                  apiType == "DALAM PERJALANAN" ||
+                                                  data?.status == "SUKSES DITERIMA" ||
+                                                  apiType == "SUKSES DITERIMA" ||
+                                                  data?.status == "SUDAH DI JNE" ||
+                                                  apiType == "SUDAH DI JNE"
+                                              ? warningColor
+                                              : data?.status == "Success" || apiType == "Success"
+                                                  ? successColor
+                                                  : errorLightColor2,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Text(
+                                      data?.status?.tr ?? status?.tr ?? '',
+                                      style: sublistTitleTextStyle.copyWith(
+                                        color: whiteColor,
+                                        fontSize: 8,
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(),
                           ],
                         ),
                       ],

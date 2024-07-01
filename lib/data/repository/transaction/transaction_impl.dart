@@ -263,6 +263,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
+    transDate.printInfo(info: "transaction date");
     try {
       Response response = await network.dio.get(
         "/transaction",

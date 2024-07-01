@@ -9,6 +9,7 @@ import 'package:css_mobile/data/repository/facility/facility_repository.dart';
 import 'package:css_mobile/data/repository/jlc/jlc_repository.dart';
 import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_repository.dart';
 import 'package:css_mobile/data/repository/notification/notification_repository.dart';
+import 'package:css_mobile/data/repository/pantau/pantau_repository.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
 import 'package:css_mobile/data/repository/request_pickup/request_pickup_repository.dart';
@@ -34,5 +35,6 @@ abstract class BaseController extends GetxController {
   final requestPickupRepository = Get.find<RequestPickupRepository>();
   late StreamSubscription<ConnectivityResult> connectivitySubscription;
   final notification = Get.find<NotificationRepository>();
+  final pantau = Get.find<PantauRepository>();
 
 }
