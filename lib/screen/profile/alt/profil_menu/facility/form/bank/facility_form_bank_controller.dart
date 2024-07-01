@@ -8,6 +8,7 @@ import 'package:css_mobile/data/model/storage/ccrf_file_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
@@ -34,6 +35,9 @@ class FacilityFormBankController extends BaseController {
   final List<BankModel> banks = [];
   BankModel? selectedBank;
 
+  bool _pickImageFailed = false;
+  bool get pickImageFailed => _pickImageFailed;
+
   @override
   void onInit() {
     super.onInit();
@@ -54,15 +58,28 @@ class FacilityFormBankController extends BaseController {
     update();
   }
 
-  pickImage() async {
+  void pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final imageNotNull = image != null;
 
-    if (image != null) {
-      pickedImageUrl = image.path;
-      pickedImage = File(image.path);
+    if (imageNotNull) {
+      final imageSizeApproved = await image.length() <= Constant.maxImageLength;
+
+      if (imageSizeApproved) {
+        pickedImageUrl = image.path;
+        pickedImage = File(image.path);
+      } else {
+        _pickImageFailed = true;
+      }
+
       update();
     }
+  }
+
+  void onRefreshUploadState() {
+    _pickImageFailed = false;
+    update();
   }
 
   onTermsAndConditionsCheck() {

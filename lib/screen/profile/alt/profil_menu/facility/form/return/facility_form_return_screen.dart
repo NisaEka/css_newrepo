@@ -6,10 +6,12 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/return/f
 import 'package:css_mobile/util/input_formatter/npwp_separator_input_formater.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/profile/image_picker_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
@@ -29,7 +31,15 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 appBar: _appBarContent(controller),
                 body: _bodyContent(controller, context),
                 bottomNavigationBar: _nextButton(controller),
-              )
+              ),
+              controller.pickImageFailed
+                  ? MessageInfoDialog(
+                      message:
+                          'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                              .tr,
+                      onClickAction: () => controller.onRefreshPickImageState(),
+                    )
+                  : Container()
             ],
           );
         });
@@ -42,7 +52,8 @@ class FacilityFormReturnScreen extends StatelessWidget {
         color: redJNE,
         title: 'Selanjutnya'.tr,
         onPressed: () {
-          Get.to(const FacilityFormBankScreen(), arguments: {'data': c.submitData()});
+          Get.to(const FacilityFormBankScreen(),
+              arguments: {'data': c.submitData()});
         },
       ),
     );
@@ -63,7 +74,9 @@ class FacilityFormReturnScreen extends StatelessWidget {
                   'Ceklis bila informasi pengembalian barang sama dengan data pemohon',
                   textAlign: TextAlign.start,
                   style: sublistTitleTextStyle.copyWith(
-                    color: Theme.of(context).brightness == Brightness.light ? greyDarkColor2 : greyLightColor2,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? greyDarkColor2
+                        : greyLightColor2,
                   ),
                 ),
                 leading: Checkbox(
@@ -86,7 +99,8 @@ class FacilityFormReturnScreen extends StatelessWidget {
                   return GestureDetector(
                     onTap: () => c.update(),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 16),
                       child: Text(e.asFacilityFormFormat()),
                     ),
                   );
@@ -99,8 +113,12 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 value: c.selectedDestination,
                 isRequired: c.selectedDestination == null ? true : false,
                 readOnly: false,
-                hintText: c.isLoadDestination ? "Loading..." : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
-                textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
+                hintText: c.isLoadDestination
+                    ? "Loading..."
+                    : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
+                textStyle: c.selectedDestination != null
+                    ? subTitleTextStyle
+                    : hintTextStyle,
               ),
               CustomTextFormField(
                 controller: c.returnPhone,
@@ -126,7 +144,8 @@ class FacilityFormReturnScreen extends StatelessWidget {
                     value: 'PRIBADI'.tr,
                     child: Text('Pribadi'.tr),
                   ),
-                  DropdownMenuItem(value: 'BADAN USAHA'.tr, child: Text('Badan Usaha'.tr))
+                  DropdownMenuItem(
+                      value: 'BADAN USAHA'.tr, child: Text('Badan Usaha'.tr))
                 ],
                 onChanged: (value) {
                   c.npwpType.text = value!;
@@ -137,7 +156,8 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 controller: c.npwpNumber,
                 hintText: 'Nomor NPWP'.tr,
                 inputType: TextInputType.number,
-                validator: ValidationBuilder().minLength(15).maxLength(15).build(),
+                validator:
+                    ValidationBuilder().minLength(15).maxLength(15).build(),
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                   LengthLimitingTextInputFormatter(15),
@@ -154,16 +174,11 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 hintText: 'Alamat NPWP'.tr,
                 validator: ValidationBuilder().minLength(4).build(),
               ),
-              Container(
-                  width: Get.width,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
-                    ),
-                  ),
-                  child: _imagePickerContent(context, c)),
+              ImagePickerContainer(
+                containerTitle: 'Pilih Gambar NPWP',
+                pickedImagePath: c.pickedImageUrl,
+                onPickImage: () => c.pickImage(),
+              )
             ],
           ),
         ))
@@ -185,29 +200,5 @@ class FacilityFormReturnScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Widget _imagePickerContent(BuildContext context, FacilityFormReturnController controller) {
-    if (controller.pickedImage != null) {
-      return Container(
-        width: Get.width,
-        height: Get.width / 2,
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-        child: Image(image: FileImage(controller.pickedImage!), fit: BoxFit.fitWidth),
-      );
-    } else {
-      return TextButton(
-        onPressed: () {
-          controller.pickImage();
-        },
-        child: Text(
-          'Pilih Gambar NPWP',
-          style: sublistTitleTextStyle.copyWith(
-            color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
-          ),
-        ),
-      );
-    }
   }
 }
