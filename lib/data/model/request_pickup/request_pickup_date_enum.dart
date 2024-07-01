@@ -13,22 +13,22 @@ extension RequestPickupDateEnumExt on RequestPickupDateEnum {
 
     switch (this) {
       case RequestPickupDateEnum.all:
-        result = "Semua Tanggal";
+        result = "SEMUA TANGGAL";
         break;
       case RequestPickupDateEnum.one_month:
-        result = "1 Bulan Terakhir";
+        result = "1 BULAN TERAKHIR";
         break;
       case RequestPickupDateEnum.one_week:
-        result = "1 Minggu Terakhir";
+        result = "1 MINGGU TERAKHIR";
         break;
       case RequestPickupDateEnum.today:
-        result = "Hari Ini";
+        result = "HARI INI";
         break;
       case RequestPickupDateEnum.custom:
-        result = "Pilih Tanggal Sendiri";
+        result = "PILIH TANGGAL SENDIRI";
         break;
       default:
-        result = "Tidak Diketahui";
+        result = "SEMUA TANGGAL";
         break;
     }
 
