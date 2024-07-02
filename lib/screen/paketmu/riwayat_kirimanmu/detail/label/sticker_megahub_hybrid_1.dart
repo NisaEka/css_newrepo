@@ -51,10 +51,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
     return DefaultTextStyle(
       style: const TextStyle(color: Colors.black),
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(),
-          color: Colors.white
-        ),
+        decoration: BoxDecoration(border: Border.all(), color: Colors.white),
         child: Row(
           children: [
             Column(
@@ -139,7 +136,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                           ),
                           const SolidBorder(
                             width: 1,
-                            height: 70,
+                            height: 50,
                           ),
                           Container(
                             padding: const EdgeInsets.all(3),
@@ -173,12 +170,13 @@ class StickerMegahubHybrid1 extends StatelessWidget {
             Container(
               padding: const EdgeInsets.only(
                 left: 5,
-                bottom: 3,
+                bottom: 0,
               ),
               decoration: const BoxDecoration(
-                  border: Border(
-                left: BorderSide(),
-              )),
+                border: Border(
+                  left: BorderSide(),
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

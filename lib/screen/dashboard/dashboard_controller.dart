@@ -31,7 +31,7 @@ class DashboardController extends BaseController {
 
   List<Widget> widgetOptions = <Widget>[
     const DashboardScreen(),
-    AltProfileScreen(),
+    const AltProfileScreen(),
   ];
 
   List<Items> menuItems = [];
@@ -251,7 +251,7 @@ class DashboardController extends BaseController {
         update();
       });
 
-      isCcrf = ccrf?.payload != null;
+      isCcrf = ccrf?.payload != null && ccrf?.payload?.generalInfo?.apiStatus == "Y";
       storage.saveData(StorageCore.ccrfProfil, ccrf?.payload);
       update();
     } catch (e, i) {

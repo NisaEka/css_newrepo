@@ -192,7 +192,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   alignment: Alignment.center,
                   // color: Colors.grey,
                   child: Text(
-                    "${data.destination?.destinationCode?.substring(0, 3)}-${data.receiver?.destinationCode?.substring(0, 3)}\n${data.receiver?.zip}",
+                    "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.receiver?.destinationCode?.substring(0, 3) ?? '-'}\n${data.receiver?.zip}",
                     style: TextStyle(fontSize: 15, fontWeight: bold),
                     textAlign: TextAlign.center,
                   ),

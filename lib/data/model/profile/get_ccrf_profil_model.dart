@@ -353,7 +353,7 @@ class ReturnAddress {
 
 class GeneralInfo {
   GeneralInfo({
-    String? brand,
+    String?brand,
     String? name,
     String? idCardNumber,
     String? address,
@@ -364,8 +364,9 @@ class GeneralInfo {
     String? subDistrict,
     String? zipCode,
     String? phone,
-    dynamic secondaryPhone,
+    String? secondaryPhone,
     String? email,
+    String? apiStatus,
   }) {
     _brand = brand;
     _name = name;
@@ -380,6 +381,7 @@ class GeneralInfo {
     _phone = phone;
     _secondaryPhone = secondaryPhone;
     _email = email;
+    _apiStatus = apiStatus;
   }
 
   GeneralInfo.fromJson(dynamic json) {
@@ -396,6 +398,7 @@ class GeneralInfo {
     _phone = json['phone'];
     _secondaryPhone = json['secondary_phone'];
     _email = json['email'];
+    _apiStatus = json['api_status'];
   }
 
   String? _brand;
@@ -409,8 +412,9 @@ class GeneralInfo {
   String? _subDistrict;
   String? _zipCode;
   String? _phone;
-  dynamic _secondaryPhone;
+  String? _secondaryPhone;
   String? _email;
+  String? _apiStatus;
 
   GeneralInfo copyWith({
     String? brand,
@@ -424,8 +428,9 @@ class GeneralInfo {
     String? subDistrict,
     String? zipCode,
     String? phone,
-    dynamic secondaryPhone,
+    String? secondaryPhone,
     String? email,
+    String? apiStatus,
   }) =>
       GeneralInfo(
         brand: brand ?? _brand,
@@ -441,6 +446,7 @@ class GeneralInfo {
         phone: phone ?? _phone,
         secondaryPhone: secondaryPhone ?? _secondaryPhone,
         email: email ?? _email,
+        apiStatus: apiStatus ?? _apiStatus,
       );
 
   String? get brand => _brand;
@@ -465,9 +471,11 @@ class GeneralInfo {
 
   String? get phone => _phone;
 
-  dynamic get secondaryPhone => _secondaryPhone;
+  String? get secondaryPhone => _secondaryPhone;
 
   String? get email => _email;
+
+  String? get apiStatus => _apiStatus;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -484,6 +492,7 @@ class GeneralInfo {
     map['phone'] = _phone;
     map['secondary_phone'] = _secondaryPhone;
     map['email'] = _email;
+    map['api_status'] = _apiStatus;
     return map;
   }
 }

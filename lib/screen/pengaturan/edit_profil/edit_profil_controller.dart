@@ -42,7 +42,7 @@ class EditProfileController extends BaseController {
       await profil.getCcrfProfil().then((value) {
         if (value.payload != null) {
           ccrfProfil = value.payload;
-          isCcrf = value.payload != null;
+          isCcrf = value.payload != null  && value.payload?.generalInfo?.apiStatus == "Y";
         } else {
           ccrfProfil ??= CcrfProfilModel(
             generalInfo: GeneralInfo(
