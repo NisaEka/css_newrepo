@@ -110,14 +110,14 @@ class AltProfileScreen extends StatelessWidget {
           ),
           Column(
             children: [
-              c.allow.profil == "Y"
+              c.allow.profil == "Y" && c.basicProfil?.userType == "PEMILIK"
                   ? SettingListItem(
                       title: 'Edit Profil'.tr,
                       icon: Icons.person,
                       onTap: () => Get.to(const EditProfilScreen()),
                     )
                   : const SizedBox(),
-              c.allow.fasilitas == 'Y'
+              c.allow.fasilitas == 'Y' && c.basicProfil?.userType == "PEMILIK"
                   ? SettingListItem(
                       title: 'Fasilitasku'.tr,
                       icon: Icons.format_list_numbered_rounded,

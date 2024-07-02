@@ -309,22 +309,22 @@ class TambahPetugasScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomFormLabel(label: 'Profil'.tr),
-                          CustomCheckbox(
-                            label: 'profilku'.tr,
-                            value: c.profilku,
-                            onChanged: (value) {
-                              c.profilku = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomCheckbox(
-                            label: 'Fasilitasku'.tr,
-                            value: c.fasilitas,
-                            onChanged: (value) {
-                              c.fasilitas = value!;
-                              c.update();
-                            },
-                          ),
+                          // CustomCheckbox(
+                          //   label: 'profilku'.tr,
+                          //   value: c.profilku,
+                          //   onChanged: (value) {
+                          //     c.profilku = value!;
+                          //     c.update();
+                          //   },
+                          // ),
+                          // CustomCheckbox(
+                          //   label: 'Fasilitasku'.tr,
+                          //   value: c.fasilitas,
+                          //   onChanged: (value) {
+                          //     c.fasilitas = value!;
+                          //     c.update();
+                          //   },
+                          // ),
                           CustomCheckbox(
                             label: 'Ubah Kata Sandi'.tr,
                             value: c.katasandi,
