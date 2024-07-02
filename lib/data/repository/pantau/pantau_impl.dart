@@ -13,11 +13,10 @@ class PantauRepositoryImpl extends PantauRepository {
   Future<GetPantauPaketmuModel> getPantauList(
     int page,
     int limit,
-    String transType,
-    String transDate,
-    String transStatus,
+    String date,
     String keyword,
     String officer,
+    String status,
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
@@ -29,12 +28,16 @@ class PantauRepositoryImpl extends PantauRepository {
         queryParameters: {
           "page": page,
           "limit": limit,
-          "keyword": keyword,
+          "keyword": keyword.toUpperCase(),
+          "date": date,
+          "officer_entry": officer,
+          "status": status,
         },
       );
-
       return GetPantauPaketmuModel.fromJson(response.data);
     } on DioException catch (e) {
+      e.printError();
+      e.response?.data.printError();
       return GetPantauPaketmuModel.fromJson(e.response?.data);
     }
   }

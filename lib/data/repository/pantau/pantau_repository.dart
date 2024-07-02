@@ -4,10 +4,9 @@ abstract class PantauRepository {
   Future<GetPantauPaketmuModel> getPantauList(
     int page,
     int limit,
-    String transType,
-    String transDate,
-    String transStatus,
+    String date,
     String keyword,
     String officer,
+    String status,
   );
 }
