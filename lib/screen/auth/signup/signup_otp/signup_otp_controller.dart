@@ -11,6 +11,7 @@ import 'package:pinput/pinput.dart';
 
 class SignUpOTPController extends BaseController {
   String email = Get.arguments['email'];
+  bool? isActivation = Get.arguments['isActivation'];
   String mail = '';
   bool isLoading = false;
 
@@ -63,6 +64,9 @@ class SignUpOTPController extends BaseController {
   @override
   void onReady() {
     _startTimer(120);
+    if (isActivation == true) {
+      resendPin();
+    }
     super.onReady();
   }
 
@@ -87,7 +91,7 @@ class SignUpOTPController extends BaseController {
         if (value.code == 200) {
           Get.to(SuccessScreen(
             message: "Selamat, kamu sudah berhasil mendaftar".tr,
-            buttonTitle: "Masuk",
+            buttonTitle: "Masuk".tr,
             nextAction: () => Get.offAll(const LoginScreen()),
           ));
         } else {

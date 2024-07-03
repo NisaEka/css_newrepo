@@ -5,9 +5,11 @@ import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/input_email_screen.dart';
+import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
@@ -96,7 +98,7 @@ class LoginController extends BaseController {
     Icons.remove_red_eye,
   );
 
-  Future<void> doLogin() async {
+  Future<void> doLogin(BuildContext context) async {
     isLoading = true;
     update();
     try {
@@ -131,6 +133,17 @@ class LoginController extends BaseController {
           //     backgroundColor: successColor,
           //   ),
           // );
+        } else if (value.code == 403) {
+          showDialog(
+            context: context,
+            builder: (context) => InfoDialog(
+              infoText: "Silahkan aktivasi akun terlebih dahulu".tr,
+              nextButton: () => Get.off(const SignUpOTPScreen(), arguments: {
+                'email': emailTextField.text,
+                'isActivation': true,
+              }),
+            ),
+          );
         } else {
           Get.showSnackbar(
             GetSnackBar(

@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 
 class NpwpSeparatorInputFormatter extends TextInputFormatter {
   static const separator = '.';
