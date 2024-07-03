@@ -16,4 +16,8 @@ class Constant {
   static const String statusAlreadyRequestPickedUp = 'SUDAH MINTA DIJEMPUT';
 
   static const int maxImageLength = 2000000;
+
+  static const String keyImageKtp = 'KTP';
+  static const String keyImageNpwp = 'NPWP';
+  static const String keyImageRekening = 'REKENING';
 }

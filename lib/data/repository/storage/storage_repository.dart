@@ -7,5 +7,5 @@ import 'package:dio/dio.dart';
 
 abstract class StorageRepository {
   Future<DefaultResponseModel<StorageModel?>> postStorage(File file);
-  Future<DefaultResponseModel<List<CcrfFileModel>?>> postCcrfFile(Map<String, MultipartFile> files);
+  Future<DefaultResponseModel<List<CcrfFileModel>?>> postCcrfFile(Map<String, String> files);
 }

@@ -37,9 +37,21 @@ class FacilityFormBankScreen extends StatelessWidget {
                     message:
                         'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
                             .tr,
-                    onClickAction: () => controller.onRefreshUploadState(),
+                    onClickAction: () => controller.onRefreshPickImageState(),
                   )
-                : Container()
+                : Container(),
+            controller.postDataFailed
+                ? MessageInfoDialog(
+                    message: 'Gagal menyimpan data.',
+                    onClickAction: () => controller.onRefreshPostDataState(),
+                  )
+                : Container(),
+            controller.postFileFailed
+                ? MessageInfoDialog(
+                    message: 'Gagal menyimpan file.',
+                    onClickAction: () => controller.onRefreshPostDataState(),
+                  )
+                : Container(),
           ],
         );
       },
@@ -112,7 +124,7 @@ class FacilityFormBankScreen extends StatelessWidget {
                 ),
                 ImagePickerContainer(
                   containerTitle: 'Pilih Gambar Buku Rekening',
-                  pickedImagePath: controller.pickedImageUrl,
+                  pickedImagePath: controller.pickedImagePath,
                   onPickImage: () => controller.pickImage(),
                 ),
                 ListTile(
@@ -141,5 +153,4 @@ class FacilityFormBankScreen extends StatelessWidget {
       ],
     );
   }
-
 }

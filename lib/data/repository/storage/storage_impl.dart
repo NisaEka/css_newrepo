@@ -34,12 +34,12 @@ class StorageImpl extends StorageRepository {
   }
 
   @override
-  Future<DefaultResponseModel<List<CcrfFileModel>?>> postCcrfFile(Map<String, MultipartFile> files) async {
+  Future<DefaultResponseModel<List<CcrfFileModel>?>> postCcrfFile(Map<String, String> files) async {
     try {
       var formData = FormData.fromMap({});
       files.forEach((key, value) {
         formData.files.add(
-            MapEntry(key, value)
+            MapEntry(key, MultipartFile.fromFileSync(value))
         );
       });
       var response = await network.dio.post("/storage/ccrf",
