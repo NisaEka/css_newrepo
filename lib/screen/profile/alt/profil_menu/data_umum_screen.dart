@@ -55,9 +55,10 @@ class DataUmumScreen extends StatelessWidget {
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
                 DataUmumListItem(
-                  title: "${c.ccrfProfil?.generalInfo?.address ?? '-'}"
+                  title: "${(c.ccrfProfil?.generalInfo?.address == null) ? ""
+                          "" : "${c.ccrfProfil?.generalInfo?.address}, "}"
                       "${(c.ccrfProfil?.generalInfo?.subDistrict == null) ? ""
-                          ", ${c.basicProfil?.origin?.originName}" : ""
+                          "${c.basicProfil?.origin?.originName ?? ''}" : ""
                           ",  ${c.ccrfProfil?.generalInfo?.subDistrict ?? '-'}"}"
                       "${(c.ccrfProfil?.generalInfo?.district == null) ? "" : ""
                           ", ${c.ccrfProfil?.generalInfo?.district ?? '-'}"}"
@@ -66,7 +67,8 @@ class DataUmumScreen extends StatelessWidget {
                       "${(c.ccrfProfil?.generalInfo?.province == null) ? "" : ""
                           ", ${c.ccrfProfil?.generalInfo?.province ?? '-'}"}"
                       "${(c.ccrfProfil?.generalInfo?.zipCode == null) ? ""
-                          ", ${c.basicProfil?.zipCode}" : ""
+                          "${(c.basicProfil?.zipCode) == null ? '' : ''
+                              ', ${c.basicProfil?.zipCode}'}" : ""
                           ", ${c.ccrfProfil?.generalInfo?.zipCode ?? '-'}"}",
                   // subtitle: c.ccrfProfil?.generalInfo?.zipCode ?? '-',
                   icon: Icons.home,
