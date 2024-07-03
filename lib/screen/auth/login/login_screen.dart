@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                     icon: c.showIcon,
                     onPressed: () => c.showPassword(),
                   ),
-                  onSubmit: (value) => (c.formKey.currentState?.validate() == true) ? c.doLogin() : null,
+                  onSubmit: (value) => (c.formKey.currentState?.validate() == true) ? c.doLogin(context) : null,
                 ),
                 Container(
                   alignment: Alignment.centerRight,
@@ -103,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                   color: blueJNE,
                   title: 'Masuk'.tr,
                   onPressed: () async {
-                    if (c.formKey.currentState?.validate() == true) c.doLogin();
+                    if (c.formKey.currentState?.validate() == true) c.doLogin(context);
                   },
                 ),
                 // CustomFilledButton(

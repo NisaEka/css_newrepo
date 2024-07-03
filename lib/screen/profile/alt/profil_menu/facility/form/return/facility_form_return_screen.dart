@@ -165,11 +165,10 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 controller: c.npwpNumber,
                 hintText: 'Nomor NPWP'.tr,
                 inputType: TextInputType.number,
-                validator:
-                    ValidationBuilder().minLength(15).maxLength(15).build(),
+                validator: ValidationBuilder().minLength(15).build(),
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(15),
+                  LengthLimitingTextInputFormatter(16),
                   NpwpSeparatorInputFormatter(),
                 ],
               ),

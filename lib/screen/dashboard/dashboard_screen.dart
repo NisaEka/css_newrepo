@@ -17,7 +17,6 @@ import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -26,7 +25,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
@@ -193,7 +191,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ],
           ),
         ),
-
       ],
     );
   }

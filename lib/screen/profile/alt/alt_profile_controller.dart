@@ -108,12 +108,12 @@ class AltProfileController extends BaseController {
   void isCcrfAction(dynamic screen, BuildContext context) {
     isCcrf
         ? Get.to(screen)
-        : showDialog(
-            context: context,
-            builder: (context) => InfoDialog(
-              infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas".tr,
-              nextButton: () => Get.off(const FacilityScreen()),
-            ),
-          );
+          : showDialog(
+              context: context,
+              builder: (context) => InfoDialog(
+                infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas".tr,
+                nextButton: () => Get.off(const FacilityScreen()),
+              ),
+            );
   }
 }
