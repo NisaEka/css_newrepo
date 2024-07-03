@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_return_address_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_tax_info_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,9 +42,14 @@ class FacilityFormReturnController extends BaseController {
   List<Destination> destinationList = [];
   Destination? selectedDestination;
 
+  bool _pickImageFailed = false;
+  bool get pickImageFailed => _pickImageFailed;
+
+  bool _addressSectionReadOnly = false;
+  bool get addressSectionReadOnly => _addressSectionReadOnly;
+
   @override
   void onInit() {
-    print(facilityCreateArgs.toJson());
     npwpType.text = 'PRIBADI';
     super.onInit();
   }
@@ -61,26 +67,47 @@ class FacilityFormReturnController extends BaseController {
     return models ?? List.empty();
   }
 
-  onAddressSameCheck() async {
+  void onAddressSameCheck() async {
     sameWithOwner = !sameWithOwner;
     if (sameWithOwner) {
       returnAddress.text = facilityCreateArgs.address!.address;
       selectedDestination = shipperDestination;
       returnPhone.text = facilityCreateArgs.address!.phone;
       returnWhatsAppNumber.text = facilityCreateArgs.address!.handphone;
+      _addressSectionReadOnly = true;
+    } else {
+      returnAddress.clear();
+      selectedDestination = null;
+      returnPhone.clear();
+      returnWhatsAppNumber.clear();
+      _addressSectionReadOnly = false;
     }
+
     update();
   }
 
   pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final imageNotNull = image != null;
 
-    if (image != null) {
-      pickedImageUrl = image.path;
-      pickedImage = File(pickedImageUrl!);
-      update();
+    if (imageNotNull) {
+      final imageSizeApproved = await image.length() <= Constant.maxImageLength;
+
+      if (imageSizeApproved) {
+        pickedImageUrl = image.path;
+        pickedImage = File(pickedImageUrl!);
+        update();
+      } else {
+        _pickImageFailed = true;
+        update();
+      }
     }
+  }
+
+  void onRefreshPickImageState() {
+    _pickImageFailed = false;
+    update();
   }
 
   FacilityCreateModel submitData() {

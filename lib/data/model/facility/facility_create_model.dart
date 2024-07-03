@@ -34,6 +34,10 @@ class FacilityCreateModel {
     _facilityType = facilityType;
   }
 
+  String getFacilityType() {
+    return _facilityType;
+  }
+
   setTermsAndConditions(String termsAndConditions) {
     _termsAndConditions = termsAndConditions;
   }

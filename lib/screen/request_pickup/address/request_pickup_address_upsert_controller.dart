@@ -75,4 +75,11 @@ class RequestPickupAddressUpsertController extends BaseController {
     createDataLoading = false;
     update();
   }
+
+  void onRefreshCreateState() {
+    createDataLoading = false;
+    createDataSuccess = false;
+    createDataFailed = false;
+  }
+
 }

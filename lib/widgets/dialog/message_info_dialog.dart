@@ -5,8 +5,9 @@ import 'package:get/get.dart';
 
 class MessageInfoDialog extends StatelessWidget {
   final String message;
+  final Function onClickAction;
 
-  const MessageInfoDialog({super.key, required this.message});
+  const MessageInfoDialog({super.key, required this.message, required this.onClickAction});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class MessageInfoDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               FilledButton(
-                onPressed: () => Get.back(),
+                onPressed: () => onClickAction(),
                 child: Text(
                   "OK".tr,
                   style: const TextStyle(color: whiteColor),
