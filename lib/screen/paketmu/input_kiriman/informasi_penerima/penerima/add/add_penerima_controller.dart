@@ -62,7 +62,7 @@ class AddPenerimaController extends BaseController {
                   Icons.info,
                   color: whiteColor,
                 ),
-                message: value.message,
+                message: "Data penerima telah disimpan".tr,
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
                 backgroundColor: value.code == 200 ? successColor : errorColor,

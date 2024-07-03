@@ -2,6 +2,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/notification/notification_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
@@ -76,11 +77,11 @@ class BottomBar4 extends StatelessWidget {
                   ),
                 ),
           BottomMenuItem2(
-            icon: Icons.notifications,
-            title: "Notifikasi".tr,
+            icon: Icons.local_shipping,
+            title: "Cek Ongkir".tr,
             isSelected: menu == 2,
             color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-            onTap: () => Get.to(const NotificationScreen(), arguments: {}),
+            onTap: () => Get.to(const CekOngkirScreen(), arguments: {}),
           ),
           BottomMenuItem2(
             icon: Icons.person,

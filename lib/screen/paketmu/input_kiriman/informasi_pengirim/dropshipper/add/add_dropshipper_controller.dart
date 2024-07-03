@@ -52,7 +52,7 @@ class AddDropshipperController extends BaseController {
                   Icons.info,
                   color: whiteColor,
                 ),
-                message: value.message,
+                message: "Data dropshipper berhasil di simpan".tr,
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
                 backgroundColor: value.code == 201 ? successColor : errorColor,
