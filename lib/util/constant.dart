@@ -20,4 +20,12 @@ class Constant {
   static const String keyImageKtp = 'KTP';
   static const String keyImageNpwp = 'NPWP';
   static const String keyImageRekening = 'REKENING';
+
+  static const String keyMenuAllowed = 'Y';
+
+  static const String keyTypeCod = 'COD';
+
+  static const String bannerStatusHide = 'HIDE';
+  static const String bannerStatusIdle = 'IDLE';
+  static const String bannerStatusOnProcess = 'ON PROCESS';
 }

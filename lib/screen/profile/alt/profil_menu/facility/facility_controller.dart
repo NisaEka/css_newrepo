@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/facility/facility_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:get/get.dart';
 
 class FacilityController extends BaseController {
@@ -13,6 +16,9 @@ class FacilityController extends BaseController {
 
   List<FacilityModel> codFacilities = [];
   List<FacilityModel> nonCodFacilities = [];
+  
+  String _bannerStatus = Constant.bannerStatusHide;
+  String get bannerStatus => _bannerStatus;
 
   @override
   void onInit() {
@@ -26,17 +32,21 @@ class FacilityController extends BaseController {
       AllowedMenu allowedMenu = AllowedMenu.fromJson(
           await storage.readData(StorageCore.allowedMenu)
       );
-      if (allowedMenu.fasilitas == 'Y') {
+      if (allowedMenu.fasilitas == Constant.keyMenuAllowed) {
         await facility.getFacilities()
             .then((response) async {
-              if (response.code == 200) {
-                response.payload?.forEach((facility) {
-                  if (facility.type == "COD") {
+              if (response.code == HttpStatus.ok) {
+                final facilities = response.payload ?? List.empty();
+                _determineBannerStatus(facilities);
+                
+                for (var facility in facilities) {
+                  if (facility.type == Constant.keyTypeCod) {
                     codFacilities.add(facility);
                   } else {
                     nonCodFacilities.add(facility);
                   }
-                });
+                }
+                
                 showMainContent = true;
               } else {
                 showErrorContent = true;
@@ -44,9 +54,8 @@ class FacilityController extends BaseController {
         });
       } else {
         showProhibitedContent = true;
+        update();
       }
-
-
     } catch(e) {
       showErrorContent = true;
       update();
@@ -54,6 +63,35 @@ class FacilityController extends BaseController {
 
     showLoadingIndicator = false;
     update();
+  }
+  
+  void _determineBannerStatus(List<FacilityModel> facilities) {
+    final facilityOnProgressStatuses = facilities.map((e) => e.onProcess);
+    final facilityCanUseStatuses = facilities.map((e) => e.canUse);
+
+    if (facilityOnProgressStatuses.contains(true)) {
+      _bannerStatus = Constant.bannerStatusOnProcess;
+    } else if (facilityCanUseStatuses.contains(true)) {
+      _bannerStatus = Constant.bannerStatusIdle;
+    } else {
+      _bannerStatus = Constant.bannerStatusHide;
+    }
+
+    update();
+  }
+
+  Future<void> onRefreshAction() async {
+    showLoadingIndicator = false;
+    showMainContent = false;
+    showErrorContent = false;
+    showProhibitedContent = false;
+
+    _bannerStatus = Constant.bannerStatusHide;
+
+    codFacilities.clear();
+    nonCodFacilities.clear();
+
+    initData();
   }
 
 }

@@ -50,6 +50,8 @@ class FacilityItem extends StatelessWidget {
 
     if (facility.enabled) {
       imagePath = "assets/icons/checked.png";
+    } else if (facility.onProcess) {
+      imagePath = 'assets/icons/android-sync.jpg';
     } else {
       imagePath = "assets/icons/cancel.png";
     }
