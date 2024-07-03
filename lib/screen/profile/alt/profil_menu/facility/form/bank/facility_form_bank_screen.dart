@@ -5,10 +5,13 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/fac
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/profile/image_picker_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -30,6 +33,30 @@ class FacilityFormBankScreen extends StatelessWidget {
             controller.showLoadingIndicator
                 ? const LoadingDialog()
                 : Container(),
+            controller.pickImageFailed
+                ? MessageInfoDialog(
+                    message:
+                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                            .tr,
+                    onClickAction: () => controller.onRefreshPickImageState(),
+                  )
+                : Container(),
+            controller.postDataFailed
+                ? MessageInfoDialog(
+                    message: 'Gagal menyimpan data.',
+                    onClickAction: () => controller.onRefreshPostDataState(),
+                  )
+                : Container(),
+            controller.postFileFailed
+                ? MessageInfoDialog(
+                    message: 'Gagal menyimpan file.',
+                    onClickAction: () => controller.onRefreshPostDataState(),
+                  )
+                : Container(),
+            controller.showTermsAndConditions
+                ? _termsAndConditionsContent(controller.termsAndConditions,
+                    () => controller.onHideTermsAndConditions())
+                : Container()
           ],
         );
       },
@@ -100,22 +127,13 @@ class FacilityFormBankScreen extends StatelessWidget {
                   hintText: 'Atas Nama'.tr,
                   validator: ValidationBuilder().maxLength(32).build(),
                 ),
-                Container(
-                  width: Get.width,
-                  height: Get.width / 2,
-                  clipBehavior: Clip.hardEdge,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: Theme.of(context).brightness == Brightness.light
-                          ? Colors.black
-                          : Colors.white,
-                    ),
-                  ),
-                  child: _imagePickerContent(context, controller),
+                ImagePickerContainer(
+                  containerTitle: 'Pilih Gambar Buku Rekening',
+                  pickedImagePath: controller.pickedImagePath,
+                  onPickImage: () => controller.pickImage(),
                 ),
                 ListTile(
+                  onTap: () => controller.onShowTermsAndConditions(),
                   title: Text(
                     'Saya Setuju dengan Syarat & Ketentuan Pengiriman JNE'.tr,
                     textAlign: TextAlign.start,
@@ -142,28 +160,36 @@ class FacilityFormBankScreen extends StatelessWidget {
     );
   }
 
-  Widget _imagePickerContent(
-      BuildContext context, FacilityFormBankController controller) {
-    if (controller.pickedImage != null) {
-      return Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-        child: Image(
-            image: FileImage(controller.pickedImage!), fit: BoxFit.fitWidth),
-      );
-    } else {
-      return TextButton(
-        onPressed: () {
-          controller.pickImage();
-        },
-        child: Text(
-          'Pilih Gambar Buku Rekening'.tr,
-          style: sublistTitleTextStyle.copyWith(
-            color: Theme.of(context).brightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
-          ),
+  Widget _termsAndConditionsContent(
+      String contentText, Function onCloseAction) {
+    return AlertDialog(
+      title: Text('Syarat dan Ketentuan'.tr),
+      actions: [
+        FilledButton(
+          onPressed: () => onCloseAction(),
+          child: Text('Tutup'.tr),
+        )
+      ],
+      content: SizedBox(
+        width: Get.width / 2,
+        height: Get.height / 2,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Html(data: contentText, style: {
+                'ol': Style(
+                  margin: Margins(
+                    left: Margin.zero(),
+                  ),
+                  padding: HtmlPaddings(
+                    left: HtmlPadding(16),
+                  ),
+                ),
+              }),
+            )
+          ],
         ),
-      );
-    }
+      ),
+    );
   }
 }

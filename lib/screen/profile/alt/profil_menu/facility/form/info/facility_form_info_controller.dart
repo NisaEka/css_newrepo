@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/facility/facility_create_address_model.dar
 import 'package:css_mobile/data/model/facility/facility_create_id_card_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -40,6 +41,9 @@ class FacilityFormInfoController extends BaseController {
   List<Destination> destinationList = [];
   Destination? selectedDestination;
 
+  bool _pickImageFailed = false;
+  bool get pickImageFailed => _pickImageFailed;
+
   @override
   void onInit() {
     super.onInit();
@@ -63,12 +67,25 @@ class FacilityFormInfoController extends BaseController {
   pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final imageNotNull = image != null;
 
-    if (image != null) {
-      pickedImageUrl = image.path;
-      pickedImage = File(pickedImageUrl!);
-      update();
+    if (imageNotNull) {
+      final imageSizeApproved = await image.length() <= Constant.maxImageLength;
+
+      if (imageSizeApproved) {
+        pickedImageUrl = image.path;
+        pickedImage = File(pickedImageUrl!);
+        update();
+      } else {
+        _pickImageFailed = true;
+        update();
+      }
     }
+  }
+
+  void onRefreshUploadState() {
+    _pickImageFailed = false;
+    update();
   }
 
   Future<List<Destination>> getDestinationList(String keyword) async {

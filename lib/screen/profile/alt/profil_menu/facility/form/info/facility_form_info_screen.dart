@@ -5,9 +5,11 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/info/fac
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/return/facility_form_return_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/profile/image_picker_container.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -26,7 +28,15 @@ class FacilityFormInfoScreen extends StatelessWidget {
               appBar: _appBarContent(controller),
               body: _bodyContent(controller, context),
               bottomNavigationBar: _nextButton(controller),
-            )
+            ),
+            controller.pickImageFailed
+                ? MessageInfoDialog(
+                    message:
+                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                            .tr,
+                    onClickAction: () => controller.onRefreshUploadState(),
+                  )
+                : Container(),
           ],
         );
       },
@@ -40,7 +50,10 @@ class FacilityFormInfoScreen extends StatelessWidget {
           color: redJNE,
           title: 'Selanjutnya'.tr,
           onPressed: () {
-            Get.to(const FacilityFormReturnScreen(), arguments: {'data': c.submitData(), 'destination': c.selectedDestination});
+            Get.to(const FacilityFormReturnScreen(), arguments: {
+              'data': c.submitData(),
+              'destination': c.selectedDestination
+            });
           },
         ));
   }
@@ -49,81 +62,91 @@ class FacilityFormInfoScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-            child: Container(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomTextFormField(controller: c.brand, hintText: 'Nama Toko / Perusahaan', validator: ValidationBuilder().maxLength(32).build()),
-              CustomTextFormField(
+          child: Container(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextFormField(
+                  controller: c.brand,
+                  hintText: 'Nama Toko / Perusahaan',
+                  validator: ValidationBuilder().maxLength(32).build(),
+                ),
+                CustomTextFormField(
                   controller: c.idCardNumber,
                   hintText: 'No Identitas / KTP',
                   inputType: TextInputType.number,
                   inputFormatters: const [],
-                  validator: ValidationBuilder().maxLength(16).minLength(16).build()),
-              Container(
-                  width: Get.width,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
-                      )),
-                  child: _imagePickerContent(context, c)),
-              CustomTextFormField(
-                controller: c.fullName,
-                hintText: 'Nama Lengkap',
-                inputType: TextInputType.name,
-                validator: ValidationBuilder().maxLength(32).build(),
-              ),
-              CustomTextFormField(
-                controller: c.fullAddress,
-                hintText: 'Alamat Lengkap',
-                inputType: TextInputType.streetAddress,
-                validator: ValidationBuilder().maxLength(128).build(),
-              ),
-              CustomSearchDropdownField<Destination>(
-                asyncItems: (String filter) => c.getDestinationList(filter),
-                itemBuilder: (context, e, b) {
-                  return GestureDetector(
-                    onTap: () => c.update(),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                      child: Text(e.asFacilityFormFormat()),
-                    ),
-                  );
-                },
-                itemAsString: (Destination e) => e.asFacilityFormFormat(),
-                onChanged: (value) {
-                  c.selectedDestination = value;
-                  c.update();
-                },
-                value: c.selectedDestination,
-                isRequired: c.selectedDestination == null ? true : false,
-                readOnly: false,
-                hintText: c.isLoadDestination ? "Loading..." : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
-                textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
-              ),
-              CustomTextFormField(
-                controller: c.phone,
-                hintText: 'No. Telp',
-                inputType: TextInputType.phone,
-                validator: ValidationBuilder().maxLength(15).phone().build(),
-              ),
-              CustomTextFormField(
-                  controller: c.whatsAppPhone,
-                  hintText: 'No. WhatsApp',
+                  validator:
+                      ValidationBuilder().maxLength(16).minLength(16).build(),
+                ),
+                ImagePickerContainer(
+                  containerTitle: 'Pilih Gambar Identitas / KTP',
+                  pickedImagePath: c.pickedImageUrl,
+                  onPickImage: () => c.pickImage(),
+                ),
+                CustomTextFormField(
+                  controller: c.fullName,
+                  hintText: 'Nama Lengkap',
+                  inputType: TextInputType.name,
+                  validator: ValidationBuilder().maxLength(32).build(),
+                ),
+                CustomTextFormField(
+                  controller: c.fullAddress,
+                  hintText: 'Alamat Lengkap',
+                  inputType: TextInputType.streetAddress,
+                  validator: ValidationBuilder().maxLength(128).build(),
+                ),
+                CustomSearchDropdownField<Destination>(
+                  asyncItems: (String filter) => c.getDestinationList(filter),
+                  itemBuilder: (context, e, b) {
+                    return GestureDetector(
+                      onTap: () => c.update(),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
+                        child: Text(e.asFacilityFormFormat()),
+                      ),
+                    );
+                  },
+                  itemAsString: (Destination e) => e.asFacilityFormFormat(),
+                  onChanged: (value) {
+                    c.selectedDestination = value;
+                    c.update();
+                  },
+                  value: c.selectedDestination,
+                  isRequired: c.selectedDestination == null ? true : false,
+                  readOnly: false,
+                  hintText: c.isLoadDestination
+                      ? "Loading..."
+                      : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
+                  textStyle: c.selectedDestination != null
+                      ? subTitleTextStyle
+                      : hintTextStyle,
+                ),
+                CustomTextFormField(
+                  controller: c.phone,
+                  hintText: 'No. Telp'.tr,
                   inputType: TextInputType.phone,
-                  validator: ValidationBuilder().maxLength(15).phone().build()),
-              CustomTextFormField(
+                  validator: ValidationBuilder().maxLength(15).phone().build(),
+                ),
+                CustomTextFormField(
+                  controller: c.whatsAppPhone,
+                  hintText: 'No. WhatsApp'.tr,
+                  inputType: TextInputType.phone,
+                  validator: ValidationBuilder().maxLength(15).phone().build(),
+                ),
+                CustomTextFormField(
                   controller: c.email,
-                  hintText: 'Email',
+                  hintText: 'Email'.tr,
                   inputType: TextInputType.emailAddress,
                   inputFormatters: const [],
-                  validator: ValidationBuilder().maxLength(64).email().build())
-            ],
+                  validator: ValidationBuilder().maxLength(64).email().build(),
+                )
+              ],
+            ),
           ),
-        ))
+        )
       ],
     );
   }
@@ -142,27 +165,5 @@ class FacilityFormInfoScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Widget _imagePickerContent(BuildContext context, FacilityFormInfoController controller) {
-    if (controller.pickedImage != null) {
-      return Container(
-        width: Get.width,
-        height: Get.width / 2,
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-        child: Image(image: FileImage(controller.pickedImage!), fit: BoxFit.fitWidth),
-      );
-    } else {
-      return TextButton(
-        onPressed: () {
-          controller.pickImage();
-        },
-        child: Text(
-          'Pilih Gambar Identitas / KTP',
-          style: sublistTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white),
-        ),
-      );
-    }
   }
 }
