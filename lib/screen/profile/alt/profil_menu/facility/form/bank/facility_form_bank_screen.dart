@@ -11,6 +11,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/profile/image_picker_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -52,6 +53,10 @@ class FacilityFormBankScreen extends StatelessWidget {
                     onClickAction: () => controller.onRefreshPostDataState(),
                   )
                 : Container(),
+            controller.showTermsAndConditions
+                ? _termsAndConditionsContent(controller.termsAndConditions,
+                    () => controller.onHideTermsAndConditions())
+                : Container()
           ],
         );
       },
@@ -128,6 +133,7 @@ class FacilityFormBankScreen extends StatelessWidget {
                   onPickImage: () => controller.pickImage(),
                 ),
                 ListTile(
+                  onTap: () => controller.onShowTermsAndConditions(),
                   title: Text(
                     'Saya Setuju dengan Syarat & Ketentuan Pengiriman JNE'.tr,
                     textAlign: TextAlign.start,
@@ -151,6 +157,39 @@ class FacilityFormBankScreen extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  Widget _termsAndConditionsContent(
+      String contentText, Function onCloseAction) {
+    return AlertDialog(
+      title: Text('Syarat dan Ketentuan'.tr),
+      actions: [
+        FilledButton(
+          onPressed: () => onCloseAction(),
+          child: Text('Tutup'.tr),
+        )
+      ],
+      content: SizedBox(
+        width: Get.width / 2,
+        height: Get.height / 2,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Html(data: contentText, style: {
+                'ol': Style(
+                  margin: Margins(
+                    left: Margin.zero(),
+                  ),
+                  padding: HtmlPaddings(
+                    left: HtmlPadding(16),
+                  ),
+                ),
+              }),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

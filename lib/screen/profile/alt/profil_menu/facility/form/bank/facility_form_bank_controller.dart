@@ -37,6 +37,9 @@ class FacilityFormBankController extends BaseController {
   String? _pickedImagePath;
   String? get pickedImagePath => _pickedImagePath;
 
+  String _termsAndConditions = '';
+  String get termsAndConditions => _termsAndConditions;
+
   bool _showLoadingIndicator = false;
   bool get showLoadingIndicator => _showLoadingIndicator;
 
@@ -49,10 +52,16 @@ class FacilityFormBankController extends BaseController {
   bool _postFileFailed = false;
   bool get postFileFailed => _postFileFailed;
 
+  bool _showTermsAndConditions = false;
+  bool get showTermsAndConditions => _showTermsAndConditions;
+
   @override
   void onInit() {
     super.onInit();
-    Future.wait([getBanks()]);
+    Future.wait([
+      getBanks(),
+      getTermsAndConditions()
+    ]);
   }
 
   Future<void> getBanks() async {
@@ -61,6 +70,12 @@ class FacilityFormBankController extends BaseController {
         _banks.addAll(response.payload!);
         update();
       }
+    });
+  }
+
+  Future<void> getTermsAndConditions() async {
+    facility.getFacilityTermsAndConditions(facilityCreateArgs.getFacilityType()).then((response) {
+      _termsAndConditions = response.payload ?? '';
     });
   }
 
@@ -187,4 +202,15 @@ class FacilityFormBankController extends BaseController {
 
     update();
   }
+
+  void onShowTermsAndConditions() {
+    _showTermsAndConditions = true;
+    update();
+  }
+
+  void onHideTermsAndConditions() {
+    _showTermsAndConditions = false;
+    update();
+  }
+
 }

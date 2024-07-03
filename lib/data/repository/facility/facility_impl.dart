@@ -23,4 +23,16 @@ class FacilityImpl extends FacilityRepository {
     }
   }
 
+  @override
+  Future<DefaultResponseModel<String>> getFacilityTermsAndConditions(String type) async {
+    try {
+      var response = await network.dio.get("/facility/terms", queryParameters: {
+        type: type
+      });
+      return DefaultResponseModel.fromJson(response.data, response.data['payload']);
+    } on DioException catch (e) {
+      return DefaultResponseModel.fromJson(e.response?.data, '');
+    }
+  }
+
 }
