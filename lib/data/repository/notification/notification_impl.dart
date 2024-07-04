@@ -16,7 +16,7 @@ class NotificationRepositoryImpl extends NotificationRepository {
     network.local.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.get(
+      Response response = await network.dio.get(
         "/apps-notification",
       );
 
