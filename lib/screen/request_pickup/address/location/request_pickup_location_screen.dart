@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_controller.dart';
+import 'package:css_mobile/util/ext/placement_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -16,87 +18,100 @@ class RequestPickupLocationScreen extends StatelessWidget {
       init: RequestPickupLocationController(),
       builder: (controller) {
         return Scaffold(
-          appBar: CustomTopBar(
-            title: "Pilih Lokasi".tr
-          ),
-          body: _bodyContent(controller),
+          appBar: CustomTopBar(title: "Pilih Lokasi".tr),
+          body: _bodyContent(context, controller),
         );
       },
     );
   }
 
-  Widget _bodyContent(RequestPickupLocationController controller) {
+  Widget _bodyContent(
+      BuildContext context, RequestPickupLocationController controller) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          _mapsView(),
+          _mapsView(controller),
           const SizedBox(height: 24),
-          _searchBar(),
+          _searchBar(context, controller),
           const SizedBox(height: 16),
-          _locationList()
+          _locationList(controller)
         ],
       ),
     );
   }
 
-  Widget _mapsView() {
+  Widget _mapsView(RequestPickupLocationController controller) {
     final Completer<GoogleMapController> googleMapController =
-      Completer<GoogleMapController>();
+        Completer<GoogleMapController>();
 
-    const CameraPosition kGooglePlex = CameraPosition(
-      target: LatLng(-6.9506528, 107.6234307),
-      zoom: 16.0
-    );
+    const CameraPosition kGooglePlex =
+        CameraPosition(target: LatLng(-6.9506528, 107.6234307), zoom: 16.0);
 
     return Container(
       width: Get.width,
       height: Get.width / 2,
       clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16)
-      ),
-      child: GoogleMap(
-        zoomControlsEnabled: false,
-        myLocationButtonEnabled: false,
-        initialCameraPosition: kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          googleMapController.complete(controller);
-        }
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          GoogleMap(
+            zoomControlsEnabled: false,
+            myLocationButtonEnabled: false,
+            initialCameraPosition: kGooglePlex,
+            onMapCreated: (GoogleMapController controller) {
+              googleMapController.complete(controller);
+            },
+            onCameraMove: (CameraPosition position) =>
+                controller.onCameraMove(position.target),
+            onCameraIdle: () => controller.onCameraIdle(),
+          ),
+          const Icon(
+            Icons.location_on,
+            size: 24,
+            color: blueJNE,
+          ),
+        ],
       ),
     );
   }
 
-  Widget _searchBar() {
-    return const TextField(
+  Widget _searchBar(
+      BuildContext context, RequestPickupLocationController controller) {
+    return TextField(
+      controller: controller.addressText,
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(16))
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(16))
-        ),
-        hintText: "Cari alamat",
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.outline, width: 1),
+            borderRadius: const BorderRadius.all(Radius.circular(16))),
+        enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey, width: 1),
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        hintText: "Cari alamat".tr,
       ),
+      onChanged: (String newText) => controller.onAddressTextChanged(newText),
     );
   }
 
-  Widget _locationList() {
+  Widget _locationList(RequestPickupLocationController controller) {
     return Expanded(
       child: ListView.separated(
         itemBuilder: (BuildContext context, int index) {
-          return const Row(
+          Placemark placeMark = controller.placeMarks[index];
+          return Row(
             children: [
-              Icon(Icons.location_on),
-              SizedBox(width: 16),
-              Text("Bandung")
+              const Icon(Icons.location_on),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(placeMark.toReadableAddress()),
+              )
             ],
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          if (index < 2) {
+          if (index < controller.placeMarks.length) {
             return const Divider(
               thickness: 1,
               color: greyLightColor3,
@@ -105,9 +120,8 @@ class RequestPickupLocationScreen extends StatelessWidget {
             return Container();
           }
         },
-        itemCount: 3,
+        itemCount: controller.placeMarks.length,
       ),
     );
   }
-
 }
