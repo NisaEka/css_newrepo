@@ -167,7 +167,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     network.local.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo(info: "kiriman data");
     try {
-      Response response = await network.local.post(
+      Response response = await network.dio.post(
         "/transaction",
         data: data,
       );
