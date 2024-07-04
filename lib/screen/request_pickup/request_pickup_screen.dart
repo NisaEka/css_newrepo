@@ -29,8 +29,8 @@ class RequestPickupScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: _requestPickupAppBar(),
-          body: _requestPickupBody(controller),
-          bottomNavigationBar: _requestPickupBottomBar(controller),
+          body: _requestPickupBody(context, controller),
+          bottomNavigationBar: _requestPickupBottomBar(context, controller),
         );
       },
     );
@@ -40,7 +40,7 @@ class RequestPickupScreen extends StatelessWidget {
     return CustomTopBar(title: "Minta Dijemput".tr);
   }
 
-  Widget? _requestPickupBottomBar(RequestPickupController controller) {
+  Widget? _requestPickupBottomBar(BuildContext context, RequestPickupController controller) {
     if (controller.checkMode) {
       return Padding(
         padding: const EdgeInsets.all(16),
@@ -69,6 +69,7 @@ class RequestPickupScreen extends StatelessWidget {
               onPressed: () {
                 _pickupAddressBottomSheet(controller);
               },
+              style: FilledButtonTheme.of(context).style,
               child: Text(
                 "Minta Dijemput".tr,
                 style: const TextStyle(color: whiteColor),
@@ -82,7 +83,7 @@ class RequestPickupScreen extends StatelessWidget {
     return null;
   }
 
-  Widget _requestPickupBody(RequestPickupController controller) {
+  Widget _requestPickupBody(BuildContext context, RequestPickupController controller) {
     if (controller.showLoadingIndicator) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -105,16 +106,16 @@ class RequestPickupScreen extends StatelessWidget {
     }
 
     if (controller.showMainContent) {
-      return _mainContentStack(controller);
+      return _mainContentStack(context, controller);
     }
 
     return Text("No Content".tr);
   }
 
-  Widget _mainContentStack(RequestPickupController controller) {
+  Widget _mainContentStack(BuildContext context, RequestPickupController controller) {
     return Stack(
       children: [
-        _mainContent(controller),
+        _mainContent(context, controller),
         controller.createDataLoading ? const LoadingDialog() : Container(),
         controller.createDataFailed
             ? MessageInfoDialog(
@@ -132,11 +133,11 @@ class RequestPickupScreen extends StatelessWidget {
     );
   }
 
-  Widget _mainContent(RequestPickupController controller) {
+  Widget _mainContent(BuildContext context, RequestPickupController controller) {
     return Column(
       children: [
-        _buttonFilters(controller),
-        _checkAllItemBox(controller),
+        _buttonFilters(context, controller),
+        _checkAllItemBox(context, controller),
         Expanded(
             child: RefreshIndicator(
           onRefresh: () =>
@@ -182,31 +183,19 @@ class RequestPickupScreen extends StatelessWidget {
     );
   }
 
-  Widget _checkAllItemBox(RequestPickupController controller) {
+  Widget _checkAllItemBox(BuildContext context, RequestPickupController controller) {
     if (controller.checkMode) {
       return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                children: [
-                  Checkbox(
-                    value: false,
-                    onChanged: (newValue) {},
-                  ),
-                  Text(
-                    "Pilih Semua".tr,
-                    style: inputTextStyle,
-                  )
-                ],
-              ),
               TextButton(
                 onPressed: () {
                   controller.setCheckMode(false);
                   controller.onCancel();
                 },
-                child: Text("Batal".tr),
+                child: Text("Batal".tr, style: Theme.of(context).textTheme.labelMedium,),
               )
             ],
           ));
@@ -215,7 +204,7 @@ class RequestPickupScreen extends StatelessWidget {
     }
   }
 
-  Widget _buttonFilters(RequestPickupController controller) {
+  Widget _buttonFilters(BuildContext context, RequestPickupController controller) {
     return SizedBox(
       height: 64,
       child: SingleChildScrollView(
@@ -223,19 +212,19 @@ class RequestPickupScreen extends StatelessWidget {
         child: Row(
           children: [
             const SizedBox(width: 16),
-            _buttonFilter(controller.filterDateText.tr, () {
+            _buttonFilter(context, controller.filterDateText.tr, () {
               _filterDateBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(controller.filterStatusText.tr, () {
+            _buttonFilter(context, controller.filterStatusText.tr, () {
               _filterStatusBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(controller.filterDeliveryTypeText.tr, () {
+            _buttonFilter(context, controller.filterDeliveryTypeText.tr, () {
               _filterDeliveryTypeBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(controller.filterDeliveryCityText.tr, () {
+            _buttonFilter(context, controller.filterDeliveryCityText.tr, () {
               _filterDeliveryCityBottomSheet(controller);
             }),
             const SizedBox(width: 16),
@@ -245,7 +234,7 @@ class RequestPickupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buttonFilter(String text, Function onPressed) {
+  Widget _buttonFilter(BuildContext context, String text, Function onPressed) {
     return OutlinedButton(
       onPressed: () {
         onPressed();
@@ -258,13 +247,13 @@ class RequestPickupScreen extends StatelessWidget {
         children: [
           Text(
             text.tr,
-            style: sublistTitleTextStyle.copyWith(fontWeight: semiBold),
+            style: Theme.of(context).textTheme.labelMedium,
           ),
           const SizedBox(width: 8),
-          const Icon(
+          Icon(
             Icons.keyboard_arrow_down,
             size: 24,
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.outline,
           )
         ],
       ),
@@ -409,7 +398,7 @@ class RequestPickupScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             itemCount: items.length,
             itemBuilder: (context, index) {
-              bool isSelected = controller.filterStatusText == items[index];
+              bool isSelected = controller.filterDeliveryTypeText == items[index];
               return GestureDetector(
                 onTap: () {
                   controller.setSelectedDeliveryType(items[index]);

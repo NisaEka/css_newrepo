@@ -133,15 +133,15 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
                   return const EdgeInsets.symmetric(horizontal: 4, vertical: 2);
                 }),
                 side: MaterialStateProperty.resolveWith((states) {
-                  return const BorderSide(
-                      color: blueJNE
+                  return BorderSide(
+                      color: Theme.of(context).colorScheme.outline
                   );
                 })
             ),
             child: Text(
               selectedTime.tr,
-              style: const TextStyle(
-                  color: blueJNE,
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.outline,
                   fontWeight: FontWeight.normal
               ),
             ),
