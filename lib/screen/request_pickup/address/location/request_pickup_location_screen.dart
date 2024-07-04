@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_controller.dart';
 import 'package:css_mobile/util/ext/placement_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -44,26 +46,30 @@ class RequestPickupLocationScreen extends StatelessWidget {
 
   Widget _bodyContent(
       BuildContext context, RequestPickupLocationController controller) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          _mapsView(controller),
-          const SizedBox(height: 24),
-          _searchBar(context, controller),
-          const SizedBox(height: 16),
-          _locationList(controller)
-        ],
-      ),
-    );
+    if (controller.contentReady) {
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            _mapsView(controller),
+            const SizedBox(height: 24),
+            _searchBar(context, controller),
+            const SizedBox(height: 16),
+            _locationList(controller)
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   Widget _mapsView(RequestPickupLocationController controller) {
     final Completer<GoogleMapController> googleMapController =
         Completer<GoogleMapController>();
 
-    const CameraPosition kGooglePlex =
-        CameraPosition(target: LatLng(-6.9506528, 107.6234307), zoom: 16.0);
+    final CameraPosition kGooglePlex =
+        CameraPosition(target: LatLng(controller.selectedLat, controller.selectedLng), zoom: 16.0);
 
     return Container(
       width: Get.width,
