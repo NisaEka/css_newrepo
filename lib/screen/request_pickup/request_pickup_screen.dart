@@ -10,9 +10,11 @@ import 'package:css_mobile/screen/request_pickup/detail/request_pickup_filter_it
 import 'package:css_mobile/screen/request_pickup/request_pickup_confirmation_dialog.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
+import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
+import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +42,8 @@ class RequestPickupScreen extends StatelessWidget {
     return CustomTopBar(title: "Minta Dijemput".tr);
   }
 
-  Widget? _requestPickupBottomBar(BuildContext context, RequestPickupController controller) {
+  Widget? _requestPickupBottomBar(
+      BuildContext context, RequestPickupController controller) {
     if (controller.checkMode) {
       return Padding(
         padding: const EdgeInsets.all(16),
@@ -83,7 +86,8 @@ class RequestPickupScreen extends StatelessWidget {
     return null;
   }
 
-  Widget _requestPickupBody(BuildContext context, RequestPickupController controller) {
+  Widget _requestPickupBody(
+      BuildContext context, RequestPickupController controller) {
     if (controller.showLoadingIndicator) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -112,7 +116,8 @@ class RequestPickupScreen extends StatelessWidget {
     return Text("No Content".tr);
   }
 
-  Widget _mainContentStack(BuildContext context, RequestPickupController controller) {
+  Widget _mainContentStack(
+      BuildContext context, RequestPickupController controller) {
     return Stack(
       children: [
         _mainContent(context, controller),
@@ -133,7 +138,8 @@ class RequestPickupScreen extends StatelessWidget {
     );
   }
 
-  Widget _mainContent(BuildContext context, RequestPickupController controller) {
+  Widget _mainContent(
+      BuildContext context, RequestPickupController controller) {
     return Column(
       children: [
         _buttonFilters(context, controller),
@@ -183,7 +189,8 @@ class RequestPickupScreen extends StatelessWidget {
     );
   }
 
-  Widget _checkAllItemBox(BuildContext context, RequestPickupController controller) {
+  Widget _checkAllItemBox(
+      BuildContext context, RequestPickupController controller) {
     if (controller.checkMode) {
       return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -195,7 +202,10 @@ class RequestPickupScreen extends StatelessWidget {
                   controller.setCheckMode(false);
                   controller.onCancel();
                 },
-                child: Text("Batal".tr, style: Theme.of(context).textTheme.labelMedium,),
+                child: Text(
+                  "Batal".tr,
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
               )
             ],
           ));
@@ -204,7 +214,8 @@ class RequestPickupScreen extends StatelessWidget {
     }
   }
 
-  Widget _buttonFilters(BuildContext context, RequestPickupController controller) {
+  Widget _buttonFilters(
+      BuildContext context, RequestPickupController controller) {
     return SizedBox(
       height: 64,
       child: SingleChildScrollView(
@@ -383,120 +394,154 @@ class RequestPickupScreen extends StatelessWidget {
     List<String> items = controller.types;
 
     _requestPickupBottomSheetScaffold(
-        "Pilih Tipe Kiriman".tr,
-        Expanded(
-          child: ListView.separated(
-            separatorBuilder: (BuildContext context, int index) {
-              if (index <= items.length) {
-                return const SizedBox(
-                  height: 16,
-                );
-              } else {
-                return Container();
-              }
-            },
-            padding: const EdgeInsets.all(16),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              bool isSelected = controller.filterDeliveryTypeText == items[index];
-              return GestureDetector(
-                onTap: () {
-                  controller.setSelectedDeliveryType(items[index]);
-                  Get.back();
-                },
-                child: Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(items[index].tr),
-                      Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-                    ],
-                  ),
-                ),
+      "Pilih Tipe Kiriman".tr,
+      Expanded(
+        child: ListView.separated(
+          separatorBuilder: (BuildContext context, int index) {
+            if (index <= items.length) {
+              return const SizedBox(
+                height: 16,
               );
-            },
-          ),
-        ));
+            } else {
+              return Container();
+            }
+          },
+          padding: const EdgeInsets.all(16),
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            bool isSelected = controller.filterDeliveryTypeText == items[index];
+            return GestureDetector(
+              onTap: () {
+                controller.setSelectedDeliveryType(items[index]);
+                Get.back();
+              },
+              child: Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(items[index].tr),
+                    Icon(isSelected ? Icons.circle : Icons.circle_outlined)
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   _filterDeliveryCityBottomSheet(RequestPickupController controller) {
     List<String> items = controller.cities;
 
-    _requestPickupBottomSheetScaffold(
-        "Pilih Kota Pengiriman",
-        Expanded(
-          child: ListView.separated(
-            separatorBuilder: (BuildContext context, int index) {
-              if (index <= items.length) {
-                return const SizedBox(
-                  height: 16,
-                );
-              } else {
-                return Container();
-              }
-            },
-            padding: const EdgeInsets.all(16),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              bool isSelected =
-                  controller.filterDeliveryCityText == items[index];
-              return GestureDetector(
-                onTap: () {
-                  controller.setSelectedFilterCity(items[index]);
-                  Get.back();
-                },
-                child: Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(items[index]),
-                      Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-                    ],
-                  ),
+    Get.bottomSheet(
+      enableDrag: true,
+      isDismissible: true,
+      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+        return RequestPickupBottomSheetScaffold(
+          title: "Pilih Kota Pengiriman",
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                child: CustomTextFormField(
+                  controller: controller.cityKeyword,
+                  label: 'Nama Kota'.tr,
+                  hintText: 'Masukkan nama kota',
+                  inputType: TextInputType.streetAddress,
+                  onChanged: (newText) =>
+                      setState(() => controller.onCityKeywordChange(newText)),
                 ),
-              );
-            },
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Expanded(
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  separatorBuilder: (BuildContext context, int index) {
+                    if (index <= items.length) {
+                      return const SizedBox(
+                        height: 16,
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                  padding: const EdgeInsets.all(16),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    bool isSelected =
+                        controller.filterDeliveryCityText == items[index];
+                    return GestureDetector(
+                      onTap: () {
+                        controller.setSelectedFilterCity(items[index]);
+                        Get.back();
+                      },
+                      child: Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(items[index]),
+                            Icon(isSelected
+                                ? Icons.circle
+                                : Icons.circle_outlined)
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
           ),
-        ));
+        );
+      }),
+    );
   }
 
   _pickupAddressBottomSheet(RequestPickupController controller) {
-    Get.bottomSheet(enableDrag: true, isDismissible: true,
-        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-      return RequestPickupBottomSheetScaffold(
-        title: 'Pilih Alamat Penjemputan'.tr,
-        content: RequestPickupSelectAddressContent(
-          addresses: controller.addresses,
-          onAddNewAddressClick: () async {
-            var upsertResult =
-                await Get.to(() => const RequestPickupAddressUpsertScreen());
-            if (upsertResult == HttpStatus.created) {
-              setState(() => controller.onUpdateAddresses());
-            }
-          },
-          onPickupClick: () {
-            Get.dialog(RequestPickupConfirmationDialog(
-              pickupTime: controller.selectedPickupTime,
-              onConfirmAction: () {
-                controller.onPickupAction();
-                Get.back();
-              },
-              onCancelAction: () {
-                Get.back();
-              },
-            ));
-          },
-          onTimeSet: (String newTime) {
-            setState(() => controller.onSetPickupTime(newTime));
-          },
-          selectedTime: controller.selectedPickupTime,
-          onSelectAddress: (String addressId) {
-            setState(() => controller.onSelectAddress(addressId));
-          },
-          selectedAddressId: controller.selectedAddressId,
-        ),
-      );
-    }));
+    Get.bottomSheet(
+      enableDrag: true,
+      isDismissible: true,
+      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+        return RequestPickupBottomSheetScaffold(
+          title: 'Pilih Alamat Penjemputan'.tr,
+          content: RequestPickupSelectAddressContent(
+            addresses: controller.addresses,
+            onAddNewAddressClick: () async {
+              final upsertResult =
+                  await Get.to(() => const RequestPickupAddressUpsertScreen());
+              if (upsertResult == HttpStatus.created) {
+                setState(() => controller.onUpdateAddresses());
+              }
+            },
+            onPickupClick: () {
+              controller.onSetPickupTime(TimeOfDay.now().asPickupTimeFormat());
+              Get.dialog(RequestPickupConfirmationDialog(
+                pickupTime: controller.selectedPickupTime,
+                onConfirmAction: () {
+                  controller.onPickupAction();
+                  Get.back();
+                },
+                onCancelAction: () {
+                  Get.back();
+                },
+              ));
+            },
+            onTimeSet: (String newTime) {
+              setState(() => controller.onSetPickupTime(newTime));
+            },
+            selectedTime: controller.selectedPickupTime,
+            onSelectAddress: (String addressId) {
+              setState(() => controller.onSelectAddress(addressId));
+            },
+            selectedAddressId: controller.selectedAddressId,
+          ),
+        );
+      }),
+    );
   }
 
   _requestPickupBottomSheetScaffold(String title, Widget content) {

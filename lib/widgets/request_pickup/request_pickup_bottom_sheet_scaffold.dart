@@ -52,7 +52,9 @@ class RequestPickupBottomSheetScaffold extends StatelessWidget {
             height: 1,
             color: greyColor,
           ),
-          content
+          Expanded(
+            child: content,
+          )
         ],
       ),
     );

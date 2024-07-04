@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/request_pickup/request_pickup_filter_model
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/date_ext.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -20,6 +21,8 @@ class RequestPickupController extends BaseController {
     _checkMode = newState;
     update();
   }
+
+  TextEditingController cityKeyword = TextEditingController();
 
   bool showLoadingIndicator = false;
   bool showMainContent = true;
@@ -66,7 +69,7 @@ class RequestPickupController extends BaseController {
     super.onInit();
     Future.wait([
       getAddresses(),
-      getCities(),
+      getCities(''),
       getStatuses(),
       getTypes(),
     ]);
@@ -155,7 +158,7 @@ class RequestPickupController extends BaseController {
       final response = await requestPickupRepository.getRequestPickups(filter);
 
       final payload = response.payload ?? List.empty();
-      final isLastPage = payload.length < pageSize;
+      final isLastPage = payload.length <= pageSize;
 
       if (isLastPage) {
         pagingController.appendLastPage(payload);
@@ -182,21 +185,22 @@ class RequestPickupController extends BaseController {
       final payload = response.payload ?? List.empty();
       addresses.clear();
       addresses.addAll(payload);
-      update();
     } catch (e) {
       e.toString();
-      print("payload error");
       // Do nothing for now.
     }
   }
 
-  Future<void> getCities() async {
+  Future<void> getCities(String keyword) async {
     try {
       final response = await requestPickupRepository
-          .getRequestPickupCities(DefaultPageFilterModel());
+          .getRequestPickupCities(DefaultPageFilterModel(keyword: keyword));
       final payload = response.payload ?? List.empty();
+      cities.clear();
       cities.add(Constant.allDeliveryCity);
       cities.addAll(payload);
+
+      update();
     } catch (e) {
       // Do nothing for now.
     }
@@ -263,6 +267,8 @@ class RequestPickupController extends BaseController {
     _createDataLoading = false;
     _createDataSuccess = false;
     _createDataFailed = false;
+    _checkMode = false;
+    selectedAwbs.clear();
     update();
   }
 
@@ -297,6 +303,10 @@ class RequestPickupController extends BaseController {
 
     _createDataLoading = false;
     update();
+  }
+
+  void onCityKeywordChange(String newText) {
+    getCities(newText);
   }
 
   /// Internal methods.
