@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_create_request_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/ext/placement_ext.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 
 class RequestPickupAddressUpsertController extends BaseController {
@@ -80,6 +81,12 @@ class RequestPickupAddressUpsertController extends BaseController {
     createDataLoading = false;
     createDataSuccess = false;
     createDataFailed = false;
+  }
+
+  void onSelectedPlaceMark(Placemark? placeMark) {
+    if (placeMark != null) {
+      address.text = placeMark.toReadableAddress();
+    }
   }
 
 }

@@ -4,6 +4,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_controller.dart';
 import 'package:css_mobile/util/ext/placement_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
@@ -20,9 +21,25 @@ class RequestPickupLocationScreen extends StatelessWidget {
         return Scaffold(
           appBar: CustomTopBar(title: "Pilih Lokasi".tr),
           body: _bodyContent(context, controller),
+          bottomNavigationBar: _bottomNavBar(controller),
         );
       },
     );
+  }
+
+  Widget? _bottomNavBar(RequestPickupLocationController controller) {
+    if (controller.selectedPlaceMark != null) {
+      return CustomFilledButton(
+        margin: const EdgeInsets.all(16),
+        color: redJNE,
+        title: 'Pilih Lokasi Ini'.tr,
+        onPressed: () {
+          Get.back(result: controller.selectedPlaceMark);
+        },
+      );
+    }
+
+    return null;
   }
 
   Widget _bodyContent(
@@ -58,7 +75,7 @@ class RequestPickupLocationScreen extends StatelessWidget {
         children: [
           GoogleMap(
             zoomControlsEnabled: false,
-            myLocationButtonEnabled: false,
+            myLocationButtonEnabled: true,
             initialCameraPosition: kGooglePlex,
             onMapCreated: (GoogleMapController controller) {
               googleMapController.complete(controller);
@@ -100,14 +117,18 @@ class RequestPickupLocationScreen extends StatelessWidget {
       child: ListView.separated(
         itemBuilder: (BuildContext context, int index) {
           Placemark placeMark = controller.placeMarks[index];
-          return Row(
-            children: [
-              const Icon(Icons.location_on),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(placeMark.toReadableAddress()),
-              )
-            ],
+          return GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => controller.onSetSelectedPlaceMark(placeMark),
+            child: Row(
+              children: [
+                const Icon(Icons.location_on),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(placeMark.toReadableAddress()),
+                )
+              ],
+            ),
           );
         },
         separatorBuilder: (BuildContext context, int index) {
