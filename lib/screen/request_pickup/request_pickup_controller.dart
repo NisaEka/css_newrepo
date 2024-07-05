@@ -278,7 +278,6 @@ class RequestPickupController extends BaseController {
 
   void onSetPickupTime(String newTime) {
     selectedPickupTime = newTime;
-    update();
   }
 
   void onPickupAction() async {

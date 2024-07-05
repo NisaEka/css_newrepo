@@ -46,6 +46,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
 
   Widget _addNewAddressWidget() {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () { onAddNewAddressClick(); },
       child: Padding(
         padding: const EdgeInsets.all(16),

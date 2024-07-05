@@ -511,10 +511,9 @@ class RequestPickupScreen extends StatelessWidget {
           content: RequestPickupSelectAddressContent(
             addresses: controller.addresses,
             onAddNewAddressClick: () async {
-              final upsertResult =
-                  await Get.to(() => const RequestPickupAddressUpsertScreen());
-              if (upsertResult == HttpStatus.created) {
-                setState(() => controller.onUpdateAddresses());
+              var result = await Get.to(() => const RequestPickupAddressUpsertScreen());
+              if (result == HttpStatus.created) {
+                setState(() => controller.getAddresses());
               }
             },
             onPickupClick: () {

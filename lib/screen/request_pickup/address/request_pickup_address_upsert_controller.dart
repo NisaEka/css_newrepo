@@ -28,6 +28,14 @@ class RequestPickupAddressUpsertController extends BaseController {
   /// Internal methods.
 
   Future<RequestPickupAddressCreateRequestModel> _prepareRequestData() async {
+    await locationFromAddress(address.text).then((locations) {
+      final location = locations.firstOrNull;
+      selectedLat = location?.latitude;
+      selectedLng = location?.longitude;
+    }).onError((error, stackTrace) {
+      // Do nothing for now.
+    });
+
     return RequestPickupAddressCreateRequestModel(
       name: name.text,
       phone: phone.text,
