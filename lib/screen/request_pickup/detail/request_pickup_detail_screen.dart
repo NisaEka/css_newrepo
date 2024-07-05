@@ -16,30 +16,30 @@ class RequestPickupDetailScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: CustomTopBar(title: "Detail Kiriman".tr),
-          body: _detailBody(controller)
+          body: _detailBody(context, controller)
         );
       });
   }
 
-  Widget _detailBody(RequestPickupDetailController controller) {
+  Widget _detailBody(BuildContext context, RequestPickupDetailController controller) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _basicSection(controller.requestPickupArgs),
+          _basicSection(context, controller.requestPickupArgs),
           const SizedBox(height: 32),
           _detailedSectionTitle(),
           const SizedBox(height: 16),
-          _detailedSection(controller.requestPickupArgs)
+          _detailedSection(context, controller.requestPickupArgs)
         ],
       ),
     );
   }
 
-  Widget _basicSection(RequestPickupModel requestPickup) {
+  Widget _basicSection(BuildContext context, RequestPickupModel requestPickup) {
     return Card.filled(
-      color: infoLightColor1,
+      color: Theme.of(context).cardColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16))
       ),
@@ -68,9 +68,9 @@ class RequestPickupDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _detailedSection(RequestPickupModel requestPickup) {
+  Widget _detailedSection(BuildContext context, RequestPickupModel requestPickup) {
     return Card.filled(
-      color: infoLightColor1,
+      color: Theme.of(context).cardColor,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16))
       ),

@@ -97,6 +97,11 @@ class CustomTheme {
             ),
             textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
       ),
+      filledButtonTheme: FilledButtonThemeData(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(blueJNE)
+          )
+      ),
     );
   }
 
@@ -211,6 +216,11 @@ class CustomTheme {
             ),
             textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
       ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(blueJNE)
+        )
+      )
     );
   }
 
