@@ -74,6 +74,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _textRow("No Resi", requestPickup.awb),
             const SizedBox(height: 16),
@@ -110,7 +111,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
             const SizedBox(height: 16),
             _textRow("Service", requestPickup.service),
             const SizedBox(height: 16),
-            _textRow("Dana COD", requestPickup.codFee.toCurrency()),
+            _textRow("Dana COD", (requestPickup.codFee ?? 0).toCurrency()),
             const SizedBox(height: 16),
             _textRow("Pengirim", requestPickup.receiverName),
             const SizedBox(height: 16),
@@ -125,7 +126,11 @@ class RequestPickupDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _textRow(String title, String value) {
+  Widget _textRow(String title, String? value) {
+    if (value == null) {
+      return Container();
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,

@@ -45,6 +45,8 @@ class RequestPickupDetailController extends BaseController {
       },
     ).onError(
       (error, stackTrace) {
+        print("on error");
+        error.printError();
         _showErrorContainer = true;
         update();
       },
