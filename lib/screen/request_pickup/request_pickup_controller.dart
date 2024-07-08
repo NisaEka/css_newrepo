@@ -9,7 +9,9 @@ import 'package:css_mobile/data/model/request_pickup/request_pickup_filter_model
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/date_ext.dart';
+import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -308,13 +310,21 @@ class RequestPickupController extends BaseController {
     getCities(newText);
   }
 
+  String getSelectedPickupTime() {
+    if (selectedPickupTime == Constant.defaultPickupTime) {
+      return TimeOfDay.now().asPickupTimeFormat();
+    }
+
+    return selectedPickupTime;
+  }
+
   /// Internal methods.
 
   RequestPickupCreateRequestModel _prepareCreateData() {
     return RequestPickupCreateRequestModel(
       awbs: selectedAwbs,
       pickupAddressId: addresses.first.id,
-      pickupTime: selectedPickupTime,
+      pickupTime: getSelectedPickupTime(),
     );
   }
 }
