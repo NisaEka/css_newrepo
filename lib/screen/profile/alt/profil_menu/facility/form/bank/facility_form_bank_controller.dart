@@ -58,10 +58,7 @@ class FacilityFormBankController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([
-      getBanks(),
-      getTermsAndConditions()
-    ]);
+    Future.wait([getBanks(), getTermsAndConditions()]);
   }
 
   Future<void> getBanks() async {
@@ -74,7 +71,9 @@ class FacilityFormBankController extends BaseController {
   }
 
   Future<void> getTermsAndConditions() async {
-    facility.getFacilityTermsAndConditions(facilityCreateArgs.getFacilityType()).then((response) {
+    facility
+        .getFacilityTermsAndConditions(facilityCreateArgs.getFacilityType())
+        .then((response) {
       _termsAndConditions = response.payload ?? '';
     });
   }
@@ -140,24 +139,26 @@ class FacilityFormBankController extends BaseController {
       Constant.keyImageRekening: _pickedImagePath ?? ''
     };
 
-    var response = await storageRepository.postCcrfFile(fileMap);
+    return await storageRepository.postCcrfFile(fileMap).then((response) {
+      if (response.code == HttpStatus.ok) {
+        ktpUrl = response.payload
+            ?.firstWhere((element) => element.fileType == Constant.keyImageKtp);
+        npwpUrl = response.payload?.firstWhere(
+            (element) => element.fileType == Constant.keyImageNpwp);
+        rekeningUrl = response.payload?.firstWhere(
+            (element) => element.fileType == Constant.keyImageRekening);
 
-    if (response.code == HttpStatus.ok) {
-      ktpUrl =
-          response.payload?.firstWhere((element) => element.fileType == Constant.keyImageKtp);
-      npwpUrl =
-          response.payload?.firstWhere((element) => element.fileType == Constant.keyImageNpwp);
-      rekeningUrl =
-          response.payload?.firstWhere((element) => element.fileType == Constant.keyImageRekening);
+        facilityCreateArgs.setIdCardPath(ktpUrl?.fileUrl ?? '');
+        facilityCreateArgs.setTaxInfoPath(npwpUrl?.fileUrl ?? '');
+        facilityCreateArgs.setBankInfoPath(rekeningUrl?.fileUrl ?? '');
 
-      facilityCreateArgs.setIdCardPath(ktpUrl?.fileUrl ?? '');
-      facilityCreateArgs.setTaxInfoPath(npwpUrl?.fileUrl ?? '');
-      facilityCreateArgs.setBankInfoPath(rekeningUrl?.fileUrl ?? '');
-
-      return true;
-    } else {
+        return true;
+      } else {
+        return false;
+      }
+    }).onError((error, stackTrace) {
       return false;
-    }
+    });
   }
 
   void submitData() async {
@@ -171,13 +172,13 @@ class FacilityFormBankController extends BaseController {
       profil.createProfileCcrf(facilityCreateArgs).then((response) {
         if (response.code == HttpStatus.created) {
           Get.to(
-            SuccessScreen(
+            () => SuccessScreen(
               message:
                   'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'
                       .tr,
               buttonTitle: 'Selesai'.tr,
               nextAction: () => Get.delete<DashboardController>().then(
-                (_) => Get.offAll(const DashboardScreen()),
+                (_) => Get.offAll(() => const DashboardScreen()),
               ),
             ),
           );
@@ -185,6 +186,9 @@ class FacilityFormBankController extends BaseController {
           _postDataFailed = true;
           update();
         }
+      }).onError((error, stackTrace) {
+        _postDataFailed = true;
+        update();
       });
     } else {
       _postFileFailed = true;
@@ -212,5 +216,4 @@ class FacilityFormBankController extends BaseController {
     _showTermsAndConditions = false;
     update();
   }
-
 }
