@@ -5,7 +5,7 @@ class RequestPickupDetailModel {
   final String date;
   final String type;
   final String service;
-  final double codFee;
+  final int codFee;
   final String shipperName;
   final String shipperCity;
   final String receiverName;
@@ -36,7 +36,7 @@ class RequestPickupDetailModel {
     date: json['date'] as String,
     type: json['type'] as String,
     service: json['service'] as String,
-    codFee: json['cod_fee'] as double,
+    codFee: json['cod_fee'] as int,
     shipperName: json['shipper_name'] as String,
     shipperCity: json['shipper_city'] as String,
     receiverName: json['receiver_name'] as String,
