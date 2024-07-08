@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -130,6 +131,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         !c.isLogin || (c.allow.lacakPesanan == "Y" || c.allow.keuanganBonus == "Y")
                             ? TextField(
                                 controller: c.nomorResi,
+                                cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                                 decoration: InputDecoration(
                                   hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
                                   hintStyle: hintTextStyle,

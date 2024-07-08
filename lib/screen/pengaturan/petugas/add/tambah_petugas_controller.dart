@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/pengaturan/DataPetugasModel.dart';
 import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
@@ -149,28 +150,28 @@ class TambahPetugasController extends BaseController {
         fasilitas = dataPetugas.payload?.menu?.fasilitas == "Y";
         katasandi = dataPetugas.payload?.menu?.katasandi == "Y";
         beranda = dataPetugas.payload?.menu?.beranda == "Y";
-        buatPesanan = dataPetugas.payload?.menu?.buatPesanan == "Y";
-        lacakPesanan = dataPetugas.payload?.menu?.lacakPesanan == "Y";
-        mintaDijemput = dataPetugas.payload?.menu?.mintaDijemput == "Y";
-        serahTerima = dataPetugas.payload?.menu?.serahTerima == "Y";
-        saldo = dataPetugas.payload?.menu?.saldo == "Y";
-        uangCod = dataPetugas.payload?.menu?.uangCod == "Y";
-        tagihan = dataPetugas.payload?.menu?.tagihan == "Y";
-        bonus = dataPetugas.payload?.menu?.bonus == "Y";
+        buatPesanan = dataPetugas.payload?.menu?.buatPesanan == "Y" || dataPetugas.payload?.menu?.paketmuInput == "Y";
+        lacakPesanan = dataPetugas.payload?.menu?.lacakPesanan == "Y" || dataPetugas.payload?.menu?.paketmuLacak == "Y";
+        mintaDijemput = dataPetugas.payload?.menu?.mintaDijemput == "Y" || dataPetugas.payload?.menu?.paketmuMintaDijemput == "Y";
+        serahTerima = dataPetugas.payload?.menu?.serahTerima == "Y" || dataPetugas.payload?.menu?.paketmuSerahTerima == "Y";
+        saldo = dataPetugas.payload?.menu?.saldo == "Y" || dataPetugas.payload?.menu?.keuanganJneMoney == "Y";
+        uangCod = dataPetugas.payload?.menu?.uangCod == "Y" || dataPetugas.payload?.menu?.keuanganCod == "Y";
+        tagihan = dataPetugas.payload?.menu?.tagihan == "Y" || dataPetugas.payload?.menu?.keuanganTagihan == "Y";
+        bonus = dataPetugas.payload?.menu?.bonus == "Y" || dataPetugas.payload?.menu?.keuanganBonus == "y";
         pantauPaketmu = dataPetugas.payload?.menu?.pantauPaketmu == "Y";
         laporan = dataPetugas.payload?.menu?.laporan == "Y";
         eclaim = dataPetugas.payload?.menu?.eclaim == "Y";
-        tema = dataPetugas.payload?.menu?.tema == "Y";
-        label = dataPetugas.payload?.menu?.label == "Y";
-        petugas = dataPetugas.payload?.menu?.petugas == "Y";
-        riwayatPesanan = dataPetugas.payload?.menu?.riwayatPesanan == "Y";
+        tema = dataPetugas.payload?.menu?.tema == "Y" || dataPetugas.payload?.menu?.pengaturanTema == "Y";
+        label = dataPetugas.payload?.menu?.label == "Y" || dataPetugas.payload?.menu?.pengaturanLabel == "Y";
+        petugas = dataPetugas.payload?.menu?.petugas == "Y" || dataPetugas.payload?.menu?.pengaturanPetugas == "Y";
+        riwayatPesanan = dataPetugas.payload?.menu?.riwayatPesanan == "Y" || dataPetugas.payload?.menu?.paketmuRiwayat == "Y";
         cekOngkir = dataPetugas.payload?.menu?.cekOngkir == "Y";
         semuaTransaksi = dataPetugas.payload?.menu?.semuaTransaksi == "Y";
         hapusPesanan = dataPetugas.payload?.menu?.hapusPesanan == "Y";
         semuaHapus = dataPetugas.payload?.menu?.semuaHapus == "Y";
-        cetakPesanan = dataPetugas.payload?.menu?.cetakPesanan == "Y";
-        monitoringAgg = dataPetugas.payload?.menu?.monitoringAgg == "Y";
-        monitoringAggMinus = dataPetugas.payload?.menu?.monitoringAggMinus == "Y";
+        cetakPesanan = dataPetugas.payload?.menu?.cetakPesanan == "Y" || dataPetugas.payload?.menu?.paketmuPrint == "Y";
+        monitoringAgg = dataPetugas.payload?.menu?.monitoringAgg == "Y" || dataPetugas.payload?.menu?.keuanganAggregasi == "Y";
+        monitoringAggMinus = dataPetugas.payload?.menu?.monitoringAggMinus == "Y" || dataPetugas.payload?.menu?.keuanganAggregasiMinus == "Y";
         update();
       } else {
         basic = BasicProfilModel.fromJson(
@@ -245,20 +246,30 @@ class TambahPetugasController extends BaseController {
               password: password.text,
               address: alamat.text,
               zipCode: zipCode.text,
-              menu: Menu(
+              menu: AllowedMenu(
                 profil: profilku ? "Y" : null,
                 fasilitas: fasilitas ? "Y" : null,
                 katasandi: katasandi ? "Y" : null,
                 beranda: beranda ? "Y" : null,
                 buatPesanan: buatPesanan ? "Y" : null,
+                paketmuInput: buatPesanan ? "Y" : null,
                 riwayatPesanan: riwayatPesanan ? "Y" : null,
+                paketmuRiwayat: riwayatPesanan ? "Y" : null,
                 lacakPesanan: lacakPesanan ? "Y" : null,
+                paketmuLacak: lacakPesanan ? "Y" : null,
                 mintaDijemput: mintaDijemput ? "Y" : null,
+                paketmuMintaDijemput: mintaDijemput ? "Y" : null,
                 serahTerima: serahTerima ? "Y" : null,
+                paketmuSerahTerima: serahTerima ? "Y" : null,
                 cetakPesanan: cetakPesanan ? "Y" : null,
+                paketmuPrint: cetakPesanan ? "Y" : null,
                 hapusPesanan: hapusPesanan ? "Y" : null,
                 saldo: saldo ? "Y" : null,
                 uangCod: uangCod ? "Y" : null,
+                keuanganCod: uangCod ? "Y" : null,
+                keuanganBonus: saldo ? "Y" : null,
+                keuanganAggregasi: monitoringAgg ? "Y" : null,
+                keuanganAggregasiMinus: monitoringAggMinus ? "Y" : null,
                 monitoringAgg: monitoringAgg ? "Y" : null,
                 monitoringAggMinus: monitoringAggMinus ? "Y" : null,
                 tagihan: tagihan ? "Y" : null,
@@ -266,9 +277,13 @@ class TambahPetugasController extends BaseController {
                 pantauPaketmu: pantauPaketmu ? "Y" : null,
                 laporan: laporan ? "Y" : null,
                 eclaim: eclaim ? "Y" : null,
+                hubungiEclaim: eclaim ? "Y" : null,
                 cekOngkir: cekOngkir ? "Y" : null,
                 label: label ? "Y" : null,
                 petugas: petugas ? "Y" : null,
+                pengaturanLabel: label ? "Y" : null,
+                pengaturanPetugas: petugas ? "Y" : null,
+                pengaturanTema: tema ? "Y" : null,
                 semuaHapus: semuaHapus ? "Y" : null,
                 semuaTransaksi: semuaTransaksi ? "Y" : null,
                 tema: tema ? "Y" : null,
@@ -339,20 +354,30 @@ class TambahPetugasController extends BaseController {
               password: password.text,
               address: alamat.text,
               zipCode: zipCode.text,
-              menu: Menu(
+              menu: AllowedMenu(
                 profil: profilku ? "Y" : null,
                 fasilitas: fasilitas ? "Y" : null,
                 katasandi: katasandi ? "Y" : null,
                 beranda: beranda ? "Y" : null,
                 buatPesanan: buatPesanan ? "Y" : null,
+                paketmuInput: buatPesanan ? "Y" : null,
                 riwayatPesanan: riwayatPesanan ? "Y" : null,
+                paketmuRiwayat: riwayatPesanan ? "Y" : null,
                 lacakPesanan: lacakPesanan ? "Y" : null,
+                paketmuLacak: lacakPesanan ? "Y" : null,
                 mintaDijemput: mintaDijemput ? "Y" : null,
+                paketmuMintaDijemput: mintaDijemput ? "Y" : null,
                 serahTerima: serahTerima ? "Y" : null,
+                paketmuSerahTerima: serahTerima ? "Y" : null,
                 cetakPesanan: cetakPesanan ? "Y" : null,
+                paketmuPrint: cetakPesanan ? "Y" : null,
                 hapusPesanan: hapusPesanan ? "Y" : null,
                 saldo: saldo ? "Y" : null,
                 uangCod: uangCod ? "Y" : null,
+                keuanganCod: uangCod ? "Y" : null,
+                keuanganBonus: saldo ? "Y" : null,
+                keuanganAggregasi: monitoringAgg ? "Y" : null,
+                keuanganAggregasiMinus: monitoringAggMinus ? "Y" : null,
                 monitoringAgg: monitoringAgg ? "Y" : null,
                 monitoringAggMinus: monitoringAggMinus ? "Y" : null,
                 tagihan: tagihan ? "Y" : null,
@@ -360,9 +385,13 @@ class TambahPetugasController extends BaseController {
                 pantauPaketmu: pantauPaketmu ? "Y" : null,
                 laporan: laporan ? "Y" : null,
                 eclaim: eclaim ? "Y" : null,
+                hubungiEclaim: eclaim ? "Y" : null,
                 cekOngkir: cekOngkir ? "Y" : null,
                 label: label ? "Y" : null,
                 petugas: petugas ? "Y" : null,
+                pengaturanLabel: label ? "Y" : null,
+                pengaturanPetugas: petugas ? "Y" : null,
+                pengaturanTema: tema ? "Y" : null,
                 semuaHapus: semuaHapus ? "Y" : null,
                 semuaTransaksi: semuaTransaksi ? "Y" : null,
                 tema: tema ? "Y" : null,

@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
@@ -53,11 +54,11 @@ class PointListItem extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3),
-                        border: Border.all(color: blueJNE, width: 2),
+                        border: Border.all(color: AppConst.isLightTheme(context) ? blueJNE : redJNE, width: 2),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.playlist_add_check_rounded,
-                        color: blueJNE,
+                        color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                       ),
                     ),
                     Container(
@@ -102,7 +103,9 @@ class PointListItem extends StatelessWidget {
                               Text("$title   ".toUpperCase()),
                               Text(
                                 subtitle ?? '',
-                                style: listTitleTextStyle.copyWith(color: blueJNE),
+                                style: listTitleTextStyle.copyWith(
+                                  color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                                ),
                               ),
                             ],
                           ),

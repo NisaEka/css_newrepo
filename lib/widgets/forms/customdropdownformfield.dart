@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -6,21 +7,23 @@ import 'package:get/get.dart';
 
 //ignore: must_be_immutable
 class CustomDropDownFormField<T> extends StatelessWidget {
-  CustomDropDownFormField(
-      {super.key,
-      required this.items,
-      this.label,
-      this.value,
-      this.hintText,
-      this.readOnly = false,
-      this.onChanged,
-      this.isRequired = false,
-      this.validator,
-      this.selectedItem,
-      this.textStyle,
-      this.width,
-      this.suffixIcon,
-      this.prefixIcon}) {
+  CustomDropDownFormField({
+    super.key,
+    required this.items,
+    this.label,
+    this.value,
+    this.hintText,
+    this.readOnly = false,
+    this.onChanged,
+    this.isRequired = false,
+    this.validator,
+    this.selectedItem,
+    this.textStyle,
+    this.width,
+    this.suffixIcon,
+    this.prefixIcon,
+    this.searchHintText,
+  }) {
     if (isRequired) {
       // validator ??= ValidationBuilder().required().build() as FormFieldValidator<T>?;
     }
@@ -39,8 +42,9 @@ class CustomDropDownFormField<T> extends StatelessWidget {
   final double? width;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final String? searchHintText;
 
-  _getDropDown() {
+  _getDropDown(BuildContext context) {
     if (items == null) {
       return const SizedBox();
     }
@@ -58,9 +62,16 @@ class CustomDropDownFormField<T> extends StatelessWidget {
         showSelectedItems: true,
         showSearchBox: items!.length >= 15,
         searchDelay: const Duration(milliseconds: 500),
-        itemBuilder: (context, item, bool bool ) {
-          return Container(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), child: Text(item));
+        searchFieldProps: TextFieldProps(
+          cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+          autofocus: true,
+          decoration: InputDecoration(
+            hintText: searchHintText,
+            helperText: "Masukan minimal 3 karakter".tr,
+          ),
+        ),
+        itemBuilder: (context, item, bool bool) {
+          return Container(padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), child: Text(item));
         },
       ),
       dropdownButtonProps: const DropdownButtonProps(
@@ -85,9 +96,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
   }
 
   dynamic _getIdSelectedValue(String selected) {
-    DropdownMenuItem? item =
-        items?.firstWhere((DropdownMenuItem item) => (item.child as Text).data == selected)
-            as DropdownMenuItem;
+    DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => (item.child as Text).data == selected) as DropdownMenuItem;
     return item.value;
   }
 
@@ -95,8 +104,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
     if (items != null) {
       if (items!.isNotEmpty) {
         if (value != null) {
-          DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => item.value == value,
-              orElse: () => items!.first) as DropdownMenuItem;
+          DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => item.value == value, orElse: () => items!.first) as DropdownMenuItem;
           Text textView = item.child as Text;
 
           return textView.data ?? hintText ?? label ?? '';
@@ -147,7 +155,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
                     suffixIconColor: greyDarkColor1,
                   ),
                 )
-              : _getDropDown(),
+              : _getDropDown(context),
         ),
         const SizedBox(height: 10)
       ],

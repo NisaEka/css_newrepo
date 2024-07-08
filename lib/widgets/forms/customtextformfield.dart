@@ -119,6 +119,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               validator: widget.validator,
               keyboardType: widget.inputType,
               obscureText: widget.isObscure ?? false,
+              cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
               inputFormatters: widget.inputFormatters ??
                   (widget.hintText?.contains('email') ?? false
                       ? [

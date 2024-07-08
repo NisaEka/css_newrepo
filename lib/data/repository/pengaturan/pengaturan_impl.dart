@@ -80,8 +80,12 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   Future<PostTransactionModel> putOfficer(DataPetugasModel data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
+    data.toJson().printInfo(info: "kiriman data");
     try {
-      Response response = await network.dio.put("/officer/${data.id}", data: data);
+      Response response = await network.dio.put(
+        "/officer/${data.id}",
+        data: data,
+      );
       return PostTransactionModel.fromJson(response.data);
     } on DioException catch (e) {
       return e.response?.data;

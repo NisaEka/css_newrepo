@@ -123,9 +123,11 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
             isFilterOnline: true,
             itemBuilder: widget.itemBuilder,
             searchFieldProps: TextFieldProps(
+              cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
               autofocus: true,
               decoration: InputDecoration(
                 hintText: widget.searchHintText,
+                helperText: "Masukan minimal 3 karakter".tr,
               ),
             ),
           ),

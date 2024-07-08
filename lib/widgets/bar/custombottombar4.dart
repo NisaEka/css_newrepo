@@ -4,7 +4,6 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/notification/notification_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
@@ -59,9 +58,8 @@ class BottomBar4 extends StatelessWidget {
             color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
             onTap: () => Get.to(const LacakKirimanScreen(), arguments: {}),
           ),
-          (allowedMenu.paketmuInput != "Y" || allowedMenu.buatPesanan != "Y") && isLogin
-              ? const SizedBox()
-              : FloatingActionButton(
+          (allowedMenu.paketmuInput == "Y" || allowedMenu.buatPesanan == "Y") || !isLogin
+              ? FloatingActionButton(
                   shape: const CircleBorder(),
                   backgroundColor: isLogin ? redJNE : errorLightColor2,
                   // onPressed: () => Get.to(const InputKirimanScreen()),
@@ -75,7 +73,8 @@ class BottomBar4 extends StatelessWidget {
                     ImageConstant.paketmuIcon,
                     height: Get.width / 12,
                   ),
-                ),
+                )
+              : const SizedBox(),
           BottomMenuItem2(
             icon: Icons.local_shipping,
             title: "Cek Ongkir".tr,

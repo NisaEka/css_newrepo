@@ -11,6 +11,7 @@ import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/profile/image_picker_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -31,9 +32,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
             ),
             controller.pickImageFailed
                 ? MessageInfoDialog(
-                    message:
-                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
-                            .tr,
+                    message: 'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'.tr,
                     onClickAction: () => controller.onRefreshUploadState(),
                   )
                 : Container(),
@@ -50,10 +49,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
           color: redJNE,
           title: 'Selanjutnya'.tr,
           onPressed: () {
-            Get.to(const FacilityFormReturnScreen(), arguments: {
-              'data': c.submitData(),
-              'destination': c.selectedDestination
-            });
+            Get.to(const FacilityFormReturnScreen(), arguments: {'data': c.submitData(), 'destination': c.selectedDestination});
           },
         ));
   }
@@ -76,9 +72,11 @@ class FacilityFormInfoScreen extends StatelessWidget {
                   controller: c.idCardNumber,
                   hintText: 'No Identitas / KTP',
                   inputType: TextInputType.number,
-                  inputFormatters: const [],
-                  validator:
-                      ValidationBuilder().maxLength(16).minLength(16).build(),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(16),
+                  ],
+                  validator: ValidationBuilder().maxLength(16).minLength(16).build(),
                 ),
                 ImagePickerContainer(
                   containerTitle: 'Pilih Gambar Identitas / KTP',
@@ -103,8 +101,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: () => c.update(),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                         child: Text(e.asFacilityFormFormat()),
                       ),
                     );
@@ -117,12 +114,8 @@ class FacilityFormInfoScreen extends StatelessWidget {
                   value: c.selectedDestination,
                   isRequired: c.selectedDestination == null ? true : false,
                   readOnly: false,
-                  hintText: c.isLoadDestination
-                      ? "Loading..."
-                      : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
-                  textStyle: c.selectedDestination != null
-                      ? subTitleTextStyle
-                      : hintTextStyle,
+                  hintText: c.isLoadDestination ? "Loading..." : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
+                  textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
                 ),
                 CustomTextFormField(
                   controller: c.phone,

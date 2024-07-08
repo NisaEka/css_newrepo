@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class CustomSearchField<T> extends StatelessWidget {
           controller: controller,
           keyboardType: inputType,
           inputFormatters: inputFormatters,
+          cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
           decoration: InputDecoration(
             hintText: hintText,
             enabledBorder: OutlineInputBorder(
