@@ -50,6 +50,17 @@ class RequestPickupAddressUpsertController extends BaseController {
     );
   }
 
+  _getDestinationByPostalCode(String postalCode) async {
+    transaction.getDestination(postalCode)
+        .then((value) => _setSelectedDestination(value.payload?.first))
+        .onError((error, stackTrace) => null);
+  }
+
+  _setSelectedDestination(Destination? destination) {
+    selectedDestination = destination;
+    update();
+  }
+
   /// Screen methods.
 
   Future<List<Destination>> getDestinationList(String keyword) async {
@@ -94,6 +105,9 @@ class RequestPickupAddressUpsertController extends BaseController {
   void onSelectedPlaceMark(Placemark? placeMark) {
     if (placeMark != null) {
       address.text = placeMark.toReadableAddress();
+      if (placeMark.postalCode != null) {
+        _getDestinationByPostalCode(placeMark.postalCode!);
+      }
     }
   }
 
