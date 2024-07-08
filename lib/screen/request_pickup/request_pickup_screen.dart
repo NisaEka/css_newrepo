@@ -510,18 +510,22 @@ class RequestPickupScreen extends StatelessWidget {
           title: 'Pilih Alamat Penjemputan'.tr,
           content: RequestPickupSelectAddressContent(
             addresses: controller.addresses,
-            onAddNewAddressClick: () async {
-              var result = await Get.to(() => const RequestPickupAddressUpsertScreen());
-              if (result == HttpStatus.created) {
-                setState(() => controller.getAddresses());
-              }
+            onAddNewAddressClick: () {
+              Get.to(() => const RequestPickupAddressUpsertScreen())
+                  ?.then((result) {
+                if (result == HttpStatus.created) {
+                  controller.getAddresses().then((value) {
+                    setState(() => controller.update());
+                  });
+                }
+              });
             },
             onPickupClick: () {
-              controller.onSetPickupTime(TimeOfDay.now().asPickupTimeFormat());
               Get.dialog(RequestPickupConfirmationDialog(
                 pickupTime: controller.selectedPickupTime,
                 onConfirmAction: () {
                   controller.onPickupAction();
+                  Get.back();
                   Get.back();
                 },
                 onCancelAction: () {
