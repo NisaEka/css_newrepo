@@ -527,7 +527,7 @@ class RequestPickupScreen extends StatelessWidget {
             },
             onPickupClick: () {
               Get.dialog(RequestPickupConfirmationDialog(
-                pickupTime: controller.selectedPickupTime,
+                pickupTime: controller.getSelectedPickupTime(),
                 onConfirmAction: () {
                   controller.onPickupAction();
                   Get.back();
