@@ -29,4 +29,6 @@ abstract class AuthRepository {
   Future<PostTransactionModel> postPasswordChage(InputNewPasswordModel data);
 
   Future<GetCheckMailModel> getCheckMail(String email);
+
+  Future<LoginModel> postFcmToken(Device data);
 }

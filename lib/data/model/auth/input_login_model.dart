@@ -98,29 +98,37 @@ class Coordinate {
 
 class Device {
   Device({
+    String? fcmToken,
     String? deviceId,
     String? deviceVersion,
   }) {
+    _fcmToken = fcmToken;
     _deviceId = deviceId;
     _deviceVersion = deviceVersion;
   }
 
   Device.fromJson(dynamic json) {
+    _fcmToken = json['fcm_token'];
     _deviceId = json['device_id'];
     _deviceVersion = json['device_version'];
   }
 
+  String? _fcmToken;
   String? _deviceId;
   String? _deviceVersion;
 
   Device copyWith({
+    String? fcmToken,
     String? deviceId,
     String? deviceVersion,
   }) =>
       Device(
+        fcmToken: fcmToken ?? _fcmToken,
         deviceId: deviceId ?? _deviceId,
         deviceVersion: deviceVersion ?? _deviceVersion,
       );
+
+  String? get fcmToken => _fcmToken;
 
   String? get deviceId => _deviceId;
 
@@ -128,6 +136,7 @@ class Device {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['fcm_token'] = _fcmToken;
     map['device_id'] = _deviceId;
     map['device_version'] = _deviceVersion;
     return map;

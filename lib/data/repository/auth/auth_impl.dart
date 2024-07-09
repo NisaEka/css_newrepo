@@ -18,11 +18,12 @@ class AuthRepositoryImpl extends AuthRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<LoginModel> postLogin(InputLoginModel loginData) async {
+  Future<LoginModel> postLogin(InputLoginModel data) async {
+    data.toJson().printInfo(info: "kiriman data");
     try {
       Response response = await network.dio.post(
         '/auth/login',
-        data: loginData,
+        data: data,
       );
       return LoginModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -148,4 +149,23 @@ class AuthRepositoryImpl extends AuthRepository {
       return GetCheckMailModel.fromJson(e.response?.data);
     }
   }
+
+  @override
+  Future<LoginModel> postFcmToken(Device data) async{
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.local.options.headers['Authorization'] = 'Bearer $token';
+
+    try {
+      Response response = await network.local.post(
+        '/device_info',
+        data: data,
+      );
+      return LoginModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return LoginModel.fromJson(e.response?.data);
+    }
+  }
+
+
 }

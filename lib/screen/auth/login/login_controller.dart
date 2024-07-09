@@ -11,6 +11,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:geolocator/geolocator.dart';
@@ -29,6 +30,7 @@ class LoginController extends BaseController {
   bool isLoading = false;
   bool pop = false;
   String? lang;
+  String? fcmToken;
 
   DateTime? currentBackPressTime;
 
@@ -44,15 +46,17 @@ class LoginController extends BaseController {
   @override
   void onInit() async {
     super.onInit();
-    // initData();
+    initData();
     emailTextField.text;
     passwordTextField.text;
   }
 
   Future<void> initData() async {
     lang = await storage.readString(StorageCore.localeApp);
+    fcmToken = await storage.readString(StorageCore.fcmToken);
     update();
     ValidationBuilder.setLocale(lang!);
+    print("fcmToken : ${fcmToken?.length}");
   }
 
   // @override
@@ -118,6 +122,7 @@ class LoginController extends BaseController {
                 value.payload?.token ?? '',
                 value.payload?.allowedMenu ?? AllowedMenu(),
               )
+              .then((_) async => auth.postFcmToken(await getDeviceinfo() ?? Device()))
               .then((_) => Get.delete<DashboardController>())
               .then((_) => Get.offAll(const DashboardScreen()));
 
@@ -188,6 +193,7 @@ class LoginController extends BaseController {
       var version = iosDeviceInfo.systemVersion;
 
       return Device(
+        fcmToken: fcmToken,
         deviceId: iosDeviceInfo.identifierForVendor,
         deviceVersion: '$systemName $version',
       );
@@ -195,6 +201,7 @@ class LoginController extends BaseController {
       var androidDeviceInfo = await deviceInfo.androidInfo;
       var release = androidDeviceInfo.version.release;
       return Device(
+        fcmToken: fcmToken,
         deviceId: androidDeviceInfo.id,
         deviceVersion: 'Android $release',
       );

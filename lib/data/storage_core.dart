@@ -18,6 +18,7 @@ class StorageCore {
   static const String ccrfProfil = 'ccrf_profil';
   static const String transactionLabel = "transaction_label";
   static const String shippingCost = "shipping_const";
+  static const String fcmToken = "fcm_token";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);

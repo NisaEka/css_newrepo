@@ -211,6 +211,7 @@ class DashboardController extends BaseController {
         jlcPoint = value.data?.first.sisaPoint.toString();
         update();
       });
+
       await transaction
           .getSender()
           .then((value) async => await storage.saveData(

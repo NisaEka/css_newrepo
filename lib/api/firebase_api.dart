@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/notification/notification_screen.dart';
 import 'package:css_mobile/util/navigation/notification_navigation.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -77,6 +78,7 @@ class FirebaseApi {
       sound: true,
     );
     print("fcmToken ${await messaging.getToken()}");
+    StorageCore().writeString(StorageCore.fcmToken, await messaging.getToken());
 
     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
 
