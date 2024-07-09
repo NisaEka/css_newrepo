@@ -1,14 +1,12 @@
 import 'dart:async';
 
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_controller.dart';
 import 'package:css_mobile/util/ext/placement_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -35,9 +33,7 @@ class RequestPickupLocationScreen extends StatelessWidget {
         margin: const EdgeInsets.all(16),
         color: redJNE,
         title: 'Pilih Lokasi Ini'.tr,
-        onPressed: () {
-          Get.back(result: controller.selectedPlaceMark);
-        },
+        onPressed: () => Get.back(result: controller.selectedPlaceMark),
       );
     }
 

@@ -6,11 +6,10 @@ import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.da
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_screen.dart';
 import 'package:css_mobile/screen/request_pickup/detail/request_pickup_detail_screen.dart';
-import 'package:css_mobile/screen/request_pickup/detail/request_pickup_filter_item.dart';
+import 'package:css_mobile/screen/request_pickup/request_pickup_filter_item.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_confirmation_dialog.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
-import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
@@ -98,15 +97,17 @@ class RequestPickupScreen extends StatelessWidget {
 
     if (controller.showErrorContent) {
       return Center(
-          child: Column(
-        children: [
-          Text("Terjadi kesalahan ketika mengambil data".tr),
-          const Padding(padding: EdgeInsets.only(top: 16)),
-          FilledButton(
+        child: Column(
+          children: [
+            Text("Terjadi kesalahan ketika mengambil data".tr),
+            const Padding(padding: EdgeInsets.only(top: 16)),
+            FilledButton(
               onPressed: () => controller.requireRetry(),
-              child: const Text("Muat ulang"))
-        ],
-      ));
+              child: const Text("Muat ulang"),
+            )
+          ],
+        ),
+      );
     }
 
     if (controller.showMainContent) {
@@ -133,7 +134,7 @@ class RequestPickupScreen extends StatelessWidget {
                 message: 'Berhasil membuat permintaan pickup',
                 onClickAction: () => controller.refreshState(),
               )
-            : Container()
+            : Container(),
       ],
     );
   }
@@ -151,38 +152,41 @@ class RequestPickupScreen extends StatelessWidget {
           child: PagedListView<int, RequestPickupModel>(
             pagingController: controller.pagingController,
             builderDelegate: PagedChildBuilderDelegate<RequestPickupModel>(
-                transitionDuration: const Duration(milliseconds: 500),
-                itemBuilder: (context, item, index) {
-                  return RequestPickupItem(
-                    data: item,
-                    onTap: (String awb) {
-                      if (controller.checkMode) {
-                        controller.selectItem(awb);
-                      } else {
-                        Get.to(const RequestPickupDetailScreen(),
-                            arguments: {"data": item});
-                      }
-                    },
-                    onLongTap: () {
-                      controller.setCheckMode(true);
-                    },
-                    checkMode: controller.checkMode,
-                    checked: controller.isItemChecked(item.awb),
-                  );
-                },
-                firstPageErrorIndicatorBuilder: (context) {
-                  return Center(
-                      child: Column(
-                    children: [
-                      Text("Terjadi kesalahan ketika mengambil data".tr),
-                      const Padding(padding: EdgeInsets.only(top: 16)),
-                      FilledButton(
-                        onPressed: () => controller.requireRetry(),
-                        child: const Text("Muat ulang"),
-                      )
-                    ],
-                  ));
-                }),
+              transitionDuration: const Duration(milliseconds: 500),
+              itemBuilder: (context, item, index) {
+                return RequestPickupItem(
+                  data: item,
+                  onTap: (String awb) {
+                    if (controller.checkMode) {
+                      controller.selectItem(awb);
+                    } else {
+                      Get.to(
+                        const RequestPickupDetailScreen(),
+                        arguments: {"awb": item.awb},
+                      );
+                    }
+                  },
+                  onLongTap: () {
+                    controller.setCheckMode(true);
+                  },
+                  checkMode: controller.checkMode,
+                  checked: controller.isItemChecked(item.awb),
+                );
+              },
+              firstPageErrorIndicatorBuilder: (context) {
+                return Center(
+                    child: Column(
+                  children: [
+                    Text("Terjadi kesalahan ketika mengambil data".tr),
+                    const Padding(padding: EdgeInsets.only(top: 16)),
+                    FilledButton(
+                      onPressed: () => controller.requireRetry(),
+                      child: const Text("Muat ulang"),
+                    )
+                  ],
+                ));
+              },
+            ),
           ),
         ))
       ],
@@ -354,40 +358,41 @@ class RequestPickupScreen extends StatelessWidget {
     List<String> items = controller.statuses;
 
     _requestPickupBottomSheetScaffold(
-        "Pilih Status".tr,
-        Expanded(
-          child: ListView.separated(
-            separatorBuilder: (BuildContext context, int index) {
-              if (index <= items.length) {
-                return const SizedBox(
-                  height: 16,
-                );
-              } else {
-                return Container();
-              }
-            },
-            padding: const EdgeInsets.all(16),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              bool isSelected = controller.filterStatusText == items[index];
-              return GestureDetector(
-                onTap: () {
-                  controller.setSelectedFilterStatus(items[index]);
-                  Get.back();
-                },
-                child: Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(items[index].tr),
-                      Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-                    ],
-                  ),
-                ),
+      "Pilih Status".tr,
+      Expanded(
+        child: ListView.separated(
+          separatorBuilder: (BuildContext context, int index) {
+            if (index <= items.length) {
+              return const SizedBox(
+                height: 16,
               );
-            },
-          ),
-        ));
+            } else {
+              return Container();
+            }
+          },
+          padding: const EdgeInsets.all(16),
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            bool isSelected = controller.filterStatusText == items[index];
+            return GestureDetector(
+              onTap: () {
+                controller.setSelectedFilterStatus(items[index]);
+                Get.back();
+              },
+              child: Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(items[index].tr),
+                    Icon(isSelected ? Icons.circle : Icons.circle_outlined)
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   _filterDeliveryTypeBottomSheet(RequestPickupController controller) {
@@ -510,18 +515,22 @@ class RequestPickupScreen extends StatelessWidget {
           title: 'Pilih Alamat Penjemputan'.tr,
           content: RequestPickupSelectAddressContent(
             addresses: controller.addresses,
-            onAddNewAddressClick: () async {
-              var result = await Get.to(() => const RequestPickupAddressUpsertScreen());
-              if (result == HttpStatus.created) {
-                setState(() => controller.getAddresses());
-              }
+            onAddNewAddressClick: () {
+              Get.to(() => const RequestPickupAddressUpsertScreen())
+                  ?.then((result) {
+                if (result == HttpStatus.created) {
+                  controller.getAddresses().then((value) {
+                    setState(() => controller.update());
+                  });
+                }
+              });
             },
             onPickupClick: () {
-              controller.onSetPickupTime(TimeOfDay.now().asPickupTimeFormat());
               Get.dialog(RequestPickupConfirmationDialog(
-                pickupTime: controller.selectedPickupTime,
+                pickupTime: controller.getSelectedPickupTime(),
                 onConfirmAction: () {
                   controller.onPickupAction();
+                  Get.back();
                   Get.back();
                 },
                 onCancelAction: () {
