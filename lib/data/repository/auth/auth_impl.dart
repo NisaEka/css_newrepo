@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
+import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -151,7 +152,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<LoginModel> postFcmToken(Device data) async{
+  Future<LoginModel> postFcmToken(Device data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     network.local.options.headers['Authorization'] = 'Bearer $token';
@@ -167,5 +168,22 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
+  @override
+  Future<LoginModel> logout() async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.local.options.headers['Authorization'] = 'Bearer $token';
 
+    var deviceInfo = await LoginController().getDeviceinfo();
+    String id = deviceInfo?.deviceId ?? '';
+
+    try {
+      Response response = await network.local.delete(
+        '/device_info/$id',
+      );
+      return LoginModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return LoginModel.fromJson(e.response?.data);
+    }
+  }
 }

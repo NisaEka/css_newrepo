@@ -41,9 +41,13 @@ class PengaturanController extends BaseController {
   }
 
   void doLogout() async {
-    storage.deleteToken();
-    storage.deleteString(StorageCore.favoriteMenu);
-    Get.offAll(const LoginScreen());
+    await auth.logout().then((value){
+      if(value.code == 200){
+        storage.deleteToken();
+        storage.deleteString(StorageCore.favoriteMenu);
+        Get.offAll(const LoginScreen());
+      }
+    });
   }
 
   void changeLanguage(String language) async {

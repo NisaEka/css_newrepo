@@ -31,4 +31,6 @@ abstract class AuthRepository {
   Future<GetCheckMailModel> getCheckMail(String email);
 
   Future<LoginModel> postFcmToken(Device data);
+
+  Future<LoginModel> logout();
 }
