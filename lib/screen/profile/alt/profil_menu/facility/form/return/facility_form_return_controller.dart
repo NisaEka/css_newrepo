@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_return_address_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_tax_info_model.dart';
@@ -48,9 +51,13 @@ class FacilityFormReturnController extends BaseController {
   bool _addressSectionReadOnly = false;
   bool get addressSectionReadOnly => _addressSectionReadOnly;
 
+  bool _isOnline = true;
+  bool get isOnline => _isOnline;
+
   @override
   void onInit() {
     npwpType.text = 'PRIBADI';
+    _checkConnectivity();
     super.onInit();
   }
 
@@ -65,6 +72,52 @@ class FacilityFormReturnController extends BaseController {
     update();
 
     return models ?? List.empty();
+  }
+
+  void _checkConnectivity() {
+    connection.checkConnection();
+
+    (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      connection.isOnline().then((value) {
+        _isOnline = value && (result != ConnectivityResult.none);
+        if (_isOnline) {
+          Get.showSnackbar(
+            GetSnackBar(
+              padding: const EdgeInsets.symmetric(vertical: 1.5),
+              margin: const EdgeInsets.only(top: 195),
+              snackPosition: SnackPosition.TOP,
+              messageText: Center(
+                child: Text(
+                  'Online Mode'.tr,
+                  style: listTitleTextStyle.copyWith(color: whiteColor),
+                ),
+              ),
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: successColor.withOpacity(0.7),
+            ),
+          );
+        } else {
+          Get.showSnackbar(
+            GetSnackBar(
+              padding: const EdgeInsets.symmetric(vertical: 1.5),
+              margin: const EdgeInsets.only(top: 195),
+              snackPosition: SnackPosition.TOP,
+              messageText: Center(
+                child: Text(
+                  'Offline Mode'.tr,
+                  style: listTitleTextStyle.copyWith(color: whiteColor),
+                ),
+              ),
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: greyDarkColor1.withOpacity(0.7),
+            ),
+          );
+        }
+        update();
+      });
+    }));
   }
 
   void onAddressSameCheck() async {
