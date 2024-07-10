@@ -211,11 +211,6 @@ class DashboardController extends BaseController {
     userName = shipper.name ?? "         ";
     // if (isLogin == true) {
     try {
-      await jlc.postTotalPoint().then((value) {
-        jlcPoint = value.data?.first.sisaPoint.toString();
-        update();
-      });
-
       await transaction
           .getSender()
           .then((value) async => await storage.saveData(
@@ -253,6 +248,11 @@ class DashboardController extends BaseController {
 
       await profil.getCcrfProfil().then((value) async {
         ccrf = value;
+        update();
+      });
+
+      await jlc.postTotalPoint().then((value) {
+        jlcPoint = value.data?.first.sisaPoint.toString();
         update();
       });
 
