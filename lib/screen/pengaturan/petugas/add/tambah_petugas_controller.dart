@@ -2,7 +2,7 @@ import 'dart:core';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
-import 'package:css_mobile/data/model/pengaturan/DataPetugasModel.dart';
+import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';

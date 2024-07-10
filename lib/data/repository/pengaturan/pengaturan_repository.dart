@@ -1,7 +1,8 @@
-import 'package:css_mobile/data/model/pengaturan/DataPetugasModel.dart';
+import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_setting_label_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 
@@ -20,5 +21,10 @@ abstract class PengaturanRepository {
 
   Future<GetOriginModel> getOriginGroup(List<String> keyword);
 
+  Future<GetSettingLabelModel> getSettingLabel();
 
+  Future<PostTransactionModel> updateSettingLabel(
+    String label,
+    int price,
+  );
 }

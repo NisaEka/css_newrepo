@@ -13,7 +13,6 @@ class NotificationRepositoryImpl extends NotificationRepository {
   Future<GetNotificationModel> getNotificationsList() async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
-    network.local.options.headers['Authorization'] = 'Bearer $token';
 
     try {
       Response response = await network.dio.get(

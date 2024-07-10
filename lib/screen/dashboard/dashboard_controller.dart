@@ -128,8 +128,12 @@ class DashboardController extends BaseController {
     update();
 
     if (stickerLabel.isEmpty || shipcost.isEmpty) {
-      await storage.writeString(StorageCore.transactionLabel, "/sticker_megahub1");
-      await storage.writeString(StorageCore.shippingCost, "PUBLISH");
+      await setting.getSettingLabel().then(
+        (value) async {
+          await storage.writeString(StorageCore.transactionLabel, value.payload?.where((e) => e.enable ?? false).first.name);
+          await storage.writeString(StorageCore.shippingCost, value.payload?.first.showPrice ?? false ? "PUBLISH" : "HIDE");
+        },
+      );
     }
     update();
   }
