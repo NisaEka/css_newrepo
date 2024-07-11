@@ -91,20 +91,41 @@ class RequestPickupController extends BaseController {
     bool startDateAvailable = selectedDateStart != null;
     bool endDateAvailable = selectedDateEnd != null;
 
-    if (selectedFilterDate == RequestPickupDateEnum.custom) {
-      if (startDateAvailable && endDateAvailable) {
-        filter.setDate(
-            '${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
-        filterDateText = '$selectedDateStartText - $selectedDateEndText';
-      } else if (startDateAvailable) {
-        filter.setDate('${selectedDateStart?.millisecondsSinceEpoch}');
-        filterDateText = selectedDateStartText;
-      } else if (endDateAvailable) {
-        filter.setDate('${selectedDateEnd?.millisecondsSinceEpoch}');
-        filterDateText = selectedDateEndText;
-      }
-    } else if (selectedFilterDate == RequestPickupDateEnum.all) {
-      filter.setDate('');
+    switch (selectedFilterDate) {
+      case RequestPickupDateEnum.custom:
+        if (startDateAvailable && endDateAvailable) {
+          filter.setDate(
+              '${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
+          filterDateText = '$selectedDateStartText - $selectedDateEndText';
+        } else if (startDateAvailable) {
+          filter.setDate('${selectedDateStart?.millisecondsSinceEpoch}');
+          filterDateText = selectedDateStartText;
+        } else if (endDateAvailable) {
+          filter.setDate('${selectedDateEnd?.millisecondsSinceEpoch}');
+          filterDateText = selectedDateEndText;
+        }
+        break;
+      case RequestPickupDateEnum.all:
+        filter.setDate('');
+        break;
+      case RequestPickupDateEnum.oneMonth:
+        final currentDateTime = DateTime.now();
+        final oneMonthAgo = currentDateTime.subtract(const Duration(days: 30));
+        filter.setDate('${oneMonthAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
+        break;
+      case RequestPickupDateEnum.oneWeek:
+        final currentDateTime = DateTime.now();
+        final oneWeekAgo = currentDateTime.subtract(const Duration(days: 7));
+        filter.setDate('${oneWeekAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
+        break;
+      case RequestPickupDateEnum.today:
+        final currentDateTime = DateTime.now();
+        final startOfDay = DateTime(currentDateTime.year, currentDateTime.month, currentDateTime.day);
+        filter.setDate('${startOfDay.millisecondsSinceEpoch}');
+        break;
+      default:
+        filter.setDate('');
+        break;
     }
 
     refreshPickups();
