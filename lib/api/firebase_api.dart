@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:css_mobile/data/model/notification/get_notification_model.dart';
+import 'package:css_mobile/data/model/notification/unread_message_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/notification/notification_screen.dart';
 import 'package:css_mobile/util/navigation/notification_navigation.dart';
@@ -10,18 +12,64 @@ import 'package:get/get.dart';
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.messageId}");
+  saveUnreadMessage(message);
+}
+
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingOpenAppHandler(RemoteMessage message) async {
+  saveUnreadMessage(message);
+}
+
+Future<void> saveUnreadMessage(RemoteMessage data) async {
+  List<Messages> listUnread = [];
+  List<NotificationModel> listUnreadMessage = [];
+  var u = GetNotificationModel.fromJson(await StorageCore().readData(StorageCore.unreadMessage));
+  if (u.payload?.isNotEmpty ?? false) {
+    listUnreadMessage.addAll(u.payload ?? []);
+  }
+  listUnreadMessage.add(
+    NotificationModel(
+      id: data.messageId,
+      category: data.notification?.title,
+      text: data.notification?.body,
+      createDate: data.sentTime.toString(),
+      isRead: true,
+    ),
+  );
+  listUnread.add(Messages(
+    senderId: data.senderId,
+    category: data.category,
+    collapseKey: data.collapseKey,
+    contentAvailable: data.contentAvailable,
+    data: data.data,
+    from: data.from,
+    messageId: data.messageId,
+    messageType: data.messageType,
+    mutableContent: data.mutableContent,
+    notification: data.notification,
+    sentTime: data.sentTime,
+    threadId: data.threadId,
+    ttl: data.ttl,
+    isRead: false,
+  ));
+  // await StorageCore().saveData(StorageCore.unreadMessage, UnreadMessageModel(messages: listUnread));
+  await StorageCore().saveData(StorageCore.unreadMessage, GetNotificationModel(payload: listUnreadMessage)).then(
+        (value) => print("pesan tersimpan"),
+      );
+  // var u = await StorageCore().readData(StorageCore.unreadMessage);
+  // u.printInfo(info: "unread");
 }
 
 String? payload;
 
-// @pragma('vm:entry-point')
-// void notificationTapBackground(NotificationResponse notificationResponse) {
-//   if (payload != null) {
-//     Map<String, dynamic> data = jsonDecode(notificationResponse.payload!);
-//     FirebaseApi._handleTapOnNotification(data);
-//   }
-// }
+@pragma('vm:entry-point')
+void notificationTapBackground(NotificationResponse notificationResponse) {
+  if (payload != null) {
+    Map<String, dynamic> data = jsonDecode(notificationResponse.payload!);
+    var msg = RemoteMessage(data: data);
+    FirebaseApi._handleTapOnNotification(msg);
+  }
+}
 
 class FirebaseApi {
   static Future<void> initNotification() async {
@@ -80,12 +128,19 @@ class FirebaseApi {
     print("fcmToken ${await messaging.getToken()}");
     StorageCore().writeString(StorageCore.fcmToken, await messaging.getToken());
 
-    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
+    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+
       if (message.notification != null) {
         AndroidNotification? android = message.notification?.android;
-
+        saveUnreadMessage(message);
+        print(message.sentTime);
         // If `onMessage` is triggered with a notification, construct our own
         // local notification to show to users using the created channel.
         if (android != null) {
@@ -108,12 +163,12 @@ class FirebaseApi {
 
     FirebaseMessaging.onMessageOpenedApp.listen(_handleTapOnNotification);
 
-    FirebaseMessaging.instance.getInitialMessage().then(_handleTapOnNotification);
+    FirebaseMessaging.instance.getInitialMessage().then(
+          (value) => saveUnreadMessage(value ?? const RemoteMessage()),
+        );
   }
 
-  static void _handleTapOnNotification(RemoteMessage? data) {
-    // Get.to(const NotificationScreen(), arguments: {
-    //   "message": data,
-    // });
+  static void _handleTapOnNotification(RemoteMessage data) {
+    Get.to(const NotificationScreen());
   }
 }
