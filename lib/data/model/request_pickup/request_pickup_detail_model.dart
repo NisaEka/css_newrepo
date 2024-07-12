@@ -5,7 +5,7 @@ class RequestPickupDetailModel {
   final String date;
   final String type;
   final String service;
-  final int? codFee;
+  final num? codFee;
   final String shipperName;
   final String shipperCity;
   final String receiverName;

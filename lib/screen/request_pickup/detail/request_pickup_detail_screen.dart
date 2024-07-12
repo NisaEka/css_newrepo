@@ -111,7 +111,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
             const SizedBox(height: 16),
             _textRow("Service", requestPickup.service),
             const SizedBox(height: 16),
-            _textRow("Dana COD", (requestPickup.codFee ?? 0).toCurrency()),
+            _textRow("Dana COD", (requestPickup.codFee ?? 0).toInt().toCurrency()),
             const SizedBox(height: 16),
             _textRow("Pengirim", requestPickup.receiverName),
             const SizedBox(height: 16),
