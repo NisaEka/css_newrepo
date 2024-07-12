@@ -1,7 +1,7 @@
 enum RequestPickupDateEnum {
   all,
-  one_month,
-  one_week,
+  oneMonth,
+  oneWeek,
   today,
   custom
 }
@@ -15,10 +15,10 @@ extension RequestPickupDateEnumExt on RequestPickupDateEnum {
       case RequestPickupDateEnum.all:
         result = "SEMUA TANGGAL";
         break;
-      case RequestPickupDateEnum.one_month:
+      case RequestPickupDateEnum.oneMonth:
         result = "1 BULAN TERAKHIR";
         break;
-      case RequestPickupDateEnum.one_week:
+      case RequestPickupDateEnum.oneWeek:
         result = "1 MINGGU TERAKHIR";
         break;
       case RequestPickupDateEnum.today:
