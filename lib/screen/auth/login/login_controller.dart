@@ -111,7 +111,7 @@ class LoginController extends BaseController {
         InputLoginModel(
           email: emailTextField.text,
           password: passwordTextField.text,
-          device: await getDeviceinfo(),
+          device: await getDeviceinfo(fcmToken ?? ''),
           coordinate: await getCurrentLocation(),
         ),
       )
@@ -122,7 +122,7 @@ class LoginController extends BaseController {
                 value.payload?.token ?? '',
                 value.payload?.allowedMenu ?? AllowedMenu(),
               )
-              .then((_) async => auth.postFcmToken(await getDeviceinfo() ?? Device()))
+              .then((_) async => auth.postFcmToken(await getDeviceinfo(fcmToken ?? '') ?? Device()))
               .then((_) => Get.delete<DashboardController>())
               .then((_) => Get.offAll(const DashboardScreen()));
 
@@ -184,7 +184,7 @@ class LoginController extends BaseController {
     // Get.offAll(DashboardScreen());
   }
 
-  Future<Device?> getDeviceinfo() async {
+  Future<Device?> getDeviceinfo(String token) async {
     var deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) {
       // import 'dart:io'
@@ -193,7 +193,7 @@ class LoginController extends BaseController {
       var version = iosDeviceInfo.systemVersion;
 
       return Device(
-        fcmToken: fcmToken,
+        fcmToken: token,
         deviceId: iosDeviceInfo.identifierForVendor,
         deviceVersion: '$systemName $version',
       );
@@ -201,7 +201,7 @@ class LoginController extends BaseController {
       var androidDeviceInfo = await deviceInfo.androidInfo;
       var release = androidDeviceInfo.version.release;
       return Device(
-        fcmToken: fcmToken,
+        fcmToken: token,
         deviceId: androidDeviceInfo.id,
         deviceVersion: 'Android $release',
       );

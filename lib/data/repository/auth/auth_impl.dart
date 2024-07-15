@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -155,6 +156,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<LoginModel> postFcmToken(Device data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
+    data.toJson().printInfo(info: "kiriman data");
 
     try {
       Response response = await network.dio.post(
@@ -171,8 +173,9 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<LoginModel> logout() async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
+    var fcmToken = await StorageCore().readString(StorageCore.fcmToken);
 
-    var deviceInfo = await LoginController().getDeviceinfo();
+    var deviceInfo = await LoginController().getDeviceinfo(fcmToken ?? '');
     String id = deviceInfo?.deviceId ?? '';
 
     try {

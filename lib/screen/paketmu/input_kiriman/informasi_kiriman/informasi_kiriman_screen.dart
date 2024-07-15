@@ -36,7 +36,11 @@ class InformasiKirimanScreen extends StatelessWidget {
             children: [
               Scaffold(
                 appBar: _appBarContent(controller),
-                body: _bodyContent(controller, context),
+                body: RefreshIndicator(
+                  color: greyColor,
+                  onRefresh: () => controller.initData(),
+                  child: _bodyContent(controller, context),
+                ),
               ),
               controller.isLoading ? const LoadingDialog() : Container(),
               controller.isShowDialog ? _warningDialog(controller) : const SizedBox()

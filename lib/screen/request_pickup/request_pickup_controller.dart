@@ -10,13 +10,13 @@ import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/date_ext.dart';
 import 'package:css_mobile/util/ext/time_of_day_ext.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RequestPickupController extends BaseController {
   bool _checkMode = false;
+
   bool get checkMode => _checkMode;
 
   void setCheckMode(bool newState) {
@@ -49,8 +49,7 @@ class RequestPickupController extends BaseController {
   String selectedDateStartText = "Pilih Tanggal Awal";
   String selectedDateEndText = "Pilih Tanggal Akhir";
 
-  final PagingController<int, RequestPickupModel> pagingController =
-      PagingController(firstPageKey: Constant.defaultPage);
+  final PagingController<int, RequestPickupModel> pagingController = PagingController(firstPageKey: Constant.defaultPage);
   static const pageSize = Constant.defaultLimit;
 
   List<String> selectedAwbs = [];
@@ -58,12 +57,15 @@ class RequestPickupController extends BaseController {
   String? selectedAddressId;
 
   bool _createDataLoading = false;
+
   bool get createDataLoading => _createDataLoading;
 
   bool _createDataFailed = false;
+
   bool get createDataFailed => _createDataFailed;
 
   bool _createDataSuccess = false;
+
   bool get createDataSuccess => _createDataSuccess;
 
   @override
@@ -94,8 +96,7 @@ class RequestPickupController extends BaseController {
     switch (selectedFilterDate) {
       case RequestPickupDateEnum.custom:
         if (startDateAvailable && endDateAvailable) {
-          filter.setDate(
-              '${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
+          filter.setDate('${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
           filterDateText = '$selectedDateStartText - $selectedDateEndText';
         } else if (startDateAvailable) {
           filter.setDate('${selectedDateStart?.millisecondsSinceEpoch}');
@@ -162,8 +163,7 @@ class RequestPickupController extends BaseController {
   void setSelectedDateStart(DateTime? dateTime) {
     if (dateTime != null) {
       selectedDateStart = dateTime;
-      selectedDateStartText =
-          dateTime.toStringWithFormat(format: "dd MMM yyyy");
+      selectedDateStartText = dateTime.toStringWithFormat(format: "dd MMM yyyy");
     }
   }
 
@@ -203,8 +203,7 @@ class RequestPickupController extends BaseController {
 
   Future<void> getAddresses() async {
     try {
-      final response =
-          await requestPickupRepository.getRequestPickupAddresses();
+      final response = await requestPickupRepository.getRequestPickupAddresses();
       final payload = response.payload ?? List.empty();
       addresses.clear();
       addresses.addAll(payload);
@@ -216,8 +215,7 @@ class RequestPickupController extends BaseController {
 
   Future<void> getCities(String keyword) async {
     try {
-      final response = await requestPickupRepository
-          .getRequestPickupCities(DefaultPageFilterModel(keyword: keyword));
+      final response = await requestPickupRepository.getRequestPickupCities(DefaultPageFilterModel(keyword: keyword));
       final payload = response.payload ?? List.empty();
       cities.clear();
       cities.add(Constant.allDeliveryCity);
@@ -307,9 +305,7 @@ class RequestPickupController extends BaseController {
     _createDataLoading = true;
     update();
 
-    requestPickupRepository
-        .createRequestPickup(_prepareCreateData())
-        .then((response) {
+    requestPickupRepository.createRequestPickup(_prepareCreateData()).then((response) {
       if (response.code == HttpStatus.created) {
         _createDataSuccess = true;
         refreshPickups();

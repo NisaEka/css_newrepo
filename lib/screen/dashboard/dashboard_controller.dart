@@ -4,10 +4,12 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,7 @@ class DashboardController extends BaseController {
   String? marqueeText;
   String? userName;
   String? jlcPoint;
+  String? fcmToken;
 
   List<Widget> widgetOptions = <Widget>[
     const DashboardScreen(),
@@ -211,6 +214,10 @@ class DashboardController extends BaseController {
     userName = shipper.name ?? "         ";
     // if (isLogin == true) {
     try {
+      fcmToken = await storage.readString(StorageCore.fcmToken);
+
+      await auth.postFcmToken(await LoginController().getDeviceinfo(fcmToken ?? '') ?? Device());
+
       await transaction
           .getSender()
           .then((value) async => await storage.saveData(

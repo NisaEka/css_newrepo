@@ -32,7 +32,11 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
             children: [
               Scaffold(
                 appBar: _appBarContent(controller),
-                body: _bodyContent(controller, context),
+                body: RefreshIndicator(
+                  color: greyColor,
+                  onRefresh: () => controller.initData(),
+                  child: _bodyContent(controller, context),
+                ),
               ),
               controller.isLoadSave ? const LoadingDialog() : const SizedBox()
             ],

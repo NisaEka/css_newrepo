@@ -4,7 +4,6 @@ import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_controller.dart';
-import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
@@ -38,7 +37,11 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
             children: [
               Scaffold(
                 appBar: _appBarContent(controller),
-                body: _bodyContent(controller, context),
+                body: RefreshIndicator(
+                  color: greyColor,
+                  onRefresh: () => controller.initData(),
+                  child: _bodyContent(controller, context),
+                ),
               ),
               controller.isLoadSave ? const LoadingDialog() : const SizedBox()
             ],
