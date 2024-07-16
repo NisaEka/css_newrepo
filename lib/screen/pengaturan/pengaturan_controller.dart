@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
@@ -11,6 +12,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 class PengaturanController extends BaseController {
   bool isLogin = false;
+  bool isLoading = false;
   String? version;
   String? lang;
   AllowedMenu allow = AllowedMenu();
@@ -41,13 +43,23 @@ class PengaturanController extends BaseController {
   }
 
   void doLogout() async {
-    await auth.logout().then((value){
-      if(value.code == 200){
+    isLoading = true;
+    update();
+    await auth
+        .updateDeviceInfoNonAuth(
+      Device(
+        fcmToken: await storage.readString(StorageCore.fcmToken),
+      ),
+    )
+        .then((value) {
+      if (value.code == 201) {
         storage.deleteToken();
         storage.deleteString(StorageCore.favoriteMenu);
         Get.offAll(const LoginScreen());
       }
     });
+    isLoading = false;
+    update();
   }
 
   void changeLanguage(String language) async {

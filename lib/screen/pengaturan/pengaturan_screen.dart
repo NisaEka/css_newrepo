@@ -5,6 +5,7 @@ import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_screen.dart'
 import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
@@ -19,10 +20,15 @@ class PengaturanScreen extends StatelessWidget {
     return GetBuilder<PengaturanController>(
         init: PengaturanController(),
         builder: (controller) {
-          return Scaffold(
-            appBar: CustomTopBar(title: 'Pengaturan'.tr),
-            body: _bodyContent(controller, context),
-            bottomNavigationBar: _logoutButton(controller),
+          return Stack(
+            children: [
+              Scaffold(
+                appBar: CustomTopBar(title: 'Pengaturan'.tr),
+                body: _bodyContent(controller, context),
+                bottomNavigationBar: _logoutButton(controller),
+              ),
+              controller.isLoading ? const LoadingDialog() : const SizedBox(),
+            ],
           );
         });
   }

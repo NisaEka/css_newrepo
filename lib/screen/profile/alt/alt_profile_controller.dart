@@ -1,11 +1,13 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/bottombar_controller.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ class AltProfileController extends BaseController {
   bool isLogin = false;
   bool isEdit = false;
   bool pop = false;
+  bool isLoading = false;
 
   BasicProfilModel? basicProfil;
   String? version;
@@ -95,29 +98,39 @@ class AltProfileController extends BaseController {
       e.printError();
     }
 
-    isCcrf = ccrf?.payload != null  && ccrf?.payload?.generalInfo?.apiStatus == "Y";
+    isCcrf = ccrf?.payload != null && ccrf?.payload?.generalInfo?.apiStatus == "Y";
     update();
   }
 
   void doLogout() async {
-    await auth.logout().then((value){
-      if(value.code == 200){
+    isLoading = true;
+    update();
+    await auth
+        .updateDeviceInfoNonAuth(
+      Device(
+        fcmToken: await storage.readString(StorageCore.fcmToken),
+      ),
+    )
+        .then((value) {
+      if (value.code == 201) {
         storage.deleteToken();
         storage.deleteString(StorageCore.favoriteMenu);
         Get.offAll(const LoginScreen());
       }
     });
+    isLoading = false;
+    update();
   }
 
   void isCcrfAction(dynamic screen, BuildContext context) {
     isCcrf
         ? Get.to(screen)
-          : showDialog(
-              context: context,
-              builder: (context) => InfoDialog(
-                infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas".tr,
-                nextButton: () => Get.off(const FacilityScreen()),
-              ),
-            );
+        : showDialog(
+            context: context,
+            builder: (context) => InfoDialog(
+              infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas".tr,
+              nextButton: () => Get.off(const FacilityScreen()),
+            ),
+          );
   }
 }

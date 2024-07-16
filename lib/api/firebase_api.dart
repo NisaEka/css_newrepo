@@ -125,8 +125,8 @@ class FirebaseApi {
       provisional: false,
       sound: true,
     );
-    print("fcmToken ${await messaging.getToken()}");
-    StorageCore().writeString(StorageCore.fcmToken, await messaging.getToken());
+    print("fcmTokens ${await messaging.getToken()}");
+    StorageCore().writeString(StorageCore.fcmToken, await messaging.getToken()).then((value) => print("fcm Token saved"),);
 
     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,

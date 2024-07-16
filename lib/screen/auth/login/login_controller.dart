@@ -11,7 +11,6 @@ import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:geolocator/geolocator.dart';
@@ -56,7 +55,6 @@ class LoginController extends BaseController {
     fcmToken = await storage.readString(StorageCore.fcmToken);
     update();
     ValidationBuilder.setLocale(lang!);
-    print("fcmToken : ${fcmToken?.length}");
   }
 
   // @override
@@ -122,7 +120,15 @@ class LoginController extends BaseController {
                 value.payload?.token ?? '',
                 value.payload?.allowedMenu ?? AllowedMenu(),
               )
-              .then((_) async => auth.postFcmToken(await getDeviceinfo(fcmToken ?? '') ?? Device()))
+              .then((_) async => auth
+                  .postFcmToken(
+                    await getDeviceinfo(fcmToken ?? '') ?? Device(),
+                  )
+                  .then((value) async => value.code == 200
+                      ? await auth.updateDeviceInfo(
+                          await getDeviceinfo(fcmToken ?? '') ?? Device(),
+                        )
+                      : null))
               .then((_) => Get.delete<DashboardController>())
               .then((_) => Get.offAll(const DashboardScreen()));
 

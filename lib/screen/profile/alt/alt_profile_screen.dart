@@ -14,6 +14,7 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
 import 'package:flutter/material.dart';
@@ -30,18 +31,23 @@ class AltProfileScreen extends StatelessWidget {
           return PopScope(
             canPop: controller.pop,
             onPopInvoked: (didPop) => controller.onPop(),
-            child: Scaffold(
-              appBar: _appBarContent(),
-              body: _bodyContent(controller, context),
-              bottomNavigationBar: ValueListenableBuilder(
-                  valueListenable: controller.bottom.visible,
-                  builder: (context, bool value, child) {
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 500),
-                      height: value ? 113 : kBottomNavigationBarHeight,
-                      child: _logoutButton(controller, context),
-                    );
-                  }),
+            child: Stack(
+              children: [
+                Scaffold(
+                  appBar: _appBarContent(),
+                  body: _bodyContent(controller, context),
+                  bottomNavigationBar: ValueListenableBuilder(
+                      valueListenable: controller.bottom.visible,
+                      builder: (context, bool value, child) {
+                        return AnimatedContainer(
+                          duration: const Duration(milliseconds: 500),
+                          height: value ? 113 : kBottomNavigationBarHeight,
+                          child: _logoutButton(controller, context),
+                        );
+                      }),
+                ),
+                controller.isLoading ? const LoadingDialog() : const SizedBox(),
+              ],
             ),
           );
         });

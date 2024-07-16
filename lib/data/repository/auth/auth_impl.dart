@@ -156,10 +156,11 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<LoginModel> postFcmToken(Device data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.local.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo(info: "kiriman data");
 
     try {
-      Response response = await network.dio.post(
+      Response response = await network.local.post(
         '/device_info',
         data: data,
       );
@@ -175,12 +176,57 @@ class AuthRepositoryImpl extends AuthRepository {
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     var fcmToken = await StorageCore().readString(StorageCore.fcmToken);
 
-    var deviceInfo = await LoginController().getDeviceinfo(fcmToken ?? '');
+    var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
     String id = deviceInfo?.deviceId ?? '';
 
     try {
       Response response = await network.dio.delete(
         '/device_info/$id',
+      );
+      return LoginModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return LoginModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<LoginModel> postFcmTokenNonAuth(Device data) async {
+
+    try {
+      Response response = await network.local.post(
+        '/device_info/save',
+        data: data,
+      );
+      return LoginModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return LoginModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<LoginModel> updateDeviceInfo(Device data) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.local.options.headers['Authorization'] = 'Bearer $token';
+
+    try {
+      Response response = await network.local.put(
+        '/device_info',
+        data: data,
+      );
+      return LoginModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return LoginModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<LoginModel> updateDeviceInfoNonAuth(Device data) async {
+
+    try {
+      Response response = await network.local.put(
+        '/device_info/update',
+        data: data,
       );
       return LoginModel.fromJson(response.data);
     } on DioException catch (e) {

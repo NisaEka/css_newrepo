@@ -196,12 +196,35 @@ class DashboardController extends BaseController {
     }
   }
 
+  Future<void> saveFCMToken() async {
+    try {
+      fcmToken = await storage.readString(StorageCore.fcmToken);
+
+      await auth
+          .postFcmToken(
+            await LoginController().getDeviceinfo(fcmToken ?? '') ?? Device(),
+          )
+          .then((value) async => value.code == 200
+              ? await auth.updateDeviceInfo(
+                  await LoginController().getDeviceinfo(fcmToken ?? '') ?? Device(),
+                )
+              : value.code == 401 || value.code == 400 || value.code == null
+                  ? await auth.postFcmTokenNonAuth(
+                      await LoginController().getDeviceinfo(fcmToken ?? '') ?? Device(),
+                    )
+                  : print('post device info: ${value.code}'));
+    } catch (e) {
+      e.printError();
+    }
+  }
+
   Future<void> initData() async {
     connection.isOnline().then((value) => isOnline = value);
     cekFavoritMenu();
     update();
     cekLocalLanguage();
     cekToken();
+    saveFCMToken();
     isLoading = true;
     bannerList = [
       const Text('for commercial banner 1'),
@@ -214,10 +237,6 @@ class DashboardController extends BaseController {
     userName = shipper.name ?? "         ";
     // if (isLogin == true) {
     try {
-      fcmToken = await storage.readString(StorageCore.fcmToken);
-
-      await auth.postFcmToken(await LoginController().getDeviceinfo(fcmToken ?? '') ?? Device());
-
       await transaction
           .getSender()
           .then((value) async => await storage.saveData(
