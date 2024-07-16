@@ -171,9 +171,9 @@ class DashboardController extends BaseController {
 
   Future<void> cekLocalLanguage() async {
     String local = await storage.readString(StorageCore.localeApp);
-    local.isEmpty.printInfo();
+    // local.isEmpty.printInfo();
     if (local.isEmpty || local == 'id_ID' || local == 'en_US' || local == "id" || local == "en") {
-      (Get.deviceLocale == const Locale("id", "ID")).printInfo(info: "local");
+      // (Get.deviceLocale == const Locale("id", "ID")).printInfo(info: "local");
       if (Get.deviceLocale == const Locale("id", "ID")) {
         await storage.writeString(StorageCore.localeApp, "id");
         Get.updateLocale(const Locale("id", "ID"));

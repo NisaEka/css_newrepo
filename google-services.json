@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "558047279467",
+    "project_id": "css-mobile-7d974",
+    "storage_bucket": "css-mobile-7d974.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558047279467:android:fed39e77d92f4091b6b42e",
+        "android_client_info": {
+          "package_name": "com.jne.css.css_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHIcGL8tTU-R6KDkigcyOi1TKdpMK4w7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558047279467:android:82efb18ec1cd6481b6b42e",
+        "android_client_info": {
+          "package_name": "com.jne.css.css_mobile.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHIcGL8tTU-R6KDkigcyOi1TKdpMK4w7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558047279467:android:821186261500794bb6b42e",
+        "android_client_info": {
+          "package_name": "com.jne.css.css_mobile.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHIcGL8tTU-R6KDkigcyOi1TKdpMK4w7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

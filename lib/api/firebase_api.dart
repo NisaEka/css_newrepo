@@ -116,7 +116,7 @@ class FirebaseApi {
 
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-    await messaging.requestPermission(
+    NotificationSettings settings = await messaging.requestPermission(
       alert: true,
       announcement: false,
       badge: true,
@@ -125,7 +125,7 @@ class FirebaseApi {
       provisional: false,
       sound: true,
     );
-    print("fcmTokens ${await messaging.getToken()}");
+    print("fcmToken ${await messaging.getToken()}");
     StorageCore().writeString(StorageCore.fcmToken, await messaging.getToken());
 
     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
