@@ -34,6 +34,8 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
       text: data.notification?.body,
       createDate: data.sentTime.toString(),
       isRead: true,
+      title: data.notification?.title,
+      // img: data.
     ),
   );
   listUnread.add(Messages(

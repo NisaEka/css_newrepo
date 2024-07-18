@@ -33,11 +33,13 @@ class NotificationScreen extends StatelessWidget {
         SliverList.list(
           children: c.unreadNotifList
               .map(
-                (e) => NotificationListItem(
-                  data: e,
-                  isRead: true,
-                  onTap: () => c.readMessage(e.id ?? ''),
-                ),
+                (e) => e.id == null
+                    ? const SizedBox()
+                    : NotificationListItem(
+                        data: e,
+                        isRead: true,
+                        onTap: () => c.readMessage(e.id ?? ''),
+                      ),
               )
               .toList(),
         ),

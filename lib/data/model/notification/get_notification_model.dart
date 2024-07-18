@@ -66,6 +66,7 @@ class NotificationModel {
     String? createBy,
     String? createDate,
     String? img,
+    String? title,
     bool? isRead,
   }) {
     _id = id;
@@ -80,6 +81,7 @@ class NotificationModel {
     _createBy = createBy;
     _createDate = createDate;
     _img = img;
+    _title = title;
     _isRead = isRead;
   }
 
@@ -96,6 +98,7 @@ class NotificationModel {
     _createBy = json['create_by'];
     _createDate = json['create_date'];
     _img = json['img'];
+    _title = json['title'];
     _isRead = json['is_read'] ?? false;
   }
 
@@ -111,6 +114,7 @@ class NotificationModel {
   String? _createBy;
   String? _createDate;
   String? _img;
+  String? _title;
   bool? _isRead;
 
   NotificationModel copyWith({
@@ -126,6 +130,7 @@ class NotificationModel {
     String? createBy,
     String? createDate,
     String? img,
+    String? title,
     bool? isRead,
   }) =>
       NotificationModel(
@@ -141,6 +146,7 @@ class NotificationModel {
         createBy: createBy ?? _createBy,
         createDate: createDate ?? _createDate,
         img: img ?? _img,
+        title: title ?? _title,
         isRead: isRead ?? _isRead,
       );
 
@@ -168,6 +174,8 @@ class NotificationModel {
 
   String? get img => _img;
 
+  String? get title => _title;
+
   bool? get isRead => _isRead;
 
   Map<String, dynamic> toJson() {
@@ -184,6 +192,7 @@ class NotificationModel {
     map['create_by'] = _createBy;
     map['create_date'] = _createDate;
     map['img'] = _img;
+    map['title'] = _title;
     map['isRead'] = _isRead;
     return map;
   }
