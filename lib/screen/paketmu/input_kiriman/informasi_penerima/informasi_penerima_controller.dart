@@ -177,29 +177,42 @@ class InformasiPenerimaController extends BaseController {
             contact: namaPenerima.text,
             phone: nomorTelpon.text,
             address: alamatLengkap.text,
-            city: selectedDestination?.cityName,
-            zipCode: selectedDestination?.zipCode,
-            region: selectedDestination?.provinceName,
-            country: selectedDestination?.countryName,
-            destinationCode: selectedDestination?.destinationCode,
-            destinationDescription: selectedDestination?.cityName,
-            idDestination: selectedDestination?.id.toString(),
-            receiverDistrict: selectedDestination?.districtName,
-            receiverSubDistrict: selectedDestination?.subDistrictName,
+            city: selectedDestination?.cityName ?? '-',
+            zipCode: selectedDestination?.zipCode ?? '00000',
+            region: selectedDestination?.provinceName ?? '-',
+            country: selectedDestination?.countryName ?? '-',
+            destinationCode: selectedDestination?.destinationCode ?? '-',
+            destinationDescription: selectedDestination?.cityName ?? '-',
+            idDestination: selectedDestination?.id.toString() ?? '-',
+            receiverDistrict: selectedDestination?.districtName ?? '-',
+            receiverSubDistrict: selectedDestination?.subDistrictName ?? '-',
           ))
           .then(
-            (value) => Get.showSnackbar(
-              GetSnackBar(
-                icon: const Icon(
-                  Icons.info,
-                  color: whiteColor,
-                ),
-                message: "Data penerima telah disimpan".tr,
-                isDismissible: true,
-                duration: const Duration(seconds: 3),
-                backgroundColor: value.code == 201 ? successColor : errorColor,
-              ),
-            ),
+            (value) => value == 201
+                ? Get.showSnackbar(
+                    GetSnackBar(
+                      icon: const Icon(
+                        Icons.info,
+                        color: whiteColor,
+                      ),
+                      message: "Data penerima telah disimpan".tr,
+                      isDismissible: true,
+                      duration: const Duration(seconds: 3),
+                      backgroundColor: value.code == 201 ? successColor : errorColor,
+                    ),
+                  )
+                : Get.showSnackbar(
+                    GetSnackBar(
+                      icon: const Icon(
+                        Icons.info,
+                        color: whiteColor,
+                      ),
+                      message: value.error?.first.message ?? ''.tr,
+                      isDismissible: true,
+                      duration: const Duration(seconds: 3),
+                      backgroundColor: value.code == 201 ? successColor : errorColor,
+                    ),
+                  ),
           );
     } catch (e) {
       e.printError();

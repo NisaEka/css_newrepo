@@ -256,6 +256,7 @@ class InformasiKirimaController extends BaseController {
           serviceCode: selectedService?.serviceCode,
           weight: beratKiriman.text == '' ? 1 : beratKiriman.text.split('.').first.toInt(),
           custNo: account.accountNumber,
+          type: jenisBarang.text == "PAKET" ? "PAKET" : "DOCUMENT"
         ),
       )
           .then((value) {

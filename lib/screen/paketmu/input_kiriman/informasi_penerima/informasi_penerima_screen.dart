@@ -149,14 +149,21 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                         validator: ValidationBuilder().phoneNumber().build(),
                       ),
                       CustomSearchDropdownField<Destination>(
-                        asyncItems: (String filter) => c.getDestinationList(filter.isNotEmpty ? filter : c.selectedDestination?.cityName ?? ''),
+                        asyncItems: (String filter) => c.getDestinationList(
+                          filter.isNotEmpty ? filter : c.selectedDestination?.cityName ?? '',
+                        ),
                         itemBuilder: (context, e, b) {
                           return GestureDetector(
                             onTap: () => c.update(),
                             child: Container(
                               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                               child: Text(
-                                '${e.zipCode ?? ''}; ${e.provinceName ?? ''}; ${e.cityName ?? ''}; ${e.districtName ?? ''}; ${e.subDistrictName ?? ''}; ${e.destinationCode ?? ''}'
+                                '${e.zipCode == null || e.zipCode == '00000' ? '' : '${e.zipCode}; '}'
+                                        '${e.provinceName == null ? '' : '${e.provinceName}; '}'
+                                        '${e.cityName == null ? '' : '${e.cityName}; '}'
+                                        '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
+                                        '${e.subDistrictName == null || e.subDistrictName == '-' ? '' : '${e.subDistrictName}; '}'
+                                        '${e.destinationCode == null ? '' : '${e.destinationCode}'}'
                                     .splitMapJoin(
                                   ';',
                                   onMatch: (p0) => '; ',
@@ -169,8 +176,8 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                             '${e.zipCode == null ? '' : '${e.zipCode}; '}'
                             '${e.provinceName == null ? '' : '${e.provinceName}; '}'
                             '${e.cityName == null ? '' : '${e.cityName}; '}'
-                            '${e.districtName == null ? '' : '${e.districtName}; '}'
-                            '${e.subDistrictName == null ? '' : '${e.subDistrictName}; '}'
+                            '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
+                            '${e.subDistrictName == null || e.subDistrictName == '-' ? '' : '${e.subDistrictName}; '}'
                             '${e.destinationCode == null ? '' : '${e.destinationCode}'}',
                         onChanged: (value) {
                           c.selectedDestination = value;
