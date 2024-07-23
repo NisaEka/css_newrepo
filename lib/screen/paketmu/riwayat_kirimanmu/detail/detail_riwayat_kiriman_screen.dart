@@ -95,11 +95,11 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: c.isLoading ? greyColor : (AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2),
                 borderRadius: BorderRadius.circular(5),
-                boxShadow: const [
+                boxShadow: [
                   BoxShadow(
-                    color: greyLightColor3,
+                    color: AppConst.isLightTheme(context) ? greyLightColor3 : greyDarkColor2,
                     spreadRadius: 1,
-                    offset: Offset(-2, 2),
+                    offset: const Offset(-2, 2),
                   ),
                 ],
               ),
@@ -108,9 +108,9 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                 children: [
                   CustomLabelText(
                     title: 'Tanggal Pesanan'.tr,
-                    value: c.transactionModel?.createdDate?.toLongDateTimeFormat() ?? '',
-                    titleTextStyle: listTitleTextStyle.copyWith(fontSize: 10, fontWeight: medium),
-                    valueTextStyle: sublistTitleTextStyle.copyWith(fontSize: 10, color: greyColor),
+                    value: c.transactionModel?.createdDate?.toLongDateTimeFormat() ?? '-',
+                    titleTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, fontWeight: medium),
+                    valueTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10),
                     alignment: 'end',
                   ),
                   Row(
@@ -120,7 +120,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text("No Resi".tr, style: itemTextStyle),
+                              Text("No Resi".tr, style: Theme.of(context).textTheme.bodySmall),
                               GestureDetector(
                                 onTap: () => Clipboard.setData(ClipboardData(text: c.transactionModel?.awb ?? '')),
                                 child: Container(
@@ -134,17 +134,17 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Text("Tipe".tr, style: itemTextStyle),
-                          Text("Service".tr, style: itemTextStyle),
-                          Text("Dana COD".tr, style: itemTextStyle),
-                          Text("Petugas Entry".tr, style: itemTextStyle),
-                          Text("Pengirim".tr, style: itemTextStyle),
-                          Text("Kota Pengiriman".tr, style: itemTextStyle),
-                          Text("Penerima".tr, style: itemTextStyle),
-                          Text("Kontak Penerima".tr, style: itemTextStyle),
+                          Text("Tipe".tr, style: Theme.of(context).textTheme.bodySmall),
+                          Text("Service".tr, style: Theme.of(context).textTheme.bodySmall),
+                          Text("Dana COD".tr, style: Theme.of(context).textTheme.bodySmall),
+                          Text("Petugas Entry".tr, style: Theme.of(context).textTheme.bodySmall),
+                          Text("Pengirim".tr, style: Theme.of(context).textTheme.bodySmall),
+                          Text("Kota Pengiriman".tr, style: Theme.of(context).textTheme.bodySmall),
+                          Text("Penerima".tr, style: Theme.of(context).textTheme.bodySmall),
+                          Text("Kontak Penerima".tr, style: Theme.of(context).textTheme.bodySmall),
                           Row(
                             children: [
-                              Text("Order ID".tr, style: itemTextStyle),
+                              Text("Order ID".tr, style: Theme.of(context).textTheme.bodySmall),
                               GestureDetector(
                                 onTap: () => Clipboard.setData(ClipboardData(text: c.transactionModel?.orderId ?? '')),
                                 child: Container(
@@ -158,7 +158,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Text("Account".tr, style: itemTextStyle),
+                          Text("Account".tr, style: Theme.of(context).textTheme.bodySmall),
                         ],
                       ),
                       const SizedBox(width: 15),
@@ -167,51 +167,51 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                         children: [
                           Text(
                             c.transactionModel?.awb ?? '-',
-                            style: itemTextStyle.copyWith(
-                              fontWeight: medium,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  fontWeight: medium,
+                                ),
                           ),
                           Text(
                             c.transactionModel?.type ?? '-',
-                            style: itemTextStyle,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           Text(
                             c.transactionModel?.delivery?.serviceCode ?? '-',
-                            style: itemTextStyle,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           Text(
                             'Rp. ${c.transactionModel?.delivery?.flatRate?.toInt().toCurrency() ?? '-'}',
-                            style: itemTextStyle,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           Text(
                             c.transactionModel?.officerEntry ?? '-',
-                            style: itemTextStyle,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           Text(
                             c.transactionModel?.shipper?.name ?? '-',
-                            style: itemTextStyle.copyWith(fontWeight: medium),
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: medium),
                           ),
                           Text(
                             "${c.transactionModel?.receiver?.city} / ${c.transactionModel?.receiver?.district}",
-                            style: itemTextStyle,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           Text(
                             c.transactionModel?.receiver?.name ?? '-',
-                            style: itemTextStyle,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           Text(
                             c.transactionModel?.receiver?.phone ?? '-',
-                            style: itemTextStyle,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           Text(
                             c.transactionModel?.orderId ?? '-',
-                            style: itemTextStyle,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           SizedBox(
                             width: Get.width - 200,
                             child: Text(
                               '${c.transactionModel?.account?.accountNumber}/${c.transactionModel?.account?.accountName}/${c.transactionModel?.account?.accountType ?? 'JLC'}',
-                              style: itemTextStyle,
+                              style: Theme.of(context).textTheme.bodySmall,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),

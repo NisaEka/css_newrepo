@@ -329,9 +329,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                           ),
                           title: Text(
                             '${'Gunakan Asuransi Pengiriman'.tr} ( Rp. ${c.isr.toInt().toCurrency()} )',
-                            style: sublistTitleTextStyle.copyWith(
-                              color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2,
-                            ),
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                           trailing: Checkbox(
                             checkColor: whiteColor,

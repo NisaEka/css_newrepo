@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
@@ -92,12 +92,13 @@ class RiwayatKirimanListItem extends StatelessWidget {
                     Container(
                       color: isLoading ? greyLightColor3 : Colors.transparent,
                       width: isLoading ? Get.width / 3 : null,
-                      child: Text('Order ID : ${data?.orderId ?? orderID ?? ''}', style: sublistTitleTextStyle),
+                      child: Text('Order ID : ${data?.orderId ?? orderID ?? '-'}', style: Theme.of(context).textTheme.titleSmall),
                     ),
                     Container(
                       color: isLoading ? greyLightColor3 : Colors.transparent,
                       width: isLoading ? Get.width / 5 : null,
-                      child: Text(data?.createdDate?.toDateTimeFormat() ?? tanggalEntry?.toDateTimeFormat() ?? '', style: sublistTitleTextStyle),
+                      child: Text(data?.createdDate?.toDateTimeFormat() ?? tanggalEntry?.toDateTimeFormat() ?? '-',
+                          style: Theme.of(context).textTheme.titleSmall),
                     ),
                   ],
                 ),
@@ -123,10 +124,10 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           ),
                           child: Text(
                             data?.type ?? apiType ?? '-',
-                            style: sublistTitleTextStyle.copyWith(
-                              color: whiteColor,
-                              fontSize: 8,
-                            ),
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                  color: whiteColor,
+                                  fontSize: 8,
+                                ),
                           ),
                         ),
                         // Text(ImageConstant.paket),
@@ -144,19 +145,24 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           color: isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 3 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(data?.awb ?? noResi ?? '-', style: listTitleTextStyle),
+                          child: Text(
+                            data?.awb ?? noResi ?? '-',
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                                ),
+                          ),
                         ),
                         Container(
                           color: isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 5 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(data?.receiver?.name ?? penerima ?? '-', style: sublistTitleTextStyle),
+                          child: Text(data?.receiver?.name ?? penerima ?? '-', style: Theme.of(context).textTheme.titleSmall),
                         ),
                         Container(
                           color: isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 10 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(data?.service ?? service ?? '-', style: sublistTitleTextStyle),
+                          child: Text(data?.service ?? service ?? '-', style: Theme.of(context).textTheme.titleSmall),
                         ),
                         Column(
                           children: [
@@ -187,10 +193,10 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                     ),
                                     child: Text(
                                       data?.status?.tr ?? status?.tr ?? '',
-                                      style: sublistTitleTextStyle.copyWith(
-                                        color: whiteColor,
-                                        fontSize: 8,
-                                      ),
+                                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                            color: whiteColor,
+                                            fontSize: 8,
+                                          ),
                                     ),
                                   )
                                 : const SizedBox(),

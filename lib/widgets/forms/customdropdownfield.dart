@@ -70,7 +70,7 @@ class CustomDropDownField<T> extends StatelessWidget {
         //     ],
         //   ),
         // ),
-        Text(label ?? '', style: subTitleTextStyle),
+        Text(label ?? '', style: Theme.of(context).textTheme.titleSmall),
         const SizedBox(
           height: 8,
         ),

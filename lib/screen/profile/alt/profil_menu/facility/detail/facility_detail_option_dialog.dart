@@ -28,9 +28,7 @@ class FacilityDetailOptionDialog extends StatelessWidget {
             },
             child: Text(
               'Belum',
-              style: sublistTitleTextStyle.copyWith(
-                color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
-              ),
+              style: Theme.of(context).textTheme.titleSmall,
             )
         ),
         TextButton(
@@ -41,9 +39,7 @@ class FacilityDetailOptionDialog extends StatelessWidget {
             },
             child: Text(
               'Sudah',
-              style: sublistTitleTextStyle.copyWith(
-                color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
-              ),
+              style: Theme.of(context).textTheme.titleSmall,
             )
         )
       ],

@@ -46,6 +46,7 @@ class PengaturanLabelScreen extends StatelessWidget {
           //     controller.update();
           //   },
           // ),
+          const SizedBox(height: 15),
           CustomDropDownField(
             label: 'Biaya Kirim'.tr,
             value: c.shipcost.isNotEmpty ? c.shipcost : "PUBLISH",
@@ -84,6 +85,7 @@ class PengaturanLabelScreen extends StatelessWidget {
                       )
                       .substring(1),
             ),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,

@@ -291,7 +291,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                     c.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width / 5,
+                    width: Get.width / 4.76,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.selectedKiriman == 0 ? blueJNE : whiteColor,
@@ -329,7 +329,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                     c.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width / 5,
+                    width: Get.width / 4.76,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.selectedKiriman == 1 ? blueJNE : whiteColor,
@@ -364,7 +364,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                     c.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width / 5,
+                    width: Get.width / 4.76,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.selectedKiriman == 2 ? blueJNE : whiteColor,
@@ -398,7 +398,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                     c.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width / 5,
+                    width: Get.width / 4.76,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.selectedKiriman == 3 ? blueJNE : whiteColor,

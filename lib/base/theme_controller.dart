@@ -38,7 +38,9 @@ class CustomTheme {
           color: greyDarkColor1,
         ),
         titleMedium: listTitleTextStyle.copyWith(
-          fontSize: 11,
+          color: greyDarkColor1,
+        ),
+        bodySmall: itemTextStyle.copyWith(
           color: greyDarkColor1,
         ),
       ),
@@ -54,6 +56,15 @@ class CustomTheme {
       //     color: greyDarkColor1,
       //   ),
       // ),
+      datePickerTheme: DatePickerThemeData(
+        cancelButtonStyle: TextButton.styleFrom(
+          foregroundColor: redJNE, // button text color
+        ),
+        confirmButtonStyle: TextButton.styleFrom(
+          foregroundColor: redJNE, // button text color
+        ),
+
+      ),
       switchTheme: SwitchThemeData(
           trackColor: MaterialStateColor.resolveWith((states) => greyColor), thumbColor: MaterialStateColor.resolveWith((states) => blueJNE)),
       inputDecorationTheme: InputDecorationTheme(
@@ -134,8 +145,18 @@ class CustomTheme {
             color: greyLightColor1,
           ),
           titleMedium: listTitleTextStyle.copyWith(
-            fontSize: 11,
             color: greyLightColor1,
+          ),
+          bodySmall: itemTextStyle.copyWith(
+            color: greyLightColor1,
+          ),
+        ),
+        datePickerTheme: DatePickerThemeData(
+          cancelButtonStyle: TextButton.styleFrom(
+            foregroundColor: redJNE, // button text color
+          ),
+          confirmButtonStyle: TextButton.styleFrom(
+            foregroundColor: redJNE, // button text color
           ),
         ),
 

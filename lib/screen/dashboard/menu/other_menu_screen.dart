@@ -41,6 +41,8 @@ class OtherMenuScreen extends StatelessWidget {
               _menuItems(c.paketmuList, c),
               c.keuanganmuList.isNotEmpty ? _menu("Keuanganmu".tr, c) : const SliverPadding(padding: EdgeInsets.zero),
               _menuItems(c.keuanganmuList, c),
+              c.hubungiAkuList.isNotEmpty ? _menu("Hubungi Aku".tr, c) : const SliverPadding(padding: EdgeInsets.zero),
+              _menuItems(c.hubungiAkuList, c),
               c.otherList.isNotEmpty ? _menu("Lainnya".tr, c) : const SliverPadding(padding: EdgeInsets.zero),
               _menuItems(c.otherList, c),
             ],

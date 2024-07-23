@@ -24,9 +24,9 @@ class LabelScreen extends StatelessWidget {
         init: LabelController(),
         builder: (controller) {
           return Scaffold(
-            appBar: CustomTopBar(
-              title: "Cetak Label".tr,
-              action: const [
+            appBar: AppBar(
+              title: Text("Lihat Resi".tr),
+              actions: const [
                 // IconButton(
                 //   onPressed: () async {
                 //     // final directory = (await getApplicationDocumentsDirectory ()).path; //from path_provide package
@@ -69,6 +69,8 @@ class LabelScreen extends StatelessWidget {
               controller: controller.screenshotController,
               child: Container(
                 margin: const EdgeInsets.all(25),
+                padding: const EdgeInsets.only(top: 50),
+                alignment: Alignment.center,
                 color: Colors.white,
                 // child: StickerMegahubHybrid3(data: data),
                 child: controller.stickerLabel == "/sticker_default"

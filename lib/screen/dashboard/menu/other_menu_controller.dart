@@ -17,6 +17,7 @@ class OtherMenuCotroller extends BaseController {
   List<Items> paketmuList = [];
   List<Items> keuanganmuList = [];
   List<Items> otherList = [];
+  List<Items> hubungiAkuList = [];
 
   MenuItemModel? menuData;
   AllowedMenu allow = Get.arguments['allowance'];
@@ -135,6 +136,16 @@ class OtherMenuCotroller extends BaseController {
       ),
     ];
 
+    hubungiAkuList = [
+      Items(
+          title: "Laporanku",
+          icon: ImageConstant.hubungiAkuIcon,
+          isAuth: true,
+          isFavorite: favoritList.where((e) => e.title == "Laporanku").isNotEmpty,
+          isEdit: isEdit,
+          route: "/laporanku"),
+    ];
+
     update();
     cekAllowance();
   }
@@ -174,6 +185,10 @@ class OtherMenuCotroller extends BaseController {
       otherList.removeWhere((e) => e.title == "Pantau Paketmu");
       favoritList.removeWhere((e) => e.title == "Pantau Paketmu");
     }
+    if (isLogin && allow.hubungiLaporan != "Y") {
+      otherList.removeWhere((e) => e.title == "Laporanku");
+      favoritList.removeWhere((e) => e.title == "Laporanku");
+    }
 
     update();
   }
@@ -184,6 +199,9 @@ class OtherMenuCotroller extends BaseController {
         : null;
     otherList.where((e) => e.title == favoritList[i].title).isNotEmpty
         ? otherList.where((e) => e.title == favoritList[i].title).first.isFavorite = false
+        : null;
+    hubungiAkuList.where((e) => e.title == favoritList[i].title).isNotEmpty
+        ? hubungiAkuList.where((e) => e.title == favoritList[i].title).first.isFavorite = false
         : null;
 
     favoritList.removeAt(i);
@@ -196,6 +214,7 @@ class OtherMenuCotroller extends BaseController {
         paketmuList.where((e) => e == menu).isNotEmpty ? paketmuList.where((e) => e == menu).first.isFavorite = true : null;
         otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = true : null;
         keuanganmuList.where((e) => e == menu).isNotEmpty ? keuanganmuList.where((e) => e == menu).first.isFavorite = true : null;
+        hubungiAkuList.where((e) => e == menu).isNotEmpty ? hubungiAkuList.where((e) => e == menu).first.isFavorite = true : null;
         update();
         favoritList.add(menu);
       } else {
@@ -216,6 +235,7 @@ class OtherMenuCotroller extends BaseController {
       paketmuList.where((e) => e == menu).isNotEmpty ? paketmuList.where((e) => e == menu).first.isFavorite = false : null;
       otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = false : null;
       keuanganmuList.where((e) => e == menu).isNotEmpty ? keuanganmuList.where((e) => e == menu).first.isFavorite = false : null;
+      hubungiAkuList.where((e) => e == menu).isNotEmpty ? hubungiAkuList.where((e) => e == menu).first.isFavorite = false : null;
       update();
 
       favoritList.removeWhere((e) => e.title == menu.title);

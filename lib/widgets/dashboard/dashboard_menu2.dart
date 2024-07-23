@@ -67,7 +67,7 @@ class DashboardMenu2 extends StatelessWidget {
                     menuIcon: const Icon(
                       Icons.more_horiz,
                       color: whiteColor,
-                      size: 40,
+                      size: 46,
                     ),
                   ),
                 ],

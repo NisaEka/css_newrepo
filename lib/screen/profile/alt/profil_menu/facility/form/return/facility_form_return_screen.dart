@@ -34,9 +34,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
             ),
             controller.pickImageFailed
                 ? MessageInfoDialog(
-                    message:
-                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
-                            .tr,
+                    message: 'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'.tr,
                     onClickAction: () => controller.onRefreshPickImageState(),
                   )
                 : Container()
@@ -53,8 +51,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
         color: redJNE,
         title: 'Selanjutnya'.tr,
         onPressed: () {
-          Get.to(const FacilityFormBankScreen(),
-              arguments: {'data': c.submitData()});
+          Get.to(const FacilityFormBankScreen(), arguments: {'data': c.submitData()});
         },
       ),
     );
@@ -74,11 +71,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 title: Text(
                   'Ceklis bila informasi pengembalian barang sama dengan data pemohon',
                   textAlign: TextAlign.start,
-                  style: sublistTitleTextStyle.copyWith(
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? greyDarkColor2
-                        : greyLightColor2,
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
                 leading: Checkbox(
                   checkColor: whiteColor,
@@ -118,12 +111,8 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 selectedItem: c.selectedDestination?.asFacilityFormFormat(),
                 isRequired: c.selectedDestination == null ? true : false,
                 readOnly: c.addressSectionReadOnly,
-                hintText: c.isLoadDestination
-                    ? "Loading..."
-                    : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
-                textStyle: c.selectedDestination != null
-                    ? subTitleTextStyle
-                    : hintTextStyle,
+                hintText: c.isLoadDestination ? "Loading..." : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
+                textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
               ),
               CustomTextFormField(
                 controller: c.returnPhone,

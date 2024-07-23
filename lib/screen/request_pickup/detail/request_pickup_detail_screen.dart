@@ -57,7 +57,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
         children: [
           _basicSection(context, controller.requestPickup),
           const SizedBox(height: 32),
-          _detailedSectionTitle(),
+          _detailedSectionTitle(context),
           const SizedBox(height: 16),
           _detailedSection(context, controller.requestPickup)
         ],
@@ -87,10 +87,10 @@ class RequestPickupDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _detailedSectionTitle() {
+  Widget _detailedSectionTitle(BuildContext context) {
     return Text(
       "Detail Pesanan".tr,
-      style: sublistTitleTextStyle.copyWith(fontWeight: semiBold),
+      style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: semiBold),
       textAlign: TextAlign.start,
     );
   }
