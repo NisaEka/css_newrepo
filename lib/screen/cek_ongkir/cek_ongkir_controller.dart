@@ -169,6 +169,7 @@ class CekOngkirController extends BaseController {
                 controller: searchCity,
                 hintText: 'Cari'.tr,
                 validate: searchCity.text.length < 3,
+                autoFocus: true,
                 validationText: 'Masukan 3 atau lebih karakter'.tr,
                 onChanged: (value) {
                   Timer(const Duration(milliseconds: 1000), () {

@@ -18,6 +18,7 @@ class CustomSearchField<T> extends StatelessWidget {
   final TextInputType? inputType;
   final VoidCallback? onClear;
   final EdgeInsets? margin;
+  final bool autoFocus;
 
   const CustomSearchField({
     super.key,
@@ -34,6 +35,7 @@ class CustomSearchField<T> extends StatelessWidget {
     this.inputType,
     this.onClear,
     this.margin,
+    this.autoFocus = false,
   });
 
   @override
@@ -47,6 +49,7 @@ class CustomSearchField<T> extends StatelessWidget {
             controller: controller,
             keyboardType: inputType,
             inputFormatters: inputFormatters,
+            autofocus: autoFocus,
             cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
             decoration: InputDecoration(
               hintText: hintText,

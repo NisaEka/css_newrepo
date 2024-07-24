@@ -3,7 +3,6 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_controller.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
-import 'package:css_mobile/util/input_formatter/npwp_separator_input_formater.dart';
 import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
