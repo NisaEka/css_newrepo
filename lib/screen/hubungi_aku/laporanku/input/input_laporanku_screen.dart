@@ -6,6 +6,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InputLaporankuScreen extends StatelessWidget {
   const InputLaporankuScreen({super.key});
@@ -56,11 +57,46 @@ class InputLaporankuScreen extends StatelessWidget {
               multiLine: true,
             ),
             CustomTextFormField(
-              controller: c.image,
-              hintText: "Pilih Gambar".tr,
+              controller: c.imageFile,
+              hintText: "Bukti Pendukung".tr,
               readOnly: true,
-              suffixIcon: const Icon(Icons.camera_alt_outlined, color: greyColor,),
-              onTap: () {},
+              suffixIcon: const Icon(
+                Icons.camera_alt_outlined,
+                color: greyColor,
+              ),
+              validator: (value) {
+                if ((c.imageSize ?? 0) >= c.maxImageSize) {
+                  return "Ukuran file terlalu besar".tr;
+                }
+                return null;
+              },
+              onTap: () => Get.dialog(StatefulBuilder(
+                builder: (context, setState) => AlertDialog(
+                  scrollable: false,
+                  title: Text(
+                    "Upload Gambar".tr,
+                    textAlign: TextAlign.center,
+                  ),
+                  alignment: Alignment.center,
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Text("Upload Gambar".tr),
+                      CustomFilledButton(
+                        color: blueJNE,
+                        title: "Ambil Gambar".tr,
+                        isTransparent: true,
+                        onPressed: () => c.getSinglePhoto(ImageSource.camera),
+                      ),
+                      CustomFilledButton(
+                        color: blueJNE,
+                        title: "Pilih dari galeri".tr,
+                        onPressed: () => c.getSinglePhoto(ImageSource.gallery),
+                      )
+                    ],
+                  ),
+                ),
+              )),
             ),
             Row(
               children: [
@@ -84,8 +120,9 @@ class InputLaporankuScreen extends StatelessWidget {
               },
             ),
             CustomFilledButton(
-              color: blueJNE,
+              color: c.formKey.currentState?.validate() == true ? blueJNE : greyColor,
               title: "Kirim".tr,
+              onPressed: () => c.formKey.currentState?.validate() == true ? c.sendReport : null,
             )
           ],
         ),

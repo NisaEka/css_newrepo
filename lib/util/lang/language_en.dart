@@ -327,6 +327,12 @@ class LanguageEN {
       "Subjek": "Subject",
       "Isi Pesan": "Message",
       "Pilih Gambar": "Select Picture",
+      "Kirim": "Send",
+      "Prioritas": "Priority",
+      "Maksimal ukuran 2 MB": "Maximal file size 2 MB",
+      "Ukuran file terlalu besar": "file size is too large",
+      "Ambil Gambar": "Take a picture",
+      "Pilih dari galeri": "Choose from gallery"
     };
   }
 }
