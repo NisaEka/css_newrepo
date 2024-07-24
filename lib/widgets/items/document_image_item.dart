@@ -59,7 +59,10 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(widget.title.tr, style: subTitleTextStyle),
+            Text(
+              widget.title.tr,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
             SizedBox(
               height: 62,
               width: 120,

@@ -23,7 +23,12 @@ class SettingListItem extends StatelessWidget {
         size: 24,
         color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
       ),
-      title: Text(title.tr, maxLines: 2, overflow: TextOverflow.ellipsis),
+      title: Text(
+        title.tr,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
       shape: const Border(bottom: BorderSide(color: greyColor)),
       contentPadding: EdgeInsets.zero,
       onTap: onTap,

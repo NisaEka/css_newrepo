@@ -52,7 +52,10 @@ class PetugasListItem extends StatelessWidget {
                     color: isLoading ? greyLightColor2 : Colors.transparent,
                     width: isLoading ? 100 : null,
                     margin: const EdgeInsets.only(bottom: 2),
-                    child: Text(title, style: listTitleTextStyle),
+                    child: Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
                   isLoading
                       ? Column(
@@ -77,7 +80,10 @@ class PetugasListItem extends StatelessWidget {
                             ),
                           ],
                         )
-                      : Text(subtitle ?? '', style: sublistTitleTextStyle),
+                      : Text(
+                          subtitle ?? '',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
                 ],
               )
             ],

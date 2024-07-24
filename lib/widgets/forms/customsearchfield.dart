@@ -17,6 +17,7 @@ class CustomSearchField<T> extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? inputType;
   final VoidCallback? onClear;
+  final EdgeInsets? margin;
 
   const CustomSearchField({
     super.key,
@@ -32,95 +33,100 @@ class CustomSearchField<T> extends StatelessWidget {
     this.inputFormatters,
     this.inputType,
     this.onClear,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          controller: controller,
-          keyboardType: inputType,
-          inputFormatters: inputFormatters,
-          cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-          decoration: InputDecoration(
-            hintText: hintText,
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+    return Container(
+      color: Theme.of(context).colorScheme.onSurface,
+      padding: margin ?? const EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        children: [
+          TextField(
+            controller: controller,
+            keyboardType: inputType,
+            inputFormatters: inputFormatters,
+            cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+            decoration: InputDecoration(
+              hintText: hintText,
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                    color: validate
+                        ? redJNE
+                        : Theme.of(context).brightness == Brightness.light
+                            ? blueJNE
+                            : whiteColor,
+                    width: 2,
+                  )),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                color: validate
+                    ? redJNE
+                    : Theme.of(context).brightness == Brightness.light
+                        ? blueJNE
+                        : whiteColor,
+                width: 2,
+              )),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(
-                  color: validate
-                      ? redJNE
-                      : Theme.of(context).brightness == Brightness.light
-                          ? blueJNE
-                          : whiteColor,
-                  width: 2,
-                )),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-              color: validate
-                  ? redJNE
-                  : Theme.of(context).brightness == Brightness.light
-                      ? blueJNE
-                      : whiteColor,
-              width: 2,
-            )),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
-                color: validate ? redJNE : neutralColor,
-                width: 1,
-                style: BorderStyle.solid,
+                  color: validate ? redJNE : neutralColor,
+                  width: 1,
+                  style: BorderStyle.solid,
+                ),
               ),
+              prefixIcon: prefixIcon != null
+                  ? Container(
+                      alignment: Alignment.center,
+                      width: 40,
+                      height: 39,
+                      margin: const EdgeInsets.only(right: 10),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          bottomLeft: Radius.circular(8),
+                        ),
+                      ),
+                      child: prefixIcon,
+                    )
+                  : null,
+              suffixIcon: suffixIcon != null
+                  ? Container(
+                      alignment: Alignment.center,
+                      width: 30,
+                      height: 39,
+                      margin: const EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(8),
+                          bottomRight: Radius.circular(8),
+                        ),
+                      ),
+                      child: suffixIcon,
+                    )
+                  : controller.text.isNotEmpty
+                      ? IconButton(
+                          onPressed: onClear,
+                          icon: const Icon(Icons.close),
+                        )
+                      : null,
             ),
-            prefixIcon: prefixIcon != null
-                ? Container(
-                    alignment: Alignment.center,
-                    width: 40,
-                    height: 39,
-                    margin: const EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        bottomLeft: Radius.circular(8),
-                      ),
-                    ),
-                    child: prefixIcon,
-                  )
-                : null,
-            suffixIcon: suffixIcon != null
-                ? Container(
-                    alignment: Alignment.center,
-                    width: 30,
-                    height: 39,
-                    margin: const EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
-                      ),
-                    ),
-                    child: suffixIcon,
-                  )
-                : controller.text.isNotEmpty
-                    ? IconButton(
-                        onPressed: onClear,
-                        icon: const Icon(Icons.close),
-                      )
-                    : null,
+            onTap: onTap,
+            onSubmitted: onSubmit,
+            onChanged: onChanged,
           ),
-          onTap: onTap,
-          onSubmitted: onSubmit,
-          onChanged: onChanged,
-        ),
-        Text(
-          validate ? validationText ?? '' : '',
-          style: sublistTitleTextStyle.copyWith(
-            color: errorColor,
+          Text(
+            validate ? validationText ?? '' : '',
+            style: sublistTitleTextStyle.copyWith(
+              color: errorColor,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

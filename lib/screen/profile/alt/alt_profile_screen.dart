@@ -68,9 +68,18 @@ class AltProfileScreen extends StatelessWidget {
           ListTile(
             // tileColor: whiteColor,
             onTap: () => c.isLogin ? c.doLogout() : Get.to(const LoginScreen()),
-            leading: Icon(c.isLogin ? Icons.logout : Icons.login),
-            title: Text(c.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
-            trailing: Text('v ${c.version.toString()}'.tr),
+            leading: Icon(
+              c.isLogin ? Icons.logout : Icons.login,
+              color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+            ),
+            title: Text(
+              c.isLogin ? 'Keluar'.tr : 'Masuk'.tr,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            trailing: Text(
+              'v ${c.version.toString()}'.tr,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
           ),
           BottomBar4(
             menu: 3,

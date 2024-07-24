@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
@@ -25,7 +26,7 @@ class PengaturanScreen extends StatelessWidget {
               Scaffold(
                 appBar: CustomTopBar(title: 'Pengaturan'.tr),
                 body: _bodyContent(controller, context),
-                bottomNavigationBar: _logoutButton(controller),
+                bottomNavigationBar: _logoutButton(controller, context),
               ),
               controller.isLoading ? const LoadingDialog() : const SizedBox(),
             ],
@@ -39,7 +40,10 @@ class PengaturanScreen extends StatelessWidget {
       child: ListView(
         children: [
           ListTile(
-            title: Text('Bahasa'.tr),
+            title: Text(
+              'Bahasa'.tr,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             contentPadding: EdgeInsets.zero,
             trailing: SizedBox(
               width: 90,
@@ -110,13 +114,19 @@ class PengaturanScreen extends StatelessWidget {
     );
   }
 
-  Widget _logoutButton(PengaturanController c) {
+  Widget _logoutButton(PengaturanController c, BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 50),
       child: ListTile(
         onTap: () => c.isLogin ? c.doLogout() : Get.to(const LoginScreen()),
-        leading: Icon(c.isLogin ? Icons.logout : Icons.login),
-        title: Text(c.isLogin ? 'Keluar'.tr : 'Masuk'.tr),
+        leading: Icon(
+          c.isLogin ? Icons.logout : Icons.login,
+          color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+        ),
+        title: Text(
+          c.isLogin ? 'Keluar'.tr : 'Masuk'.tr,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         trailing: Text('v ${c.version.toString()}'.tr),
         shape: const Border(
           bottom: BorderSide(color: greyColor),

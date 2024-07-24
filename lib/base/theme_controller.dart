@@ -12,9 +12,9 @@ class CustomTheme {
       colorScheme: const ColorScheme.light(
         primary: blueJNE,
         secondary: greyLightColor2,
-        background: whiteColor,
+        surface: whiteColor,
         onPrimary: blueJNE,
-        onBackground: whiteColor,
+        onSurface: whiteColor,
         outline: greyColor,
       ),
       bottomSheetTheme: const BottomSheetThemeData(
@@ -44,6 +44,13 @@ class CustomTheme {
           color: greyDarkColor1,
         ),
       ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          iconColor: WidgetStateProperty.resolveWith(
+            (states) => blueJNE,
+          ),
+        ),
+      ),
       // textTheme: TextTheme(
       //   titleSmall: sublistTitleTextStyle.copyWith(
       //     color: greyDarkColor1,
@@ -63,20 +70,34 @@ class CustomTheme {
         confirmButtonStyle: TextButton.styleFrom(
           foregroundColor: redJNE, // button text color
         ),
-
       ),
       switchTheme: SwitchThemeData(
-          trackColor: MaterialStateColor.resolveWith((states) => greyColor), thumbColor: MaterialStateColor.resolveWith((states) => blueJNE)),
+        trackColor: WidgetStateColor.resolveWith((states) => greyColor),
+        thumbColor: WidgetStateColor.resolveWith((states) => blueJNE),
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: WidgetStateColor.resolveWith((states) => blueJNE),
+      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: whiteColor,
         labelStyle: hintTextStyle.copyWith(color: greyDarkColor1),
         hintStyle: hintTextStyle,
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        outlineBorder: const BorderSide(color: blueJNE),
+        activeIndicatorBorder: const BorderSide(color: Colors.blue),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
-            color: neutralColor,
+            color: blueJNE,
+            width: 1,
+            style: BorderStyle.solid,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(
+            color: blueJNE,
             width: 1,
             style: BorderStyle.solid,
           ),
@@ -109,156 +130,177 @@ class CustomTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-            minimumSize: MaterialStateProperty.all<Size>(const Size(100, 40)),
-            shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-            elevation: MaterialStateProperty.resolveWith<double>(
-              (Set<MaterialState> states) {
-                if (states.contains(MaterialState.disabled)) {
+            minimumSize: WidgetStateProperty.all<Size>(const Size(100, 40)),
+            shape: WidgetStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+            elevation: WidgetStateProperty.resolveWith<double>(
+              (Set<WidgetState> states) {
+                if (states.contains(WidgetState.disabled)) {
                   return 0;
                 }
                 return 0; // Defer to the widget's default.
               },
             ),
-            textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
+            textStyle: WidgetStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
       ),
-      filledButtonTheme: FilledButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(blueJNE))),
+      filledButtonTheme: FilledButtonThemeData(style: ButtonStyle(backgroundColor: WidgetStateProperty.all(blueJNE))),
     );
   }
 
   ThemeData dark() {
     return ThemeData(
+      brightness: Brightness.dark,
+      colorScheme: const ColorScheme.dark(
+        primary: primaryDarkColor,
+        secondary: greyDarkColor2,
+        surface: bgDarkColor,
         brightness: Brightness.dark,
-        colorScheme: const ColorScheme.dark(
-            primary: primaryDarkColor,
-            secondary: greyDarkColor2,
-            background: bgDarkColor,
-            brightness: Brightness.dark,
-            onPrimary: infoColor,
-            onBackground: greyColor,
-            outline: whiteColor),
-        useMaterial3: true,
-        textTheme: GoogleFonts.ubuntuTextTheme().copyWith(
-          labelLarge: const TextStyle(
-            color: greyLightColor1,
-          ),
-          titleSmall: sublistTitleTextStyle.copyWith(
-            color: greyLightColor1,
-          ),
-          titleMedium: listTitleTextStyle.copyWith(
-            color: greyLightColor1,
-          ),
-          bodySmall: itemTextStyle.copyWith(
-            color: greyLightColor1,
+        onPrimary: infoColor,
+        onSurface: Colors.transparent,
+        outline: whiteColor,
+      ),
+      useMaterial3: true,
+      textTheme: GoogleFonts.ubuntuTextTheme().copyWith(
+        labelLarge: const TextStyle(
+          color: greyLightColor1,
+        ),
+        titleSmall: sublistTitleTextStyle.copyWith(
+          color: greyLightColor1,
+        ),
+        titleMedium: listTitleTextStyle.copyWith(
+          color: greyLightColor1,
+        ),
+        bodySmall: itemTextStyle.copyWith(
+          color: greyLightColor1,
+        ),
+      ),
+      datePickerTheme: DatePickerThemeData(
+        cancelButtonStyle: TextButton.styleFrom(
+          foregroundColor: redJNE, // button text color
+        ),
+        confirmButtonStyle: TextButton.styleFrom(
+          foregroundColor: redJNE, // button text color
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          iconColor: WidgetStateProperty.resolveWith(
+            (states) => whiteColor,
           ),
         ),
-        datePickerTheme: DatePickerThemeData(
-          cancelButtonStyle: TextButton.styleFrom(
-            foregroundColor: redJNE, // button text color
+      ),
+      // textTheme: TextTheme(
+      //   labelLarge: const TextStyle(
+      //     color: greyLightColor1,
+      //   ),
+      //   titleSmall: sublistTitleTextStyle.copyWith(
+      //     color: greyLightColor1,
+      //   ),
+      //   titleMedium: listTitleTextStyle.copyWith(
+      //     fontSize: 11,
+      //     color: greyLightColor1,
+      //   ),
+      // ),
+      dialogBackgroundColor: greyColor,
+      fontFamily: 'Ubuntu',
+      // backgroundColor: greyColor,
+      appBarTheme: AppBarTheme(
+        // backgroundColor: const Color(0xff171717),
+        elevation: 0,
+        titleTextStyle: appTitleTextStyle.copyWith(color: whiteColor),
+        iconTheme: const IconThemeData(color: whiteColor),
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateColor.resolveWith((states) => redJNE),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        // filled: true,
+        // fillColor: Colors.transparent,
+        labelStyle: hintTextStyle.copyWith(color: greyLightColor1),
+        hintStyle: hintTextStyle.copyWith(color: whiteColor),
+        counterStyle: hintTextStyle.copyWith(color: whiteColor),
+        prefixIconColor: greyLightColor1,
+        suffixIconColor: greyLightColor1,
+        errorMaxLines: 3,
+        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(
+            color: whiteColor,
+            width: 1,
+            // style: BorderStyle.solid,
           ),
-          confirmButtonStyle: TextButton.styleFrom(
-            foregroundColor: redJNE, // button text color
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(
+            color: whiteColor,
+            width: 1,
+            // style: BorderStyle.solid,
           ),
         ),
-
-        // textTheme: TextTheme(
-        //   labelLarge: const TextStyle(
-        //     color: greyLightColor1,
-        //   ),
-        //   titleSmall: sublistTitleTextStyle.copyWith(
-        //     color: greyLightColor1,
-        //   ),
-        //   titleMedium: listTitleTextStyle.copyWith(
-        //     fontSize: 11,
-        //     color: greyLightColor1,
-        //   ),
-        // ),
-        dialogBackgroundColor: greyColor,
-        fontFamily: 'Ubuntu',
-        // backgroundColor: greyColor,
-        appBarTheme: AppBarTheme(
-          // backgroundColor: const Color(0xff171717),
-          elevation: 0,
-          titleTextStyle: appTitleTextStyle.copyWith(color: whiteColor),
-          iconTheme: const IconThemeData(color: whiteColor),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(
+            color: whiteColor,
+            width: 1,
+            style: BorderStyle.solid,
+          ),
         ),
-        switchTheme: SwitchThemeData(
-          thumbColor: MaterialStateColor.resolveWith((states) => redJNE),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(
+            color: greyColor,
+            width: 1,
+          ),
         ),
-        inputDecorationTheme: InputDecorationTheme(
-          // filled: true,
-          // fillColor: Colors.transparent,
-          labelStyle: hintTextStyle.copyWith(color: greyLightColor1),
-          hintStyle: hintTextStyle.copyWith(color: whiteColor),
-          counterStyle: hintTextStyle.copyWith(color: whiteColor),
-          prefixIconColor: greyLightColor1,
-          suffixIconColor: greyLightColor1,
-          errorMaxLines: 3,
-          contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(
-              color: whiteColor,
-              width: 1,
-              // style: BorderStyle.solid,
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(
+            8,
+          ),
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 1,
+            style: BorderStyle.solid,
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+            minimumSize: const Size(100, 40),
+            // side: const BorderSide(color: infoColor),
+            // foregroundColor: infoColor,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          minimumSize: WidgetStateProperty.all<Size>(const Size(100, 40)),
+          shape: WidgetStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+          elevation: WidgetStateProperty.resolveWith<double>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.disabled)) {
+                return 0;
+              }
+              return 0; // Defer to the widget's default.
+            },
+          ),
+          textStyle: WidgetStateProperty.all<TextStyle>(
+            const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
             ),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(
-              color: whiteColor,
-              width: 1,
-              // style: BorderStyle.solid,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(
-              color: whiteColor,
-              width: 1,
-              style: BorderStyle.solid,
-            ),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(
-              color: greyColor,
-              width: 1,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-              8,
-            ),
-            borderSide: const BorderSide(
-              color: Colors.red,
-              width: 1,
-              style: BorderStyle.solid,
-            ),
-          ),
         ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-              minimumSize: const Size(100, 40),
-              // side: const BorderSide(color: infoColor),
-              // foregroundColor: infoColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(blueJNE),
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-              minimumSize: MaterialStateProperty.all<Size>(const Size(100, 40)),
-              shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-              elevation: MaterialStateProperty.resolveWith<double>(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.disabled)) {
-                    return 0;
-                  }
-                  return 0; // Defer to the widget's default.
-                },
-              ),
-              textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
-        ),
-        filledButtonTheme: FilledButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(blueJNE))));
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: WidgetStateColor.resolveWith((states) => redJNE),
+      ),
+    );
   }
 
   Color activeColor(BuildContext context) {

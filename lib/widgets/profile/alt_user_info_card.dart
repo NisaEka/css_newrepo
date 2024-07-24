@@ -34,7 +34,7 @@ class AltUserInfoCard extends StatelessWidget {
             decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
             child: Text(
               name,
-              style: listTitleTextStyle.copyWith(fontSize: 16),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 16),
             ),
           ),
           Container(
@@ -42,13 +42,13 @@ class AltUserInfoCard extends StatelessWidget {
               height: isLoading ? 15 : null,
               width: isLoading ? 100 : null,
               decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
-              child: Text(brand, style: sublistTitleTextStyle)),
+              child: Text(brand, style: Theme.of(context).textTheme.titleSmall)),
           Container(
               margin: isLoading ? const EdgeInsets.all(2) : null,
               height: isLoading ? 15 : null,
               width: isLoading ? 100 : null,
               decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
-              child: Text(mail, style: sublistTitleTextStyle)),
+              child: Text(mail, style: Theme.of(context).textTheme.titleSmall)),
           Container(
             margin: isLoading ? const EdgeInsets.all(2) : null,
             height: isLoading ? 10 : null,
@@ -56,7 +56,7 @@ class AltUserInfoCard extends StatelessWidget {
             decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
             child: Text(
               type.tr,
-              style: listTitleTextStyle,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           )
         ],

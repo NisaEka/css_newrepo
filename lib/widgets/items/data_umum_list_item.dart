@@ -42,8 +42,20 @@ class DataUmumListItem extends StatelessWidget {
                     color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                   ),
                 ),
-                title: Text(title.tr, maxLines: 3, overflow: TextOverflow.ellipsis),
-                subtitle: subtitle.isNotEmpty ? Text(subtitle, maxLines: 2, overflow: TextOverflow.ellipsis) : null,
+                title: Text(
+                  title.tr,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                subtitle: subtitle.isNotEmpty
+                    ? Text(
+                        subtitle,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      )
+                    : null,
                 shape: const Border(bottom: BorderSide(color: greyColor)),
                 contentPadding: EdgeInsets.zero,
               ),

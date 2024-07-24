@@ -52,8 +52,8 @@ class ListDropshipperScreen extends StatelessWidget {
   }
 
   Widget _bodyContent(ListDropshipperController c, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
           // !controller.isOnline ? const OfflineBar() : const SizedBox(),

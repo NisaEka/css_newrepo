@@ -124,7 +124,10 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Lihat Data Penerima'.tr),
+                              Text(
+                                'Lihat Data Penerima'.tr,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
                               const Icon(
                                 Icons.keyboard_arrow_right,
                                 color: redJNE,

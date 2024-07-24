@@ -275,7 +275,10 @@ class _InformasiPengirimScreenState extends State<InformasiPengirimScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Lihat Data Dropshipper'.tr),
+            Text(
+              'Lihat Data Dropshipper'.tr,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             const Icon(
               Icons.keyboard_arrow_right,
               color: redJNE,

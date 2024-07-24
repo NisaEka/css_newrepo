@@ -35,15 +35,15 @@ class OtherMenuScreen extends StatelessWidget {
         Expanded(
           child: CustomScrollView(
             slivers: [
-              _menu("Favorit".tr, c),
+              _menu("Favorit".tr, c, context),
               _menuItems(c.favoritList, c),
-              c.paketmuList.isNotEmpty ? _menu("Paketmu".tr, c) : const SliverPadding(padding: EdgeInsets.zero),
+              c.paketmuList.isNotEmpty ? _menu("Paketmu".tr, c, context) : const SliverPadding(padding: EdgeInsets.zero),
               _menuItems(c.paketmuList, c),
-              c.keuanganmuList.isNotEmpty ? _menu("Keuanganmu".tr, c) : const SliverPadding(padding: EdgeInsets.zero),
+              c.keuanganmuList.isNotEmpty ? _menu("Keuanganmu".tr, c, context) : const SliverPadding(padding: EdgeInsets.zero),
               _menuItems(c.keuanganmuList, c),
-              c.hubungiAkuList.isNotEmpty ? _menu("Hubungi Aku".tr, c) : const SliverPadding(padding: EdgeInsets.zero),
+              c.hubungiAkuList.isNotEmpty ? _menu("Hubungi Aku".tr, c, context) : const SliverPadding(padding: EdgeInsets.zero),
               _menuItems(c.hubungiAkuList, c),
-              c.otherList.isNotEmpty ? _menu("Lainnya".tr, c) : const SliverPadding(padding: EdgeInsets.zero),
+              c.otherList.isNotEmpty ? _menu("Lainnya".tr, c, context) : const SliverPadding(padding: EdgeInsets.zero),
               _menuItems(c.otherList, c),
             ],
           ),
@@ -52,7 +52,7 @@ class OtherMenuScreen extends StatelessWidget {
     );
   }
 
-  SliverPadding _menu(String title, OtherMenuCotroller c) {
+  SliverPadding _menu(String title, OtherMenuCotroller c, BuildContext context) {
     return SliverPadding(
       padding: const EdgeInsets.only(left: 20, right: 10, top: 20),
       sliver: SliverToBoxAdapter(
@@ -63,7 +63,7 @@ class OtherMenuScreen extends StatelessWidget {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(title, style: listTitleTextStyle),
+                      Text(title, style: Theme.of(context).textTheme.titleMedium),
                       IconButton(
                         onPressed: () => c.saveChanges(),
                         icon: c.isEdit
@@ -78,7 +78,7 @@ class OtherMenuScreen extends StatelessWidget {
                       ),
                     ],
                   )
-                : Text(title, style: listTitleTextStyle),
+                : Text(title, style: Theme.of(context).textTheme.titleMedium),
             const Divider(color: greyColor),
           ],
         ),
