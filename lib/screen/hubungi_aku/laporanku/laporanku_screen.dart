@@ -1,6 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/hubungi_aku/laporanku/detail/detail_laporanku_screen.dart';
+import 'package:css_mobile/screen/hubungi_aku/laporanku/input/input_laporanku_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -30,11 +32,12 @@ class LaporankuScreen extends StatelessWidget {
             body: _bodyContent(controller, context),
             floatingActionButton: CustomFilledButton(
               color: redJNE,
-              title: "Buat Laporan",
+              title: "Buat Laporan".tr,
               width: Get.width / 3,
               icon: Icons.add,
               radius: 30,
               height: 50,
+              onPressed: () => Get.to(const InputLaporankuScreen()),
             ),
           );
         });
@@ -187,7 +190,7 @@ class LaporankuScreen extends StatelessWidget {
                       10,
                       (index) => LaporankuListItem(
                         isLoading: false,
-                        onTap: () => null,
+                        onTap: () => Get.to(const DetailLaporankuScreen()),
                       ),
                     ),
                   ),

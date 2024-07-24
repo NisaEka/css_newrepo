@@ -78,6 +78,11 @@ class CustomTheme {
       radioTheme: RadioThemeData(
         fillColor: WidgetStateColor.resolveWith((states) => blueJNE),
       ),
+      checkboxTheme: CheckboxThemeData(
+        // fillColor: WidgetStateColor.resolveWith((states) => greyColo),
+        side: const BorderSide(color: blueJNE),
+        checkColor: WidgetStateColor.resolveWith((states) => whiteColor),
+      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: whiteColor,
@@ -85,7 +90,7 @@ class CustomTheme {
         hintStyle: hintTextStyle,
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         outlineBorder: const BorderSide(color: blueJNE),
-        activeIndicatorBorder: const BorderSide(color: Colors.blue),
+        activeIndicatorBorder: const BorderSide(color: blueJNE),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
@@ -188,18 +193,11 @@ class CustomTheme {
           ),
         ),
       ),
-      // textTheme: TextTheme(
-      //   labelLarge: const TextStyle(
-      //     color: greyLightColor1,
-      //   ),
-      //   titleSmall: sublistTitleTextStyle.copyWith(
-      //     color: greyLightColor1,
-      //   ),
-      //   titleMedium: listTitleTextStyle.copyWith(
-      //     fontSize: 11,
-      //     color: greyLightColor1,
-      //   ),
-      // ),
+      checkboxTheme: CheckboxThemeData(
+        // fillColor: WidgetStateColor.resolveWith((states) => greyColor),
+        side: const BorderSide(color: whiteColor),
+        checkColor: WidgetStateColor.resolveWith((states) => whiteColor),
+      ),
       dialogBackgroundColor: greyColor,
       fontFamily: 'Ubuntu',
       // backgroundColor: greyColor,
@@ -230,6 +228,7 @@ class CustomTheme {
             // style: BorderStyle.solid,
           ),
         ),
+        activeIndicatorBorder: const BorderSide(color: redJNE),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(

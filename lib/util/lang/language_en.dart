@@ -319,6 +319,14 @@ class LanguageEN {
       "Belum ada notifikasi tersedia": "No notifications available yet",
       "Data dropshipper telah disimpan": "Dropshipper data is saved",
       "Data penerima telah disimpan": "Recipient data has been saved",
+      "Buat Laporan": "Add Report",
+      "Semua Laporan": "All Reports",
+      "Masih Diproses": "On Process",
+      "Selesai": "Closed",
+      "Kategori": "Category",
+      "Subjek": "Subject",
+      "Isi Pesan": "Message",
+      "Pilih Gambar": "Select Picture",
     };
   }
 }

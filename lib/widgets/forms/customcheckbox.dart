@@ -1,3 +1,5 @@
+import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +21,12 @@ class CustomCheckbox extends StatelessWidget {
       minVerticalPadding: 0,
       contentPadding: EdgeInsets.zero,
       dense: true,
-      leading: Checkbox(value: value, onChanged: onChanged),
-      title: Text(label, style: subTitleTextStyle),
+      leading: Checkbox(
+        value: value,
+        onChanged: onChanged,
+        activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+      ),
+      title: Text(label, style: Theme.of(context).textTheme.titleSmall),
     );
     // return Row(
     //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
