@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/detail/detail_laporanku_controller.dart';
+import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolan_laporanku_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -23,6 +24,7 @@ class DetailLaporankuScreen extends StatelessWidget {
               color: blueJNE,
               title: "Lihat Obrolan".tr,
               width: Get.width - 50,
+              onPressed: () => Get.to(const ObrolanLaporankuScreen()),
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           );
@@ -31,8 +33,8 @@ class DetailLaporankuScreen extends StatelessWidget {
 
   Widget _bodyContent(DetailLaporankuController c, BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(30),
-      padding: EdgeInsets.all(15),
+      margin: const EdgeInsets.all(30),
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(color: greyLightColor3, borderRadius: BorderRadius.circular(8)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
