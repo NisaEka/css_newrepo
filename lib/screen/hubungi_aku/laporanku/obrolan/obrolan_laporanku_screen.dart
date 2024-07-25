@@ -4,11 +4,11 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/laporanku/chat_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolal_laporanku_controller.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ObrolanLaporankuScreen extends StatelessWidget {
   const ObrolanLaporankuScreen({super.key});
@@ -30,57 +30,85 @@ class ObrolanLaporankuScreen extends StatelessWidget {
   Widget _bodyContent(ObrolanLaporankuController c, BuildContext context) {
     return Column(
       children: [
-        Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.only(top: 15, bottom: 10),
-          child: Text(
-            DateTime.now().toString().toShortDateFormat(),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
+        // Container(
+        //   alignment: Alignment.center,
+        //   padding: const EdgeInsets.only(top: 15, bottom: 10),
+        //   child: Text(
+        //     DateTime.now().toString().toShortDateFormat(),
+        //     style: Theme.of(context).textTheme.titleSmall,
+        //   ),
+        // ),
         Flexible(
           child: ListView(
             reverse: true,
-            children: c.messsages
-                .mapIndexed(
-                  (index, e) => chat(e, context),
-                )
-                .toList().reversed.toList(),
+            children: c.gettedPhoto != null
+                ? [
+                    SizedBox(
+                      // height: Get.height / 2,
+                      width: Get.width - 50,
+                      child: Image.file(
+                        c.gettedPhoto!,
+                        fit: BoxFit.fill,
+                      ),
+                    )
+                  ]
+                : c.messsages
+                    .mapIndexed(
+                      (index, e) => chat(e, context),
+                    )
+                    .toList()
+                    .reversed
+                    .toList(),
           ),
-          // child: ListView.builder(
-          //   reverse: true,
-          //   itemCount: c.messsages.length,
-          //   itemBuilder: (e, index) => chat(
-          //     e,
-          //     index % 2 == 0 ? 0 : 1,
-          //     context,
-          //   ),
-          // ),
         ),
         ListTile(
           title: TextFormField(
             controller: c.messageInsert,
-            autofocus: true,
             decoration: InputDecoration(
-                hintText: "Tulis Pesan".tr,
-                hintStyle: hintTextStyle,
-                border: InputBorder.none,
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: greyColor)),
-                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: greyColor))),
-            // style: const TextStyle(fontSize: 16, color: Colors.black),
+              hintText: "Tulis Pesan".tr,
+              hintStyle: hintTextStyle,
+              border: InputBorder.none,
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: greyColor)),
+              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: greyColor)),
+              suffixIcon: GestureDetector(
+                onTap: () => Get.dialog(StatefulBuilder(
+                  builder: (context, setState) => AlertDialog(
+                    scrollable: false,
+                    title: Text(
+                      "Upload Gambar".tr,
+                      textAlign: TextAlign.center,
+                    ),
+                    alignment: Alignment.center,
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Text("Upload Gambar".tr),
+                        CustomFilledButton(
+                          color: blueJNE,
+                          title: "Ambil Gambar".tr,
+                          isTransparent: true,
+                          onPressed: () => c.getSinglePhoto(ImageSource.camera),
+                        ),
+                        CustomFilledButton(
+                          color: blueJNE,
+                          title: "Pilih dari galeri".tr,
+                          onPressed: () => c.getSinglePhoto(ImageSource.gallery),
+                        )
+                      ],
+                    ),
+                  ),
+                )),
+                child: const Icon(
+                  Icons.camera_alt_outlined,
+                  color: greyColor,
+                ),
+              ),
+            ),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
             onFieldSubmitted: (value) => c.sendMessage(),
           ),
           trailing: GestureDetector(
-            onTap: () {
-              if (c.messageInsert.text.isEmpty) {
-              } else {
-               c.sendMessage();
-              }
-              FocusScopeNode currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus) {
-                currentFocus.unfocus();
-              }
-            },
+            onTap: () => c.sendMessage(),
             child: Container(
               height: 45,
               width: 45,

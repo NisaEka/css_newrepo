@@ -94,8 +94,6 @@ class LaporankuScreen extends StatelessWidget {
                       onChanged: (value) => setState(() => c.selectDateFilter(4)),
                       onTap: () => setState(() => c.selectDateFilter(4)),
                     ),
-                    // CustomFormLabel(label: 'Pilih Tanggal Sendiri'.tr),
-                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

@@ -21,8 +21,6 @@ class InputLaporankuController extends BaseController {
   Future<void> sendReport() async {}
 
   getSinglePhoto(ImageSource source) async {
-
-
     final ImagePicker picker = ImagePicker();
     // Pick an image
     final XFile? image = await picker.pickImage(source: source);

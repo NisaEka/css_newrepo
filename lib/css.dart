@@ -52,7 +52,7 @@ class App extends StatelessWidget {
       fallbackLocale: const Locale("id", "ID"),
       debugShowCheckedModeBanner: false,
       title: 'CSS',
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       darkTheme: CustomTheme().dark(),
       theme: CustomTheme().light(),
       getPages: [
