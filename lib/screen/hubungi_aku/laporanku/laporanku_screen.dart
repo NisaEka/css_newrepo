@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/detail/detail_laporanku_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/input/input_laporanku_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_controller.dart';
@@ -177,18 +178,21 @@ class LaporankuScreen extends StatelessWidget {
                   c.pagingController.refresh();
                 },
               ),
-              child: PagedListView<int, dynamic>(
+              child: PagedListView<int, TicketModel>(
                 pagingController: c.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                builderDelegate: PagedChildBuilderDelegate<TicketModel>(
                   transitionDuration: const Duration(milliseconds: 500),
-                  itemBuilder: (context, item, index) => const LaporankuListItem(),
+                  itemBuilder: (context, item, index) => LaporankuListItem(
+                    data: item,
+                    onTap: () => Get.to(DetailLaporankuScreen(data: item)),
+                  ),
                   firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(
                     children: List.generate(
                       10,
-                      (index) => LaporankuListItem(
-                        isLoading: false,
-                        onTap: () => Get.to(const DetailLaporankuScreen()),
+                      (index) => const LaporankuListItem(
+                        isLoading: true,
+                        // onTap: () => Get.to(const DetailLaporankuScreen()),
                       ),
                     ),
                   ),

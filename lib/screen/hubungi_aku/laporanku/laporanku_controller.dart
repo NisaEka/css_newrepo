@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,9 +11,11 @@ class LaporankuController extends BaseController {
   final searchField = TextEditingController();
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
-  final PagingController<int, dynamic> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, TicketModel> pagingController = PagingController(firstPageKey: 1);
+  static const pageSize = 10;
 
   bool isFiltered = false;
+  bool isLoading = false;
   DateTime? startDate;
   DateTime? endDate;
   String? date;
@@ -22,6 +25,57 @@ class LaporankuController extends BaseController {
   int onProcess = 0;
   int closed = 0;
   String dateFilter = '0';
+
+  @override
+  void onInit() {
+    super.onInit();
+    Future.wait([initData()]);
+    pagingController.addPageRequestListener((pageKey) {
+      getTicketList(pageKey);
+    });
+  }
+
+  Future<void> initData() async {
+    try {
+      await laporanku.getTicketSummary().then((value) {
+        total = value.payload?.all?.toInt() ?? 0;
+        onProcess = value.payload?.onProcess?.toInt() ?? 0;
+        closed = value.payload?.finished?.toInt() ?? 0;
+        update();
+      });
+    } catch (e) {
+      e.printError();
+    }
+  }
+
+  Future<void> getTicketList(int page) async {
+    isLoading = true;
+    try {
+      final tickets = await laporanku.getTickets(
+        page,
+        pageSize,
+        "",
+        date ?? '',
+        searchField.text,
+      );
+
+      final isLastPage = (tickets.payload?.length ?? 0) < pageSize;
+      if (isLastPage) {
+        pagingController.appendLastPage(tickets.payload ?? []);
+        // transactionList.addAll(pagingController.itemList ?? []);
+      } else {
+        final nextPageKey = page + 1;
+        pagingController.appendPage(tickets.payload ?? [], nextPageKey);
+        // transactionList.addAll(pagingController.itemList ?? []);
+      }
+    } catch (e) {
+      e.printError();
+      pagingController.error = e;
+    }
+
+    isLoading = false;
+    update();
+  }
 
   Future<DateTime?> selectDate(BuildContext context) {
     return showDatePicker(

@@ -42,7 +42,7 @@ class InputLaporankuScreen extends StatelessWidget {
               readOnly: true,
               hintText: "Kategori".tr,
               isRequired: true,
-              onTap: () {},
+              onTap: () => c.showCategoryList(),
               suffixIcon: const Icon(Icons.keyboard_arrow_right),
             ),
             CustomTextFormField(

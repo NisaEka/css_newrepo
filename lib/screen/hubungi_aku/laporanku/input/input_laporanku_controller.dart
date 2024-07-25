@@ -1,7 +1,12 @@
+import 'dart:async';
 import 'dart:io';
-
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
+import 'package:css_mobile/widgets/forms/customsearchfield.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -12,11 +17,153 @@ class InputLaporankuController extends BaseController {
   final subject = TextEditingController();
   final message = TextEditingController();
   final imageFile = TextEditingController();
+  final searchCategory = TextEditingController();
 
   bool priority = false;
+  bool isLoading = false;
   File? gettedPhoto;
   int? imageSize;
   var maxImageSize = 2 * 1048576;
+
+  List<TicketCategory> listCategory = [];
+  List<TicketCategory> listSearchCategory = [];
+  TicketCategory? selectedCategory;
+
+  @override
+  void onInit() {
+    super.onInit();
+    Future.wait([initData()]);
+  }
+
+  Future<void> initData() async {
+    listCategory = [];
+    isLoading = true;
+    try {
+      await laporanku.getTicketCategory().then((value) {
+        listCategory.addAll(value.payload ?? []);
+        update();
+      });
+    } catch (e) {
+      e.printError();
+    }
+
+    isLoading = false;
+    update();
+  }
+
+  void showCategoryList() {
+    searchCategory.clear();
+    selectedCategory = null;
+    update();
+    Get.bottomSheet(
+      enableDrag: true,
+      isDismissible: true,
+      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          decoration: BoxDecoration(
+            color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor1,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Kategori".tr,
+                style: appTitleTextStyle.copyWith(
+                  color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
+                ),
+              ),
+              CustomSearchField(
+                controller: searchCategory,
+                hintText: 'Cari'.tr,
+                margin: const EdgeInsets.only(top: 20),
+                // validate: searchCategory.text.length < 3,
+                autoFocus: false,
+                // validationText: 'Masukan 3 atau lebih karakter'.tr,
+                onChanged: (value) {
+                  update();
+                  setState(() {
+                    searchListCategory(searchCategory.text);
+                  });
+                },
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: ListView(
+                  children: listSearchCategory.isNotEmpty
+                      ? listSearchCategory
+                          .map(
+                            (e) => Column(
+                              children: [
+                                ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(
+                                    e.description ?? '',
+                                    style: Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  style: ListTileStyle.list,
+                                  onTap: () {
+                                    selectedCategory = e;
+                                    category.text = e.description ?? '';
+                                    update();
+                                    Get.back();
+                                  },
+                                ),
+                                const Divider(color: greyColor, height: 1),
+                              ],
+                            ),
+                          )
+                          .toList()
+                      : listCategory
+                          .map(
+                            (e) => Column(
+                              children: [
+                                ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(
+                                    e.description ?? '',
+                                    style: Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  style: ListTileStyle.list,
+                                  onTap: () {
+                                    selectedCategory = e;
+                                    category.text = e.description ?? '';
+                                    update();
+                                    Get.back();
+                                  },
+                                ),
+                                const Divider(color: greyColor, height: 1),
+                              ],
+                            ),
+                          )
+                          .toList(),
+                ),
+              )
+            ],
+          ),
+        );
+      }),
+    );
+  }
+
+  void searchListCategory(String search) {
+    if (search == "") {
+      listSearchCategory = [];
+      update();
+    } else {
+      listSearchCategory = listCategory
+          .where(
+            (e) => e.description?.toLowerCase().contains(search.toLowerCase()) ?? false,
+          )
+          .toList();
+
+      update();
+    }
+  }
 
   Future<void> sendReport() async {}
 

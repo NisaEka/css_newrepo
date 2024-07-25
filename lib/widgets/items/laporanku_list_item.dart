@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,11 +10,13 @@ import 'package:get/get.dart';
 class LaporankuListItem extends StatelessWidget {
   final bool isLoading;
   final VoidCallback? onTap;
+  final TicketModel? data;
 
   const LaporankuListItem({
     super.key,
     this.isLoading = false,
     this.onTap,
+    this.data,
   });
 
   @override
@@ -45,27 +48,27 @@ class LaporankuListItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "CSS0221001862909",
+                            data?.cnote ?? '',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           Text(
-                            DateTime.now().toString().toShortDateTimeFormat(),
+                            data?.createdAt?.toShortDateTimeFormat() ?? '-',
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ],
                       ),
                       Text(
-                        "Permintaan Kirim Ulang",
+                        data?.category?.description ?? '-',
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         decoration: BoxDecoration(
-                          color: successColor,
+                          color: data?.status == "Closed" ? successColor : warningColor,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          'Selesai'.tr,
+                          data?.status == "Closed" ? "Selesai".tr : "Masih Diproses".tr,
                           style: sublistTitleTextStyle.copyWith(color: whiteColor, fontSize: 10),
                         ),
                       )
