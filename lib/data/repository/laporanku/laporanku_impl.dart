@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_summary_model.dart';
@@ -57,6 +58,23 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
     try {
       Response response = await network.local.get(
         "/ticket",
+      );
+
+      return GetTicketModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return GetTicketModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<GetTicketModel> postTicket(DataPostTicketModel data) async {
+    var token = await storageSecure.read(key: "token");
+    network.local.options.headers['Authorization'] = 'Bearer $token';
+
+    try {
+      Response response = await network.local.post(
+        "/ticket",
+        data: data
       );
 
       return GetTicketModel.fromJson(response.data);

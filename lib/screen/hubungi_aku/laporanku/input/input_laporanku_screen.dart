@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/input/input_laporanku_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcheckbox.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -20,7 +21,12 @@ class InputLaporankuScreen extends StatelessWidget {
             appBar: CustomTopBar(
               title: "Buat Laporan".tr,
             ),
-            body: _bodyContent(controller, context),
+            body: Stack(
+              children: [
+                _bodyContent(controller, context),
+                controller.isLoading ? const LoadingDialog() : const SizedBox()
+              ],
+            ),
           );
         });
   }
@@ -122,7 +128,7 @@ class InputLaporankuScreen extends StatelessWidget {
             CustomFilledButton(
               color: c.formKey.currentState?.validate() == true ? blueJNE : greyColor,
               title: "Kirim".tr,
-              onPressed: () => c.formKey.currentState?.validate() == true ? c.sendReport : null,
+              onPressed: () => c.formKey.currentState?.validate() == true ? c.sendReport() : null,
             )
           ],
         ),

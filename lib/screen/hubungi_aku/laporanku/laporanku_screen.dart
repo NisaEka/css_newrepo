@@ -38,7 +38,9 @@ class LaporankuScreen extends StatelessWidget {
               icon: Icons.add,
               radius: 30,
               height: 50,
-              onPressed: () => Get.to(const InputLaporankuScreen()),
+              onPressed: () => Get.to(const InputLaporankuScreen())?.then(
+                (_) => controller.pagingController.refresh(),
+              ),
             ),
           );
         });
@@ -169,6 +171,7 @@ class LaporankuScreen extends StatelessWidget {
               color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
             ),
             margin: EdgeInsets.zero,
+            onChanged: (p0) => c.pagingController.refresh(),
           ),
           _statusLaporanku(c),
           Expanded(

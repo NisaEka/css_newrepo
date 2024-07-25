@@ -4,6 +4,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
@@ -165,7 +166,68 @@ class InputLaporankuController extends BaseController {
     }
   }
 
-  Future<void> sendReport() async {}
+  Future<void> sendReport() async {
+    isLoading = true;
+    update();
+
+    try {
+      await laporanku
+          .postTicket(DataPostTicketModel(
+            cnote: noResi.text,
+            categoryId: selectedCategory?.id,
+            subject: subject.text,
+            message: message.text,
+            priority: priority ? "Y" : "N",
+          ))
+          .then(
+            (value) => value.code == 200
+                ? Get.back()
+                : value.code == 404
+                    ? Get.showSnackbar(
+                        GetSnackBar(
+                          icon: const Icon(
+                            Icons.warning,
+                            color: whiteColor,
+                          ),
+                          message: 'Nomor Resi Tidak Terdaftar'.tr,
+                          isDismissible: true,
+                          duration: const Duration(seconds: 3),
+                          backgroundColor: warningColor,
+                        ),
+                      )
+                    : value.code == 403
+                        ? Get.showSnackbar(
+                            GetSnackBar(
+                              icon: const Icon(
+                                Icons.warning,
+                                color: whiteColor,
+                              ),
+                              message: 'Tiket Sudah Terdaftar'.tr,
+                              isDismissible: true,
+                              duration: const Duration(seconds: 3),
+                              backgroundColor: warningColor,
+                            ),
+                          )
+                        : Get.showSnackbar(
+                            GetSnackBar(
+                              icon: const Icon(
+                                Icons.warning,
+                                color: whiteColor,
+                              ),
+                              message: 'Bad Request'.tr,
+                              isDismissible: true,
+                              duration: const Duration(seconds: 3),
+                              backgroundColor: errorColor,
+                            ),
+                          ),
+          );
+    } catch (e) {
+      e.printError();
+    }
+
+    isLoading = false;
+    update();
+  }
 
   getSinglePhoto(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
