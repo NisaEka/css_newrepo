@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/detail/detail_laporanku_controller.dart';
@@ -40,7 +41,10 @@ class DetailLaporankuScreen extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(30),
       padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(color: greyLightColor3, borderRadius: BorderRadius.circular(8)),
+      decoration: BoxDecoration(
+        color: AppConst.isLightTheme(context) ? greyLightColor3 : greyColor,
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

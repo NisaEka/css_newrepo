@@ -150,6 +150,7 @@ class LaporankuController extends BaseController {
     isFiltered = false;
     searchField.clear();
     date = null;
+    dateFilter = '0';
 
     pagingController.refresh();
     update();

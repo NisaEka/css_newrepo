@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -173,7 +174,7 @@ class LaporankuScreen extends StatelessWidget {
             margin: EdgeInsets.zero,
             onChanged: (p0) => c.pagingController.refresh(),
           ),
-          _statusLaporanku(c),
+          _statusLaporanku(c, context),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () => Future.sync(
@@ -226,13 +227,13 @@ class LaporankuScreen extends StatelessWidget {
     );
   }
 
-  Widget _statusLaporanku(LaporankuController c) {
+  Widget _statusLaporanku(LaporankuController c, BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
-        color: blueJNE,
+        color: AppConst.isLightTheme(context) ? blueJNE : greyColor,
         border: Border.all(),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -248,7 +249,11 @@ class LaporankuScreen extends StatelessWidget {
               width: Get.width / 3.56,
               padding: const EdgeInsets.symmetric(vertical: 4),
               decoration: BoxDecoration(
-                color: c.selectedStatus == 0 ? blueJNE : whiteColor,
+                color: c.selectedStatus == 0
+                    ? blueJNE
+                    : AppConst.isLightTheme(context)
+                        ? whiteColor
+                        : bgDarkColor,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(8),
                   bottomLeft: Radius.circular(8),
@@ -262,13 +267,21 @@ class LaporankuScreen extends StatelessWidget {
                   Text(
                     c.total.toString(),
                     style: listTitleTextStyle.copyWith(
-                      color: c.selectedStatus == 0 ? whiteColor : blueJNE,
+                      color: c.selectedStatus == 0
+                          ? whiteColor
+                          : AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : whiteColor,
                     ),
                   ),
                   Text(
                     'Semua Laporan'.tr,
                     style: sublistTitleTextStyle.copyWith(
-                      color: c.selectedStatus == 0 ? whiteColor : greyColor,
+                      color: c.selectedStatus == 0
+                          ? whiteColor
+                          : AppConst.isLightTheme(context)
+                              ? greyColor
+                              : Colors.white,
                     ),
                   )
                 ],
@@ -286,7 +299,11 @@ class LaporankuScreen extends StatelessWidget {
               width: Get.width / 3.56,
               padding: const EdgeInsets.symmetric(vertical: 4),
               decoration: BoxDecoration(
-                color: c.selectedStatus == 1 ? blueJNE : whiteColor,
+                color: c.selectedStatus == 1
+                    ? blueJNE
+                    : AppConst.isLightTheme(context)
+                        ? whiteColor
+                        : bgDarkColor,
                 // border: const Border(
                 //   right: BorderSide(color: greyDarkColor1),
                 //   left: BorderSide(color: greyDarkColor1),
@@ -297,13 +314,21 @@ class LaporankuScreen extends StatelessWidget {
                   Text(
                     c.onProcess.toString(),
                     style: listTitleTextStyle.copyWith(
-                      color: c.selectedStatus == 1 ? whiteColor : blueJNE,
+                      color: c.selectedStatus == 1
+                          ? whiteColor
+                          : AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : whiteColor,
                     ),
                   ),
                   Text(
                     'Masih Diproses'.tr,
                     style: sublistTitleTextStyle.copyWith(
-                      color: c.selectedStatus == 1 ? whiteColor : greyColor,
+                      color: c.selectedStatus == 1
+                          ? whiteColor
+                          : AppConst.isLightTheme(context)
+                              ? greyColor
+                              : whiteColor,
                     ),
                   )
                 ],
@@ -321,7 +346,11 @@ class LaporankuScreen extends StatelessWidget {
               width: Get.width / 3.58,
               padding: const EdgeInsets.symmetric(vertical: 4),
               decoration: BoxDecoration(
-                color: c.selectedStatus == 2 ? blueJNE : whiteColor,
+                color: c.selectedStatus == 2
+                    ? blueJNE
+                    : AppConst.isLightTheme(context)
+                        ? whiteColor
+                        : bgDarkColor,
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(8),
                   bottomRight: Radius.circular(8),
@@ -332,13 +361,21 @@ class LaporankuScreen extends StatelessWidget {
                   Text(
                     c.closed.toString(),
                     style: listTitleTextStyle.copyWith(
-                      color: c.selectedStatus == 2 ? whiteColor : blueJNE,
+                      color: c.selectedStatus == 2
+                          ? whiteColor
+                          : AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : whiteColor,
                     ),
                   ),
                   Text(
                     'Selesai'.tr,
                     style: sublistTitleTextStyle.copyWith(
-                      color: c.selectedStatus == 2 ? whiteColor : greyColor,
+                      color: c.selectedStatus == 2
+                          ? whiteColor
+                          : AppConst.isLightTheme(context)
+                              ? greyColor
+                              : whiteColor,
                     ),
                   )
                 ],

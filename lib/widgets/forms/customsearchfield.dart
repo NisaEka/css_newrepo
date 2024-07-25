@@ -51,6 +51,7 @@ class CustomSearchField<T> extends StatelessWidget {
             inputFormatters: inputFormatters,
             autofocus: autoFocus,
             cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
             decoration: InputDecoration(
               hintText: hintText,
               enabledBorder: OutlineInputBorder(

@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 
 class DetailContent extends StatelessWidget {
@@ -17,7 +18,10 @@ class DetailContent extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+        ),
         Text(
           value,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(

@@ -65,6 +65,8 @@ class AltProfileController extends BaseController {
   Future<void> initData() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version = packageInfo.version;
+    isLoading = true;
+    update();
 
     try {
       String? token = await storage.readToken();
@@ -85,6 +87,7 @@ class AltProfileController extends BaseController {
       );
     }
 
+    isLoading = false;
     update();
   }
 
