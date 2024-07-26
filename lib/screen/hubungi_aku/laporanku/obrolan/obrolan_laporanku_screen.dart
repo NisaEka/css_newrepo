@@ -53,6 +53,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
               itemBuilder: (context, e, i) => Column(
                 children: [
                   Text(
+                    // e.createdDate.toString(),
                     c.messages.length > i + 1
                         ? e.createdDate!.toShortDateFormat() != c.messages[i + 1].createdDate!.toShortDateFormat()
                             ? e.createdDate?.toShortDateFormat().toString() ?? ''
@@ -81,6 +82,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                 height: 50,
                 size: 30,
               ),
+
             ),
           ),
           // child: ListView(

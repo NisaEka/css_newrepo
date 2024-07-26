@@ -32,7 +32,7 @@ class ObrolanLaporankuController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([initData()]);
+    // Future.wait([initData()]);
     pagingController.addPageRequestListener((pageKey) {
       getMessages(pageKey);
     });
@@ -42,7 +42,7 @@ class ObrolanLaporankuController extends BaseController {
   Future<void> initData() async {
     messages = [];
     try {
-      await laporanku.getTickeMessage(id, 1).then((value) {
+      await laporanku.getTickeMessage(id, 1, pageSize).then((value) {
         messages.addAll(value.payload ?? []);
         subject = value.payload?.first.subject;
         update();
@@ -55,24 +55,22 @@ class ObrolanLaporankuController extends BaseController {
   Future<void> getMessages(int page) async {
     isLoading = true;
     try {
-      final message = await laporanku.getTickeMessage(id, page);
+      final message = await laporanku.getTickeMessage(id, page, pageSize);
 
       final isLastPage = (message.payload?.length ?? 0) < pageSize;
       if (isLastPage) {
         pagingController.appendLastPage(message.payload ?? []);
-        // transactionList.addAll(pagingController.itemList ?? []);
+        messages.addAll(message.payload ?? []);
       } else {
-        currentPage++;
-        update();
         final nextPageKey = page + 1;
         pagingController.appendPage(message.payload ?? [], nextPageKey);
-        // transactionList.addAll(pagingController.itemList ?? []);
+        messages.addAll(message.payload ?? []);
       }
     } catch (e) {
       e.printError(info: 'error message paging');
       pagingController.error = e;
     }
-
+    print("messages.length ${messages.length}");
     isLoading = false;
     update();
   }

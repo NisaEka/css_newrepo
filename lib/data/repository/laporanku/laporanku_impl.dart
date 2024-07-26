@@ -87,14 +87,14 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   }
 
   @override
-  Future<GetTicketMessageModel> getTickeMessage(String id, int page) async {
+  Future<GetTicketMessageModel> getTickeMessage(String id, int page, int limit) async {
     var token = await storageSecure.read(key: "token");
     network.local.options.headers['Authorization'] = 'Bearer $token';
 
     try {
       Response response = await network.local.get("/ticket/$id/message", queryParameters: {
         "page": page,
-        "limit": 10,
+        "limit": limit,
       });
 
       return GetTicketMessageModel.fromJson(response.data);

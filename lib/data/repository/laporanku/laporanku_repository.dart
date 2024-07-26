@@ -23,6 +23,7 @@ abstract class LaporankuRepository {
   Future<GetTicketMessageModel> getTickeMessage(
     String id,
     int page,
+    int limit,
   );
 
   Future<GetTicketModel> postTicketMessage(DataPostTicketModel data);
