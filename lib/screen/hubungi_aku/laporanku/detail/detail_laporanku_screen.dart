@@ -30,7 +30,10 @@ class DetailLaporankuScreen extends StatelessWidget {
               color: blueJNE,
               title: "Lihat Obrolan".tr,
               width: Get.width - 50,
-              onPressed: () => Get.to(const ObrolanLaporankuScreen()),
+              onPressed: () => Get.to(const ObrolanLaporankuScreen(), arguments: {
+                "id": data.id,
+                "ticket": data,
+              }),
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           );

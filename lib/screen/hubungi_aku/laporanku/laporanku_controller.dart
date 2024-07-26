@@ -54,7 +54,7 @@ class LaporankuController extends BaseController {
       final tickets = await laporanku.getTickets(
         page,
         pageSize,
-        "",
+        status ?? '',
         date ?? '',
         searchField.text,
       );

@@ -36,6 +36,7 @@ class InputLaporankuScreen extends StatelessWidget {
       padding: const EdgeInsets.only(right: 30, left: 30, top: 20),
       child: Form(
         key: c.formKey,
+        onChanged: () => c.update(),
         child: ListView(
           children: [
             CustomTextFormField(
@@ -61,6 +62,7 @@ class InputLaporankuScreen extends StatelessWidget {
               hintText: "Isi Pesan".tr,
               isRequired: true,
               multiLine: true,
+              onChanged: (value) => c.formKey.currentState?.validate(),
             ),
             CustomTextFormField(
               controller: c.imageFile,

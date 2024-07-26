@@ -6,6 +6,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
+import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -180,8 +181,12 @@ class InputLaporankuController extends BaseController {
             priority: priority ? "Y" : "N",
           ))
           .then(
-            (value) => value.code == 200
-                ? Get.back()
+            (value) => value.code == 201
+                ? Get.to(SuccessScreen(
+                    message: "Laporanmu berhasil dibuatdan akan diproses lebih lanjut".tr,
+                    buttonTitle: "OK".tr,
+                    nextAction: () => Get.close(2),
+                  ))
                 : value.code == 404
                     ? Get.showSnackbar(
                         GetSnackBar(

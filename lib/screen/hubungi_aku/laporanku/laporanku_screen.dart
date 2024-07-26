@@ -40,7 +40,10 @@ class LaporankuScreen extends StatelessWidget {
               radius: 30,
               height: 50,
               onPressed: () => Get.to(const InputLaporankuScreen())?.then(
-                (_) => controller.pagingController.refresh(),
+                (_) {
+                  controller.pagingController.refresh();
+                  controller.initData();
+                },
               ),
             ),
           );
@@ -291,7 +294,7 @@ class LaporankuScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               c.selectedStatus = 1;
-              c.status = 'onProcess';
+              c.status = 'On Process';
               c.update();
               c.pagingController.refresh();
             },
@@ -338,7 +341,7 @@ class LaporankuScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               c.selectedStatus = 2;
-              c.status = 'closed';
+              c.status = 'Closed';
               c.update();
               c.pagingController.refresh();
             },

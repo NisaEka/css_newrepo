@@ -2,13 +2,18 @@ import 'package:bubble/bubble.dart';
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/laporanku/chat_model.dart';
+import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolal_laporanku_controller.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:pinput/pinput.dart';
 
 class ObrolanLaporankuScreen extends StatelessWidget {
   const ObrolanLaporankuScreen({super.key});
@@ -30,40 +35,88 @@ class ObrolanLaporankuScreen extends StatelessWidget {
   Widget _bodyContent(ObrolanLaporankuController c, BuildContext context) {
     return Column(
       children: [
-        // Container(
-        //   alignment: Alignment.center,
-        //   padding: const EdgeInsets.only(top: 15, bottom: 10),
-        //   child: Text(
-        //     DateTime.now().toString().toShortDateFormat(),
-        //     style: Theme.of(context).textTheme.titleSmall,
-        //   ),
+        // IconButton(
+        //   onPressed: () {
+        //     // c.pagingController.refresh();
+        //     c.getMessages(c.currentPage);
+        //     print(c.currentPage);
+        //     // c.initData(c.currentPage+1);
+        //   },
+        //   icon: Icon(Icons.refresh),
         // ),
         Flexible(
-          child: ListView(
+          child: PagedListView<int, TicketMessageModel>(
             reverse: true,
-            children: c.gettedPhoto != null
-                ? [
-                    SizedBox(
-                      // height: Get.height / 2,
-                      width: Get.width - 50,
-                      child: Image.file(
-                        c.gettedPhoto!,
-                        fit: BoxFit.fill,
-                      ),
-                    )
-                  ]
-                : c.messsages
-                    .mapIndexed(
-                      (index, e) => chat(e, context),
-                    )
-                    .toList()
-                    .reversed
-                    .toList(),
+            pagingController: c.pagingController,
+            builderDelegate: PagedChildBuilderDelegate<TicketMessageModel>(
+              transitionDuration: const Duration(milliseconds: 500),
+              itemBuilder: (context, e, i) => Column(
+                children: [
+                  Text(
+                    c.messages.length > i + 1
+                        ? e.createdDate!.toShortDateFormat() != c.messages[i + 1].createdDate!.toShortDateFormat()
+                            ? e.createdDate?.toShortDateFormat().toString() ?? ''
+                            : ''
+                        : e.createdDate?.toShortDateFormat().toString() ?? '',
+                  ),
+                  chat(e, context),
+                ],
+              ),
+              firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+              firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                height: 100,
+                background: Colors.transparent,
+              ),
+              noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
+              noMoreItemsIndicatorBuilder: (context) => const Center(
+                  // child: Divider(
+                  //   indent: 100,
+                  //   endIndent: 100,
+                  //   thickness: 2,
+                  //   color: blueJNE,
+                  // ),
+                  ),
+              newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                background: Colors.transparent,
+                height: 50,
+                size: 30,
+              ),
+            ),
           ),
+          // child: ListView(
+          //   reverse: true,
+          //   children: c.gettedPhoto != null
+          //       ? [
+          //           SizedBox(
+          //             // height: Get.height / 2,
+          //             width: Get.width - 50,
+          //             child: Image.file(
+          //               c.gettedPhoto!,
+          //               fit: BoxFit.fill,
+          //             ),
+          //           )
+          //         ]
+          //       : c.messages
+          //           .mapIndexed(
+          //             (i, e) => Column(
+          //               children: [
+          //                 Text(c.messages.length > i + 1
+          //                     ? e.createdDate!.toShortDateFormat() != c.messages[i + 1].createdDate!.toShortDateFormat()
+          //                         ? e.createdDate?.toShortDateFormat().toString() ?? ''
+          //                         : ''
+          //                     : e.createdDate?.toShortDateFormat().toString() ?? ''),
+          //                 chat(e, context),
+          //               ],
+          //             ),
+          //           )
+          //           .toList(),
+          // ),
         ),
         ListTile(
           title: TextFormField(
             controller: c.messageInsert,
+            minLines: 1,
+            maxLines: 5,
             decoration: InputDecoration(
               hintText: "Tulis Pesan".tr,
               hintStyle: hintTextStyle,
@@ -128,24 +181,24 @@ class ObrolanLaporankuScreen extends StatelessWidget {
     );
   }
 
-  Widget chat(ChatModel msg, BuildContext context) {
+  Widget chat(TicketMessageModel msg, BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Row(
-        mainAxisAlignment: msg.data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: msg.type == "S" ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          msg.data == 0 ? avatar("Developer", context) : Container(),
+          msg.type == "R" ? avatar("${msg.user}\n${msg.branchCode}", context) : Container(),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
-              crossAxisAlignment: msg.data == 0 ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+              crossAxisAlignment: msg.type == "R" ? CrossAxisAlignment.start : CrossAxisAlignment.end,
               children: [
                 Bubble(
                   radius: const Radius.circular(8),
-                  color: msg.data == 0 ? blueJNE : redJNE,
+                  color: msg.type == "R" ? blueJNE : redJNE,
                   elevation: 0.0,
                   showNip: true,
-                  nip: msg.data == 0 ? BubbleNip.leftBottom : BubbleNip.rightBottom,
+                  nip: msg.type == "R" ? BubbleNip.leftBottom : BubbleNip.rightBottom,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -153,9 +206,18 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                       Flexible(
                         child: Container(
                           constraints: const BoxConstraints(maxWidth: 200),
-                          child: Text(
-                            msg.message ?? '',
-                            style: listTitleTextStyle.copyWith(color: whiteColor),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${'Subjek'.tr} : ${msg.subject ?? ''}",
+                                style: listTitleTextStyle.copyWith(color: whiteColor),
+                              ),
+                              Text(
+                                msg.message ?? '',
+                                style: listTitleTextStyle.copyWith(color: whiteColor, fontWeight: regular),
+                              ),
+                            ],
                           ),
                         ),
                       )
@@ -163,13 +225,13 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '17.00',
+                  msg.createdDate?.toTimeFormat() ?? '',
                   style: Theme.of(context).textTheme.titleSmall,
                 )
               ],
             ),
           ),
-          msg.data == 1 ? avatar("Customer", context) : Container(),
+          msg.type == "S" ? avatar("${msg.user}\n${msg.branchCode}", context) : Container(),
         ],
       ),
     );
@@ -185,7 +247,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(color: greyLightColor3, borderRadius: BorderRadius.circular(50)),
           child: Text(
-            name.split(" ").first.substring(0, 1).toUpperCase(),
+            name.substring(0, 1),
             style: listTitleTextStyle,
           ),
         ),

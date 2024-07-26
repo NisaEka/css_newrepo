@@ -46,7 +46,18 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      debugPrint("ERROR toLongDateFormat $e");
+      debugPrint("ERROR toShortDateFormat $e");
+      return "-";
+    }
+  }
+
+  String toTimeFormat({String targetFormat = "HH:mm", String originFormat = "dd/MM/yyyy"}) {
+    try {
+      DateTime dateTimeOrigin = DateTime.parse(this);
+      DateFormat dateFormat = DateFormat(targetFormat);
+      return dateFormat.format(dateTimeOrigin);
+    } catch (e) {
+      debugPrint("ERROR toTimeFormat $e");
       return "-";
     }
   }
