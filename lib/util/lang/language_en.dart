@@ -332,7 +332,8 @@ class LanguageEN {
       "Maksimal ukuran 2 MB": "Maximal file size 2 MB",
       "Ukuran file terlalu besar": "file size is too large",
       "Ambil Gambar": "Take a picture",
-      "Pilih dari galeri": "Choose from gallery"
+      "Pilih dari galeri": "Choose from gallery",
+      "Bukti Pendukung": "Supporting Evidence"
     };
   }
 }

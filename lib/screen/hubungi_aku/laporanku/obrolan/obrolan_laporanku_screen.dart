@@ -7,6 +7,7 @@ import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolal_laporank
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
+import 'package:css_mobile/widgets/dialog/image_popup_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                             ? e.createdDate?.toShortDateFormat().toString() ?? ''
                             : ''
                         : e.createdDate?.toShortDateFormat().toString() ?? '',
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   chat(e, context),
                 ],
@@ -82,7 +84,6 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                 height: 50,
                 size: 30,
               ),
-
             ),
           ),
           // child: ListView(
@@ -219,6 +220,19 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                                 msg.message ?? '',
                                 style: listTitleTextStyle.copyWith(color: whiteColor, fontWeight: regular),
                               ),
+                              GestureDetector(
+                                onTap: () => showDialog(
+                                  context: context,
+                                  builder: (context) => ImagePopupDialog(
+                                    title: '',
+                                    img: "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
+                                  ),
+                                ),
+                                child: Image.network(
+                                  "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
+                                  errorBuilder: (context, error, stackTrace) => const SizedBox(),
+                                ),
+                              )
                             ],
                           ),
                         ),

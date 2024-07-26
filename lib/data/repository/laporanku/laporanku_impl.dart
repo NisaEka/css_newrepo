@@ -17,10 +17,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketCategoryModel> getTicketCategory() async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.get(
+      Response response = await network.dio.get(
         "/ticket/category",
       );
 
@@ -33,10 +33,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketSummaryModel> getTicketSummary() async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.get(
+      Response response = await network.dio.get(
         "/ticket/summary",
       );
 
@@ -55,10 +55,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
     String query,
   ) async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.get("/ticket", queryParameters: {
+      Response response = await network.dio.get("/ticket", queryParameters: {
         "page": page,
         "limit": limit,
         "status": status,
@@ -75,10 +75,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketModel> postTicket(DataPostTicketModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.post("/ticket", data: data);
+      Response response = await network.dio.post("/ticket", data: data);
 
       return GetTicketModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -89,10 +89,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketMessageModel> getTickeMessage(String id, int page, int limit) async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.get("/ticket/$id/message", queryParameters: {
+      Response response = await network.dio.get("/ticket/$id/message", queryParameters: {
         "page": page,
         "limit": limit,
       });
@@ -106,10 +106,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketModel> postTicketMessage(DataPostTicketModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.post(
+      Response response = await network.dio.post(
         "/ticket/${data.id}/message",
         data: data,
       );

@@ -31,6 +31,7 @@ class CustomTheme {
         iconTheme: const IconThemeData(color: whiteColor),
       ),
       textTheme: GoogleFonts.ubuntuTextTheme().copyWith(
+
         titleSmall: sublistTitleTextStyle.copyWith(
           color: greyDarkColor1,
         ),
