@@ -54,110 +54,24 @@ class LaporankuScreen extends StatelessWidget {
     return CustomTopBar(
       title: "Laporanku".tr,
       action: [
-        Container(
-          margin: const EdgeInsets.only(right: 10),
-          decoration: BoxDecoration(
-            color: c.isFiltered ? redJNE : Colors.transparent,
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: FilterButton(
-            filterContent: StatefulBuilder(
-              builder: (context, setState) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Customradiobutton(
-                      title: "Semua Tanggal".tr,
-                      value: '0',
-                      groupValue: c.dateFilter,
-                      onChanged: (value) => setState(() => c.selectDateFilter(0)),
-                      onTap: () => setState(() => c.selectDateFilter(0)),
-                    ),
-                    Customradiobutton(
-                      title: "1 Bulan Terakhir".tr,
-                      value: '1',
-                      groupValue: c.dateFilter,
-                      onChanged: (value) => setState(() => c.selectDateFilter(1)),
-                      onTap: () => setState(() => c.selectDateFilter(1)),
-                    ),
-                    Customradiobutton(
-                      title: "1 Minggu Terakhir".tr,
-                      value: '2',
-                      groupValue: c.dateFilter,
-                      onChanged: (value) => setState(() => c.selectDateFilter(2)),
-                      onTap: () => setState(() => c.selectDateFilter(2)),
-                    ),
-                    Customradiobutton(
-                      title: "Hari Ini".tr,
-                      value: '3',
-                      groupValue: c.dateFilter,
-                      onChanged: (value) => setState(() => c.selectDateFilter(3)),
-                      onTap: () => setState(() => c.selectDateFilter(3)),
-                    ),
-                    Customradiobutton(
-                      title: "Pilih Tanggal Sendiri".tr,
-                      value: '4',
-                      groupValue: c.dateFilter,
-                      onChanged: (value) => setState(() => c.selectDateFilter(4)),
-                      onTap: () => setState(() => c.selectDateFilter(4)),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomTextFormField(
-                          controller: c.startDateField,
-                          readOnly: true,
-                          width: Get.width / 3,
-                          hintText: 'Tanggal Awal'.tr,
-                          onTap: () => c.dateFilter == '4'
-                              ? c.selectDate(context).then((value) {
-                                  setState(() {
-                                    c.startDate = value;
-                                    c.startDateField.text = value.toString().toShortDateFormat();
-                                    c.endDate = DateTime.now();
-                                    c.endDateField.text = DateTime.now().toString().toShortDateFormat();
-                                    c.update();
-                                  });
-                                })
-                              : null,
-                          // hintText: 'Dari Tanggal',
-                        ),
-                        CustomTextFormField(
-                          controller: c.endDateField,
-                          readOnly: true,
-                          width: Get.width / 3,
-                          hintText: 'Tanggal Akhir'.tr,
-                          onTap: () => c.dateFilter == '4'
-                              ? c.selectDate(context).then((value) {
-                                  setState(() {
-                                    c.endDate = value;
-                                    c.endDateField.text = value.toString().toShortDateFormat();
-                                    c.update();
-                                  });
-                                })
-                              : null,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    // CustomFormLabel(label: 'Petugas Entry'),
-                  ],
-                );
-              },
-            ),
-            isFiltered: c.isFiltered,
-            isApplyFilter: c.startDate != null || c.endDate != null,
-            onResetFilter: () => c.resetFilter(),
-            onApplyFilter: () => c.applyFilter(),
-            onCloseFilter: () {
-              if (!c.isFiltered) {
-                c.resetFilter();
-              } else {
-                Get.back();
-              }
+        FilterButton(
+          filterContent: StatefulBuilder(
+            builder: (context, setState) {
+              return _filterContent(c, context, setState);
             },
           ),
-        )
+          isFiltered: c.isFiltered,
+          isApplyFilter: c.startDate != null || c.endDate != null,
+          onResetFilter: () => c.resetFilter(),
+          onApplyFilter: () => c.applyFilter(),
+          onCloseFilter: () {
+            if (!c.isFiltered) {
+              c.resetFilter();
+            } else {
+              Get.back();
+            }
+          },
+        ),
       ],
     );
   }
@@ -387,6 +301,89 @@ class LaporankuScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _filterContent(LaporankuController c, BuildContext context, StateSetter setState) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Customradiobutton(
+          title: "Semua Tanggal".tr,
+          value: '0',
+          groupValue: c.dateFilter,
+          onChanged: (value) => setState(() => c.selectDateFilter(0)),
+          onTap: () => setState(() => c.selectDateFilter(0)),
+        ),
+        Customradiobutton(
+          title: "1 Bulan Terakhir".tr,
+          value: '1',
+          groupValue: c.dateFilter,
+          onChanged: (value) => setState(() => c.selectDateFilter(1)),
+          onTap: () => setState(() => c.selectDateFilter(1)),
+        ),
+        Customradiobutton(
+          title: "1 Minggu Terakhir".tr,
+          value: '2',
+          groupValue: c.dateFilter,
+          onChanged: (value) => setState(() => c.selectDateFilter(2)),
+          onTap: () => setState(() => c.selectDateFilter(2)),
+        ),
+        Customradiobutton(
+          title: "Hari Ini".tr,
+          value: '3',
+          groupValue: c.dateFilter,
+          onChanged: (value) => setState(() => c.selectDateFilter(3)),
+          onTap: () => setState(() => c.selectDateFilter(3)),
+        ),
+        Customradiobutton(
+          title: "Pilih Tanggal Sendiri".tr,
+          value: '4',
+          groupValue: c.dateFilter,
+          onChanged: (value) => setState(() => c.selectDateFilter(4)),
+          onTap: () => setState(() => c.selectDateFilter(4)),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CustomTextFormField(
+              controller: c.startDateField,
+              readOnly: true,
+              width: Get.width / 3,
+              hintText: 'Tanggal Awal'.tr,
+              onTap: () => c.dateFilter == '4'
+                  ? c.selectDate(context).then((value) {
+                      setState(() {
+                        c.startDate = value;
+                        c.startDateField.text = value.toString().toShortDateFormat();
+                        c.endDate = DateTime.now();
+                        c.endDateField.text = DateTime.now().toString().toShortDateFormat();
+                        c.update();
+                      });
+                    })
+                  : null,
+              // hintText: 'Dari Tanggal',
+            ),
+            CustomTextFormField(
+              controller: c.endDateField,
+              readOnly: true,
+              width: Get.width / 3,
+              hintText: 'Tanggal Akhir'.tr,
+              onTap: () => c.dateFilter == '4'
+                  ? c.selectDate(context).then((value) {
+                      setState(() {
+                        c.endDate = value;
+                        c.endDateField.text = value.toString().toShortDateFormat();
+                        c.update();
+                      });
+                    })
+                  : null,
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        // CustomFormLabel(label: 'Petugas Entry'),
+      ],
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -18,7 +20,8 @@ class PantauPaketmuController extends BaseController {
   String? selectedStatusKiriman;
   String? selectedPetugasEntry;
   String? transType;
-  String? transDate;
+  String? date;
+  String dateFilter = '0';
 
   bool isFiltered = false;
   bool isLoading = false;
@@ -62,13 +65,41 @@ class PantauPaketmuController extends BaseController {
     update();
   }
 
+  void selectDateFilter(int filter) {
+    dateFilter = filter.toString();
+    update();
+    if (filter == 0 || filter == 4) {
+      startDate = null;
+      endDate = null;
+      startDateField.text = '-';
+      endDateField.text = '-';
+    } else if (filter == 1) {
+      startDate = DateTime.now().subtract(const Duration(days: 30));
+      endDate = DateTime.now();
+      startDateField.text = startDate.toString().toShortDateFormat();
+      endDateField.text = endDate.toString().toShortDateFormat();
+    } else if (filter == 2) {
+      startDate = DateTime.now().subtract(const Duration(days: 7));
+      endDate = DateTime.now();
+      startDateField.text = startDate.toString().toShortDateFormat();
+      endDateField.text = endDate.toString().toShortDateFormat();
+    } else if (filter == 3) {
+      startDate = DateTime.now();
+      endDate = DateTime.now();
+      startDateField.text = startDate.toString().toShortDateFormat();
+      endDateField.text = endDate.toString().toShortDateFormat();
+    }
+
+    update();
+  }
+
   Future<void> getPantauList(int page) async {
     isLoading = true;
     try {
       final trans = await pantau.getPantauList(
         page,
         pageSize,
-        transDate ?? '',
+        date ?? '',
         searchField.text,
         selectedPetugasEntry ?? '',
         'Total Kiriman',
@@ -102,7 +133,8 @@ class PantauPaketmuController extends BaseController {
     selectedStatusKiriman = null;
     isFiltered = false;
     searchField.clear();
-    transDate = null;
+    date = null;
+    dateFilter = "0";
 
     pagingController.refresh();
     update();
@@ -118,48 +150,34 @@ class PantauPaketmuController extends BaseController {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
+            colorScheme: AppConst.isLightTheme(context)
+                ? const ColorScheme.light().copyWith(primary: blueJNE)
+                : const ColorScheme.dark().copyWith(primary: redJNE),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: Colors.red, // button text color
+                foregroundColor: redJNE, // button text color
               ),
             ),
           ),
           child: child!,
         );
       },
-    ).then(
-      (selectedDate) => showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        builder: (context, child) {
-          return Theme(
-            data: Theme.of(context).copyWith(
-              colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
-              textButtonTheme: TextButtonThemeData(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.red, // button text color
-                ),
-              ),
-            ),
-            child: child!,
-          );
-        },
-      ).then((selectedTime) => DateTime(
-            selectedDate!.year,
-            selectedDate.month,
-            selectedDate.day,
-            selectedTime!.hour,
-            selectedTime.minute,
-          )),
-    );
+    ).then((selectedDate) => DateTime(
+          selectedDate!.year,
+          selectedDate.month,
+          selectedDate.day,
+          1,
+          0,
+        ));
   }
 
   applyFilter() {
     if (startDate != null || endDate != null || selectedPetugasEntry != null || selectedStatusKiriman != null) {
       isFiltered = true;
       if (startDate != null && endDate != null) {
-        transDate = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+        date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+        date.printInfo(info: "date filter");
+        date.printInfo(info: "${startDate} - ${endDate}");
       }
       update();
       pagingController.refresh();
