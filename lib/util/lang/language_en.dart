@@ -333,7 +333,12 @@ class LanguageEN {
       "Ukuran file terlalu besar": "file size is too large",
       "Ambil Gambar": "Take a picture",
       "Pilih dari galeri": "Choose from gallery",
-      "Bukti Pendukung": "Supporting Evidence"
+      "Bukti Pendukung": "Supporting Evidence",
+      "Semua Tanggal": "All Dates",
+      "1 Bula Terakhir": "Last 1 Month",
+      "1 Minggu Terakhir": "Last 1 Week",
+      "Hari Ini": "Today",
+      "Pilih Tanggal Sendiri": "Custom Range",
     };
   }
 }

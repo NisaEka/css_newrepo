@@ -114,9 +114,9 @@ class PantauPaketmuScreen extends StatelessWidget {
                   ? c.selectDate(context).then((value) {
                       setState(() {
                         c.startDate = value;
-                        c.startDateField.text = value.toString().toLongDateTimeFormat();
+                        c.startDateField.text = value.toString().toShortDateFormat();
                         c.endDate = DateTime.now();
-                        c.endDateField.text = DateTime.now().toString().toLongDateTimeFormat();
+                        c.endDateField.text = DateTime.now().toString().toShortDateFormat();
                         c.update();
                       });
                     })

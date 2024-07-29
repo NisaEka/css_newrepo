@@ -31,7 +31,6 @@ class CustomTheme {
         iconTheme: const IconThemeData(color: whiteColor),
       ),
       textTheme: GoogleFonts.ubuntuTextTheme().copyWith(
-
         titleSmall: sublistTitleTextStyle.copyWith(
           color: greyDarkColor1,
         ),
@@ -313,5 +312,17 @@ class CustomTheme {
 
   Color? textColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : whiteColor;
+  }
+
+  ThemeData dateTimePickerTheme(BuildContext context) {
+    return Theme.of(context).copyWith(
+      colorScheme:
+          AppConst.isLightTheme(context) ? const ColorScheme.light().copyWith(primary: blueJNE) : const ColorScheme.dark().copyWith(primary: redJNE),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: redJNE, // button text color
+        ),
+      ),
+    );
   }
 }

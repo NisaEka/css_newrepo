@@ -1,4 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
@@ -149,16 +150,7 @@ class PantauPaketmuController extends BaseController {
       lastDate: DateTime(2101),
       builder: (context, child) {
         return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: AppConst.isLightTheme(context)
-                ? const ColorScheme.light().copyWith(primary: blueJNE)
-                : const ColorScheme.dark().copyWith(primary: redJNE),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                foregroundColor: redJNE, // button text color
-              ),
-            ),
-          ),
+          data: CustomTheme().dateTimePickerTheme(context),
           child: child!,
         );
       },
