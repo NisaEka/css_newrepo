@@ -3,6 +3,7 @@ import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
+import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/lappembayaran_box.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,41 @@ class UangCODScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomFormLabel(label: 'Tanggal Pencarian'.tr),
-                const SizedBox(height: 10),
+                Customradiobutton(
+                  title: "Semua Tanggal".tr,
+                  value: '0',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(0)),
+                  onTap: () => setState(() => c.selectDateFilter(0)),
+                ),
+                Customradiobutton(
+                  title: "1 Bulan Terakhir".tr,
+                  value: '1',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(1)),
+                  onTap: () => setState(() => c.selectDateFilter(1)),
+                ),
+                Customradiobutton(
+                  title: "1 Minggu Terakhir".tr,
+                  value: '2',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(2)),
+                  onTap: () => setState(() => c.selectDateFilter(2)),
+                ),
+                Customradiobutton(
+                  title: "Hari Ini".tr,
+                  value: '3',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(3)),
+                  onTap: () => setState(() => c.selectDateFilter(3)),
+                ),
+                Customradiobutton(
+                  title: "Pilih Tanggal Sendiri".tr,
+                  value: '4',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(4)),
+                  onTap: () => setState(() => c.selectDateFilter(4)),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -1,12 +1,10 @@
 import 'package:bubble/bubble.dart';
-import 'package:collection/collection.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolal_laporanku_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/image_popup_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -14,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:pinput/pinput.dart';
 
 class ObrolanLaporankuScreen extends StatelessWidget {
   const ObrolanLaporankuScreen({super.key});
@@ -65,25 +62,16 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                   chat(e, context),
                 ],
               ),
-              firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
               firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
                 height: 100,
                 background: Colors.transparent,
               ),
-              noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
-              noMoreItemsIndicatorBuilder: (context) => const Center(
-                  // child: Divider(
-                  //   indent: 100,
-                  //   endIndent: 100,
-                  //   thickness: 2,
-                  //   color: blueJNE,
-                  // ),
-                  ),
               newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
                 background: Colors.transparent,
                 height: 50,
                 size: 30,
               ),
+              noItemsFoundIndicatorBuilder: (context) => Container(),
             ),
           ),
           // child: ListView(
