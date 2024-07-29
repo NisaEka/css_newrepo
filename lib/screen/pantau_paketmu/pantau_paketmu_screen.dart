@@ -1,6 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
@@ -11,8 +10,6 @@ import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -64,103 +61,111 @@ class PantauPaketmuScreen extends StatelessWidget {
   }
 
   Widget _filterContent(BuildContext context, PantauPaketmuController c, StateSetter setState) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Customradiobutton(
-          title: "Semua Tanggal".tr,
-          value: '0',
-          groupValue: c.dateFilter,
-          onChanged: (value) => setState(() => c.selectDateFilter(0)),
-          onTap: () => setState(() => c.selectDateFilter(0)),
-        ),
-        Customradiobutton(
-          title: "1 Bulan Terakhir".tr,
-          value: '1',
-          groupValue: c.dateFilter,
-          onChanged: (value) => setState(() => c.selectDateFilter(1)),
-          onTap: () => setState(() => c.selectDateFilter(1)),
-        ),
-        Customradiobutton(
-          title: "1 Minggu Terakhir".tr,
-          value: '2',
-          groupValue: c.dateFilter,
-          onChanged: (value) => setState(() => c.selectDateFilter(2)),
-          onTap: () => setState(() => c.selectDateFilter(2)),
-        ),
-        Customradiobutton(
-          title: "Hari Ini".tr,
-          value: '3',
-          groupValue: c.dateFilter,
-          onChanged: (value) => setState(() => c.selectDateFilter(3)),
-          onTap: () => setState(() => c.selectDateFilter(3)),
-        ),
-        Customradiobutton(
-          title: "Pilih Tanggal Sendiri".tr,
-          value: '4',
-          groupValue: c.dateFilter,
-          onChanged: (value) => setState(() => c.selectDateFilter(4)),
-          onTap: () => setState(() => c.selectDateFilter(4)),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CustomTextFormField(
-              controller: c.startDateField,
-              readOnly: true,
-              width: Get.width / 3,
-              hintText: 'Tanggal Awal'.tr,
-              onTap: () => c.dateFilter == '4'
-                  ? c.selectDate(context).then((value) {
-                      setState(() {
-                        c.startDate = value;
-                        c.startDateField.text = value.toString().toShortDateFormat();
-                        c.endDate = DateTime.now();
-                        c.endDateField.text = DateTime.now().toString().toShortDateFormat();
-                        c.update();
-                      });
-                    })
-                  : null,
-              // hintText: 'Dari Tanggal',
-            ),
-            CustomTextFormField(
-              controller: c.endDateField,
-              readOnly: true,
-              width: Get.width / 3,
-              hintText: 'Tanggal Akhir'.tr,
-              onTap: () => c.dateFilter == '4'
-                  ? c.selectDate(context).then((value) {
-                      setState(() {
-                        c.endDate = value;
-                        c.endDateField.text = value.toString().toShortDateFormat();
-                        c.update();
-                      });
-                    })
-                  : null,
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        CustomDropDownField(
-          items: c.listOfficerEntry
-              .map(
-                (e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(e),
+    return Expanded(
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Customradiobutton(
+                  title: "Semua Tanggal".tr,
+                  value: '0',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(0)),
+                  onTap: () => setState(() => c.selectDateFilter(0)),
                 ),
-              )
-              .toList(),
-          label: 'Petugas Entry'.tr,
-          hintText: 'Petugas Entry'.tr,
-          value: c.selectedPetugasEntry,
-          onChanged: (value) {
-            setState(() {
-              c.selectedPetugasEntry = value;
-              c.update();
-            });
-          },
-        )
-      ],
+                Customradiobutton(
+                  title: "1 Bulan Terakhir".tr,
+                  value: '1',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(1)),
+                  onTap: () => setState(() => c.selectDateFilter(1)),
+                ),
+                Customradiobutton(
+                  title: "1 Minggu Terakhir".tr,
+                  value: '2',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(2)),
+                  onTap: () => setState(() => c.selectDateFilter(2)),
+                ),
+                Customradiobutton(
+                  title: "Hari Ini".tr,
+                  value: '3',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(3)),
+                  onTap: () => setState(() => c.selectDateFilter(3)),
+                ),
+                Customradiobutton(
+                  title: "Pilih Tanggal Sendiri".tr,
+                  value: '4',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(4)),
+                  onTap: () => setState(() => c.selectDateFilter(4)),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomTextFormField(
+                      controller: c.startDateField,
+                      readOnly: true,
+                      width: Get.width / 3,
+                      hintText: 'Tanggal Awal'.tr,
+                      onTap: () => c.dateFilter == '4'
+                          ? c.selectDate(context).then((value) {
+                              setState(() {
+                                c.startDate = value;
+                                c.startDateField.text = value.toString().toShortDateFormat();
+                                c.endDate = DateTime.now();
+                                c.endDateField.text = DateTime.now().toString().toShortDateFormat();
+                                c.update();
+                              });
+                            })
+                          : null,
+                      // hintText: 'Dari Tanggal',
+                    ),
+                    CustomTextFormField(
+                      controller: c.endDateField,
+                      readOnly: true,
+                      width: Get.width / 3,
+                      hintText: 'Tanggal Akhir'.tr,
+                      onTap: () => c.dateFilter == '4'
+                          ? c.selectDate(context).then((value) {
+                              setState(() {
+                                c.endDate = value;
+                                c.endDateField.text = value.toString().toShortDateFormat();
+                                c.update();
+                              });
+                            })
+                          : null,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                CustomDropDownField(
+                  items: c.listOfficerEntry
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e),
+                        ),
+                      )
+                      .toList(),
+                  label: 'Petugas Entry'.tr,
+                  hintText: 'Petugas Entry'.tr,
+                  value: c.selectedPetugasEntry,
+                  onChanged: (value) {
+                    setState(() {
+                      c.selectedPetugasEntry = value;
+                      c.update();
+                    });
+                  },
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

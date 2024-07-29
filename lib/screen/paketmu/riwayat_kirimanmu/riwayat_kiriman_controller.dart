@@ -1,9 +1,11 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -27,6 +29,8 @@ class RiwayatKirimanController extends BaseController {
   String? selectedPetugasEntry;
   String? transType;
   String? transDate;
+  String dateFilter = '0';
+
 
   bool isFiltered = false;
   bool isLoading = false;
@@ -140,6 +144,34 @@ class RiwayatKirimanController extends BaseController {
     update();
   }
 
+  void selectDateFilter(int filter) {
+    dateFilter = filter.toString();
+    update();
+    if (filter == 0 || filter == 4) {
+      startDate = null;
+      endDate = null;
+      startDateField.text = '-';
+      endDateField.text = '-';
+    } else if (filter == 1) {
+      startDate = DateTime.now().subtract(const Duration(days: 30));
+      endDate = DateTime.now();
+      startDateField.text = startDate.toString().toLongDateTimeFormat();
+      endDateField.text = endDate.toString().toLongDateTimeFormat();
+    } else if (filter == 2) {
+      startDate = DateTime.now().subtract(const Duration(days: 7));
+      endDate = DateTime.now();
+      startDateField.text = startDate.toString().toLongDateTimeFormat();
+      endDateField.text = endDate.toString().toLongDateTimeFormat();
+    } else if (filter == 3) {
+      startDate = DateTime.now();
+      endDate = DateTime.now();
+      startDateField.text = startDate.toString().toLongDateTimeFormat();
+      endDateField.text = endDate.toString().toLongDateTimeFormat();
+    }
+
+    update();
+  }
+
   Future<DateTime?> selectDate(BuildContext context) {
     return showDatePicker(
       context: context,
@@ -148,14 +180,7 @@ class RiwayatKirimanController extends BaseController {
       lastDate: DateTime(2101),
       builder: (context, child) {
         return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.red, // button text color
-              ),
-            ),
-          ),
+          data: CustomTheme().dateTimePickerTheme(context),
           child: child!,
         );
       },
@@ -165,14 +190,7 @@ class RiwayatKirimanController extends BaseController {
         initialTime: TimeOfDay.now(),
         builder: (context, child) {
           return Theme(
-            data: Theme.of(context).copyWith(
-              colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
-              textButtonTheme: TextButtonThemeData(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.red, // button text color
-                ),
-              ),
-            ),
+            data: CustomTheme().dateTimePickerTheme(context),
             child: child!,
           );
         },
@@ -196,6 +214,8 @@ class RiwayatKirimanController extends BaseController {
     isFiltered = false;
     searchField.clear();
     transDate = null;
+    dateFilter = '0';
+
 
     pagingController.refresh();
     update();

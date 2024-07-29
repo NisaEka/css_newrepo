@@ -1,17 +1,16 @@
-import 'package:collection/collection.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_doc/agg_by_doc_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_controller.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
+import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
@@ -31,15 +30,36 @@ class PembayaranAggergasiScreen extends StatelessWidget {
         init: PembayaranAggergasiController(),
         builder: (controller) {
           return Scaffold(
-            appBar: CustomTopBar(
-              title: 'Laporan Pembayaran Aggregasi'.tr,
-              action: [
-                _filterContent(controller, context),
-              ],
-            ),
+            appBar: _appBarContent(controller, context),
             body: _bodyContent(controller, context),
           );
         });
+  }
+
+  CustomTopBar _appBarContent(PembayaranAggergasiController c, BuildContext context) {
+    return CustomTopBar(
+      title: 'Laporan Pembayaran Aggregasi'.tr,
+      action: [
+        FilterButton(
+          filterContent: StatefulBuilder(
+            builder: (context, setState) {
+              return _filterContent(c, context, setState);
+            },
+          ),
+          isFiltered: c.isFiltered,
+          isApplyFilter: c.startDate != null || c.endDate != null,
+          onResetFilter: () => c.resetFilter(),
+          onApplyFilter: () => c.applyFilter(),
+          onCloseFilter: () {
+            if (!c.isFiltered) {
+              c.resetFilter();
+            } else {
+              Get.back();
+            }
+          },
+        ),
+      ],
+    );
   }
 
   Widget _bodyContent(PembayaranAggergasiController c, BuildContext context) {
@@ -113,144 +133,99 @@ class PembayaranAggergasiScreen extends StatelessWidget {
     );
   }
 
-  Widget _filterContent(PembayaranAggergasiController c, BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(
-        color: c.isFiltered ? redJNE : Colors.transparent,
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child: IconButton(
-        onPressed: () {
-          Get.bottomSheet(
-            enableDrag: true,
-            isDismissible: false,
-            // isScrollControlled: true,
-            StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-              return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  color: AppConst.isDarkTheme(context) ? greyDarkColor2 : greyLightColor2,
-                  borderRadius: BorderRadius.circular(10),
+  Widget _filterContent(PembayaranAggergasiController c, BuildContext context, StateSetter setState) {
+    return Expanded(
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomFormLabel(label: 'Nomor Akun'.tr),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: c.accountList
+                        .map(
+                          (e) => AccountListItem(
+                            data: e,
+                            isSelected: c.selectedAccount.where((accounts) => accounts == e).isNotEmpty,
+                            onTap: () => setState(() => c.onSelectAccount(e)),
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                const SizedBox(height: 10),
+                CustomFormLabel(label: 'Tanggal Pembayaran'.tr),
+                Customradiobutton(
+                  title: "Semua Tanggal".tr,
+                  value: '0',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(0)),
+                  onTap: () => setState(() => c.selectDateFilter(0)),
+                ),
+                Customradiobutton(
+                  title: "1 Bulan Terakhir".tr,
+                  value: '1',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(1)),
+                  onTap: () => setState(() => c.selectDateFilter(1)),
+                ),
+                Customradiobutton(
+                  title: "1 Minggu Terakhir".tr,
+                  value: '2',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(2)),
+                  onTap: () => setState(() => c.selectDateFilter(2)),
+                ),
+                Customradiobutton(
+                  title: "Hari Ini".tr,
+                  value: '3',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(3)),
+                  onTap: () => setState(() => c.selectDateFilter(3)),
+                ),
+                Customradiobutton(
+                  title: "Pilih Tanggal Sendiri".tr,
+                  value: '4',
+                  groupValue: c.dateFilter,
+                  onChanged: (value) => setState(() => c.selectDateFilter(4)),
+                  onTap: () => setState(() => c.selectDateFilter(4)),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Filter',
-                          style: appTitleTextStyle.copyWith(
-                            color: AppConst.isDarkTheme(context) ? redJNE : blueJNE,
-                          ),
-                        ),
-                        IconButton(
-                          // onPressed: () => controller.resetFilter(),
-                          onPressed: () {
-                            if (!c.isFiltered) {
-                              c.resetFilter();
-                            }
-                          },
-                          icon: const Icon(Icons.close),
-                        ),
-                      ],
+                    CustomTextFormField(
+                      controller: c.startDateField,
+                      readOnly: true,
+                      width: Get.width / 2.3,
+                      hintText: 'Tanggal Awal'.tr,
+                      // label: ,
+                      onTap: () => c.dateFilter == '4'
+                          ? c.selectDate(context).then((value) {
+                              setState(() => c.onSelectStartDate(value!));
+                            })
+                          : null,
+                      // hintText: 'Dari Tanggal',
                     ),
-                    // const Divider(color: greyColor),
-                    const SizedBox(height: 10),
-                    Expanded(
-                      child: CustomScrollView(
-                        slivers: [
-                          SliverToBoxAdapter(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomFormLabel(label: 'Nomor Akun'.tr),
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: c.accountList
-                                        .map(
-                                          (e) => AccountListItem(
-                                            data: e,
-                                            isSelected: c.selectedAccount.where((accounts) => accounts == e).isNotEmpty,
-                                            onTap: () => setState(() => c.onSelectAccount(e)),
-                                          ),
-                                        )
-                                        .toList(),
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                CustomFormLabel(label: 'Tanggal Pembayaran'.tr),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CustomTextFormField(
-                                      controller: c.startDateField,
-                                      readOnly: true,
-                                      width: Get.width / 2.3,
-                                      hintText: 'Tanggal Awal'.tr,
-                                      // label: ,
-                                      onTap: () => c.selectDate(context).then((value) {
-                                        setState(() => c.onSelectStartDate(value!));
-                                      }),
-                                      // hintText: 'Dari Tanggal',
-                                    ),
-                                    CustomTextFormField(
-                                      controller: c.endDateField,
-                                      readOnly: true,
-                                      width: Get.width / 2.3,
-                                      hintText: 'Tanggal Akhir'.tr,
-                                      onTap: () => c.selectDate(context).then(
-                                            (value) => setState(() => c.onSelectEndDate(value!)),
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        c.isFiltered
-                            ? CustomFilledButton(
-                                color: whiteColor,
-                                fontColor: blueJNE,
-                                borderColor: blueJNE,
-                                width: Get.width / 2.5,
-                                title: 'Reset Filter'.tr,
-                                onPressed: () => c.resetFilter(),
+                    CustomTextFormField(
+                      controller: c.endDateField,
+                      readOnly: true,
+                      width: Get.width / 2.3,
+                      hintText: 'Tanggal Akhir'.tr,
+                      onTap: () => c.dateFilter == '4'
+                          ? c.selectDate(context).then(
+                                (value) => setState(() => c.onSelectEndDate(value!)),
                               )
-                            : const SizedBox(),
-                        CustomFilledButton(
-                          color: c.startDate != null || c.endDate != null || !c.accountList.equals(c.selectedAccount)
-                              ? blueJNE
-                              : (AppConst.isLightTheme(context) ? greyColor : greyLightColor3),
-                          width: c.isFiltered ? Get.width / 2.5 : Get.width - 40,
-                          title: 'Terapkan'.tr,
-                          onPressed: () => c.applyFilter(),
-                        ),
-                      ],
-                    )
+                          : null,
+                    ),
                   ],
                 ),
-              );
-            }),
-            backgroundColor: AppConst.isLightTheme(context) ? Colors.white : greyColor,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              ],
             ),
-          );
-        },
-        icon: const Icon(Icons.filter_alt_outlined),
-        color: c.isFiltered ? whiteColor : redJNE,
-        tooltip: 'filter'.tr,
+          ),
+        ],
       ),
     );
   }

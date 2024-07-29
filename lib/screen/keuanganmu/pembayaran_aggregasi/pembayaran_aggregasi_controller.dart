@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -23,6 +23,7 @@ class PembayaranAggergasiController extends BaseController {
   bool isSelectAll = false;
 
   String? transDate;
+  String dateFilter = '0';
   int? aggTotal;
 
   List<Account> accountList = [];
@@ -83,9 +84,37 @@ class PembayaranAggergasiController extends BaseController {
         aggTotal = value.payload?.total?.toInt() ?? 0;
         update();
       });
-    } catch (e,i) {
+    } catch (e, i) {
       e.printError();
       i.printError();
+    }
+
+    update();
+  }
+
+  void selectDateFilter(int filter) {
+    dateFilter = filter.toString();
+    update();
+    if (filter == 0 || filter == 4) {
+      startDate = null;
+      endDate = null;
+      startDateField.text = '-';
+      endDateField.text = '-';
+    } else if (filter == 1) {
+      startDate = DateTime.now().subtract(const Duration(days: 30));
+      endDate = DateTime.now();
+      startDateField.text = startDate.toString().toShortDateFormat();
+      endDateField.text = endDate.toString().toShortDateFormat();
+    } else if (filter == 2) {
+      startDate = DateTime.now().subtract(const Duration(days: 7));
+      endDate = DateTime.now();
+      startDateField.text = startDate.toString().toShortDateFormat();
+      endDateField.text = endDate.toString().toShortDateFormat();
+    } else if (filter == 3) {
+      startDate = DateTime.now();
+      endDate = DateTime.now();
+      startDateField.text = startDate.toString().toShortDateFormat();
+      endDateField.text = endDate.toString().toShortDateFormat();
     }
 
     update();
@@ -99,41 +128,10 @@ class PembayaranAggergasiController extends BaseController {
       lastDate: DateTime(2101),
       builder: (context, child) {
         return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.red, // button text color
-              ),
-            ),
-          ),
+          data: CustomTheme().dateTimePickerTheme(context),
           child: child!,
         );
       },
-    ).then(
-      (selectedDate) => showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        builder: (context, child) {
-          return Theme(
-            data: Theme.of(context).copyWith(
-              colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
-              textButtonTheme: TextButtonThemeData(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.red, // button text color
-                ),
-              ),
-            ),
-            child: child!,
-          );
-        },
-      ).then((selectedTime) => DateTime(
-            selectedDate!.year,
-            selectedDate.month,
-            selectedDate.day,
-            selectedTime!.hour,
-            selectedTime.minute,
-          )),
     );
   }
 
@@ -170,6 +168,8 @@ class PembayaranAggergasiController extends BaseController {
     selectedAccount = [];
     selectedAccount.addAll(accountList);
     transDate = '';
+    dateFilter = '0';
+
     update();
 
     pagingController.refresh();
@@ -188,16 +188,16 @@ class PembayaranAggergasiController extends BaseController {
 
   void onSelectStartDate(DateTime value) {
     startDate = value;
-    startDateField.text = value.toString().toDateTimeFormat();
-    endDate = value;
-    endDateField.text = value.toString().toDateTimeFormat();
+    startDateField.text = value.toString().toShortDateFormat();
+    endDate = DateTime.now();
+    endDateField.text = endDate.toString().toShortDateFormat();
 
     update();
   }
 
   void onSelectEndDate(DateTime value) {
     endDate = value;
-    endDateField.text = value.toString().toDateTimeFormat();
+    endDateField.text = value.toString().toShortDateFormat();
     update();
   }
 }

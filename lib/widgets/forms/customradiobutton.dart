@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 
 class Customradiobutton extends StatelessWidget {
@@ -24,7 +25,7 @@ class Customradiobutton extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
           ),
           Radio(
             value: value,

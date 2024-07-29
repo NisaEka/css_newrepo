@@ -67,15 +67,7 @@ class FilterButton extends StatelessWidget {
                     ),
                     // const Divider(color: greyColor),
                     const SizedBox(height: 10),
-                    Expanded(
-                      child: CustomScrollView(
-                        slivers: [
-                          SliverToBoxAdapter(
-                            child: filterContent,
-                          ),
-                        ],
-                      ),
-                    ),
+                    filterContent,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

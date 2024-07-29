@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-class UangCODController extends BaseController{
+class UangCODController extends BaseController {
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
 
@@ -23,16 +23,16 @@ class UangCODController extends BaseController{
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     ).then(
-          (selectedDate) => showTimePicker(
+      (selectedDate) => showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
       ).then((selectedTime) => DateTime(
-        selectedDate!.year,
-        selectedDate.month,
-        selectedDate.day,
-        selectedTime!.hour,
-        selectedTime.minute,
-      )),
+            selectedDate!.year,
+            selectedDate.month,
+            selectedDate.day,
+            selectedTime!.hour,
+            selectedTime.minute,
+          )),
     );
   }
 
@@ -46,4 +46,11 @@ class UangCODController extends BaseController{
     Get.back();
   }
 
+  applyFilter() {
+    if (startDate != null || endDate != null) {
+      isFiltered = true;
+      update();
+      Get.back();
+    }
+  }
 }
