@@ -5,7 +5,6 @@ import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/laporanku/laporanku_repository.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -106,10 +105,9 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketModel> postTicketMessage(DataPostTicketModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-
+    network.local.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.post(
+      Response response = await network.local.post(
         "/ticket/${data.id}/message",
         data: data,
       );

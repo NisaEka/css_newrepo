@@ -32,7 +32,7 @@ class ObrolanLaporankuController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    // Future.wait([initData()]);
+    Future.wait([initData()]);
     pagingController.addPageRequestListener((pageKey) {
       getMessages(pageKey);
     });
@@ -61,10 +61,12 @@ class ObrolanLaporankuController extends BaseController {
       if (isLastPage) {
         pagingController.appendLastPage(message.payload ?? []);
         messages.addAll(message.payload ?? []);
+        // subject = message.payload?.first.subject;
       } else {
         final nextPageKey = page + 1;
         pagingController.appendPage(message.payload ?? [], nextPageKey);
         messages.addAll(message.payload ?? []);
+        // subject = message.payload?.first.subject;
       }
     } catch (e) {
       e.printError(info: 'error message paging');
@@ -90,24 +92,52 @@ class ObrolanLaporankuController extends BaseController {
       await laporanku
           .postTicketMessage(
         DataPostTicketModel(
-          id: id,
-          subject: subject,
-          message: messageInsert.text.toUpperCase(),
-          type: 'S',
-          image: '',
-        ),
+            cnote: ticket.cnote,
+            categoryId: ticket.category?.id,
+            id: id,
+            subject: subject,
+            message: messageInsert.text.toUpperCase(),
+            type: 'S',
+            image: null,
+            priority: ticket.priority),
       )
           .then((value) {
+        value.toJson().printInfo(info: "tm response");
         if (value.code == 201) {
           pagingController.refresh();
           initData();
           messageInsert.clear();
           gettedPhoto = null;
           update();
+        } else {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.warning,
+                color: whiteColor,
+              ),
+              message: value.message?.tr,
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: errorColor,
+            ),
+          );
         }
       });
     } catch (e) {
       e.printError();
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(
+            Icons.warning,
+            color: whiteColor,
+          ),
+          message: 'Bad Request'.tr,
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: errorColor,
+        ),
+      );
     }
   }
 

@@ -104,13 +104,13 @@ class InputLaporankuController extends BaseController {
                                 ListTile(
                                   contentPadding: EdgeInsets.zero,
                                   title: Text(
-                                    e.description ?? '',
+                                    e.description?.toUpperCase() ?? '',
                                     style: Theme.of(context).textTheme.titleMedium,
                                   ),
                                   style: ListTileStyle.list,
                                   onTap: () {
                                     selectedCategory = e;
-                                    category.text = e.description ?? '';
+                                    category.text = e.description?.toUpperCase() ?? '';
                                     update();
                                     Get.back();
                                   },
@@ -127,13 +127,13 @@ class InputLaporankuController extends BaseController {
                                 ListTile(
                                   contentPadding: EdgeInsets.zero,
                                   title: Text(
-                                    e.description ?? '',
+                                    e.description?.toUpperCase() ?? '',
                                     style: Theme.of(context).textTheme.titleMedium,
                                   ),
                                   style: ListTileStyle.list,
                                   onTap: () {
                                     selectedCategory = e;
-                                    category.text = e.description ?? '';
+                                    category.text = e.description?.toUpperCase() ?? '';
                                     update();
                                     Get.back();
                                   },

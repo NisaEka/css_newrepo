@@ -339,6 +339,8 @@ class LanguageEN {
       "1 Minggu Terakhir": "Last 1 Week",
       "Hari Ini": "Today",
       "Pilih Tanggal Sendiri": "Custom Range",
+      "Nomor Resi Tidak Terdaftar": "Receipt number not found",
+      "Tiket Sudah Terdaftar": "This Ticket is already exist",
     };
   }
 }

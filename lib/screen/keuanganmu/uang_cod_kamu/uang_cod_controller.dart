@@ -3,7 +3,6 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class UangCODController extends BaseController {
   final startDateField = TextEditingController();
