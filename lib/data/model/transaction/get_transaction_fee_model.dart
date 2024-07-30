@@ -59,8 +59,8 @@ String payloadToJson(TransactionFeeModel data) => json.encode(data.toJson());
 
 class TransactionFeeModel {
   TransactionFeeModel({
-    String? flatRate,
-    String? freightCharge,
+    int? flatRate,
+    int? freightCharge,
   }) {
     _flatRate = flatRate;
     _freightCharge = freightCharge;
@@ -71,21 +71,21 @@ class TransactionFeeModel {
     _freightCharge = json['freight_charge'];
   }
 
-  String? _flatRate;
-  String? _freightCharge;
+  int? _flatRate;
+  int? _freightCharge;
 
   TransactionFeeModel copyWith({
-    String? flatRate,
-    String? freightCharge,
+    int? flatRate,
+    int? freightCharge,
   }) =>
       TransactionFeeModel(
         flatRate: flatRate ?? _flatRate,
         freightCharge: freightCharge ?? _freightCharge,
       );
 
-  String? get flatRate => _flatRate;
+  int? get flatRate => _flatRate;
 
-  String? get freightCharge => _freightCharge;
+  int? get freightCharge => _freightCharge;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

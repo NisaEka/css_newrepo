@@ -105,9 +105,9 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketModel> postTicketMessage(DataPostTicketModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.local.post(
+      Response response = await network.dio.post(
         "/ticket/${data.id}/message",
         data: data,
       );

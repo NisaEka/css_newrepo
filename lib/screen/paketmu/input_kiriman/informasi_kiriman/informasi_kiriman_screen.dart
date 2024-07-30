@@ -19,6 +19,7 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
@@ -159,12 +160,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                   data: c.account,
                   isSelected: true,
                   width: Get.width,
-                  onTap: () => c.dropship == false
-                      ? Get.to(const AkunTransaksiScreen())?.then((result) {
-                          c.account = result;
-                          c.update();
-                        })
-                      : null,
+                  onTap: () => c.dropship == false ? Get.to(const AkunTransaksiScreen())?.then((result) => c.onChangeAccount(result)) : null,
                 ),
               ),
               const SizedBox(height: 10),
@@ -182,50 +178,71 @@ class InformasiKirimanScreen extends StatelessWidget {
         ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          sliver: SliverGrid(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 100.0,
-              mainAxisSpacing: 20.0,
-              crossAxisSpacing: 20.0,
-              childAspectRatio: 4.0,
-              // mainAxisExtent: 10
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () {
-                    c.selectedService = c.serviceList[index];
-                    c.getOngkir();
-                    c.formValidate = c.formKey.currentState?.validate() ?? false;
-                    c.update();
-                  },
-                  child: Shimmer(
-                    isLoading: c.isServiceLoad,
+          sliver: c.serviceList.isEmpty && c.isOnline && !c.isServiceLoad
+              ? SliverToBoxAdapter(
+                  child: GestureDetector(
+                    onTap: () => c.initData(),
                     child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: c.isServiceLoad
-                            ? greyColor
-                            : c.selectedService == c.serviceList[index]
-                                ? AppConst.isLightTheme(context)
-                                    ? blueJNE
-                                    : redJNE
-                                : greyLightColor3,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: c.serviceList.isEmpty
-                          ? const SizedBox()
-                          : Text(
-                              c.serviceList[index].serviceDisplay ?? '',
-                              style: listTitleTextStyle.copyWith(color: c.selectedService == c.serviceList[index] ? whiteColor : blueJNE),
-                            ),
-                    ),
+                        decoration: const BoxDecoration(
+                          color: greyLightColor3,
+                        ),
+                        width: Get.width / 2,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.refresh),
+                            Text("Try again"),
+                          ],
+                        )),
                   ),
-                );
-              },
-              childCount: c.isServiceLoad ? 6 : c.serviceList.length,
-            ),
-          ),
+                )
+              : SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 100.0,
+                    mainAxisSpacing: 20.0,
+                    crossAxisSpacing: 20.0,
+                    childAspectRatio: 4.0,
+                    // mainAxisExtent: 10
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          c.selectedService = c.serviceList[index];
+                          c.getOngkir();
+                          c.formValidate = c.formKey.currentState?.validate() ?? false;
+                          c.update();
+                        },
+                        child: Shimmer(
+                          isLoading: c.isServiceLoad,
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: c.isServiceLoad
+                                  ? greyColor
+                                  : c.selectedService?.serviceDisplay == c.serviceList[index].serviceDisplay
+                                      ? AppConst.isLightTheme(context)
+                                          ? blueJNE
+                                          : redJNE
+                                      : greyLightColor3,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: c.serviceList.isEmpty
+                                ? const SizedBox()
+                                : Text(
+                                    c.serviceList[index].serviceDisplay ?? '',
+                                    style: listTitleTextStyle.copyWith(
+                                      color: c.selectedService?.serviceDisplay == c.serviceList[index].serviceDisplay ? whiteColor : blueJNE,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      );
+                    },
+                    childCount: c.isServiceLoad ? 6 : c.serviceList.length,
+                  ),
+                ),
         ),
         SliverToBoxAdapter(
           child: Container(
@@ -305,7 +322,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                             contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 40, right: 10),
                             width: Get.width / 2,
                             isRequired: c.asuransi,
-                            onChanged: (value) => c.hitungOngkir(),
+                            onChanged: (value) => c.getOngkir(),
                           ),
                           CustomTextFormField(
                             controller: c.jumlahPacking,
@@ -337,7 +354,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                             value: c.asuransi,
                             onChanged: (value) {
                               c.asuransi = value!;
-                              c.hitungOngkir();
+                              c.getOngkir();
                               // value == false ? controller.hargaBarang.clear() : null;
                               c.hargaCODkey.currentState?.validate();
                               c.update();
@@ -368,7 +385,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                               c.update();
                             },
                           ),
-                          title: Text("Packing Kayu".tr),
+                          title: Text(
+                            "Packing Kayu".tr,
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+                          ),
                           // trailing: IconButton(
                           //   onPressed: () {},
                           //   icon: const Icon(
@@ -491,7 +511,7 @@ class InformasiKirimanScreen extends StatelessWidget {
                               ],
                             )
                           : const SizedBox(),
-                      c.isOnline
+                      c.isOnline && c.selectedService != null
                           ? /*controller.isCalculate
                                           ? Container(
                                               width: Get.width,
@@ -518,10 +538,10 @@ class InformasiKirimanScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
-                                  c.isCalculate
+                                  c.isCalculate || c.isServiceLoad
                                       ? Column(
                                           children: List.generate(
-                                            2,
+                                            5,
                                             (index) => Shimmer(
                                               isLoading: c.isCalculate,
                                               child: Container(

@@ -112,17 +112,22 @@ class InformasiKirimaController extends BaseController {
     }));
   }
 
-  int totalOngkir = 0;
+  num totalOngkir = 0;
   num flatRate = 0;
   num flatRateISR = 0;
   num freightCharge = 0;
   num freightChargeISR = 0;
   double isr = 0;
   double berat = 0;
-  double hargacod = 0;
-  double hargacCODOngkir = 0;
-  double hargacCODOngkirISR = 0;
+  num hargacod = 0;
+  num hargacCODOngkir = 0;
+  num hargacCODOngkirISR = 0;
   double codfee = 0;
+  num getCodFeeMinimum = 0;
+  num getCodAmountMinimum = 0;
+  num getCodFee = 0;
+  num getCodAmount = 0;
+  num getInsurance = 0;
 
   void hitungBerat(double p, double l, double t) {
     isCalculate = true;
@@ -161,10 +166,13 @@ class InformasiKirimaController extends BaseController {
   void hitungOngkir() {
     totalOngkir = 0;
     isr = 0;
+    double vat = (1.1 / 100);
     isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
     flatRateISR = flatRate + isr;
     freightChargeISR = freightCharge + isr;
+    getInsurance = asuransi ? isr : 0;
     update();
+    int goodsAmount = hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt();
 
     if (isOnline) {
       isCalculate = true;
@@ -176,18 +184,30 @@ class InformasiKirimaController extends BaseController {
         freightChargeISR = freightCharge + isr;
         update();
         // }
-        hargacod = (codfee * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) +
-            (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt()) +
-            totalOngkir;
+        print("select account : ${account.toJson()}");
+        bool prefix3 = account.accountNumber?.substring(0, 0) == "3";
+        bool isCOD = account.accountService?.toUpperCase() == 'COD';
+        print("isCOD: $isCOD");
+        print("isPrefix3: $prefix3");
+        num getVat =  isCOD && prefix3 ? freightCharge * vat : 0;
+
+        getCodFeeMinimum = asuransi ? freightChargeISR * codfee : freightCharge * codfee;
+        getCodAmountMinimum = asuransi ? freightChargeISR + getCodFeeMinimum + getVat : freightCharge + getCodFeeMinimum + getVat;
+
+        getCodFee = (goodsAmount + freightCharge) * codfee;
+        getCodAmount = (goodsAmount + getCodFee + getVat);
+
+        // hargacod = (codfee * (goodsAmount) + (goodsAmount) + totalOngkir);
+        hargacod = isCOD ? getCodAmount : 0;
         hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1000;
         hargacCODOngkirISR = freightCharge + isr;
         update();
 
-        totalOngkir = codOngkir
+        totalOngkir = codOngkir && account.accountService == "JLC"
             ? hargacCODOngkir.toInt()
             : asuransi
-                ? freightChargeISR.toInt()
-                : freightCharge.toInt();
+                ? (freightChargeISR.toInt() + hargacod)
+                : (freightCharge.toInt() + hargacod);
 
         update();
       }
@@ -204,7 +224,7 @@ class InformasiKirimaController extends BaseController {
         //     snackPosition: SnackPosition.BOTTOM,
         //     snackStyle: SnackStyle.FLOATING,
         //     animationDuration: Duration(milliseconds: 500),
-        //   ),
+        //   )
         // );
       } else {
         isShowDialog = false;
@@ -247,24 +267,26 @@ class InformasiKirimaController extends BaseController {
 
   Future<void> getOngkir() async {
     isCalculate = isOnline ? true : false;
+    update();
+    // print("freightCharge${freightCharge}");
     try {
-      await transaction
-          .getTransactionFee(
+      var value = await transaction.getTransactionFee(
         DataTransactionFeeModel(
-          destinationCode: destination.destinationCode,
-          originCode: origin.originCode,
-          serviceCode: selectedService?.serviceCode,
-          weight: beratKiriman.text == '' ? 1 : beratKiriman.text.split('.').first.toInt(),
-          custNo: account.accountNumber,
-          type: jenisBarang.text == "PAKET" ? "PAKET" : "DOCUMENT"
-        ),
-      )
-          .then((value) {
-        flatRate = value.payload?.flatRate?.toInt() ?? 0;
-        freightCharge = value.payload?.freightCharge?.toInt() ?? 0;
-      });
-    } catch (e) {
+            destinationCode: destination.destinationCode,
+            originCode: origin.originCode,
+            serviceCode: selectedService?.serviceCode,
+            weight: beratKiriman.text == '' ? 1 : beratKiriman.text.split('.').first.toInt(),
+            custNo: account.accountNumber,
+            type: jenisBarang.text == "PAKET" ? "PAKET" : "DOCUMENT"),
+      );
+
+      flatRate = value.payload?.flatRate?.toInt() ?? 0;
+      freightCharge = value.payload?.freightCharge?.toInt() ?? 0;
+      print("freightCharge${freightCharge}");
+      update();
+    } catch (e, i) {
       e.printError();
+      i.printError();
       String message;
       if (selectedService == null && isOnline) {
         message = "Service harus diisi".tr;
@@ -282,6 +304,7 @@ class InformasiKirimaController extends BaseController {
         );
       }
     }
+
     hitungOngkir();
     update();
   }
@@ -325,6 +348,7 @@ class InformasiKirimaController extends BaseController {
     serviceList = [];
     connection.isOnline().then((value) => isOnline = value);
     jenisBarang.text = "PAKET";
+    update();
     try {
       await transaction
           .getService(
@@ -356,8 +380,10 @@ class InformasiKirimaController extends BaseController {
       });
       getCODfee();
       update();
-    } catch (e) {
+
+    } catch (e,i) {
       e.printError();
+      i.printError();
       // isOnline = false;
     }
     if (dataEdit != null) {
@@ -647,5 +673,18 @@ class InformasiKirimaController extends BaseController {
     }
     isLoading = false;
     update();
+  }
+
+  onChangeAccount(Account result) {
+    account = result;
+    selectedService = null;
+    update();
+    initData();
+    update();
+    getOngkir();
+    account.accountNumber.printInfo(info: "account number");
+
+    print("origin: ${origin.originCode}");
+    print("destination: ${destination.destinationCode}");
   }
 }
