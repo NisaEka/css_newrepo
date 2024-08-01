@@ -31,19 +31,23 @@ class CustomTheme {
         iconTheme: const IconThemeData(color: whiteColor),
       ),
       textTheme: GoogleFonts.ubuntuTextTheme().copyWith(
-        titleSmall: sublistTitleTextStyle.copyWith(
-          color: greyDarkColor1,
-        ),
-        labelLarge: const TextStyle(
-          color: greyDarkColor1,
-        ),
-        titleMedium: listTitleTextStyle.copyWith(
-          color: greyDarkColor1,
-        ),
-        bodySmall: itemTextStyle.copyWith(
-          color: greyDarkColor1,
-        ),
-      ),
+          titleSmall: sublistTitleTextStyle.copyWith(
+            color: greyDarkColor1,
+          ),
+          labelLarge: const TextStyle(
+            color: greyDarkColor1,
+          ),
+          titleMedium: listTitleTextStyle.copyWith(
+            color: greyDarkColor1,
+          ),
+          bodySmall: itemTextStyle.copyWith(
+            color: greyDarkColor1,
+          ),
+          bodyLarge: const TextStyle(
+            fontSize: 16,
+            color: greyDarkColor1,
+            // fontWeight: FontWeight.w600,
+          )),
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(
           iconColor: WidgetStateProperty.resolveWith(
@@ -176,6 +180,11 @@ class CustomTheme {
         ),
         bodySmall: itemTextStyle.copyWith(
           color: greyLightColor1,
+        ),
+        bodyLarge: const TextStyle(
+          fontSize: 16,
+          color: greyDarkColor1,
+          // fontWeight: FontWeight.w600,
         ),
       ),
       datePickerTheme: DatePickerThemeData(

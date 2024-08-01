@@ -71,7 +71,13 @@ class CustomDropDownFormField<T> extends StatelessWidget {
           ),
         ),
         itemBuilder: (context, item, bool bool) {
-          return Container(padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), child: Text(item));
+          return Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            child: Text(
+              item,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+            ),
+          );
         },
       ),
       dropdownButtonProps: const DropdownButtonProps(
@@ -86,7 +92,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
         ),
-        baseStyle: textStyle,
+        baseStyle: textStyle ?? Theme.of(context).textTheme.titleSmall,
       ),
       onChanged: (value) {
         onChanged!(_getIdSelectedValue(value ?? "") as T?);
@@ -141,11 +147,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
               ? TextField(
                   controller: TextEditingController(text: selectedItem.toString()),
                   enabled: false,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 16,
-                        color: greyDarkColor1,
-                        // fontWeight: FontWeight.w600,
-                      ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                   decoration: InputDecoration(
                     label: Text(hintText ?? ''),
                     fillColor: neutralColor,

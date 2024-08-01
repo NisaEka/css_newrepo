@@ -19,7 +19,6 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
@@ -272,11 +271,17 @@ class InformasiKirimanScreen extends StatelessWidget {
                             items: [
                               DropdownMenuItem(
                                 value: "PAKET",
-                                child: Text('Paket'.tr),
+                                child: Text(
+                                  'Paket'.tr,
+                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: "DOKUMEN",
-                                child: Text('Dokumen'.tr),
+                                child: Text(
+                                  'Dokumen'.tr,
+                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+                                ),
                               ),
                             ],
                             onChanged: (value) {
@@ -562,8 +567,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                 ? Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      const Text('COD fee'),
-                                                      Text('${c.codfee * 100}%'.replaceAll('.', ','), style: listTitleTextStyle),
+                                                      Text('COD fee', style: Theme.of(context).textTheme.titleMedium),
+                                                      Text('${c.codfee * 100}%'.replaceAll('.', ','), style: Theme.of(context).textTheme.titleMedium),
                                                     ],
                                                   )
                                                 : const SizedBox(),
@@ -571,8 +576,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                 ? Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      Text('Harga COD'.tr),
-                                                      Text('Rp. ${c.hargacod.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                      Text('Harga COD'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                      Text('Rp. ${c.hargacod.toInt().toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
                                                     ],
                                                   )
                                                 : const SizedBox(),
@@ -580,8 +585,8 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                 ? Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      Text('Fee COD Ongkir'.tr),
-                                                      Text('Rp. ${1000.toCurrency()}', style: listTitleTextStyle),
+                                                      Text('Fee COD Ongkir'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                      Text('Rp. ${1000.toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
                                                     ],
                                                   )
                                                 : const SizedBox(),
@@ -589,24 +594,24 @@ class InformasiKirimanScreen extends StatelessWidget {
                                                 ? Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      Text('Asuransi Pengiriman'.tr),
-                                                      Text('Rp. ${c.isr.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                      Text('Asuransi Pengiriman'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                      Text('Rp. ${c.isr.toInt().toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
                                                     ],
                                                   )
                                                 : const SizedBox(),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text('Ongkos Kirim'.tr),
-                                                Text('Rp. ${c.freightCharge.toInt().toCurrency()}', style: listTitleTextStyle),
+                                                Text('Ongkos Kirim'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                Text('Rp. ${c.freightCharge.toInt().toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
                                               ],
                                             ),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text('Total Ongkos Kirim'.tr),
+                                                Text('Total Ongkos Kirim'.tr, style: Theme.of(context).textTheme.titleMedium),
                                                 //gak boleh lebih dari 1jt //kalo cod ongkir true // kasih notif gak bisa di simpan transaksi // button transaksi disable
-                                                Text('Rp. ${(c.totalOngkir).toInt().toCurrency()}', style: listTitleTextStyle),
+                                                Text('Rp. ${(c.totalOngkir).toInt().toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
                                               ],
                                             )
                                           ],

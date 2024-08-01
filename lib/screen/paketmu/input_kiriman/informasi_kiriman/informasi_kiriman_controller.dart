@@ -191,8 +191,15 @@ class InformasiKirimaController extends BaseController {
         print("isPrefix3: $prefix3");
         num getVat =  isCOD && prefix3 ? freightCharge * vat : 0;
 
-        getCodFeeMinimum = asuransi ? freightChargeISR * codfee : freightCharge * codfee;
-        getCodAmountMinimum = asuransi ? freightChargeISR + getCodFeeMinimum + getVat : freightCharge + getCodFeeMinimum + getVat;
+        getCodFeeMinimum = (freightCharge + goodsAmount) * codfee;
+        getCodAmountMinimum = freightCharge + getCodFeeMinimum + getVat;
+
+        //cod amount text >= cod amount minimum
+        /*tanpa harga barang
+        * 1. codAmountMinimum = ongkir + (ongkir *vat) + (ongkir * codfee)
+        * 2. codAmount = HB + ongkir + (ongkir * vat) + (ongkir + harga barang * fee)
+        */
+
 
         getCodFee = (goodsAmount + freightCharge) * codfee;
         getCodAmount = (goodsAmount + getCodFee + getVat);
@@ -590,6 +597,7 @@ class InformasiKirimaController extends BaseController {
     isLoading = true;
     update();
 
+    // muncul popup kalo coud amount text <= cod amount minimum
     try {
       await transaction
           .postTransaction(DataTransactionModel(
