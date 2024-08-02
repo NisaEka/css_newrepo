@@ -21,6 +21,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/infor
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -57,6 +58,7 @@ class InformasiKirimaController extends BaseController {
   final hargaBarang = TextEditingController();
   final ongkosKirim = TextEditingController();
   final hargaAsuransi = TextEditingController();
+  final codAmountText = TextEditingController();
 
   // final codFee = TextEditingController();
   final hargaCOD = TextEditingController();
@@ -185,14 +187,14 @@ class InformasiKirimaController extends BaseController {
         update();
         // }
         print("select account : ${account.toJson()}");
-        bool prefix3 = account.accountNumber?.substring(0, 0) == "3";
+        bool prefix3 = account.accountNumber?.substring(0, 0) != "3";
         bool isCOD = account.accountService?.toUpperCase() == 'COD';
         print("isCOD: $isCOD");
         print("isPrefix3: $prefix3");
-        num getVat =  isCOD && prefix3 ? freightCharge * vat : 0;
+        num getVat = isCOD && prefix3 ? freightCharge * vat : 0;
 
         getCodFeeMinimum = (freightCharge + goodsAmount) * codfee;
-        getCodAmountMinimum = freightCharge + getCodFeeMinimum + getVat;
+        getCodAmountMinimum = goodsAmount + freightCharge + getCodFeeMinimum + getVat;
 
         //cod amount text >= cod amount minimum
         /*tanpa harga barang
@@ -200,12 +202,13 @@ class InformasiKirimaController extends BaseController {
         * 2. codAmount = HB + ongkir + (ongkir * vat) + (ongkir + harga barang * fee)
         */
 
-
         getCodFee = (goodsAmount + freightCharge) * codfee;
         getCodAmount = (goodsAmount + getCodFee + getVat);
+        // getCodAmount = goodsAmount + getVat + getCodFee;
 
         // hargacod = (codfee * (goodsAmount) + (goodsAmount) + totalOngkir);
         hargacod = isCOD ? getCodAmount : 0;
+        codAmountText.text = isCOD ? getCodAmountMinimum.toInt().toCurrency().toString() : '0';
         hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1000;
         hargacCODOngkirISR = freightCharge + isr;
         update();
@@ -387,8 +390,7 @@ class InformasiKirimaController extends BaseController {
       });
       getCODfee();
       update();
-
-    } catch (e,i) {
+    } catch (e, i) {
       e.printError();
       i.printError();
       // isOnline = false;
@@ -694,5 +696,52 @@ class InformasiKirimaController extends BaseController {
 
     print("origin: ${origin.originCode}");
     print("destination: ${destination.destinationCode}");
+  }
+
+  onChangeCodAmountText(String value) {
+    if (value.toInt() <= getCodAmountMinimum) {}
+  }
+
+  void onSaved() {
+    if (codAmountText.text.digitOnly().toInt() < getCodAmountMinimum) {
+      Get.dialog(StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          scrollable: false,
+          title: const Icon(
+            Icons.dangerous_outlined,
+            color: errorColor,
+            size: 100,
+          ),
+          alignment: Alignment.center,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Error".tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              Text(
+                "${'Harga COD tidak boleh kurang dari'.tr} Rp.${getCodAmountMinimum.toInt().toCurrency()}",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              CustomFilledButton(
+                color: blueJNE,
+                width: Get.width / 3,
+                title: "OK".tr,
+                onPressed: () => Get.back(),
+              )
+            ],
+          ),
+        ),
+      ));
+    } else {
+      isValidate()
+          ? dataEdit == null
+              ? saveTransaction()
+              : updateTransaction()
+          : null;
+    }
   }
 }

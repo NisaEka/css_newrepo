@@ -1,3 +1,4 @@
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -19,8 +20,8 @@ extension CustomValidationBuilder on ValidationBuilder {
   phoneNumber() => add((value) {
         if (value?.isEmpty ?? false) {
           return 'Masukan tidak boleh kosong'.tr;
-        // } else if (value!.length < 10) {
-        //   return 'Nomor telepon harus lebih dari 10 karakter'.tr;
+          // } else if (value!.length < 10) {
+          //   return 'Nomor telepon harus lebih dari 10 karakter'.tr;
         } else if (value!.length > 12) {
           return "Nomor telepon tidak boleh lebih dari 12 karakter".tr;
         }
@@ -49,16 +50,16 @@ extension CustomValidationBuilder on ValidationBuilder {
       });
 
   ValidationBuilder min(int minValue) => add((value) {
-        if (int.parse(value!) < minValue) {
-          return "minimal ${minValue.toString()}";
+        if (int.parse(value!.digitOnly()) < minValue) {
+          return "${'Isian Harus lebih besar atau sama dengan'.tr} ${minValue.toString()}";
         }
 
         return null;
       });
 
   ValidationBuilder max(int maxValue, [String? message]) => add((value) {
-        if (int.parse(value!) > maxValue) {
-          return message ?? "maximal${maxValue.toString()}";
+        if (int.parse(value!.digitOnly()) > maxValue) {
+          return message ?? "${'Isian tidak boleh lebih besar dari'.tr} ${maxValue.toString()}";
         }
 
         return null;

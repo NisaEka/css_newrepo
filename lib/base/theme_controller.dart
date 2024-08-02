@@ -30,6 +30,9 @@ class CustomTheme {
         titleTextStyle: appTitleTextStyle.copyWith(color: greyDarkColor1),
         iconTheme: const IconThemeData(color: whiteColor),
       ),
+      iconTheme: const IconThemeData(
+        color: greyDarkColor1,
+      ),
       textTheme: GoogleFonts.ubuntuTextTheme().copyWith(
           titleSmall: sublistTitleTextStyle.copyWith(
             color: greyDarkColor1,
@@ -38,6 +41,9 @@ class CustomTheme {
             color: greyDarkColor1,
           ),
           titleMedium: listTitleTextStyle.copyWith(
+            color: greyDarkColor1,
+          ),
+          titleLarge: appTitleTextStyle.copyWith(
             color: greyDarkColor1,
           ),
           bodySmall: itemTextStyle.copyWith(
@@ -168,6 +174,9 @@ class CustomTheme {
         outline: whiteColor,
       ),
       useMaterial3: true,
+      iconTheme: const IconThemeData(
+        color: greyLightColor1,
+      ),
       textTheme: GoogleFonts.ubuntuTextTheme().copyWith(
         labelLarge: const TextStyle(
           color: greyLightColor1,
@@ -178,6 +187,7 @@ class CustomTheme {
         titleMedium: listTitleTextStyle.copyWith(
           color: greyLightColor1,
         ),
+        titleLarge: appTitleTextStyle.copyWith(color: greyLightColor1),
         bodySmall: itemTextStyle.copyWith(
           color: greyLightColor1,
         ),

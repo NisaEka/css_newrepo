@@ -17,6 +17,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool readOnly;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmit;
+  final ValueChanged<String?>? onSaved;
   bool isRequired;
   FormFieldValidator<String>? validator;
   final List<TextInputFormatter>? inputFormatters;
@@ -60,7 +61,7 @@ class CustomTextFormField extends StatefulWidget {
     this.autofocus,
     this.contentPadding,
     this.noBorder = false,
-    this.isLoading = false,
+    this.isLoading = false, this.onSaved,
   }) {
     if (isRequired) {
       StorageCore().readString(StorageCore.localeApp).then((value) => ValidationBuilder.setLocale(value));
@@ -113,6 +114,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               controller: widget.controller,
               readOnly: widget.readOnly,
               onChanged: widget.onChanged,
+              onSaved: widget.onSaved,
               onFieldSubmitted: widget.onSubmit,
               autofocus: widget.autofocus ?? false,
               focusNode: widget.focusNode,

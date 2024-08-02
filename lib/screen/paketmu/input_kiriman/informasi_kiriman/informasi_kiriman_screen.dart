@@ -533,104 +533,128 @@ class InformasiKirimanScreen extends StatelessWidget {
                                               ),
                                             )
                                           : */
-                          Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2),
-                              ),
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
-                                  c.isCalculate || c.isServiceLoad
-                                      ? Column(
-                                          children: List.generate(
-                                            5,
-                                            (index) => Shimmer(
-                                              isLoading: c.isCalculate,
-                                              child: Container(
-                                                width: Get.width,
-                                                height: 15,
-                                                margin: const EdgeInsets.symmetric(vertical: 5),
-                                                color: greyLightColor3,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      : Column(
-                                          children: [
-                                            c.account.accountService?.toUpperCase() == 'COD'
-                                                // &&
-                                                //     (controller.account.accountCustType?.toUpperCase() == "990" ||
-                                                //         controller.account.accountCustType?.toUpperCase() == "992")
-                                                ? Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text('COD fee', style: Theme.of(context).textTheme.titleMedium),
-                                                      Text('${c.codfee * 100}%'.replaceAll('.', ','), style: Theme.of(context).textTheme.titleMedium),
-                                                    ],
-                                                  )
-                                                : const SizedBox(),
-                                            c.account.accountService?.toUpperCase() == 'COD'
-                                                ? Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text('Harga COD'.tr, style: Theme.of(context).textTheme.titleMedium),
-                                                      Text('Rp. ${c.hargacod.toInt().toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
-                                                    ],
-                                                  )
-                                                : const SizedBox(),
-                                            c.codOngkir
-                                                ? Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text('Fee COD Ongkir'.tr, style: Theme.of(context).textTheme.titleMedium),
-                                                      Text('Rp. ${1000.toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
-                                                    ],
-                                                  )
-                                                : const SizedBox(),
-                                            c.asuransi
-                                                ? Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text('Asuransi Pengiriman'.tr, style: Theme.of(context).textTheme.titleMedium),
-                                                      Text('Rp. ${c.isr.toInt().toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
-                                                    ],
-                                                  )
-                                                : const SizedBox(),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text('Ongkos Kirim'.tr, style: Theme.of(context).textTheme.titleMedium),
-                                                Text('Rp. ${c.freightCharge.toInt().toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text('Total Ongkos Kirim'.tr, style: Theme.of(context).textTheme.titleMedium),
-                                                //gak boleh lebih dari 1jt //kalo cod ongkir true // kasih notif gak bisa di simpan transaksi // button transaksi disable
-                                                Text('Rp. ${(c.totalOngkir).toInt().toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
-                                              ],
-                                            )
-                                          ],
+                          Column(
+                              children: [
+                                c.account.accountService?.toUpperCase() == 'COD' && !c.isCalculate && !c.isServiceLoad
+                                    ? CustomTextFormField(
+                                        controller: c.codAmountText,
+                                        prefixIcon: const SatuanFieldIcon(
+                                          title: 'Rp',
+                                          isPrefix: true,
                                         ),
-                                ],
-                              ),
+                                        hintText: "Harga COD".tr,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly,
+                                          ThousandsSeparatorInputFormatter(),
+                                        ],
+                                        validator: ValidationBuilder().min(1000).build(),
+                                        // validator: (value) =>
+                                        //     ((value?.digitOnly().toInt() ?? 0) < 1000 && c.account.accountService?.toUpperCase() == 'COD')
+                                        //         ? 'Harga COD Minimal 1000'.tr
+                                        //         : null,
+                                        inputType: TextInputType.number,
+                                        contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 40, right: 10),
+                                        onSaved: (value) => c.onChangeCodAmountText(value ?? ''),
+                                      )
+                                    : const SizedBox(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2),
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
+                                      c.isCalculate || c.isServiceLoad
+                                          ? Column(
+                                              children: List.generate(
+                                                5,
+                                                (index) => Shimmer(
+                                                  isLoading: c.isCalculate,
+                                                  child: Container(
+                                                    width: Get.width,
+                                                    height: 15,
+                                                    margin: const EdgeInsets.symmetric(vertical: 5),
+                                                    color: greyLightColor3,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          : Column(
+                                              children: [
+                                                c.account.accountService?.toUpperCase() == 'COD'
+                                                    // &&
+                                                    //     (controller.account.accountCustType?.toUpperCase() == "990" ||
+                                                    //         controller.account.accountCustType?.toUpperCase() == "992")
+                                                    ? Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Text('COD fee', style: Theme.of(context).textTheme.titleMedium),
+                                                          Text('${c.codfee * 100}%'.replaceAll('.', ','),
+                                                              style: Theme.of(context).textTheme.titleMedium),
+                                                        ],
+                                                      )
+                                                    : const SizedBox(),
+                                                c.account.accountService?.toUpperCase() == 'COD'
+                                                    ? Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Text('Harga COD'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                          Text('Rp. ${c.hargacod.toInt().toCurrency()}',
+                                                              style: Theme.of(context).textTheme.titleMedium),
+                                                        ],
+                                                      )
+                                                    : const SizedBox(),
+                                                c.codOngkir
+                                                    ? Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Text('Fee COD Ongkir'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                          Text('Rp. ${1000.toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
+                                                        ],
+                                                      )
+                                                    : const SizedBox(),
+                                                c.asuransi
+                                                    ? Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Text('Asuransi Pengiriman'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                          Text('Rp. ${c.isr.toInt().toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
+                                                        ],
+                                                      )
+                                                    : const SizedBox(),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text('Ongkos Kirim'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                    Text('Rp. ${c.freightCharge.toInt().toCurrency()}',
+                                                        style: Theme.of(context).textTheme.titleMedium),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text('Total Ongkos Kirim'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                    //gak boleh lebih dari 1jt //kalo cod ongkir true // kasih notif gak bisa di simpan transaksi // button transaksi disable
+                                                    Text('Rp. ${(c.totalOngkir).toInt().toCurrency()}',
+                                                        style: Theme.of(context).textTheme.titleMedium),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             )
                           : const SizedBox(),
                       c.isOnline
                           ? CustomFilledButton(
                               color: c.isValidate() ? blueJNE : greyColor,
                               title: c.dataEdit != null ? 'Edit Resi'.tr : 'Buat Resi'.tr,
-                              onPressed: () {
-                                c.isValidate()
-                                    ? c.dataEdit == null
-                                        ? c.saveTransaction()
-                                        : c.updateTransaction()
-                                    : null;
-                              },
+                              onPressed: () => c.onSaved(),
                             )
                           : const SizedBox(),
                       c.goods == null && !c.isOnline || c.draft != null

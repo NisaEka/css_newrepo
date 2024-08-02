@@ -129,6 +129,7 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
                 hintText: widget.searchHintText,
                 helperText: "Masukan minimal 3 karakter".tr,
               ),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular)
             ),
           ),
           dropdownButtonProps: DropdownButtonProps(

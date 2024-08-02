@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
@@ -171,6 +172,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                   ';',
                                   onMatch: (p0) => '; ',
                                 ),
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
                           );
@@ -190,8 +192,11 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                         isRequired: c.selectedDestination == null ? true : false,
                         readOnly: false,
                         hintText: c.isLoading ? "Loading..." : "Kota Tujuan".tr,
-                        prefixIcon: const Icon(Icons.location_city),
-                        textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
+                        prefixIcon: Icon(
+                          Icons.location_city,
+                          color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
+                        ),
+                        textStyle: c.selectedDestination != null ? Theme.of(context).textTheme.titleSmall : hintTextStyle,
                       ),
                       CustomTextFormField(
                         controller: c.alamatLengkap,

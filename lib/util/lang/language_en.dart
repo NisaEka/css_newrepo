@@ -341,6 +341,10 @@ class LanguageEN {
       "Pilih Tanggal Sendiri": "Custom Range",
       "Nomor Resi Tidak Terdaftar": "Receipt number not found",
       "Tiket Sudah Terdaftar": "This Ticket is already exist",
+      "Isian Harus lebih besar atau sama dengan": "Value must be greater than or equal",
+      "Harga COD tidak boleh kurang dari": "COD Price can't must be greater than or equal",
+      "Isian tidak boleh lebih besar dari": "Value must be less than",
+      "Karakter": "Character",
     };
   }
 }
