@@ -6,10 +6,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class CustomBackButton<T> extends StatelessWidget {
-  const CustomBackButton({Key? key, this.result, this.onPressed}) : super(key: key);
+  const CustomBackButton({
+    Key? key,
+    this.result,
+    this.onPressed,
+    this.color,
+  }) : super(key: key);
 
   final T? result;
   final VoidCallback? onPressed;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class CustomBackButton<T> extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: SvgPicture.asset(
           IconsConstant.arrowCircle,
-          color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+          color: color ?? (AppConst.isLightTheme(context) ? blueJNE : redJNE),
         ),
       ),
     );

@@ -345,6 +345,10 @@ class LanguageEN {
       "Harga COD tidak boleh kurang dari": "COD Price can't must be greater than or equal",
       "Isian tidak boleh lebih besar dari": "Value must be less than",
       "Karakter": "Character",
+      "Lihat Obrolan": "View Chats",
+      "Lapor Ulang": "Re-Report",
+      "Lacak": "Track",
+      "Detail Laporanku": "My Report Detail"
     };
   }
 }

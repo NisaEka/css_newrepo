@@ -65,9 +65,18 @@ class InputLaporankuScreen extends StatelessWidget {
               controller: c.imageFile,
               hintText: "Bukti Pendukung".tr,
               readOnly: true,
-              suffixIcon: const Icon(
-                Icons.camera_alt_outlined,
-                color: greyColor,
+              suffixIcon: GestureDetector(
+                onTap: c.gettedPhoto != null
+                    ? () {
+                        c.gettedPhoto = null;
+                        c.imageFile.clear();
+                        c.update();
+                      }
+                    : null,
+                child: Icon(
+                  c.gettedPhoto != null ? Icons.close : Icons.camera_alt_outlined,
+                  color: greyColor,
+                ),
               ),
               validator: (value) {
                 if ((c.imageSize ?? 0) >= c.maxImageSize) {

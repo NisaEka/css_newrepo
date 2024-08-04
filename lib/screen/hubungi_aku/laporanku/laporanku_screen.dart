@@ -105,7 +105,10 @@ class LaporankuScreen extends StatelessWidget {
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => LaporankuListItem(
                     data: item,
-                    onTap: () => Get.to(DetailLaporankuScreen(data: item)),
+                    index: index,
+                    onTap: () => Get.to(DetailLaporankuScreen(data: item))?.then(
+                      (_) => c.pagingController.refresh(),
+                    ),
                   ),
                   firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(

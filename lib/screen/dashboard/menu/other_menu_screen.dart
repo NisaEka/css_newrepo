@@ -1,9 +1,9 @@
 import 'package:collection/collection.dart';
-import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/screen/dashboard/menu/other_menu_controller.dart';
+import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +22,7 @@ class OtherMenuScreen extends StatelessWidget {
             title: Text('Lihat Semua Layanan'.tr),
             centerTitle: true,
             titleTextStyle: appTitleTextStyle.copyWith(color: whiteColor),
+            leading: const CustomBackButton(color: whiteColor),
           ),
           body: _bodyContent(controller, context),
         );

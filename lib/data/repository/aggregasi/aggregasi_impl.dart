@@ -16,13 +16,11 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<GetAggregationReportModel> getAggregationReport(
-    int page,
-    int limit,
-    String keyword,
-    String aggDate,
-    List<Account> accounts,
-  ) async {
+  Future<GetAggregationReportModel> getAggregationReport(int page,
+      int limit,
+      String keyword,
+      String aggDate,
+      List<Account> accounts,) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
@@ -50,11 +48,9 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<DefaultResponseModel<List<AggregationMinusModel>>> getAggregationMinus(
-    int page,
-    int limit,
-    String? keyword,
-  ) async {
+  Future<DefaultResponseModel<List<AggregationMinusModel>>> getAggregationMinus(int page,
+      int limit,
+      String? keyword,) async {
     try {
       var response = await network.dio.get("/aggregation/minus", queryParameters: {"page": page, "limit": limit, "keyword": keyword});
       List<AggregationMinusModel> aggregations = [];
@@ -98,11 +94,9 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<GetAggregationDetailModel> getAggregationByDoc(
-    int page,
-    int limit,
-    String aggregationID,
-  ) async {
+  Future<GetAggregationDetailModel> getAggregationByDoc(int page,
+      int limit,
+      String aggregationID,) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {

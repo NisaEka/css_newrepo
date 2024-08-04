@@ -22,9 +22,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
         init: ObrolanLaporankuController(),
         builder: (controller) {
           return Scaffold(
-            appBar: CustomTopBar(
-              title: "Obrolan".tr,
-            ),
+            appBar: _appBarContent(controller, context),
             body: _bodyContent(controller, context),
           );
         });
@@ -43,37 +41,46 @@ class ObrolanLaporankuScreen extends StatelessWidget {
         //   icon: Icon(Icons.refresh),
         // ),
         Flexible(
-          child: PagedListView<int, TicketMessageModel>(
-            reverse: true,
-            pagingController: c.pagingController,
-            builderDelegate: PagedChildBuilderDelegate<TicketMessageModel>(
-              transitionDuration: const Duration(milliseconds: 500),
-              itemBuilder: (context, e, i) => Column(
-                children: [
-                  Text(
-                    // e.createdDate.toString(),
-                    c.messages.length > i + 1
-                        ? e.createdDate!.toShortDateFormat() != c.messages[i + 1].createdDate!.toShortDateFormat()
-                            ? e.createdDate?.toShortDateFormat().toString() ?? ''
-                            : ''
-                        : e.createdDate?.toShortDateFormat().toString() ?? '',
-                    style: Theme.of(context).textTheme.titleMedium,
+          child: c.gettedPhoto != null
+              ? SizedBox(
+                  // height: Get.height / 2,
+                  width: Get.width - 50,
+                  child: Image.file(
+                    c.gettedPhoto!,
+                    fit: BoxFit.fill,
                   ),
-                  chat(e, context),
-                ],
-              ),
-              firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                height: 100,
-                background: Colors.transparent,
-              ),
-              newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                background: Colors.transparent,
-                height: 50,
-                size: 30,
-              ),
-              noItemsFoundIndicatorBuilder: (context) => Container(),
-            ),
-          ),
+                )
+              : PagedListView<int, TicketMessageModel>(
+                  reverse: true,
+                  pagingController: c.pagingController,
+                  builderDelegate: PagedChildBuilderDelegate<TicketMessageModel>(
+                    transitionDuration: const Duration(milliseconds: 500),
+                    itemBuilder: (context, e, i) => Column(
+                      children: [
+                        Text(
+                          // e.createdDate.toString(),
+                          c.messages.length > i + 1
+                              ? e.createdDate!.toShortDateFormat() != c.messages[i + 1].createdDate!.toShortDateFormat()
+                                  ? e.createdDate?.toShortDateFormat().toString() ?? ''
+                                  : ''
+                              : e.createdDate?.toShortDateFormat().toString() ?? '',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        chat(e, context),
+                      ],
+                    ),
+                    firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                      height: 100,
+                      background: Colors.transparent,
+                    ),
+                    newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                      background: Colors.transparent,
+                      height: 50,
+                      size: 30,
+                    ),
+                    noItemsFoundIndicatorBuilder: (context) => Container(),
+                  ),
+                ),
           // child: ListView(
           //   reverse: true,
           //   children: c.gettedPhoto != null
@@ -260,6 +267,24 @@ class ObrolanLaporankuScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.titleSmall,
           textAlign: TextAlign.center,
         )
+      ],
+    );
+  }
+
+  CustomTopBar _appBarContent(ObrolanLaporankuController c, BuildContext context) {
+    return CustomTopBar(
+      title: "Obrolan".tr,
+      action: [
+        c.gettedPhoto != null
+            ? IconButton(
+                onPressed: () {
+                  c.gettedPhoto = null;
+                  c.update();
+                },
+                icon: const Icon(Icons.close),
+                padding: EdgeInsets.zero,
+              )
+            : const SizedBox(),
       ],
     );
   }

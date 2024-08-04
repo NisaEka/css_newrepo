@@ -117,4 +117,22 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
       return GetTicketModel.fromJson(e.response?.data);
     }
   }
+
+  @override
+  Future<GetTicketModel> putTicket(String id, String status) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.dio.put(
+        "/ticket/$id",
+        data: {
+          "status": status,
+        },
+      );
+
+      return GetTicketModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return GetTicketModel.fromJson(e.response?.data);
+    }
+  }
 }

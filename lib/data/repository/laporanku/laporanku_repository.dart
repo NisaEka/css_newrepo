@@ -27,4 +27,6 @@ abstract class LaporankuRepository {
   );
 
   Future<GetTicketModel> postTicketMessage(DataPostTicketModel data);
+
+  Future<GetTicketModel> putTicket(String id, String status);
 }

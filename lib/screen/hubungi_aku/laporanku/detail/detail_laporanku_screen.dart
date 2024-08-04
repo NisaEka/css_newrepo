@@ -5,6 +5,7 @@ import 'package:css_mobile/screen/hubungi_aku/laporanku/detail/detail_laporanku_
 import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolan_laporanku_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/detail_content.dart';
 import 'package:flutter/material.dart';
@@ -20,21 +21,19 @@ class DetailLaporankuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('ticketID : ${data.id}');
     return GetBuilder<DetailLaporankuController>(
         init: DetailLaporankuController(),
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(title: "Detail Laporanku".tr),
-            body: _bodyContent(controller, context),
-            floatingActionButton: CustomFilledButton(
-              color: blueJNE,
-              title: "Lihat Obrolan".tr,
-              width: Get.width - 50,
-              onPressed: () => Get.to(const ObrolanLaporankuScreen(), arguments: {
-                "id": data.id,
-                "ticket": data,
-              }),
+            body: Stack(
+              children: [
+                _bodyContent(controller, context),
+                controller.isLoading ? const LoadingDialog() : const SizedBox(),
+              ],
             ),
+            floatingActionButton: _buttonContent(controller, context),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           );
         });
@@ -78,6 +77,31 @@ class DetailLaporankuScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buttonContent(DetailLaporankuController c, BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        data.status != "Closed"
+            ? CustomFilledButton(
+                color: redJNE,
+                title: "Selesai".tr,
+                width: Get.width - 50,
+                onPressed: () => c.updateStatus(data.id ?? ''),
+              )
+            : const SizedBox(),
+        CustomFilledButton(
+          color: blueJNE,
+          title: data.status == "Closed" ? "Lapor Ulang".tr : "Lihat Obrolan".tr,
+          width: Get.width - 50,
+          onPressed: () => Get.to(const ObrolanLaporankuScreen(), arguments: {
+            "id": data.id,
+            "ticket": data,
+          }),
+        ),
+      ],
     );
   }
 }
