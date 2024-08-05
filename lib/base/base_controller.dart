@@ -6,6 +6,7 @@ import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/repository/bank/bank_repository.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
 import 'package:css_mobile/data/repository/facility/facility_repository.dart';
+import 'package:css_mobile/data/repository/invoice/invoice_repository.dart';
 import 'package:css_mobile/data/repository/jlc/jlc_repository.dart';
 import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_repository.dart';
 import 'package:css_mobile/data/repository/laporanku/laporanku_repository.dart';
@@ -38,5 +39,5 @@ abstract class BaseController extends GetxController {
   final notification = Get.find<NotificationRepository>();
   final pantau = Get.find<PantauRepository>();
   final laporanku = Get.find<LaporankuRepository>();
-
+  final invoiceRepository = Get.find<InvoiceRepository>();
 }
