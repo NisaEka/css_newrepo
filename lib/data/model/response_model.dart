@@ -1,12 +1,12 @@
 class ResponseModel<T> {
-  ResponseModel({num? code, String? message, List<ErrorResponse>? error, dynamic payload}) {
+  ResponseModel({num? code, String? message, List<ErrorResponse>? error, T? payload}) {
     _code = code;
     _message = message;
     _error = error;
     _payload = payload;
   }
 
-  ResponseModel.fromJson(dynamic json) {
+  ResponseModel.fromJson(dynamic json, T Function(Object? json) fromJsonT) {
     _code = json['code'];
     _message = json['message'];
     if (json['error'] != null) {
@@ -15,15 +15,21 @@ class ResponseModel<T> {
         _error?.add(ErrorResponse.fromJson(v));
       });
     }
-    _payload = json['payload'];
+    _payload = _$nullableGenericFromJson(json['payload'], fromJsonT);
   }
+
+  T? _$nullableGenericFromJson<T>(
+    Object? input,
+    T Function(Object? json) fromJson,
+  ) =>
+      input == null ? null : fromJson(input);
 
   num? _code;
   String? _message;
   List<ErrorResponse>? _error;
-  dynamic _payload;
+  T? _payload;
 
-  ResponseModel copyWith({num? code, String? message, List<ErrorResponse>? error, dynamic payload}) => ResponseModel(
+  ResponseModel copyWith({num? code, String? message, List<ErrorResponse>? error, T? payload}) => ResponseModel(
         code: code ?? _code,
         message: message ?? _message,
         error: error ?? _error,
@@ -36,7 +42,7 @@ class ResponseModel<T> {
 
   List<ErrorResponse>? get error => _error;
 
-  dynamic get payload => _payload;
+  T? get payload => _payload;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

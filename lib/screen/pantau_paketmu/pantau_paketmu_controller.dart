@@ -1,7 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -20,9 +18,15 @@ class PantauPaketmuController extends BaseController {
   DateTime? endDate;
   String? selectedStatusKiriman;
   String? selectedPetugasEntry;
-  String? transType;
+  String? selectedStatusPrint = "SEMUA";
+  String? selectedTipeKiriman = "SEMUA";
   String? date;
-  String dateFilter = '0';
+  String dateFilter = '3';
+  int tipeKiriman = 0;
+  int total = 0;
+  int cod = 0;
+  int noncod = 0;
+  int codOngkir = 0;
 
   bool isFiltered = false;
   bool isLoading = false;
@@ -31,6 +35,8 @@ class PantauPaketmuController extends BaseController {
 
   List<String> listStatusKiriman = [];
   List<String> listOfficerEntry = [];
+  List<String> listTipeKiriman = ["SEMUA", "COD", "NON COD", "COD ONGKIR"];
+  List<String> listStatusPrint = ["SEMUA", "SUDAH DIPRINT", "BELUM DIPRINT"];
   List<PantauPaketmuModel> selectedTransaction = [];
 
   BasicProfilModel? basic;
@@ -48,20 +54,31 @@ class PantauPaketmuController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     update();
+    selectDateFilter(3);
+    date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+    pagingController.refresh();
 
     try {
       await profil.getBasicProfil().then((value) async => basic = value.payload);
 
       if (basic?.userType == "PEMILIK") {
         await transaction.getTransOfficer().then((value) {
+          listOfficerEntry.add(basic?.name ?? '');
           listOfficerEntry.addAll(value.payload ?? []);
           update();
         });
       }
-    } catch (e) {
+
+      await pantau.getPantauStatus().then((value) {
+        listStatusKiriman.addAll(value.payload ?? []);
+        update();
+      });
+    } catch (e, i) {
       e.printError();
+      i.printError();
     }
 
+    selectedStatusKiriman = listStatusKiriman.first;
     isLoading = false;
     update();
   }
@@ -103,7 +120,8 @@ class PantauPaketmuController extends BaseController {
         date ?? '',
         searchField.text,
         selectedPetugasEntry ?? '',
-        'Total Kiriman',
+        selectedStatusKiriman ?? '',
+        selectedTipeKiriman ?? '',
       );
 
       final isLastPage = (trans.payload?.length ?? 0) < pageSize;
@@ -126,16 +144,15 @@ class PantauPaketmuController extends BaseController {
   }
 
   void resetFilter() {
-    startDate = null;
-    endDate = null;
-    startDateField.clear();
-    endDateField.clear();
     selectedPetugasEntry = basic?.userType == "PEMILIK" ? null : basic?.name;
-    selectedStatusKiriman = null;
+    selectedStatusKiriman = "Total Kiriman";
+    selectedTipeKiriman = "SEMUA";
+    tipeKiriman = 0;
     isFiltered = false;
     searchField.clear();
-    date = null;
-    dateFilter = "0";
+    dateFilter = "3";
+    selectDateFilter(3);
+    date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
 
     pagingController.refresh();
     update();
@@ -164,17 +181,15 @@ class PantauPaketmuController extends BaseController {
   }
 
   applyFilter() {
-    if (startDate != null || endDate != null || selectedPetugasEntry != null || selectedStatusKiriman != null) {
-      isFiltered = true;
-      if (startDate != null && endDate != null) {
-        date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
-        date.printInfo(info: "date filter");
-        date.printInfo(info: "${startDate} - ${endDate}");
-      }
-      update();
-      pagingController.refresh();
-      update();
-      Get.back();
+    isFiltered = true;
+    if (startDate != null && endDate != null) {
+      date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+      date.printInfo(info: "date filter");
+      date.printInfo(info: "$startDate - $endDate");
     }
+    update();
+    pagingController.refresh();
+    update();
+    Get.back();
   }
 }

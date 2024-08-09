@@ -340,16 +340,16 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<GetTransactionStatusModel> getTransactionStatus() async {
+  Future<GetStatusModel> getTransactionStatus() async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.dio.get(
         "/transaction/status",
       );
-      return GetTransactionStatusModel.fromJson(response.data);
+      return GetStatusModel.fromJson(response.data);
     } on DioException catch (e) {
-      return GetTransactionStatusModel.fromJson(e.response?.data);
+      return GetStatusModel.fromJson(e.response?.data);
     }
   }
 

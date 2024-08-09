@@ -100,6 +100,7 @@ class RiwayatKirimanController extends BaseController {
 
       if (basic?.userType == "PEMILIK") {
         await transaction.getTransOfficer().then((value) {
+          listOfficerEntry.add(basic?.name ?? '');
           listOfficerEntry.addAll(value.payload ?? []);
           update();
         });

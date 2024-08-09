@@ -85,6 +85,7 @@ class PantauPaketmuModel {
     String? paymentReffId,
     String? podUrlPic,
     String? podUrl,
+    String? status,
   }) {
     _petugasEntry = petugasEntry;
     _custNo = custNo;
@@ -117,6 +118,7 @@ class PantauPaketmuModel {
     _paymentReffId = paymentReffId;
     _podUrlPic = podUrlPic;
     _podUrl = podUrl;
+    _status = status;
   }
 
   PantauPaketmuModel.fromJson(dynamic json) {
@@ -151,6 +153,7 @@ class PantauPaketmuModel {
     _paymentReffId = json['payment_reff_id'];
     _podUrlPic = json['pod_url_pic'];
     _podUrl = json['pod_url'];
+    _status = json['status'];
   }
 
   String? _petugasEntry;
@@ -184,6 +187,7 @@ class PantauPaketmuModel {
   String? _paymentReffId;
   String? _podUrlPic;
   String? _podUrl;
+  String? _status;
 
   PantauPaketmuModel copyWith({
     String? petugasEntry,
@@ -217,6 +221,7 @@ class PantauPaketmuModel {
     String? paymentReffId,
     String? podUrlPic,
     String? podUrl,
+    String? status,
   }) =>
       PantauPaketmuModel(
         petugasEntry: petugasEntry ?? _petugasEntry,
@@ -250,6 +255,7 @@ class PantauPaketmuModel {
         paymentReffId: paymentReffId ?? _paymentReffId,
         podUrlPic: podUrlPic ?? _podUrlPic,
         podUrl: podUrl ?? _podUrl,
+        status: status ?? _status,
       );
 
   String? get petugasEntry => _petugasEntry;
@@ -314,6 +320,8 @@ class PantauPaketmuModel {
 
   String? get podUrl => _podUrl;
 
+  String? get status => _status;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['petugas_entry'] = _petugasEntry;
@@ -347,6 +355,7 @@ class PantauPaketmuModel {
     map['payment_reff_id'] = _paymentReffId;
     map['pod_url_pic'] = _podUrlPic;
     map['pod_url'] = _podUrl;
+    map['status'] = _status;
     return map;
   }
 }

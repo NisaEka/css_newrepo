@@ -34,7 +34,7 @@ class CustomDropDownField<T> extends StatelessWidget {
   final double? width;
   final List<DropdownMenuItem<T>>? items;
 
-  _getDropDown() {
+  _getDropDown(BuildContext context) {
     if (items == null) {
       return const SizedBox();
     }
@@ -48,13 +48,12 @@ class CustomDropDownField<T> extends StatelessWidget {
         style: hintTextStyle,
       ),
       value: value,
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
       isExpanded: true,
       items: items,
       onChanged: onChanged,
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +70,7 @@ class CustomDropDownField<T> extends StatelessWidget {
         //   ),
         // ),
         Text(label ?? '', style: Theme.of(context).textTheme.titleSmall),
-        const SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 5),
         Container(
           width: width ?? Get.width,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
@@ -90,8 +87,9 @@ class CustomDropDownField<T> extends StatelessWidget {
                     fillColor: whiteColor,
                   ),
                 )
-              : _getDropDown(),
+              : _getDropDown(context),
         ),
+        const SizedBox(height: 8),
       ],
     );
   }

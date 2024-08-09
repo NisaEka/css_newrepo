@@ -71,7 +71,7 @@ abstract class TransactionRepository {
 
   Future<PostTransactionModel> deleteTransaction(String awb);
 
-  Future<GetTransactionStatusModel> getTransactionStatus();
+  Future<GetStatusModel> getTransactionStatus();
 
   Future<PostTransactionModel> putTransaction(DataTransactionModel data, String awb);
 

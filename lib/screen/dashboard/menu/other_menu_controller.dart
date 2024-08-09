@@ -129,7 +129,7 @@ class OtherMenuCotroller extends BaseController {
       Items(
         title: "Pantau Paketmu",
         icon: ImageConstant.pantauPaketmuIcon,
-        isAuth: false,
+        isAuth: true,
         isFavorite: favoritList.where((e) => e.title == "Pantau Paketmu").isNotEmpty,
         isEdit: isEdit,
         route: "/pantauPaketmu",
