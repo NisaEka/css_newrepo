@@ -1,5 +1,5 @@
-class GetTransactionStatusModel {
-  GetTransactionStatusModel({
+class GetStatusModel<T> {
+  GetStatusModel({
     num? code,
     String? message,
     List<String>? payload,
@@ -9,7 +9,7 @@ class GetTransactionStatusModel {
     _payload = payload;
   }
 
-  GetTransactionStatusModel.fromJson(dynamic json) {
+  GetStatusModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
     _payload = json['payload'] != null ? json['payload'].cast<String>() : [];
@@ -19,12 +19,12 @@ class GetTransactionStatusModel {
   String? _message;
   List<String>? _payload;
 
-  GetTransactionStatusModel copyWith({
+  GetStatusModel copyWith({
     num? code,
     String? message,
     List<String>? payload,
   }) =>
-      GetTransactionStatusModel(
+      GetStatusModel(
         code: code ?? _code,
         message: message ?? _message,
         payload: payload ?? _payload,

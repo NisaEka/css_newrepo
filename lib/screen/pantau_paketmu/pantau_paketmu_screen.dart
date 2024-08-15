@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
@@ -45,7 +46,7 @@ class PantauPaketmuScreen extends StatelessWidget {
             },
           ),
           isFiltered: c.isFiltered,
-          isApplyFilter: c.startDate != null || c.endDate != null,
+          isApplyFilter: (c.selectedStatusKiriman != "Total Kiriman"),
           onResetFilter: () => c.resetFilter(),
           onApplyFilter: () => c.applyFilter(),
           onCloseFilter: () {
@@ -68,13 +69,13 @@ class PantauPaketmuScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Customradiobutton(
-                  title: "Semua Tanggal".tr,
-                  value: '0',
-                  groupValue: c.dateFilter,
-                  onChanged: (value) => setState(() => c.selectDateFilter(0)),
-                  onTap: () => setState(() => c.selectDateFilter(0)),
-                ),
+                // Customradiobutton(
+                //   title: "Semua Tanggal".tr,
+                //   value: '0',
+                //   groupValue: c.dateFilter,
+                //   onChanged: (value) => setState(() => c.selectDateFilter(0)),
+                //   onTap: () => setState(() => c.selectDateFilter(0)),
+                // ),
                 Customradiobutton(
                   title: "1 Bulan Terakhir".tr,
                   value: '1',
@@ -142,6 +143,64 @@ class PantauPaketmuScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10),
+                CustomDropDownField<String>(
+                  items: c.listStatusKiriman
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e),
+                        ),
+                      )
+                      .toList(),
+                  label: 'Status Kiriman'.tr,
+                  hintText: 'Status Kiriman'.tr,
+                  // selectedItem: c.selectedStatusKiriman,
+                  value: c.selectedStatusKiriman,
+                  onChanged: (value) {
+                    setState(() {
+                      c.selectedStatusKiriman = value;
+                      c.update();
+                    });
+                  },
+                ),
+                // CustomDropDownField(
+                //   items: c.listStatusPrint
+                //       .map(
+                //         (e) => DropdownMenuItem(
+                //           value: e,
+                //           child: Text(e),
+                //         ),
+                //       )
+                //       .toList(),
+                //   label: 'Status Print'.tr,
+                //   hintText: 'Status Print'.tr,
+                //   value: c.selectedStatusPrint,
+                //   onChanged: (value) {
+                //     setState(() {
+                //       c.selectedStatusPrint = value;
+                //       c.update();
+                //     });
+                //   },
+                // ),
+                CustomDropDownField(
+                  items: c.listTipeKiriman
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e),
+                        ),
+                      )
+                      .toList(),
+                  label: 'Tipe Kiriman'.tr,
+                  hintText: 'Tipe Kiriman'.tr,
+                  value: c.selectedTipeKiriman,
+                  onChanged: (value) {
+                    setState(() {
+                      c.selectedTipeKiriman = value;
+                      c.update();
+                    });
+                  },
+                ),
                 CustomDropDownField(
                   items: c.listOfficerEntry
                       .map(
@@ -190,7 +249,9 @@ class PantauPaketmuScreen extends StatelessWidget {
               c.searchField.clear();
               c.pagingController.refresh();
             },
+            margin: const EdgeInsets.only(top: 20),
           ),
+          _tipeKiriman(context, c),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () => Future.sync(
@@ -207,7 +268,7 @@ class PantauPaketmuScreen extends StatelessWidget {
                     data: TransactionModel(
                       awb: item.awbNo,
                       orderId: item.orderId,
-                      status: item.statusPod,
+                      status: item.statusPod ?? item.status,
                       service: item.service,
                       type: item.awbType,
                       receiver: Receiver(
@@ -250,6 +311,164 @@ class PantauPaketmuScreen extends StatelessWidget {
               ),
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget _tipeKiriman(BuildContext context, PantauPaketmuController c) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 15),
+      decoration: BoxDecoration(
+        color: blueJNE,
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () {
+              c.tipeKiriman = 0;
+              c.selectedTipeKiriman = 'SEMUA';
+              c.update();
+              c.pagingController.refresh();
+            },
+            child: Container(
+              width: Get.width / 4.76,
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              decoration: BoxDecoration(
+                color: c.tipeKiriman == 0 ? blueJNE : whiteColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  bottomLeft: Radius.circular(8),
+                ),
+                // border: const Border(
+                //   right: BorderSide(color: greyDarkColor1),
+                // ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    c.total.toString(),
+                    style: listTitleTextStyle.copyWith(
+                      color: c.tipeKiriman == 0 ? whiteColor : blueJNE,
+                    ),
+                  ),
+                  Text(
+                    'Kiriman'.tr,
+                    style: sublistTitleTextStyle.copyWith(
+                      color: c.tipeKiriman == 0 ? whiteColor : greyColor,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              c.tipeKiriman = 1;
+              c.selectedTipeKiriman = 'COD';
+              c.update();
+              c.pagingController.refresh();
+            },
+            child: Container(
+              width: Get.width / 4.76,
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              decoration: BoxDecoration(
+                color: c.tipeKiriman == 1 ? blueJNE : whiteColor,
+                // border: const Border(
+                //   right: BorderSide(color: greyDarkColor1),
+                //   left: BorderSide(color: greyDarkColor1),
+                // ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    c.cod.toString(),
+                    style: listTitleTextStyle.copyWith(
+                      color: c.tipeKiriman == 1 ? whiteColor : blueJNE,
+                    ),
+                  ),
+                  Text(
+                    'COD'.tr,
+                    style: sublistTitleTextStyle.copyWith(
+                      color: c.tipeKiriman == 1 ? whiteColor : greyColor,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              c.tipeKiriman = 2;
+              c.selectedTipeKiriman = 'NON COD';
+              c.update();
+              c.pagingController.refresh();
+            },
+            child: Container(
+              width: Get.width / 4.76,
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              decoration: BoxDecoration(
+                color: c.tipeKiriman == 2 ? blueJNE : whiteColor,
+                // border: const Border(
+                //   right: BorderSide(color: greyDarkColor1),
+                // ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    c.noncod.toString(),
+                    style: listTitleTextStyle.copyWith(
+                      color: c.tipeKiriman == 2 ? whiteColor : blueJNE,
+                    ),
+                  ),
+                  Text(
+                    'NON COD'.tr,
+                    style: sublistTitleTextStyle.copyWith(
+                      color: c.tipeKiriman == 2 ? whiteColor : greyColor,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              c.tipeKiriman = 3;
+              c.selectedTipeKiriman = 'COD ONGKIR';
+              c.update();
+              c.pagingController.refresh();
+            },
+            child: Container(
+              width: Get.width / 4.76,
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              decoration: BoxDecoration(
+                color: c.tipeKiriman == 3 ? blueJNE : whiteColor,
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(8),
+                  bottomRight: Radius.circular(8),
+                ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    c.codOngkir.toString(),
+                    style: listTitleTextStyle.copyWith(
+                      color: c.tipeKiriman == 3 ? whiteColor : blueJNE,
+                    ),
+                  ),
+                  Text(
+                    'COD ONGKIR'.tr,
+                    style: sublistTitleTextStyle.copyWith(
+                      color: c.tipeKiriman == 3 ? whiteColor : greyColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
