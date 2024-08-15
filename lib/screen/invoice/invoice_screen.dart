@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
+import 'package:css_mobile/screen/invoice/detail/invoice_detail_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/invoice/invoice_item.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,12 @@ class InvoiceScreen extends StatelessWidget {
                     padding: EdgeInsets.only(top: paddingTop),
                     child: InvoiceItem(
                       invoice: item,
-                      onTap: (String invoiceNumber) {},
+                      onTap: (String invoiceNumber) {
+                        Get.to(
+                          const InvoiceDetailScreen(),
+                          arguments: { "invoice_number": item.invoiceNoEncoded }
+                        );
+                      },
                     ),
                   );
                 },

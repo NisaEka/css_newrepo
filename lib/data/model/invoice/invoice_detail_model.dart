@@ -1,90 +1,94 @@
 class InvoiceDetailModel {
 
-  String _invoiceNumber = "";
-  String get invoiceNumber => _invoiceNumber;
+  String? _invoiceNumberEncoded = "";
+  String? get invoiceNumberEncoded => _invoiceNumberEncoded;
 
-  String _invoiceDate = "";
-  String get invoiceDate => _invoiceDate;
+  String? _invoiceNumber = "";
+  String? get invoiceNumber => _invoiceNumber;
 
-  String _top = "";
-  String get top => _top;
+  String? _invoiceDate = "";
+  String? get invoiceDate => _invoiceDate;
 
-  String _description = "";
-  String get description => _description;
+  String? _top = "";
+  String? get top => _top;
 
-  String _dueDate = "";
-  String get dueDate => _dueDate;
+  String? _description = "";
+  String? get description => _description;
 
-  String _period = "";
-  String get period => _period;
+  String? _dueDate = "";
+  String? get dueDate => _dueDate;
 
-  String _invoiceStatus = "";
-  String get invoiceStatus => _invoiceStatus;
+  String? _period = "";
+  String? get period => _period;
 
-  String _invoiceReference = "";
-  String get invoiceReference => _invoiceReference;
+  String? _invoiceStatus = "";
+  String? get invoiceStatus => _invoiceStatus;
 
-  String _customerId = "";
-  String get customerId => _customerId;
+  String? _invoiceReference = "";
+  String? get invoiceReference => _invoiceReference;
 
-  String _customerName = "";
-  String get customerName => _customerName;
+  String? _customerId = "";
+  String? get customerId => _customerId;
 
-  String _address = "";
-  String get address => _address;
+  String? _customerName = "";
+  String? get customerName => _customerName;
 
-  String _zipCode = "";
-  String get zipCode => _zipCode;
+  String? _address = "";
+  String? get address => _address;
 
-  String _phone = "";
-  String get phone => _phone;
+  String? _zipCode = "";
+  String? get zipCode => _zipCode;
 
-  String _email = "";
-  String get email => _email;
+  String? _phone = "";
+  String? get phone => _phone;
 
-  String _taxNumber = "";
-  String get taxNumber => _taxNumber;
+  String? _email = "";
+  String? get email => _email;
 
-  String _npwpId = "";
-  String get npwpId => _npwpId;
+  String? _taxNumber = "";
+  String? get taxNumber => _taxNumber;
 
-  String _npwpName = "";
-  String get npwpName => _npwpName;
+  String? _npwpId = "";
+  String? get npwpId => _npwpId;
 
-  String _npwpAddress = "";
-  String get npwpAddress => _npwpAddress;
+  String? _npwpName = "";
+  String? get npwpName => _npwpName;
 
-  int _grossTotal = 0;
-  int get grossTotal => _grossTotal;
+  String? _npwpAddress = "";
+  String? get npwpAddress => _npwpAddress;
 
-  int _discount = 0;
-  int get discount => _discount;
+  num? _grossTotal = 0;
+  num? get grossTotal => _grossTotal;
 
-  int _reward = 0;
-  int get reward => _reward;
+  num? _discount = 0;
+  num? get discount => _discount;
 
-  int _totalAfterDiscount = 0;
-  int get totalAfterDiscount => _totalAfterDiscount;
+  num? _reward = 0;
+  num? get reward => _reward;
 
-  int _vat = 0;
-  int get vat => _vat;
+  num? _totalAfterDiscount = 0;
+  num? get totalAfterDiscount => _totalAfterDiscount;
 
-  int _commissionFee = 0;
-  int get commissionFee => _commissionFee;
+  num? _vat = 0;
+  num? get vat => _vat;
 
-  int _vatCommissionFee = 0;
-  int get vatCommissionFee => _vatCommissionFee;
+  num? _commissionFee = 0;
+  num? get commissionFee => _commissionFee;
 
-  int _insurance = 0;
-  int get insurance => _insurance;
+  num? _vatCommissionFee = 0;
+  num? get vatCommissionFee => _vatCommissionFee;
 
-  int _stamp = 0;
-  int get stamp => _stamp;
+  num? _insurance = 0;
+  num? get insurance => _insurance;
 
-  int _totalPaid = 0;
-  int get totalPaid => _totalPaid;
+  num? _stamp = 0;
+  num? get stamp => _stamp;
+
+  num? _totalPaid = 0;
+  num? get totalPaid => _totalPaid;
 
   InvoiceDetailModel.fromJson(dynamic json) {
+    _invoiceNumberEncoded = json["invoice_number_encoded"];
     _invoiceNumber = json["invoice_number"];
     _invoiceDate = json["invoice_date"];
     _top = json["top"];
@@ -99,20 +103,20 @@ class InvoiceDetailModel {
     _zipCode = json["zip_code"];
     _phone = json["phone"];
     _email = json["email"];
-    _taxNumber = json["tax_number"];
+    _taxNumber = json["tax_num?ber"];
     _npwpId = json["npwp_id"];
     _npwpName = json["npwp_name"];
     _npwpAddress = json["npwp_address"];
-    _grossTotal = json["gross_total"];
-    _discount = json["discount"];
-    _reward = json["reward"];
-    _totalAfterDiscount = json["total_after_discount"];
-    _vat = json["vat"];
-    _commissionFee = json["commission_fee"];
-    _vatCommissionFee = json["vat_commission_fee"];
-    _insurance = json["insurance"];
-    _stamp = json["stamp"];
-    _totalPaid = json["total_paid"];
+    _grossTotal = json["gross_total"] ?? 0;
+    _discount = json["discount"] ?? 0;
+    _reward = json["reward"] ?? 0;
+    _totalAfterDiscount = json["total_after_discount"] ?? 0;
+    _vat = json["vat"] ?? 0;
+    _commissionFee = json["commission_fee"] ?? 0;
+    _vatCommissionFee = json["vat_commission_fee"] ?? 0;
+    _insurance = json["insurance"] ?? 0;
+    _stamp = json["stamp"] ?? 0;
+    _totalPaid = json["total_paid"] ?? 0;
   }
 
 }

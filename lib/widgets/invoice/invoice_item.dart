@@ -10,43 +10,47 @@ class InvoiceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      margin: const EdgeInsets.only(left: 16, right: 16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Theme.of(context).colorScheme.outline),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                invoice?.invoiceNo ?? '',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              Text(
-                "Rp ${invoice?.invoiceTotalAmount.toCurrency() ?? ''}",
-                style: Theme.of(context).textTheme.bodySmall,
-              )
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                invoice?.invoiceDate ?? '',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              Text(
-                invoice?.invoiceStatus ?? '',
-                style: Theme.of(context).textTheme.bodySmall,
-              )
-            ],
-          ),
-        ],
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: (() => onTap(invoice?.invoiceNoEncoded ?? '')),
+      child:  Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        margin: const EdgeInsets.only(left: 16, right: 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Theme.of(context).colorScheme.outline),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  invoice?.invoiceNo ?? '',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  "Rp ${invoice?.invoiceTotalAmount.toCurrency() ?? ''}",
+                  style: Theme.of(context).textTheme.bodySmall,
+                )
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  invoice?.invoiceDate ?? '',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                Text(
+                  invoice?.invoiceStatus ?? '',
+                  style: Theme.of(context).textTheme.bodySmall,
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
