@@ -26,6 +26,10 @@ class AdvanceFilterModel {
     _keyword = keyword;
   }
 
+  setPage(int newPage) {
+    _page = newPage;
+  }
+
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
 

@@ -17,7 +17,7 @@ class InvoiceImpl extends InvoiceRepository {
   @override
   Future<DefaultResponseModel<List<InvoiceModel>>> getInvoices(AdvanceFilterModel advanceFilter) async {
     try {
-      var response = await network.dio.get("/invoice");
+      var response = await network.dio.get("/invoice", queryParameters: advanceFilter.toJson());
       List<InvoiceModel> invoices = [];
 
       response.data["payload"].forEach((invoice) {
@@ -55,7 +55,7 @@ class InvoiceImpl extends InvoiceRepository {
   @override
   Future<DefaultResponseModel<List<InvoiceCnoteModel>>> getInvoiceCnotes(String invoiceNumber, DefaultPageFilterModel filter) async {
     try {
-      var response = await network.dio.get("/invoice/$invoiceNumber/cnote");
+      var response = await network.dio.get("/invoice/$invoiceNumber/cnote", queryParameters: filter.toJson());
       List<InvoiceCnoteModel> invoices = [];
 
       response.data["payload"].forEach((invoice) {

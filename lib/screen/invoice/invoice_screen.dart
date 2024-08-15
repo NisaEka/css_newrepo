@@ -1,11 +1,15 @@
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/invoice/invoice_model.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/invoice/invoice_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'invoice_controller.dart';
 
 class InvoiceScreen extends StatelessWidget {
-  const InvoiceScreen({ super.key });
+  const InvoiceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +48,49 @@ class InvoiceScreen extends StatelessWidget {
       );
     }
 
-    if (controller.showMainContent) {
-      // return _mainContentStack(context, controller);
-    }
-
-    return Text("No Content".tr);
+    return _mainContent(context, controller);
   }
 
+  Widget _mainContent(BuildContext context, InvoiceController controller) {
+    return Column(
+      children: [
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: () => Future.sync(() => controller.refreshInvoices()),
+            child: PagedListView.separated(
+              pagingController: controller.pagingController,
+              builderDelegate: PagedChildBuilderDelegate<InvoiceModel>(
+                transitionDuration: const Duration(milliseconds: 500),
+                itemBuilder: (context, item, index) {
+                  double paddingTop = index == 0 ? 16 : 0;
+                  return Padding(
+                    padding: EdgeInsets.only(top: paddingTop),
+                    child: InvoiceItem(
+                      invoice: item,
+                      onTap: (String invoiceNumber) {},
+                    ),
+                  );
+                },
+                noMoreItemsIndicatorBuilder: (BuildContext context) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Text(
+                      ".",
+                      style: Theme.of(context).textTheme.titleMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                },
+              ),
+              separatorBuilder: (context, index) {
+                return const SizedBox(
+                  height: 16,
+                );
+              },
+            ),
+          ),
+        )
+      ],
+    );
+  }
 }
