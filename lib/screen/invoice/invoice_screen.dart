@@ -19,37 +19,10 @@ class InvoiceScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: CustomTopBar(title: "Tagihan Kamu".tr),
-          body: _invoiceBody(context, controller),
+          body: _mainContent(context, controller),
         );
       },
     );
-  }
-
-  Widget _invoiceBody(BuildContext context, InvoiceController controller) {
-    if (controller.showLoadingIndicator) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    if (controller.showEmptyContent) {
-      return const Center(child: Text("Tidak ada data tersedia"));
-    }
-
-    if (controller.showErrorContent) {
-      return Center(
-        child: Column(
-          children: [
-            Text("Terjadi kesalahan ketika mengambil data".tr),
-            const Padding(padding: EdgeInsets.only(top: 16)),
-            FilledButton(
-              onPressed: () => controller.requireRetry(),
-              child: const Text("Muat ulang"),
-            )
-          ],
-        ),
-      );
-    }
-
-    return _mainContent(context, controller);
   }
 
   Widget _mainContent(BuildContext context, InvoiceController controller) {
@@ -57,11 +30,11 @@ class InvoiceScreen extends StatelessWidget {
       children: [
         Expanded(
           child: RefreshIndicator(
+            color: Theme.of(context).colorScheme.outline,
             onRefresh: () => Future.sync(() => controller.refreshInvoices()),
             child: PagedListView.separated(
               pagingController: controller.pagingController,
               builderDelegate: PagedChildBuilderDelegate<InvoiceModel>(
-                transitionDuration: const Duration(milliseconds: 500),
                 itemBuilder: (context, item, index) {
                   double paddingTop = index == 0 ? 16 : 0;
                   return Padding(
@@ -69,12 +42,47 @@ class InvoiceScreen extends StatelessWidget {
                     child: InvoiceItem(
                       invoice: item,
                       onTap: (String invoiceNumber) {
-                        Get.to(
-                          const InvoiceDetailScreen(),
-                          arguments: { "invoice_number": item.invoiceNoEncoded }
-                        );
+                        Get.to(const InvoiceDetailScreen(), arguments: {
+                          "invoice_number": item.invoiceNoEncoded
+                        });
                       },
                     ),
+                  );
+                },
+                firstPageProgressIndicatorBuilder: (BuildContext context) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
+                  );
+                },
+                newPageProgressIndicatorBuilder: (BuildContext context) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.outline,
+                      ),
+                    ),
+                  );
+                },
+                firstPageErrorIndicatorBuilder: (BuildContext context) {
+                  return Center(
+                    child: Column(
+                      children: [
+                        Text("Terjadi kesalahan ketika mengambil data".tr),
+                        const Padding(padding: EdgeInsets.only(top: 16)),
+                        FilledButton(
+                          onPressed: () => controller.requireRetry(),
+                          child: const Text("Muat ulang"),
+                        )
+                      ],
+                    ),
+                  );
+                },
+                noItemsFoundIndicatorBuilder: (BuildContext context) {
+                  return const Center(
+                    child: Text("Tidak ada data tersedia"),
                   );
                 },
                 noMoreItemsIndicatorBuilder: (BuildContext context) {
@@ -87,6 +95,7 @@ class InvoiceScreen extends StatelessWidget {
                     ),
                   );
                 },
+                transitionDuration: const Duration(milliseconds: 500),
               ),
               separatorBuilder: (context, index) {
                 return const SizedBox(

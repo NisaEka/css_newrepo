@@ -7,18 +7,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class InvoiceController extends BaseController {
 
-  bool _showLoadingIndicator = false;
-  bool get showLoadingIndicator => _showLoadingIndicator;
-
-  bool _showMainContent = false;
-  bool get showMainContent => _showMainContent;
-
-  bool _showErrorContent = false;
-  bool get showErrorContent => _showErrorContent;
-
-  bool _showEmptyContent = false;
-  bool get showEmptyContent => _showEmptyContent;
-
   AdvanceFilterModel _advanceFilterModel = AdvanceFilterModel();
 
   final PagingController<int, InvoiceModel> pagingController = PagingController(firstPageKey: Constant.defaultPage);
@@ -32,8 +20,6 @@ class InvoiceController extends BaseController {
   }
 
   void _getInvoices(int page) async {
-    _showLoadingIndicator = true;
-
     try {
       _advanceFilterModel.setPage(page);
       final response = await invoiceRepository.getInvoices(_advanceFilterModel);
@@ -47,16 +33,9 @@ class InvoiceController extends BaseController {
         final nextPageKey = page + 1;
         pagingController.appendPage(payload, nextPageKey);
       }
-      _showMainContent = true;
-      update();
     } catch (e) {
       e.printError();
-      _showErrorContent = true;
-      update();
     }
-
-    _showLoadingIndicator = false;
-    update();
   }
 
   void requireRetry() {

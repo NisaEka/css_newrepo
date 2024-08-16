@@ -18,6 +18,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
         return Scaffold(
           appBar: CustomTopBar(title: "Detail AWB Info".tr),
           body: RefreshIndicator(
+            color: Theme.of(context).colorScheme.outline,
             onRefresh: () => Future.sync(() => controller.refreshInvoice()),
             child: _detailBody(context, controller),
           ),
@@ -34,7 +35,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
       return Container(
         alignment: Alignment.center,
         child: CircularProgressIndicator(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.outline,
         ),
       );
     }

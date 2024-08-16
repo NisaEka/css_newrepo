@@ -9,18 +9,6 @@ class InvoiceCnoteController extends BaseController {
 
   String invoiceNumber = Get.arguments["invoice_number"];
 
-  bool _showLoadingIndicator = false;
-  bool get showLoadingIndicator => _showLoadingIndicator;
-
-  bool _showMainContent = false;
-  bool get showMainContent => _showMainContent;
-
-  bool _showErrorContent = false;
-  bool get showErrorContent => _showErrorContent;
-
-  bool _showEmptyContent = false;
-  bool get showEmptyContent => _showEmptyContent;
-
   final DefaultPageFilterModel _defaultPageFilterModel = DefaultPageFilterModel();
 
   final PagingController<int, InvoiceCnoteModel> pagingController = PagingController(firstPageKey: Constant.defaultPage);
@@ -34,8 +22,6 @@ class InvoiceCnoteController extends BaseController {
   }
 
   void _getInvoiceCnotes(int page) async {
-    _showLoadingIndicator = true;
-
     try {
       _defaultPageFilterModel.setPage(page);
       final response = await invoiceRepository.getInvoiceCnotes(invoiceNumber, _defaultPageFilterModel);
@@ -49,16 +35,9 @@ class InvoiceCnoteController extends BaseController {
         final nextPageKey = page + 1;
         pagingController.appendPage(payload, nextPageKey);
       }
-      _showMainContent = true;
-      update();
     } catch (e) {
       e.printError();
-      _showErrorContent = true;
-      update();
     }
-
-    _showLoadingIndicator = false;
-    update();
   }
 
   void requireRetry() {
