@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/invoice/invoice_detail_model.dart';
+import 'package:css_mobile/screen/invoice/cnote/invoice_cnote_screen.dart';
 import 'package:css_mobile/screen/invoice/detail/invoice_detail_controller.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -272,7 +273,12 @@ class InvoiceDetailScreen extends StatelessWidget {
   Widget _viewAwbList(BuildContext context, String encodedInvoiceNumber) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () {},
+      onTap: () {
+        Get.to(
+          const InvoiceCnoteScreen(),
+          arguments: { "invoice_number": encodedInvoiceNumber }
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
