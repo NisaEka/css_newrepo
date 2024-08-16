@@ -10,6 +10,7 @@ import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -289,7 +290,7 @@ class PantauPaketmuScreen extends StatelessWidget {
                   firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(
                     children: List.generate(
-                      3,
+                      10,
                       (index) => const RiwayatKirimanListItem(isLoading: true),
                     ),
                   ),
@@ -317,159 +318,162 @@ class PantauPaketmuScreen extends StatelessWidget {
   }
 
   Widget _tipeKiriman(BuildContext context, PantauPaketmuController c) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 15),
-      decoration: BoxDecoration(
-        color: blueJNE,
-        border: Border.all(),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: () {
-              c.tipeKiriman = 0;
-              c.selectedTipeKiriman = 'SEMUA';
-              c.update();
-              c.pagingController.refresh();
-            },
-            child: Container(
-              width: Get.width / 4.76,
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              decoration: BoxDecoration(
-                color: c.tipeKiriman == 0 ? blueJNE : whiteColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  bottomLeft: Radius.circular(8),
+    return Shimmer(
+      isLoading: c.isLoading,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 15),
+        decoration: BoxDecoration(
+          color: blueJNE,
+          border: Border.all(),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () {
+                c.tipeKiriman = 0;
+                c.selectedTipeKiriman = 'SEMUA';
+                c.update();
+                c.pagingController.refresh();
+              },
+              child: Container(
+                width: Get.width / 4.76,
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                decoration: BoxDecoration(
+                  color: c.tipeKiriman == 0 ? blueJNE : whiteColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    bottomLeft: Radius.circular(8),
+                  ),
+                  // border: const Border(
+                  //   right: BorderSide(color: greyDarkColor1),
+                  // ),
                 ),
-                // border: const Border(
-                //   right: BorderSide(color: greyDarkColor1),
-                // ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    c.total.toString(),
-                    style: listTitleTextStyle.copyWith(
-                      color: c.tipeKiriman == 0 ? whiteColor : blueJNE,
+                child: Column(
+                  children: [
+                    Text(
+                      c.total.toString(),
+                      style: listTitleTextStyle.copyWith(
+                        color: c.tipeKiriman == 0 ? whiteColor : blueJNE,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Kiriman'.tr,
-                    style: sublistTitleTextStyle.copyWith(
-                      color: c.tipeKiriman == 0 ? whiteColor : greyColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              c.tipeKiriman = 1;
-              c.selectedTipeKiriman = 'COD';
-              c.update();
-              c.pagingController.refresh();
-            },
-            child: Container(
-              width: Get.width / 4.76,
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              decoration: BoxDecoration(
-                color: c.tipeKiriman == 1 ? blueJNE : whiteColor,
-                // border: const Border(
-                //   right: BorderSide(color: greyDarkColor1),
-                //   left: BorderSide(color: greyDarkColor1),
-                // ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    c.cod.toString(),
-                    style: listTitleTextStyle.copyWith(
-                      color: c.tipeKiriman == 1 ? whiteColor : blueJNE,
-                    ),
-                  ),
-                  Text(
-                    'COD'.tr,
-                    style: sublistTitleTextStyle.copyWith(
-                      color: c.tipeKiriman == 1 ? whiteColor : greyColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              c.tipeKiriman = 2;
-              c.selectedTipeKiriman = 'NON COD';
-              c.update();
-              c.pagingController.refresh();
-            },
-            child: Container(
-              width: Get.width / 4.76,
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              decoration: BoxDecoration(
-                color: c.tipeKiriman == 2 ? blueJNE : whiteColor,
-                // border: const Border(
-                //   right: BorderSide(color: greyDarkColor1),
-                // ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    c.noncod.toString(),
-                    style: listTitleTextStyle.copyWith(
-                      color: c.tipeKiriman == 2 ? whiteColor : blueJNE,
-                    ),
-                  ),
-                  Text(
-                    'NON COD'.tr,
-                    style: sublistTitleTextStyle.copyWith(
-                      color: c.tipeKiriman == 2 ? whiteColor : greyColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              c.tipeKiriman = 3;
-              c.selectedTipeKiriman = 'COD ONGKIR';
-              c.update();
-              c.pagingController.refresh();
-            },
-            child: Container(
-              width: Get.width / 4.76,
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              decoration: BoxDecoration(
-                color: c.tipeKiriman == 3 ? blueJNE : whiteColor,
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
+                    Text(
+                      'Kiriman'.tr,
+                      style: sublistTitleTextStyle.copyWith(
+                        color: c.tipeKiriman == 0 ? whiteColor : greyColor,
+                      ),
+                    )
+                  ],
                 ),
               ),
-              child: Column(
-                children: [
-                  Text(
-                    c.codOngkir.toString(),
-                    style: listTitleTextStyle.copyWith(
-                      color: c.tipeKiriman == 3 ? whiteColor : blueJNE,
+            ),
+            GestureDetector(
+              onTap: () {
+                c.tipeKiriman = 1;
+                c.selectedTipeKiriman = 'COD';
+                c.update();
+                c.pagingController.refresh();
+              },
+              child: Container(
+                width: Get.width / 4.76,
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                decoration: BoxDecoration(
+                  color: c.tipeKiriman == 1 ? blueJNE : whiteColor,
+                  // border: const Border(
+                  //   right: BorderSide(color: greyDarkColor1),
+                  //   left: BorderSide(color: greyDarkColor1),
+                  // ),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      c.cod.toString(),
+                      style: listTitleTextStyle.copyWith(
+                        color: c.tipeKiriman == 1 ? whiteColor : blueJNE,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'COD ONGKIR'.tr,
-                    style: sublistTitleTextStyle.copyWith(
-                      color: c.tipeKiriman == 3 ? whiteColor : greyColor,
-                    ),
-                  ),
-                ],
+                    Text(
+                      'COD'.tr,
+                      style: sublistTitleTextStyle.copyWith(
+                        color: c.tipeKiriman == 1 ? whiteColor : greyColor,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+            GestureDetector(
+              onTap: () {
+                c.tipeKiriman = 2;
+                c.selectedTipeKiriman = 'NON COD';
+                c.update();
+                c.pagingController.refresh();
+              },
+              child: Container(
+                width: Get.width / 4.76,
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                decoration: BoxDecoration(
+                  color: c.tipeKiriman == 2 ? blueJNE : whiteColor,
+                  // border: const Border(
+                  //   right: BorderSide(color: greyDarkColor1),
+                  // ),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      c.noncod.toString(),
+                      style: listTitleTextStyle.copyWith(
+                        color: c.tipeKiriman == 2 ? whiteColor : blueJNE,
+                      ),
+                    ),
+                    Text(
+                      'NON COD'.tr,
+                      style: sublistTitleTextStyle.copyWith(
+                        color: c.tipeKiriman == 2 ? whiteColor : greyColor,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                c.tipeKiriman = 3;
+                c.selectedTipeKiriman = 'COD ONGKIR';
+                c.update();
+                c.pagingController.refresh();
+              },
+              child: Container(
+                width: Get.width / 4.76,
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                decoration: BoxDecoration(
+                  color: c.tipeKiriman == 3 ? blueJNE : whiteColor,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(8),
+                    bottomRight: Radius.circular(8),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      c.codOngkir.toString(),
+                      style: listTitleTextStyle.copyWith(
+                        color: c.tipeKiriman == 3 ? whiteColor : blueJNE,
+                      ),
+                    ),
+                    Text(
+                      'COD ONGKIR'.tr,
+                      style: sublistTitleTextStyle.copyWith(
+                        color: c.tipeKiriman == 3 ? whiteColor : greyColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

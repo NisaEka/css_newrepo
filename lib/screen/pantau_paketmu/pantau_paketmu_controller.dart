@@ -17,7 +17,7 @@ class PantauPaketmuController extends BaseController {
   DateTime? startDate;
   DateTime? endDate;
   String? selectedStatusKiriman;
-  String? selectedPetugasEntry;
+  String? selectedPetugasEntry = 'SEMUA';
   String? selectedStatusPrint = "SEMUA";
   String? selectedTipeKiriman = "SEMUA";
   String? date;
@@ -63,6 +63,7 @@ class PantauPaketmuController extends BaseController {
 
       if (basic?.userType == "PEMILIK") {
         await transaction.getTransOfficer().then((value) {
+          listOfficerEntry.add('SEMUA');
           listOfficerEntry.add(basic?.name ?? '');
           listOfficerEntry.addAll(value.payload ?? []);
           update();
@@ -119,7 +120,7 @@ class PantauPaketmuController extends BaseController {
         pageSize,
         date ?? '',
         searchField.text,
-        selectedPetugasEntry ?? '',
+        selectedPetugasEntry != "SEMUA" ? (selectedPetugasEntry ?? '') : '',
         selectedStatusKiriman ?? '',
         selectedTipeKiriman ?? '',
       );
@@ -153,7 +154,7 @@ class PantauPaketmuController extends BaseController {
     dateFilter = "3";
     selectDateFilter(3);
     date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
-
+    count();
     pagingController.refresh();
     update();
     Get.back();
@@ -188,8 +189,42 @@ class PantauPaketmuController extends BaseController {
       date.printInfo(info: "$startDate - $endDate");
     }
     update();
+    count();
     pagingController.refresh();
+
     update();
     Get.back();
   }
+
+  Future<void> count() async {
+    total = 0;
+    cod = 0;
+    noncod = 0;
+    codOngkir = 0;
+    isLoading = true;
+    update();
+    try {
+      await pantau
+          .getPantauCount(
+        date ?? '',
+        searchField.text,
+        selectedPetugasEntry != "SEMUA" ? (selectedPetugasEntry ?? '') : '',
+        selectedStatusKiriman ?? '',
+      )
+          .then((value) {
+        total = value.payload!.total!.toInt();
+        cod = value.payload!.cod!.toInt();
+        noncod = value.payload!.nonCod!.toInt();
+        codOngkir = value.payload!.codOngkir!.toInt();
+        update();
+      });
+    } catch (e) {
+      e.printError();
+    }
+
+    isLoading = false;
+    update();
+  }
+
+
 }

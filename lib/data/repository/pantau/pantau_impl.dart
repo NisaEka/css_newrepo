@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/pantau/pantau_repository.dart';
 import 'package:dio/dio.dart';
@@ -20,13 +21,13 @@ class PantauRepositoryImpl extends PantauRepository {
     String keyword,
     String officer,
     String status,
-      String type,
+    String type,
   ) async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.get(
+      Response response = await network.dio.get(
         "/pantau",
         queryParameters: {
           "page": page,
@@ -49,10 +50,10 @@ class PantauRepositoryImpl extends PantauRepository {
   @override
   Future<ResponseModel<List<String>>> getPantauStatus() async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.get(
+      Response response = await network.dio.get(
         "/pantau/status",
       );
       return ResponseModel<List<String>>.fromJson(
@@ -63,6 +64,34 @@ class PantauRepositoryImpl extends PantauRepository {
       return ResponseModel<List<String>>.fromJson(
         e.response?.data,
         (json) => json is List<dynamic> ? e.response?.data['payload'].cast<String>() : List.empty(),
+      );
+    }
+  }
+
+  @override
+  Future<ResponseModel<TransactionCount>> getPantauCount(String date, String keyword, String officer, String status) async {
+    var token = await storageSecure.read(key: "token");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
+
+    try {
+      Response response = await network.dio.get(
+        "/pantau/count",
+        queryParameters: {
+          "keyword": keyword.toUpperCase(),
+          "date": date,
+          "officer_entry": officer,
+          "status": status,
+        },
+      );
+      return ResponseModel<TransactionCount>.fromJson(
+        response.data,
+        (json) => TransactionCount.fromJson(json as Map<String, dynamic>),
+      );
+    } on DioException catch (e) {
+      e.printError();
+      return ResponseModel<TransactionCount>.fromJson(
+        e.response?.data,
+        (json) => TransactionCount.fromJson(json as Map<String, dynamic>),
       );
     }
   }

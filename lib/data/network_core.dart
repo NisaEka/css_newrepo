@@ -23,9 +23,9 @@ class NetworkCore {
 
     local.options = BaseOptions(
       baseUrl: "http://10.0.2.2:3000",
-      connectTimeout: const Duration(seconds: 20),
-      receiveTimeout: const Duration(seconds: 10),
-      sendTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      sendTimeout: const Duration(seconds: 30),
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
