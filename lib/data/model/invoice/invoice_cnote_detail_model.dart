@@ -1,70 +1,70 @@
 class InvoiceCnoteDetailModel {
 
-  String _awbNumber = "";
-  String get awbNumber => _awbNumber;
+  String? _awbNumber = "";
+  String? get awbNumber => _awbNumber;
 
-  String _awbDate = "";
-  String get awbDate => _awbDate;
+  String? _awbDate = "";
+  String? get awbDate => _awbDate;
 
-  String _shipperName = "";
-  String get shipperName => _shipperName;
+  String? _shipperName = "";
+  String? get shipperName => _shipperName;
 
-  String _consigneeName = "";
-  String get consigneeName => _consigneeName;
+  String? _consigneeName = "";
+  String? get consigneeName => _consigneeName;
 
-  int _quantity = 0;
-  int get quantity => _quantity;
+  num? _quantity = 0;
+  num? get quantity => _quantity;
 
-  int _weightKg = 0;
-  int get weightKg => _weightKg;
+  num? _weightKg = 0;
+  num? get weightKg => _weightKg;
 
-  String _serviceCode = "";
-  String get serviceCode => _serviceCode;
+  String? _serviceCode = "";
+  String? get serviceCode => _serviceCode;
 
-  String _originSysCode = "";
-  String get originSysCode => _originSysCode;
+  String? _originSysCode = "";
+  String? get originSysCode => _originSysCode;
 
-  String _originName = "";
-  String get originName => _originName;
+  String? _originName = "";
+  String? get originName => _originName;
 
-  String _destinationSysCode = "";
-  String get destinationSysCode => _destinationSysCode;
+  String? _destinationSysCode = "";
+  String? get destinationSysCode => _destinationSysCode;
 
-  String _destinationName = "";
-  String get destinationName => _destinationName;
+  String? _destinationName = "";
+  String? get destinationName => _destinationName;
 
-  int _originalAmountNumber = 0;
-  int get originalAmountNumber => _originalAmountNumber;
+  num? _originalAmountNumber = 0;
+  num? get originalAmountNumber => _originalAmountNumber;
 
-  int _packing = 0;
-  int get packing => _packing;
+  num? _packing = 0;
+  num? get packing => _packing;
 
-  int _surcharge = 0;
-  int get surcharge => _surcharge;
+  num? _surcharge = 0;
+  num? get surcharge => _surcharge;
 
-  int _otherCharges = 0;
-  int get otherCharges => _otherCharges;
+  num? _otherCharges = 0;
+  num? get otherCharges => _otherCharges;
 
-  int _discountAmountAwb = 0;
-  int get discountAmountAwb => _discountAmountAwb;
+  num? _discountAmountAwb = 0;
+  num? get discountAmountAwb => _discountAmountAwb;
 
-  int _totalAdjustedInsAmt = 0;
-  int get totalAdjustedInsAmt => _totalAdjustedInsAmt;
+  num? _totalAdjustedInsAmt = 0;
+  num? get totalAdjustedInsAmt => _totalAdjustedInsAmt;
 
-  int _goodsValue = 0;
-  int get goodsValue => _goodsValue;
+  num? _goodsValue = 0;
+  num? get goodsValue => _goodsValue;
 
-  int _codAmount = 0;
-  int get codAmount => _codAmount;
+  num? _codAmount = 0;
+  num? get codAmount => _codAmount;
 
-  int _persentaseCodFee = 0;
-  int get persentaseCodFee => _persentaseCodFee;
+  num? _persentaseCodFee = 0;
+  num? get persentaseCodFee => _persentaseCodFee;
 
-  int _codFeeAmount = 0;
-  int get codFeeAmount => _codFeeAmount;
+  num? _codFeeAmount = 0;
+  num? get codFeeAmount => _codFeeAmount;
 
-  String _codFeeZone = "";
-  String get codFeeZone => _codFeeZone;
+  String? _codFeeZone = "";
+  String? get codFeeZone => _codFeeZone;
 
   InvoiceCnoteDetailModel.fromJson(dynamic json) {
     _awbNumber = json["awb_number"];
