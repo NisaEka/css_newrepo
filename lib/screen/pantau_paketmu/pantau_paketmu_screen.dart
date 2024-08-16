@@ -49,7 +49,10 @@ class PantauPaketmuScreen extends StatelessWidget {
           isFiltered: c.isFiltered,
           isApplyFilter: (c.selectedStatusKiriman != "Total Kiriman"),
           onResetFilter: () => c.resetFilter(),
-          onApplyFilter: () => c.applyFilter(),
+          onApplyFilter: () {
+            c.applyFilter();
+            Get.back();
+          },
           onCloseFilter: () {
             if (!c.isFiltered) {
               c.resetFilter();
@@ -370,10 +373,11 @@ class PantauPaketmuScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                c.tipeKiriman = 1;
-                c.selectedTipeKiriman = 'COD';
+                c.tipeKiriman = 0;
+                c.selectedTipeKiriman = 'SEMUA';
                 c.update();
                 c.pagingController.refresh();
+                c.count();
               },
               child: Container(
                 width: Get.width / 4.76,

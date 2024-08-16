@@ -14,13 +14,13 @@ class PantauPaketmuController extends BaseController {
   final PagingController<int, PantauPaketmuModel> pagingController = PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
-  DateTime? startDate;
-  DateTime? endDate;
-  String? selectedStatusKiriman;
+  DateTime? startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime? endDate = DateTime.now();
+  String? selectedStatusKiriman = 'SEMUA';
   String? selectedPetugasEntry = 'SEMUA';
   String? selectedStatusPrint = "SEMUA";
   String? selectedTipeKiriman = "SEMUA";
-  String? date;
+  String? date = "${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).millisecondsSinceEpoch ?? ''}-${DateTime.now().millisecondsSinceEpoch ?? ''}";
   String dateFilter = '3';
   int tipeKiriman = 0;
   int total = 0;
@@ -44,7 +44,8 @@ class PantauPaketmuController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([initData()]);
+    selectDateFilter(3);
+    initData();
     pagingController.addPageRequestListener((pageKey) {
       getPantauList(pageKey);
     });
@@ -54,9 +55,10 @@ class PantauPaketmuController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     update();
-    selectDateFilter(3);
-    date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
-    pagingController.refresh();
+    // selectDateFilter(3);
+    // date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+    // update();
+    // pagingController.refresh();
 
     try {
       await profil.getBasicProfil().then((value) async => basic = value.payload);
@@ -82,6 +84,7 @@ class PantauPaketmuController extends BaseController {
     selectedStatusKiriman = listStatusKiriman.first;
     isLoading = false;
     update();
+    applyFilter();
   }
 
   void selectDateFilter(int filter) {
@@ -103,7 +106,7 @@ class PantauPaketmuController extends BaseController {
       startDateField.text = startDate.toString().toShortDateFormat();
       endDateField.text = endDate.toString().toShortDateFormat();
     } else if (filter == 3) {
-      startDate = DateTime.now();
+      startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
       endDate = DateTime.now();
       startDateField.text = startDate.toString().toShortDateFormat();
       endDateField.text = endDate.toString().toShortDateFormat();
@@ -189,11 +192,10 @@ class PantauPaketmuController extends BaseController {
       date.printInfo(info: "$startDate - $endDate");
     }
     update();
-    count();
     pagingController.refresh();
+    count();
 
     update();
-    Get.back();
   }
 
   Future<void> count() async {

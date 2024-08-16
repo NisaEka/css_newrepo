@@ -56,11 +56,14 @@ class PantauRepositoryImpl extends PantauRepository {
       Response response = await network.dio.get(
         "/pantau/status",
       );
+      // response.data.printInfo(info: 'pantau status response');
       return ResponseModel<List<String>>.fromJson(
         response.data,
         (json) => json is List<dynamic> ? response.data['payload'].cast<String>() : List.empty(),
       );
     } on DioException catch (e) {
+      e.response?.data.printError(info: 'pantau status response');
+
       return ResponseModel<List<String>>.fromJson(
         e.response?.data,
         (json) => json is List<dynamic> ? e.response?.data['payload'].cast<String>() : List.empty(),
@@ -88,7 +91,7 @@ class PantauRepositoryImpl extends PantauRepository {
         (json) => TransactionCount.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
-      e.printError();
+      e.response?.data.printError(info: 'count pantau error');
       return ResponseModel<TransactionCount>.fromJson(
         e.response?.data,
         (json) => TransactionCount.fromJson(json as Map<String, dynamic>),
