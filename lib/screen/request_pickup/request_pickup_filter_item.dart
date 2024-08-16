@@ -15,17 +15,16 @@ class RequestPickupFilterItem extends StatelessWidget {
   final Function(DateTime?) onStartDateChange;
   final Function(DateTime?) onEndDateChange;
 
-  const RequestPickupFilterItem({
-    super.key,
-    required this.onItemSelected,
-    required this.itemName,
-    required this.isSelected,
-    required this.requireDatePicker,
-    required this.startDate,
-    required this.endDate,
-    required this.onStartDateChange,
-    required this.onEndDateChange
-  });
+  const RequestPickupFilterItem(
+      {super.key,
+      required this.onItemSelected,
+      required this.itemName,
+      required this.isSelected,
+      required this.requireDatePicker,
+      required this.startDate,
+      required this.endDate,
+      required this.onStartDateChange,
+      required this.onEndDateChange});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,13 @@ class RequestPickupFilterItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(itemName.tr),
+              Text(
+                itemName.tr,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(color: Theme.of(context).colorScheme.outline),
+              ),
               Icon(isSelected ? Icons.circle : Icons.circle_outlined)
             ],
           ),

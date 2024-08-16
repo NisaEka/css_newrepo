@@ -15,6 +15,16 @@ class InvoiceImpl extends InvoiceRepository {
   final network = Get.find<NetworkCore>();
 
   @override
+  Future<DefaultResponseModel<num>> getInvoiceCount(AdvanceFilterModel advanceFilter) async {
+    try {
+      var response = await network.dio.get("/invoice/count", queryParameters: advanceFilter.toJson());
+      return DefaultResponseModel.fromJson(response.data, response.data["payload"]);
+    } on DioException catch (e) {
+      return DefaultResponseModel.fromJson(e.response?.data, 0);
+    }
+  }
+
+  @override
   Future<DefaultResponseModel<List<InvoiceModel>>> getInvoices(AdvanceFilterModel advanceFilter) async {
     try {
       var response = await network.dio.get("/invoice", queryParameters: advanceFilter.toJson());

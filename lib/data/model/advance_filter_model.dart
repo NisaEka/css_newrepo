@@ -30,6 +30,14 @@ class AdvanceFilterModel {
     _page = newPage;
   }
 
+  setKeyword(String newKeyword) {
+    _keyword = newKeyword;
+  }
+
+  setDate(String newDate) {
+    _date = newDate;
+  }
+
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
 
