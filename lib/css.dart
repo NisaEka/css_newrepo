@@ -2,6 +2,7 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_screen.dart';
+import 'package:css_mobile/screen/invoice/invoice_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/uang_cod_kamu/uang_cod_screen.dart';
@@ -68,7 +69,8 @@ class App extends StatelessWidget {
         GetPage(name: "/requestPickup", page: () => const RequestPickupScreen()),
         GetPage(name: "/notification", page: () => const NotificationScreen()),
         GetPage(name: "/pantauPaketmu", page: () => const PantauPaketmuScreen()),
-        GetPage(name: "/laporanku", page: () => const LaporankuScreen())
+        GetPage(name: "/laporanku", page: () => const LaporankuScreen()),
+        GetPage(name: "/invoice", page: () => const InvoiceScreen())
       ],
       // home: const LoginScreen(),
       home: const DashboardScreen(),

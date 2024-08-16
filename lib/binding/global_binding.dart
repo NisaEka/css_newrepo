@@ -10,6 +10,8 @@ import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_impl.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
 import 'package:css_mobile/data/repository/facility/facility_impl.dart';
 import 'package:css_mobile/data/repository/facility/facility_repository.dart';
+import 'package:css_mobile/data/repository/invoice/invoice_impl.dart';
+import 'package:css_mobile/data/repository/invoice/invoice_repository.dart';
 import 'package:css_mobile/data/repository/jlc/jlc_impl.dart';
 import 'package:css_mobile/data/repository/jlc/jlc_repository.dart';
 import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_impl.dart';
@@ -54,5 +56,6 @@ class GlobalBinding extends Bindings {
     Get.put<NotificationRepository>(NotificationRepositoryImpl(), permanent: true);
     Get.put<PantauRepository>(PantauRepositoryImpl(), permanent: true);
     Get.put<LaporankuRepository>(LaporankuRepositoryImpl(), permanent: true);
+    Get.put<InvoiceRepository>(InvoiceImpl(), permanent: true);
   }
 }
