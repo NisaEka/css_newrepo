@@ -80,6 +80,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
               IconsConstant.search,
               color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
             ),
+            margin: EdgeInsets.zero,
             onChanged: (value) {
               c.searchField.text = value;
               c.update();

@@ -23,16 +23,9 @@ class StickerMegahubHybrid1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTextStyle(
       style: const TextStyle(color: Colors.black),
-      child: ListView(
+      child: Column(
         children: [
           StickerMegahubHybrid2(data: data).sticker(),
-          RotatedBox(
-            quarterTurns: 1,
-            child: StickerMegahubHybrid2(
-              data: data,
-              shippingCost: shippingCost,
-            ).sticker(),
-          ),
           const SizedBox(height: 20),
           sticker2(),
           Center(

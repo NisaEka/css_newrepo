@@ -27,7 +27,7 @@ class StickerMegahub1 extends StatelessWidget {
       style: const TextStyle(color: Colors.black),
       child: Container(
         color: Colors.white,
-        child: ListView(
+        child: Column(
           // crossAxisAlignment: CrossAxisAlignment.center,
           // mainAxisAlignment: ,
           children: [

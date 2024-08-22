@@ -12,7 +12,7 @@ class StickerMegahubHybrid3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
         // RotatedBox(
         //   quarterTurns: 1,

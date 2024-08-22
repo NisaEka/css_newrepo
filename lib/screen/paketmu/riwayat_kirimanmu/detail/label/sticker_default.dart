@@ -24,7 +24,7 @@ class StickerDefault extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
         DefaultTextStyle(
           style: const TextStyle(color: greyDarkColor1),
