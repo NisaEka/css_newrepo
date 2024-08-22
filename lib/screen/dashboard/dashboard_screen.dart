@@ -66,7 +66,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       // color: blueJNE,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary,
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(40),
                         bottomRight: Radius.circular(40),
@@ -76,7 +79,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       children: [
                         Container(
                           padding: const EdgeInsets.only(top: 20),
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Theme
+                              .of(context)
+                              .colorScheme
+                              .primary,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -108,57 +114,59 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                         c.isLogin
                             ? Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  CustomLabelText(
-                                    title: 'Selamat Datang'.tr,
-                                    value: c.userName ?? '',
-                                    fontColor: whiteColor,
-                                    isLoading: c.isLoading,
-                                  ),
-                                  c.isLogin && (c.allow.keuanganBonus == "Y" || c.allow.bonus == "Y")
-                                      ? GestureDetector(
-                                          onTap: () => Get.to(const BonusKamuScreen()),
-                                          child: JLCPointWidget(
-                                            point: c.jlcPoint ?? '0',
-                                          ),
-                                        )
-                                      : const SizedBox(),
-                                ],
-                              )
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomLabelText(
+                              title: 'Selamat Datang'.tr,
+                              value: c.userName ?? '',
+                              fontColor: whiteColor,
+                              isLoading: c.isLoading,
+                            ),
+                            c.isLogin && (c.allow.keuanganBonus == "Y" || c.allow.bonus == "Y")
+                                ? GestureDetector(
+                              onTap: () => Get.to(const BonusKamuScreen()),
+                              child: JLCPointWidget(
+                                point: c.jlcPoint ?? '0',
+                              ),
+                            )
+                                : const SizedBox(),
+                          ],
+                        )
                             : const SizedBox(),
                         const SizedBox(height: 15),
                         !c.isLogin || (c.allow.lacakPesanan == "Y" || c.allow.keuanganBonus == "Y")
                             ? TextField(
-                                controller: c.nomorResi,
-                                cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                                decoration: InputDecoration(
-                                  hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
-                                  hintStyle: hintTextStyle,
-                                  suffixIcon: GestureDetector(
-                                    onTap: () => Get.to(
-                                      const BarcodeScanScreen(),
-                                      arguments: {
-                                        "cek_resi": true,
-                                      },
-                                    )?.then((result) {
-                                      c.nomorResi.clear();
-                                      c.update();
-                                    }),
-                                    child: const Icon(
-                                      Icons.qr_code,
-                                      color: redJNE,
-                                    ),
-                                  ),
-                                ),
-                                // readOnly: true,
-                                onSubmitted: (value) => Get.to(const LacakKirimanScreen(), arguments: {
-                                  'nomor_resi': value,
-                                })?.then((value) {
-                                  c.nomorResi.clear();
-                                  c.update();
-                                }),
-                              )
+                          controller: c.nomorResi,
+                          cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                          decoration: InputDecoration(
+                            hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
+                            hintStyle: hintTextStyle,
+                            suffixIcon: GestureDetector(
+                              onTap: () =>
+                                  Get.to(
+                                    const BarcodeScanScreen(),
+                                    arguments: {
+                                      "cek_resi": true,
+                                    },
+                                  )?.then((result) {
+                                    c.nomorResi.clear();
+                                    c.update();
+                                  }),
+                              child: const Icon(
+                                Icons.qr_code,
+                                color: redJNE,
+                              ),
+                            ),
+                          ),
+                          // readOnly: true,
+                          onSubmitted: (value) =>
+                              Get.to(const LacakKirimanScreen(), arguments: {
+                                'nomor_resi': value,
+                              })?.then((value) {
+                                c.nomorResi.clear();
+                                c.update();
+                              }),
+                        )
                             : const SizedBox(),
                       ],
                     ),
@@ -180,15 +188,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 isLogin: c.isLogin,
                 isLoading: c.isLoading,
                 menu: c.menuItems,
-                getOtherMenu: () => Get.to(const OtherMenuScreen(), arguments: {
-                  'isLogin': c.isLogin,
-                  'allowance': c.allow,
-                })?.then(
-                  (result) {
-                    c.cekFavoritMenu();
-                    c.cekAllowance();
-                  },
-                ),
+                getOtherMenu: () =>
+                    Get.to(const OtherMenuScreen(), arguments: {
+                      'isLogin': c.isLogin,
+                      'allowance': c.allow,
+                    })?.then(
+                          (result) {
+                        c.cekFavoritMenu();
+                        c.cekAllowance();
+                      },
+                    ),
               ),
             ],
           ),

@@ -1,6 +1,8 @@
+import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
@@ -16,6 +18,7 @@ import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_officer_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_status_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
 import 'package:dio/dio.dart';
@@ -139,7 +142,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<GetTransactionFeeModel> getTransactionFee(DataTransactionFeeModel params) async {
+  Future<ResponseModel<TransactionFeeModel>> getTransactionFee(DataTransactionFeeModel params) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
@@ -154,7 +157,10 @@ class TransactionRepositoryImpl extends TransactionRepository {
           "cust_no": params.custNo,
         },
       );
-      return GetTransactionFeeModel.fromJson(response.data);
+      return ResponseModel<TransactionFeeModel>.fromJson(
+        response.data,
+        (json) => TransactionFeeModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
       return e.response?.data;
     }
@@ -307,7 +313,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
-    print("transStatus${transStatus}");
     try {
       Response response = await network.dio.get(
         "/transaction/count",
@@ -362,10 +367,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.put(
-        "/transaction/$awb",
-        data: data
-      );
+      Response response = await network.dio.put("/transaction/$awb", data: data);
       return PostTransactionModel.fromJson(response.data);
     } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
@@ -383,6 +385,28 @@ class TransactionRepositoryImpl extends TransactionRepository {
       return GetTransactionOfficerModel.fromJson(response.data);
     } on DioException catch (e) {
       return GetTransactionOfficerModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data) async {
+    var token = await storageSecure.read(key: "token");
+    network.local.options.headers['Authorization'] = 'Bearer $token';
+    data.toJson().printInfo();
+    try {
+      Response response = await network.local.post(
+        "/transaction/ongkir",
+        data: data,
+      );
+      print('error ongkir: ${response.data}');
+
+      return ResponseModel<PostTransactionOngkirModel>.fromJson(
+        response.data,
+        (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on DioException catch (e) {
+      print('error ongkir: ${e.response?.data}');
+      return e.response?.data;
     }
   }
 }

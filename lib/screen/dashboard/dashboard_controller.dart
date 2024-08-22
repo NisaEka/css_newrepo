@@ -47,10 +47,7 @@ class DashboardController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([
-      initData(),
-    ]);
-    update();
+    Future.wait([initData()]);
   }
 
   Future<bool> cekToken() async {
@@ -235,7 +232,10 @@ class DashboardController extends BaseController {
     marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
     var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
     userName = shipper.name ?? "         ";
+
+    update();
     // if (isLogin == true) {
+
     try {
       await transaction
           .getSender()
@@ -277,23 +277,25 @@ class DashboardController extends BaseController {
         update();
       });
 
-      await jlc.postTotalPoint().then((value) {
-        jlcPoint = value.data?.first.sisaPoint.toString();
-        update();
-      });
-
       isCcrf = ccrf?.payload != null && ccrf?.payload?.generalInfo?.apiStatus == "Y";
       storage.saveData(StorageCore.ccrfProfil, ccrf?.payload);
+      await jlc.postTotalPoint().then((value) {
+        if (value.status == true) {
+          jlcPoint = value.data?.first.sisaPoint.toString();
+          update();
+        } else {
+          jlcPoint = '0';
+        }
+      });
       update();
     } catch (e, i) {
       e.printError();
       i.printError();
     }
     // }
-
+    cekAllowance();
     isLoading = false;
     update();
-    cekAllowance();
   }
 
   bool pop = false;

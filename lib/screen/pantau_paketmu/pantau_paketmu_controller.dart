@@ -16,11 +16,12 @@ class PantauPaketmuController extends BaseController {
 
   DateTime? startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   DateTime? endDate = DateTime.now();
+  final DateTime nowDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0);
   String? selectedStatusKiriman = 'SEMUA';
   String? selectedPetugasEntry = 'SEMUA';
   String? selectedStatusPrint = "SEMUA";
   String? selectedTipeKiriman = "SEMUA";
-  String? date = "${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).millisecondsSinceEpoch ?? ''}-${DateTime.now().millisecondsSinceEpoch ?? ''}";
+  String? date = "${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).millisecondsSinceEpoch}-${DateTime.now().millisecondsSinceEpoch}";
   String dateFilter = '3';
   int tipeKiriman = 0;
   int total = 0;
@@ -30,6 +31,7 @@ class PantauPaketmuController extends BaseController {
 
   bool isFiltered = false;
   bool isLoading = false;
+  bool isLoadCount = false;
   bool isSelect = false;
   bool isSelectAll = false;
 
@@ -96,17 +98,17 @@ class PantauPaketmuController extends BaseController {
       startDateField.text = '-';
       endDateField.text = '-';
     } else if (filter == 1) {
-      startDate = DateTime.now().subtract(const Duration(days: 30));
+      startDate = nowDay.subtract(const Duration(days: 30));
       endDate = DateTime.now();
       startDateField.text = startDate.toString().toShortDateFormat();
       endDateField.text = endDate.toString().toShortDateFormat();
     } else if (filter == 2) {
-      startDate = DateTime.now().subtract(const Duration(days: 7));
+      startDate = nowDay.subtract(const Duration(days: 7));
       endDate = DateTime.now();
       startDateField.text = startDate.toString().toShortDateFormat();
       endDateField.text = endDate.toString().toShortDateFormat();
     } else if (filter == 3) {
-      startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+      startDate = nowDay;
       endDate = DateTime.now();
       startDateField.text = startDate.toString().toShortDateFormat();
       endDateField.text = endDate.toString().toShortDateFormat();
@@ -161,6 +163,7 @@ class PantauPaketmuController extends BaseController {
     pagingController.refresh();
     update();
     Get.back();
+    applyFilter();
   }
 
   Future<DateTime?> selectDate(BuildContext context) {
@@ -185,7 +188,10 @@ class PantauPaketmuController extends BaseController {
   }
 
   applyFilter() {
-    isFiltered = true;
+    if(dateFilter != '3'){
+      isFiltered = true;
+    }
+
     if (startDate != null && endDate != null) {
       date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
       date.printInfo(info: "date filter");
@@ -203,7 +209,7 @@ class PantauPaketmuController extends BaseController {
     cod = 0;
     noncod = 0;
     codOngkir = 0;
-    isLoading = true;
+    isLoadCount = true;
     update();
     try {
       await pantau
@@ -220,11 +226,12 @@ class PantauPaketmuController extends BaseController {
         codOngkir = value.payload!.codOngkir!.toInt();
         update();
       });
-    } catch (e) {
+    } catch (e,i) {
       e.printError();
+      i.printError();
     }
 
-    isLoading = false;
+    isLoadCount = false;
     update();
   }
 

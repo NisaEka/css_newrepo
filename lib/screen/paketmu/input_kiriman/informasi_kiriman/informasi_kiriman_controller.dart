@@ -6,6 +6,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
@@ -165,7 +166,7 @@ class InformasiKirimaController extends BaseController {
     update();
   }
 
-  void hitungOngkir() {
+  void hitungOngkir() async {
     totalOngkir = 0;
     isr = 0;
     double vat = (1.1 / 100);
@@ -187,59 +188,64 @@ class InformasiKirimaController extends BaseController {
         update();
         // }
         print("select account : ${account.toJson()}");
-        bool prefix3 = account.accountNumber?.substring(0, 0) != "3";
+        bool prefix3 = account.accountNumber?.substring(0, 1) != "3";
         bool isCOD = account.accountService?.toUpperCase() == 'COD';
         print("isCOD: $isCOD");
         print("isPrefix3: $prefix3");
-        num getVat = isCOD && prefix3 ? freightCharge * vat : 0;
 
-        getCodFeeMinimum = (freightCharge + goodsAmount) * codfee;
-        getCodAmountMinimum = goodsAmount + freightCharge + getCodFeeMinimum + getVat;
+        try {
+          await transaction
+              .postCalcOngkir(DataTransactionOngkirModel(
+            goodsAmount: goodsAmount,
+            isIsr: asuransi,
+            ongkir: freightCharge,
+            accountNumber: account.accountNumber,
+            isCod: isCOD,
+            codFee: codfee,
+            isCongkir: codOngkir,
+            isPrefix3: prefix3,
+          ))
+              .then((value) {
+            getCodAmountMinimum = value.payload?.codAmountMinimum ?? 0;
+            hargacCODOngkir = value.payload?.congkirAmount ?? 0;
+            hargacod = value.payload?.codAmount ?? 0;
+            totalOngkir = codOngkir && account.accountService == "JLC" ? hargacCODOngkir.toInt() : value.payload?.totalOngkir ?? 0;
+            getCodAmount = value.payload?.codAmount ?? 0;
+            codAmountText.text = value.payload?.codAmountMinimum?.toInt().toCurrency().toString() ?? '0';
+            getCodFee = value.payload?.codFee ?? 0;
+          });
+        } catch (e) {
+          num getVat = isCOD && prefix3 ? freightCharge * vat : 0;
+          getCodFeeMinimum = (freightCharge + goodsAmount) * codfee;
+          getCodAmountMinimum = goodsAmount + freightCharge + getCodFeeMinimum + getVat;
 
-        //cod amount text >= cod amount minimum
-        /*tanpa harga barang
+          //cod amount text >= cod amount minimum
+          /*tanpa harga barang
         * 1. codAmountMinimum = ongkir + (ongkir *vat) + (ongkir * codfee)
         * 2. codAmount = HB + ongkir + (ongkir * vat) + (ongkir + harga barang * fee)
         */
 
-        getCodFee = (goodsAmount + freightCharge) * codfee;
-        getCodAmount = (goodsAmount + getCodFee + getVat);
-        // getCodAmount = goodsAmount + getVat + getCodFee;
+          getCodFee = (goodsAmount + freightCharge) * codfee;
+          getCodAmount = (goodsAmount + getCodFee + getVat);
+          // getCodAmount = goodsAmount + getVat + getCodFee;
 
-        // hargacod = (codfee * (goodsAmount) + (goodsAmount) + totalOngkir);
-        hargacod = isCOD ? getCodAmount : 0;
-        codAmountText.text = isCOD ? getCodAmountMinimum.toInt().toCurrency().toString() : '0';
-        hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1000;
-        hargacCODOngkirISR = freightCharge + isr;
-        update();
-
-        totalOngkir = codOngkir && account.accountService == "JLC"
-            ? hargacCODOngkir.toInt()
-            : asuransi
-                ? (freightChargeISR.toInt() + hargacod)
-                : (freightCharge.toInt() + hargacod);
+          // hargacod = (codfee * (goodsAmount) + (goodsAmount) + totalOngkir);
+          hargacod = isCOD ? getCodAmount : 0;
+          codAmountText.text = isCOD ? getCodAmountMinimum.toInt().toCurrency().toString() : '0';
+          hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1000;
+          hargacCODOngkirISR = freightCharge + isr;
+          update();
+          totalOngkir = codOngkir && account.accountService == "JLC"
+              ? hargacCODOngkir.toInt()
+              : asuransi
+                  ? (freightChargeISR.toInt() + hargacod)
+                  : (freightCharge.toInt() + hargacod);
+        }
 
         update();
       }
-      if (totalOngkir > 1000000) {
-        isShowDialog = true;
-        update();
-        // Get.showSnackbar(
-        //   const GetSnackBar(
-        //     message: "Total Ongkos Kirim tidak bisa lebih dari Rp. 1000.000,-",
-        //     isDismissible: true,
-        //     margin: EdgeInsets.only(bottom: 0),
-        //     duration: Duration(seconds: 3),
-        //     backgroundColor: Colors.red,
-        //     snackPosition: SnackPosition.BOTTOM,
-        //     snackStyle: SnackStyle.FLOATING,
-        //     animationDuration: Duration(milliseconds: 500),
-        //   )
-        // );
-      } else {
-        isShowDialog = false;
-        update();
-      }
+      isShowDialog = (totalOngkir > 1000000);
+      update();
 
       isValidate();
 

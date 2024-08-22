@@ -12,9 +12,6 @@ class NetworkCore {
   NetworkCore() {
     dio.options = BaseOptions(
       baseUrl: AppConst.baseUrl,
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 10),
-      sendTimeout: const Duration(seconds: 10),
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -23,9 +20,6 @@ class NetworkCore {
 
     local.options = BaseOptions(
       baseUrl: "http://10.0.2.2:3000",
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
-      sendTimeout: const Duration(seconds: 30),
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -34,9 +28,6 @@ class NetworkCore {
 
     city.options = BaseOptions(
       baseUrl: AppConst.cityUrl,
-      connectTimeout: const Duration(seconds: 20),
-      receiveTimeout: const Duration(seconds: 2),
-      sendTimeout: const Duration(seconds: 2),
       headers: {
         // 'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -45,9 +36,6 @@ class NetworkCore {
 
     jne.options = BaseOptions(
       baseUrl: AppConst.jneUrl,
-      connectTimeout: const Duration(seconds: 20),
-      receiveTimeout: const Duration(seconds: 2),
-      sendTimeout: const Duration(seconds: 2),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -57,9 +45,6 @@ class NetworkCore {
 
     myJNE.options = BaseOptions(
       baseUrl: AppConst.myJneUrl,
-      connectTimeout: const Duration(seconds: 20),
-      receiveTimeout: const Duration(seconds: 2),
-      sendTimeout: const Duration(seconds: 2),
       headers: {
         // 'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',

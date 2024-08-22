@@ -260,7 +260,8 @@ class PantauPaketmuScreen extends StatelessWidget {
             child: RefreshIndicator(
               onRefresh: () => Future.sync(
                 () {
-                  c.pagingController.refresh();
+                  c.count();
+                  c.applyFilter();
                   // c.transactionCount();
                 },
               ),
@@ -290,13 +291,8 @@ class PantauPaketmuScreen extends StatelessWidget {
                       // c.unselect(item);
                     },
                   ),
-                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
-                  firstPageProgressIndicatorBuilder: (context) => Column(
-                    children: List.generate(
-                      10,
-                      (index) => const RiwayatKirimanListItem(isLoading: true),
-                    ),
-                  ),
+                  firstPageErrorIndicatorBuilder: (context) => _loading(),
+                  firstPageProgressIndicatorBuilder: (context) => _loading(),
                   noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
                   noMoreItemsIndicatorBuilder: (context) => const Center(
                     child: Divider(
@@ -322,7 +318,7 @@ class PantauPaketmuScreen extends StatelessWidget {
 
   Widget _tipeKiriman(BuildContext context, PantauPaketmuController c) {
     return Shimmer(
-      isLoading: c.isLoading,
+      isLoading: c.isLoadCount,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 15),
         decoration: BoxDecoration(
@@ -478,6 +474,15 @@ class PantauPaketmuScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _loading() {
+    return Column(
+      children: List.generate(
+        10,
+        (index) => const RiwayatKirimanListItem(isLoading: true),
       ),
     );
   }

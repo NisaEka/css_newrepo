@@ -29,8 +29,10 @@ class JLCRepositoryImpl extends JLCRepository {
           'id_member': jlc?.first.accountNumber,
         },
       );
+      print('jlc : ${response.data}');
       return PostTotalPointModel.fromJson(response.data);
     } on DioException catch (e) {
+      print('jlc : ${e.response?.data}');
       return PostTotalPointModel.fromJson(e.response?.data);
     }
   }

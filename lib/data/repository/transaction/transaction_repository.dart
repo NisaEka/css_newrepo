@@ -1,3 +1,5 @@
+import 'package:css_mobile/data/model/response_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
@@ -16,6 +18,7 @@ import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
+import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
 
 abstract class TransactionRepository {
   Future<GetAccountNumberModel> getAccountNumber();
@@ -35,7 +38,7 @@ abstract class TransactionRepository {
 
   Future<GetServiceModel> getService(DataServiceModel param);
 
-  Future<GetTransactionFeeModel> getTransactionFee(DataTransactionFeeModel params);
+  Future<ResponseModel<TransactionFeeModel>> getTransactionFee(DataTransactionFeeModel params);
 
   Future<PostTransactionModel> postTransaction(DataTransactionModel data);
 
@@ -76,4 +79,6 @@ abstract class TransactionRepository {
   Future<PostTransactionModel> putTransaction(DataTransactionModel data, String awb);
 
   Future<GetTransactionOfficerModel> getTransOfficer();
+
+  Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data);
 }
