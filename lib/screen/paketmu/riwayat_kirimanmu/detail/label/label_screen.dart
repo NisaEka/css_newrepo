@@ -73,32 +73,32 @@ class LabelScreen extends StatelessWidget {
                 alignment: Alignment.center,
                 color: Colors.white,
                 // child: StickerMegahubHybrid3(data: data),
-                child: controller.stickerLabel == "/sticker_default"
+                child: controller.stickerLabel == "Default"
                     ? StickerDefault(
                         data: data,
                         shippingCost: controller.shippingCost,
                       )
-                    : controller.stickerLabel == "/sticker_A6"
+                    : controller.stickerLabel == "Sticker Label (A6 10.50 X 14.80 CM)"
                         ? StickerA6(
                             data: data,
                             shippingCost: controller.shippingCost,
                           )
-                        : controller.stickerLabel == "/sticker_megahub1"
+                        : controller.stickerLabel == "Sticker Label (Mega HUB 1)"
                             ? StickerMegahub1(
                                 data: data,
                                 shippingCost: controller.shippingCost,
                               )
-                            : controller.stickerLabel == "/sticker_vertical_megahub_1"
+                            : controller.stickerLabel == "Sticker Label Vertikal (Mega HUB 1)"
                                 ? StickerMegahub2(
                                     data: data,
                                     shippingCost: controller.shippingCost,
                                   )
-                                : controller.stickerLabel == "/sticker_megahub_hybrid_1"
+                                : controller.stickerLabel == "Sticker Label (Mega HUB HYBRID)"
                                     ? StickerMegahubHybrid1(
                                         data: data,
                                         shippingCost: controller.shippingCost,
                                       )
-                                    : controller.stickerLabel == "/sticker_megahub_hybrid_2"
+                                    : controller.stickerLabel == "Sticker Label (Mega HUB HYBRID 2)"
                                         ? StickerMegahubHybrid2(
                                             data: data,
                                             shippingCost: controller.shippingCost,

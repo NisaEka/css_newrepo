@@ -191,7 +191,7 @@ class StickerDefault extends StatelessWidget {
                     CustomLabelText(
                       title: "Estimasi Ongkir: Rp",
                       value:
-                          '${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}',
+                          '${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' :  data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
                       titleTextStyle: TextStyle(fontWeight: bold),
                       valueTextStyle: const TextStyle(),
                     ),

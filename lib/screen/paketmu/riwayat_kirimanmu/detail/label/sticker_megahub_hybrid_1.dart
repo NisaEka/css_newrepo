@@ -188,7 +188,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                   ),
                   Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
                   Text(
-                      'Biaya Kirim: Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}',
+                      'Biaya Kirim: Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' :  data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
                       style: labelTextStyle),
                   Text('Kota Tujuan: ${data.receiver?.city ?? ''}', style: labelTextStyle),
                   Text('Order ID: ${data.orderId ?? ''}', style: labelTextStyle),

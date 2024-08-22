@@ -52,7 +52,10 @@ class StickerA6 extends StatelessWidget {
                     )
                   ],
                 ),
-                const Divider(height: 1, color: Colors.black,),
+                const Divider(
+                  height: 1,
+                  color: Colors.black,
+                ),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                   child: BarcodeWidget(
@@ -154,7 +157,7 @@ class StickerA6 extends StatelessWidget {
                               valueTextStyle: sublistTitleTextStyle.copyWith(),
                               isHorizontal: true,
                               valueMaxline: 5,
-                              width: Get.width /2,
+                              width: Get.width / 2,
                               maxline: 5,
                             ),
                             RichText(
@@ -311,7 +314,9 @@ class StickerA6 extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Divider(color: Colors.black,),
+                const Divider(
+                  color: Colors.black,
+                ),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: BarcodeWidget(
@@ -326,7 +331,10 @@ class StickerA6 extends StatelessWidget {
                     // width: Get.width ,
                   ),
                 ),
-                const Divider(height: 1, color: Colors.black,),
+                const Divider(
+                  height: 1,
+                  color: Colors.black,
+                ),
                 Row(
                   children: [
                     Container(
@@ -355,7 +363,10 @@ class StickerA6 extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Divider(height: 1, color: Colors.black,),
+                const Divider(
+                  height: 1,
+                  color: Colors.black,
+                ),
                 CustomLabelText(
                   title: 'Instruction : ',
                   value: data.delivery?.specialInstruction ?? '-',
@@ -406,7 +417,7 @@ class StickerA6 extends StatelessWidget {
                     CustomLabelText(
                       title: 'Est.Ongkir',
                       value:
-                          "Rp ${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}",
+                          "Rp ${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}",
                       titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                       valueTextStyle: sublistTitleTextStyle.copyWith(),
                       margin: const EdgeInsets.all(5),

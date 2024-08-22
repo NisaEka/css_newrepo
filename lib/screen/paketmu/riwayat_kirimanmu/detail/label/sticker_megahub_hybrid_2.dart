@@ -124,7 +124,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   width: (Get.width - 51) / 3.2,
                   alignment: Alignment.center,
                   child: Text(
-                    "Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() ?? '0' : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}",
+                    "Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() ?? '0' : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' :  data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}",
                     style: TextStyle(fontSize: 15, fontWeight: bold),
                   ),
                 ),

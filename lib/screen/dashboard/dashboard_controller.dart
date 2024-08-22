@@ -127,14 +127,19 @@ class DashboardController extends BaseController {
 
     update();
 
-    if (stickerLabel.isEmpty || shipcost.isEmpty) {
-      await setting.getSettingLabel().then(
-        (value) async {
-          await storage.writeString(StorageCore.transactionLabel, value.payload?.where((e) => e.enable ?? false).first.name);
-          await storage.writeString(StorageCore.shippingCost, value.payload?.first.showPrice ?? false ? "PUBLISH" : "HIDE");
-        },
-      );
-    }
+    await setting.getSettingLabel().then(
+      (value) async {
+        await storage.writeString(
+          StorageCore.transactionLabel,
+          value.payload?.where((e) => e.enable ?? false).first.name,
+        );
+        await storage.writeString(
+          StorageCore.shippingCost,
+          value.payload?.first.showPrice ?? false ? "PUBLISH" : "HIDE",
+        );
+      },
+    );
+
     update();
   }
 

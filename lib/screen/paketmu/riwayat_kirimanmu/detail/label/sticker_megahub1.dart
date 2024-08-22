@@ -57,14 +57,13 @@ class StickerMegahub1 extends StatelessWidget {
               width: Get.width - 51,
               padding: const EdgeInsets.all(15),
               decoration: const BoxDecoration(
-                border: Border(
-                  left: BorderSide(),
-                  top: BorderSide(),
-                  right: BorderSide(),
-                  bottom: BorderSide(),
-                ),
-                color: Colors.white
-              ),
+                  border: Border(
+                    left: BorderSide(),
+                    top: BorderSide(),
+                    right: BorderSide(),
+                    bottom: BorderSide(),
+                  ),
+                  color: Colors.white),
               child: Column(
                 children: [
                   Image.asset(
@@ -105,7 +104,7 @@ class StickerMegahub1 extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     Text(
-                      'Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.flatRateWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.flatRate?.toInt().toCurrency() ?? '0'}',
+                      'Rp ${shippingCost ? 1 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
                       style: itemTextStyle.copyWith(fontWeight: bold),
                       textAlign: TextAlign.center,
                     ),
@@ -271,7 +270,7 @@ class StickerMegahub1 extends StatelessWidget {
                         textAlign: pw.TextAlign.center,
                       ),
                       pw.Text(
-                        'Rp. ${data.delivery?.flatRate?.toInt().toCurrency()}',
+                        'Rp. ${ data.delivery?.freightCharge?.toInt().toCurrency()}',
                         style: const pw.TextStyle(fontSize: 10),
                         textAlign: pw.TextAlign.center,
                       ),

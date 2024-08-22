@@ -16,7 +16,7 @@ import 'package:screenshot/screenshot.dart';
 
 class LabelController extends BaseController {
   ScreenshotController screenshotController = ScreenshotController();
-  GlobalKey previewContainer =  GlobalKey();
+  GlobalKey previewContainer = GlobalKey();
 
   String? stickerLabel;
   bool shippingCost = false;
@@ -27,23 +27,25 @@ class LabelController extends BaseController {
     Future.wait([initData()]);
   }
 
-  Future<dynamic> showCapturedWidget(
-      BuildContext context, Uint8List capturedImage) async => showDialog(
-      useSafeArea: false,
-      context: context,
-      builder: (context) => Scaffold(
-        appBar: AppBar(
-          title: const Text("Captured Label"),
+  Future<dynamic> showCapturedWidget(BuildContext context, Uint8List capturedImage) async => showDialog(
+        useSafeArea: false,
+        context: context,
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: const Text("Captured Label"),
+          ),
+          body: Center(child: Image.memory(capturedImage)),
         ),
-        body: Center(child: Image.memory(capturedImage)),
-      ),
-    );
+      );
 
   Future<void> initData() async {
     try {
       stickerLabel = await storage.readString(StorageCore.transactionLabel);
       var shipcost = await storage.readString(StorageCore.shippingCost);
       shippingCost = shipcost == "HIDE";
+      print("sticker $stickerLabel");
+      print("sticker $shippingCost");
+
       update();
     } catch (e) {
       e.printError();
