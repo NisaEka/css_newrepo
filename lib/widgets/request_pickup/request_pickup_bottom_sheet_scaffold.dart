@@ -35,7 +35,9 @@ class RequestPickupBottomSheetScaffold extends StatelessWidget {
               Expanded(
                 child: Text(
                   title.tr,
-                  style: listTitleTextStyle,
+                  style: listTitleTextStyle.copyWith(
+                    color: Theme.of(context).colorScheme.outline
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),

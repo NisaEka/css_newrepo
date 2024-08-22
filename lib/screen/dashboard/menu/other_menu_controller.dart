@@ -115,6 +115,14 @@ class OtherMenuCotroller extends BaseController {
         isEdit: isEdit,
         route: "/uangCODKamu",
       ),
+      Items(
+        title: "Invoice",
+        icon: ImageConstant.keuanganmuIcon,
+        isAuth: true,
+        isFavorite: favoritList.where((e) => e.title == "Invoice").isNotEmpty,
+        isEdit: isEdit,
+        route: "/invoice",
+      ),
     ];
 
     otherList = [
