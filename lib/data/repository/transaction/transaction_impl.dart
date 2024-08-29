@@ -391,10 +391,10 @@ class TransactionRepositoryImpl extends TransactionRepository {
   @override
   Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo();
     try {
-      Response response = await network.local.post(
+      Response response = await network.dio.post(
         "/transaction/ongkir",
         data: data,
       );

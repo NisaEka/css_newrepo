@@ -6,14 +6,18 @@ class InvoiceItem extends StatelessWidget {
   final InvoiceModel? invoice;
   final Function(String) onTap;
 
-  const InvoiceItem({super.key, required this.invoice, required this.onTap});
+  const InvoiceItem({
+    super.key,
+    required this.invoice,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: (() => onTap(invoice?.invoiceNoEncoded ?? '')),
-      child:  Container(
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         margin: const EdgeInsets.only(left: 16, right: 16),
         decoration: BoxDecoration(

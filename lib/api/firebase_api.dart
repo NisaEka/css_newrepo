@@ -4,7 +4,6 @@ import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/model/notification/unread_message_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/notification/notification_screen.dart';
-import 'package:css_mobile/util/navigation/notification_navigation.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -105,7 +104,7 @@ class FirebaseApi {
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) {
         if (notificationResponse.payload != null) {
-          Map<String, dynamic> data = jsonDecode(notificationResponse.payload!);
+          // Map<String, dynamic> data = jsonDecode(notificationResponse.payload!);
           // _handleTapOnNotification(data);
         }
       },
@@ -118,15 +117,15 @@ class FirebaseApi {
 
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
+    // NotificationSettings settings = await messaging.requestPermission(
+    //   alert: true,
+    //   announcement: false,
+    //   badge: true,
+    //   carPlay: false,
+    //   criticalAlert: false,
+    //   provisional: false,
+    //   sound: true,
+    // );
     print("fcmTokens ${await messaging.getToken()}");
     StorageCore().writeString(StorageCore.fcmToken, await messaging.getToken()).then((value) => print("fcm Token saved"),);
 

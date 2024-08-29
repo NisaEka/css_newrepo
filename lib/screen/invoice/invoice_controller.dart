@@ -16,10 +16,12 @@ class InvoiceController extends BaseController {
 
   final searchTextController = TextEditingController();
 
+
   num _invoiceCount = 0;
   num get invoiceCount => _invoiceCount;
 
   String filterDateText = Constant.allDate;
+
 
   RequestPickupDateEnum selectedFilterDate = RequestPickupDateEnum.all;
 
@@ -27,6 +29,8 @@ class InvoiceController extends BaseController {
   DateTime? selectedDateEnd;
   String selectedDateStartText = "Pilih Tanggal Awal";
   String selectedDateEndText = "Pilih Tanggal Akhir";
+  static const pageSize = 10;
+
 
   @override
   void onInit() {
@@ -99,6 +103,7 @@ class InvoiceController extends BaseController {
 
       final payload = response.payload ?? List.empty();
       final isLastPage = payload.length < _advanceFilterModel.limit;
+      print(response.toJson());
 
       if (isLastPage) {
         pagingController.appendLastPage(payload);
@@ -106,14 +111,15 @@ class InvoiceController extends BaseController {
         final nextPageKey = page + 1;
         pagingController.appendPage(payload, nextPageKey);
       }
-    } catch (e) {
+    } catch (e,i) {
       e.printError();
+      i.printError();
     }
   }
 
   void requireRetry() {
-    _getInvoiceCount();
-    _getInvoices(Constant.defaultPage);
+    // _getInvoiceCount();
+    // _getInvoices(Constant.defaultPage);
     refreshInvoices();
   }
 

@@ -5,11 +5,12 @@ import 'package:css_mobile/data/model/invoice/invoice_cnote_detail_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_cnote_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_detail_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
+import 'package:css_mobile/data/model/response_model.dart';
 
 abstract class InvoiceRepository {
-  Future<DefaultResponseModel<num>> getInvoiceCount(AdvanceFilterModel advanceFilter);
-  Future<DefaultResponseModel<List<InvoiceModel>>> getInvoices(AdvanceFilterModel advanceFilter);
-  Future<DefaultResponseModel<InvoiceDetailModel>> getInvoiceByNumber(String invoiceNumber);
-  Future<DefaultResponseModel<List<InvoiceCnoteModel>>> getInvoiceCnotes(String invoiceNumber, DefaultPageFilterModel filter);
-  Future<DefaultResponseModel<InvoiceCnoteDetailModel>> getInvoiceCnoteByAwb(String invoiceNumber, String awb);
+  Future<ResponseModel<num>> getInvoiceCount(AdvanceFilterModel advanceFilter);
+  Future<ResponseModel<List<InvoiceModel>>> getInvoices(AdvanceFilterModel advanceFilter);
+  Future<ResponseModel<InvoiceDetailModel>> getInvoiceByNumber(String invoiceNumber);
+  Future<ResponseModel<List<InvoiceCnoteModel>>> getInvoiceCnotes(String invoiceNumber, DefaultPageFilterModel filter);
+  Future<ResponseModel<InvoiceCnoteDetailModel>> getInvoiceCnoteByAwb(String invoiceNumber, String awb);
 }

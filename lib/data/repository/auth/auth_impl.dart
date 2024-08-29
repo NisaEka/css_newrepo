@@ -155,11 +155,11 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<LoginModel> postFcmToken(Device data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.local.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo(info: "kiriman data");
 
     try {
-      Response response = await network.dio.post(
+      Response response = await network.local.post(
         '/device_info',
         data: data,
       );
@@ -179,7 +179,7 @@ class AuthRepositoryImpl extends AuthRepository {
     String id = deviceInfo?.deviceId ?? '';
 
     try {
-      Response response = await network.dio.delete(
+      Response response = await network.local.delete(
         '/device_info/$id',
       );
       return LoginModel.fromJson(response.data);
@@ -192,7 +192,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<LoginModel> postFcmTokenNonAuth(Device data) async {
 
     try {
-      Response response = await network.dio.post(
+      Response response = await network.local.post(
         '/device_info/save',
         data: data,
       );
