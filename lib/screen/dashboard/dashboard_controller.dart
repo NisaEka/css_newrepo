@@ -110,8 +110,8 @@ class DashboardController extends BaseController {
       ),
     ];
     var favMenu = await storage.readString(StorageCore.favoriteMenu);
-    var stickerLabel = await storage.readString(StorageCore.transactionLabel);
-    var shipcost = await storage.readString(StorageCore.shippingCost);
+    // var stickerLabel = await storage.readString(StorageCore.transactionLabel);
+    // var shipcost = await storage.readString(StorageCore.shippingCost);
     update();
     if (favMenu.isEmpty == true) {
       await storage.saveData(
@@ -236,51 +236,66 @@ class DashboardController extends BaseController {
 
     marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
     var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+    bool accounts = await storage.readData(StorageCore.accounts) == null;
+    bool dropshipper = await storage.readData(StorageCore.dropshipper) == null;
+    bool receiver = await storage.readData(StorageCore.receiver) == null;
+    bool sender = await storage.readData(StorageCore.shipper) == null;
+    bool basic = await storage.readData(StorageCore.userProfil) == null;
     userName = shipper.name ?? "         ";
-
+    print('basic: $basic');
     update();
     // if (isLogin == true) {
 
     try {
-      await transaction
-          .getSender()
-          .then((value) async => await storage.saveData(
-                StorageCore.shipper,
-                value.payload,
-              ))
-          .then((_) async {
-        var data = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
-        userName = data.name;
-        update();
-      });
+      if (sender) {
+        await transaction
+            .getSender()
+            .then((value) async => await storage.saveData(
+                  StorageCore.shipper,
+                  value.payload,
+                ))
+            .then((_) async {
+          var data = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+          userName = data.name;
+          update();
+        });
+      }
 
-      await transaction.getAccountNumber().then((value) async => await storage.saveData(
-            StorageCore.accounts,
-            value,
-          ));
+      if (accounts) {
+        await transaction.getAccountNumber().then((value) async => await storage.saveData(
+              StorageCore.accounts,
+              value,
+            ));
+      }
 
-      await transaction.getDropshipper().then((value) async => await storage.saveData(
-            StorageCore.dropshipper,
-            value,
-          ));
+      if (dropshipper) {
+        await transaction.getDropshipper().then((value) async => await storage.saveData(
+              StorageCore.dropshipper,
+              value,
+            ));
+      }
 
-      await transaction.getReceiver().then((value) async => await storage.saveData(
-            StorageCore.receiver,
-            value,
-          ));
+      if (receiver) {
+        await transaction.getReceiver().then((value) async => await storage.saveData(
+              StorageCore.receiver,
+              value,
+            ));
+      }
 
-      await profil.getBasicProfil().then((value) async => await storage.saveData(
-            StorageCore.userProfil,
-            value.payload,
-          ));
+      if (basic) {
+        await profil.getBasicProfil().then((value) async => await storage.saveData(
+              StorageCore.userProfil,
+              value.payload,
+            ));
+      }
 
       allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
       update();
 
-      await profil.getCcrfProfil().then((value) async {
-        ccrf = value;
-        update();
-      });
+      // await profil.getCcrfProfil().then((value) async {
+      //   ccrf = value;
+      //   update();
+      // });
 
       isCcrf = ccrf?.payload != null && ccrf?.payload?.generalInfo?.apiStatus == "Y";
       storage.saveData(StorageCore.ccrfProfil, ccrf?.payload);

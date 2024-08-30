@@ -7,7 +7,6 @@ import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:flutter/material.dart';
@@ -72,13 +71,14 @@ class AltProfileController extends BaseController {
       String? token = await storage.readToken();
       debugPrint("token : $token");
       isLogin = token != null;
-      await profil.getBasicProfil().then((value) async {
-        basicProfil = value.payload;
-        update();
-      });
+      // if (await storage.readData(StorageCore.userProfil) == null) {
+        await profil.getBasicProfil().then((value) async {
+          basicProfil = value.payload;
+          update();
+        });
+      // }
 
-      allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
-      update();
+
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -87,16 +87,22 @@ class AltProfileController extends BaseController {
       );
     }
 
+    allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+    update();
+
     isLoading = false;
     update();
   }
 
   Future<void> getCcrf() async {
+    bool ccrfProfile = await storage.readString(StorageCore.ccrfProfil) == null;
     try {
-      await profil.getCcrfProfil().then((value) {
-        ccrf = value;
-        update();
-      });
+      // if (ccrfProfile) {
+        await profil.getCcrfProfil().then((value) {
+          ccrf = value;
+          update();
+        });
+      // }
     } catch (e) {
       e.printError();
     }
