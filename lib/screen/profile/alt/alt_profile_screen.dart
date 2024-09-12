@@ -81,11 +81,7 @@ class AltProfileScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
-          BottomBar4(
-            menu: 3,
-            isLogin: c.isLogin,
-            allowedMenu: c.allow,
-          )
+          const BottomBar4(menu: 3)
         ],
       ),
     );

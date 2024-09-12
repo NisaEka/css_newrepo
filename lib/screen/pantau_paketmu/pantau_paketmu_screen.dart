@@ -46,15 +46,15 @@ class PantauPaketmuScreen extends StatelessWidget {
               return _filterContent(context, c, setState);
             },
           ),
-          isFiltered: c.isFiltered,
-          isApplyFilter: (c.selectedStatusKiriman != "Total Kiriman"),
+          isFiltered: c.state.isFiltered,
+          isApplyFilter: (c.state.selectedStatusKiriman != "Total Kiriman"),
           onResetFilter: () => c.resetFilter(),
           onApplyFilter: () {
             c.applyFilter();
             Get.back();
           },
           onCloseFilter: () {
-            if (!c.isFiltered) {
+            if (!c.state.isFiltered) {
               c.resetFilter();
             } else {
               Get.back();
@@ -83,28 +83,28 @@ class PantauPaketmuScreen extends StatelessWidget {
                 Customradiobutton(
                   title: "1 Bulan Terakhir".tr,
                   value: '1',
-                  groupValue: c.dateFilter,
+                  groupValue: c.state.dateFilter,
                   onChanged: (value) => setState(() => c.selectDateFilter(1)),
                   onTap: () => setState(() => c.selectDateFilter(1)),
                 ),
                 Customradiobutton(
                   title: "1 Minggu Terakhir".tr,
                   value: '2',
-                  groupValue: c.dateFilter,
+                  groupValue: c.state.dateFilter,
                   onChanged: (value) => setState(() => c.selectDateFilter(2)),
                   onTap: () => setState(() => c.selectDateFilter(2)),
                 ),
                 Customradiobutton(
                   title: "Hari Ini".tr,
                   value: '3',
-                  groupValue: c.dateFilter,
+                  groupValue: c.state.dateFilter,
                   onChanged: (value) => setState(() => c.selectDateFilter(3)),
                   onTap: () => setState(() => c.selectDateFilter(3)),
                 ),
                 Customradiobutton(
                   title: "Pilih Tanggal Sendiri".tr,
                   value: '4',
-                  groupValue: c.dateFilter,
+                  groupValue: c.state.dateFilter,
                   onChanged: (value) => setState(() => c.selectDateFilter(4)),
                   onTap: () => setState(() => c.selectDateFilter(4)),
                 ),
@@ -112,17 +112,17 @@ class PantauPaketmuScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomTextFormField(
-                      controller: c.startDateField,
+                      controller: c.state.startDateField,
                       readOnly: true,
                       width: Get.width / 3,
                       hintText: 'Tanggal Awal'.tr,
-                      onTap: () => c.dateFilter == '4'
+                      onTap: () => c.state.dateFilter == '4'
                           ? c.selectDate(context).then((value) {
                               setState(() {
-                                c.startDate = value;
-                                c.startDateField.text = value.toString().toShortDateFormat();
-                                c.endDate = DateTime.now();
-                                c.endDateField.text = DateTime.now().toString().toShortDateFormat();
+                                c.state.startDate = value;
+                                c.state.startDateField.text = value.toString().toShortDateFormat();
+                                c.state.endDate = DateTime.now();
+                                c.state.endDateField.text = DateTime.now().toString().toShortDateFormat();
                                 c.update();
                               });
                             })
@@ -130,15 +130,15 @@ class PantauPaketmuScreen extends StatelessWidget {
                       // hintText: 'Dari Tanggal',
                     ),
                     CustomTextFormField(
-                      controller: c.endDateField,
+                      controller: c.state.endDateField,
                       readOnly: true,
                       width: Get.width / 3,
                       hintText: 'Tanggal Akhir'.tr,
-                      onTap: () => c.dateFilter == '4'
+                      onTap: () => c.state.dateFilter == '4'
                           ? c.selectDate(context).then((value) {
                               setState(() {
-                                c.endDate = value;
-                                c.endDateField.text = value.toString().toShortDateFormat();
+                                c.state.endDate = value;
+                                c.state.endDateField.text = value.toString().toShortDateFormat();
                                 c.update();
                               });
                             })
@@ -148,7 +148,7 @@ class PantauPaketmuScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 CustomDropDownField<String>(
-                  items: c.listStatusKiriman
+                  items: c.state.listStatusKiriman
                       .map(
                         (e) => DropdownMenuItem(
                           value: e,
@@ -159,10 +159,10 @@ class PantauPaketmuScreen extends StatelessWidget {
                   label: 'Status Kiriman'.tr,
                   hintText: 'Status Kiriman'.tr,
                   // selectedItem: c.selectedStatusKiriman,
-                  value: c.selectedStatusKiriman,
+                  value: c.state.selectedStatusKiriman,
                   onChanged: (value) {
                     setState(() {
-                      c.selectedStatusKiriman = value;
+                      c.state.selectedStatusKiriman = value;
                       c.update();
                     });
                   },
@@ -187,7 +187,7 @@ class PantauPaketmuScreen extends StatelessWidget {
                 //   },
                 // ),
                 CustomDropDownField(
-                  items: c.listTipeKiriman
+                  items: c.state.listTipeKiriman
                       .map(
                         (e) => DropdownMenuItem(
                           value: e,
@@ -197,16 +197,16 @@ class PantauPaketmuScreen extends StatelessWidget {
                       .toList(),
                   label: 'Tipe Kiriman'.tr,
                   hintText: 'Tipe Kiriman'.tr,
-                  value: c.selectedTipeKiriman,
+                  value: c.state.selectedTipeKiriman,
                   onChanged: (value) {
                     setState(() {
-                      c.selectedTipeKiriman = value;
+                      c.state.selectedTipeKiriman = value;
                       c.update();
                     });
                   },
                 ),
                 CustomDropDownField(
-                  items: c.listOfficerEntry
+                  items: c.state.listOfficerEntry
                       .map(
                         (e) => DropdownMenuItem(
                           value: e,
@@ -216,10 +216,10 @@ class PantauPaketmuScreen extends StatelessWidget {
                       .toList(),
                   label: 'Petugas Entry'.tr,
                   hintText: 'Petugas Entry'.tr,
-                  value: c.selectedPetugasEntry,
+                  value: c.state.selectedPetugasEntry,
                   onChanged: (value) {
                     setState(() {
-                      c.selectedPetugasEntry = value;
+                      c.state.selectedPetugasEntry = value;
                       c.update();
                     });
                   },
@@ -238,20 +238,20 @@ class PantauPaketmuScreen extends StatelessWidget {
       child: Column(
         children: [
           CustomSearchField(
-            controller: c.searchField,
+            controller: c.state.searchField,
             hintText: 'Cari'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
               color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
             ),
             onChanged: (value) {
-              c.searchField.text = value;
+              c.state.searchField.text = value;
               c.update();
-              c.pagingController.refresh();
+              c.state.pagingController.refresh();
             },
             onClear: () {
-              c.searchField.clear();
-              c.pagingController.refresh();
+              c.state.searchField.clear();
+              c.state.pagingController.refresh();
             },
             margin: const EdgeInsets.only(top: 20),
           ),
@@ -260,13 +260,12 @@ class PantauPaketmuScreen extends StatelessWidget {
             child: RefreshIndicator(
               onRefresh: () => Future.sync(
                 () {
-                  c.count();
                   c.applyFilter();
-                  // c.transactionCount();
+                  // c.state.transactionCount();
                 },
               ),
               child: PagedListView<int, PantauPaketmuModel>(
-                pagingController: c.pagingController,
+                pagingController: c.state.pagingController,
                 builderDelegate: PagedChildBuilderDelegate<PantauPaketmuModel>(
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => RiwayatKirimanListItem(
@@ -283,7 +282,7 @@ class PantauPaketmuScreen extends StatelessWidget {
                     ),
                     isLoading: false,
                     index: index,
-                    isSelected: c.selectedTransaction.where((e) => e == item).isNotEmpty,
+                    isSelected: c.state.selectedTransaction.where((e) => e == item).isNotEmpty,
                     onLongPress: () {
                       // c.select(item);
                     },
@@ -318,7 +317,7 @@ class PantauPaketmuScreen extends StatelessWidget {
 
   Widget _tipeKiriman(BuildContext context, PantauPaketmuController c) {
     return Shimmer(
-      isLoading: c.isLoadCount,
+      isLoading: c.state.isLoadCount,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 15),
         decoration: BoxDecoration(
@@ -331,16 +330,16 @@ class PantauPaketmuScreen extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                c.tipeKiriman = 0;
-                c.selectedTipeKiriman = 'SEMUA';
+                c.state.tipeKiriman = 0;
+                c.state.selectedTipeKiriman = 'SEMUA';
                 c.update();
-                c.pagingController.refresh();
+                c.state.pagingController.refresh();
               },
               child: Container(
                 width: Get.width / 4.76,
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 decoration: BoxDecoration(
-                  color: c.tipeKiriman == 0 ? blueJNE : whiteColor,
+                  color: c.state.tipeKiriman == 0 ? blueJNE : whiteColor,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8),
                     bottomLeft: Radius.circular(8),
@@ -352,15 +351,15 @@ class PantauPaketmuScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      c.total.toString(),
+                      c.state.total.toString(),
                       style: listTitleTextStyle.copyWith(
-                        color: c.tipeKiriman == 0 ? whiteColor : blueJNE,
+                        color: c.state.tipeKiriman == 0 ? whiteColor : blueJNE,
                       ),
                     ),
                     Text(
                       'Kiriman'.tr,
                       style: sublistTitleTextStyle.copyWith(
-                        color: c.tipeKiriman == 0 ? whiteColor : greyColor,
+                        color: c.state.tipeKiriman == 0 ? whiteColor : greyColor,
                       ),
                     )
                   ],
@@ -369,17 +368,17 @@ class PantauPaketmuScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                c.tipeKiriman = 0;
-                c.selectedTipeKiriman = 'SEMUA';
+                c.state.tipeKiriman = 0;
+                c.state.selectedTipeKiriman = 'SEMUA';
                 c.update();
-                c.pagingController.refresh();
+                c.state.pagingController.refresh();
                 c.count();
               },
               child: Container(
                 width: Get.width / 4.76,
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 decoration: BoxDecoration(
-                  color: c.tipeKiriman == 1 ? blueJNE : whiteColor,
+                  color: c.state.tipeKiriman == 1 ? blueJNE : whiteColor,
                   // border: const Border(
                   //   right: BorderSide(color: greyDarkColor1),
                   //   left: BorderSide(color: greyDarkColor1),
@@ -388,15 +387,15 @@ class PantauPaketmuScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      c.cod.toString(),
+                      c.state.cod.toString(),
                       style: listTitleTextStyle.copyWith(
-                        color: c.tipeKiriman == 1 ? whiteColor : blueJNE,
+                        color: c.state.tipeKiriman == 1 ? whiteColor : blueJNE,
                       ),
                     ),
                     Text(
                       'COD'.tr,
                       style: sublistTitleTextStyle.copyWith(
-                        color: c.tipeKiriman == 1 ? whiteColor : greyColor,
+                        color: c.state.tipeKiriman == 1 ? whiteColor : greyColor,
                       ),
                     )
                   ],
@@ -405,16 +404,16 @@ class PantauPaketmuScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                c.tipeKiriman = 2;
-                c.selectedTipeKiriman = 'NON COD';
+                c.state.tipeKiriman = 2;
+                c.state.selectedTipeKiriman = 'NON COD';
                 c.update();
-                c.pagingController.refresh();
+                c.state.pagingController.refresh();
               },
               child: Container(
                 width: Get.width / 4.76,
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 decoration: BoxDecoration(
-                  color: c.tipeKiriman == 2 ? blueJNE : whiteColor,
+                  color: c.state.tipeKiriman == 2 ? blueJNE : whiteColor,
                   // border: const Border(
                   //   right: BorderSide(color: greyDarkColor1),
                   // ),
@@ -422,15 +421,15 @@ class PantauPaketmuScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      c.noncod.toString(),
+                      c.state.noncod.toString(),
                       style: listTitleTextStyle.copyWith(
-                        color: c.tipeKiriman == 2 ? whiteColor : blueJNE,
+                        color: c.state.tipeKiriman == 2 ? whiteColor : blueJNE,
                       ),
                     ),
                     Text(
                       'NON COD'.tr,
                       style: sublistTitleTextStyle.copyWith(
-                        color: c.tipeKiriman == 2 ? whiteColor : greyColor,
+                        color: c.state.tipeKiriman == 2 ? whiteColor : greyColor,
                       ),
                     )
                   ],
@@ -439,16 +438,16 @@ class PantauPaketmuScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                c.tipeKiriman = 3;
-                c.selectedTipeKiriman = 'COD ONGKIR';
+                c.state.tipeKiriman = 3;
+                c.state.selectedTipeKiriman = 'COD ONGKIR';
                 c.update();
-                c.pagingController.refresh();
+                c.state.pagingController.refresh();
               },
               child: Container(
                 width: Get.width / 4.76,
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 decoration: BoxDecoration(
-                  color: c.tipeKiriman == 3 ? blueJNE : whiteColor,
+                  color: c.state.tipeKiriman == 3 ? blueJNE : whiteColor,
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(8),
                     bottomRight: Radius.circular(8),
@@ -457,15 +456,15 @@ class PantauPaketmuScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      c.codOngkir.toString(),
+                      c.state.codOngkir.toString(),
                       style: listTitleTextStyle.copyWith(
-                        color: c.tipeKiriman == 3 ? whiteColor : blueJNE,
+                        color: c.state.tipeKiriman == 3 ? whiteColor : blueJNE,
                       ),
                     ),
                     Text(
                       'COD ONGKIR'.tr,
                       style: sublistTitleTextStyle.copyWith(
-                        color: c.tipeKiriman == 3 ? whiteColor : greyColor,
+                        color: c.state.tipeKiriman == 3 ? whiteColor : greyColor,
                       ),
                     ),
                   ],

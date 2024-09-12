@@ -1,3 +1,4 @@
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -123,7 +124,7 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
             isFilterOnline: true,
             itemBuilder: widget.itemBuilder,
             searchFieldProps: TextFieldProps(
-              cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+              cursorColor: CustomTheme().cursorColor(context),
               autofocus: true,
               decoration: InputDecoration(
                 hintText: widget.searchHintText,

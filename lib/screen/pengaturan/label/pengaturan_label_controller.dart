@@ -57,7 +57,6 @@ class PengaturanLabelController extends BaseController {
       // var sticker = labelList.where((e) => e.name == selectedSticker).first;
       await setting.getSettingLabel().then((value) {
         labelList.addAll(value.payload ?? []);
-        print("label list ${labelList.where((e) => e.enable == true).first.toJson()}");
         selectedSticker = labelList.where((e) => e.enable == true).first;
         shipcost = (selectedSticker?.showPrice ?? false) ? "PUBLISH" : "HIDE";
       });

@@ -57,17 +57,6 @@ class LoginController extends BaseController {
     ValidationBuilder.setLocale(lang!);
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   emailTextField.dispose();
-  //   passwordTextField.dispose();
-  //   emailFocus?.dispose();
-  //   passFocus?.dispose();
-  //   emailFocus = null;
-  //   passFocus = null;
-  // }
-
   bool onPop() {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
@@ -131,19 +120,6 @@ class LoginController extends BaseController {
                       : null))
               .then((_) => Get.delete<DashboardController>())
               .then((_) => Get.offAll(const DashboardScreen()));
-
-          // Get.showSnackbar(
-          //   GetSnackBar(
-          //     icon: const Icon(
-          //       Icons.info,
-          //       color: whiteColor,
-          //     ),
-          //     message: value.message.toString(),
-          //     isDismissible: true,
-          //     duration: const Duration(seconds: 3),
-          //     backgroundColor: successColor,
-          //   ),
-          // );
         } else if (value.code == 403) {
           showDialog(
             context: context,
@@ -155,7 +131,7 @@ class LoginController extends BaseController {
               }),
             ),
           );
-        } else {
+        } else if (value.code == 401) {
           Get.showSnackbar(
             GetSnackBar(
               icon: const Icon(
@@ -163,6 +139,19 @@ class LoginController extends BaseController {
                 color: whiteColor,
               ),
               message: "login_failed".tr,
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } else {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.error,
+                color: whiteColor,
+              ),
+              message: value.message,
               isDismissible: true,
               duration: const Duration(seconds: 3),
               backgroundColor: Colors.red,

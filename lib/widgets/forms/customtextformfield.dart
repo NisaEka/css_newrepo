@@ -1,3 +1,4 @@
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -121,7 +122,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               validator: widget.validator,
               keyboardType: widget.inputType,
               obscureText: widget.isObscure ?? false,
-              cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+              cursorColor: CustomTheme().cursorColor(context),
               inputFormatters: widget.inputFormatters ??
                   (widget.hintText?.contains('email') ?? false
                       ? [

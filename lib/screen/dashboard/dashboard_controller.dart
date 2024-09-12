@@ -1,62 +1,44 @@
 import 'dart:convert';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
+import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
+import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
+import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardController extends BaseController {
-  final selectedIndex = 0.obs;
-  final nomorResi = TextEditingController();
-  DateTime? currentBackPressTime;
-
-  bool isLogin = false;
-  bool isLoading = false;
-  bool isOnline = false;
-  bool isCcrf = true;
-
-  GetCcrfProfilModel? ccrf;
-
-  String? marqueeText;
-  String? userName;
-  String? jlcPoint;
-  String? fcmToken;
-
-  List<Widget> widgetOptions = <Widget>[
-    const DashboardScreen(),
-    const AltProfileScreen(),
-  ];
-
-  List<Items> menuItems = [];
-  List<String> appTitle = <String>["Beranda".tr, "Profil".tr];
-  List<Widget> bannerList = [];
-  var bannerIndex = 0.obs;
-  CarouselController commercialCarousel = CarouselController();
-  AllowedMenu allow = AllowedMenu();
+  final state = DashboardState();
 
   @override
   void onInit() {
     super.onInit();
-    Future.wait([initData()]);
+    Future.wait([
+      saveFCMToken(),
+      initData(),
+      loadTransCountList(),
+    ]);
   }
 
   Future<bool> cekToken() async {
     String? token = await storage.readToken();
     debugPrint("token : $token");
-    isLogin = token != null;
+    state.isLogin = token != null;
     update();
 
-    return isLogin;
+    return state.isLogin;
   }
 
   void loadMenu() async {
@@ -75,7 +57,7 @@ class DashboardController extends BaseController {
   }
 
   Future<void> cekFavoritMenu() async {
-    menuItems = [
+    state.menuItems = [
       Items(
         title: "Input Kirimanmu",
         icon: ImageConstant.paketmuIcon,
@@ -116,66 +98,69 @@ class DashboardController extends BaseController {
     if (favMenu.isEmpty == true) {
       await storage.saveData(
         StorageCore.favoriteMenu,
-        MenuItemModel(items: menuItems),
+        MenuItemModel(items: state.menuItems),
       );
       update();
     } else {
-      menuItems = [];
+      state.menuItems = [];
       var menu = MenuItemModel.fromJson(jsonDecode(favMenu));
-      menuItems.addAll(menu.items ?? []);
+      state.menuItems.addAll(menu.items ?? []);
     }
 
     update();
 
-    await setting.getSettingLabel().then(
-      (value) async {
-        await storage.writeString(
-          StorageCore.transactionLabel,
-          value.payload?.where((e) => e.enable ?? false).first.name,
-        );
-        await storage.writeString(
-          StorageCore.shippingCost,
-          value.payload?.first.showPrice ?? false ? "PUBLISH" : "HIDE",
-        );
-      },
-    );
+    bool label = (await storage.readString(StorageCore.transactionLabel)).isEmpty;
+
+    if (label) {
+      await setting.getSettingLabel().then(
+        (value) async {
+          await storage.writeString(
+            StorageCore.transactionLabel,
+            value.payload?.where((e) => e.enable ?? false).first.name,
+          );
+          await storage.writeString(
+            StorageCore.shippingCost,
+            value.payload?.first.showPrice ?? false ? "PUBLISH" : "HIDE",
+          );
+        },
+      );
+    }
 
     update();
   }
 
   void cekAllowance() {
-    if (isLogin && allow.paketmuInput != "Y" && isOnline && allow.buatPesanan != "Y") {
-      menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
+    if (state.isLogin && state.allow.paketmuInput != "Y" && state.isOnline && state.allow.buatPesanan != "Y") {
+      state.menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (isLogin && allow.paketmuRiwayat != "Y" && isOnline && allow.riwayatPesanan != "Y") {
-      menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
-      menuItems.removeWhere((e) => e.title == "Draft Transaksi");
+    if (state.isLogin && state.allow.paketmuRiwayat != "Y" && state.isOnline && state.allow.riwayatPesanan != "Y") {
+      state.menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
+      state.menuItems.removeWhere((e) => e.title == "Draft Transaksi");
     }
-    if (isLogin && allow.paketmuLacak != "Y" && isOnline && allow.lacakPesanan != "Y") {
-      menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
+    if (state.isLogin && state.allow.paketmuLacak != "Y" && state.isOnline && state.allow.lacakPesanan != "Y") {
+      state.menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
     }
-    if (isLogin && allow.keuanganCod != "Y" && isOnline && allow.uangCod != "Y") {
-      menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
+    if (state.isLogin && state.allow.keuanganCod != "Y" && state.isOnline && state.allow.uangCod != "Y") {
+      state.menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (isLogin && allow.keuanganAggregasi != "Y" && isOnline && allow.monitoringAgg != "Y") {
-      menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
+    if (state.isLogin && state.allow.keuanganAggregasi != "Y" && state.isOnline && state.allow.monitoringAgg != "Y") {
+      state.menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (isLogin && allow.keuanganAggregasiMinus != "Y" && isOnline && allow.monitoringAggMinus != "Y") {
-      menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
+    if (state.isLogin && state.allow.keuanganAggregasiMinus != "Y" && state.isOnline && state.allow.monitoringAggMinus != "Y") {
+      state.menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
     }
-    if (isLogin && allow.cekOngkir != "Y" && isOnline) {
-      menuItems.removeWhere((e) => e.title == "Cek Ongkir");
+    if (state.isLogin && state.allow.cekOngkir != "Y" && state.isOnline) {
+      state.menuItems.removeWhere((e) => e.title == "Cek Ongkir");
     }
-    if (isLogin && allow.pantauPaketmu != "Y" && isOnline) {
-      menuItems.removeWhere((e) => e.title == "Pantau Paketmu");
+    if (state.isLogin && state.allow.pantauPaketmu != "Y" && state.isOnline) {
+      state.menuItems.removeWhere((e) => e.title == "Pantau Paketmu");
     }
   }
 
   Future<void> cekLocalLanguage() async {
     String local = await storage.readString(StorageCore.localeApp);
-    // local.isEmpty.printInfo();
+
     if (local.isEmpty || local == 'id_ID' || local == 'en_US' || local == "id" || local == "en") {
-      // (Get.deviceLocale == const Locale("id", "ID")).printInfo(info: "local");
       if (Get.deviceLocale == const Locale("id", "ID")) {
         await storage.writeString(StorageCore.localeApp, "id");
         Get.updateLocale(const Locale("id", "ID"));
@@ -200,65 +185,75 @@ class DashboardController extends BaseController {
 
   Future<void> saveFCMToken() async {
     try {
-      fcmToken = await storage.readString(StorageCore.fcmToken);
+      // String? token = await FirebaseMessaging.instance.getToken();
+
+      state.fcmToken = await storage.readString(StorageCore.fcmToken);
+      print('fcm token : ${state.fcmToken}');
+      // print('fcm token : ${token}');
 
       await auth
           .postFcmToken(
-            await LoginController().getDeviceinfo(fcmToken ?? '') ?? Device(),
+            await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
           )
           .then((value) async => value.code == 200
               ? await auth.updateDeviceInfo(
-                  await LoginController().getDeviceinfo(fcmToken ?? '') ?? Device(),
+                  await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
                 )
               : value.code == 401 || value.code == 400 || value.code == null
                   ? await auth.postFcmTokenNonAuth(
-                      await LoginController().getDeviceinfo(fcmToken ?? '') ?? Device(),
+                      await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
                     )
-                  : print('post device info: ${value.code}'));
-    } catch (e) {
+                  : debugPrint('post device info : ${value.code}'));
+    } catch (e, i) {
       e.printError();
+      i.printError();
     }
   }
 
+  Future<void> loadTransCountList() async {
+    state.transCountList.clear();
+    try {
+      transaction.postTransactionDashboard('1722445200000 - 1725814800000', '').then(
+        (value) {
+          state.transCountList.addAll(value.payload ?? []);
+        },
+      );
+    } catch (e) {
+      e.printError();
+    }
+
+    update();
+  }
+
   Future<void> initData() async {
-    connection.isOnline().then((value) => isOnline = value);
+    connection.isOnline().then((value) => state.isOnline = value);
     cekFavoritMenu();
     update();
     cekLocalLanguage();
     cekToken();
-    saveFCMToken();
-    isLoading = true;
-    bannerList = [
-      const Text('for commercial banner 1'),
-      const Text('for commercial banner 2'),
-      const Text('for commercial banner 3'),
-    ];
+    state.isLoading = true;
 
-    marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
-    var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
-    bool accounts = await storage.readData(StorageCore.accounts) == null;
-    bool dropshipper = await storage.readData(StorageCore.dropshipper) == null;
-    bool receiver = await storage.readData(StorageCore.receiver) == null;
-    bool sender = await storage.readData(StorageCore.shipper) == null;
-    bool basic = await storage.readData(StorageCore.userProfil) == null;
-    userName = shipper.name ?? "         ";
-    print('basic: $basic');
+    bool accounts =
+        ((await storage.readString(StorageCore.accounts)).isEmpty || (await storage.readString(StorageCore.accounts)) == 'null') && state.isLogin;
+    bool dropshipper =
+        ((await storage.readString(StorageCore.dropshipper)).isEmpty || (await storage.readString(StorageCore.dropshipper)) == 'null') &&
+            state.isLogin;
+    bool receiver =
+        ((await storage.readString(StorageCore.receiver)).isEmpty || (await storage.readString(StorageCore.receiver)) == 'null') && state.isLogin;
+    bool sender =
+        ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null') && state.isLogin;
+    bool basic =
+        ((await storage.readString(StorageCore.userProfil)).isEmpty || (await storage.readString(StorageCore.userProfil)) == 'null') && state.isLogin;
+    bool ccrfP =
+        ((await storage.readString(StorageCore.ccrfProfil)).isEmpty || (await storage.readString(StorageCore.ccrfProfil)) == 'null') && state.isLogin;
     update();
-    // if (isLogin == true) {
 
     try {
       if (sender) {
-        await transaction
-            .getSender()
-            .then((value) async => await storage.saveData(
-                  StorageCore.shipper,
-                  value.payload,
-                ))
-            .then((_) async {
-          var data = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
-          userName = data.name;
-          update();
-        });
+        await transaction.getSender().then((value) async => await storage.saveData(
+              StorageCore.shipper,
+              value.payload,
+            ));
       }
 
       if (accounts) {
@@ -289,32 +284,38 @@ class DashboardController extends BaseController {
             ));
       }
 
-      allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
-      update();
+      if (ccrfP) {
+        await profil.getCcrfProfil().then((value) async {
+          state.ccrf = value.payload;
+          await storage.saveData(StorageCore.ccrfProfil, value.payload);
+        });
+      } else {
+        state.ccrf = CcrfProfilModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
+      }
 
-      // await profil.getCcrfProfil().then((value) async {
-      //   ccrf = value;
-      //   update();
-      // });
-
-      isCcrf = ccrf?.payload != null && ccrf?.payload?.generalInfo?.apiStatus == "Y";
-      storage.saveData(StorageCore.ccrfProfil, ccrf?.payload);
+      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y");
+      storage.saveData(StorageCore.ccrfProfil, state.ccrf);
       await jlc.postTotalPoint().then((value) {
         if (value.status == true) {
-          jlcPoint = value.data?.first.sisaPoint.toString();
+          state.jlcPoint = value.data?.first.sisaPoint.toString();
           update();
         } else {
-          jlcPoint = '0';
+          state.jlcPoint = '0';
         }
       });
+      update();
+      state.ccrf = CcrfProfilModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
+      var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+      state.userName = shipper.name ?? '';
+      state.allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
       update();
     } catch (e, i) {
       e.printError();
       i.printError();
     }
-    // }
+
     cekAllowance();
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
@@ -322,8 +323,8 @@ class DashboardController extends BaseController {
 
   bool onPop() {
     DateTime now = DateTime.now();
-    if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
-      currentBackPressTime = now;
+    if (state.currentBackPressTime == null || now.difference(state.currentBackPressTime!) > const Duration(seconds: 2)) {
+      state.currentBackPressTime = now;
       Get.showSnackbar(
         GetSnackBar(
           icon: const Icon(
@@ -345,5 +346,18 @@ class DashboardController extends BaseController {
     pop = true;
     update();
     return true;
+  }
+
+  onLacakKiriman(bool useBarcode, String value) {
+    Get.to(
+      useBarcode ? const BarcodeScanScreen() : const LacakKirimanScreen(),
+      arguments: {
+        'nomor_resi': value,
+        "cek_resi": true,
+      },
+    )?.then((value) {
+      state.nomorResi.clear();
+      update();
+    });
   }
 }

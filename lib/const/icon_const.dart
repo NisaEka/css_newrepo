@@ -15,5 +15,4 @@ class IconsConstant {
   // static const String paket = "assets/icons/paket.png";
   static const String paket = "https://github.com/NisaEka/assets/blob/css/icons/paket.png?raw=true";
 
-
 }

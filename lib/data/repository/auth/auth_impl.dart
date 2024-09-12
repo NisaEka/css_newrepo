@@ -20,12 +20,11 @@ class AuthRepositoryImpl extends AuthRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<LoginModel> postLogin(InputLoginModel data) async {
-    data.toJson().printInfo(info: "kiriman data");
+  Future<LoginModel> postLogin(InputLoginModel loginData) async {
     try {
       Response response = await network.dio.post(
         '/auth/login',
-        data: data,
+        data: loginData,
       );
       return LoginModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -155,11 +154,10 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<LoginModel> postFcmToken(Device data) async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
-    data.toJson().printInfo(info: "kiriman data");
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.post(
+      Response response = await network.dio.post(
         '/device_info',
         data: data,
       );
@@ -179,7 +177,7 @@ class AuthRepositoryImpl extends AuthRepository {
     String id = deviceInfo?.deviceId ?? '';
 
     try {
-      Response response = await network.local.delete(
+      Response response = await network.dio.delete(
         '/device_info/$id',
       );
       return LoginModel.fromJson(response.data);
@@ -190,9 +188,8 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<LoginModel> postFcmTokenNonAuth(Device data) async {
-
     try {
-      Response response = await network.local.post(
+      Response response = await network.dio.post(
         '/device_info/save',
         data: data,
       );
@@ -220,7 +217,6 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<LoginModel> updateDeviceInfoNonAuth(Device data) async {
-
     try {
       Response response = await network.dio.put(
         '/device_info/update',

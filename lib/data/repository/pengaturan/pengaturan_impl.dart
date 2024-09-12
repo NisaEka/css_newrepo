@@ -134,7 +134,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
       );
       return GetSettingLabelModel.fromJson(response.data);
     } on DioException catch (e) {
-      return e.response?.data;
+      return GetSettingLabelModel.fromJson(e.response?.data);
     }
   }
 

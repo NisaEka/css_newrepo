@@ -20,6 +20,8 @@ class CustomLabelText extends StatelessWidget {
   final EdgeInsets? padding;
   final int? valueMaxline;
   final bool isLoading;
+  final bool isHasSpace;
+  final Color? color;
 
   const CustomLabelText({
     super.key,
@@ -38,6 +40,8 @@ class CustomLabelText extends StatelessWidget {
     this.valueMaxline,
     this.isLoading = false,
     this.maxline,
+    this.isHasSpace = false,
+    this.color,
   });
 
   @override
@@ -46,6 +50,9 @@ class CustomLabelText extends StatelessWidget {
       padding: padding,
       margin: margin,
       width: width,
+      decoration: BoxDecoration(
+        color: color,
+      ),
       child: isHorizontal
           ? Row(
               crossAxisAlignment: alignment == 'end'
@@ -53,6 +60,7 @@ class CustomLabelText extends StatelessWidget {
                   : alignment == 'center'
                       ? CrossAxisAlignment.center
                       : CrossAxisAlignment.start,
+              mainAxisAlignment: isHasSpace ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
               children: [
                 Shimmer(
                   isLoading: isLoading,

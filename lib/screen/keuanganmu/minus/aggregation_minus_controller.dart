@@ -34,7 +34,6 @@ class AggregasiMinusController extends BaseController {
 
   Future<void> getAggregationMinuses(int page) async {
     showLoadingIndicator = true;
-
     try {
       final aggregations = await aggregation.getAggregationMinus(
         page, pageSize, searchField.text
@@ -50,7 +49,7 @@ class AggregasiMinusController extends BaseController {
         pagingController.appendPage(payload, nextPageKey);
       }
 
-    } catch (e, i) {
+    } catch (e) {
       showErrorContent = true;
       update();
     }

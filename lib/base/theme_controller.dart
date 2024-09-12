@@ -53,6 +53,11 @@ class CustomTheme {
             fontSize: 16,
             color: greyDarkColor1,
             // fontWeight: FontWeight.w600,
+          ),
+          headlineLarge: const TextStyle(
+            fontSize: 24,
+            color: greyDarkColor1,
+            fontWeight: FontWeight.bold,
           )),
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(
@@ -61,18 +66,6 @@ class CustomTheme {
           ),
         ),
       ),
-      // textTheme: TextTheme(
-      //   titleSmall: sublistTitleTextStyle.copyWith(
-      //     color: greyDarkColor1,
-      //   ),
-      //   labelLarge: const TextStyle(
-      //     color: greyDarkColor1,
-      //   ),
-      //   titleMedium: listTitleTextStyle.copyWith(
-      //     fontSize: 11,
-      //     color: greyDarkColor1,
-      //   ),
-      // ),
       datePickerTheme: DatePickerThemeData(
         cancelButtonStyle: TextButton.styleFrom(
           foregroundColor: redJNE, // button text color
@@ -178,25 +171,29 @@ class CustomTheme {
         color: greyLightColor1,
       ),
       textTheme: GoogleFonts.ubuntuTextTheme().copyWith(
-        labelLarge: const TextStyle(
-          color: greyLightColor1,
-        ),
-        titleSmall: sublistTitleTextStyle.copyWith(
-          color: greyLightColor1,
-        ),
-        titleMedium: listTitleTextStyle.copyWith(
-          color: greyLightColor1,
-        ),
-        titleLarge: appTitleTextStyle.copyWith(color: greyLightColor1),
-        bodySmall: itemTextStyle.copyWith(
-          color: greyLightColor1,
-        ),
-        bodyLarge: const TextStyle(
-          fontSize: 16,
-          color: greyDarkColor1,
-          // fontWeight: FontWeight.w600,
-        ),
-      ),
+          labelLarge: const TextStyle(
+            color: greyLightColor1,
+          ),
+          titleSmall: sublistTitleTextStyle.copyWith(
+            color: greyLightColor1,
+          ),
+          titleMedium: listTitleTextStyle.copyWith(
+            color: greyLightColor1,
+          ),
+          titleLarge: appTitleTextStyle.copyWith(color: greyLightColor1),
+          bodySmall: itemTextStyle.copyWith(
+            color: greyLightColor1,
+          ),
+          bodyLarge: const TextStyle(
+            fontSize: 16,
+            color: greyDarkColor1,
+            // fontWeight: FontWeight.w600,
+          ),
+          headlineLarge: const TextStyle(
+            fontSize: 24,
+            color: greyLightColor1,
+            fontWeight: FontWeight.bold,
+          )),
       datePickerTheme: DatePickerThemeData(
         cancelButtonStyle: TextButton.styleFrom(
           foregroundColor: redJNE, // button text color
@@ -331,6 +328,10 @@ class CustomTheme {
 
   Color? textColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : whiteColor;
+  }
+
+  Color? cursorColor(BuildContext context) {
+    return AppConst.isLightTheme(context) ? blueJNE : whiteColor;
   }
 
   ThemeData dateTimePickerTheme(BuildContext context) {

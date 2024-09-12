@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
@@ -81,4 +82,9 @@ abstract class TransactionRepository {
   Future<GetTransactionOfficerModel> getTransOfficer();
 
   Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data);
+
+  Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(
+    String transDate,
+    String officer,
+  );
 }

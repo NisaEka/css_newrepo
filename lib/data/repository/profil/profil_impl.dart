@@ -25,7 +25,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
       );
       return GetBasicProfilModel.fromJson(response.data);
     } on DioException catch (e) {
-      return e.response?.data;
+      return GetBasicProfilModel.fromJson(e.response?.data);
     }
   }
 

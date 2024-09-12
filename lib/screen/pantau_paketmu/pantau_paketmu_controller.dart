@@ -1,81 +1,62 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
-import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_pakemu_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class PantauPaketmuController extends BaseController {
-  final startDateField = TextEditingController();
-  final endDateField = TextEditingController();
-  final searchField = TextEditingController();
-  final PagingController<int, PantauPaketmuModel> pagingController = PagingController(firstPageKey: 1);
+  final state = PantauPaketmuState();
   static const pageSize = 10;
-
-  DateTime? startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  DateTime? endDate = DateTime.now();
-  final DateTime nowDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0);
-  String? selectedStatusKiriman = 'SEMUA';
-  String? selectedPetugasEntry = 'SEMUA';
-  String? selectedStatusPrint = "SEMUA";
-  String? selectedTipeKiriman = "SEMUA";
-  String? date = "${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).millisecondsSinceEpoch}-${DateTime.now().millisecondsSinceEpoch}";
-  String dateFilter = '3';
-  int tipeKiriman = 0;
-  int total = 0;
-  int cod = 0;
-  int noncod = 0;
-  int codOngkir = 0;
-
-  bool isFiltered = false;
-  bool isLoading = false;
-  bool isLoadCount = false;
-  bool isSelect = false;
-  bool isSelectAll = false;
-
-  List<String> listStatusKiriman = [];
-  List<String> listOfficerEntry = [];
-  List<String> listTipeKiriman = ["SEMUA", "COD", "NON COD", "COD ONGKIR"];
-  List<String> listStatusPrint = ["SEMUA", "SUDAH DIPRINT", "BELUM DIPRINT"];
-  List<PantauPaketmuModel> selectedTransaction = [];
-
-  BasicProfilModel? basic;
 
   @override
   void onInit() {
     super.onInit();
     selectDateFilter(3);
-    initData();
-    pagingController.addPageRequestListener((pageKey) {
+    Future.wait([initData(), loadPantauCountList()]);
+    state.pagingController.addPageRequestListener((pageKey) {
       getPantauList(pageKey);
     });
     update();
   }
 
+  Future<void> loadPantauCountList() async {
+    state.pantauCountList.clear();
+    try {
+      transaction.postTransactionDashboard('1722445200000 - 1725814800000', '').then(
+            (value) {
+          state.pantauCountList.addAll(value.payload ?? []);
+        },
+      );
+    } catch (e) {
+      e.printError();
+    }
+
+    update();
+  }
+
   Future<void> initData() async {
-    isLoading = true;
+    state.isLoading = true;
     update();
     // selectDateFilter(3);
-    // date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+    // state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     // update();
-    // pagingController.refresh();
+    // state.pagingController.refresh();
 
     try {
-      await profil.getBasicProfil().then((value) async => basic = value.payload);
+      await profil.getBasicProfil().then((value) async => state.basic = value.payload);
 
-      if (basic?.userType == "PEMILIK") {
+      if (state.basic?.userType == "PEMILIK") {
         await transaction.getTransOfficer().then((value) {
-          listOfficerEntry.add('SEMUA');
-          listOfficerEntry.add(basic?.name ?? '');
-          listOfficerEntry.addAll(value.payload ?? []);
+          state.listOfficerEntry.add('SEMUA');
+          state.listOfficerEntry.add(state.basic?.name ?? '');
+          state.listOfficerEntry.addAll(value.payload ?? []);
           update();
         });
       }
 
       await pantau.getPantauStatus().then((value) {
-        listStatusKiriman.addAll(value.payload ?? []);
+        state.listStatusKiriman.addAll(value.payload ?? []);
         update();
       });
     } catch (e, i) {
@@ -83,84 +64,84 @@ class PantauPaketmuController extends BaseController {
       i.printError();
     }
 
-    selectedStatusKiriman = listStatusKiriman.first;
-    isLoading = false;
+    state.selectedStatusKiriman = state.listStatusKiriman.first;
+    state.isLoading = false;
     update();
     applyFilter();
   }
 
   void selectDateFilter(int filter) {
-    dateFilter = filter.toString();
+    state.dateFilter = filter.toString();
     update();
     if (filter == 0 || filter == 4) {
-      startDate = null;
-      endDate = null;
-      startDateField.text = '-';
-      endDateField.text = '-';
+      state.startDate = null;
+      state.endDate = null;
+      state.startDateField.text = '-';
+      state.endDateField.text = '-';
     } else if (filter == 1) {
-      startDate = nowDay.subtract(const Duration(days: 30));
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
+      state.startDate = state.nowDay.subtract(const Duration(days: 30));
+      state.endDate = DateTime.now();
+      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.endDateField.text = state.endDate.toString().toShortDateFormat();
     } else if (filter == 2) {
-      startDate = nowDay.subtract(const Duration(days: 7));
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
+      state.startDate = state.nowDay.subtract(const Duration(days: 7));
+      state.endDate = DateTime.now();
+      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.endDateField.text = state.endDate.toString().toShortDateFormat();
     } else if (filter == 3) {
-      startDate = nowDay;
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
+      state.startDate = state.nowDay;
+      state.endDate = DateTime.now();
+      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.endDateField.text = state.endDate.toString().toShortDateFormat();
     }
 
     update();
   }
 
   Future<void> getPantauList(int page) async {
-    isLoading = true;
+    state.isLoading = true;
     try {
       final trans = await pantau.getPantauList(
         page,
         pageSize,
-        date ?? '',
-        searchField.text,
-        selectedPetugasEntry != "SEMUA" ? (selectedPetugasEntry ?? '') : '',
-        selectedStatusKiriman ?? '',
-        selectedTipeKiriman ?? '',
+        state.date ?? '',
+        state.searchField.text,
+        state.selectedPetugasEntry != "SEMUA" ? (state.selectedPetugasEntry ?? '') : '',
+        state.selectedStatusKiriman ?? '',
+        state.selectedTipeKiriman ?? '',
       );
 
       final isLastPage = (trans.payload?.length ?? 0) < pageSize;
       if (isLastPage) {
-        pagingController.appendLastPage(trans.payload ?? []);
-        // transactionList.addAll(pagingController.itemList ?? []);
+        state.pagingController.appendLastPage(trans.payload ?? []);
+        // transactionList.addAll(state.pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
-        pagingController.appendPage(trans.payload ?? [], nextPageKey);
-        // transactionList.addAll(pagingController.itemList ?? []);
+        state.pagingController.appendPage(trans.payload ?? [], nextPageKey);
+        // transactionList.addAll(state.pagingController.itemList ?? []);
       }
     } catch (e, i) {
       e.printError();
       i.printError();
-      pagingController.error = e;
+      state.pagingController.error = e;
     }
 
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
   void resetFilter() {
-    selectedPetugasEntry = basic?.userType == "PEMILIK" ? null : basic?.name;
-    selectedStatusKiriman = "Total Kiriman";
-    selectedTipeKiriman = "SEMUA";
-    tipeKiriman = 0;
-    isFiltered = false;
-    searchField.clear();
-    dateFilter = "3";
+    state.selectedPetugasEntry = state.basic?.userType == "PEMILIK" ? null : state.basic?.name;
+    state.selectedStatusKiriman = "Total Kiriman";
+    state.selectedTipeKiriman = "SEMUA";
+    state.tipeKiriman = 0;
+    state.isFiltered = false;
+    state.searchField.clear();
+    state.dateFilter = "3";
     selectDateFilter(3);
-    date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+    state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     count();
-    pagingController.refresh();
+    state.pagingController.refresh();
     update();
     Get.back();
     applyFilter();
@@ -188,42 +169,40 @@ class PantauPaketmuController extends BaseController {
   }
 
   applyFilter() {
-    if(dateFilter != '3'){
-      isFiltered = true;
+    if(state.dateFilter != '3'){
+      state.isFiltered = true;
     }
 
-    if (startDate != null && endDate != null) {
-      date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
-      date.printInfo(info: "date filter");
-      date.printInfo(info: "$startDate - $endDate");
+    if (state.startDate != null && state.endDate != null) {
+      state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
+      state.date.printInfo(info: "state.date filter");
+      state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
     }
-    update();
-    pagingController.refresh();
     count();
-
     update();
+    state.pagingController.refresh();
   }
 
   Future<void> count() async {
-    total = 0;
-    cod = 0;
-    noncod = 0;
-    codOngkir = 0;
-    isLoadCount = true;
+    state.total = 0;
+    state.cod = 0;
+    state.noncod = 0;
+    state.codOngkir = 0;
+    state.isLoadCount = true;
     update();
     try {
       await pantau
           .getPantauCount(
-        date ?? '',
-        searchField.text,
-        selectedPetugasEntry != "SEMUA" ? (selectedPetugasEntry ?? '') : '',
-        selectedStatusKiriman ?? '',
+        state.date ?? '',
+        state.searchField.text,
+        state.selectedPetugasEntry != "SEMUA" ? (state.selectedPetugasEntry ?? '') : '',
+        state.selectedStatusKiriman ?? '',
       )
           .then((value) {
-        total = value.payload!.total!.toInt();
-        cod = value.payload!.cod!.toInt();
-        noncod = value.payload!.nonCod!.toInt();
-        codOngkir = value.payload!.codOngkir!.toInt();
+state.        total = value.payload!.total!.toInt();
+        state.cod = value.payload!.cod!.toInt();
+        state.noncod = value.payload!.nonCod!.toInt();
+        state.codOngkir = value.payload!.codOngkir!.toInt();
         update();
       });
     } catch (e,i) {
@@ -231,7 +210,7 @@ class PantauPaketmuController extends BaseController {
       i.printError();
     }
 
-    isLoadCount = false;
+    state.isLoadCount = false;
     update();
   }
 

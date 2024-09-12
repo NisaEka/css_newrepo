@@ -22,9 +22,29 @@ class ImageConstant {
   static const String scanIcon = "assets/icons/Scan.png";
   static const String truckIcon = "assets/icons/truck.png";
   static const String arrowDownIcon = "assets/icons/keyboard-arrow-down.svg";
+  static const String track = "assets/icons/029-track 1.png";
+  static const String dalamPeninjauan = "assets/icons/dalam peninjauan.png";
+  static const String dalamPerjalanan = "assets/icons/dalam perjalanan.png";
+  static const String dibatalkan = "assets/icons/dibatalkan oleh kamu.png";
+  static const String jmlTransaksi = "assets/icons/jumlah transaksi.png";
+  static const String masihDikamu = "assets/icons/masih dikamu.png";
+  static const String dikembalikan = "assets/icons/sudah dikembalikan.png";
+  static const String diterima = "assets/icons/sukses diterima.png";
+  static const String codIcon = "assets/icons/cod.png";
 
   static const String successLottie = "assets/lottie/success_lottie.json";
   static const String failedLottie = "assets/lottie/failed_lottie.json";
 
   static const String folderIcon = "assets/images/folder.png";
+
+  static const List dashboardCountIcons = [
+    jmlTransaksi,
+    masihDikamu,
+    truckIcon,
+    dalamPerjalanan,
+    diterima,
+    dikembalikan,
+    dalamPeninjauan,
+    dibatalkan,
+  ];
 }

@@ -1,3 +1,4 @@
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -63,7 +64,7 @@ class CustomDropDownFormField<T> extends StatelessWidget {
         showSearchBox: items!.length >= 15,
         searchDelay: const Duration(milliseconds: 500),
         searchFieldProps: TextFieldProps(
-          cursorColor: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+          cursorColor: CustomTheme().cursorColor(context),
           autofocus: true,
           decoration: InputDecoration(
             hintText: searchHintText,
