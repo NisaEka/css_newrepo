@@ -418,10 +418,10 @@ class TransactionRepositoryImpl extends TransactionRepository {
   @override
   Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(String transDate, String officer) async {
     var token = await storageSecure.read(key: "token");
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.local.post(
+      Response response = await network.dio.post(
         "/transaction/dashboard",
         queryParameters: {
           "transaction_date": transDate,

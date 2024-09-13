@@ -56,7 +56,7 @@ class ResponseModel<T> {
   }
 }
 
-class ErrorResponse {
+class ErrorResponse{
   ErrorResponse({
     String? property,
     num? code,

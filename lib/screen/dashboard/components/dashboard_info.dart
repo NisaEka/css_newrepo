@@ -19,46 +19,44 @@ class _DashboardInfoState extends State<DashboardInfo> {
     return GetBuilder<DashboardController>(
         init: DashboardController(),
         builder: (c) {
-          return c.state.isCcrf
+          return c.state.isCcrf == false
               ? const SizedBox()
-              : isShow
-                  ? GestureDetector(
-                      onTap: () => Get.to(const FacilityScreen()),
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: blueJNE,
-                          borderRadius: BorderRadius.circular(10),
+              : GestureDetector(
+                  onTap: () => Get.to(const FacilityScreen()),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: blueJNE,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Lengkapi profil Kamu untuk menikmati semua fitur unggulan.'.tr,
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: whiteColor,
+                          ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Lengkapi profil Kamu untuk menikmati semua fitur unggulan.'.tr,
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                fontSize: 10,
-                                color: whiteColor,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => setState(
-                                () => isShow = false,
-                              ),
-                              child: const Icon(
-                                Icons.close,
-                                color: whiteColor,
-                                size: 15,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  : const SizedBox();
+                        GestureDetector(
+                          onTap: () => setState(
+                            () => isShow = false,
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            color: whiteColor,
+                            size: 15,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
         });
   }
 }

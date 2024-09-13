@@ -302,6 +302,8 @@ class DashboardController extends BaseController {
         } else {
           state.jlcPoint = '0';
         }
+      }).catchError((value) {
+        debugPrint("jlc error $value");
       });
       update();
       state.ccrf = CcrfProfilModel.fromJson(await storage.readData(StorageCore.ccrfProfil));

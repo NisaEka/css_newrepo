@@ -348,7 +348,9 @@ class LanguageEN {
       "Lihat Obrolan": "View Chats",
       "Lapor Ulang": "Re-Report",
       "Lacak": "Track",
-      "Detail Laporanku": "My Report Detail"
+      "Detail Laporanku": "My Report Detail",
+      "Jumlah Transaksi" : "All Transactions",
+      "Kiriman Kamu": "Your Shipments"
     };
   }
 }

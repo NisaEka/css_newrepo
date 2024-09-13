@@ -20,6 +20,7 @@ class JLCRepositoryImpl extends JLCRepository {
     var account = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
     var jlc = account.payload?.where((element) => element.accountService == "JLC");
 
+    print('jlc number: ${jlc?.first.accountNumber}');
     try {
       Response response = await network.myJNE.post(
         '/jlctotalpoint',
@@ -29,6 +30,7 @@ class JLCRepositoryImpl extends JLCRepository {
           'id_member': jlc?.first.accountNumber,
         },
       );
+      print('jlc number: ${response.data}');
       return PostTotalPointModel.fromJson(response.data);
     } on DioException catch (e) {
       return PostTotalPointModel.fromJson(e.response?.data);
