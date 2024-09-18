@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/routes/app_page.dart';
+import 'package:css_mobile/screen/cek_ongkir/screen.dart';
+import 'package:css_mobile/screen/dashboard/screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_screen.dart';
 import 'package:css_mobile/screen/invoice/invoice_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_screen.dart';
@@ -55,29 +56,11 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'CSS',
       themeMode: ThemeMode.system,
-      darkTheme: CustomTheme().dark(),
-      theme: CustomTheme().light(),
-      getPages: [
-        GetPage(name: "/inputKiriman", page: () => const InformasiPengirimScreen()),
-        GetPage(name: "/cekOngkir", page: () => const CekOngkirScreen()),
-        GetPage(name: "/draftTransaksi", page: () => const DraftTransaksiScreen()),
-        GetPage(name: "/riwayatKiriman", page: () => const RiwayatKirimanScreen()),
-        GetPage(name: "/lacakKiriman", page: () => const LacakKirimanScreen()),
-        GetPage(name: "/pembayaranAggregasi", page: () => const PembayaranAggergasiScreen()),
-        GetPage(name: "/aggregasiMinus", page: () => const AggregationMinusScreen()),
-        GetPage(name: "/uangCODKamu", page: () => const UangCODScreen()),
-        GetPage(name: "/profileGeneral", page: () => const DataUmumScreen()),
-        GetPage(name: "/requestPickup", page: () => const RequestPickupScreen()),
-        GetPage(name: "/notification", page: () => const NotificationScreen()),
-        GetPage(name: "/pantauPaketmu", page: () => const PantauCardScreen()),
-        // GetPage(name: "/pantauPaketmu", page: () => const PantauPaketmuScreen()),
-        GetPage(name: "/laporanku", page: () => const LaporankuScreen()),
-        GetPage(name: "/invoice", page: () => const InvoiceScreen())
-      ],
+      darkTheme: CustomTheme.dark,
+      theme: CustomTheme.light,
+      getPages: AppPages.routes,
       // home: const LoginScreen(),
       home: const DashboardScreen(),
     );
   }
-
-
 }

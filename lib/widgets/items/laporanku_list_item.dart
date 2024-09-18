@@ -4,7 +4,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
-import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

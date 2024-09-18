@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/dashboard/screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';

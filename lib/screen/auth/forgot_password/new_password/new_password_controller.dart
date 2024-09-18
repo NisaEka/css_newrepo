@@ -3,7 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/dashboard/screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

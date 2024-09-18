@@ -9,7 +9,7 @@ import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_s
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';

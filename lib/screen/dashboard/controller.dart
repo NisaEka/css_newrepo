@@ -1,21 +1,17 @@
 import 'dart:convert';
-import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
-import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
+import 'package:css_mobile/screen/dashboard/state.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -188,7 +184,7 @@ class DashboardController extends BaseController {
       // String? token = await FirebaseMessaging.instance.getToken();
 
       state.fcmToken = await storage.readString(StorageCore.fcmToken);
-      print('fcm token : ${state.fcmToken}');
+      // print('fcm token : ${state.fcmToken}');
       // print('fcm token : ${token}');
 
       await auth

@@ -3,7 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';

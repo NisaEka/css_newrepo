@@ -2,7 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/dashboard/screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';

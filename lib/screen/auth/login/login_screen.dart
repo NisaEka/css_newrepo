@@ -2,7 +2,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/dashboard/screen.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';

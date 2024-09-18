@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/dashboard/menu/other_menu_screen.dart';
+import 'package:css_mobile/screen/dashboard/controller.dart';
+import 'package:css_mobile/screen/dashboard/menu/screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:flutter/material.dart';

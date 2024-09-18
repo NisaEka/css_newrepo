@@ -11,7 +11,7 @@ import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/offlinebar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';

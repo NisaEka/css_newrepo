@@ -4,7 +4,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_appbar.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_kiriman_counts.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/dashboard/controller.dart';
 import 'package:css_mobile/screen/notification/notification_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar4.dart';

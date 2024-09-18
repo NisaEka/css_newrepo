@@ -1,9 +1,9 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/cek_ongkir/screen.dart';
+import 'package:css_mobile/screen/dashboard/controller.dart';
+import 'package:css_mobile/screen/dashboard/screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';

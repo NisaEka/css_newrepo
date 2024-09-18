@@ -4,7 +4,7 @@ import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
-import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/value_item.dart';
 import 'package:flutter/cupertino.dart';

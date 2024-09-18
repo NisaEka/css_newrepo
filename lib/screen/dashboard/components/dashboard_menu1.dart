@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/screen/cek_ongkir/cek_ongkir_screen.dart';
+import 'package:css_mobile/screen/cek_ongkir/screen.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

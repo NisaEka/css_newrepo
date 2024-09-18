@@ -3,7 +3,7 @@ import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/dashboard/screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

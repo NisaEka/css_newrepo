@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/dashboard/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

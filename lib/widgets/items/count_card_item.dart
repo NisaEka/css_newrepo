@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
-import 'package:css_mobile/widgets/dialog/shimer_loading.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

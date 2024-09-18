@@ -2,10 +2,8 @@ import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_city_model.dart';
-import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/screen/cek_ongkir/state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -13,31 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CekOngkirController extends BaseController {
-  final formKey = GlobalKey<FormState>();
-  final searchCity = TextEditingController();
-  final kotaPengirim = TextEditingController();
-  final kotaTujuan = TextEditingController();
-  final beratKiriman = TextEditingController();
-  final panjang = TextEditingController();
-  final lebar = TextEditingController();
-  final tinggi = TextEditingController();
-  final estimasiHargaBarang = TextEditingController();
-
-  bool asuransi = false;
-  bool dimensi = false;
-  bool isCalculate = false;
-  double berat = 0;
-  double isr = 0;
-  bool isLoading = false;
-
-  List<City> cityList = [];
-  List<Origin> originList = [];
-  List<Origin> destinationList = [];
-  List<Ongkir> ongkirList = [];
-
-  GetOriginModel? cityModel;
-  Origin? selectedDestination;
-  Origin? selectedOrigin;
+  final state = CekOngkirState();
 
   @override
   void onInit() {
@@ -49,90 +23,92 @@ class CekOngkirController extends BaseController {
   }
 
   Future<void> loadOngkir() async {
-    if (asuransi) hitungAsuransi();
-    ongkirList = [];
-    isLoading = true;
-    update();
-    try {
-      await ongkir
-          .postCekOngkir(
-        selectedOrigin?.originCode ?? '',
-        selectedDestination?.originCode ?? '',
-        beratKiriman.text,
-      )
-          .then((value) {
-        ongkirList.addAll(value.ongkir ?? []);
-      });
-    } catch (e, i) {
-      e.printError();
-      i.printError();
-    }
+    if (state.formKey.currentState!.validate() == true) {
+      if (state.asuransi) hitungAsuransi();
+      state.ongkirList = [];
+      state.isLoading = true;
+      update();
+      try {
+        await ongkir
+            .postCekOngkir(
+          state.selectedOrigin?.originCode ?? '',
+          state.selectedDestination?.originCode ?? '',
+          state.beratKiriman.text,
+        )
+            .then((value) {
+          state.ongkirList.addAll(value.ongkir ?? []);
+        });
+      } catch (e, i) {
+        e.printError();
+        i.printError();
+      }
 
-    isLoading = false;
-    update();
+      state.isLoading = false;
+      update();
+    }
   }
 
   Future<List<Origin>> getOriginList(String keyword) async {
-    originList = [];
-    isLoading = true;
+    state.originList = [];
+    state.isLoading = true;
     try {
       var response = await ongkir.postOrigin(keyword);
-      cityModel = response;
-      originList.addAll(cityModel?.payload ?? []);
+      state.cityModel = response;
+      state.originList.addAll(state.cityModel?.payload ?? []);
     } catch (e, i) {
       e.printError();
       i.printError();
     }
 
-    isLoading = false;
+    state.isLoading = false;
     update();
-    return cityModel?.payload?.toList() ?? [];
-    // return originList;
+    return state.cityModel?.payload?.toList() ?? [];
+    // return state.originList;
   }
 
   Future<List<Origin>> getDestinationList(String keyword) async {
-    isLoading = true;
-    destinationList = [];
+    state.isLoading = true;
+    state.destinationList = [];
     try {
       var response = await ongkir.postDestination(keyword);
-      cityModel = response;
-      destinationList.addAll(response.payload ?? []);
+      state.cityModel = response;
+      state.destinationList.addAll(response.payload ?? []);
       update();
     } catch (e, i) {
       e.printError();
       i.printError();
     }
 
-    isLoading = false;
+    state.isLoading = false;
     update();
-    return cityModel?.payload?.toList() ?? [];
+    return state.cityModel?.payload?.toList() ?? [];
   }
 
   void hitungAsuransi() {
-    isr = 0;
-    isr = (0.002 * (estimasiHargaBarang.text == '' ? 0 : estimasiHargaBarang.text.digitOnly().toInt())) + 5000;
+    state.isr = 0;
+    state.isr = (0.002 * (state.estimasiHargaBarang.text == '' ? 0 : state.estimasiHargaBarang.text.digitOnly().toInt())) + 5000;
     update();
   }
 
   void hitungBerat(double p, double l, double t) {
-    isCalculate = true;
-    berat = 0;
+    state.isCalculate = true;
+    state.berat = 0;
     update();
 
-    if (dimensi) {
-      berat = (p * l * t) / 6000;
-      String b = "0.${berat.toStringAsFixed(2).split('.').last}";
+    if (state.dimensi) {
+      state.berat = (p * l * t) / 6000;
+      String b = "0.${state.berat.toStringAsFixed(2).split('.').last}";
 
-      if (berat < 1) {
-        beratKiriman.text = '1';
+      if (state.berat < 1) {
+        state.beratKiriman.text = '1';
       } else if (b.toDouble() >= 0.31) {
-        beratKiriman.text = berat.ceil().toString();
+        state.beratKiriman.text = state.berat.ceil().toString();
       } else {
-        beratKiriman.text = berat.truncate().toString();
+        state.beratKiriman.text = state.berat.truncate().toString();
       }
 
       // if (b.split('.').last.toInt() > 30) {
-      // beratKiriman.text = berat.truncate().toString();
+      // state.beratKiriman.text = state.berat.truncate().toString();
       // }
 
       update();
@@ -140,8 +116,8 @@ class CekOngkirController extends BaseController {
   }
 
   void showCityList(String title) {
-    searchCity.clear();
-    cityModel = null;
+    state.searchCity.clear();
+    state.cityModel = null;
     update();
     Get.bottomSheet(
       enableDrag: true,
@@ -161,14 +137,13 @@ class CekOngkirController extends BaseController {
             children: [
               Text(
                 '$title\n',
-                style: appTitleTextStyle.copyWith(
-                  color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               CustomSearchField(
-                controller: searchCity,
+                controller: state.searchCity,
                 hintText: 'Cari'.tr,
-                validate: searchCity.text.length < 3,
+                validate: state.searchCity.text.length < 3,
+                margin: EdgeInsets.zero,
                 autoFocus: true,
                 validationText: 'Masukan 3 atau lebih karakter'.tr,
                 onChanged: (value) {
@@ -180,17 +155,18 @@ class CekOngkirController extends BaseController {
                   setState(() {});
                 },
               ),
-              const SizedBox(height: 10),
+              // const SizedBox(height: 10),
               Expanded(
                 // child: ListView.builder(
                 //   itemBuilder: (c, i) => ListTile(
-                //     title: Text(destinationList[i].cityName ?? ''),
+                //     title: Text(state.destinationList[i].cityName ?? ''),
                 //   ),
                 // ),
                 child: FutureBuilder(
-                  // future: getOriginList(searchCity.text == '' ? 'jak' : searchCity.text),
-                  future: (title == "Kota Asal" || title == "Origin") ? getOriginList(searchCity.text) : getDestinationList(searchCity.text),
-                  // initialData: (title == "Kota Asal" || title == "Origin") ? originList : destinationList,
+                  // future: getOriginList(state.searchCity.text == '' ? 'jak' : state.searchCity.text),
+                  future:
+                      (title == "Kota Asal" || title == "Origin") ? getOriginList(state.searchCity.text) : getDestinationList(state.searchCity.text),
+                  // initialData: (title == "Kota Asal" || title == "Origin") ? state.originList : state.destinationList,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -219,14 +195,17 @@ class CekOngkirController extends BaseController {
       itemBuilder: (context, index) {
         final post = data[index];
         return ListTile(
-          title: Text(post.originName!),
+          title: Text(
+            post.originName!,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           onTap: () {
             if (title == "Kota Asal" || title == "Origin") {
-              selectedOrigin = post;
-              kotaPengirim.text = post.originName.toString();
+              state.selectedOrigin = post;
+              state.kotaPengirim.text = post.originName.toString();
             } else if (title == "Kota Tujuan" || title == "Destination") {
-              selectedDestination = post;
-              kotaTujuan.text = post.originName.toString();
+              state.selectedDestination = post;
+              state.kotaTujuan.text = post.originName.toString();
             }
             update();
             Get.back();
