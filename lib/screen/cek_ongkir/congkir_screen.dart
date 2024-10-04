@@ -1,5 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/screen/cek_ongkir/controller.dart';
+import 'package:css_mobile/screen/cek_ongkir/congkir_controller.dart';
 import 'package:css_mobile/screen/cek_ongkir/components/cek_ongkir_data.dart';
 import 'package:css_mobile/screen/cek_ongkir/components/cek_ongkir_form.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';

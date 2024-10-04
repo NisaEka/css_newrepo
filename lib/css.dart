@@ -1,7 +1,7 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/routes/app_page.dart';
-import 'package:css_mobile/screen/cek_ongkir/screen.dart';
-import 'package:css_mobile/screen/dashboard/screen.dart';
+import 'package:css_mobile/screen/cek_ongkir/congkir_screen.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_screen.dart';
 import 'package:css_mobile/screen/invoice/invoice_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_screen.dart';
@@ -55,7 +55,7 @@ class App extends StatelessWidget {
       fallbackLocale: const Locale("id", "ID"),
       debugShowCheckedModeBanner: false,
       title: 'CSS',
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       darkTheme: CustomTheme.dark,
       theme: CustomTheme.light,
       getPages: AppPages.routes,

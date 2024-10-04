@@ -1,37 +1,18 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
+import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class LaporankuController extends BaseController {
-  final searchField = TextEditingController();
-  final startDateField = TextEditingController();
-  final endDateField = TextEditingController();
-  final PagingController<int, TicketModel> pagingController = PagingController(firstPageKey: 1);
-  static const pageSize = 10;
-
-  bool isFiltered = false;
-  bool isLoading = false;
-  DateTime? startDate;
-  DateTime? endDate;
-  String? date;
-  String? status;
-  int selectedStatus = 0;
-  int total = 0;
-  int onProcess = 0;
-  int closed = 0;
-  String dateFilter = '0';
+  final state = LaporankuState();
 
   @override
   void onInit() {
     super.onInit();
     Future.wait([initData()]);
-    pagingController.addPageRequestListener((pageKey) {
+    state.pagingController.addPageRequestListener((pageKey) {
       getTicketList(pageKey);
     });
   }
@@ -39,9 +20,9 @@ class LaporankuController extends BaseController {
   Future<void> initData() async {
     try {
       await laporanku.getTicketSummary().then((value) {
-        total = value.payload?.all?.toInt() ?? 0;
-        onProcess = value.payload?.onProcess?.toInt() ?? 0;
-        closed = value.payload?.finished?.toInt() ?? 0;
+        state.total = value.payload?.all?.toInt() ?? 0;
+        state.onProcess = value.payload?.onProcess?.toInt() ?? 0;
+        state.closed = value.payload?.finished?.toInt() ?? 0;
         update();
       });
     } catch (e) {
@@ -50,31 +31,31 @@ class LaporankuController extends BaseController {
   }
 
   Future<void> getTicketList(int page) async {
-    isLoading = true;
+    state.isLoading = true;
     try {
       final tickets = await laporanku.getTickets(
         page,
-        pageSize,
-        status ?? '',
-        date ?? '',
-        searchField.text,
+        LaporankuState.pageSize,
+        state.status ?? '',
+        state.date ?? '',
+        state.searchField.text,
       );
 
-      final isLastPage = (tickets.payload?.length ?? 0) < pageSize;
+      final isLastPage = (tickets.payload?.length ?? 0) < LaporankuState.pageSize;
       if (isLastPage) {
-        pagingController.appendLastPage(tickets.payload ?? []);
-        // transactionList.addAll(pagingController.itemList ?? []);
+        state.pagingController.appendLastPage(tickets.payload ?? []);
+        // transactionList.addAll(state.pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
-        pagingController.appendPage(tickets.payload ?? [], nextPageKey);
-        // transactionList.addAll(pagingController.itemList ?? []);
+        state.pagingController.appendPage(tickets.payload ?? [], nextPageKey);
+        // transactionList.addAll(state.pagingController.itemList ?? []);
       }
     } catch (e) {
       e.printError();
-      pagingController.error = e;
+      state.pagingController.error = e;
     }
 
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
@@ -94,57 +75,57 @@ class LaporankuController extends BaseController {
   }
 
   void selectDateFilter(int filter) {
-    dateFilter = filter.toString();
+    state.dateFilter = filter.toString();
     update();
     if (filter == 0 || filter == 4) {
-      startDate = null;
-      endDate = null;
-      startDateField.text = '-';
-      endDateField.text = '-';
+      state.startDate = null;
+      state.endDate = null;
+      state.startDateField.text = '-';
+      state.endDateField.text = '-';
     } else if (filter == 1) {
-      startDate = DateTime.now().subtract(const Duration(days: 30));
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
+      state.startDate = DateTime.now().subtract(const Duration(days: 30));
+      state.endDate = DateTime.now();
+      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.endDateField.text = state.endDate.toString().toShortDateFormat();
     } else if (filter == 2) {
-      startDate = DateTime.now().subtract(const Duration(days: 7));
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
+      state.startDate = DateTime.now().subtract(const Duration(days: 7));
+      state.endDate = DateTime.now();
+      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.endDateField.text = state.endDate.toString().toShortDateFormat();
     } else if (filter == 3) {
-      startDate = DateTime.now();
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
+      state.startDate = DateTime.now();
+      state.endDate = DateTime.now();
+      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.endDateField.text = state.endDate.toString().toShortDateFormat();
     }
 
     update();
   }
 
   applyFilter() {
-    if (startDate != null || endDate != null) {
-      isFiltered = true;
-      if (startDate != null && endDate != null) {
-        date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+    if (state.startDate != null || state.endDate != null) {
+      state.isFiltered = true;
+      if (state.startDate != null && state.endDate != null) {
+        state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
       }
       update();
-      pagingController.refresh();
+      state.pagingController.refresh();
       update();
       Get.back();
     }
   }
 
   void resetFilter() {
-    startDate = null;
-    endDate = null;
-    startDateField.clear();
-    endDateField.clear();
-    isFiltered = false;
-    searchField.clear();
-    date = null;
-    dateFilter = '0';
+    state.startDate = null;
+    state.endDate = null;
+    state.startDateField.clear();
+    state.endDateField.clear();
+    state.isFiltered = false;
+    state.searchField.clear();
+    state.date = null;
+    state.dateFilter = '0';
 
-    pagingController.refresh();
+    state.pagingController.refresh();
     update();
     Get.back();
   }

@@ -9,7 +9,7 @@ import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
-import 'package:css_mobile/screen/dashboard/state.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:flutter/material.dart';
@@ -156,7 +156,7 @@ class DashboardController extends BaseController {
   Future<void> cekLocalLanguage() async {
     String local = await storage.readString(StorageCore.localeApp);
 
-    if (local.isEmpty || local == 'id_ID' || local == 'en_US' || local == "id" || local == "en") {
+    if (local.isEmpty || local == 'id_ID' || local == 'en_US') {
       if (Get.deviceLocale == const Locale("id", "ID")) {
         await storage.writeString(StorageCore.localeApp, "id");
         Get.updateLocale(const Locale("id", "ID"));

@@ -12,7 +12,7 @@ class DashboardAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      backgroundColor: blueJNE,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       title: Image.asset(
         ImageConstant.logoCSS,
         height: 30,

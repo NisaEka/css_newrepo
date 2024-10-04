@@ -322,6 +322,7 @@ class LanguageEN {
       "Buat Laporan": "Add Report",
       "Semua Laporan": "All Reports",
       "Masih Diproses": "On Process",
+      "Belum Diproses": "Waiting",
       "Selesai": "Closed",
       "Kategori": "Category",
       "Subjek": "Subject",

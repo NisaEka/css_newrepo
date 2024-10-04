@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import 'components/menu_items.dart';
 import 'components/menu_title.dart';
-import 'controller.dart';
+import 'other_menu_controller.dart';
 
 class OtherMenuScreen extends StatelessWidget {
   const OtherMenuScreen({super.key});

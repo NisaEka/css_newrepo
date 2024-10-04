@@ -1,7 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/screen/dashboard/menu/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../other_menu_controller.dart';
 
 class MenuTitle extends StatelessWidget {
   final String title;

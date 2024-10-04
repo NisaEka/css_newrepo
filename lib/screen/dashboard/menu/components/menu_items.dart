@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
-import 'package:css_mobile/screen/dashboard/menu/controller.dart';
+import 'package:css_mobile/screen/dashboard/menu/other_menu_controller.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

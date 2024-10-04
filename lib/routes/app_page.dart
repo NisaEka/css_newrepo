@@ -1,4 +1,4 @@
-import 'package:css_mobile/screen/cek_ongkir/screen.dart';
+import 'package:css_mobile/screen/cek_ongkir/congkir_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_screen.dart';
 import 'package:css_mobile/screen/invoice/invoice_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_screen.dart';

@@ -2,7 +2,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
-import 'package:css_mobile/screen/dashboard/screen.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_controller.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/akun_bank_screen.dart';

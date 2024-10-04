@@ -1,4 +1,4 @@
-import 'package:css_mobile/screen/cek_ongkir/controller.dart';
+import 'package:css_mobile/screen/cek_ongkir/congkir_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
 import 'package:css_mobile/widgets/forms/customswitch.dart';

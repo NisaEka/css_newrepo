@@ -38,7 +38,11 @@ class CountCardItem extends StatelessWidget {
           // padding: const EdgeInsets.all(10),
           width: Get.width / 2,
           margin: const EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: greyColor), color: whiteColor),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: greyColor),
+            // color: whiteColor,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +59,7 @@ class CountCardItem extends StatelessWidget {
                     const SizedBox(height: 28),
                     _loadingText(Text('${data.count ?? 0}', style: Theme.of(context).textTheme.headlineLarge)),
                     const SizedBox(height: 18),
-                    Text(data.title?.tr ?? titles[index].tr , style: Theme.of(context).textTheme.titleMedium),
+                    Text(data.title?.tr ?? titles[index].tr, style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
               ),
