@@ -1,5 +1,8 @@
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
+import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
+import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +99,21 @@ class FilterComponent extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      // CustomFormLabel(label: 'Petugas Entry'),
+                      CustomDropDownFormField(
+                        label: "Status",
+
+                        items: c.state.statusList
+                            .map((e) => DropdownMenuItem(
+                                  value: e["value"].toString(),
+                                  child: Text(e["name"].toString()),
+                                ))
+                            .toList(),
+                        value: c.state.status,
+                        onChanged: (value) {
+                          c.state.status = value;
+                          c.update();
+                        },
+                      )
                     ],
                   ),
                 ),

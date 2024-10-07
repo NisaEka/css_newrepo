@@ -76,7 +76,7 @@ class StatusLaporanku extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     c.state.selectedStatus = 3;
-                    c.state.status = 'Waiting';
+                    c.state.status = 'On Process';
                     c.update();
                     c.state.pagingController.refresh();
                   },
@@ -97,7 +97,7 @@ class StatusLaporanku extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          c.state.onProcess.toString(),
+                          c.state.waiting.toString(),
                           style: listTitleTextStyle.copyWith(
                             color: c.state.selectedStatus == 3
                                 ? whiteColor
@@ -123,7 +123,7 @@ class StatusLaporanku extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     c.state.selectedStatus = 1;
-                    c.state.status = 'On Process';
+                    c.state.status = 'Reply CS';
                     c.update();
                     c.state.pagingController.refresh();
                   },

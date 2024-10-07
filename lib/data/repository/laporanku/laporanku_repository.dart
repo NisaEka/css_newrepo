@@ -8,7 +8,11 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_controller.d
 abstract class LaporankuRepository {
   Future<GetTicketCategoryModel> getTicketCategory();
 
-  Future<GetTicketSummaryModel> getTicketSummary();
+  Future<GetTicketSummaryModel> getTicketSummary(
+    String status,
+    String date,
+    String query,
+  );
 
   Future<GetTicketModel> getTickets(
     int page,

@@ -56,8 +56,16 @@ class DetailLaporankuScreen extends StatelessWidget {
           ),
           DetailContent(
             title: "Status".tr,
-            value: data.status == "Closed" ? "Selesai".tr : "Masih Diproses".tr,
-            valueColor: data.status == "Closed" ? successLightColor3 : warningLightColor3,
+            value: data.status == "Closed"
+                ? "Selesai".tr
+                : data.status == "Reply CS"
+                    ? "Masih Diproses".tr
+                    : "Belum Diproses".tr,
+            valueColor: data.status == "Closed"
+                ? successLightColor3
+                : data.status == "Reply CS"
+                    ? warningLightColor3
+                    : greyDarkColor2,
           ),
           DetailContent(
             title: "Kategori".tr,

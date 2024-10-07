@@ -31,7 +31,7 @@ class LaporankuListItem extends StatelessWidget {
       child: Slidable(
         key: ValueKey(index ?? 0),
         startActionPane: ActionPane(
-          motion: DrawerMotion(),
+          motion: const DrawerMotion(),
           children: [
             SlidableAction(
               onPressed: (context) => Get.to(const LacakKirimanScreen(), arguments: {
@@ -84,11 +84,20 @@ class LaporankuListItem extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           decoration: BoxDecoration(
-                            color: data?.status == "Closed" ? successColor : warningColor,
+                            color: data?.status == "Closed"
+                                ? successColor
+                                : data?.status == "Reply CS"
+                                    ? warningColor
+                                    : greyColor,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            data?.status == "Closed" ? "Selesai".tr : "Masih Diproses".tr,
+                            // data?.status ?? '',
+                            data?.status == "Closed"
+                                ? "Selesai".tr
+                                : data?.status == "Reply CS"
+                                    ? "Masih Diproses".tr
+                                    : "Belum Diproses".tr,
                             style: sublistTitleTextStyle.copyWith(color: whiteColor, fontSize: 10),
                           ),
                         )

@@ -52,31 +52,37 @@ class TicketSummary {
     num? all,
     num? onProcess,
     num? finished,
+    num? waiting,
   }) {
     _all = all;
     _onProcess = onProcess;
     _finished = finished;
+    _waiting = waiting;
   }
 
   TicketSummary.fromJson(dynamic json) {
     _all = json['all'];
     _onProcess = json['on_process'];
     _finished = json['finished'];
+    _waiting = json['waiting'];
   }
 
   num? _all;
   num? _onProcess;
   num? _finished;
+  num? _waiting;
 
   TicketSummary copyWith({
     num? all,
     num? onProcess,
     num? finished,
+    num? waiting,
   }) =>
       TicketSummary(
         all: all ?? _all,
         onProcess: onProcess ?? _onProcess,
         finished: finished ?? _finished,
+        waiting: waiting ?? _waiting,
       );
 
   num? get all => _all;
@@ -85,11 +91,14 @@ class TicketSummary {
 
   num? get finished => _finished;
 
+  num? get waiting => _waiting;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['all'] = _all;
     map['on_process'] = _onProcess;
     map['finished'] = _finished;
+    map['waiting'] = _waiting;
     return map;
   }
 }

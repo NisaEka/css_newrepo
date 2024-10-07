@@ -30,13 +30,22 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   }
 
   @override
-  Future<GetTicketSummaryModel> getTicketSummary() async {
+  Future<GetTicketSummaryModel> getTicketSummary(
+    String status,
+    String date,
+    String query,
+  ) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
       Response response = await network.dio.get(
         "/ticket/summary",
+        queryParameters: {
+          "date": date,
+          "keyworf": query,
+          "status": status,
+        },
       );
 
       return GetTicketSummaryModel.fromJson(response.data);

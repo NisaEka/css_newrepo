@@ -11,6 +11,7 @@ class LaporankuController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+
     Future.wait([initData()]);
     state.pagingController.addPageRequestListener((pageKey) {
       getTicketList(pageKey);
@@ -18,11 +19,24 @@ class LaporankuController extends BaseController {
   }
 
   Future<void> initData() async {
+    // selectDateFilter(3);
+    // applyFilter();
+    countReports();
+  }
+
+  Future<void> countReports() async {
     try {
-      await laporanku.getTicketSummary().then((value) {
+      await laporanku
+          .getTicketSummary(
+        state.status ?? '',
+        state.date ?? '',
+        state.searchField.text,
+      )
+          .then((value) {
         state.total = value.payload?.all?.toInt() ?? 0;
         state.onProcess = value.payload?.onProcess?.toInt() ?? 0;
         state.closed = value.payload?.finished?.toInt() ?? 0;
+        state.waiting = value.payload?.waiting?.toInt() ?? 0;
         update();
       });
     } catch (e) {
@@ -103,16 +117,19 @@ class LaporankuController extends BaseController {
   }
 
   applyFilter() {
-    if (state.startDate != null || state.endDate != null) {
+    if (state.startDate != null || state.endDate != null || state.status != "") {
       state.isFiltered = true;
       if (state.startDate != null && state.endDate != null) {
         state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
       }
-      update();
       state.pagingController.refresh();
-      update();
-      Get.back();
+      countReports();
+    } else {
+      state.isFiltered = false;
+      resetFilter();
     }
+
+    update();
   }
 
   void resetFilter() {
@@ -124,9 +141,10 @@ class LaporankuController extends BaseController {
     state.searchField.clear();
     state.date = null;
     state.dateFilter = '0';
+    state.status = "";
 
     state.pagingController.refresh();
+    countReports();
     update();
-    Get.back();
   }
 }

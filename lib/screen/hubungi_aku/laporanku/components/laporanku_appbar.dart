@@ -12,7 +12,6 @@ import 'laporanku_filter.dart';
 class LaporankuAppbar extends CustomTopBar {
   LaporankuAppbar({super.key});
 
-
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(150),
@@ -30,11 +29,18 @@ class LaporankuAppbar extends CustomTopBar {
                   ),
                   isFiltered: c.state.isFiltered,
                   isApplyFilter: c.state.startDate != null || c.state.endDate != null,
-                  onResetFilter: () => c.resetFilter(),
-                  onApplyFilter: () => c.applyFilter(),
+                  onResetFilter: () {
+                    c.resetFilter();
+                    Get.back();
+                  },
+                  onApplyFilter: () {
+                    c.applyFilter();
+                    Get.back();
+                  },
                   onCloseFilter: () {
                     if (!c.state.isFiltered) {
                       c.resetFilter();
+                      Get.back();
                     } else {
                       Get.back();
                     }
@@ -45,7 +51,4 @@ class LaporankuAppbar extends CustomTopBar {
           }),
     );
   }
-
-
-
 }
