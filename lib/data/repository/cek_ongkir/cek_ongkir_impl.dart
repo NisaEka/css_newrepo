@@ -71,36 +71,4 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
     }
   }
 
-  @override
-  Future<BaseResponse<List<Origin>>> getOrigins(String keyword) async {
-    try {
-      Response response = await network.base.get(
-        '/master/origins',
-        queryParameters: {
-          'search': keyword.toUpperCase(),
-        },
-      );
-      return BaseResponse<List<Origin>>.fromJson(
-        response.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<Origin>(
-                  (i) => Origin.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
-      );
-    } on DioException catch (e) {
-      return BaseResponse<List<Origin>>.fromJson(
-        e.response?.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<Origin>(
-                  (i) => Origin.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
-      );
-    }
-  }
 }

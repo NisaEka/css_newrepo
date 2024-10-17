@@ -1,7 +1,7 @@
 class BaseResponse<T> {
   BaseResponse({
-    String? message,
-    T? error,
+    dynamic message,
+    dynamic error,
     num? code,
     T? data,
     Meta? meta,
@@ -15,7 +15,7 @@ class BaseResponse<T> {
 
   BaseResponse.fromJson(dynamic json, T Function(Object? json) fromJsonT) {
     _message = json['message'];
-    _error = _$nullableGenericFromJson(json['error'], fromJsonT);
+    _error = json['error'];
     _code = json['statusCode'];
     _data = _$nullableGenericFromJson(json['data'], fromJsonT);
     _meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
@@ -27,15 +27,15 @@ class BaseResponse<T> {
   ) =>
       input == null ? null : fromJson(input);
 
-  String? _message;
-  T? _error;
+  dynamic _message;
+  dynamic _error;
   num? _code;
   T? _data;
   Meta? _meta;
 
   BaseResponse copyWith({
-    String? message,
-    T? error,
+    dynamic message,
+    dynamic error,
     num? code,
     T? data,
     Meta? meta,
@@ -48,9 +48,9 @@ class BaseResponse<T> {
         meta: meta ?? _meta,
       );
 
-  String? get message => _message;
+  dynamic get message => _message;
 
-  T? get error => _error;
+  dynamic get error => _error;
 
   num? get code => _code;
 

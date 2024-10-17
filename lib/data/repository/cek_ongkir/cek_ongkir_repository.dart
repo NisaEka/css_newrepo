@@ -13,5 +13,4 @@ abstract class CekOngkirRepository {
 
   Future<GetOriginModel> postOrigin(String keyword);
 
-  Future<BaseResponse<List<Origin>>> getOrigins(String keyword);
 }

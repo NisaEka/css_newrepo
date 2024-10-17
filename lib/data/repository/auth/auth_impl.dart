@@ -78,19 +78,30 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<BaseResponse> postRegister(InputRegisterModel data) async {
+    print("data : ${data.toJson()}");
+
     try {
-      Response response = await network.dio.post(
-        '/auth/registration',
+      Response response = await network.base.post(
+        '/authentications/signup',
         data: data,
       );
+      print('signup response : ${response.data}');
       return BaseResponse.fromJson(
         response.data,
         (json) => null,
       );
     } on DioException catch (e) {
-      return BaseResponse.fromJson(
+      print('signup response : ${e.response?.data}');
+
+      return BaseResponse<List<String>>.fromJson(
         e.response?.data,
-        (json) => null,
+        (json) => json is List<String>
+            ? json
+                .map<String>(
+                  (i) => i,
+                )
+                .toList()
+            : List.empty(),
       );
     }
   }
@@ -166,9 +177,6 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.get(
         '/authentications/email-check/$email',
       );
-      // Response response = await Dio().get(
-      //   'https://api.mailcheck.ai/email/$email',
-      // );
       return BaseResponse<MailCheckModel>.fromJson(
         response.data,
         (json) => MailCheckModel.fromJson(
@@ -178,9 +186,7 @@ class AuthRepositoryImpl extends AuthRepository {
     } on DioException catch (e) {
       return BaseResponse<MailCheckModel>.fromJson(
         e.response?.data,
-        (json) => MailCheckModel.fromJson(
-          json as Map<String, dynamic>,
-        ),
+        (json) => MailCheckModel(),
       );
     }
   }

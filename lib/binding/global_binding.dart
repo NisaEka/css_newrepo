@@ -18,6 +18,8 @@ import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_impl.dart
 import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_repository.dart';
 import 'package:css_mobile/data/repository/laporanku/laporanku_impl.dart';
 import 'package:css_mobile/data/repository/laporanku/laporanku_repository.dart';
+import 'package:css_mobile/data/repository/master/master_impl.dart';
+import 'package:css_mobile/data/repository/master/master_repository.dart';
 import 'package:css_mobile/data/repository/notification/notification_impl.dart';
 import 'package:css_mobile/data/repository/notification/notification_repository.dart';
 import 'package:css_mobile/data/repository/pantau/pantau_impl.dart';
@@ -57,5 +59,6 @@ class GlobalBinding extends Bindings {
     Get.put<PantauRepository>(PantauRepositoryImpl(), permanent: true);
     Get.put<LaporankuRepository>(LaporankuRepositoryImpl(), permanent: true);
     Get.put<InvoiceRepository>(InvoiceImpl(), permanent: true);
+    Get.put<MasterRepository>(MasterRepositoryImpl(), permanent: true);
   }
 }

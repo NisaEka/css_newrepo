@@ -152,7 +152,7 @@ class LoginController extends BaseController {
                 Icons.error,
                 color: whiteColor,
               ),
-              message: value.message,
+              message: value.message.toString(),
               isDismissible: true,
               duration: const Duration(seconds: 3),
               backgroundColor: Colors.red,

@@ -20,14 +20,14 @@ class InputRegisterModel {
   }
 
   InputRegisterModel.fromJson(dynamic json) {
-    _fullName = json['full_name'];
-    _brandName = json['brand_name'];
+    _fullName = json['name'];
+    _brandName = json['brand'];
     _phone = json['phone'];
     _email = json['email'];
-    _referralCode = json['referral_code'];
-    _originCode = json['origin_code'];
-    _alreadyUseJne = json['already_use_jne'];
-    _salesCounter = json['sales_counter'];
+    _referralCode = json['referralCode'];
+    _originCode = json['originCode'];
+    _alreadyUseJne = json['alreadyUseJne'];
+    _salesCounter = json['counter'];
   }
 
   String? _fullName;
@@ -78,14 +78,14 @@ class InputRegisterModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['full_name'] = _fullName;
-    map['brand_name'] = _brandName;
+    map['name'] = _fullName;
+    map['brand'] = _brandName;
     map['phone'] = _phone;
     map['email'] = _email;
-    map['referral_code'] = _referralCode;
-    map['origin_code'] = _originCode;
-    map['already_use_jne'] = _alreadyUseJne;
-    map['sales_counter'] = _salesCounter;
+    map['referralCode'] = _referralCode;
+    map['originCode'] = _originCode;
+    map['alreadyUseJne'] = _alreadyUseJne;
+    map['counter'] = _salesCounter;
     return map;
   }
 }

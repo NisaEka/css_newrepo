@@ -1,6 +1,9 @@
 import 'package:css_mobile/screen/auth/signup/signup_controller.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/forms/email_textformfield.dart';
 import 'package:css_mobile/widgets/forms/origin_dropdown.dart';
+import 'package:css_mobile/widgets/forms/phone_textformfield.dart';
+import 'package:css_mobile/widgets/forms/referal_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:css_mobile/const/app_const.dart';
@@ -53,77 +56,17 @@ class SignupForm extends StatelessWidget {
                           isRequired: true,
                           validator: ValidationBuilder().name().build(),
                         ),
-                        CustomTextFormField(
-                          controller: c.state.noHp,
-                          prefixIcon: const Icon(Icons.phone),
-                          hintText: 'No Handphone'.tr,
-                          isRequired: true,
-                          inputType: TextInputType.number,
-                          validator: ValidationBuilder().phoneNumber().build(),
-                        ),
-                        CustomTextFormField(
-                          controller: c.state.email,
-                          prefixIcon: const Icon(Icons.mail_outline),
-                          hintText: 'Email'.tr,
-                          isRequired: true,
-                          validator: ValidationBuilder(localeName: c.state.locale).email().minLength(10).maxLength(50).build(),
-                          inputFormatters: [
-                            TextInputFormatter.withFunction((oldValue, newValue) {
-                              return newValue.copyWith(text: newValue.text.toLowerCase());
-                            })
-                          ],
-                        ),
-                        CustomSearchDropdownField<ReferalModel>(
-                          asyncItems: (String filter) => c.getReferalList(filter),
-                          itemBuilder: (context, e, b) {
-                            return Container(
-                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                              child: Text(
-                                e.name.toString(),
-                              ),
-                            );
-                          },
-                          itemAsString: (ReferalModel e) => e.name.toString(),
+                        PhoneTextFormField(controller: c.state.noHp),
+                        EmailTextformfield(controller: c.state.email),
+                        ReferalDropdown(
+                          label: "Kode Referal".tr,
                           onChanged: (value) => c.onSelectReferal(value),
-                          value: c.state.selectedReferal,
-                          selectedItem: c.state.selectedReferal?.name,
-                          hintText: c.state.isLoadReferal ? "Loading..." : "Kode Referal".tr,
-                          prefixIcon: const Icon(Icons.line_style),
-                          textStyle: c.state.selectedReferal != null ? subTitleTextStyle : hintTextStyle,
-                          readOnly: false,
-                          isRequired: false,
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () {},
-                          ),
-                          showClearButton: true,
-                          showDropdownButton: c.state.selectedReferal == null,
-                          onClear: () => c.unSelectReferal(),
                         ),
                         OriginDropdown(
-                          onChanged : (value) => c.selectOrigin(value) ,
+                          onChanged: (value) => c.selectOrigin(value),
+                          readonly: c.state.isDefaultOrigin,
+                          value: c.state.selectedOrigin,
                         ),
-                        // CustomSearchDropdownField<Origin>(
-                        //   asyncItems: (String filter) => c.getOriginList(filter),
-                        //   itemBuilder: (context, e, b) {
-                        //     return Container(
-                        //       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                        //       child: Text(
-                        //         e.originName.toString(),
-                        //       ),
-                        //     );
-                        //   },
-                        //   itemAsString: (Origin e) => e.originName.toString(),
-                        //   onChanged: (value) => c.selectOrigin(value),
-                        //   value: c.state.selectedOrigin,
-                        //   selectedItem: c.state.kotaPengirim.text,
-                        //   hintText: c.state.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
-                        //   searchHintText: 'Masukan Kota Pengiriman'.tr,
-                        //   prefixIcon: const Icon(Icons.location_city),
-                        //   textStyle: c.state.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
-                        //   readOnly: c.state.isDefaultOrigin,
-                        //   isRequired: true,
-                        // ),
                         c.state.isSelectCounter
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
