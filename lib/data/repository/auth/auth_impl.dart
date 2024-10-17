@@ -22,20 +22,20 @@ class AuthRepositoryImpl extends AuthRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponseModel<PostLoginModel>> postLogin(InputLoginModel loginData) async {
+  Future<BaseResponse<PostLoginModel>> postLogin(InputLoginModel loginData) async {
     try {
       Response response = await network.base.post(
         '/authentications/login',
         data: loginData,
       );
-      return BaseResponseModel<PostLoginModel>.fromJson(
+      return BaseResponse<PostLoginModel>.fromJson(
         response.data,
         (json) => PostLoginModel.fromJson(
           json as Map<String, dynamic>,
         ),
       );
     } on DioException catch (e) {
-      return BaseResponseModel<PostLoginModel>.fromJson(
+      return BaseResponse<PostLoginModel>.fromJson(
         e.response?.data,
         (json) => PostLoginModel.fromJson(
           json as Map<String, dynamic>,
@@ -45,18 +45,18 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponseModel> postRegistPinConfirm(InputPinconfirmModel data) async {
+  Future<BaseResponse> postRegistPinConfirm(InputPinconfirmModel data) async {
     try {
       Response response = await network.dio.post(
         '/auth/registration/pin/confirm',
         data: data,
       );
-      return BaseResponseModel.fromJson(
+      return BaseResponse.fromJson(
         response.data,
         (json) => null,
       );
     } on DioException catch (e) {
-      return BaseResponseModel.fromJson(
+      return BaseResponse.fromJson(
         e.response?.data,
         (json) => null,
       );
@@ -77,18 +77,18 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponseModel> postRegister(InputRegisterModel data) async {
+  Future<BaseResponse> postRegister(InputRegisterModel data) async {
     try {
       Response response = await network.dio.post(
         '/auth/registration',
         data: data,
       );
-      return BaseResponseModel.fromJson(
+      return BaseResponse.fromJson(
         response.data,
         (json) => null,
       );
     } on DioException catch (e) {
-      return BaseResponseModel.fromJson(
+      return BaseResponse.fromJson(
         e.response?.data,
         (json) => null,
       );
@@ -161,7 +161,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponseModel<MailCheckModel>> getCheckMail(String email) async {
+  Future<BaseResponse<MailCheckModel>> getCheckMail(String email) async {
     try {
       Response response = await network.base.get(
         '/authentications/email-check/$email',
@@ -169,14 +169,14 @@ class AuthRepositoryImpl extends AuthRepository {
       // Response response = await Dio().get(
       //   'https://api.mailcheck.ai/email/$email',
       // );
-      return BaseResponseModel<MailCheckModel>.fromJson(
+      return BaseResponse<MailCheckModel>.fromJson(
         response.data,
         (json) => MailCheckModel.fromJson(
           json as Map<String, dynamic>,
         ),
       );
     } on DioException catch (e) {
-      return BaseResponseModel<MailCheckModel>.fromJson(
+      return BaseResponse<MailCheckModel>.fromJson(
         e.response?.data,
         (json) => MailCheckModel.fromJson(
           json as Map<String, dynamic>,
@@ -186,7 +186,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponseModel> postFcmToken(Device data) async {
+  Future<BaseResponse> postFcmToken(Device data) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -195,12 +195,12 @@ class AuthRepositoryImpl extends AuthRepository {
         '/auth/device-infos',
         data: data,
       );
-      return BaseResponseModel.fromJson(
+      return BaseResponse.fromJson(
         response.data,
         (json) => null,
       );
     } on DioException catch (e) {
-      return BaseResponseModel.fromJson(
+      return BaseResponse.fromJson(
         e.response?.data,
         (json) => null,
       );
@@ -208,7 +208,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponseModel> logout() async {
+  Future<BaseResponse> logout() async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     var fcmToken = await StorageCore().readString(StorageCore.fcmToken);
@@ -224,12 +224,12 @@ class AuthRepositoryImpl extends AuthRepository {
       Response logout = await network.base.post(
         'authentications/logout',
       );
-      return BaseResponseModel.fromJson(
+      return BaseResponse.fromJson(
         logout.data,
         (json) => null,
       );
     } on DioException catch (e) {
-      return BaseResponseModel.fromJson(
+      return BaseResponse.fromJson(
         e.response?.data,
         (json) => null,
       );

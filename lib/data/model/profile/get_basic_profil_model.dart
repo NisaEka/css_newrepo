@@ -1,4 +1,4 @@
-import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/get_origin_model.dart';
 
 class GetBasicProfilModel {
   GetBasicProfilModel({

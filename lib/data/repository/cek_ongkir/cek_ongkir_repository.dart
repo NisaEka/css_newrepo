@@ -1,6 +1,6 @@
-import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_city_model.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
-import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/get_origin_model.dart';
 
 abstract class CekOngkirRepository {
   Future<PostCekongkirModel> postCekOngkir(
@@ -12,4 +12,6 @@ abstract class CekOngkirRepository {
   Future<GetOriginModel> postDestination(String keyword);
 
   Future<GetOriginModel> postOrigin(String keyword);
+
+  Future<BaseResponse<List<Origin>>> getOrigins(String keyword);
 }

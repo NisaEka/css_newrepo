@@ -11,11 +11,11 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 
 abstract class AuthRepository {
-  Future<BaseResponseModel<PostLoginModel>> postLogin(InputLoginModel loginData);
+  Future<BaseResponse<PostLoginModel>> postLogin(InputLoginModel loginData);
 
-  Future<BaseResponseModel> postRegister(InputRegisterModel data);
+  Future<BaseResponse> postRegister(InputRegisterModel data);
 
-  Future<BaseResponseModel> postRegistPinConfirm(InputPinconfirmModel data);
+  Future<BaseResponse> postRegistPinConfirm(InputPinconfirmModel data);
 
   Future<PostTransactionModel> postRegistPinResend(InputPinconfirmModel data);
 
@@ -29,13 +29,13 @@ abstract class AuthRepository {
 
   Future<PostTransactionModel> postPasswordChage(InputNewPasswordModel data);
 
-  Future<BaseResponseModel<MailCheckModel>> getCheckMail(String email);
+  Future<BaseResponse<MailCheckModel>> getCheckMail(String email);
 
-  Future<BaseResponseModel> postFcmToken(Device data);
+  Future<BaseResponse> postFcmToken(Device data);
 
   Future<GetLoginModel> postFcmTokenNonAuth(Device data);
 
-  Future<BaseResponseModel> logout();
+  Future<BaseResponse> logout();
 
   Future<GetLoginModel> updateDeviceInfo(Device data);
 

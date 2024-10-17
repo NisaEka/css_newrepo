@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/get_origin_model.dart';
 
 GetShipperModel getShipperModelFromJson(String str) => GetShipperModel.fromJson(json.decode(str));
 

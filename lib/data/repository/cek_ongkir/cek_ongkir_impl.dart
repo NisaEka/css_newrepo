@@ -1,6 +1,7 @@
 import 'package:css_mobile/config/api_config.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
-import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
 import 'package:dio/dio.dart';
@@ -67,6 +68,39 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
       return GetOriginModel.fromJson(response.data);
     } on DioException catch (e) {
       return GetOriginModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<Origin>>> getOrigins(String keyword) async {
+    try {
+      Response response = await network.base.get(
+        '/master/origins',
+        queryParameters: {
+          'search': keyword.toUpperCase(),
+        },
+      );
+      return BaseResponse<List<Origin>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<Origin>(
+                  (i) => Origin.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      return BaseResponse<List<Origin>>.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<Origin>(
+                  (i) => Origin.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     }
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
-
 GetOriginModel getOriginModelFromJson(String str) => GetOriginModel.fromJson(json.decode(str));
 
 String getOriginModelToJson(GetOriginModel data) => json.encode(data.toJson());
@@ -69,27 +68,26 @@ class GetOriginModel {
   }
 }
 
-Origin payloadFromJson(String str) => Origin.fromJson(json.decode(str));
-
-String payloadToJson(Origin data) => json.encode(data.toJson());
-
 class Origin {
   Origin({
     String? originCode,
     String? originName,
     String? branchCode,
+    String? originStatus,
     Region? region,
   }) {
     _originCode = originCode;
     _originName = originName;
     _branchCode = branchCode;
+    _originStatus = originStatus;
     _region = region;
   }
 
   Origin.fromJson(dynamic json) {
-    _originCode = json['origin_code'] ?? json['code'];
-    _originName = json['origin_name'] ?? json['desc'] ?? json['label'];
-    _branchCode = json['branch_code'] ?? json['branch'];
+    _originCode = json['origin_code'] ?? json['code'] ?? json['originCode'];
+    _originName = json['origin_name'] ?? json['desc'] ?? json['label'] ?? json['originName'];
+    _branchCode = json['branch_code'] ?? json['branch'] ?? json['branchCode'];
+    _originStatus = json['originStatus'];
     if (json["region"] != null) {
       _region = Region.fromJson(json["region"]);
     }
@@ -98,17 +96,20 @@ class Origin {
   String? _originCode;
   String? _originName;
   String? _branchCode;
+  String? _originStatus;
   Region? _region;
 
   Origin copyWith({
     String? originCode,
     String? originName,
     String? branchCode,
+    String? originStatus,
   }) =>
       Origin(
         originCode: originCode ?? _originCode,
         originName: originName ?? _originName,
         branchCode: branchCode ?? _branchCode,
+        originStatus: originStatus ?? _originStatus
       );
 
   String? get originCode => _originCode;
@@ -116,6 +117,8 @@ class Origin {
   String? get originName => _originName;
 
   String? get branchCode => _branchCode;
+
+  String? get originStatus => _originStatus;
 
   Region? get region => _region;
 
@@ -128,6 +131,10 @@ class Origin {
     map['desc'] = _originName;
     map['label'] = _originName;
     map['branch'] = _branchCode;
+    map['originStatus'] = _originStatus;
+    map['originCode'] = _originCode;
+    map['originName'] = _originName;
+    map['branchCode'] = _branchCode;
     return map;
   }
 }

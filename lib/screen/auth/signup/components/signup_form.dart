@@ -7,7 +7,6 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
-import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
@@ -74,23 +73,6 @@ class SignupForm extends StatelessWidget {
                             })
                           ],
                         ),
-                        // Autocomplete<ReferalModel>(
-                        //   optionsBuilder: (code) async => await controller.getReferalList(code.text.toUpperCase()),
-                        //   displayStringForOption: (option) => option.name ?? '',
-                        //   fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) => CustomTextFormField(
-                        //     controller: textEditingController,
-                        //     prefixIcon: const Icon(Icons.line_style),
-                        //     hintText: 'Kode Referal'.tr,
-                        //     onChanged: (value) => onFieldSubmitted,
-                        //     focusNode: focusNode,
-                        //   ),
-                        //   // optionsViewOpenDirection: OptionsViewOpenDirection.up,
-                        //   // optionsMaxHeight: 100,
-                        //   onSelected: (ReferalModel selection) {
-                        //     controller.kodeReferal.text = selection.name ?? '';
-                        //     controller.update();
-                        //   },
-                        // ),
                         CustomSearchDropdownField<ReferalModel>(
                           asyncItems: (String filter) => c.getReferalList(filter),
                           itemBuilder: (context, e, b) {
@@ -118,7 +100,9 @@ class SignupForm extends StatelessWidget {
                           showDropdownButton: c.state.selectedReferal == null,
                           onClear: () => c.unSelectReferal(),
                         ),
-                        // const OriginDropdown(),
+                        OriginDropdown(
+                          onChanged : (value) => c.selectOrigin(value) ,
+                        ),
                         // CustomSearchDropdownField<Origin>(
                         //   asyncItems: (String filter) => c.getOriginList(filter),
                         //   itemBuilder: (context, e, b) {

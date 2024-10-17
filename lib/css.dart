@@ -40,7 +40,7 @@ class App extends StatelessWidget {
       fallbackLocale: const Locale("id", "ID"),
       debugShowCheckedModeBanner: false,
       title: 'CSS',
-      // themeMode: ,
+      themeMode: ThemeMode.dark,
       darkTheme: CustomTheme.dark,
       theme: CustomTheme.light,
       getPages: AppPages.routes,

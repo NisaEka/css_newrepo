@@ -3,7 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_agent_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
-import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:css_mobile/screen/auth/signup/signup_state.dart';
@@ -21,7 +21,16 @@ class SignUpController extends BaseController {
     update();
   }
 
+  void selectOrigin(value) {
+    {
+      state.selectedOrigin = value;
+      state.kotaPengirim.text = state.selectedOrigin?.originName ?? '';
+      state.branchCode = state.selectedOrigin?.branchCode;
+      update();
 
+      getAgentList();
+    }
+  }
 
   Future<List<ReferalModel>> getReferalList(String code) async {
     var response = await auth.getReferal(code);
@@ -159,6 +168,4 @@ class SignUpController extends BaseController {
     state.isSelectCounter = false;
     update();
   }
-
-
 }
