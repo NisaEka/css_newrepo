@@ -88,8 +88,8 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
               fillColor: Theme.of(context).brightness == Brightness.light ? neutralColor : greyColor,
               prefixIcon: widget.prefixIcon,
               suffixIcon: widget.suffixIcon,
-              prefixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
-              suffixIconColor: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1,
+              prefixIconColor: Theme.of(context).colorScheme.outline,
+              suffixIconColor: Theme.of(context).colorScheme.outline,
             ),
           ),
           const SizedBox(height: 10)
@@ -124,14 +124,13 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
             isFilterOnline: true,
             itemBuilder: widget.itemBuilder,
             searchFieldProps: TextFieldProps(
-              cursorColor: CustomTheme().cursorColor(context),
-              autofocus: true,
-              decoration: InputDecoration(
-                hintText: widget.searchHintText,
-                helperText: "Masukan minimal 3 karakter".tr,
-              ),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular)
-            ),
+                cursorColor: CustomTheme().cursorColor(context),
+                autofocus: true,
+                decoration: InputDecoration(
+                  hintText: widget.searchHintText,
+                  helperText: "Masukan minimal 3 karakter".tr,
+                ),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular)),
           ),
           dropdownButtonProps: DropdownButtonProps(
             icon: const Icon(Icons.keyboard_arrow_down),
@@ -144,6 +143,7 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
               hintStyle: hintTextStyle,
               prefixIcon: widget.prefixIcon,
               suffixIcon: widget.suffixIcon,
+              prefixIconColor: Theme.of(context).colorScheme.outline
             ),
             baseStyle: widget.textStyle,
           ),

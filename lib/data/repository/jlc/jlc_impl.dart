@@ -1,4 +1,6 @@
 import 'package:css_mobile/config/api_config.dart';
+import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
+import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_point_reedem_model.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_transactions_model.dart';
 import 'package:css_mobile/data/model/jlc/post_total_point_model.dart';
@@ -20,7 +22,6 @@ class JLCRepositoryImpl extends JLCRepository {
     var account = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
     var jlc = account.payload?.where((element) => element.accountService == "JLC");
 
-    print('jlc number: ${jlc?.first.accountNumber}');
     try {
       Response response = await network.myJNE.post(
         '/jlctotalpoint',
@@ -30,8 +31,8 @@ class JLCRepositoryImpl extends JLCRepository {
           'id_member': jlc?.first.accountNumber,
         },
       );
-      print('jlc number: ${response.data}');
-      return PostTotalPointModel.fromJson(response.data);
+
+       return PostTotalPointModel.fromJson(response.data);
     } on DioException catch (e) {
       return PostTotalPointModel.fromJson(e.response?.data);
     }
@@ -74,6 +75,54 @@ class JLCRepositoryImpl extends JLCRepository {
       return PostJlcPointReedemModel.fromJson(response.data);
     } on DioException catch (e) {
       return PostJlcPointReedemModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<DashboardBannerModel> postDashboardBanner() async {
+    Dio banner = Dio();
+    banner.options = BaseOptions(
+      contentType: 'application/x-www-form-urlencoded',
+    );
+    try {
+      Response response = await banner.post(
+        'https://apiv2.jne.co.id:10205/myjne/jlcgetbanner',
+        data: {
+          'username': ApiConfig.jlcUsername,
+          'api_key': ApiConfig.jlcAPIKEY,
+        },
+      );
+      return DashboardBannerModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return DashboardBannerModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<DashboardNewsModel> postDashboardNews(
+    String type,
+    String fromDate,
+    String toDate,
+  ) async {
+    Dio news = Dio();
+    news.options = BaseOptions(
+      contentType: 'application/x-www-form-urlencoded',
+    );
+
+    try {
+      Response response = await news.post(
+        'https://cms.jne.co.id/api_webjne/web_base/',
+        data: {
+          'username': ApiConfig.bannerKey,
+          'api_key': ApiConfig.bannerPass,
+          'from_date': fromDate,
+          'to_date': toDate,
+          'type': type,
+        },
+      );
+      return DashboardNewsModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return e.response?.data;
     }
   }
 }

@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
+import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
+import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -24,6 +26,7 @@ class DashboardState {
   String? userName;
   String? jlcPoint;
   String? fcmToken;
+  String local = '';
 
   List<Widget> widgetOptions = <Widget>[
     const DashboardScreen(),
@@ -32,11 +35,8 @@ class DashboardState {
 
   List<Items> menuItems = [];
   List<String> appTitle = <String>["Beranda".tr, "Profil".tr];
-  List<Widget> bannerList = [
-    const Text('for commercial banner 1'),
-    const Text('for commercial banner 2'),
-    const Text('for commercial banner 3'),
-  ];
+  List<BannerModel> bannerList = [];
+  List<NewsModel> newsList = [];
   List<CountCardModel> transCountList = [];
   List<String> transType = [
     'Jumlah Transaksi',
@@ -49,6 +49,5 @@ class DashboardState {
     'Dibatalkan Oleh Kamu'
   ];
   var bannerIndex = 0.obs;
-  CarouselController commercialCarousel = CarouselController();
   AllowedMenu allow = AllowedMenu();
 }

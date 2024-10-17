@@ -6,14 +6,16 @@ import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 
 abstract class AuthRepository {
-  Future<LoginModel> postLogin(InputLoginModel loginData);
+  Future<BaseResponseModel<PostLoginModel>> postLogin(InputLoginModel loginData);
 
-  Future<PostTransactionModel> postRegister(InputRegisterModel data);
+  Future<BaseResponseModel> postRegister(InputRegisterModel data);
 
-  Future<PostTransactionModel> postRegistPinConfirm(InputPinconfirmModel data);
+  Future<BaseResponseModel> postRegistPinConfirm(InputPinconfirmModel data);
 
   Future<PostTransactionModel> postRegistPinResend(InputPinconfirmModel data);
 
@@ -23,19 +25,19 @@ abstract class AuthRepository {
 
   Future<PostTransactionModel> postEmailForgotPassword(String email);
 
-  Future<LoginModel> postPasswordPinConfirm(InputPinconfirmModel data);
+  Future<GetLoginModel> postPasswordPinConfirm(InputPinconfirmModel data);
 
   Future<PostTransactionModel> postPasswordChage(InputNewPasswordModel data);
 
-  Future<GetCheckMailModel> getCheckMail(String email);
+  Future<BaseResponseModel<MailCheckModel>> getCheckMail(String email);
 
-  Future<LoginModel> postFcmToken(Device data);
+  Future<BaseResponseModel> postFcmToken(Device data);
 
-  Future<LoginModel> postFcmTokenNonAuth(Device data);
+  Future<GetLoginModel> postFcmTokenNonAuth(Device data);
 
-  Future<LoginModel> logout();
+  Future<BaseResponseModel> logout();
 
-  Future<LoginModel> updateDeviceInfo(Device data);
+  Future<GetLoginModel> updateDeviceInfo(Device data);
 
-  Future<LoginModel> updateDeviceInfoNonAuth(Device data);
+  Future<GetLoginModel> updateDeviceInfoNonAuth(Device data);
 }

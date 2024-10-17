@@ -11,6 +11,11 @@ class ImageConstant {
   static const String vector3 = "assets/images/vector3.svg";
   static const String vector4 = "assets/images/vector4.svg";
 
+  static const String slice1 = "assets/images/Slice 1.png";
+  static const String slice2 = "assets/images/Slice 2.png";
+  static const String slice3 = "assets/images/Slice 3.png";
+  static const String sliceU = "assets/images/Union.png";
+
   static const String berandaIcon = "assets/icons/Beranda.png";
   static const String cekOngkirIcon = "assets/icons/Cek Ongkir.png";
   static const String dukunganTeknisIcon = "assets/icons/Dukungan Teknis.png";

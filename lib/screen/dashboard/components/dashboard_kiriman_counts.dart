@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/widgets/forms/date_dropdown_filter_button.dart';
 import 'package:css_mobile/widgets/items/count_card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,12 +30,12 @@ class DashboardKirimanCounts extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: controller.state.isLoading
+                      children: controller.state.isLoading || controller.state.transCountList.isEmpty
                           ? ImageConstant.dashboardCountIcons
                               .mapIndexed(
                                 (i, e) => CountCardItem(
                                   data: CountCardModel(),
-                                  isLoading: true,
+                                  isLoading: controller.state.isLoading,
                                   index: i,
                                 ),
                               )

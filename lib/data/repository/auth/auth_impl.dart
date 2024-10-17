@@ -6,6 +6,8 @@ import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
@@ -20,28 +22,44 @@ class AuthRepositoryImpl extends AuthRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<LoginModel> postLogin(InputLoginModel loginData) async {
+  Future<BaseResponseModel<PostLoginModel>> postLogin(InputLoginModel loginData) async {
     try {
-      Response response = await network.dio.post(
-        '/auth/login',
+      Response response = await network.base.post(
+        '/authentications/login',
         data: loginData,
       );
-      return LoginModel.fromJson(response.data);
+      return BaseResponseModel<PostLoginModel>.fromJson(
+        response.data,
+        (json) => PostLoginModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
     } on DioException catch (e) {
-      return LoginModel.fromJson(e.response?.data);
+      return BaseResponseModel<PostLoginModel>.fromJson(
+        e.response?.data,
+        (json) => PostLoginModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
     }
   }
 
   @override
-  Future<PostTransactionModel> postRegistPinConfirm(InputPinconfirmModel data) async {
+  Future<BaseResponseModel> postRegistPinConfirm(InputPinconfirmModel data) async {
     try {
       Response response = await network.dio.post(
         '/auth/registration/pin/confirm',
         data: data,
       );
-      return PostTransactionModel.fromJson(response.data);
+      return BaseResponseModel.fromJson(
+        response.data,
+        (json) => null,
+      );
     } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
+      return BaseResponseModel.fromJson(
+        e.response?.data,
+        (json) => null,
+      );
     }
   }
 
@@ -59,15 +77,21 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<PostTransactionModel> postRegister(InputRegisterModel data) async {
+  Future<BaseResponseModel> postRegister(InputRegisterModel data) async {
     try {
       Response response = await network.dio.post(
         '/auth/registration',
         data: data,
       );
-      return PostTransactionModel.fromJson(response.data);
+      return BaseResponseModel.fromJson(
+        response.data,
+        (json) => null,
+      );
     } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
+      return BaseResponseModel.fromJson(
+        e.response?.data,
+        (json) => null,
+      );
     }
   }
 
@@ -86,8 +110,8 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<GetReferalModel> getReferal(String keyword) async {
     try {
-      Response response = await network.dio.get(
-        '/referral?keyword=$keyword',
+      Response response = await network.local.get(
+        '/master/group-owners?search=$keyword',
       );
       return GetReferalModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -124,83 +148,109 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<LoginModel> postPasswordPinConfirm(InputPinconfirmModel data) async {
+  Future<GetLoginModel> postPasswordPinConfirm(InputPinconfirmModel data) async {
     try {
       Response response = await network.dio.post(
         '/auth/password/pin/confirm',
         data: data,
       );
-      return LoginModel.fromJson(response.data);
+      return GetLoginModel.fromJson(response.data);
     } on DioException catch (e) {
-      return LoginModel.fromJson(e.response?.data);
+      return GetLoginModel.fromJson(e.response?.data);
     }
   }
 
   @override
-  Future<GetCheckMailModel> getCheckMail(String email) async {
+  Future<BaseResponseModel<MailCheckModel>> getCheckMail(String email) async {
     try {
-      Response response = await network.dio.get(
-        '/auth/registration/mail_check/$email',
+      Response response = await network.base.get(
+        '/authentications/email-check/$email',
       );
       // Response response = await Dio().get(
       //   'https://api.mailcheck.ai/email/$email',
       // );
-      return GetCheckMailModel.fromJson(response.data);
+      return BaseResponseModel<MailCheckModel>.fromJson(
+        response.data,
+        (json) => MailCheckModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
     } on DioException catch (e) {
-      return GetCheckMailModel.fromJson(e.response?.data);
+      return BaseResponseModel<MailCheckModel>.fromJson(
+        e.response?.data,
+        (json) => MailCheckModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
     }
   }
 
   @override
-  Future<LoginModel> postFcmToken(Device data) async {
+  Future<BaseResponseModel> postFcmToken(Device data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.dio.post(
-        '/device_info',
+      Response response = await network.base.post(
+        '/auth/device-infos',
         data: data,
       );
-      return LoginModel.fromJson(response.data);
+      return BaseResponseModel.fromJson(
+        response.data,
+        (json) => null,
+      );
     } on DioException catch (e) {
-      return LoginModel.fromJson(e.response?.data);
+      return BaseResponseModel.fromJson(
+        e.response?.data,
+        (json) => null,
+      );
     }
   }
 
   @override
-  Future<LoginModel> logout() async {
+  Future<BaseResponseModel> logout() async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     var fcmToken = await StorageCore().readString(StorageCore.fcmToken);
 
     var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
     String id = deviceInfo?.deviceId ?? '';
 
     try {
-      Response response = await network.dio.delete(
-        '/device_info/$id',
+      Response response = await network.base.patch(
+        '/auth/device-infos/update',
       );
-      return LoginModel.fromJson(response.data);
+
+      Response logout = await network.base.post(
+        'authentications/logout',
+      );
+      return BaseResponseModel.fromJson(
+        logout.data,
+        (json) => null,
+      );
     } on DioException catch (e) {
-      return LoginModel.fromJson(e.response?.data);
+      return BaseResponseModel.fromJson(
+        e.response?.data,
+        (json) => null,
+      );
     }
   }
 
   @override
-  Future<LoginModel> postFcmTokenNonAuth(Device data) async {
+  Future<GetLoginModel> postFcmTokenNonAuth(Device data) async {
     try {
       Response response = await network.dio.post(
         '/device_info/save',
         data: data,
       );
-      return LoginModel.fromJson(response.data);
+      return GetLoginModel.fromJson(response.data);
     } on DioException catch (e) {
-      return LoginModel.fromJson(e.response?.data);
+      return GetLoginModel.fromJson(e.response?.data);
     }
   }
 
   @override
-  Future<LoginModel> updateDeviceInfo(Device data) async {
+  Future<GetLoginModel> updateDeviceInfo(Device data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
@@ -209,22 +259,22 @@ class AuthRepositoryImpl extends AuthRepository {
         '/device_info',
         data: data,
       );
-      return LoginModel.fromJson(response.data);
+      return GetLoginModel.fromJson(response.data);
     } on DioException catch (e) {
-      return LoginModel.fromJson(e.response?.data);
+      return GetLoginModel.fromJson(e.response?.data);
     }
   }
 
   @override
-  Future<LoginModel> updateDeviceInfoNonAuth(Device data) async {
+  Future<GetLoginModel> updateDeviceInfoNonAuth(Device data) async {
     try {
       Response response = await network.dio.put(
         '/device_info/update',
         data: data,
       );
-      return LoginModel.fromJson(response.data);
+      return GetLoginModel.fromJson(response.data);
     } on DioException catch (e) {
-      return LoginModel.fromJson(e.response?.data);
+      return GetLoginModel.fromJson(e.response?.data);
     }
   }
 }

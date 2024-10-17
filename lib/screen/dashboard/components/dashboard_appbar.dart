@@ -27,7 +27,7 @@ class DashboardAppbar extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () => Get.to(const PengaturanScreen()),
+          onPressed: () => Get.off(const PengaturanScreen()),
           icon: const Icon(
             Icons.settings,
             color: whiteColor,

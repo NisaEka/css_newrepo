@@ -75,7 +75,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.jne.css.css_mobile"
+        applicationId "com.jne.cssmobile"
         minSdkVersion 21
         multiDexEnabled true
         targetSdkVersion flutter.targetSdkVersion

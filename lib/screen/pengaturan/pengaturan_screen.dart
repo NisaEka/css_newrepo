@@ -1,10 +1,11 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
-import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_screen.dart';
+import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
@@ -21,15 +22,24 @@ class PengaturanScreen extends StatelessWidget {
     return GetBuilder<PengaturanController>(
         init: PengaturanController(),
         builder: (controller) {
-          return Stack(
-            children: [
-              Scaffold(
-                appBar: CustomTopBar(title: 'Pengaturan'.tr),
-                body: _bodyContent(controller, context),
-                bottomNavigationBar: _logoutButton(controller, context),
-              ),
-              controller.isLoading ? const LoadingDialog() : const SizedBox(),
-            ],
+          return PopScope(
+            canPop: false,
+            onPopInvoked: (didPop) => Get.off(const DashboardScreen()),
+            child: Stack(
+              children: [
+                Scaffold(
+                  appBar: CustomTopBar(
+                    title: 'Pengaturan'.tr,
+                    leading: CustomBackButton(
+                      onPressed: () => Get.off(const DashboardScreen()),
+                    ),
+                  ),
+                  body: _bodyContent(controller, context),
+                  bottomNavigationBar: _logoutButton(controller, context),
+                ),
+                controller.isLoading ? const LoadingDialog() : const SizedBox(),
+              ],
+            ),
           );
         });
   }

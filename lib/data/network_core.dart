@@ -8,22 +8,32 @@ class NetworkCore {
   Dio jne = Dio();
   Dio myJNE = Dio();
   Dio local = Dio();
+  Dio base = Dio();
 
   NetworkCore() {
     dio.options = BaseOptions(
       baseUrl: AppConst.baseUrl,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    base.options = BaseOptions(
+      baseUrl: AppConst.base,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
     );
 
     local.options = BaseOptions(
-      baseUrl: "http://10.0.2.2:3000",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
+      baseUrl: "http://192.168.10.220:3001",
+      // baseUrl: "http://10.0.2.2:3000",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
     );
 
     city.options = BaseOptions(
@@ -39,7 +49,6 @@ class NetworkCore {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
-
       },
     );
 

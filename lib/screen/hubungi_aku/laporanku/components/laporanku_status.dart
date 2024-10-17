@@ -31,7 +31,7 @@ class StatusLaporanku extends StatelessWidget {
                     c.state.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width / 5.5,
+                    width: Get.width / 6,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedStatus == 0
@@ -128,7 +128,7 @@ class StatusLaporanku extends StatelessWidget {
                     c.state.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width / 4.71,
+                    width: Get.width / 4,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedStatus == 1
@@ -175,7 +175,7 @@ class StatusLaporanku extends StatelessWidget {
                     c.state.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width / 5.5,
+                    width: Get.width / 6,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedStatus == 2

@@ -62,7 +62,8 @@ class CustomTextFormField extends StatefulWidget {
     this.autofocus,
     this.contentPadding,
     this.noBorder = false,
-    this.isLoading = false, this.onSaved,
+    this.isLoading = false,
+    this.onSaved,
   }) {
     if (isRequired) {
       StorageCore().readString(StorageCore.localeApp).then((value) => ValidationBuilder.setLocale(value));
@@ -156,8 +157,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
                   suffixIcon: widget.suffixIcon,
                   prefixIcon: widget.prefixIcon,
-                  prefixIconColor: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
-                  suffixIconColor: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
+                  prefixIconColor: Theme.of(context).colorScheme.outline,
+                  suffixIconColor: Theme.of(context).colorScheme.outline,
                   contentPadding: widget.contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                   hintText: widget.hintText ?? widget.label,
                   errorMaxLines: 3,

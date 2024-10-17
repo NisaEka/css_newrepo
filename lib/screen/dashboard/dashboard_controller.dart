@@ -23,8 +23,9 @@ class DashboardController extends BaseController {
     super.onInit();
     Future.wait([
       saveFCMToken(),
+      loadBanner(),
+      loadNews(),
       initData(),
-      loadTransCountList(),
     ]);
   }
 
@@ -50,6 +51,30 @@ class DashboardController extends BaseController {
         backgroundColor: successColor,
       ),
     );
+  }
+
+  Future<void> loadBanner() async {
+    try {
+      jlc.postDashboardBanner().then((value) {
+        state.bannerList.addAll(value.data ?? []);
+        update();
+      });
+    } catch (e) {
+      e.printError();
+    }
+  }
+
+  Future<void> loadNews() async {
+    String toDate = DateTime.now().toString().split(' ').first;
+    String fromDate = DateTime(DateTime.now().year, 01).toString().split(' ').first;
+    try {
+      jlc.postDashboardNews('news', fromDate, toDate).then((value) {
+        state.newsList.addAll(value.message ?? []);
+        update();
+      });
+    } catch (e) {
+      e.printError();
+    }
   }
 
   Future<void> cekFavoritMenu() async {
@@ -154,9 +179,9 @@ class DashboardController extends BaseController {
   }
 
   Future<void> cekLocalLanguage() async {
-    String local = await storage.readString(StorageCore.localeApp);
+    state.local = await storage.readString(StorageCore.localeApp);
 
-    if (local.isEmpty || local == 'id_ID' || local == 'en_US') {
+    if (state.local.isEmpty || state.local == 'id_ID' || state.local == 'en_US') {
       if (Get.deviceLocale == const Locale("id", "ID")) {
         await storage.writeString(StorageCore.localeApp, "id");
         Get.updateLocale(const Locale("id", "ID"));
@@ -167,7 +192,7 @@ class DashboardController extends BaseController {
         update();
       }
     } else {
-      if (local == "id") {
+      if (state.local == "id") {
         await storage.writeString(StorageCore.localeApp, "id");
         Get.updateLocale(const Locale("id", "ID"));
         update();
@@ -209,9 +234,10 @@ class DashboardController extends BaseController {
   Future<void> loadTransCountList() async {
     state.transCountList.clear();
     try {
-      transaction.postTransactionDashboard('1722445200000 - 1725814800000', '').then(
+      transaction.postTransactionDashboard('', '').then(
         (value) {
           state.transCountList.addAll(value.payload ?? []);
+          update();
         },
       );
     } catch (e) {
@@ -229,6 +255,8 @@ class DashboardController extends BaseController {
     cekToken();
     state.isLoading = true;
 
+    loadTransCountList();
+
     bool accounts =
         ((await storage.readString(StorageCore.accounts)).isEmpty || (await storage.readString(StorageCore.accounts)) == 'null') && state.isLogin;
     bool dropshipper =
@@ -240,8 +268,10 @@ class DashboardController extends BaseController {
         ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null') && state.isLogin;
     bool basic =
         ((await storage.readString(StorageCore.userProfil)).isEmpty || (await storage.readString(StorageCore.userProfil)) == 'null') && state.isLogin;
-    bool ccrfP =
-        ((await storage.readString(StorageCore.ccrfProfil)).isEmpty || (await storage.readString(StorageCore.ccrfProfil)) == 'null') && state.isLogin;
+    bool ccrfP = ((await storage.readString(StorageCore.ccrfProfil)).isEmpty ||
+            (await storage.readString(StorageCore.ccrfProfil)) == 'null' ||
+            (await storage.readString(StorageCore.ccrfProfil)) == '{}') &&
+        state.isLogin;
     update();
 
     try {
@@ -290,6 +320,7 @@ class DashboardController extends BaseController {
       }
 
       state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y");
+
       storage.saveData(StorageCore.ccrfProfil, state.ccrf);
       await jlc.postTotalPoint().then((value) {
         if (value.status == true) {
@@ -302,7 +333,6 @@ class DashboardController extends BaseController {
         debugPrint("jlc error $value");
       });
       update();
-      state.ccrf = CcrfProfilModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
       var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
       state.userName = shipper.name ?? '';
       state.allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));

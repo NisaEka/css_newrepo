@@ -108,9 +108,9 @@ class Device {
   }
 
   Device.fromJson(dynamic json) {
-    _fcmToken = json['fcm_token'];
-    _deviceId = json['device_id'];
-    _deviceVersion = json['device_version'];
+    _fcmToken = json['fcmToken'];
+    _deviceId = json['deviceId'];
+    _deviceVersion = json['versionOs'];
   }
 
   String? _fcmToken;
@@ -136,9 +136,9 @@ class Device {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['fcm_token'] = _fcmToken;
-    map['device_id'] = _deviceId;
-    map['device_version'] = _deviceVersion;
+    map['fcmToken'] = _fcmToken;
+    map['deviceId'] = _deviceId;
+    map['versionOs'] = _deviceVersion;
     return map;
   }
 }

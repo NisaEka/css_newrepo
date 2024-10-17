@@ -1,12 +1,15 @@
 import 'dart:convert';
 
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StorageCore {
   final storage = const FlutterSecureStorage();
   static const String localeApp = "locale";
   static const String token = 'token';
+  static const String refreshToken = 'refresh_token';
+  static const String userMenu = 'user_menu';
   static const String allowedMenu = 'allowed_menu';
   static const String favoriteMenu = 'favorite_menu';
   static const String shipper = 'shipper';
@@ -41,9 +44,14 @@ class StorageCore {
     await storage.delete(key: key);
   }
 
-  Future<void> saveToken(String token, AllowedMenu allowedMenu) async {
-    await storage.write(key: 'token', value: token);
-    await storage.write(key: 'allowed_menu', value: jsonEncode(allowedMenu));
+  Future<void> saveToken(
+    String t,
+    MenuModel m,
+    String rt,
+  ) async {
+    await storage.write(key: token, value: t);
+    await storage.write(key: refreshToken, value: rt);
+    await storage.write(key: userMenu, value: jsonEncode(m));
   }
 
   Future<String?> readToken() async {
@@ -54,6 +62,8 @@ class StorageCore {
   void deleteToken() async {
     await storage.delete(key: token);
     await storage.delete(key: allowedMenu);
+    await storage.delete(key: userMenu);
+    await storage.delete(key: refreshToken);
     await storage.delete(key: shipper);
     await storage.delete(key: accounts);
     await storage.delete(key: draftTransaction);
@@ -62,5 +72,6 @@ class StorageCore {
     await storage.delete(key: userProfil);
     await storage.delete(key: transactionLabel);
     await storage.delete(key: shippingCost);
+    await storage.delete(key: ccrfProfil);
   }
 }

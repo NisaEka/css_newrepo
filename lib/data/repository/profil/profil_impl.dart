@@ -37,6 +37,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
       Response response = await network.dio.get(
         "/profile/ccrf",
       );
+      print('isccrf api : $response');
       return GetCcrfProfilModel.fromJson(response.data);
     } on DioException catch (e) {
       return GetCcrfProfilModel.fromJson(e.response?.data);

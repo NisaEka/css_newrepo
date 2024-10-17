@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomTheme {
   static final light = ThemeData(
-    // primaryColor: blueJNE,
+    primaryColor: blueJNE,
     brightness: Brightness.light,
     colorScheme: const ColorScheme.light(
       primary: blueJNE,
@@ -32,6 +32,10 @@ class CustomTheme {
     iconTheme: const IconThemeData(
       color: greyDarkColor1,
     ),
+    dropdownMenuTheme: const DropdownMenuThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+      prefixIconColor: greyDarkColor1,
+    )),
     textTheme: GoogleFonts.ubuntuTextTheme().copyWith(
         titleSmall: sublistTitleTextStyle.copyWith(
           color: greyDarkColor1,
@@ -154,6 +158,7 @@ class CustomTheme {
 
   static final dark = ThemeData(
     brightness: Brightness.dark,
+    primaryColor: greyLightColor1,
     colorScheme: const ColorScheme.dark(
       primary: primaryDarkColor,
       secondary: greyDarkColor2,
@@ -167,6 +172,10 @@ class CustomTheme {
     iconTheme: const IconThemeData(
       color: greyLightColor1,
     ),
+    dropdownMenuTheme: const DropdownMenuThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+      prefixIconColor: greyLightColor1,
+    )),
     textTheme: GoogleFonts.ubuntuTextTheme().copyWith(
         labelLarge: const TextStyle(
           color: greyLightColor1,

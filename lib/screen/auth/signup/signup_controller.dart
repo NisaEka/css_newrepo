@@ -6,52 +6,22 @@ import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/transaction/get_origin_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
+import 'package:css_mobile/screen/auth/signup/signup_state.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends BaseController {
-  final formKey = GlobalKey<FormState>();
-  final namaLengkap = TextEditingController();
-  final namaBrand = TextEditingController();
-  final noHp = TextEditingController();
-  final email = TextEditingController();
-  final kodeReferal = TextEditingController();
-  final kotaPengirim = TextEditingController();
-  final agenSales = TextEditingController();
-
-  List<AgentModel> agenList = [];
-
-  String? version;
-  String? branchCode;
-  bool pakaiJNE = false;
-  bool isLoadOrigin = false;
-  bool isLoadReferal = false;
-  bool isLoadAgent = false;
-  bool isLoading = false;
-  bool isDefaultOrigin = false;
-  bool isSelectCounter = true;
-  Origin? selectedOrigin;
-  AgentModel? selectedAgent;
-  ReferalModel? selectedReferal;
-  String? locale;
+  final state = SignupState();
 
   Future<void> initData() async {
-    locale = await storage.readString(StorageCore.localeApp);
-    ValidationBuilder.setLocale(locale!);
+    state.locale = await storage.readString(StorageCore.localeApp);
+    ValidationBuilder.setLocale(state.locale!);
 
     update();
   }
 
-  Future<List<Origin>> getOriginList(String keyword) async {
-    isLoadOrigin = true;
-    var response = await ongkir.postOrigin(keyword);
-    var models = response.payload?.toList();
 
-    isLoadOrigin = false;
-    update();
-    return models ?? [];
-  }
 
   Future<List<ReferalModel>> getReferalList(String code) async {
     var response = await auth.getReferal(code);
@@ -59,35 +29,35 @@ class SignUpController extends BaseController {
   }
 
   Future<void> getAgentList() async {
-    agenList = [
+    state.agenList = [
       AgentModel(custName: 'BELUM KIRIM KE JNE'),
       AgentModel(custName: 'TIDAK TENTU'),
     ];
-    isLoadAgent = true;
+    state.isLoadAgent = true;
     update();
-    await auth.getAgent(branchCode!).then((value) {
-      agenList.addAll(value.payload ?? []);
+    await auth.getAgent(state.branchCode!).then((value) {
+      state.agenList.addAll(value.payload ?? []);
       update();
     });
 
-    isLoadAgent = false;
+    state.isLoadAgent = false;
     update();
   }
 
   Future<void> mailValidation() async {
-    isLoading = true;
+    state.isLoading = true;
     update();
     try {
       await auth
-          .getCheckMail(email.text)
-          .then((value) => value.payload?.disposable == true || value.payload?.publicDomain == false || value.payload?.mx == false
+          .getCheckMail(state.email.text)
+          .then((value) => value.data?.disposable == true || value.data?.publicDomain == false || value.data?.mx == false
               ? Get.showSnackbar(
                   GetSnackBar(
                     icon: const Icon(
                       Icons.warning,
                       color: whiteColor,
                     ),
-                    message: 'CSS tidak menerima pendaftaran menggunakan email temporary'.tr,
+                    message: 'CSS tidak menerima pendaftaran menggunakan state.email temporary'.tr,
                     isDismissible: true,
                     duration: const Duration(seconds: 3),
                     backgroundColor: errorColor,
@@ -97,25 +67,25 @@ class SignUpController extends BaseController {
     } catch (e) {
       e.printError();
     }
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
   Future<void> saveRegistration() async {
-    isLoading = true;
+    state.isLoading = true;
     update();
     try {
       await auth
           .postRegister(
         InputRegisterModel(
-          fullName: namaLengkap.text,
-          brandName: namaBrand.text,
-          phone: noHp.text,
-          email: email.text,
-          referralCode: kodeReferal.text,
-          originCode: selectedOrigin?.originCode ?? '',
-          alreadyUseJne: pakaiJNE ? "YES" : null,
-          salesCounter: selectedAgent?.custNo ?? selectedAgent?.custName,
+          fullName: state.namaLengkap.text,
+          brandName: state.namaBrand.text,
+          phone: state.noHp.text,
+          email: state.email.text,
+          referralCode: state.kodeReferal.text,
+          originCode: state.selectedOrigin?.originCode ?? '',
+          alreadyUseJne: state.pakaiJNE ? "YES" : null,
+          salesCounter: state.selectedAgent?.custNo ?? state.selectedAgent?.custName,
         ),
       )
           .then((value) {
@@ -126,14 +96,14 @@ class SignUpController extends BaseController {
                 Icons.info,
                 color: whiteColor,
               ),
-              message: 'Silahkan cek email anda'.tr,
+              message: 'Silahkan cek state.email anda'.tr,
               isDismissible: true,
               duration: const Duration(seconds: 3),
               backgroundColor: successColor,
             ),
           );
           Get.to(const SignUpOTPScreen(), arguments: {
-            'email': email.text,
+            'state.email': state.email.text,
             'isActivation': false,
           });
         } else if (value.code == 409 || value.message == "Conflict") {
@@ -143,7 +113,7 @@ class SignUpController extends BaseController {
                 Icons.warning,
                 color: whiteColor,
               ),
-              message: 'Email atau nomor telepon sudah terdaftar'.tr,
+              message: 'state.email atau nomor telepon sudah terdaftar'.tr,
               isDismissible: true,
               duration: const Duration(seconds: 3),
               backgroundColor: errorColor,
@@ -155,49 +125,40 @@ class SignUpController extends BaseController {
       e.printError();
     }
 
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
   Future<void> onSelectReferal(ReferalModel value) async {
-    kodeReferal.text = value.name ?? '';
-    selectedReferal = value;
-    selectedOrigin = value.origin;
-    isDefaultOrigin = value.defaultOrigin == "FIXED" ? true : false;
-    isSelectCounter = value.counter == null ? true : false;
+    state.kodeReferal.text = value.name ?? '';
+    state.selectedReferal = value;
+    state.selectedOrigin = value.origin;
+    state.isDefaultOrigin = value.defaultOrigin == "FIXED" ? true : false;
+    state.isSelectCounter = value.counter == null ? true : false;
     update();
-    kotaPengirim.text = selectedOrigin?.originName ?? '';
-    branchCode = selectedOrigin?.branchCode;
-    pakaiJNE = value.counter != null;
+    state.kotaPengirim.text = state.selectedOrigin?.originName ?? '';
+    state.branchCode = state.selectedOrigin?.branchCode;
+    state.pakaiJNE = value.counter != null;
     update();
     getAgentList();
     if (value.counter != null) {
-      selectedAgent = agenList.where((e) => e.custName == value.counter).first;
+      state.selectedAgent = state.agenList.where((e) => e.custName == value.counter).first;
       update();
-      selectedAgent?.custName.printInfo(info: "selectedAgent");
+      state.selectedAgent?.custName.printInfo(info: "selectedAgent");
     } else {
-      selectedAgent = null;
+      state.selectedAgent = null;
       update();
     }
   }
 
   void unSelectReferal() {
-    kodeReferal.clear();
-    selectedReferal = null;
-    selectedOrigin = null;
-    isDefaultOrigin = false;
-    isSelectCounter = false;
+    state.kodeReferal.clear();
+    state.selectedReferal = null;
+    state.selectedOrigin = null;
+    state.isDefaultOrigin = false;
+    state.isSelectCounter = false;
     update();
   }
 
-  selectOrigin(value) {
-    {
-      selectedOrigin = value;
-      kotaPengirim.text = selectedOrigin?.originName ?? '';
-      branchCode = selectedOrigin?.branchCode;
-      update();
 
-      getAgentList();
-    }
-  }
 }

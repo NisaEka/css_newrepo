@@ -19,7 +19,7 @@ class _DashboardInfoState extends State<DashboardInfo> {
     return GetBuilder<DashboardController>(
         init: DashboardController(),
         builder: (c) {
-          return c.state.isCcrf == false
+          return c.state.isCcrf == true || c.state.isLoading
               ? const SizedBox()
               : GestureDetector(
                   onTap: () => Get.to(const FacilityScreen()),

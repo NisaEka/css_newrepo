@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/input_email_screen.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
@@ -103,17 +103,18 @@ class LoginController extends BaseController {
         ),
       )
           .then((value) async {
-        if (value.code == 200) {
+        if (value.code == 201) {
           await storage
               .saveToken(
-                value.payload?.token ?? '',
-                value.payload?.allowedMenu ?? AllowedMenu(),
+                value.data?.token?.accessToken ?? '',
+                value.data?.menu ?? MenuModel(),
+                value.data?.token?.refreshToken ?? '',
               )
               .then((_) async => auth
                   .postFcmToken(
                     await getDeviceinfo(fcmToken ?? '') ?? Device(),
                   )
-                  .then((value) async => value.code == 200
+                  .then((value) async => value.code == 201
                       ? await auth.updateDeviceInfo(
                           await getDeviceinfo(fcmToken ?? '') ?? Device(),
                         )

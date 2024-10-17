@@ -1,99 +1,53 @@
-class GetLoginModel {
-  GetLoginModel({
-    num? code,
-    String? message,
-    Payload? payload,
+class PostLoginModel {
+  PostLoginModel({
+    Token? token,
+    MenuModel? menu,
   }) {
-    _code = code;
-    _message = message;
-    _payload = payload;
-  }
-
-  GetLoginModel.fromJson(dynamic json) {
-    _code = json['code'];
-    _message = json['message'];
-    _payload = json['payload'] != null ? Payload.fromJson(json['payload']) : null;
-  }
-
-  num? _code;
-  String? _message;
-  Payload? _payload;
-
-  GetLoginModel copyWith({
-    num? code,
-    String? message,
-    Payload? payload,
-  }) =>
-      GetLoginModel(
-        code: code ?? _code,
-        message: message ?? _message,
-        payload: payload ?? _payload,
-      );
-
-  num? get code => _code;
-
-  String? get message => _message;
-
-  Payload? get payload => _payload;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.toJson();
-    }
-    return map;
-  }
-}
-
-class Payload {
-  Payload({
-    AllowedMenu? allowedMenu,
-    String? token,
-  }) {
-    _allowedMenu = allowedMenu;
     _token = token;
+    _menu = menu;
   }
 
-  Payload.fromJson(dynamic json) {
-    _allowedMenu = json['allowed_menu'] != null ? AllowedMenu.fromJson(json['allowed_menu']) : null;
-    _token = json['token'];
+  PostLoginModel.fromJson(dynamic json) {
+    _token = json['token'] != null ? Token.fromJson(json['token']) : null;
+    _menu = json['menu'] != null ? MenuModel.fromJson(json['menu']) : null;
   }
 
-  AllowedMenu? _allowedMenu;
-  String? _token;
+  Token? _token;
+  MenuModel? _menu;
 
-  Payload copyWith({
-    AllowedMenu? allowedMenu,
-    String? token,
+  PostLoginModel copyWith({
+    Token? token,
+    MenuModel? menu,
   }) =>
-      Payload(
-        allowedMenu: allowedMenu ?? _allowedMenu,
+      PostLoginModel(
         token: token ?? _token,
+        menu: menu ?? _menu,
       );
 
-  AllowedMenu? get allowedMenu => _allowedMenu;
+  Token? get token => _token;
 
-  String? get token => _token;
+  MenuModel? get menu => _menu;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (_allowedMenu != null) {
-      map['allowed_menu'] = _allowedMenu?.toJson();
+    if (_token != null) {
+      map['token'] = _token?.toJson();
     }
-    map['token'] = _token;
+    if (_menu != null) {
+      map['menu'] = _menu?.toJson();
+    }
     return map;
   }
 }
 
-class AllowedMenu {
-  AllowedMenu({
+class MenuModel {
+  MenuModel({
     String? profil,
     String? fasilitas,
     String? katasandi,
     String? beranda,
     String? buatPesanan,
+    String? riwayatPesanan,
     String? lacakPesanan,
     String? mintaDijemput,
     String? serahTerima,
@@ -107,7 +61,9 @@ class AllowedMenu {
     String? tema,
     String? label,
     String? petugas,
-    String? riwayatPesanan,
+    String? laporanReturn,
+    String? summaryOrigin,
+    String? summaryDestination,
     String? cekOngkir,
     String? semuaTransaksi,
     String? hapusPesanan,
@@ -118,15 +74,14 @@ class AllowedMenu {
     String? dashReferralTrans,
     String? dashReferralDseller,
     String? dashReferralSeller,
-    String? groupOwner,
-    String? laporanReturn,
-    String? summaryOrigin,
-    String? summaryDestination,
+    String? accountJlc,
+    String? accountCod,
+    String? accountNoncod,
     String? paketmuInput,
     String? paketmuRiwayat,
     String? paketmuLacak,
-    String? paketmuMintaDijemput,
-    String? paketmuSerahTerima,
+    String? paketmuMintadijemput,
+    String? paketmuSerahterima,
     String? paketmuPrint,
     String? keuanganJneMoney,
     String? keuanganCod,
@@ -148,6 +103,7 @@ class AllowedMenu {
     _katasandi = katasandi;
     _beranda = beranda;
     _buatPesanan = buatPesanan;
+    _riwayatPesanan = riwayatPesanan;
     _lacakPesanan = lacakPesanan;
     _mintaDijemput = mintaDijemput;
     _serahTerima = serahTerima;
@@ -161,7 +117,9 @@ class AllowedMenu {
     _tema = tema;
     _label = label;
     _petugas = petugas;
-    _riwayatPesanan = riwayatPesanan;
+    _laporanReturn = laporanReturn;
+    _summaryOrigin = summaryOrigin;
+    _summaryDestination = summaryDestination;
     _cekOngkir = cekOngkir;
     _semuaTransaksi = semuaTransaksi;
     _hapusPesanan = hapusPesanan;
@@ -172,15 +130,14 @@ class AllowedMenu {
     _dashReferralTrans = dashReferralTrans;
     _dashReferralDseller = dashReferralDseller;
     _dashReferralSeller = dashReferralSeller;
-    _groupOwner = groupOwner;
-    _laporanReturn = laporanReturn;
-    _summaryOrigin = summaryOrigin;
-    _summaryDestination = summaryDestination;
+    _accountJlc = accountJlc;
+    _accountCod = accountCod;
+    _accountNoncod = accountNoncod;
     _paketmuInput = paketmuInput;
     _paketmuRiwayat = paketmuRiwayat;
     _paketmuLacak = paketmuLacak;
-    _paketmuMintaDijemput = paketmuMintaDijemput;
-    _paketmuSerahTerima = paketmuSerahTerima;
+    _paketmuMintadijemput = paketmuMintadijemput;
+    _paketmuSerahterima = paketmuSerahterima;
     _paketmuPrint = paketmuPrint;
     _keuanganJneMoney = keuanganJneMoney;
     _keuanganCod = keuanganCod;
@@ -198,60 +155,62 @@ class AllowedMenu {
     _pengaturanPetugas = pengaturanPetugas;
   }
 
-  AllowedMenu.fromJson(dynamic json) {
+  MenuModel.fromJson(dynamic json) {
     _profil = json['profil'];
     _fasilitas = json['fasilitas'];
     _katasandi = json['katasandi'];
     _beranda = json['beranda'];
-    _buatPesanan = json['buat_pesanan'];
-    _lacakPesanan = json['lacak_pesanan'];
-    _mintaDijemput = json['minta_dijemput'];
-    _serahTerima = json['serah_terima'];
+    _buatPesanan = json['buatPesanan'];
+    _riwayatPesanan = json['riwayatPesanan'];
+    _lacakPesanan = json['lacakPesanan'];
+    _mintaDijemput = json['mintaDijemput'];
+    _serahTerima = json['serahTerima'];
     _saldo = json['saldo'];
-    _uangCod = json['uang_cod'];
+    _uangCod = json['uangCod'];
     _tagihan = json['tagihan'];
     _bonus = json['bonus'];
-    _pantauPaketmu = json['pantau_paketmu'];
+    _pantauPaketmu = json['pantauPaketmu'];
     _laporan = json['laporan'];
     _eclaim = json['eclaim'];
     _tema = json['tema'];
     _label = json['label'];
     _petugas = json['petugas'];
-    _riwayatPesanan = json['riwayat_pesanan'];
-    _cekOngkir = json['cek_ongkir'];
-    _semuaTransaksi = json['semua_transaksi'];
-    _hapusPesanan = json['hapus_pesanan'];
-    _semuaHapus = json['semua_hapus'];
-    _cetakPesanan = json['cetak_pesanan'];
-    _monitoringAgg = json['monitoring_agg'];
-    _monitoringAggMinus = json['monitoring_agg_minus'];
-    _dashReferralTrans = json['dash_referral_trans'];
-    _dashReferralDseller = json['dash_referral_dseller'];
-    _dashReferralSeller = json['dash_referral_seller'];
-    _groupOwner = json['group_owner'];
-    _laporanReturn = json['laporan_return'];
-    _summaryOrigin = json['summary_origin'];
-    _summaryDestination = json['summary_destination'];
-    _paketmuInput = json['paketmu_input'];
-    _paketmuRiwayat = json['paketmu_riwayat'];
-    _paketmuLacak = json['paketmu_lacak'];
-    _paketmuMintaDijemput = json['paketmu_minta_dijemput'];
-    _paketmuSerahTerima = json['paketmu_serah_terima'];
-    _paketmuPrint = json['paketmu_print'];
-    _keuanganJneMoney = json['keuangan_jne_money'];
-    _keuanganCod = json['keuangan_cod'];
-    _keuanganAggregasi = json['keuangan_aggregasi'];
-    _keuanganAggregasiMinus = json['keuangan_aggregasi_minus'];
-    _keuanganTagihan = json['keuangan_tagihan'];
-    _keuanganBonus = json['keuangan_bonus'];
-    _hubungiLaporan = json['hubungi_laporan'];
-    _hubungiEclaim = json['hubungi_eclaim'];
-    _laporanSummaryOrigin = json['laporan_summary_origin'];
-    _laporanSummaryDestination = json['laporan_summary_destination'];
-    _dukunganTeknis = json['dukungan_teknis'];
-    _pengaturanTema = json['pengaturan_tema'];
-    _pengaturanLabel = json['pengaturan_label'];
-    _pengaturanPetugas = json['pengaturan_petugas'];
+    _laporanReturn = json['laporanReturn'];
+    _summaryOrigin = json['summaryOrigin'];
+    _summaryDestination = json['summaryDestination'];
+    _cekOngkir = json['cekOngkir'];
+    _semuaTransaksi = json['semuaTransaksi'];
+    _hapusPesanan = json['hapusPesanan'];
+    _semuaHapus = json['semuaHapus'];
+    _cetakPesanan = json['cetakPesanan'];
+    _monitoringAgg = json['monitoringAgg'];
+    _monitoringAggMinus = json['monitoringAggMinus'];
+    _dashReferralTrans = json['dashReferralTrans'];
+    _dashReferralDseller = json['dashReferralDseller'];
+    _dashReferralSeller = json['dashReferralSeller'];
+    _accountJlc = json['accountJlc'];
+    _accountCod = json['accountCod'];
+    _accountNoncod = json['accountNoncod'];
+    _paketmuInput = json['paketmuInput'];
+    _paketmuRiwayat = json['paketmuRiwayat'];
+    _paketmuLacak = json['paketmuLacak'];
+    _paketmuMintadijemput = json['paketmuMintadijemput'];
+    _paketmuSerahterima = json['paketmuSerahterima'];
+    _paketmuPrint = json['paketmuPrint'];
+    _keuanganJneMoney = json['keuanganJneMoney'];
+    _keuanganCod = json['keuanganCod'];
+    _keuanganAggregasi = json['keuanganAggregasi'];
+    _keuanganAggregasiMinus = json['keuanganAggregasiMinus'];
+    _keuanganTagihan = json['keuanganTagihan'];
+    _keuanganBonus = json['keuanganBonus'];
+    _hubungiLaporan = json['hubungiLaporan'];
+    _hubungiEclaim = json['hubungiEclaim'];
+    _laporanSummaryOrigin = json['laporanSummaryOrigin'];
+    _laporanSummaryDestination = json['laporanSummaryDestination'];
+    _dukunganTeknis = json['dukunganTeknis'];
+    _pengaturanTema = json['pengaturanTema'];
+    _pengaturanLabel = json['pengaturanLabel'];
+    _pengaturanPetugas = json['pengaturanPetugas'];
   }
 
   String? _profil;
@@ -259,6 +218,7 @@ class AllowedMenu {
   String? _katasandi;
   String? _beranda;
   String? _buatPesanan;
+  String? _riwayatPesanan;
   String? _lacakPesanan;
   String? _mintaDijemput;
   String? _serahTerima;
@@ -272,7 +232,9 @@ class AllowedMenu {
   String? _tema;
   String? _label;
   String? _petugas;
-  String? _riwayatPesanan;
+  String? _laporanReturn;
+  String? _summaryOrigin;
+  String? _summaryDestination;
   String? _cekOngkir;
   String? _semuaTransaksi;
   String? _hapusPesanan;
@@ -283,15 +245,14 @@ class AllowedMenu {
   String? _dashReferralTrans;
   String? _dashReferralDseller;
   String? _dashReferralSeller;
-  String? _groupOwner;
-  String? _laporanReturn;
-  String? _summaryOrigin;
-  String? _summaryDestination;
+  String? _accountJlc;
+  String? _accountCod;
+  String? _accountNoncod;
   String? _paketmuInput;
   String? _paketmuRiwayat;
   String? _paketmuLacak;
-  String? _paketmuMintaDijemput;
-  String? _paketmuSerahTerima;
+  String? _paketmuMintadijemput;
+  String? _paketmuSerahterima;
   String? _paketmuPrint;
   String? _keuanganJneMoney;
   String? _keuanganCod;
@@ -308,12 +269,13 @@ class AllowedMenu {
   String? _pengaturanLabel;
   String? _pengaturanPetugas;
 
-  AllowedMenu copyWith({
+  MenuModel copyWith({
     String? profil,
     String? fasilitas,
     String? katasandi,
     String? beranda,
     String? buatPesanan,
+    String? riwayatPesanan,
     String? lacakPesanan,
     String? mintaDijemput,
     String? serahTerima,
@@ -327,7 +289,9 @@ class AllowedMenu {
     String? tema,
     String? label,
     String? petugas,
-    String? riwayatPesanan,
+    String? laporanReturn,
+    String? summaryOrigin,
+    String? summaryDestination,
     String? cekOngkir,
     String? semuaTransaksi,
     String? hapusPesanan,
@@ -338,15 +302,14 @@ class AllowedMenu {
     String? dashReferralTrans,
     String? dashReferralDseller,
     String? dashReferralSeller,
-    String? groupOwner,
-    String? laporanReturn,
-    String? summaryOrigin,
-    String? summaryDestination,
+    String? accountJlc,
+    String? accountCod,
+    String? accountNoncod,
     String? paketmuInput,
     String? paketmuRiwayat,
     String? paketmuLacak,
-    String? paketmuMintaDijemput,
-    String? paketmuSerahTerima,
+    String? paketmuMintadijemput,
+    String? paketmuSerahterima,
     String? paketmuPrint,
     String? keuanganJneMoney,
     String? keuanganCod,
@@ -363,12 +326,13 @@ class AllowedMenu {
     String? pengaturanLabel,
     String? pengaturanPetugas,
   }) =>
-      AllowedMenu(
+      MenuModel(
         profil: profil ?? _profil,
         fasilitas: fasilitas ?? _fasilitas,
         katasandi: katasandi ?? _katasandi,
         beranda: beranda ?? _beranda,
         buatPesanan: buatPesanan ?? _buatPesanan,
+        riwayatPesanan: riwayatPesanan ?? _riwayatPesanan,
         lacakPesanan: lacakPesanan ?? _lacakPesanan,
         mintaDijemput: mintaDijemput ?? _mintaDijemput,
         serahTerima: serahTerima ?? _serahTerima,
@@ -382,7 +346,9 @@ class AllowedMenu {
         tema: tema ?? _tema,
         label: label ?? _label,
         petugas: petugas ?? _petugas,
-        riwayatPesanan: riwayatPesanan ?? _riwayatPesanan,
+        laporanReturn: laporanReturn ?? _laporanReturn,
+        summaryOrigin: summaryOrigin ?? _summaryOrigin,
+        summaryDestination: summaryDestination ?? _summaryDestination,
         cekOngkir: cekOngkir ?? _cekOngkir,
         semuaTransaksi: semuaTransaksi ?? _semuaTransaksi,
         hapusPesanan: hapusPesanan ?? _hapusPesanan,
@@ -393,15 +359,14 @@ class AllowedMenu {
         dashReferralTrans: dashReferralTrans ?? _dashReferralTrans,
         dashReferralDseller: dashReferralDseller ?? _dashReferralDseller,
         dashReferralSeller: dashReferralSeller ?? _dashReferralSeller,
-        groupOwner: groupOwner ?? _groupOwner,
-        laporanReturn: laporanReturn ?? _laporanReturn,
-        summaryOrigin: summaryOrigin ?? _summaryOrigin,
-        summaryDestination: summaryDestination ?? _summaryDestination,
+        accountJlc: accountJlc ?? _accountJlc,
+        accountCod: accountCod ?? _accountCod,
+        accountNoncod: accountNoncod ?? _accountNoncod,
         paketmuInput: paketmuInput ?? _paketmuInput,
         paketmuRiwayat: paketmuRiwayat ?? _paketmuRiwayat,
         paketmuLacak: paketmuLacak ?? _paketmuLacak,
-        paketmuMintaDijemput: paketmuMintaDijemput ?? _paketmuMintaDijemput,
-        paketmuSerahTerima: paketmuSerahTerima ?? _paketmuSerahTerima,
+        paketmuMintadijemput: paketmuMintadijemput ?? _paketmuMintadijemput,
+        paketmuSerahterima: paketmuSerahterima ?? _paketmuSerahterima,
         paketmuPrint: paketmuPrint ?? _paketmuPrint,
         keuanganJneMoney: keuanganJneMoney ?? _keuanganJneMoney,
         keuanganCod: keuanganCod ?? _keuanganCod,
@@ -429,6 +394,8 @@ class AllowedMenu {
 
   String? get buatPesanan => _buatPesanan;
 
+  String? get riwayatPesanan => _riwayatPesanan;
+
   String? get lacakPesanan => _lacakPesanan;
 
   String? get mintaDijemput => _mintaDijemput;
@@ -455,7 +422,11 @@ class AllowedMenu {
 
   String? get petugas => _petugas;
 
-  String? get riwayatPesanan => _riwayatPesanan;
+  String? get laporanReturn => _laporanReturn;
+
+  String? get summaryOrigin => _summaryOrigin;
+
+  String? get summaryDestination => _summaryDestination;
 
   String? get cekOngkir => _cekOngkir;
 
@@ -477,13 +448,11 @@ class AllowedMenu {
 
   String? get dashReferralSeller => _dashReferralSeller;
 
-  String? get groupOwner => _groupOwner;
+  String? get accountJlc => _accountJlc;
 
-  String? get laporanReturn => _laporanReturn;
+  String? get accountCod => _accountCod;
 
-  String? get summaryOrigin => _summaryOrigin;
-
-  String? get summaryDestination => _summaryDestination;
+  String? get accountNoncod => _accountNoncod;
 
   String? get paketmuInput => _paketmuInput;
 
@@ -491,9 +460,9 @@ class AllowedMenu {
 
   String? get paketmuLacak => _paketmuLacak;
 
-  String? get paketmuMintaDijemput => _paketmuMintaDijemput;
+  String? get paketmuMintadijemput => _paketmuMintadijemput;
 
-  String? get paketmuSerahTerima => _paketmuSerahTerima;
+  String? get paketmuSerahterima => _paketmuSerahterima;
 
   String? get paketmuPrint => _paketmuPrint;
 
@@ -531,55 +500,113 @@ class AllowedMenu {
     map['fasilitas'] = _fasilitas;
     map['katasandi'] = _katasandi;
     map['beranda'] = _beranda;
-    map['buat_pesanan'] = _buatPesanan;
-    map['lacak_pesanan'] = _lacakPesanan;
-    map['minta_dijemput'] = _mintaDijemput;
-    map['serah_terima'] = _serahTerima;
+    map['buatPesanan'] = _buatPesanan;
+    map['riwayatPesanan'] = _riwayatPesanan;
+    map['lacakPesanan'] = _lacakPesanan;
+    map['mintaDijemput'] = _mintaDijemput;
+    map['serahTerima'] = _serahTerima;
     map['saldo'] = _saldo;
-    map['uang_cod'] = _uangCod;
+    map['uangCod'] = _uangCod;
     map['tagihan'] = _tagihan;
     map['bonus'] = _bonus;
-    map['pantau_paketmu'] = _pantauPaketmu;
+    map['pantauPaketmu'] = _pantauPaketmu;
     map['laporan'] = _laporan;
     map['eclaim'] = _eclaim;
     map['tema'] = _tema;
     map['label'] = _label;
     map['petugas'] = _petugas;
-    map['riwayat_pesanan'] = _riwayatPesanan;
-    map['cek_ongkir'] = _cekOngkir;
-    map['semua_transaksi'] = _semuaTransaksi;
-    map['hapus_pesanan'] = _hapusPesanan;
-    map['semua_hapus'] = _semuaHapus;
-    map['cetak_pesanan'] = _cetakPesanan;
-    map['monitoring_agg'] = _monitoringAgg;
-    map['monitoring_agg_minus'] = _monitoringAggMinus;
-    map['dash_referral_trans'] = _dashReferralTrans;
-    map['dash_referral_dseller'] = _dashReferralDseller;
-    map['dash_referral_seller'] = _dashReferralSeller;
-    map['group_owner'] = _groupOwner;
-    map['laporan_return'] = _laporanReturn;
-    map['summary_origin'] = _summaryOrigin;
-    map['summary_destination'] = _summaryDestination;
-    map['paketmu_input'] = _paketmuInput;
-    map['paketmu_riwayat'] = _paketmuRiwayat;
-    map['paketmu_lacak'] = _paketmuLacak;
-    map['paketmu_minta_dijemput'] = _paketmuMintaDijemput;
-    map['paketmu_serah_terima'] = _paketmuSerahTerima;
-    map['paketmu_print'] = _paketmuPrint;
-    map['keuangan_jne_money'] = _keuanganJneMoney;
-    map['keuangan_cod'] = _keuanganCod;
-    map['keuangan_aggregasi'] = _keuanganAggregasi;
-    map['keuangan_aggregasi_minus'] = _keuanganAggregasiMinus;
-    map['keuangan_tagihan'] = _keuanganTagihan;
-    map['keuangan_bonus'] = _keuanganBonus;
-    map['hubungi_laporan'] = _hubungiLaporan;
-    map['hubungi_eclaim'] = _hubungiEclaim;
-    map['laporan_summary_origin'] = _laporanSummaryOrigin;
-    map['laporan_summary_destination'] = _laporanSummaryDestination;
-    map['dukungan_teknis'] = _dukunganTeknis;
-    map['pengaturan_tema'] = _pengaturanTema;
-    map['pengaturan_label'] = _pengaturanLabel;
-    map['pengaturan_petugas'] = _pengaturanPetugas;
+    map['laporanReturn'] = _laporanReturn;
+    map['summaryOrigin'] = _summaryOrigin;
+    map['summaryDestination'] = _summaryDestination;
+    map['cekOngkir'] = _cekOngkir;
+    map['semuaTransaksi'] = _semuaTransaksi;
+    map['hapusPesanan'] = _hapusPesanan;
+    map['semuaHapus'] = _semuaHapus;
+    map['cetakPesanan'] = _cetakPesanan;
+    map['monitoringAgg'] = _monitoringAgg;
+    map['monitoringAggMinus'] = _monitoringAggMinus;
+    map['dashReferralTrans'] = _dashReferralTrans;
+    map['dashReferralDseller'] = _dashReferralDseller;
+    map['dashReferralSeller'] = _dashReferralSeller;
+    map['accountJlc'] = _accountJlc;
+    map['accountCod'] = _accountCod;
+    map['accountNoncod'] = _accountNoncod;
+    map['paketmuInput'] = _paketmuInput;
+    map['paketmuRiwayat'] = _paketmuRiwayat;
+    map['paketmuLacak'] = _paketmuLacak;
+    map['paketmuMintadijemput'] = _paketmuMintadijemput;
+    map['paketmuSerahterima'] = _paketmuSerahterima;
+    map['paketmuPrint'] = _paketmuPrint;
+    map['keuanganJneMoney'] = _keuanganJneMoney;
+    map['keuanganCod'] = _keuanganCod;
+    map['keuanganAggregasi'] = _keuanganAggregasi;
+    map['keuanganAggregasiMinus'] = _keuanganAggregasiMinus;
+    map['keuanganTagihan'] = _keuanganTagihan;
+    map['keuanganBonus'] = _keuanganBonus;
+    map['hubungiLaporan'] = _hubungiLaporan;
+    map['hubungiEclaim'] = _hubungiEclaim;
+    map['laporanSummaryOrigin'] = _laporanSummaryOrigin;
+    map['laporanSummaryDestination'] = _laporanSummaryDestination;
+    map['dukunganTeknis'] = _dukunganTeknis;
+    map['pengaturanTema'] = _pengaturanTema;
+    map['pengaturanLabel'] = _pengaturanLabel;
+    map['pengaturanPetugas'] = _pengaturanPetugas;
+    return map;
+  }
+}
+
+class Token {
+  Token({
+    String? accessToken,
+    num? accessTokenExpiresAt,
+    String? refreshToken,
+    num? refreshTokenExpiresAt,
+  }) {
+    _accessToken = accessToken;
+    _accessTokenExpiresAt = accessTokenExpiresAt;
+    _refreshToken = refreshToken;
+    _refreshTokenExpiresAt = refreshTokenExpiresAt;
+  }
+
+  Token.fromJson(dynamic json) {
+    _accessToken = json['accessToken'];
+    _accessTokenExpiresAt = json['accessTokenExpiresAt'];
+    _refreshToken = json['refreshToken'];
+    _refreshTokenExpiresAt = json['refreshTokenExpiresAt'];
+  }
+
+  String? _accessToken;
+  num? _accessTokenExpiresAt;
+  String? _refreshToken;
+  num? _refreshTokenExpiresAt;
+
+  Token copyWith({
+    String? accessToken,
+    num? accessTokenExpiresAt,
+    String? refreshToken,
+    num? refreshTokenExpiresAt,
+  }) =>
+      Token(
+        accessToken: accessToken ?? _accessToken,
+        accessTokenExpiresAt: accessTokenExpiresAt ?? _accessTokenExpiresAt,
+        refreshToken: refreshToken ?? _refreshToken,
+        refreshTokenExpiresAt: refreshTokenExpiresAt ?? _refreshTokenExpiresAt,
+      );
+
+  String? get accessToken => _accessToken;
+
+  num? get accessTokenExpiresAt => _accessTokenExpiresAt;
+
+  String? get refreshToken => _refreshToken;
+
+  num? get refreshTokenExpiresAt => _refreshTokenExpiresAt;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['accessToken'] = _accessToken;
+    map['accessTokenExpiresAt'] = _accessTokenExpiresAt;
+    map['refreshToken'] = _refreshToken;
+    map['refreshTokenExpiresAt'] = _refreshTokenExpiresAt;
     return map;
   }
 }
