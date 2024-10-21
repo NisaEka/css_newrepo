@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/auth/get_agent_model.dart';
+import 'package:css_mobile/data/model/master/get_agent_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
@@ -46,8 +46,8 @@ class SignUpController extends BaseController {
     ];
     state.isLoadAgent = true;
     update();
-    await auth.getAgent(state.branchCode!).then((value) {
-      state.agenList.addAll(value.payload ?? []);
+    await master.getAgents(state.selectedOrigin?.branchCode ?? '').then((value) {
+      state.agenList.addAll(value.data ?? []);
       update();
     });
 
@@ -149,7 +149,7 @@ class SignUpController extends BaseController {
   Future<Origin> getOrigin(String keyword) async {
     var response = await master.getOrigins(keyword);
     var models = response.data?.toList();
-
+    print(models);
     return models?.first ?? Origin();
   }
 
@@ -180,7 +180,7 @@ class SignUpController extends BaseController {
     state.selectedReferal = null;
     state.selectedOrigin = null;
     state.isDefaultOrigin = false;
-    state.isSelectCounter = false;
+    // state.isSelectCounter = false;
     update();
   }
 }

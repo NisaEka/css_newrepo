@@ -109,11 +109,11 @@ class ForgotPasswordOTPController extends BaseController {
     update();
     try {
       await auth.postPasswordPinConfirm(InputPinconfirmModel(email: email, pin: otpPin.text)).then((value) {
-        if (value.code == 200) {
+        if (value.code == 201) {
           Get.to(
             const NewPasswordScreen(),
             arguments: {
-              'token': value.payload?.token ?? '',
+              'token': value.data?.token ?? '',
               'isChange': isChange,
             },
           );
@@ -145,9 +145,10 @@ class ForgotPasswordOTPController extends BaseController {
     isLoading = true;
     update();
     _startTimer(120);
+
     try {
       await auth.postEmailForgotPassword(email).then((value) {
-        if (value.code == 200) {
+        if (value.code == 201) {
           Get.showSnackbar(
             GetSnackBar(
               icon: const Icon(

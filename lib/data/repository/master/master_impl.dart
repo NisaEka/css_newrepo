@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/master/get_agent_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
@@ -49,6 +50,30 @@ class MasterRepositoryImpl extends MasterRepository {
             ? json
                 .map<GroupOwnerModel>(
                   (i) => GroupOwnerModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      return e.response?.data;
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<AgentModel>>> getAgents(String branch) async {
+    try {
+      Response response = await network.base.get(
+        '/master/agents',
+        queryParameters: {
+          'branch': branch.toUpperCase(),
+        },
+      );
+      return BaseResponse<List<AgentModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<AgentModel>(
+                  (i) => AgentModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),

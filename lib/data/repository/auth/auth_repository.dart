@@ -1,4 +1,4 @@
-import 'package:css_mobile/data/model/auth/get_agent_model.dart';
+import 'package:css_mobile/data/model/master/get_agent_model.dart';
 import 'package:css_mobile/data/model/auth/get_check_mail_model.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
@@ -17,15 +17,13 @@ abstract class AuthRepository {
 
   Future<BaseResponse> postRegistPinConfirm(InputPinconfirmModel data);
 
-  Future<PostTransactionModel> postRegistPinResend(InputPinconfirmModel data);
+  Future<BaseResponse> postRegistPinResend(InputPinconfirmModel data);
 
   Future<GetReferalModel> getReferal(String keyword);
 
-  Future<GetAgentModel> getAgent(String branchCode);
+  Future<BaseResponse> postEmailForgotPassword(String email);
 
-  Future<PostTransactionModel> postEmailForgotPassword(String email);
-
-  Future<GetLoginModel> postPasswordPinConfirm(InputPinconfirmModel data);
+  Future<BaseResponse> postPasswordPinConfirm(InputPinconfirmModel data);
 
   Future<PostTransactionModel> postPasswordChage(InputNewPasswordModel data);
 
@@ -33,7 +31,7 @@ abstract class AuthRepository {
 
   Future<BaseResponse> postFcmToken(Device data);
 
-  Future<GetLoginModel> postFcmTokenNonAuth(Device data);
+  Future<BaseResponse> postFcmTokenNonAuth(Device data);
 
   Future<BaseResponse> logout();
 

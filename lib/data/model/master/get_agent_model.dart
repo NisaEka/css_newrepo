@@ -1,57 +1,3 @@
-class GetAgentModel {
-  GetAgentModel({
-    num? code,
-    String? message,
-    List<AgentModel>? payload,
-  }) {
-    _code = code;
-    _message = message;
-    _payload = payload;
-  }
-
-  GetAgentModel.fromJson(dynamic json) {
-    _code = json['code'];
-    _message = json['message'];
-    if (json['payload'] != null) {
-      _payload = [];
-      json['payload'].forEach((v) {
-        _payload?.add(AgentModel.fromJson(v));
-      });
-    }
-  }
-
-  num? _code;
-  String? _message;
-  List<AgentModel>? _payload;
-
-  GetAgentModel copyWith({
-    num? code,
-    String? message,
-    List<AgentModel>? payload,
-  }) =>
-      GetAgentModel(
-        code: code ?? _code,
-        message: message ?? _message,
-        payload: payload ?? _payload,
-      );
-
-  num? get code => _code;
-
-  String? get message => _message;
-
-  List<AgentModel>? get payload => _payload;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
 class AgentModel {
   AgentModel({
     bool? status,
@@ -84,16 +30,16 @@ class AgentModel {
   AgentModel.fromJson(dynamic json) {
     _status = json['status'];
     _branch = json['branch'];
-    _custNo = json['cust_no'];
-    _custName = json['cust_name'];
-    _custAddr1 = json['cust_addr1'];
-    _custAddr2 = json['cust_addr2'];
-    _custAddr3 = json['cust_addr3'];
-    _custCity = json['cust_city'];
-    _custZip = json['cust_zip'];
-    _custCountry = json['cust_country'];
-    _custPhone = json['cust_phone'];
-    _custTaxName = json['cust_tax_name'];
+    _custNo = json['custNo'];
+    _custName = json['custName'];
+    _custAddr1 = json['custAddr1'];
+    _custAddr2 = json['custAddr2'];
+    _custAddr3 = json['custAddr3'];
+    _custCity = json['custCity'];
+    _custZip = json['custZip'];
+    _custCountry = json['custCountry'];
+    _custPhone = json['custPhone'];
+    _custTaxName = json['custTaxName'];
   }
 
   bool? _status;
@@ -166,16 +112,16 @@ class AgentModel {
     final map = <String, dynamic>{};
     map['status'] = _status;
     map['branch'] = _branch;
-    map['cust_no'] = _custNo;
-    map['cust_name'] = _custName;
-    map['cust_addr1'] = _custAddr1;
-    map['cust_addr2'] = _custAddr2;
-    map['cust_addr3'] = _custAddr3;
-    map['cust_city'] = _custCity;
-    map['cust_zip'] = _custZip;
-    map['cust_country'] = _custCountry;
-    map['cust_phone'] = _custPhone;
-    map['cust_tax_name'] = _custTaxName;
+    map['custNo'] = _custNo;
+    map['custName'] = _custName;
+    map['custAddr1'] = _custAddr1;
+    map['custAddr2'] = _custAddr2;
+    map['custAddr3'] = _custAddr3;
+    map['custCity'] = _custCity;
+    map['custZip'] = _custZip;
+    map['custCountry'] = _custCountry;
+    map['custPhone'] = _custPhone;
+    map['custTaxName'] = _custTaxName;
     return map;
   }
 }

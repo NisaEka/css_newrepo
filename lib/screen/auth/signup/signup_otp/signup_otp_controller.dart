@@ -1,70 +1,20 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_state.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinput/pinput.dart';
 
 class SignUpOTPController extends BaseController {
-  String email = Get.arguments['email'];
-  bool? isActivation = Get.arguments['isActivation'];
-  String mail = '';
-  bool isLoading = false;
-
-  final formKey = GlobalKey<FormState>();
-  final otpPin = TextEditingController();
-  final focusNode = FocusNode();
-  final defaultPinTheme = PinTheme(
-    width: 56,
-    height: 56,
-    textStyle: titleTextStyle.copyWith(color: redJNE),
-    decoration: const BoxDecoration(
-      border: Border(
-        bottom: BorderSide(width: 1.5, color: greyColor),
-      ),
-    ),
-  );
-
-  final cursor = Column(
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: [
-      Container(
-        width: 56,
-        height: 3,
-        decoration: BoxDecoration(
-          color: blueJNE,
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-    ],
-  );
-
-  final preFilledWidget = Column(
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: [
-      Container(
-        width: 56,
-        height: 3,
-        decoration: BoxDecoration(
-          // color: blueJNE,
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-    ],
-  );
-
-  Timer? _timer;
-  int remainingSeconds = -1;
-  final time = '01.00'.obs;
+  final state = SignupOtpState();
 
   @override
   void onReady() {
     _startTimer(120);
-    if (isActivation == true) {
+    if (state.isActivation == true) {
       resendPin();
     }
     super.onReady();
@@ -72,22 +22,22 @@ class SignUpOTPController extends BaseController {
 
   @override
   void onClose() {
-    if (_timer != null) {
-      _timer!.cancel();
+    if (state.timer != null) {
+      state.timer!.cancel();
     }
     super.onClose();
   }
 
   String getMail() {
-    var nameuser = email.split("@");
-    var emailcaracter = email.replaceRange(2, nameuser[0].length, "*" * (nameuser[0].length - 2));
+    var nameuser = state.email.split("@");
+    var emailcaracter = state.email.replaceRange(2, nameuser[0].length, "*" * (nameuser[0].length - 2));
     return emailcaracter;
   }
 
   Future<void> pinConfirmation() async {
-    isLoading = true;
+    state.isLoading = true;
     try {
-      await auth.postRegistPinConfirm(InputPinconfirmModel(email: email, pin: otpPin.text)).then((value) {
+      await auth.postRegistPinConfirm(InputPinconfirmModel(email: state.email, pin: state.otpPin.text)).then((value) {
         if (value.code == 200) {
           Get.to(SuccessScreen(
             message: "Selamat, kamu sudah berhasil mendaftar".tr,
@@ -113,16 +63,16 @@ class SignUpOTPController extends BaseController {
       e.printError();
     }
 
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
   Future<void> resendPin() async {
-    isLoading = true;
-    otpPin.clear();
+    state.isLoading = true;
+    state.otpPin.clear();
     _startTimer(120);
     try {
-      await auth.postRegistPinResend(InputPinconfirmModel(email: email)).then((value) {
+      await auth.postRegistPinResend(InputPinconfirmModel(email: state.email)).then((value) {
         if (value.code == 200) {
           Get.showSnackbar(
             GetSnackBar(
@@ -142,22 +92,22 @@ class SignUpOTPController extends BaseController {
       e.printError();
     }
 
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
   _startTimer(int seconds) {
     const duration = Duration(seconds: 1);
-    remainingSeconds = seconds;
+    state.remainingSeconds = seconds;
     update();
-    _timer = Timer.periodic(duration, (Timer timer) {
-      if (remainingSeconds == 0) {
+    state.timer = Timer.periodic(duration, (Timer timer) {
+      if (state.remainingSeconds == 0) {
         timer.cancel();
       } else {
-        int minutes = remainingSeconds ~/ 60;
-        int seconds = (remainingSeconds % 60);
-        time.value = "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2, "0")}";
-        remainingSeconds--;
+        int minutes = state.remainingSeconds ~/ 60;
+        int seconds = (state.remainingSeconds % 60);
+        state.time.value = "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2, "0")}";
+        state.remainingSeconds--;
         update();
       }
     });

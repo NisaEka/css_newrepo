@@ -14,14 +14,16 @@ class ReferalDropdown extends HookWidget {
   final GroupOwnerModel? value;
   final String? selectedItem;
   final void Function(dynamic) onChanged;
+  final VoidCallback? onClear;
 
   const ReferalDropdown({
     super.key,
     this.label,
-    this.isRequired = true,
+    this.isRequired = false,
     this.readonly = false,
     this.value,
     required this.onChanged,
+    this.onClear,
     this.selectedItem,
     this.placeholder,
   });
@@ -46,8 +48,9 @@ class ReferalDropdown extends HookWidget {
           ),
         );
       },
+      showClearButton: true,
       itemAsString: (e) => e.groupownerName.toString(),
-      onChanged:  onChanged,
+      onChanged: onChanged,
       value: value,
       selectedItem: selectedItem,
       hintText: label ?? "Group Owner".tr,
@@ -56,6 +59,7 @@ class ReferalDropdown extends HookWidget {
       textStyle: Theme.of(context).textTheme.titleSmall,
       readOnly: readonly,
       isRequired: isRequired,
+      onClear: onClear,
     );
   }
 }

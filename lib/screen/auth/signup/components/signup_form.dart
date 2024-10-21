@@ -9,13 +9,10 @@ import 'package:get/get.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
-import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 
 class SignupForm extends StatelessWidget {
@@ -61,11 +58,14 @@ class SignupForm extends StatelessWidget {
                         ReferalDropdown(
                           label: "Kode Referal".tr,
                           onChanged: (value) => c.onSelectReferal(value),
+                          onClear: () => c.unSelectReferal(),
+                          value: c.state.selectedReferal,
                         ),
                         OriginDropdown(
                           onChanged: (value) => c.selectOrigin(value),
                           readonly: c.state.isDefaultOrigin,
                           value: c.state.selectedOrigin,
+                          selectedItem: c.state.kotaPengirim.text,
                         ),
                         c.state.isSelectCounter
                             ? Row(
