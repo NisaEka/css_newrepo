@@ -3,12 +3,13 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
-import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
+import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
+import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class InformasiPenerimaController extends BaseController {
   List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
   List<Destination> destinationList = [];
 
-  GetDestinationModel? destinationModel;
+  // GetDestinationModel? destinationModel;
   Destination? selectedDestination;
   ReceiverModel? receiver;
 
@@ -104,7 +105,7 @@ class InformasiPenerimaController extends BaseController {
       countryName: receiver?.country,
       districtName: receiver?.receiverDistrict,
       provinceName: receiver?.region,
-      subDistrictName: receiver?.receiverSubDistrict,
+      subdistrictName: receiver?.receiverSubDistrict,
       zipCode: receiver?.zipCode,
     );
 
@@ -122,9 +123,10 @@ class InformasiPenerimaController extends BaseController {
   Future<List<Destination>> getDestinationList(String keyword) async {
     isLoading = true;
     destinationList = [];
+    BaseResponse<List<Destination>>? response;
     try {
-      var response = await transaction.getDestination(keyword);
-      destinationModel = response;
+      response = await master.getDestinations(keyword);
+      // destinationModel = response;
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -132,7 +134,7 @@ class InformasiPenerimaController extends BaseController {
 
     isLoading = false;
     update();
-    return destinationModel?.payload?.toList() ?? [];
+    return response?.data?.toList() ?? [];
   }
 
   void nextStep() {
@@ -160,7 +162,7 @@ class InformasiPenerimaController extends BaseController {
           country: selectedDestination?.countryName,
           contact: namaPenerima.text.toUpperCase(),
           district: selectedDestination?.districtName,
-          subDistrict: selectedDestination?.subDistrictName,
+          subDistrict: selectedDestination?.subdistrictName,
         ),
         "destination": selectedDestination,
       },
@@ -185,7 +187,7 @@ class InformasiPenerimaController extends BaseController {
             destinationDescription: selectedDestination?.cityName ?? '-',
             idDestination: selectedDestination?.id.toString() ?? '-',
             receiverDistrict: selectedDestination?.districtName ?? '-',
-            receiverSubDistrict: selectedDestination?.subDistrictName ?? '-',
+            receiverSubDistrict: selectedDestination?.subdistrictName ?? '-',
           ))
           .then(
             (value) => value == 201

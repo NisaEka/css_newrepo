@@ -5,13 +5,12 @@ import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
+import 'package:css_mobile/data/model/auth/pin_confirm_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -77,21 +76,16 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<BaseResponse> postRegister(InputRegisterModel data) async {
-    print("data : ${data.toJson()}");
-
     try {
       Response response = await network.base.post(
         '/authentications/signup',
         data: data,
       );
-      print('signup response : ${response.data}');
       return BaseResponse.fromJson(
         response.data,
         (json) => null,
       );
     } on DioException catch (e) {
-      print('signup response : ${e.response?.data}');
-
       return BaseResponse<List<String>>.fromJson(
         e.response?.data,
         (json) => json is List<String>
@@ -145,28 +139,28 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<PostTransactionModel> postPasswordChage(InputNewPasswordModel data) async {
+  Future<BaseResponse> postPasswordChage(InputNewPasswordModel data) async {
     try {
-      Response response = await network.dio.post(
-        '/auth/password/change',
-        data: data,
-      );
-      return PostTransactionModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<BaseResponse> postPasswordPinConfirm(InputPinconfirmModel data) async {
-    try {
-      Response response = await network.base.post(
-        '/authentications/forgot-password/confirm',
+      Response response = await network.base.patch(
+        '/authentications/reset-password',
         data: data,
       );
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
       return BaseResponse.fromJson(e.response?.data, (json) => null);
+    }
+  }
+
+  @override
+  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(InputPinconfirmModel data) async {
+    try {
+      Response response = await network.base.post(
+        '/authentications/forgot-password/confirm',
+        data: data,
+      );
+      return BaseResponse.fromJson(response.data, (json) => PinConfirmModel.fromJson(json as Map<String, dynamic>));
+    } on DioException catch (e) {
+      return BaseResponse.fromJson(e.response?.data, (json) => PinConfirmModel());
     }
   }
 
@@ -216,22 +210,19 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<BaseResponse> logout() async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    var fcmToken = await StorageCore().readString(StorageCore.fcmToken);
+    // var fcmToken = await StorageCore().readString(StorageCore.fcmToken);
 
-    var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
+    // var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
     // String id = deviceInfo?.deviceId ?? '';
 
     try {
-      Response logout = await network.base
-          .post(
-            'authentications/logout',
-          )
-          .then((value) async => await network.base.patch(
-                '/auth/device-infos/update',
-                data: deviceInfo,
-              ));
+      Response response = await network.base.post('/authentications/logout', data: {});
+      // .then((value) async => await network.base.patch(
+      //       '/auth/device-infos/update',
+      //       data: deviceInfo,
+      //     ));
       return BaseResponse.fromJson(
-        logout.data,
+        response.data,
         (json) => null,
       );
     } on DioException catch (e) {
@@ -287,6 +278,34 @@ class AuthRepositoryImpl extends AuthRepository {
       return GetLoginModel.fromJson(response.data);
     } on DioException catch (e) {
       return GetLoginModel.fromJson(e.response?.data);
+    }
+  }
+
+  @override
+  Future<BaseResponse<PostLoginModel>> postRefreshToken() async {
+    var token = await storageSecure.read(key: StorageCore.refreshToken);
+    // network.dio.options.headers['Authorization'] = 'Bearer $token';
+
+    try {
+      Response response = await network.base.post(
+        '/authentications/refresh',
+        data: {
+          "refreshToken": token,
+        },
+      );
+      return BaseResponse<PostLoginModel>.fromJson(
+        response.data,
+        (json) => PostLoginModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
+    } on DioException catch (e) {
+      return BaseResponse<PostLoginModel>.fromJson(
+        e.response?.data,
+        (json) => PostLoginModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
     }
   }
 }

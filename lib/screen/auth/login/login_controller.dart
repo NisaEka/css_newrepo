@@ -2,9 +2,11 @@ import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
+import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/input_email_screen.dart';
+import 'package:css_mobile/screen/auth/login/login_state.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
@@ -17,27 +19,13 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class LoginController extends BaseController {
-  final formKey = GlobalKey<FormState>();
-  final emailTextField = TextEditingController();
-  final passwordTextField = TextEditingController();
-  FocusNode? emailFocus = FocusNode();
-  FocusNode? passFocus = FocusNode();
-  final emailFieldKey = GlobalKey<FormFieldState>();
-  final passFieldKey = GlobalKey<FormFieldState>();
-
-  bool isObscurePasswordLogin = true;
-  bool isLoading = false;
-  bool pop = false;
-  String? lang;
-  String? fcmToken;
-
-  DateTime? currentBackPressTime;
+  final state = LoginState();
 
   // @override
   // void onClose() {
   //   super.onClose();
-  //   emailTextField.dispose();
-  //   passwordTextField.dispose();
+  //   state.emailTextField.dispose();
+  //   state.passwordTextField.dispose();
   //   emailFocus?.dispose();
   //   passFocus?.dispose();
   // }
@@ -46,21 +34,21 @@ class LoginController extends BaseController {
   void onInit() async {
     super.onInit();
     initData();
-    emailTextField.text;
-    passwordTextField.text;
+    state.emailTextField.text;
+    state.passwordTextField.text;
   }
 
   Future<void> initData() async {
-    lang = await storage.readString(StorageCore.localeApp);
-    fcmToken = await storage.readString(StorageCore.fcmToken);
+    state.lang = await storage.readString(StorageCore.localeApp);
+    state.fcmToken = await storage.readString(StorageCore.fcmToken);
     update();
-    ValidationBuilder.setLocale(lang!);
+    ValidationBuilder.setLocale(state.lang!);
   }
 
   bool onPop() {
     DateTime now = DateTime.now();
-    if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
-      currentBackPressTime = now;
+    if (state.currentBackPressTime == null || now.difference(state.currentBackPressTime!) > const Duration(seconds: 2)) {
+      state.currentBackPressTime = now;
       Get.showSnackbar(
         GetSnackBar(
           icon: const Icon(
@@ -75,11 +63,11 @@ class LoginController extends BaseController {
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
         ),
       );
-      pop = false;
+      state.pop = false;
       update();
       return false;
     }
-    pop = true;
+    state.pop = true;
     update();
     Get.off(const DashboardScreen());
     return true;
@@ -90,15 +78,15 @@ class LoginController extends BaseController {
   );
 
   Future<void> doLogin(BuildContext context) async {
-    isLoading = true;
+    state.isLoading = true;
     update();
     try {
       await auth
           .postLogin(
         InputLoginModel(
-          email: emailTextField.text,
-          password: passwordTextField.text,
-          device: await getDeviceinfo(fcmToken ?? ''),
+          email: state.emailTextField.text,
+          password: state.passwordTextField.text,
+          device: await getDeviceinfo(state.fcmToken ?? ''),
           coordinate: await getCurrentLocation(),
         ),
       )
@@ -110,15 +98,15 @@ class LoginController extends BaseController {
                 value.data?.menu ?? MenuModel(),
                 value.data?.token?.refreshToken ?? '',
               )
-              .then((_) async => auth
-                  .postFcmToken(
-                    await getDeviceinfo(fcmToken ?? '') ?? Device(),
-                  )
-                  .then((value) async => value.code == 201
-                      ? await auth.updateDeviceInfo(
-                          await getDeviceinfo(fcmToken ?? '') ?? Device(),
-                        )
-                      : null))
+              // .then((_) async => auth
+              //     .postFcmToken(
+              //       await getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+              //     )
+              //     .then((value) async => value.code == 201
+              //         ? await auth.updateDeviceInfo(
+              //             await getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+              //           )
+              //         : null))
               .then((_) => Get.delete<DashboardController>())
               .then((_) => Get.offAll(const DashboardScreen()));
         } else if (value.code == 403) {
@@ -127,7 +115,7 @@ class LoginController extends BaseController {
             builder: (context) => InfoDialog(
               infoText: "Silahkan aktivasi akun terlebih dahulu".tr,
               nextButton: () => Get.off(const SignUpOTPScreen(), arguments: {
-                'email': emailTextField.text,
+                'email': state.emailTextField.text,
                 'isActivation': true,
               }),
             ),
@@ -145,6 +133,31 @@ class LoginController extends BaseController {
               backgroundColor: Colors.red,
             ),
           );
+        } else if (value.message == "Email not verified") {
+          try {
+            await auth.postRegistPinResend(InputPinconfirmModel(email: state.emailTextField.text)).then((value) {
+              if (value.code == 201) {
+                Get.showSnackbar(
+                  GetSnackBar(
+                    icon: const Icon(
+                      Icons.info,
+                      color: whiteColor,
+                    ),
+                    message: 'Silahkan cek email anda'.tr,
+                    isDismissible: true,
+                    duration: const Duration(seconds: 3),
+                    backgroundColor: successColor,
+                  ),
+                );
+                Get.to(const SignUpOTPScreen(), arguments: {
+                  'email': state.emailTextField.text,
+                  'isActivation': true,
+                });
+              }
+            });
+          } catch (e) {
+            e.printError();
+          }
         } else {
           Get.showSnackbar(
             GetSnackBar(
@@ -175,7 +188,7 @@ class LoginController extends BaseController {
         ),
       );
     }
-    isLoading = false;
+    state.isLoading = false;
     update();
     // Get.offAll(DashboardScreen());
   }
@@ -206,7 +219,7 @@ class LoginController extends BaseController {
   }
 
   Future cekToken() async {
-    isLoading = true;
+    state.isLoading = true;
     update();
     String? token = await storage.readToken();
     debugPrint("token : $token");
@@ -216,7 +229,7 @@ class LoginController extends BaseController {
       // AllowedMenu menu = AllowedMenu.fromJson(jsonDecode(all));
       // print(menu.beranda);
     }
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
@@ -247,8 +260,8 @@ class LoginController extends BaseController {
   }
 
   showPassword() {
-    isObscurePasswordLogin ? isObscurePasswordLogin = false : isObscurePasswordLogin = true;
-    isObscurePasswordLogin != false
+    state.isObscurePasswordLogin ? state.isObscurePasswordLogin = false : state.isObscurePasswordLogin = true;
+    state.isObscurePasswordLogin != false
         ? showIcon = const Icon(
             Icons.visibility,
           )
@@ -260,8 +273,8 @@ class LoginController extends BaseController {
 
   forgotPassword() {
     // Get.delete<LoginController>();
-    emailTextField.clear();
-    passwordTextField.clear();
+    state.emailTextField.clear();
+    state.passwordTextField.clear();
     Get.to(
       const InputEmailScreen(),
       arguments: {'isChange': false},
@@ -269,10 +282,10 @@ class LoginController extends BaseController {
   }
 
   register() {
-    emailTextField.clear();
-    passwordTextField.clear();
+    state.emailTextField.clear();
+    state.passwordTextField.clear();
     Get.to(const SignUpScreen())?.then(
-      (_) => formKey.currentState?.reset(),
+      (_) => state.formKey.currentState?.reset(),
     );
   }
 }

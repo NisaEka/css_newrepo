@@ -65,7 +65,7 @@ class PetugasModel {
     AllowedMenu? menu,
     List<Account>? accounts,
     List<Origin>? origins,
-    List<BranchModel>? branches,
+    List<Branch>? branches,
   }) {
     _id = id;
     _name = name;
@@ -108,7 +108,7 @@ class PetugasModel {
     if (json['branches'] != null) {
       _branches = [];
       json['branches'].forEach((v) {
-        _branches?.add(BranchModel.fromJson(v));
+        _branches?.add(Branch.fromJson(v));
       });
     }
   }
@@ -125,7 +125,7 @@ class PetugasModel {
   AllowedMenu? _menu;
   List<Account>? _accounts;
   List<Origin>? _origins;
-  List<BranchModel>? _branches;
+  List<Branch>? _branches;
 
   PetugasModel copyWith({
     String? id,
@@ -139,7 +139,7 @@ class PetugasModel {
     AllowedMenu? menu,
     List<Account>? accounts,
     List<Origin>? origins,
-    List<BranchModel>? branches,
+    List<Branch>? branches,
   }) =>
       PetugasModel(
         id: id ?? _id,
@@ -178,7 +178,7 @@ class PetugasModel {
 
   List<Origin>? get origins => _origins;
 
-  List<BranchModel>? get branches => _branches;
+  List<Branch>? get branches => _branches;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

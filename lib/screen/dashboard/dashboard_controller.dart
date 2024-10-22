@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
-import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
@@ -21,6 +21,7 @@ class DashboardController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    isFirst();
     Future.wait([
       saveFCMToken(),
       loadBanner(),
@@ -33,6 +34,13 @@ class DashboardController extends BaseController {
     String? token = await storage.readToken();
     debugPrint("token : $token");
     state.isLogin = token != null;
+    await auth.postRefreshToken().then((value) async {
+      storage.saveToken(
+        value.data?.token?.accessToken ?? '',
+        value.data?.menu ?? MenuModel(),
+        value.data?.token?.refreshToken ?? '',
+      );
+    });
     update();
 
     return state.isLogin;
@@ -133,18 +141,21 @@ class DashboardController extends BaseController {
     bool label = (await storage.readString(StorageCore.transactionLabel)).isEmpty;
 
     if (label) {
-      await setting.getSettingLabel().then(
-        (value) async {
-          await storage.writeString(
-            StorageCore.transactionLabel,
-            value.payload?.where((e) => e.enable ?? false).first.name,
-          );
-          await storage.writeString(
-            StorageCore.shippingCost,
-            value.payload?.first.showPrice ?? false ? "PUBLISH" : "HIDE",
-          );
-        },
-      );
+      // await setting.getSettingLabel().then(
+      //       (value) async {
+      //     await storage.writeString(
+      //       StorageCore.transactionLabel,
+      //       value.payload
+      //           ?.where((e) => e.enable ?? false)
+      //           .first
+      //           .name,
+      //     );
+      //     await storage.writeString(
+      //       StorageCore.shippingCost,
+      //       value.payload?.first.showPrice ?? false ? "PUBLISH" : "HIDE",
+      //     );
+      //   },
+      // );
     }
 
     update();
@@ -206,8 +217,6 @@ class DashboardController extends BaseController {
 
   Future<void> saveFCMToken() async {
     try {
-      // String? token = await FirebaseMessaging.instance.getToken();
-
       state.fcmToken = await storage.readString(StorageCore.fcmToken);
       // print('fcm token : ${state.fcmToken}');
       // print('fcm token : ${token}');
@@ -247,6 +256,16 @@ class DashboardController extends BaseController {
     update();
   }
 
+  Future<void> isFirst() async {
+    state.isFirst = (await storage.readString(StorageCore.isFirst)).isEmpty ||
+        (await storage.readString(StorageCore.isFirst)) == 'null' ||
+        (await storage.readString(StorageCore.isFirst)) == 'false';
+
+    if (state.isFirst) {
+      StorageCore().writeString(StorageCore.isFirst, "true");
+    }
+  }
+
   Future<void> initData() async {
     connection.isOnline().then((value) => state.isOnline = value);
     cekFavoritMenu();
@@ -255,7 +274,7 @@ class DashboardController extends BaseController {
     cekToken();
     state.isLoading = true;
 
-    loadTransCountList();
+    // loadTransCountList();
 
     bool accounts =
         ((await storage.readString(StorageCore.accounts)).isEmpty || (await storage.readString(StorageCore.accounts)) == 'null') && state.isLogin;
@@ -275,46 +294,45 @@ class DashboardController extends BaseController {
     update();
 
     try {
-      if (sender) {
-        await transaction.getSender().then((value) async => await storage.saveData(
-              StorageCore.shipper,
-              value.payload,
-            ));
-      }
-
       if (accounts) {
-        await transaction.getAccountNumber().then((value) async => await storage.saveData(
-              StorageCore.accounts,
-              value,
-            ));
+        // await transaction.getAccountNumber().then((value) async => await storage.saveData(
+        //       StorageCore.accounts,
+        //       value,
+        //     ));
       }
 
       if (dropshipper) {
-        await transaction.getDropshipper().then((value) async => await storage.saveData(
+        await master.getDropshippers().then((value) async => await storage.saveData(
               StorageCore.dropshipper,
               value,
             ));
       }
 
       if (receiver) {
-        await transaction.getReceiver().then((value) async => await storage.saveData(
+        await master.getReceivers().then((value) async => await storage.saveData(
               StorageCore.receiver,
               value,
             ));
       }
 
-      if (basic) {
-        await profil.getBasicProfil().then((value) async => await storage.saveData(
-              StorageCore.userProfil,
-              value.payload,
-            ));
+      if (basic || sender) {
+        await profil.getBasicProfil().then((value) async {
+          await storage.saveData(
+            StorageCore.userProfil,
+            value.data?.user,
+          );
+          await storage.saveData(
+            StorageCore.shipper,
+            value.data?.user,
+          );
+        });
       }
 
       if (ccrfP) {
-        await profil.getCcrfProfil().then((value) async {
-          state.ccrf = value.payload;
-          await storage.saveData(StorageCore.ccrfProfil, value.payload);
-        });
+        // await profil.getCcrfProfil().then((value) async {
+        //   state.ccrf = value.payload;
+        //   await storage.saveData(StorageCore.ccrfProfil, value.payload);
+        // });
       } else {
         state.ccrf = CcrfProfilModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
       }
@@ -322,20 +340,20 @@ class DashboardController extends BaseController {
       state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y");
 
       storage.saveData(StorageCore.ccrfProfil, state.ccrf);
-      await jlc.postTotalPoint().then((value) {
-        if (value.status == true) {
-          state.jlcPoint = value.data?.first.sisaPoint.toString();
-          update();
-        } else {
-          state.jlcPoint = '0';
-        }
-      }).catchError((value) {
-        debugPrint("jlc error $value");
-      });
+      // await jlc.postTotalPoint().then((value) {
+      //   if (value.status == true) {
+      //     state.jlcPoint = value.data?.first.sisaPoint.toString();
+      //     update();
+      //   } else {
+      //     state.jlcPoint = '0';
+      //   }
+      // }).catchError((value) {
+      //   debugPrint("jlc error $value");
+      // });
       update();
-      var shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+      var shipper = UserModel.fromJson(await storage.readData(StorageCore.shipper));
       state.userName = shipper.name ?? '';
-      state.allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+      state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
       update();
     } catch (e, i) {
       e.printError();

@@ -1,7 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
@@ -55,11 +56,19 @@ class ListPenerimaController extends BaseController {
     isLoading = true;
     receiverList = [];
     try {
-      await transaction.getReceiver().then((value) => receiverList.addAll(value.payload ?? []));
+      await master.getReceivers().then((value) => receiverList.addAll(value.data ?? []));
     } catch (e) {
       e.printError();
-      var receiver = GetReceiverModel.fromJson(await storage.readData(StorageCore.receiver));
-      receiverList.addAll(receiver.payload ?? []);
+      var receiver = BaseResponse<List<ReceiverModel>>.fromJson(
+          await storage.readData(StorageCore.receiver),
+          (json) => json is List<dynamic>
+              ? json
+                  .map<ReceiverModel>(
+                    (i) => ReceiverModel.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+              : List.empty());
+      receiverList.addAll(receiver.data ?? []);
     }
     isLoading = false;
     update();

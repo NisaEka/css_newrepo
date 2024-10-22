@@ -38,7 +38,7 @@ class SignUpOTPController extends BaseController {
     state.isLoading = true;
     try {
       await auth.postRegistPinConfirm(InputPinconfirmModel(email: state.email, pin: state.otpPin.text)).then((value) {
-        if (value.code == 200) {
+        if (value.code == 201) {
           Get.to(SuccessScreen(
             message: "Selamat, kamu sudah berhasil mendaftar".tr,
             buttonTitle: "Masuk".tr,
@@ -73,7 +73,7 @@ class SignUpOTPController extends BaseController {
     _startTimer(120);
     try {
       await auth.postRegistPinResend(InputPinconfirmModel(email: state.email)).then((value) {
-        if (value.code == 200) {
+        if (value.code == 201) {
           Get.showSnackbar(
             GetSnackBar(
               icon: const Icon(
@@ -86,10 +86,24 @@ class SignUpOTPController extends BaseController {
               backgroundColor: successColor,
             ),
           );
+        } else {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.info,
+                color: whiteColor,
+              ),
+              message: value.message,
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: errorColor,
+            ),
+          );
         }
       });
-    } catch (e) {
+    } catch (e, i) {
       e.printError();
+      i.printError();
     }
 
     state.isLoading = false;

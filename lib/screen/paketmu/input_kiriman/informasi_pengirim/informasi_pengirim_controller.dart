@@ -3,11 +3,13 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/master/get_region_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
-import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
+import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
+import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_screen.dart';
 import 'package:flutter/material.dart';
@@ -40,9 +42,9 @@ class InformasiPengirimController extends BaseController {
   List<Origin> originList = [];
 
   Account? selectedAccount;
-  GetOriginModel? originModel;
+  // GetOriginModel? originModel;
   Origin? selectedOrigin;
-  ShipperModel? shipper;
+  UserModel? shipper;
   DropshipperModel? dropshipper;
   String? locale;
 
@@ -126,13 +128,13 @@ class InformasiPengirimController extends BaseController {
     try {
       await transaction.getAccountNumber().then((value) => accountList.addAll(value.payload ?? []));
       update();
-      await transaction.getSender().then((value) {
-        shipper = value.payload;
-        namaPengirim.text = value.payload?.name ?? '';
-        nomorTelpon.text = value.payload?.phone ?? '';
-        kotaPengirim.text = value.payload?.origin?.originName ?? '';
-        kodePos.text = value.payload?.zipCode ?? '';
-        alamatLengkap.text = value.payload?.address ?? '';
+      await profil.getBasicProfil().then((value) {
+        shipper = value.data?.user;
+        namaPengirim.text = value.data?.user?.name ?? '';
+        nomorTelpon.text = value.data?.user?.phone ?? '';
+        kotaPengirim.text = value.data?.user?.origin?.originName ?? '';
+        kodePos.text = value.data?.user?.zipCode ?? '';
+        alamatLengkap.text = value.data?.user?.address ?? '';
         selectedOrigin = Origin(
             originCode: shipper?.origin?.originCode,
             branchCode: shipper?.origin?.branchCode,
@@ -145,7 +147,7 @@ class InformasiPengirimController extends BaseController {
       var accounts = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
       accountList.addAll(accounts.payload ?? []);
       // accountList.addAll(GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts)) );
-      shipper = ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+      shipper = UserModel.fromJson(await storage.readData(StorageCore.shipper));
       namaPengirim.text = shipper?.name ?? '';
       nomorTelpon.text = shipper?.phone ?? '';
       kotaPengirim.text = shipper?.origin?.originName ?? '';
@@ -181,7 +183,7 @@ class InformasiPengirimController extends BaseController {
             origin: selectedOrigin?.branchCode,
           );
         } else {
-          shipper = ShipperModel(
+          shipper = UserModel(
             origin: value.first,
             name: data?.shipper?.name,
             address: data?.shipper?.address,
@@ -218,45 +220,44 @@ class InformasiPengirimController extends BaseController {
     originList = [];
     isLoadOrigin = true;
     try {
-      var response = await transaction.getOrigin(keyword, accountID);
-      originModel = response;
+      // var response = await transaction.getOrigin(keyword, accountID);
+      // originModel = response;
     } catch (e) {
       e.printError();
     }
 
     isLoadOrigin = false;
     update();
-    return originModel?.payload?.toList() ?? [];
+    // return originModel?.payload?.toList() ?? [];
+    return [];
   }
 
   void nextStep() {
-    Get.to(
-      const InformasiPenerimaScreen(),
-      arguments: {
-        "cod_ongkir": codOgkir,
-        "account": selectedAccount,
-        "origin": selectedOrigin ?? shipper?.origin,
-        "dropship": isDropshipper,
-        "dropshipper": dropshipper,
-        "shipper": Shipper(
-          name: namaPengirim.text.toUpperCase(),
-          address: alamatLengkap.text.toUpperCase(),
-          address1: alamatLengkap.text.length <= 30 ? alamatLengkap.text.substring(0, alamatLengkap.text.length) : '',
-          address2: alamatLengkap.text.length >= 31 ? alamatLengkap.text.substring(31, alamatLengkap.text.length) : '',
-          address3: alamatLengkap.text.length >= 60 ? alamatLengkap.text.substring(60, alamatLengkap.text.length) : '',
-          city: kotaPengirim.text.toUpperCase(),
-          zip: kodePos.text,
-          region: isDropshipper ? selectedOrigin?.region?.name : shipper?.region?.name,
-          //province
-          country: "ID",
-          contact: namaPengirim.text.toUpperCase(),
-          phone: nomorTelpon.text,
-          dropship: isDropshipper,
-        ),
-        "data": data,
-      },
-      transition: Transition.rightToLeft
-    );
+    Get.to(const InformasiPenerimaScreen(),
+        arguments: {
+          "cod_ongkir": codOgkir,
+          "account": selectedAccount,
+          "origin": selectedOrigin ?? shipper?.origin,
+          "dropship": isDropshipper,
+          "dropshipper": dropshipper,
+          "shipper": Shipper(
+            name: namaPengirim.text.toUpperCase(),
+            address: alamatLengkap.text.toUpperCase(),
+            address1: alamatLengkap.text.length <= 30 ? alamatLengkap.text.substring(0, alamatLengkap.text.length) : '',
+            address2: alamatLengkap.text.length >= 31 ? alamatLengkap.text.substring(31, alamatLengkap.text.length) : '',
+            address3: alamatLengkap.text.length >= 60 ? alamatLengkap.text.substring(60, alamatLengkap.text.length) : '',
+            city: kotaPengirim.text.toUpperCase(),
+            zip: kodePos.text,
+            region: isDropshipper ? selectedOrigin?.region?.name : shipper?.region?.name,
+            //province
+            country: "ID",
+            contact: namaPengirim.text.toUpperCase(),
+            phone: nomorTelpon.text,
+            dropship: isDropshipper,
+          ),
+          "data": data,
+        },
+        transition: Transition.rightToLeft);
   }
 
   Future<void> saveDropshipper() async {

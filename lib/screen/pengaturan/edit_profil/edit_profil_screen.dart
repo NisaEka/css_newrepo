@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_controller.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
@@ -99,7 +99,7 @@ class EditProfilScreen extends StatelessWidget {
                       '${e.provinceName ?? ''}; '
                       '${e.cityName ?? ''}; '
                       '${e.districtName ?? ''}; '
-                      '${e.subDistrictName ?? ''}; '
+                      '${e.subdistrictName ?? ''}; '
                       '${e.destinationCode ?? ''}; ',
                     ),
                   ),
@@ -109,7 +109,7 @@ class EditProfilScreen extends StatelessWidget {
               itemAsString: (Destination e) => c.isCcrf
                   ? '${e.cityName ?? ''}; '
                       '${e.districtName ?? ''}; '
-                      '${e.subDistrictName ?? ''}; '
+                      '${e.subdistrictName ?? ''}; '
                       '${e.zipCode ?? ''}'
                   : e.zipCode ?? '',
               onChanged: (value) {

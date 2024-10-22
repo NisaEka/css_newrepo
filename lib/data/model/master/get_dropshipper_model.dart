@@ -1,63 +1,5 @@
 import 'dart:convert';
 
-GetDropshipperModel getDropshipperModelFromJson(String str) => GetDropshipperModel.fromJson(json.decode(str));
-
-String getDropshipperModelToJson(GetDropshipperModel data) => json.encode(data.toJson());
-
-class GetDropshipperModel {
-  GetDropshipperModel({
-    num? code,
-    String? message,
-    List<DropshipperModel>? payload,
-  }) {
-    _code = code;
-    _message = message;
-    _payload = payload;
-  }
-
-  GetDropshipperModel.fromJson(dynamic json) {
-    _code = json['code'];
-    _message = json['message'];
-    if (json['payload'] != null) {
-      _payload = [];
-      json['payload'].forEach((v) {
-        _payload?.add(DropshipperModel.fromJson(v));
-      });
-    }
-  }
-
-  num? _code;
-  String? _message;
-  List<DropshipperModel>? _payload;
-
-  GetDropshipperModel copyWith({
-    num? code,
-    String? message,
-    List<DropshipperModel>? payload,
-  }) =>
-      GetDropshipperModel(
-        code: code ?? _code,
-        message: message ?? _message,
-        payload: payload ?? _payload,
-      );
-
-  num? get code => _code;
-
-  String? get message => _message;
-
-  List<DropshipperModel>? get payload => _payload;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
 DropshipperModel payloadFromJson(String str) => DropshipperModel.fromJson(json.decode(str));
 
 String payloadToJson(DropshipperModel data) => json.encode(data.toJson());
@@ -82,14 +24,13 @@ class DropshipperModel {
   }
 
   DropshipperModel.fromJson(dynamic json) {
-    _id = json['id'];
-    _name = json['name'];
-    _phone = json['phone'];
-    _zipCode = json['zip_code'];
-    _city = json['city'];
-    _address = json['address'];
-    _origin = json['origin'];
-    _origin = json['origin_code'];
+    _id = json['id'] ?? json['dropshipperId'];
+    _name = json['name'] ?? json['dropshipperName'];
+    _phone = json['phone'] ?? json['dropshipperPhone'];
+    _zipCode = json['zip_code'] ?? json['dropshipperZip'];
+    _city = json['city'] ?? json['dropshipperCity'];
+    _address = json['address'] ?? json['dropshipperAddress'];
+    _origin = json['origin_code'] ?? json['dropshipperOrigin'] ?? json['origin'];
   }
 
   String? _id;
@@ -142,6 +83,13 @@ class DropshipperModel {
     map['city'] = _city;
     map['address'] = _address;
     map['origin'] = _origin;
+    map['dropshipperId'] = _id;
+    map['dropshipperName'] = _name;
+    map['dropshipperPhone'] = _phone;
+    map['dropshipperZip'] = _zipCode;
+    map['dropshipperCity'] = _city;
+    map['dropshipperAddress'] = _address;
+    map['dropshipperOrigin'] = _origin;
     map['origin_code'] = _origin;
     return map;
   }

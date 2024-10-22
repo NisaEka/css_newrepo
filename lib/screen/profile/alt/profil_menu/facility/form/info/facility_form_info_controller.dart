@@ -7,7 +7,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/facility/facility_create_address_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_id_card_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -62,7 +62,7 @@ class FacilityFormInfoController extends BaseController {
   Future<void> _getUserProfile() async {
     await profil.getBasicProfil().then((result) {
       if (result.code == HttpStatus.ok) {
-        var payload = result.payload;
+        var payload = result.data?.user;
         brand.setText(payload?.brand ?? '');
         fullName.setText(payload?.name ?? '');
         whatsAppPhone.setText(payload?.phone ?? '');
@@ -145,13 +145,14 @@ class FacilityFormInfoController extends BaseController {
     isLoading = true;
     destinationList.clear();
 
-    var response = await transaction.getDestination(keyword);
-    var models = response.payload?.toList();
+    // var response = await transaction.getDestination(keyword);
+    // var models = response.payload?.toList();
 
     isLoading = false;
     update();
 
-    return models ?? List.empty();
+    // return models ?? List.empty();
+    return [];
   }
 
   FacilityCreateModel submitData() {
@@ -170,7 +171,7 @@ class FacilityFormInfoController extends BaseController {
     address.setProvince(selectedDestination!.provinceName!);
     address.setCity(selectedDestination!.cityName!);
     address.setDistrict(selectedDestination!.districtName!);
-    address.setSubDistrict(selectedDestination!.subDistrictName!);
+    address.setSubDistrict(selectedDestination!.subdistrictName!);
     address.setZipCode(selectedDestination!.zipCode!);
     address.setPhone(phone.text);
     address.setHandPhone(whatsAppPhone.text);

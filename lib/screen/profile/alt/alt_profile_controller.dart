@@ -1,8 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/bottombar_controller.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
-import 'package:css_mobile/data/model/auth/input_login_model.dart';
-import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
@@ -21,7 +20,7 @@ class AltProfileController extends BaseController {
   bool pop = false;
   bool isLoading = false;
 
-  BasicProfilModel? basicProfil;
+  UserModel? basicProfil;
   String? version;
   AllowedMenu allow = AllowedMenu();
   GetCcrfProfilModel? ccrf;
@@ -34,7 +33,7 @@ class AltProfileController extends BaseController {
   }
 
   bool onPop() {
-    DateTime now = DateTime.now();
+    // DateTime now = DateTime.now();
     // if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
     //   currentBackPressTime = now;
     //   Get.showSnackbar(
@@ -73,7 +72,7 @@ class AltProfileController extends BaseController {
       isLogin = token != null;
       // if (await storage.readData(StorageCore.userProfil) == null) {
         await profil.getBasicProfil().then((value) async {
-          basicProfil = value.payload;
+          basicProfil = value.data?.user;
           update();
         });
       // }
@@ -82,7 +81,7 @@ class AltProfileController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-      basicProfil = BasicProfilModel.fromJson(
+      basicProfil = UserModel.fromJson(
         await storage.readData(StorageCore.userProfil),
       );
     }
@@ -95,7 +94,7 @@ class AltProfileController extends BaseController {
   }
 
   Future<void> getCcrf() async {
-    bool ccrfProfile = await storage.readString(StorageCore.ccrfProfil) == null;
+    // bool ccrfProfile = await storage.readString(StorageCore.ccrfProfil) == null;
     try {
       // if (ccrfProfile) {
         await profil.getCcrfProfil().then((value) {
@@ -115,14 +114,14 @@ class AltProfileController extends BaseController {
     isLoading = true;
     update();
     await auth
-        .updateDeviceInfoNonAuth(
-      Device(
-        fcmToken: await storage.readString(StorageCore.fcmToken),
-      ),
+        .logout(
+      // Device(
+      //   fcmToken: await storage.readString(StorageCore.fcmToken),
+      // ),
     )
         .then((value) {
       if (value.code == 201) {
-        storage.deleteToken();
+        storage.deleteLogin();
         storage.deleteString(StorageCore.favoriteMenu);
         Get.offAll(const LoginScreen());
       }

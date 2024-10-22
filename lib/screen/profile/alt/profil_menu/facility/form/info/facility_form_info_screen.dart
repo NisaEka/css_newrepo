@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/info/facility_form_info_controller.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/return/facility_form_return_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
@@ -95,28 +95,28 @@ class FacilityFormInfoScreen extends StatelessWidget {
                   inputType: TextInputType.streetAddress,
                   validator: ValidationBuilder().maxLength(128).build(),
                 ),
-                CustomSearchDropdownField<Destination>(
-                  asyncItems: (String filter) => c.getDestinationList(filter),
-                  itemBuilder: (context, e, b) {
-                    return GestureDetector(
-                      onTap: () => c.update(),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                        child: Text(e.asFacilityFormFormat()),
-                      ),
-                    );
-                  },
-                  itemAsString: (Destination e) => e.asFacilityFormFormat(),
-                  onChanged: (value) {
-                    c.selectedDestination = value;
-                    c.update();
-                  },
-                  value: c.selectedDestination,
-                  isRequired: c.selectedDestination == null ? true : false,
-                  readOnly: false,
-                  hintText: c.isLoadDestination ? "Loading..." : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
-                  textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
-                ),
+                // CustomSearchDropdownField<Destination>(
+                //   asyncItems: (String filter) => c.getDestinationList(filter),
+                //   itemBuilder: (context, e, b) {
+                //     return GestureDetector(
+                //       onTap: () => c.update(),
+                //       child: Container(
+                //         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                //         child: Text(e.asFacilityFormFormat()),
+                //       ),
+                //     );
+                //   },
+                //   itemAsString: (Destination e) => e.asFacilityFormFormat(),
+                //   onChanged: (value) {
+                //     c.selectedDestination = value;
+                //     c.update();
+                //   },
+                //   value: c.selectedDestination,
+                //   isRequired: c.selectedDestination == null ? true : false,
+                //   readOnly: false,
+                //   hintText: c.isLoadDestination ? "Loading..." : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
+                //   textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
+                // ),
                 CustomTextFormField(
                   controller: c.phone,
                   hintText: 'No. Telp'.tr,

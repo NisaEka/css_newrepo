@@ -1,5 +1,6 @@
 import 'package:css_mobile/screen/dashboard/components/dashboard_body.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/onboarding/ob1_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,14 +18,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return GetBuilder<DashboardController>(
       init: DashboardController(),
       builder: (controller) {
-        return PopScope(
-          canPop: controller.pop,
-          onPopInvoked: (didPop) => controller.onPop(),
-          child: const Scaffold(
-            body: DashboardBody(),
-            bottomNavigationBar: BottomBar4(menu: 0),
-          ),
-        );
+        if (controller.state.isFirst) {
+          return const Ob1Screen();
+        } else {
+          return PopScope(
+            canPop: controller.pop,
+            onPopInvoked: (didPop) => controller.onPop(),
+            child: const Scaffold(
+              body: DashboardBody(),
+              bottomNavigationBar: BottomBar4(menu: 0),
+            ),
+          );
+        }
       },
     );
   }

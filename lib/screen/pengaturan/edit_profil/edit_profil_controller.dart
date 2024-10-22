@@ -1,7 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,10 +21,10 @@ class EditProfileController extends BaseController {
   bool isLoading = false;
   bool isCcrf = false;
   bool isLoadOrigin = false;
-  GetDestinationModel? destinationModel;
+  // GetDestinationModel? destinationModel;
   Destination? selectedCity;
   Origin? selectedOrigin;
-  BasicProfilModel? basicProfil;
+  UserModel? basicProfil;
   CcrfProfilModel? ccrfProfil;
 
   @override
@@ -36,7 +36,7 @@ class EditProfileController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     try {
-      await profil.getBasicProfil().then((value) => basicProfil = value.payload);
+      await profil.getBasicProfil().then((value) => basicProfil = value.data?.user);
       update();
 
       await profil.getCcrfProfil().then((value) {
@@ -62,7 +62,7 @@ class EditProfileController extends BaseController {
       e.printError();
       i.printError();
 
-      var basic = BasicProfilModel.fromJson(await storage.readData(StorageCore.userProfil));
+      var basic = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
 
       brand.text = basic.brand ?? '';
       name.text = basic.name ?? '';
@@ -82,7 +82,7 @@ class EditProfileController extends BaseController {
       cityName: ccrfProfil?.generalInfo?.city,
       countryName: ccrfProfil?.generalInfo?.country,
       districtName: ccrfProfil?.generalInfo?.district,
-      subDistrictName: ccrfProfil?.generalInfo?.subDistrict,
+      subdistrictName: ccrfProfil?.generalInfo?.subDistrict,
       zipCode: ccrfProfil?.generalInfo?.zipCode,
       provinceName: ccrfProfil?.generalInfo?.province,
     );
@@ -98,8 +98,8 @@ class EditProfileController extends BaseController {
   Future<List<Destination>> getDestinationList(String keyword) async {
     isLoading = true;
     try {
-      var response = await transaction.getDestination(keyword);
-      destinationModel = response;
+      // var response = await transaction.getDestination(keyword);
+      // destinationModel = response;
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -107,17 +107,19 @@ class EditProfileController extends BaseController {
 
     isLoading = false;
     update();
-    return destinationModel?.payload?.toList() ?? [];
+    // return destinationModel?.payload?.toList() ?? [];
+    return [];
   }
 
   Future<List<Origin>> getOriginList(String keyword) async {
     isLoadOrigin = true;
-    var response = await ongkir.postOrigin(keyword);
-    var models = response.payload?.toList();
+    // var response = await ongkir.postOrigin(keyword);
+    // var models = response.payload?.toList();
 
     isLoadOrigin = false;
     update();
-    return models ?? [];
+    // return models ?? [];
+    return [];
   }
 
   Future<void> updateBasic() async {
@@ -126,7 +128,7 @@ class EditProfileController extends BaseController {
     try {
       await profil
           .putProfileBasic(
-            BasicProfilModel(
+            UserModel(
               name: name.text,
               brand: brand.text,
               phone: phone.text,
@@ -159,7 +161,7 @@ class EditProfileController extends BaseController {
             district: selectedCity?.districtName,
             province: selectedCity?.provinceName,
             city: selectedCity?.cityName,
-            subDistrict: selectedCity?.subDistrictName,
+            subDistrict: selectedCity?.subdistrictName,
             zipCode: selectedCity?.zipCode,
           ))
           .then(

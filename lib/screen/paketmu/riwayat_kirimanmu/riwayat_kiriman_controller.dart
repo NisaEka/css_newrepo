@@ -2,7 +2,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -41,7 +41,7 @@ class RiwayatKirimanController extends BaseController {
   List<String> listOfficerEntry = [];
   List<TransactionModel> selectedTransaction = [];
 
-  BasicProfilModel? basic;
+  UserModel? basic;
 
   @override
   void onInit() {
@@ -91,7 +91,7 @@ class RiwayatKirimanController extends BaseController {
     selectedTransaction = [];
     listStatusKiriman = [];
     try {
-      await profil.getBasicProfil().then((value) async => basic = value.payload);
+      await profil.getBasicProfil().then((value) async => basic = value.data?.user);
 
       await transaction.getTransactionStatus().then((value) {
         listStatusKiriman.addAll(value.payload ?? []);

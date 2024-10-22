@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
@@ -20,7 +20,7 @@ class OtherMenuCotroller extends BaseController {
   List<Items> hubungiAkuList = [];
 
   MenuItemModel? menuData;
-  AllowedMenu allow = Get.arguments['allowance'];
+  MenuModel allow = Get.arguments['allowance'];
   bool isLogin = Get.arguments['isLogin'];
   bool isEdit = false;
 

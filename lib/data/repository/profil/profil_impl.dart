@@ -1,9 +1,11 @@
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_existing_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
-import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
@@ -16,16 +18,22 @@ class ProfilRepositoryImpl extends ProfilRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<GetBasicProfilModel> getBasicProfil() async {
+  Future<BaseResponse<UserProfileModel>> getBasicProfil() async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.get(
-        "/profile",
+      Response response = await network.base.get(
+        "/me",
       );
-      return GetBasicProfilModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => UserProfileModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
-      return GetBasicProfilModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => UserProfileModel.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 
@@ -100,12 +108,12 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future putProfileBasic(BasicProfilModel data) async {
+  Future<BaseResponse> putProfileBasic(UserModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.put(
-        "/profile",
+      Response response = await network.base.patch(
+        "/me",
         data: {
           "brand": data.brand,
           "name": data.name,
@@ -115,7 +123,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
           "zip_code": data.zipCode
         },
       );
-      return PostTransactionModel.fromJson(response.data);
+      return BaseResponse.fromJson(response.data, (json) => null,);
     } on DioException catch (e) {
       return e.response?.data;
     }

@@ -1,5 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class DataUmumController extends BaseController {
   bool isLoading = false;
 
   CcrfProfilModel? ccrfProfil;
-  BasicProfilModel? basicProfil;
+  UserModel? basicProfil;
   bool isCcrf = false;
 
   @override
@@ -25,7 +25,7 @@ class DataUmumController extends BaseController {
       String? token = await storage.readToken();
       debugPrint("token : $token");
       isLogin = token != null;
-      await profil.getBasicProfil().then((value) => basicProfil = value.payload);
+      await profil.getBasicProfil().then((value) => basicProfil = value.data?.user);
       update();
       await profil.getCcrfProfil().then((value) {
         if (value.payload != null) {
@@ -49,7 +49,7 @@ class DataUmumController extends BaseController {
       e.printError();
       i.printError();
 
-      var basic = BasicProfilModel.fromJson(await storage.readData(StorageCore.userProfil));
+      var basic = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
 
       ccrfProfil = CcrfProfilModel(
         generalInfo: GeneralInfo(

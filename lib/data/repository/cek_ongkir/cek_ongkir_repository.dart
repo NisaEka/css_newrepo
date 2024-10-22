@@ -8,9 +8,4 @@ abstract class CekOngkirRepository {
     String to,
     String weight,
   );
-
-  Future<GetOriginModel> postDestination(String keyword);
-
-  Future<GetOriginModel> postOrigin(String keyword);
-
 }

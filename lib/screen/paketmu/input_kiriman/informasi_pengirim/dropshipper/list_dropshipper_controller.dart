@@ -1,8 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
-import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
+import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
@@ -44,12 +45,21 @@ class ListDropshipperController extends BaseController {
     update();
 
     try {
-      await transaction.getDropshipper().then((value) => dropshipperList.addAll(value.payload ?? []));
+      await master.getDropshippers().then((value) => dropshipperList.addAll(value.data ?? []));
       update();
     } catch (e) {
       e.printError();
-      var dropshipper = GetDropshipperModel.fromJson(await storage.readData(StorageCore.dropshipper));
-      dropshipperList.addAll(dropshipper.payload ?? []);
+      var dropshipper = BaseResponse<List<DropshipperModel>>.fromJson(
+        await storage.readData(StorageCore.dropshipper),
+        (json) => json is List<dynamic>
+            ? json
+                .map<DropshipperModel>(
+                  (i) => DropshipperModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+      dropshipperList.addAll(dropshipper.data ?? []);
     }
 
     isLoading = false;

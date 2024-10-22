@@ -2,7 +2,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
-import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
@@ -16,7 +16,7 @@ class PengaturanController extends BaseController {
   String? version;
   String? lang;
   AllowedMenu allow = AllowedMenu();
-  BasicProfilModel? basicProfil;
+  UserModel? basicProfil;
 
   @override
   void onInit() {
@@ -35,7 +35,7 @@ class PengaturanController extends BaseController {
 
     allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
 
-    basicProfil = BasicProfilModel.fromJson(
+    basicProfil = UserModel.fromJson(
       await storage.readData(StorageCore.userProfil),
     );
 
@@ -46,15 +46,15 @@ class PengaturanController extends BaseController {
     isLoading = true;
     update();
     await auth
-        .updateDeviceInfoNonAuth(
-      Device(
-        fcmToken: await storage.readString(StorageCore.fcmToken),
-      ),
-    )
-        .then((value) {
+        .logout(
+      // Device(
+            //   fcmToken: await storage.readString(StorageCore.fcmToken),
+            // ),
+            )
+        .then((value) async {
       if (value.code == 201) {
-        storage.deleteToken();
-        storage.deleteString(StorageCore.favoriteMenu);
+        await auth.logout();
+        storage.deleteLogin();
         Get.offAll(const LoginScreen());
       }
     });

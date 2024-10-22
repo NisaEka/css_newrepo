@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/add/add_penerima_controller.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
@@ -82,13 +82,13 @@ class AddPenerimaScreen extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                       child: Text(
-                        '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
+                        '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subdistrictName}; ${e.destinationCode}',
                       ),
                     ),
                   );
                 },
                 itemAsString: (Destination e) =>
-                    '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subDistrictName}; ${e.destinationCode}',
+                    '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subdistrictName}; ${e.destinationCode}',
                 onChanged: (value) {
                   c.selectedDestination = value;
                   c.update();

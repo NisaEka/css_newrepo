@@ -5,7 +5,7 @@ import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/profile/get_basic_profil_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
@@ -32,7 +32,7 @@ class TambahPetugasController extends BaseController {
   bool isLoadOrigin = false;
   bool isObscurePassword = true;
   bool isObscurePasswordConfirm = true;
-  BasicProfilModel? basic;
+  UserModel? basic;
   CcrfProfilModel? ccrf;
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
@@ -75,8 +75,8 @@ class TambahPetugasController extends BaseController {
   RxList<Origin> originList = <Origin>[].obs;
   final selectedOrigin = <Origin>[].obs;
   List<String> originCodes = [];
-  List<BranchModel> branchList = [];
-  List<BranchModel> selectedBranchList = [];
+  List<Branch> branchList = [];
+  List<Branch> selectedBranchList = [];
   List<String> branchs = [];
   String? status;
   GetPetugasByidModel dataPetugas = GetPetugasByidModel();
@@ -174,7 +174,7 @@ class TambahPetugasController extends BaseController {
         monitoringAggMinus = dataPetugas.payload?.menu?.monitoringAggMinus == "Y" || dataPetugas.payload?.menu?.keuanganAggregasiMinus == "Y";
         update();
       } else {
-        basic = BasicProfilModel.fromJson(
+        basic = UserModel.fromJson(
           await storage.readData(StorageCore.userProfil),
         );
         ccrf = CcrfProfilModel.fromJson(
@@ -193,7 +193,7 @@ class TambahPetugasController extends BaseController {
     update();
   }
 
-  Future<void> loadOrigin(List<BranchModel> branches) async {
+  Future<void> loadOrigin(List<Branch> branches) async {
     originList.clear();
     selectedOrigin.clear();
     branchs = [];
@@ -204,19 +204,19 @@ class TambahPetugasController extends BaseController {
       update();
     }
     try {
-      await setting.getOriginGroup(branchs).then((value) {
-        originList.addAll(value.payload ?? []);
-        update();
-      }).then((value) {
-        if (dataPetugas.payload?.origins?.isNotEmpty ?? false) {
-          dataPetugas.payload?.origins?.forEach((origin) {
-            selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).first);
-            update();
-          });
-
-          update();
-        }
-      });
+      // await master.getOrigins(branchs).then((value) {
+      //   originList.addAll(value.payload ?? []);
+      //   update();
+      // }).then((value) {
+      //   if (dataPetugas.payload?.origins?.isNotEmpty ?? false) {
+      //     dataPetugas.payload?.origins?.forEach((origin) {
+      //       selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).first);
+      //       update();
+      //     });
+      //
+      //     update();
+      //   }
+      // });
       update();
     } catch (e, i) {
       e.printError();

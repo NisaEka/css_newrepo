@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -182,7 +184,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.linear,
                   )
-                : Get.back(),
+                : Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
           ),
         ],
       ),

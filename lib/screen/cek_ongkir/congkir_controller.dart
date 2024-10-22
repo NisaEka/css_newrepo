@@ -52,9 +52,9 @@ class CekOngkirController extends BaseController {
     state.originList = [];
     state.isLoading = true;
     try {
-      var response = await ongkir.postOrigin(keyword);
-      state.cityModel = response;
-      state.originList.addAll(state.cityModel?.payload ?? []);
+      // var response = await ongkir.postOrigin(keyword);
+      // state.cityModel = response;
+      // state.originList.addAll(state.cityModel?.payload ?? []);
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -62,7 +62,8 @@ class CekOngkirController extends BaseController {
 
     state.isLoading = false;
     update();
-    return state.cityModel?.payload?.toList() ?? [];
+    // return state.cityModel?.payload?.toList() ?? [];
+    return [];
     // return state.originList;
   }
 
@@ -70,9 +71,9 @@ class CekOngkirController extends BaseController {
     state.isLoading = true;
     state.destinationList = [];
     try {
-      var response = await ongkir.postDestination(keyword);
-      state.cityModel = response;
-      state.destinationList.addAll(response.payload ?? []);
+      // var response = await ongkir.postDestination(keyword);
+      // state.cityModel = response;
+      // state.destinationList.addAll(response.payload ?? []);
       update();
     } catch (e, i) {
       e.printError();
@@ -81,7 +82,8 @@ class CekOngkirController extends BaseController {
 
     state.isLoading = false;
     update();
-    return state.cityModel?.payload?.toList() ?? [];
+    // return state.cityModel?.payload?.toList() ?? [];
+    return [];
   }
 
   void hitungAsuransi() {
@@ -117,7 +119,7 @@ class CekOngkirController extends BaseController {
 
   void showCityList(String title) {
     state.searchCity.clear();
-    state.cityModel = null;
+    // state.cityModel = null;
     update();
     Get.bottomSheet(
       enableDrag: true,

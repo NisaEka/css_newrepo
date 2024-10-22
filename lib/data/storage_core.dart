@@ -23,6 +23,7 @@ class StorageCore {
   static const String shippingCost = "shipping_const";
   static const String fcmToken = "fcm_token";
   static const String unreadMessage = "unread_message";
+  static const String isFirst = "first_install";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);
@@ -59,7 +60,7 @@ class StorageCore {
     return token;
   }
 
-  void deleteToken() async {
+  void deleteLogin() async {
     await storage.delete(key: token);
     await storage.delete(key: allowedMenu);
     await storage.delete(key: userMenu);
@@ -73,5 +74,7 @@ class StorageCore {
     await storage.delete(key: transactionLabel);
     await storage.delete(key: shippingCost);
     await storage.delete(key: ccrfProfil);
+    // await storage.delete(key: isFirst);
+    deleteString(StorageCore.favoriteMenu);
   }
 }

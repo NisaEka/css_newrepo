@@ -32,7 +32,7 @@ class NewPasswordController extends BaseController {
     isLoading = true;
     update();
     try {
-      await auth.postPasswordChage(InputNewPasswordModel(password: newPW.text, token: token)).then((value) => value.code == 200
+      await auth.postPasswordChage(InputNewPasswordModel(password: newPW.text, token: token)).then((value) => value.code == 201
           ? Get.to(
               SuccessScreen(
                 message: "Password berhasil diperbaharui".tr,
@@ -48,14 +48,15 @@ class NewPasswordController extends BaseController {
                   Icons.warning,
                   color: whiteColor,
                 ),
-                message: 'Bad Request'.tr,
+                message: value.message?[0].toString(),
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
                 backgroundColor: errorColor,
               ),
             ));
-    } catch (e) {
+    } catch (e,i) {
       e.printError();
+      i.printError();
     }
 
     isLoading = false;

@@ -44,7 +44,7 @@ class PantauPaketmuController extends BaseController {
     // state.pagingController.refresh();
 
     try {
-      await profil.getBasicProfil().then((value) async => state.basic = value.payload);
+      await profil.getBasicProfil().then((value) async => state.basic = value.data?.user);
 
       if (state.basic?.userType == "PEMILIK") {
         await transaction.getTransOfficer().then((value) {

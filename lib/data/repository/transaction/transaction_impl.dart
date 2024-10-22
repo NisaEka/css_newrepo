@@ -6,12 +6,9 @@ import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
-import 'package:css_mobile/data/model/transaction/get_dropshipper_model.dart';
-import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
+import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
+import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/transaction/get_service_model.dart';
-import 'package:css_mobile/data/model/transaction/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
@@ -41,84 +38,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
       return GetAccountNumberModel.fromJson(response.data);
     } on DioException catch (e) {
       return GetAccountNumberModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<GetDropshipperModel> getDropshipper() async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      Response response = await network.dio.get(
-        "/dropshipper",
-      );
-      return GetDropshipperModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return GetDropshipperModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<GetShipperModel> getSender() async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      Response response = await network.dio.get(
-        "/shipper",
-      );
-      return GetShipperModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return GetShipperModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<GetOriginModel> getOrigin(String? keyword, String accountID) async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    keyword.printInfo(info: "keyword");
-    try {
-      Response response = await network.dio.get(
-        "/origin",
-        queryParameters: {
-          "keyword": keyword,
-          "account_id": accountID,
-        },
-      );
-      return GetOriginModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return GetOriginModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<GetDestinationModel> getDestination(String? keyword) async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      Response response = await network.dio.get(
-        "/destination",
-        queryParameters: {
-          "keyword": keyword,
-        },
-      );
-      return GetDestinationModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return GetDestinationModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<GetReceiverModel> getReceiver() async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      Response response = await network.dio.get(
-        "/receiver",
-      );
-      return GetReceiverModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return GetReceiverModel.fromJson(e.response?.data);
     }
   }
 

@@ -26,7 +26,7 @@ class CekOngkirState {
   List<Origin> destinationList = [];
   List<Ongkir> ongkirList = [];
 
-  GetOriginModel? cityModel;
+  // GetOriginModel? cityModel;
   Origin? selectedDestination;
   Origin? selectedOrigin;
 }

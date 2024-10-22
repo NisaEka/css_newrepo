@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/auth/pin_confirm_model.dart';
 import 'package:css_mobile/data/model/master/get_agent_model.dart';
 import 'package:css_mobile/data/model/auth/get_check_mail_model.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
@@ -23,9 +24,9 @@ abstract class AuthRepository {
 
   Future<BaseResponse> postEmailForgotPassword(String email);
 
-  Future<BaseResponse> postPasswordPinConfirm(InputPinconfirmModel data);
+  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(InputPinconfirmModel data);
 
-  Future<PostTransactionModel> postPasswordChage(InputNewPasswordModel data);
+  Future<BaseResponse> postPasswordChage(InputNewPasswordModel data);
 
   Future<BaseResponse<MailCheckModel>> getCheckMail(String email);
 
@@ -38,4 +39,6 @@ abstract class AuthRepository {
   Future<GetLoginModel> updateDeviceInfo(Device data);
 
   Future<GetLoginModel> updateDeviceInfoNonAuth(Device data);
+
+  Future<BaseResponse<PostLoginModel>> postRefreshToken();
 }

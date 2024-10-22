@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/informasi_penerima_controller.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
@@ -166,7 +166,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                                         '${e.provinceName == null ? '' : '${e.provinceName}; '}'
                                         '${e.cityName == null ? '' : '${e.cityName}; '}'
                                         '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
-                                        '${e.subDistrictName == null || e.subDistrictName == '-' ? '' : '${e.subDistrictName}; '}'
+                                        '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
                                         '${e.destinationCode == null ? '' : '${e.destinationCode}'}'
                                     .splitMapJoin(
                                   ';',
@@ -182,7 +182,7 @@ class _InformasiPenerimaScreenState extends State<InformasiPenerimaScreen> {
                             '${e.provinceName == null ? '' : '${e.provinceName}; '}'
                             '${e.cityName == null ? '' : '${e.cityName}; '}'
                             '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
-                            '${e.subDistrictName == null || e.subDistrictName == '-' ? '' : '${e.subDistrictName}; '}'
+                            '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
                             '${e.destinationCode == null ? '' : '${e.destinationCode}'}',
                         onChanged: (value) {
                           c.selectedDestination = value;

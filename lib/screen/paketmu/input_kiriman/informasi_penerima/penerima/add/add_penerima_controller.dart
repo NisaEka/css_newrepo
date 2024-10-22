@@ -1,7 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
-import 'package:css_mobile/data/model/transaction/get_receiver_model.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,8 +27,8 @@ class AddPenerimaController extends BaseController {
   Future<List<Destination>> getDestinationList(String keyword) async {
     isLoading = true;
     destinationList = [];
-    var response = await transaction.getDestination(keyword);
-    var models = response.payload?.toList();
+    var response = await master.getDestinations(keyword);
+    var models = response.data?.toList();
 
     isLoading = false;
     update();
@@ -53,7 +53,7 @@ class AddPenerimaController extends BaseController {
             destinationDescription: selectedDestination?.cityName,
             idDestination: selectedDestination?.id.toString(),
             receiverDistrict: selectedDestination?.districtName,
-            receiverSubDistrict: selectedDestination?.subDistrictName,
+            receiverSubDistrict: selectedDestination?.subdistrictName,
           ))
           .then(
             (value) => Get.showSnackbar(

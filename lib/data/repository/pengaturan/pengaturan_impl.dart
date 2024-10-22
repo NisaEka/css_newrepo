@@ -107,22 +107,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
     }
   }
 
-  @override
-  Future<GetOriginModel> getOriginGroup(List<String> keyword) async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      Response response = await network.dio.get(
-        "/origin/group",
-        queryParameters: {
-          'keyword': keyword.join(","),
-        },
-      );
-      return GetOriginModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return e.response?.data;
-    }
-  }
+
 
   @override
   Future<GetSettingLabelModel> getSettingLabel() async {

@@ -7,7 +7,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_return_address_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_tax_info_model.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -65,13 +65,14 @@ class FacilityFormReturnController extends BaseController {
     isLoading = true;
     destinationList.clear();
 
-    var response = await transaction.getDestination(keyword);
-    var models = response.payload?.toList();
+    // var response = await transaction.getDestination(keyword);
+    // var models = response.payload?.toList();
 
     isLoading = false;
     update();
 
-    return models ?? List.empty();
+    // return models ?? List.empty();
+    return [];
   }
 
   void _checkConnectivity() {
@@ -169,7 +170,7 @@ class FacilityFormReturnController extends BaseController {
     returnAddress.setProvince(selectedDestination!.provinceName!);
     returnAddress.setCity(selectedDestination!.cityName!);
     returnAddress.setDistrict(selectedDestination!.districtName!);
-    returnAddress.setSubDistrict(selectedDestination!.subDistrictName!);
+    returnAddress.setSubDistrict(selectedDestination!.subdistrictName!);
     returnAddress.setZipCode(selectedDestination!.zipCode!);
     returnAddress.setPhone(returnPhone.text);
     returnAddress.setHandPhone(returnWhatsAppNumber.text);

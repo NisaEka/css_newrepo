@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_create_request_model.dart';
-import 'package:css_mobile/data/model/transaction/get_destination_model.dart';
 import 'package:css_mobile/util/ext/placement_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
@@ -43,7 +43,7 @@ class RequestPickupAddressUpsertController extends BaseController {
       zipCode: selectedDestination?.zipCode ?? '',
       city: selectedDestination?.cityName ?? '',
       district: selectedDestination?.districtName ?? '',
-      subDistrict: selectedDestination?.subDistrictName ?? '',
+      subDistrict: selectedDestination?.subdistrictName ?? '',
       region: selectedDestination?.provinceName ?? '',
       lat: selectedLat,
       lng: selectedLng,
@@ -51,9 +51,9 @@ class RequestPickupAddressUpsertController extends BaseController {
   }
 
   _getDestinationByPostalCode(String postalCode) async {
-    transaction.getDestination(postalCode)
-        .then((value) => _setSelectedDestination(value.payload?.first))
-        .onError((error, stackTrace) => null);
+    // transaction.getDestination(postalCode)
+    //     .then((value) => _setSelectedDestination(value.payload?.first))
+    //     .onError((error, stackTrace) => null);
   }
 
   _setSelectedDestination(Destination? destination) {
@@ -67,13 +67,14 @@ class RequestPickupAddressUpsertController extends BaseController {
     isLoadDestination = true;
     destinationList.clear();
 
-    var response = await transaction.getDestination(keyword);
-    var models = response.payload?.toList();
+    // var response = await transaction.getDestination(keyword);
+    // var models = response.payload?.toList();
 
     isLoadDestination = false;
     update();
 
-    return models ?? List.empty();
+    // return models ?? List.empty();
+    return [];
   }
 
   void onSubmitAction() async {

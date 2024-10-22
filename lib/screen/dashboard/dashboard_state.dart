@@ -1,5 +1,4 @@
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
@@ -19,6 +18,7 @@ class DashboardState {
   bool isLoading = false;
   bool isOnline = false;
   bool isCcrf = true;
+  bool isFirst = false;
 
   CcrfProfilModel? ccrf;
 
@@ -49,5 +49,5 @@ class DashboardState {
     'Dibatalkan Oleh Kamu'
   ];
   var bannerIndex = 0.obs;
-  AllowedMenu allow = AllowedMenu();
+  MenuModel allow = MenuModel();
 }

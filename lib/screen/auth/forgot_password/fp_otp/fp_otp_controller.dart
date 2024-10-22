@@ -180,15 +180,15 @@ class ForgotPasswordOTPController extends BaseController {
     return isLogin;
   }
 
-  Future<void> useOtherMethod(BuildContext context) async {
+  Future<void> useOtherMethod(BuildContext context)  async {
     isLoading = true;
     update();
     if (isLogin) {
       var basic = await profil.getBasicProfil();
 
-      if ((basic.payload?.emailRecovery?.isNotEmpty ?? false)) {
+      if ((basic.data?.user?.emailRecovery?.isNotEmpty ?? false)) {
         Get.off(const PasswordRecoveryScreen(), arguments: {
-          'email': basic.payload?.emailRecovery,
+          'email': basic.data?.user?.emailRecovery,
           'isChange': isChange,
         });
       } else {

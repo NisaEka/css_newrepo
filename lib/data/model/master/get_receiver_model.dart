@@ -1,67 +1,3 @@
-import 'dart:convert';
-
-GetReceiverModel getReceiverModelFromJson(String str) => GetReceiverModel.fromJson(json.decode(str));
-
-String getReceiverModelToJson(GetReceiverModel data) => json.encode(data.toJson());
-
-class GetReceiverModel {
-  GetReceiverModel({
-    num? code,
-    String? message,
-    List<ReceiverModel>? payload,
-  }) {
-    _code = code;
-    _message = message;
-    _payload = payload;
-  }
-
-  GetReceiverModel.fromJson(dynamic json) {
-    _code = json['code'];
-    _message = json['message'];
-    if (json['payload'] != null) {
-      _payload = [];
-      json['payload'].forEach((v) {
-        _payload?.add(ReceiverModel.fromJson(v));
-      });
-    }
-  }
-
-  num? _code;
-  String? _message;
-  List<ReceiverModel>? _payload;
-
-  GetReceiverModel copyWith({
-    num? code,
-    String? message,
-    List<ReceiverModel>? payload,
-  }) =>
-      GetReceiverModel(
-        code: code ?? _code,
-        message: message ?? _message,
-        payload: payload ?? _payload,
-      );
-
-  num? get code => _code;
-
-  String? get message => _message;
-
-  List<ReceiverModel>? get payload => _payload;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
-ReceiverModel payloadFromJson(String str) => ReceiverModel.fromJson(json.decode(str));
-
-String payloadToJson(ReceiverModel data) => json.encode(data.toJson());
-
 class ReceiverModel {
   ReceiverModel({
     String? name,
@@ -98,23 +34,21 @@ class ReceiverModel {
   }
 
   ReceiverModel.fromJson(dynamic json) {
-    _name = json['name'];
-    _address = json['address'];
-    _city = json['city'];
-    _zipCode = json['zip_code'];
-    _region = json['region'];
-    _country = json['country'];
-    _contact = json['contact'];
-    _phone = json['phone'];
-    _destinationCode = json['destination_code'];
-    _destinationDescription = json['destination_description'];
-    _destinationDescription = json['destination_desc'];
-    _idDestination = json['id_destination'];
-    _idDestination = json['destination_id'];
-    _idReceive = json['id_receive'];
-    _receiverDistrict = json['receiver_district'];
-    _receiverSubDistrict = json['receiver_sub_district'];
-    _registrationId = json['registration_id'];
+    _name = json['name'] ?? json['receiverName'];
+    _address = json['address'] ?? json['receiverAddr'];
+    _city = json['city'] ?? json['receiverCity'];
+    _zipCode = json['zip_code'] ?? json['receiverZip'];
+    _region = json['region'] ?? json['receiverRegion'];
+    _country = json['country'] ?? json['receiverCountry'];
+    _contact = json['contact'] ?? json['receiverContact'];
+    _phone = json['phone'] ?? json['receiverPhone'];
+    _destinationCode = json['destination_code'] ?? json['destinationCode'];
+    _destinationDescription = json['destination_description'] ?? json['destinationDesc'] ?? json['destination_desc'];
+    _idDestination = json['id_destination'] ?? json['idDest'] ?? json['destination_id'];
+    _idReceive = json['id_receive'] ?? json['idReceive'];
+    _receiverDistrict = json['receiver_district'] ?? json['receiverDistrict'];
+    _receiverSubDistrict = json['receiver_sub_district'] ?? json['receiverSubdistrict'];
+    _registrationId = json['registration_id'] ?? json['registrationId'];
   }
 
   String? _name;
@@ -217,6 +151,23 @@ class ReceiverModel {
     map['receiver_district'] = _receiverDistrict;
     map['receiver_sub_district'] = _receiverSubDistrict;
     map['registration_id'] = _registrationId;
+
+    map['receiverName'] = _name;
+    map['receiverAddr'] = _address;
+    map['receiverCity'] = _city;
+    map['receiverZip'] = _zipCode;
+    map['receiverRegion'] = _region;
+    map['receiverCountry'] = _country;
+    map['receiverContact'] = _contact;
+    map['receiverPhone'] = _phone;
+    map['destinationCode'] = _destinationCode;
+    map['destinationDesc'] = _destinationDescription;
+    map['idDest'] = _destinationDescription;
+    map['idReceive'] = _idReceive;
+    map['receiverDistrict'] = _receiverDistrict;
+    map['receiverSubdistrict'] = _receiverSubDistrict;
+    map['registrationId'] = _registrationId;
+
     return map;
   }
 }

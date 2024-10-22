@@ -31,7 +31,7 @@ class PasswordRecoveryController extends BaseController {
   Future<void> initData() async {
     try {
       await profil.getBasicProfil().then((value) {
-        email = value.payload?.emailRecovery ?? '';
+        email = value.data?.user?.emailRecovery ?? '';
         update();
       });
     } catch (e) {
