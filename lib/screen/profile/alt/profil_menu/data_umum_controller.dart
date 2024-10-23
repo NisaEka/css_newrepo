@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
-import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
+
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ class DataUmumController extends BaseController {
   bool isLogin = false;
   bool isLoading = false;
 
-  CcrfProfilModel? ccrfProfil;
+  CcrfProfileModel? ccrfProfil;
   UserModel? basicProfil;
   bool isCcrf = false;
 
@@ -28,16 +29,16 @@ class DataUmumController extends BaseController {
       await profil.getBasicProfil().then((value) => basicProfil = value.data?.user);
       update();
       await profil.getCcrfProfil().then((value) {
-        if (value.payload != null) {
-          ccrfProfil = value.payload;
+        if (value.data != null) {
+          ccrfProfil = value.data;
         } else {
-          ccrfProfil ??= CcrfProfilModel(
+          ccrfProfil ??= CcrfProfileModel(
             generalInfo: GeneralInfo(
-              name: basicProfil?.name,
-              brand: basicProfil?.brand,
-              address: basicProfil?.address,
-              email: basicProfil?.email,
-              phone: basicProfil?.phone,
+              ccrfName: basicProfil?.name,
+              ccrfBrand: basicProfil?.brand,
+              ccrfAddress: basicProfil?.address,
+              ccrfEmail: basicProfil?.email,
+              ccrfPhone: basicProfil?.phone,
             ),
           );
         }
@@ -51,13 +52,13 @@ class DataUmumController extends BaseController {
 
       var basic = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
 
-      ccrfProfil = CcrfProfilModel(
+      ccrfProfil = CcrfProfileModel(
         generalInfo: GeneralInfo(
-          name: basic.name,
-          brand: basic.brand,
-          address: basic.address,
-          email: basic.email,
-          phone: basic.phone,
+          ccrfName: basic.name,
+          ccrfBrand: basic.brand,
+          ccrfAddress: basic.address,
+          ccrfEmail: basic.email,
+          ccrfPhone: basic.phone,
         ),
       );
     }

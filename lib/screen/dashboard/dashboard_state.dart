@@ -3,7 +3,7 @@ import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
-import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
+import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class DashboardState {
   bool isCcrf = true;
   bool isFirst = false;
 
-  CcrfProfilModel? ccrf;
+  CcrfProfileModel? ccrf;
 
   String? marqueeText = 'Data diperbaharui setiap jam 06 : 45 WIB';
   String? userName;

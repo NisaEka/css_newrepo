@@ -1,12 +1,13 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
+import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
+
 import 'package:get/get.dart';
 
 class AkunBankController extends BaseController {
   bool isLogin = false;
   bool isLoading = false;
 
-  CcrfProfilModel? ccrfProfil;
+  CcrfProfileModel? ccrfProfil;
 
   @override
   void onInit() {
@@ -18,7 +19,7 @@ class AkunBankController extends BaseController {
     isLoading = true;
     try {
       await profil.getCcrfProfil().then(
-            (value) => ccrfProfil = value.payload,
+            (value) => ccrfProfil = value.data,
           );
     } catch (e, i) {
       e.printError();

@@ -116,6 +116,10 @@ class CekOngkirController extends BaseController {
       update();
     }
   }
+  
+  Future<void> selectOrigin()async{
+    // print(object)
+  }
 
   void showCityList(String title) {
     state.searchCity.clear();

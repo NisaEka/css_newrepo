@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class CustomSearchDropdownField<T> extends StatefulWidget {
   final Future<List<T>> Function(String) asyncItems;
 
-  final void Function(dynamic) onChanged;
+  final void Function(dynamic)? onChanged;
 
   // final ValueChanged<T?>? onChanged;
   final List<DropdownMenuItem<T>>? items;
@@ -30,12 +30,13 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
   final bool showDropdownButton;
   final VoidCallback? onClear;
   final String? searchHintText;
+  final TextEditingController? controller;
 
   CustomSearchDropdownField(
       {super.key,
       this.items,
       required this.asyncItems,
-      required this.onChanged,
+       this.onChanged,
       required this.itemAsString,
       required this.itemBuilder,
       this.label,
@@ -51,7 +52,8 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
       this.showClearButton = false,
       this.showDropdownButton = true,
       this.onClear,
-      this.searchHintText}) {
+      this.searchHintText,
+      this.controller}) {
     if (isRequired) {
       if (value == null || value == hintText || value == label) {
         // return validator!(value as T);
@@ -75,7 +77,7 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
         children: [
           const SizedBox(height: 10),
           TextField(
-            controller: TextEditingController(text: widget.selectedItem.toString()),
+            controller: widget.controller ?? TextEditingController(text: widget.selectedItem.toString()),
             enabled: false,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16,
@@ -83,7 +85,7 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
                   // fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(
-              label: Text(widget.selectedItem ?? widget.hintText ?? ''),
+              label: Text(widget.label ?? widget.hintText ?? ''),
               filled: true,
               fillColor: Theme.of(context).brightness == Brightness.light ? neutralColor : greyColor,
               prefixIcon: widget.prefixIcon,

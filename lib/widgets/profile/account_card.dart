@@ -1,7 +1,8 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,12 +51,12 @@ class AccountCard extends StatelessWidget {
                         style: listTitleTextStyle.copyWith(color: blueJNE))),
                 Row(
                   children: [
-                    Text(account.availableService?.ss == "Y" ? "SS " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                    Text(account.availableService?.yes == "Y" ? "YES " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                    Text(account.availableService?.reg == "Y" ? "REG " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                    Text(account.availableService?.oke == "Y" ? "OKE " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                    Text(account.availableService?.jtr == "Y" ? "JTR " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                    Text(account.availableService?.intl == "Y" ? "INTL " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountSs == "Y" ? "SS " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountYes == "Y" ? "YES " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountReg == "Y" ? "REG " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountOke == "Y" ? "OKE " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountJtr == "Y" ? "JTR " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountIntl == "Y" ? "INTL " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
                   ],
                 ),
               ],

@@ -17,6 +17,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final Color? backgroundColor;
   final bool? isOnline;
+  final Size? pfSize;
 
   const CustomTopBar({
     Key? key,
@@ -29,14 +30,17 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
     this.title,
     this.backgroundColor,
     this.isOnline,
+    this.pfSize,
   }) : super(key: key);
 
   @override
-  Size get preferredSize => flexibleSpace != null
-      ? const Size.fromHeight(220)
-      : action?.isNotEmpty ?? false
-          ? const Size.fromHeight(150)
-          : const Size.fromHeight(130);
+  Size get preferredSize =>
+      pfSize ??
+      ((flexibleSpace != null)
+          ? const Size.fromHeight(220)
+          : action?.isNotEmpty ?? false
+              ? const Size.fromHeight(150)
+              : const Size.fromHeight(130));
 
   @override
   Widget build(BuildContext context) {

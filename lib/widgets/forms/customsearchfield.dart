@@ -118,7 +118,7 @@ class CustomSearchField<T> extends StatelessWidget {
                     )
                   : controller.text.isNotEmpty
                       ? IconButton(
-                          onPressed: onClear,
+                          onPressed: onClear ?? ()=> controller.clear(),
                           icon: const Icon(Icons.close),
                         )
                       : null,

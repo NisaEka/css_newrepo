@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_agent_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
@@ -20,13 +21,16 @@ class MasterRepositoryImpl extends MasterRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<Origin>>> getOrigins(String keyword) async {
+  Future<BaseResponse<List<Origin>>> getOrigins(QueryParamModel param) async {
+    var token = await storageSecure.read(key: "token");
+
+    if (token != null) {
+      network.base.options.headers['Authorization'] = 'Bearer $token';
+    }
     try {
       Response response = await network.base.get(
         '/master/origins',
-        queryParameters: {
-          'search': keyword.toUpperCase(),
-        },
+        queryParameters: param.toJson(),
       );
       return BaseResponse<List<Origin>>.fromJson(
         response.data,
@@ -44,13 +48,11 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Destination>>> getDestinations(String keyword) async {
+  Future<BaseResponse<List<Destination>>> getDestinations(QueryParamModel param) async {
     try {
       Response response = await network.base.get(
         '/master/destinations',
-        queryParameters: {
-          'search': keyword.toUpperCase(),
-        },
+        queryParameters: param.toJson(),
       );
       return BaseResponse<List<Destination>>.fromJson(
         response.data,
@@ -116,9 +118,9 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<DropshipperModel>>> getDropshippers() async {
+  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.userProfil),
@@ -128,9 +130,7 @@ class MasterRepositoryImpl extends MasterRepository {
     try {
       Response response = await network.base.get(
         '/master/dropshippers',
-        queryParameters: QueryParamModel(
-          where: registID,
-        ).toJson(),
+        queryParameters: param.copyWith(where: registID, table: true).toJson(),
       );
       return BaseResponse<List<DropshipperModel>>.fromJson(
         response.data,
@@ -143,14 +143,15 @@ class MasterRepositoryImpl extends MasterRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
+      print('dropshipper error ${e.response?.data}');
       return e.response?.data;
     }
   }
 
   @override
-  Future<BaseResponse<List<ReceiverModel>>> getReceivers() async {
+  Future<BaseResponse<List<ReceiverModel>>> getReceivers(QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.userProfil),
@@ -160,9 +161,7 @@ class MasterRepositoryImpl extends MasterRepository {
     try {
       Response response = await network.base.get(
         '/master/receivers',
-        queryParameters: QueryParamModel(
-          where: registID,
-        ).toJson(),
+        queryParameters: param.copyWith(where: registID, table: true).toJson(),
       );
       return BaseResponse<List<ReceiverModel>>.fromJson(
         response.data,
@@ -170,6 +169,30 @@ class MasterRepositoryImpl extends MasterRepository {
             ? json
                 .map<ReceiverModel>(
                   (i) => ReceiverModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      print('receiver error : ${e.response?.data}');
+      return e.response?.data;
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<Account>>> getAccounts() async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.base.get(
+        '/accounts',
+      );
+      return BaseResponse<List<Account>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<Account>(
+                  (i) => Account.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),

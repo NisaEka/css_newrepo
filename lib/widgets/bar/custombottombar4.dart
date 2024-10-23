@@ -4,7 +4,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/cek_ongkir/congkir_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/informasi_pengirim_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';

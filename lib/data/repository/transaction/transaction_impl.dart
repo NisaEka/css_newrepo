@@ -4,7 +4,7 @@ import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
@@ -26,20 +26,6 @@ import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 class TransactionRepositoryImpl extends TransactionRepository {
   final network = Get.find<NetworkCore>();
   final storageSecure = const FlutterSecureStorage();
-
-  @override
-  Future<GetAccountNumberModel> getAccountNumber() async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      Response response = await network.dio.get(
-        "/account",
-      );
-      return GetAccountNumberModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return GetAccountNumberModel.fromJson(e.response?.data);
-    }
-  }
 
   @override
   Future<GetServiceModel> getService(DataServiceModel param) async {

@@ -2,8 +2,8 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/add/add_dropshipper_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_pengirim/dropshipper/list_dropshipper_controller.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/dropshipper/add/add_dropshipper_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/dropshipper/list_dropshipper_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:collection/collection.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
@@ -70,7 +70,7 @@ class ListDropshipperScreen extends StatelessWidget {
               color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
             ),
             onChanged: (value) {
-              c.searchDropshipper(value);
+              c.initData();
             },
             onClear: () {
               c.search.clear();
@@ -87,25 +87,13 @@ class ListDropshipperScreen extends StatelessWidget {
               : Expanded(
                   child: ListView(
                     shrinkWrap: true,
-                    children: c.search.text.isNotEmpty
-                        ? c.searchResultList.isNotEmpty
-                            ? c.searchResultList
-                                .mapIndexed(
-                                  (i, e) => c.dropshipperItem(e, i, context),
-                                )
-                                .toList()
-                            : [
-                                Center(
-                                  child: DataEmpty(text: "Petugas Tidak Ditemukan".tr),
-                                )
-                              ]
-                        : c.dropshipperList.isNotEmpty
-                            ? c.dropshipperList
-                                .mapIndexed(
-                                  (i, e) => c.dropshipperItem(e, i, context),
-                                )
-                                .toList()
-                            : [const Center(child: DataEmpty())],
+                    children: c.dropshipperList.isNotEmpty
+                        ? c.dropshipperList
+                            .mapIndexed(
+                              (i, e) => c.dropshipperItem(e, i, context),
+                            )
+                            .toList()
+                        : [const Center(child: DataEmpty())],
                   ),
                 )
         ],

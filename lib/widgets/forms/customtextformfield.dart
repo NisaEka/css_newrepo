@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 //ignore: must_be_immutable
 class CustomTextFormField extends StatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? label;
   final String? hintText;
   final String? helperText;
@@ -39,7 +39,7 @@ class CustomTextFormField extends StatefulWidget {
 
   CustomTextFormField({
     super.key,
-    required this.controller,
+     this.controller,
     this.label,
     this.helperText,
     this.hintText,

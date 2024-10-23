@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/akun_transaksi/akun_transaksi_controller.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/trans_account/trans_account_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:flutter/material.dart';

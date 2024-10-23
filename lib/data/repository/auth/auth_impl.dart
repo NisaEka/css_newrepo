@@ -216,7 +216,10 @@ class AuthRepositoryImpl extends AuthRepository {
     // String id = deviceInfo?.deviceId ?? '';
 
     try {
-      Response response = await network.base.post('/authentications/logout', data: {});
+      Response response = await network.base.post(
+        '/authentications/logout',
+        data: {},
+      );
       // .then((value) async => await network.base.patch(
       //       '/auth/device-infos/update',
       //       data: deviceInfo,

@@ -5,8 +5,9 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
-import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
+import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
@@ -21,26 +22,36 @@ class DashboardController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    isFirst();
+
     Future.wait([
+      isFirst(),
+      cekToken(),
       saveFCMToken(),
+      initData(),
       loadBanner(),
       loadNews(),
-      initData(),
     ]);
   }
 
-  Future<bool> cekToken() async {
-    String? token = await storage.readToken();
-    debugPrint("token : $token");
-    state.isLogin = token != null;
+  Future<void> refreshToken() async {
     await auth.postRefreshToken().then((value) async {
+      debugPrint("nrToken : ${value.data?.token?.refreshToken}");
+
       storage.saveToken(
         value.data?.token?.accessToken ?? '',
         value.data?.menu ?? MenuModel(),
         value.data?.token?.refreshToken ?? '',
       );
     });
+  }
+
+  Future<bool> cekToken() async {
+    String? token = await storage.readToken();
+    state.isLogin = token != null;
+    refreshToken();
+    debugPrint("token : $token");
+    debugPrint("rtoken : ${await storage.readString(StorageCore.refreshToken)}");
+
     update();
 
     return state.isLogin;
@@ -83,6 +94,8 @@ class DashboardController extends BaseController {
     } catch (e) {
       e.printError();
     }
+
+    update();
   }
 
   Future<void> cekFavoritMenu() async {
@@ -271,7 +284,6 @@ class DashboardController extends BaseController {
     cekFavoritMenu();
     update();
     cekLocalLanguage();
-    cekToken();
     state.isLoading = true;
 
     // loadTransCountList();
@@ -295,21 +307,21 @@ class DashboardController extends BaseController {
 
     try {
       if (accounts) {
-        // await transaction.getAccountNumber().then((value) async => await storage.saveData(
-        //       StorageCore.accounts,
-        //       value,
-        //     ));
+        await master.getAccounts().then((value) async => await storage.saveData(
+              StorageCore.accounts,
+              value,
+            ));
       }
 
       if (dropshipper) {
-        await master.getDropshippers().then((value) async => await storage.saveData(
+        await master.getDropshippers(QueryParamModel()).then((value) async => await storage.saveData(
               StorageCore.dropshipper,
               value,
             ));
       }
 
       if (receiver) {
-        await master.getReceivers().then((value) async => await storage.saveData(
+        await master.getReceivers(QueryParamModel()).then((value) async => await storage.saveData(
               StorageCore.receiver,
               value,
             ));
@@ -329,17 +341,18 @@ class DashboardController extends BaseController {
       }
 
       if (ccrfP) {
-        // await profil.getCcrfProfil().then((value) async {
-        //   state.ccrf = value.payload;
-        //   await storage.saveData(StorageCore.ccrfProfil, value.payload);
-        // });
+        await profil.getCcrfProfil().then((value) async {
+          state.ccrf = value.data;
+          await storage.saveData(StorageCore.ccrfProfil, value.data);
+        });
       } else {
-        state.ccrf = CcrfProfilModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
+        state.ccrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
       }
 
-      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y");
+      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.ccrfApistatus == "Y");
 
       storage.saveData(StorageCore.ccrfProfil, state.ccrf);
+      // #TODO : implement jlc api
       // await jlc.postTotalPoint().then((value) {
       //   if (value.status == true) {
       //     state.jlcPoint = value.data?.first.sisaPoint.toString();

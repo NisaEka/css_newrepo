@@ -6,7 +6,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/draft_list_item.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +66,7 @@ class DraftTransaksiController extends BaseController {
 
   void validate(int index) {
     var data = draftList.elementAt(index);
-    Get.to(const InformasiKirimanScreen(), arguments: {
+    Get.to(const TransactionScreen(), arguments: {
       "cod_ongkir": data.delivery?.codOngkir == "Y" ? true : false,
       "account": data.dataAccount,
       "origin": data.origin,

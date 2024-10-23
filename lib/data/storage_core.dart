@@ -56,8 +56,8 @@ class StorageCore {
   }
 
   Future<String?> readToken() async {
-    var token = await storage.read(key: 'token');
-    return token;
+    var accessToken = await storage.read(key: token);
+    return accessToken;
   }
 
   void deleteLogin() async {

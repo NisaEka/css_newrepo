@@ -2,8 +2,8 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/add/add_penerima_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_penerima/penerima/list_penerima_controller.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver/add/add_receiver_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver/list_receiver_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -65,7 +65,7 @@ class ListPenerimaScreen extends StatelessWidget {
               })
             ],
             onChanged: (value) {
-              c.searchReceiver(value);
+              c.initData();
             },
             onClear: () {
               c.search.clear();
@@ -82,20 +82,7 @@ class ListPenerimaScreen extends StatelessWidget {
               : Expanded(
                   child: ListView(
                     shrinkWrap: true,
-                    children: c.search.text.isNotEmpty
-                        ? c.searchResultList.isNotEmpty
-                            ? c.searchResultList
-                                .mapIndexed(
-                                  (i, e) => c.receiverItem(e, i, context),
-                                )
-                                .toList()
-                            : [
-                                Center(
-                                    child: DataEmpty(
-                                  text: "Penerima Tidak Ditemukan".tr,
-                                ))
-                              ]
-                        : c.receiverList.isNotEmpty
+                    children: c.receiverList.isNotEmpty
                             ? c.receiverList
                                 .mapIndexed(
                                   (i, e) => c.receiverItem(e, i, context),

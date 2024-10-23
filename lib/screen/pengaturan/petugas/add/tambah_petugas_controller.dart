@@ -2,12 +2,13 @@ import 'dart:core';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
+import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
-import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class TambahPetugasController extends BaseController {
   bool isObscurePassword = true;
   bool isObscurePasswordConfirm = true;
   UserModel? basic;
-  CcrfProfilModel? ccrf;
+  CcrfProfileModel? ccrf;
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
     color: greyDarkColor1,
@@ -102,8 +103,8 @@ class TambahPetugasController extends BaseController {
     branchList = [];
     update();
     try {
-      await transaction.getAccountNumber().then((value) {
-        accountList.addAll(value.payload ?? []);
+      await master.getAccounts().then((value) {
+        accountList.addAll(value.data ?? []);
         update();
       });
 
@@ -120,8 +121,7 @@ class TambahPetugasController extends BaseController {
         print("akuns: ${accountList.length}");
         print("akuns: ${accountList.first.accountId}");
         dataPetugas.payload?.accounts?.forEach((account) {
-          // print("akun terpilih : ${ account.accountId}");
-          print("akunss: ${account.accountId}");
+          
           selectedAccountList.add((accountList.where((e) => e.accountId == account.accountId).isNotEmpty
               ? (accountList.where((e) => e.accountId == account.accountId).first)
               : Account()));
@@ -177,11 +177,11 @@ class TambahPetugasController extends BaseController {
         basic = UserModel.fromJson(
           await storage.readData(StorageCore.userProfil),
         );
-        ccrf = CcrfProfilModel.fromJson(
+        ccrf = CcrfProfileModel.fromJson(
           await storage.readData(StorageCore.ccrfProfil),
         );
         alamat.text = basic?.address ?? '';
-        zipCode.text = ccrf?.generalInfo?.zipCode ?? '';
+        zipCode.text = ccrf?.generalInfo?.ccrfZipcode ?? '';
         update();
       }
     } catch (e, i) {

@@ -37,36 +37,36 @@ class AlamatReturnScreen extends StatelessWidget {
               )
             : [
                 DataUmumListItem(
-                  title: c.ccrfProfil?.returnAddress?.responsibleName ?? '-',
-                  subtitle: c.ccrfProfil?.returnAddress?.npwpName ?? '-',
+                  title: c.ccrfProfil?.returnAddress?.ccrfReturnresponsiblename ?? '-',
+                  subtitle: c.ccrfProfil?.returnAddress?.ccrfNpwpname ?? '-',
                   icon: Icons.person_pin,
                   tooltip: '${'Nama Penanggung Jawab'.tr}\n${'Nama NPWP'.tr}',
                 ),
                 DataUmumListItem(
-                  title: c.ccrfProfil?.returnAddress?.npwpType ?? '-',
-                  subtitle: c.ccrfProfil?.returnAddress?.npwpNumber ?? '-',
+                  title: c.ccrfProfil?.returnAddress?.ccrfNpwptype ?? '-',
+                  subtitle: c.ccrfProfil?.returnAddress?.ccrfNpwpnumber ?? '-',
                   icon: Icons.credit_score_rounded,
                   tooltip: '${'Jenis NPWP'.tr}\n${'Nomor NPWP'.tr}',
                 ),
                 DataUmumListItem(
-                  title: c.ccrfProfil?.returnAddress?.jlcNumber ?? '-',
-                  subtitle: c.ccrfProfil?.returnAddress?.counter ?? '-',
+                  title: c.ccrfProfil?.returnAddress?.ccrfJlcnumber ?? '-',
+                  subtitle: c.ccrfProfil?.returnAddress?.ccrfCounter ?? '-',
                   icon: Icons.card_membership_rounded,
                   tooltip: '${'Nomor JLC'.tr}\n${'Nomor Counter Pengiriman'.tr}',
                 ),
                 DataUmumListItem(
-                  title: c.ccrfProfil?.returnAddress?.secondaryPhone ?? c.ccrfProfil?.returnAddress?.phone ?? '-',
-                  subtitle: c.ccrfProfil?.returnAddress?.phone ?? '-',
+                  title: c.ccrfProfil?.returnAddress?.ccrfReturnhandphone ?? c.ccrfProfil?.returnAddress?.ccrfReturnphone ?? '-',
+                  subtitle: c.ccrfProfil?.returnAddress?.ccrfReturnphone ?? '-',
                   icon: Icons.contact_phone_rounded,
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
                 DataUmumListItem(
-                  title: "${c.ccrfProfil?.returnAddress?.address ?? '-'}"
-                      ",  ${c.ccrfProfil?.returnAddress?.subDistrict ?? '-'}"
-                      ", ${c.ccrfProfil?.returnAddress?.district ?? '-'}"
-                      ", ${c.ccrfProfil?.returnAddress?.city ?? '-'}"
-                      ", ${c.ccrfProfil?.returnAddress?.province ?? '-'}"
-                      ", ${c.ccrfProfil?.returnAddress?.zipCode ?? '-'}",
+                  title: "${c.ccrfProfil?.returnAddress?.ccrfReturnaddress ?? '-'}"
+                      ",  ${c.ccrfProfil?.returnAddress?.ccrfReturnsubdistrict ?? '-'}"
+                      ", ${c.ccrfProfil?.returnAddress?.ccrfReturndistrict ?? '-'}"
+                      ", ${c.ccrfProfil?.returnAddress?.ccrfReturncity ?? '-'}"
+                      ", ${c.ccrfProfil?.returnAddress?.ccrfReturnprovince ?? '-'}"
+                      ", ${c.ccrfProfil?.returnAddress?.ccrfReturnzipcode ?? '-'}",
                   // subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
                   icon: Icons.home,
                   tooltip: 'Alamat Lengkap'.tr,

@@ -2,10 +2,9 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_existing_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
+import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
-import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
@@ -38,17 +37,20 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future<GetCcrfProfilModel> getCcrfProfil() async {
+  Future<BaseResponse<CcrfProfileModel>> getCcrfProfil() async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.get(
-        "/profile/ccrf",
+      Response response = await network.base.get(
+        "/me/ccrf",
       );
-      print('isccrf api : $response');
-      return GetCcrfProfilModel.fromJson(response.data);
+      return BaseResponse<CcrfProfileModel>.fromJson(
+        response.data,
+        (json) => CcrfProfileModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
-      return GetCcrfProfilModel.fromJson(e.response?.data);
+      print("ccrf error : ${e.response?.data}");
+      return e.response?.data;
     }
   }
 
@@ -123,7 +125,10 @@ class ProfilRepositoryImpl extends ProfilRepository {
           "zip_code": data.zipCode
         },
       );
-      return BaseResponse.fromJson(response.data, (json) => null,);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => null,
+      );
     } on DioException catch (e) {
       return e.response?.data;
     }

@@ -105,7 +105,7 @@ class EditProfilScreen extends StatelessWidget {
                   ),
                 );
               },
-              selectedItem: c.ccrfProfil?.generalInfo?.zipCode,
+              selectedItem: c.ccrfProfil?.generalInfo?.ccrfZipcode,
               itemAsString: (Destination e) => c.isCcrf
                   ? '${e.cityName ?? ''}; '
                       '${e.districtName ?? ''}; '

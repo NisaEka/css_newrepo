@@ -1,8 +1,9 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/bottombar_controller.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
-import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
+
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -23,7 +24,7 @@ class AltProfileController extends BaseController {
   UserModel? basicProfil;
   String? version;
   AllowedMenu allow = AllowedMenu();
-  GetCcrfProfilModel? ccrf;
+  CcrfProfileModel? ccrf;
   bool isCcrf = false;
 
   @override
@@ -98,7 +99,7 @@ class AltProfileController extends BaseController {
     try {
       // if (ccrfProfile) {
         await profil.getCcrfProfil().then((value) {
-          ccrf = value;
+          ccrf = value.data;
           update();
         });
       // }
@@ -106,7 +107,7 @@ class AltProfileController extends BaseController {
       e.printError();
     }
 
-    isCcrf = ccrf?.payload != null && ccrf?.payload?.generalInfo?.apiStatus == "Y";
+    isCcrf = ccrf != null && ccrf?.generalInfo?.ccrfApistatus == "Y";
     update();
   }
 

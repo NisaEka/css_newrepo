@@ -63,9 +63,10 @@ class SignupForm extends StatelessWidget {
                         ),
                         OriginDropdown(
                           onChanged: (value) => c.selectOrigin(value),
-                          readonly: c.state.isDefaultOrigin,
+                          readOnly: c.state.isDefaultOrigin,
                           value: c.state.selectedOrigin,
                           selectedItem: c.state.kotaPengirim.text,
+                          prefixIcon: const Icon(Icons.location_city),
                         ),
                         c.state.isSelectCounter
                             ? Row(

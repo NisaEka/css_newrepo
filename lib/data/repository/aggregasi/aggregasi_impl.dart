@@ -4,7 +4,8 @@ import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dar
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_total_model.dart';
 import 'package:css_mobile/data/model/default_response_model.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/aggregasi/aggregasi_repository.dart';
 import 'package:dio/dio.dart';

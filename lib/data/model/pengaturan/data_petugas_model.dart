@@ -1,6 +1,6 @@
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
 
 class DataPetugasModel {
   DataPetugasModel({

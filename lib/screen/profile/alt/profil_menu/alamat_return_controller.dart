@@ -1,8 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
-import 'package:css_mobile/data/model/profile/get_ccrf_profil_model.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
-import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +7,7 @@ class AlamatReturnController extends BaseController {
   bool isLogin = false;
   bool isLoading = false;
 
-  CcrfProfilModel? ccrfProfil;
+  CcrfProfileModel? ccrfProfil;
 
   @override
   void onInit() {
@@ -26,7 +23,7 @@ class AlamatReturnController extends BaseController {
       isLogin = token != null;
 
       await profil.getCcrfProfil().then(
-            (value) => ccrfProfil = value.payload,
+            (value) => ccrfProfil = value.data,
           );
     } catch (e, i) {
       e.printError();

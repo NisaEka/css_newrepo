@@ -2,7 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/log_activity_stepper.dart';

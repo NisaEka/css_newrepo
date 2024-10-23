@@ -47,12 +47,12 @@ class PengaturanController extends BaseController {
     update();
     await auth
         .logout(
-      // Device(
+            // Device(
             //   fcmToken: await storage.readString(StorageCore.fcmToken),
             // ),
             )
         .then((value) async {
-      if (value.code == 201) {
+      if (value.code == 200) {
         await auth.logout();
         storage.deleteLogin();
         Get.offAll(const LoginScreen());

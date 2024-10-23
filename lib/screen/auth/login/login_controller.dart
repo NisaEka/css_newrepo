@@ -21,15 +21,6 @@ import 'package:get/get.dart';
 class LoginController extends BaseController {
   final state = LoginState();
 
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  //   state.emailTextField.dispose();
-  //   state.passwordTextField.dispose();
-  //   emailFocus?.dispose();
-  //   passFocus?.dispose();
-  // }
-
   @override
   void onInit() async {
     super.onInit();

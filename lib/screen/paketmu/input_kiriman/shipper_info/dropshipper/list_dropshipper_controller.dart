@@ -2,27 +2,30 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/master/get_receiver_model.dart';
+
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ListPenerimaController extends BaseController {
-  final search = TextEditingController();
+class ListDropshipperController extends BaseController {
+  Account account = Get.arguments['account'];
 
+  final search = TextEditingController();
   bool isLoading = false;
   bool isOnline = false;
-  List<ReceiverModel> receiverList = [];
-  List<ReceiverModel> searchResultList = [];
-  ReceiverModel? selectedReceiver;
+  List<DropshipperModel> dropshipperList = [];
+
+  DropshipperModel? selectedDropshipper;
 
   @override
   void onInit() {
     super.onInit();
     Future.wait([initData()]);
-
     connection.checkConnection();
 
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
@@ -34,49 +37,39 @@ class ListPenerimaController extends BaseController {
     }));
   }
 
-  void searchReceiver(String text) {
-    searchResultList = [];
-    if (text.isEmpty) {
-      searchResultList = [];
-      update();
-    } else {
-      for (var receiver in receiverList) {
-        if (receiver.name?.contains(text) ?? false) {
-          searchResultList.add(receiver);
-          update();
-        }
-      }
-      update();
-    }
-
-    update();
-  }
-
   Future<void> initData() async {
     isLoading = true;
-    receiverList = [];
+    dropshipperList = [];
+
+    connection.isOnline().then((value) => isOnline = value);
+    update();
+
     try {
-      await master.getReceivers().then((value) => receiverList.addAll(value.data ?? []));
+      await master.getDropshippers(QueryParamModel(search: search.text)).then((value) => dropshipperList.addAll(value.data ?? []));
+      update();
     } catch (e) {
       e.printError();
-      var receiver = BaseResponse<List<ReceiverModel>>.fromJson(
-          await storage.readData(StorageCore.receiver),
-          (json) => json is List<dynamic>
-              ? json
-                  .map<ReceiverModel>(
-                    (i) => ReceiverModel.fromJson(i as Map<String, dynamic>),
-                  )
-                  .toList()
-              : List.empty());
-      receiverList.addAll(receiver.data ?? []);
+      var dropshipper = BaseResponse<List<DropshipperModel>>.fromJson(
+        await storage.readData(StorageCore.dropshipper),
+        (json) => json is List<dynamic>
+            ? json
+                .map<DropshipperModel>(
+                  (i) => DropshipperModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+      dropshipperList.addAll(dropshipper.data ?? []);
     }
+
     isLoading = false;
     update();
   }
 
-  void delete(ReceiverModel data) async {
+
+  void delete(DropshipperModel data) async {
     try {
-      await transaction.deleteReceiver(data.idReceive ?? '').then(
+      await transaction.deleteDropshipper(data.id ?? '').then(
             (value) => Get.showSnackbar(
               GetSnackBar(
                 icon: Icon(
@@ -96,23 +89,20 @@ class ListPenerimaController extends BaseController {
     initData();
   }
 
-  Widget receiverItem(ReceiverModel e, int i, BuildContext context) {
+  Widget dropshipperItem(DropshipperModel e, int i, BuildContext context) {
     return ContactRadioListItem(
       isLoading: isLoading,
       index: i,
+      groupValue: dropshipperList,
       value: e,
       name: e.name,
       phone: e.phone,
       city: e.city,
       address: e.address,
-      groupValue: selectedReceiver,
-      isSelected: e == selectedReceiver ? true : false,
       onChanged: (value) {
-        selectedReceiver = value as ReceiverModel?;
+        selectedDropshipper = value as DropshipperModel?;
         update();
-        Get.back(
-          result: selectedReceiver,
-        );
+        Get.back(result: selectedDropshipper);
       },
       onDelete: (value) => showDialog(
         context: context,

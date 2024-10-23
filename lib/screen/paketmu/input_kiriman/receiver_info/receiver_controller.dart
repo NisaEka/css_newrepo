@@ -5,17 +5,19 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class InformasiPenerimaController extends BaseController {
+class ReceiverController extends BaseController {
   DataTransactionModel? data = Get.arguments['data'];
   Shipper shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
@@ -125,7 +127,9 @@ class InformasiPenerimaController extends BaseController {
     destinationList = [];
     BaseResponse<List<Destination>>? response;
     try {
-      response = await master.getDestinations(keyword);
+      response = await master.getDestinations(QueryParamModel(
+        search: keyword.toUpperCase(),
+      ));
       // destinationModel = response;
     } catch (e, i) {
       e.printError();
@@ -139,7 +143,7 @@ class InformasiPenerimaController extends BaseController {
 
   void nextStep() {
     Get.to(
-      const InformasiKirimanScreen(),
+      const TransactionScreen(),
       transition: Transition.rightToLeft,
       arguments: {
         "data": data,
@@ -197,7 +201,7 @@ class InformasiPenerimaController extends BaseController {
                         Icons.info,
                         color: whiteColor,
                       ),
-                      message: "Data penerima telah disimpan".tr,
+                      message: "Data receiver telah disimpan".tr,
                       isDismissible: true,
                       duration: const Duration(seconds: 3),
                       backgroundColor: value.code == 201 ? successColor : errorColor,

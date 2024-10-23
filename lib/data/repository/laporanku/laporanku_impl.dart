@@ -66,13 +66,16 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.dio.get("/ticket", queryParameters: {
-        "page": page,
-        "limit": limit,
-        "status": status,
-        "date": date,
-        "keyword": query,
-      });
+      Response response = await network.dio.get(
+        "/ticket",
+        queryParameters: {
+          "page": page,
+          "limit": limit,
+          "status": status,
+          "date": date,
+          "keyword": query,
+        },
+      );
 
       return GetTicketModel.fromJson(response.data);
     } on DioException catch (e) {

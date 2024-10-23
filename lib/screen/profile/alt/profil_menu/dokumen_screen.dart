@@ -31,36 +31,36 @@ class DokumenScreen extends StatelessWidget {
           DocumentImageItem(
             isLoading: c.isLoading,
             title: 'Lampiran Dokumen KTP'.tr,
-            img: c.ccrfProfil?.document?.idCard ?? '',
+            img: c.ccrfProfil?.document?.ccrfKtpattached ?? '',
             onTap: () => showDialog(
               context: context,
               builder: (context) => ImagePopupDialog(
                 title: 'Lampiran Dokumen KTP'.tr,
-                img: c.ccrfProfil?.document?.idCard ?? '',
+                img: c.ccrfProfil?.document?.ccrfKtpattached ?? '',
               ),
             ),
           ),
           DocumentImageItem(
             isLoading: c.isLoading,
             title: 'Lampiran Dokumen NPWP'.tr,
-            img: c.ccrfProfil?.document?.npwp ?? '',
+            img: c.ccrfProfil?.document?.ccrfNpwpattached ?? '',
             onTap: () => showDialog(
               context: context,
               builder: (context) => ImagePopupDialog(
                 title: 'Lampiran Dokumen NPWP'.tr,
-                img: c.ccrfProfil?.document?.npwp ?? '',
+                img: c.ccrfProfil?.document?.ccrfNpwpattached ?? '',
               ),
             ),
           ),
           DocumentImageItem(
             isLoading: c.isLoading,
             title: 'Lampiran Dokumen Rekening'.tr,
-            img: c.ccrfProfil?.document?.bankAccount ?? '',
+            img: c.ccrfProfil?.document?.ccrfAccountattached ?? '',
             onTap: () => showDialog(
               context: context,
               builder: (context) => ImagePopupDialog(
                 title: 'Lampiran Dokumen Rekening'.tr,
-                img: c.ccrfProfil?.document?.bankAccount ?? '',
+                img: c.ccrfProfil?.document?.ccrfAccountattached ?? '',
               ),
             ),
           ),

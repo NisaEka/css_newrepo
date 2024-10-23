@@ -166,13 +166,29 @@ class QueryParamModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['table'] = _table;
-    map['trash'] = _trash;
-    map['includeDeleted'] = _includeDeleted;
-    map['relation'] = _relation;
-    map['limit'] = _limit;
-    map['search'] = _search;
-    map['where'] = _where;
+    if (_table != null) {
+      map['table'] = _table;
+    }
+
+    if (_trash != null) {
+      map['trash'] = _trash;
+    }
+
+    if (_includeDeleted != null) {
+      map['includeDeleted'] = _includeDeleted;
+    }
+
+    if (_relation != null) {
+      map['relation'] = _relation;
+    }
+
+    if (_search != null) {
+      map['search'] = _search;
+    }
+
+    if (_where != null) {
+      map['where'] = _where;
+    }
 
     if (_page != null) {
       map['page'] = _page;
@@ -180,70 +196,51 @@ class QueryParamModel {
       map['page'] = 1;
     }
 
+    if (_limit != null) {
+      map['limit'] = _limit;
+    }
     if (_notEqual != null) {
       map['notEqual'] = _notEqual;
-    } else {
-      map['notEqual'] = "[]";
     }
 
     if (greaterThan != null) {
       map['greaterThan'] = _greaterThan;
-    } else {
-      map['greaterThan'] = "[]";
     }
 
     if (greaterThan != null) {
       map['lessThan'] = _greaterThan;
-    } else {
-      map['lessThan'] = "[]";
     }
 
     if (greaterThan != null) {
       map['like'] = _like;
-    } else {
-      map['like'] = "[]";
     }
 
     if (greaterThan != null) {
       map['sort'] = _like;
-    } else {
-      map['sort'] = "[]";
     }
 
     if (greaterThan != null) {
       map['between'] = _like;
-    } else {
-      map['between'] = "[]";
     }
 
     if (greaterThan != null) {
       map['in'] = _in;
-    } else {
-      map['in'] = "[]";
     }
 
     if (greaterThan != null) {
       map['notin'] = _notin;
-    } else {
-      map['notin'] = "[]";
     }
 
     if (greaterThan != null) {
       map['isNull'] = _isNull;
-    } else {
-      map['isNull'] = "[]";
     }
 
     if (greaterThan != null) {
       map['isNotNull'] = _isNotNull;
-    } else {
-      map['isNotNull'] = "[]";
     }
 
     if (greaterThan != null) {
       map['select'] = _select;
-    } else {
-      map['select'] = "[]";
     }
 
     return map;

@@ -1,6 +1,9 @@
+import 'package:css_mobile/api/firebase_api.dart';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:get/get.dart';
 
@@ -21,16 +24,25 @@ class NoAkunController extends BaseController {
     isLoading = true;
     accountList = [];
     try {
-      await transaction.getAccountNumber().then((value) {
-        accountList.addAll(value.payload ?? []);
+      await master.getAccounts().then((value) {
+        accountList.addAll(value.data ?? []);
         update();
       });
     } catch (e, i) {
       e.printError();
       i.printError();
       accountList = [];
-      var accounts = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
-      accountList.addAll(accounts.payload ?? []);
+      var accounts = BaseResponse<List<Account>>.fromJson(
+        await storage.readData(StorageCore.accounts),
+        (json) => json is List<dynamic>
+            ? json
+                .map<Account>(
+                  (i) => Account.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+      accountList.addAll(accounts.data ?? []);
     }
 
     isLoading = false;
@@ -43,7 +55,7 @@ class NoAkunController extends BaseController {
         logActivityList.addAll(value.payload ?? []);
         update();
       });
-    } catch (e,i) {
+    } catch (e, i) {
       e.printError();
       i.printError(info: "Error info:");
     }

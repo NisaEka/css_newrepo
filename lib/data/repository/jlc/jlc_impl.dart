@@ -1,10 +1,12 @@
 import 'package:css_mobile/config/api_config.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_point_reedem_model.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_transactions_model.dart';
 import 'package:css_mobile/data/model/jlc/post_total_point_model.dart';
-import 'package:css_mobile/data/model/transaction/get_account_number_model.dart';
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/jlc/jlc_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -19,8 +21,17 @@ class JLCRepositoryImpl extends JLCRepository {
 
   @override
   Future<PostTotalPointModel> postTotalPoint() async {
-    var account = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
-    var jlc = account.payload?.where((element) => element.accountService == "JLC");
+    var account = BaseResponse<List<Account>>.fromJson(
+      await storage.readData(StorageCore.accounts),
+      (json) => json is List<dynamic>
+          ? json
+              .map<Account>(
+                (i) => Account.fromJson(i as Map<String, dynamic>),
+              )
+              .toList()
+          : List.empty(),
+    );
+    var jlc = account.data?.where((element) => element.accountService == "JLC");
 
     try {
       Response response = await network.myJNE.post(
@@ -32,7 +43,7 @@ class JLCRepositoryImpl extends JLCRepository {
         },
       );
 
-       return PostTotalPointModel.fromJson(response.data);
+      return PostTotalPointModel.fromJson(response.data);
     } on DioException catch (e) {
       return PostTotalPointModel.fromJson(e.response?.data);
     }
@@ -40,8 +51,17 @@ class JLCRepositoryImpl extends JLCRepository {
 
   @override
   Future<PostJlcTransactionsModel> postTransPoint() async {
-    var account = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
-    var jlc = account.payload?.where((element) => element.accountService == "JLC");
+    var account = BaseResponse<List<Account>>.fromJson(
+      await storage.readData(StorageCore.accounts),
+          (json) => json is List<dynamic>
+          ? json
+          .map<Account>(
+            (i) => Account.fromJson(i as Map<String, dynamic>),
+      )
+          .toList()
+          : List.empty(),
+    );
+    var jlc = account.data?.where((element) => element.accountService == "JLC");
 
     try {
       Response response = await network.myJNE.post(
@@ -60,8 +80,17 @@ class JLCRepositoryImpl extends JLCRepository {
 
   @override
   Future<PostJlcPointReedemModel> postTukarPoint() async {
-    var account = GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts));
-    var jlc = account.payload?.where((element) => element.accountService == "JLC");
+    var account = BaseResponse<List<Account>>.fromJson(
+      await storage.readData(StorageCore.accounts),
+          (json) => json is List<dynamic>
+          ? json
+          .map<Account>(
+            (i) => Account.fromJson(i as Map<String, dynamic>),
+      )
+          .toList()
+          : List.empty(),
+    );
+    var jlc = account.data?.where((element) => element.accountService == "JLC");
 
     try {
       Response response = await network.myJNE.post(

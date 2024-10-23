@@ -1,15 +1,13 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/akun_transaksi/akun_transaksi_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/informasi_kiriman/informasi_kiriman_controller.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_appbar.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/trans_account/trans_account_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_controller.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
-import 'package:css_mobile/widgets/bar/customstepper.dart';
-import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/bar/offlinebar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
@@ -24,18 +22,21 @@ import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
-class InformasiKirimanScreen extends StatelessWidget {
-  const InformasiKirimanScreen({super.key});
+class TransactionScreen extends StatelessWidget {
+  const TransactionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<InformasiKirimaController>(
-        init: InformasiKirimaController(),
+    return GetBuilder<TransactionController>(
+        init: TransactionController(),
         builder: (controller) {
           return Stack(
             children: [
               Scaffold(
-                appBar: _appBarContent(controller),
+                appBar: TransactionAppbar(
+                  isOnline: controller.isOnline,
+                  currentStep: 2,
+                ),
                 body: RefreshIndicator(
                   color: greyColor,
                   onRefresh: () => controller.initData(),
@@ -49,7 +50,7 @@ class InformasiKirimanScreen extends StatelessWidget {
         });
   }
 
-  Widget _warningDialog(InformasiKirimaController c) {
+  Widget _warningDialog(TransactionController c) {
     return Container(
       height: Get.height,
       width: Get.width,
@@ -96,51 +97,8 @@ class InformasiKirimanScreen extends StatelessWidget {
     );
   }
 
-  CustomTopBar _appBarContent(InformasiKirimaController c) {
-    return CustomTopBar(
-      title: 'Input Transaksi'.tr,
-      flexibleSpace: Column(
-        children: [
-          c.isOnline ? const SizedBox() : const OfflineBar(),
-          CustomStepper(
-            currentStep: 2,
-            totalStep: c.steps.length,
-            steps: c.steps,
-          ),
-          const SizedBox(height: 10),
-        ],
-      ),
-      action: const [
-        // controller.isOnline
-        //     ? const SizedBox()
-        //     : Tooltip(
-        //         key: controller.offlineTooltipKey,
-        //         triggerMode: TooltipTriggerMode.tap,
-        //         showDuration: const Duration(seconds: 3),
-        //         decoration: ShapeDecoration(
-        //           color: greyColor,
-        //           shape: ToolTipCustomShape(usePadding: false),
-        //         ),
-        //         // textStyle: listTitleTextStyle.copyWith(color: whiteColor),
-        //         message: 'Offline Mode',
-        //         child: Container(
-        //           margin: const EdgeInsets.only(right: 20),
-        //           padding: const EdgeInsets.all(5),
-        //           decoration: BoxDecoration(
-        //             color: successColor,
-        //             borderRadius: BorderRadius.circular(50),
-        //           ),
-        //           child: const Icon(
-        //             Icons.cloud_off,
-        //             color: whiteColor,
-        //           ),
-        //         ),
-        //       )
-      ],
-    );
-  }
 
-  Widget _bodyContent(InformasiKirimaController c, BuildContext context) {
+  Widget _bodyContent(TransactionController c, BuildContext context) {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(

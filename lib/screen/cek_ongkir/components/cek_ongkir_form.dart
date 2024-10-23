@@ -1,8 +1,10 @@
 import 'package:css_mobile/screen/cek_ongkir/congkir_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
+import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customswitch.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/forms/origin_dropdown.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +22,15 @@ class CekOngkirForm extends StatelessWidget {
             key: c.state.formKey,
             child: Column(
               children: [
+                OriginDropdown(
+                  controller: c.state.kotaPengirim,
+                  label: "Origin",
+                  showfromBottom: true,
+                  value: c.state.selectedOrigin,
+                  onChanged: (p0) {
+                    print('selected origin : $p0');
+                  },
+                ),
                 CustomTextFormField(
                   controller: c.state.kotaPengirim,
                   // items: [],
@@ -30,6 +41,7 @@ class CekOngkirForm extends StatelessWidget {
                   suffixIcon: const Icon(Icons.keyboard_arrow_down),
                   onTap: () => c.showCityList('Kota Asal'.tr),
                 ),
+
                 CustomTextFormField(
                   controller: c.state.kotaTujuan,
                   // items: [],
@@ -149,4 +161,6 @@ class CekOngkirForm extends StatelessWidget {
           );
         });
   }
+
+
 }
