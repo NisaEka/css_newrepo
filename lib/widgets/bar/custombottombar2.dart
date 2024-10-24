@@ -89,7 +89,7 @@ class BottomBar2 extends StatelessWidget {
                         : whiteColor.withOpacity(0.5),
                 // onTap: () => Get.offAll(const ProfileScreen()),
                 onTap: () => isLogin
-                    ? Get.offAll(AltProfileScreen())
+                    ? Get.offAll(const AltProfileScreen())
                     : showDialog(
                         context: context,
                         builder: (context) => const LoginAlertDialog(),

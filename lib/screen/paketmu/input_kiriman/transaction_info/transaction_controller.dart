@@ -299,7 +299,7 @@ class TransactionController extends BaseController {
 
       flatRate = value.payload?.flatRate?.toInt() ?? 0;
       freightCharge = value.payload?.freightCharge?.toInt() ?? 0;
-      print("freightCharge${freightCharge}");
+      print("freightCharge$freightCharge");
       update();
     } catch (e, i) {
       e.printError();

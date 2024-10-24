@@ -130,10 +130,10 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
               });
             },
             style: ButtonStyle(
-                padding: MaterialStateProperty.resolveWith((states) {
+                padding: WidgetStateProperty.resolveWith((states) {
                   return const EdgeInsets.symmetric(horizontal: 4, vertical: 2);
                 }),
-                side: MaterialStateProperty.resolveWith((states) {
+                side: WidgetStateProperty.resolveWith((states) {
                   return BorderSide(
                       color: Theme.of(context).colorScheme.outline
                   );

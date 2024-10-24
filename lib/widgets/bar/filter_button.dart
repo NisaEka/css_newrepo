@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';

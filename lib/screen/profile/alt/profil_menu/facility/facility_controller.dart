@@ -5,7 +5,6 @@ import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/facility/facility_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/constant.dart';
-import 'package:get/get.dart';
 
 class FacilityController extends BaseController {
 

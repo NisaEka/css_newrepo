@@ -1,6 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_controller.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';

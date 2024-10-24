@@ -31,7 +31,7 @@ class FacilityFormBankController extends BaseController {
   bool termsAndConditionsCheck = false;
   bool buttonEnabled = false;
 
-  List<BankModel> _banks = [];
+  final List<BankModel> _banks = [];
   List<BankModel> get banks => _banks;
 
   BankModel? _selectedBank;

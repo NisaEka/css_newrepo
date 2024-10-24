@@ -1,5 +1,4 @@
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:dropdown_search/dropdown_search.dart';

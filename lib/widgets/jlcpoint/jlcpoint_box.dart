@@ -5,7 +5,6 @@ import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:marquee/marquee.dart';
 
 class JlcPointBox extends StatelessWidget {
   final String totalTransaksi;

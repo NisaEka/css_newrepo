@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 

@@ -1,5 +1,5 @@
 import 'package:css_mobile/config/api_config.dart';
-import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
 import 'package:dio/dio.dart';

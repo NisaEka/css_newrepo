@@ -32,7 +32,7 @@ class BottomBar3 extends StatelessWidget {
       const LacakKirimanScreen(),
       const InformasiPengirimScreen(),
       const DashboardScreen(),
-      AltProfileScreen(),
+      const AltProfileScreen(),
     ];
 
     return Builder(

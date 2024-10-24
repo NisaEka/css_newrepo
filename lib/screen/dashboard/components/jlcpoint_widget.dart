@@ -2,7 +2,6 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

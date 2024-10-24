@@ -16,11 +16,6 @@ class PasswordRecoveryController extends BaseController {
 
   // String? email;
 
-  @override
-  void onInit() {
-    super.onInit();
-    // Future.wait([initData()]);
-  }
 
   String getMail() {
     var nameUser = email?.split("@");

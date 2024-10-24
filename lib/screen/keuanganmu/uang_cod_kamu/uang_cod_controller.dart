@@ -14,10 +14,6 @@ class UangCODController extends BaseController {
   String dateFilter = '0';
   String? date;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   void selectDateFilter(int filter) {
     dateFilter = filter.toString();

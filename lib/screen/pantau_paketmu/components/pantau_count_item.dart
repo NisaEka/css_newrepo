@@ -23,7 +23,7 @@ class PantauCountItem extends StatelessWidget {
     return Shimmer(
       isLoading: isLoading,
       child: GestureDetector(
-        onTap: () => Get.to(PantauPaketmuScreen()),
+        onTap: () => Get.to(const PantauPaketmuScreen()),
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),

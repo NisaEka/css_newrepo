@@ -1,5 +1,4 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -4,7 +4,6 @@ import 'package:css_mobile/screen/invoice/detail/invoice_detail_controller.dart'
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/items/text_col_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

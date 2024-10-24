@@ -1,6 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
-import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_cnote/agg_by_cnote_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

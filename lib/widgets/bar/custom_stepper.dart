@@ -26,7 +26,7 @@ class IKStepper extends StatelessWidget {
         colorScheme: const ColorScheme.light(
           primary: redJNE,
           secondary: greyLightColor1,
-          background: whiteColor,
+          surface: whiteColor,
         ),
       ),
       child: Stepper(

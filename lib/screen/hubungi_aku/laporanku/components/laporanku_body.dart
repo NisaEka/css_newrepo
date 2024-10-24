@@ -89,7 +89,7 @@ class LaporankuBody extends StatelessWidget {
               ),
             ],
           ),
-        );;
+        );
       }
     );
   }

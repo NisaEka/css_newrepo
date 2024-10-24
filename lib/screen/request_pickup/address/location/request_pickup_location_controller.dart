@@ -1,5 +1,4 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/util/ext/placement_ext.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geocoding/geocoding.dart';

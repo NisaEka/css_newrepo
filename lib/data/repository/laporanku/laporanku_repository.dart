@@ -3,7 +3,6 @@ import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_summary_model.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_controller.dart';
 
 abstract class LaporankuRepository {
   Future<GetTicketCategoryModel> getTicketCategory();

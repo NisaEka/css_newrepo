@@ -9,8 +9,6 @@ import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggminus_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_item.dart';
-import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';

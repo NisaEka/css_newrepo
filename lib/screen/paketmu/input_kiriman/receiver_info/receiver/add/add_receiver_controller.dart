@@ -20,10 +20,6 @@ class AddPenerimaController extends BaseController {
 
   Destination? selectedDestination;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<List<Destination>> getDestinationList(String keyword) async {
     isLoading = true;

@@ -18,7 +18,7 @@ class DashboardMarquee extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onBackground,
+        color: Theme.of(context).colorScheme.onSurface,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: greyDarkColor1),
         boxShadow: const [

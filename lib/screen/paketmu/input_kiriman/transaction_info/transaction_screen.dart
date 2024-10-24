@@ -364,7 +364,7 @@ class TransactionScreen extends StatelessWidget {
                             key: c.tooltipkey,
                             triggerMode: TooltipTriggerMode.tap,
                             showDuration: const Duration(seconds: 3),
-                            decoration: ShapeDecoration(
+                            decoration: const ShapeDecoration(
                               color: greyColor,
                               shape: ToolTipCustomShape(usePadding: false),
                             ),

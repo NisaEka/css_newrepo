@@ -1,4 +1,3 @@
-import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_count_item.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_card_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -22,7 +21,7 @@ class PantauCardScreen extends StatelessWidget {
               onRefresh: () => controller.loadPantauCountList(),
               child: SingleChildScrollView(
                 child: controller.state.isLoading
-                    ? LoadingDialog()
+                    ? const LoadingDialog()
                     : Column(
                         children: [
                           Column(

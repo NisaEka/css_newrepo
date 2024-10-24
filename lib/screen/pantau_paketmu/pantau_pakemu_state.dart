@@ -1,7 +1,6 @@
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 

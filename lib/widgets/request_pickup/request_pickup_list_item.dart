@@ -5,7 +5,6 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
 class RequestPickupItem extends StatefulWidget {
