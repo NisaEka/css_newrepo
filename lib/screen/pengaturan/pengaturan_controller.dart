@@ -52,11 +52,12 @@ class PengaturanController extends BaseController {
             // ),
             )
         .then((value) async {
-      if (value.code == 200) {
-        await auth.logout();
-        storage.deleteLogin();
-        Get.offAll(const LoginScreen());
-      }
+      debugPrint(value.toJson().toString());
+      // if (value.code == 200) {
+      await auth.logout();
+      storage.deleteLogin();
+      Get.offAll(const LoginScreen());
+      // }
     });
     isLoading = false;
     update();

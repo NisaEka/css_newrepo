@@ -1,7 +1,7 @@
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,7 +34,7 @@ class ShipperState {
 
   // GetOriginModel? originModel;
   Origin? selectedOrigin;
-  UserModel? shipper;
+  Shipper? shipper;
   DropshipperModel? dropshipper;
   String? locale;
 

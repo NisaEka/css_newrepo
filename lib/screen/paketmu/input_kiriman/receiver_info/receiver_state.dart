@@ -1,3 +1,36 @@
-class ReceiferState {
+import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
+import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/get_receiver_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+class ReceiverState {
+  DataTransactionModel? data = Get.arguments['data'];
+  Shipper shipper = Get.arguments['shipper'];
+  bool dropship = Get.arguments['dropship'];
+  DropshipperModel? dropshipper = Get.arguments['dropshipper'];
+  bool codOngkir = Get.arguments['cod_ongkir'];
+  Origin origin = Get.arguments['origin'];
+  Account account = Get.arguments['account'];
+
+  final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
+  final formKey = GlobalKey<FormState>();
+  final receiverName = TextEditingController();
+  final receiverPhone = TextEditingController();
+  final receiverDest = TextEditingController();
+  final receiverAddress = TextEditingController();
+
+  bool isLoading = false;
+  bool isOnline = true;
+  bool isLoadSave = false;
+
+  List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
+  List<Destination> destinationList = [];
+
+  // GetDestinationModel? destinationModel;
+  Destination? selectedDestination;
+  ReceiverModel? receiver;
 }

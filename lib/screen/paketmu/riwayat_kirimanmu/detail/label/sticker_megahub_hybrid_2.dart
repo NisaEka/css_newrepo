@@ -80,7 +80,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                 SizedBox(
                   width: (Get.width - 51) / 1.5,
                   child: Text(
-                    'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zip ?? ''}, Telp.${data.shipper?.phone ?? ''}',
+                    'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zipCode ?? ''}, Telp.${data.shipper?.phone ?? ''}',
                     style: labelTextStyle,
                   ),
                 ),

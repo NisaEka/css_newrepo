@@ -22,19 +22,20 @@ class _ReceiverScreenState extends State<ReceiverScreen> {
           return Stack(
             children: [
               Scaffold(
-                appBar: TransactionAppbar(isOnline: controller.isOnline,currentStep: 1,),
+                appBar: TransactionAppbar(
+                  data: controller.state.data,
+                  isOnline: controller.state.isOnline,
+                  currentStep: 1,
+                ),
                 body: RefreshIndicator(
                   color: greyColor,
                   onRefresh: () => controller.initData(),
-                  child:const ReceiverForm(),
+                  child: const ReceiverForm(),
                 ),
               ),
-              controller.isLoadSave ? const LoadingDialog() : const SizedBox()
+              controller.state.isLoadSave ? const LoadingDialog() : const SizedBox()
             ],
           );
         });
   }
-
-
-
 }

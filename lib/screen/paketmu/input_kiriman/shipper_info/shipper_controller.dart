@@ -6,7 +6,8 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/model/master/get_shipper_model.dart';
+import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
@@ -98,21 +99,64 @@ class ShipperController extends BaseController {
     state.isLoading = true;
     connection.isOnline().then((value) => state.isOnline = value);
 
+    storage.writeString(
+      StorageCore.transactionTemp,
+      DataTransactionModel(
+        shipper: state.shipper
+      ),
+    );
+
     try {
       await master.getAccounts().then((value) => state.accountList.addAll(value.data ?? []));
       update();
-      await profil.getBasicProfil().then((value) {
-        state.shipper = value.data?.user;
-        state.shipperName.text = value.data?.user?.name ?? '';
-        state.shipperPhone.text = value.data?.user?.phone ?? '';
-        state.shipperOrigin.text = value.data?.user?.origin?.originName ?? '';
-        state.shipperZipCode.text = value.data?.user?.zipCode ?? '';
-        state.shipperAddress.text = value.data?.user?.address ?? '';
-        state.selectedOrigin = Origin(
-            originCode: state.shipper?.origin?.originCode,
-            branchCode: state.shipper?.origin?.branchCode,
-            originName: state.shipper?.origin?.originName,
-            region: state.shipper?.origin?.region);
+
+      var user =  CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
+
+      await profil.getShipper().then((value) async {
+        if (value.data != null) {
+          state.shipper = Shipper(
+            name: value.data?.first.name,
+            region: value.data?.first.region?.name,
+            origin: value.data?.first.origin,
+            zipCode: value.data?.first.zipCode,
+            address: value.data?.first.address,
+            phone: value.data?.first.phone,
+            city: user.generalInfo?.ccrfCity,
+            country: user.generalInfo?.ccrfCountry,
+            dropship: state.isDropshipper,
+            contact: user.generalInfo?.ccrfName,
+            // address1:
+
+          );
+          state.shipperName.text = value.data?.first.name ?? '';
+          state.shipperPhone.text = value.data?.first.phone ?? '';
+          state.shipperOrigin.text = value.data?.first.origin?.originName ?? '';
+          state.shipperZipCode.text = value.data?.first.zipCode ?? '';
+          state.shipperAddress.text = value.data?.first.address ?? '';
+          state.selectedOrigin = value.data?.first.origin;
+        } else {
+          await profil.getBasicProfil().then((value) {
+            state.shipper = Shipper(
+              name: value.data?.user?.name,
+              phone: value.data?.user?.phone,
+              address: value.data?.user?.address,
+              zipCode: value.data?.user?.zipCode,
+              origin: value.data?.user?.origin,
+              region: value.data?.user?.region?.name,
+              contact: value.data?.user?.name,
+              city: value.data?.user?.origin?.originName,
+              country: 'INDONESIA',
+              dropship: state.isDropshipper
+
+            );
+            state.shipperName.text = value.data?.user?.name ?? '';
+            state.shipperPhone.text = value.data?.user?.phone ?? '';
+            state.shipperOrigin.text = value.data?.user?.origin?.originName ?? '';
+            state.shipperZipCode.text = value.data?.user?.zipCode ?? '';
+            state.shipperAddress.text = value.data?.user?.address ?? '';
+            state.selectedOrigin = value.data?.user?.origin;
+          });
+        }
       });
       update();
     } catch (e) {
@@ -129,7 +173,7 @@ class ShipperController extends BaseController {
       );
       state.accountList.addAll(accounts.data ?? []);
       // state.accountList.addAll(GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts)) );
-      state.shipper = UserModel.fromJson(await storage.readData(StorageCore.shipper));
+      state.shipper = Shipper.fromJson(await storage.readData(StorageCore.shipper));
       state.shipperName.text = state.shipper?.name ?? '';
       state.shipperPhone.text = state.shipper?.phone ?? '';
       state.shipperOrigin.text = state.shipper?.origin?.originName ?? '';
@@ -148,7 +192,7 @@ class ShipperController extends BaseController {
       state.selectedAccount = state.accountList.where((element) => element.accountNumber == state.data?.account?.accountNumber).first;
       state.shipperName.text = state.data?.shipper?.name ?? '';
       state.shipperPhone.text = state.data?.shipper?.phone ?? '';
-      state.shipperZipCode.text = state.data?.shipper?.zip ?? '';
+      state.shipperZipCode.text = state.data?.shipper?.zipCode ?? '';
       state.shipperAddress.text = state.data?.shipper?.address ?? '';
       state.isDropshipper = state.data?.shipper?.name != state.shipper?.name;
 
@@ -163,11 +207,11 @@ class ShipperController extends BaseController {
             address: state.data?.shipper?.address,
             city: state.data?.shipper?.city,
             phone: state.data?.shipper?.phone,
-            zipCode: state.data?.shipper?.zip,
+            zipCode: state.data?.shipper?.zipCode,
             origin: state.selectedOrigin?.branchCode,
           );
         } else {
-          state.shipper = UserModel(
+          state.shipper = ShipperModel(
             origin: value.first,
             name: state.data?.shipper?.name,
             address: state.data?.shipper?.address,
@@ -175,7 +219,7 @@ class ShipperController extends BaseController {
             region: Region(
               name: state.data?.shipper?.region,
             ),
-            zipCode: state.data?.shipper?.zip,
+            zipCode: state.data?.shipper?.zipCode,
           );
         }
 
@@ -219,7 +263,7 @@ class ShipperController extends BaseController {
             address2: state.shipperAddress.text.length >= 31 ? state.shipperAddress.text.substring(31, state.shipperAddress.text.length) : '',
             address3: state.shipperAddress.text.length >= 60 ? state.shipperAddress.text.substring(60, state.shipperAddress.text.length) : '',
             city: state.shipperOrigin.text.toUpperCase(),
-            zip: state.shipperZipCode.text,
+            zipCode: state.shipperZipCode.text,
             region: state.isDropshipper ? state.selectedOrigin?.region?.name : state.shipper?.region?.name,
             //province
             country: "ID",

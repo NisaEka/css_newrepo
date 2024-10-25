@@ -115,8 +115,8 @@ class ShipperForm extends StatelessWidget {
                             CustomTextFormField(
                               controller: c.state.shipperZipCode,
                               hintText: "Kode Pos".tr,
-                              // readOnly: !c.state.isDropshipper,
-                              // isRequired: true, implement profile ccrf
+                              readOnly: !c.state.isDropshipper,
+                              isRequired: true,
                               prefixIcon: const Icon(Icons.line_style),
                               // validator: ValidationBuilder().zipCode().build(),
                               inputType: TextInputType.number,

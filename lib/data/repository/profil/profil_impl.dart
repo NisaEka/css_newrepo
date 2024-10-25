@@ -2,9 +2,11 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_existing_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
+import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
@@ -130,6 +132,30 @@ class ProfilRepositoryImpl extends ProfilRepository {
         (json) => null,
       );
     } on DioException catch (e) {
+      return e.response?.data;
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<Shipper>>> getShipper() async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.base.get(
+        "/me/shipper",
+      );
+      return BaseResponse<List<Shipper>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<Shipper>(
+                  (i) => Shipper.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      print("shipper error : ${e.response?.data}");
       return e.response?.data;
     }
   }

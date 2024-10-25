@@ -1,3 +1,4 @@
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
@@ -137,7 +138,7 @@ class PengaturanScreen extends StatelessWidget {
           c.isLogin ? 'Keluar'.tr : 'Masuk'.tr,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        trailing: Text('v ${c.version.toString()}'.tr),
+        trailing: Text('v ${c.version.toString()}'.tr, style: TextStyle(color: CustomTheme().textColor(context)),),
         shape: const Border(
           bottom: BorderSide(color: greyColor),
           top: BorderSide(color: greyColor),

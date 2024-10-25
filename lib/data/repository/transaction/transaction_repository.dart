@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
@@ -5,7 +6,7 @@ import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
-import 'package:css_mobile/data/model/transaction/get_service_model.dart';
+
 import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
@@ -13,20 +14,18 @@ import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_officer_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_status_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
-import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
 
 abstract class TransactionRepository {
 
-  Future<GetServiceModel> getService(DataServiceModel param);
-
-  Future<ResponseModel<TransactionFeeModel>> getTransactionFee(DataTransactionFeeModel params);
+  // #TODO: delete after finish implemented
+  // Future<ResponseModel<TransactionFeeModel>> getTransactionFee(DataTransactionFeeModel params);
 
   Future<PostTransactionModel> postTransaction(DataTransactionModel data);
 
-  Future<GetCodFeeModel> getCODFee(String accountID);
+  Future<BaseResponse<CODFeeModel>> getCODFee(String accountID);
 
   Future<PostTransactionModel> postDropshipper(DropshipperModel data);
 
@@ -64,7 +63,7 @@ abstract class TransactionRepository {
 
   Future<GetTransactionOfficerModel> getTransOfficer();
 
-  Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data);
+  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data);
 
   Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(
     String transDate,

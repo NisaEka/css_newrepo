@@ -24,6 +24,7 @@ class OriginDropdown extends StatefulHookWidget {
   final bool showfromBottom;
   final TextEditingController? controller;
   final void Function(dynamic)? onSelect;
+  final String? branch;
 
   const OriginDropdown({
     super.key,
@@ -38,6 +39,7 @@ class OriginDropdown extends StatefulHookWidget {
     this.showfromBottom = false,
     this.controller,
     this.onSelect,
+    this.branch,
   });
 
   @override
@@ -49,7 +51,12 @@ class _OriginDropdownState extends State<OriginDropdown> {
 
   Future<List<Origin>> getOriginList(String keyword) async {
     final master = Get.find<MasterRepository>();
-    var response = await master.getOrigins(QueryParamModel(search: keyword.toUpperCase()));
+
+    var branchCode = '[{"branchCode" : "${widget.branch}"}]';
+    var response = await master.getOrigins(QueryParamModel(
+      search: keyword.toUpperCase(),
+      where: branchCode, table: true
+    ));
     var models = response.data?.toList();
 
     return models ?? [];

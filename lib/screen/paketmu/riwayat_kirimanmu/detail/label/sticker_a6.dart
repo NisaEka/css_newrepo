@@ -201,7 +201,7 @@ class StickerA6 extends StatelessWidget {
                                 style: sublistTitleTextStyle.copyWith(fontWeight: bold),
                               ),
                               TextSpan(
-                                text: data.shipper?.zip ?? '',
+                                text: data.shipper?.zipCode ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
                             ],
@@ -355,7 +355,7 @@ class StickerA6 extends StatelessWidget {
                 ),
                 const SizedBox(width: 5),
                 CustomLabelText(
-                  title: 'Goods Value',
+                  title: 'Goods Amount',
                   value: "Rp ${data.goods?.amount?.toInt().toCurrency() ?? '0'}",
                   titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                   valueTextStyle: sublistTitleTextStyle.copyWith(),

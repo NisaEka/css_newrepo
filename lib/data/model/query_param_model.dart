@@ -192,8 +192,6 @@ class QueryParamModel {
 
     if (_page != null) {
       map['page'] = _page;
-    } else {
-      map['page'] = 1;
     }
 
     if (_limit != null) {

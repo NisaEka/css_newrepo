@@ -236,17 +236,20 @@ class DashboardController extends BaseController {
 
       await auth
           .postFcmToken(
-            await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
-          )
-          .then((value) async => value.code == 200
-              ? await auth.updateDeviceInfo(
-                  await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
-                )
-              : value.code == 401 || value.code == 400 || value.code == null
-                  ? await auth.postFcmTokenNonAuth(
-                      await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
-                    )
-                  : debugPrint('post device info : ${value.code}'));
+        await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+      )
+          .then((value) async {
+        value.code == 409
+            ? await auth.updateDeviceInfo(
+                await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+              )
+            // : value.code == 401 || value.code == 400 || value.code == null
+            : await auth.postFcmTokenNonAuth(
+                await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+              );
+        // : debugPrint('post device info : ${value.code}'));
+        debugPrint('post device info : ${value.code}');
+      });
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -286,6 +289,7 @@ class DashboardController extends BaseController {
     cekLocalLanguage();
     state.isLoading = true;
 
+    storage.deleteString(StorageCore.transactionTemp);
     // loadTransCountList();
 
     bool accounts =
@@ -306,6 +310,41 @@ class DashboardController extends BaseController {
     update();
 
     try {
+      if (basic) {
+        await profil.getBasicProfil().then((value) async {
+          await storage.saveData(
+            StorageCore.userProfil,
+            value.data?.user,
+          );
+        });
+      }
+
+      if (sender) {
+        await profil.getShipper().then((value) async {
+          if (value.data != null) {
+            await storage.saveData(
+              StorageCore.shipper,
+              value.data?.first,
+            );
+          } else {
+            var s = UserModel.fromJson(storage.readData(StorageCore.userProfil));
+            await storage.saveData(
+              StorageCore.shipper,
+              s,
+            );
+          }
+        });
+      }
+
+      if (ccrfP) {
+        await profil.getCcrfProfil().then((value) async {
+          state.ccrf = value.data;
+          await storage.saveData(StorageCore.ccrfProfil, value.data);
+        });
+      } else {
+        state.ccrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
+      }
+
       if (accounts) {
         await master.getAccounts().then((value) async => await storage.saveData(
               StorageCore.accounts,
@@ -327,28 +366,6 @@ class DashboardController extends BaseController {
             ));
       }
 
-      if (basic || sender) {
-        await profil.getBasicProfil().then((value) async {
-          await storage.saveData(
-            StorageCore.userProfil,
-            value.data?.user,
-          );
-          await storage.saveData(
-            StorageCore.shipper,
-            value.data?.user,
-          );
-        });
-      }
-
-      if (ccrfP) {
-        await profil.getCcrfProfil().then((value) async {
-          state.ccrf = value.data;
-          await storage.saveData(StorageCore.ccrfProfil, value.data);
-        });
-      } else {
-        state.ccrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
-      }
-
       state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.ccrfApistatus == "Y");
 
       storage.saveData(StorageCore.ccrfProfil, state.ccrf);
@@ -364,7 +381,7 @@ class DashboardController extends BaseController {
       //   debugPrint("jlc error $value");
       // });
       update();
-      var shipper = UserModel.fromJson(await storage.readData(StorageCore.shipper));
+      UserModel shipper = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
       state.userName = shipper.name ?? '';
       state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
       update();

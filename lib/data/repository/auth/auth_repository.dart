@@ -36,7 +36,7 @@ abstract class AuthRepository {
 
   Future<BaseResponse> logout();
 
-  Future<GetLoginModel> updateDeviceInfo(Device data);
+  Future<BaseResponse> updateDeviceInfo(Device data);
 
   Future<GetLoginModel> updateDeviceInfoNonAuth(Device data);
 

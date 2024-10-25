@@ -1,6 +1,6 @@
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
-import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
@@ -8,7 +8,7 @@ import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
-import 'package:css_mobile/data/model/transaction/get_service_model.dart';
+
 import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_fee_model.dart';
@@ -27,53 +27,34 @@ class TransactionRepositoryImpl extends TransactionRepository {
   final network = Get.find<NetworkCore>();
   final storageSecure = const FlutterSecureStorage();
 
-  @override
-  Future<GetServiceModel> getService(DataServiceModel param) async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-
-    try {
-      Response response = await network.dio.get(
-        "/transaction/service",
-        queryParameters: {
-          'account_id': param.accountId,
-          'origin_code': param.originCode,
-          'destination_code': param.destinationCode,
-        },
-      );
-      return GetServiceModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return GetServiceModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<ResponseModel<TransactionFeeModel>> getTransactionFee(DataTransactionFeeModel params) async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-
-    try {
-      Response response = await network.dio.get(
-        "/transaction/fee",
-        queryParameters: {
-          "origin_code": params.originCode,
-          "destination_code": params.destinationCode,
-          "service_code": params.serviceCode,
-          "weight": params.weight,
-          "cust_no": params.custNo,
-        },
-      );
-      return ResponseModel<TransactionFeeModel>.fromJson(
-        response.data,
-        (json) => TransactionFeeModel.fromJson(json as Map<String, dynamic>),
-      );
-    } on DioException catch (e) {
-      return ResponseModel<TransactionFeeModel>.fromJson(
-        e.response?.data,
-        (json) => TransactionFeeModel.fromJson(json as Map<String, dynamic>),
-      );
-    }
-  }
+  // #TODO: delete after finish implemented
+  // @override
+  // Future<ResponseModel<TransactionFeeModel>> getTransactionFee(DataTransactionFeeModel params) async {
+  //   var token = await storageSecure.read(key: "token");
+  //   network.dio.options.headers['Authorization'] = 'Bearer $token';
+  //
+  //   try {
+  //     Response response = await network.dio.get(
+  //       "/transaction/fee",
+  //       queryParameters: {
+  //         "origin_code": params.originCode,
+  //         "destination_code": params.destinationCode,
+  //         "service_code": params.serviceCode,
+  //         "weight": params.weight,
+  //         "cust_no": params.custNo,
+  //       },
+  //     );
+  //     return ResponseModel<TransactionFeeModel>.fromJson(
+  //       response.data,
+  //       (json) => TransactionFeeModel.fromJson(json as Map<String, dynamic>),
+  //     );
+  //   } on DioException catch (e) {
+  //     return ResponseModel<TransactionFeeModel>.fromJson(
+  //       e.response?.data,
+  //       (json) => TransactionFeeModel.fromJson(json as Map<String, dynamic>),
+  //     );
+  //   }
+  // }
 
   @override
   Future<PostTransactionModel> postTransaction(DataTransactionModel data) async {
@@ -92,17 +73,23 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<GetCodFeeModel> getCODFee(String accountID) async {
+  Future<BaseResponse<CODFeeModel>> getCODFee(String accountID) async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+
     try {
-      Response response = await network.dio.get(
-        "/account/cod/fee",
-        queryParameters: {
-          'account_id': accountID,
-        },
+      Response response = await network.base.get(
+        "/accounts/$accountID",
       );
-      return GetCodFeeModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => CODFeeModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
-      return GetCodFeeModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => CODFeeModel.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 
@@ -298,22 +285,22 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data) async {
+  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo();
     try {
-      Response response = await network.dio.post(
-        "/transaction/ongkir",
+      Response response = await network.base.post(
+        "/transaction/fees/ongkir",
         data: data,
       );
 
-      return ResponseModel<PostTransactionOngkirModel>.fromJson(
+      return BaseResponse<PostTransactionOngkirModel>.fromJson(
         response.data,
         (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
-      return ResponseModel<PostTransactionOngkirModel>.fromJson(
+      return BaseResponse<PostTransactionOngkirModel>.fromJson(
         e.response?.data,
         (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
       );

@@ -39,16 +39,19 @@ class ListDropshipperController extends BaseController {
 
   Future<void> initData() async {
     isLoading = true;
-    dropshipperList = [];
+    dropshipperList.clear();
 
     connection.isOnline().then((value) => isOnline = value);
     update();
 
     try {
-      await master.getDropshippers(QueryParamModel(search: search.text)).then((value) => dropshipperList.addAll(value.data ?? []));
+      await master.getDropshippers(QueryParamModel(search: search.text)).then(
+            (value) => dropshipperList.addAll(value.data ?? []),
+          );
       update();
     } catch (e) {
       e.printError();
+      dropshipperList.clear();
       var dropshipper = BaseResponse<List<DropshipperModel>>.fromJson(
         await storage.readData(StorageCore.dropshipper),
         (json) => json is List<dynamic>
@@ -65,7 +68,6 @@ class ListDropshipperController extends BaseController {
     isLoading = false;
     update();
   }
-
 
   void delete(DropshipperModel data) async {
     try {

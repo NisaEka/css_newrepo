@@ -3,23 +3,19 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
-import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
-
-import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
-import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/transaction/get_service_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_state.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -28,59 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TransactionController extends BaseController {
-  DataTransactionModel? dataEdit = Get.arguments['data'];
-  Shipper shipper = Get.arguments['shipper'];
-  bool dropship = Get.arguments['dropship'];
-  bool codOngkir = Get.arguments['cod_ongkir'];
-  Origin origin = Get.arguments['origin'];
-  Account account = Get.arguments['account'];
-  Receiver receiver = Get.arguments['receiver'];
-  Destination destination = Get.arguments['destination'];
-  Delivery? delivery = Get.arguments['delivery'];
-  Goods? goods = Get.arguments['goods'];
-  int? draftIndex = Get.arguments['index'];
-  DataTransactionModel? draft = Get.arguments['draft'];
-  DropshipperModel? dropshipper = Get.arguments['dropshipper'];
-
-  final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
-  final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
-  final formKey = GlobalKey<FormState>();
-  final hargaCODkey = GlobalKey<FormFieldState>();
-  final service = TextEditingController();
-  final beratKiriman = TextEditingController();
-  final dimensiPanjang = TextEditingController();
-  final dimensiLebar = TextEditingController();
-  final dimensiTinggi = TextEditingController();
-  final jumlahPacking = TextEditingController();
-  final jenisBarang = TextEditingController();
-  final namaBarang = TextEditingController();
-  final noReference = TextEditingController();
-  final intruksiKhusus = TextEditingController();
-  final layanan = TextEditingController();
-  final hargaBarang = TextEditingController();
-  final ongkosKirim = TextEditingController();
-  final hargaAsuransi = TextEditingController();
-  final codAmountText = TextEditingController();
-
-  // final codFee = TextEditingController();
-  final hargaCOD = TextEditingController();
-
-  bool asuransi = false;
-  bool packingKayu = false;
-  bool isServiceLoad = false;
-  bool isCalculate = false;
-  bool isLoading = false;
-  bool dimensi = false;
-  bool formValidate = false;
-  bool isOnline = true;
-  bool isShowDialog = false;
-
-  List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
-  List<ServiceModel> serviceList = [];
-  List<DataTransactionModel> draftList = [];
-
-  ServiceModel? selectedService;
-  DraftTransactionModel? draftData;
+  final state = TransactionState();
 
   @override
   void onInit() {
@@ -90,9 +34,9 @@ class TransactionController extends BaseController {
 
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       connection.isOnline().then((value) {
-        isOnline = value && (result != ConnectivityResult.none);
+        state.isOnline = value && (result != ConnectivityResult.none);
         update();
-        if (isOnline) {
+        if (state.isOnline) {
           Get.showSnackbar(
             GetSnackBar(
               padding: const EdgeInsets.symmetric(vertical: 1.5),
@@ -116,50 +60,33 @@ class TransactionController extends BaseController {
     }));
   }
 
-  num totalOngkir = 0;
-  num flatRate = 0;
-  num flatRateISR = 0;
-  num freightCharge = 0;
-  num freightChargeISR = 0;
-  double isr = 0;
-  double berat = 0;
-  num hargacod = 0;
-  num hargacCODOngkir = 0;
-  num hargacCODOngkirISR = 0;
-  double codfee = 0;
-  num getCodFeeMinimum = 0;
-  num getCodAmountMinimum = 0;
-  num getCodFee = 0;
-  num getCodAmount = 0;
-  num getInsurance = 0;
-
   void hitungBerat(double p, double l, double t) {
-    isCalculate = true;
-    berat = 0;
+    state.isCalculate = true;
+    state.berat = 0;
     update();
 
-    if (dimensi) {
-      if (selectedService?.serviceCode?.contains("JTR") == true) {
-        // if (selectedService?.serviceCode == "JTR23" ||
-        //     selectedService?.serviceCode == "JTR<130" ||
-        //     selectedService?.serviceCode == "JTR250" ||
-        //     selectedService?.serviceCode == "JTR>250") {
+    if (state.dimension) {
+      if (state.selectedService?.serviceCode?.contains("JTR") == true) {
+        // if (state.selectedService?.serviceCode == "JTR23" ||
+        //     state.selectedService?.serviceCode == "JTR<130" ||
+        //     state.selectedService?.serviceCode == "JTR250" ||
+        //     state.selectedService?.serviceCode == "JTR>250") {
 
-        berat = (p * l * t) / 5000;
+        state.berat = (p * l * t) / 5000;
       } else {
-        berat = (p * l * t) / 6000;
+        state.berat = (p * l * t) / 6000;
       }
 
-      String b = "0.${berat.toStringAsFixed(2).split('.').last}";
+      String b = "0.${state.berat.toStringAsFixed(2).split('.').last}";
 
-      if (berat < 1) {
-        beratKiriman.text = '1';
+      if (state.berat < 1) {
+        state.weight.text = '1';
       } else if (b.toDouble() >= 0.31) {
-        beratKiriman.text = berat.ceil().toString();
+        state.weight.text = state.berat.ceil().toString();
       } else {
-        beratKiriman.text = berat.truncate().toString();
+        state.weight.text = state.berat.truncate().toString();
       }
-      // beratKiriman.text = berat!.toStringAsFixed(2);
+      // state.state.beratKiriman.text = state.berat!.toStringAsFixed(2);
     }
     update();
     getOngkir();
@@ -168,57 +95,54 @@ class TransactionController extends BaseController {
   }
 
   void hitungOngkir() async {
-    totalOngkir = 0;
-    isr = 0;
+    state.totalOngkir = 0;
+    state.isr = 0;
     double vat = (1.1 / 100);
-    isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
-    flatRateISR = flatRate + isr;
-    freightChargeISR = freightCharge + isr;
-    getInsurance = asuransi ? isr : 0;
+    state.isr = (0.002 * (state.goodAmount.text == '' ? 0 : state.goodAmount.text.digitOnly().toInt())) + 5000;
+    state.flatRateISR = state.flatRate + state.isr;
+    state.freightChargeISR = state.freightCharge + state.isr;
+    state.getInsurance = state.insurance ? state.isr : 0;
     update();
-    int goodsAmount = hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt();
+    int goodsAmount = state.goodAmount.text == '' ? 0 : state.goodAmount.text.digitOnly().toInt();
 
-    if (isOnline) {
-      isCalculate = true;
+    if (state.isOnline) {
+      state.isCalculate = true;
       update();
-      if (isOnline) {
-        // if (asuransi) {
-        // isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
-        flatRateISR = flatRate + isr;
-        freightChargeISR = freightCharge + isr;
+      if (state.isOnline) {
+        // if (state.asuransi) {
+        // state.isr = (0.002 * (state.hargaBarang.text == '' ? 0 : state.hargaBarang.text.digitOnly().toInt())) + 5000;
+        state.flatRateISR = state.flatRate + state.isr;
+        state.freightChargeISR = state.freightCharge + state.isr;
         update();
         // }
-        print("select account : ${account.toJson()}");
-        bool prefix3 = account.accountNumber?.substring(0, 1) != "3";
-        bool isCOD = account.accountService?.toUpperCase() == 'COD';
-        print("isCOD: $isCOD");
-        print("isPrefix3: $prefix3");
+        bool prefix3 = state.account.accountNumber?.substring(0, 1) != "3";
+        bool isCOD = state.account.accountService?.toUpperCase() == 'COD';
 
         try {
           await transaction
               .postCalcOngkir(DataTransactionOngkirModel(
             goodsAmount: goodsAmount,
-            isIsr: asuransi,
-            ongkir: freightCharge,
-            accountNumber: account.accountNumber,
+            isIsr: state.insurance,
+            ongkir: state.freightCharge,
+            accountNumber: state.account.accountNumber,
             isCod: isCOD,
-            codFee: codfee,
-            isCongkir: codOngkir,
+            codFee: state.codfee,
+            isCongkir: state.codOngkir,
             isPrefix3: prefix3,
           ))
               .then((value) {
-            getCodAmountMinimum = value.payload?.codAmountMinimum ?? 0;
-            hargacCODOngkir = value.payload?.congkirAmount ?? 0;
-            hargacod = value.payload?.codAmount ?? 0;
-            totalOngkir = codOngkir && account.accountService == "JLC" ? hargacCODOngkir.toInt() : value.payload?.totalOngkir ?? 0;
-            getCodAmount = value.payload?.codAmount ?? 0;
-            codAmountText.text = value.payload?.codAmountMinimum?.toInt().toCurrency().toString() ?? '0';
-            getCodFee = value.payload?.codFee ?? 0;
+            state.getCodAmountMinimum = value.data?.codAmountMinimum ?? 0;
+            state.congkirAmount = value.data?.codOngkirAmount ?? 0;
+            state.codAmount = value.data?.codAmountMinimum ?? 0;
+            state.totalOngkir = state.codOngkir && state.account.accountService == "JLC" ? state.congkirAmount.toInt() : value.data?.totalOngkir ?? 0;
+            state.getCodAmount = value.data?.codAmountMinimum ?? 0;
+            state.codAmountText.text = value.data?.codAmountMinimum?.toInt().toCurrency().toString() ?? '0';
+            state.getCodFee = value.data?.codFee ?? 0;
           });
         } catch (e) {
-          num getVat = isCOD && prefix3 ? freightCharge * vat : 0;
-          getCodFeeMinimum = (freightCharge + goodsAmount) * codfee;
-          getCodAmountMinimum = goodsAmount + freightCharge + getCodFeeMinimum + getVat;
+          num getVat = isCOD && prefix3 ? state.freightCharge * vat : 0;
+          state.getCodFeeMinimum = (state.freightCharge + goodsAmount) * state.codfee;
+          state.getCodAmountMinimum = goodsAmount + state.freightCharge + state.getCodFeeMinimum + getVat;
 
           //cod amount text >= cod amount minimum
           /*tanpa harga barang
@@ -226,37 +150,37 @@ class TransactionController extends BaseController {
         * 2. codAmount = HB + ongkir + (ongkir * vat) + (ongkir + harga barang * fee)
         */
 
-          getCodFee = (goodsAmount + freightCharge) * codfee;
-          getCodAmount = (goodsAmount + getCodFee + getVat);
-          // getCodAmount = goodsAmount + getVat + getCodFee;
+          state.getCodFee = (goodsAmount + state.freightCharge) * state.codfee;
+          state.getCodAmount = (goodsAmount + state.getCodFee + getVat);
+          // state.getCodAmount = goodsAmount + getVat + state.getCodFee;
 
-          // hargacod = (codfee * (goodsAmount) + (goodsAmount) + totalOngkir);
-          hargacod = isCOD ? getCodAmount : 0;
-          codAmountText.text = isCOD ? getCodAmountMinimum.toInt().toCurrency().toString() : '0';
-          hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1000;
-          hargacCODOngkirISR = freightCharge + isr;
+          // state.hargacod = (codfee * (goodsAmount) + (goodsAmount) + state.totalOngkir);
+          state.codAmount = isCOD ? state.getCodAmount : 0;
+          state.codAmountText.text = isCOD ? state.getCodAmountMinimum.toInt().toCurrency().toString() : '0';
+          state.congkirAmount = state.freightCharge + (state.insurance ? state.isr : 0) + 1000;
+          state.congkirAmountISR = state.freightCharge + state.isr;
           update();
-          totalOngkir = codOngkir && account.accountService == "JLC"
-              ? hargacCODOngkir.toInt()
-              : asuransi
-                  ? (freightChargeISR.toInt() + hargacod)
-                  : (freightCharge.toInt() + hargacod);
+          state.totalOngkir = state.codOngkir && state.account.accountService == "JLC"
+              ? state.congkirAmount.toInt()
+              : state.insurance
+                  ? (state.freightChargeISR.toInt() + state.codAmount)
+                  : (state.freightCharge.toInt() + state.codAmount);
         }
 
         update();
       }
-      isShowDialog = (totalOngkir > 1000000);
+      state.isShowDialog = (state.totalOngkir > 1000000);
       update();
 
       isValidate();
 
-      isCalculate = false;
+      state.isCalculate = false;
       update();
     }
   }
 
   bool isValidate() {
-    if (formValidate && selectedService != null && !isCalculate && totalOngkir <= 1000000) {
+    if (state.formValidate && state.selectedService != null && !state.isCalculate && state.totalOngkir <= 1000000) {
       return true;
     }
 
@@ -264,16 +188,16 @@ class TransactionController extends BaseController {
   }
 
   Future<void> getCODfee() async {
-    if (isOnline && account.accountService == "COD") {
-      isCalculate = true;
+    if (state.isOnline && state.account.accountService == "COD") {
+      state.isCalculate = true;
       try {
-        await transaction.getCODFee(account.accountId.toString()).then(
+        await transaction.getCODFee(state.account.accountId.toString()).then(
           (value) {
-            codfee = value.payload?.disc?.toDouble() ?? 0;
+            state.codfee = value.data?.disc?.toDouble() ?? 0;
             update();
           },
         );
-        isCalculate = false;
+        state.isCalculate = false;
 
         update();
       } catch (e) {
@@ -283,29 +207,30 @@ class TransactionController extends BaseController {
   }
 
   Future<void> getOngkir() async {
-    isCalculate = isOnline ? true : false;
+    state.isCalculate = state.isOnline ? true : false;
     update();
-    // print("freightCharge${freightCharge}");
+    // print("state.freightCharge${state.freightCharge}");
     try {
-      var value = await transaction.getTransactionFee(
-        DataTransactionFeeModel(
-            destinationCode: destination.destinationCode,
-            originCode: origin.originCode,
-            serviceCode: selectedService?.serviceCode,
-            weight: beratKiriman.text == '' ? 1 : beratKiriman.text.split('.').first.toInt(),
-            custNo: account.accountNumber,
-            type: jenisBarang.text == "PAKET" ? "PAKET" : "DOCUMENT"),
+      var value = await master.getServices(
+        DataServiceModel(
+          destinationCode: state.destination.destinationCode,
+          originCode: state.origin.originCode,
+          // serviceCode: state.selectedService?.serviceCode,
+          weight: state.weight.text.toDouble(),
+          accountId: state.account.accountNumber,
+          // custNo: state.account.accountNumber,
+          // type: state.goodType.text == "PAKET" ? "PAKET" : "DOCUMENT"),
+        ),
       );
 
-      flatRate = value.payload?.flatRate?.toInt() ?? 0;
-      freightCharge = value.payload?.freightCharge?.toInt() ?? 0;
-      print("freightCharge${freightCharge}");
+      // state.flatRate = value.data?.where((e)=> e == state.selectedService).first.price?.toInt() ?? 0;
+      state.freightCharge = value.data?.where((e) => e.serviceCode == state.selectedService?.serviceCode).first.price?.toInt() ?? 0;
       update();
     } catch (e, i) {
       e.printError();
       i.printError();
       String message;
-      if (selectedService == null && isOnline) {
+      if (state.selectedService == null && state.isOnline) {
         message = "Service harus diisi".tr;
         Get.showSnackbar(
           GetSnackBar(
@@ -327,32 +252,32 @@ class TransactionController extends BaseController {
   }
 
   void loadDraft() async {
-    draftList = [];
+    state.draftList = [];
     DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
-    draftList.addAll(temp.draft);
+    state.draftList.addAll(temp.draft);
 
-    namaBarang.text = goods?.desc ?? '';
-    jenisBarang.text = goods?.type ?? '';
-    hargaBarang.text = goods?.amount?.toInt().toCurrency().toString() ?? '';
-    jumlahPacking.text = goods?.quantity.toString() ?? '';
-    asuransi = delivery?.insuranceFlag == "Y" ? true : false;
-    intruksiKhusus.text = delivery?.specialInstruction ?? '';
-    packingKayu = delivery?.woodPackaging == "Y" ? true : false;
-    beratKiriman.text = goods?.weight.toString().split('.').first ?? '1';
-    selectedService = serviceList.where((e) => e.serviceCode == delivery?.serviceCode).first;
+    state.goodName.text = state.goods?.desc ?? '';
+    state.goodType.text = state.goods?.type ?? '';
+    state.goodAmount.text = state.goods?.amount?.toInt().toCurrency().toString() ?? '';
+    state.goodQty.text = state.goods?.quantity.toString() ?? '';
+    state.insurance = state.delivery?.insuranceFlag == "Y" ? true : false;
+    state.specialInstruction.text = state.delivery?.specialInstruction ?? '';
+    state.woodPacking = state.delivery?.woodPackaging == "Y" ? true : false;
+    state.weight.text = state.goods?.weight.toString().split('.').first ?? '1';
+    state.selectedService = state.serviceList.where((e) => e.serviceCode == state.delivery?.serviceCode).first;
 
-    if (delivery?.flatRate != null) {
+    if (state.delivery?.flatRate != null) {
       getOngkir();
     }
     update();
   }
 
   void deleteDraft(int index) async {
-    draftList.removeAt(index);
-    var data = '{"draft" : ${jsonEncode(draftList)}}';
-    draftData = DraftTransactionModel.fromJson(jsonDecode(data));
+    state.draftList.removeAt(index);
+    var data = '{"draft" : ${jsonEncode(state.draftList)}}';
+    state.draftData = DraftTransactionModel.fromJson(jsonDecode(data));
 
-    await storage.saveData(StorageCore.draftTransaction, draftData).then(
+    await storage.saveData(StorageCore.draftTransaction, state.draftData).then(
           (_) => update(),
         );
     // initData();
@@ -361,23 +286,35 @@ class TransactionController extends BaseController {
   }
 
   Future<void> initData() async {
-    isServiceLoad = true;
-    serviceList = [];
-    connection.isOnline().then((value) => isOnline = value);
-    jenisBarang.text = "PAKET";
+    state.isServiceLoad = true;
+    state.serviceList = [];
+    connection.isOnline().then((value) => state.isOnline = value);
+    state.goodType.text = "PAKET";
     update();
     try {
-      await transaction
-          .getService(
-        DataServiceModel(
-          accountId: account.accountId,
-          originCode: origin.originCode,
-          destinationCode: destination.destinationCode,
-        ),
-      )
+      await master
+          .getServices(DataServiceModel(
+        accountId: state.account.accountNumber,
+        originCode: state.origin.originCode,
+        destinationCode: state.destination.destinationCode,
+      ))
           .then((value) {
-        serviceList.addAll(value.payload ?? []);
+        state.serviceList.addAll(value.data ?? []);
         update();
+        if (value.data?.isEmpty ?? false) {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.error,
+                color: whiteColor,
+              ),
+              message: 'Service tidak tersedia'.tr,
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: errorColor,
+            ),
+          );
+        }
         if (value.code != 200) {
           Get.showSnackbar(
             GetSnackBar(
@@ -391,7 +328,7 @@ class TransactionController extends BaseController {
               backgroundColor: Colors.red,
             ),
           );
-          isOnline = false;
+          state.isOnline = false;
           update();
         }
       });
@@ -400,91 +337,91 @@ class TransactionController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-      // isOnline = false;
+      // state.isOnline = false;
     }
-    if (dataEdit != null) {
-      jenisBarang.text = dataEdit?.goods?.type ?? '';
-      noReference.text = dataEdit?.orderId ?? '';
-      namaBarang.text = dataEdit?.goods?.desc ?? '';
-      hargaBarang.text = dataEdit?.goods?.amount?.toInt().toCurrency().toString() ?? '';
-      jumlahPacking.text = dataEdit?.goods?.quantity.toString() ?? '';
-      asuransi = dataEdit?.delivery?.insuranceFlag == "Y";
-      intruksiKhusus.text = dataEdit?.delivery?.specialInstruction ?? '';
-      packingKayu = dataEdit?.delivery?.woodPackaging == "Y";
-      beratKiriman.text = dataEdit?.goods?.weight.toString() ?? '';
-      berat = dataEdit?.goods?.weight?.toDouble() ?? 0;
-      // ServiceModel servicecode = serviceList.where((element) => element.serviceCode == dataEdit?.delivery?.serviceCode).first;
-      ServiceModel? servicedisplay = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).isNotEmpty
-          ? serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).first
+    if (state.dataEdit != null) {
+      state.goodType.text = state.dataEdit?.goods?.type ?? '';
+      state.noReference.text = state.dataEdit?.orderId ?? '';
+      state.noReference.text = state.dataEdit?.goods?.desc ?? '';
+      state.goodAmount.text = state.dataEdit?.goods?.amount?.toInt().toCurrency().toString() ?? '';
+      state.goodQty.text = state.dataEdit?.goods?.quantity.toString() ?? '';
+      state.insurance = state.dataEdit?.delivery?.insuranceFlag == "Y";
+      state.specialInstruction.text = state.dataEdit?.delivery?.specialInstruction ?? '';
+      state.woodPacking = state.dataEdit?.delivery?.woodPackaging == "Y";
+      state.weight.text = state.dataEdit?.goods?.weight.toString() ?? '';
+      state.berat = state.dataEdit?.goods?.weight?.toDouble() ?? 0;
+      // ServiceModel servicecode = state.serviceList.where((element) => element.serviceCode == state.dataEdit?.delivery?.serviceCode).first;
+      ServiceModel? servicedisplay = state.serviceList.where((element) => element.serviceDisplay == state.dataEdit?.delivery?.serviceCode).isNotEmpty
+          ? state.serviceList.where((element) => element.serviceDisplay == state.dataEdit?.delivery?.serviceCode).first
           : ServiceModel();
-      selectedService = servicedisplay;
+      state.selectedService = servicedisplay;
 
       update();
       getOngkir();
     }
-    if (draft != null) {
-      beratKiriman.text = draft?.goods?.weight.toString().split('.').first ?? '';
+    if (state.draft != null) {
+      state.weight.text = state.draft?.goods?.weight.toString().split('.').first ?? '';
       update();
     }
     hitungOngkir();
 
-    goods != null ? loadDraft() : null;
-    isServiceLoad = false;
+    state.goods != null ? loadDraft() : null;
+    state.isServiceLoad = false;
     update();
   }
 
   Future<void> saveDraft() async {
-    isLoading = true;
+    state.isLoading = true;
     update();
-    draftList = [];
+    state.draftList = [];
     DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
-    draftList.addAll(temp.draft);
-    draftList.add(DataTransactionModel(
-      createAt: goods == null ? DateTime.now().toString() : draft?.createAt,
+    state.draftList.addAll(temp.draft);
+    state.draftList.add(DataTransactionModel(
+      createAt: state.goods == null ? DateTime.now().toString() : state.draft?.createAt,
       updateAt: DateTime.now().toString(),
       delivery: Delivery(
-        serviceCode: selectedService?.serviceCode,
-        woodPackaging: packingKayu ? "Y" : "N",
-        specialInstruction: intruksiKhusus.text,
-        codFlag: account.accountService == "COD"
+        serviceCode: state.selectedService?.serviceCode,
+        woodPackaging: state.woodPacking ? "Y" : "N",
+        specialInstruction: state.specialInstruction.text,
+        codFlag: state.account.accountService == "COD"
             ? "YES"
-            : codOngkir
+            : state.codOngkir
                 ? "YES"
                 : "NO",
-        codOngkir: codOngkir ? "YES" : "NO",
-        insuranceFlag: asuransi ? "Y" : "N",
-        insuranceFee: isr,
-        flatRate: flatRate,
-        codFee: codfee,
-        flatRateWithInsurance: flatRateISR,
-        freightCharge: freightCharge,
-        freightChargeWithInsurance: freightChargeISR,
+        codOngkir: state.codOngkir ? "YES" : "NO",
+        insuranceFlag: state.insurance ? "Y" : "N",
+        insuranceFee: state.isr,
+        flatRate: state.flatRate,
+        codFee: state.codfee,
+        flatRateWithInsurance: state.flatRateISR,
+        freightCharge: state.freightCharge,
+        freightChargeWithInsurance: state.freightChargeISR,
       ),
       account: Account(
-        accountNumber: account.accountNumber,
-        accountService: account.accountService,
+        accountNumber: state.account.accountNumber,
+        accountService: state.account.accountService,
       ),
-      origin: origin,
-      destination: destination,
-      // destination: Destination(code: destination.destinationCode, desc: destination.cityName),
+      origin: state.origin,
+      destination: state.destination,
+      // destination: Destination(code: state.destination.destinationCode, desc: state.destination.cityName),
       goods: Goods(
-          type: jenisBarang.text,
-          desc: namaBarang.text,
-          amount: hargaBarang.text.isNotEmpty ? hargaBarang.text.digitOnly().toInt() : 0,
-          quantity: jumlahPacking.text.toInt(),
-          weight: berat != 0 ? berat : beratKiriman.text.toInt()),
-      shipper: shipper,
-      receiver: receiver,
-      dataAccount: account,
-      dataDestination: destination,
+          type: state.goodType.text,
+          desc: state.goodName.text,
+          amount: state.goodAmount.text.isNotEmpty ? state.goodAmount.text.digitOnly().toInt() : 0,
+          quantity: state.goodQty.text.toInt(),
+          weight: state.berat != 0 ? state.berat : state.weight.text.toInt()),
+      shipper: state.shipper,
+      receiver: state.receiver,
+      dataAccount: state.account,
+      dataDestination: state.destination,
     ));
 
-    var data = '{"draft" : ${jsonEncode(draftList)}}';
-    draftData = DraftTransactionModel.fromJson(jsonDecode(data));
+    var data = '{"draft" : ${jsonEncode(state.draftList)}}';
+    state.draftData = DraftTransactionModel.fromJson(jsonDecode(data));
 
-    goods != null ? deleteDraft(draftIndex!) : null;
+    state.goods != null ? deleteDraft(state.draftIndex!) : null;
 
-    await storage.saveData(StorageCore.draftTransaction, draftData).then(
+    await storage.saveData(StorageCore.draftTransaction, state.draftData).then(
           (_) => Get.to(
             SuccessScreen(
               message: "Transaksi di simpan ke draft".tr,
@@ -509,12 +446,12 @@ class TransactionController extends BaseController {
           ),
         );
 
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
   Future<void> updateTransaction() async {
-    isLoading = true;
+    state.isLoading = true;
     update();
 
     try {
@@ -522,40 +459,40 @@ class TransactionController extends BaseController {
           .putTransaction(
         DataTransactionModel(
           delivery: Delivery(
-            serviceCode: selectedService?.serviceDisplay,
-            woodPackaging: packingKayu ? "Y" : "N",
-            specialInstruction: intruksiKhusus.text,
-            codFlag: account.accountService == "COD"
+            serviceCode: state.selectedService?.serviceDisplay,
+            woodPackaging: state.woodPacking ? "Y" : "N",
+            specialInstruction: state.specialInstruction.text,
+            codFlag: state.account.accountService == "COD"
                 ? "YES"
-                : codOngkir
+                : state.codOngkir
                     ? "YES"
                     : "NO",
-            codOngkir: codOngkir ? "YES" : "NO",
-            insuranceFlag: asuransi ? "Y" : "N",
-            insuranceFee: isr,
-            flatRate: flatRate,
-            codFee: codfee,
-            flatRateWithInsurance: flatRateISR,
-            freightCharge: freightCharge,
-            freightChargeWithInsurance: freightChargeISR,
+            codOngkir: state.codOngkir ? "YES" : "NO",
+            insuranceFlag: state.insurance ? "Y" : "N",
+            insuranceFee: state.isr,
+            flatRate: state.flatRate,
+            codFee: state.codfee,
+            flatRateWithInsurance: state.flatRateISR,
+            freightCharge: state.freightCharge,
+            freightChargeWithInsurance: state.freightChargeISR,
           ),
           account: Account(
-            accountNumber: account.accountNumber,
-            accountService: account.accountService,
+            accountNumber: state.account.accountNumber,
+            accountService: state.account.accountService,
           ),
-          origin: origin,
-          destination: destination,
-          // destination: Destination(code: destination.destinationCode, desc: destination.cityName),
+          origin: state.origin,
+          destination: state.destination,
+          // destination: Destination(code: state.destination.destinationCode, desc: state.destination.cityName),
           goods: Goods(
-              type: jenisBarang.text,
-              desc: namaBarang.text,
-              amount: hargaBarang.text.digitOnly().toInt(),
-              quantity: jumlahPacking.text.toInt(),
-              weight: berat),
-          shipper: shipper,
-          receiver: receiver,
+              type: state.goodType.text,
+              desc: state.goodName.text,
+              amount: state.goodAmount.text.digitOnly().toInt(),
+              quantity: state.goodQty.text.toInt(),
+              weight: state.berat),
+          shipper: state.shipper,
+          receiver: state.receiver,
         ),
-        dataEdit?.awb ?? '',
+        state.dataEdit?.awb ?? '',
       )
           .then((v) {
         if (v.code != 200) {
@@ -598,12 +535,12 @@ class TransactionController extends BaseController {
       i.printError();
       saveDraft();
     }
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
   Future<void> saveTransaction() async {
-    isLoading = true;
+    state.isLoading = true;
     update();
 
     // muncul popup kalo coud amount text <= cod amount minimum
@@ -611,42 +548,46 @@ class TransactionController extends BaseController {
       await transaction
           .postTransaction(DataTransactionModel(
         delivery: Delivery(
-          serviceCode: selectedService?.serviceDisplay,
-          woodPackaging: packingKayu ? "Y" : "N",
-          specialInstruction: intruksiKhusus.text,
-          codFlag: account.accountService == "COD"
+          serviceCode: state.selectedService?.serviceDisplay,
+          woodPackaging: state.woodPacking ? "Y" : "N",
+          specialInstruction: state.specialInstruction.text,
+          codFlag: state.account.accountService == "COD"
               ? "YES"
-              : codOngkir
+              : state.codOngkir
                   ? "YES"
                   : "NO",
-          codOngkir: codOngkir ? "YES" : "NO",
-          insuranceFlag: asuransi ? "Y" : "N",
-          insuranceFee: isr,
-          flatRate: flatRate,
-          codFee: codfee,
-          flatRateWithInsurance: flatRateISR,
-          freightCharge: freightCharge,
-          freightChargeWithInsurance: freightChargeISR,
+          codOngkir: state.selectedService?.serviceDisplay == 'INTL'
+              ? 'NO'
+              : state.codOngkir
+                  ? "YES"
+                  : "NO",
+          insuranceFlag: state.insurance ? "Y" : "N",
+          insuranceFee: state.isr,
+          flatRate: state.flatRate,
+          codFee: state.codfee,
+          flatRateWithInsurance: state.flatRateISR,
+          freightCharge: state.freightCharge,
+          freightChargeWithInsurance: state.freightChargeISR,
         ),
         account: Account(
-          accountNumber: account.accountNumber,
-          accountService: account.accountService,
+          accountNumber: state.account.accountNumber,
+          accountService: state.account.accountService,
         ),
-        origin: origin,
-        destination: destination,
-        // destination: Destination(code: destination.destinationCode, desc: destination.cityName),
+        origin: state.origin,
+        destination: state.destination,
+        // destination: Destination(code: state.destination.destinationCode, desc: state.destination.cityName),
         goods: Goods(
-            type: jenisBarang.text,
-            desc: namaBarang.text,
-            amount: hargaBarang.text.isNotEmpty ? hargaBarang.text.digitOnly().toInt() : 0,
-            quantity: jumlahPacking.text.toInt(),
-            weight: berat),
-        shipper: shipper,
-        receiver: receiver,
+            type: state.goodType.text,
+            desc: state.goodName.text,
+            amount: state.goodAmount.text.isNotEmpty ? state.goodAmount.text.digitOnly().toInt() : 0,
+            quantity: state.goodQty.text.toInt(),
+            weight: state.berat),
+        shipper: state.shipper,
+        receiver: state.receiver,
       ))
           .then((v) {
-        if (goods != null) {
-          deleteDraft(draftIndex!);
+        if (state.goods != null) {
+          deleteDraft(state.draftIndex!);
         }
         if (v.code == 400 || v.code == 500) {
           Get.showSnackbar(
@@ -688,29 +629,26 @@ class TransactionController extends BaseController {
       i.printError();
       saveDraft();
     }
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
   onChangeAccount(Account result) {
-    account = result;
-    selectedService = null;
+    state.account = result;
+    state.selectedService = null;
     update();
     initData();
     update();
     getOngkir();
-    account.accountNumber.printInfo(info: "account number");
-
-    print("origin: ${origin.originCode}");
-    print("destination: ${destination.destinationCode}");
+    state.account.accountNumber.printInfo(info: "account number");
   }
 
   onChangeCodAmountText(String value) {
-    if (value.toInt() <= getCodAmountMinimum) {}
+    if (value.toInt() <= state.getCodAmountMinimum) {}
   }
 
   void onSaved() {
-    if (codAmountText.text.digitOnly().toInt() < getCodAmountMinimum) {
+    if (state.codAmountText.text.digitOnly().toInt() < state.getCodAmountMinimum) {
       Get.dialog(StatefulBuilder(
         builder: (context, setState) => AlertDialog(
           scrollable: false,
@@ -729,7 +667,7 @@ class TransactionController extends BaseController {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
-                "${'Harga COD tidak boleh kurang dari'.tr} Rp.${getCodAmountMinimum.toInt().toCurrency()}",
+                "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
@@ -745,7 +683,7 @@ class TransactionController extends BaseController {
       ));
     } else {
       isValidate()
-          ? dataEdit == null
+          ? state.dataEdit == null
               ? saveTransaction()
               : updateTransaction()
           : null;

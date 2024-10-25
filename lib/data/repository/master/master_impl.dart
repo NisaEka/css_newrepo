@@ -4,10 +4,12 @@ import 'package:css_mobile/data/model/master/get_agent_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
+import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:dio/dio.dart';
@@ -125,12 +127,13 @@ class MasterRepositoryImpl extends MasterRepository {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.userProfil),
     );
-    String registID = '{"registrationId" : "${user.id}"}';
+    String registID = '[{"registrationId" : "${user.id}"}]';
+    QueryParamModel params = param.copyWith(where: registID, table: true);
 
     try {
       Response response = await network.base.get(
         '/master/dropshippers',
-        queryParameters: param.copyWith(where: registID, table: true).toJson(),
+        queryParameters: params.toJson(),
       );
       return BaseResponse<List<DropshipperModel>>.fromJson(
         response.data,
@@ -156,12 +159,13 @@ class MasterRepositoryImpl extends MasterRepository {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.userProfil),
     );
-    String registID = '{"registrationId" : "${user.id}"}';
+    String registID = '[{"registrationId" : "${user.id}"}]';
+    QueryParamModel params = param.copyWith(where: registID, table: true);
 
     try {
       Response response = await network.base.get(
         '/master/receivers',
-        queryParameters: param.copyWith(where: registID, table: true).toJson(),
+        queryParameters: params.toJson(),
       );
       return BaseResponse<List<ReceiverModel>>.fromJson(
         response.data,
@@ -198,6 +202,34 @@ class MasterRepositoryImpl extends MasterRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
+      return e.response?.data;
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<ServiceModel>>> getServices(DataServiceModel param) async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+
+    try {
+      Response response = await network.base.get(
+        "/transaction/fees",
+        queryParameters: param.toJson(),
+      );
+
+      print('service response : ${response.data}');
+      return BaseResponse<List<ServiceModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<ServiceModel>(
+                  (i) => ServiceModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      print("service error : ${e.response?.data}");
       return e.response?.data;
     }
   }

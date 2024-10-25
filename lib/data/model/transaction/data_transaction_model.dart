@@ -440,7 +440,7 @@ class Shipper {
     String? address2,
     String? address3,
     String? city,
-    String? zip,
+    String? zipCode,
     String? region,
     String? country,
     String? contact,
@@ -454,7 +454,7 @@ class Shipper {
     _address2 = address2;
     _address3 = address3;
     _city = city;
-    _zip = zip;
+    _zipCode = zipCode;
     _region = region;
     _country = country;
     _contact = contact;
@@ -464,13 +464,13 @@ class Shipper {
   }
 
   Shipper.fromJson(dynamic json) {
-    _name = json['name'];
-    _address = json['address'];
+    _name = json['name'] ?? json['ccrfName'];
+    _address = json['address'] ?? json['ccrfAdd'];
     _address1 = json['address1'];
     _address2 = json['address2'];
     _address3 = json['address3'];
     _city = json['city'];
-    _zip = json['zip'] ?? json['zip_code'];
+    _zipCode = json['zip'] ?? json['zip_code'];
     _region = json['region'];
     _country = json['country'];
     _contact = json['contact'];
@@ -486,7 +486,7 @@ class Shipper {
   String? _address2;
   String? _address3;
   String? _city;
-  String? _zip;
+  String? _zipCode;
   String? _region;
   String? _country;
   String? _contact;
@@ -501,7 +501,7 @@ class Shipper {
     String? address2,
     String? address3,
     String? city,
-    String? zip,
+    String? zipCode,
     String? region,
     String? country,
     String? contact,
@@ -516,7 +516,7 @@ class Shipper {
         address2: address2 ?? _address2,
         address3: address3 ?? _address3,
         city: city ?? _city,
-        zip: zip ?? _zip,
+        zipCode: zipCode ?? _zipCode,
         region: region ?? _region,
         country: country ?? _country,
         contact: contact ?? _contact,
@@ -537,7 +537,7 @@ class Shipper {
 
   String? get city => _city;
 
-  String? get zip => _zip;
+  String? get zipCode => _zipCode;
 
   String? get region => _region;
 
@@ -559,13 +559,13 @@ class Shipper {
     map['address2'] = _address2;
     map['address3'] = _address3;
     map['city'] = _city;
-    map['zip'] = _zip;
+    map['zip'] = _zipCode;
     map['region'] = _region;
     map['country'] = _country;
     map['contact'] = _contact;
     map['phone'] = _phone;
     map['dropship'] = _dropship;
-    map['zip_code'] = _zip;
+    map['zip_code'] = _zipCode;
     if (_origin != null) {
       map['origin'] = _origin?.toJson();
     } else {

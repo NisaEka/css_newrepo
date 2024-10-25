@@ -24,6 +24,7 @@ class StorageCore {
   static const String fcmToken = "fcm_token";
   static const String unreadMessage = "unread_message";
   static const String isFirst = "first_install";
+  static const String transactionTemp = "transaction_temp";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);

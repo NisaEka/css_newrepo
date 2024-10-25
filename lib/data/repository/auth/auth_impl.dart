@@ -256,18 +256,18 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<GetLoginModel> updateDeviceInfo(Device data) async {
+  Future<BaseResponse> updateDeviceInfo(Device data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.dio.put(
-        '/device_info',
+      Response response = await network.base.patch(
+        '/auth/device-infos/update',
         data: data,
       );
-      return GetLoginModel.fromJson(response.data);
+      return BaseResponse.fromJson(response.data, (json) => json);
     } on DioException catch (e) {
-      return GetLoginModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(e.response?.data, (json) => json);
     }
   }
 
