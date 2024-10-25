@@ -11,6 +11,7 @@ import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -117,17 +118,21 @@ class TambahPetugasController extends BaseController {
         dataPetugas = await setting.getOfficerByID(data?.id ?? '');
         update();
         loadOrigin(dataPetugas.payload?.branches ?? []);
-        print("akuns: ${dataPetugas.payload?.accounts?.length}");
-        print("akuns: ${accountList.length}");
-        print("akuns: ${accountList.first.accountId}");
+        AppLogger.i("akuns: ${dataPetugas.payload?.accounts?.length}");
+        AppLogger.i("akuns: ${accountList.length}");
+        AppLogger.i("akuns: ${accountList.first.accountId}");
         dataPetugas.payload?.accounts?.forEach((account) {
-          
-          selectedAccountList.add((accountList.where((e) => e.accountId == account.accountId).isNotEmpty
-              ? (accountList.where((e) => e.accountId == account.accountId).first)
+          selectedAccountList.add((accountList
+                  .where((e) => e.accountId == account.accountId)
+                  .isNotEmpty
+              ? (accountList
+                  .where((e) => e.accountId == account.accountId)
+                  .first)
               : Account()));
         });
         dataPetugas.payload?.branches?.forEach((branch) {
-          selectedBranchList.add(branchList.where((e) => e.code == branch.code).first);
+          selectedBranchList
+              .add(branchList.where((e) => e.code == branch.code).first);
           update();
         });
         // selectedOrigin = dataPetugas.payload?.origins ?? [];
@@ -150,28 +155,44 @@ class TambahPetugasController extends BaseController {
         fasilitas = dataPetugas.payload?.menu?.fasilitas == "Y";
         katasandi = dataPetugas.payload?.menu?.katasandi == "Y";
         beranda = dataPetugas.payload?.menu?.beranda == "Y";
-        buatPesanan = dataPetugas.payload?.menu?.buatPesanan == "Y" || dataPetugas.payload?.menu?.paketmuInput == "Y";
-        lacakPesanan = dataPetugas.payload?.menu?.lacakPesanan == "Y" || dataPetugas.payload?.menu?.paketmuLacak == "Y";
-        mintaDijemput = dataPetugas.payload?.menu?.mintaDijemput == "Y" || dataPetugas.payload?.menu?.paketmuMintaDijemput == "Y";
-        serahTerima = dataPetugas.payload?.menu?.serahTerima == "Y" || dataPetugas.payload?.menu?.paketmuSerahTerima == "Y";
-        saldo = dataPetugas.payload?.menu?.saldo == "Y" || dataPetugas.payload?.menu?.keuanganJneMoney == "Y";
-        uangCod = dataPetugas.payload?.menu?.uangCod == "Y" || dataPetugas.payload?.menu?.keuanganCod == "Y";
-        tagihan = dataPetugas.payload?.menu?.tagihan == "Y" || dataPetugas.payload?.menu?.keuanganTagihan == "Y";
-        bonus = dataPetugas.payload?.menu?.bonus == "Y" || dataPetugas.payload?.menu?.keuanganBonus == "y";
+        buatPesanan = dataPetugas.payload?.menu?.buatPesanan == "Y" ||
+            dataPetugas.payload?.menu?.paketmuInput == "Y";
+        lacakPesanan = dataPetugas.payload?.menu?.lacakPesanan == "Y" ||
+            dataPetugas.payload?.menu?.paketmuLacak == "Y";
+        mintaDijemput = dataPetugas.payload?.menu?.mintaDijemput == "Y" ||
+            dataPetugas.payload?.menu?.paketmuMintaDijemput == "Y";
+        serahTerima = dataPetugas.payload?.menu?.serahTerima == "Y" ||
+            dataPetugas.payload?.menu?.paketmuSerahTerima == "Y";
+        saldo = dataPetugas.payload?.menu?.saldo == "Y" ||
+            dataPetugas.payload?.menu?.keuanganJneMoney == "Y";
+        uangCod = dataPetugas.payload?.menu?.uangCod == "Y" ||
+            dataPetugas.payload?.menu?.keuanganCod == "Y";
+        tagihan = dataPetugas.payload?.menu?.tagihan == "Y" ||
+            dataPetugas.payload?.menu?.keuanganTagihan == "Y";
+        bonus = dataPetugas.payload?.menu?.bonus == "Y" ||
+            dataPetugas.payload?.menu?.keuanganBonus == "y";
         pantauPaketmu = dataPetugas.payload?.menu?.pantauPaketmu == "Y";
         laporan = dataPetugas.payload?.menu?.laporan == "Y";
         eclaim = dataPetugas.payload?.menu?.eclaim == "Y";
-        tema = dataPetugas.payload?.menu?.tema == "Y" || dataPetugas.payload?.menu?.pengaturanTema == "Y";
-        label = dataPetugas.payload?.menu?.label == "Y" || dataPetugas.payload?.menu?.pengaturanLabel == "Y";
-        petugas = dataPetugas.payload?.menu?.petugas == "Y" || dataPetugas.payload?.menu?.pengaturanPetugas == "Y";
-        riwayatPesanan = dataPetugas.payload?.menu?.riwayatPesanan == "Y" || dataPetugas.payload?.menu?.paketmuRiwayat == "Y";
+        tema = dataPetugas.payload?.menu?.tema == "Y" ||
+            dataPetugas.payload?.menu?.pengaturanTema == "Y";
+        label = dataPetugas.payload?.menu?.label == "Y" ||
+            dataPetugas.payload?.menu?.pengaturanLabel == "Y";
+        petugas = dataPetugas.payload?.menu?.petugas == "Y" ||
+            dataPetugas.payload?.menu?.pengaturanPetugas == "Y";
+        riwayatPesanan = dataPetugas.payload?.menu?.riwayatPesanan == "Y" ||
+            dataPetugas.payload?.menu?.paketmuRiwayat == "Y";
         cekOngkir = dataPetugas.payload?.menu?.cekOngkir == "Y";
         semuaTransaksi = dataPetugas.payload?.menu?.semuaTransaksi == "Y";
         hapusPesanan = dataPetugas.payload?.menu?.hapusPesanan == "Y";
         semuaHapus = dataPetugas.payload?.menu?.semuaHapus == "Y";
-        cetakPesanan = dataPetugas.payload?.menu?.cetakPesanan == "Y" || dataPetugas.payload?.menu?.paketmuPrint == "Y";
-        monitoringAgg = dataPetugas.payload?.menu?.monitoringAgg == "Y" || dataPetugas.payload?.menu?.keuanganAggregasi == "Y";
-        monitoringAggMinus = dataPetugas.payload?.menu?.monitoringAggMinus == "Y" || dataPetugas.payload?.menu?.keuanganAggregasiMinus == "Y";
+        cetakPesanan = dataPetugas.payload?.menu?.cetakPesanan == "Y" ||
+            dataPetugas.payload?.menu?.paketmuPrint == "Y";
+        monitoringAgg = dataPetugas.payload?.menu?.monitoringAgg == "Y" ||
+            dataPetugas.payload?.menu?.keuanganAggregasi == "Y";
+        monitoringAggMinus =
+            dataPetugas.payload?.menu?.monitoringAggMinus == "Y" ||
+                dataPetugas.payload?.menu?.keuanganAggregasiMinus == "Y";
         update();
       } else {
         basic = UserModel.fromJson(
@@ -307,7 +328,9 @@ class TambahPetugasController extends BaseController {
                           Icons.warning,
                           color: whiteColor,
                         ),
-                        message: 'Alamat email atau nomor telepon sudah digunakan'.tr,
+                        message:
+                            'Alamat email atau nomor telepon sudah digunakan'
+                                .tr,
                         isDismissible: true,
                         duration: const Duration(seconds: 3),
                         backgroundColor: errorColor,

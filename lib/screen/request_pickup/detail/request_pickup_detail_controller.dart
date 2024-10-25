@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_detail_model.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:get/get.dart';
 
 class RequestPickupDetailController extends BaseController {
@@ -45,7 +46,7 @@ class RequestPickupDetailController extends BaseController {
       },
     ).onError(
       (error, stackTrace) {
-        print("on error");
+        AppLogger.e("on error");
         error.printError();
         _showErrorContainer = true;
         update();

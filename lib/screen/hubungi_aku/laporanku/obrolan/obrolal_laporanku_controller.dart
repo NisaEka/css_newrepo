@@ -4,6 +4,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,7 +27,8 @@ class ObrolanLaporankuController extends BaseController {
   File? gettedPhoto;
   int? imageSize;
   var maxImageSize = 2 * 1048576;
-  final PagingController<int, TicketMessageModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, TicketMessageModel> pagingController =
+      PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
   @override
@@ -36,7 +38,7 @@ class ObrolanLaporankuController extends BaseController {
     pagingController.addPageRequestListener((pageKey) {
       getMessages(pageKey);
     });
-    print("idMessage$id");
+    AppLogger.d('idMessage$id');
   }
 
   Future<void> initData() async {
@@ -72,7 +74,7 @@ class ObrolanLaporankuController extends BaseController {
       e.printError(info: 'error message paging');
       pagingController.error = e;
     }
-    print("messages.length ${messages.length}");
+    AppLogger.d('messages.length ${messages.length}');
     isLoading = false;
     update();
   }

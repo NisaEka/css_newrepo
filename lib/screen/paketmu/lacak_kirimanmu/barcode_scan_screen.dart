@@ -13,44 +13,62 @@ class BarcodeScanScreen extends StatefulWidget {
 
 class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
   String _scanBarcode = 'Unknown';
-  bool? cekResi = Get.arguments['cek_resi'];
+  late final bool cekResi;
 
   @override
   void initState() {
     super.initState();
+    // Safely get the 'cek_resi' argument or default to false if it's not provided
+    cekResi = Get.arguments['cek_resi'] ?? false;
     scanBarcodeNormal();
   }
 
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
+
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.BARCODE,
+      );
     } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
+      barcodeScanRes = 'Failed to scan barcode.';
     }
+
     if (!mounted) return;
 
     setState(() {
       _scanBarcode = barcodeScanRes;
     });
 
-    if (barcodeScanRes != "-1") {
-      if (cekResi == true) {
-        Get.off(const LacakKirimanScreen(), arguments: {
-          'nomor_resi': barcodeScanRes,
-        });
-      } else {
-        Get.back(result: barcodeScanRes);
-      }
+    if (barcodeScanRes == "-1") {
+      // Handle scan cancellation
+      _handleScanCancelled();
     } else {
-      setState(() {
-        _scanBarcode = "Scan canceled";
-      });
-      if (cekResi == true) {
-        Get.off(const LacakKirimanScreen(), arguments: {});
-      } else {
-        Get.back();
-      }
+      // Handle valid barcode scan
+      _handleScanResult(barcodeScanRes);
+    }
+  }
+
+  void _handleScanCancelled() {
+    setState(() {
+      _scanBarcode = "Scan canceled";
+    });
+
+    if (cekResi) {
+      Get.off(const LacakKirimanScreen(), arguments: {});
+    } else {
+      Get.back();
+    }
+  }
+
+  void _handleScanResult(String barcode) {
+    if (cekResi) {
+      Get.off(const LacakKirimanScreen(), arguments: {'nomor_resi': barcode});
+    } else {
+      Get.back(result: barcode);
     }
   }
 
@@ -59,13 +77,14 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Barcode scan'),
+          title: const Text('Barcode Scan'),
           centerTitle: true,
         ),
-        body: Builder(
-          builder: (BuildContext context) {
-            return Container();
-          },
+        body: Center(
+          child: Text(
+            'Scan result: $_scanBarcode',
+            style: const TextStyle(fontSize: 20),
+          ),
         ),
       ),
     );

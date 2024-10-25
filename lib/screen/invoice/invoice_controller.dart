@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/advance_filter_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/date_ext.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -16,12 +19,10 @@ class InvoiceController extends BaseController {
 
   final searchTextController = TextEditingController();
 
-
   num _invoiceCount = 0;
   num get invoiceCount => _invoiceCount;
 
   String filterDateText = Constant.allDate;
-
 
   RequestPickupDateEnum selectedFilterDate = RequestPickupDateEnum.all;
 
@@ -30,7 +31,6 @@ class InvoiceController extends BaseController {
   String selectedDateStartText = "Pilih Tanggal Awal";
   String selectedDateEndText = "Pilih Tanggal Akhir";
   static const pageSize = 10;
-
 
   @override
   void onInit() {
@@ -48,13 +48,16 @@ class InvoiceController extends BaseController {
     switch (selectedFilterDate) {
       case RequestPickupDateEnum.custom:
         if (startDateAvailable && endDateAvailable) {
-          _advanceFilterModel.setDate('${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
+          _advanceFilterModel.setDate(
+              '${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
           filterDateText = '$selectedDateStartText - $selectedDateEndText';
         } else if (startDateAvailable) {
-          _advanceFilterModel.setDate('${selectedDateStart?.millisecondsSinceEpoch}');
+          _advanceFilterModel
+              .setDate('${selectedDateStart?.millisecondsSinceEpoch}');
           filterDateText = selectedDateStartText;
         } else if (endDateAvailable) {
-          _advanceFilterModel.setDate('${selectedDateEnd?.millisecondsSinceEpoch}');
+          _advanceFilterModel
+              .setDate('${selectedDateEnd?.millisecondsSinceEpoch}');
           filterDateText = selectedDateEndText;
         }
         break;
@@ -64,16 +67,19 @@ class InvoiceController extends BaseController {
       case RequestPickupDateEnum.oneMonth:
         final currentDateTime = DateTime.now();
         final oneMonthAgo = currentDateTime.subtract(const Duration(days: 30));
-        _advanceFilterModel.setDate('${oneMonthAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
+        _advanceFilterModel.setDate(
+            '${oneMonthAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
         break;
       case RequestPickupDateEnum.oneWeek:
         final currentDateTime = DateTime.now();
         final oneWeekAgo = currentDateTime.subtract(const Duration(days: 7));
-        _advanceFilterModel.setDate('${oneWeekAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
+        _advanceFilterModel.setDate(
+            '${oneWeekAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
         break;
       case RequestPickupDateEnum.today:
         final currentDateTime = DateTime.now();
-        final startOfDay = DateTime(currentDateTime.year, currentDateTime.month, currentDateTime.day);
+        final startOfDay = DateTime(
+            currentDateTime.year, currentDateTime.month, currentDateTime.day);
         _advanceFilterModel.setDate('${startOfDay.millisecondsSinceEpoch}');
         break;
       default:
@@ -103,7 +109,7 @@ class InvoiceController extends BaseController {
 
       final payload = response.payload ?? List.empty();
       final isLastPage = payload.length < _advanceFilterModel.limit;
-      print(response.toJson());
+      AppLogger.d(jsonEncode(response.toJson()));
 
       if (isLastPage) {
         pagingController.appendLastPage(payload);
@@ -111,7 +117,7 @@ class InvoiceController extends BaseController {
         final nextPageKey = page + 1;
         pagingController.appendPage(payload, nextPageKey);
       }
-    } catch (e,i) {
+    } catch (e, i) {
       e.printError();
       i.printError();
     }
@@ -146,7 +152,8 @@ class InvoiceController extends BaseController {
   void setSelectedDateStart(DateTime? dateTime) {
     if (dateTime != null) {
       selectedDateStart = dateTime;
-      selectedDateStartText = dateTime.toStringWithFormat(format: "dd MMM yyyy");
+      selectedDateStartText =
+          dateTime.toStringWithFormat(format: "dd MMM yyyy");
     }
   }
 

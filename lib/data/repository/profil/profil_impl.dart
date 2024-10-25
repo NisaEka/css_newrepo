@@ -8,6 +8,7 @@ import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -49,7 +50,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
         (json) => CcrfProfileModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
-      print("ccrf error : ${e.response?.data}");
+      AppLogger.e("ccrf error : ${e.response?.data}");
       return e.response?.data;
     }
   }
@@ -70,11 +71,13 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future<DefaultResponseModel<String>> createProfileCcrf(FacilityCreateModel data) async {
+  Future<DefaultResponseModel<String>> createProfileCcrf(
+      FacilityCreateModel data) async {
     var token = await storageSecure.read(key: 'token');
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {
-      var response = await network.dio.post('/profile/ccrf', data: data.toJson());
+      var response =
+          await network.dio.post('/profile/ccrf', data: data.toJson());
       return DefaultResponseModel.fromJson(response.data, '');
     } on DioException catch (e) {
       return DefaultResponseModel.fromJson(e.response?.data, '');
@@ -82,12 +85,14 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future<DefaultResponseModel<String>> createProfileCcrfExisting(FacilityCreateExistingModel data) async {
+  Future<DefaultResponseModel<String>> createProfileCcrfExisting(
+      FacilityCreateExistingModel data) async {
     var token = await storageSecure.read(key: 'token');
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      var response = await network.dio.post('/profile/ccrf/existing', data: data.toJson());
+      var response =
+          await network.dio.post('/profile/ccrf/existing', data: data.toJson());
       return DefaultResponseModel.fromJson(response.data, '');
     } on DioException catch (e) {
       return DefaultResponseModel.fromJson(e.response?.data, '');

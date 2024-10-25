@@ -23,6 +23,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_scr
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -75,7 +76,11 @@ class TransactionController extends BaseController {
   bool isOnline = true;
   bool isShowDialog = false;
 
-  List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
+  List<String> steps = [
+    'Data Pengirim'.tr,
+    'Data Penerima'.tr,
+    'Data Kiriman'.tr
+  ];
   List<ServiceModel> serviceList = [];
   List<DataTransactionModel> draftList = [];
 
@@ -171,12 +176,17 @@ class TransactionController extends BaseController {
     totalOngkir = 0;
     isr = 0;
     double vat = (1.1 / 100);
-    isr = (0.002 * (hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt())) + 5000;
+    isr = (0.002 *
+            (hargaBarang.text == ''
+                ? 0
+                : hargaBarang.text.digitOnly().toInt())) +
+        5000;
     flatRateISR = flatRate + isr;
     freightChargeISR = freightCharge + isr;
     getInsurance = asuransi ? isr : 0;
     update();
-    int goodsAmount = hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt();
+    int goodsAmount =
+        hargaBarang.text == '' ? 0 : hargaBarang.text.digitOnly().toInt();
 
     if (isOnline) {
       isCalculate = true;
@@ -188,11 +198,11 @@ class TransactionController extends BaseController {
         freightChargeISR = freightCharge + isr;
         update();
         // }
-        print("select account : ${account.toJson()}");
+        AppLogger.i("account number: ${account.accountNumber}");
         bool prefix3 = account.accountNumber?.substring(0, 1) != "3";
         bool isCOD = account.accountService?.toUpperCase() == 'COD';
-        print("isCOD: $isCOD");
-        print("isPrefix3: $prefix3");
+        AppLogger.i("isCOD: $isCOD");
+        AppLogger.i("isPrefix3: $prefix3");
 
         try {
           await transaction
@@ -210,15 +220,22 @@ class TransactionController extends BaseController {
             getCodAmountMinimum = value.payload?.codAmountMinimum ?? 0;
             hargacCODOngkir = value.payload?.congkirAmount ?? 0;
             hargacod = value.payload?.codAmount ?? 0;
-            totalOngkir = codOngkir && account.accountService == "JLC" ? hargacCODOngkir.toInt() : value.payload?.totalOngkir ?? 0;
+            totalOngkir = codOngkir && account.accountService == "JLC"
+                ? hargacCODOngkir.toInt()
+                : value.payload?.totalOngkir ?? 0;
             getCodAmount = value.payload?.codAmount ?? 0;
-            codAmountText.text = value.payload?.codAmountMinimum?.toInt().toCurrency().toString() ?? '0';
+            codAmountText.text = value.payload?.codAmountMinimum
+                    ?.toInt()
+                    .toCurrency()
+                    .toString() ??
+                '0';
             getCodFee = value.payload?.codFee ?? 0;
           });
         } catch (e) {
           num getVat = isCOD && prefix3 ? freightCharge * vat : 0;
           getCodFeeMinimum = (freightCharge + goodsAmount) * codfee;
-          getCodAmountMinimum = goodsAmount + freightCharge + getCodFeeMinimum + getVat;
+          getCodAmountMinimum =
+              goodsAmount + freightCharge + getCodFeeMinimum + getVat;
 
           //cod amount text >= cod amount minimum
           /*tanpa harga barang
@@ -232,7 +249,8 @@ class TransactionController extends BaseController {
 
           // hargacod = (codfee * (goodsAmount) + (goodsAmount) + totalOngkir);
           hargacod = isCOD ? getCodAmount : 0;
-          codAmountText.text = isCOD ? getCodAmountMinimum.toInt().toCurrency().toString() : '0';
+          codAmountText.text =
+              isCOD ? getCodAmountMinimum.toInt().toCurrency().toString() : '0';
           hargacCODOngkir = freightCharge + (asuransi ? isr : 0) + 1000;
           hargacCODOngkirISR = freightCharge + isr;
           update();
@@ -256,7 +274,10 @@ class TransactionController extends BaseController {
   }
 
   bool isValidate() {
-    if (formValidate && selectedService != null && !isCalculate && totalOngkir <= 1000000) {
+    if (formValidate &&
+        selectedService != null &&
+        !isCalculate &&
+        totalOngkir <= 1000000) {
       return true;
     }
 
@@ -292,14 +313,16 @@ class TransactionController extends BaseController {
             destinationCode: destination.destinationCode,
             originCode: origin.originCode,
             serviceCode: selectedService?.serviceCode,
-            weight: beratKiriman.text == '' ? 1 : beratKiriman.text.split('.').first.toInt(),
+            weight: beratKiriman.text == ''
+                ? 1
+                : beratKiriman.text.split('.').first.toInt(),
             custNo: account.accountNumber,
             type: jenisBarang.text == "PAKET" ? "PAKET" : "DOCUMENT"),
       );
 
       flatRate = value.payload?.flatRate?.toInt() ?? 0;
       freightCharge = value.payload?.freightCharge?.toInt() ?? 0;
-      print("freightCharge$freightCharge");
+      AppLogger.i("freightCharge: $freightCharge");
       update();
     } catch (e, i) {
       e.printError();
@@ -328,7 +351,8 @@ class TransactionController extends BaseController {
 
   void loadDraft() async {
     draftList = [];
-    DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
+    DraftTransactionModel temp = DraftTransactionModel.fromJson(
+        await storage.readData(StorageCore.draftTransaction));
     draftList.addAll(temp.draft);
 
     namaBarang.text = goods?.desc ?? '';
@@ -339,7 +363,8 @@ class TransactionController extends BaseController {
     intruksiKhusus.text = delivery?.specialInstruction ?? '';
     packingKayu = delivery?.woodPackaging == "Y" ? true : false;
     beratKiriman.text = goods?.weight.toString().split('.').first ?? '1';
-    selectedService = serviceList.where((e) => e.serviceCode == delivery?.serviceCode).first;
+    selectedService =
+        serviceList.where((e) => e.serviceCode == delivery?.serviceCode).first;
 
     if (delivery?.flatRate != null) {
       getOngkir();
@@ -406,7 +431,8 @@ class TransactionController extends BaseController {
       jenisBarang.text = dataEdit?.goods?.type ?? '';
       noReference.text = dataEdit?.orderId ?? '';
       namaBarang.text = dataEdit?.goods?.desc ?? '';
-      hargaBarang.text = dataEdit?.goods?.amount?.toInt().toCurrency().toString() ?? '';
+      hargaBarang.text =
+          dataEdit?.goods?.amount?.toInt().toCurrency().toString() ?? '';
       jumlahPacking.text = dataEdit?.goods?.quantity.toString() ?? '';
       asuransi = dataEdit?.delivery?.insuranceFlag == "Y";
       intruksiKhusus.text = dataEdit?.delivery?.specialInstruction ?? '';
@@ -414,8 +440,14 @@ class TransactionController extends BaseController {
       beratKiriman.text = dataEdit?.goods?.weight.toString() ?? '';
       berat = dataEdit?.goods?.weight?.toDouble() ?? 0;
       // ServiceModel servicecode = serviceList.where((element) => element.serviceCode == dataEdit?.delivery?.serviceCode).first;
-      ServiceModel? servicedisplay = serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).isNotEmpty
-          ? serviceList.where((element) => element.serviceDisplay == dataEdit?.delivery?.serviceCode).first
+      ServiceModel? servicedisplay = serviceList
+              .where((element) =>
+                  element.serviceDisplay == dataEdit?.delivery?.serviceCode)
+              .isNotEmpty
+          ? serviceList
+              .where((element) =>
+                  element.serviceDisplay == dataEdit?.delivery?.serviceCode)
+              .first
           : ServiceModel();
       selectedService = servicedisplay;
 
@@ -423,7 +455,8 @@ class TransactionController extends BaseController {
       getOngkir();
     }
     if (draft != null) {
-      beratKiriman.text = draft?.goods?.weight.toString().split('.').first ?? '';
+      beratKiriman.text =
+          draft?.goods?.weight.toString().split('.').first ?? '';
       update();
     }
     hitungOngkir();
@@ -437,7 +470,8 @@ class TransactionController extends BaseController {
     isLoading = true;
     update();
     draftList = [];
-    DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
+    DraftTransactionModel temp = DraftTransactionModel.fromJson(
+        await storage.readData(StorageCore.draftTransaction));
     draftList.addAll(temp.draft);
     draftList.add(DataTransactionModel(
       createAt: goods == null ? DateTime.now().toString() : draft?.createAt,
@@ -470,7 +504,9 @@ class TransactionController extends BaseController {
       goods: Goods(
           type: jenisBarang.text,
           desc: namaBarang.text,
-          amount: hargaBarang.text.isNotEmpty ? hargaBarang.text.digitOnly().toInt() : 0,
+          amount: hargaBarang.text.isNotEmpty
+              ? hargaBarang.text.digitOnly().toInt()
+              : 0,
           quantity: jumlahPacking.text.toInt(),
           weight: berat != 0 ? berat : beratKiriman.text.toInt()),
       shipper: shipper,
@@ -498,9 +534,11 @@ class TransactionController extends BaseController {
                 const DashboardScreen(),
               ),
               secondButtonTitle: "Lihat Draft".tr,
-              secondAction: () => Get.delete<DraftTransaksiController>().then((value) => Get.offAll(const DraftTransaksiScreen())),
+              secondAction: () => Get.delete<DraftTransaksiController>()
+                  .then((value) => Get.offAll(const DraftTransaksiScreen())),
               thirdButtonTitle: "Buat Transaksi Lainnya".tr,
-              thirdAction: () => Get.offAll(const InformasiPengirimScreen(), arguments: {}),
+              thirdAction: () =>
+                  Get.offAll(const InformasiPengirimScreen(), arguments: {}),
             ),
             transition: Transition.rightToLeft,
             arguments: {
@@ -588,7 +626,8 @@ class TransactionController extends BaseController {
                 },
               ),
               thirdButtonTitle: "Lihat Transaksi",
-              thirdAction: () => Get.offAll(const RiwayatKirimanScreen(), arguments: {"isLastScreen": true}),
+              thirdAction: () => Get.offAll(const RiwayatKirimanScreen(),
+                  arguments: {"isLastScreen": true}),
             ),
           );
         }
@@ -638,7 +677,9 @@ class TransactionController extends BaseController {
         goods: Goods(
             type: jenisBarang.text,
             desc: namaBarang.text,
-            amount: hargaBarang.text.isNotEmpty ? hargaBarang.text.digitOnly().toInt() : 0,
+            amount: hargaBarang.text.isNotEmpty
+                ? hargaBarang.text.digitOnly().toInt()
+                : 0,
             quantity: jumlahPacking.text.toInt(),
             weight: berat),
         shipper: shipper,
@@ -678,7 +719,8 @@ class TransactionController extends BaseController {
                 },
               ),
               thirdButtonTitle: "Buat Transaksi Lainnya".tr,
-              thirdAction: () => Get.offAll(const InformasiPengirimScreen(), arguments: {}),
+              thirdAction: () =>
+                  Get.offAll(const InformasiPengirimScreen(), arguments: {}),
             ),
           );
         }
@@ -701,8 +743,8 @@ class TransactionController extends BaseController {
     getOngkir();
     account.accountNumber.printInfo(info: "account number");
 
-    print("origin: ${origin.originCode}");
-    print("destination: ${destination.destinationCode}");
+    AppLogger.i("origin: ${origin.originCode}");
+    AppLogger.i("destination: ${destination.destinationCode}");
   }
 
   onChangeCodAmountText(String value) {

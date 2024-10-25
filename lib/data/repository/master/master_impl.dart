@@ -13,6 +13,7 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:css_mobile/util/logger.dart';
 
 import 'master_repository.dart';
 
@@ -48,7 +49,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Destination>>> getDestinations(QueryParamModel param) async {
+  Future<BaseResponse<List<Destination>>> getDestinations(
+      QueryParamModel param) async {
     try {
       Response response = await network.base.get(
         '/master/destinations',
@@ -70,7 +72,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<GroupOwnerModel>>> getReferals(String keyword) async {
+  Future<BaseResponse<List<GroupOwnerModel>>> getReferals(
+      String keyword) async {
     try {
       Response response = await network.base.get(
         '/master/group-owners',
@@ -118,7 +121,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(QueryParamModel param) async {
+  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -143,13 +147,14 @@ class MasterRepositoryImpl extends MasterRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      print('dropshipper error ${e.response?.data}');
+      AppLogger.e('dropshipper error ${e.response?.data}');
       return e.response?.data;
     }
   }
 
   @override
-  Future<BaseResponse<List<ReceiverModel>>> getReceivers(QueryParamModel param) async {
+  Future<BaseResponse<List<ReceiverModel>>> getReceivers(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -174,7 +179,7 @@ class MasterRepositoryImpl extends MasterRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      print('receiver error : ${e.response?.data}');
+      AppLogger.e('receiver error ${e.response?.data}');
       return e.response?.data;
     }
   }

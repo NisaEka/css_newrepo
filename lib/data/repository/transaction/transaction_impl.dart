@@ -19,6 +19,7 @@ import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -48,7 +49,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<ResponseModel<TransactionFeeModel>> getTransactionFee(DataTransactionFeeModel params) async {
+  Future<ResponseModel<TransactionFeeModel>> getTransactionFee(
+      DataTransactionFeeModel params) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
@@ -76,7 +78,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<PostTransactionModel> postTransaction(DataTransactionModel data) async {
+  Future<PostTransactionModel> postTransaction(
+      DataTransactionModel data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo(info: "kiriman data");
@@ -272,11 +275,12 @@ class TransactionRepositoryImpl extends TransactionRepository {
     DataTransactionModel data,
     String awb,
   ) async {
-    print("weigh: ${data.goods?.weight}");
+    AppLogger.d("weigh: ${data.goods?.weight}");
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.put("/transaction/$awb", data: data);
+      Response response =
+          await network.dio.put("/transaction/$awb", data: data);
       return PostTransactionModel.fromJson(response.data);
     } on DioException catch (e) {
       return PostTransactionModel.fromJson(e.response?.data);
@@ -298,7 +302,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data) async {
+  Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(
+      DataTransactionOngkirModel data) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo();
@@ -310,18 +315,21 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
       return ResponseModel<PostTransactionOngkirModel>.fromJson(
         response.data,
-        (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
+        (json) =>
+            PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
       return ResponseModel<PostTransactionOngkirModel>.fromJson(
         e.response?.data,
-        (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
+        (json) =>
+            PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }
 
   @override
-  Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(String transDate, String officer) async {
+  Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(
+      String transDate, String officer) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
@@ -344,7 +352,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      print('response: ${e.response?.data}');
+      AppLogger.e('error: ${e.response?.data}');
       return ResponseModel<List<CountCardModel>>.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>
