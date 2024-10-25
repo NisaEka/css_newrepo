@@ -91,8 +91,10 @@ class LoginForm extends StatelessWidget {
                         color: blueJNE,
                         title: 'Masuk'.tr,
                         onPressed: () async {
-                          if (c.state.formKey.currentState?.validate() == true)
+                          if (c.state.formKey.currentState?.validate() ==
+                              true) {
                             c.doLogin(context);
+                          }
                         },
                       ),
                       // CustomFilledButton(

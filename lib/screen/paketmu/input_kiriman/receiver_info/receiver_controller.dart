@@ -180,49 +180,43 @@ class ReceiverController extends BaseController {
     try {
       await transaction
           .postReceiver(ReceiverModel(
-            name: namaPenerima.text,
-            contact: namaPenerima.text,
-            phone: nomorTelpon.text,
-            address: alamatLengkap.text,
-            city: selectedDestination?.cityName ?? '-',
-            zipCode: selectedDestination?.zipCode ?? '00000',
-            region: selectedDestination?.provinceName ?? '-',
-            country: selectedDestination?.countryName ?? '-',
-            destinationCode: selectedDestination?.destinationCode ?? '-',
-            destinationDescription: selectedDestination?.cityName ?? '-',
-            idDestination: selectedDestination?.id.toString() ?? '-',
-            receiverDistrict: selectedDestination?.districtName ?? '-',
-            receiverSubDistrict: selectedDestination?.subdistrictName ?? '-',
-          ))
-          .then(
-            (value) => value == 201
-                ? Get.showSnackbar(
-                    GetSnackBar(
-                      icon: const Icon(
-                        Icons.info,
-                        color: whiteColor,
-                      ),
-                      message: "Data receiver telah disimpan".tr,
-                      isDismissible: true,
-                      duration: const Duration(seconds: 3),
-                      backgroundColor:
-                          value.code == 201 ? successColor : errorColor,
-                    ),
-                  )
-                : Get.showSnackbar(
-                    GetSnackBar(
-                      icon: const Icon(
-                        Icons.info,
-                        color: whiteColor,
-                      ),
-                      message: value.error?.first.message ?? ''.tr,
-                      isDismissible: true,
-                      duration: const Duration(seconds: 3),
-                      backgroundColor:
-                          value.code == 201 ? successColor : errorColor,
-                    ),
-                  ),
+        name: namaPenerima.text,
+        contact: namaPenerima.text,
+        phone: nomorTelpon.text,
+        address: alamatLengkap.text,
+        city: selectedDestination?.cityName ?? '-',
+        zipCode: selectedDestination?.zipCode ?? '00000',
+        region: selectedDestination?.provinceName ?? '-',
+        country: selectedDestination?.countryName ?? '-',
+        destinationCode: selectedDestination?.destinationCode ?? '-',
+        destinationDescription: selectedDestination?.cityName ?? '-',
+        idDestination: selectedDestination?.id.toString() ?? '-',
+        receiverDistrict: selectedDestination?.districtName ?? '-',
+        receiverSubDistrict: selectedDestination?.subdistrictName ?? '-',
+      ))
+          .then((value) {
+        if (value.code == 201) {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(Icons.info, color: whiteColor),
+              message: "Data receiver telah disimpan".tr,
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: successColor,
+            ),
           );
+        } else {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(Icons.info, color: whiteColor),
+              message: value.error?.first.message ?? ''.tr,
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: errorColor,
+            ),
+          );
+        }
+      });
     } catch (e) {
       e.printError();
       Get.showSnackbar(

@@ -56,10 +56,10 @@ class RequestPickupAddressUpsertController extends BaseController {
     //     .onError((error, stackTrace) => null);
   }
 
-  _setSelectedDestination(Destination? destination) {
-    selectedDestination = destination;
-    update();
-  }
+  // _setSelectedDestination(Destination? destination) {
+  //   selectedDestination = destination;
+  //   update();
+  // }
 
   /// Screen methods.
 

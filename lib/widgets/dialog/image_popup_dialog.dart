@@ -28,9 +28,9 @@ class _ImagePopupDialogState extends State<ImagePopupDialog> {
   late GoogleMapController mapController;
   Completer<GoogleMapController>? googleMapController;
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
+  // void _onMapCreated(GoogleMapController controller) {
+  //   mapController = controller;
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -24,7 +24,8 @@ class PengaturanScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: false,
-            onPopInvoked: (didPop) => Get.off(const DashboardScreen()),
+            onPopInvokedWithResult: (didPop, result) =>
+                Get.off(const DashboardScreen()),
             child: Stack(
               children: [
                 Scaffold(
