@@ -7,7 +7,8 @@ class LaporankuState {
   final searchField = TextEditingController();
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
-  final PagingController<int, TicketModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, TicketModel> pagingController =
+      PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
   bool isFiltered = false;

@@ -42,7 +42,11 @@ class LogActivityStepper extends StatelessWidget {
                 width: 23,
                 height: 23,
                 decoration: BoxDecoration(
-                    color: currentStep == 0 ? (AppConst.isLightTheme(context) ? blueJNE : redJNE) : (AppConst.isLightTheme(context) ? greyColor : greyDarkColor1),
+                    color: currentStep == 0
+                        ? (AppConst.isLightTheme(context) ? blueJNE : redJNE)
+                        : (AppConst.isLightTheme(context)
+                            ? greyColor
+                            : greyDarkColor1),
                     borderRadius: BorderRadius.circular(20)),
               ),
             ),
@@ -53,7 +57,9 @@ class LogActivityStepper extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border(
                   left: BorderSide(
-                    color: (currentStep + 1) != length ? greyDarkColor1 : Colors.transparent,
+                    color: (currentStep + 1) != length
+                        ? greyDarkColor1
+                        : Colors.transparent,
                   ),
                 ),
               ),
@@ -91,8 +97,11 @@ class LogActivityStepper extends StatelessWidget {
               title: data?.activityStatus ?? '',
               fontSize: 10,
               // height: 20,
-              width: calcTextSize(TextSpan(text: data?.activityStatus ?? '')).width,
-              height: calcTextSize(TextSpan(text: data?.activityStatus ?? '')).height + 5,
+              width: calcTextSize(TextSpan(text: data?.activityStatus ?? ''))
+                  .width,
+              height: calcTextSize(TextSpan(text: data?.activityStatus ?? ''))
+                      .height +
+                  5,
             )
           ],
         ),

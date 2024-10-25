@@ -36,7 +36,8 @@ class PembayaranAggergasiScreen extends StatelessWidget {
         });
   }
 
-  CustomTopBar _appBarContent(PembayaranAggergasiController c, BuildContext context) {
+  CustomTopBar _appBarContent(
+      PembayaranAggergasiController c, BuildContext context) {
     return CustomTopBar(
       title: 'Laporan Pembayaran Aggregasi'.tr,
       action: [
@@ -101,7 +102,8 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(
                     children: List.generate(
                       3,
@@ -119,7 +121,8 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                       color: blueJNE,
                     ),
                   ),
-                  newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                  newPageProgressIndicatorBuilder: (context) =>
+                      const LoadingDialog(
                     background: Colors.transparent,
                     height: 50,
                     size: 30,
@@ -133,7 +136,8 @@ class PembayaranAggergasiScreen extends StatelessWidget {
     );
   }
 
-  Widget _filterContent(PembayaranAggergasiController c, BuildContext context, StateSetter setState) {
+  Widget _filterContent(PembayaranAggergasiController c, BuildContext context,
+      StateSetter setState) {
     return Expanded(
       child: CustomScrollView(
         slivers: [
@@ -149,7 +153,9 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                         .map(
                           (e) => AccountListItem(
                             data: e,
-                            isSelected: c.selectedAccount.where((accounts) => accounts == e).isNotEmpty,
+                            isSelected: c.selectedAccount
+                                .where((accounts) => accounts == e)
+                                .isNotEmpty,
                             onTap: () => setState(() => c.onSelectAccount(e)),
                           ),
                         )
@@ -216,7 +222,8 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                       hintText: 'Tanggal Akhir'.tr,
                       onTap: () => c.dateFilter == '4'
                           ? c.selectDate(context).then(
-                                (value) => setState(() => c.onSelectEndDate(value!)),
+                                (value) =>
+                                    setState(() => c.onSelectEndDate(value!)),
                               )
                           : null,
                     ),

@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class RequestPickupLocationController extends BaseController {
-
   double _selectedLat = 0.0;
   double get selectedLat => _selectedLat;
 
@@ -28,26 +27,22 @@ class RequestPickupLocationController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([
-      initializeCurrentLocation()
-    ]);
+    Future.wait([initializeCurrentLocation()]);
   }
 
   Future<void> initializeCurrentLocation() async {
-    _getCurrentLocation()
-        .then((coordinate) {
-          _selectedLat = coordinate.latitude;
-          _selectedLng = coordinate.longitude;
+    _getCurrentLocation().then((coordinate) {
+      _selectedLat = coordinate.latitude;
+      _selectedLng = coordinate.longitude;
 
-          _contentReady = true;
-          update();
-    })
-        .catchError((error) {
-          _selectedLat = -6.9506528;
-          _selectedLng = 107.6234307;
+      _contentReady = true;
+      update();
+    }).catchError((error) {
+      _selectedLat = -6.9506528;
+      _selectedLng = 107.6234307;
 
-          _contentReady = true;
-          update();
+      _contentReady = true;
+      update();
     });
   }
 
@@ -63,7 +58,8 @@ class RequestPickupLocationController extends BaseController {
   void onAddressTextChanged(String newText) async {
     List<Location> locations = await locationFromAddress(newText);
     final locationFirst = locations.first;
-    _getAddress(await placemarkFromCoordinates(locationFirst.latitude, locationFirst.longitude));
+    _getAddress(await placemarkFromCoordinates(
+        locationFirst.latitude, locationFirst.longitude));
   }
 
   void onNavigateUp() {
@@ -109,11 +105,11 @@ class RequestPickupLocationController extends BaseController {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
     position = await Geolocator.getCurrentPosition();
     return LatLng(position.latitude, position.longitude);
   }
-
 }

@@ -55,7 +55,8 @@ class LaporankuController extends BaseController {
         state.searchField.text,
       );
 
-      final isLastPage = (tickets.payload?.length ?? 0) < LaporankuState.pageSize;
+      final isLastPage =
+          (tickets.payload?.length ?? 0) < LaporankuState.pageSize;
       if (isLastPage) {
         state.pagingController.appendLastPage(tickets.payload ?? []);
         // transactionList.addAll(state.pagingController.itemList ?? []);
@@ -99,17 +100,20 @@ class LaporankuController extends BaseController {
     } else if (filter == 1) {
       state.startDate = DateTime.now().subtract(const Duration(days: 30));
       state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.startDateField.text =
+          state.startDate.toString().toShortDateFormat();
       state.endDateField.text = state.endDate.toString().toShortDateFormat();
     } else if (filter == 2) {
       state.startDate = DateTime.now().subtract(const Duration(days: 7));
       state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.startDateField.text =
+          state.startDate.toString().toShortDateFormat();
       state.endDateField.text = state.endDate.toString().toShortDateFormat();
     } else if (filter == 3) {
       state.startDate = DateTime.now();
       state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.startDateField.text =
+          state.startDate.toString().toShortDateFormat();
       state.endDateField.text = state.endDate.toString().toShortDateFormat();
     }
 
@@ -117,10 +121,13 @@ class LaporankuController extends BaseController {
   }
 
   applyFilter() {
-    if (state.startDate != null || state.endDate != null || state.status != "") {
+    if (state.startDate != null ||
+        state.endDate != null ||
+        state.status != "") {
       state.isFiltered = true;
       if (state.startDate != null && state.endDate != null) {
-        state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
+        state.date =
+            "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
       }
       state.pagingController.refresh();
       countReports();

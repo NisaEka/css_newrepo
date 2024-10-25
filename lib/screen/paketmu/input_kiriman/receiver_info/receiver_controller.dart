@@ -116,7 +116,8 @@ class ReceiverController extends BaseController {
   }
 
   bool isSaveReceiver() {
-    if (receiver?.name != namaPenerima.text && receiver?.phone != nomorTelpon.text) {
+    if (receiver?.name != namaPenerima.text &&
+        receiver?.phone != nomorTelpon.text) {
       return true;
     }
     return false;
@@ -204,7 +205,8 @@ class ReceiverController extends BaseController {
                       message: "Data receiver telah disimpan".tr,
                       isDismissible: true,
                       duration: const Duration(seconds: 3),
-                      backgroundColor: value.code == 201 ? successColor : errorColor,
+                      backgroundColor:
+                          value.code == 201 ? successColor : errorColor,
                     ),
                   )
                 : Get.showSnackbar(
@@ -216,7 +218,8 @@ class ReceiverController extends BaseController {
                       message: value.error?.first.message ?? ''.tr,
                       isDismissible: true,
                       duration: const Duration(seconds: 3),
-                      backgroundColor: value.code == 201 ? successColor : errorColor,
+                      backgroundColor:
+                          value.code == 201 ? successColor : errorColor,
                     ),
                   ),
           );

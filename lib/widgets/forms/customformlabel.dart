@@ -31,10 +31,14 @@ class CustomFormLabel extends StatelessWidget {
             text: label,
             style: subformLabelTextStyle.copyWith(
               fontWeight: isBold ? FontWeight.bold : regular,
-              color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2,
+              color: AppConst.isLightTheme(context)
+                  ? greyDarkColor2
+                  : greyLightColor2,
             ),
             children: <TextSpan>[
-              TextSpan(text: showRequired ? "*" : "", style: const TextStyle(color: Colors.red)),
+              TextSpan(
+                  text: showRequired ? "*" : "",
+                  style: const TextStyle(color: Colors.red)),
             ],
           ),
         ),

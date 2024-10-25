@@ -37,7 +37,9 @@ class DataPetugasModel {
     _address = json['address'];
     _zipCode = json['zip_code'];
     _menu = json['menu'] != null ? AllowedMenu.fromJson(json['menu']) : null;
-    _transaction = json['transaction'] != null ? Transaction.fromJson(json['transaction']) : null;
+    _transaction = json['transaction'] != null
+        ? Transaction.fromJson(json['transaction'])
+        : null;
     if (json['accounts'] != null) {
       _accounts = [];
       json['accounts'].forEach((v) {
@@ -168,5 +170,3 @@ class Transaction {
     return map;
   }
 }
-
-

@@ -65,7 +65,8 @@ class PantauPaketmuScreen extends StatelessWidget {
     );
   }
 
-  Widget _filterContent(BuildContext context, PantauPaketmuController c, StateSetter setState) {
+  Widget _filterContent(
+      BuildContext context, PantauPaketmuController c, StateSetter setState) {
     return Expanded(
       child: CustomScrollView(
         slivers: [
@@ -120,9 +121,12 @@ class PantauPaketmuScreen extends StatelessWidget {
                           ? c.selectDate(context).then((value) {
                               setState(() {
                                 c.state.startDate = value;
-                                c.state.startDateField.text = value.toString().toShortDateFormat();
+                                c.state.startDateField.text =
+                                    value.toString().toShortDateFormat();
                                 c.state.endDate = DateTime.now();
-                                c.state.endDateField.text = DateTime.now().toString().toShortDateFormat();
+                                c.state.endDateField.text = DateTime.now()
+                                    .toString()
+                                    .toShortDateFormat();
                                 c.update();
                               });
                             })
@@ -138,7 +142,8 @@ class PantauPaketmuScreen extends StatelessWidget {
                           ? c.selectDate(context).then((value) {
                               setState(() {
                                 c.state.endDate = value;
-                                c.state.endDateField.text = value.toString().toShortDateFormat();
+                                c.state.endDateField.text =
+                                    value.toString().toShortDateFormat();
                                 c.update();
                               });
                             })
@@ -242,7 +247,9 @@ class PantauPaketmuScreen extends StatelessWidget {
             hintText: 'Cari'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
-              color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? whiteColor
+                  : blueJNE,
             ),
             onChanged: (value) {
               c.state.searchField.text = value;
@@ -282,7 +289,9 @@ class PantauPaketmuScreen extends StatelessWidget {
                     ),
                     isLoading: false,
                     index: index,
-                    isSelected: c.state.selectedTransaction.where((e) => e == item).isNotEmpty,
+                    isSelected: c.state.selectedTransaction
+                        .where((e) => e == item)
+                        .isNotEmpty,
                     onLongPress: () {
                       // c.select(item);
                     },
@@ -301,7 +310,8 @@ class PantauPaketmuScreen extends StatelessWidget {
                       color: blueJNE,
                     ),
                   ),
-                  newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                  newPageProgressIndicatorBuilder: (context) =>
+                      const LoadingDialog(
                     background: Colors.transparent,
                     height: 50,
                     size: 30,
@@ -359,7 +369,8 @@ class PantauPaketmuScreen extends StatelessWidget {
                     Text(
                       'Kiriman'.tr,
                       style: sublistTitleTextStyle.copyWith(
-                        color: c.state.tipeKiriman == 0 ? whiteColor : greyColor,
+                        color:
+                            c.state.tipeKiriman == 0 ? whiteColor : greyColor,
                       ),
                     )
                   ],
@@ -395,7 +406,8 @@ class PantauPaketmuScreen extends StatelessWidget {
                     Text(
                       'COD'.tr,
                       style: sublistTitleTextStyle.copyWith(
-                        color: c.state.tipeKiriman == 1 ? whiteColor : greyColor,
+                        color:
+                            c.state.tipeKiriman == 1 ? whiteColor : greyColor,
                       ),
                     )
                   ],
@@ -429,7 +441,8 @@ class PantauPaketmuScreen extends StatelessWidget {
                     Text(
                       'NON COD'.tr,
                       style: sublistTitleTextStyle.copyWith(
-                        color: c.state.tipeKiriman == 2 ? whiteColor : greyColor,
+                        color:
+                            c.state.tipeKiriman == 2 ? whiteColor : greyColor,
                       ),
                     )
                   ],
@@ -464,7 +477,8 @@ class PantauPaketmuScreen extends StatelessWidget {
                     Text(
                       'COD ONGKIR'.tr,
                       style: sublistTitleTextStyle.copyWith(
-                        color: c.state.tipeKiriman == 3 ? whiteColor : greyColor,
+                        color:
+                            c.state.tipeKiriman == 3 ? whiteColor : greyColor,
                       ),
                     ),
                   ],

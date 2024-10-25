@@ -58,19 +58,25 @@ class PetugasListItem extends StatelessWidget {
                       ? Column(
                           children: [
                             Container(
-                              color: isLoading ? greyLightColor2 : Colors.transparent,
+                              color: isLoading
+                                  ? greyLightColor2
+                                  : Colors.transparent,
                               width: isLoading ? 150 : null,
                               height: 10,
                               margin: const EdgeInsets.only(bottom: 2),
                             ),
                             Container(
-                              color: isLoading ? greyLightColor2 : Colors.transparent,
+                              color: isLoading
+                                  ? greyLightColor2
+                                  : Colors.transparent,
                               width: isLoading ? 150 : null,
                               height: 10,
                               margin: const EdgeInsets.only(bottom: 2),
                             ),
                             Container(
-                              color: isLoading ? greyLightColor2 : Colors.transparent,
+                              color: isLoading
+                                  ? greyLightColor2
+                                  : Colors.transparent,
                               width: isLoading ? 150 : null,
                               height: 10,
                               margin: const EdgeInsets.only(bottom: 2),

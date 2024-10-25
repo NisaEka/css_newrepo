@@ -18,7 +18,8 @@ class DashboardNews extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Jnews'.tr, style: Theme.of(context).textTheme.titleLarge),
+                    Text('Jnews'.tr,
+                        style: Theme.of(context).textTheme.titleLarge),
                     // const DateDropdownFilterButton(),
                   ],
                 ),

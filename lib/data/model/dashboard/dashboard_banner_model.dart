@@ -1,10 +1,11 @@
 class DashboardBannerModel {
   DashboardBannerModel({
-      bool? status, 
-      List<BannerModel>? data,}){
+    bool? status,
+    List<BannerModel>? data,
+  }) {
     _status = status;
     _data = data;
-}
+  }
 
   DashboardBannerModel.fromJson(dynamic json) {
     _status = json['status'];
@@ -17,11 +18,14 @@ class DashboardBannerModel {
   }
   bool? _status;
   List<BannerModel>? _data;
-DashboardBannerModel copyWith({  bool? status,
-  List<BannerModel>? data,
-}) => DashboardBannerModel(  status: status ?? _status,
-  data: data ?? _data,
-);
+  DashboardBannerModel copyWith({
+    bool? status,
+    List<BannerModel>? data,
+  }) =>
+      DashboardBannerModel(
+        status: status ?? _status,
+        data: data ?? _data,
+      );
   bool? get status => _status;
   List<BannerModel>? get data => _data;
 
@@ -33,18 +37,18 @@ DashboardBannerModel copyWith({  bool? status,
     }
     return map;
   }
-
 }
 
 class BannerModel {
   BannerModel({
-      String? namaBanner, 
-      String? picture, 
-      String? link,}){
+    String? namaBanner,
+    String? picture,
+    String? link,
+  }) {
     _namaBanner = namaBanner;
     _picture = picture;
     _link = link;
-}
+  }
 
   BannerModel.fromJson(dynamic json) {
     _namaBanner = json['nama_banner'];
@@ -54,13 +58,16 @@ class BannerModel {
   String? _namaBanner;
   String? _picture;
   String? _link;
-BannerModel copyWith({  String? namaBanner,
-  String? picture,
-  String? link,
-}) => BannerModel(  namaBanner: namaBanner ?? _namaBanner,
-  picture: picture ?? _picture,
-  link: link ?? _link,
-);
+  BannerModel copyWith({
+    String? namaBanner,
+    String? picture,
+    String? link,
+  }) =>
+      BannerModel(
+        namaBanner: namaBanner ?? _namaBanner,
+        picture: picture ?? _picture,
+        link: link ?? _link,
+      );
   String? get namaBanner => _namaBanner;
   String? get picture => _picture;
   String? get link => _link;
@@ -72,5 +79,4 @@ BannerModel copyWith({  String? namaBanner,
     map['link'] = _link;
     return map;
   }
-
 }

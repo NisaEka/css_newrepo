@@ -1,5 +1,4 @@
 class RequestPickupAddressCreateRequestModel {
-
   final String name;
   final String phone;
   final String address;
@@ -24,7 +23,8 @@ class RequestPickupAddressCreateRequestModel {
     required this.lng,
   });
 
-  factory RequestPickupAddressCreateRequestModel.fromJson(Map<String, dynamic> json) =>
+  factory RequestPickupAddressCreateRequestModel.fromJson(
+          Map<String, dynamic> json) =>
       RequestPickupAddressCreateRequestModel(
         name: json['name'] as String,
         phone: json['phone'] as String,
@@ -36,19 +36,18 @@ class RequestPickupAddressCreateRequestModel {
         region: json['region'] as String,
         lat: json['lat'] as double,
         lng: json['lng'] as double,
-    );
+      );
 
   Map<String, dynamic> toJson() => {
-    'name': name,
-    'phone': phone,
-    'address': address,
-    'zip_code': zipCode,
-    'city': city,
-    'district': district,
-    'sub_district': subDistrict,
-    'region': region,
-    'lat': lat,
-    'lng': lng,
-  };
-
+        'name': name,
+        'phone': phone,
+        'address': address,
+        'zip_code': zipCode,
+        'city': city,
+        'district': district,
+        'sub_district': subDistrict,
+        'region': region,
+        'lat': lat,
+        'lng': lng,
+      };
 }

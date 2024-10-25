@@ -1,7 +1,6 @@
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 
-
 class GetTransactionModel {
   GetTransactionModel({
     num? code,
@@ -98,12 +97,15 @@ class TransactionModel {
     _createdDate = json['created_date'];
     _service = json['service'];
     _status = json['status'];
-    _receiver = json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
+    _receiver =
+        json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
     _orderId = json['order_id'];
     _codAmount = json['cod_amount'];
     _officerEntry = json['officer_entry'];
-    _shipper = json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
-    _account = json['account'] != null ? Account.fromJson(json['account']) : null;
+    _shipper =
+        json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
+    _account =
+        json['account'] != null ? Account.fromJson(json['account']) : null;
     _pickupStatus = json['pickup_status'];
   }
 

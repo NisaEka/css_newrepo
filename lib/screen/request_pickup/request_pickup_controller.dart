@@ -49,7 +49,8 @@ class RequestPickupController extends BaseController {
   String selectedDateStartText = "Pilih Tanggal Awal";
   String selectedDateEndText = "Pilih Tanggal Akhir";
 
-  final PagingController<int, RequestPickupModel> pagingController = PagingController(firstPageKey: Constant.defaultPage);
+  final PagingController<int, RequestPickupModel> pagingController =
+      PagingController(firstPageKey: Constant.defaultPage);
   static const pageSize = Constant.defaultLimit;
 
   List<String> selectedAwbs = [];
@@ -96,7 +97,8 @@ class RequestPickupController extends BaseController {
     switch (selectedFilterDate) {
       case RequestPickupDateEnum.custom:
         if (startDateAvailable && endDateAvailable) {
-          filter.setDate('${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
+          filter.setDate(
+              '${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
           filterDateText = '$selectedDateStartText - $selectedDateEndText';
         } else if (startDateAvailable) {
           filter.setDate('${selectedDateStart?.millisecondsSinceEpoch}');
@@ -112,16 +114,19 @@ class RequestPickupController extends BaseController {
       case RequestPickupDateEnum.oneMonth:
         final currentDateTime = DateTime.now();
         final oneMonthAgo = currentDateTime.subtract(const Duration(days: 30));
-        filter.setDate('${oneMonthAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
+        filter.setDate(
+            '${oneMonthAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
         break;
       case RequestPickupDateEnum.oneWeek:
         final currentDateTime = DateTime.now();
         final oneWeekAgo = currentDateTime.subtract(const Duration(days: 7));
-        filter.setDate('${oneWeekAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
+        filter.setDate(
+            '${oneWeekAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
         break;
       case RequestPickupDateEnum.today:
         final currentDateTime = DateTime.now();
-        final startOfDay = DateTime(currentDateTime.year, currentDateTime.month, currentDateTime.day);
+        final startOfDay = DateTime(
+            currentDateTime.year, currentDateTime.month, currentDateTime.day);
         filter.setDate('${startOfDay.millisecondsSinceEpoch}');
         break;
       default:
@@ -163,7 +168,8 @@ class RequestPickupController extends BaseController {
   void setSelectedDateStart(DateTime? dateTime) {
     if (dateTime != null) {
       selectedDateStart = dateTime;
-      selectedDateStartText = dateTime.toStringWithFormat(format: "dd MMM yyyy");
+      selectedDateStartText =
+          dateTime.toStringWithFormat(format: "dd MMM yyyy");
     }
   }
 
@@ -203,7 +209,8 @@ class RequestPickupController extends BaseController {
 
   Future<void> getAddresses() async {
     try {
-      final response = await requestPickupRepository.getRequestPickupAddresses();
+      final response =
+          await requestPickupRepository.getRequestPickupAddresses();
       final payload = response.payload ?? List.empty();
       addresses.clear();
       addresses.addAll(payload);
@@ -215,7 +222,8 @@ class RequestPickupController extends BaseController {
 
   Future<void> getCities(String keyword) async {
     try {
-      final response = await requestPickupRepository.getRequestPickupCities(DefaultPageFilterModel(keyword: keyword));
+      final response = await requestPickupRepository
+          .getRequestPickupCities(DefaultPageFilterModel(keyword: keyword));
       final payload = response.payload ?? List.empty();
       cities.clear();
       cities.add(Constant.allDeliveryCity);
@@ -305,7 +313,9 @@ class RequestPickupController extends BaseController {
     _createDataLoading = true;
     update();
 
-    requestPickupRepository.createRequestPickup(_prepareCreateData()).then((response) {
+    requestPickupRepository
+        .createRequestPickup(_prepareCreateData())
+        .then((response) {
       if (response.code == HttpStatus.created) {
         _createDataSuccess = true;
         refreshPickups();

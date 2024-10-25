@@ -26,7 +26,6 @@ class PantauCardScreen extends StatelessWidget {
                         children: [
                           Column(
                               children: controller.state.pantauCountList
-
                                   .map((e) => PantauCountItem(
                                         data: e,
                                         type: 'COD',

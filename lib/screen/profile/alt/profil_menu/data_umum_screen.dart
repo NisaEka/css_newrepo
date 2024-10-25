@@ -46,16 +46,20 @@ class DataUmumScreen extends StatelessWidget {
                   title: c.ccrfProfil?.generalInfo?.ccrfName ?? '-',
                   subtitle: c.ccrfProfil?.generalInfo?.ccrfKtp ?? '-',
                   icon: Icons.person,
-                  tooltip: '${'Nama Lengkap'.tr}\n${'Nomor Identitas / KTP'.tr}',
+                  tooltip:
+                      '${'Nama Lengkap'.tr}\n${'Nomor Identitas / KTP'.tr}',
                 ),
                 DataUmumListItem(
-                  title: c.ccrfProfil?.generalInfo?.ccrfPhone ?? c.ccrfProfil?.generalInfo?.ccrfHandphone ?? '-',
+                  title: c.ccrfProfil?.generalInfo?.ccrfPhone ??
+                      c.ccrfProfil?.generalInfo?.ccrfHandphone ??
+                      '-',
                   subtitle: c.ccrfProfil?.generalInfo?.ccrfHandphone ?? '-',
                   icon: Icons.phone,
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
                 DataUmumListItem(
-                  title: "${(c.ccrfProfil?.generalInfo?.ccrfAddress == null) ? ""
+                  title:
+                      "${(c.ccrfProfil?.generalInfo?.ccrfAddress == null) ? ""
                           "" : "${c.ccrfProfil?.generalInfo?.ccrfAddress}, "}"
                       "${(c.ccrfProfil?.generalInfo?.ccrfSubdistrict == null) ? ""
                           "${c.basicProfil?.origin?.originName ?? ''}" : ""
@@ -102,10 +106,12 @@ class DataUmumScreen extends StatelessWidget {
                 enableDrag: true,
                 isDismissible: true,
                 // isScrollControlled: true,
-                StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
                   return SecretDataDialog(text: 'kerahasiaan_data'.tr);
                 }),
-                backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                backgroundColor:
+                    AppConst.isLightTheme(context) ? whiteColor : greyColor,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

@@ -45,7 +45,9 @@ class ListDropshipperController extends BaseController {
     update();
 
     try {
-      await master.getDropshippers(QueryParamModel(search: search.text)).then((value) => dropshipperList.addAll(value.data ?? []));
+      await master
+          .getDropshippers(QueryParamModel(search: search.text))
+          .then((value) => dropshipperList.addAll(value.data ?? []));
       update();
     } catch (e) {
       e.printError();
@@ -66,7 +68,6 @@ class ListDropshipperController extends BaseController {
     update();
   }
 
-
   void delete(DropshipperModel data) async {
     try {
       await transaction.deleteDropshipper(data.id ?? '').then(
@@ -76,7 +77,8 @@ class ListDropshipperController extends BaseController {
                   value.code == 200 ? Icons.info : Icons.warning,
                   color: whiteColor,
                 ),
-                message: value.code == 200 ? 'Data Dihapus'.tr : "Bad Request".tr,
+                message:
+                    value.code == 200 ? 'Data Dihapus'.tr : "Bad Request".tr,
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
                 backgroundColor: value.code == 200 ? successColor : errorColor,

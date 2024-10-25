@@ -53,4 +53,3 @@ class GetSettingLabelModel {
     return map;
   }
 }
-

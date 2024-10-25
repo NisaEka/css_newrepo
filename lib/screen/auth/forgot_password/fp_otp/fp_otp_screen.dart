@@ -18,10 +18,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
               const Scaffold(
                 body: SingleChildScrollView(
                   child: Column(
-                    children: [
-                      LogoHeader(),
-                      ForgotPasswordOTPForm()
-                    ],
+                    children: [LogoHeader(), ForgotPasswordOTPForm()],
                   ),
                 ),
               ),
@@ -30,5 +27,4 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
           );
         });
   }
-
 }

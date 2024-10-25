@@ -1,3 +1,1 @@
-class ReceiferState {
-
-}
+class ReceiferState {}

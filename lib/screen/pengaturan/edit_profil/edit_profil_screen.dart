@@ -70,7 +70,8 @@ class EditProfilScreen extends StatelessWidget {
                     asyncItems: (String filter) => c.getOriginList(filter),
                     itemBuilder: (context, e, b) {
                       return Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
                         child: Text(
                           e.originName.toString(),
                         ),
@@ -80,9 +81,12 @@ class EditProfilScreen extends StatelessWidget {
                     onChanged: (value) => c.selectOrigin(value),
                     value: c.selectedOrigin,
                     // selectedItem: c.kotaPengirim.text,
-                    hintText: c.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
+                    hintText:
+                        c.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
                     searchHintText: 'Masukan Kota Pengiriman'.tr,
-                    textStyle: c.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
+                    textStyle: c.selectedOrigin != null
+                        ? subTitleTextStyle
+                        : hintTextStyle,
                     isRequired: true,
                     readOnly: false,
                   )
@@ -93,7 +97,8 @@ class EditProfilScreen extends StatelessWidget {
                 return GestureDetector(
                   onTap: () => c.update(),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
                     child: Text(
                       '${e.zipCode ?? ''}; '
                       '${e.provinceName ?? ''}; '
@@ -125,7 +130,8 @@ class EditProfilScreen extends StatelessWidget {
                       ? "Kota/Kecamatan/Kelurahan/Kode Pos".tr
                       : "Kode Pos".tr,
               // prefixIcon: const Icon(Icons.location_city),
-              textStyle: c.selectedCity != null ? subTitleTextStyle : hintTextStyle,
+              textStyle:
+                  c.selectedCity != null ? subTitleTextStyle : hintTextStyle,
             ),
             CustomTextFormField(
               controller: c.phone,

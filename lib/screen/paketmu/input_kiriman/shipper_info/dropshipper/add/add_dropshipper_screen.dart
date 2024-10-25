@@ -40,7 +40,7 @@ class AddDropshipperScreen extends StatelessWidget {
       title: Text(
         'Tambah Data Dropshipper'.tr,
         // style: appTitleTextStyle.copyWith(
-          // color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+        // color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
         // ),
       ),
     );
@@ -74,10 +74,12 @@ class AddDropshipperScreen extends StatelessWidget {
                 validator: ValidationBuilder().phoneNumber().build(),
               ),
               CustomSearchDropdownField<Origin>(
-                asyncItems: (String filter) => c.getOriginList(filter, c.account.accountId ?? ''),
+                asyncItems: (String filter) =>
+                    c.getOriginList(filter, c.account.accountId ?? ''),
                 itemBuilder: (context, e, b) {
                   return Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
                     child: Text(
                       e.originName.toString(),
                     ),
@@ -94,7 +96,9 @@ class AddDropshipperScreen extends StatelessWidget {
                 selectedItem: c.kotaPengirim.text,
                 hintText: c.isLoadOrigin ? "Loading..." : "Kota Pengirim".tr,
                 prefixIcon: const Icon(Icons.location_city),
-                textStyle: c.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
+                textStyle: c.selectedOrigin != null
+                    ? subTitleTextStyle
+                    : hintTextStyle,
                 readOnly: false,
                 isRequired: true,
               ),
@@ -115,10 +119,14 @@ class AddDropshipperScreen extends StatelessWidget {
                 validator: ValidationBuilder().address().build(),
               ),
               CustomFilledButton(
-                  color: c.formKey.currentState?.validate() ?? false ? blueJNE : greyColor,
+                  color: c.formKey.currentState?.validate() ?? false
+                      ? blueJNE
+                      : greyColor,
                   title: "Simpan Data Dropshipper".tr,
                   // radius: 20,
-                  onPressed: () => c.formKey.currentState?.validate() == true ? c.saveDropshipper() : null),
+                  onPressed: () => c.formKey.currentState?.validate() == true
+                      ? c.saveDropshipper()
+                      : null),
             ],
           ),
         ),

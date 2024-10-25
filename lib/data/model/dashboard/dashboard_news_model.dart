@@ -1,12 +1,13 @@
 class DashboardNewsModel {
   DashboardNewsModel({
-      num? status, 
-      bool? error, 
-      List<NewsModel>? message,}){
+    num? status,
+    bool? error,
+    List<NewsModel>? message,
+  }) {
     _status = status;
     _error = error;
     _message = message;
-}
+  }
 
   DashboardNewsModel.fromJson(dynamic json) {
     _status = json['status'];
@@ -21,13 +22,16 @@ class DashboardNewsModel {
   num? _status;
   bool? _error;
   List<NewsModel>? _message;
-DashboardNewsModel copyWith({  num? status,
-  bool? error,
-  List<NewsModel>? message,
-}) => DashboardNewsModel(  status: status ?? _status,
-  error: error ?? _error,
-  message: message ?? _message,
-);
+  DashboardNewsModel copyWith({
+    num? status,
+    bool? error,
+    List<NewsModel>? message,
+  }) =>
+      DashboardNewsModel(
+        status: status ?? _status,
+        error: error ?? _error,
+        message: message ?? _message,
+      );
   num? get status => _status;
   bool? get error => _error;
   List<NewsModel>? get message => _message;
@@ -41,24 +45,24 @@ DashboardNewsModel copyWith({  num? status,
     }
     return map;
   }
-
 }
 
 class NewsModel {
   NewsModel({
-      String? id, 
-      String? date, 
-      String? thumbnail, 
-      String? createdAt, 
-      String? updatedAt, 
-      List<Detail>? detail,}){
+    String? id,
+    String? date,
+    String? thumbnail,
+    String? createdAt,
+    String? updatedAt,
+    List<Detail>? detail,
+  }) {
     _id = id;
     _date = date;
     _thumbnail = thumbnail;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
     _detail = detail;
-}
+  }
 
   NewsModel.fromJson(dynamic json) {
     _id = json['id'];
@@ -79,19 +83,22 @@ class NewsModel {
   String? _createdAt;
   String? _updatedAt;
   List<Detail>? _detail;
-NewsModel copyWith({  String? id,
-  String? date,
-  String? thumbnail,
-  String? createdAt,
-  String? updatedAt,
-  List<Detail>? detail,
-}) => NewsModel(  id: id ?? _id,
-  date: date ?? _date,
-  thumbnail: thumbnail ?? _thumbnail,
-  createdAt: createdAt ?? _createdAt,
-  updatedAt: updatedAt ?? _updatedAt,
-  detail: detail ?? _detail,
-);
+  NewsModel copyWith({
+    String? id,
+    String? date,
+    String? thumbnail,
+    String? createdAt,
+    String? updatedAt,
+    List<Detail>? detail,
+  }) =>
+      NewsModel(
+        id: id ?? _id,
+        date: date ?? _date,
+        thumbnail: thumbnail ?? _thumbnail,
+        createdAt: createdAt ?? _createdAt,
+        updatedAt: updatedAt ?? _updatedAt,
+        detail: detail ?? _detail,
+      );
   String? get id => _id;
   String? get date => _date;
   String? get thumbnail => _thumbnail;
@@ -111,24 +118,24 @@ NewsModel copyWith({  String? id,
     }
     return map;
   }
-
 }
 
 class Detail {
   Detail({
-      String? baseId, 
-      String? lang, 
-      String? title, 
-      dynamic intro, 
-      dynamic description, 
-      String? externalLink,}){
+    String? baseId,
+    String? lang,
+    String? title,
+    dynamic intro,
+    dynamic description,
+    String? externalLink,
+  }) {
     _baseId = baseId;
     _lang = lang;
     _title = title;
     _intro = intro;
     _description = description;
     _externalLink = externalLink;
-}
+  }
 
   Detail.fromJson(dynamic json) {
     _baseId = json['base_id'];
@@ -144,19 +151,22 @@ class Detail {
   dynamic _intro;
   dynamic _description;
   String? _externalLink;
-Detail copyWith({  String? baseId,
-  String? lang,
-  String? title,
-  dynamic intro,
-  dynamic description,
-  String? externalLink,
-}) => Detail(  baseId: baseId ?? _baseId,
-  lang: lang ?? _lang,
-  title: title ?? _title,
-  intro: intro ?? _intro,
-  description: description ?? _description,
-  externalLink: externalLink ?? _externalLink,
-);
+  Detail copyWith({
+    String? baseId,
+    String? lang,
+    String? title,
+    dynamic intro,
+    dynamic description,
+    String? externalLink,
+  }) =>
+      Detail(
+        baseId: baseId ?? _baseId,
+        lang: lang ?? _lang,
+        title: title ?? _title,
+        intro: intro ?? _intro,
+        description: description ?? _description,
+        externalLink: externalLink ?? _externalLink,
+      );
   String? get baseId => _baseId;
   String? get lang => _lang;
   String? get title => _title;
@@ -174,5 +184,4 @@ Detail copyWith({  String? baseId,
     map['external_link'] = _externalLink;
     return map;
   }
-
 }

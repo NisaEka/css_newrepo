@@ -15,7 +15,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pinput/pinput.dart';
 
 class FacilityFormInfoController extends BaseController {
-
   final String _facilityType = Get.arguments['facility_type'];
 
   List<String> steps = [
@@ -53,9 +52,7 @@ class FacilityFormInfoController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([
-      _getUserProfile()
-    ]);
+    Future.wait([_getUserProfile()]);
     _checkConnectivity();
   }
 
@@ -179,5 +176,4 @@ class FacilityFormInfoController extends BaseController {
 
     return requestData;
   }
-
 }

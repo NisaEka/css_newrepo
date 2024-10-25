@@ -10,16 +10,20 @@ class PantauPaketmuState {
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
   final searchField = TextEditingController();
-  final PagingController<int, PantauPaketmuModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, PantauPaketmuModel> pagingController =
+      PagingController(firstPageKey: 1);
 
-  DateTime? startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime? startDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   DateTime? endDate = DateTime.now();
-  final DateTime nowDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0);
+  final DateTime nowDay = DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day, 0);
   String? selectedStatusKiriman = 'SEMUA';
   String? selectedPetugasEntry = 'SEMUA';
   String? selectedStatusPrint = "SEMUA";
   String? selectedTipeKiriman = "SEMUA";
-  String? date = "${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).millisecondsSinceEpoch}-${DateTime.now().millisecondsSinceEpoch}";
+  String? date =
+      "${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).millisecondsSinceEpoch}-${DateTime.now().millisecondsSinceEpoch}";
   String dateFilter = '3';
   int tipeKiriman = 0;
   int total = 0;
@@ -40,6 +44,4 @@ class PantauPaketmuState {
   List<PantauPaketmuModel> selectedTransaction = [];
 
   UserModel? basic;
-
-
 }

@@ -37,7 +37,8 @@ class ReceiverForm extends StatelessWidget {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () => Get.to(const ListPenerimaScreen())?.then(
+                              onTap: () =>
+                                  Get.to(const ListPenerimaScreen())?.then(
                                 (result) {
                                   c.receiver = result;
                                   c.update();
@@ -45,17 +46,26 @@ class ReceiverForm extends StatelessWidget {
                                 },
                               ),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                                margin: const EdgeInsets.symmetric(vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 5),
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 decoration: const BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: greyColor, width: 2), top: BorderSide(color: greyColor, width: 2)),
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: greyColor, width: 2),
+                                      top: BorderSide(
+                                          color: greyColor, width: 2)),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Lihat Data Penerima'.tr,
-                                      style: Theme.of(context).textTheme.titleMedium,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
                                     ),
                                     const Icon(
                                       Icons.keyboard_arrow_right,
@@ -78,7 +88,8 @@ class ReceiverForm extends StatelessWidget {
                               inputType: TextInputType.number,
                               prefixIcon: const Icon(Icons.phone),
                               isRequired: true,
-                              validator: ValidationBuilder().phoneNumber().build(),
+                              validator:
+                                  ValidationBuilder().phoneNumber().build(),
                             ),
                             DestinationDropdown(
                               onChanged: (value) {
@@ -86,12 +97,15 @@ class ReceiverForm extends StatelessWidget {
                                 c.update();
                               },
                               value: c.selectedDestination,
-                              isRequired: c.selectedDestination == null ? true : false,
+                              isRequired:
+                                  c.selectedDestination == null ? true : false,
                               readOnly: false,
                               label: "Kota Tujuan".tr,
                               prefixIcon: Icon(
                                 Icons.location_city,
-                                color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
+                                color: AppConst.isLightTheme(context)
+                                    ? greyDarkColor1
+                                    : greyLightColor1,
                               ),
                             ),
                             CustomTextFormField(
@@ -106,15 +120,32 @@ class ReceiverForm extends StatelessWidget {
                                 ? CustomFilledButton(
                                     color: whiteColor,
                                     title: 'Simpan Data Penerima'.tr,
-                                    borderColor: c.formKey.currentState?.validate() == true ? blueJNE : greyColor,
-                                    fontColor: c.formKey.currentState?.validate() == true ? blueJNE : greyColor,
-                                    onPressed: () => c.formKey.currentState?.validate() == true ? c.saveReceiver() : null,
+                                    borderColor:
+                                        c.formKey.currentState?.validate() ==
+                                                true
+                                            ? blueJNE
+                                            : greyColor,
+                                    fontColor:
+                                        c.formKey.currentState?.validate() ==
+                                                true
+                                            ? blueJNE
+                                            : greyColor,
+                                    onPressed: () =>
+                                        c.formKey.currentState?.validate() ==
+                                                true
+                                            ? c.saveReceiver()
+                                            : null,
                                   )
                                 : const SizedBox(),
                             CustomFilledButton(
-                              color: c.formKey.currentState?.validate() == true ? blueJNE : greyColor,
+                              color: c.formKey.currentState?.validate() == true
+                                  ? blueJNE
+                                  : greyColor,
                               title: "Selanjutnya".tr,
-                              onPressed: () => c.formKey.currentState?.validate() == true ? c.nextStep() : null,
+                              onPressed: () =>
+                                  c.formKey.currentState?.validate() == true
+                                      ? c.nextStep()
+                                      : null,
                             )
                           ],
                         ),

@@ -76,7 +76,9 @@ class InputLaporankuController extends BaseController {
               Text(
                 "Kategori".tr,
                 style: appTitleTextStyle.copyWith(
-                  color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
+                  color: AppConst.isLightTheme(context)
+                      ? greyDarkColor1
+                      : greyLightColor1,
                 ),
               ),
               CustomSearchField(
@@ -105,12 +107,14 @@ class InputLaporankuController extends BaseController {
                                   contentPadding: EdgeInsets.zero,
                                   title: Text(
                                     e.description?.toUpperCase() ?? '',
-                                    style: Theme.of(context).textTheme.titleMedium,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                   style: ListTileStyle.list,
                                   onTap: () {
                                     selectedCategory = e;
-                                    category.text = e.description?.toUpperCase() ?? '';
+                                    category.text =
+                                        e.description?.toUpperCase() ?? '';
                                     update();
                                     Get.back();
                                   },
@@ -128,12 +132,14 @@ class InputLaporankuController extends BaseController {
                                   contentPadding: EdgeInsets.zero,
                                   title: Text(
                                     e.description?.toUpperCase() ?? '',
-                                    style: Theme.of(context).textTheme.titleMedium,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                   style: ListTileStyle.list,
                                   onTap: () {
                                     selectedCategory = e;
-                                    category.text = e.description?.toUpperCase() ?? '';
+                                    category.text =
+                                        e.description?.toUpperCase() ?? '';
                                     update();
                                     Get.back();
                                   },
@@ -159,7 +165,9 @@ class InputLaporankuController extends BaseController {
     } else {
       listSearchCategory = listCategory
           .where(
-            (e) => e.description?.toLowerCase().contains(search.toLowerCase()) ?? false,
+            (e) =>
+                e.description?.toLowerCase().contains(search.toLowerCase()) ??
+                false,
           )
           .toList();
 
@@ -183,7 +191,9 @@ class InputLaporankuController extends BaseController {
           .then(
             (value) => value.code == 201
                 ? Get.to(SuccessScreen(
-                    message: "Laporanmu berhasil dibuatdan akan diproses lebih lanjut".tr,
+                    message:
+                        "Laporanmu berhasil dibuatdan akan diproses lebih lanjut"
+                            .tr,
                     buttonTitle: "OK".tr,
                     nextAction: () => Get.close(2),
                   ))

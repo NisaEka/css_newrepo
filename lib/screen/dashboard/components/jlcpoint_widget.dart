@@ -14,37 +14,40 @@ class JLCPointWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
-      init: DashboardController(),
-      builder: (controller) {
-        return controller.state.isLogin && (controller.state.allow.keuanganBonus == "Y" || controller.state.allow.bonus == "Y")
-            ? GestureDetector(
-                onTap: () => Get.to(const BonusKamuScreen()),
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
-                    borderRadius: BorderRadius.circular(50),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: redJNE,
-                        spreadRadius: 1,
-                        offset: Offset(-2, 3),
-                      ),
-                    ],
+        init: DashboardController(),
+        builder: (controller) {
+          return controller.state.isLogin &&
+                  (controller.state.allow.keuanganBonus == "Y" ||
+                      controller.state.allow.bonus == "Y")
+              ? GestureDetector(
+                  onTap: () => Get.to(const BonusKamuScreen()),
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? whiteColor
+                          : greyColor,
+                      borderRadius: BorderRadius.circular(50),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: redJNE,
+                          spreadRadius: 1,
+                          offset: Offset(-2, 3),
+                        ),
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(ImageConstant.logoJLC, height: 14),
+                        Text(' ${point != '0' ? point.toDouble() : 0} Point'),
+                      ],
+                    ),
                   ),
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(ImageConstant.logoJLC, height: 14),
-                      Text(' ${point != '0' ? point.toDouble() : 0} Point'),
-                    ],
-                  ),
-                ),
-              )
-            : const SizedBox();
-      }
-    );
+                )
+              : const SizedBox();
+        });
   }
 }

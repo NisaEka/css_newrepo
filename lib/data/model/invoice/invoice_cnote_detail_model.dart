@@ -1,5 +1,4 @@
 class InvoiceCnoteDetailModel {
-
   String? _awbNumber = "";
   String? get awbNumber => _awbNumber;
 
@@ -90,5 +89,4 @@ class InvoiceCnoteDetailModel {
     _codFeeAmount = json["cod_fee_amount"];
     _codFeeZone = json["cod_fee_zone"];
   }
-
 }

@@ -4,13 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FacilityDetailOptionDialog extends StatelessWidget {
-
   final String facilityType;
 
-  const FacilityDetailOptionDialog({
-    super.key,
-    required this.facilityType
-  });
+  const FacilityDetailOptionDialog({super.key, required this.facilityType});
 
   @override
   Widget build(BuildContext context) {
@@ -19,28 +15,23 @@ class FacilityDetailOptionDialog extends StatelessWidget {
       actions: [
         TextButton(
             onPressed: () {
-              Get.off(const FacilityFormInfoScreen(), arguments: {
-                'facility_type': facilityType
-              });
+              Get.off(const FacilityFormInfoScreen(),
+                  arguments: {'facility_type': facilityType});
             },
             child: Text(
               'Belum',
               style: Theme.of(context).textTheme.titleSmall,
-            )
-        ),
+            )),
         TextButton(
             onPressed: () {
-              Get.off(const FacilityFormExistingScreen(), arguments: {
-                'facility_type': facilityType
-              });
+              Get.off(const FacilityFormExistingScreen(),
+                  arguments: {'facility_type': facilityType});
             },
             child: Text(
               'Sudah',
               style: Theme.of(context).textTheme.titleSmall,
-            )
-        )
+            ))
       ],
     );
   }
-
 }

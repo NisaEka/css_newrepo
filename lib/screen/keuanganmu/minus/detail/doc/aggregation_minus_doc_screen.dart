@@ -14,20 +14,18 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class AggregationMinusDocScreen extends StatelessWidget {
-
   const AggregationMinusDocScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AggregationMinusDocController>(
-      init: AggregationMinusDocController(),
-      builder: (controller) {
-        return Scaffold(
-          appBar: _aggregationMinusDocAppBar(),
-          body: _bodyContent(context, controller),
-        );
-      }
-    );
+        init: AggregationMinusDocController(),
+        builder: (controller) {
+          return Scaffold(
+            appBar: _aggregationMinusDocAppBar(),
+            body: _bodyContent(context, controller),
+          );
+        });
   }
 
   PreferredSizeWidget _aggregationMinusDocAppBar() {
@@ -36,7 +34,8 @@ class AggregationMinusDocScreen extends StatelessWidget {
     );
   }
 
-  Widget _bodyContent(BuildContext context, AggregationMinusDocController controller) {
+  Widget _bodyContent(
+      BuildContext context, AggregationMinusDocController controller) {
     return Column(
       children: [
         _topBox(controller.docArgs),
@@ -46,14 +45,9 @@ class AggregationMinusDocScreen extends StatelessWidget {
     );
   }
 
-
   Widget _topBox(String docId) {
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 16,
-        left: 16,
-        right: 16
-      ),
+      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
       child: AggregationMinusBox(
         title: "Document No".tr,
         value: docId,
@@ -61,13 +55,10 @@ class AggregationMinusDocScreen extends StatelessWidget {
     );
   }
 
-  Widget _searchBox(BuildContext context, AggregationMinusDocController controller) {
+  Widget _searchBox(
+      BuildContext context, AggregationMinusDocController controller) {
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 16,
-        left: 16,
-        right: 16
-      ),
+      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
       child: CustomSearchField(
         controller: controller.searchField,
         hintText: 'Cari berdasarkan no resi'.tr,
@@ -92,23 +83,20 @@ class AggregationMinusDocScreen extends StatelessWidget {
 
   Widget _listData(AggregationMinusDocController controller) {
     return Expanded(
-      child: RefreshIndicator(
-        onRefresh: () => Future.sync(() => controller.pagingController.refresh()),
-        child: PagedListView<int, AggregationMinusDocModel>(
-          pagingController: controller.pagingController,
-          builderDelegate: PagedChildBuilderDelegate<AggregationMinusDocModel>(
+        child: RefreshIndicator(
+      onRefresh: () => Future.sync(() => controller.pagingController.refresh()),
+      child: PagedListView<int, AggregationMinusDocModel>(
+        pagingController: controller.pagingController,
+        builderDelegate: PagedChildBuilderDelegate<AggregationMinusDocModel>(
             transitionDuration: const Duration(milliseconds: 500),
-            itemBuilder: (context, aggregation, index) => AggregationMinusDocItem(
-              data: aggregation,
-              onTap: () => {
-                Get.to(AggregationMinusCnoteScreen(data: aggregation))
-              },
-            ),
-            firstPageErrorIndicatorBuilder: (context) => const DataEmpty()
-          ),
-        ),
-      )
-    );
+            itemBuilder: (context, aggregation, index) =>
+                AggregationMinusDocItem(
+                  data: aggregation,
+                  onTap: () =>
+                      {Get.to(AggregationMinusCnoteScreen(data: aggregation))},
+                ),
+            firstPageErrorIndicatorBuilder: (context) => const DataEmpty()),
+      ),
+    ));
   }
-
 }

@@ -8,8 +8,12 @@ import 'package:css_mobile/data/model/response_model.dart';
 
 abstract class InvoiceRepository {
   Future<ResponseModel<num>> getInvoiceCount(AdvanceFilterModel advanceFilter);
-  Future<ResponseModel<List<InvoiceModel>>> getInvoices(AdvanceFilterModel advanceFilter);
-  Future<ResponseModel<InvoiceDetailModel>> getInvoiceByNumber(String invoiceNumber);
-  Future<ResponseModel<List<InvoiceCnoteModel>>> getInvoiceCnotes(String invoiceNumber, DefaultPageFilterModel filter);
-  Future<ResponseModel<InvoiceCnoteDetailModel>> getInvoiceCnoteByAwb(String invoiceNumber, String awb);
+  Future<ResponseModel<List<InvoiceModel>>> getInvoices(
+      AdvanceFilterModel advanceFilter);
+  Future<ResponseModel<InvoiceDetailModel>> getInvoiceByNumber(
+      String invoiceNumber);
+  Future<ResponseModel<List<InvoiceCnoteModel>>> getInvoiceCnotes(
+      String invoiceNumber, DefaultPageFilterModel filter);
+  Future<ResponseModel<InvoiceCnoteDetailModel>> getInvoiceCnoteByAwb(
+      String invoiceNumber, String awb);
 }

@@ -53,12 +53,12 @@ class JLCRepositoryImpl extends JLCRepository {
   Future<PostJlcTransactionsModel> postTransPoint() async {
     var account = BaseResponse<List<Account>>.fromJson(
       await storage.readData(StorageCore.accounts),
-          (json) => json is List<dynamic>
+      (json) => json is List<dynamic>
           ? json
-          .map<Account>(
-            (i) => Account.fromJson(i as Map<String, dynamic>),
-      )
-          .toList()
+              .map<Account>(
+                (i) => Account.fromJson(i as Map<String, dynamic>),
+              )
+              .toList()
           : List.empty(),
     );
     var jlc = account.data?.where((element) => element.accountService == "JLC");
@@ -82,12 +82,12 @@ class JLCRepositoryImpl extends JLCRepository {
   Future<PostJlcPointReedemModel> postTukarPoint() async {
     var account = BaseResponse<List<Account>>.fromJson(
       await storage.readData(StorageCore.accounts),
-          (json) => json is List<dynamic>
+      (json) => json is List<dynamic>
           ? json
-          .map<Account>(
-            (i) => Account.fromJson(i as Map<String, dynamic>),
-      )
-          .toList()
+              .map<Account>(
+                (i) => Account.fromJson(i as Map<String, dynamic>),
+              )
+              .toList()
           : List.empty(),
     );
     var jlc = account.data?.where((element) => element.accountService == "JLC");

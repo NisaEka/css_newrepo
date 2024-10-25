@@ -91,7 +91,8 @@ class ForgotPasswordOTPController extends BaseController {
       } else {
         int minutes = remainingSeconds ~/ 60;
         int seconds = (remainingSeconds % 60);
-        time.value = "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2, "0")}";
+        time.value =
+            "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2, "0")}";
         remainingSeconds--;
         update();
       }
@@ -100,7 +101,8 @@ class ForgotPasswordOTPController extends BaseController {
 
   String getMail() {
     var nameuser = email.split("@");
-    var emailcaracter = email.replaceRange(2, nameuser[0].length, "*" * (nameuser[0].length - 2));
+    var emailcaracter = email.replaceRange(
+        2, nameuser[0].length, "*" * (nameuser[0].length - 2));
     return emailcaracter;
   }
 
@@ -108,7 +110,10 @@ class ForgotPasswordOTPController extends BaseController {
     isLoading = true;
     update();
     try {
-      await auth.postPasswordPinConfirm(InputPinconfirmModel(email: email, pin: otpPin.text)).then((value) {
+      await auth
+          .postPasswordPinConfirm(
+              InputPinconfirmModel(email: email, pin: otpPin.text))
+          .then((value) {
         if (value.code == 201) {
           Get.to(
             const NewPasswordScreen(),
@@ -180,7 +185,7 @@ class ForgotPasswordOTPController extends BaseController {
     return isLogin;
   }
 
-  Future<void> useOtherMethod(BuildContext context)  async {
+  Future<void> useOtherMethod(BuildContext context) async {
     isLoading = true;
     update();
     if (isLogin) {

@@ -39,7 +39,7 @@ class CustomTextFormField extends StatefulWidget {
 
   CustomTextFormField({
     super.key,
-     this.controller,
+    this.controller,
     this.label,
     this.helperText,
     this.hintText,
@@ -66,8 +66,13 @@ class CustomTextFormField extends StatefulWidget {
     this.onSaved,
   }) {
     if (isRequired) {
-      StorageCore().readString(StorageCore.localeApp).then((value) => ValidationBuilder.setLocale(value));
-      validator ??= ValidationBuilder(requiredMessage: 'Masukan tidak boleh kosong'.tr).required().build();
+      StorageCore()
+          .readString(StorageCore.localeApp)
+          .then((value) => ValidationBuilder.setLocale(value));
+      validator ??=
+          ValidationBuilder(requiredMessage: 'Masukan tidak boleh kosong'.tr)
+              .required()
+              .build();
     }
   }
 
@@ -95,7 +100,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         SizedBox(
           height: widget.helperText != null ? 16 : 8,
         ),
-        widget.helperText != null ? Text(widget.helperText ?? "") : const SizedBox(),
+        widget.helperText != null
+            ? Text(widget.helperText ?? "")
+            : const SizedBox(),
         SizedBox(
           height: widget.helperText != null ? 16 : 0,
         ),
@@ -103,7 +110,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           isLoading: widget.isLoading,
           child: Container(
             width: widget.width ?? Get.width,
-            height: widget.height != null && widget.multiLine == false ? widget.height ?? 39 : null,
+            height: widget.height != null && widget.multiLine == false
+                ? widget.height ?? 39
+                : null,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: widget.isLoading ? greyColor : Colors.transparent,
@@ -128,26 +137,34 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   (widget.hintText?.contains('email') ?? false
                       ? [
                           TextInputFormatter.withFunction((oldValue, newValue) {
-                            return newValue.copyWith(text: newValue.text.toLowerCase());
+                            return newValue.copyWith(
+                                text: newValue.text.toLowerCase());
                           })
                         ]
-                      : (!(widget.hintText?.contains('Kata Sandi') ?? false) || !(widget.hintText?.contains('Password') ?? false))
+                      : (!(widget.hintText?.contains('Kata Sandi') ?? false) ||
+                              !(widget.hintText?.contains('Password') ?? false))
                           ? [
-                              TextInputFormatter.withFunction((oldValue, newValue) {
-                                return newValue.copyWith(text: newValue.text.toUpperCase());
+                              TextInputFormatter.withFunction(
+                                  (oldValue, newValue) {
+                                return newValue.copyWith(
+                                    text: newValue.text.toUpperCase());
                               })
                             ]
                           : []),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
-                    color: AppConst.isLightTheme(context) ? Colors.black : Colors.white,
+                    color: AppConst.isLightTheme(context)
+                        ? Colors.black
+                        : Colors.white,
                     // fontWeight: FontWeight.w600,
                   ),
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                   filled: true,
-                  label: widget.label == null ? Text(widget.hintText ?? '') : const SizedBox(),
+                  label: widget.label == null
+                      ? Text(widget.hintText ?? '')
+                      : const SizedBox(),
                   fillColor: widget.backgroundColor ??
                       (widget.onTap != null || !widget.readOnly
                           ? Colors.transparent
@@ -159,7 +176,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   prefixIcon: widget.prefixIcon,
                   prefixIconColor: Theme.of(context).colorScheme.outline,
                   suffixIconColor: Theme.of(context).colorScheme.outline,
-                  contentPadding: widget.contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                  contentPadding: widget.contentPadding ??
+                      const EdgeInsets.only(
+                          top: 10, bottom: 10, left: 10, right: 10),
                   hintText: widget.hintText ?? widget.label,
                   errorMaxLines: 3,
                   disabledBorder: widget.noBorder

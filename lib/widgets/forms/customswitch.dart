@@ -8,7 +8,11 @@ class CustomSwitch extends StatelessWidget {
   final String label;
   final void Function(bool) onChange;
 
-  const CustomSwitch({super.key, required this.value, required this.label, required this.onChange});
+  const CustomSwitch(
+      {super.key,
+      required this.value,
+      required this.label,
+      required this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +20,15 @@ class CustomSwitch extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label,
-            style: subformLabelTextStyle.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2)),
+            style: subformLabelTextStyle.copyWith(
+                color: AppConst.isLightTheme(context)
+                    ? greyDarkColor2
+                    : greyLightColor2)),
         Switch(
           value: value,
           onChanged: onChange,
           activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
           // inactiveThumbColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-
         )
       ],
     );

@@ -7,7 +7,6 @@ enum RequestPickupStatus {
 }
 
 extension RequestPickupExt on RequestPickupStatus {
-
   String asName() {
     String result = "";
 
@@ -34,5 +33,4 @@ extension RequestPickupExt on RequestPickupStatus {
 
     return result;
   }
-
 }

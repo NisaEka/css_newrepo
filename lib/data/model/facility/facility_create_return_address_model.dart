@@ -1,5 +1,4 @@
 class FacilityCreateReturnAddress {
-
   String _address = '';
   String get address => _address;
 
@@ -78,5 +77,4 @@ class FacilityCreateReturnAddress {
 
     return json;
   }
-
 }

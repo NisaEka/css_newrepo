@@ -6,9 +6,11 @@ import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 
-DataTransactionModel transactionDataModelFromJson(String str) => DataTransactionModel.fromJson(json.decode(str));
+DataTransactionModel transactionDataModelFromJson(String str) =>
+    DataTransactionModel.fromJson(json.decode(str));
 
-String transactionDataModelToJson(DataTransactionModel data) => json.encode(data.toJson());
+String transactionDataModelToJson(DataTransactionModel data) =>
+    json.encode(data.toJson());
 
 class DataTransactionModel {
   DataTransactionModel({
@@ -33,7 +35,6 @@ class DataTransactionModel {
     Destination? dataDestination,
     String? createAt,
     String? updateAt,
-
   }) {
     _awb = awb;
     _awbType = awbType;
@@ -74,14 +75,23 @@ class DataTransactionModel {
             : json['transaction'] != null
                 ? Delivery.fromJson(json['transaction'])
                 : null;
-    _account = json['account'] != null ? Account.fromJson(json['account']) : null;
+    _account =
+        json['account'] != null ? Account.fromJson(json['account']) : null;
     _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
-    _destination = json['destination'] != null ? Destination.fromJson(json['destination']) : null;
+    _destination = json['destination'] != null
+        ? Destination.fromJson(json['destination'])
+        : null;
     _goods = json['goods'] != null ? Goods.fromJson(json['goods']) : null;
-    _shipper = json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
-    _receiver = json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
-    _dataAccount = json['data_account'] != null ? Account.fromJson(json['data_account']) : null;
-    _dataDestination = json['data_destination'] != null ? Destination.fromJson(json['data_destination']) : null;
+    _shipper =
+        json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
+    _receiver =
+        json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
+    _dataAccount = json['data_account'] != null
+        ? Account.fromJson(json['data_account'])
+        : null;
+    _dataDestination = json['data_destination'] != null
+        ? Destination.fromJson(json['data_destination'])
+        : null;
     _createAt = json['create_at'];
     _updateAt = json['update_at'];
   }
@@ -358,7 +368,8 @@ class Receiver {
         district: district ?? _district,
         subDistrict: subDistrict ?? _subDistrict,
         destinationCode: destinationCode ?? _destinationCode,
-        destinationDescription: destinationDescription ?? _destinationDescription,
+        destinationDescription:
+            destinationDescription ?? _destinationDescription,
         idDestination: idDestination ?? _idDestination,
         idReceive: idReceive ?? _idReceive,
         registrationId: registrationId ?? _registrationId,
@@ -477,7 +488,9 @@ class Shipper {
     _phone = json['phone'];
     _dropship = json['dropship'];
     // _zip = json['zip_code'];
-    _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : json['origin'];
+    _origin = json['origin'] != null
+        ? Origin.fromJson(json['origin'])
+        : json['origin'];
   }
 
   String? _name;
@@ -732,7 +745,8 @@ class Delivery {
         flatRate: flatRate ?? _flatRate,
         flatRateWithInsurance: flatRateWithInsurance ?? _flatRateWithInsurance,
         freightCharge: freightCharge ?? _freightCharge,
-        freightChargeWithInsurance: freightChargeWithInsurance ?? _freightChargeWithInsurance,
+        freightChargeWithInsurance:
+            freightChargeWithInsurance ?? _freightChargeWithInsurance,
       );
 
   String? get serviceCode => _serviceCode;

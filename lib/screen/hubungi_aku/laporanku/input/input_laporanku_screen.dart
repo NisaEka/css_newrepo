@@ -22,7 +22,10 @@ class InputLaporankuScreen extends StatelessWidget {
               title: "Buat Laporan".tr,
             ),
             body: Stack(
-              children: [_bodyContent(controller, context), controller.isLoading ? const LoadingDialog() : const SizedBox()],
+              children: [
+                _bodyContent(controller, context),
+                controller.isLoading ? const LoadingDialog() : const SizedBox()
+              ],
             ),
           );
         });
@@ -74,7 +77,9 @@ class InputLaporankuScreen extends StatelessWidget {
                       }
                     : null,
                 child: Icon(
-                  c.gettedPhoto != null ? Icons.close : Icons.camera_alt_outlined,
+                  c.gettedPhoto != null
+                      ? Icons.close
+                      : Icons.camera_alt_outlined,
                   color: greyColor,
                 ),
               ),
@@ -134,9 +139,15 @@ class InputLaporankuScreen extends StatelessWidget {
               },
             ),
             CustomFilledButton(
-              color: c.formKey.currentState?.validate() == true && c.selectedCategory != null ? blueJNE : greyColor,
+              color: c.formKey.currentState?.validate() == true &&
+                      c.selectedCategory != null
+                  ? blueJNE
+                  : greyColor,
               title: "Kirim".tr,
-              onPressed: () => c.formKey.currentState?.validate() == true && c.selectedCategory != null ? c.sendReport() : null,
+              onPressed: () => c.formKey.currentState?.validate() == true &&
+                      c.selectedCategory != null
+                  ? c.sendReport()
+                  : null,
             )
           ],
         ),

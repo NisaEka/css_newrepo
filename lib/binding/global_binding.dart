@@ -43,11 +43,13 @@ class GlobalBinding extends Bindings {
     Get.put<NetworkCore>(NetworkCore(), permanent: true);
     Get.put<StorageCore>(StorageCore(), permanent: true);
     Get.put<AuthRepository>(AuthRepositoryImpl(), permanent: true);
-    Get.put<TransactionRepository>(TransactionRepositoryImpl(), permanent: true);
+    Get.put<TransactionRepository>(TransactionRepositoryImpl(),
+        permanent: true);
     Get.put<ConnectionTest>(ConnectionTest(), permanent: true);
     Get.put<ProfilRepository>(ProfilRepositoryImpl(), permanent: true);
     Get.put<CekOngkirRepository>(CekOngkirRepositoryImpl(), permanent: false);
-    Get.put<LacakKirimanRepository>(LacakKirimanRepositoryImpl(), permanent: false);
+    Get.put<LacakKirimanRepository>(LacakKirimanRepositoryImpl(),
+        permanent: false);
     Get.put<JLCRepository>(JLCRepositoryImpl(), permanent: false);
     Get.put<PengaturanRepository>(PengaturanRepositoryImpl(), permanent: true);
     Get.put<FacilityRepository>(FacilityImpl(), permanent: true);
@@ -55,7 +57,8 @@ class GlobalBinding extends Bindings {
     Get.put<StorageRepository>(StorageImpl(), permanent: true);
     Get.put<AggregasiRepository>(AggregasiRepositoryImpl(), permanent: true);
     Get.put<RequestPickupRepository>(RequestPickupImpl(), permanent: true);
-    Get.put<NotificationRepository>(NotificationRepositoryImpl(), permanent: true);
+    Get.put<NotificationRepository>(NotificationRepositoryImpl(),
+        permanent: true);
     Get.put<PantauRepository>(PantauRepositoryImpl(), permanent: true);
     Get.put<LaporankuRepository>(LaporankuRepositoryImpl(), permanent: true);
     Get.put<InvoiceRepository>(InvoiceImpl(), permanent: true);

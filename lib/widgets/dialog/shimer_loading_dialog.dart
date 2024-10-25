@@ -128,7 +128,8 @@ class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _shimmerController = AnimationController.unbounded(vsync: this)..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1000));
+    _shimmerController = AnimationController.unbounded(vsync: this)
+      ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1000));
   }
 
   @override
@@ -144,10 +145,12 @@ class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
         stops: widget.linearGradient.stops,
         begin: widget.linearGradient.begin,
         end: widget.linearGradient.end,
-        transform: _SlidingGradientTransform(slidePercent: _shimmerController.value),
+        transform:
+            _SlidingGradientTransform(slidePercent: _shimmerController.value),
       );
 
-  bool get isSized => (context.findRenderObject() as RenderBox?)?.hasSize ?? false;
+  bool get isSized =>
+      (context.findRenderObject() as RenderBox?)?.hasSize ?? false;
 
   Size get size => (context.findRenderObject() as RenderBox).size;
 

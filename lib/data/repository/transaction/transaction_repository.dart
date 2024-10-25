@@ -19,10 +19,10 @@ import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dar
 import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
 
 abstract class TransactionRepository {
-
   Future<GetServiceModel> getService(DataServiceModel param);
 
-  Future<ResponseModel<TransactionFeeModel>> getTransactionFee(DataTransactionFeeModel params);
+  Future<ResponseModel<TransactionFeeModel>> getTransactionFee(
+      DataTransactionFeeModel params);
 
   Future<PostTransactionModel> postTransaction(DataTransactionModel data);
 
@@ -60,11 +60,13 @@ abstract class TransactionRepository {
 
   Future<GetStatusModel> getTransactionStatus();
 
-  Future<PostTransactionModel> putTransaction(DataTransactionModel data, String awb);
+  Future<PostTransactionModel> putTransaction(
+      DataTransactionModel data, String awb);
 
   Future<GetTransactionOfficerModel> getTransOfficer();
 
-  Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data);
+  Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(
+      DataTransactionOngkirModel data);
 
   Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(
     String transDate,

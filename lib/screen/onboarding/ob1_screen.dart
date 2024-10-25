@@ -21,7 +21,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
   List<Map<String, String>> bannerTexts = [
     {
       "title": "Permintaan Pickup",
-      "desc": "Kamu dapat melakukan permintaan pickup dan akan kami jemput ke tempat kamu.",
+      "desc":
+          "Kamu dapat melakukan permintaan pickup dan akan kami jemput ke tempat kamu.",
     },
     {
       "title": "Pencairan COD Cepat dan Detail",
@@ -30,7 +31,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
     },
     {
       "title": "Pantau Progres Pengiriman Realtime",
-      "desc": "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.",
+      "desc":
+          "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.",
     },
   ];
 
@@ -184,7 +186,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.linear,
                   )
-                : Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+                : Get.delete<DashboardController>()
+                    .then((_) => Get.offAll(const DashboardScreen())),
           ),
         ],
       ),

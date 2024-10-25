@@ -60,8 +60,14 @@ class AltProfileScreen extends StatelessWidget {
       decoration: BoxDecoration(
           color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
           border: Border(
-            bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
-            top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
+            bottom: BorderSide(
+                color: AppConst.isLightTheme(context)
+                    ? Colors.black
+                    : Colors.white),
+            top: BorderSide(
+                color: AppConst.isLightTheme(context)
+                    ? Colors.black
+                    : Colors.white),
           )),
       child: Wrap(
         children: [
@@ -106,7 +112,9 @@ class AltProfileScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(color: blueJNE)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(color: blueJNE)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -153,21 +161,24 @@ class AltProfileScreen extends StatelessWidget {
                   ? SettingListItem(
                       title: 'Alamat Pengembalian'.tr,
                       icon: Icons.cached_rounded,
-                      onTap: () => c.isCcrfAction(const AlamatReturnScreen(), context),
+                      onTap: () =>
+                          c.isCcrfAction(const AlamatReturnScreen(), context),
                     )
                   : const SizedBox(),
               c.allow.profil == "Y"
                   ? SettingListItem(
                       title: 'Data Rekening'.tr,
                       icon: Icons.credit_card_rounded,
-                      onTap: () => c.isCcrfAction(const AkunBankScreen(), context),
+                      onTap: () =>
+                          c.isCcrfAction(const AkunBankScreen(), context),
                     )
                   : const SizedBox(),
               c.allow.profil == "Y"
                   ? SettingListItem(
                       title: 'Dokumen'.tr,
                       icon: Icons.file_present_rounded,
-                      onTap: () => c.isCcrfAction(const DokumenScreen(), context),
+                      onTap: () =>
+                          c.isCcrfAction(const DokumenScreen(), context),
                     )
                   : const SizedBox(),
               const SizedBox(height: 50),

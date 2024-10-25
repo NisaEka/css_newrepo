@@ -6,12 +6,13 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class InvoiceCnoteController extends BaseController {
-
   String invoiceNumber = Get.arguments["invoice_number"];
 
-  final DefaultPageFilterModel _defaultPageFilterModel = DefaultPageFilterModel();
+  final DefaultPageFilterModel _defaultPageFilterModel =
+      DefaultPageFilterModel();
 
-  final PagingController<int, InvoiceCnoteModel> pagingController = PagingController(firstPageKey: Constant.defaultPage);
+  final PagingController<int, InvoiceCnoteModel> pagingController =
+      PagingController(firstPageKey: Constant.defaultPage);
 
   @override
   void onInit() {
@@ -24,7 +25,8 @@ class InvoiceCnoteController extends BaseController {
   void _getInvoiceCnotes(int page) async {
     try {
       _defaultPageFilterModel.setPage(page);
-      final response = await invoiceRepository.getInvoiceCnotes(invoiceNumber, _defaultPageFilterModel);
+      final response = await invoiceRepository.getInvoiceCnotes(
+          invoiceNumber, _defaultPageFilterModel);
 
       final payload = response.payload ?? List.empty();
       final isLastPage = payload.length < _defaultPageFilterModel.limit;
@@ -47,5 +49,4 @@ class InvoiceCnoteController extends BaseController {
   void refreshInvoices() {
     pagingController.refresh();
   }
-
 }

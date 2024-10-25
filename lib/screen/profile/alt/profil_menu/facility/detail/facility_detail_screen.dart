@@ -19,13 +19,12 @@ class FacilityDetailScreen extends StatelessWidget {
           return Scaffold(
               appBar: CustomTopBar(title: controller.facilityArgs.name),
               bottomNavigationBar: _detailBottomAppBar(context, controller),
-              body: _detailBody(controller, context)
-          );
+              body: _detailBody(controller, context));
         });
   }
 
-  Widget? _detailBottomAppBar(BuildContext context, FacilityDetailController controller) {
-
+  Widget? _detailBottomAppBar(
+      BuildContext context, FacilityDetailController controller) {
     if (!controller.facilityArgs.canUse) {
       return null;
     }
@@ -42,7 +41,8 @@ class FacilityDetailScreen extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (context) => FacilityDetailOptionDialog(
-                        facilityType: "${controller.facilityArgs.name} (Mingguan)",
+                        facilityType:
+                            "${controller.facilityArgs.name} (Mingguan)",
                       ),
                     );
                   }
@@ -63,7 +63,8 @@ class FacilityDetailScreen extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (context) => FacilityDetailOptionDialog(
-                        facilityType: "${controller.facilityArgs.name} (Bulanan)",
+                        facilityType:
+                            "${controller.facilityArgs.name} (Bulanan)",
                       ),
                     );
                   }
@@ -96,42 +97,41 @@ class FacilityDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _detailBody(FacilityDetailController controller, BuildContext context) {
+  Widget _detailBody(
+      FacilityDetailController controller, BuildContext context) {
     return CustomScrollView(
       slivers: [
         SliverPadding(
-          padding:
-          const EdgeInsets.only(left: 16, right: 16, top: 16),
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
           sliver: SliverToBoxAdapter(
               child: Center(
                   child: SizedBox(
-                    width: 128,
-                    height: 128,
-                    child: Image(
-                        image: NetworkImage(controller.facilityArgs.icon),
-                        fit: BoxFit.cover),
-                  ))),
+            width: 128,
+            height: 128,
+            child: Image(
+                image: NetworkImage(controller.facilityArgs.icon),
+                fit: BoxFit.cover),
+          ))),
         ),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 16, vertical: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           sliver: SliverToBoxAdapter(
               child: Center(
-                child: Text(
-                  'Skema Pembayaran'.tr,
-                  textAlign: TextAlign.center,
-                  style: appTitleTextStyle.copyWith(
-                    color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
-                  ),
-                ),
-              )),
+            child: Text(
+              'Skema Pembayaran'.tr,
+              textAlign: TextAlign.center,
+              style: appTitleTextStyle.copyWith(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.black
+                      : Colors.white),
+            ),
+          )),
         ),
         SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverToBoxAdapter(
-                child: _descriptionSection(controller.facilityArgs.description)
-            )
-        )
+                child:
+                    _descriptionSection(controller.facilityArgs.description)))
       ],
     );
   }
@@ -141,16 +141,9 @@ class FacilityDetailScreen extends StatelessWidget {
       data: facilityDescription,
       style: {
         'ul': Style(
-          margin: Margins(
-            left: Margin.zero()
-          ),
-          padding: HtmlPaddings(
-            left: HtmlPadding(16)
-          )
-        ),
-        'h6': Style(
-          fontSize: FontSize.large
-        )
+            margin: Margins(left: Margin.zero()),
+            padding: HtmlPaddings(left: HtmlPadding(16))),
+        'h6': Style(fontSize: FontSize.large)
       },
     );
   }

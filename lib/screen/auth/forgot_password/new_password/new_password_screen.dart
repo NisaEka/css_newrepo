@@ -17,13 +17,13 @@ class NewPasswordScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   const NewPasswordForm(),
-                  controller.isLoading ? const LoadingDialog() : const SizedBox(),
+                  controller.isLoading
+                      ? const LoadingDialog()
+                      : const SizedBox(),
                 ],
               ),
             ),
           );
         });
   }
-
-
 }

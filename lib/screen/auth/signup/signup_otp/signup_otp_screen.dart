@@ -20,7 +20,9 @@ class SignUpOTPScreen extends StatelessWidget {
                   children: const [LogoHeader(), SignupOtpForm()],
                 ),
               ),
-              controller.state.isLoading ? const LoadingDialog() : const SizedBox()
+              controller.state.isLoading
+                  ? const LoadingDialog()
+                  : const SizedBox()
             ],
           );
         });

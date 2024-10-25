@@ -1,5 +1,4 @@
 class FacilityCreateBankInfoModel {
-
   String _bankId = '';
   String get bankId => _bankId;
 
@@ -38,5 +37,4 @@ class FacilityCreateBankInfoModel {
 
     return json;
   }
-
 }

@@ -57,7 +57,9 @@ class MenuItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: AppConst.isDarkTheme(context) ? greyColor : Colors.transparent,
+                          color: AppConst.isDarkTheme(context)
+                              ? greyColor
+                              : Colors.transparent,
                           spreadRadius: 1,
                           offset: const Offset(3, -2),
                           blurRadius: 2,
@@ -75,8 +77,12 @@ class MenuItem extends StatelessWidget {
                     child: Text(
                       isLoading
                           ? ""
-                          : data?.title?.tr.splitMapJoin(' ', onMatch: (p0) => '\n').splitMapJoin('_', onMatch: (p0) => ' ') ??
-                              menuTitle?.splitMapJoin(' ', onMatch: (p0) => '\n').splitMapJoin('_', onMatch: (p0) => ' ') ??
+                          : data?.title?.tr
+                                  .splitMapJoin(' ', onMatch: (p0) => '\n')
+                                  .splitMapJoin('_', onMatch: (p0) => ' ') ??
+                              menuTitle
+                                  ?.splitMapJoin(' ', onMatch: (p0) => '\n')
+                                  .splitMapJoin('_', onMatch: (p0) => ' ') ??
                               '',
                       style: Theme.of(context).textTheme.titleSmall,
                       textAlign: TextAlign.center,
@@ -94,8 +100,12 @@ class MenuItem extends StatelessWidget {
                 child: IconButton(
                   onPressed: onEdit,
                   icon: Icon(
-                    isFavorite == true || (data?.isFavorite ?? false) ? Icons.remove_circle : Icons.add_circle_rounded,
-                    color: isFavorite == true || (data?.isFavorite ?? false) ? errorColor : successColor,
+                    isFavorite == true || (data?.isFavorite ?? false)
+                        ? Icons.remove_circle
+                        : Icons.add_circle_rounded,
+                    color: isFavorite == true || (data?.isFavorite ?? false)
+                        ? errorColor
+                        : successColor,
                   ),
                 ),
               )

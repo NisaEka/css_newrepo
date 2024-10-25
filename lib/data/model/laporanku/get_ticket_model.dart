@@ -81,7 +81,8 @@ class TicketModel {
     _createdBy = json['created_by'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
-    _category = json['category'] != null ? Category.fromJson(json['category']) : null;
+    _category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
   }
 
   String? _id;

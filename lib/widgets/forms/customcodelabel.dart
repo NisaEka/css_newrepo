@@ -37,7 +37,9 @@ class CustomCodeLabel extends StatelessWidget {
           onPressed: () => Clipboard.setData(ClipboardData(text: label)),
           icon: Icon(
             Icons.copy_rounded,
-            color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+            color: Theme.of(context).brightness == Brightness.light
+                ? blueJNE
+                : whiteColor,
           ),
         ),
       ],

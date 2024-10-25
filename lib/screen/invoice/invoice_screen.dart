@@ -49,7 +49,9 @@ class InvoiceScreen extends StatelessWidget {
       hintText: 'Cari'.tr,
       prefixIcon: SvgPicture.asset(
         IconsConstant.search,
-        color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+        color: Theme.of(context).brightness == Brightness.light
+            ? whiteColor
+            : blueJNE,
       ),
       onChanged: (value) {
         controller.onKeywordChange(value);
@@ -129,7 +131,8 @@ class InvoiceScreen extends StatelessWidget {
                 child: InvoiceItem(
                   invoice: item,
                   onTap: (String invoiceNumber) {
-                    Get.to(const InvoiceDetailScreen(), arguments: {"invoice_number": item.invoiceNoEncoded});
+                    Get.to(const InvoiceDetailScreen(),
+                        arguments: {"invoice_number": item.invoiceNoEncoded});
                   },
                 ),
               );
@@ -219,7 +222,10 @@ class InvoiceScreen extends StatelessWidget {
         children: [
           Text(
             text.tr,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.outline),
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(color: Theme.of(context).colorScheme.outline),
           ),
           const SizedBox(width: 8),
           Icon(
@@ -259,13 +265,16 @@ class InvoiceScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   itemCount: items.length,
                   itemBuilder: (context, index) {
-                    bool isSelected = controller.selectedFilterDate == items[index];
-                    bool isCustom = controller.selectedFilterDate == RequestPickupDateEnum.custom;
+                    bool isSelected =
+                        controller.selectedFilterDate == items[index];
+                    bool isCustom = controller.selectedFilterDate ==
+                        RequestPickupDateEnum.custom;
                     bool showDatePickerContent = isCustom && isSelected;
 
                     return RequestPickupFilterItem(
                       onItemSelected: () {
-                        setState(() => controller.setSelectedFilterDate(items[index]));
+                        setState(() =>
+                            controller.setSelectedFilterDate(items[index]));
                       },
                       itemName: items[index].asName(),
                       isSelected: isSelected,
@@ -273,10 +282,12 @@ class InvoiceScreen extends StatelessWidget {
                       startDate: controller.selectedDateStartText,
                       endDate: controller.selectedDateEndText,
                       onStartDateChange: (newDateTime) {
-                        setState(() => controller.setSelectedDateStart(newDateTime));
+                        setState(
+                            () => controller.setSelectedDateStart(newDateTime));
                       },
                       onEndDateChange: (newDateTime) {
-                        setState(() => controller.setSelectedDateEnd(newDateTime));
+                        setState(
+                            () => controller.setSelectedDateEnd(newDateTime));
                       },
                     );
                   },

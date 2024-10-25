@@ -24,7 +24,8 @@ class DraftTransactionListItem extends StatefulWidget {
   });
 
   @override
-  State<DraftTransactionListItem> createState() => _DraftTransactionListItemState();
+  State<DraftTransactionListItem> createState() =>
+      _DraftTransactionListItemState();
 }
 
 class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
@@ -63,15 +64,20 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
               right: 0,
               top: 5,
               child: Container(
-                padding: const EdgeInsets.only(top: 5, right: 5, left: 20, bottom: 2),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 5, left: 20, bottom: 2),
                 decoration: BoxDecoration(
-                    color: widget.data.delivery?.freightCharge == 0 ? infoColor : successColor,
+                    color: widget.data.delivery?.freightCharge == 0
+                        ? infoColor
+                        : successColor,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(8),
                       bottomLeft: Radius.circular(20),
                     )),
                 child: Text(
-                  widget.data.delivery?.freightCharge == 0 ? 'Draft' : 'Ready to Upload',
+                  widget.data.delivery?.freightCharge == 0
+                      ? 'Draft'
+                      : 'Ready to Upload',
                   style: listTitleTextStyle.copyWith(color: whiteColor),
                 ),
               ),
@@ -89,8 +95,11 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                   Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.data.createAt!.toDateTimeFormat().toString(), style: sublistTitleTextStyle),
-                      !widget.showDetail ? const Icon(Icons.keyboard_arrow_down) : const Icon(Icons.keyboard_arrow_up),
+                      Text(widget.data.createAt!.toDateTimeFormat().toString(),
+                          style: sublistTitleTextStyle),
+                      !widget.showDetail
+                          ? const Icon(Icons.keyboard_arrow_down)
+                          : const Icon(Icons.keyboard_arrow_up),
                     ],
                   ),
                   Row(
@@ -139,7 +148,9 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                                 CustomLabelText(
                                   alignment: 'end',
                                   title: 'Destination'.tr,
-                                  value: widget.data.dataDestination?.cityName ?? '',
+                                  value:
+                                      widget.data.dataDestination?.cityName ??
+                                          '',
                                   valueMaxline: 3,
                                 ),
                               ],

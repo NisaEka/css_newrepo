@@ -7,20 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AggregationMinusCnoteScreen extends StatelessWidget {
-
   final AggregationMinusDocModel data;
 
-  const AggregationMinusCnoteScreen({
-    super.key,
-    required this.data
-  });
+  const AggregationMinusCnoteScreen({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _aggregationMinusCnoteAppBar(),
-      body: _bodyContent()
-    );
+        appBar: _aggregationMinusCnoteAppBar(), body: _bodyContent());
   }
 
   PreferredSizeWidget _aggregationMinusCnoteAppBar() {
@@ -33,11 +27,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(
-            top: 16,
-            left: 16,
-            right: 16
-          ),
+          padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
           child: AggregationMinusBox(
             title: "Connote No".tr,
             value: data.cnoteNo ?? "",
@@ -56,23 +46,17 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
         _contentSpacer(),
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: _deliveryInfoContent()
-          ),
+          sliver: SliverToBoxAdapter(child: _deliveryInfoContent()),
         ),
         _contentDivider(),
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-              child: _aggregationInfoContent()
-          ),
+          sliver: SliverToBoxAdapter(child: _aggregationInfoContent()),
         ),
         _contentDivider(),
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-              child: _aggregationDetailContent()
-          ),
+          sliver: SliverToBoxAdapter(child: _aggregationDetailContent()),
         ),
         _contentSpacer()
       ],
@@ -138,14 +122,19 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
         _rowText("Return Fee".tr, data.returnFee?.toString() ?? ""),
         _rowText("COD Amount".tr, data.codAmount?.toString() ?? ""),
         _rowText("Discount".tr, data.discount?.toString() ?? ""),
-        _rowText("Freight Charge After Discount".tr, data.freightChargeAfterDisc?.toString() ?? ""),
-        _rowText("Freight Charge VAT".tr, data.freightChargeVat?.toString() ?? ""),
+        _rowText("Freight Charge After Discount".tr,
+            data.freightChargeAfterDisc?.toString() ?? ""),
+        _rowText(
+            "Freight Charge VAT".tr, data.freightChargeVat?.toString() ?? ""),
         _rowText("Packing Fee".tr, data.packingFee?.toString() ?? ""),
         _rowText("Surcharge".tr, data.surcharge?.toString() ?? ""),
         const Divider(thickness: 0.5),
-        _rowText("Return Freight Charge After Discount".tr, data.returnFreightChargeAfterDisc?.toString() ?? ""),
-        _rowText("Return Freight Charge VAT".tr, data.returnFreightChargeVat?.toString() ?? ""),
-        _rowText("COD Fee Include VAT".tr, data.codFeeIncludeVat?.toString() ?? ""),
+        _rowText("Return Freight Charge After Discount".tr,
+            data.returnFreightChargeAfterDisc?.toString() ?? ""),
+        _rowText("Return Freight Charge VAT".tr,
+            data.returnFreightChargeVat?.toString() ?? ""),
+        _rowText(
+            "COD Fee Include VAT".tr, data.codFeeIncludeVat?.toString() ?? ""),
         const Divider(thickness: 0.5),
         _rowText("Netto AWB Amount".tr, data.netAwbAmount?.toString() ?? "")
       ],
@@ -154,13 +143,12 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
 
   Widget _titleText(String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Text(
-        text,
-        style: listTitleTextStyle,
-        textAlign: TextAlign.start,
-      )
-    );
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Text(
+          text,
+          style: listTitleTextStyle,
+          textAlign: TextAlign.start,
+        ));
   }
 
   Widget _rowText(String title, String value) {
@@ -178,5 +166,4 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
       ],
     );
   }
-
 }

@@ -1,6 +1,5 @@
 class RequestPickupModel {
-
-  String _awb =  "";
+  String _awb = "";
   String get awb => _awb;
 
   String _officerEntry = "";
@@ -38,5 +37,4 @@ class RequestPickupModel {
     _serviceCode = json["service_code"];
     _status = json["status"];
   }
-
 }

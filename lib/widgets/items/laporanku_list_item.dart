@@ -34,10 +34,12 @@ class LaporankuListItem extends StatelessWidget {
           motion: const DrawerMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) => Get.to(const LacakKirimanScreen(), arguments: {
+              onPressed: (context) =>
+                  Get.to(const LacakKirimanScreen(), arguments: {
                 'nomor_resi': data?.cnote ?? '',
               }),
-              foregroundColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+              foregroundColor:
+                  AppConst.isLightTheme(context) ? blueJNE : redJNE,
               icon: Icons.search,
               label: 'Lacak'.tr,
             )
@@ -82,7 +84,8 @@ class LaporankuListItem extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
                           decoration: BoxDecoration(
                             color: data?.status == "Closed"
                                 ? successColor
@@ -98,7 +101,8 @@ class LaporankuListItem extends StatelessWidget {
                                 : data?.status == "Reply CS"
                                     ? "Masih Diproses".tr
                                     : "Belum Diproses".tr,
-                            style: sublistTitleTextStyle.copyWith(color: whiteColor, fontSize: 10),
+                            style: sublistTitleTextStyle.copyWith(
+                                color: whiteColor, fontSize: 10),
                           ),
                         )
                       ],

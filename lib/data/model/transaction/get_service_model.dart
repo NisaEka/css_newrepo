@@ -1,6 +1,10 @@
 import 'dart:convert';
-GetServiceModel getServiceModelFromJson(String str) => GetServiceModel.fromJson(json.decode(str));
-String getServiceModelToJson(GetServiceModel data) => json.encode(data.toJson());
+
+GetServiceModel getServiceModelFromJson(String str) =>
+    GetServiceModel.fromJson(json.decode(str));
+String getServiceModelToJson(GetServiceModel data) =>
+    json.encode(data.toJson());
+
 class GetServiceModel {
   GetServiceModel({
     num? code,
@@ -55,7 +59,8 @@ class GetServiceModel {
   }
 }
 
-ServiceModel payloadFromJson(String str) => ServiceModel.fromJson(json.decode(str));
+ServiceModel payloadFromJson(String str) =>
+    ServiceModel.fromJson(json.decode(str));
 
 String payloadToJson(ServiceModel data) => json.encode(data.toJson());
 
@@ -116,5 +121,4 @@ class ServiceModel {
     map['price'] = _price;
     return map;
   }
-
 }

@@ -15,7 +15,9 @@ class InputLoginModel {
     _email = json['email'];
     _password = json['password'];
     _device = json['device'] != null ? Device.fromJson(json['device']) : null;
-    _coordinate = json['coordinate'] != null ? Coordinate.fromJson(json['coordinate']) : null;
+    _coordinate = json['coordinate'] != null
+        ? Coordinate.fromJson(json['coordinate'])
+        : null;
   }
 
   String? _email;

@@ -26,14 +26,15 @@ class ToolTipCustomShape extends ShapeBorder {
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    rect = Rect.fromPoints(rect.topLeft, rect.bottomRight - Offset(0, arrowHeight));
+    rect = Rect.fromPoints(
+        rect.topLeft, rect.bottomRight - Offset(0, arrowHeight));
     double x = arrowWidth, y = arrowHeight, r = 1 - arrowArc;
     return Path()
       ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(radius)));
-      // ..moveTo(rect.topCenter.dx + x / 2, rect.bottomCenter.dy)
-      // ..relativeLineTo(x / 2 * r, y * r)
-      // ..relativeQuadraticBezierTo(-x / 2 * (1 - r), y * (1 - r), -x * (1 - r), 0)
-      // ..relativeLineTo(x / 2 * r, -y * r);
+    // ..moveTo(rect.topCenter.dx + x / 2, rect.bottomCenter.dy)
+    // ..relativeLineTo(x / 2 * r, y * r)
+    // ..relativeQuadraticBezierTo(-x / 2 * (1 - r), y * (1 - r), -x * (1 - r), 0)
+    // ..relativeLineTo(x / 2 * r, -y * r);
   }
 
   @override

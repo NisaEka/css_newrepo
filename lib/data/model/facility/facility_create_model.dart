@@ -5,7 +5,6 @@ import 'package:css_mobile/data/model/facility/facility_create_return_address_mo
 import 'package:css_mobile/data/model/facility/facility_create_tax_info_model.dart';
 
 class FacilityCreateModel {
-
   String _brand = '';
   String _name = '';
   String _email = '';
@@ -98,5 +97,4 @@ class FacilityCreateModel {
 
     return json;
   }
-
 }

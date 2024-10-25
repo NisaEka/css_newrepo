@@ -80,7 +80,8 @@ class AddPenerimaScreen extends StatelessWidget {
                   return GestureDetector(
                     onTap: () => c.update(),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 16),
                       child: Text(
                         '${e.zipCode}; ${e.provinceName}; ${e.cityName}; ${e.districtName}; ${e.subdistrictName}; ${e.destinationCode}',
                       ),
@@ -98,7 +99,9 @@ class AddPenerimaScreen extends StatelessWidget {
                 readOnly: false,
                 hintText: c.isLoadDestination ? "Loading..." : "Kota Tujuan".tr,
                 prefixIcon: const Icon(Icons.location_city),
-                textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
+                textStyle: c.selectedDestination != null
+                    ? subTitleTextStyle
+                    : hintTextStyle,
               ),
               CustomTextFormField(
                 controller: c.alamat,
@@ -109,9 +112,13 @@ class AddPenerimaScreen extends StatelessWidget {
                 validator: ValidationBuilder().address().build(),
               ),
               CustomFilledButton(
-                color: c.formKey.currentState?.validate() == true ? blueJNE : greyColor,
+                color: c.formKey.currentState?.validate() == true
+                    ? blueJNE
+                    : greyColor,
                 title: 'Simpan Data Penerima'.tr,
-                onPressed: () => c.formKey.currentState?.validate() == true ? c.saveReceiver() : null,
+                onPressed: () => c.formKey.currentState?.validate() == true
+                    ? c.saveReceiver()
+                    : null,
               ),
             ],
           ),

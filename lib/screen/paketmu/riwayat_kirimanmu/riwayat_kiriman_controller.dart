@@ -14,7 +14,8 @@ class RiwayatKirimanController extends BaseController {
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
   final searchField = TextEditingController();
-  final PagingController<int, TransactionModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, TransactionModel> pagingController =
+      PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
   int selectedKiriman = 0;
@@ -29,7 +30,6 @@ class RiwayatKirimanController extends BaseController {
   String? transType;
   String? transDate;
   String dateFilter = '0';
-
 
   bool isFiltered = false;
   bool isLoading = false;
@@ -90,7 +90,9 @@ class RiwayatKirimanController extends BaseController {
     selectedTransaction = [];
     listStatusKiriman = [];
     try {
-      await profil.getBasicProfil().then((value) async => basic = value.data?.user);
+      await profil
+          .getBasicProfil()
+          .then((value) async => basic = value.data?.user);
 
       await transaction.getTransactionStatus().then((value) {
         listStatusKiriman.addAll(value.payload ?? []);
@@ -216,7 +218,6 @@ class RiwayatKirimanController extends BaseController {
     transDate = null;
     dateFilter = '0';
 
-
     pagingController.refresh();
     update();
     Get.back();
@@ -251,7 +252,9 @@ class RiwayatKirimanController extends BaseController {
       }
       update();
       // selectedTransaction.length == transactionList.length ? isSelectAll = true : isSelectAll = false;
-      selectedTransaction.length == pagingController.itemList?.length ? isSelectAll = true : isSelectAll = false;
+      selectedTransaction.length == pagingController.itemList?.length
+          ? isSelectAll = true
+          : isSelectAll = false;
     } else {
       Get.to(const DetailRiwayatKirimanScreen(), arguments: {
         'awb': item.awb,
@@ -307,10 +310,14 @@ class RiwayatKirimanController extends BaseController {
   }
 
   applyFilter() {
-    if (startDate != null || endDate != null || selectedPetugasEntry != null || selectedStatusKiriman != null) {
+    if (startDate != null ||
+        endDate != null ||
+        selectedPetugasEntry != null ||
+        selectedStatusKiriman != null) {
       isFiltered = true;
       if (startDate != null && endDate != null) {
-        transDate = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+        transDate =
+            "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
       }
       update();
       transactionCount();

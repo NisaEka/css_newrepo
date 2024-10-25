@@ -77,7 +77,9 @@ class RiwayatKirimanScreen extends StatelessWidget {
             hintText: 'Cari Transaksimu'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
-              color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? whiteColor
+                  : blueJNE,
             ),
             margin: EdgeInsets.zero,
             onChanged: (value) {
@@ -125,13 +127,15 @@ class RiwayatKirimanScreen extends StatelessWidget {
                         Text(
                           c.total.toString(),
                           style: listTitleTextStyle.copyWith(
-                            color: c.selectedKiriman == 0 ? whiteColor : blueJNE,
+                            color:
+                                c.selectedKiriman == 0 ? whiteColor : blueJNE,
                           ),
                         ),
                         Text(
                           'Kiriman'.tr,
                           style: sublistTitleTextStyle.copyWith(
-                            color: c.selectedKiriman == 0 ? whiteColor : greyColor,
+                            color:
+                                c.selectedKiriman == 0 ? whiteColor : greyColor,
                           ),
                         )
                       ],
@@ -160,13 +164,15 @@ class RiwayatKirimanScreen extends StatelessWidget {
                         Text(
                           c.cod.toString(),
                           style: listTitleTextStyle.copyWith(
-                            color: c.selectedKiriman == 1 ? whiteColor : blueJNE,
+                            color:
+                                c.selectedKiriman == 1 ? whiteColor : blueJNE,
                           ),
                         ),
                         Text(
                           'COD'.tr,
                           style: sublistTitleTextStyle.copyWith(
-                            color: c.selectedKiriman == 1 ? whiteColor : greyColor,
+                            color:
+                                c.selectedKiriman == 1 ? whiteColor : greyColor,
                           ),
                         )
                       ],
@@ -194,13 +200,15 @@ class RiwayatKirimanScreen extends StatelessWidget {
                         Text(
                           c.noncod.toString(),
                           style: listTitleTextStyle.copyWith(
-                            color: c.selectedKiriman == 2 ? whiteColor : blueJNE,
+                            color:
+                                c.selectedKiriman == 2 ? whiteColor : blueJNE,
                           ),
                         ),
                         Text(
                           'NON COD'.tr,
                           style: sublistTitleTextStyle.copyWith(
-                            color: c.selectedKiriman == 2 ? whiteColor : greyColor,
+                            color:
+                                c.selectedKiriman == 2 ? whiteColor : greyColor,
                           ),
                         )
                       ],
@@ -229,13 +237,15 @@ class RiwayatKirimanScreen extends StatelessWidget {
                         Text(
                           c.codOngkir.toString(),
                           style: listTitleTextStyle.copyWith(
-                            color: c.selectedKiriman == 3 ? whiteColor : blueJNE,
+                            color:
+                                c.selectedKiriman == 3 ? whiteColor : blueJNE,
                           ),
                         ),
                         Text(
                           'COD ONGKIR'.tr,
                           style: sublistTitleTextStyle.copyWith(
-                            color: c.selectedKiriman == 3 ? whiteColor : greyColor,
+                            color:
+                                c.selectedKiriman == 3 ? whiteColor : greyColor,
                           ),
                         ),
                       ],
@@ -271,7 +281,9 @@ class RiwayatKirimanScreen extends StatelessWidget {
                     data: item,
                     isLoading: false,
                     index: index,
-                    isSelected: c.selectedTransaction.where((e) => e == item).isNotEmpty,
+                    isSelected: c.selectedTransaction
+                        .where((e) => e == item)
+                        .isNotEmpty,
                     onLongPress: () {
                       c.select(item);
                     },
@@ -295,7 +307,8 @@ class RiwayatKirimanScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(
                     children: List.generate(
                       3,
@@ -315,7 +328,8 @@ class RiwayatKirimanScreen extends StatelessWidget {
                       color: blueJNE,
                     ),
                   ),
-                  newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                  newPageProgressIndicatorBuilder: (context) =>
+                      const LoadingDialog(
                     background: Colors.transparent,
                     height: 50,
                     size: 30,
@@ -329,7 +343,8 @@ class RiwayatKirimanScreen extends StatelessWidget {
     );
   }
 
-  Widget _filterContent(BuildContext context, RiwayatKirimanController c, StateSetter setState) {
+  Widget _filterContent(
+      BuildContext context, RiwayatKirimanController c, StateSetter setState) {
     return Expanded(
       child: CustomScrollView(
         slivers: [
@@ -385,9 +400,11 @@ class RiwayatKirimanScreen extends StatelessWidget {
                       onTap: () => c.selectDate(context).then((value) {
                         setState(() {
                           c.startDate = value;
-                          c.startDateField.text = value.toString().toDateTimeFormat();
+                          c.startDateField.text =
+                              value.toString().toDateTimeFormat();
                           c.endDate = DateTime.now();
-                          c.endDateField.text = DateTime.now().toString().toDateTimeFormat();
+                          c.endDateField.text =
+                              DateTime.now().toString().toDateTimeFormat();
                           c.update();
                         });
                       }),
@@ -401,7 +418,8 @@ class RiwayatKirimanScreen extends StatelessWidget {
                       onTap: () => c.selectDate(context).then((value) {
                         setState(() {
                           c.endDate = value;
-                          c.endDateField.text = value.toString().toDateTimeFormat();
+                          c.endDateField.text =
+                              value.toString().toDateTimeFormat();
                           c.update();
                         });
                       }),
@@ -430,16 +448,26 @@ class RiwayatKirimanScreen extends StatelessWidget {
                   child: Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: c.selectedStatusKiriman == c.listStatusKiriman[index] ? blueJNE : whiteColor,
+                      color:
+                          c.selectedStatusKiriman == c.listStatusKiriman[index]
+                              ? blueJNE
+                              : whiteColor,
                       border: Border.all(
-                        color: c.selectedStatusKiriman != c.listStatusKiriman[index] ? blueJNE : whiteColor,
+                        color: c.selectedStatusKiriman !=
+                                c.listStatusKiriman[index]
+                            ? blueJNE
+                            : whiteColor,
                       ),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
                       c.listStatusKiriman[index].tr,
                       textAlign: TextAlign.center,
-                      style: listTitleTextStyle.copyWith(color: c.selectedStatusKiriman == c.listStatusKiriman[index] ? whiteColor : blueJNE),
+                      style: listTitleTextStyle.copyWith(
+                          color: c.selectedStatusKiriman ==
+                                  c.listStatusKiriman[index]
+                              ? whiteColor
+                              : blueJNE),
                     ),
                   ),
                 ),

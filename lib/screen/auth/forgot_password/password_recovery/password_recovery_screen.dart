@@ -59,8 +59,10 @@ class PasswordRecoveryScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Kode OTP akan dikirimkan ke alamat email berikut :'.tr),
-                      Text(c.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
+                      Text('Kode OTP akan dikirimkan ke alamat email berikut :'
+                          .tr),
+                      Text(c.getMail(),
+                          textAlign: TextAlign.left, style: formLabelTextStyle),
                     ],
                   ),
                 )
@@ -91,7 +93,9 @@ class PasswordRecoveryScreen extends StatelessWidget {
                   groupValue: c.recovery,
                   onChanged: (value) {},
                 ),
-                SizedBox(width: Get.width / 1.5, child: Text('Hubungi sales cabang kota anda'.tr))
+                SizedBox(
+                    width: Get.width / 1.5,
+                    child: Text('Hubungi sales cabang kota anda'.tr))
               ],
             ),
           ),

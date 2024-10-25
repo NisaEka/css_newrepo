@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 class UangCODBox extends StatelessWidget {
   const UangCODBox({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,16 +29,18 @@ class UangCODBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
-            children: [
-              Text("COD Terkumpul Dari Pelanggan".tr,
-                  style: subformLabelTextStyle),
-              Text("Rp. 3.910.000",
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              children: [
+                Text("COD Terkumpul Dari Pelanggan".tr,
+                    style: subformLabelTextStyle),
+                Text(
+                  "Rp. 3.910.000",
                   style: appTitleTextStyle.copyWith(color: blueJNE),
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

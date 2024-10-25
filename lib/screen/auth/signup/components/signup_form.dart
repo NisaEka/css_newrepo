@@ -34,10 +34,13 @@ class SignupForm extends StatelessWidget {
                     c.update();
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 40, right: 40, top: 30),
+                    padding:
+                        const EdgeInsets.only(left: 40, right: 40, top: 30),
                     child: Column(
                       children: [
-                        Center(child: Text('Buat akun anda'.tr, style: listTitleTextStyle)),
+                        Center(
+                            child: Text('Buat akun anda'.tr,
+                                style: listTitleTextStyle)),
                         const SizedBox(height: 25),
                         CustomTextFormField(
                           controller: c.state.namaLengkap,
@@ -70,12 +73,15 @@ class SignupForm extends StatelessWidget {
                         ),
                         c.state.isSelectCounter
                             ? Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('Sudah menggunakan JNE'.tr),
                                   Switch(
                                     value: c.state.pakaiJNE,
-                                    activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                                    activeColor: AppConst.isLightTheme(context)
+                                        ? blueJNE
+                                        : redJNE,
                                     onChanged: (value) {
                                       c.state.pakaiJNE = value;
                                       c.update();
@@ -95,21 +101,30 @@ class SignupForm extends StatelessWidget {
                                       ),
                                     )
                                     .toList(),
-                                hintText: c.state.isLoadAgent ? 'Loading...' : 'Agen / Sales Counter'.tr,
+                                hintText: c.state.isLoadAgent
+                                    ? 'Loading...'
+                                    : 'Agen / Sales Counter'.tr,
                                 onChanged: (value) {
                                   c.state.selectedAgent = value;
                                   c.update();
                                 },
                                 value: c.state.selectedAgent,
-                                selectedItem: c.state.selectedAgent?.custName ?? '',
+                                selectedItem:
+                                    c.state.selectedAgent?.custName ?? '',
                               )
                             : const SizedBox(),
                         CustomFilledButton(
-                          color: c.state.formKey.currentState?.validate() == true && c.state.selectedOrigin != null ? blueJNE : greyColor,
+                          color: c.state.formKey.currentState?.validate() ==
+                                      true &&
+                                  c.state.selectedOrigin != null
+                              ? blueJNE
+                              : greyColor,
                           title: 'Daftar'.tr,
                           radius: 50,
                           onPressed: () {
-                            if (c.state.formKey.currentState?.validate() == true && c.state.selectedOrigin != null) {
+                            if (c.state.formKey.currentState?.validate() ==
+                                    true &&
+                                c.state.selectedOrigin != null) {
                               c.mailValidation();
                             }
                           },

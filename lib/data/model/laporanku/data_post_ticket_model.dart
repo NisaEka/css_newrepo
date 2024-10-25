@@ -1,6 +1,13 @@
 class DataPostTicketModel {
   DataPostTicketModel(
-      {String? cnote, String? categoryId, String? subject, String? message, String? priority, String? image, String? type, String? id}) {
+      {String? cnote,
+      String? categoryId,
+      String? subject,
+      String? message,
+      String? priority,
+      String? image,
+      String? type,
+      String? id}) {
     _cnote = cnote;
     _categoryId = categoryId;
     _subject = subject;

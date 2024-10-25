@@ -31,7 +31,9 @@ class FacilityFormReturnScreen extends StatelessWidget {
             ),
             controller.pickImageFailed
                 ? MessageInfoDialog(
-                    message: 'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'.tr,
+                    message:
+                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                            .tr,
                     onClickAction: () => controller.onRefreshPickImageState(),
                   )
                 : Container()
@@ -48,7 +50,8 @@ class FacilityFormReturnScreen extends StatelessWidget {
         color: redJNE,
         title: 'Selanjutnya'.tr,
         onPressed: () {
-          Get.to(const FacilityFormBankScreen(), arguments: {'data': c.submitData()});
+          Get.to(const FacilityFormBankScreen(),
+              arguments: {'data': c.submitData()});
         },
       ),
     );

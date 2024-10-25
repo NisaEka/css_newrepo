@@ -1,5 +1,6 @@
 class ResponseModel<T> {
-  ResponseModel({num? code, String? message, List<ErrorResponse>? error, T? payload}) {
+  ResponseModel(
+      {num? code, String? message, List<ErrorResponse>? error, T? payload}) {
     _code = code;
     _message = message;
     _error = error;
@@ -29,7 +30,12 @@ class ResponseModel<T> {
   List<ErrorResponse>? _error;
   T? _payload;
 
-  ResponseModel copyWith({num? code, String? message, List<ErrorResponse>? error, T? payload}) => ResponseModel(
+  ResponseModel copyWith(
+          {num? code,
+          String? message,
+          List<ErrorResponse>? error,
+          T? payload}) =>
+      ResponseModel(
         code: code ?? _code,
         message: message ?? _message,
         error: error ?? _error,
@@ -56,7 +62,7 @@ class ResponseModel<T> {
   }
 }
 
-class ErrorResponse{
+class ErrorResponse {
   ErrorResponse({
     String? property,
     num? code,

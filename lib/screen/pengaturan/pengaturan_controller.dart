@@ -32,7 +32,8 @@ class PengaturanController extends BaseController {
 
     lang = await storage.readString(StorageCore.localeApp);
 
-    allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+    allow =
+        AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
 
     basicProfil = UserModel.fromJson(
       await storage.readData(StorageCore.userProfil),

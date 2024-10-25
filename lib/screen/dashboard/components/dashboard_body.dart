@@ -50,7 +50,8 @@ class DashboardBody extends StatelessWidget {
                             children: [
                               c.state.isLogin
                                   ? Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         CustomLabelText(
                                           title: 'Selamat Datang'.tr,
@@ -58,28 +59,38 @@ class DashboardBody extends StatelessWidget {
                                           fontColor: whiteColor,
                                           isLoading: c.state.isLoading,
                                         ),
-                                        JLCPointWidget(point: c.state.jlcPoint ?? '0')
+                                        JLCPointWidget(
+                                            point: c.state.jlcPoint ?? '0')
                                       ],
                                     )
                                   : const SizedBox(),
                               SizedBox(height: c.state.isCcrf ? 15 : 0),
-                              c.state.isLogin ? const DashboardInfo() : const SizedBox(),
-                              !c.state.isLogin || (c.state.allow.lacakPesanan == "Y" || c.state.allow.keuanganBonus == "Y")
+                              c.state.isLogin
+                                  ? const DashboardInfo()
+                                  : const SizedBox(),
+                              !c.state.isLogin ||
+                                      (c.state.allow.lacakPesanan == "Y" ||
+                                          c.state.allow.keuanganBonus == "Y")
                                   ? TextField(
                                       controller: c.state.nomorResi,
-                                      cursorColor: CustomTheme().cursorColor(context),
+                                      cursorColor:
+                                          CustomTheme().cursorColor(context),
                                       decoration: InputDecoration(
-                                        hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
+                                        hintText:
+                                            'Masukan nomor resi untuk lacak kiriman'
+                                                .tr,
                                         hintStyle: hintTextStyle,
                                         suffixIcon: GestureDetector(
-                                          onTap: () => c.onLacakKiriman(true, ''),
+                                          onTap: () =>
+                                              c.onLacakKiriman(true, ''),
                                           child: const Icon(
                                             Icons.qr_code,
                                             color: redJNE,
                                           ),
                                         ),
                                       ),
-                                      onSubmitted: (value) => c.onLacakKiriman(false, value),
+                                      onSubmitted: (value) =>
+                                          c.onLacakKiriman(false, value),
                                     )
                                   : const SizedBox(),
                             ],
@@ -89,7 +100,9 @@ class DashboardBody extends StatelessWidget {
                       ],
                     ),
                     const DashboardMenu2(),
-                    c.state.isLogin ? const DashboardKirimanCounts() : const SizedBox(),
+                    c.state.isLogin
+                        ? const DashboardKirimanCounts()
+                        : const SizedBox(),
                     const DashboardPromo(),
                     const DashboardNews(),
                     const SizedBox(height: 50),

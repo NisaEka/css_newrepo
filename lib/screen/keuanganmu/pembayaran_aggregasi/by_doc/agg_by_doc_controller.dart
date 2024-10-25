@@ -8,7 +8,8 @@ class AggByDocController extends BaseController {
   String aggregationID = Get.arguments['aggregationID'];
 
   final searchField = TextEditingController();
-  final PagingController<int, AggregationDetailModel> pagingController = PagingController<int, AggregationDetailModel>(firstPageKey: 1);
+  final PagingController<int, AggregationDetailModel> pagingController =
+      PagingController<int, AggregationDetailModel>(firstPageKey: 1);
 
   bool isLoading = false;
   static const pageSize = 10;
@@ -27,7 +28,8 @@ class AggByDocController extends BaseController {
   Future<void> getAggregation(int page) async {
     isLoading = true;
     try {
-      final agg = await aggregation.getAggregationByDoc(page, pageSize, aggregationID);
+      final agg =
+          await aggregation.getAggregationByDoc(page, pageSize, aggregationID);
       data = agg;
       update();
       final isLastPage = (agg.payload?.length ?? 0) < pageSize;

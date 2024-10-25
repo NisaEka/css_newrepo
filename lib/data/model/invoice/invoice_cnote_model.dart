@@ -1,5 +1,4 @@
 class InvoiceCnoteModel {
-
   String? _awbDate = "";
   String? get awbDate => _awbDate;
 
@@ -38,5 +37,4 @@ class InvoiceCnoteModel {
     _discountAmountAwb = json["discount_amount_awb"];
     _totalAdjustedInsAmt = json["total_adjusted_ins_amt"];
   }
-
 }

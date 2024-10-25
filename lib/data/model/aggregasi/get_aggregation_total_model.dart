@@ -12,7 +12,9 @@ class GetAggregationTotalModel {
   GetAggregationTotalModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
-    _payload = json['payload'] != null ? AggTotal.fromJson(json['payload']) : AggTotal.fromJson("{'total': 0}");
+    _payload = json['payload'] != null
+        ? AggTotal.fromJson(json['payload'])
+        : AggTotal.fromJson("{'total': 0}");
   }
 
   num? _code;

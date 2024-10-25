@@ -5,7 +5,8 @@ class NpwpSeparatorInputFormatter extends TextInputFormatter {
   static const separatorr = '-';
 
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     // Short-circuit if the new value is empty
     if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');
@@ -14,13 +15,16 @@ class NpwpSeparatorInputFormatter extends TextInputFormatter {
     // Handle "deletion" of separator character
     String oldValueText = oldValue.text.replaceAll(separator, '');
     String newValueText = newValue.text.replaceAll(separator, '');
-    if ((oldValue.text.endsWith(separator) || oldValue.text.endsWith(separatorr)) && oldValue.text.length == newValue.text.length + 1) {
+    if ((oldValue.text.endsWith(separator) ||
+            oldValue.text.endsWith(separatorr)) &&
+        oldValue.text.length == newValue.text.length + 1) {
       newValueText = newValueText.substring(0, newValueText.length - 1);
     }
 
     // Only process if the old value and new value are different
     if (oldValueText != newValueText) {
-      int selectionIndex = newValue.text.length - newValue.selection.extentOffset;
+      int selectionIndex =
+          newValue.text.length - newValue.selection.extentOffset;
       final chars = newValueText.split('');
 
       String newString = '';

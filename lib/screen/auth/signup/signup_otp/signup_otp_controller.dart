@@ -30,14 +30,18 @@ class SignUpOTPController extends BaseController {
 
   String getMail() {
     var nameuser = state.email.split("@");
-    var emailcaracter = state.email.replaceRange(2, nameuser[0].length, "*" * (nameuser[0].length - 2));
+    var emailcaracter = state.email
+        .replaceRange(2, nameuser[0].length, "*" * (nameuser[0].length - 2));
     return emailcaracter;
   }
 
   Future<void> pinConfirmation() async {
     state.isLoading = true;
     try {
-      await auth.postRegistPinConfirm(InputPinconfirmModel(email: state.email, pin: state.otpPin.text)).then((value) {
+      await auth
+          .postRegistPinConfirm(
+              InputPinconfirmModel(email: state.email, pin: state.otpPin.text))
+          .then((value) {
         if (value.code == 201) {
           Get.to(SuccessScreen(
             message: "Selamat, kamu sudah berhasil mendaftar".tr,
@@ -72,7 +76,9 @@ class SignUpOTPController extends BaseController {
     state.otpPin.clear();
     _startTimer(120);
     try {
-      await auth.postRegistPinResend(InputPinconfirmModel(email: state.email)).then((value) {
+      await auth
+          .postRegistPinResend(InputPinconfirmModel(email: state.email))
+          .then((value) {
         if (value.code == 201) {
           Get.showSnackbar(
             GetSnackBar(
@@ -120,7 +126,8 @@ class SignUpOTPController extends BaseController {
       } else {
         int minutes = state.remainingSeconds ~/ 60;
         int seconds = (state.remainingSeconds % 60);
-        state.time.value = "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2, "0")}";
+        state.time.value =
+            "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2, "0")}";
         state.remainingSeconds--;
         update();
       }

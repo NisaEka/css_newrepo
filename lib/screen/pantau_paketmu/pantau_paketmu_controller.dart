@@ -23,8 +23,10 @@ class PantauPaketmuController extends BaseController {
   Future<void> loadPantauCountList() async {
     state.pantauCountList.clear();
     try {
-      transaction.postTransactionDashboard('1722445200000 - 1725814800000', '').then(
-            (value) {
+      transaction
+          .postTransactionDashboard('1722445200000 - 1725814800000', '')
+          .then(
+        (value) {
           state.pantauCountList.addAll(value.payload ?? []);
         },
       );
@@ -44,7 +46,9 @@ class PantauPaketmuController extends BaseController {
     // state.pagingController.refresh();
 
     try {
-      await profil.getBasicProfil().then((value) async => state.basic = value.data?.user);
+      await profil
+          .getBasicProfil()
+          .then((value) async => state.basic = value.data?.user);
 
       if (state.basic?.userType == "PEMILIK") {
         await transaction.getTransOfficer().then((value) {
@@ -81,17 +85,20 @@ class PantauPaketmuController extends BaseController {
     } else if (filter == 1) {
       state.startDate = state.nowDay.subtract(const Duration(days: 30));
       state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.startDateField.text =
+          state.startDate.toString().toShortDateFormat();
       state.endDateField.text = state.endDate.toString().toShortDateFormat();
     } else if (filter == 2) {
       state.startDate = state.nowDay.subtract(const Duration(days: 7));
       state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.startDateField.text =
+          state.startDate.toString().toShortDateFormat();
       state.endDateField.text = state.endDate.toString().toShortDateFormat();
     } else if (filter == 3) {
       state.startDate = state.nowDay;
       state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.startDateField.text =
+          state.startDate.toString().toShortDateFormat();
       state.endDateField.text = state.endDate.toString().toShortDateFormat();
     }
 
@@ -106,7 +113,9 @@ class PantauPaketmuController extends BaseController {
         pageSize,
         state.date ?? '',
         state.searchField.text,
-        state.selectedPetugasEntry != "SEMUA" ? (state.selectedPetugasEntry ?? '') : '',
+        state.selectedPetugasEntry != "SEMUA"
+            ? (state.selectedPetugasEntry ?? '')
+            : '',
         state.selectedStatusKiriman ?? '',
         state.selectedTipeKiriman ?? '',
       );
@@ -131,7 +140,8 @@ class PantauPaketmuController extends BaseController {
   }
 
   void resetFilter() {
-    state.selectedPetugasEntry = state.basic?.userType == "PEMILIK" ? null : state.basic?.name;
+    state.selectedPetugasEntry =
+        state.basic?.userType == "PEMILIK" ? null : state.basic?.name;
     state.selectedStatusKiriman = "Total Kiriman";
     state.selectedTipeKiriman = "SEMUA";
     state.tipeKiriman = 0;
@@ -139,7 +149,8 @@ class PantauPaketmuController extends BaseController {
     state.searchField.clear();
     state.dateFilter = "3";
     selectDateFilter(3);
-    state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
+    state.date =
+        "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     count();
     state.pagingController.refresh();
     update();
@@ -169,12 +180,13 @@ class PantauPaketmuController extends BaseController {
   }
 
   applyFilter() {
-    if(state.dateFilter != '3'){
+    if (state.dateFilter != '3') {
       state.isFiltered = true;
     }
 
     if (state.startDate != null && state.endDate != null) {
-      state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
+      state.date =
+          "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
       state.date.printInfo(info: "state.date filter");
       state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
     }
@@ -195,17 +207,19 @@ class PantauPaketmuController extends BaseController {
           .getPantauCount(
         state.date ?? '',
         state.searchField.text,
-        state.selectedPetugasEntry != "SEMUA" ? (state.selectedPetugasEntry ?? '') : '',
+        state.selectedPetugasEntry != "SEMUA"
+            ? (state.selectedPetugasEntry ?? '')
+            : '',
         state.selectedStatusKiriman ?? '',
       )
           .then((value) {
-state.        total = value.payload!.total!.toInt();
+        state.total = value.payload!.total!.toInt();
         state.cod = value.payload!.cod!.toInt();
         state.noncod = value.payload!.nonCod!.toInt();
         state.codOngkir = value.payload!.codOngkir!.toInt();
         update();
       });
-    } catch (e,i) {
+    } catch (e, i) {
       e.printError();
       i.printError();
     }
@@ -213,6 +227,4 @@ state.        total = value.payload!.total!.toInt();
     state.isLoadCount = false;
     update();
   }
-
-
 }

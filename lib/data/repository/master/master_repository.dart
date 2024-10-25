@@ -11,13 +11,15 @@ import 'package:css_mobile/data/model/query_param_model.dart';
 abstract class MasterRepository {
   Future<BaseResponse<List<Origin>>> getOrigins(QueryParamModel param);
 
-  Future<BaseResponse<List<Destination>>> getDestinations(QueryParamModel param);
+  Future<BaseResponse<List<Destination>>> getDestinations(
+      QueryParamModel param);
 
   Future<BaseResponse<List<GroupOwnerModel>>> getReferals(String keyword);
 
   Future<BaseResponse<List<AgentModel>>> getAgents(String branch);
 
-  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(QueryParamModel param);
+  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(
+      QueryParamModel param);
 
   Future<BaseResponse<List<ReceiverModel>>> getReceivers(QueryParamModel param);
 

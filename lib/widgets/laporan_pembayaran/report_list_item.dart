@@ -55,9 +55,12 @@ class _ReportListItemState extends State<ReportListItem> {
               top: 1.2,
               child: widget.status != null
                   ? Container(
-                      padding: const EdgeInsets.only(top: 5, right: 5, left: 20, bottom: 2),
+                      padding: const EdgeInsets.only(
+                          top: 5, right: 5, left: 20, bottom: 2),
                       decoration: BoxDecoration(
-                          color: widget.status == 'Success' ? successLightColor2 : errorLightColor2,
+                          color: widget.status == 'Success'
+                              ? successLightColor2
+                              : errorLightColor2,
                           borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(7),
                             bottomLeft: Radius.circular(20),
@@ -74,7 +77,10 @@ class _ReportListItemState extends State<ReportListItem> {
               margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
+                border: Border.all(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? greyDarkColor1
+                        : greyLightColor1),
               ),
               child: Column(
                 children: [
@@ -84,11 +90,19 @@ class _ReportListItemState extends State<ReportListItem> {
                         margin: const EdgeInsets.only(right: 8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
-                          border: Border.all(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE, width: 2),
+                          border: Border.all(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? blueJNE
+                                  : redJNE,
+                              width: 2),
                         ),
                         child: Icon(
                           Icons.playlist_add_check_rounded,
-                          color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? blueJNE
+                                  : redJNE,
                           size: 20,
                         ),
                       ),
@@ -96,30 +110,47 @@ class _ReportListItemState extends State<ReportListItem> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            color: widget.isLoading ? greyLightColor3 : Colors.transparent,
+                            color: widget.isLoading
+                                ? greyLightColor3
+                                : Colors.transparent,
                             width: widget.isLoading ? Get.width / 3 : null,
                             height: widget.isLoading ? 10 : null,
                             child: Text(
-                              widget.data?.aggDocDate?.toDateTimeFormat() ?? widget.det?.cnoteDate?.toDateTimeFormat() ?? '',
+                              widget.data?.aggDocDate?.toDateTimeFormat() ??
+                                  widget.det?.cnoteDate?.toDateTimeFormat() ??
+                                  '',
                               style: sublistTitleTextStyle,
                             ),
                           ),
                           Container(
-                            color: widget.isLoading ? greyLightColor3 : Colors.transparent,
+                            color: widget.isLoading
+                                ? greyLightColor3
+                                : Colors.transparent,
                             width: widget.isLoading ? Get.width / 3 : null,
                             height: widget.isLoading ? 15 : null,
-                            margin: widget.isLoading ? const EdgeInsets.only(top: 2) : EdgeInsets.zero,
+                            margin: widget.isLoading
+                                ? const EdgeInsets.only(top: 2)
+                                : EdgeInsets.zero,
                             child: Text(
                               "# ${widget.data?.aggDocNo ?? widget.det?.cnoteNo ?? ''}",
-                              style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE),
+                              style: listTitleTextStyle.copyWith(
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? blueJNE
+                                      : redJNE),
                             ),
                           ),
                           !showDetail && widget.isShowDetail
                               ? Container(
-                                  color: widget.isLoading ? greyLightColor3 : Colors.transparent,
-                                  width: widget.isLoading ? Get.width / 4 : null,
+                                  color: widget.isLoading
+                                      ? greyLightColor3
+                                      : Colors.transparent,
+                                  width:
+                                      widget.isLoading ? Get.width / 4 : null,
                                   height: widget.isLoading ? 12 : null,
-                                  margin: widget.isLoading ? const EdgeInsets.only(top: 2) : EdgeInsets.zero,
+                                  margin: widget.isLoading
+                                      ? const EdgeInsets.only(top: 2)
+                                      : EdgeInsets.zero,
                                   child: Text(
                                     "RP. ${widget.data?.paidAmt?.toInt().toCurrency() ?? widget.data?.netAmt?.toInt().toCurrency() ?? '-'}",
                                     style: listTitleTextStyle.copyWith(
@@ -151,38 +182,48 @@ class _ReportListItemState extends State<ReportListItem> {
                             const Divider(thickness: 0.5),
                             ValueItem(
                               title: "COD AMOUNT",
-                              value: "RP. ${widget.data?.codAmt?.toInt().toCurrency() ?? '-'}",
+                              value:
+                                  "RP. ${widget.data?.codAmt?.toInt().toCurrency() ?? '-'}",
                             ),
                             ValueItem(
                               title: "COD FEE ( ONGKIR DLL )",
-                              value: "RP. ${widget.data?.codFee?.toInt().toCurrency() ?? '-'}",
+                              value:
+                                  "RP. ${widget.data?.codFee?.toInt().toCurrency() ?? '-'}",
                               valueFontColor: errorColor,
                             ),
                             ValueItem(
                               title: "NET AMOUNT",
-                              value: "RP. ${widget.data?.netAmt?.toInt().toCurrency() ?? '-'}",
+                              value:
+                                  "RP. ${widget.data?.netAmt?.toInt().toCurrency() ?? '-'}",
                             ),
                             const Divider(thickness: 0.5),
                             ValueItem(
                               title: "PAID AMOUNT",
-                              value: "RP. ${widget.data?.paidAmt?.toInt().toCurrency() ?? '-'}",
-                              titleTextStyle: listTitleTextStyle.copyWith(fontSize: 8),
+                              value:
+                                  "RP. ${widget.data?.paidAmt?.toInt().toCurrency() ?? '-'}",
+                              titleTextStyle:
+                                  listTitleTextStyle.copyWith(fontSize: 8),
                               valueFontColor: successColor,
                             ),
                             ValueItem(
                               title: "PAID DATE",
-                              value: widget.data?.paidDate?.toShortDateFormat() ?? '-',
-                              valueTextStyle: sublistTitleTextStyle.copyWith(fontSize: 8),
+                              value:
+                                  widget.data?.paidDate?.toShortDateFormat() ??
+                                      '-',
+                              valueTextStyle:
+                                  sublistTitleTextStyle.copyWith(fontSize: 8),
                             ),
                             ValueItem(
                               title: "PAID REFF NO",
                               value: widget.data?.paidReffNo ?? '-',
-                              valueTextStyle: sublistTitleTextStyle.copyWith(fontSize: 8),
+                              valueTextStyle:
+                                  sublistTitleTextStyle.copyWith(fontSize: 8),
                             ),
                             ValueItem(
                               title: "REMARKS",
                               value: widget.data?.remarks ?? '-',
-                              valueTextStyle: sublistTitleTextStyle.copyWith(fontSize: 8),
+                              valueTextStyle:
+                                  sublistTitleTextStyle.copyWith(fontSize: 8),
                             ),
                             CustomFilledButton(
                               color: blueJNE,

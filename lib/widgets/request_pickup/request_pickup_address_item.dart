@@ -4,7 +4,6 @@ import 'package:css_mobile/data/model/request_pickup/request_pickup_address_mode
 import 'package:flutter/material.dart';
 
 class RequestPickupAddressItem extends StatelessWidget {
-
   final RequestPickupAddressModel address;
 
   final bool lastItem;
@@ -12,13 +11,12 @@ class RequestPickupAddressItem extends StatelessWidget {
 
   final Function onItemClick;
 
-  const RequestPickupAddressItem({
-    super.key,
-    required this.address,
-    required this.lastItem,
-    required this.selected,
-    required this.onItemClick
-  });
+  const RequestPickupAddressItem(
+      {super.key,
+      required this.address,
+      required this.lastItem,
+      required this.selected,
+      required this.onItemClick});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +24,11 @@ class RequestPickupAddressItem extends StatelessWidget {
       onTap: () => onItemClick(),
       behavior: HitTestBehavior.translucent,
       child: Card.outlined(
-        margin: lastItem ? const EdgeInsets.only(left: 16, right: 16) : const EdgeInsets.only(left: 16),
+        margin: lastItem
+            ? const EdgeInsets.only(left: 16, right: 16)
+            : const EdgeInsets.only(left: 16),
         shape: RoundedRectangleBorder(
-            side: BorderSide(
-                color: _borderColor(),
-                width: 1
-            )
-        ),
+            side: BorderSide(color: _borderColor(), width: 1)),
         child: SizedBox(
           width: 136,
           height: 136,
@@ -45,9 +41,7 @@ class RequestPickupAddressItem extends StatelessWidget {
                   address.name,
                   maxLines: 1,
                   textAlign: TextAlign.start,
-                  style: sublistTitleTextStyle.copyWith(
-                      fontWeight: semiBold
-                  ),
+                  style: sublistTitleTextStyle.copyWith(fontWeight: semiBold),
                 ),
                 Text(
                   address.phone,
@@ -76,5 +70,4 @@ class RequestPickupAddressItem extends StatelessWidget {
       return greyColor;
     }
   }
-
 }

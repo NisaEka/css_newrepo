@@ -1,13 +1,6 @@
-enum RequestPickupDateEnum {
-  all,
-  oneMonth,
-  oneWeek,
-  today,
-  custom
-}
+enum RequestPickupDateEnum { all, oneMonth, oneWeek, today, custom }
 
 extension RequestPickupDateEnumExt on RequestPickupDateEnum {
-
   String asName() {
     String result = "";
 
@@ -34,5 +27,4 @@ extension RequestPickupDateEnumExt on RequestPickupDateEnum {
 
     return result;
   }
-
 }

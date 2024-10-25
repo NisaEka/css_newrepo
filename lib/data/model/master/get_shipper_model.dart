@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
-ShipperModel payloadFromJson(String str) => ShipperModel.fromJson(json.decode(str));
+
+ShipperModel payloadFromJson(String str) =>
+    ShipperModel.fromJson(json.decode(str));
 
 String payloadToJson(ShipperModel data) => json.encode(data.toJson());
 
@@ -89,5 +91,3 @@ class ShipperModel {
     return map;
   }
 }
-
-

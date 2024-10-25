@@ -1,5 +1,4 @@
 class StorageModel {
-
   String _fileId = "";
   String get fileId => _fileId;
 
@@ -14,5 +13,4 @@ class StorageModel {
     _fileRelativePath = json["file_relative_path"];
     _fileAbsolutePath = json["file_absolute_path"];
   }
-
 }

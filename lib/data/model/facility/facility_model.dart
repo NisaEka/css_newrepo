@@ -1,5 +1,4 @@
 class FacilityModel {
-
   String _icon = "";
   String get icon => _icon;
 
@@ -21,14 +20,13 @@ class FacilityModel {
   bool _canUse = false;
   bool get canUse => _canUse;
 
-  FacilityModel({
-    String icon = "",
-    String name = "",
-    String type = "",
-    bool enabled = false,
-    bool onProcess = false,
-    bool canUse = false
-  }) {
+  FacilityModel(
+      {String icon = "",
+      String name = "",
+      String type = "",
+      bool enabled = false,
+      bool onProcess = false,
+      bool canUse = false}) {
     _icon = icon;
     _name = name;
     _type = type;
@@ -46,5 +44,4 @@ class FacilityModel {
     _onProcess = json['on_process'];
     _canUse = json["can_use"];
   }
-
 }

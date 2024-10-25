@@ -42,7 +42,8 @@ class GroupOwnerModel {
       GroupOwnerModel(
         groupownerId: groupownerId ?? _groupownerId,
         groupownerName: groupownerName ?? _groupownerName,
-        groupownerDefaultorigin: groupownerDefaultorigin ?? _groupownerDefaultorigin,
+        groupownerDefaultorigin:
+            groupownerDefaultorigin ?? _groupownerDefaultorigin,
         groupownerOrigin: groupownerOrigin ?? _groupownerOrigin,
         groupownerCreateddate: groupownerCreateddate ?? _groupownerCreateddate,
         groupownerCounter: groupownerCounter ?? _groupownerCounter,

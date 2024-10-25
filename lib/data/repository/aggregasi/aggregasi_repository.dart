@@ -30,7 +30,8 @@ abstract class AggregasiRepository {
     String? keyword,
   );
 
-  Future<DefaultResponseModel<List<AggregationMinusDocModel>>> getAggregationMinusDoc(
+  Future<DefaultResponseModel<List<AggregationMinusDocModel>>>
+      getAggregationMinusDoc(
     String doc,
     int page,
     int limit,

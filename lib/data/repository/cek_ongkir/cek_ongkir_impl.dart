@@ -31,6 +31,4 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
       return e.response?.data;
     }
   }
-
-
 }

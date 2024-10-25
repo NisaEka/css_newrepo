@@ -20,7 +20,6 @@ class AddPenerimaController extends BaseController {
 
   Destination? selectedDestination;
 
-
   Future<List<Destination>> getDestinationList(String keyword) async {
     isLoading = true;
     destinationList = [];

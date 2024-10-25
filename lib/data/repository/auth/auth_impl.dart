@@ -20,7 +20,8 @@ class AuthRepositoryImpl extends AuthRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<PostLoginModel>> postLogin(InputLoginModel loginData) async {
+  Future<BaseResponse<PostLoginModel>> postLogin(
+      InputLoginModel loginData) async {
     try {
       Response response = await network.base.post(
         '/authentications/login',
@@ -152,15 +153,18 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(InputPinconfirmModel data) async {
+  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(
+      InputPinconfirmModel data) async {
     try {
       Response response = await network.base.post(
         '/authentications/forgot-password/confirm',
         data: data,
       );
-      return BaseResponse.fromJson(response.data, (json) => PinConfirmModel.fromJson(json as Map<String, dynamic>));
+      return BaseResponse.fromJson(response.data,
+          (json) => PinConfirmModel.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
-      return BaseResponse.fromJson(e.response?.data, (json) => PinConfirmModel());
+      return BaseResponse.fromJson(
+          e.response?.data, (json) => PinConfirmModel());
     }
   }
 

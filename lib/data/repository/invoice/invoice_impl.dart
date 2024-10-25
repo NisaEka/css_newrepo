@@ -16,13 +16,15 @@ class InvoiceImpl extends InvoiceRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<ResponseModel<num>> getInvoiceCount(AdvanceFilterModel advanceFilter) async {
+  Future<ResponseModel<num>> getInvoiceCount(
+      AdvanceFilterModel advanceFilter) async {
     var token = await storageSecure.read(key: "token");
     // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
     network.local.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      var response = await network.local.get("/invoice/count", queryParameters: advanceFilter.toJson());
+      var response = await network.local
+          .get("/invoice/count", queryParameters: advanceFilter.toJson());
       return ResponseModel.fromJson(
         response.data,
         (json) => json as num,
@@ -36,7 +38,8 @@ class InvoiceImpl extends InvoiceRepository {
   }
 
   @override
-  Future<ResponseModel<List<InvoiceModel>>> getInvoices(AdvanceFilterModel advanceFilter) async {
+  Future<ResponseModel<List<InvoiceModel>>> getInvoices(
+      AdvanceFilterModel advanceFilter) async {
     var token = await storageSecure.read(key: "token");
     // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
     network.local.options.headers['Authorization'] = 'Bearer $token';
@@ -72,7 +75,8 @@ class InvoiceImpl extends InvoiceRepository {
   }
 
   @override
-  Future<ResponseModel<InvoiceDetailModel>> getInvoiceByNumber(String invoiceNumber) async {
+  Future<ResponseModel<InvoiceDetailModel>> getInvoiceByNumber(
+      String invoiceNumber) async {
     try {
       var response = await network.local.get("/invoice/$invoiceNumber");
       return ResponseModel.fromJson(
@@ -90,9 +94,11 @@ class InvoiceImpl extends InvoiceRepository {
   }
 
   @override
-  Future<ResponseModel<InvoiceCnoteDetailModel>> getInvoiceCnoteByAwb(String invoiceNumber, String awb) async {
+  Future<ResponseModel<InvoiceCnoteDetailModel>> getInvoiceCnoteByAwb(
+      String invoiceNumber, String awb) async {
     try {
-      var response = await network.local.get("/invoice/$invoiceNumber/cnote/$awb");
+      var response =
+          await network.local.get("/invoice/$invoiceNumber/cnote/$awb");
       return ResponseModel.fromJson(
         response.data,
         (json) => InvoiceCnoteDetailModel.fromJson(
@@ -110,9 +116,11 @@ class InvoiceImpl extends InvoiceRepository {
   }
 
   @override
-  Future<ResponseModel<List<InvoiceCnoteModel>>> getInvoiceCnotes(String invoiceNumber, DefaultPageFilterModel filter) async {
+  Future<ResponseModel<List<InvoiceCnoteModel>>> getInvoiceCnotes(
+      String invoiceNumber, DefaultPageFilterModel filter) async {
     try {
-      var response = await network.local.get("/invoice/$invoiceNumber/cnote", queryParameters: filter.toJson());
+      var response = await network.local.get("/invoice/$invoiceNumber/cnote",
+          queryParameters: filter.toJson());
       List<InvoiceCnoteModel> invoices = [];
 
       response.data["payload"].forEach((invoice) {

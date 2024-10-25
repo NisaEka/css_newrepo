@@ -1,5 +1,4 @@
 class InvoiceModel {
-
   String? _invoiceNoEncoded = "";
   String? get invoiceNoEncoded => _invoiceNoEncoded;
 
@@ -30,5 +29,4 @@ class InvoiceModel {
     _invoiceStatus = json["invoice_status"];
     _invoiceTotalAmount = json["invoice_total_amount"];
   }
-
 }

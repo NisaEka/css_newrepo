@@ -13,7 +13,8 @@ class Customradiobutton extends StatelessWidget {
     required this.title,
     required this.groupValue,
     required this.value,
-    required this.onChanged, required this.onTap,
+    required this.onChanged,
+    required this.onTap,
   });
 
   @override
@@ -25,7 +26,10 @@ class Customradiobutton extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(fontWeight: regular),
           ),
           Radio(
             value: value,

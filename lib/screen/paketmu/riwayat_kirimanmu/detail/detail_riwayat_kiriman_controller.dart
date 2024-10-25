@@ -9,8 +9,8 @@ class DetailRiwayatKirimanController extends BaseController {
   String awb = Get.arguments['awb'];
 
   DataTransactionModel? transactionModel;
-  final  pickupStatus = TextEditingController();
-  final  transStatus = TextEditingController();
+  final pickupStatus = TextEditingController();
+  final transStatus = TextEditingController();
 
   bool isLoading = false;
 

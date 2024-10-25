@@ -34,7 +34,8 @@ class ValueItem extends StatelessWidget {
           width: titleWidth,
           child: Text(
             title,
-            style: titleTextStyle ?? subTitleTextStyle.copyWith(fontSize: fontSize ?? 8),
+            style: titleTextStyle ??
+                subTitleTextStyle.copyWith(fontSize: fontSize ?? 8),
           ),
         ),
         Container(
@@ -45,7 +46,10 @@ class ValueItem extends StatelessWidget {
             style: valueTextStyle ??
                 listTitleTextStyle.copyWith(
                   fontSize: fontSize ?? 8,
-                  color: valueFontColor ?? (Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
+                  color: valueFontColor ??
+                      (Theme.of(context).brightness == Brightness.light
+                          ? greyDarkColor1
+                          : greyLightColor1),
                 ),
             textAlign: TextAlign.end,
           ),

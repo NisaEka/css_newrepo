@@ -79,7 +79,9 @@ class PengaturanLabelController extends BaseController {
           .then((value) async {
         if (value.code == 200) {
           await storage.writeString(StorageCore.shippingCost, shipcost);
-          await storage.writeString(StorageCore.transactionLabel, selectedSticker?.name).then(
+          await storage
+              .writeString(StorageCore.transactionLabel, selectedSticker?.name)
+              .then(
                 (value) => Get.showSnackbar(
                   GetSnackBar(
                     icon: const Icon(

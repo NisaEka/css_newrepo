@@ -7,7 +7,7 @@ import '../other_menu_controller.dart';
 class MenuTitle extends StatelessWidget {
   final String title;
 
-  const MenuTitle(this.title,{super.key});
+  const MenuTitle(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,8 @@ class MenuTitle extends StatelessWidget {
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(title, style: Theme.of(context).textTheme.titleMedium),
+                            Text(title,
+                                style: Theme.of(context).textTheme.titleMedium),
                             IconButton(
                               onPressed: () => c.saveChanges(),
                               icon: c.isEdit
@@ -39,7 +40,8 @@ class MenuTitle extends StatelessWidget {
                             ),
                           ],
                         )
-                      : Text(title, style: Theme.of(context).textTheme.titleMedium),
+                      : Text(title,
+                          style: Theme.of(context).textTheme.titleMedium),
                   const Divider(color: greyColor),
                 ],
               ),

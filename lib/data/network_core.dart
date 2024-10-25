@@ -62,9 +62,12 @@ class NetworkCore {
 
     String env = FlavorConfig.instance.name ?? "PROD";
     if (env != "PROD") {
-      dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
-      city.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
-      jne.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
+      dio.interceptors
+          .add(LogInterceptor(responseBody: true, requestBody: true));
+      city.interceptors
+          .add(LogInterceptor(responseBody: true, requestBody: true));
+      jne.interceptors
+          .add(LogInterceptor(responseBody: true, requestBody: true));
     }
   }
 }

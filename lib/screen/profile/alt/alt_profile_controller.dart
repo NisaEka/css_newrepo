@@ -72,13 +72,11 @@ class AltProfileController extends BaseController {
       debugPrint("token : $token");
       isLogin = token != null;
       // if (await storage.readData(StorageCore.userProfil) == null) {
-        await profil.getBasicProfil().then((value) async {
-          basicProfil = value.data?.user;
-          update();
-        });
+      await profil.getBasicProfil().then((value) async {
+        basicProfil = value.data?.user;
+        update();
+      });
       // }
-
-
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -87,7 +85,8 @@ class AltProfileController extends BaseController {
       );
     }
 
-    allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+    allow =
+        AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
     update();
 
     isLoading = false;
@@ -98,10 +97,10 @@ class AltProfileController extends BaseController {
     // bool ccrfProfile = await storage.readString(StorageCore.ccrfProfil) == null;
     try {
       // if (ccrfProfile) {
-        await profil.getCcrfProfil().then((value) {
-          ccrf = value.data;
-          update();
-        });
+      await profil.getCcrfProfil().then((value) {
+        ccrf = value.data;
+        update();
+      });
       // }
     } catch (e) {
       e.printError();
@@ -116,10 +115,10 @@ class AltProfileController extends BaseController {
     update();
     await auth
         .logout(
-      // Device(
-      //   fcmToken: await storage.readString(StorageCore.fcmToken),
-      // ),
-    )
+            // Device(
+            //   fcmToken: await storage.readString(StorageCore.fcmToken),
+            // ),
+            )
         .then((value) {
       if (value.code == 201) {
         storage.deleteLogin();
@@ -137,7 +136,9 @@ class AltProfileController extends BaseController {
         : showDialog(
             context: context,
             builder: (context) => InfoDialog(
-              infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas".tr,
+              infoText:
+                  "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas"
+                      .tr,
               nextButton: () => Get.off(const FacilityScreen()),
             ),
           );

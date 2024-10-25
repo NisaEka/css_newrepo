@@ -26,7 +26,8 @@ class LaporankuAppbar extends CustomTopBar {
                     },
                   ),
                   isFiltered: c.state.isFiltered,
-                  isApplyFilter: c.state.startDate != null || c.state.endDate != null,
+                  isApplyFilter:
+                      c.state.startDate != null || c.state.endDate != null,
                   onResetFilter: () {
                     c.resetFilter();
                     Get.back();

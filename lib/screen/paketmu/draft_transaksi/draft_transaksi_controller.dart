@@ -44,11 +44,14 @@ class DraftTransaksiController extends BaseController {
     update();
     searchList = [];
     draftList = [];
-    var data = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
+    var data = DraftTransactionModel.fromJson(
+        await storage.readData(StorageCore.draftTransaction));
     draftList.addAll(data.draft);
     update();
 
-    isSync = draftList.where((element) => element.delivery?.flatRate != 0).isNotEmpty;
+    isSync = draftList
+        .where((element) => element.delivery?.flatRate != 0)
+        .isNotEmpty;
 
     update();
   }
@@ -94,7 +97,9 @@ class DraftTransaksiController extends BaseController {
             var data = '{"draft" : ${jsonEncode(draftList)}}';
             draftData = DraftTransactionModel.fromJson(jsonDecode(data));
 
-            await storage.saveData(StorageCore.draftTransaction, draftData).then((_) {
+            await storage
+                .saveData(StorageCore.draftTransaction, draftData)
+                .then((_) {
               initData();
               isLoading = false;
             });
@@ -108,7 +113,9 @@ class DraftTransaksiController extends BaseController {
                 Icons.info,
                 color: whiteColor,
               ),
-              message: value.code == 201 ? "Draft berhasil di upload" : "Draft gagal di upload",
+              message: value.code == 201
+                  ? "Draft berhasil di upload"
+                  : "Draft gagal di upload",
               isDismissible: true,
               duration: const Duration(seconds: 3),
               backgroundColor: value.code == 201 ? successColor : errorColor,

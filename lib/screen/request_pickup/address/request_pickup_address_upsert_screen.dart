@@ -43,10 +43,12 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           ],
         ),
         controller.createDataLoading ? const LoadingDialog() : Container(),
-        controller.createDataFailed ? MessageInfoDialog(
-          message: "Data gagal ditambahkan",
-          onClickAction: () => controller.onRefreshCreateState(),
-        ) : Container()
+        controller.createDataFailed
+            ? MessageInfoDialog(
+                message: "Data gagal ditambahkan",
+                onClickAction: () => controller.onRefreshCreateState(),
+              )
+            : Container()
       ],
     );
   }
@@ -57,7 +59,8 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
         GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () async {
-            Placemark? selectedPlaceMark = await Get.to(() => const RequestPickupLocationScreen());
+            Placemark? selectedPlaceMark =
+                await Get.to(() => const RequestPickupLocationScreen());
             controller.onSelectedPlaceMark(selectedPlaceMark);
           },
           child: const Row(

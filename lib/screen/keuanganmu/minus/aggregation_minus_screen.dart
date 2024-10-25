@@ -64,10 +64,12 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
               onRefresh: () => Future.sync(() => c.pagingController.refresh()),
               child: PagedListView<int, AggregationMinusModel>(
                 pagingController: c.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<AggregationMinusModel>(
+                builderDelegate:
+                    PagedChildBuilderDelegate<AggregationMinusModel>(
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => _aggregationItem(item),
-                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      const DataEmpty(),
                 ),
               ),
             ),
@@ -81,7 +83,8 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
     return AggregationMinusItem(
         data: aggregation,
         onTap: () => {
-              Get.to(const AggregationMinusDocScreen(), arguments: {"doc": aggregation.aggMinDoc})
+              Get.to(const AggregationMinusDocScreen(),
+                  arguments: {"doc": aggregation.aggMinDoc})
             });
   }
 }

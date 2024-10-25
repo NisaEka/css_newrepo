@@ -37,5 +37,4 @@ class ShipperState {
   UserModel? shipper;
   DropshipperModel? dropshipper;
   String? locale;
-
 }

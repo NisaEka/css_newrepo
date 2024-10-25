@@ -31,8 +31,12 @@ class CekOngkirData extends StatelessWidget {
                       (e) => OngkirListItem(
                         serviceTitle: e.serviceDisplay.toString(),
                         serviceSubtitle: e.goodsType.toString(),
-                        servicePrice: (e.price!.toInt() + c.state.isr).toInt().toCurrency().toString(),
-                        serviceDuration: '${e.etdFrom ?? ''} - ${e.etdThru ?? ''} ${e.times ?? ''}',
+                        servicePrice: (e.price!.toInt() + c.state.isr)
+                            .toInt()
+                            .toCurrency()
+                            .toString(),
+                        serviceDuration:
+                            '${e.etdFrom ?? ''} - ${e.etdThru ?? ''} ${e.times ?? ''}',
                       ),
                     )
                     .toList(),

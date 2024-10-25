@@ -9,7 +9,11 @@ class CustomStepper extends StatelessWidget {
   final int totalStep;
   final List<String>? steps;
 
-  const CustomStepper({super.key, required this.currentStep, required this.totalStep, this.steps});
+  const CustomStepper(
+      {super.key,
+      required this.currentStep,
+      required this.totalStep,
+      this.steps});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,8 @@ class CustomStepper extends StatelessWidget {
                             child: currentStep <= index
                                 ? Text(
                                     '${index + 1}',
-                                    style: listTitleTextStyle.copyWith(color: whiteColor),
+                                    style: listTitleTextStyle.copyWith(
+                                        color: whiteColor),
                                   )
                                 : const Icon(
                                     Icons.check,
@@ -68,10 +73,13 @@ class CustomStepper extends StatelessWidget {
                                 height: 2,
                                 margin: const EdgeInsets.only(left: 3),
                                 decoration: BoxDecoration(
-                                  color: currentStep > index ? blueJNE : greyColor,
+                                  color:
+                                      currentStep > index ? blueJNE : greyColor,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: currentStep > index ? redJNE : Colors.transparent,
+                                      color: currentStep > index
+                                          ? redJNE
+                                          : Colors.transparent,
                                       spreadRadius: 1,
                                       offset: const Offset(1, -1),
                                     )

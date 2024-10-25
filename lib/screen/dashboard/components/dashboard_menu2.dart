@@ -13,72 +13,76 @@ class DashboardMenu2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GetBuilder<DashboardController>(
-      init: DashboardController(),
-      builder: (controller) {
-        return SizedBox(
-          height: 120,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: controller.state.isLoading
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      5,
-                      (index) => const MenuItem(
-                        isLoading: true,
-                        menuIcon: Icon(
-                          Icons.more_horiz,
-                          size: 40,
+        init: DashboardController(),
+        builder: (controller) {
+          return SizedBox(
+            height: 120,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: controller.state.isLoading
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        5,
+                        (index) => const MenuItem(
+                          isLoading: true,
+                          menuIcon: Icon(
+                            Icons.more_horiz,
+                            size: 40,
+                          ),
                         ),
                       ),
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: controller.state.menuItems
+                              .map((e) => MenuItem(
+                                    menuTitle: e.title?.tr ?? '',
+                                    menuImg: e.icon,
+                                    isLoading: controller.state.isLoading,
+                                    isActive: (e.isAuth ?? false)
+                                        ? controller.state.isLogin
+                                        : true,
+                                    onTap: () => (e.isAuth == true &&
+                                            !controller.state.isLogin)
+                                        ? showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                const LoginAlertDialog(),
+                                          )
+                                        : !controller.state.isLoading
+                                            ? Get.toNamed(e.route.toString(),
+                                                arguments: {})
+                                            : null,
+                                  ))
+                              .toList(),
+                        ),
+                        MenuItem(
+                          menuTitle: 'Lainnya'.tr,
+                          isLoading: controller.state.isLoading,
+                          onTap: () =>
+                              Get.to(const OtherMenuScreen(), arguments: {
+                            'isLogin': controller.state.isLogin,
+                            'allowance': controller.state.allow,
+                          })?.then(
+                            (result) {
+                              controller.cekFavoritMenu();
+                              controller.cekAllowance();
+                            },
+                          ),
+                          menuIcon: const Icon(
+                            Icons.more_horiz,
+                            color: whiteColor,
+                            size: 46,
+                          ),
+                        ),
+                      ],
                     ),
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: controller.state.menuItems
-                            .map((e) => MenuItem(
-                                  menuTitle: e.title?.tr ?? '',
-                                  menuImg: e.icon,
-                                  isLoading: controller.state.isLoading,
-                                  isActive: (e.isAuth ?? false) ? controller.state.isLogin : true,
-                                  onTap: () => (e.isAuth == true && !controller.state.isLogin)
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (context) => const LoginAlertDialog(),
-                                        )
-                                      : !controller.state.isLoading
-                                          ? Get.toNamed(e.route.toString(), arguments: {})
-                                          : null,
-                                ))
-                            .toList(),
-                      ),
-                      MenuItem(
-                        menuTitle: 'Lainnya'.tr,
-                        isLoading: controller.state.isLoading,
-                        onTap: () => Get.to(const OtherMenuScreen(), arguments: {
-                          'isLogin': controller.state.isLogin,
-                          'allowance': controller.state.allow,
-                        })?.then(
-                          (result) {
-                            controller.cekFavoritMenu();
-                            controller.cekAllowance();
-                          },
-                        ),
-                        menuIcon: const Icon(
-                          Icons.more_horiz,
-                          color: whiteColor,
-                          size: 46,
-                        ),
-                      ),
-                    ],
-                  ),
-          ),
-        );
-      }
-    );
+            ),
+          );
+        });
   }
 }

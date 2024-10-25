@@ -1,5 +1,4 @@
 class FacilityCreateAddressModel {
-
   String _address = '';
   String get address => _address;
 
@@ -70,5 +69,4 @@ class FacilityCreateAddressModel {
 
     return json;
   }
-
 }

@@ -1,12 +1,6 @@
-enum RequestPickupDeliveryType {
-  semua_tipe_kiriman,
-  cod,
-  non_cod,
-  cod_ongkir
-}
+enum RequestPickupDeliveryType { semua_tipe_kiriman, cod, non_cod, cod_ongkir }
 
 extension RequestPickupDeliveryTypeExt on RequestPickupDeliveryType {
-
   String asName() {
     String result = "";
 
@@ -30,5 +24,4 @@ extension RequestPickupDeliveryTypeExt on RequestPickupDeliveryType {
 
     return result;
   }
-
 }

@@ -34,7 +34,9 @@ class InfoDialog extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: BoxDecoration(
-                color: AppConst.isDarkTheme(context) ? infoDarkColor : infoLightColor1,
+                color: AppConst.isDarkTheme(context)
+                    ? infoDarkColor
+                    : infoLightColor1,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(

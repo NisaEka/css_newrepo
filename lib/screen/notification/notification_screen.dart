@@ -20,7 +20,9 @@ class NotificationScreen extends StatelessWidget {
               appBar: CustomTopBar(
                 title: "Notifikasi".tr,
               ),
-              body: controller.isLoading ? const LoadingDialog() : _bodyContent(controller, context),
+              body: controller.isLoading
+                  ? const LoadingDialog()
+                  : _bodyContent(controller, context),
             ),
           );
         });

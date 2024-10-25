@@ -16,10 +16,10 @@ class PasswordRecoveryController extends BaseController {
 
   // String? email;
 
-
   String getMail() {
     var nameUser = email?.split("@");
-    var emailCharacter = email?.replaceRange(2, nameUser?[0].length, "*" * (nameUser?[0].length ?? 0 - 3));
+    var emailCharacter = email?.replaceRange(
+        2, nameUser?[0].length, "*" * (nameUser?[0].length ?? 0 - 3));
     return emailCharacter ?? '';
   }
 

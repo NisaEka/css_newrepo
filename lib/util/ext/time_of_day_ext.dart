@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 extension TimeOfDayExt on TimeOfDay {
-
   String asPickupTimeFormat() {
     String addLeadingZeroIfNeeded(int value) {
       if (value < 10) {
@@ -15,5 +14,4 @@ extension TimeOfDayExt on TimeOfDay {
 
     return '$hourLabel:$minuteLabel';
   }
-
 }

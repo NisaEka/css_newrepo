@@ -22,7 +22,8 @@ abstract class AuthRepository {
 
   Future<BaseResponse> postEmailForgotPassword(String email);
 
-  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(InputPinconfirmModel data);
+  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(
+      InputPinconfirmModel data);
 
   Future<BaseResponse> postPasswordChage(InputNewPasswordModel data);
 

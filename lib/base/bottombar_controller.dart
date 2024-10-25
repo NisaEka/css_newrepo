@@ -9,13 +9,15 @@ class HideNavbar {
     visible.value = true;
     controller.addListener(
       () {
-        if (controller.position.userScrollDirection == ScrollDirection.reverse) {
+        if (controller.position.userScrollDirection ==
+            ScrollDirection.reverse) {
           if (visible.value) {
             visible.value = false;
           }
         }
 
-        if (controller.position.userScrollDirection == ScrollDirection.forward ) {
+        if (controller.position.userScrollDirection ==
+            ScrollDirection.forward) {
           if (!visible.value) {
             visible.value = true;
           }

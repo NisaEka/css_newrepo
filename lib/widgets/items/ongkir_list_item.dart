@@ -33,7 +33,10 @@ class OngkirListItem extends StatelessWidget {
                 ),
                 Text(
                   serviceSubtitle,
-                  style: sublistTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? greyColor : whiteColor),
+                  style: sublistTitleTextStyle.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? greyColor
+                          : whiteColor),
                 )
               ],
             ),
@@ -42,7 +45,10 @@ class OngkirListItem extends StatelessWidget {
               children: [
                 Text(
                   'Rp. $servicePrice',
-                  style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE),
+                  style: listTitleTextStyle.copyWith(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? blueJNE
+                          : redJNE),
                 ),
                 Text(
                   serviceDuration,

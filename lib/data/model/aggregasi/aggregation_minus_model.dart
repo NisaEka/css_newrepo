@@ -1,5 +1,4 @@
 class AggregationMinusModel {
-
   String _aggMinDoc = "";
   String get aggMinDoc => _aggMinDoc;
 
@@ -42,5 +41,4 @@ class AggregationMinusModel {
     _payType = json["pay_type"];
     _createdDate = json["created_date"];
   }
-
 }

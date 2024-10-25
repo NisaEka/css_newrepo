@@ -32,7 +32,10 @@ class PantauCountItem extends StatelessWidget {
             child: Container(
               // padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: greyColor), color: whiteColor),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: greyColor),
+                  color: whiteColor),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,9 +51,11 @@ class PantauCountItem extends StatelessWidget {
                           height: 25,
                         ),
                         const SizedBox(height: 28),
-                        Text(data.title.toString(), style: Theme.of(context).textTheme.titleMedium),
+                        Text(data.title.toString(),
+                            style: Theme.of(context).textTheme.titleMedium),
                         const SizedBox(height: 18),
-                        Text(data.count.toString().tr, style: Theme.of(context).textTheme.headlineMedium),
+                        Text(data.count.toString().tr,
+                            style: Theme.of(context).textTheme.headlineMedium),
                       ],
                     ),
                   ),

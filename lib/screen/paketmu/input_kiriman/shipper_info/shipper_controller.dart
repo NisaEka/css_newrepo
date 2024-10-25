@@ -63,8 +63,12 @@ class ShipperController extends BaseController {
     state.shipperOrigin.text = state.dropshipper?.city?.toUpperCase() ?? '';
     state.shipperAddress.text = state.dropshipper?.address?.toUpperCase() ?? '';
     state.shipperZipCode.text = state.dropshipper?.zipCode ?? '';
-    getOriginList(state.dropshipper?.city?.split(',').first ?? '', state.selectedAccount?.accountId ?? '').then((value) {
-      state.selectedOrigin = value.where((element) => element.originName == state.dropshipper?.city).first;
+    getOriginList(state.dropshipper?.city?.split(',').first ?? '',
+            state.selectedAccount?.accountId ?? '')
+        .then((value) {
+      state.selectedOrigin = value
+          .where((element) => element.originName == state.dropshipper?.city)
+          .first;
       update();
     });
     update();
@@ -72,7 +76,8 @@ class ShipperController extends BaseController {
   }
 
   bool isSaveDropshipper() {
-    if (state.dropshipper?.name != state.shipperName.text && state.dropshipper?.phone != state.shipperPhone.text) {
+    if (state.dropshipper?.name != state.shipperName.text &&
+        state.dropshipper?.phone != state.shipperPhone.text) {
       return true;
     }
     return false;
@@ -80,9 +85,12 @@ class ShipperController extends BaseController {
 
   void formValidate() async {
     if (state.isOnline) {
-      state.isValidate = state.formKey.currentState?.validate() == true && state.selectedAccount != null && state.selectedOrigin != null;
+      state.isValidate = state.formKey.currentState?.validate() == true &&
+          state.selectedAccount != null &&
+          state.selectedOrigin != null;
     } else {
-      state.isValidate = state.formKey.currentState?.validate() == true && state.selectedAccount != null;
+      state.isValidate = state.formKey.currentState?.validate() == true &&
+          state.selectedAccount != null;
     }
 
     update();
@@ -99,7 +107,9 @@ class ShipperController extends BaseController {
     connection.isOnline().then((value) => state.isOnline = value);
 
     try {
-      await master.getAccounts().then((value) => state.accountList.addAll(value.data ?? []));
+      await master
+          .getAccounts()
+          .then((value) => state.accountList.addAll(value.data ?? []));
       update();
       await profil.getBasicProfil().then((value) {
         state.shipper = value.data?.user;
@@ -129,7 +139,8 @@ class ShipperController extends BaseController {
       );
       state.accountList.addAll(accounts.data ?? []);
       // state.accountList.addAll(GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts)) );
-      state.shipper = UserModel.fromJson(await storage.readData(StorageCore.shipper));
+      state.shipper =
+          UserModel.fromJson(await storage.readData(StorageCore.shipper));
       state.shipperName.text = state.shipper?.name ?? '';
       state.shipperPhone.text = state.shipper?.phone ?? '';
       state.shipperOrigin.text = state.shipper?.origin?.originName ?? '';
@@ -145,14 +156,19 @@ class ShipperController extends BaseController {
     update();
 
     if (state.data != null) {
-      state.selectedAccount = state.accountList.where((element) => element.accountNumber == state.data?.account?.accountNumber).first;
+      state.selectedAccount = state.accountList
+          .where((element) =>
+              element.accountNumber == state.data?.account?.accountNumber)
+          .first;
       state.shipperName.text = state.data?.shipper?.name ?? '';
       state.shipperPhone.text = state.data?.shipper?.phone ?? '';
       state.shipperZipCode.text = state.data?.shipper?.zip ?? '';
       state.shipperAddress.text = state.data?.shipper?.address ?? '';
       state.isDropshipper = state.data?.shipper?.name != state.shipper?.name;
 
-      getOriginList(state.data?.shipper?.city ?? '', state.selectedAccount?.accountId ?? '').then((value) {
+      getOriginList(state.data?.shipper?.city ?? '',
+              state.selectedAccount?.accountId ?? '')
+          .then((value) {
         state.selectedOrigin = value.first;
         state.shipperOrigin.text = value.first.originName ?? '';
         update();
@@ -193,7 +209,8 @@ class ShipperController extends BaseController {
     BaseResponse<List<Origin>>? response;
     try {
       String accountId = '{"accountId":"$id"}';
-      response = await master.getOrigins(QueryParamModel(search: keyword.toUpperCase(), where: accountId));
+      response = await master.getOrigins(
+          QueryParamModel(search: keyword.toUpperCase(), where: accountId));
     } catch (e) {
       e.printError();
     }
@@ -215,12 +232,23 @@ class ShipperController extends BaseController {
           "shipper": Shipper(
             name: state.shipperName.text.toUpperCase(),
             address: state.shipperAddress.text.toUpperCase(),
-            address1: state.shipperAddress.text.length <= 30 ? state.shipperAddress.text.substring(0, state.shipperAddress.text.length) : '',
-            address2: state.shipperAddress.text.length >= 31 ? state.shipperAddress.text.substring(31, state.shipperAddress.text.length) : '',
-            address3: state.shipperAddress.text.length >= 60 ? state.shipperAddress.text.substring(60, state.shipperAddress.text.length) : '',
+            address1: state.shipperAddress.text.length <= 30
+                ? state.shipperAddress.text
+                    .substring(0, state.shipperAddress.text.length)
+                : '',
+            address2: state.shipperAddress.text.length >= 31
+                ? state.shipperAddress.text
+                    .substring(31, state.shipperAddress.text.length)
+                : '',
+            address3: state.shipperAddress.text.length >= 60
+                ? state.shipperAddress.text
+                    .substring(60, state.shipperAddress.text.length)
+                : '',
             city: state.shipperOrigin.text.toUpperCase(),
             zip: state.shipperZipCode.text,
-            region: state.isDropshipper ? state.selectedOrigin?.region?.name : state.shipper?.region?.name,
+            region: state.isDropshipper
+                ? state.selectedOrigin?.region?.name
+                : state.shipper?.region?.name,
             //province
             country: "ID",
             contact: state.shipperName.text.toUpperCase(),
@@ -303,7 +331,9 @@ class ShipperController extends BaseController {
         state.shipperOrigin.text = state.dropshipper?.city ?? '';
         state.shipperZipCode.text = state.dropshipper?.zipCode ?? '';
         state.shipperAddress.text = state.dropshipper?.address ?? '';
-        getOriginList(state.dropshipper?.city ?? '', state.selectedAccount?.accountId ?? '').then((value) => state.selectedOrigin = value.first);
+        getOriginList(state.dropshipper?.city ?? '',
+                state.selectedAccount?.accountId ?? '')
+            .then((value) => state.selectedOrigin = value.first);
 
         state.isValidate = true;
       } else {

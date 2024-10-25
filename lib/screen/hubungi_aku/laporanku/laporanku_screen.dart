@@ -35,10 +35,4 @@ class LaporankuScreen extends StatelessWidget {
           );
         });
   }
-
-
-
-
-
-
 }

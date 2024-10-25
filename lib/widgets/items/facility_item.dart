@@ -4,44 +4,36 @@ import 'package:css_mobile/data/model/facility/facility_model.dart';
 import 'package:flutter/material.dart';
 
 class FacilityItem extends StatelessWidget {
-
   final FacilityModel facility;
   final VoidCallback? onTap;
 
-  const FacilityItem({
-    super.key,
-    required this.facility,
-    this.onTap
-  });
+  const FacilityItem({super.key, required this.facility, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+      color: Theme.of(context).brightness == Brightness.light
+          ? whiteColor
+          : greyColor,
       child: InkWell(
-        onTap: onTap,
-        child: SizedBox(
-          width: 112,
-          height: 172,
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                marker(),
-                Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Column(
-                    children: [
-                      image(),
-                      title()
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        )
-      ),
+          onTap: onTap,
+          child: SizedBox(
+              width: 112,
+              height: 172,
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    marker(),
+                    Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: Column(
+                        children: [image(), title()],
+                      ),
+                    )
+                  ],
+                ),
+              ))),
     );
   }
 
@@ -68,25 +60,19 @@ class FacilityItem extends StatelessWidget {
 
   Widget image() {
     return AspectRatio(
-      aspectRatio: 1/1,
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Image(
-            image: NetworkImage(facility.icon),
-            fit: BoxFit.cover
-        ),
-      )
-    );
+        aspectRatio: 1 / 1,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Image(image: NetworkImage(facility.icon), fit: BoxFit.cover),
+        ));
   }
 
   Widget title() {
     return Center(
-      child: Text(
-        facility.name,
-        textAlign: TextAlign.center,
-        style: sublistTitleTextStyle,
-      )
-    );
+        child: Text(
+      facility.name,
+      textAlign: TextAlign.center,
+      style: sublistTitleTextStyle,
+    ));
   }
-
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-GetCodFeeModel getCodFeeModelFromJson(String str) => GetCodFeeModel.fromJson(json.decode(str));
+GetCodFeeModel getCodFeeModelFromJson(String str) =>
+    GetCodFeeModel.fromJson(json.decode(str));
 
 String getCodFeeModelToJson(GetCodFeeModel data) => json.encode(data.toJson());
 
@@ -18,7 +19,8 @@ class GetCodFeeModel {
   GetCodFeeModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
-    _payload = json['payload'] != null ? CODFeeModel.fromJson(json['payload']) : null;
+    _payload =
+        json['payload'] != null ? CODFeeModel.fromJson(json['payload']) : null;
   }
 
   num? _code;
@@ -53,7 +55,8 @@ class GetCodFeeModel {
   }
 }
 
-CODFeeModel payloadFromJson(String str) => CODFeeModel.fromJson(json.decode(str));
+CODFeeModel payloadFromJson(String str) =>
+    CODFeeModel.fromJson(json.decode(str));
 
 String payloadToJson(CODFeeModel data) => json.encode(data.toJson());
 

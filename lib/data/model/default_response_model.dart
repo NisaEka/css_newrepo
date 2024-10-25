@@ -1,5 +1,4 @@
-class DefaultResponseModel <T> {
-
+class DefaultResponseModel<T> {
   num _code = 0;
   num get code => _code;
 
@@ -9,11 +8,7 @@ class DefaultResponseModel <T> {
   T? _payload;
   T? get payload => _payload;
 
-  DefaultResponseModel({
-    num code = 0,
-    String message = "",
-    T? payload
-  }) {
+  DefaultResponseModel({num code = 0, String message = "", T? payload}) {
     this._code = code;
     this._message = message;
     this._payload = payload;
@@ -24,5 +19,4 @@ class DefaultResponseModel <T> {
     this._message = json["message"];
     this._payload = payload;
   }
-
 }

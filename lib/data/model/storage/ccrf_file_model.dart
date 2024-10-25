@@ -1,5 +1,4 @@
 class CcrfFileModel {
-
   String _fileType = "";
   String get fileType => _fileType;
 
@@ -10,5 +9,4 @@ class CcrfFileModel {
     _fileType = json["file_type"];
     _fileUrl = json["file_url"];
   }
-
 }

@@ -29,7 +29,9 @@ class FacilityFormInfoScreen extends StatelessWidget {
             ),
             controller.pickImageFailed
                 ? MessageInfoDialog(
-                    message: 'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'.tr,
+                    message:
+                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                            .tr,
                     onClickAction: () => controller.onRefreshUploadState(),
                   )
                 : Container(),
@@ -46,7 +48,10 @@ class FacilityFormInfoScreen extends StatelessWidget {
           color: redJNE,
           title: 'Selanjutnya'.tr,
           onPressed: () {
-            Get.to(const FacilityFormReturnScreen(), arguments: {'data': c.submitData(), 'destination': c.selectedDestination});
+            Get.to(const FacilityFormReturnScreen(), arguments: {
+              'data': c.submitData(),
+              'destination': c.selectedDestination
+            });
           },
         ));
   }
@@ -73,7 +78,8 @@ class FacilityFormInfoScreen extends StatelessWidget {
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(16),
                   ],
-                  validator: ValidationBuilder().maxLength(16).minLength(16).build(),
+                  validator:
+                      ValidationBuilder().maxLength(16).minLength(16).build(),
                 ),
                 ImagePickerContainer(
                   containerTitle: 'Pilih Gambar Identitas / KTP',

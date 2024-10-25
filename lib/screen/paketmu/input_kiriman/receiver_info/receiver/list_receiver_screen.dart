@@ -33,7 +33,8 @@ class ListPenerimaScreen extends StatelessWidget {
       leading: const CustomBackButton(),
       title: Text(
         'Pilih Data Penerima'.tr,
-        style: appTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
+        style: appTitleTextStyle.copyWith(
+            color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
       ),
       actions: [
         IconButton(
@@ -76,19 +77,20 @@ class ListPenerimaScreen extends StatelessWidget {
           c.isLoading
               ? Expanded(
                   child: ListView.builder(
-                  itemBuilder: (context, i) => c.receiverItem(ReceiverModel(), i, context),
+                  itemBuilder: (context, i) =>
+                      c.receiverItem(ReceiverModel(), i, context),
                   itemCount: 5,
                 ))
               : Expanded(
                   child: ListView(
                     shrinkWrap: true,
                     children: c.receiverList.isNotEmpty
-                            ? c.receiverList
-                                .mapIndexed(
-                                  (i, e) => c.receiverItem(e, i, context),
-                                )
-                                .toList()
-                            : [const Center(child: DataEmpty())],
+                        ? c.receiverList
+                            .mapIndexed(
+                              (i, e) => c.receiverItem(e, i, context),
+                            )
+                            .toList()
+                        : [const Center(child: DataEmpty())],
                   ),
                 )
         ],

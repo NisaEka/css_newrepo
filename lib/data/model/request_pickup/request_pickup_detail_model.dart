@@ -1,5 +1,4 @@
 class RequestPickupDetailModel {
-
   final String awb;
   final String officerEntry;
   final String date;
@@ -30,20 +29,20 @@ class RequestPickupDetailModel {
     required this.statusPickup,
   });
 
-  factory RequestPickupDetailModel.fromJson(Map<String, dynamic> json) => RequestPickupDetailModel(
-    awb: json['awb'] ?? '',
-    officerEntry: json['officer_entry'] ?? '',
-    date: json['date'] ?? '',
-    type: json['type'] ?? '',
-    service: json['service'] ?? '',
-    codFee: json['cod_fee'] ?? 0,
-    shipperName: json['shipper_name'] ?? '',
-    shipperCity: json['shipper_city'] ?? '',
-    receiverName: json['receiver_name'] ?? '',
-    receiverCity: json['receiver_city'] ?? '',
-    receiverPhone: json['receiver_phone'] ?? '',
-    status: json['status'] ?? '',
-    statusPickup: json['status_pickup'] ?? '',
-  );
-
+  factory RequestPickupDetailModel.fromJson(Map<String, dynamic> json) =>
+      RequestPickupDetailModel(
+        awb: json['awb'] ?? '',
+        officerEntry: json['officer_entry'] ?? '',
+        date: json['date'] ?? '',
+        type: json['type'] ?? '',
+        service: json['service'] ?? '',
+        codFee: json['cod_fee'] ?? 0,
+        shipperName: json['shipper_name'] ?? '',
+        shipperCity: json['shipper_city'] ?? '',
+        receiverName: json['receiver_name'] ?? '',
+        receiverCity: json['receiver_city'] ?? '',
+        receiverPhone: json['receiver_phone'] ?? '',
+        status: json['status'] ?? '',
+        statusPickup: json['status_pickup'] ?? '',
+      );
 }

@@ -18,7 +18,8 @@ class GetPetugasByidModel {
   GetPetugasByidModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
-    _payload = json['payload'] != null ? PetugasModel.fromJson(json['payload']) : null;
+    _payload =
+        json['payload'] != null ? PetugasModel.fromJson(json['payload']) : null;
   }
 
   num? _code;
@@ -280,5 +281,3 @@ class AvailableService {
     return map;
   }
 }
-
-

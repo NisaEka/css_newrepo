@@ -33,12 +33,14 @@ class ListDropshipperScreen extends StatelessWidget {
       leading: const CustomBackButton(),
       title: Text(
         'Pilih Data Dropshipper'.tr,
-        style: appTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
+        style: appTitleTextStyle.copyWith(
+            color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
       ),
       actions: [
         c.isOnline
             ? IconButton(
-                onPressed: () => Get.to(const AddDropshipperScreen(), arguments: {
+                onPressed: () =>
+                    Get.to(const AddDropshipperScreen(), arguments: {
                   'account': c.account,
                 })?.then((value) => c.initData()),
                 icon: Icon(
@@ -81,7 +83,8 @@ class ListDropshipperScreen extends StatelessWidget {
           c.isLoading
               ? Expanded(
                   child: ListView.builder(
-                  itemBuilder: (context, i) => c.dropshipperItem(DropshipperModel(), i, context),
+                  itemBuilder: (context, i) =>
+                      c.dropshipperItem(DropshipperModel(), i, context),
                   itemCount: 5,
                 ))
               : Expanded(

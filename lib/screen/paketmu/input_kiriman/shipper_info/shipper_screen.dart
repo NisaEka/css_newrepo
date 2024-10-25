@@ -27,7 +27,9 @@ class InformasiPengirimScreen extends StatelessWidget {
                   child: const ShipperForm(),
                 ),
               ),
-              controller.state.isLoadSave ? const LoadingDialog() : const SizedBox()
+              controller.state.isLoadSave
+                  ? const LoadingDialog()
+                  : const SizedBox()
             ],
           );
         });

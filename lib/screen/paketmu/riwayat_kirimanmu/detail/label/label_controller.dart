@@ -108,7 +108,8 @@ class LabelController extends BaseController {
   }
 
   Future capture(BuildContext context) async {
-    if (stickerLabel == "Default" || stickerLabel == "Sticker Label (A6 10.50 X 14.80 CM)") {
+    if (stickerLabel == "Default" ||
+        stickerLabel == "Sticker Label (A6 10.50 X 14.80 CM)") {
       screenshotController
           .captureFromLongWidget(
             myLongWidget(data),
@@ -117,7 +118,9 @@ class LabelController extends BaseController {
           )
           .then((capturedImage) async => getPdf(capturedImage));
     } else {
-      screenshotController.capture().then((capturedImage) async => getPdf(capturedImage!));
+      screenshotController
+          .capture()
+          .then((capturedImage) async => getPdf(capturedImage!));
     }
   }
 

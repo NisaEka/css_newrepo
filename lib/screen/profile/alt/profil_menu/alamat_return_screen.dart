@@ -37,7 +37,9 @@ class AlamatReturnScreen extends StatelessWidget {
               )
             : [
                 DataUmumListItem(
-                  title: c.ccrfProfil?.returnAddress?.ccrfReturnresponsiblename ?? '-',
+                  title:
+                      c.ccrfProfil?.returnAddress?.ccrfReturnresponsiblename ??
+                          '-',
                   subtitle: c.ccrfProfil?.returnAddress?.ccrfNpwpname ?? '-',
                   icon: Icons.person_pin,
                   tooltip: '${'Nama Penanggung Jawab'.tr}\n${'Nama NPWP'.tr}',
@@ -52,16 +54,20 @@ class AlamatReturnScreen extends StatelessWidget {
                   title: c.ccrfProfil?.returnAddress?.ccrfJlcnumber ?? '-',
                   subtitle: c.ccrfProfil?.returnAddress?.ccrfCounter ?? '-',
                   icon: Icons.card_membership_rounded,
-                  tooltip: '${'Nomor JLC'.tr}\n${'Nomor Counter Pengiriman'.tr}',
+                  tooltip:
+                      '${'Nomor JLC'.tr}\n${'Nomor Counter Pengiriman'.tr}',
                 ),
                 DataUmumListItem(
-                  title: c.ccrfProfil?.returnAddress?.ccrfReturnhandphone ?? c.ccrfProfil?.returnAddress?.ccrfReturnphone ?? '-',
+                  title: c.ccrfProfil?.returnAddress?.ccrfReturnhandphone ??
+                      c.ccrfProfil?.returnAddress?.ccrfReturnphone ??
+                      '-',
                   subtitle: c.ccrfProfil?.returnAddress?.ccrfReturnphone ?? '-',
                   icon: Icons.contact_phone_rounded,
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
                 DataUmumListItem(
-                  title: "${c.ccrfProfil?.returnAddress?.ccrfReturnaddress ?? '-'}"
+                  title:
+                      "${c.ccrfProfil?.returnAddress?.ccrfReturnaddress ?? '-'}"
                       ",  ${c.ccrfProfil?.returnAddress?.ccrfReturnsubdistrict ?? '-'}"
                       ", ${c.ccrfProfil?.returnAddress?.ccrfReturndistrict ?? '-'}"
                       ", ${c.ccrfProfil?.returnAddress?.ccrfReturncity ?? '-'}"
@@ -98,10 +104,13 @@ class AlamatReturnScreen extends StatelessWidget {
                 enableDrag: true,
                 isDismissible: true,
                 // isScrollControlled: true,
-                StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-                  return SecretDataDialog(text: '${'return_info'.tr}\n\n${'kerahasiaan_data'.tr}');
+                StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                  return SecretDataDialog(
+                      text: '${'return_info'.tr}\n\n${'kerahasiaan_data'.tr}');
                 }),
-                backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                backgroundColor:
+                    AppConst.isLightTheme(context) ? whiteColor : greyColor,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

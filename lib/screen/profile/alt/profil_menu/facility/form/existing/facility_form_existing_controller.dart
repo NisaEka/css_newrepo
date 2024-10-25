@@ -8,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class FacilityFormExistingController extends BaseController {
-
   final String _facilityType = Get.arguments['facility_type'];
 
   final name = TextEditingController();
@@ -30,17 +29,16 @@ class FacilityFormExistingController extends BaseController {
 
     if (_dataIsValid()) {
       final data = _composeData();
-      profil.createProfileCcrfExisting(data)
-          .then((response) {
+      profil.createProfileCcrfExisting(data).then((response) {
         if (response.code == HttpStatus.created) {
           _createDataSuccess = true;
           Get.to(
             SuccessScreen(
-              message: 'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'.tr,
+              message:
+                  'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'
+                      .tr,
               buttonTitle: 'Selesai'.tr,
-              nextAction: () => Get.offAll(
-                  const DashboardScreen()
-              ),
+              nextAction: () => Get.offAll(const DashboardScreen()),
             ),
           );
         } else {
@@ -70,11 +68,9 @@ class FacilityFormExistingController extends BaseController {
 
   FacilityCreateExistingModel _composeData() {
     return FacilityCreateExistingModel(
-      name: name.text,
-      email: email.text,
-      phone: phone.text,
-      facilityType: _facilityType
-    );
+        name: name.text,
+        email: email.text,
+        phone: phone.text,
+        facilityType: _facilityType);
   }
-
 }

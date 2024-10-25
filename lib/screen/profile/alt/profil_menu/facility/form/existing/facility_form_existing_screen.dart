@@ -10,27 +10,32 @@ import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class FacilityFormExistingScreen extends StatelessWidget {
-
-  const FacilityFormExistingScreen({ super.key });
+  const FacilityFormExistingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: FacilityFormExistingController(),
-      builder: (controller) {
-        return Stack(
-          children: [
-            Scaffold(
-              appBar: _formAppBar(),
-              bottomNavigationBar: _formBottomNavBar(controller),
-              body: _formBody(controller)
-            ),
-            controller.showLoadingIndicator ? const LoadingDialog() : Container(),
-            controller.showInvalidInputMessage ? MessageInfoDialog(message: 'Terdapat input yang tidak valid, periksa kembali data yang telah anda masukkan.', onClickAction: () => controller.onRestartValidationState()) : Container()
-          ],
-        );
-      }
-    );
+        init: FacilityFormExistingController(),
+        builder: (controller) {
+          return Stack(
+            children: [
+              Scaffold(
+                  appBar: _formAppBar(),
+                  bottomNavigationBar: _formBottomNavBar(controller),
+                  body: _formBody(controller)),
+              controller.showLoadingIndicator
+                  ? const LoadingDialog()
+                  : Container(),
+              controller.showInvalidInputMessage
+                  ? MessageInfoDialog(
+                      message:
+                          'Terdapat input yang tidak valid, periksa kembali data yang telah anda masukkan.',
+                      onClickAction: () =>
+                          controller.onRestartValidationState())
+                  : Container()
+            ],
+          );
+        });
   }
 
   PreferredSizeWidget _formAppBar() {
@@ -54,43 +59,37 @@ class FacilityFormExistingScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: Container(
-            padding: _defaultFormPadding(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTextFormField(
-                  controller: controller.name,
-                  hintText: 'Nama'.tr,
-                  helperText: 'Nama customer yang terdaftar'.tr,
-                  validator: ValidationBuilder()
-                    .minLength(3)
-                    .maxLength(32)
-                    .build(),
-                ),
-                CustomTextFormField(
-                  controller: controller.email,
-                  hintText: 'Email'.tr,
-                  helperText: 'Email terdaftar saat kerjasama'.tr,
-                  inputType: TextInputType.emailAddress,
-                  inputFormatters: const [],
-                  validator: ValidationBuilder()
-                    .email()
-                    .build(),
-                ),
-                CustomTextFormField(
-                  controller: controller.phone,
-                  hintText: 'No Telp'.tr,
-                  helperText: 'Nomor telepon yang terdaftar di akun JNE'.tr,
-                  inputType: TextInputType.phone,
-                  validator: ValidationBuilder()
-                    .phone()
-                    .build(),
-                )
-              ],
-            )
-          )
-        )
+            child: Container(
+                padding: _defaultFormPadding(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomTextFormField(
+                      controller: controller.name,
+                      hintText: 'Nama'.tr,
+                      helperText: 'Nama customer yang terdaftar'.tr,
+                      validator: ValidationBuilder()
+                          .minLength(3)
+                          .maxLength(32)
+                          .build(),
+                    ),
+                    CustomTextFormField(
+                      controller: controller.email,
+                      hintText: 'Email'.tr,
+                      helperText: 'Email terdaftar saat kerjasama'.tr,
+                      inputType: TextInputType.emailAddress,
+                      inputFormatters: const [],
+                      validator: ValidationBuilder().email().build(),
+                    ),
+                    CustomTextFormField(
+                      controller: controller.phone,
+                      hintText: 'No Telp'.tr,
+                      helperText: 'Nomor telepon yang terdaftar di akun JNE'.tr,
+                      inputType: TextInputType.phone,
+                      validator: ValidationBuilder().phone().build(),
+                    )
+                  ],
+                )))
       ],
     );
   }
@@ -102,5 +101,4 @@ class FacilityFormExistingScreen extends StatelessWidget {
       top: 16,
     );
   }
-
 }

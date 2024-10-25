@@ -39,7 +39,8 @@ class LacakKirimanScreen extends StatelessWidget {
             controller: c.searchField,
             hintText: 'Masukan Nomor Resimu'.tr,
             suffixIcon: GestureDetector(
-              onTap: () => Get.to(const BarcodeScanScreen(), arguments: {})?.then((result) {
+              onTap: () => Get.to(const BarcodeScanScreen(), arguments: {})
+                  ?.then((result) {
                 c.searchField.text = result;
                 c.update();
                 c.cekResi(result);
@@ -53,7 +54,8 @@ class LacakKirimanScreen extends StatelessWidget {
             onSubmit: (value) => c.cekResi(value),
           ),
           Expanded(
-            child: c.trackModel != null && c.trackModel?.error == null || c.isLoading
+            child: c.trackModel != null && c.trackModel?.error == null ||
+                    c.isLoading
                 ? ListView(
                     children: [
                       const SizedBox(height: 22),
@@ -80,7 +82,9 @@ class LacakKirimanScreen extends StatelessWidget {
                           CustomLabelText(
                             isLoading: c.isLoading,
                             title: 'Dari'.tr,
-                            value: c.trackModel?.detail?.first.cnoteShipperCity ?? '',
+                            value:
+                                c.trackModel?.detail?.first.cnoteShipperCity ??
+                                    '',
                             width: Get.width / 2,
                           ),
                           CustomLabelText(
@@ -125,7 +129,9 @@ class LacakKirimanScreen extends StatelessWidget {
                           CustomLabelText(
                             isLoading: c.isLoading,
                             title: 'Tanggal Kirim'.tr,
-                            value: c.trackModel?.cnote?.cnoteDate?.toLongDateTimeFormat() ?? '',
+                            value: c.trackModel?.cnote?.cnoteDate
+                                    ?.toLongDateTimeFormat() ??
+                                '',
                             width: Get.width / 2,
                           ),
                           CustomLabelText(
@@ -150,13 +156,17 @@ class LacakKirimanScreen extends StatelessWidget {
                           CustomLabelText(
                             isLoading: c.isLoading,
                             title: 'Nama Pengirim'.tr,
-                            value: c.trackModel?.detail?.first.cnoteShipperName ?? '',
+                            value:
+                                c.trackModel?.detail?.first.cnoteShipperName ??
+                                    '',
                             width: Get.width / 3,
                           ),
                           CustomLabelText(
                             isLoading: c.isLoading,
                             title: 'Nama Penerima'.tr,
-                            value: c.trackModel?.detail?.first.cnoteReceiverName ?? '',
+                            value:
+                                c.trackModel?.detail?.first.cnoteReceiverName ??
+                                    '',
                             width: Get.width / 3,
                             alignment: 'end',
                           ),
@@ -168,13 +178,17 @@ class LacakKirimanScreen extends StatelessWidget {
                           CustomLabelText(
                             isLoading: c.isLoading,
                             title: 'Kota Pengirim'.tr,
-                            value: c.trackModel?.detail?.first.cnoteShipperCity ?? '',
+                            value:
+                                c.trackModel?.detail?.first.cnoteShipperCity ??
+                                    '',
                             // width: Get.width / 2,
                           ),
                           CustomLabelText(
                             isLoading: c.isLoading,
                             title: 'Kota Penerima'.tr,
-                            value: c.trackModel?.detail?.first.cnoteReceiverCity ?? '',
+                            value:
+                                c.trackModel?.detail?.first.cnoteReceiverCity ??
+                                    '',
                             // width: Get.width / 3,
                             alignment: 'end',
                           ),
@@ -201,7 +215,8 @@ class LacakKirimanScreen extends StatelessWidget {
                     ],
                   )
                 : Center(
-                    child: DataEmpty(text: c.trackModel?.error ?? 'Data Kosong'),
+                    child:
+                        DataEmpty(text: c.trackModel?.error ?? 'Data Kosong'),
                   ),
           )
         ],

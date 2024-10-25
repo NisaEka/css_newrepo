@@ -62,7 +62,8 @@ class PengaturanScreen extends StatelessWidget {
                   CustomFilledButton(
                     color: c.lang == "id" ? blueJNE : whiteColor,
                     fontColor: c.lang == "id" ? whiteColor : greyColor,
-                    borderColor: c.lang == "id" ? Colors.transparent : greyColor,
+                    borderColor:
+                        c.lang == "id" ? Colors.transparent : greyColor,
                     title: 'ID',
                     width: 40,
                     margin: EdgeInsets.zero,
@@ -73,7 +74,8 @@ class PengaturanScreen extends StatelessWidget {
                   CustomFilledButton(
                     color: c.lang == "en" ? blueJNE : whiteColor,
                     fontColor: c.lang == "en" ? whiteColor : greyColor,
-                    borderColor: c.lang == "en" ? Colors.transparent : greyColor,
+                    borderColor:
+                        c.lang == "en" ? Colors.transparent : greyColor,
                     margin: EdgeInsets.zero,
                     padding: EdgeInsets.zero,
                     title: 'EN',

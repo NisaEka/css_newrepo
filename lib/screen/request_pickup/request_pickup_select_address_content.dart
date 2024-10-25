@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RequestPickupSelectAddressContent extends StatelessWidget {
-
   final List<RequestPickupAddressModel> addresses;
 
   final Function onAddNewAddressClick;
@@ -21,16 +20,15 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
   final String selectedTime;
   final String? selectedAddressId;
 
-  const RequestPickupSelectAddressContent({
-    super.key,
-    required this.addresses,
-    required this.onAddNewAddressClick,
-    required this.onPickupClick,
-    required this.onTimeSet,
-    required this.onSelectAddress,
-    required this.selectedTime,
-    required this.selectedAddressId
-  });
+  const RequestPickupSelectAddressContent(
+      {super.key,
+      required this.addresses,
+      required this.onAddNewAddressClick,
+      required this.onPickupClick,
+      required this.onTimeSet,
+      required this.onSelectAddress,
+      required this.selectedTime,
+      required this.selectedAddressId});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +45,9 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
   Widget _addNewAddressWidget() {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () { onAddNewAddressClick(); },
+      onTap: () {
+        onAddNewAddressClick();
+      },
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -88,8 +88,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
             border: Border.all(color: Theme.of(context).colorScheme.outline),
-            borderRadius: BorderRadius.circular(16)
-        ),
+            borderRadius: BorderRadius.circular(16)),
         alignment: Alignment.center,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,7 +98,9 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
               "Alamat masih kosong".tr,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             Text(
               "Tambah alamat baru untuk melakukan permintaan penjemputan".tr,
               style: Theme.of(context).textTheme.labelMedium,
@@ -117,10 +118,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-              "Jam Pickup".tr,
-              style: Theme.of(context).textTheme.bodyLarge
-          ),
+          Text("Jam Pickup".tr, style: Theme.of(context).textTheme.bodyLarge),
           OutlinedButton(
             onPressed: () {
               _selectedTime(context).then((value) {
@@ -129,22 +127,17 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
                 }
               });
             },
-            style: ButtonStyle(
-                padding: WidgetStateProperty.resolveWith((states) {
-                  return const EdgeInsets.symmetric(horizontal: 4, vertical: 2);
-                }),
-                side: WidgetStateProperty.resolveWith((states) {
-                  return BorderSide(
-                      color: Theme.of(context).colorScheme.outline
-                  );
-                })
-            ),
+            style:
+                ButtonStyle(padding: WidgetStateProperty.resolveWith((states) {
+              return const EdgeInsets.symmetric(horizontal: 4, vertical: 2);
+            }), side: WidgetStateProperty.resolveWith((states) {
+              return BorderSide(color: Theme.of(context).colorScheme.outline);
+            })),
             child: Text(
               selectedTime.tr,
               style: TextStyle(
                   color: Theme.of(context).colorScheme.outline,
-                  fontWeight: FontWeight.normal
-              ),
+                  fontWeight: FontWeight.normal),
             ),
           ),
         ],
@@ -183,7 +176,9 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
         builder: (BuildContext context, Widget? child) {
           return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
+              colorScheme: AppConst.isLightTheme(context)
+                  ? const ColorScheme.light()
+                  : const ColorScheme.dark(),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.red,
@@ -192,8 +187,6 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
             ),
             child: child!,
           );
-        }
-    );
+        });
   }
-
 }

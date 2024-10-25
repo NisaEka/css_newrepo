@@ -25,7 +25,8 @@ class LacakKirimanRepositoryImpl extends LacakKirimanRepository {
   }
 
   @override
-  Future<PostLacakKirimanModel> postTracingByReference(String referenceNumber) async {
+  Future<PostLacakKirimanModel> postTracingByReference(
+      String referenceNumber) async {
     try {
       Response response = await network.city.post(
         '/v2/refrencenumber',

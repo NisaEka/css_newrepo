@@ -88,7 +88,11 @@ class CekOngkirController extends BaseController {
 
   void hitungAsuransi() {
     state.isr = 0;
-    state.isr = (0.002 * (state.estimasiHargaBarang.text == '' ? 0 : state.estimasiHargaBarang.text.digitOnly().toInt())) + 5000;
+    state.isr = (0.002 *
+            (state.estimasiHargaBarang.text == ''
+                ? 0
+                : state.estimasiHargaBarang.text.digitOnly().toInt())) +
+        5000;
     update();
   }
 
@@ -116,8 +120,8 @@ class CekOngkirController extends BaseController {
       update();
     }
   }
-  
-  Future<void> selectOrigin()async{
+
+  Future<void> selectOrigin() async {
     // print(object)
   }
 
@@ -170,8 +174,9 @@ class CekOngkirController extends BaseController {
                 // ),
                 child: FutureBuilder(
                   // future: getOriginList(state.searchCity.text == '' ? 'jak' : state.searchCity.text),
-                  future:
-                      (title == "Kota Asal" || title == "Origin") ? getOriginList(state.searchCity.text) : getDestinationList(state.searchCity.text),
+                  future: (title == "Kota Asal" || title == "Origin")
+                      ? getOriginList(state.searchCity.text)
+                      : getDestinationList(state.searchCity.text),
                   // initialData: (title == "Kota Asal" || title == "Origin") ? state.originList : state.destinationList,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {

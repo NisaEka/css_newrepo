@@ -81,10 +81,12 @@ class DokumenScreen extends StatelessWidget {
                 enableDrag: true,
                 isDismissible: true,
                 // isScrollControlled: true,
-                StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
                   return SecretDataDialog(text: 'kerahasiaan_data'.tr);
                 }),
-                backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                backgroundColor:
+                    AppConst.isLightTheme(context) ? whiteColor : greyColor,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

@@ -233,7 +233,8 @@ class PantauPaketmuModel {
         receiverPhone: receiverPhone ?? _receiverPhone,
         awbDate: awbDate ?? _awbDate,
         courierDate: courierDate ?? _courierDate,
-        puLastAttempStatusDate: puLastAttempStatusDate ?? _puLastAttempStatusDate,
+        puLastAttempStatusDate:
+            puLastAttempStatusDate ?? _puLastAttempStatusDate,
         shipperName: shipperName ?? _shipperName,
         receiverName: receiverName ?? _receiverName,
         receiverAddr1: receiverAddr1 ?? _receiverAddr1,

@@ -106,8 +106,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
     }
   }
 
-
-
   @override
   Future<GetSettingLabelModel> getSettingLabel() async {
     var token = await storageSecure.read(key: "token");
@@ -123,7 +121,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   }
 
   @override
-  Future<PostTransactionModel> updateSettingLabel(String label, int price) async {
+  Future<PostTransactionModel> updateSettingLabel(
+      String label, int price) async {
     var token = await storageSecure.read(key: "token");
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {

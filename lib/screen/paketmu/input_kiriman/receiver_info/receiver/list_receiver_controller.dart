@@ -34,12 +34,13 @@ class ListPenerimaController extends BaseController {
     }));
   }
 
-
   Future<void> initData() async {
     isLoading = true;
     receiverList = [];
     try {
-      await master.getReceivers(QueryParamModel(search: search.text)).then((value) => receiverList.addAll(value.data ?? []));
+      await master
+          .getReceivers(QueryParamModel(search: search.text))
+          .then((value) => receiverList.addAll(value.data ?? []));
     } catch (e) {
       e.printError();
       var receiver = BaseResponse<List<ReceiverModel>>.fromJson(
@@ -66,7 +67,8 @@ class ListPenerimaController extends BaseController {
                   value.code == 200 ? Icons.info : Icons.warning,
                   color: whiteColor,
                 ),
-                message: value.code == 200 ? 'Data Dihapus'.tr : "Bad Request".tr,
+                message:
+                    value.code == 200 ? 'Data Dihapus'.tr : "Bad Request".tr,
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
                 backgroundColor: value.code == 200 ? successColor : errorColor,

@@ -78,7 +78,9 @@ class StickerDefault extends StatelessWidget {
                           Text("From :", style: TextStyle(fontWeight: bold)),
                           Text(data.shipper?.name ?? ''),
                           Text(data.origin?.originName ?? ''),
-                          Text(data.shipper?.city ?? data.shipper?.origin?.originName ?? ''),
+                          Text(data.shipper?.city ??
+                              data.shipper?.origin?.originName ??
+                              ''),
                           Text(data.shipper?.address ?? ''),
                           Text("\n\nKode Pos : ${data.shipper?.zip ?? ''}"),
                           Text(data.shipper?.phone ?? '')
@@ -98,7 +100,9 @@ class StickerDefault extends StatelessWidget {
                           Text("\n\nKode Pos : ${data.receiver?.zip ?? ''}"),
                           Text(data.receiver?.phone ?? ''),
                           Text(
-                            data.destination?.destinationCode?.substring(0, 3) ?? '-',
+                            data.destination?.destinationCode
+                                    ?.substring(0, 3) ??
+                                '-',
                             style: TextStyle(fontSize: 38, fontWeight: bold),
                           ),
                           Text(
@@ -143,7 +147,6 @@ class StickerDefault extends StatelessWidget {
                           valueTextStyle: const TextStyle(),
                           isHorizontal: true,
                         ),
-
                       ],
                     ),
                     Column(
@@ -160,7 +163,9 @@ class StickerDefault extends StatelessWidget {
                               valueTextStyle: const TextStyle(),
                             ),
                             const SizedBox(width: 25),
-                            Text(data.delivery?.serviceCode ?? '', style: TextStyle(fontSize: 38, fontWeight: bold)),
+                            Text(data.delivery?.serviceCode ?? '',
+                                style:
+                                    TextStyle(fontSize: 38, fontWeight: bold)),
                           ],
                         ),
                       ],
@@ -180,7 +185,8 @@ class StickerDefault extends StatelessWidget {
                     Row(
                       children: [
                         const SizedBox(width: 10),
-                        Text(data.account?.accountService ?? '', style: TextStyle(fontSize: 38, fontWeight: bold)),
+                        Text(data.account?.accountService ?? '',
+                            style: TextStyle(fontSize: 38, fontWeight: bold)),
                       ],
                     ),
                   ],
@@ -191,7 +197,7 @@ class StickerDefault extends StatelessWidget {
                     CustomLabelText(
                       title: "Estimasi Ongkir: Rp",
                       value:
-                          '${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' :  data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
+                          '${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
                       titleTextStyle: TextStyle(fontWeight: bold),
                       valueTextStyle: const TextStyle(),
                     ),
@@ -207,14 +213,16 @@ class StickerDefault extends StatelessWidget {
                 ),
                 CustomLabelText(
                   title: "Goods Value  :   ",
-                  value: 'Rp ${data.goods?.amount?.toInt().toCurrency() ?? '0'}',
+                  value:
+                      'Rp ${data.goods?.amount?.toInt().toCurrency() ?? '0'}',
                   titleTextStyle: TextStyle(fontWeight: bold),
                   valueTextStyle: const TextStyle(),
                   isHorizontal: true,
                 ),
                 CustomLabelText(
                   title: "COD Amount :   ",
-                  value: "Rp ${data.delivery?.codFee?.toInt().toCurrency() ?? '0'}",
+                  value:
+                      "Rp ${data.delivery?.codFee?.toInt().toCurrency() ?? '0'}",
                   titleTextStyle: TextStyle(fontWeight: bold),
                   valueTextStyle: const TextStyle(),
                   isHorizontal: true,
@@ -273,7 +281,8 @@ class StickerDefault extends StatelessWidget {
                       ),
                       Text(
                         "Print date : ${DateTime.now().toString().toDateTimeFormat()}",
-                        style: TextStyle(fontStyle: FontStyle.italic, fontWeight: bold),
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, fontWeight: bold),
                       ),
                     ],
                   ),

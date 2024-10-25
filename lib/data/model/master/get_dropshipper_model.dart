@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-DropshipperModel payloadFromJson(String str) => DropshipperModel.fromJson(json.decode(str));
+DropshipperModel payloadFromJson(String str) =>
+    DropshipperModel.fromJson(json.decode(str));
 
 String payloadToJson(DropshipperModel data) => json.encode(data.toJson());
 
@@ -30,7 +31,8 @@ class DropshipperModel {
     _zipCode = json['zip_code'] ?? json['dropshipperZip'];
     _city = json['city'] ?? json['dropshipperCity'];
     _address = json['address'] ?? json['dropshipperAddress'];
-    _origin = json['origin_code'] ?? json['dropshipperOrigin'] ?? json['origin'];
+    _origin =
+        json['origin_code'] ?? json['dropshipperOrigin'] ?? json['origin'];
   }
 
   String? _id;

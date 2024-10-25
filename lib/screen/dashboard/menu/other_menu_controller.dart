@@ -41,7 +41,8 @@ class OtherMenuCotroller extends BaseController {
     favoritList = [];
     cekToken();
     try {
-      var menu = MenuItemModel.fromJson(await storage.readData(StorageCore.favoriteMenu));
+      var menu = MenuItemModel.fromJson(
+          await storage.readData(StorageCore.favoriteMenu));
       favoritList.addAll(menu.items ?? []);
       update();
     } catch (e) {
@@ -53,7 +54,8 @@ class OtherMenuCotroller extends BaseController {
         title: "Input Kirimanmu",
         icon: ImageConstant.paketmuIcon,
         isAuth: true,
-        isFavorite: favoritList.where((e) => e.title == "Input Kirimanmu").isNotEmpty,
+        isFavorite:
+            favoritList.where((e) => e.title == "Input Kirimanmu").isNotEmpty,
         isEdit: isEdit,
         route: "/inputKiriman",
       ),
@@ -61,7 +63,8 @@ class OtherMenuCotroller extends BaseController {
         title: "Riwayat Kiriman",
         icon: ImageConstant.paketmuIcon,
         isAuth: true,
-        isFavorite: favoritList.where((e) => e.title == "Riwayat Kiriman").isNotEmpty,
+        isFavorite:
+            favoritList.where((e) => e.title == "Riwayat Kiriman").isNotEmpty,
         isEdit: isEdit,
         route: "/riwayatKiriman",
       ),
@@ -69,7 +72,8 @@ class OtherMenuCotroller extends BaseController {
         title: "Draft Transaksi",
         icon: ImageConstant.paketmuIcon,
         isAuth: true,
-        isFavorite: favoritList.where((e) => e.title == "Draft Transaksi").isNotEmpty,
+        isFavorite:
+            favoritList.where((e) => e.title == "Draft Transaksi").isNotEmpty,
         isEdit: isEdit,
         route: "/draftTransaksi",
       ),
@@ -77,7 +81,8 @@ class OtherMenuCotroller extends BaseController {
         title: "Lacak Kiriman",
         icon: ImageConstant.paketmuIcon,
         isAuth: false,
-        isFavorite: favoritList.where((e) => e.title == "Lacak Kiriman").isNotEmpty,
+        isFavorite:
+            favoritList.where((e) => e.title == "Lacak Kiriman").isNotEmpty,
         isEdit: isEdit,
         route: "/lacakKiriman",
       ),
@@ -85,7 +90,8 @@ class OtherMenuCotroller extends BaseController {
           title: "Request Pickup",
           icon: ImageConstant.paketmuIcon,
           isAuth: true,
-          isFavorite: favoritList.where((e) => e.title == "Request Pickup").isNotEmpty,
+          isFavorite:
+              favoritList.where((e) => e.title == "Request Pickup").isNotEmpty,
           isEdit: isEdit,
           route: "/requestPickup"),
     ];
@@ -95,7 +101,9 @@ class OtherMenuCotroller extends BaseController {
         title: "Pembayaran Aggregasi",
         icon: ImageConstant.keuanganmuIcon,
         isAuth: true,
-        isFavorite: favoritList.where((e) => e.title == "Pembayaran Aggregasi").isNotEmpty,
+        isFavorite: favoritList
+            .where((e) => e.title == "Pembayaran Aggregasi")
+            .isNotEmpty,
         isEdit: isEdit,
         route: "/pembayaranAggregasi",
       ),
@@ -103,7 +111,8 @@ class OtherMenuCotroller extends BaseController {
         title: "Aggregasi Minus",
         icon: ImageConstant.keuanganmuIcon,
         isAuth: true,
-        isFavorite: favoritList.where((e) => e.title == "Aggregasi Minus").isNotEmpty,
+        isFavorite:
+            favoritList.where((e) => e.title == "Aggregasi Minus").isNotEmpty,
         isEdit: isEdit,
         route: "/aggregasiMinus",
       ),
@@ -130,7 +139,8 @@ class OtherMenuCotroller extends BaseController {
         title: "Cek Ongkir",
         icon: ImageConstant.cekOngkirIcon,
         isAuth: false,
-        isFavorite: favoritList.where((e) => e.title == "Cek Ongkir").isNotEmpty,
+        isFavorite:
+            favoritList.where((e) => e.title == "Cek Ongkir").isNotEmpty,
         isEdit: isEdit,
         route: "/cekOngkir",
       ),
@@ -138,7 +148,8 @@ class OtherMenuCotroller extends BaseController {
         title: "Pantau Paketmu",
         icon: ImageConstant.pantauPaketmuIcon,
         isAuth: true,
-        isFavorite: favoritList.where((e) => e.title == "Pantau Paketmu").isNotEmpty,
+        isFavorite:
+            favoritList.where((e) => e.title == "Pantau Paketmu").isNotEmpty,
         isEdit: isEdit,
         route: "/pantauPaketmu",
       ),
@@ -149,7 +160,8 @@ class OtherMenuCotroller extends BaseController {
           title: "Laporanku",
           icon: ImageConstant.hubungiAkuIcon,
           isAuth: true,
-          isFavorite: favoritList.where((e) => e.title == "Laporanku").isNotEmpty,
+          isFavorite:
+              favoritList.where((e) => e.title == "Laporanku").isNotEmpty,
           isEdit: isEdit,
           route: "/laporanku"),
     ];
@@ -163,7 +175,8 @@ class OtherMenuCotroller extends BaseController {
       paketmuList.removeWhere((e) => e.title == "Input Kirimanmu");
       favoritList.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (isLogin && (allow.paketmuRiwayat != "Y" && allow.riwayatPesanan != "Y")) {
+    if (isLogin &&
+        (allow.paketmuRiwayat != "Y" && allow.riwayatPesanan != "Y")) {
       paketmuList.removeWhere((e) => e.title == "Riwayat Kiriman");
       paketmuList.removeWhere((e) => e.title == "Draft Transaksi");
       favoritList.removeWhere((e) => e.title == "Riwayat Kiriman");
@@ -177,11 +190,14 @@ class OtherMenuCotroller extends BaseController {
       keuanganmuList.removeWhere((e) => e.title == "Uang_COD Kamu");
       favoritList.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (isLogin && (allow.keuanganAggregasi != "Y" && allow.monitoringAgg != "Y")) {
+    if (isLogin &&
+        (allow.keuanganAggregasi != "Y" && allow.monitoringAgg != "Y")) {
       keuanganmuList.removeWhere((e) => e.title == "Pembayaran Aggregasi");
       favoritList.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (isLogin && (allow.keuanganAggregasiMinus != "Y" && allow.monitoringAggMinus != "Y")) {
+    if (isLogin &&
+        (allow.keuanganAggregasiMinus != "Y" &&
+            allow.monitoringAggMinus != "Y")) {
       keuanganmuList.removeWhere((e) => e.title == "Aggregasi Minus");
       favoritList.removeWhere((e) => e.title == "Aggregasi Minus");
     }
@@ -203,13 +219,22 @@ class OtherMenuCotroller extends BaseController {
 
   void removeFavorit(int i) {
     paketmuList.where((e) => e.title == favoritList[i].title).isNotEmpty
-        ? paketmuList.where((e) => e.title == favoritList[i].title).first.isFavorite = false
+        ? paketmuList
+            .where((e) => e.title == favoritList[i].title)
+            .first
+            .isFavorite = false
         : null;
     otherList.where((e) => e.title == favoritList[i].title).isNotEmpty
-        ? otherList.where((e) => e.title == favoritList[i].title).first.isFavorite = false
+        ? otherList
+            .where((e) => e.title == favoritList[i].title)
+            .first
+            .isFavorite = false
         : null;
     hubungiAkuList.where((e) => e.title == favoritList[i].title).isNotEmpty
-        ? hubungiAkuList.where((e) => e.title == favoritList[i].title).first.isFavorite = false
+        ? hubungiAkuList
+            .where((e) => e.title == favoritList[i].title)
+            .first
+            .isFavorite = false
         : null;
 
     favoritList.removeAt(i);
@@ -219,10 +244,18 @@ class OtherMenuCotroller extends BaseController {
   void addFavorit(int i, Items menu) {
     if ((favoritList.where((e) => e.title == menu.title).isEmpty)) {
       if (favoritList.length < 4) {
-        paketmuList.where((e) => e == menu).isNotEmpty ? paketmuList.where((e) => e == menu).first.isFavorite = true : null;
-        otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = true : null;
-        keuanganmuList.where((e) => e == menu).isNotEmpty ? keuanganmuList.where((e) => e == menu).first.isFavorite = true : null;
-        hubungiAkuList.where((e) => e == menu).isNotEmpty ? hubungiAkuList.where((e) => e == menu).first.isFavorite = true : null;
+        paketmuList.where((e) => e == menu).isNotEmpty
+            ? paketmuList.where((e) => e == menu).first.isFavorite = true
+            : null;
+        otherList.where((e) => e == menu).isNotEmpty
+            ? otherList.where((e) => e == menu).first.isFavorite = true
+            : null;
+        keuanganmuList.where((e) => e == menu).isNotEmpty
+            ? keuanganmuList.where((e) => e == menu).first.isFavorite = true
+            : null;
+        hubungiAkuList.where((e) => e == menu).isNotEmpty
+            ? hubungiAkuList.where((e) => e == menu).first.isFavorite = true
+            : null;
         update();
         favoritList.add(menu);
       } else {
@@ -240,10 +273,18 @@ class OtherMenuCotroller extends BaseController {
         );
       }
     } else {
-      paketmuList.where((e) => e == menu).isNotEmpty ? paketmuList.where((e) => e == menu).first.isFavorite = false : null;
-      otherList.where((e) => e == menu).isNotEmpty ? otherList.where((e) => e == menu).first.isFavorite = false : null;
-      keuanganmuList.where((e) => e == menu).isNotEmpty ? keuanganmuList.where((e) => e == menu).first.isFavorite = false : null;
-      hubungiAkuList.where((e) => e == menu).isNotEmpty ? hubungiAkuList.where((e) => e == menu).first.isFavorite = false : null;
+      paketmuList.where((e) => e == menu).isNotEmpty
+          ? paketmuList.where((e) => e == menu).first.isFavorite = false
+          : null;
+      otherList.where((e) => e == menu).isNotEmpty
+          ? otherList.where((e) => e == menu).first.isFavorite = false
+          : null;
+      keuanganmuList.where((e) => e == menu).isNotEmpty
+          ? keuanganmuList.where((e) => e == menu).first.isFavorite = false
+          : null;
+      hubungiAkuList.where((e) => e == menu).isNotEmpty
+          ? hubungiAkuList.where((e) => e == menu).first.isFavorite = false
+          : null;
       update();
 
       favoritList.removeWhere((e) => e.title == menu.title);

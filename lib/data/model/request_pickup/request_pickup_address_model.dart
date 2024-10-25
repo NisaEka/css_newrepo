@@ -1,5 +1,4 @@
 class RequestPickupAddressModel {
-
   String _id = "";
   String get id => _id;
 
@@ -46,5 +45,4 @@ class RequestPickupAddressModel {
     _lat = json["lat"];
     _lng = json["lng"];
   }
-
 }

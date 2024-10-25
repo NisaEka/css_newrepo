@@ -1,4 +1,3 @@
-
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -39,12 +38,17 @@ class FilterButton extends StatelessWidget {
             enableDrag: true,
             isDismissible: false,
             // isScrollControlled: true,
-            StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+            StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
-                    color: Theme.of(context).brightness == Brightness.light ? greyLightColor2 : greyDarkColor2,
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? greyLightColor2
+                        : greyDarkColor2,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -55,7 +59,10 @@ class FilterButton extends StatelessWidget {
                         Text(
                           'Filter',
                           style: appTitleTextStyle.copyWith(
-                            color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? blueJNE
+                                    : redJNE,
                           ),
                         ),
                         IconButton(

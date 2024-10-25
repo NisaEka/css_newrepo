@@ -44,11 +44,16 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2,
-          border: Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
+          border: Border.all(
+              color: Theme.of(context).brightness == Brightness.light
+                  ? greyDarkColor1
+                  : greyLightColor1),
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).brightness == Brightness.light ? blueJNE : redJNE,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? blueJNE
+                  : redJNE,
               spreadRadius: 1,
               offset: const Offset(-2, 2),
             ),
@@ -77,17 +82,21 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Center(
-                          child: widget.isLoading ? const CircularProgressIndicator.adaptive() : const Icon(Icons.image_not_supported_outlined),
+                          child: widget.isLoading
+                              ? const CircularProgressIndicator.adaptive()
+                              : const Icon(Icons.image_not_supported_outlined),
                         ),
                       ),
-                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) {
                           return child;
                         } else {
                           return Center(
                             child: CircularProgressIndicator(
                               value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
                                   : null,
                             ),
                           );
@@ -100,7 +109,8 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
                         )
                       : GoogleMap(
                           // onMapCreated: _onMapCreated,
-                          onMapCreated: (controller) => googleMapController?.complete(controller),
+                          onMapCreated: (controller) =>
+                              googleMapController?.complete(controller),
                           zoomControlsEnabled: false,
                           myLocationButtonEnabled: false,
                           mapType: MapType.none,

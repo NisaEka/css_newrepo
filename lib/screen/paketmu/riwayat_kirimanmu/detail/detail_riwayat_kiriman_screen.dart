@@ -28,7 +28,9 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
         return Scaffold(
           appBar: CustomTopBar(title: 'Detail Kiriman'.tr),
           body: _bodyContent(controller, context),
-          bottomNavigationBar: _bottomContent(controller.transactionModel ?? DataTransactionModel(), controller),
+          bottomNavigationBar: _bottomContent(
+              controller.transactionModel ?? DataTransactionModel(),
+              controller),
         );
       },
     );
@@ -51,7 +53,9 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                     width: Get.width / 2.5,
                     readOnly: true,
                     hintText: '',
-                    backgroundColor: AppConst.isLightTheme(context) ? greyLightColor2 : greyDarkColor2,
+                    backgroundColor: AppConst.isLightTheme(context)
+                        ? greyLightColor2
+                        : greyDarkColor2,
                     noBorder: true,
                     isLoading: c.isLoading,
                   ),
@@ -61,7 +65,9 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                     width: Get.width / 2.5,
                     readOnly: true,
                     hintText: '',
-                    backgroundColor: AppConst.isLightTheme(context) ? greyLightColor2 : greyDarkColor2,
+                    backgroundColor: AppConst.isLightTheme(context)
+                        ? greyLightColor2
+                        : greyDarkColor2,
                     noBorder: true,
                     isLoading: c.isLoading,
                   ),
@@ -93,11 +99,17 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(13),
               decoration: BoxDecoration(
-                color: c.isLoading ? greyColor : (AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2),
+                color: c.isLoading
+                    ? greyColor
+                    : (AppConst.isLightTheme(context)
+                        ? whiteColor
+                        : greyDarkColor2),
                 borderRadius: BorderRadius.circular(5),
                 boxShadow: [
                   BoxShadow(
-                    color: AppConst.isLightTheme(context) ? greyLightColor3 : greyDarkColor2,
+                    color: AppConst.isLightTheme(context)
+                        ? greyLightColor3
+                        : greyDarkColor2,
                     spreadRadius: 1,
                     offset: const Offset(-2, 2),
                   ),
@@ -108,9 +120,17 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                 children: [
                   CustomLabelText(
                     title: 'Tanggal Pesanan'.tr,
-                    value: c.transactionModel?.createdDate?.toLongDateTimeFormat() ?? '-',
-                    titleTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, fontWeight: medium),
-                    valueTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10),
+                    value: c.transactionModel?.createdDate
+                            ?.toLongDateTimeFormat() ??
+                        '-',
+                    titleTextStyle: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(fontSize: 10, fontWeight: medium),
+                    valueTextStyle: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(fontSize: 10),
                     alignment: 'end',
                   ),
                   Row(
@@ -120,45 +140,62 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text("No Resi".tr, style: Theme.of(context).textTheme.bodySmall),
+                              Text("No Resi".tr,
+                                  style: Theme.of(context).textTheme.bodySmall),
                               GestureDetector(
-                                onTap: () => Clipboard.setData(ClipboardData(text: c.transactionModel?.awb ?? '')),
+                                onTap: () => Clipboard.setData(ClipboardData(
+                                    text: c.transactionModel?.awb ?? '')),
                                 child: Container(
                                   margin: const EdgeInsets.only(left: 10),
                                   child: Icon(
                                     size: 10,
                                     Icons.copy_rounded,
-                                    color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                                    color: AppConst.isLightTheme(context)
+                                        ? blueJNE
+                                        : redJNE,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          Text("Tipe".tr, style: Theme.of(context).textTheme.bodySmall),
-                          Text("Service".tr, style: Theme.of(context).textTheme.bodySmall),
-                          Text("Dana COD".tr, style: Theme.of(context).textTheme.bodySmall),
-                          Text("Petugas Entry".tr, style: Theme.of(context).textTheme.bodySmall),
-                          Text("Pengirim".tr, style: Theme.of(context).textTheme.bodySmall),
-                          Text("Kota Pengiriman".tr, style: Theme.of(context).textTheme.bodySmall),
-                          Text("Penerima".tr, style: Theme.of(context).textTheme.bodySmall),
-                          Text("Kontak Penerima".tr, style: Theme.of(context).textTheme.bodySmall),
+                          Text("Tipe".tr,
+                              style: Theme.of(context).textTheme.bodySmall),
+                          Text("Service".tr,
+                              style: Theme.of(context).textTheme.bodySmall),
+                          Text("Dana COD".tr,
+                              style: Theme.of(context).textTheme.bodySmall),
+                          Text("Petugas Entry".tr,
+                              style: Theme.of(context).textTheme.bodySmall),
+                          Text("Pengirim".tr,
+                              style: Theme.of(context).textTheme.bodySmall),
+                          Text("Kota Pengiriman".tr,
+                              style: Theme.of(context).textTheme.bodySmall),
+                          Text("Penerima".tr,
+                              style: Theme.of(context).textTheme.bodySmall),
+                          Text("Kontak Penerima".tr,
+                              style: Theme.of(context).textTheme.bodySmall),
                           Row(
                             children: [
-                              Text("Order ID".tr, style: Theme.of(context).textTheme.bodySmall),
+                              Text("Order ID".tr,
+                                  style: Theme.of(context).textTheme.bodySmall),
                               GestureDetector(
-                                onTap: () => Clipboard.setData(ClipboardData(text: c.transactionModel?.orderId ?? '')),
+                                onTap: () => Clipboard.setData(ClipboardData(
+                                    text: c.transactionModel?.orderId ?? '')),
                                 child: Container(
                                   margin: const EdgeInsets.only(left: 10),
                                   child: Icon(
                                     size: 10,
                                     Icons.copy_rounded,
-                                    color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                                    color: AppConst.isLightTheme(context)
+                                        ? blueJNE
+                                        : redJNE,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          Text("Account".tr, style: Theme.of(context).textTheme.bodySmall),
+                          Text("Account".tr,
+                              style: Theme.of(context).textTheme.bodySmall),
                         ],
                       ),
                       const SizedBox(width: 15),
@@ -167,9 +204,10 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                         children: [
                           Text(
                             c.transactionModel?.awb ?? '-',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontWeight: medium,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      fontWeight: medium,
+                                    ),
                           ),
                           Text(
                             c.transactionModel?.type ?? '-',
@@ -189,7 +227,10 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
                           ),
                           Text(
                             c.transactionModel?.shipper?.name ?? '-',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: medium),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(fontWeight: medium),
                           ),
                           Text(
                             "${c.transactionModel?.receiver?.city} / ${c.transactionModel?.receiver?.district}",
@@ -238,7 +279,8 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
     );
   }
 
-  Widget _bottomContent(DataTransactionModel trans, DetailRiwayatKirimanController c) {
+  Widget _bottomContent(
+      DataTransactionModel trans, DetailRiwayatKirimanController c) {
     return CustomFilledButton(
       title: trans.status == "MASIH DI KAMU" &&
               trans.account?.accountType != "CASHLESS" &&

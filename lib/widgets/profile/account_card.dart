@@ -44,19 +44,27 @@ class AccountCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(account.accountNumber ?? '', style: listTitleTextStyle.copyWith(color: blueJNE)),
+                Text(account.accountNumber ?? '',
+                    style: listTitleTextStyle.copyWith(color: blueJNE)),
                 SizedBox(
                     width: Get.width / 2,
-                    child: Text("${account.accountName?.toUpperCase() ?? ''} / ${account.accountType?.toUpperCase() ?? account.accountService?.toUpperCase()}",
+                    child: Text(
+                        "${account.accountName?.toUpperCase() ?? ''} / ${account.accountType?.toUpperCase() ?? account.accountService?.toUpperCase()}",
                         style: listTitleTextStyle.copyWith(color: blueJNE))),
                 Row(
                   children: [
-                    Text(account.accountSs == "Y" ? "SS " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                    Text(account.accountYes == "Y" ? "YES " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                    Text(account.accountReg == "Y" ? "REG " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                    Text(account.accountOke == "Y" ? "OKE " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                    Text(account.accountJtr == "Y" ? "JTR " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
-                    Text(account.accountIntl == "Y" ? "INTL " : '', style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountSs == "Y" ? "SS " : '',
+                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountYes == "Y" ? "YES " : '',
+                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountReg == "Y" ? "REG " : '',
+                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountOke == "Y" ? "OKE " : '',
+                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountJtr == "Y" ? "JTR " : '',
+                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                    Text(account.accountIntl == "Y" ? "INTL " : '',
+                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
                   ],
                 ),
               ],
@@ -64,8 +72,10 @@ class AccountCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(account.accountService ?? '', style: listTitleTextStyle.copyWith(color: redJNE)),
-                Text(account.accountCategory ?? '', style: subTitleTextStyle.copyWith(color: greyDarkColor2)),
+                Text(account.accountService ?? '',
+                    style: listTitleTextStyle.copyWith(color: redJNE)),
+                Text(account.accountCategory ?? '',
+                    style: subTitleTextStyle.copyWith(color: greyDarkColor2)),
                 // Text("CCNC", style: subTitleTextStyle.copyWith(color: greyDarkColor2)),
               ],
             )

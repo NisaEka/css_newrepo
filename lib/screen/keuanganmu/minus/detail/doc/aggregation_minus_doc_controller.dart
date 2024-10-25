@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class AggregationMinusDocController extends BaseController {
-
   String docArgs = Get.arguments["doc"];
 
   final searchField = TextEditingController();
@@ -15,7 +14,8 @@ class AggregationMinusDocController extends BaseController {
   bool showMainContent = false;
   bool showErrorContent = false;
 
-  final PagingController<int, AggregationMinusDocModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, AggregationMinusDocModel> pagingController =
+      PagingController(firstPageKey: 1);
   static const pageSize = 20;
 
   @override
@@ -30,8 +30,7 @@ class AggregationMinusDocController extends BaseController {
     showLoadingIndicator = true;
     try {
       final aggregations = await aggregation.getAggregationMinusDoc(
-          docArgs, page, pageSize, searchField.text
-      );
+          docArgs, page, pageSize, searchField.text);
 
       final payload = aggregations.payload ?? List.empty();
       final isLastPage = payload.length < pageSize;
@@ -42,7 +41,6 @@ class AggregationMinusDocController extends BaseController {
         final nextPageKey = page + 1;
         pagingController.appendPage(payload, nextPageKey);
       }
-
     } catch (e) {
       showErrorContent = true;
       update();
@@ -51,5 +49,4 @@ class AggregationMinusDocController extends BaseController {
     showLoadingIndicator = false;
     update();
   }
-
 }

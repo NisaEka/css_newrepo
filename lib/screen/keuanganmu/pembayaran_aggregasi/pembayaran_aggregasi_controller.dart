@@ -13,7 +13,8 @@ class PembayaranAggergasiController extends BaseController {
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
   final searchField = TextEditingController();
-  final PagingController<int, AggregationModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, AggregationModel> pagingController =
+      PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
   DateTime? startDate;
@@ -148,10 +149,13 @@ class PembayaranAggergasiController extends BaseController {
   }
 
   void applyFilter() {
-    if (startDate != null || endDate != null || !accountList.equals(selectedAccount)) {
+    if (startDate != null ||
+        endDate != null ||
+        !accountList.equals(selectedAccount)) {
       isFiltered = true;
       if (startDate != null && endDate != null) {
-        transDate = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+        transDate =
+            "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
       }
       update();
       pagingController.refresh();

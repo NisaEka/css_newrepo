@@ -3,7 +3,6 @@ import 'package:css_mobile/data/model/invoice/invoice_detail_model.dart';
 import 'package:get/get.dart';
 
 class InvoiceDetailController extends BaseController {
-
   String invoiceNumber = Get.arguments["invoice_number"];
 
   bool _showLoadingIndicator = false;
@@ -43,7 +42,6 @@ class InvoiceDetailController extends BaseController {
         _showEmptyContent = true;
         update();
       }
-
     } catch (error) {
       _showErrorContent = true;
       update();
@@ -58,5 +56,4 @@ class InvoiceDetailController extends BaseController {
   void refreshInvoice() {
     _getInvoiceDetail();
   }
-
 }

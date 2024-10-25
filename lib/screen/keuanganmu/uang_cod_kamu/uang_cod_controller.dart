@@ -14,7 +14,6 @@ class UangCODController extends BaseController {
   String dateFilter = '0';
   String? date;
 
-
   void selectDateFilter(int filter) {
     dateFilter = filter.toString();
     update();
@@ -91,7 +90,8 @@ class UangCODController extends BaseController {
     if (startDate != null || endDate != null) {
       isFiltered = true;
       if (startDate != null && endDate != null) {
-        date = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+        date =
+            "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
       }
       update();
       // pagingController.refresh();

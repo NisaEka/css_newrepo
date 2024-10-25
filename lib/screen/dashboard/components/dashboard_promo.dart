@@ -18,7 +18,8 @@ class DashboardPromo extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Promo Terkini'.tr, style: Theme.of(context).textTheme.titleLarge),
+                    Text('Promo Terkini'.tr,
+                        style: Theme.of(context).textTheme.titleLarge),
                     // const DateDropdownFilterButton(),
                   ],
                 ),

@@ -16,7 +16,8 @@ class LoginScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: controller.state.pop,
-            onPopInvokedWithResult: (bool didPop, Object? result) => Get.off(const DashboardScreen()),
+            onPopInvokedWithResult: (bool didPop, Object? result) =>
+                Get.off(const DashboardScreen()),
             child: Stack(
               children: [
                 const Scaffold(
@@ -25,7 +26,9 @@ class LoginScreen extends StatelessWidget {
                   ),
                   bottomNavigationBar: VersionApp(),
                 ),
-                controller.state.isLoading == true ? const LoadingDialog() : Container(),
+                controller.state.isLoading == true
+                    ? const LoadingDialog()
+                    : Container(),
               ],
             ),
           );

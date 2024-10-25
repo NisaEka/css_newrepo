@@ -17,7 +17,10 @@ class Origin {
 
   Origin.fromJson(dynamic json) {
     _originCode = json['origin_code'] ?? json['code'] ?? json['originCode'];
-    _originName = json['origin_name'] ?? json['desc'] ?? json['label'] ?? json['originName'];
+    _originName = json['origin_name'] ??
+        json['desc'] ??
+        json['label'] ??
+        json['originName'];
     _branchCode = json['branch_code'] ?? json['branch'] ?? json['branchCode'];
     _originStatus = json['originStatus'];
     if (json["region"] != null) {

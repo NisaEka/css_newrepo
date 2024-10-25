@@ -36,7 +36,7 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
       {super.key,
       this.items,
       required this.asyncItems,
-       this.onChanged,
+      this.onChanged,
       required this.itemAsString,
       required this.itemBuilder,
       this.label,
@@ -64,10 +64,12 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
   }
 
   @override
-  State<CustomSearchDropdownField<T>> createState() => _CustomSearchDropdownFieldState<T>();
+  State<CustomSearchDropdownField<T>> createState() =>
+      _CustomSearchDropdownFieldState<T>();
 }
 
-class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField<T>> {
+class _CustomSearchDropdownFieldState<T>
+    extends State<CustomSearchDropdownField<T>> {
   FormFieldValidator<T>? validator;
 
   @override
@@ -77,17 +79,22 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
         children: [
           const SizedBox(height: 10),
           TextField(
-            controller: widget.controller ?? TextEditingController(text: widget.selectedItem.toString()),
+            controller: widget.controller ??
+                TextEditingController(text: widget.selectedItem.toString()),
             enabled: false,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16,
-                  color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
+                  color: AppConst.isLightTheme(context)
+                      ? greyDarkColor1
+                      : greyLightColor1,
                   // fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(
               label: Text(widget.label ?? widget.hintText ?? ''),
               filled: true,
-              fillColor: Theme.of(context).brightness == Brightness.light ? neutralColor : greyColor,
+              fillColor: Theme.of(context).brightness == Brightness.light
+                  ? neutralColor
+                  : greyColor,
               prefixIcon: widget.prefixIcon,
               suffixIcon: widget.suffixIcon,
               prefixIconColor: Theme.of(context).colorScheme.outline,
@@ -104,7 +111,9 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
         DropdownSearch<T>(
           validator: (value) {
             if (widget.isRequired) {
-              if (value == null || value == widget.hintText || value == widget.label) {
+              if (value == null ||
+                  value == widget.hintText ||
+                  value == widget.label) {
                 // return validator!(value as T);
                 // StorageCore().readString(StorageCore.localeApp).then((value) {
                 //   if (value == 'id') {
@@ -122,7 +131,8 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
             fit: FlexFit.loose,
             showSelectedItems: false,
             menuProps: MenuProps(
-              backgroundColor: AppConst.isLightTheme(context) ? null : greyColor,
+              backgroundColor:
+                  AppConst.isLightTheme(context) ? null : greyColor,
               borderRadius: BorderRadius.circular(10),
             ),
             showSearchBox: true,
@@ -136,7 +146,10 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
                   hintText: widget.searchHintText,
                   helperText: "Masukan minimal 3 karakter".tr,
                 ),
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular)),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: regular)),
           ),
           dropdownButtonProps: DropdownButtonProps(
             icon: const Icon(Icons.keyboard_arrow_down),
@@ -150,7 +163,8 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
                 prefixIcon: widget.prefixIcon,
                 suffixIcon: widget.suffixIcon,
                 prefixIconColor: Theme.of(context).colorScheme.outline),
-            baseStyle: widget.textStyle ?? Theme.of(context).textTheme.titleSmall,
+            baseStyle:
+                widget.textStyle ?? Theme.of(context).textTheme.titleSmall,
           ),
           asyncItems: widget.asyncItems,
           itemAsString: widget.itemAsString,

@@ -23,8 +23,12 @@ class MenuItems extends StatelessWidget {
                   data: items[i],
                   isActive: (items[i].isAuth ?? false) ? c.isLogin : true,
                   isEdit: c.isEdit,
-                  onEdit: () => !items.equals(c.favoritList) ? c.addFavorit(i, items[i]) : c.removeFavorit(i),
-                  onTap: () => c.isEdit ? c.addFavorit(i, items[i]) : c.routeToMenu(items[i], context),
+                  onEdit: () => !items.equals(c.favoritList)
+                      ? c.addFavorit(i, items[i])
+                      : c.removeFavorit(i),
+                  onTap: () => c.isEdit
+                      ? c.addFavorit(i, items[i])
+                      : c.routeToMenu(items[i], context),
                 ),
                 childCount: items.length,
               ),

@@ -1,5 +1,4 @@
 class InvoiceDetailModel {
-
   String? _invoiceNumberEncoded = "";
   String? get invoiceNumberEncoded => _invoiceNumberEncoded;
 
@@ -118,5 +117,4 @@ class InvoiceDetailModel {
     _stamp = json["stamp"] ?? 0;
     _totalPaid = json["total_paid"] ?? 0;
   }
-
 }

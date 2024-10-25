@@ -44,7 +44,8 @@ class NoAkunScreen extends StatelessWidget {
             StatefulBuilder(builder: (BuildContext c, StateSetter setState) {
               return _modalContent(c, setState, ctrl);
             }),
-            backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+            backgroundColor:
+                AppConst.isLightTheme(context) ? whiteColor : greyColor,
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -57,7 +58,8 @@ class NoAkunScreen extends StatelessWidget {
         ));
   }
 
-  Widget _modalContent(BuildContext context, StateSetter setState, NoAkunController c) {
+  Widget _modalContent(
+      BuildContext context, StateSetter setState, NoAkunController c) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(

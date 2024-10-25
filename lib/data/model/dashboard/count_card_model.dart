@@ -1,12 +1,13 @@
 class CountCardModel {
   CountCardModel({
-      String? title, 
-      String? img, 
-      String? route, 
-      num? count, 
-      num? cod, 
-      num? nonCod, 
-      num? codOngkir,}){
+    String? title,
+    String? img,
+    String? route,
+    num? count,
+    num? cod,
+    num? nonCod,
+    num? codOngkir,
+  }) {
     _title = title;
     _img = img;
     _route = route;
@@ -14,7 +15,7 @@ class CountCardModel {
     _cod = cod;
     _nonCod = nonCod;
     _codOngkir = codOngkir;
-}
+  }
 
   CountCardModel.fromJson(dynamic json) {
     _title = json['title'];
@@ -32,21 +33,24 @@ class CountCardModel {
   num? _cod;
   num? _nonCod;
   num? _codOngkir;
-CountCardModel copyWith({  String? title,
-  String? img,
-  String? route,
-  num? count,
-  num? cod,
-  num? nonCod,
-  num? codOngkir,
-}) => CountCardModel(  title: title ?? _title,
-  img: img ?? _img,
-  route: route ?? _route,
-  count: count ?? _count,
-  cod: cod ?? _cod,
-  nonCod: nonCod ?? _nonCod,
-  codOngkir: codOngkir ?? _codOngkir,
-);
+  CountCardModel copyWith({
+    String? title,
+    String? img,
+    String? route,
+    num? count,
+    num? cod,
+    num? nonCod,
+    num? codOngkir,
+  }) =>
+      CountCardModel(
+        title: title ?? _title,
+        img: img ?? _img,
+        route: route ?? _route,
+        count: count ?? _count,
+        cod: cod ?? _cod,
+        nonCod: nonCod ?? _nonCod,
+        codOngkir: codOngkir ?? _codOngkir,
+      );
   String? get title => _title;
   String? get img => _img;
   String? get route => _route;
@@ -66,5 +70,4 @@ CountCardModel copyWith({  String? title,
     map['cod_ongkir'] = _codOngkir;
     return map;
   }
-
 }

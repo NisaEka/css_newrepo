@@ -1,8 +1,10 @@
 import 'dart:convert';
 
-ProfilListModel profilListModelFromJson(String str) => ProfilListModel.fromJson(json.decode(str));
+ProfilListModel profilListModelFromJson(String str) =>
+    ProfilListModel.fromJson(json.decode(str));
 
-String profilListModelToJson(ProfilListModel data) => json.encode(data.toJson());
+String profilListModelToJson(ProfilListModel data) =>
+    json.encode(data.toJson());
 
 class ProfilListModel {
   ProfilListModel({

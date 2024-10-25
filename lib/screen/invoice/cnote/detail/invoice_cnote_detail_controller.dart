@@ -3,7 +3,6 @@ import 'package:css_mobile/data/model/invoice/invoice_cnote_detail_model.dart';
 import 'package:get/get.dart';
 
 class InvoiceCnoteDetailController extends BaseController {
-
   String invoiceNumber = Get.arguments["invoice_number"];
   String awb = Get.arguments["awb"];
 
@@ -20,7 +19,8 @@ class InvoiceCnoteDetailController extends BaseController {
   bool get showEmptyContent => _showEmptyContent;
 
   InvoiceCnoteDetailModel? _invoiceCnoteDetailModel;
-  InvoiceCnoteDetailModel? get invoiceCnoteDetailModel => _invoiceCnoteDetailModel;
+  InvoiceCnoteDetailModel? get invoiceCnoteDetailModel =>
+      _invoiceCnoteDetailModel;
 
   @override
   void onInit() {
@@ -33,7 +33,8 @@ class InvoiceCnoteDetailController extends BaseController {
     update();
 
     try {
-      final invoice = await invoiceRepository.getInvoiceCnoteByAwb(invoiceNumber, awb);
+      final invoice =
+          await invoiceRepository.getInvoiceCnoteByAwb(invoiceNumber, awb);
 
       if (invoice.payload != null) {
         _invoiceCnoteDetailModel = invoice.payload;
@@ -44,7 +45,6 @@ class InvoiceCnoteDetailController extends BaseController {
         _showEmptyContent = true;
         update();
       }
-
     } catch (error) {
       _showErrorContent = true;
       update();

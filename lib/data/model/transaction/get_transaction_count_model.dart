@@ -12,7 +12,9 @@ class GetTransactionCountModel {
   GetTransactionCountModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
-    _payload = json['payload'] != null ? TransactionCount.fromJson(json['payload']) : null;
+    _payload = json['payload'] != null
+        ? TransactionCount.fromJson(json['payload'])
+        : null;
   }
 
   num? _code;

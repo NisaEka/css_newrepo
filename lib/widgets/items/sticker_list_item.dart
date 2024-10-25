@@ -37,7 +37,8 @@ class StickerListItem extends StatelessWidget {
               color: Colors.grey,
             ),
           ),
-          errorWidget: (context, url, error) => const Icon(Icons.image_not_supported),
+          errorWidget: (context, url, error) =>
+              const Icon(Icons.image_not_supported),
         ),
       ),
     );

@@ -60,7 +60,8 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 ValueItem(
                   title: "POD".tr,
-                  value: '${c.data.podCode ?? ''} - ${c.data.podGroupName ?? '-'}',
+                  value:
+                      '${c.data.podCode ?? ''} - ${c.data.podGroupName ?? '-'}',
                   fontSize: 12,
                 ),
                 ValueItem(
@@ -103,17 +104,20 @@ class AggByCnoteScreen extends StatelessWidget {
                   title: "COD Amount".tr,
                   value: 'Rp ${c.data.codAmount?.toInt().toCurrency()}',
                   fontSize: 12,
-                  valueFontColor: AppConst.isLightTheme(context) ? blueJNE : infoColor,
+                  valueFontColor:
+                      AppConst.isLightTheme(context) ? blueJNE : infoColor,
                 ),
                 const Divider(),
                 ValueItem(
                   title: "Freight Charge".tr,
-                  value: 'Rp ${c.data.freightCharge?.toInt().toCurrency() ?? 0}',
+                  value:
+                      'Rp ${c.data.freightCharge?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Insurance Charge".tr,
-                  value: 'Rp ${c.data.insuranceCharge?.toInt().toCurrency() ?? 0}',
+                  value:
+                      'Rp ${c.data.insuranceCharge?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                 ),
                 ValueItem(
@@ -147,7 +151,8 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 ValueItem(
                   title: "Return Freight Charge After Discount".tr,
-                  value: 'Rp ${c.data.rtfChargeDisc?.toInt().toCurrency() ?? 0}',
+                  value:
+                      'Rp ${c.data.rtfChargeDisc?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),

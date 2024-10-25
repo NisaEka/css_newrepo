@@ -1,5 +1,4 @@
 class AggregationMinusDocModel {
-
   String? _aggMinDoc = "";
   String? get aggMinDoc => _aggMinDoc;
 
@@ -102,7 +101,7 @@ class AggregationMinusDocModel {
   String? _lastUpdateBy = "";
   String? get lastUpdateBy => _lastUpdateBy;
 
-  String? _lastUpdateProcess ="";
+  String? _lastUpdateProcess = "";
   String? get lastUpdateProcess => _lastUpdateProcess;
 
   AggregationMinusDocModel.fromJson(dynamic json) {
@@ -142,5 +141,4 @@ class AggregationMinusDocModel {
     _lastUpdateBy = json["last_update_by"];
     _lastUpdateProcess = json["last_update_process"];
   }
-
 }

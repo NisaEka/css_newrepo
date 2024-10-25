@@ -14,7 +14,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class FacilityFormReturnController extends BaseController {
-
   FacilityCreateModel facilityCreateArgs = Get.arguments['data'];
   Destination shipperDestination = Get.arguments['destination'];
 
@@ -187,5 +186,4 @@ class FacilityFormReturnController extends BaseController {
 
     return facilityCreateArgs;
   }
-
 }

@@ -8,41 +8,33 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RequestPickupItem extends StatefulWidget {
-
   final RequestPickupModel? data;
   final Function(String) onTap;
   final Function onLongTap;
   final bool checkMode;
   final bool checked;
 
-  const RequestPickupItem({
-    super.key,
-    required this.data,
-    required this.onTap,
-    required this.onLongTap,
-    this.checkMode = false,
-    required this.checked
-  });
+  const RequestPickupItem(
+      {super.key,
+      required this.data,
+      required this.onTap,
+      required this.onLongTap,
+      this.checkMode = false,
+      required this.checked});
 
   @override
   State<StatefulWidget> createState() => _RequestPickupItemState();
-
 }
 
 class _RequestPickupItemState extends State<RequestPickupItem> {
-
   @override
   Widget build(BuildContext context) {
     final requestPickup = widget.data!;
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () => {
-        widget.onTap(requestPickup.awb)
-      },
-      onLongPress: () => {
-        widget.onLongTap()
-      },
+      onTap: () => {widget.onTap(requestPickup.awb)},
+      onLongPress: () => {widget.onLongTap()},
       child: Container(
         width: Get.size.width,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -62,7 +54,8 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
   }
 
   Widget _requestPickupCheckbox() {
-    final isTristate = widget.data?.status == Constant.statusAlreadyRequestPickedUp;
+    final isTristate =
+        widget.data?.status == Constant.statusAlreadyRequestPickedUp;
 
     if (widget.checkMode && !isTristate) {
       return Row(
@@ -78,7 +71,9 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
         ],
       );
     } else if (widget.checkMode) {
-      return const SizedBox(width: 64,);
+      return const SizedBox(
+        width: 64,
+      );
     } else {
       return Container();
     }
@@ -94,23 +89,20 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
 
   Widget _requestPickupContent(RequestPickupModel requestPickup) {
     return Expanded(
-      child:  Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            requestPickup.awb,
-            style: itemTextStyle.copyWith(
-              fontWeight: FontWeight.bold
-            ),
-          ),
-          Text(
-            requestPickup.receiverName,
-            style: itemTextStyle,
-          ),
-          _requestPickupServiceAndType(requestPickup)
-        ],
-      )
-    );
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          requestPickup.awb,
+          style: itemTextStyle.copyWith(fontWeight: FontWeight.bold),
+        ),
+        Text(
+          requestPickup.receiverName,
+          style: itemTextStyle,
+        ),
+        _requestPickupServiceAndType(requestPickup)
+      ],
+    ));
   }
 
   Widget _requestPickupServiceAndType(RequestPickupModel requestPickup) {
@@ -140,16 +132,15 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
           requestPickup.date,
           style: labelTextStyle,
         ),
-        const SizedBox(height: 8,),
+        const SizedBox(
+          height: 8,
+        ),
         Container(
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
-            color: _chipColor(requestPickup),
-            border: Border.all(
-              color: _chipColor(requestPickup)
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(8))
-          ),
+              color: _chipColor(requestPickup),
+              border: Border.all(color: _chipColor(requestPickup)),
+              borderRadius: const BorderRadius.all(Radius.circular(8))),
           child: Text(
             requestPickup.status,
             style: labelTextStyle.copyWith(
@@ -169,5 +160,4 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
       return successColor;
     }
   }
-
 }

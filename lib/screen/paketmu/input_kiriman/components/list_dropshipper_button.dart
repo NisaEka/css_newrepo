@@ -33,10 +33,13 @@ class ListDropshipperButton extends StatelessWidget {
                       ),
                     ),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 decoration: const BoxDecoration(
-                  border: Border(bottom: BorderSide(color: greyColor, width: 2), top: BorderSide(color: greyColor, width: 2)),
+                  border: Border(
+                      bottom: BorderSide(color: greyColor, width: 2),
+                      top: BorderSide(color: greyColor, width: 2)),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
