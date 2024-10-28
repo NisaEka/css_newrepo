@@ -31,8 +31,8 @@ class FacilityController extends BaseController {
           AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
       if (allowedMenu.fasilitas == Constant.keyMenuAllowed) {
         await facility.getFacilities().then((response) async {
-          if (response.code == HttpStatus.ok) {
-            final facilities = response.payload ?? List.empty();
+          if (response.statusCode == HttpStatus.ok) {
+            final facilities = response.data ?? List.empty();
             _determineBannerStatus(facilities);
 
             for (var facility in facilities) {

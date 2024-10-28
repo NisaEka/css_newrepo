@@ -186,7 +186,7 @@ class RequestPickupController extends BaseController {
     try {
       final response = await requestPickupRepository.getRequestPickups(filter);
 
-      final payload = response.payload ?? List.empty();
+      final payload = response.data ?? List.empty();
       final isLastPage = payload.length <= pageSize;
 
       if (isLastPage) {
@@ -211,7 +211,7 @@ class RequestPickupController extends BaseController {
     try {
       final response =
           await requestPickupRepository.getRequestPickupAddresses();
-      final payload = response.payload ?? List.empty();
+      final payload = response.data ?? List.empty();
       addresses.clear();
       addresses.addAll(payload);
     } catch (e) {
@@ -224,7 +224,7 @@ class RequestPickupController extends BaseController {
     try {
       final response = await requestPickupRepository
           .getRequestPickupCities(DefaultPageFilterModel(keyword: keyword));
-      final payload = response.payload ?? List.empty();
+      final payload = response.data ?? List.empty();
       cities.clear();
       cities.add(Constant.allDeliveryCity);
       cities.addAll(payload);
@@ -238,7 +238,7 @@ class RequestPickupController extends BaseController {
   Future<void> getStatuses() async {
     try {
       final response = await requestPickupRepository.getRequestPickupStatuses();
-      final payload = response.payload ?? List.empty();
+      final payload = response.data ?? List.empty();
       statuses.add(Constant.allStatus);
       statuses.addAll(payload);
     } catch (e) {
@@ -250,7 +250,7 @@ class RequestPickupController extends BaseController {
   Future<void> getTypes() async {
     try {
       final response = await requestPickupRepository.getRequestPickupTypes();
-      final payload = response.payload ?? List.empty();
+      final payload = response.data ?? List.empty();
       types.add(Constant.allDeliveryType);
       types.addAll(payload);
     } catch (e) {
@@ -316,7 +316,7 @@ class RequestPickupController extends BaseController {
     requestPickupRepository
         .createRequestPickup(_prepareCreateData())
         .then((response) {
-      if (response.code == HttpStatus.created) {
+      if (response.statusCode == HttpStatus.created) {
         _createDataSuccess = true;
         refreshPickups();
         refreshState();

@@ -3,9 +3,10 @@ import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_total_model.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/default_response_model.dart';
 
-import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/aggregasi/aggregasi_repository.dart';
 import 'package:dio/dio.dart';
@@ -17,41 +18,30 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<GetAggregationReportModel> getAggregationReport(
-    int page,
-    int limit,
-    String keyword,
-    String aggDate,
-    List<Account> accounts,
-  ) async {
+  Future<BaseResponse<List<AggregationModel>>> getAggregationReport(
+      QueryParamModel param) async {
+    print("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
-    List<String> accountNumber = [];
-    for (var e in accounts) {
-      accountNumber.add(e.accountNumber.toString());
-    }
     try {
-      Response response = await network.dio.get(
-        "/aggregation",
-        queryParameters: {
-          "keyword": keyword,
-          "page": page,
-          "limit": limit,
-          "agg_date": aggDate,
-          "account_number": accountNumber
-              .toString()
-              .splitMapJoin(',')
-              .replaceAll('[', '')
-              .replaceAll(']', '')
-              .toString(),
-          // "account_number": "80563317,80563320",
-        },
+      Response response = await network.base.get(
+        "/aggregations",
+        queryParameters: param.toJson(),
       );
 
-      return GetAggregationReportModel.fromJson(response.data);
+      return BaseResponse<List<AggregationModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<AggregationModel>(
+                  (i) => AggregationModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return GetAggregationReportModel.fromJson(e.response?.data);
+      return e.response?.data;
     }
   }
 
@@ -62,10 +52,10 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     String? keyword,
   ) async {
     try {
-      var response = await network.dio.get("/aggregation/minus",
+      var response = await network.base.get("/aggregations/minus",
           queryParameters: {"page": page, "limit": limit, "keyword": keyword});
       List<AggregationMinusModel> aggregations = [];
-      response.data["payload"].forEach((aggregation) {
+      response.data["data"].forEach((aggregation) {
         aggregations.add(AggregationMinusModel.fromJson(aggregation));
       });
       return DefaultResponseModel.fromJson(response.data, aggregations);
@@ -79,10 +69,10 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
       getAggregationMinusDoc(
           String doc, int page, int limit, String? keyword) async {
     try {
-      var response = await network.dio.get("/aggregation/minus/$doc",
+      var response = await network.base.get("/aggregations/minus/$doc",
           queryParameters: {"page": page, "limit": limit, "keyword": keyword});
       List<AggregationMinusDocModel> aggregations = [];
-      response.data["payload"].forEach((aggregation) {
+      response.data["data"].forEach((aggregation) {
         aggregations.add(AggregationMinusDocModel.fromJson(aggregation));
       });
       return DefaultResponseModel.fromJson(response.data, aggregations);
@@ -92,12 +82,15 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<GetAggregationTotalModel> getAggregationTotal() async {
+  Future<GetAggregationTotalModel> getAggregationTotal(
+      QueryParamModel param) async {
+    print("param toJson total ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.get(
-        "/aggregation/total",
+      Response response = await network.base.get(
+        "/aggregations/total",
+        queryParameters: param.toJson(),
       );
       GetAggregationTotalModel resp =
           GetAggregationTotalModel.fromJson(response.data);
@@ -109,21 +102,29 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<GetAggregationDetailModel> getAggregationByDoc(
-    int page,
-    int limit,
-    String aggregationID,
-  ) async {
+  Future<BaseResponse<List<AggregationDetailModel>>> getAggregationByDoc(
+      String aggregationID, QueryParamModel param) async {
+    print("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.get(
-        "/aggregation/$aggregationID",
+      Response response = await network.base.get(
+        "/aggregations/$aggregationID",
       );
 
-      return GetAggregationDetailModel.fromJson(response.data);
+      return BaseResponse<List<AggregationDetailModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<AggregationDetailModel>(
+                  (i) => AggregationDetailModel.fromJson(
+                      i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return GetAggregationDetailModel.fromJson(e.response?.data);
+      return e.response?.data;
     }
   }
 }

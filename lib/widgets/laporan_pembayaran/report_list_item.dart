@@ -116,8 +116,10 @@ class _ReportListItemState extends State<ReportListItem> {
                             width: widget.isLoading ? Get.width / 3 : null,
                             height: widget.isLoading ? 10 : null,
                             child: Text(
-                              widget.data?.aggDocDate?.toDateTimeFormat() ??
-                                  widget.det?.cnoteDate?.toDateTimeFormat() ??
+                              widget.data?.mpayWdrGrpPayDate
+                                      ?.toDateTimeFormat() ??
+                                  widget.det?.dpayDetWdrCnotedate
+                                      ?.toDateTimeFormat() ??
                                   '',
                               style: sublistTitleTextStyle,
                             ),
@@ -132,7 +134,7 @@ class _ReportListItemState extends State<ReportListItem> {
                                 ? const EdgeInsets.only(top: 2)
                                 : EdgeInsets.zero,
                             child: Text(
-                              "# ${widget.data?.aggDocNo ?? widget.det?.cnoteNo ?? ''}",
+                              "# ${widget.data?.mpayWdrGrpPayNo ?? widget.det?.dpayDetWdrCnoteno ?? ''}",
                               style: listTitleTextStyle.copyWith(
                                   color: Theme.of(context).brightness ==
                                           Brightness.light
@@ -152,7 +154,7 @@ class _ReportListItemState extends State<ReportListItem> {
                                       ? const EdgeInsets.only(top: 2)
                                       : EdgeInsets.zero,
                                   child: Text(
-                                    "RP. ${widget.data?.paidAmt?.toInt().toCurrency() ?? widget.data?.netAmt?.toInt().toCurrency() ?? '-'}",
+                                    "RP. ${widget.data?.mpayWdrGrpPayPaidAmt?.toInt().toCurrency() ?? widget.data?.mpayWdrGrpPayNetAmt?.toInt().toCurrency() ?? '-'}",
                                     style: listTitleTextStyle.copyWith(
                                       color: successColor,
                                     ),
@@ -169,53 +171,53 @@ class _ReportListItemState extends State<ReportListItem> {
                             const Divider(thickness: 0.5),
                             ValueItem(
                               title: "CUST GROUP",
-                              value: widget.data?.custGroup ?? '-',
+                              value: widget.data?.mpayWdrGrpPayGroup ?? '-',
                             ),
                             ValueItem(
                               title: "CUST ID",
-                              value: widget.data?.custId ?? '-',
+                              value: widget.data?.mpayWdrGrpPayCode ?? '-',
                             ),
                             ValueItem(
                               title: "CUST NAME",
-                              value: widget.data?.custName ?? '-',
+                              value: widget.data?.mpayWdrGrpPayName ?? '-',
                             ),
                             const Divider(thickness: 0.5),
                             ValueItem(
                               title: "COD AMOUNT",
                               value:
-                                  "RP. ${widget.data?.codAmt?.toInt().toCurrency() ?? '-'}",
+                                  "RP. ${widget.data?.mpayWdrGrpPayCodAmt?.toInt().toCurrency() ?? '-'}",
                             ),
                             ValueItem(
                               title: "COD FEE ( ONGKIR DLL )",
                               value:
-                                  "RP. ${widget.data?.codFee?.toInt().toCurrency() ?? '-'}",
+                                  "RP. ${widget.data?.mpayWdrGrpPayCodFee?.toInt().toCurrency() ?? '-'}",
                               valueFontColor: errorColor,
                             ),
                             ValueItem(
                               title: "NET AMOUNT",
                               value:
-                                  "RP. ${widget.data?.netAmt?.toInt().toCurrency() ?? '-'}",
+                                  "RP. ${widget.data?.mpayWdrGrpPayNetAmt?.toInt().toCurrency() ?? '-'}",
                             ),
                             const Divider(thickness: 0.5),
                             ValueItem(
                               title: "PAID AMOUNT",
                               value:
-                                  "RP. ${widget.data?.paidAmt?.toInt().toCurrency() ?? '-'}",
+                                  "RP. ${widget.data?.mpayWdrGrpPayPaidAmt?.toInt().toCurrency() ?? '-'}",
                               titleTextStyle:
                                   listTitleTextStyle.copyWith(fontSize: 8),
                               valueFontColor: successColor,
                             ),
                             ValueItem(
                               title: "PAID DATE",
-                              value:
-                                  widget.data?.paidDate?.toShortDateFormat() ??
-                                      '-',
+                              value: widget.data?.mpayWdrGrpPayDatePaid
+                                      ?.toShortDateFormat() ??
+                                  '-',
                               valueTextStyle:
                                   sublistTitleTextStyle.copyWith(fontSize: 8),
                             ),
                             ValueItem(
                               title: "PAID REFF NO",
-                              value: widget.data?.paidReffNo ?? '-',
+                              value: widget.data?.mpayWdrGrpPayReffPaid ?? '-',
                               valueTextStyle:
                                   sublistTitleTextStyle.copyWith(fontSize: 8),
                             ),

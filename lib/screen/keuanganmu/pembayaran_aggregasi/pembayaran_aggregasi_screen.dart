@@ -98,7 +98,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                     onTapButton: () => Get.to(
                       const AggByDocScreen(),
                       arguments: {
-                        'aggregationID': item.aggDocNo ?? '',
+                        'aggregationID': item.mpayWdrGrpPayNo ?? '',
                       },
                     ),
                   ),

@@ -120,11 +120,11 @@ class AltProfileController extends BaseController {
             // ),
             )
         .then((value) {
-      if (value.code == 201) {
-        storage.deleteLogin();
-        storage.deleteString(StorageCore.favoriteMenu);
-        Get.offAll(const LoginScreen());
-      }
+      // if (value.code == 201) {
+      storage.deleteLogin();
+      storage.deleteString(StorageCore.favoriteMenu);
+      Get.offAll(const LoginScreen());
+      // }
     });
     isLoading = false;
     update();

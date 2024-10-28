@@ -1,5 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -13,7 +14,7 @@ class AggByDocController extends BaseController {
 
   bool isLoading = false;
   static const pageSize = 10;
-  GetAggregationDetailModel? data;
+  List<AggregationDetailModel>? data;
 
   @override
   void onInit() {
@@ -28,17 +29,19 @@ class AggByDocController extends BaseController {
   Future<void> getAggregation(int page) async {
     isLoading = true;
     try {
-      final agg =
-          await aggregation.getAggregationByDoc(page, pageSize, aggregationID);
-      data = agg;
+      final agg = await aggregation.getAggregationByDoc(
+          aggregationID,
+          QueryParamModel(
+              page: page, limit: pageSize, search: searchField.text));
+      data = agg.data;
       update();
-      final isLastPage = (agg.payload?.length ?? 0) < pageSize;
+      final isLastPage = (agg.data?.length ?? 0) < pageSize;
       if (isLastPage) {
-        pagingController.appendLastPage(agg.payload ?? []);
+        pagingController.appendLastPage(agg.data ?? []);
         // transactionList.addAll(pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
-        pagingController.appendPage(agg.payload ?? [], nextPageKey);
+        pagingController.appendPage(agg.data ?? [], nextPageKey);
         // transactionList.addAll(pagingController.itemList ?? []);
       }
     } catch (e, i) {

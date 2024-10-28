@@ -73,56 +73,74 @@ class BaseResponse<T> {
 
 class Meta {
   Meta({
-    num? page,
+    num? total,
     num? limit,
-    num? rowCount,
-    num? pageCount,
+    num? currentPage,
+    num? lastPage,
+    num? from,
+    num? to,
   }) {
-    _page = page;
+    _total = total;
     _limit = limit;
-    _rowCount = rowCount;
-    _pageCount = pageCount;
+    _currentPage = currentPage;
+    _lastPage = lastPage;
+    _from = from;
+    _to = to;
   }
 
   Meta.fromJson(dynamic json) {
-    _page = json['page'];
+    _total = json['total'];
     _limit = json['limit'];
-    _rowCount = json['rowCount'];
-    _pageCount = json['pageCount'];
+    _currentPage = json['currentPage'];
+    _lastPage = json['lastPage'];
+    _from = json['from'];
+    _to = json['to'];
   }
 
-  num? _page;
+  num? _total;
   num? _limit;
-  num? _rowCount;
-  num? _pageCount;
+  num? _currentPage;
+  num? _lastPage;
+  num? _from;
+  num? _to;
 
   Meta copyWith({
-    num? page,
+    num? currentPage,
     num? limit,
-    num? rowCount,
-    num? pageCount,
+    num? total,
+    num? lastPage,
+    num? from,
+    num? to,
   }) =>
       Meta(
-        page: page ?? _page,
+        total: total ?? _total,
         limit: limit ?? _limit,
-        rowCount: rowCount ?? _rowCount,
-        pageCount: pageCount ?? _pageCount,
+        currentPage: currentPage ?? _currentPage,
+        lastPage: lastPage ?? _lastPage,
+        from: from ?? _from,
+        to: to ?? _to,
       );
 
-  num? get page => _page;
+  num? get total => _total;
 
   num? get limit => _limit;
 
-  num? get rowCount => _rowCount;
+  num? get currentPage => _currentPage;
 
-  num? get pageCount => _pageCount;
+  num? get lastPage => _lastPage;
+
+  num? get from => _from;
+
+  num? get to => _to;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['page'] = _page;
+    map['total'] = _total;
     map['limit'] = _limit;
-    map['rowCount'] = _rowCount;
-    map['pageCount'] = _pageCount;
+    map['currentPage'] = _currentPage;
+    map['lastPage'] = _lastPage;
+    map['from'] = _from;
+    map['to'] = _to;
     return map;
   }
 }

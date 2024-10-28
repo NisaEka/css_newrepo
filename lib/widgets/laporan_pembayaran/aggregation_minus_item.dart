@@ -107,7 +107,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                             width: widget.isLoading ? Get.width / 3 : null,
                             height: widget.isLoading ? 10 : null,
                             child: Text(
-                              widget.data?.createdDate.toDateTimeFormat() ?? '',
+                              widget.data?.createddtm.toDateTimeFormat() ?? '',
                               style: sublistTitleTextStyle,
                             ),
                           ),
@@ -154,7 +154,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                           ValueItem(
                             title: "COD AMOUNT",
                             value:
-                                "RP. ${widget.data?.codAmount.toCurrency() ?? '-'}",
+                                "RP. ${widget.data?.codAmt.toCurrency() ?? '-'}",
                           ),
                           ValueItem(
                             title: "COD FEE ( ONGKIR DLL )",
@@ -165,7 +165,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                           ValueItem(
                             title: "NET AMOUNT",
                             value:
-                                "RP. ${widget.data?.netAmount.toCurrency() ?? '-'}",
+                                "RP. ${widget.data?.netAmt.toCurrency() ?? '-'}",
                           ),
                           CustomFilledButton(
                               title: "Lihat Detail".tr,

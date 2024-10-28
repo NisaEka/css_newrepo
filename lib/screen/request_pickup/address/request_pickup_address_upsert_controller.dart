@@ -84,7 +84,7 @@ class RequestPickupAddressUpsertController extends BaseController {
     requestPickupRepository
         .createRequestPickupAddress(await _prepareRequestData())
         .then((response) {
-      if (response.code == HttpStatus.created) {
+      if (response.statusCode == HttpStatus.created) {
         Get.back(result: HttpStatus.created);
         createDataSuccess = true;
       } else {

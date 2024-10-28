@@ -207,39 +207,39 @@ class QueryParamModel {
       map['greaterThan'] = _greaterThan;
     }
 
-    if (greaterThan != null) {
-      map['lessThan'] = _greaterThan;
+    if (lessThan != null) {
+      map['lessThan'] = _lessThan;
     }
 
-    if (greaterThan != null) {
+    if (like != null) {
       map['like'] = _like;
     }
 
-    if (greaterThan != null) {
-      map['sort'] = _like;
+    if (sort != null) {
+      map['sort'] = _sort;
     }
 
-    if (greaterThan != null) {
-      map['between'] = _like;
+    if (between != null) {
+      map['between'] = _between;
     }
 
-    if (greaterThan != null) {
+    if (isIn != null) {
       map['in'] = _in;
     }
 
-    if (greaterThan != null) {
+    if (notin != null) {
       map['notin'] = _notin;
     }
 
-    if (greaterThan != null) {
+    if (isNull != null) {
       map['isNull'] = _isNull;
     }
 
-    if (greaterThan != null) {
+    if (isNotNull != null) {
       map['isNotNull'] = _isNotNull;
     }
 
-    if (greaterThan != null) {
+    if (select != null) {
       map['select'] = _select;
     }
 

@@ -1,144 +1,144 @@
 class AggregationMinusDocModel {
-  String? _aggMinDoc = "";
-  String? get aggMinDoc => _aggMinDoc;
+  String? _dAggMinDoc = "";
+  String? get dAggMinDoc => _dAggMinDoc;
 
-  String? _docDate = "";
-  String? get docDate => _docDate;
+  String? _dDocDate = "";
+  String? get dDocDate => _dDocDate;
 
-  String? _aggPayRef = "";
-  String? get aggPayRef => _aggPayRef;
+  String? _dAggPayRef = "";
+  String? get dAggPayRef => _dAggPayRef;
 
-  String? _custGroupId = "";
-  String? get custGroupId => _custGroupId;
+  String? _dCustGroupId = "";
+  String? get dCustGroupId => _dCustGroupId;
 
-  String? _custId = "";
-  String? get custId => _custId;
+  String? _dCustId = "";
+  String? get dCustId => _dCustId;
 
-  String? _custName = "";
-  String? get custName => _custName;
+  String? _dCustName = "";
+  String? get dCustName => _dCustName;
 
-  num? _netAggAmount = 0;
-  num? get netAggAmount => _netAggAmount;
+  num? _dNetAggAmt = 0;
+  num? get dNetAggAmt => _dNetAggAmt;
 
-  String? _codType = "";
-  String? get codType => _codType;
+  String? _dCodType = "";
+  String? get dCodType => _dCodType;
 
-  String? _payType = "";
-  String? get payType => _payType;
+  String? _dPayType = "";
+  String? get dPayType => _dPayType;
 
-  String? _aggDate = "";
-  String? get aggDate => _aggDate;
+  String? _dAggDate = "";
+  String? get dAggDate => _dAggDate;
 
-  String? _cnoteNo = "";
-  String? get cnoteNo => _cnoteNo;
+  String? _dCnoteNo = "";
+  String? get dCnoteNo => _dCnoteNo;
 
-  String? _cnoteDate = "";
-  String? get cnoteDate => _cnoteDate;
+  String? _dCnoteDate = "";
+  String? get dCnoteDate => _dCnoteDate;
 
-  String? _orderId = "";
-  String? get orderId => _orderId;
+  String? _dOrderid = "";
+  String? get dOrderid => _dOrderid;
 
-  String? _aggPeriod = "";
-  String? get aggPeriod => _aggPeriod;
+  String? _dAggPeriod = "";
+  String? get dAggPeriod => _dAggPeriod;
 
-  String? _podCode = "";
-  String? get podCode => _podCode;
+  String? _dPodCode = "";
+  String? get dPodCode => _dPodCode;
 
-  String? _podDateSys = "";
-  String? get podDateSys => _podDateSys;
+  String? _dPodDateSys = "";
+  String? get dPodDateSys => _dPodDateSys;
 
-  num? _shipFee = 0;
-  num? get shipFee => _shipFee;
+  num? _dShipFee = 0;
+  num? get dShipFee => _dShipFee;
 
-  num? _insuranceCharge = 0;
-  num? get insuranceCharge => _insuranceCharge;
+  num? _dInsCharge = 0;
+  num? get dInsCharge => _dInsCharge;
 
-  num? _codFee = 0;
-  num? get codFee => _codFee;
+  num? _dCodFee = 0;
+  num? get dCodFee => _dCodFee;
 
-  num? _returnFee = 0;
-  num? get returnFee => _returnFee;
+  num? _dReturnFee = 0;
+  num? get dReturnFee => _dReturnFee;
 
-  num? _codAmount = 0;
-  num? get codAmount => _codAmount;
+  num? _dCodAmt = 0;
+  num? get dCodAmt => _dCodAmt;
 
-  num? _discount = 0;
-  num? get discount => _discount;
+  num? _dDiscount = 0;
+  num? get dDiscount => _dDiscount;
 
-  num? _freightChargeAfterDisc = 0;
-  num? get freightChargeAfterDisc => _freightChargeAfterDisc;
+  num? _dFchargeAftDisc = 0;
+  num? get dFchargeAftDisc => _dFchargeAftDisc;
 
-  num? _freightChargeVat = 0;
-  num? get freightChargeVat => _freightChargeVat;
+  num? _dFchargeVat = 0;
+  num? get dFchargeVat => _dFchargeVat;
 
-  num? _packingFee = 0;
-  num? get packingFee => _packingFee;
+  num? _dPackingFee = 0;
+  num? get dPackingFee => _dPackingFee;
 
-  num? _surcharge = 0;
-  num? get surcharge => _surcharge;
+  num? _dSurcharge = 0;
+  num? get dSurcharge => _dSurcharge;
 
-  num? _returnFreightChargeAfterDisc = 0;
-  num? get returnFreightChargeAfterDisc => _returnFreightChargeAfterDisc;
+  num? _dRtFchargeAftDisc = 0;
+  num? get dRtFchargeAftDisc => _dRtFchargeAftDisc;
 
-  num? _returnFreightChargeVat = 0;
-  num? get returnFreightChargeVat => _returnFreightChargeVat;
+  num? _dRtFchargeVat = 0;
+  num? get dRtFchargeVat => _dRtFchargeVat;
 
-  num? _codFeeIncludeVat = 0;
-  num? get codFeeIncludeVat => _codFeeIncludeVat;
+  num? _dCodfeeInclvat = 0;
+  num? get dCodfeeInclvat => _dCodfeeInclvat;
 
-  num? _netAwbAmount = 0;
-  num? get netAwbAmount => _netAwbAmount;
+  num? _dNetAwbAmt = 0;
+  num? get dNetAwbAmt => _dNetAwbAmt;
 
-  String? _createdDate = "";
-  String? get createdDate => _createdDate;
+  String? _createddtm = "";
+  String? get createddtm => _createddtm;
 
-  String? _createdBy = "";
-  String? get createdBy => _createdBy;
+  String? _createdby = "";
+  String? get createdby => _createdby;
 
-  String? _lastUpdateDate = "";
-  String? get lastUpdateDate => _lastUpdateDate;
+  String? _lastupddtm = "";
+  String? get lastupddtm => _lastupddtm;
 
-  String? _lastUpdateBy = "";
-  String? get lastUpdateBy => _lastUpdateBy;
+  String? _lastupdby = "";
+  String? get lastupdby => _lastupdby;
 
-  String? _lastUpdateProcess = "";
-  String? get lastUpdateProcess => _lastUpdateProcess;
+  String? _lastupdprocess = "";
+  String? get lastupdprocess => _lastupdprocess;
 
   AggregationMinusDocModel.fromJson(dynamic json) {
-    _aggMinDoc = json["agg_min_doc"];
-    _docDate = json["doc_date"];
-    _aggPayRef = json["agg_pay_ref"];
-    _custGroupId = json["cust_group_id"];
-    _custId = json["cust_id"];
-    _custName = json["cust_name"];
-    _netAggAmount = json["net_agg_amount"];
-    _codType = json["cod_type"];
-    _payType = json["pay_type"];
-    _aggDate = json["agg_date"];
-    _cnoteNo = json["cnote_no"];
-    _cnoteDate = json["cnote_date"];
-    _orderId = json["order_id"];
-    _aggPeriod = json["agg_period"];
-    _podCode = json["pod_code"];
-    _podDateSys = json["pod_date_sys"];
-    _shipFee = json["ship_fee"];
-    _insuranceCharge = json["insurance_charge"];
-    _codFee = json["cod_fee"];
-    _returnFee = json["return_fee"];
-    _codAmount = json["cod_amount"];
-    _discount = json["discount"];
-    _freightChargeAfterDisc = json["freight_charge_after_disc"];
-    _freightChargeVat = json["freight_charge_vat"];
-    _packingFee = json["packing_fee"];
-    _surcharge = json["surcharge"];
-    _returnFreightChargeAfterDisc = json["return_freight_charge_after_disc"];
-    _returnFreightChargeVat = json["return_freight_charge_vat"];
-    _codFeeIncludeVat = json["cod_fee_include_vat"];
-    _netAwbAmount = json["net_awb_amount"];
-    _createdDate = json["created_date"];
-    _createdBy = json["created_by"];
-    _lastUpdateDate = json["last_update_date"];
-    _lastUpdateBy = json["last_update_by"];
-    _lastUpdateProcess = json["last_update_process"];
+    _dAggMinDoc = json["dAggMinDoc"];
+    _dDocDate = json["dDocDate"];
+    _dAggPayRef = json["dAggPayRef"];
+    _dCustGroupId = json["dCustGroupId"];
+    _dCustId = json["dCustId"];
+    _dCustName = json["dCustName"];
+    _dNetAggAmt = json["dNetAggAmt"];
+    _dCodType = json["dCodType"];
+    _dPayType = json["dPayType"];
+    _dAggDate = json["dAggDate"];
+    _dCnoteNo = json["dCnoteNo"];
+    _dCnoteDate = json["dCnoteDate"];
+    _dOrderid = json["dOrderid"];
+    _dAggPeriod = json["dAggPeriod"];
+    _dPodCode = json["dPodCode"];
+    _dPodDateSys = json["dPodDateSys"];
+    _dShipFee = json["dShipFee"];
+    _dInsCharge = json["dInsCharge"];
+    _dCodFee = json["dCodFee"];
+    _dReturnFee = json["dReturnFee"];
+    _dCodAmt = json["dCodAmt"];
+    _dDiscount = json["dDiscount"];
+    _dFchargeAftDisc = json["dFchargeAftDisc"];
+    _dFchargeVat = json["dFchargeVat"];
+    _dPackingFee = json["dPackingFee"];
+    _dSurcharge = json["dSurcharge"];
+    _dRtFchargeAftDisc = json["dRtFchargeAftDisc"];
+    _dRtFchargeVat = json["dRtFchargeVat"];
+    _dCodfeeInclvat = json["dCodfeeInclvat"];
+    _dNetAwbAmt = json["dNetAwbAmt"];
+    _createddtm = json["createddtm"];
+    _createdby = json["createdby"];
+    _lastupddtm = json["lastupddtm"];
+    _lastupdby = json["lastupdby"];
+    _lastupdprocess = json["lastupdprocess"];
   }
 }

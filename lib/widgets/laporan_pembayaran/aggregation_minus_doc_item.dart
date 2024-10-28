@@ -101,7 +101,7 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                             width: widget.isLoading ? Get.width / 3 : null,
                             height: widget.isLoading ? 10 : null,
                             child: Text(
-                              widget.data?.docDate?.toDateTimeFormat() ?? '',
+                              widget.data?.dDocDate?.toDateTimeFormat() ?? '',
                               style: sublistTitleTextStyle,
                             ),
                           ),
@@ -115,7 +115,7 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                                 ? const EdgeInsets.only(top: 2)
                                 : EdgeInsets.zero,
                             child: Text(
-                              "# ${widget.data?.cnoteNo ?? ''}",
+                              "# ${widget.data?.dCnoteNo ?? ''}",
                               style: listTitleTextStyle.copyWith(
                                   color: Theme.of(context).brightness ==
                                           Brightness.light

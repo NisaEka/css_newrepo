@@ -38,7 +38,7 @@ class AggregasiMinusController extends BaseController {
       final aggregations = await aggregation.getAggregationMinus(
           page, pageSize, searchField.text);
 
-      final payload = aggregations.payload ?? List.empty();
+      final payload = aggregations.data ?? List.empty();
       final isLastPage = payload.length < pageSize;
 
       if (isLastPage) {
