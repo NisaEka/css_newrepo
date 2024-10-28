@@ -41,14 +41,6 @@ class LacakKirimanController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-      try {
-        await trace.postTracingByReference(nomorResi).then(
-              (value) => trackModel = value,
-            );
-      } catch (e, i) {
-        e.printError();
-        i.printError();
-      }
     }
 
     isLoading = false;
