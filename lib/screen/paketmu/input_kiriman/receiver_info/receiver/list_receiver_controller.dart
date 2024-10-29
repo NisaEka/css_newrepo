@@ -15,8 +15,8 @@ class ListPenerimaController extends BaseController {
 
   bool isLoading = false;
   bool isOnline = false;
-  List<ReceiverModel> receiverList = [];
-  ReceiverModel? selectedReceiver;
+  List<Receiver> receiverList = [];
+  Receiver? selectedReceiver;
 
   @override
   void onInit() {
@@ -34,20 +34,25 @@ class ListPenerimaController extends BaseController {
     }));
   }
 
-
   Future<void> initData() async {
     isLoading = true;
     receiverList = [];
+    connection.isOnline().then((value) => isOnline = value);
+
+    update();
     try {
-      await master.getReceivers(QueryParamModel(search: search.text)).then((value) => receiverList.addAll(value.data ?? []));
+      await master.getReceivers(QueryParamModel(search: search.text)).then((value) async {
+        receiverList.addAll(value.data ?? []);
+        await storage.saveData(StorageCore.receiver, value);
+      });
     } catch (e) {
       e.printError();
-      var receiver = BaseResponse<List<ReceiverModel>>.fromJson(
+      var receiver = BaseResponse<List<Receiver>>.fromJson(
           await storage.readData(StorageCore.receiver),
           (json) => json is List<dynamic>
               ? json
-                  .map<ReceiverModel>(
-                    (i) => ReceiverModel.fromJson(i as Map<String, dynamic>),
+                  .map<Receiver>(
+                    (i) => Receiver.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
               : List.empty());
@@ -57,9 +62,9 @@ class ListPenerimaController extends BaseController {
     update();
   }
 
-  void delete(ReceiverModel data) async {
+  void delete(Receiver data) async {
     try {
-      await transaction.deleteReceiver(data.idReceive ?? '').then(
+      await master.deleteReceiver(data.idReceive ?? '').then(
             (value) => Get.showSnackbar(
               GetSnackBar(
                 icon: Icon(
@@ -79,7 +84,7 @@ class ListPenerimaController extends BaseController {
     initData();
   }
 
-  Widget receiverItem(ReceiverModel e, int i, BuildContext context) {
+  Widget receiverItem(Receiver e, int i, BuildContext context) {
     return ContactRadioListItem(
       isLoading: isLoading,
       index: i,
@@ -91,7 +96,7 @@ class ListPenerimaController extends BaseController {
       groupValue: selectedReceiver,
       isSelected: e == selectedReceiver ? true : false,
       onChanged: (value) {
-        selectedReceiver = value as ReceiverModel?;
+        selectedReceiver = value as Receiver?;
         update();
         Get.back(
           result: selectedReceiver,

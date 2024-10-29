@@ -66,6 +66,11 @@ class Origin {
     map['originCode'] = _originCode;
     map['originName'] = _originName;
     map['branchCode'] = _branchCode;
+    if (_region != null) {
+      map['region'] = _region?.toJson();
+    } else {
+      map['region'] = _region;
+    }
     return map;
   }
 }

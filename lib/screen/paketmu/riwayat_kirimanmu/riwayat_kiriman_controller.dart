@@ -1,6 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
@@ -117,25 +116,25 @@ class RiwayatKirimanController extends BaseController {
   Future<void> getTransaction(int page) async {
     isLoading = true;
     try {
-      final trans = await transaction.getTransaction(
-        page,
-        pageSize,
-        transType ?? '',
-        transDate ?? '',
-        selectedStatusKiriman ?? '',
-        searchField.text,
-        selectedPetugasEntry ?? '',
-      );
+      // final trans = await transaction.getTransaction(
+      //   page,
+      //   pageSize,
+      //   transType ?? '',
+      //   transDate ?? '',
+      //   selectedStatusKiriman ?? '',
+      //   searchField.text,
+      //   selectedPetugasEntry ?? '',
+      // );
 
-      final isLastPage = (trans.payload?.length ?? 0) < pageSize;
-      if (isLastPage) {
-        pagingController.appendLastPage(trans.payload ?? []);
-        // transactionList.addAll(pagingController.itemList ?? []);
-      } else {
-        final nextPageKey = page + 1;
-        pagingController.appendPage(trans.payload ?? [], nextPageKey);
-        // transactionList.addAll(pagingController.itemList ?? []);
-      }
+      // final isLastPage = (trans.payload?.length ?? 0) < pageSize;
+      // if (isLastPage) {
+      //   pagingController.appendLastPage(trans.payload ?? []);
+      //   // transactionList.addAll(pagingController.itemList ?? []);
+      // } else {
+      //   final nextPageKey = page + 1;
+      //   pagingController.appendPage(trans.payload ?? [], nextPageKey);
+      //   // transactionList.addAll(pagingController.itemList ?? []);
+      // }
     } catch (e) {
       e.printError();
       pagingController.error = e;

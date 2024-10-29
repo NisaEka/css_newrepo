@@ -321,6 +321,8 @@ class DashboardController extends BaseController {
 
       if (sender) {
         await profil.getShipper().then((value) async {
+          print("shipper data : ${value.data?.first.toJson()}");
+
           if (value.data != null) {
             await storage.saveData(
               StorageCore.shipper,

@@ -24,9 +24,9 @@ class DataTransactionOngkirModel {
     _isIsr = json['isInsurance'];
     _ongkir = json['ongkir'];
     _accountNumber = json['account'];
-    _isCod = json['isCod'];
+    _isCod = json['isCOD'];
     _codFee = json['codFee'];
-    _isCongkir = json['isCongkit'];
+    _isCongkir = json['isCodOngkir'];
     _isPrefix3 = json['isPrefix3'];
   }
 
@@ -82,9 +82,9 @@ class DataTransactionOngkirModel {
     map['isInsurance'] = _isIsr;
     map['ongkir'] = _ongkir;
     map['account'] = _accountNumber;
-    map['isCod'] = _isCod;
+    map['isCOD'] = _isCod;
     map['codFee'] = _codFee;
-    map['isCongkit'] = _isCongkir;
+    map['isCodOngkir'] = _isCongkir;
     map['isPrefix3'] = _isPrefix3;
     return map;
   }

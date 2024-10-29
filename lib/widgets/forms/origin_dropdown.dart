@@ -52,7 +52,7 @@ class _OriginDropdownState extends State<OriginDropdown> {
   Future<List<Origin>> getOriginList(String keyword) async {
     final master = Get.find<MasterRepository>();
 
-    var branchCode = '[{"branchCode" : "${widget.branch}"}]';
+    var branchCode = (widget.branch?.isNotEmpty ?? false) ? '[{"branchCode" : "${widget.branch}"}]' : '[]';
     var response = await master.getOrigins(QueryParamModel(
       search: keyword.toUpperCase(),
       where: branchCode, table: true

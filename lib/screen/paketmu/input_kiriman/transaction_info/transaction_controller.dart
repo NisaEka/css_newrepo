@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
@@ -116,7 +117,7 @@ class TransactionController extends BaseController {
         update();
         // }
         bool prefix3 = state.account.accountNumber?.substring(0, 1) != "3";
-        bool isCOD = state.account.accountService?.toUpperCase() == 'COD';
+        state.isCOD = state.account.accountService?.toUpperCase() == 'COD';
 
         try {
           await transaction
@@ -125,12 +126,13 @@ class TransactionController extends BaseController {
             isIsr: state.insurance,
             ongkir: state.freightCharge,
             accountNumber: state.account.accountNumber,
-            isCod: isCOD,
+            isCod: state.isCOD,
             codFee: state.codfee,
             isCongkir: state.codOngkir,
             isPrefix3: prefix3,
           ))
               .then((value) {
+            print('transaction ongkir : ${value.toJson()}');
             state.getCodAmountMinimum = value.data?.codAmountMinimum ?? 0;
             state.congkirAmount = value.data?.codOngkirAmount ?? 0;
             state.codAmount = value.data?.codAmountMinimum ?? 0;
@@ -140,7 +142,7 @@ class TransactionController extends BaseController {
             state.getCodFee = value.data?.codFee ?? 0;
           });
         } catch (e) {
-          num getVat = isCOD && prefix3 ? state.freightCharge * vat : 0;
+          num getVat = state.isCOD && prefix3 ? state.freightCharge * vat : 0;
           state.getCodFeeMinimum = (state.freightCharge + goodsAmount) * state.codfee;
           state.getCodAmountMinimum = goodsAmount + state.freightCharge + state.getCodFeeMinimum + getVat;
 
@@ -155,8 +157,8 @@ class TransactionController extends BaseController {
           // state.getCodAmount = goodsAmount + getVat + state.getCodFee;
 
           // state.hargacod = (codfee * (goodsAmount) + (goodsAmount) + state.totalOngkir);
-          state.codAmount = isCOD ? state.getCodAmount : 0;
-          state.codAmountText.text = isCOD ? state.getCodAmountMinimum.toInt().toCurrency().toString() : '0';
+          state.codAmount = state.isCOD ? state.getCodAmount : 0;
+          state.codAmountText.text = state.isCOD ? state.getCodAmountMinimum.toInt().toCurrency().toString() : '0';
           state.congkirAmount = state.freightCharge + (state.insurance ? state.isr : 0) + 1000;
           state.congkirAmountISR = state.freightCharge + state.isr;
           update();
@@ -216,7 +218,7 @@ class TransactionController extends BaseController {
           destinationCode: state.destination.destinationCode,
           originCode: state.origin.originCode,
           // serviceCode: state.selectedService?.serviceCode,
-          weight: state.weight.text.toDouble(),
+          weight: state.weight.text.isNotEmpty ? state.weight.text.toDouble() : 1,
           accountId: state.account.accountNumber,
           // custNo: state.account.accountNumber,
           // type: state.goodType.text == "PAKET" ? "PAKET" : "DOCUMENT"),
@@ -328,7 +330,7 @@ class TransactionController extends BaseController {
               backgroundColor: Colors.red,
             ),
           );
-          state.isOnline = false;
+          // state.isOnline = false;
           update();
         }
       });
@@ -339,20 +341,20 @@ class TransactionController extends BaseController {
       i.printError();
       // state.isOnline = false;
     }
-    if (state.dataEdit != null) {
-      state.goodType.text = state.dataEdit?.goods?.type ?? '';
-      state.noReference.text = state.dataEdit?.orderId ?? '';
-      state.noReference.text = state.dataEdit?.goods?.desc ?? '';
-      state.goodAmount.text = state.dataEdit?.goods?.amount?.toInt().toCurrency().toString() ?? '';
-      state.goodQty.text = state.dataEdit?.goods?.quantity.toString() ?? '';
-      state.insurance = state.dataEdit?.delivery?.insuranceFlag == "Y";
-      state.specialInstruction.text = state.dataEdit?.delivery?.specialInstruction ?? '';
-      state.woodPacking = state.dataEdit?.delivery?.woodPackaging == "Y";
-      state.weight.text = state.dataEdit?.goods?.weight.toString() ?? '';
-      state.berat = state.dataEdit?.goods?.weight?.toDouble() ?? 0;
+    if (state.data != null) {
+      state.goodType.text = state.data?.goods?.type ?? '';
+      state.noReference.text = state.data?.orderId ?? '';
+      state.noReference.text = state.data?.goods?.desc ?? '';
+      state.goodAmount.text = state.data?.goods?.amount?.toInt().toCurrency().toString() ?? '';
+      state.goodQty.text = state.data?.goods?.quantity.toString() ?? '';
+      state.insurance = state.data?.delivery?.insuranceFlag == "Y";
+      state.specialInstruction.text = state.data?.delivery?.specialInstruction ?? '';
+      state.woodPacking = state.data?.delivery?.woodPackaging == "Y";
+      state.weight.text = state.data?.goods?.weight.toString() ?? '';
+      state.berat = state.data?.goods?.weight?.toDouble() ?? 0;
       // ServiceModel servicecode = state.serviceList.where((element) => element.serviceCode == state.dataEdit?.delivery?.serviceCode).first;
-      ServiceModel? servicedisplay = state.serviceList.where((element) => element.serviceDisplay == state.dataEdit?.delivery?.serviceCode).isNotEmpty
-          ? state.serviceList.where((element) => element.serviceDisplay == state.dataEdit?.delivery?.serviceCode).first
+      ServiceModel? servicedisplay = state.serviceList.where((element) => element.serviceDisplay == state.data?.delivery?.serviceCode).isNotEmpty
+          ? state.serviceList.where((element) => element.serviceDisplay == state.data?.delivery?.serviceCode).first
           : ServiceModel();
       state.selectedService = servicedisplay;
 
@@ -492,7 +494,7 @@ class TransactionController extends BaseController {
           shipper: state.shipper,
           receiver: state.receiver,
         ),
-        state.dataEdit?.awb ?? '',
+        state.data?.awb ?? '',
       )
           .then((v) {
         if (v.code != 200) {
@@ -544,46 +546,106 @@ class TransactionController extends BaseController {
     update();
 
     // muncul popup kalo coud amount text <= cod amount minimum
+    var trans = DataTransactionModel(
+      delivery: Delivery(
+        serviceCode: state.selectedService?.serviceDisplay,
+        woodPackaging: state.woodPacking ? "Y" : "N",
+        specialInstruction: state.specialInstruction.text,
+        codFlag: state.account.accountService == "COD"
+            ? "YES"
+            : state.codOngkir
+                ? "YES"
+                : "NO",
+        codOngkir: state.selectedService?.serviceDisplay == 'INTL'
+            ? 'NO'
+            : state.codOngkir
+                ? "YES"
+                : "NO",
+        insuranceFlag: state.insurance ? "Y" : "N",
+        insuranceFee: state.isr,
+        flatRate: state.flatRate,
+        codFee: state.codfee,
+        flatRateWithInsurance: state.flatRateISR,
+        freightCharge: state.freightCharge,
+        freightChargeWithInsurance: state.freightChargeISR,
+      ),
+      account: Account(
+        accountNumber: state.account.accountNumber,
+        accountService: state.account.accountService,
+      ),
+      origin: state.origin,
+      destination: state.destination,
+      // destination: Destination(code: state.destination.destinationCode, desc: state.destination.cityName),
+      goods: Goods(
+          type: state.goodType.text,
+          desc: state.goodName.text,
+          amount: state.goodAmount.text.isNotEmpty ? state.goodAmount.text.digitOnly().toInt() : 0,
+          quantity: state.goodQty.text.toInt(),
+          weight: state.berat),
+      shipper: state.shipper,
+      receiver: state.receiver,
+    );
     try {
       await transaction
-          .postTransaction(DataTransactionModel(
-        delivery: Delivery(
-          serviceCode: state.selectedService?.serviceDisplay,
-          woodPackaging: state.woodPacking ? "Y" : "N",
-          specialInstruction: state.specialInstruction.text,
-          codFlag: state.account.accountService == "COD"
-              ? "YES"
-              : state.codOngkir
-                  ? "YES"
-                  : "NO",
-          codOngkir: state.selectedService?.serviceDisplay == 'INTL'
-              ? 'NO'
-              : state.codOngkir
-                  ? "YES"
-                  : "NO",
-          insuranceFlag: state.insurance ? "Y" : "N",
-          insuranceFee: state.isr,
-          flatRate: state.flatRate,
-          codFee: state.codfee,
-          flatRateWithInsurance: state.flatRateISR,
-          freightCharge: state.freightCharge,
-          freightChargeWithInsurance: state.freightChargeISR,
-        ),
-        account: Account(
-          accountNumber: state.account.accountNumber,
-          accountService: state.account.accountService,
-        ),
-        origin: state.origin,
-        destination: state.destination,
-        // destination: Destination(code: state.destination.destinationCode, desc: state.destination.cityName),
-        goods: Goods(
-            type: state.goodType.text,
-            desc: state.goodName.text,
-            amount: state.goodAmount.text.isNotEmpty ? state.goodAmount.text.digitOnly().toInt() : 0,
-            quantity: state.goodQty.text.toInt(),
-            weight: state.berat),
-        shipper: state.shipper,
-        receiver: state.receiver,
+          .postTransaction(TransactionModel(
+        apiType: trans.account?.accountService,
+        custId: state.account.accountNumber,
+        branch: state.account.accountBranch,
+        codAmount: state.isCOD ? state.codAmountText.text.digitOnly().toInt() : null,
+        codFlag: state.account.accountService == "COD"
+            ? "YES"
+            : state.codOngkir
+                ? "YES"
+                : "NO",
+        codOngkir: state.selectedService?.serviceDisplay == 'INTL'
+            ? 'NO'
+            : state.codOngkir
+                ? "YES"
+                : "NO",
+        // custId:
+        deliveryPrice: state.freightCharge,
+        deliveryPricePublish: state.freightCharge,
+        destinationCode: trans.receiver?.destinationCode,
+        goodsAmount: state.goodAmount.text.isNotEmpty ? state.goodAmount.text.digitOnly().toInt() : 0,
+        goodsDesc: state.goodName.text,
+        goodsType: state.goodType.text,
+        qty: state.goodQty.text.toDouble(),
+        insuranceAmount: state.isr,
+        insuranceFlag: state.insurance ? "Y" : "N",
+        originCode: trans.origin?.originCode,
+        originDesc: trans.origin?.originName,
+        packingkayuFlag: state.woodPacking ? "Y" : "N",
+        receiverAddr: trans.receiver?.address,
+        receiverCity: trans.receiver?.city,
+        receiverCountry: trans.receiver?.country,
+        receiverDistrict: trans.receiver?.district,
+        receiverSubdistrict: trans.receiver?.subdistrict,
+        receiverRegion: trans.receiver?.region,
+        receiverZip: trans.receiver?.zipCode,
+        receiverAddr1:
+            trans.receiver?.address?.substring(0, (trans.receiver?.address?.length ?? 0) > 30 ? 29 : (trans.receiver?.address?.length ?? 0)),
+        receiverAddr2: (trans.receiver?.address?.length ?? 0) > 30
+            ? trans.receiver?.address?.substring(30, (trans.receiver?.address?.length ?? 0) > 60 ? 59 : (trans.receiver?.address?.length ?? 0))
+            : '',
+        receiverAddr3:
+            (trans.receiver?.address?.length ?? 0) >= 60 ? trans.receiver?.address?.substring(60, (trans.receiver?.address?.length ?? 0)) : '',
+        receiverName: trans.receiver?.name,
+        receiverPhone: trans.receiver?.phone,
+        receiverContact: trans.receiver?.contact,
+        serviceCode: state.selectedService?.serviceDisplay,
+        shipperName: trans.shipper?.name,
+        shipperPhone: trans.shipper?.phone,
+        shipperAddr: trans.shipper?.address,
+        shipperCity: trans.shipper?.city,
+        shipperZip: trans.shipper?.zipCode,
+        shipperContact: trans.shipper?.contact,
+        shipperRegion: trans.shipper?.region?.name,
+        shipperCountry: trans.shipper?.country,
+        shipperAddr1: trans.shipper?.address1,
+        shipperAddr2: trans.shipper?.address2,
+        shipperAddr3: trans.shipper?.address3,
+        specialIns: state.specialInstruction.text,
+        weight: state.berat,
       ))
           .then((v) {
         if (state.goods != null) {
@@ -596,7 +658,7 @@ class TransactionController extends BaseController {
                 Icons.warning,
                 color: warningColor,
               ),
-              message: v.error?.first.message?.tr ?? v.message,
+              message: v.error?[0] ?? v.message,
               isDismissible: true,
               margin: const EdgeInsets.only(bottom: 0),
               duration: const Duration(seconds: 3),
@@ -609,13 +671,13 @@ class TransactionController extends BaseController {
         } else {
           Get.to(
             SuccessScreen(
-              message: "${'Transaksi Berhasil'.tr}\n${v.payload?.awb}",
+              message: "${'Transaksi Berhasil'.tr}\n${v.data?.awb}",
               buttonTitle: "Kembali ke Beranda".tr,
               nextAction: () => Get.offAll(
                 const DashboardScreen(),
                 transition: Transition.rightToLeft,
                 arguments: {
-                  'awb': v.payload?.awb,
+                  'awb': v.data?.awb,
                 },
               ),
               thirdButtonTitle: "Buat Transaksi Lainnya".tr,
@@ -627,7 +689,7 @@ class TransactionController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-      saveDraft();
+      // saveDraft();
     }
     state.isLoading = false;
     update();

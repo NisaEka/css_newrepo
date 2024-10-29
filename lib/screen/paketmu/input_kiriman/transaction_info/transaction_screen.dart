@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_account_card.dart';
@@ -7,22 +6,9 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_f
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_services_list.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/trans_account/trans_account_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_controller.dart';
-import 'package:css_mobile/util/ext/int_ext.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
-import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
-import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
-import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/forms/customformlabel.dart';
-import 'package:css_mobile/widgets/forms/customtextformfield.dart';
-import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
-import 'package:css_mobile/widgets/items/account_list_item.dart';
-import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class TransactionScreen extends StatelessWidget {
@@ -37,6 +23,7 @@ class TransactionScreen extends StatelessWidget {
             children: [
               Scaffold(
                 appBar: TransactionAppbar(
+                  data: controller.state.data,
                   isOnline: controller.state.isOnline,
                   currentStep: 2,
                 ),

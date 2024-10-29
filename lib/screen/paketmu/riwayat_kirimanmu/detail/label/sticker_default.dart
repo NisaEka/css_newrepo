@@ -95,7 +95,7 @@ class StickerDefault extends StatelessWidget {
                           Text(data.destination?.cityName ?? ''),
                           Text(data.receiver?.city ?? ''),
                           Text(data.receiver?.address ?? ''),
-                          Text("\n\nKode Pos : ${data.receiver?.zip ?? ''}"),
+                          Text("\n\nKode Pos : ${data.receiver?.zipCode ?? ''}"),
                           Text(data.receiver?.phone ?? ''),
                           Text(
                             data.destination?.destinationCode?.substring(0, 3) ?? '-',

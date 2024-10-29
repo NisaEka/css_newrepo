@@ -278,7 +278,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
                     onTap: () {
                       c.unselect(item);
                     },
-                    isDelete: item.status == "MASIH DI KAMU",
+                    // isDelete: item.status == "MASIH DI KAMU",
                     onDelete: (context) => showDialog(
                       context: context,
                       builder: (context) => DeleteAlertDialog(

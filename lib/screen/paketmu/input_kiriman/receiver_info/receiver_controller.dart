@@ -8,9 +8,9 @@ import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_state.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,14 +20,14 @@ class ReceiverController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([getDestinationList(''), initData()]);
-    connection.isOnline().then((value) => state.isOnline= value);
+    Future.wait([initData()]);
+    connection.isOnline().then((value) => state.isOnline = value);
 
     connection.checkConnection();
 
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       connection.isOnline().then((value) {
-        state.isOnline= value && (result != ConnectivityResult.none);
+        state.isOnline = value && (result != ConnectivityResult.none);
         update();
         if (state.isOnline) {
           Get.showSnackbar(
@@ -57,33 +57,20 @@ class ReceiverController extends BaseController {
       state.receiverName.text = state.data?.receiver?.name ?? '';
       state.receiverPhone.text = state.data?.receiver?.phone ?? '';
       state.receiverAddress.text = state.data?.receiver?.address ?? '';
-      getDestinationList(state.data?.destination?.cityName ?? '').then((value) {
-        state.selectedDestination = value.first;
-        update();
-      });
       // state.kotaTujuan.text = state.data?.destination?.cityName
 
       update();
     }
   }
 
-  FutureOr<ReceiverModel?> getSelectedReceiver() async {
+  FutureOr<Receiver?> getSelectedReceiver() async {
     state.receiverName.text = state.receiver?.name?.toUpperCase() ?? '';
     state.receiverPhone.text = state.receiver?.phone ?? '';
     state.receiverDest.text = state.receiver?.idDestination ?? '';
     state.receiverAddress.text = state.receiver?.address?.toUpperCase() ?? '';
-    getDestinationList(state.receiver?.city?.split(',').first ?? '');
-    state.selectedDestination = Destination(
-      id: state.receiver?.idDestination?.toInt(),
-      destinationCode: state.receiver?.destinationCode,
-      cityName: state.receiver?.city,
-      countryName: state.receiver?.country,
-      districtName: state.receiver?.receiverDistrict,
-      provinceName: state.receiver?.region,
-      subdistrictName: state.receiver?.receiverSubDistrict,
-      zipCode: state.receiver?.zipCode,
-    );
-
+    getDestinationList(state.receiver?.destinationCode ?? '').then((value) {
+      state.selectedDestination = value.where((element) => element.destinationCode == state.receiver?.destinationCode).first;
+    });
     update();
     return state.receiver;
   }
@@ -97,13 +84,9 @@ class ReceiverController extends BaseController {
 
   Future<List<Destination>> getDestinationList(String keyword) async {
     state.isLoading = true;
-    state.destinationList = [];
     BaseResponse<List<Destination>>? response;
     try {
-      response = await master.getDestinations(QueryParamModel(
-        search: keyword.toUpperCase(),
-      ));
-      // destinationModel = response;
+      response = await master.getDestinations(QueryParamModel(search: keyword.toUpperCase()));
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -115,32 +98,46 @@ class ReceiverController extends BaseController {
   }
 
   void nextStep() {
+    var receiver = Receiver(
+      name: state.receiverName.text.toUpperCase(),
+      address: state.receiverAddress.text.toUpperCase(),
+      phone: state.receiverPhone.text,
+      city: state.selectedDestination?.cityName,
+      zipCode: state.selectedDestination?.zipCode,
+      region: state.selectedDestination?.provinceName,
+      country: state.selectedDestination?.countryName,
+      contact: state.receiverName.text.toUpperCase(),
+      district: state.selectedDestination?.districtName,
+      subdistrict: state.selectedDestination?.subdistrictName,
+    );
+
+    var trans = DataTransactionModel(
+      shipper: state.shipper,
+      origin: state.origin,
+      account: state.account,
+      dataAccount: state.account,
+      dropshipper: state.dropshipper,
+      receiver: receiver,
+      dataDestination: state.selectedDestination,
+      destination: state.selectedDestination,
+    );
+
+    storage.writeString(
+      StorageCore.transactionTemp,
+      trans.toString(),
+    );
     Get.to(
       const TransactionScreen(),
       transition: Transition.rightToLeft,
       arguments: {
-        "data": state.data,
+        "data": state.data ?? trans,
         "cod_ongkir": state.codOngkir,
         "account": state.account,
         "origin": state.origin,
         "dropship": state.dropship,
         "dropshipper": state.dropshipper,
         "shipper": state.shipper,
-        "receiver": Receiver(
-          name: state.receiverName.text.toUpperCase(),
-          address: state.receiverAddress.text.toUpperCase(),
-          address1: '',
-          address2: '',
-          address3: '',
-          phone: state.receiverPhone.text,
-          city: state.selectedDestination?.cityName,
-          zip: state.selectedDestination?.zipCode,
-          region: state.selectedDestination?.provinceName,
-          country: state.selectedDestination?.countryName,
-          contact: state.receiverName.text.toUpperCase(),
-          district: state.selectedDestination?.districtName,
-          subDistrict: state.selectedDestination?.subdistrictName,
-        ),
+        "receiver": receiver ,
         "destination": state.selectedDestination,
       },
     );
@@ -150,8 +147,8 @@ class ReceiverController extends BaseController {
     state.isLoadSave = true;
     update();
     try {
-      await transaction
-          .postReceiver(ReceiverModel(
+      await master
+          .postReceiver(Receiver(
             name: state.receiverName.text,
             contact: state.receiverName.text,
             phone: state.receiverPhone.text,
@@ -163,11 +160,11 @@ class ReceiverController extends BaseController {
             destinationCode: state.selectedDestination?.destinationCode ?? '-',
             destinationDescription: state.selectedDestination?.cityName ?? '-',
             idDestination: state.selectedDestination?.id.toString() ?? '-',
-            receiverDistrict: state.selectedDestination?.districtName ?? '-',
-            receiverSubDistrict: state.selectedDestination?.subdistrictName ?? '-',
+            district: state.selectedDestination?.districtName ?? '-',
+            subdistrict: state.selectedDestination?.subdistrictName ?? '-',
           ))
           .then(
-            (value) => value == 201
+            (value) => value.code == 201
                 ? Get.showSnackbar(
                     GetSnackBar(
                       icon: const Icon(

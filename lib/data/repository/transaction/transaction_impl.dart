@@ -57,18 +57,24 @@ class TransactionRepositoryImpl extends TransactionRepository {
   // }
 
   @override
-  Future<PostTransactionModel> postTransaction(DataTransactionModel data) async {
+  Future<BaseResponse<TransactionModel>> postTransaction(TransactionModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo(info: "kiriman data");
     try {
-      Response response = await network.dio.post(
-        "/transaction",
+      Response response = await network.base.post(
+        "/transaction/transactions",
         data: data,
       );
-      return PostTransactionModel.fromJson(response.data);
+      return BaseResponse<TransactionModel>.fromJson(
+        response.data,
+        (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
+      return BaseResponse<TransactionModel>.fromJson(
+        e.response?.data,
+        (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 
@@ -94,67 +100,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<PostTransactionModel> postDropshipper(DropshipperModel data) async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    data.toJson().printInfo();
-    try {
-      Response response = await network.dio.post(
-        "/dropshipper",
-        data: data,
-      );
-      return PostTransactionModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<PostTransactionModel> postReceiver(ReceiverModel data) async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    data.toJson().printInfo(info: 'receiverData');
-    try {
-      Response response = await network.dio.post(
-        "/receiver",
-        data: data,
-      );
-      return PostTransactionModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<PostTransactionModel> deleteDropshipper(String id) async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      Response response = await network.dio.delete(
-        "/dropshipper/$id",
-      );
-      return PostTransactionModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<PostTransactionModel> deleteReceiver(String id) async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      Response response = await network.dio.delete(
-        "/receiver/$id",
-      );
-      return PostTransactionModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<GetTransactionModel> getTransaction(
+  Future<BaseResponse> getTransaction(
     int page,
     int limit,
     String transType,
@@ -179,9 +125,9 @@ class TransactionRepositoryImpl extends TransactionRepository {
           "limit": limit,
         },
       );
-      return GetTransactionModel.fromJson(response.data);
+      return BaseResponse.fromJson(response.data, (json) => null,);
     } on DioException catch (e) {
-      return GetTransactionModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(e.response?.data, (json) => null,);
     }
   }
 

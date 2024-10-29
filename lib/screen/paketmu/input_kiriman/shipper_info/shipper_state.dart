@@ -28,14 +28,12 @@ class ShipperState {
   bool isLoadSave = false;
 
   List<Account> accountList = [];
-  List<Origin> originList = [];
-
   Account? selectedAccount;
 
   // GetOriginModel? originModel;
   Origin? selectedOrigin;
   Shipper? shipper;
-  DropshipperModel? dropshipper;
+  Dropshipper? dropshipper;
   String? locale;
 
 }

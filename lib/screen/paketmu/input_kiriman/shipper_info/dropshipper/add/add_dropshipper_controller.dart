@@ -11,57 +11,49 @@ class AddDropshipperController extends BaseController {
   Account account = Get.arguments['account'];
 
   final formKey = GlobalKey<FormState>();
-  final namaPengirim = TextEditingController();
-  final noHP = TextEditingController();
-  final kotaPengirim = TextEditingController();
-  final alamatPengirim = TextEditingController();
-  final kodePos = TextEditingController();
+  final dropshipperName = TextEditingController();
+  final dropshipperPhone = TextEditingController();
+  final dropshipperOrigin = TextEditingController();
+  final dropshipperAddress = TextEditingController();
+  final dropshipperZipCode = TextEditingController();
 
   List<Origin> originList = [];
   bool isLoadOrigin = false;
   bool isLoading = false;
   Origin? selectedOrigin;
 
-  Future<List<Origin>> getOriginList(String keyword, String accountID) async {
-    originList = [];
-    isLoadOrigin = true;
-    // var response = await master.getOrigins(keyword, accountID);
-    // var models = response.payload?.toList();
-
-    isLoadOrigin = false;
-    update();
-    // return models ?? [];
-    return [];
-  }
-
   Future<void> saveDropshipper() async {
     isLoading = true;
     update();
     try {
-      await transaction
-          .postDropshipper(DropshipperModel(
-            name: namaPengirim.text,
-            phone: noHP.text,
-            origin: selectedOrigin?.originCode,
-            zipCode: kodePos.text,
-            address: alamatPengirim.text,
-            city: selectedOrigin?.originName,
-          ))
-          .then(
-            (value) => Get.showSnackbar(
-              GetSnackBar(
-                icon: const Icon(
-                  Icons.info,
-                  color: whiteColor,
-                ),
-                message: "Data dropshipper berhasil di simpan".tr,
-                isDismissible: true,
-                duration: const Duration(seconds: 3),
-                backgroundColor: value.code == 201 ? successColor : errorColor,
-              ),
+      await master
+          .postDropshipper(
+        Dropshipper(
+          name: dropshipperName.text,
+          phone: dropshipperPhone.text,
+          originCode: selectedOrigin?.originCode,
+          zipCode: dropshipperZipCode.text,
+          address: dropshipperAddress.text,
+          city: selectedOrigin?.originName,
+        ),
+      )
+          .then((value) {
+        Get.showSnackbar(
+          GetSnackBar(
+            icon: const Icon(
+              Icons.info,
+              color: whiteColor,
             ),
-          )
-          .then((_) => Get.close(1));
+            message: value.code == 201 ? "Data dropshipper berhasil di simpan".tr : value.error[0].toString(),
+            isDismissible: true,
+            duration: const Duration(seconds: 3),
+            backgroundColor: value.code == 201 ? successColor : errorColor,
+          ),
+        );
+        if (value.code == 201) {
+          Get.close(1);
+        }
+      });
     } catch (e) {
       e.printError();
     }

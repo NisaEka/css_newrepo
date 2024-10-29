@@ -1,5 +1,5 @@
-class ReceiverModel {
-  ReceiverModel({
+class Receiver {
+  Receiver({
     String? name,
     String? address,
     String? city,
@@ -12,8 +12,8 @@ class ReceiverModel {
     String? destinationDescription,
     String? idDestination,
     String? idReceive,
-    String? receiverDistrict,
-    String? receiverSubDistrict,
+    String? district,
+    String? subdistrict,
     String? registrationId,
   }) {
     _name = name;
@@ -28,12 +28,12 @@ class ReceiverModel {
     _destinationDescription = destinationDescription;
     _idDestination = idDestination;
     _idReceive = idReceive;
-    _receiverDistrict = receiverDistrict;
-    _receiverSubDistrict = receiverSubDistrict;
+    _district = district;
+    _subdistrict = subdistrict;
     _registrationId = registrationId;
   }
 
-  ReceiverModel.fromJson(dynamic json) {
+  Receiver.fromJson(dynamic json) {
     _name = json['name'] ?? json['receiverName'];
     _address = json['address'] ?? json['receiverAddr'];
     _city = json['city'] ?? json['receiverCity'];
@@ -46,8 +46,8 @@ class ReceiverModel {
     _destinationDescription = json['destination_description'] ?? json['destinationDesc'] ?? json['destination_desc'];
     _idDestination = json['id_destination'] ?? json['idDest'] ?? json['destination_id'];
     _idReceive = json['id_receive'] ?? json['idReceive'];
-    _receiverDistrict = json['receiver_district'] ?? json['receiverDistrict'];
-    _receiverSubDistrict = json['receiver_sub_district'] ?? json['receiverSubdistrict'];
+    _district = json['receiver_district'] ?? json['receiverDistrict'];
+    _subdistrict = json['receiver_sub_district'] ?? json['receiverSubdistrict'];
     _registrationId = json['registration_id'] ?? json['registrationId'];
   }
 
@@ -63,11 +63,11 @@ class ReceiverModel {
   String? _destinationDescription;
   String? _idDestination;
   String? _idReceive;
-  String? _receiverDistrict;
-  String? _receiverSubDistrict;
+  String? _district;
+  String? _subdistrict;
   String? _registrationId;
 
-  ReceiverModel copyWith({
+  Receiver copyWith({
     String? name,
     String? address,
     String? city,
@@ -80,11 +80,11 @@ class ReceiverModel {
     String? destinationDescription,
     String? idDestination,
     String? idReceive,
-    String? receiverDistrict,
-    String? receiverSubDistrict,
+    String? district,
+    String? subdistrict,
     String? registrationId,
   }) =>
-      ReceiverModel(
+      Receiver(
         name: name ?? _name,
         address: address ?? _address,
         city: city ?? _city,
@@ -97,8 +97,8 @@ class ReceiverModel {
         destinationDescription: destinationDescription ?? _destinationDescription,
         idDestination: idDestination ?? _idDestination,
         idReceive: idReceive ?? _idReceive,
-        receiverDistrict: receiverDistrict ?? _receiverDistrict,
-        receiverSubDistrict: receiverSubDistrict ?? _receiverSubDistrict,
+        district: district ?? _district,
+        subdistrict: subdistrict ?? _subdistrict,
         registrationId: registrationId ?? _registrationId,
       );
 
@@ -126,9 +126,9 @@ class ReceiverModel {
 
   String? get idReceive => _idReceive;
 
-  String? get receiverDistrict => _receiverDistrict;
+  String? get district => _district;
 
-  String? get receiverSubDistrict => _receiverSubDistrict;
+  String? get subdistrict => _subdistrict;
 
   String? get registrationId => _registrationId;
 
@@ -148,8 +148,8 @@ class ReceiverModel {
     map['id_destination'] = _idDestination;
     map['destination_id'] = _idDestination;
     map['id_receive'] = _idReceive;
-    map['receiver_district'] = _receiverDistrict;
-    map['receiver_sub_district'] = _receiverSubDistrict;
+    map['receiver_district'] = _district;
+    map['receiver_sub_district'] = _subdistrict;
     map['registration_id'] = _registrationId;
 
     map['receiverName'] = _name;
@@ -164,8 +164,8 @@ class ReceiverModel {
     map['destinationDesc'] = _destinationDescription;
     map['idDest'] = _destinationDescription;
     map['idReceive'] = _idReceive;
-    map['receiverDistrict'] = _receiverDistrict;
-    map['receiverSubdistrict'] = _receiverSubDistrict;
+    map['receiverDistrict'] = _district;
+    map['receiverSubdistrict'] = _subdistrict;
     map['registrationId'] = _registrationId;
 
     return map;

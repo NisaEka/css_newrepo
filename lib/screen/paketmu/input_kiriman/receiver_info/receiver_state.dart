@@ -3,15 +3,17 @@ import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
+import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReceiverState {
   DataTransactionModel? data = Get.arguments['data'];
+  DataTransactionModel? dataEdit = Get.arguments['dataEdit'];
   Shipper shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
-  DropshipperModel? dropshipper = Get.arguments['dropshipper'];
+  Dropshipper? dropshipper = Get.arguments['dropshipper'];
   bool codOngkir = Get.arguments['cod_ongkir'];
   Origin origin = Get.arguments['origin'];
   Account account = Get.arguments['account'];
@@ -27,10 +29,6 @@ class ReceiverState {
   bool isOnline = true;
   bool isLoadSave = false;
 
-  List<String> steps = ['Data Pengirim', 'Data Penerima', 'Data Kiriman'];
-  List<Destination> destinationList = [];
-
-  // GetDestinationModel? destinationModel;
   Destination? selectedDestination;
-  ReceiverModel? receiver;
+  Receiver? receiver;
 }

@@ -6,9 +6,7 @@ import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class StickerA6 extends StatelessWidget {
@@ -177,7 +175,7 @@ class StickerA6 extends StatelessWidget {
                                 style: sublistTitleTextStyle.copyWith(fontWeight: bold),
                               ),
                               TextSpan(
-                                text: data.shipper?.region ?? '',
+                                text: data.shipper?.region?.name ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
                               // TextSpan(
@@ -277,7 +275,7 @@ class StickerA6 extends StatelessWidget {
                                 style: sublistTitleTextStyle.copyWith(fontWeight: bold),
                               ),
                               TextSpan(
-                                text: data.receiver?.zip ?? '',
+                                text: data.receiver?.zipCode ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
                               TextSpan(
