@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/aggregasi/aggregasi_repository.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -20,7 +21,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   @override
   Future<BaseResponse<List<AggregationModel>>> getAggregationReport(
       QueryParamModel param) async {
-    print("param toJson ${param.toJson()}");
+    AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -84,7 +85,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   @override
   Future<GetAggregationTotalModel> getAggregationTotal(
       QueryParamModel param) async {
-    print("param toJson total ${param.toJson()}");
+    AppLogger.i("param toJson total ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
@@ -104,7 +105,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   @override
   Future<BaseResponse<List<AggregationDetailModel>>> getAggregationByDoc(
       String aggregationID, QueryParamModel param) async {
-    print("param toJson ${param.toJson()}");
+    AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
