@@ -41,6 +41,7 @@ class PembayaranAggergasiController extends BaseController {
     pagingController.addPageRequestListener((pageKey) {
       getAggregation(pageKey);
     });
+    fetchAggregationTotal();
     update();
   }
 
@@ -53,10 +54,13 @@ class PembayaranAggergasiController extends BaseController {
 
       if (selectedAccount.isNotEmpty) {
         isIn.add({
-          "mpayWdrGrpPayCode": [
-            "10999302",
-            ...selectedAccount.map((e) => e.accountNumber).toList()
-          ]
+          // TODO: TO BE REMOVED, TESTING PURPOSE
+          // "mpayWdrGrpPayCode": [
+          //   "10999302",
+          //   ...selectedAccount.map((e) => e.accountNumber).toList()
+          // ]
+          "mpayWdrGrpPayCode":
+              selectedAccount.map((e) => e.accountNumber).toList()
         });
       }
 
@@ -81,17 +85,6 @@ class PembayaranAggergasiController extends BaseController {
         pagingController.appendPage(agg.data ?? [], nextPageKey);
         // transactionList.addAll(pagingController.itemList ?? []);
       }
-
-      await aggregation
-          .getAggregationTotal(QueryParamModel(
-        search: searchField.text,
-        between: jsonEncode(between),
-        isIn: jsonEncode(isIn),
-      ))
-          .then((value) {
-        aggTotal = value.data?.total?.toInt() ?? 0;
-        update();
-      });
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -100,6 +93,41 @@ class PembayaranAggergasiController extends BaseController {
 
     isLoading = false;
     update();
+  }
+
+  Future<void> fetchAggregationTotal() async {
+    try {
+      final isIn = [];
+      final between = [];
+
+      if (selectedAccount.isNotEmpty) {
+        isIn.add({
+          // TODO: TO BE REMOVED, TESTING PURPOSE
+          // "mpayWdrGrpPayCode": [
+          //   "10999302",
+          //   ...selectedAccount.map((e) => e.accountNumber).toList()
+          // ]
+          "mpayWdrGrpPayCode":
+              selectedAccount.map((e) => e.accountNumber).toList()
+        });
+      }
+
+      if (transDate.isNotEmpty) {
+        between.add({"mpayWdrGrpPayDate": transDate});
+      }
+
+      final total = await aggregation.getAggregationTotal(QueryParamModel(
+        search: searchField.text,
+        between: jsonEncode(between),
+        isIn: jsonEncode(isIn),
+      ));
+
+      aggTotal = total.data?.total?.toInt() ?? 0;
+      update();
+    } catch (e, i) {
+      e.printError();
+      i.printError();
+    }
   }
 
   Future<void> initData() async {
@@ -204,6 +232,7 @@ class PembayaranAggergasiController extends BaseController {
       }
       update();
       pagingController.refresh();
+      fetchAggregationTotal();
       Get.back();
     }
   }
@@ -223,6 +252,7 @@ class PembayaranAggergasiController extends BaseController {
     update();
 
     pagingController.refresh();
+    fetchAggregationTotal();
     Get.back();
     // }
   }
