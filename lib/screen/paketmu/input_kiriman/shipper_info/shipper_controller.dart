@@ -208,7 +208,7 @@ class ShipperController extends BaseController {
     state.isLoadOrigin = true;
     BaseResponse<List<Origin>>? response;
     try {
-      String accountId = '{"accountId":"$id"}';
+      String accountId = '[{"accountId":"$id"}]';
       response = await master.getOrigins(
           QueryParamModel(search: keyword.toUpperCase(), where: accountId));
     } catch (e) {

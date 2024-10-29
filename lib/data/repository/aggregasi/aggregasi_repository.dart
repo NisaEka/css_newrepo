@@ -4,7 +4,6 @@ import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dar
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_total_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/default_response_model.dart';
 
 import 'package:css_mobile/data/model/query_param_model.dart';
 
@@ -17,17 +16,9 @@ abstract class AggregasiRepository {
   Future<BaseResponse<List<AggregationDetailModel>>> getAggregationByDoc(
       String aggregationID, QueryParamModel param);
 
-  Future<DefaultResponseModel<List<AggregationMinusModel>>> getAggregationMinus(
-    int page,
-    int limit,
-    String? keyword,
-  );
+  Future<BaseResponse<List<AggregationMinusModel>>> getAggregationMinus(
+      QueryParamModel param);
 
-  Future<DefaultResponseModel<List<AggregationMinusDocModel>>>
-      getAggregationMinusDoc(
-    String doc,
-    int page,
-    int limit,
-    String? keyword,
-  );
+  Future<BaseResponse<List<AggregationMinusDocModel>>> getAggregationMinusDoc(
+      String doc, QueryParamModel param);
 }

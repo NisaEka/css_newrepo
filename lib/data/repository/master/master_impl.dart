@@ -129,7 +129,7 @@ class MasterRepositoryImpl extends MasterRepository {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.userProfil),
     );
-    String registID = '{"registrationId" : "${user.id}"}';
+    String registID = '[{"registrationId" : "${user.id}"}]';
 
     try {
       Response response = await network.base.get(
@@ -161,7 +161,7 @@ class MasterRepositoryImpl extends MasterRepository {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.userProfil),
     );
-    String registID = '{"registrationId" : "${user.id}"}';
+    String registID = '[{"registrationId" : "${user.id}"}]';
 
     try {
       Response response = await network.base.get(

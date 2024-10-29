@@ -1,5 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -30,7 +31,12 @@ class AggregationMinusDocController extends BaseController {
     showLoadingIndicator = true;
     try {
       final aggregations = await aggregation.getAggregationMinusDoc(
-          docArgs, page, pageSize, searchField.text);
+          docArgs,
+          QueryParamModel(
+            page: page,
+            limit: pageSize,
+            search: searchField.text,
+          ));
 
       final payload = aggregations.data ?? List.empty();
       final isLastPage = payload.length < pageSize;

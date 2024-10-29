@@ -47,38 +47,56 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<DefaultResponseModel<List<AggregationMinusModel>>> getAggregationMinus(
-    int page,
-    int limit,
-    String? keyword,
-  ) async {
+  Future<BaseResponse<List<AggregationMinusModel>>> getAggregationMinus(
+      QueryParamModel param) async {
+    AppLogger.i("param toJson ${param.toJson()}");
     try {
-      var response = await network.base.get("/aggregations/minus",
-          queryParameters: {"page": page, "limit": limit, "keyword": keyword});
+      var response = await network.base
+          .get("/aggregations/minus", queryParameters: param.toJson());
       List<AggregationMinusModel> aggregations = [];
       response.data["data"].forEach((aggregation) {
         aggregations.add(AggregationMinusModel.fromJson(aggregation));
       });
-      return DefaultResponseModel.fromJson(response.data, aggregations);
+      return BaseResponse<List<AggregationMinusModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<AggregationMinusModel>(
+                  (i) =>
+                      AggregationMinusModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return DefaultResponseModel.fromJson(e.response?.data, List.empty());
+      return e.response?.data;
     }
   }
 
   @override
-  Future<DefaultResponseModel<List<AggregationMinusDocModel>>>
-      getAggregationMinusDoc(
-          String doc, int page, int limit, String? keyword) async {
+  Future<BaseResponse<List<AggregationMinusDocModel>>> getAggregationMinusDoc(
+      String doc, QueryParamModel param) async {
+    AppLogger.i("param toJson ${param.toJson()}");
     try {
-      var response = await network.base.get("/aggregations/minus/$doc",
-          queryParameters: {"page": page, "limit": limit, "keyword": keyword});
+      var response = await network.base
+          .get("/aggregations/minus/$doc", queryParameters: param.toJson());
       List<AggregationMinusDocModel> aggregations = [];
       response.data["data"].forEach((aggregation) {
         aggregations.add(AggregationMinusDocModel.fromJson(aggregation));
       });
-      return DefaultResponseModel.fromJson(response.data, aggregations);
+      return BaseResponse<List<AggregationMinusDocModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<AggregationMinusDocModel>(
+                  (i) => AggregationMinusDocModel.fromJson(
+                      i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return DefaultResponseModel.fromJson(e.response?.data, List.empty());
+      return e.response?.data;
     }
   }
 
