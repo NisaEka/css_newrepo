@@ -23,7 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         } else {
           return PopScope(
             canPop: controller.pop,
-            onPopInvoked: (didPop) => controller.onPop(),
+            onPopInvokedWithResult: (didPop, result) => controller.onPop(),
             child: const Scaffold(
               body: DashboardBody(),
               bottomNavigationBar: BottomBar4(menu: 0),

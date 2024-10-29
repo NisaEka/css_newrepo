@@ -1,13 +1,20 @@
 class ResponseModel<T> {
-  ResponseModel(
-      {num? code, String? message, List<ErrorResponse>? error, T? payload}) {
+  ResponseModel({
+    num? code,
+    String? message,
+    List<ErrorResponse>? error,
+    T? payload,
+  }) {
     _code = code;
     _message = message;
     _error = error;
     _payload = payload;
   }
 
-  ResponseModel.fromJson(dynamic json, T Function(Object? json) fromJsonT) {
+  ResponseModel.fromJson(
+    dynamic json,
+    T Function(Object? json) fromJsonT,
+  ) {
     _code = json['code'];
     _message = json['message'];
     if (json['error'] != null) {
@@ -16,12 +23,13 @@ class ResponseModel<T> {
         _error?.add(ErrorResponse.fromJson(v));
       });
     }
-    _payload = _$nullableGenericFromJson(json['payload'], fromJsonT);
+    _payload = _nullableGenericFromJson(json['payload'], fromJsonT);
   }
 
-  T? _$nullableGenericFromJson<T>(
+  // Renamed the type parameter from T to U to avoid shadowing.
+  U? _nullableGenericFromJson<U>(
     Object? input,
-    T Function(Object? json) fromJson,
+    U Function(Object? json) fromJson,
   ) =>
       input == null ? null : fromJson(input);
 
@@ -30,24 +38,22 @@ class ResponseModel<T> {
   List<ErrorResponse>? _error;
   T? _payload;
 
-  ResponseModel copyWith(
-          {num? code,
-          String? message,
-          List<ErrorResponse>? error,
-          T? payload}) =>
-      ResponseModel(
+  ResponseModel<T> copyWith({
+    num? code,
+    String? message,
+    List<ErrorResponse>? error,
+    T? payload,
+  }) =>
+      ResponseModel<T>(
         code: code ?? _code,
         message: message ?? _message,
         error: error ?? _error,
-        payload: payload ?? payload,
+        payload: payload ?? _payload,
       );
 
   num? get code => _code;
-
   String? get message => _message;
-
   List<ErrorResponse>? get error => _error;
-
   T? get payload => _payload;
 
   Map<String, dynamic> toJson() {
@@ -95,9 +101,7 @@ class ErrorResponse {
       );
 
   String? get property => _property;
-
   num? get code => _code;
-
   String? get message => _message;
 
   Map<String, dynamic> toJson() {

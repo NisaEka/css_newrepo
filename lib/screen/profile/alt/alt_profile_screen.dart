@@ -30,7 +30,7 @@ class AltProfileScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: controller.pop,
-            onPopInvoked: (didPop) => controller.onPop(),
+            onPopInvokedWithResult: (didPop, result) => controller.onPop(),
             child: Stack(
               children: [
                 Scaffold(

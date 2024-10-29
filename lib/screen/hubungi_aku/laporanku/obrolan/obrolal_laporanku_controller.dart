@@ -21,8 +21,8 @@ class ObrolanLaporankuController extends BaseController {
   String? subject;
   bool isLoading = false;
   int currentPage = 1;
-  var spellMsg;
-  var respMsg;
+  String? spellMsg;
+  String? respMsg;
 
   File? gettedPhoto;
   int? imageSize;
