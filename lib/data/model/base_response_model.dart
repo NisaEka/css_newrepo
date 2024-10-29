@@ -17,13 +17,14 @@ class BaseResponse<T> {
     _message = json['message'];
     _error = json['error'];
     _code = json['statusCode'];
-    _data = _$nullableGenericFromJson(json['data'], fromJsonT);
+    _data = _nullableGenericFromJson(json['data'], fromJsonT);
     _meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 
-  T? _$nullableGenericFromJson<T>(
+  /// Avoids shadowing the class-level T by renaming the generic parameter to U.
+  U? _nullableGenericFromJson<U>(
     Object? input,
-    T Function(Object? json) fromJson,
+    U Function(Object? json) fromJson,
   ) =>
       input == null ? null : fromJson(input);
 
@@ -33,14 +34,14 @@ class BaseResponse<T> {
   T? _data;
   Meta? _meta;
 
-  BaseResponse copyWith({
+  BaseResponse<T> copyWith({
     dynamic message,
     dynamic error,
     num? code,
     T? data,
     Meta? meta,
   }) =>
-      BaseResponse(
+      BaseResponse<T>(
         message: message ?? _message,
         error: error ?? _error,
         code: code ?? _code,
@@ -49,13 +50,9 @@ class BaseResponse<T> {
       );
 
   dynamic get message => _message;
-
   dynamic get error => _error;
-
   num? get code => _code;
-
   T? get data => _data;
-
   Meta? get meta => _meta;
 
   Map<String, dynamic> toJson() {
@@ -122,15 +119,10 @@ class Meta {
       );
 
   num? get total => _total;
-
   num? get limit => _limit;
-
   num? get currentPage => _currentPage;
-
   num? get lastPage => _lastPage;
-
   num? get from => _from;
-
   num? get to => _to;
 
   Map<String, dynamic> toJson() {
