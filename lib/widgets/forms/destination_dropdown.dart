@@ -184,7 +184,7 @@ class _OriginDropdownState extends State<DestinationDropdown> {
         final post = data[index];
         return ListTile(
           title: Text(
-            post.cityName!,
+            '${post.districtName!}, ${post.cityName!}',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           onTap: () {

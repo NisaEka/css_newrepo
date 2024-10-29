@@ -6,9 +6,9 @@ class PostCekongkirModel {
   }
 
   PostCekongkirModel.fromJson(dynamic json) {
-    if (json['price'] != null) {
+    if (json['data'] != null) {
       _ongkir = [];
-      json['price'].forEach((v) {
+      json['data'].forEach((v) {
         _ongkir?.add(Ongkir.fromJson(v));
       });
     }
@@ -60,15 +60,15 @@ class Ongkir {
   }
 
   Ongkir.fromJson(dynamic json) {
-    _originName = json['origin_name'];
-    _destinationName = json['destination_name'];
-    _serviceDisplay = json['service_display'];
-    _serviceCode = json['service_code'];
-    _goodsType = json['goods_type'];
+    _originName = json['originName'];
+    _destinationName = json['destinationName'];
+    _serviceDisplay = json['serviceDisplay'];
+    _serviceCode = json['serviceCode'];
+    _goodsType = json['goodsType'];
     _currency = json['currency'];
     _price = json['price'];
-    _etdFrom = json['etd_from'];
-    _etdThru = json['etd_thru'];
+    _etdFrom = json['etdFrom'];
+    _etdThru = json['etdThru'];
     _times = json['times'];
   }
 
@@ -130,15 +130,15 @@ class Ongkir {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['origin_name'] = _originName;
-    map['destination_name'] = _destinationName;
-    map['service_display'] = _serviceDisplay;
-    map['service_code'] = _serviceCode;
-    map['goods_type'] = _goodsType;
+    map['originName'] = _originName;
+    map['destinationName'] = _destinationName;
+    map['serviceDisplay'] = _serviceDisplay;
+    map['serviceCode'] = _serviceCode;
+    map['goodsType'] = _goodsType;
     map['currency'] = _currency;
     map['price'] = _price;
-    map['etd_from'] = _etdFrom;
-    map['etd_thru'] = _etdThru;
+    map['etdFrom'] = _etdFrom;
+    map['etdThru'] = _etdThru;
     map['times'] = _times;
     return map;
   }
