@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/facility/facility_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/constant.dart';
@@ -27,9 +27,9 @@ class FacilityController extends BaseController {
   Future<void> initData() async {
     showLoadingIndicator = true;
     try {
-      AllowedMenu allowedMenu =
-          AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
-      if (allowedMenu.fasilitas == Constant.keyMenuAllowed) {
+      MenuModel menuModel =
+          MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+      if (menuModel.fasilitas == Constant.keyMenuAllowed) {
         await facility.getFacilities().then((response) async {
           if (response.statusCode == HttpStatus.ok) {
             final facilities = response.data ?? List.empty();

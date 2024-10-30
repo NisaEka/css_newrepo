@@ -285,7 +285,7 @@ class DashboardController extends BaseController {
     try {
       transaction.postTransactionDashboard('', '').then(
         (value) {
-          state.transCountList.addAll(value.payload ?? []);
+          state.transCountList.addAll(value.data ?? []);
           update();
         },
       );

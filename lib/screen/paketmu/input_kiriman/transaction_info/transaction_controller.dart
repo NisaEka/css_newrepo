@@ -217,19 +217,17 @@ class TransactionController extends BaseController {
             isPrefix3: prefix3,
           ))
               .then((value) {
-            getCodAmountMinimum = value.payload?.codAmountMinimum ?? 0;
-            hargacCODOngkir = value.payload?.congkirAmount ?? 0;
-            hargacod = value.payload?.codAmount ?? 0;
+            getCodAmountMinimum = value.data?.codAmountMinimum ?? 0;
+            hargacCODOngkir = value.data?.congkirAmount ?? 0;
+            hargacod = value.data?.codAmount ?? 0;
             totalOngkir = codOngkir && account.accountService == "JLC"
                 ? hargacCODOngkir.toInt()
-                : value.payload?.totalOngkir ?? 0;
-            getCodAmount = value.payload?.codAmount ?? 0;
-            codAmountText.text = value.payload?.codAmountMinimum
-                    ?.toInt()
-                    .toCurrency()
-                    .toString() ??
-                '0';
-            getCodFee = value.payload?.codFee ?? 0;
+                : value.data?.totalOngkir ?? 0;
+            getCodAmount = value.data?.codAmount ?? 0;
+            codAmountText.text =
+                value.data?.codAmountMinimum?.toInt().toCurrency().toString() ??
+                    '0';
+            getCodFee = value.data?.codFee ?? 0;
           });
         } catch (e) {
           num getVat = isCOD && prefix3 ? freightCharge * vat : 0;
@@ -320,8 +318,8 @@ class TransactionController extends BaseController {
             type: jenisBarang.text == "PAKET" ? "PAKET" : "DOCUMENT"),
       );
 
-      flatRate = value.payload?.flatRate?.toInt() ?? 0;
-      freightCharge = value.payload?.freightCharge?.toInt() ?? 0;
+      flatRate = value.data?.flatRate?.toInt() ?? 0;
+      freightCharge = value.data?.freightCharge?.toInt() ?? 0;
       AppLogger.i("freightCharge: $freightCharge");
       update();
     } catch (e, i) {

@@ -129,35 +129,36 @@ class AltProfileScreen extends StatelessWidget {
           ),
           Column(
             children: [
-              c.allow.profil == "Y" && c.basicProfil?.userType == "PEMILIK"
+              c.menuModel.profil == "Y" && c.basicProfil?.userType == "PEMILIK"
                   ? SettingListItem(
                       title: 'Edit Profil'.tr,
                       icon: Icons.person,
                       onTap: () => Get.to(const EditProfilScreen()),
                     )
                   : const SizedBox(),
-              c.allow.fasilitas == 'Y' && c.basicProfil?.userType == "PEMILIK"
+              c.menuModel.fasilitas == 'Y' &&
+                      c.basicProfil?.userType == "PEMILIK"
                   ? SettingListItem(
                       title: 'Fasilitasku'.tr,
                       icon: Icons.format_list_numbered_rounded,
                       onTap: () => Get.to(const FacilityScreen()),
                     )
                   : const SizedBox(),
-              c.allow.profil == "Y"
+              c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Lihat Akun'.tr,
                       icon: Icons.account_tree_rounded,
                       onTap: () => Get.to(const NoAkunScreen()),
                     )
                   : const SizedBox(),
-              c.allow.profil == "Y"
+              c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Data Umum'.tr,
                       icon: Icons.person_pin_outlined,
                       onTap: () => Get.to(const DataUmumScreen()),
                     )
                   : const SizedBox(),
-              c.allow.profil == "Y"
+              c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Alamat Pengembalian'.tr,
                       icon: Icons.cached_rounded,
@@ -165,7 +166,7 @@ class AltProfileScreen extends StatelessWidget {
                           c.isCcrfAction(const AlamatReturnScreen(), context),
                     )
                   : const SizedBox(),
-              c.allow.profil == "Y"
+              c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Data Rekening'.tr,
                       icon: Icons.credit_card_rounded,
@@ -173,7 +174,7 @@ class AltProfileScreen extends StatelessWidget {
                           c.isCcrfAction(const AkunBankScreen(), context),
                     )
                   : const SizedBox(),
-              c.allow.profil == "Y"
+              c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Dokumen'.tr,
                       icon: Icons.file_present_rounded,

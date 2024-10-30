@@ -4,7 +4,6 @@ import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dar
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_total_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/default_response_model.dart';
 
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/network_core.dart';

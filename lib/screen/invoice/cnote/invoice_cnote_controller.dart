@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/default_page_filter_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_cnote_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -8,8 +8,9 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 class InvoiceCnoteController extends BaseController {
   String invoiceNumber = Get.arguments["invoice_number"];
 
-  final DefaultPageFilterModel _defaultPageFilterModel =
-      DefaultPageFilterModel();
+  // final DefaultPageFilterModel _defaultPageFilterModel =
+  //     DefaultPageFilterModel();
+  final QueryParamModel _queryParamModel = QueryParamModel();
 
   final PagingController<int, InvoiceCnoteModel> pagingController =
       PagingController(firstPageKey: Constant.defaultPage);
@@ -24,12 +25,13 @@ class InvoiceCnoteController extends BaseController {
 
   void _getInvoiceCnotes(int page) async {
     try {
-      _defaultPageFilterModel.setPage(page);
+      _queryParamModel.setPage(page);
       final response = await invoiceRepository.getInvoiceCnotes(
-          invoiceNumber, _defaultPageFilterModel);
+          invoiceNumber, _queryParamModel);
 
-      final payload = response.payload ?? List.empty();
-      final isLastPage = payload.length < _defaultPageFilterModel.limit;
+      final payload = response.data ?? List.empty();
+      // final isLastPage = payload.length < (_queryParamModel.limit ?? 0);
+      final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
 
       if (isLastPage) {
         pagingController.appendLastPage(payload);

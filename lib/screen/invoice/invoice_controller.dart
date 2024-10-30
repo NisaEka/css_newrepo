@@ -1,18 +1,18 @@
 import 'dart:convert';
 
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/advance_filter_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/date_ext.dart';
-import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class InvoiceController extends BaseController {
-  final AdvanceFilterModel _advanceFilterModel = AdvanceFilterModel();
+  // final AdvanceFilterModel _advanceFilterModel = AdvanceFilterModel();
+  final QueryParamModel _queryParamModel = QueryParamModel();
 
   final PagingController<int, InvoiceModel> pagingController =
       PagingController(firstPageKey: Constant.defaultPage);
@@ -45,47 +45,96 @@ class InvoiceController extends BaseController {
     bool startDateAvailable = selectedDateStart != null;
     bool endDateAvailable = selectedDateEnd != null;
 
+    List<Map<String, dynamic>> between = [];
+
     switch (selectedFilterDate) {
       case RequestPickupDateEnum.custom:
         if (startDateAvailable && endDateAvailable) {
-          _advanceFilterModel.setDate(
-              '${selectedDateStart?.millisecondsSinceEpoch}-${selectedDateEnd?.millisecondsSinceEpoch}');
+          between.add({
+            "invoiceDate": [
+              DateTime(selectedDateStart!.year, selectedDateStart!.month,
+                      selectedDateStart!.day)
+                  .toIso8601String(),
+              DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
+                      selectedDateEnd!.day, 23, 59, 59)
+                  .toIso8601String()
+            ]
+          });
           filterDateText = '$selectedDateStartText - $selectedDateEndText';
         } else if (startDateAvailable) {
-          _advanceFilterModel
-              .setDate('${selectedDateStart?.millisecondsSinceEpoch}');
+          between.add({
+            "invoiceDate": [
+              DateTime(selectedDateStart!.year, selectedDateStart!.month,
+                      selectedDateStart!.day)
+                  .toIso8601String(),
+              DateTime(selectedDateStart!.year, selectedDateStart!.month,
+                      selectedDateStart!.day, 23, 59, 59)
+                  .toIso8601String()
+            ]
+          });
           filterDateText = selectedDateStartText;
         } else if (endDateAvailable) {
-          _advanceFilterModel
-              .setDate('${selectedDateEnd?.millisecondsSinceEpoch}');
+          between.add({
+            "invoiceDate": [
+              DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
+                      selectedDateEnd!.day)
+                  .toIso8601String(),
+              DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
+                      selectedDateEnd!.day, 23, 59, 59)
+                  .toIso8601String()
+            ]
+          });
           filterDateText = selectedDateEndText;
         }
         break;
       case RequestPickupDateEnum.all:
-        _advanceFilterModel.setDate('');
+        between = [];
         break;
       case RequestPickupDateEnum.oneMonth:
         final currentDateTime = DateTime.now();
         final oneMonthAgo = currentDateTime.subtract(const Duration(days: 30));
-        _advanceFilterModel.setDate(
-            '${oneMonthAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
+        between.add({
+          "invoiceDate": [
+            DateTime(oneMonthAgo.year, oneMonthAgo.month, oneMonthAgo.day)
+                .toIso8601String(),
+            DateTime(currentDateTime.year, currentDateTime.month,
+                    currentDateTime.day, 23, 59, 59)
+                .toIso8601String()
+          ]
+        });
         break;
       case RequestPickupDateEnum.oneWeek:
         final currentDateTime = DateTime.now();
         final oneWeekAgo = currentDateTime.subtract(const Duration(days: 7));
-        _advanceFilterModel.setDate(
-            '${oneWeekAgo.millisecondsSinceEpoch}-${currentDateTime.millisecondsSinceEpoch}');
+        between.add({
+          "invoiceDate": [
+            DateTime(oneWeekAgo.year, oneWeekAgo.month, oneWeekAgo.day)
+                .toIso8601String(),
+            DateTime(currentDateTime.year, currentDateTime.month,
+                    currentDateTime.day, 23, 59, 59)
+                .toIso8601String()
+          ]
+        });
         break;
       case RequestPickupDateEnum.today:
         final currentDateTime = DateTime.now();
         final startOfDay = DateTime(
             currentDateTime.year, currentDateTime.month, currentDateTime.day);
-        _advanceFilterModel.setDate('${startOfDay.millisecondsSinceEpoch}');
+        final endOfDay = DateTime(currentDateTime.year, currentDateTime.month,
+            currentDateTime.day, 23, 59, 59);
+        between.add({
+          "invoiceDate": [
+            startOfDay.toIso8601String(),
+            endOfDay.toIso8601String()
+          ]
+        });
         break;
       default:
-        _advanceFilterModel.setDate('');
+        between = [];
         break;
     }
+
+    _queryParamModel.setBetween(jsonEncode(between));
 
     requireRetry();
     update();
@@ -94,8 +143,8 @@ class InvoiceController extends BaseController {
   Future<void> _getInvoiceCount() async {
     try {
       final response =
-          await invoiceRepository.getInvoiceCount(_advanceFilterModel);
-      _invoiceCount = response.payload ?? 0;
+          await invoiceRepository.getInvoiceCount(_queryParamModel);
+      _invoiceCount = response.data ?? 0;
       update();
     } catch (error) {
       error.printError();
@@ -104,12 +153,13 @@ class InvoiceController extends BaseController {
 
   void _getInvoices(int page) async {
     try {
-      _advanceFilterModel.setPage(page);
-      final response = await invoiceRepository.getInvoices(_advanceFilterModel);
+      _queryParamModel.setPage(page);
+      final response = await invoiceRepository.getInvoices(_queryParamModel);
 
-      final payload = response.payload ?? List.empty();
-      final isLastPage = payload.length < _advanceFilterModel.limit;
-      AppLogger.d(jsonEncode(response.toJson()));
+      final payload = response.data ?? List.empty();
+      // final isLastPage = payload.length < (_queryParamModel.limit ?? 0);
+      final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
+      // AppLogger.d(jsonEncode(response.toJson()));
 
       if (isLastPage) {
         pagingController.appendLastPage(payload);
@@ -124,7 +174,7 @@ class InvoiceController extends BaseController {
   }
 
   void requireRetry() {
-    // _getInvoiceCount();
+    _getInvoiceCount();
     // _getInvoices(Constant.defaultPage);
     refreshInvoices();
   }
@@ -134,7 +184,7 @@ class InvoiceController extends BaseController {
   }
 
   void onKeywordChange(String newKeyword) {
-    _advanceFilterModel.setKeyword(newKeyword);
+    _queryParamModel.setSearch(newKeyword);
     requireRetry();
 
     if (newKeyword.isEmpty) {

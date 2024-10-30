@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/bottombar_controller.dart';
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 
@@ -23,7 +23,7 @@ class AltProfileController extends BaseController {
 
   UserModel? basicProfil;
   String? version;
-  AllowedMenu allow = AllowedMenu();
+  MenuModel menuModel = MenuModel();
   CcrfProfileModel? ccrf;
   bool isCcrf = false;
 
@@ -85,8 +85,8 @@ class AltProfileController extends BaseController {
       );
     }
 
-    allow =
-        AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+    menuModel =
+        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
     update();
 
     isLoading = false;

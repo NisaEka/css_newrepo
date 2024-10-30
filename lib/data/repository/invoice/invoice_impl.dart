@@ -1,12 +1,12 @@
-import 'package:css_mobile/data/model/advance_filter_model.dart';
-import 'package:css_mobile/data/model/default_page_filter_model.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_cnote_detail_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_cnote_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_detail_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
-import 'package:css_mobile/data/model/response_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/invoice/invoice_repository.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -16,21 +16,22 @@ class InvoiceImpl extends InvoiceRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<ResponseModel<num>> getInvoiceCount(
-      AdvanceFilterModel advanceFilter) async {
+  Future<BaseResponse<num>> getInvoiceCount(QueryParamModel queryParam) async {
     var token = await storageSecure.read(key: "token");
     // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+
+    AppLogger.i("param toJson ${queryParam.toJson()}");
 
     try {
-      var response = await network.local
-          .get("/invoice/count", queryParameters: advanceFilter.toJson());
-      return ResponseModel.fromJson(
+      var response = await network.base
+          .get("/invoices/count", queryParameters: queryParam.toJson());
+      return BaseResponse.fromJson(
         response.data,
         (json) => json as num,
       );
     } on DioException catch (e) {
-      return ResponseModel.fromJson(
+      return BaseResponse.fromJson(
         e.response?.data,
         (json) => json as num,
       );
@@ -38,19 +39,21 @@ class InvoiceImpl extends InvoiceRepository {
   }
 
   @override
-  Future<ResponseModel<List<InvoiceModel>>> getInvoices(
-      AdvanceFilterModel advanceFilter) async {
+  Future<BaseResponse<List<InvoiceModel>>> getInvoices(
+      QueryParamModel queryParam) async {
     var token = await storageSecure.read(key: "token");
     // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
-    network.local.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+
+    AppLogger.i("param toJson ${queryParam.toJson()}");
 
     try {
-      Response response = await network.local.get(
-        "/invoice",
-        queryParameters: advanceFilter.toJson(),
+      Response response = await network.base.get(
+        "/invoices",
+        queryParameters: queryParam.toJson(),
       );
 
-      return ResponseModel<List<InvoiceModel>>.fromJson(
+      return BaseResponse<List<InvoiceModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
@@ -61,7 +64,7 @@ class InvoiceImpl extends InvoiceRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      return ResponseModel<List<InvoiceModel>>.fromJson(
+      return BaseResponse<List<InvoiceModel>>.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>
             ? json
@@ -75,17 +78,18 @@ class InvoiceImpl extends InvoiceRepository {
   }
 
   @override
-  Future<ResponseModel<InvoiceDetailModel>> getInvoiceByNumber(
+  Future<BaseResponse<InvoiceDetailModel>> getInvoiceByNumber(
       String invoiceNumber) async {
     try {
-      var response = await network.local.get("/invoice/$invoiceNumber");
-      return ResponseModel.fromJson(
+      var encodedInvoiceNumber = Uri.encodeComponent(invoiceNumber);
+      var response = await network.base.get("/invoices/$encodedInvoiceNumber");
+      return BaseResponse.fromJson(
           response.data,
           (json) => InvoiceDetailModel.fromJson(
                 json as Map<String, dynamic>,
               ));
     } on DioException catch (e) {
-      return ResponseModel.fromJson(
+      return BaseResponse.fromJson(
           e.response?.data,
           (json) => InvoiceDetailModel.fromJson(
                 json as Map<String, dynamic>,
@@ -94,19 +98,20 @@ class InvoiceImpl extends InvoiceRepository {
   }
 
   @override
-  Future<ResponseModel<InvoiceCnoteDetailModel>> getInvoiceCnoteByAwb(
+  Future<BaseResponse<InvoiceCnoteDetailModel>> getInvoiceCnoteByAwb(
       String invoiceNumber, String awb) async {
     try {
+      var encodedInvoiceNumber = Uri.encodeComponent(invoiceNumber);
       var response =
-          await network.local.get("/invoice/$invoiceNumber/cnote/$awb");
-      return ResponseModel.fromJson(
+          await network.base.get("/invoices/$encodedInvoiceNumber/cnotes/$awb");
+      return BaseResponse.fromJson(
         response.data,
         (json) => InvoiceCnoteDetailModel.fromJson(
           json as Map<String, dynamic>,
         ),
       );
     } on DioException catch (e) {
-      return ResponseModel.fromJson(
+      return BaseResponse.fromJson(
         e.response?.data,
         (json) => InvoiceCnoteDetailModel.fromJson(
           json as Map<String, dynamic>,
@@ -116,18 +121,21 @@ class InvoiceImpl extends InvoiceRepository {
   }
 
   @override
-  Future<ResponseModel<List<InvoiceCnoteModel>>> getInvoiceCnotes(
-      String invoiceNumber, DefaultPageFilterModel filter) async {
+  Future<BaseResponse<List<InvoiceCnoteModel>>> getInvoiceCnotes(
+      String invoiceNumber, QueryParamModel queryParam) async {
+    AppLogger.i("param toJson ${queryParam.toJson()}");
     try {
-      var response = await network.local.get("/invoice/$invoiceNumber/cnote",
-          queryParameters: filter.toJson());
+      var encodedInvoiceNumber = Uri.encodeComponent(invoiceNumber);
+      var response = await network.base.get(
+          "/invoices/$encodedInvoiceNumber/cnotes",
+          queryParameters: queryParam.toJson());
       List<InvoiceCnoteModel> invoices = [];
 
-      response.data["payload"].forEach((invoice) {
+      response.data["data"].forEach((invoice) {
         invoices.add(InvoiceCnoteModel.fromJson(invoice));
       });
 
-      return ResponseModel.fromJson(
+      return BaseResponse.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
@@ -138,7 +146,7 @@ class InvoiceImpl extends InvoiceRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      return ResponseModel.fromJson(e.response?.data, (json) => List.empty());
+      return BaseResponse.fromJson(e.response?.data, (json) => List.empty());
     }
   }
 }

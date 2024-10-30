@@ -27,7 +27,7 @@ class PantauPaketmuController extends BaseController {
           .postTransactionDashboard('1722445200000 - 1725814800000', '')
           .then(
         (value) {
-          state.pantauCountList.addAll(value.payload ?? []);
+          state.pantauCountList.addAll(value.data ?? []);
         },
       );
     } catch (e) {
@@ -60,7 +60,7 @@ class PantauPaketmuController extends BaseController {
       }
 
       await pantau.getPantauStatus().then((value) {
-        state.listStatusKiriman.addAll(value.payload ?? []);
+        state.listStatusKiriman.addAll(value.data ?? []);
         update();
       });
     } catch (e, i) {
@@ -213,10 +213,10 @@ class PantauPaketmuController extends BaseController {
         state.selectedStatusKiriman ?? '',
       )
           .then((value) {
-        state.total = value.payload!.total!.toInt();
-        state.cod = value.payload!.cod!.toInt();
-        state.noncod = value.payload!.nonCod!.toInt();
-        state.codOngkir = value.payload!.codOngkir!.toInt();
+        state.total = value.data!.total!.toInt();
+        state.cod = value.data!.cod!.toInt();
+        state.noncod = value.data!.nonCod!.toInt();
+        state.codOngkir = value.data!.codOngkir!.toInt();
         update();
       });
     } catch (e, i) {

@@ -36,8 +36,8 @@ class InvoiceCnoteDetailController extends BaseController {
       final invoice =
           await invoiceRepository.getInvoiceCnoteByAwb(invoiceNumber, awb);
 
-      if (invoice.payload != null) {
-        _invoiceCnoteDetailModel = invoice.payload;
+      if (invoice.data != null) {
+        _invoiceCnoteDetailModel = invoice.data;
 
         _showMainContent = true;
         update();

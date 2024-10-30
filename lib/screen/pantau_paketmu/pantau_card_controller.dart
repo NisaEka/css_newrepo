@@ -22,8 +22,8 @@ class PantauCardController extends BaseController {
       // ResponseModel result = await pantau.getPantauCountStatus('1717174800000 - 1719766800000', '');
       ResponseModel result = await transaction.postTransactionDashboard(
           '1717174800000 - 1719766800000', '');
-      state.pantauCountList.addAll(result.payload);
-      AppLogger.d('pantau screen : ${result.code}');
+      state.pantauCountList.addAll(result.data);
+      AppLogger.d('pantau screen : ${result.statusCode}');
     } catch (e, i) {
       e.printError();
       i.printError();

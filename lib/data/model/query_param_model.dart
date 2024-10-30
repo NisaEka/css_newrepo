@@ -83,6 +83,65 @@ class QueryParamModel {
   String? _isNotNull;
   String? _select;
 
+  // Getters
+  bool? get table => _table;
+  void setTable(bool? value) => _table = value;
+
+  bool? get trash => _trash;
+  void setTrash(bool? value) => _trash = value;
+
+  bool? get includeDeleted => _includeDeleted;
+  void setIncludeDeleted(bool? value) => _includeDeleted = value;
+
+  bool? get relation => _relation;
+  void setRelation(bool? value) => _relation = value;
+
+  num? get page => _page;
+  void setPage(num? value) => _page = value;
+
+  num? get limit => _limit;
+  void setLimit(num? value) => _limit = value;
+
+  String? get search => _search;
+  void setSearch(String? value) => _search = value;
+
+  String? get where => _where;
+  void setWhere(String? value) => _where = value;
+
+  String? get notEqual => _notEqual;
+  void setNotEqual(String? value) => _notEqual = value;
+
+  String? get greaterThan => _greaterThan;
+  void setGreaterThan(String? value) => _greaterThan = value;
+
+  String? get lessThan => _lessThan;
+  void setLessThan(String? value) => _lessThan = value;
+
+  String? get like => _like;
+  void setLike(String? value) => _like = value;
+
+  String? get sort => _sort;
+  void setSort(String? value) => _sort = value;
+
+  String? get between => _between;
+  void setBetween(String? value) => _between = value;
+
+  String? get isIn => _in;
+  void setIsIn(String? value) => _in = value;
+
+  String? get notin => _notin;
+  void setNotin(String? value) => _notin = value;
+
+  String? get isNull => _isNull;
+  void setIsNull(String? value) => _isNull = value;
+
+  String? get isNotNull => _isNotNull;
+  void setIsNotNull(String? value) => _isNotNull = value;
+
+  String? get select => _select;
+  void setSelect(String? value) => _select = value;
+
+  // CopyWith method
   QueryParamModel copyWith({
     bool? table,
     bool? trash,
@@ -126,122 +185,28 @@ class QueryParamModel {
         select: select ?? _select,
       );
 
-  bool? get table => _table;
-
-  bool? get trash => _trash;
-
-  bool? get includeDeleted => _includeDeleted;
-
-  bool? get relation => _relation;
-
-  num? get page => _page;
-
-  num? get limit => _limit;
-
-  String? get search => _search;
-
-  String? get where => _where;
-
-  String? get notEqual => _notEqual;
-
-  String? get greaterThan => _greaterThan;
-
-  String? get lessThan => _lessThan;
-
-  String? get like => _like;
-
-  String? get sort => _sort;
-
-  String? get between => _between;
-
-  String? get isIn => _in;
-
-  String? get notin => _notin;
-
-  String? get isNull => _isNull;
-
-  String? get isNotNull => _isNotNull;
-
-  String? get select => _select;
-
+  // toJson method
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (_table != null) {
-      map['table'] = _table;
-    }
-
-    if (_trash != null) {
-      map['trash'] = _trash;
-    }
-
-    if (_includeDeleted != null) {
-      map['includeDeleted'] = _includeDeleted;
-    }
-
-    if (_relation != null) {
-      map['relation'] = _relation;
-    }
-
-    if (_search != null) {
-      map['search'] = _search;
-    }
-
-    if (_where != null) {
-      map['where'] = _where;
-    }
-
-    if (_page != null) {
-      map['page'] = _page;
-    } else {
-      map['page'] = 1;
-    }
-
-    if (_limit != null) {
-      map['limit'] = _limit;
-    }
-    if (_notEqual != null) {
-      map['notEqual'] = _notEqual;
-    }
-
-    if (greaterThan != null) {
-      map['greaterThan'] = _greaterThan;
-    }
-
-    if (lessThan != null) {
-      map['lessThan'] = _lessThan;
-    }
-
-    if (like != null) {
-      map['like'] = _like;
-    }
-
-    if (sort != null) {
-      map['sort'] = _sort;
-    }
-
-    if (between != null) {
-      map['between'] = _between;
-    }
-
-    if (isIn != null) {
-      map['in'] = _in;
-    }
-
-    if (notin != null) {
-      map['notin'] = _notin;
-    }
-
-    if (isNull != null) {
-      map['isNull'] = _isNull;
-    }
-
-    if (isNotNull != null) {
-      map['isNotNull'] = _isNotNull;
-    }
-
-    if (select != null) {
-      map['select'] = _select;
-    }
+    if (_table != null) map['table'] = _table;
+    if (_trash != null) map['trash'] = _trash;
+    if (_includeDeleted != null) map['includeDeleted'] = _includeDeleted;
+    if (_relation != null) map['relation'] = _relation;
+    if (_search != null) map['search'] = _search;
+    if (_where != null) map['where'] = _where;
+    map['page'] = _page ?? 1; // Default value
+    if (_limit != null) map['limit'] = _limit;
+    if (_notEqual != null) map['notEqual'] = _notEqual;
+    if (_greaterThan != null) map['greaterThan'] = _greaterThan;
+    if (_lessThan != null) map['lessThan'] = _lessThan;
+    if (_like != null) map['like'] = _like;
+    if (_sort != null) map['sort'] = _sort;
+    if (_between != null) map['between'] = _between;
+    if (_in != null) map['in'] = _in;
+    if (_notin != null) map['notin'] = _notin;
+    if (_isNull != null) map['isNull'] = _isNull;
+    if (_isNotNull != null) map['isNotNull'] = _isNotNull;
+    if (_select != null) map['select'] = _select;
 
     return map;
   }

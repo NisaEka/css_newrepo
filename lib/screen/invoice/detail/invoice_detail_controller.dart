@@ -33,8 +33,8 @@ class InvoiceDetailController extends BaseController {
     try {
       final invoice = await invoiceRepository.getInvoiceByNumber(invoiceNumber);
 
-      if (invoice.payload != null) {
-        _invoiceDetailModel = invoice.payload;
+      if (invoice.data != null) {
+        _invoiceDetailModel = invoice.data;
 
         _showMainContent = true;
         update();
