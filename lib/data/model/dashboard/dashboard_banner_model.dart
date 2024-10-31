@@ -51,7 +51,7 @@ class BannerModel {
   }
 
   BannerModel.fromJson(dynamic json) {
-    _namaBanner = json['nama_banner'];
+    _namaBanner = json['namaBanner'];
     _picture = json['picture'];
     _link = json['link'];
   }
@@ -74,7 +74,7 @@ class BannerModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['nama_banner'] = _namaBanner;
+    map['namaBanner'] = _namaBanner;
     map['picture'] = _picture;
     map['link'] = _link;
     return map;

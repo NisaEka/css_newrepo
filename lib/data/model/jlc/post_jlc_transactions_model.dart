@@ -50,9 +50,9 @@ class JLCTransactions {
   }
 
   JLCTransactions.fromJson(dynamic json) {
-    _tglTransaksi = json['tgl_transaksi'];
-    _noConnote = json['no_connote'];
-    _jmlTransaksi = json['jml_transaksi'];
+    _tglTransaksi = json['tglTransaksi'];
+    _noConnote = json['noConnote'];
+    _jmlTransaksi = json['jmlTransaksi'];
     _point = json['point'];
     _status = json['status'];
   }
@@ -90,9 +90,9 @@ class JLCTransactions {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['tgl_transaksi'] = _tglTransaksi;
-    map['no_connote'] = _noConnote;
-    map['jml_transaksi'] = _jmlTransaksi;
+    map['tglTransaksi'] = _tglTransaksi;
+    map['noConnote'] = _noConnote;
+    map['jmlTransaksi'] = _jmlTransaksi;
     map['point'] = _point;
     map['status'] = _status;
     return map;
