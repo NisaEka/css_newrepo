@@ -1,4 +1,3 @@
-import 'package:css_mobile/config/api_config.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_point_reedem_model.dart';
@@ -64,29 +63,13 @@ class JLCRepositoryImpl extends JLCRepository {
   }
 
   @override
-  Future<DashboardNewsModel> postDashboardNews(
-    String type,
-    String fromDate,
-    String toDate,
-  ) async {
-    Dio news = Dio();
-    news.options = BaseOptions(
-      contentType: 'application/x-www-form-urlencoded',
-    );
-
+  Future<DashboardNewsModel> postDashboardNews() async {
     try {
-      Response response = await news.post(
-        'https://cms.jne.co.id/api_webjne/web_base/',
-        data: {
-          'username': ApiConfig.bannerKey,
-          'api_key': ApiConfig.bannerPass,
-          'from_date': fromDate,
-          'to_date': toDate,
-          'type': type,
-        },
-      );
+      Response response = await network.base.get('/news');
+      AppLogger.i('response: ${response.data}');
       return DashboardNewsModel.fromJson(response.data);
     } on DioException catch (e) {
+      AppLogger.e('News error: ${e.message}');
       return e.response?.data;
     }
   }

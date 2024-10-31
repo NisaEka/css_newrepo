@@ -13,6 +13,7 @@ import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -85,12 +86,10 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadNews() async {
-    String toDate = DateTime.now().toString().split(' ').first;
-    String fromDate =
-        DateTime(DateTime.now().year, 01).toString().split(' ').first;
+    AppLogger.i('load news');
     try {
-      jlc.postDashboardNews('news', fromDate, toDate).then((value) {
-        state.newsList.addAll(value.message ?? []);
+      jlc.postDashboardNews().then((value) {
+        state.newsList.addAll(value.data ?? []);
         update();
       });
     } catch (e) {
