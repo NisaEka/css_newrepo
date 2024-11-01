@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/facility/facility_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FacilityItem extends StatelessWidget {
   final FacilityModel facility;
@@ -70,7 +71,7 @@ class FacilityItem extends StatelessWidget {
   Widget title() {
     return Center(
         child: Text(
-      facility.name,
+      facility.name.tr,
       textAlign: TextAlign.center,
       style: sublistTitleTextStyle,
     ));

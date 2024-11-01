@@ -377,7 +377,14 @@ class LanguageEN {
       "Lacak": "Track",
       "Detail Laporanku": "My Report Detail",
       "Jumlah Transaksi": "All Transactions",
-      "Kiriman Kamu": "Your Shipments"
+      "Kiriman Kamu": "Your Shipments",
+      "Skema Pembayaran": "Payment Scheme",
+      "COD / BAYAR DI TEMPAT": "COD / PAY ON DELIVERY",
+      "Gak Mau Ribet": "Don't want it to be complicated",
+      "Bayar Ongkir di Awal": "Pay Shipping Costs Upfront",
+      "Bayar Ongkir di Akhir": "Pay Shipping Costs Later",
+      "Bayar Tunai Harian": "Daily Cash Payment",
+      "Bayar Ongkir Nanti": "Pay Shipping Costs Later",
     };
   }
 }
