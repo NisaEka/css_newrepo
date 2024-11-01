@@ -27,7 +27,7 @@ class PantauPaketmuController extends BaseController {
           .postTransactionDashboard('1722445200000 - 1725814800000', '')
           .then(
         (value) {
-          state.pantauCountList.addAll(value.data ?? []);
+          // state.pantauCountList.addAll(value.data ?? []);
         },
       );
     } catch (e) {

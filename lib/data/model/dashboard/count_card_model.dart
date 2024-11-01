@@ -1,3 +1,67 @@
+class PropertySummary {
+  PropertySummary({
+    this.countCardModel,
+    // this.totalKirimanCod,
+  });
+
+  PropertySummary.fromJson(Map<String, dynamic> json) {
+    if (json['summary'] != null) {
+      countCardModel = (json['summary'] as List<dynamic>)
+          .map((item) => CountCardModel.fromJson(item as Map<String, dynamic>))
+          .toList();
+    }
+    // totalKirimanCod = TotalKirimanCodModel.fromJson(json['totalKirimanCod']);
+  }
+
+  List<CountCardModel>? countCardModel;
+  // TotalKirimanCodModel? totalKirimanCod;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (countCardModel != null) {
+      map['summary'] = countCardModel!.map((e) => e.toJson()).toList();
+    }
+    // if (totalKirimanCod != null) {
+    //   map['totalKirimanCod'] = totalKirimanCod!.toJson();
+    // }
+    return map;
+  }
+}
+
+class TotalKirimanCodModel {
+  TotalKirimanCodModel({
+    this.totalCod,
+    this.totalNonCod,
+    this.totalCodOngkir,
+    this.codAmount,
+    this.codOngkirAmount,
+  });
+
+  TotalKirimanCodModel.fromJson(Map<String, dynamic> json) {
+    totalCod = json['totalCod'];
+    totalNonCod = json['totalNonCod'];
+    totalCodOngkir = json['totalCodOngkir'];
+    codAmount = json['codAmount'];
+    codOngkirAmount = json['codOngkirAmount'];
+  }
+
+  num? totalCod;
+  num? totalNonCod;
+  num? totalCodOngkir;
+  num? codAmount;
+  num? codOngkirAmount;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['totalCod'] = totalCod;
+    map['totalNonCod'] = totalNonCod;
+    map['totalCodOngkir'] = totalCodOngkir;
+    map['codAmount'] = codAmount;
+    map['codOngkirAmount'] = codOngkirAmount;
+    return map;
+  }
+}
+
 class CountCardModel {
   CountCardModel({
     String? title,
@@ -18,13 +82,13 @@ class CountCardModel {
   }
 
   CountCardModel.fromJson(dynamic json) {
-    _title = json['title'];
+    _title = json['status'];
     _img = json['image'];
-    _route = json['route'];
-    _count = json['count'];
-    _cod = json['cod'];
-    _nonCod = json['non_cod'];
-    _codOngkir = json['cod_ongkir'];
+    _route = json['status'];
+    _count = json['total'];
+    _cod = json['totalCod'];
+    _nonCod = json['totalNonCod'];
+    _codOngkir = json['totalCodOngkir'];
   }
   String? _title;
   String? _img;

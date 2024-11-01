@@ -189,7 +189,7 @@ class InputLaporankuController extends BaseController {
             priority: priority ? "Y" : "N",
           ))
           .then(
-            (value) => value.code == 201
+            (value) => value.statusCode == 201
                 ? Get.to(SuccessScreen(
                     message:
                         "Laporanmu berhasil dibuatdan akan diproses lebih lanjut"
@@ -197,7 +197,7 @@ class InputLaporankuController extends BaseController {
                     buttonTitle: "OK".tr,
                     nextAction: () => Get.close(2),
                   ))
-                : value.code == 404
+                : value.statusCode == 404
                     ? Get.showSnackbar(
                         GetSnackBar(
                           icon: const Icon(
@@ -210,7 +210,7 @@ class InputLaporankuController extends BaseController {
                           backgroundColor: warningColor,
                         ),
                       )
-                    : value.code == 403
+                    : value.statusCode == 403
                         ? Get.showSnackbar(
                             GetSnackBar(
                               icon: const Icon(

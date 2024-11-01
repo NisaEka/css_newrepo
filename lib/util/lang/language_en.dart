@@ -385,6 +385,9 @@ class LanguageEN {
       "Bayar Ongkir di Akhir": "Pay Shipping Costs Later",
       "Bayar Tunai Harian": "Daily Cash Payment",
       "Bayar Ongkir Nanti": "Pay Shipping Costs Later",
+      "COD": "COD",
+      "NON COD": "NON COD",
+      "COD ONGKIR": "COD SHIPPING COST",
     };
   }
 }

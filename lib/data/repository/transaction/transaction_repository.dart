@@ -68,7 +68,7 @@ abstract class TransactionRepository {
   Future<ResponseModel<PostTransactionOngkirModel>> postCalcOngkir(
       DataTransactionOngkirModel data);
 
-  Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(
+  Future<ResponseModel<PropertySummary>> postTransactionDashboard(
     String transDate,
     String officer,
   );

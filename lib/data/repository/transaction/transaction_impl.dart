@@ -327,41 +327,78 @@ class TransactionRepositoryImpl extends TransactionRepository {
     }
   }
 
+  // @override
+  // Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(
+  //     String transDate, String officer) async {
+  //   var token = await storageSecure.read(key: "token");
+  //   network.base.options.headers['Authorization'] = 'Bearer $token';
+
+  //   try {
+  //     Response response = await network.base.get(
+  //       "/transaction/dashboards",
+  //       // queryParameters: {
+  //       //   "transaction_date": transDate,
+  //       //   "officer": officer,
+  //       // },
+  //     );
+  //     print("response: ${response.data}");
+  //     return ResponseModel<List<CountCardModel>>.fromJson(
+  //       response.data,
+  //       (json) => (json as Map<String, dynamic>)['summary'] is List<dynamic>
+  //           ? (json['summary'] as List<dynamic>)
+  //               .map<CountCardModel>(
+  //                 (i) => CountCardModel.fromJson(i as Map<String, dynamic>),
+  //               )
+  //               .toList()
+  //           : List.empty(),
+  //     );
+  //   } on DioException catch (e) {
+  //     AppLogger.e('error: ${e.response?.data}');
+  //     return ResponseModel<List<CountCardModel>>.fromJson(
+  //       e.response?.data,
+  //       (json) => json is List<dynamic>
+  //           ? json
+  //               .map<CountCardModel>(
+  //                 (i) => CountCardModel.fromJson(i as Map<String, dynamic>),
+  //               )
+  //               .toList()
+  //           : List.empty(),
+  //     );
+  //   }
+  // }
+
   @override
-  Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(
+  Future<ResponseModel<PropertySummary>> postTransactionDashboard(
       String transDate, String officer) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.dio.post(
-        "/transaction/dashboard",
-        queryParameters: {
-          "transaction_date": transDate,
-          "officer": officer,
+      Response response = await network.base.get(
+        "/transaction/dashboards",
+        // queryParameters: {
+        //   "transaction_date": transDate,
+        //   "officer": officer,
+        // },
+      );
+
+      print("response: ${response.data}");
+
+      final test = ResponseModel<PropertySummary>.fromJson(
+        response.data,
+        (json) {
+          // Deserialize the PropertySummary
+          return PropertySummary.fromJson(json as Map<String, dynamic>);
         },
       );
-      return ResponseModel<List<CountCardModel>>.fromJson(
-        response.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<CountCardModel>(
-                  (i) => CountCardModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
-      );
+      print("test: $test");
+      AppLogger.i("test: $test");
+      return test;
     } on DioException catch (e) {
       AppLogger.e('error: ${e.response?.data}');
-      return ResponseModel<List<CountCardModel>>.fromJson(
+      return ResponseModel<PropertySummary>.fromJson(
         e.response?.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<CountCardModel>(
-                  (i) => CountCardModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
+        (json) => PropertySummary.fromJson(json as Map<String, dynamic>),
       );
     }
   }

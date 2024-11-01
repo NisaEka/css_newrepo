@@ -282,12 +282,12 @@ class DashboardController extends BaseController {
   Future<void> loadTransCountList() async {
     state.transCountList.clear();
     try {
-      transaction.postTransactionDashboard('', '').then(
-        (value) {
-          state.transCountList.addAll(value.data ?? []);
-          update();
-        },
-      );
+      var value = await transaction.postTransactionDashboard('', '');
+      AppLogger.i("value : ${jsonEncode(value.data)}");
+      if (value.data?.countCardModel != null) {
+        state.transCountList.addAll(value.data?.countCardModel ?? []);
+      }
+      update();
     } catch (e) {
       e.printError();
     }
@@ -312,7 +312,7 @@ class DashboardController extends BaseController {
     cekLocalLanguage();
     state.isLoading = true;
 
-    // loadTransCountList();
+    loadTransCountList();
 
     bool accounts = ((await storage.readString(StorageCore.accounts)).isEmpty ||
             (await storage.readString(StorageCore.accounts)) == 'null') &&

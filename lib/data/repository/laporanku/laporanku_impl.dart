@@ -16,11 +16,11 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketCategoryModel> getTicketCategory() async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.dio.get(
-        "/ticket/category",
+      Response response = await network.base.get(
+        "/transaction/tickets/category",
       );
 
       return GetTicketCategoryModel.fromJson(response.data);
@@ -36,11 +36,11 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
     String query,
   ) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.dio.get(
-        "/ticket/summary",
+      Response response = await network.base.get(
+        "/transaction/tickets/summary",
         queryParameters: {
           "date": date,
           "keyworf": query,
@@ -63,11 +63,11 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
     String query,
   ) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.dio.get(
-        "/ticket",
+      Response response = await network.base.get(
+        "/transaction/tickets",
         queryParameters: {
           "page": page,
           "limit": limit,
@@ -86,10 +86,11 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketModel> postTicket(DataPostTicketModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.dio.post("/ticket", data: data);
+      Response response =
+          await network.base.post("/transaction/tickets", data: data);
 
       return GetTicketModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -101,11 +102,11 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   Future<GetTicketMessageModel> getTickeMessage(
       String id, int page, int limit) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response =
-          await network.dio.get("/ticket/$id/message", queryParameters: {
+      Response response = await network.base
+          .get("/transaction/tickets/$id/message", queryParameters: {
         "page": page,
         "limit": limit,
       });
@@ -119,10 +120,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketModel> postTicketMessage(DataPostTicketModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.post(
-        "/ticket/${data.id}/message",
+      Response response = await network.base.post(
+        "/transaction/tickets/${data.id}/message",
         data: data,
       );
 
@@ -135,10 +136,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<GetTicketModel> putTicket(String id, String status) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.put(
-        "/ticket/$id",
+      Response response = await network.base.put(
+        "/transaction/tickets/$id",
         data: {
           "status": status,
         },

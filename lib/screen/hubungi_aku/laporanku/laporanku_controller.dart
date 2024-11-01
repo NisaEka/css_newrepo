@@ -33,10 +33,10 @@ class LaporankuController extends BaseController {
         state.searchField.text,
       )
           .then((value) {
-        state.total = value.payload?.all?.toInt() ?? 0;
-        state.onProcess = value.payload?.onProcess?.toInt() ?? 0;
-        state.closed = value.payload?.finished?.toInt() ?? 0;
-        state.waiting = value.payload?.waiting?.toInt() ?? 0;
+        state.total = value.data?.all?.toInt() ?? 0;
+        state.onProcess = value.data?.onProcess?.toInt() ?? 0;
+        state.closed = value.data?.finished?.toInt() ?? 0;
+        state.waiting = value.data?.waiting?.toInt() ?? 0;
         update();
       });
     } catch (e) {
@@ -55,14 +55,13 @@ class LaporankuController extends BaseController {
         state.searchField.text,
       );
 
-      final isLastPage =
-          (tickets.payload?.length ?? 0) < LaporankuState.pageSize;
+      final isLastPage = (tickets.data?.length ?? 0) < LaporankuState.pageSize;
       if (isLastPage) {
-        state.pagingController.appendLastPage(tickets.payload ?? []);
+        state.pagingController.appendLastPage(tickets.data ?? []);
         // transactionList.addAll(state.pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
-        state.pagingController.appendPage(tickets.payload ?? [], nextPageKey);
+        state.pagingController.appendPage(tickets.data ?? [], nextPageKey);
         // transactionList.addAll(state.pagingController.itemList ?? []);
       }
     } catch (e) {

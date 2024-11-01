@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
@@ -20,16 +21,6 @@ class CountCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> titles = [
-      "Jumlah Transaksi",
-      "Masih di Kamu",
-      "Sudah di Jemput",
-      "Dalam Perjalanan",
-      "Sukses Diterima",
-      "Sudah Kembali",
-      "Dalam Peninjauan",
-      "Dibatalkan",
-    ];
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -57,17 +48,18 @@ class CountCardItem extends StatelessWidget {
                       height: 25,
                     ),
                     const SizedBox(height: 28),
-                    _loadingText(Text('${data.count ?? 0}',
+                    _loadingText(Text(
+                        '${data.count?.toInt().toCurrency() ?? 0}',
                         style: Theme.of(context).textTheme.headlineLarge)),
                     const SizedBox(height: 18),
-                    Text(data.title?.tr ?? titles[index].tr,
+                    Text(data.title?.tr ?? '',
                         style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
               ),
               CustomLabelText(
-                title: 'COD',
-                value: data.cod?.toString() ?? '',
+                title: 'COD'.tr,
+                value: data.cod?.toInt().toCurrency() ?? '',
                 isHorizontal: true,
                 isHasSpace: true,
                 fontColor: whiteColor,
@@ -75,8 +67,8 @@ class CountCardItem extends StatelessWidget {
                 color: successColor.withOpacity(0.6),
               ),
               CustomLabelText(
-                title: 'NON COD',
-                value: data.nonCod?.toString() ?? '',
+                title: 'NON COD'.tr,
+                value: data.nonCod?.toInt().toCurrency() ?? '',
                 isHorizontal: true,
                 isHasSpace: true,
                 fontColor: whiteColor,
@@ -84,8 +76,8 @@ class CountCardItem extends StatelessWidget {
                 color: warningColor.withOpacity(0.8),
               ),
               CustomLabelText(
-                title: 'COD ONGKIR',
-                value: data.codOngkir?.toString() ?? '',
+                title: 'COD ONGKIR'.tr,
+                value: data.codOngkir?.toInt().toCurrency() ?? '',
                 isHorizontal: true,
                 isHasSpace: true,
                 fontColor: whiteColor,

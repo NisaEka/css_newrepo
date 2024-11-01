@@ -79,11 +79,11 @@ class DetailLaporankuScreen extends StatelessWidget {
           ),
           DetailContent(
             title: "Tanggal Dibuat".tr,
-            value: data.createdAt?.toShortDateTimeFormat() ?? '-',
+            value: data.createdDate?.toShortDateTimeFormat() ?? '-',
           ),
           DetailContent(
             title: "Tanggal Diupdate".tr,
-            value: data.updatedAt?.toShortDateTimeFormat() ?? '-',
+            value: data.updatedDate?.toShortDateTimeFormat() ?? '-',
           ),
         ],
       ),

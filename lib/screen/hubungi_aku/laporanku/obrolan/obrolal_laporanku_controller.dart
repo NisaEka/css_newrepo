@@ -105,7 +105,7 @@ class ObrolanLaporankuController extends BaseController {
       )
           .then((value) {
         value.toJson().printInfo(info: "tm response");
-        if (value.code == 201) {
+        if (value.statusCode == 201) {
           pagingController.refresh();
           initData();
           messageInsert.clear();

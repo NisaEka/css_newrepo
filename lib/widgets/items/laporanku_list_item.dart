@@ -74,7 +74,7 @@ class LaporankuListItem extends StatelessWidget {
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
-                              data?.createdAt?.toShortDateTimeFormat() ?? '-',
+                              data?.createdDate?.toShortDateTimeFormat() ?? '-',
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ],
