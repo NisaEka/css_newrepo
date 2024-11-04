@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_fee_model.dart';
@@ -327,60 +328,16 @@ class TransactionRepositoryImpl extends TransactionRepository {
     }
   }
 
-  // @override
-  // Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(
-  //     String transDate, String officer) async {
-  //   var token = await storageSecure.read(key: "token");
-  //   network.base.options.headers['Authorization'] = 'Bearer $token';
-
-  //   try {
-  //     Response response = await network.base.get(
-  //       "/transaction/dashboards",
-  //       // queryParameters: {
-  //       //   "transaction_date": transDate,
-  //       //   "officer": officer,
-  //       // },
-  //     );
-  //     print("response: ${response.data}");
-  //     return ResponseModel<List<CountCardModel>>.fromJson(
-  //       response.data,
-  //       (json) => (json as Map<String, dynamic>)['summary'] is List<dynamic>
-  //           ? (json['summary'] as List<dynamic>)
-  //               .map<CountCardModel>(
-  //                 (i) => CountCardModel.fromJson(i as Map<String, dynamic>),
-  //               )
-  //               .toList()
-  //           : List.empty(),
-  //     );
-  //   } on DioException catch (e) {
-  //     AppLogger.e('error: ${e.response?.data}');
-  //     return ResponseModel<List<CountCardModel>>.fromJson(
-  //       e.response?.data,
-  //       (json) => json is List<dynamic>
-  //           ? json
-  //               .map<CountCardModel>(
-  //                 (i) => CountCardModel.fromJson(i as Map<String, dynamic>),
-  //               )
-  //               .toList()
-  //           : List.empty(),
-  //     );
-  //   }
-  // }
-
   @override
   Future<ResponseModel<PropertySummary>> postTransactionDashboard(
-      String transDate, String officer) async {
+      QueryParamModel param) async {
+    AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.base.get(
-        "/transaction/dashboards",
-        // queryParameters: {
-        //   "transaction_date": transDate,
-        //   "officer": officer,
-        // },
-      );
+      Response response = await network.base
+          .get("/transaction/dashboards", queryParameters: param.toJson());
 
       print("response: ${response.data}");
 

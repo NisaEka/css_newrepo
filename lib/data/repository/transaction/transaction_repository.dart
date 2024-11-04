@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 
@@ -69,7 +70,5 @@ abstract class TransactionRepository {
       DataTransactionOngkirModel data);
 
   Future<ResponseModel<PropertySummary>> postTransactionDashboard(
-    String transDate,
-    String officer,
-  );
+      QueryParamModel param);
 }

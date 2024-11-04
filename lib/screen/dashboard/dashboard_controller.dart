@@ -282,7 +282,7 @@ class DashboardController extends BaseController {
   Future<void> loadTransCountList() async {
     state.transCountList.clear();
     try {
-      var value = await transaction.postTransactionDashboard('', '');
+      var value = await transaction.postTransactionDashboard(QueryParamModel());
       AppLogger.i("value : ${jsonEncode(value.data)}");
       if (value.data?.countCardModel != null) {
         state.transCountList.addAll(value.data?.countCardModel ?? []);

@@ -1,5 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_pakemu_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +24,7 @@ class PantauPaketmuController extends BaseController {
   Future<void> loadPantauCountList() async {
     state.pantauCountList.clear();
     try {
-      transaction
-          .postTransactionDashboard('1722445200000 - 1725814800000', '')
-          .then(
+      transaction.postTransactionDashboard(QueryParamModel()).then(
         (value) {
           // state.pantauCountList.addAll(value.data ?? []);
         },
