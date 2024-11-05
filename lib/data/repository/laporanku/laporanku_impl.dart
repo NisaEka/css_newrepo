@@ -1,10 +1,15 @@
+import 'dart:convert';
+
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_summary_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/laporanku/laporanku_repository.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -14,77 +19,89 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<GetTicketCategoryModel> getTicketCategory() async {
+  Future<BaseResponse<List<TicketCategory>>> getTicketCategory(
+      QueryParamModel param) async {
+    AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
       Response response = await network.base.get(
-        "/transaction/tickets/category",
+        "/master/ticket-categories",
+        queryParameters: param.toJson(),
       );
 
-      return GetTicketCategoryModel.fromJson(response.data);
+      return BaseResponse<List<TicketCategory>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<TicketCategory>(
+                  (i) => TicketCategory.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return GetTicketCategoryModel.fromJson(e.response?.data);
+      return BaseResponse<List<TicketCategory>>.fromJson(
+          e.response?.data, (json) => List.empty());
     }
   }
 
   @override
-  Future<GetTicketSummaryModel> getTicketSummary(
-    String status,
-    String date,
-    String query,
-  ) async {
+  Future<BaseResponse<TicketSummary>> getTicketSummary(
+      QueryParamModel param) async {
+    AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.base.get(
-        "/transaction/tickets/summary",
-        queryParameters: {
-          "date": date,
-          "keyworf": query,
-          "status": status,
-        },
-      );
+      Response response = await network.base
+          .get("/transaction/tickets/summary", queryParameters: param.toJson());
 
-      return GetTicketSummaryModel.fromJson(response.data);
+      return BaseResponse<TicketSummary>.fromJson(
+        response.data,
+        (json) => TicketSummary.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
-      return GetTicketSummaryModel.fromJson(e.response?.data);
+      return BaseResponse<TicketSummary>.fromJson(
+        e.response?.data,
+        (json) => TicketSummary.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 
   @override
-  Future<GetTicketModel> getTickets(
-    int page,
-    int limit,
-    String status,
-    String date,
-    String query,
-  ) async {
+  Future<BaseResponse<List<TicketModel>>> getTickets(
+      QueryParamModel param) async {
+    AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.base.get(
-        "/transaction/tickets",
-        queryParameters: {
-          "page": page,
-          "limit": limit,
-          "status": status,
-          "date": date,
-          "keyword": query,
-        },
-      );
+      Response response = await network.base
+          .get("/transaction/tickets", queryParameters: param.toJson());
 
-      return GetTicketModel.fromJson(response.data);
+      return BaseResponse<List<TicketModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<TicketModel>(
+                  (i) => TicketModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return GetTicketModel.fromJson(e.response?.data);
+      return BaseResponse<List<TicketModel>>.fromJson(
+        e.response?.data,
+        (json) => List.empty(),
+      );
     }
   }
 
   @override
-  Future<GetTicketModel> postTicket(DataPostTicketModel data) async {
+  Future<BaseResponse<TicketModel>> postTicket(DataPostTicketModel data) async {
+    AppLogger.i("param toJson ${data.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -92,62 +109,92 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
       Response response =
           await network.base.post("/transaction/tickets", data: data);
 
-      return GetTicketModel.fromJson(response.data);
+      return BaseResponse<TicketModel>.fromJson(
+        response.data,
+        (json) => TicketModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
-      return GetTicketModel.fromJson(e.response?.data);
+      return BaseResponse<TicketModel>.fromJson(
+        e.response?.data,
+        (json) => TicketModel.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 
   @override
-  Future<GetTicketMessageModel> getTickeMessage(
-      String id, int page, int limit) async {
+  Future<BaseResponse<List<TicketMessageModel>>> getTickeMessage(
+      QueryParamModel param) async {
+    AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
       Response response = await network.base
-          .get("/transaction/tickets/$id/message", queryParameters: {
-        "page": page,
-        "limit": limit,
-      });
+          .get("/transaction/ticket-messages", queryParameters: param.toJson());
 
-      return GetTicketMessageModel.fromJson(response.data);
+      return BaseResponse<List<TicketMessageModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<TicketMessageModel>(
+                  (i) => TicketMessageModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return GetTicketMessageModel.fromJson(e.response?.data);
+      return BaseResponse<List<TicketMessageModel>>.fromJson(
+        e.response?.data,
+        (json) => List.empty(),
+      );
     }
   }
 
   @override
-  Future<GetTicketModel> postTicketMessage(DataPostTicketModel data) async {
+  Future<BaseResponse<TicketModel>> postTicketMessage(
+      DataPostTicketModel data) async {
+    AppLogger.i("param toJson ${jsonEncode(data)}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.post(
-        "/transaction/tickets/${data.id}/message",
+        "/transaction/ticket-messages",
         data: data,
       );
 
-      return GetTicketModel.fromJson(response.data);
+      return BaseResponse<TicketModel>.fromJson(
+        response.data,
+        (json) => TicketModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
-      return GetTicketModel.fromJson(e.response?.data);
+      return BaseResponse<TicketModel>.fromJson(
+        e.response?.data,
+        (json) => TicketModel.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 
   @override
-  Future<GetTicketModel> putTicket(String id, String status) async {
+  Future<BaseResponse<TicketModel>> putTicket(String id, String status) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.base.put(
+      Response response = await network.base.patch(
         "/transaction/tickets/$id",
         data: {
           "status": status,
         },
       );
 
-      return GetTicketModel.fromJson(response.data);
+      return BaseResponse<TicketModel>.fromJson(
+        response.data,
+        (json) => TicketModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
-      return GetTicketModel.fromJson(e.response?.data);
+      return BaseResponse<TicketModel>.fromJson(
+        e.response?.data,
+        (json) => TicketModel.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 }

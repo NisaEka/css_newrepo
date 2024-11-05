@@ -15,7 +15,7 @@ class LaporankuState {
   bool isLoading = false;
   DateTime? startDate;
   DateTime? endDate;
-  String? date;
+  List<String> date = [];
   String? status = "";
   int selectedStatus = 0;
   int total = 0;

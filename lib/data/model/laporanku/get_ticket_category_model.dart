@@ -1,52 +1,52 @@
 class GetTicketCategoryModel {
   GetTicketCategoryModel({
-    num? code,
+    num? statusCode,
     String? message,
-    List<TicketCategory>? payload,
+    List<TicketCategory>? data,
   }) {
-    _code = code;
+    _statusCode = statusCode;
     _message = message;
-    _payload = payload;
+    _data = data;
   }
 
   GetTicketCategoryModel.fromJson(dynamic json) {
-    _code = json['code'];
+    _statusCode = json['statusCode'];
     _message = json['message'];
-    if (json['payload'] != null) {
-      _payload = [];
-      json['payload'].forEach((v) {
-        _payload?.add(TicketCategory.fromJson(v));
+    if (json['data'] != null) {
+      _data = [];
+      json['data'].forEach((v) {
+        _data?.add(TicketCategory.fromJson(v));
       });
     }
   }
 
-  num? _code;
+  num? _statusCode;
   String? _message;
-  List<TicketCategory>? _payload;
+  List<TicketCategory>? _data;
 
   GetTicketCategoryModel copyWith({
-    num? code,
+    num? statusCode,
     String? message,
-    List<TicketCategory>? payload,
+    List<TicketCategory>? data,
   }) =>
       GetTicketCategoryModel(
-        code: code ?? _code,
+        statusCode: statusCode ?? _statusCode,
         message: message ?? _message,
-        payload: payload ?? _payload,
+        data: data ?? _data,
       );
 
-  num? get code => _code;
+  num? get statusCode => _statusCode;
 
   String? get message => _message;
 
-  List<TicketCategory>? get payload => _payload;
+  List<TicketCategory>? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['code'] = _code;
+    map['statusCode'] = _statusCode;
     map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.map((v) => v.toJson()).toList();
+    if (_data != null) {
+      map['data'] = _data?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -54,47 +54,47 @@ class GetTicketCategoryModel {
 
 class TicketCategory {
   TicketCategory({
-    String? id,
-    String? description,
-    String? group,
+    String? categoryId,
+    String? categoryDescription,
+    String? categoryGroup,
   }) {
-    _id = id;
-    _description = description;
-    _group = group;
+    _categoryId = categoryId;
+    _categoryDescription = categoryDescription;
+    _categoryGroup = categoryGroup;
   }
 
   TicketCategory.fromJson(dynamic json) {
-    _id = json['id'];
-    _description = json['description'];
-    _group = json['group'];
+    _categoryId = json['categoryId'];
+    _categoryDescription = json['categoryDescription'];
+    _categoryGroup = json['categoryGroup'];
   }
 
-  String? _id;
-  String? _description;
-  String? _group;
+  String? _categoryId;
+  String? _categoryDescription;
+  String? _categoryGroup;
 
   TicketCategory copyWith({
-    String? id,
-    String? description,
-    String? group,
+    String? categoryId,
+    String? categoryDescription,
+    String? categoryGroup,
   }) =>
       TicketCategory(
-        id: id ?? _id,
-        description: description ?? _description,
-        group: group ?? _group,
+        categoryId: categoryId ?? _categoryId,
+        categoryDescription: categoryDescription ?? _categoryDescription,
+        categoryGroup: categoryGroup ?? _categoryGroup,
       );
 
-  String? get id => _id;
+  String? get categoryId => _categoryId;
 
-  String? get description => _description;
+  String? get categoryDescription => _categoryDescription;
 
-  String? get group => _group;
+  String? get categoryGroup => _categoryGroup;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['id'] = _id;
-    map['description'] = _description;
-    map['group'] = _group;
+    map['categoryId'] = _categoryId;
+    map['categoryDescription'] = _categoryDescription;
+    map['categoryGroup'] = _categoryGroup;
     return map;
   }
 }

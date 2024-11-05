@@ -87,7 +87,7 @@ class PengaturanScreen extends StatelessWidget {
               ),
             ),
           ),
-          c.allow.label == "Y" || c.allow.pengaturanLabel == "Y"
+          c.menu.label == "Y" || c.menu.pengaturanLabel == "Y"
               ? SettingListItem(
                   title: 'Pengaturan Label'.tr,
                   icon: Icons.label_outline,
@@ -99,7 +99,7 @@ class PengaturanScreen extends StatelessWidget {
                         ),
                 )
               : const SizedBox(),
-          c.allow.petugas == "Y" || c.allow.pengaturanPetugas == "Y"
+          c.menu.petugas == "Y" || c.menu.pengaturanPetugas == "Y"
               ? SettingListItem(
                   title: 'Pengaturan Petugas'.tr,
                   icon: Icons.account_circle,
@@ -111,7 +111,7 @@ class PengaturanScreen extends StatelessWidget {
                         ),
                 )
               : const SizedBox(),
-          c.isLogin && c.allow.katasandi == "Y"
+          c.isLogin && c.menu.katasandi == "Y"
               ? SettingListItem(
                   title: 'Ubah Kata Sandi'.tr,
                   icon: Icons.lock_open_outlined,

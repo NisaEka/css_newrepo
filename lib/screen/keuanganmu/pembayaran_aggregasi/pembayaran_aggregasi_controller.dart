@@ -226,7 +226,7 @@ class PembayaranAggergasiController extends BaseController {
         transDate = [
           DateTime(startDate!.year, startDate!.month, startDate!.day)
               .toIso8601String(),
-          DateTime(endDate!.year, endDate!.month, endDate!.day, 23, 59, 59)
+          DateTime(endDate!.year, endDate!.month, endDate!.day, 23, 59, 59, 999)
               .toIso8601String()
         ];
       }

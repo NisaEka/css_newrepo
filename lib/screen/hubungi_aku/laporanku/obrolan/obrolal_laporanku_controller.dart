@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,9 +46,20 @@ class ObrolanLaporankuController extends BaseController {
   Future<void> initData() async {
     messages = [];
     try {
-      await laporanku.getTickeMessage(id, 1, pageSize).then((value) {
-        messages.addAll(value.payload ?? []);
-        subject = value.payload?.first.subject;
+      await laporanku
+          .getTickeMessage(QueryParamModel(
+              table: true,
+              where: jsonEncode([
+                {"ticketId": id}
+              ]),
+              sort: jsonEncode([
+                {"createdDate": "desc"}
+              ]),
+              page: 1,
+              limit: pageSize))
+          .then((value) {
+        messages.addAll(value.data ?? []);
+        subject = value.data?.first.subject;
         update();
       });
     } catch (e) {
@@ -57,17 +70,26 @@ class ObrolanLaporankuController extends BaseController {
   Future<void> getMessages(int page) async {
     isLoading = true;
     try {
-      final message = await laporanku.getTickeMessage(id, page, pageSize);
+      final message = await laporanku.getTickeMessage(QueryParamModel(
+          table: true,
+          where: jsonEncode([
+            {"ticketId": id}
+          ]),
+          sort: jsonEncode([
+            {"createdDate": "desc"}
+          ]),
+          page: page,
+          limit: pageSize));
 
-      final isLastPage = (message.payload?.length ?? 0) < pageSize;
+      final isLastPage = message.meta!.currentPage == message.meta!.lastPage;
       if (isLastPage) {
-        pagingController.appendLastPage(message.payload ?? []);
-        messages.addAll(message.payload ?? []);
+        pagingController.appendLastPage(message.data ?? []);
+        messages.addAll(message.data ?? []);
         // subject = message.payload?.first.subject;
       } else {
         final nextPageKey = page + 1;
-        pagingController.appendPage(message.payload ?? [], nextPageKey);
-        messages.addAll(message.payload ?? []);
+        pagingController.appendPage(message.data ?? [], nextPageKey);
+        messages.addAll(message.data ?? []);
         // subject = message.payload?.first.subject;
       }
     } catch (e) {
@@ -95,8 +117,8 @@ class ObrolanLaporankuController extends BaseController {
           .postTicketMessage(
         DataPostTicketModel(
             cnote: ticket.cnote,
-            categoryId: ticket.category?.id,
-            id: id,
+            categoryId: ticket.category?.categoryId,
+            ticketId: id,
             subject: subject,
             message: messageInsert.text.toUpperCase(),
             type: 'S',
@@ -105,7 +127,7 @@ class ObrolanLaporankuController extends BaseController {
       )
           .then((value) {
         value.toJson().printInfo(info: "tm response");
-        if (value.statusCode == 201) {
+        if (value.code == 201) {
           pagingController.refresh();
           initData();
           messageInsert.clear();

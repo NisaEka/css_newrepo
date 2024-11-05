@@ -1,52 +1,52 @@
 class GetTicketMessageModel {
   GetTicketMessageModel({
-    num? code,
+    num? statusCode,
     String? message,
-    List<TicketMessageModel>? payload,
+    List<TicketMessageModel>? data,
   }) {
-    _code = code;
+    _statusCode = statusCode;
     _message = message;
-    _payload = payload;
+    _data = data;
   }
 
   GetTicketMessageModel.fromJson(dynamic json) {
-    _code = json['code'];
+    _statusCode = json['statusCode'];
     _message = json['message'];
-    if (json['payload'] != null) {
-      _payload = [];
-      json['payload'].forEach((v) {
-        _payload?.add(TicketMessageModel.fromJson(v));
+    if (json['data'] != null) {
+      _data = [];
+      json['data'].forEach((v) {
+        _data?.add(TicketMessageModel.fromJson(v));
       });
     }
   }
 
-  num? _code;
+  num? _statusCode;
   String? _message;
-  List<TicketMessageModel>? _payload;
+  List<TicketMessageModel>? _data;
 
   GetTicketMessageModel copyWith({
-    num? code,
+    num? statusCode,
     String? message,
-    List<TicketMessageModel>? payload,
+    List<TicketMessageModel>? data,
   }) =>
       GetTicketMessageModel(
-        code: code ?? _code,
+        statusCode: statusCode ?? _statusCode,
         message: message ?? _message,
-        payload: payload ?? _payload,
+        data: data ?? _data,
       );
 
-  num? get code => _code;
+  num? get statusCode => _statusCode;
 
   String? get message => _message;
 
-  List<TicketMessageModel>? get payload => _payload;
+  List<TicketMessageModel>? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['code'] = _code;
+    map['statusCode'] = _statusCode;
     map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.map((v) => v.toJson()).toList();
+    if (_data != null) {
+      map['data'] = _data?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -77,14 +77,14 @@ class TicketMessageModel {
 
   TicketMessageModel.fromJson(dynamic json) {
     _id = json['id'];
-    _ticketId = json['ticket_id'];
+    _ticketId = json['ticketId'];
     _subject = json['subject'];
     _message = json['message'];
     _image = json['image'];
-    _createdDate = json['created_date'];
+    _createdDate = json['createdDate'];
     _type = json['type'];
     _user = json['user'];
-    _branchCode = json['branch_code'];
+    _branchCode = json['branchCode'];
   }
 
   num? _id;
@@ -141,14 +141,14 @@ class TicketMessageModel {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    map['ticket_id'] = _ticketId;
+    map['ticketId'] = _ticketId;
     map['subject'] = _subject;
     map['message'] = _message;
     map['image'] = _image;
-    map['created_date'] = _createdDate;
+    map['createdDate'] = _createdDate;
     map['type'] = _type;
     map['user'] = _user;
-    map['branch_code'] = _branchCode;
+    map['branchCode'] = _branchCode;
     return map;
   }
 }

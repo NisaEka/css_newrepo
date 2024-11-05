@@ -71,7 +71,7 @@ class DetailLaporankuScreen extends StatelessWidget {
           ),
           DetailContent(
             title: "Kategori".tr,
-            value: data.category?.description ?? '-',
+            value: data.category?.categoryDescription ?? '-',
           ),
           DetailContent(
             title: "Prioritas".tr,

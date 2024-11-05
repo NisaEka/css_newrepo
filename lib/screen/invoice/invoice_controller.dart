@@ -56,7 +56,7 @@ class InvoiceController extends BaseController {
                       selectedDateStart!.day)
                   .toIso8601String(),
               DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
-                      selectedDateEnd!.day, 23, 59, 59)
+                      selectedDateEnd!.day, 23, 59, 59, 999)
                   .toIso8601String()
             ]
           });
@@ -68,7 +68,7 @@ class InvoiceController extends BaseController {
                       selectedDateStart!.day)
                   .toIso8601String(),
               DateTime(selectedDateStart!.year, selectedDateStart!.month,
-                      selectedDateStart!.day, 23, 59, 59)
+                      selectedDateStart!.day, 23, 59, 59, 999)
                   .toIso8601String()
             ]
           });
@@ -80,7 +80,7 @@ class InvoiceController extends BaseController {
                       selectedDateEnd!.day)
                   .toIso8601String(),
               DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
-                      selectedDateEnd!.day, 23, 59, 59)
+                      selectedDateEnd!.day, 23, 59, 59, 999)
                   .toIso8601String()
             ]
           });
@@ -98,7 +98,7 @@ class InvoiceController extends BaseController {
             DateTime(oneMonthAgo.year, oneMonthAgo.month, oneMonthAgo.day)
                 .toIso8601String(),
             DateTime(currentDateTime.year, currentDateTime.month,
-                    currentDateTime.day, 23, 59, 59)
+                    currentDateTime.day, 23, 59, 59, 999)
                 .toIso8601String()
           ]
         });
@@ -111,7 +111,7 @@ class InvoiceController extends BaseController {
             DateTime(oneWeekAgo.year, oneWeekAgo.month, oneWeekAgo.day)
                 .toIso8601String(),
             DateTime(currentDateTime.year, currentDateTime.month,
-                    currentDateTime.day, 23, 59, 59)
+                    currentDateTime.day, 23, 59, 59, 999)
                 .toIso8601String()
           ]
         });
@@ -121,7 +121,7 @@ class InvoiceController extends BaseController {
         final startOfDay = DateTime(
             currentDateTime.year, currentDateTime.month, currentDateTime.day);
         final endOfDay = DateTime(currentDateTime.year, currentDateTime.month,
-            currentDateTime.day, 23, 59, 59);
+            currentDateTime.day, 23, 59, 59, 999);
         between.add({
           "invoiceDate": [
             startOfDay.toIso8601String(),

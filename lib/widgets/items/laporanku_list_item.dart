@@ -80,7 +80,7 @@ class LaporankuListItem extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          data?.category?.description ?? '-',
+                          data?.category?.categoryDescription ?? '-',
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                         Container(
