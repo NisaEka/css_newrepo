@@ -33,7 +33,6 @@ class AppPages {
     GetPage(name: "/requestPickup", page: () => const RequestPickupScreen()),
     GetPage(name: "/notification", page: () => const NotificationScreen()),
     GetPage(name: "/pantauPaketmu", page: () => const PantauCardScreen()),
-    // GetPage(name: "/pantauPaketmu", page: () => const PantauPaketmuScreen()),
     GetPage(name: "/laporanku", page: () => const LaporankuScreen()),
     GetPage(name: "/invoice", page: () => const InvoiceScreen())
   ];

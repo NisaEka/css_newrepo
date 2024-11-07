@@ -290,11 +290,11 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<GetTransactionOfficerModel> getTransOfficer() async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    var token = await storageSecure.read(key: 'token');
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.get(
-        "/transaction/officer",
+      Response response = await network.base.get(
+        "/officers",
       );
       return GetTransactionOfficerModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -339,7 +339,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.base
           .get("/transaction/dashboards", queryParameters: param.toJson());
 
-      print("response: ${response.data}");
+      AppLogger.d("response: ${response.data}");
 
       final test = ResponseModel<PropertySummary>.fromJson(
         response.data,
@@ -348,7 +348,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
           return PropertySummary.fromJson(json as Map<String, dynamic>);
         },
       );
-      print("test: $test");
       AppLogger.i("test: $test");
       return test;
     } on DioException catch (e) {

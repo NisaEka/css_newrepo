@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:get/get.dart';
+import 'package:toastification/toastification.dart';
 
 class CSS extends StatelessWidget {
   const CSS({super.key});
@@ -34,7 +35,8 @@ class App extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return GetMaterialApp(
+    return ToastificationWrapper(
+        child: GetMaterialApp(
       // navigatorKey: NavigationUtil.navigationKey,
       translations: AppTranslation(),
       fallbackLocale: const Locale("id", "ID"),
@@ -46,6 +48,6 @@ class App extends StatelessWidget {
       getPages: AppPages.routes,
       // home: const LoginScreen(),
       home: const DashboardScreen(),
-    );
+    ));
   }
 }

@@ -43,5 +43,7 @@ class PantauPaketmuState {
   List<String> listStatusPrint = ["SEMUA", "SUDAH DIPRINT", "BELUM DIPRINT"];
   List<PantauPaketmuModel> selectedTransaction = [];
 
+  List<dynamic> countList = [];
+
   UserModel? basic;
 }
