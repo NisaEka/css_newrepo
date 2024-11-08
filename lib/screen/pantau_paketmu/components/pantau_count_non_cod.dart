@@ -1,4 +1,5 @@
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_screen.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,7 @@ class PantauCountNonCod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PantauPaketmuController>(
+    return GetX<PantauPaketmuController>(
       init: PantauPaketmuController(),
       builder: (controller) {
         return Container(
@@ -43,6 +44,7 @@ class PantauCountNonCod extends StatelessWidget {
                     children: controller.state.countList.map((item) {
                       return _buildPantauCountCardItem(
                         context,
+                        controller,
                         title: item['status'] ?? '',
                         totalCod: item['totalCod'] ?? 0,
                         codAmount: item['codAmount'] ?? 0,
@@ -79,7 +81,8 @@ class PantauCountNonCod extends StatelessWidget {
   }
 
   Widget _buildPantauCountCardItem(
-    BuildContext context, {
+    BuildContext context,
+    PantauPaketmuController controller, {
     required String title,
     required int totalCod,
     required int codAmount,
@@ -103,6 +106,10 @@ class PantauCountNonCod extends StatelessWidget {
         splashColor: redJNE.withOpacity(0.3),
         onTap: () {
           debugPrint('Card tapped.');
+          controller.state.selectedStatusKiriman.value = title;
+          controller.state.selectedTipeKiriman.value = 'non cod';
+          controller.applyFilter(isDetail: true);
+          Get.to(() => const PantauPaketmuScreen());
         },
         child: Container(
           width: Get.width / 1.5,
