@@ -1,362 +1,275 @@
 class GetPantauPaketmuModel {
+  final num? statusCode;
+  final String? error;
+  final List<PantauPaketmuModel>? data;
+
   GetPantauPaketmuModel({
-    num? code,
-    String? message,
-    List<PantauPaketmuModel>? payload,
-  }) {
-    _code = code;
-    _message = message;
-    _payload = payload;
+    this.statusCode,
+    this.error,
+    this.data,
+  });
+
+  // Named constructor to handle JSON parsing
+  factory GetPantauPaketmuModel.fromJson(Map<String, dynamic> json) {
+    return GetPantauPaketmuModel(
+      statusCode: json['statusCode'],
+      error: json['error'],
+      data: json['data'] != null
+          ? List<PantauPaketmuModel>.from(
+              json['data'].map((x) => PantauPaketmuModel.fromJson(x)))
+          : null,
+    );
   }
 
-  GetPantauPaketmuModel.fromJson(dynamic json) {
-    _code = json['code'];
-    _message = json['message'];
-    if (json['payload'] != null) {
-      _payload = [];
-      json['payload'].forEach((v) {
-        _payload?.add(PantauPaketmuModel.fromJson(v));
-      });
-    }
-  }
-
-  num? _code;
-  String? _message;
-  List<PantauPaketmuModel>? _payload;
-
+  // Copy constructor
   GetPantauPaketmuModel copyWith({
-    num? code,
-    String? message,
-    List<PantauPaketmuModel>? payload,
-  }) =>
-      GetPantauPaketmuModel(
-        code: code ?? _code,
-        message: message ?? _message,
-        payload: payload ?? _payload,
-      );
+    num? statusCode,
+    String? error,
+    List<PantauPaketmuModel>? data,
+  }) {
+    return GetPantauPaketmuModel(
+      statusCode: statusCode ?? this.statusCode,
+      error: error ?? this.error,
+      data: data ?? this.data,
+    );
+  }
 
-  num? get code => _code;
-
-  String? get message => _message;
-
-  List<PantauPaketmuModel>? get payload => _payload;
-
+  // Convert to JSON
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.map((v) => v.toJson()).toList();
-    }
-    return map;
+    return {
+      'statusCode': statusCode,
+      'error': error,
+      'data': data?.map((x) => x.toJson()).toList(),
+    };
   }
 }
 
 class PantauPaketmuModel {
+  // final String? petugasEntry;
+  final String? custNo;
+  final String? custName;
+  // final String? orderId;
+  final String? awbNo;
+  final String? awbRefno;
+  // final String? awbType;
+  final String? cnoteReceiverPhone;
+  final String? awbDate;
+  final String? hoCourierDate;
+  final String? puLastAttempStatusDate;
+  final String? cnoteShipperName;
+  final String? receiverName;
+  final String? cnoteReceiverAddr1;
+  final String? cnoteReceiverAddr2;
+  final String? cnoteReceiverAddr3;
+  final String? desteReceiverAddr3;
+  final String? destinationName;
+  final String? service;
+  final num? weightAwb;
+  final String? awbGoodsDescr;
+  final String? awbSpecialIns;
+  final num? awbAmount;
+  final num? awbInsuranceValue;
+  final num? codAmount;
+  final String? statusPod;
+  final String? tglReceived;
+  final String? codingPod;
+  final String? receivedReason;
+  final String? repcssPaymentDate;
+  final String? repcssPaymentReffid;
+  final String? podlEpodUrlPic;
+  final String? podlEpodUrl;
+  // final String? status;
+
   PantauPaketmuModel({
-    String? petugasEntry,
+    // this.petugasEntry,
+    this.custNo,
+    this.custName,
+    // this.orderId,
+    this.awbNo,
+    this.awbRefno,
+    // this.awbType,
+    this.cnoteReceiverPhone,
+    this.awbDate,
+    this.hoCourierDate,
+    this.puLastAttempStatusDate,
+    this.cnoteShipperName,
+    this.receiverName,
+    this.cnoteReceiverAddr1,
+    this.cnoteReceiverAddr2,
+    this.cnoteReceiverAddr3,
+    this.desteReceiverAddr3,
+    this.destinationName,
+    this.service,
+    this.weightAwb,
+    this.awbGoodsDescr,
+    this.awbSpecialIns,
+    this.awbAmount,
+    this.awbInsuranceValue,
+    this.codAmount,
+    this.statusPod,
+    this.tglReceived,
+    this.codingPod,
+    this.receivedReason,
+    this.repcssPaymentDate,
+    this.repcssPaymentReffid,
+    this.podlEpodUrlPic,
+    this.podlEpodUrl,
+    // this.status,
+  });
+
+  // Named constructor for JSON parsing
+  factory PantauPaketmuModel.fromJson(Map<String, dynamic> json) {
+    return PantauPaketmuModel(
+      // petugasEntry: json['petugasEntry'],
+      custNo: json['custNo'],
+      custName: json['custName'],
+      // orderId: json['orderId'],
+      awbNo: json['awbNo'],
+      awbRefno: json['awbRefno'],
+      // awbType: json['awbType'],
+      cnoteReceiverPhone: json['cnoteReceiverPhone'],
+      awbDate: json['awbDate'],
+      hoCourierDate: json['hoCourierDate'],
+      puLastAttempStatusDate: json['puLastAttempStatusDate'],
+      cnoteShipperName: json['cnoteShipperName'],
+      receiverName: json['receiverName'],
+      cnoteReceiverAddr1: json['cnoteReceiverAddr1'],
+      cnoteReceiverAddr2: json['cnoteReceiverAddr2'],
+      cnoteReceiverAddr3: json['cnoteReceiverAddr3'],
+      desteReceiverAddr3: json['desteReceiverAddr3'],
+      destinationName: json['destinationName'],
+      service: json['service'],
+      weightAwb: json['weightAwb'],
+      awbGoodsDescr: json['awbGoodsDescr'],
+      awbSpecialIns: json['awbSpecialIns'],
+      awbAmount: json['awbAmount'],
+      awbInsuranceValue: json['awbInsuranceValue'],
+      codAmount: json['codAmount'],
+      statusPod: json['statusPod'],
+      tglReceived: json['tglReceived'],
+      codingPod: json['codingPod'],
+      receivedReason: json['receivedReason'],
+      repcssPaymentDate: json['repcssPaymentDate'],
+      repcssPaymentReffid: json['repcssPaymentReffid'],
+      podlEpodUrlPic: json['podlEpodUrlPic'],
+      podlEpodUrl: json['podlEpodUrl'],
+      // status: json['status'],
+    );
+  }
+
+  // Copy constructor
+  PantauPaketmuModel copyWith({
+    // String? petugasEntry,
     String? custNo,
-    String? orderId,
+    String? custName,
+    // String? orderId,
     String? awbNo,
-    String? awbReffNo,
-    String? awbType,
-    String? receiverPhone,
+    String? awbRefno,
+    // String? awbType,
+    String? cnoteReceiverPhone,
     String? awbDate,
-    String? courierDate,
+    String? hoCourierDate,
     String? puLastAttempStatusDate,
-    String? shipperName,
+    String? cnoteShipperName,
     String? receiverName,
-    String? receiverAddr1,
-    String? receiverAddr2,
-    String? receiverAddr3,
-    String? destName,
+    String? cnoteReceiverAddr1,
+    String? cnoteReceiverAddr2,
+    String? cnoteReceiverAddr3,
+    String? desteReceiverAddr3,
+    String? destinationName,
     String? service,
-    num? goodsWeight,
-    String? goodsDescr,
-    String? specialIns,
+    num? weightAwb,
+    String? awbGoodsDescr,
+    String? awbSpecialIns,
     num? awbAmount,
-    num? awbInsurance,
+    num? awbInsuranceValue,
     num? codAmount,
     String? statusPod,
     String? tglReceived,
     String? codingPod,
     String? receivedReason,
-    String? paymentDate,
-    String? paymentReffId,
-    String? podUrlPic,
-    String? podUrl,
+    String? repcssPaymentDate,
+    String? repcssPaymentReffid,
+    String? podlEpodUrlPic,
+    String? podlEpodUrl,
     String? status,
   }) {
-    _petugasEntry = petugasEntry;
-    _custNo = custNo;
-    _orderId = orderId;
-    _awbNo = awbNo;
-    _awbReffNo = awbReffNo;
-    _awbType = awbType;
-    _receiverPhone = receiverPhone;
-    _awbDate = awbDate;
-    _courierDate = courierDate;
-    _puLastAttempStatusDate = puLastAttempStatusDate;
-    _shipperName = shipperName;
-    _receiverName = receiverName;
-    _receiverAddr1 = receiverAddr1;
-    _receiverAddr2 = receiverAddr2;
-    _receiverAddr3 = receiverAddr3;
-    _destName = destName;
-    _service = service;
-    _goodsWeight = goodsWeight;
-    _goodsDescr = goodsDescr;
-    _specialIns = specialIns;
-    _awbAmount = awbAmount;
-    _awbInsurance = awbInsurance;
-    _codAmount = codAmount;
-    _statusPod = statusPod;
-    _tglReceived = tglReceived;
-    _codingPod = codingPod;
-    _receivedReason = receivedReason;
-    _paymentDate = paymentDate;
-    _paymentReffId = paymentReffId;
-    _podUrlPic = podUrlPic;
-    _podUrl = podUrl;
-    _status = status;
+    return PantauPaketmuModel(
+      // petugasEntry: petugasEntry ?? this.petugasEntry,
+      custNo: custNo ?? this.custNo,
+      custName: custName ?? this.custName,
+      // orderId: orderId ?? this.orderId,
+      awbNo: awbNo ?? this.awbNo,
+      awbRefno: awbRefno ?? this.awbRefno,
+      // awbType: awbType ?? this.awbType,
+      cnoteReceiverPhone: cnoteReceiverPhone ?? this.cnoteReceiverPhone,
+      awbDate: awbDate ?? this.awbDate,
+      hoCourierDate: hoCourierDate ?? this.hoCourierDate,
+      puLastAttempStatusDate:
+          puLastAttempStatusDate ?? this.puLastAttempStatusDate,
+      cnoteShipperName: cnoteShipperName ?? this.cnoteShipperName,
+      receiverName: receiverName ?? this.receiverName,
+      cnoteReceiverAddr1: cnoteReceiverAddr1 ?? this.cnoteReceiverAddr1,
+      cnoteReceiverAddr2: cnoteReceiverAddr2 ?? this.cnoteReceiverAddr2,
+      cnoteReceiverAddr3: cnoteReceiverAddr3 ?? this.cnoteReceiverAddr3,
+      desteReceiverAddr3: desteReceiverAddr3 ?? this.desteReceiverAddr3,
+      destinationName: destinationName ?? this.destinationName,
+      service: service ?? this.service,
+      weightAwb: weightAwb ?? this.weightAwb,
+      awbGoodsDescr: awbGoodsDescr ?? this.awbGoodsDescr,
+      awbSpecialIns: awbSpecialIns ?? this.awbSpecialIns,
+      awbAmount: awbAmount ?? this.awbAmount,
+      awbInsuranceValue: awbInsuranceValue ?? this.awbInsuranceValue,
+      codAmount: codAmount ?? this.codAmount,
+      statusPod: statusPod ?? this.statusPod,
+      tglReceived: tglReceived ?? this.tglReceived,
+      codingPod: codingPod ?? this.codingPod,
+      receivedReason: receivedReason ?? this.receivedReason,
+      repcssPaymentDate: repcssPaymentDate ?? this.repcssPaymentDate,
+      repcssPaymentReffid: repcssPaymentReffid ?? this.repcssPaymentReffid,
+      podlEpodUrlPic: podlEpodUrlPic ?? this.podlEpodUrlPic,
+      podlEpodUrl: podlEpodUrl ?? this.podlEpodUrl,
+      // status: status ?? this.status,
+    );
   }
 
-  PantauPaketmuModel.fromJson(dynamic json) {
-    _petugasEntry = json['petugas_entry'];
-    _custNo = json['cust_no'];
-    _orderId = json['order_id'];
-    _awbNo = json['awb_no'];
-    _awbReffNo = json['awb_reff_no'];
-    _awbType = json['awb_type'];
-    _receiverPhone = json['receiver_phone'];
-    _awbDate = json['awb_date'];
-    _courierDate = json['courier_date'];
-    _puLastAttempStatusDate = json['pu_last_attemp_status_date'];
-    _shipperName = json['shipper_name'];
-    _receiverName = json['receiver_name'];
-    _receiverAddr1 = json['receiver_addr1'];
-    _receiverAddr2 = json['receiver_addr2'];
-    _receiverAddr3 = json['receiver_addr3'];
-    _destName = json['dest_name'];
-    _service = json['service'];
-    _goodsWeight = json['goods_weight'];
-    _goodsDescr = json['goods_descr'];
-    _specialIns = json['special_ins'];
-    _awbAmount = json['awb_amount'];
-    _awbInsurance = json['awb_insurance'];
-    _codAmount = json['cod_amount'];
-    _statusPod = json['status_pod'];
-    _tglReceived = json['tgl_received'];
-    _codingPod = json['coding_pod'];
-    _receivedReason = json['received_reason'];
-    _paymentDate = json['payment_date'];
-    _paymentReffId = json['payment_reff_id'];
-    _podUrlPic = json['pod_url_pic'];
-    _podUrl = json['pod_url'];
-    _status = json['status'];
-  }
-
-  String? _petugasEntry;
-  String? _custNo;
-  String? _orderId;
-  String? _awbNo;
-  String? _awbReffNo;
-  String? _awbType;
-  String? _receiverPhone;
-  String? _awbDate;
-  String? _courierDate;
-  String? _puLastAttempStatusDate;
-  String? _shipperName;
-  String? _receiverName;
-  String? _receiverAddr1;
-  String? _receiverAddr2;
-  String? _receiverAddr3;
-  String? _destName;
-  String? _service;
-  num? _goodsWeight;
-  String? _goodsDescr;
-  String? _specialIns;
-  num? _awbAmount;
-  num? _awbInsurance;
-  num? _codAmount;
-  String? _statusPod;
-  String? _tglReceived;
-  String? _codingPod;
-  String? _receivedReason;
-  String? _paymentDate;
-  String? _paymentReffId;
-  String? _podUrlPic;
-  String? _podUrl;
-  String? _status;
-
-  PantauPaketmuModel copyWith({
-    String? petugasEntry,
-    String? custNo,
-    String? orderId,
-    String? awbNo,
-    String? awbReffNo,
-    String? awbType,
-    String? receiverPhone,
-    String? awbDate,
-    String? courierDate,
-    String? puLastAttempStatusDate,
-    String? shipperName,
-    String? receiverName,
-    String? receiverAddr1,
-    String? receiverAddr2,
-    String? receiverAddr3,
-    String? destName,
-    String? service,
-    num? goodsWeight,
-    String? goodsDescr,
-    String? specialIns,
-    num? awbAmount,
-    num? awbInsurance,
-    num? codAmount,
-    String? statusPod,
-    String? tglReceived,
-    String? codingPod,
-    String? receivedReason,
-    String? paymentDate,
-    String? paymentReffId,
-    String? podUrlPic,
-    String? podUrl,
-    String? status,
-  }) =>
-      PantauPaketmuModel(
-        petugasEntry: petugasEntry ?? _petugasEntry,
-        custNo: custNo ?? _custNo,
-        orderId: orderId ?? _orderId,
-        awbNo: awbNo ?? _awbNo,
-        awbReffNo: awbReffNo ?? _awbReffNo,
-        awbType: awbType ?? _awbType,
-        receiverPhone: receiverPhone ?? _receiverPhone,
-        awbDate: awbDate ?? _awbDate,
-        courierDate: courierDate ?? _courierDate,
-        puLastAttempStatusDate:
-            puLastAttempStatusDate ?? _puLastAttempStatusDate,
-        shipperName: shipperName ?? _shipperName,
-        receiverName: receiverName ?? _receiverName,
-        receiverAddr1: receiverAddr1 ?? _receiverAddr1,
-        receiverAddr2: receiverAddr2 ?? _receiverAddr2,
-        receiverAddr3: receiverAddr3 ?? _receiverAddr3,
-        destName: destName ?? _destName,
-        service: service ?? _service,
-        goodsWeight: goodsWeight ?? _goodsWeight,
-        goodsDescr: goodsDescr ?? _goodsDescr,
-        specialIns: specialIns ?? _specialIns,
-        awbAmount: awbAmount ?? _awbAmount,
-        awbInsurance: awbInsurance ?? _awbInsurance,
-        codAmount: codAmount ?? _codAmount,
-        statusPod: statusPod ?? _statusPod,
-        tglReceived: tglReceived ?? _tglReceived,
-        codingPod: codingPod ?? _codingPod,
-        receivedReason: receivedReason ?? _receivedReason,
-        paymentDate: paymentDate ?? _paymentDate,
-        paymentReffId: paymentReffId ?? _paymentReffId,
-        podUrlPic: podUrlPic ?? _podUrlPic,
-        podUrl: podUrl ?? _podUrl,
-        status: status ?? _status,
-      );
-
-  String? get petugasEntry => _petugasEntry;
-
-  String? get custNo => _custNo;
-
-  String? get orderId => _orderId;
-
-  String? get awbNo => _awbNo;
-
-  String? get awbReffNo => _awbReffNo;
-
-  String? get awbType => _awbType;
-
-  String? get receiverPhone => _receiverPhone;
-
-  String? get awbDate => _awbDate;
-
-  String? get courierDate => _courierDate;
-
-  String? get puLastAttempStatusDate => _puLastAttempStatusDate;
-
-  String? get shipperName => _shipperName;
-
-  String? get receiverName => _receiverName;
-
-  String? get receiverAddr1 => _receiverAddr1;
-
-  String? get receiverAddr2 => _receiverAddr2;
-
-  String? get receiverAddr3 => _receiverAddr3;
-
-  String? get destName => _destName;
-
-  String? get service => _service;
-
-  num? get goodsWeight => _goodsWeight;
-
-  String? get goodsDescr => _goodsDescr;
-
-  String? get specialIns => _specialIns;
-
-  num? get awbAmount => _awbAmount;
-
-  num? get awbInsurance => _awbInsurance;
-
-  num? get codAmount => _codAmount;
-
-  String? get statusPod => _statusPod;
-
-  String? get tglReceived => _tglReceived;
-
-  String? get codingPod => _codingPod;
-
-  String? get receivedReason => _receivedReason;
-
-  String? get paymentDate => _paymentDate;
-
-  String? get paymentReffId => _paymentReffId;
-
-  String? get podUrlPic => _podUrlPic;
-
-  String? get podUrl => _podUrl;
-
-  String? get status => _status;
-
+  // Convert to JSON
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['petugas_entry'] = _petugasEntry;
-    map['cust_no'] = _custNo;
-    map['order_id'] = _orderId;
-    map['awb_no'] = _awbNo;
-    map['awb_reff_no'] = _awbReffNo;
-    map['awb_type'] = _awbType;
-    map['receiver_phone'] = _receiverPhone;
-    map['awb_date'] = _awbDate;
-    map['courier_date'] = _courierDate;
-    map['pu_last_attemp_status_date'] = _puLastAttempStatusDate;
-    map['shipper_name'] = _shipperName;
-    map['receiver_name'] = _receiverName;
-    map['receiver_addr1'] = _receiverAddr1;
-    map['receiver_addr2'] = _receiverAddr2;
-    map['receiver_addr3'] = _receiverAddr3;
-    map['dest_name'] = _destName;
-    map['service'] = _service;
-    map['goods_weight'] = _goodsWeight;
-    map['goods_descr'] = _goodsDescr;
-    map['special_ins'] = _specialIns;
-    map['awb_amount'] = _awbAmount;
-    map['awb_insurance'] = _awbInsurance;
-    map['cod_amount'] = _codAmount;
-    map['status_pod'] = _statusPod;
-    map['tgl_received'] = _tglReceived;
-    map['coding_pod'] = _codingPod;
-    map['received_reason'] = _receivedReason;
-    map['payment_date'] = _paymentDate;
-    map['payment_reff_id'] = _paymentReffId;
-    map['pod_url_pic'] = _podUrlPic;
-    map['pod_url'] = _podUrl;
-    map['status'] = _status;
-    return map;
+    return {
+      // 'petugasEntry': petugasEntry,
+      'custNo': custNo,
+      'custName': custName,
+      // 'orderId': orderId,
+      'awbNo': awbNo,
+      'awbRefno': awbRefno,
+      // 'awbType': awbType,
+      'cnoteReceiverPhone': cnoteReceiverPhone,
+      'awbDate': awbDate,
+      'hoCourierDate': hoCourierDate,
+      'puLastAttempStatusDate': puLastAttempStatusDate,
+      'cnoteShipperName': cnoteShipperName,
+      'receiverName': receiverName,
+      'cnoteReceiverAddr1': cnoteReceiverAddr1,
+      'cnoteReceiverAddr2': cnoteReceiverAddr2,
+      'cnoteReceiverAddr3': cnoteReceiverAddr3,
+      'desteReceiverAddr3': desteReceiverAddr3,
+      'destinationName': destinationName,
+      'service': service,
+      'weightAwb': weightAwb,
+      'awbGoodsDescr': awbGoodsDescr,
+      'awbSpecialIns': awbSpecialIns,
+      'awbAmount': awbAmount,
+      'awbInsuranceValue': awbInsuranceValue,
+      'codAmount': codAmount,
+      'statusPod': statusPod,
+      'tglReceived': tglReceived,
+      'codingPod': codingPod,
+      'receivedReason': receivedReason,
+      'repcssPaymentDate': repcssPaymentDate,
+      'repcssPaymentReffid': repcssPaymentReffid,
+      'podlEpodUrlPic': podlEpodUrlPic,
+      'podlEpodUrl': podlEpodUrl,
+      // 'status': status,
+    };
   }
 }
