@@ -1,48 +1,48 @@
 class RequestPickupDetailModel {
   final String awb;
-  final String officerEntry;
-  final String date;
-  final String type;
-  final String service;
-  final num? codFee;
+  final String petugasEntry;
+  final String createdDateSearch;
+  final String apiType;
+  final String serviceCode;
+  final num? codAmount;
   final String shipperName;
   final String shipperCity;
   final String receiverName;
   final String receiverCity;
   final String receiverPhone;
   final String status;
-  final String? statusPickup;
+  final String? pickupStatus;
 
   RequestPickupDetailModel({
     required this.awb,
-    required this.officerEntry,
-    required this.date,
-    required this.type,
-    required this.service,
-    required this.codFee,
+    required this.petugasEntry,
+    required this.createdDateSearch,
+    required this.apiType,
+    required this.serviceCode,
+    required this.codAmount,
     required this.shipperName,
     required this.shipperCity,
     required this.receiverName,
     required this.receiverCity,
     required this.receiverPhone,
     required this.status,
-    required this.statusPickup,
+    required this.pickupStatus,
   });
 
   factory RequestPickupDetailModel.fromJson(Map<String, dynamic> json) =>
       RequestPickupDetailModel(
         awb: json['awb'] ?? '',
-        officerEntry: json['officer_entry'] ?? '',
-        date: json['date'] ?? '',
-        type: json['type'] ?? '',
-        service: json['service'] ?? '',
-        codFee: json['cod_fee'] ?? 0,
-        shipperName: json['shipper_name'] ?? '',
-        shipperCity: json['shipper_city'] ?? '',
-        receiverName: json['receiver_name'] ?? '',
-        receiverCity: json['receiver_city'] ?? '',
-        receiverPhone: json['receiver_phone'] ?? '',
+        petugasEntry: json['petugasEntry'] ?? '',
+        createdDateSearch: json['createdDateSearch'] ?? '',
+        apiType: json['apiType'] ?? '',
+        serviceCode: json['serviceCode'] ?? '',
+        codAmount: json['codAmount'] ?? 0,
+        shipperName: json['shipperName'] ?? '',
+        shipperCity: json['shipperCity'] ?? '',
+        receiverName: json['receiverName'] ?? '',
+        receiverCity: json['receiverCity'] ?? '',
+        receiverPhone: json['receiverPhone'] ?? '',
         status: json['status'] ?? '',
-        statusPickup: json['status_pickup'] ?? '',
+        pickupStatus: json['pickupStatus'] ?? '',
       );
 }

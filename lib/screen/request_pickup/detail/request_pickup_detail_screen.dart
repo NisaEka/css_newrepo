@@ -2,6 +2,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_detail_model.dart';
 import 'package:css_mobile/screen/request_pickup/detail/request_pickup_detail_controller.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -80,7 +81,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
             const SizedBox(height: 16),
             _textRow("Status Upload", requestPickup.status),
             const SizedBox(height: 16),
-            _textRow("Status Pickup", requestPickup.statusPickup)
+            _textRow("Status Pickup", requestPickup.pickupStatus)
           ],
         ),
       ),
@@ -108,14 +109,15 @@ class RequestPickupDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            _textRow("Tanggal Pesanan", requestPickup.date),
+            _textRow("Tanggal Pesanan",
+                requestPickup.createdDateSearch.toLongDateTimeFormat()),
             const SizedBox(height: 16),
-            _textRow("Tipe", requestPickup.type),
+            _textRow("Tipe", requestPickup.apiType),
             const SizedBox(height: 16),
-            _textRow("Service", requestPickup.service),
+            _textRow("Service", requestPickup.serviceCode),
             const SizedBox(height: 16),
-            _textRow(
-                "Dana COD", (requestPickup.codFee ?? 0).toInt().toCurrency()),
+            _textRow("Dana COD",
+                (requestPickup.codAmount ?? 0).toInt().toCurrency()),
             const SizedBox(height: 16),
             _textRow("Pengirim", requestPickup.receiverName),
             const SizedBox(height: 16),

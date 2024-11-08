@@ -52,10 +52,6 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     try {
       var response = await network.base
           .get("/aggregations/minus", queryParameters: param.toJson());
-      List<AggregationMinusModel> aggregations = [];
-      response.data["data"].forEach((aggregation) {
-        aggregations.add(AggregationMinusModel.fromJson(aggregation));
-      });
       return BaseResponse<List<AggregationMinusModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
@@ -79,10 +75,6 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     try {
       var response = await network.base
           .get("/aggregations/minus/$doc", queryParameters: param.toJson());
-      List<AggregationMinusDocModel> aggregations = [];
-      response.data["data"].forEach((aggregation) {
-        aggregations.add(AggregationMinusDocModel.fromJson(aggregation));
-      });
       return BaseResponse<List<AggregationMinusDocModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>

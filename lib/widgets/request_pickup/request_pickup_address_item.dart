@@ -38,19 +38,19 @@ class RequestPickupAddressItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  address.name,
+                  address.pickupDataName,
                   maxLines: 1,
                   textAlign: TextAlign.start,
                   style: sublistTitleTextStyle.copyWith(fontWeight: semiBold),
                 ),
                 Text(
-                  address.phone,
+                  address.pickupDataPhone,
                   maxLines: 1,
                   textAlign: TextAlign.start,
                   style: itemTextStyle,
                 ),
                 Text(
-                  address.address,
+                  address.pickupDataAddress,
                   maxLines: 4,
                   textAlign: TextAlign.start,
                   style: itemTextStyle,

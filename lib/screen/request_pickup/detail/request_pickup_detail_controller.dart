@@ -35,10 +35,10 @@ class RequestPickupDetailController extends BaseController {
 
     requestPickupRepository.getRequestPickupByAwb(awb).then(
       (result) {
-        if (result.statusCode == HttpStatus.ok && result.data != null) {
+        if (result.code == HttpStatus.ok && result.data != null) {
           _requestPickup = result.data!;
           _showContent = true;
-        } else if (result.statusCode == HttpStatus.notFound) {
+        } else if (result.code == HttpStatus.notFound) {
           _showEmptyContainer = true;
         }
 

@@ -1,53 +1,53 @@
 class RequestPickupAddressCreateRequestModel {
-  final String name;
-  final String phone;
-  final String address;
-  final String zipCode;
-  final String city;
-  final String district;
-  final String subDistrict;
-  final String region;
-  final double? lat;
-  final double? lng;
+  final String pickupDataName;
+  final String pickupDataPhone;
+  final String pickupDataAddress;
+  final String pickupDataZipCode;
+  final String pickupDataCity;
+  final String pickupDataDistrict;
+  final String pickupDataSubdistrict;
+  final String pickupDataRegion;
+  final String? pickupDataLatitude;
+  final String? pickupDataLongitude;
 
   RequestPickupAddressCreateRequestModel({
-    required this.name,
-    required this.phone,
-    required this.address,
-    required this.zipCode,
-    required this.city,
-    required this.district,
-    required this.subDistrict,
-    required this.region,
-    required this.lat,
-    required this.lng,
+    required this.pickupDataName,
+    required this.pickupDataPhone,
+    required this.pickupDataAddress,
+    required this.pickupDataZipCode,
+    required this.pickupDataCity,
+    required this.pickupDataDistrict,
+    required this.pickupDataSubdistrict,
+    required this.pickupDataRegion,
+    required this.pickupDataLatitude,
+    required this.pickupDataLongitude,
   });
 
   factory RequestPickupAddressCreateRequestModel.fromJson(
           Map<String, dynamic> json) =>
       RequestPickupAddressCreateRequestModel(
-        name: json['name'] as String,
-        phone: json['phone'] as String,
-        address: json['address'] as String,
-        zipCode: json['zip_code'] as String,
-        city: json['city'] as String,
-        district: json['district'] as String,
-        subDistrict: json['sub_district'] as String,
-        region: json['region'] as String,
-        lat: json['lat'] as double,
-        lng: json['lng'] as double,
+        pickupDataName: json['pickupDataName'] as String,
+        pickupDataPhone: json['pickupDataPhone'] as String,
+        pickupDataAddress: json['pickupDataAddress'] as String,
+        pickupDataZipCode: json['pickupDataZipCode'] as String,
+        pickupDataCity: json['pickupDataCity'] as String,
+        pickupDataDistrict: json['pickupDataDistrict'] as String,
+        pickupDataSubdistrict: json['pickupDataSubdistrict'] as String,
+        pickupDataRegion: json['pickupDataRegion'] as String,
+        pickupDataLatitude: json['pickupDataLatitude'] as String,
+        pickupDataLongitude: json['pickupDataLongitude'] as String,
       );
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'phone': phone,
-        'address': address,
-        'zip_code': zipCode,
-        'city': city,
-        'district': district,
-        'sub_district': subDistrict,
-        'region': region,
-        'lat': lat,
-        'lng': lng,
+        'pickupDataName': pickupDataName,
+        'pickupDataPhone': pickupDataPhone,
+        'pickupDataAddress': pickupDataAddress,
+        'pickupDataZipCode': pickupDataZipCode,
+        'pickupDataCity': pickupDataCity,
+        'pickupDataDistrict': pickupDataDistrict,
+        'pickupDataSubdistrict': pickupDataSubdistrict,
+        'pickupDataRegion': pickupDataRegion,
+        'pickupDataLatitude': pickupDataLatitude,
+        'pickupDataLongitude': pickupDataLongitude,
       };
 }

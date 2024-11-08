@@ -71,8 +71,8 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
             return RequestPickupAddressItem(
               address: addresses[index],
               lastItem: index == addresses.length - 1,
-              selected: selectedAddressId == addresses[index].id,
-              onItemClick: () => onSelectAddress(addresses[index].id),
+              selected: selectedAddressId == addresses[index].pickupDataId,
+              onItemClick: () => onSelectAddress(addresses[index].pickupDataId),
             );
           },
           separatorBuilder: (BuildContext context, int index) {

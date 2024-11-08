@@ -10,6 +10,7 @@ import 'package:css_mobile/screen/request_pickup/request_pickup_filter_item.dart
 import 'package:css_mobile/screen/request_pickup/request_pickup_confirmation_dialog.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
@@ -158,7 +159,9 @@ class RequestPickupScreen extends StatelessWidget {
                   data: item,
                   onTap: (String awb) {
                     if (controller.checkMode) {
-                      controller.selectItem(awb);
+                      if (item.status == Constant.statusNotRequestPickedUpYet) {
+                        controller.selectItem(awb);
+                      }
                     } else {
                       Get.to(
                         const RequestPickupDetailScreen(),
@@ -437,7 +440,7 @@ class RequestPickupScreen extends StatelessWidget {
   }
 
   _filterDeliveryCityBottomSheet(RequestPickupController controller) {
-    List<String> items = controller.cities;
+    List<Map<String, dynamic>> items = controller.cities;
 
     Get.bottomSheet(
       enableDrag: true,
@@ -477,8 +480,8 @@ class RequestPickupScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   itemCount: items.length,
                   itemBuilder: (context, index) {
-                    bool isSelected =
-                        controller.filterDeliveryCityText == items[index];
+                    bool isSelected = controller.filterDeliveryCityText ==
+                        items[index]['label'];
                     return GestureDetector(
                       onTap: () {
                         controller.setSelectedFilterCity(items[index]);
@@ -488,7 +491,7 @@ class RequestPickupScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(items[index]),
+                            Text(items[index]['label']),
                             Icon(isSelected
                                 ? Icons.circle
                                 : Icons.circle_outlined)

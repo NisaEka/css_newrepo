@@ -4,6 +4,7 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/util/constant.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -109,7 +110,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
     return Row(
       children: [
         Text(
-          requestPickup.type,
+          requestPickup.apiType,
           style: itemTextStyle,
         ),
         Text(
@@ -129,7 +130,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          requestPickup.date,
+          requestPickup.createdDateSearch.toLongDateTimeFormat(),
           style: labelTextStyle,
         ),
         const SizedBox(
@@ -156,8 +157,12 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
   Color _chipColor(RequestPickupModel requestPickup) {
     if (requestPickup.status == Constant.statusNotRequestPickedUpYet) {
       return warningDarkColor;
-    } else {
+    } else if (requestPickup.status == Constant.statusAlreadyRequestPickedUp) {
       return successColor;
+    } else if (requestPickup.status == Constant.statusFailedRequestForPickUp) {
+      return errorColor;
+    } else {
+      return whiteColor;
     }
   }
 }

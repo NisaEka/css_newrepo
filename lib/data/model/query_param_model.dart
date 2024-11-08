@@ -19,6 +19,7 @@ class QueryParamModel {
     String? isNull,
     String? isNotNull,
     String? select,
+    String? soundex,
   }) {
     _table = table;
     _trash = trash;
@@ -39,6 +40,7 @@ class QueryParamModel {
     _isNull = isNull;
     _isNotNull = isNotNull;
     _select = select;
+    _soundex = soundex;
   }
 
   QueryParamModel.fromJson(dynamic json) {
@@ -61,6 +63,7 @@ class QueryParamModel {
     _isNull = json['isNull'];
     _isNotNull = json['isNotNull'];
     _select = json['select'];
+    _soundex = json['soundex'];
   }
 
   bool? _table;
@@ -82,6 +85,7 @@ class QueryParamModel {
   String? _isNull;
   String? _isNotNull;
   String? _select;
+  String? _soundex;
 
   // Getters
   bool? get table => _table;
@@ -141,6 +145,9 @@ class QueryParamModel {
   String? get select => _select;
   void setSelect(String? value) => _select = value;
 
+  String? get soundex => _soundex;
+  void setSoundex(String? value) => _soundex = value;
+
   // CopyWith method
   QueryParamModel copyWith({
     bool? table,
@@ -162,6 +169,7 @@ class QueryParamModel {
     String? isNull,
     String? isNotNull,
     String? select,
+    String? soundex,
   }) =>
       QueryParamModel(
         table: table ?? _table,
@@ -183,6 +191,7 @@ class QueryParamModel {
         isNull: isNull ?? _isNull,
         isNotNull: isNotNull ?? _isNotNull,
         select: select ?? _select,
+        soundex: soundex ?? _soundex,
       );
 
   // toJson method
@@ -207,6 +216,7 @@ class QueryParamModel {
     if (_isNull != null) map['isNull'] = _isNull;
     if (_isNotNull != null) map['isNotNull'] = _isNotNull;
     if (_select != null) map['select'] = _select;
+    if (_soundex != null) map['soundex'] = _soundex;
 
     return map;
   }
