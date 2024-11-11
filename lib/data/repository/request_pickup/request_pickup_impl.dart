@@ -123,8 +123,7 @@ class RequestPickupImpl extends RequestPickupRepository {
   Future<BaseResponse<List<Destination>>> getRequestPickupDestinations(
       QueryParamModel param) async {
     try {
-      var response = await network.base.get(
-          '/transaction/pickup-datas/destinations',
+      var response = await network.base.get('/transaction/pickups/destination',
           queryParameters: param.toJson());
       AppLogger.d("getRequestPickupDestinations response: ${response.data}");
       return BaseResponse<List<Destination>>.fromJson(

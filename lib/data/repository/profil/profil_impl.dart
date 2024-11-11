@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
@@ -100,17 +101,29 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future<GetCcrfActivityModel> getCcrfActivity() async {
+  Future<BaseResponse<List<CcrfActivityModel>>> getCcrfActivity(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: 'token');
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      var response = await network.dio.get(
-        '/ccrf-activity',
+      var response = await network.base.get(
+        '/master/ccrf-activities',
+        queryParameters: param.toJson(),
       );
-      return GetCcrfActivityModel.fromJson(response.data);
+      return BaseResponse<List<CcrfActivityModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<CcrfActivityModel>(
+                  (i) => CcrfActivityModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return GetCcrfActivityModel.fromJson(e.response?.data);
+      return BaseResponse<List<CcrfActivityModel>>.fromJson(
+          e.response?.data, (json) => List.empty());
     }
   }
 

@@ -159,7 +159,8 @@ class RequestPickupScreen extends StatelessWidget {
                   data: item,
                   onTap: (String awb) {
                     if (controller.checkMode) {
-                      if (item.status == Constant.statusNotRequestPickedUpYet) {
+                      if (item.status !=
+                          Constant.statusAlreadyRequestPickedUp) {
                         controller.selectItem(awb);
                       }
                     } else {
