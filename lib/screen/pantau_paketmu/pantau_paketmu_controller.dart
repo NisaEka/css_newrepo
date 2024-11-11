@@ -1,5 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
@@ -23,17 +24,20 @@ class PantauPaketmuController extends BaseController {
     super.onInit();
     selectDateFilter(3);
     initData();
+    state.pagingController.addPageRequestListener((pageKey) {
+      getPantauList(pageKey);
+    });
   }
 
-  // @override
-  // void onClose() {
-  //   // Dispose of controllers and subscriptions if needed
-  //   state.pagingController.dispose();
-  //   state.startDateField.dispose();
-  //   state.endDateField.dispose();
-  //   state.searchField.dispose();
-  //   super.onClose();
-  // }
+  @override
+  void onClose() {
+    // Dispose of controllers and subscriptions if needed
+    state.pagingController.dispose();
+    state.startDateField.dispose();
+    state.endDateField.dispose();
+    state.searchField.dispose();
+    super.onClose();
+  }
 
   Future<void> initData() async {
     state.isLoading.value = true;
@@ -72,7 +76,6 @@ class PantauPaketmuController extends BaseController {
       AppLogger.e('error pantau', e, i);
     } finally {
       state.selectedStatusKiriman.value = state.listStatusKiriman.first;
-      state.isLoading.value = false;
       applyFilter();
     }
   }
@@ -80,8 +83,6 @@ class PantauPaketmuController extends BaseController {
   Future<void> getCountList() async {
     var token = await storageSecure.read(key: 'token');
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    AppLogger.i('start date: ${state.startDate}');
-    AppLogger.i('end date: ${state.endDate}');
     var param = CountQueryModel(
       between: [
         {
@@ -92,35 +93,34 @@ class PantauPaketmuController extends BaseController {
         }
       ],
     );
-    AppLogger.i('Pantauuuuuu count');
+
     try {
       Response responseCount = await network.base.get(
         '/transaction/tracks/count',
         queryParameters: param.toJson(),
       );
-      AppLogger.d('Pantauuuuuu ${responseCount.data}');
+      AppLogger.d('Pantauuuuuu count ${responseCount.data}');
 
       state.countList.value = responseCount.data['data'];
-      AppLogger.d('responseCount.data: ${state.countList}');
     } catch (e, i) {
       AppLogger.e('error pantau count', e, i);
     } finally {
-      AppLogger.i('finally pantau count');
-      state.isLoadCount.value = true;
       state.isLoading.value = false;
     }
   }
 
   Future<void> getPantauList(int page) async {
-    state.isLoading.value = true;
     AppLogger.i('Pantauuuuuu list');
     var token = await storageSecure.read(key: 'token');
     network.base.options.headers['Authorization'] = 'Bearer $token';
     AppLogger.i('start date: ${state.startDate}');
     AppLogger.i('end date: ${state.endDate}');
+    AppLogger.i('selected status kiriman: ${state.selectedStatusKiriman}');
+    AppLogger.i('selected tipe kiriman: ${state.selectedTipeKiriman}');
+    AppLogger.i('search: ${state.searchField}');
     var param = QueryModel(
       table: true,
-      page: 1,
+      page: page,
       limit: pageSize,
       between: [
         {
@@ -132,42 +132,45 @@ class PantauPaketmuController extends BaseController {
       ],
       entity: state.selectedStatusKiriman.value,
       type: state.selectedTipeKiriman.value,
+      search: state.searchField.text,
     );
 
     try {
-      // final trans = await pantau.getPantauList(
-      //   page,
-      //   pageSize,
-      //   state.date ?? '',
-      //   state.searchField.text,
-      //   state.selectedPetugasEntry != "SEMUA"
-      //       ? (state.selectedPetugasEntry ?? '')
-      //       : '',
-      //   state.selectedStatusKiriman ?? '',
-      //   state.selectedTipeKiriman ?? '',
-      // );
       Response response = await network.base.get(
         '/transaction/tracks/count/detail',
         queryParameters: param.toJson(),
       );
       AppLogger.d('Pantauuuuuu ${response.data}');
-      var trans = GetPantauPaketmuModel.fromJson(response.data);
+      // var trans = GetPantauPaketmuModel.fromJson(response.data);
+      var trans = BaseResponse<List<PantauPaketmuModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<PantauPaketmuModel>(
+                  (i) => PantauPaketmuModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+      // return BaseResponse<List<PantauPaketmuModel>>
 
-      final isLastPage = (trans.data?.length ?? 0) < pageSize;
+      final isLastPage = trans.meta!.currentPage == trans.meta!.lastPage;
+      AppLogger.d('Pantauuuuuu isLastPage $isLastPage');
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
+        return;
       } else {
         final nextPageKey = page + 1;
+        AppLogger.w('Pantauuuuuu nextPageKey $nextPageKey');
         state.pagingController.appendPage(trans.data ?? [], nextPageKey);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
+        return;
       }
     } catch (e, i) {
       AppLogger.e('error pantau list', e, i);
       state.pagingController.error = e;
+    } finally {
+      state.isLoading.value = false;
     }
-
-    state.isLoading.value = false;
   }
 
   void selectDateFilter(int filter) {
@@ -209,21 +212,20 @@ class PantauPaketmuController extends BaseController {
     state.endDateField.text = '-';
   }
 
-  Future<void> resetFilter() async {
+  Future<void> resetFilter({bool? isDetail = false}) async {
     AppLogger.i('Reset Filter');
     state.countList.clear();
     state.selectedPetugasEntry.value = state.basic.value?.userType == "PEMILIK"
         ? null
         : state.basic.value?.name;
-    // state.selectedStatusKiriman.value = "Total Kiriman";
-    // state.selectedTipeKiriman.value = "cod";
+    state.selectedStatusKiriman.value = "Total Kiriman";
+    state.selectedTipeKiriman.value = "cod";
     state.tipeKiriman.value = 0;
     state.isFiltered.value = false;
     state.searchField.clear();
     state.dateFilter.value = "3";
     selectDateFilter(3);
-    state.pagingController.refresh();
-    applyFilter();
+    applyFilter(isDetail: isDetail);
   }
 
   Future<DateTime?> selectDate() async {
@@ -253,7 +255,7 @@ class PantauPaketmuController extends BaseController {
     return null;
   }
 
-  applyFilter({bool? isDetail = false}) {
+  applyFilter({bool? isDetail = false}) async {
     if (state.dateFilter.value != '3') {
       state.isFiltered.value = true;
     }
@@ -266,11 +268,11 @@ class PantauPaketmuController extends BaseController {
     AppLogger.i('Apply Filter');
     AppLogger.i('Apply Filter ${state.selectedTipeKiriman.value}');
     state.isLoading.value = true;
+
     if (isDetail != null && !isDetail) {
       getCountList();
     } else {
-      getPantauList(pageSize);
+      state.pagingController.refresh();
     }
-    state.pagingController.refresh();
   }
 }

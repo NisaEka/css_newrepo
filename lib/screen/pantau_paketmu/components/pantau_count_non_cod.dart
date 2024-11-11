@@ -169,7 +169,7 @@ class PantauCountNonCod extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 child: CustomLabelText(
-                  title: 'COD Ongkir'.tr,
+                  title: 'Ongkir'.tr,
                   value:
                       'Rp ${ongkirNonCodAmount.toInt().toCurrency()} ${title != "Total Kiriman" ? '($ongkirNonCodAmountPercentage%)' : ''}',
                   isHorizontal: true,
