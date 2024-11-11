@@ -25,6 +25,7 @@ class OriginDropdown extends StatefulHookWidget {
   final TextEditingController? controller;
   final void Function(dynamic)? onSelect;
   final String? branch;
+  final bool showDialog;
 
   const OriginDropdown({
     super.key,
@@ -40,6 +41,7 @@ class OriginDropdown extends StatefulHookWidget {
     this.controller,
     this.onSelect,
     this.branch,
+    this.showDialog = false,
   });
 
   @override

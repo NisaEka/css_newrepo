@@ -56,7 +56,7 @@ class PengaturanLabelController extends BaseController {
       // update();
       // var sticker = labelList.where((e) => e.name == selectedSticker).first;
       await setting.getSettingLabel().then((value) {
-        labelList.addAll(value.payload ?? []);
+        labelList.addAll(value.data ?? []);
         selectedSticker = labelList.where((e) => e.enable == true).first;
         shipcost = (selectedSticker?.showPrice ?? false) ? "PUBLISH" : "HIDE";
       });
@@ -93,6 +93,19 @@ class PengaturanLabelController extends BaseController {
                   ),
                 ),
               );
+        } else {
+          Get.showSnackbar(
+            GetSnackBar(
+              icon: const Icon(
+                Icons.info,
+                color: whiteColor,
+              ),
+              message: value.error[0],
+              isDismissible: true,
+              duration: const Duration(seconds: 3),
+              backgroundColor: errorColor,
+            ),
+          );
         }
       });
     } catch (e) {

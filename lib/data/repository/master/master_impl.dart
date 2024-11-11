@@ -6,6 +6,7 @@ import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
@@ -62,6 +63,29 @@ class MasterRepositoryImpl extends MasterRepository {
             ? json
                 .map<Destination>(
                   (i) => Destination.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      return e.response?.data;
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<Branch>>> getBranches() async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.base.get(
+        "/master/branches",
+      );
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<Branch>(
+                  (i) => Branch.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),

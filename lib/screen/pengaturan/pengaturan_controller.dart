@@ -1,7 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
-import 'package:css_mobile/data/model/auth/input_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
@@ -15,7 +14,7 @@ class PengaturanController extends BaseController {
   bool isLoading = false;
   String? version;
   String? lang;
-  AllowedMenu allow = AllowedMenu();
+  MenuModel allow = MenuModel();
   UserModel? basicProfil;
 
   @override
@@ -33,7 +32,7 @@ class PengaturanController extends BaseController {
 
     lang = await storage.readString(StorageCore.localeApp);
 
-    allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+    allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
 
     basicProfil = UserModel.fromJson(
       await storage.readData(StorageCore.userProfil),

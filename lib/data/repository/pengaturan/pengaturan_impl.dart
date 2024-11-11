@@ -1,9 +1,7 @@
+import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/dashboard/sticker_label_model.dart';
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
-import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/pengaturan/get_petugas_model.dart';
-import 'package:css_mobile/data/model/pengaturan/get_setting_label_model.dart';
-import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
@@ -16,19 +14,28 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<GetPetugasModel> getOfficer(int page, String keyword) async {
+  Future<BaseResponse<List<PetugasModel>>> getOfficer(int page, String keyword) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.get(
-        "/officer",
+      Response response = await network.base.get(
+        "/officers",
         queryParameters: {
           "keyword": keyword,
           "page": page,
           "limit": 10,
         },
       );
-      return GetPetugasModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<PetugasModel>(
+                  (i) => PetugasModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
       return e.response?.data;
     }
@@ -49,95 +56,102 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   }
 
   @override
-  Future<GetPetugasByidModel> getOfficerByID(String id) async {
+  Future<BaseResponse<PetugasModel>> getOfficerByID(String id) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.get(
-        "/officer/$id",
+      Response response = await network.base.get(
+        "/officers/$id",
       );
-      return GetPetugasByidModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => PetugasModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
       return e.response?.data;
     }
   }
 
   @override
-  Future<PostTransactionModel> postOfficer(DataPetugasModel data) async {
+  Future<BaseResponse> postOfficer(DataPetugasModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.post(
-        "/officer",
+      Response response = await network.base.post(
+        "/officers",
         data: data,
       );
-      return PostTransactionModel.fromJson(response.data);
+      return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(e.response?.data, (json) => null);
     }
   }
 
   @override
-  Future<PostTransactionModel> putOfficer(DataPetugasModel data) async {
+  Future<BaseResponse> putOfficer(DataPetugasModel data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo(info: "kiriman data");
     try {
-      Response response = await network.dio.put(
-        "/officer/${data.id}",
+      Response response = await network.base.patch(
+        "/officers/${data.id}",
         data: data,
       );
-      return PostTransactionModel.fromJson(response.data);
+      return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
-      return e.response?.data;
+      return BaseResponse.fromJson(e.response?.data, (json) => null);
+
     }
   }
 
   @override
-  Future<GetBranchModel> getBranch() async {
+  Future<BaseResponse<List<StickerLabel>>> getSettingLabel() async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.get(
-        "/branch",
+      Response response = await network.base.get(
+        "/settings/label",
       );
-      return GetBranchModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return e.response?.data;
-    }
-  }
-
-
-
-  @override
-  Future<GetSettingLabelModel> getSettingLabel() async {
-    var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      Response response = await network.dio.get(
-        "/setting/label",
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<StickerLabel>(
+                  (i) => StickerLabel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
       );
-      return GetSettingLabelModel.fromJson(response.data);
     } on DioException catch (e) {
-      return GetSettingLabelModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<StickerLabel>(
+                  (i) => StickerLabel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     }
   }
 
   @override
-  Future<PostTransactionModel> updateSettingLabel(String label, int price) async {
+  Future<BaseResponse> updateSettingLabel(String label, int price) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.put(
-        "/setting/label",
+      Response response = await network.base.patch(
+        "/settings/label",
         data: {
-          "label_name": label,
-          "price_label": price,
+          "labelPrinter": label,
+          "priceLabel": price,
         },
       );
-      return PostTransactionModel.fromJson(response.data);
+      return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
-      return e.response?.data;
+      print('edit label error: ${e.response?.data}');
+      return BaseResponse.fromJson(e.response?.data, (json) => null);
     }
   }
 }

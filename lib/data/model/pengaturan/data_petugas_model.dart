@@ -1,6 +1,5 @@
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
-import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 
 class DataPetugasModel {
   DataPetugasModel({
@@ -11,7 +10,7 @@ class DataPetugasModel {
     String? password,
     String? address,
     String? zipCode,
-    AllowedMenu? menu,
+    MenuModel? menu,
     Transaction? transaction,
     List<Account>? accounts,
     List<String>? origins,
@@ -37,7 +36,7 @@ class DataPetugasModel {
     _password = json['password'];
     _address = json['address'];
     _zipCode = json['zip_code'];
-    _menu = json['menu'] != null ? AllowedMenu.fromJson(json['menu']) : null;
+    _menu = json['menu'] != null ? MenuModel.fromJson(json['menu']) : null;
     _transaction = json['transaction'] != null ? Transaction.fromJson(json['transaction']) : null;
     if (json['accounts'] != null) {
       _accounts = [];
@@ -55,7 +54,7 @@ class DataPetugasModel {
   String? _password;
   String? _address;
   String? _zipCode;
-  AllowedMenu? _menu;
+  MenuModel? _menu;
   Transaction? _transaction;
   List<Account>? _accounts;
   List<String>? _origins;
@@ -68,7 +67,7 @@ class DataPetugasModel {
     String? password,
     String? address,
     String? zipCode,
-    AllowedMenu? menu,
+    MenuModel? menu,
     Transaction? transaction,
     List<Account>? accounts,
     List<String>? origins,
@@ -101,7 +100,7 @@ class DataPetugasModel {
 
   String? get zipCode => _zipCode;
 
-  AllowedMenu? get menu => _menu;
+  MenuModel? get menu => _menu;
 
   Transaction? get transaction => _transaction;
 

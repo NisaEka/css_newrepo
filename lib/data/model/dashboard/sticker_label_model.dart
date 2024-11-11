@@ -1,39 +1,3 @@
-class StickerLabelModel {
-  StickerLabelModel({
-    List<StickerLabel>? stickerLabel,
-  }) {
-    _stickerLabel = stickerLabel;
-  }
-
-  StickerLabelModel.fromJson(dynamic json) {
-    if (json['sticker_label'] != null) {
-      _stickerLabel = [];
-      json['sticker_label'].forEach((v) {
-        _stickerLabel?.add(StickerLabel.fromJson(v));
-      });
-    }
-  }
-
-  List<StickerLabel>? _stickerLabel;
-
-  StickerLabelModel copyWith({
-    List<StickerLabel>? stickerLabel,
-  }) =>
-      StickerLabelModel(
-        stickerLabel: stickerLabel ?? _stickerLabel,
-      );
-
-  List<StickerLabel>? get stickerLabel => _stickerLabel;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (_stickerLabel != null) {
-      map['sticker_label'] = _stickerLabel?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
 class StickerLabel {
   StickerLabel({
     num? index,

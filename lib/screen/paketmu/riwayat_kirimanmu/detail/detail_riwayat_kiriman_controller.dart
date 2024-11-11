@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class DetailRiwayatKirimanController extends BaseController {
   String awb = Get.arguments['awb'];
 
-  DataTransactionModel? transactionModel;
+  TransactionModel? transactionModel;
   final  pickupStatus = TextEditingController();
   final  transStatus = TextEditingController();
 
@@ -26,9 +27,9 @@ class DetailRiwayatKirimanController extends BaseController {
     Timer(const Duration(seconds: 1), () {
       try {
         transaction.getTransactionByAWB(awb).then((value) {
-          transactionModel = value.payload;
-          transStatus.text = transactionModel?.status ?? '';
-          pickupStatus.text = transactionModel?.pickupStatus ?? '';
+          transactionModel = value.data;
+          transStatus.text = transactionModel?.statusDesc ?? '';
+          pickupStatus.text = transactionModel?.responsePickup ?? '';
           update();
         });
       } catch (e) {

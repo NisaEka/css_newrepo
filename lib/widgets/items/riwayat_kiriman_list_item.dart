@@ -113,17 +113,17 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           padding: const EdgeInsets.all(5),
                           width: isLoading ? 50 : null,
                           decoration: BoxDecoration(
-                            color: data?.type == "COD" || apiType == "COD"
+                            color: data?.apiType == "COD" || apiType == "COD"
                                 ? successColor
-                                : data?.type == "NON COD" || apiType == "NON COD"
+                                : data?.apiType == "NON COD" || apiType == "NON COD"
                                     ? warningColor
-                                    : data?.type == "COD ONGKIR" || apiType == "COD ONGKIR"
+                                    : data?.apiType == "COD ONGKIR" || apiType == "COD ONGKIR"
                                         ? infoColor
                                         : errorColor,
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Text(
-                            data?.type ?? apiType ?? '-',
+                            data?.apiType ?? apiType ?? '-',
                             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                   color: whiteColor,
                                   fontSize: 8,

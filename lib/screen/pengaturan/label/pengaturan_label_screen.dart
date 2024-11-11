@@ -77,13 +77,7 @@ class PengaturanLabelScreen extends StatelessWidget {
           TextField(
             readOnly: true,
             controller: TextEditingController(
-              text: c.selectedSticker?.name ??
-                  ''
-                      .splitMapJoin(
-                        '_',
-                        onMatch: (p0) => ' ',
-                      )
-                      .substring(1),
+              text: c.selectedSticker?.name ?? '',
             ),
             style: Theme.of(context).textTheme.titleMedium,
           ),

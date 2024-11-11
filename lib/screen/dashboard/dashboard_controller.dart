@@ -134,7 +134,7 @@ class DashboardController extends BaseController {
       ),
     ];
     var favMenu = await storage.readString(StorageCore.favoriteMenu);
-    // var stickerLabel = await storage.readString(StorageCore.transactionLabel);
+    var stickerLabel = await storage.readString(StorageCore.transactionLabel);
     // var shipcost = await storage.readString(StorageCore.shippingCost);
     update();
     if (favMenu.isEmpty == true) {
@@ -154,21 +154,21 @@ class DashboardController extends BaseController {
     bool label = (await storage.readString(StorageCore.transactionLabel)).isEmpty;
 
     if (label) {
-      // await setting.getSettingLabel().then(
-      //       (value) async {
-      //     await storage.writeString(
-      //       StorageCore.transactionLabel,
-      //       value.payload
-      //           ?.where((e) => e.enable ?? false)
-      //           .first
-      //           .name,
-      //     );
-      //     await storage.writeString(
-      //       StorageCore.shippingCost,
-      //       value.payload?.first.showPrice ?? false ? "PUBLISH" : "HIDE",
-      //     );
-      //   },
-      // );
+      await setting.getSettingLabel().then(
+            (value) async {
+          await storage.writeString(
+            StorageCore.transactionLabel,
+            value.data
+                ?.where((e) => e.enable ?? false)
+                .first
+                .name,
+          );
+          await storage.writeString(
+            StorageCore.shippingCost,
+            value.data?.first.showPrice ?? false ? "PUBLISH" : "HIDE",
+          );
+        },
+      );
     }
 
     update();
