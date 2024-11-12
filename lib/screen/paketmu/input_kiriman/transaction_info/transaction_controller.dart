@@ -344,8 +344,8 @@ class TransactionController extends BaseController {
     }
     if (state.data != null) {
       state.goodType.text = state.data?.goods?.type ?? '';
+      state.goodName.text = state.data?.goods?.desc ?? '';
       state.noReference.text = state.data?.orderId ?? '';
-      state.noReference.text = state.data?.goods?.desc ?? '';
       state.goodAmount.text = state.data?.goods?.amount?.toInt().toCurrency().toString() ?? '';
       state.goodQty.text = state.data?.goods?.quantity.toString() ?? '';
       state.insurance = state.data?.delivery?.insuranceFlag == "Y";
@@ -456,7 +456,7 @@ class TransactionController extends BaseController {
   Future<void> updateTransaction() async {
     state.isLoading = true;
     update();
-
+    AppLogger.i('shipper region : ${state.shipper.region?.name}');
     try {
       await transaction
           .putTransaction(
@@ -475,7 +475,7 @@ class TransactionController extends BaseController {
           insuranceAmount: state.isr,
           deliveryPrice: state.freightCharge,
           deliveryPricePublish: state.freightCharge,
-          codAmount: state.codfee,
+          codAmount: state.isCOD ? state.codAmountText.text.digitOnly().toInt() : null,
           custId: state.account.accountNumber,
           originCode: state.origin.originCode,
           originDesc: state.origin.originName,
@@ -513,6 +513,7 @@ class TransactionController extends BaseController {
         state.data?.awb ?? '',
       )
           .then((v) {
+            print(v.toJson());
         if (v.code != 200) {
           Get.showSnackbar(
             GetSnackBar(
@@ -520,7 +521,7 @@ class TransactionController extends BaseController {
                 Icons.warning,
                 color: warningColor,
               ),
-              message: v.message?.tr,
+              message: v.error[0],
               isDismissible: true,
               margin: const EdgeInsets.only(bottom: 0),
               duration: const Duration(seconds: 3),
@@ -551,7 +552,7 @@ class TransactionController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-      saveDraft();
+      // saveDraft();
     }
     state.isLoading = false;
     update();
@@ -761,9 +762,9 @@ class TransactionController extends BaseController {
       ));
     } else {
       isValidate()
-          ? state.dataEdit == null
-              ? saveTransaction()
-              : updateTransaction()
+          ? (state.isEdit ?? false)
+              ? updateTransaction()
+              : saveTransaction()
           : null;
     }
   }

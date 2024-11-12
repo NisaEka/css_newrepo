@@ -1,15 +1,12 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
-import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_officer_model.dart';
-import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -97,7 +94,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<BaseResponse<List<TransactionModel>>> getTransaction(
+  Future<BaseResponse<List<TransactionModel>>> getAllTransaction(
     int page,
     int limit,
     String transType,
@@ -108,19 +105,19 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    transDate.printInfo(info: "transaction date");
-
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
     String registID = '{"registrationId" : "${user.id}"}';
     String type = transType.isNotEmpty ? ', {"apiType" : "$transType"}' : "";
+    // String status = transStatus.isNotEmpty ? ', {"statusAwb" : "$transStatus"}' : "";
     QueryParamModel params = QueryParamModel(
-      where: "[$registID $type]",
       table: true,
       limit: limit,
       page: page,
       search: keyword,
+      between: transDate,
+      where: '[$registID $type]',
       sort: '[{"createdDateSearch":"desc"}]',
     );
 
@@ -141,6 +138,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
+      AppLogger.e("get transactions: ${e.response?.data}");
+
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>
@@ -167,6 +166,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
+      AppLogger.e(e.response?.data);
+
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
@@ -184,22 +185,28 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
+    QueryParamModel params = QueryParamModel(
+      table: true,
+      search: keyword,
+      between: transDate,
+      where: transType.isNotEmpty ? '[{"apiType" : "$transType"}]' : '[]',
+      sort: '[{"createdDateSearch":"desc"}]',
+    );
+
     try {
       Response response = await network.base.get(
         "/transaction/transactions/count",
-        queryParameters: {
-          "transaction_status": transStatus,
-          "transaction_date": transDate,
-          "transaction_type": transType,
-          "keyword": keyword,
-          "officer": officer,
-        },
+        queryParameters: params.toJson(),
       );
+      AppLogger.d("get transactions count: ${response.data}");
+
       return BaseResponse<TransactionCount>.fromJson(
         response.data,
         (json) => TransactionCount.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
+      AppLogger.e("get transactions count: ${e.response?.data}");
+
       return BaseResponse<TransactionCount>.fromJson(
         e.response?.data,
         (json) => TransactionCount.fromJson(json as Map<String, dynamic>),
@@ -271,8 +278,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.base.put(
-        "/transaction/$awb",
+      Response response = await network.base.patch(
+        "/transaction/transactions/$awb",
         data: data,
       );
       return BaseResponse.fromJson(
@@ -280,6 +287,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
         (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
+
+      AppLogger.e('error update transaksi : ${e.response?.data}');
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => TransactionModel.fromJson(json as Map<String, dynamic>),

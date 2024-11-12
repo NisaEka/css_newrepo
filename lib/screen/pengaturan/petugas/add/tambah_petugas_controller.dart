@@ -74,8 +74,8 @@ class TambahPetugasController extends BaseController {
 
   List<Account> accountList = [];
   List<Account> selectedAccountList = [];
-  RxList<OriginModel> originList = <OriginModel>[].obs;
-  final selectedOrigin = <OriginModel>[].obs;
+  RxList<Origin> originList = <Origin>[].obs;
+  final selectedOrigin = <Origin>[].obs;
   List<String> originCodes = [];
   List<BranchModel> branchList = [];
   List<BranchModel> selectedBranchList = [];

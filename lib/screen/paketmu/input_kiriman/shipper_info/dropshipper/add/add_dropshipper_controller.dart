@@ -17,10 +17,10 @@ class AddDropshipperController extends BaseController {
   final dropshipperAddress = TextEditingController();
   final dropshipperZipCode = TextEditingController();
 
-  List<OriginModel> originList = [];
+  List<Origin> originList = [];
   bool isLoadOrigin = false;
   bool isLoading = false;
-  OriginModel? selectedOrigin;
+  Origin? selectedOrigin;
 
   Future<void> saveDropshipper() async {
     isLoading = true;

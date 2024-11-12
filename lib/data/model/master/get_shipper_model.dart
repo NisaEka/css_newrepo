@@ -36,7 +36,7 @@ class ShipperModel {
         phone = json['phone'] ?? json['ccrfPhone'],
         dropship = json['dropship'] ?? false,
         origin = json['origin'] != null
-            ? OriginModel.fromJson(json['origin'])
+            ? Origin.fromJson(json['origin'])
             : null,
         region =
             json['region'] != null ? Region.fromJson(json['region']) : null;
@@ -54,7 +54,7 @@ class ShipperModel {
   String? contact;
   String? phone;
   bool dropship;
-  OriginModel? origin;
+  Origin? origin;
 
   /// Copy with method
   ShipperModel copyWith({
@@ -70,7 +70,7 @@ class ShipperModel {
     String? contact,
     String? phone,
     bool? dropship,
-    OriginModel? origin,
+    Origin? origin,
   }) {
     return ShipperModel(
       name: name ?? this.name,
@@ -102,7 +102,7 @@ class ShipperModel {
   String? get getContact => contact;
   String? get getPhone => phone;
   bool get isDropship => dropship;
-  OriginModel? get getOrigin => origin;
+  Origin? get getOrigin => origin;
 
   /// toJson method
   Map<String, dynamic> toJson() {

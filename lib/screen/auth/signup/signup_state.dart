@@ -24,7 +24,7 @@ class SignupState {
   bool isLoading = false;
   bool isDefaultOrigin = false;
   bool isSelectCounter = true;
-  OriginModel? selectedOrigin;
+  Origin? selectedOrigin;
   AgentModel? selectedAgent;
   GroupOwnerModel? selectedReferal;
   String? locale;

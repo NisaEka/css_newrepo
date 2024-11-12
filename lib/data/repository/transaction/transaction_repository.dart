@@ -20,7 +20,7 @@ abstract class TransactionRepository {
 
   Future<BaseResponse<CODFeeModel>> getCODFee(String accountID);
 
-  Future<BaseResponse<List<TransactionModel>>> getTransaction(
+  Future<BaseResponse<List<TransactionModel>>> getAllTransaction(
     int page,
     int limit,
     String transType,

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 class DetailRiwayatKirimanController extends BaseController {
   String awb = Get.arguments['awb'];
+  TransactionModel? transactionData = Get.arguments['data'];
 
   TransactionModel? transactionModel;
   final pickupStatus = TextEditingController();
@@ -24,15 +25,26 @@ class DetailRiwayatKirimanController extends BaseController {
     isLoading = true;
     update();
     Timer(const Duration(seconds: 1), () {
+      transStatus.text = transactionData?.statusAwb ?? '';
+      pickupStatus.text = transactionData?.pickupStatus ?? '';
+      update();
+
       try {
         transaction.getTransactionByAWB(awb).then((value) {
-          transactionModel = value.data;
-          transStatus.text = transactionModel?.statusDesc ?? '';
-          pickupStatus.text = transactionModel?.responsePickup ?? '';
+          transactionModel = value.data?.copyWith(
+            accountNumber: transactionData?.accountNumber,
+            accountService: transactionData?.accountService,
+            accountName: transactionData?.accountName,
+            accountType: transactionData?.accountType,
+            statusAwb: transactionData?.statusAwb,
+          );
+          // transStatus.text = transactionModel?.statusAwb ?? '';
+          // pickupStatus.text = transactionModel?.pickupStatus ?? '';
           update();
         });
-      } catch (e) {
+      } catch (e, i) {
         e.printError();
+        i.printError();
       }
 
       isLoading = false;

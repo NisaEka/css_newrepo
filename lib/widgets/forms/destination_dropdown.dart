@@ -107,7 +107,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             hintText: widget.label ?? "Kota Pengiriman".tr,
             searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
             prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.titleSmall,
+            textStyle: Theme.of(context).textTheme.titleMedium,
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,
           );

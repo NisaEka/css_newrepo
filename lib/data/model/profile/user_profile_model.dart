@@ -50,7 +50,7 @@ class UserModel {
     String? id,
     Region? region,
     BranchModel? branch,
-    OriginModel? origin,
+    Origin? origin,
     String? zipCode,
     String? name,
     String? brand,
@@ -84,7 +84,7 @@ class UserModel {
     _branch =
         json['branch'] != null ? BranchModel.fromJson(json['branch']) : null;
     _origin =
-        json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
+        json['origin'] != null ? Origin.fromJson(json['origin']) : null;
     _zipCode = json['zipCode'];
     _name = json['name'];
     _brand = json['brand'];
@@ -100,7 +100,7 @@ class UserModel {
   String? _id;
   Region? _region;
   BranchModel? _branch;
-  OriginModel? _origin;
+  Origin? _origin;
   String? _zipCode;
   String? _name;
   String? _brand;
@@ -116,7 +116,7 @@ class UserModel {
     String? id,
     Region? region,
     BranchModel? branch,
-    OriginModel? origin,
+    Origin? origin,
     String? zipCode,
     String? name,
     String? brand,
@@ -151,7 +151,7 @@ class UserModel {
 
   BranchModel? get branch => _branch;
 
-  OriginModel? get origin => _origin;
+  Origin? get origin => _origin;
 
   String? get zipCode => _zipCode;
 

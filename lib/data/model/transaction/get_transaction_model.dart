@@ -28,7 +28,7 @@ class TransactionModel {
     String? orderId,
     String? courierId,
     String? destinationCode,
-    String? deliveryAmountPublish,
+    dynamic deliveryAmountPublish,
     String? statusName,
     String? specialIns,
     String? courierName,

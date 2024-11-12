@@ -57,8 +57,9 @@ class ReceiverController extends BaseController {
       state.receiverName.text = state.data?.receiver?.name ?? '';
       state.receiverPhone.text = state.data?.receiver?.phone ?? '';
       state.receiverAddress.text = state.data?.receiver?.address ?? '';
-      // state.kotaTujuan.text = state.data?.destination?.cityName
-
+      state.receiverDest.text = state.data?.destination?.cityName ?? '';
+      state.selectedDestination = state.data?.destination;
+      state.isValidate = true;
       update();
     }
   }
@@ -69,18 +70,14 @@ class ReceiverController extends BaseController {
     state.receiverDest.text = state.receiver?.idDestination ?? '';
     state.receiverAddress.text = state.receiver?.address?.toUpperCase() ?? '';
     getDestinationList(state.receiver?.destinationCode ?? '').then((value) {
-      state.selectedDestination = value
-          .where((element) =>
-              element.destinationCode == state.receiver?.destinationCode)
-          .first;
+      state.selectedDestination = value.where((element) => element.destinationCode == state.receiver?.destinationCode).first;
     });
     update();
     return state.receiver;
   }
 
   bool isSaveReceiver() {
-    if (state.receiver?.name != state.receiverName.text &&
-        state.receiver?.phone != state.receiverPhone.text) {
+    if (state.receiver?.name != state.receiverName.text && state.receiver?.phone != state.receiverPhone.text) {
       return true;
     }
     return false;
@@ -90,8 +87,7 @@ class ReceiverController extends BaseController {
     state.isLoading = true;
     BaseResponse<List<Destination>>? response;
     try {
-      response = await master
-          .getDestinations(QueryParamModel(search: keyword.toUpperCase()));
+      response = await master.getDestinations(QueryParamModel(search: keyword.toUpperCase()));
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -112,8 +108,8 @@ class ReceiverController extends BaseController {
       region: state.selectedDestination?.provinceName,
       country: state.selectedDestination?.countryName,
       contact: state.receiverName.text.toUpperCase(),
-      receiverDistrict: state.selectedDestination?.districtName,
-      receiverSubDistrict: state.selectedDestination?.subdistrictName,
+      district: state.selectedDestination?.districtName,
+      subDistrict: state.selectedDestination?.subdistrictName,
     );
 
     var trans = DataTransactionModel(
@@ -135,6 +131,7 @@ class ReceiverController extends BaseController {
       const TransactionScreen(),
       transition: Transition.rightToLeft,
       arguments: {
+        'isEdit': state.isEdit,
         "data": state.data ?? trans,
         "cod_ongkir": state.codOngkir,
         "account": state.account,
@@ -165,9 +162,8 @@ class ReceiverController extends BaseController {
             destinationCode: state.selectedDestination?.destinationCode ?? '-',
             destinationDescription: state.selectedDestination?.cityName ?? '-',
             idDestination: state.selectedDestination?.id.toString() ?? '-',
-            receiverDistrict: state.selectedDestination?.districtName ?? '-',
-            receiverSubDistrict:
-                state.selectedDestination?.subdistrictName ?? '-',
+            district: state.selectedDestination?.districtName ?? '-',
+            subDistrict: state.selectedDestination?.subdistrictName ?? '-',
           ))
           .then(
             (value) => value.code == 201
@@ -180,8 +176,7 @@ class ReceiverController extends BaseController {
                       message: "Data receiver telah disimpan".tr,
                       isDismissible: true,
                       duration: const Duration(seconds: 3),
-                      backgroundColor:
-                          value.code == 201 ? successColor : errorColor,
+                      backgroundColor: value.code == 201 ? successColor : errorColor,
                     ),
                   )
                 : Get.showSnackbar(
@@ -193,8 +188,7 @@ class ReceiverController extends BaseController {
                       message: value.error?.first.message ?? ''.tr,
                       isDismissible: true,
                       duration: const Duration(seconds: 3),
-                      backgroundColor:
-                          value.code == 201 ? successColor : errorColor,
+                      backgroundColor: value.code == 201 ? successColor : errorColor,
                     ),
                   ),
           );

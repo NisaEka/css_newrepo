@@ -2,12 +2,14 @@ import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ShipperState {
   final DataTransactionModel? data = Get.arguments['data'];
+  final bool? isEdit = Get.arguments['isEdit'];
 
   final formKey = GlobalKey<FormState>();
   final accountNumber = TextEditingController();
@@ -31,8 +33,9 @@ class ShipperState {
   Account? selectedAccount;
 
   // GetOriginModel? originModel;
-  OriginModel? selectedOrigin;
+  Origin? selectedOrigin;
   ShipperModel? shipper;
+  UserModel? userBasic;
   DropshipperModel? dropshipper;
   String? locale;
 }

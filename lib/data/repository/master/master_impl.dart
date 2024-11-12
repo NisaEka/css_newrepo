@@ -25,7 +25,7 @@ class MasterRepositoryImpl extends MasterRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<OriginModel>>> getOrigins(
+  Future<BaseResponse<List<Origin>>> getOrigins(
       QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
 
@@ -37,12 +37,12 @@ class MasterRepositoryImpl extends MasterRepository {
         '/master/origins',
         queryParameters: param.toJson(),
       );
-      return BaseResponse<List<OriginModel>>.fromJson(
+      return BaseResponse<List<Origin>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<OriginModel>(
-                  (i) => OriginModel.fromJson(i as Map<String, dynamic>),
+                .map<Origin>(
+                  (i) => Origin.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),

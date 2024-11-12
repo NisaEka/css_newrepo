@@ -6,6 +6,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
+import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
@@ -358,6 +359,17 @@ class DashboardController extends BaseController {
             value.data?.user,
           );
 
+          await storage.saveData(StorageCore.shipper, ShipperModel(
+            name: value.data?.user?.brand,
+            phone: value.data?.user?.phone,
+            address: value.data?.user?.address,
+            zipCode: value.data?.user?.zipCode,
+            city: value.data?.user?.origin?.originName,
+            origin: value.data?.user?.origin,
+            country: value.data?.user?.language,
+            region: value.data?.user?.region,
+          ));
+
           if (state.basic?.language == "INDONESIA") {
             await storage.writeString(StorageCore.localeApp, "id");
             Get.updateLocale(const Locale("id", "ID"));
@@ -383,22 +395,22 @@ class DashboardController extends BaseController {
       }
 
       if (sender) {
-        await profil.getShipper().then((value) async {
-          AppLogger.i("shipper data : ${value.data?.first.toJson()}");
-
-          if (value.data != null) {
-            await storage.saveData(
-              StorageCore.shipper,
-              value.data?.first,
-            );
-          } else {
-            var s = UserModel.fromJson(storage.readData(StorageCore.basicProfile));
-            await storage.saveData(
-              StorageCore.shipper,
-              s,
-            );
-          }
-        });
+        // await profil.getShipper().then((value) async {
+        //   AppLogger.i("shipper data : ${value.data?.first.toJson()}");
+        //
+        //   // if (value.data != null) {
+        //   //   await storage.saveData(
+        //   //     StorageCore.shipper,
+        //   //     value.data?.first,
+        //   //   );
+        //   // } else {
+        //     var s = UserModel.fromJson(storage.readData(StorageCore.basicProfile));
+        //     await storage.saveData(
+        //       StorageCore.shipper,
+        //       s,
+        //     );
+        //   // }
+        // });
       }
 
       if (ccrfP) {

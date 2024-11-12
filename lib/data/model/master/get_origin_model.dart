@@ -1,7 +1,7 @@
 import 'get_region_model.dart';
 
-class OriginModel {
-  OriginModel({
+class Origin {
+  Origin({
     String? originCode,
     String? originName,
     String? branchCode,
@@ -15,7 +15,7 @@ class OriginModel {
     _region = region;
   }
 
-  OriginModel.fromJson(dynamic json) {
+  Origin.fromJson(dynamic json) {
     _originCode = json['origin_code'] ?? json['code'] ?? json['originCode'];
     _originName = json['origin_name'] ??
         json['desc'] ??
@@ -34,13 +34,13 @@ class OriginModel {
   String? _originStatus;
   Region? _region;
 
-  OriginModel copyWith({
+  Origin copyWith({
     String? originCode,
     String? originName,
     String? branchCode,
     String? originStatus,
   }) =>
-      OriginModel(
+      Origin(
           originCode: originCode ?? _originCode,
           originName: originName ?? _originName,
           branchCode: branchCode ?? _branchCode,

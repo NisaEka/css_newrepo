@@ -13,11 +13,12 @@ import 'package:get/get.dart';
 
 class TransactionState {
   DataTransactionModel? data = Get.arguments['data'];
+  bool? isEdit = Get.arguments['isEdit'];
   DataTransactionModel? dataEdit = Get.arguments['dataEdit'];
   ShipperModel shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
-  OriginModel origin = Get.arguments['origin'];
+  Origin origin = Get.arguments['origin'];
   Account account = Get.arguments['account'];
   ReceiverModel receiver = Get.arguments['receiver'];
   Destination destination = Get.arguments['destination'];
