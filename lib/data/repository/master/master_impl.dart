@@ -48,6 +48,7 @@ class MasterRepositoryImpl extends MasterRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
+      print('error get origin : ${e.response?.data}');
       return e.response?.data;
     }
   }

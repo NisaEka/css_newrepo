@@ -110,6 +110,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     );
     String registID = '{"registrationId" : "${user.id}"}';
     String type = transType.isNotEmpty ? ', {"apiType" : "$transType"}' : "";
+    String petugasEntry = officer.isNotEmpty ? ', {"petugasEntry" : $officer}' : '';
     // String status = transStatus.isNotEmpty ? ', {"statusAwb" : "$transStatus"}' : "";
     QueryParamModel params = QueryParamModel(
       table: true,
@@ -117,7 +118,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
       page: page,
       search: keyword,
       between: transDate,
-      where: '[$registID $type]',
+      where: '[$registID $type $petugasEntry]',
       sort: '[{"createdDateSearch":"desc"}]',
     );
 

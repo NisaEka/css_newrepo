@@ -162,28 +162,4 @@ class PengaturanScreen extends StatelessWidget {
     );
   }
 
-  Widget _logoutButton(PengaturanController c, BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 50),
-      child: ListTile(
-        onTap: () => c.isLogin ? c.doLogout() : Get.to(const LoginScreen()),
-        leading: Icon(
-          c.isLogin ? Icons.logout : Icons.login,
-          color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-        ),
-        title: Text(
-          c.isLogin ? 'Keluar'.tr : 'Masuk'.tr,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        trailing: Text(
-          'v ${c.version.toString()}'.tr,
-          style: TextStyle(color: CustomTheme().textColor(context)),
-        ),
-        shape: const Border(
-          bottom: BorderSide(color: greyColor),
-          top: BorderSide(color: greyColor),
-        ),
-      ),
-    );
-  }
 }

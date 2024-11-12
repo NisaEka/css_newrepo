@@ -2,6 +2,7 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/sticker_label_model.dart';
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
@@ -17,18 +18,21 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<PetugasModel>>> getOfficer(int page, String keyword) async {
+  Future<BaseResponse<List<PetugasModel>>> getOfficers(int page, String keyword, int limit) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
+    QueryParamModel params = QueryParamModel(
+      search: keyword,
+      page: page,
+      limit: limit,
+      table: true,
+    );
     try {
       Response response = await network.base.get(
         "/officers",
-        queryParameters: {
-          "keyword": keyword,
-          "page": page,
-          "limit": 10,
-        },
+        queryParameters: params.toJson(),
       );
+      AppLogger.d('get officers : ${response.data.toString()}');
       return BaseResponse.fromJson(
         response.data,
         (json) => json is List<dynamic>
@@ -40,6 +44,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
+      AppLogger.e('error get officers : ${e.response?.data.toString()}');
+
       return e.response?.data;
     }
   }

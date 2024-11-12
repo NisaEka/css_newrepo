@@ -25,9 +25,9 @@ class PengaturanPetugasScreen extends StatelessWidget {
         init: PengaturanPetugasController(),
         builder: (c) {
           return Scaffold(
-            appBar:  CustomTopBar(
+            appBar: CustomTopBar(
               title: 'Pengaturan Petugas'.tr,
-              action: [AddButton(onPressed: c.onAdd())],
+              action: [AddButton(onPressed: () => c.onAdd())],
             ),
             body: _bodyContent(c, context),
           );
