@@ -14,11 +14,11 @@ class StickerLabelModel {
   }
 
   StickerLabelModel.fromJson(dynamic json) {
-    _index = json['index'];
+    _index = json['index'] ?? json['id'];
     _name = json['name'];
     _image = json['image'];
     _enable = json['enabled'];
-    _showPrice = json['show_price'];
+    _showPrice = json['showPrice'];
   }
 
   num? _index;
@@ -55,6 +55,7 @@ class StickerLabelModel {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['index'] = _index;
+    map['id'] = _index;
     map['name'] = _name;
     map['image'] = _image;
     map['enabled'] = _enable;

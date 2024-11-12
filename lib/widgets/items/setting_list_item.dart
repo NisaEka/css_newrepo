@@ -5,21 +5,23 @@ import 'package:get/get.dart';
 
 class SettingListItem extends StatelessWidget {
   final String title;
-  final IconData icon;
+  final IconData leading;
   final VoidCallback? onTap;
+  final Widget? trailing;
 
   const SettingListItem({
     super.key,
     required this.title,
-    required this.icon,
+    required this.leading,
     this.onTap,
+    this.trailing,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(
-        icon,
+        leading,
         size: 24,
         color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
       ),
@@ -32,6 +34,7 @@ class SettingListItem extends StatelessWidget {
       shape: const Border(bottom: BorderSide(color: greyColor)),
       contentPadding: EdgeInsets.zero,
       onTap: onTap,
+      trailing: trailing,
     );
   }
 }

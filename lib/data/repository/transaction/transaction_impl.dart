@@ -11,6 +11,7 @@ import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_officer_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
+import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -310,7 +311,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<ResponseModel<PropertySummary>> postTransactionDashboard(
+  Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(
       QueryParamModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
@@ -322,19 +323,19 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
       AppLogger.d("response: ${response.data}");
 
-      final test = ResponseModel<PropertySummary>.fromJson(
+      final test = ResponseModel<TransactionSummaryModel>.fromJson(
         response.data,
         (json) {
           // Deserialize the PropertySummary
-          return PropertySummary.fromJson(json as Map<String, dynamic>);
+          return TransactionSummaryModel.fromJson(json as Map<String, dynamic>);
         },
       );
-      AppLogger.i("test: $test");
+      AppLogger.i("test: ${test.toJson()}");
       return test;
     } on DioException catch (e) {
-      return ResponseModel<PropertySummary>.fromJson(
+      return ResponseModel<TransactionSummaryModel>.fromJson(
         e.response?.data,
-        (json) => PropertySummary.fromJson(json as Map<String, dynamic>),
+        (json) => TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }

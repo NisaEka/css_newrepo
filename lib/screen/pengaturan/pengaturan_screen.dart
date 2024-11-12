@@ -8,6 +8,7 @@ import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/bar/logout_button.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -25,8 +26,7 @@ class PengaturanScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: false,
-            onPopInvokedWithResult: (didPop, result) =>
-                Get.off(const DashboardScreen()),
+            onPopInvokedWithResult: (bool didPop, Object? result) => Get.off(const DashboardScreen()),
             child: Stack(
               children: [
                 Scaffold(
@@ -37,7 +37,10 @@ class PengaturanScreen extends StatelessWidget {
                     ),
                   ),
                   body: _bodyContent(controller, context),
-                  bottomNavigationBar: _logoutButton(controller, context),
+                  bottomNavigationBar: LogoutButton(
+                    isLogin: controller.isLogin,
+                    version: controller.version,
+                  ),
                 ),
                 controller.isLoading ? const LoadingDialog() : const SizedBox(),
               ],
@@ -48,50 +51,50 @@ class PengaturanScreen extends StatelessWidget {
 
   Widget _bodyContent(PengaturanController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ListView(
         children: [
-          ListTile(
-            title: Text(
-              'Bahasa'.tr,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            contentPadding: EdgeInsets.zero,
-            trailing: SizedBox(
-              width: 90,
-              child: Row(
-                children: [
-                  CustomFilledButton(
-                    color: c.lang == "id" ? blueJNE : whiteColor,
-                    fontColor: c.lang == "id" ? whiteColor : greyColor,
-                    borderColor:
-                        c.lang == "id" ? Colors.transparent : greyColor,
-                    title: 'ID',
-                    width: 40,
-                    margin: EdgeInsets.zero,
-                    padding: EdgeInsets.zero,
-                    onPressed: () => c.changeLanguage("ID"),
-                  ),
-                  const SizedBox(width: 10),
-                  CustomFilledButton(
-                    color: c.lang == "en" ? blueJNE : whiteColor,
-                    fontColor: c.lang == "en" ? whiteColor : greyColor,
-                    borderColor:
-                        c.lang == "en" ? Colors.transparent : greyColor,
-                    margin: EdgeInsets.zero,
-                    padding: EdgeInsets.zero,
-                    title: 'EN',
-                    width: 40,
-                    onPressed: () => c.changeLanguage("EN"),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          SettingListItem(
+              title: 'Bahasa'.tr,
+              leading: Icons.language,
+              onTap: () => c.isLogin
+                  ? Get.to(const PengaturanPetugasScreen())
+                  : showDialog(
+                      context: context,
+                      builder: (context) => const LoginAlertDialog(),
+                    ),
+              trailing: SizedBox(
+                width: 90,
+                child: Row(
+                  children: [
+                    CustomFilledButton(
+                      color: c.lang == "id" ? blueJNE : whiteColor,
+                      fontColor: c.lang == "id" ? whiteColor : greyColor,
+                      borderColor: c.lang == "id" ? Colors.transparent : greyColor,
+                      title: 'ID',
+                      width: 40,
+                      margin: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
+                      onPressed: () => c.changeLanguage("ID"),
+                    ),
+                    const SizedBox(width: 10),
+                    CustomFilledButton(
+                      color: c.lang == "en" ? blueJNE : whiteColor,
+                      fontColor: c.lang == "en" ? whiteColor : greyColor,
+                      borderColor: c.lang == "en" ? Colors.transparent : greyColor,
+                      margin: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
+                      title: 'EN',
+                      width: 40,
+                      onPressed: () => c.changeLanguage("EN"),
+                    ),
+                  ],
+                ),
+              )),
           c.allow.label == "Y" || c.allow.pengaturanLabel == "Y"
               ? SettingListItem(
                   title: 'Pengaturan Label'.tr,
-                  icon: Icons.label_outline,
+                  leading: Icons.label_outline,
                   onTap: () => c.isLogin
                       ? Get.to(const PengaturanLabelScreen())
                       : showDialog(
@@ -103,7 +106,7 @@ class PengaturanScreen extends StatelessWidget {
           c.allow.petugas == "Y" || c.allow.pengaturanPetugas == "Y"
               ? SettingListItem(
                   title: 'Pengaturan Petugas'.tr,
-                  icon: Icons.account_circle,
+                  leading: Icons.account_circle,
                   onTap: () => c.isLogin
                       ? Get.to(const PengaturanPetugasScreen())
                       : showDialog(
@@ -115,7 +118,7 @@ class PengaturanScreen extends StatelessWidget {
           c.isLogin && c.allow.katasandi == "Y"
               ? SettingListItem(
                   title: 'Ubah Kata Sandi'.tr,
-                  icon: Icons.lock_open_outlined,
+                  leading: Icons.lock_open_outlined,
                   // onTap: () => Get.to(const InputEmailScreen(), arguments: {
                   //   'isChange': true,
                   //   'email': controller.basicProfil?.email,
@@ -123,6 +126,42 @@ class PengaturanScreen extends StatelessWidget {
                   onTap: () => c.sendEmail(),
                 )
               : const SizedBox(),
+          SettingListItem(
+              title: 'Tema Aplikasi'.tr,
+              leading: Icons.color_lens,
+              // onTap: () => Get.to(const InputEmailScreen(), arguments: {
+              //   'isChange': true,
+              //   'email': controller.basicProfil?.email,
+              // }),
+              onTap: () => c.sendEmail(),
+              trailing: SizedBox(
+                width: 90,
+                child: Row(
+                  children: [
+                    CustomFilledButton(
+                      color: c.mode == "dark" ? blueJNE : whiteColor,
+                      fontColor: c.mode == "dark" ? whiteColor : greyColor,
+                      borderColor: c.mode == "dark" ? Colors.transparent : greyColor,
+                      icon: Icons.dark_mode,
+                      width: 40,
+                      margin: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
+                      onPressed: () => c.changeTheme("dark"),
+                    ),
+                    const SizedBox(width: 10),
+                    CustomFilledButton(
+                      color: c.mode == "light" ? blueJNE : whiteColor,
+                      fontColor: c.mode == "light" ? whiteColor : greyColor,
+                      borderColor: c.mode == "light" ? Colors.transparent : greyColor,
+                      margin: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
+                      icon: Icons.light_mode,
+                      width: 40,
+                      onPressed: () => c.changeTheme("light"),
+                    ),
+                  ],
+                ),
+              ))
         ],
       ),
     );

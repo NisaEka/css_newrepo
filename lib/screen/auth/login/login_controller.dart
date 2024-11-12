@@ -217,7 +217,7 @@ class LoginController extends BaseController {
   Future cekToken() async {
     state.isLoading = true;
     update();
-    String? token = await storage.readToken();
+    String? token = await storage.readAccessToken();
     debugPrint("token : $token");
     if (token != null) {
       Get.offAll(const DashboardScreen());

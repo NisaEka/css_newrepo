@@ -388,6 +388,7 @@ class LanguageEN {
       "COD": "COD",
       "NON COD": "NON COD",
       "COD ONGKIR": "COD SHIPPING COST",
+      "Tema Aplikasi" : "App Theme"
     };
   }
 }

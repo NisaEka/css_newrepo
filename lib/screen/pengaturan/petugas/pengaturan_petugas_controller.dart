@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import 'add/tambah_petugas_screen.dart';
+
 class PengaturanPetugasController extends BaseController {
   final searchOfficer = TextEditingController();
   final PagingController<int, PetugasModel> pagingController =
@@ -79,5 +81,11 @@ class PengaturanPetugasController extends BaseController {
 
     isLoading = false;
     update();
+  }
+
+  onAdd() {
+    Get.to(const TambahPetugasScreen(), arguments: {
+      'isEdit': false,
+    })?.then((value) => pagingController.refresh());
   }
 }

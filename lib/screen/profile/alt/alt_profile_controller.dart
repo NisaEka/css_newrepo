@@ -68,7 +68,7 @@ class AltProfileController extends BaseController {
     update();
 
     try {
-      String? token = await storage.readToken();
+      String? token = await storage.readAccessToken();
       debugPrint("token : $token");
       isLogin = token != null;
       // if (await storage.readData(StorageCore.userProfil) == null) {

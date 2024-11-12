@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/model/notification/unread_message_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/notification/notification_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -14,24 +15,23 @@ import 'package:css_mobile/util/logger.dart';
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   AppLogger.i("Handling background message: ${message.messageId}");
   saveUnreadMessage(message);
+  await Firebase.initializeApp();
 }
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingOpenAppHandler(RemoteMessage message) async {
   AppLogger.i("Handling app open message: ${message.messageId}");
   saveUnreadMessage(message);
+  await Firebase.initializeApp();
 }
 
 Future<void> saveUnreadMessage(RemoteMessage data) async {
   List<Messages> listUnread = [];
   List<NotificationModel> listUnreadMessage = [];
-  var u = GetNotificationModel.fromJson(
-      await StorageCore().readData(StorageCore.unreadMessage));
-
+  var u = GetNotificationModel.fromJson(await StorageCore().readData(StorageCore.unreadMessage));
   if (u.payload?.isNotEmpty ?? false) {
     listUnreadMessage.addAll(u.payload ?? []);
   }
-
   listUnreadMessage.add(
     NotificationModel(
       id: data.messageId,
@@ -40,9 +40,9 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
       createDate: data.sentTime.toString(),
       isRead: true,
       title: data.notification?.title,
+      // img: data.
     ),
   );
-
   listUnread.add(Messages(
     senderId: data.senderId,
     category: data.category,
@@ -109,6 +109,7 @@ class FirebaseApi {
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
+      // notificationCategories: darwinNotificationCategories,
     );
 
     InitializationSettings initializationSettings = InitializationSettings(

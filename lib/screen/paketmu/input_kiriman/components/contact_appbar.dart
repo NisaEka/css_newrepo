@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/widgets/bar/add_button.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,15 +33,7 @@ class ContactAppbar extends StatelessWidget implements PreferredSizeWidget {
         style: appTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
       ),
       actions: [
-        isOnline && (title?.isEmpty ?? true)
-            ? IconButton(
-                onPressed: onAdd,
-                icon: Icon(
-                  Icons.add,
-                  color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                ),
-              )
-            : const SizedBox()
+        isOnline && (title?.isEmpty ?? true) ? AddButton(onPressed: onAdd) : const SizedBox(),
       ],
     );
   }

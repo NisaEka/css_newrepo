@@ -24,6 +24,7 @@ class StorageCore {
   static const String unreadMessage = "unread_message";
   static const String isFirst = "first_install";
   static const String transactionTemp = "transaction_temp";
+  static const String themeMode = "theme";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);
@@ -55,9 +56,14 @@ class StorageCore {
     await storage.write(key: userMenu, value: jsonEncode(m));
   }
 
-  Future<String?> readToken() async {
+  Future<String?> readAccessToken() async {
     var accessToken = await storage.read(key: token);
     return accessToken;
+  }
+
+  Future<String?> readRefreshToken() async {
+    var rToken = await storage.read(key: refreshToken);
+    return rToken;
   }
 
   void deleteLogin() async {

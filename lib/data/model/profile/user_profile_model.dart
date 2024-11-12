@@ -60,6 +60,7 @@ class UserModel {
     String? email,
     String? userType,
     String? emailRecovery,
+    String? language,
   }) {
     _id = id;
     _region = region;
@@ -74,6 +75,7 @@ class UserModel {
     _email = email;
     _userType = userType;
     _emailRecovery = emailRecovery;
+    _language = language;
   }
 
   UserModel.fromJson(dynamic json) {
@@ -92,6 +94,7 @@ class UserModel {
     _email = json['email'];
     _userType = json['userType'];
     _emailRecovery = json['emailRecovery'];
+    _language = json['language'];
   }
 
   String? _id;
@@ -107,6 +110,7 @@ class UserModel {
   String? _email;
   String? _userType;
   String? _emailRecovery;
+  String? _language;
 
   UserModel copyWith({
     String? id,
@@ -122,6 +126,7 @@ class UserModel {
     String? email,
     String? userType,
     String? emailRecovery,
+    String? language,
   }) =>
       UserModel(
         id: id ?? _id,
@@ -137,6 +142,7 @@ class UserModel {
         email: email ?? _email,
         userType: userType ?? _userType,
         emailRecovery: emailRecovery ?? _emailRecovery,
+        language: language ?? _language,
       );
 
   String? get id => _id;
@@ -165,6 +171,8 @@ class UserModel {
 
   String? get emailRecovery => _emailRecovery;
 
+  String? get language => _language;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
@@ -186,6 +194,7 @@ class UserModel {
     map['email'] = _email;
     map['userType'] = _userType;
     map['emailRecovery'] = _emailRecovery;
+    map['language'] = _language;
     return map;
   }
 }

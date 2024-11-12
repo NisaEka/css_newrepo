@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "852897989152",
     "project_id": "cssmobile-jne",
-    "storage_bucket": "cssmobile-jne.appspot.com"
+    "storage_bucket": "cssmobile-jne.firebasestorage.app"
   },
   "client": [
     {

@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
+import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
@@ -49,17 +50,17 @@ class CountCardItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 28),
                     _loadingText(Text(
-                        '${data.count?.toInt().toCurrency() ?? 0}',
+                        '${data.total?.toInt().toCurrency() ?? 0}',
                         style: Theme.of(context).textTheme.headlineLarge)),
                     const SizedBox(height: 18),
-                    Text(data.title?.tr ?? '',
+                    Text(data.status?.tr ?? '',
                         style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
               ),
               CustomLabelText(
                 title: 'COD'.tr,
-                value: data.cod?.toInt().toCurrency() ?? '',
+                value: data.totalCod?.toInt().toCurrency() ?? '',
                 isHorizontal: true,
                 isHasSpace: true,
                 fontColor: whiteColor,
@@ -68,7 +69,7 @@ class CountCardItem extends StatelessWidget {
               ),
               CustomLabelText(
                 title: 'NON COD'.tr,
-                value: data.nonCod?.toInt().toCurrency() ?? '',
+                value: data.totalNonCod?.toInt().toCurrency() ?? '',
                 isHorizontal: true,
                 isHasSpace: true,
                 fontColor: whiteColor,
@@ -77,7 +78,7 @@ class CountCardItem extends StatelessWidget {
               ),
               CustomLabelText(
                 title: 'COD ONGKIR'.tr,
-                value: data.codOngkir?.toInt().toCurrency() ?? '',
+                value: data.totalCodOngkir?.toInt().toCurrency() ?? '',
                 isHorizontal: true,
                 isHasSpace: true,
                 fontColor: whiteColor,

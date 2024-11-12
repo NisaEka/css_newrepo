@@ -1,7 +1,5 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_controller.dart';
@@ -12,8 +10,8 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
-import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/bar/logout_button.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
@@ -42,7 +40,11 @@ class AltProfileScreen extends StatelessWidget {
                         return AnimatedContainer(
                           duration: const Duration(milliseconds: 500),
                           height: value ? 113 : kBottomNavigationBarHeight,
-                          child: _logoutButton(controller, context),
+                          child: LogoutButton(
+                            version: controller.version,
+                            isLogin: controller.isLogin,
+                            showBottomBar: true,
+                          ),
                         );
                       }),
                 ),
@@ -51,46 +53,6 @@ class AltProfileScreen extends StatelessWidget {
             ),
           );
         });
-  }
-
-  Widget _logoutButton(AltProfileController c, BuildContext context) {
-    return Container(
-      // margin: const EdgeInsets.only(bottom: 20),
-      height: 113,
-      decoration: BoxDecoration(
-          color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
-          border: Border(
-            bottom: BorderSide(
-                color: AppConst.isLightTheme(context)
-                    ? Colors.black
-                    : Colors.white),
-            top: BorderSide(
-                color: AppConst.isLightTheme(context)
-                    ? Colors.black
-                    : Colors.white),
-          )),
-      child: Wrap(
-        children: [
-          ListTile(
-            // tileColor: whiteColor,
-            onTap: () => c.isLogin ? c.doLogout() : Get.to(const LoginScreen()),
-            leading: Icon(
-              c.isLogin ? Icons.logout : Icons.login,
-              color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-            ),
-            title: Text(
-              c.isLogin ? 'Keluar'.tr : 'Masuk'.tr,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            trailing: Text(
-              'v ${c.version.toString()}'.tr,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          ),
-          const BottomBar4(menu: 3)
-        ],
-      ),
-    );
   }
 
   Widget _bodyContent(AltProfileController c, BuildContext context) {
@@ -112,9 +74,7 @@ class AltProfileScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(color: blueJNE)),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(color: blueJNE)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -132,54 +92,50 @@ class AltProfileScreen extends StatelessWidget {
               c.menuModel.profil == "Y" && c.basicProfil?.userType == "PEMILIK"
                   ? SettingListItem(
                       title: 'Edit Profil'.tr,
-                      icon: Icons.person,
+                      leading: Icons.person,
                       onTap: () => Get.to(const EditProfilScreen()),
                     )
                   : const SizedBox(),
-              c.menuModel.fasilitas == 'Y' &&
-                      c.basicProfil?.userType == "PEMILIK"
+              c.menuModel.fasilitas == 'Y' && c.basicProfil?.userType == "PEMILIK"
                   ? SettingListItem(
                       title: 'Fasilitasku'.tr,
-                      icon: Icons.format_list_numbered_rounded,
+                      leading: Icons.format_list_numbered_rounded,
                       onTap: () => Get.to(const FacilityScreen()),
                     )
                   : const SizedBox(),
               c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Lihat Akun'.tr,
-                      icon: Icons.account_tree_rounded,
+                      leading: Icons.account_tree_rounded,
                       onTap: () => Get.to(const NoAkunScreen()),
                     )
                   : const SizedBox(),
               c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Data Umum'.tr,
-                      icon: Icons.person_pin_outlined,
+                      leading: Icons.person_pin_outlined,
                       onTap: () => Get.to(const DataUmumScreen()),
                     )
                   : const SizedBox(),
               c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Alamat Pengembalian'.tr,
-                      icon: Icons.cached_rounded,
-                      onTap: () =>
-                          c.isCcrfAction(const AlamatReturnScreen(), context),
+                      leading: Icons.cached_rounded,
+                      onTap: () => c.isCcrfAction(const AlamatReturnScreen(), context),
                     )
                   : const SizedBox(),
               c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Data Rekening'.tr,
-                      icon: Icons.credit_card_rounded,
-                      onTap: () =>
-                          c.isCcrfAction(const AkunBankScreen(), context),
+                      leading: Icons.credit_card_rounded,
+                      onTap: () => c.isCcrfAction(const AkunBankScreen(), context),
                     )
                   : const SizedBox(),
               c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Dokumen'.tr,
-                      icon: Icons.file_present_rounded,
-                      onTap: () =>
-                          c.isCcrfAction(const DokumenScreen(), context),
+                      leading: Icons.file_present_rounded,
+                      onTap: () => c.isCcrfAction(const DokumenScreen(), context),
                     )
                   : const SizedBox(),
               const SizedBox(height: 50),

@@ -1,4 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -14,6 +15,7 @@ class PengaturanController extends BaseController {
   bool isLoading = false;
   String? version;
   String? lang;
+  String? mode;
   MenuModel allow = MenuModel();
   UserModel? basicProfil;
 
@@ -27,10 +29,11 @@ class PengaturanController extends BaseController {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version = packageInfo.version;
 
-    String? token = await storage.readToken();
+    String? token = await storage.readAccessToken();
     isLogin = token != null;
 
     lang = await storage.readString(StorageCore.localeApp);
+    mode = await storage.readString(StorageCore.themeMode);
 
     allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
 
@@ -71,6 +74,27 @@ class PengaturanController extends BaseController {
       Get.updateLocale(const Locale("en", "US"));
       await storage.writeString(StorageCore.localeApp, "en");
       lang = "en";
+    }
+
+    initData();
+    update();
+  }
+
+  void changeTheme(String theme) async {
+    if (theme == "dark") {
+      // Get.updateLocale(const Locale("id", "ID"));
+      await storage.writeString(StorageCore.themeMode, "dark");
+      ThemeMode.dark;
+      Get.changeTheme(CustomTheme.dark);
+
+      mode = "dark";
+    } else {
+      // Get.updateLocale(const Locale("en", "US"));
+      await storage.writeString(StorageCore.themeMode, "light");
+      ThemeMode.light;
+      Get.changeTheme(CustomTheme.light);
+
+      mode = "light";
     }
 
     initData();

@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:get/get.dart';
 
+import 'util/theme/theme_changer.dart';
+
 class CSS extends StatelessWidget {
   const CSS({super.key});
 
@@ -40,7 +42,7 @@ class App extends StatelessWidget {
       fallbackLocale: const Locale("id", "ID"),
       debugShowCheckedModeBanner: false,
       title: 'CSS',
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       darkTheme: CustomTheme.dark,
       theme: CustomTheme.light,
       getPages: AppPages.routes,
@@ -48,4 +50,8 @@ class App extends StatelessWidget {
       home: const DashboardScreen(),
     );
   }
+
+
 }
+
+

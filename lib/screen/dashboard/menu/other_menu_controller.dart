@@ -31,7 +31,7 @@ class OtherMenuCotroller extends BaseController {
   }
 
   Future<bool> cekToken() async {
-    String? token = await storage.readToken();
+    String? token = await storage.readAccessToken();
     isLogin = token != null;
     update();
     return isLogin;

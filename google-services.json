@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "852897989152",
     "project_id": "cssmobile-jne",
-    "storage_bucket": "cssmobile-jne.appspot.com"
+    "storage_bucket": "cssmobile-jne.firebasestorage.app"
   },
   "client": [
     {
@@ -10,6 +10,25 @@
         "mobilesdk_app_id": "1:852897989152:android:11b186c9e0ba170fedf245",
         "android_client_info": {
           "package_name": "com.jne.cssmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuKcEdR9AIMLWdPVEuDfZVZvy3h8Z4e0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852897989152:android:653466af3c7cf1f0edf245",
+        "android_client_info": {
+          "package_name": "com.jne.cssmobile.dev"
         }
       },
       "oauth_client": [],

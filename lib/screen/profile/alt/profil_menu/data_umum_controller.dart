@@ -23,7 +23,7 @@ class DataUmumController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     try {
-      String? token = await storage.readToken();
+      String? token = await storage.readAccessToken();
       debugPrint("token : $token");
       isLogin = token != null;
       await profil

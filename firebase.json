@@ -3,20 +3,20 @@
     "platforms": {
       "android": {
         "default": {
-          "projectId": "css-mobile-7d974",
-          "appId": "1:558047279467:android:fed39e77d92f4091b6b42e",
+          "projectId": "cssmobile-jne",
+          "appId": "1:852897989152:android:11b186c9e0ba170fedf245",
           "fileOutput": "android/app/google-services.json"
         }
       },
       "dart": {
         "lib/firebase_options.dart": {
-          "projectId": "css-mobile-7d974",
+          "projectId": "cssmobile-jne",
           "configurations": {
-            "android": "1:558047279467:android:fed39e77d92f4091b6b42e",
-            "ios": "1:558047279467:ios:721b6831aa8008e5b6b42e",
-            "macos": "1:558047279467:ios:721b6831aa8008e5b6b42e",
-            "web": "1:558047279467:web:f4e62f4fa403a863b6b42e",
-            "windows": "1:558047279467:web:ae32c64e3212f23fb6b42e"
+            "android": "1:852897989152:android:11b186c9e0ba170fedf245",
+            "ios": "1:852897989152:ios:91749d55b2c2e3d0edf245",
+            "macos": "1:852897989152:ios:91749d55b2c2e3d0edf245",
+            "web": "1:852897989152:web:be217390532b0b3cedf245",
+            "windows": "1:852897989152:web:4a65514978273600edf245"
           }
         }
       }

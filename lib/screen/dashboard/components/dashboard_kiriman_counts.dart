@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
+import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/widgets/items/count_card_item.dart';
 import 'package:flutter/material.dart';

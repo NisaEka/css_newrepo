@@ -7,13 +7,13 @@ class PropertySummary {
   PropertySummary.fromJson(Map<String, dynamic> json) {
     if (json['summary'] != null) {
       countCardModel = (json['summary'] as List<dynamic>)
-          .map((item) => CountCardModel.fromJson(item as Map<String, dynamic>))
+          .map((item) => CountCardModel1.fromJson(item as Map<String, dynamic>))
           .toList();
     }
     // totalKirimanCod = TotalKirimanCodModel.fromJson(json['totalKirimanCod']);
   }
 
-  List<CountCardModel>? countCardModel;
+  List<CountCardModel1>? countCardModel;
   // TotalKirimanCodModel? totalKirimanCod;
 
   Map<String, dynamic> toJson() {
@@ -62,8 +62,8 @@ class TotalKirimanCodModel {
   }
 }
 
-class CountCardModel {
-  CountCardModel({
+class CountCardModel1 {
+  CountCardModel1({
     String? title,
     String? img,
     String? route,
@@ -81,7 +81,7 @@ class CountCardModel {
     _codOngkir = codOngkir;
   }
 
-  CountCardModel.fromJson(dynamic json) {
+  CountCardModel1.fromJson(dynamic json) {
     _title = json['status'];
     _img = json['image'];
     _route = json['status'];
@@ -97,7 +97,7 @@ class CountCardModel {
   num? _cod;
   num? _nonCod;
   num? _codOngkir;
-  CountCardModel copyWith({
+  CountCardModel1 copyWith({
     String? title,
     String? img,
     String? route,
@@ -106,7 +106,7 @@ class CountCardModel {
     num? nonCod,
     num? codOngkir,
   }) =>
-      CountCardModel(
+      CountCardModel1(
         title: title ?? _title,
         img: img ?? _img,
         route: route ?? _route,
