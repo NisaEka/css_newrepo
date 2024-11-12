@@ -6,7 +6,6 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import 'custombottombar4.dart';
 
@@ -31,8 +30,14 @@ class LogoutButton extends StatelessWidget {
           ? BoxDecoration(
               color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
               border: Border(
-                bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
-                top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
+                bottom: BorderSide(
+                    color: AppConst.isLightTheme(context)
+                        ? Colors.black
+                        : Colors.white),
+                top: BorderSide(
+                    color: AppConst.isLightTheme(context)
+                        ? Colors.black
+                        : Colors.white),
               ),
             )
           : null,

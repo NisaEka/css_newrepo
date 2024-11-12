@@ -6,8 +6,6 @@ import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/util/logger.dart';
-import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -17,7 +15,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<PetugasModel>>> getOfficer(int page, String keyword) async {
+  Future<BaseResponse<List<PetugasModel>>> getOfficer(
+      int page, String keyword) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {

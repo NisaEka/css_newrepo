@@ -15,6 +15,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
@@ -158,7 +159,8 @@ class DashboardController extends BaseController {
 
     update();
 
-    bool label = (await storage.readString(StorageCore.transactionLabel)).isEmpty;
+    bool label =
+        (await storage.readString(StorageCore.transactionLabel)).isEmpty;
 
     if (label) {
       await setting.getSettingLabel().then(
@@ -179,23 +181,41 @@ class DashboardController extends BaseController {
   }
 
   void cekAllowance() {
-    if (state.isLogin && state.allow.paketmuInput != "Y" && state.isOnline && state.allow.buatPesanan != "Y") {
+    if (state.isLogin &&
+        state.allow.paketmuInput != "Y" &&
+        state.isOnline &&
+        state.allow.buatPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (state.isLogin && state.allow.paketmuRiwayat != "Y" && state.isOnline && state.allow.riwayatPesanan != "Y") {
+    if (state.isLogin &&
+        state.allow.paketmuRiwayat != "Y" &&
+        state.isOnline &&
+        state.allow.riwayatPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
       state.menuItems.removeWhere((e) => e.title == "Draft Transaksi");
     }
-    if (state.isLogin && state.allow.paketmuLacak != "Y" && state.isOnline && state.allow.lacakPesanan != "Y") {
+    if (state.isLogin &&
+        state.allow.paketmuLacak != "Y" &&
+        state.isOnline &&
+        state.allow.lacakPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
     }
-    if (state.isLogin && state.allow.keuanganCod != "Y" && state.isOnline && state.allow.uangCod != "Y") {
+    if (state.isLogin &&
+        state.allow.keuanganCod != "Y" &&
+        state.isOnline &&
+        state.allow.uangCod != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (state.isLogin && state.allow.keuanganAggregasi != "Y" && state.isOnline && state.allow.monitoringAgg != "Y") {
+    if (state.isLogin &&
+        state.allow.keuanganAggregasi != "Y" &&
+        state.isOnline &&
+        state.allow.monitoringAgg != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (state.isLogin && state.allow.keuanganAggregasiMinus != "Y" && state.isOnline && state.allow.monitoringAggMinus != "Y") {
+    if (state.isLogin &&
+        state.allow.keuanganAggregasiMinus != "Y" &&
+        state.isOnline &&
+        state.allow.monitoringAggMinus != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
     }
     if (state.isLogin && state.allow.cekOngkir != "Y" && state.isOnline) {
@@ -208,7 +228,8 @@ class DashboardController extends BaseController {
 
   Future<void> cekTheme() async {
     state.themeMode = await storage.readString(StorageCore.themeMode);
-    var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
+    var brightness =
+        SchedulerBinding.instance.platformDispatcher.platformBrightness;
 
     if (state.themeMode.isEmpty) {
       if (brightness == Brightness.dark) {
@@ -244,7 +265,9 @@ class DashboardController extends BaseController {
   Future<void> cekLocalLanguage() async {
     state.local = await storage.readString(StorageCore.localeApp);
 
-    if (state.local.isEmpty || state.local == 'id_ID' || state.local == 'en_US') {
+    if (state.local.isEmpty ||
+        state.local == 'id_ID' ||
+        state.local == 'en_US') {
       if (Get.deviceLocale == const Locale("id", "ID")) {
         await storage.writeString(StorageCore.localeApp, "id");
         Get.updateLocale(const Locale("id", "ID"));
@@ -280,11 +303,13 @@ class DashboardController extends BaseController {
           .then((value) async {
         value.code == 409
             ? await auth.updateDeviceInfo(
-                await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+                await LoginController().getDeviceinfo(state.fcmToken ?? '') ??
+                    Device(),
               )
             // : value.code == 401 || value.code == 400 || value.code == null
             : await auth.postFcmTokenNonAuth(
-                await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+                await LoginController().getDeviceinfo(state.fcmToken ?? '') ??
+                    Device(),
               );
         // : debugPrint('post device info : ${value.code}'));
         debugPrint('post device info : ${value.code}');
@@ -331,17 +356,22 @@ class DashboardController extends BaseController {
     storage.deleteString(StorageCore.transactionTemp);
     loadTransCountList();
 
-    bool accounts =
-        ((await storage.readString(StorageCore.accounts)).isEmpty || (await storage.readString(StorageCore.accounts)) == 'null') && state.isLogin;
-    bool dropshipper =
-        ((await storage.readString(StorageCore.dropshipper)).isEmpty || (await storage.readString(StorageCore.dropshipper)) == 'null') &&
-            state.isLogin;
-    bool receiver =
-        ((await storage.readString(StorageCore.receiver)).isEmpty || (await storage.readString(StorageCore.receiver)) == 'null') && state.isLogin;
-    bool sender =
-        ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null') && state.isLogin;
-    bool basic =
-        ((await storage.readString(StorageCore.userProfil)).isEmpty || (await storage.readString(StorageCore.userProfil)) == 'null') && state.isLogin;
+    bool accounts = ((await storage.readString(StorageCore.accounts)).isEmpty ||
+            (await storage.readString(StorageCore.accounts)) == 'null') &&
+        state.isLogin;
+    bool dropshipper = ((await storage.readString(StorageCore.dropshipper))
+                .isEmpty ||
+            (await storage.readString(StorageCore.dropshipper)) == 'null') &&
+        state.isLogin;
+    bool receiver = ((await storage.readString(StorageCore.receiver)).isEmpty ||
+            (await storage.readString(StorageCore.receiver)) == 'null') &&
+        state.isLogin;
+    bool sender = ((await storage.readString(StorageCore.shipper)).isEmpty ||
+            (await storage.readString(StorageCore.shipper)) == 'null') &&
+        state.isLogin;
+    bool basic = ((await storage.readString(StorageCore.userProfil)).isEmpty ||
+            (await storage.readString(StorageCore.userProfil)) == 'null') &&
+        state.isLogin;
     bool ccrfP = ((await storage.readString(StorageCore.ccrfProfil)).isEmpty ||
             (await storage.readString(StorageCore.ccrfProfil)) == 'null' ||
             (await storage.readString(StorageCore.ccrfProfil)) == '{}') &&
@@ -367,7 +397,8 @@ class DashboardController extends BaseController {
           }
         });
       } else {
-        state.basic = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+        state.basic =
+            UserModel.fromJson(await storage.readData(StorageCore.userProfil));
         update();
         if (state.basic?.language == "INDONESIA") {
           await storage.writeString(StorageCore.localeApp, "id");
@@ -390,7 +421,8 @@ class DashboardController extends BaseController {
               value.data?.first,
             );
           } else {
-            var s = UserModel.fromJson(storage.readData(StorageCore.userProfil));
+            var s =
+                UserModel.fromJson(storage.readData(StorageCore.userProfil));
             await storage.saveData(
               StorageCore.shipper,
               s,
@@ -405,7 +437,8 @@ class DashboardController extends BaseController {
           await storage.saveData(StorageCore.ccrfProfil, value.data);
         });
       } else {
-        state.ccrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
+        state.ccrf = CcrfProfileModel.fromJson(
+            await storage.readData(StorageCore.ccrfProfil));
       }
 
       if (accounts) {
@@ -416,20 +449,25 @@ class DashboardController extends BaseController {
       }
 
       if (dropshipper) {
-        await master.getDropshippers(QueryParamModel()).then((value) async => await storage.saveData(
-              StorageCore.dropshipper,
-              value,
-            ));
+        await master
+            .getDropshippers(QueryParamModel())
+            .then((value) async => await storage.saveData(
+                  StorageCore.dropshipper,
+                  value,
+                ));
       }
 
       if (receiver) {
-        await master.getReceivers(QueryParamModel()).then((value) async => await storage.saveData(
-              StorageCore.receiver,
-              value,
-            ));
+        await master
+            .getReceivers(QueryParamModel())
+            .then((value) async => await storage.saveData(
+                  StorageCore.receiver,
+                  value,
+                ));
       }
 
-      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.ccrfApistatus == "Y");
+      state.isCcrf =
+          (state.ccrf != null && state.ccrf?.generalInfo?.ccrfApistatus == "Y");
 
       storage.saveData(StorageCore.ccrfProfil, state.ccrf);
       // #TODO : implement jlc api
@@ -444,9 +482,11 @@ class DashboardController extends BaseController {
       //   debugPrint("jlc error $value");
       // });
       update();
-      UserModel shipper = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+      UserModel shipper =
+          UserModel.fromJson(await storage.readData(StorageCore.userProfil));
       state.userName = shipper.name ?? '';
-      state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+      state.allow =
+          MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
       update();
     } catch (e, i) {
       e.printError();
@@ -462,21 +502,23 @@ class DashboardController extends BaseController {
 
   bool onPop() {
     DateTime now = DateTime.now();
-    if (state.currentBackPressTime == null || now.difference(state.currentBackPressTime!) > const Duration(seconds: 2)) {
+    if (state.currentBackPressTime == null ||
+        now.difference(state.currentBackPressTime!) >
+            const Duration(seconds: 2)) {
       state.currentBackPressTime = now;
-      Get.showSnackbar(
-        GetSnackBar(
-          icon: const Icon(
-            Icons.info,
-            color: whiteColor,
-          ),
-          message: 'Double click back button to exit',
-          isDismissible: true,
-          duration: const Duration(seconds: 3),
-          backgroundColor: greyColor.withOpacity(0.8),
-          padding: const EdgeInsets.all(10),
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+      AppSnackBar.custom(
+        message: 'Double click back button to exit',
+        backgroundColor: greyColor.withOpacity(0.8),
+        icon: const Icon(
+          Icons.info,
+          color: whiteColor,
         ),
+        durationInSeconds: 3,
+        snackPosition: SnackPosition.BOTTOM,
+        snackStyle: SnackStyle.GROUNDED,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+        padding: const EdgeInsets.all(10),
+        messageText: null,
       );
       pop = false;
       update();

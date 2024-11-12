@@ -1,5 +1,4 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
@@ -335,7 +334,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
     } on DioException catch (e) {
       return ResponseModel<TransactionSummaryModel>.fromJson(
         e.response?.data,
-        (json) => TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
+        (json) =>
+            TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }
