@@ -42,8 +42,12 @@ class NewsItem extends StatelessWidget {
               ),
               Text(
                 lang == "id"
-                    ? news?.detail?.where((e) => e.lang == "id").first.title ?? promo?.namaBanner ?? ''
-                    : news?.detail?.where((e) => e.lang == "en").first.title ?? promo?.namaBanner ?? '',
+                    ? news?.detail?.where((e) => e.lang == "id").first.title ??
+                        promo?.namaBanner ??
+                        ''
+                    : news?.detail?.where((e) => e.lang == "en").first.title ??
+                        promo?.namaBanner ??
+                        '',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleMedium,
               )
@@ -57,7 +61,8 @@ class NewsItem extends StatelessWidget {
   Future<void> _launchUrl() async {
     if (await launchUrl(Uri.parse(lang == "id"
         ? news?.detail?.where((e) => e.lang == "id").first.externalLink ?? ''
-        : news?.detail?.where((e) => e.lang == "en").first.externalLink ?? ''))) {
+        : news?.detail?.where((e) => e.lang == "en").first.externalLink ??
+            ''))) {
       throw Exception(
           'Could not launch ${lang == "id" ? news?.detail?.where((e) => e.lang == "id").first.externalLink : news?.detail?.where((e) => e.lang == "en").first.externalLink}');
     }

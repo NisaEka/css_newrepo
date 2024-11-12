@@ -1,16 +1,14 @@
 class FacilityCreateExistingModel {
-
   String _name = '';
   String _email = '';
   String _phone = '';
   String _facilityType = '';
 
-  FacilityCreateExistingModel({
-    String name = '',
-    String email = '',
-    String phone = '',
-    String facilityType = ''
-  }) {
+  FacilityCreateExistingModel(
+      {String name = '',
+      String email = '',
+      String phone = '',
+      String facilityType = ''}) {
     _name = name;
     _email = email;
     _phone = phone;
@@ -41,5 +39,4 @@ class FacilityCreateExistingModel {
     json['facility_type'] = _facilityType;
     return json;
   }
-
 }

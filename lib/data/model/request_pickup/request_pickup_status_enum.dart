@@ -1,13 +1,12 @@
 enum RequestPickupStatus {
   semua,
-  belum_minta_dijemput,
-  sudah_minta_dijemput,
-  gagal_dijemput,
-  berhasil_dijemput
+  belumMintaDijemput,
+  sudahMintaDijemput,
+  gagalDijemput,
+  berhasilDijemput
 }
 
 extension RequestPickupExt on RequestPickupStatus {
-
   String asName() {
     String result = "";
 
@@ -15,16 +14,16 @@ extension RequestPickupExt on RequestPickupStatus {
       case RequestPickupStatus.semua:
         result = "Semua Status";
         break;
-      case RequestPickupStatus.belum_minta_dijemput:
+      case RequestPickupStatus.belumMintaDijemput:
         result = "Belum Minta di Jemput";
         break;
-      case RequestPickupStatus.sudah_minta_dijemput:
+      case RequestPickupStatus.sudahMintaDijemput:
         result = "Sudah Minta di Jemput";
         break;
-      case RequestPickupStatus.gagal_dijemput:
+      case RequestPickupStatus.gagalDijemput:
         result = "Gagal di Jemput";
         break;
-      case RequestPickupStatus.berhasil_dijemput:
+      case RequestPickupStatus.berhasilDijemput:
         result = "Berhasil di Jemput";
         break;
       default:
@@ -34,5 +33,4 @@ extension RequestPickupExt on RequestPickupStatus {
 
     return result;
   }
-
 }

@@ -47,7 +47,9 @@ class TransactionScreen extends StatelessWidget {
                 ),
               ),
               controller.state.isLoading ? const LoadingDialog() : Container(),
-              controller.state.isShowDialog ? _warningDialog(controller) : const SizedBox()
+              controller.state.isShowDialog
+                  ? _warningDialog(controller)
+                  : const SizedBox()
             ],
           );
         });
@@ -99,5 +101,4 @@ class TransactionScreen extends StatelessWidget {
       ),
     );
   }
-
 }

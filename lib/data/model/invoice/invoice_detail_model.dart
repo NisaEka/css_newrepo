@@ -1,5 +1,4 @@
 class InvoiceDetailModel {
-
   String? _invoiceNumberEncoded = "";
   String? get invoiceNumberEncoded => _invoiceNumberEncoded;
 
@@ -88,35 +87,34 @@ class InvoiceDetailModel {
   num? get totalPaid => _totalPaid;
 
   InvoiceDetailModel.fromJson(dynamic json) {
-    _invoiceNumberEncoded = json["invoice_number_encoded"];
-    _invoiceNumber = json["invoice_number"];
-    _invoiceDate = json["invoice_date"];
+    _invoiceNumberEncoded = json["invoiceNumberEncoded"];
+    _invoiceNumber = json["invoiceNumber"];
+    _invoiceDate = json["invoiceDate"];
     _top = json["top"];
     _description = json["description"];
-    _dueDate = json["due_date"];
+    _dueDate = json["dueDate"];
     _period = json["period"];
-    _invoiceStatus = json["invoice_status"];
-    _invoiceReference = json["invoice_referencee"];
-    _customerId = json["customer_id"];
-    _customerName = json["customer_name"];
+    _invoiceStatus = json["invoiceStatus"];
+    _invoiceReference = json["invoiceReferencee"];
+    _customerId = json["customerId"];
+    _customerName = json["customerName"];
     _address = json["address"];
-    _zipCode = json["zip_code"];
+    _zipCode = json["zipCode"];
     _phone = json["phone"];
     _email = json["email"];
-    _taxNumber = json["tax_num?ber"];
-    _npwpId = json["npwp_id"];
-    _npwpName = json["npwp_name"];
-    _npwpAddress = json["npwp_address"];
-    _grossTotal = json["gross_total"] ?? 0;
+    _taxNumber = json["taxNumber"];
+    _npwpId = json["npwpId"];
+    _npwpName = json["npwpName"];
+    _npwpAddress = json["npwpAddress"];
+    _grossTotal = json["grossTotal"] ?? 0;
     _discount = json["discount"] ?? 0;
     _reward = json["reward"] ?? 0;
-    _totalAfterDiscount = json["total_after_discount"] ?? 0;
+    _totalAfterDiscount = json["totalAfterDiscount"] ?? 0;
     _vat = json["vat"] ?? 0;
-    _commissionFee = json["commission_fee"] ?? 0;
-    _vatCommissionFee = json["vat_commission_fee"] ?? 0;
+    _commissionFee = json["commissionFee"] ?? 0;
+    _vatCommissionFee = json["vatCommissionFee"] ?? 0;
     _insurance = json["insurance"] ?? 0;
     _stamp = json["stamp"] ?? 0;
-    _totalPaid = json["total_paid"] ?? 0;
+    _totalPaid = json["totalPaid"] ?? 0;
   }
-
 }

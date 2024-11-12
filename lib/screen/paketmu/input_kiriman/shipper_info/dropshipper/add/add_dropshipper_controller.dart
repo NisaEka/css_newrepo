@@ -1,8 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
-
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
+
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,10 +17,10 @@ class AddDropshipperController extends BaseController {
   final dropshipperAddress = TextEditingController();
   final dropshipperZipCode = TextEditingController();
 
-  List<Origin> originList = [];
+  List<OriginModel> originList = [];
   bool isLoadOrigin = false;
   bool isLoading = false;
-  Origin? selectedOrigin;
+  OriginModel? selectedOrigin;
 
   Future<void> saveDropshipper() async {
     isLoading = true;
@@ -28,7 +28,7 @@ class AddDropshipperController extends BaseController {
     try {
       await master
           .postDropshipper(
-        Dropshipper(
+        DropshipperModel(
           name: dropshipperName.text,
           phone: dropshipperPhone.text,
           originCode: selectedOrigin?.originCode,
@@ -44,7 +44,9 @@ class AddDropshipperController extends BaseController {
               Icons.info,
               color: whiteColor,
             ),
-            message: value.code == 201 ? "Data dropshipper berhasil di simpan".tr : value.error[0].toString(),
+            message: value.code == 201
+                ? "Data dropshipper berhasil di simpan".tr
+                : value.error[0].toString(),
             isDismissible: true,
             duration: const Duration(seconds: 3),
             backgroundColor: value.code == 201 ? successColor : errorColor,

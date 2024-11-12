@@ -53,27 +53,36 @@ class ObrolanLaporankuScreen extends StatelessWidget {
               : PagedListView<int, TicketMessageModel>(
                   reverse: true,
                   pagingController: c.pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<TicketMessageModel>(
+                  builderDelegate:
+                      PagedChildBuilderDelegate<TicketMessageModel>(
                     transitionDuration: const Duration(milliseconds: 500),
                     itemBuilder: (context, e, i) => Column(
                       children: [
                         Text(
                           // e.createdDate.toString(),
                           c.messages.length > i + 1
-                              ? e.createdDate!.toShortDateFormat() != c.messages[i + 1].createdDate!.toShortDateFormat()
-                                  ? e.createdDate?.toShortDateFormat().toString() ?? ''
+                              ? e.createdDate!.toShortDateFormat() !=
+                                      c.messages[i + 1].createdDate!
+                                          .toShortDateFormat()
+                                  ? e.createdDate
+                                          ?.toShortDateFormat()
+                                          .toString() ??
+                                      ''
                                   : ''
-                              : e.createdDate?.toShortDateFormat().toString() ?? '',
+                              : e.createdDate?.toShortDateFormat().toString() ??
+                                  '',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         chat(e, context),
                       ],
                     ),
-                    firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                    firstPageProgressIndicatorBuilder: (context) =>
+                        const LoadingDialog(
                       height: 100,
                       background: Colors.transparent,
                     ),
-                    newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                    newPageProgressIndicatorBuilder: (context) =>
+                        const LoadingDialog(
                       background: Colors.transparent,
                       height: 50,
                       size: 30,
@@ -119,8 +128,12 @@ class ObrolanLaporankuScreen extends StatelessWidget {
               hintText: "Tulis Pesan".tr,
               hintStyle: hintTextStyle,
               border: InputBorder.none,
-              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: greyColor)),
-              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: greyColor)),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(color: greyColor)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(color: greyColor)),
               suffixIcon: GestureDetector(
                 onTap: () => Get.dialog(StatefulBuilder(
                   builder: (context, setState) => AlertDialog(
@@ -143,7 +156,8 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                         CustomFilledButton(
                           color: blueJNE,
                           title: "Pilih dari galeri".tr,
-                          onPressed: () => c.getSinglePhoto(ImageSource.gallery),
+                          onPressed: () =>
+                              c.getSinglePhoto(ImageSource.gallery),
                         )
                       ],
                     ),
@@ -155,7 +169,10 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                 ),
               ),
             ),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(fontWeight: regular),
             onFieldSubmitted: (value) => c.sendMessage(),
           ),
           trailing: GestureDetector(
@@ -163,7 +180,8 @@ class ObrolanLaporankuScreen extends StatelessWidget {
             child: Container(
               height: 45,
               width: 45,
-              decoration: BoxDecoration(color: greyColor, borderRadius: BorderRadius.circular(50)),
+              decoration: BoxDecoration(
+                  color: greyColor, borderRadius: BorderRadius.circular(50)),
               padding: const EdgeInsets.only(left: 5),
               child: const Center(
                 child: Icon(
@@ -183,20 +201,27 @@ class ObrolanLaporankuScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Row(
-        mainAxisAlignment: msg.type == "S" ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment:
+            msg.type == "S" ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          msg.type == "R" ? avatar("${msg.user}\n${msg.branchCode}", context) : Container(),
+          msg.type == "R"
+              ? avatar("${msg.user}\n${msg.branchCode}", context)
+              : Container(),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
-              crossAxisAlignment: msg.type == "R" ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+              crossAxisAlignment: msg.type == "R"
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.end,
               children: [
                 Bubble(
                   radius: const Radius.circular(8),
                   color: msg.type == "R" ? blueJNE : redJNE,
                   elevation: 0.0,
                   showNip: true,
-                  nip: msg.type == "R" ? BubbleNip.leftBottom : BubbleNip.rightBottom,
+                  nip: msg.type == "R"
+                      ? BubbleNip.leftBottom
+                      : BubbleNip.rightBottom,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -209,23 +234,27 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "${'Subjek'.tr} : ${msg.subject ?? ''}",
-                                style: listTitleTextStyle.copyWith(color: whiteColor),
+                                style: listTitleTextStyle.copyWith(
+                                    color: whiteColor),
                               ),
                               Text(
                                 msg.message ?? '',
-                                style: listTitleTextStyle.copyWith(color: whiteColor, fontWeight: regular),
+                                style: listTitleTextStyle.copyWith(
+                                    color: whiteColor, fontWeight: regular),
                               ),
                               GestureDetector(
                                 onTap: () => showDialog(
                                   context: context,
                                   builder: (context) => ImagePopupDialog(
                                     title: '',
-                                    img: "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
+                                    img:
+                                        "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
                                   ),
                                 ),
                                 child: Image.network(
                                   "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
-                                  errorBuilder: (context, error, stackTrace) => const SizedBox(),
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      const SizedBox(),
                                 ),
                               )
                             ],
@@ -242,7 +271,9 @@ class ObrolanLaporankuScreen extends StatelessWidget {
               ],
             ),
           ),
-          msg.type == "S" ? avatar("${msg.user}\n${msg.branchCode}", context) : Container(),
+          msg.type == "S"
+              ? avatar("${msg.user}\n${msg.branchCode}", context)
+              : Container(),
         ],
       ),
     );
@@ -256,7 +287,8 @@ class ObrolanLaporankuScreen extends StatelessWidget {
           height: 55,
           width: 55,
           alignment: Alignment.center,
-          decoration: BoxDecoration(color: greyLightColor3, borderRadius: BorderRadius.circular(50)),
+          decoration: BoxDecoration(
+              color: greyLightColor3, borderRadius: BorderRadius.circular(50)),
           child: Text(
             name.substring(0, 1),
             style: listTitleTextStyle,
@@ -271,7 +303,8 @@ class ObrolanLaporankuScreen extends StatelessWidget {
     );
   }
 
-  CustomTopBar _appBarContent(ObrolanLaporankuController c, BuildContext context) {
+  CustomTopBar _appBarContent(
+      ObrolanLaporankuController c, BuildContext context) {
     return CustomTopBar(
       title: "Obrolan".tr,
       action: [

@@ -1,5 +1,4 @@
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +51,10 @@ class CustomSearchField<T> extends StatelessWidget {
             inputFormatters: inputFormatters,
             autofocus: autoFocus,
             cursorColor: CustomTheme().cursorColor(context),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(fontWeight: regular),
             decoration: InputDecoration(
               hintText: hintText,
               enabledBorder: OutlineInputBorder(
@@ -92,7 +94,9 @@ class CustomSearchField<T> extends StatelessWidget {
                       height: 39,
                       margin: const EdgeInsets.only(right: 10),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? blueJNE
+                            : whiteColor,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(8),
                           bottomLeft: Radius.circular(8),
@@ -108,7 +112,9 @@ class CustomSearchField<T> extends StatelessWidget {
                       height: 39,
                       margin: const EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.light ? blueJNE : whiteColor,
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? blueJNE
+                            : whiteColor,
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(8),
                           bottomRight: Radius.circular(8),
@@ -118,7 +124,7 @@ class CustomSearchField<T> extends StatelessWidget {
                     )
                   : controller.text.isNotEmpty
                       ? IconButton(
-                          onPressed: onClear ?? ()=> controller.clear(),
+                          onPressed: onClear ?? () => controller.clear(),
                           icon: const Icon(Icons.close),
                         )
                       : null,

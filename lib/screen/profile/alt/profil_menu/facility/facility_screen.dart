@@ -60,7 +60,7 @@ class FacilityScreen extends StatelessWidget {
                 SliverPadding(
                   padding: const EdgeInsets.all(0),
                   sliver: SliverToBoxAdapter(
-                    child: headerText(context, "COD / BAYAR DI TEMPAT"),
+                    child: headerText(context, "COD / BAYAR DI TEMPAT".tr),
                   ),
                 ),
                 SliverPadding(

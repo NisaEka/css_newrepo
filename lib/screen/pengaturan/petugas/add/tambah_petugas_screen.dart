@@ -32,7 +32,10 @@ class TambahPetugasScreen extends StatelessWidget {
               title: controller.isEdit ? 'Edit Petugas' : 'Tambah Petugas'.tr,
             ),
             body: Stack(
-              children: [_bodyContent(controller, context), controller.isLoading ? const LoadingDialog() : const SizedBox()],
+              children: [
+                _bodyContent(controller, context),
+                controller.isLoading ? const LoadingDialog() : const SizedBox()
+              ],
             ),
           );
         });
@@ -58,10 +61,14 @@ class TambahPetugasScreen extends StatelessWidget {
                   controller: c.alamatEmail,
                   hintText: 'Alamat Email'.tr,
                   isRequired: true,
-                  validator: ValidationBuilder(localeName: c.locale).email().minLength(10).build(),
+                  validator: ValidationBuilder(localeName: c.locale)
+                      .email()
+                      .minLength(10)
+                      .build(),
                   inputFormatters: [
                     TextInputFormatter.withFunction((oldValue, newValue) {
-                      return newValue.copyWith(text: newValue.text.toLowerCase());
+                      return newValue.copyWith(
+                          text: newValue.text.toLowerCase());
                     })
                   ],
                 ),
@@ -94,7 +101,9 @@ class TambahPetugasScreen extends StatelessWidget {
                         suffixIcon: IconButton(
                           icon: c.showIcon,
                           onPressed: () {
-                            c.isObscurePassword ? c.isObscurePassword = false : c.isObscurePassword = true;
+                            c.isObscurePassword
+                                ? c.isObscurePassword = false
+                                : c.isObscurePassword = true;
                             c.isObscurePassword != false
                                 ? c.showIcon = const Icon(
                                     Icons.visibility,
@@ -126,7 +135,9 @@ class TambahPetugasScreen extends StatelessWidget {
                         suffixIcon: IconButton(
                           icon: c.showConfirmIcon,
                           onPressed: () {
-                            c.isObscurePasswordConfirm ? c.isObscurePasswordConfirm = false : c.isObscurePasswordConfirm = true;
+                            c.isObscurePasswordConfirm
+                                ? c.isObscurePasswordConfirm = false
+                                : c.isObscurePasswordConfirm = true;
                             c.isObscurePasswordConfirm != false
                                 ? c.showConfirmIcon = const Icon(
                                     Icons.visibility,
@@ -146,13 +157,17 @@ class TambahPetugasScreen extends StatelessWidget {
                         children: [
                           MultiSelectDialogField(
                             decoration: BoxDecoration(
-                              border: Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
+                              border: Border.all(
+                                  color: AppConst.isLightTheme(context)
+                                      ? greyDarkColor1
+                                      : greyLightColor1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             searchable: true,
                             buttonIcon: const Icon(Icons.keyboard_arrow_down),
                             buttonText: Text('Akun'.tr),
-                            itemsTextStyle: TextStyle(color: CustomTheme().textColor(context)),
+                            itemsTextStyle: TextStyle(
+                                color: CustomTheme().textColor(context)),
                             dialogWidth: Get.width,
                             initialValue: c.selectedAccountList,
                             items: c.accountList
@@ -162,7 +177,9 @@ class TambahPetugasScreen extends StatelessWidget {
                                     ))
                                 .toList(),
                             listType: MultiSelectListType.CHIP,
-                            backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                            backgroundColor: AppConst.isLightTheme(context)
+                                ? whiteColor
+                                : greyColor,
                             onConfirm: (values) {
                               c.selectedAccountList = values;
                             },
@@ -174,7 +191,10 @@ class TambahPetugasScreen extends StatelessWidget {
                           const SizedBox(height: 10),
                           MultiSelectDialogField(
                             decoration: BoxDecoration(
-                              border: Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
+                              border: Border.all(
+                                  color: AppConst.isLightTheme(context)
+                                      ? greyDarkColor1
+                                      : greyLightColor1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             searchable: true,
@@ -187,9 +207,12 @@ class TambahPetugasScreen extends StatelessWidget {
                                       '${e.code}-${e.desc}',
                                     ))
                                 .toList(),
-                            itemsTextStyle: TextStyle(color: CustomTheme().textColor(context)),
+                            itemsTextStyle: TextStyle(
+                                color: CustomTheme().textColor(context)),
                             listType: MultiSelectListType.CHIP,
-                            backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                            backgroundColor: AppConst.isLightTheme(context)
+                                ? whiteColor
+                                : greyColor,
                             onConfirm: (values) {
                               c.selectedBranchList = values;
                               c.update();
@@ -203,14 +226,18 @@ class TambahPetugasScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Obx(
-                            () => MultiSelectDialogField<Origin>(
+                            () => MultiSelectDialogField<OriginModel>(
                               decoration: BoxDecoration(
-                                border: Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
+                                border: Border.all(
+                                    color: AppConst.isLightTheme(context)
+                                        ? greyDarkColor1
+                                        : greyLightColor1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               searchable: true,
                               buttonIcon: const Icon(Icons.keyboard_arrow_down),
-                              buttonText: Text(c.isLoadOrigin ? 'Loading...' : 'Origin'.tr),
+                              buttonText: Text(
+                                  c.isLoadOrigin ? 'Loading...' : 'Origin'.tr),
                               initialValue: c.selectedOrigin,
                               items: c.originList
                                   .map((e) => MultiSelectItem(
@@ -219,8 +246,11 @@ class TambahPetugasScreen extends StatelessWidget {
                                       ))
                                   .toList(),
                               listType: MultiSelectListType.CHIP,
-                              backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
-                              itemsTextStyle: TextStyle(color: CustomTheme().textColor(context)),
+                              backgroundColor: AppConst.isLightTheme(context)
+                                  ? whiteColor
+                                  : greyColor,
+                              itemsTextStyle: TextStyle(
+                                  color: CustomTheme().textColor(context)),
                               onConfirm: (values) {
                                 // controller.selectedOrigin = values;
                                 c.selectedOrigin.clear();
@@ -308,7 +338,8 @@ class TambahPetugasScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Center(
-                        child: Text('Tentukan Hak Akses'.tr, style: listTitleTextStyle),
+                        child: Text('Tentukan Hak Akses'.tr,
+                            style: listTitleTextStyle),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -422,7 +453,9 @@ class TambahPetugasScreen extends StatelessWidget {
                             },
                           ),
                           CustomCheckbox(
-                            label: 'Uang_COD Kamu'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
+                            label: 'Uang_COD Kamu'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
                             value: c.uangCod,
                             onChanged: (value) {
                               c.uangCod = value!;
@@ -430,7 +463,9 @@ class TambahPetugasScreen extends StatelessWidget {
                             },
                           ),
                           CustomCheckbox(
-                            label: 'Laporan Pembayaran Aggregasi'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
+                            label: 'Laporan Pembayaran Aggregasi'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
                             value: c.monitoringAgg,
                             onChanged: (value) {
                               c.monitoringAgg = value!;
@@ -438,7 +473,9 @@ class TambahPetugasScreen extends StatelessWidget {
                             },
                           ),
                           CustomCheckbox(
-                            label: 'Aggregasi Minus'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
+                            label: 'Aggregasi Minus'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
                             value: c.monitoringAggMinus,
                             onChanged: (value) {
                               c.monitoringAggMinus = value!;
@@ -446,7 +483,9 @@ class TambahPetugasScreen extends StatelessWidget {
                             },
                           ),
                           CustomCheckbox(
-                            label: 'Tagihan Kamu'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
+                            label: 'Tagihan Kamu'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
                             value: c.tagihan,
                             onChanged: (value) {
                               c.tagihan = value!;
@@ -454,7 +493,9 @@ class TambahPetugasScreen extends StatelessWidget {
                             },
                           ),
                           CustomCheckbox(
-                            label: 'Bonus Kamu'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
+                            label: 'Bonus Kamu'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
                             value: c.bonus,
                             onChanged: (value) {
                               c.bonus = value!;
@@ -463,7 +504,9 @@ class TambahPetugasScreen extends StatelessWidget {
                           ),
                           CustomFormLabel(label: "Pantau Paketmu".tr),
                           CustomCheckbox(
-                            label: 'Pantau Paketmu'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
+                            label: 'Pantau Paketmu'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
                             value: c.pantauPaketmu,
                             onChanged: (value) {
                               c.pantauPaketmu = value!;
@@ -472,7 +515,9 @@ class TambahPetugasScreen extends StatelessWidget {
                           ),
                           CustomFormLabel(label: "Hubungi Aku".tr),
                           CustomCheckbox(
-                            label: 'Laporanku'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
+                            label: 'Laporanku'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
                             value: c.laporan,
                             onChanged: (value) {
                               c.laporan = value!;
@@ -480,7 +525,9 @@ class TambahPetugasScreen extends StatelessWidget {
                             },
                           ),
                           CustomCheckbox(
-                            label: 'E-Claim'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
+                            label: 'E-Claim'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
                             value: c.eclaim,
                             onChanged: (value) {
                               c.eclaim = value!;
@@ -514,7 +561,9 @@ class TambahPetugasScreen extends StatelessWidget {
                           // ),
                           CustomFormLabel(label: "Cek Ongkir".tr),
                           CustomCheckbox(
-                            label: 'Cek Ongkir'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
+                            label: 'Cek Ongkir'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
                             value: c.cekOngkir,
                             onChanged: (value) {
                               c.cekOngkir = value!;
@@ -523,7 +572,9 @@ class TambahPetugasScreen extends StatelessWidget {
                           ),
                           CustomFormLabel(label: "Pengaturan".tr),
                           CustomCheckbox(
-                            label: 'Label'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
+                            label: 'Label'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
                             value: c.label,
                             onChanged: (value) {
                               c.label = value!;

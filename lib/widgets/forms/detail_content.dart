@@ -22,7 +22,10 @@ class DetailContent extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium
+              ?.copyWith(fontWeight: regular),
         ),
         Container(
           width: Get.width / 2,

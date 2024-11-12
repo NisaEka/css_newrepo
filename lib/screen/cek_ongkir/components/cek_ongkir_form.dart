@@ -1,10 +1,10 @@
 import 'package:css_mobile/screen/cek_ongkir/congkir_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
-import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customswitch.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
-import 'package:css_mobile/widgets/forms/origin_dropdown.dart';
+import 'package:css_mobile/widgets/forms/destination_external_dropdown.dart';
+import 'package:css_mobile/widgets/forms/origin_external_dropdown.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,35 +22,22 @@ class CekOngkirForm extends StatelessWidget {
             key: c.state.formKey,
             child: Column(
               children: [
-                OriginDropdown(
+                OriginExternalDropdown(
                   controller: c.state.kotaPengirim,
-                  label: "Origin",
+                  isRequired: true,
+                  label: 'Kota Pengirim',
                   showfromBottom: true,
                   value: c.state.selectedOrigin,
-                  onChanged: (p0) {
-                    print('selected origin : $p0');
-                  },
+                  onChanged: (selected) => c.state.selectedOrigin = selected,
                 ),
-                CustomTextFormField(
-                  controller: c.state.kotaPengirim,
-                  // items: [],
-                  hintText: 'Kota Asal'.tr,
-                  // textStyle: hintTextStyle,
-                  readOnly: c.state.selectedOrigin != null,
-                  isRequired: true,
-                  suffixIcon: const Icon(Icons.keyboard_arrow_down),
-                  onTap: () => c.showCityList('Kota Asal'.tr),
-                ),
-
-                CustomTextFormField(
+                DestinationExternalDropdown(
                   controller: c.state.kotaTujuan,
-                  // items: [],
-                  hintText: 'Kota Tujuan'.tr,
-                  // textStyle: hintTextStyle,
-                  readOnly: c.state.selectedDestination != null,
                   isRequired: true,
-                  suffixIcon: const Icon(Icons.keyboard_arrow_down),
-                  onTap: () => c.showCityList('Kota Tujuan'.tr),
+                  label: 'Kota Tujuan',
+                  showfromBottom: true,
+                  value: c.state.selectedDestination,
+                  onChanged: (selected) =>
+                      c.state.selectedDestination = selected,
                 ),
                 CustomTextFormField(
                   controller: c.state.beratKiriman,
@@ -161,6 +148,4 @@ class CekOngkirForm extends StatelessWidget {
           );
         });
   }
-
-
 }

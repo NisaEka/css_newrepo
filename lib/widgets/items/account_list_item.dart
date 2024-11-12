@@ -68,15 +68,23 @@ class _AccountListItemState extends State<AccountListItem> {
                   children: [
                     Text(
                       widget.data?.accountNumber ?? widget.accountNumber ?? '',
-                      style: listTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : redJNE),
+                      style: listTitleTextStyle.copyWith(
+                          color: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : redJNE),
                     ),
-                    widget.isSelected ? const Icon(Icons.check, color: successColor) : const SizedBox()
+                    widget.isSelected
+                        ? const Icon(Icons.check, color: successColor)
+                        : const SizedBox()
                   ],
                 ),
                 Text(
                   "${widget.data?.accountName?.toUpperCase() ?? ''} / ${widget.data?.accountType ?? widget.data?.accountService}",
                   // widget.data?.accountName ?? widget.accountName ?? '',
-                  style: sublistTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2),
+                  style: sublistTitleTextStyle.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? greyDarkColor2
+                          : greyLightColor2),
                 ),
                 Container(
                   padding: const EdgeInsets.all(5),
@@ -86,7 +94,10 @@ class _AccountListItemState extends State<AccountListItem> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    widget.data?.accountType ?? widget.data?.accountService ?? widget.accountType ?? '',
+                    widget.data?.accountType ??
+                        widget.data?.accountService ??
+                        widget.accountType ??
+                        '',
                     style: sublistTitleTextStyle.copyWith(color: whiteColor),
                   ),
                 )

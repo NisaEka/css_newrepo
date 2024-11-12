@@ -14,6 +14,7 @@ class Constant {
 
   static const String statusNotRequestPickedUpYet = 'BELUM MINTA DIJEMPUT';
   static const String statusAlreadyRequestPickedUp = 'SUDAH MINTA DIJEMPUT';
+  static const String statusFailedRequestForPickUp = 'GAGAL MINTA DIJEMPUT';
 
   static const int maxImageLength = 2000000;
 

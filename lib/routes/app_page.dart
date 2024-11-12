@@ -23,14 +23,16 @@ class AppPages {
     GetPage(name: "/draftTransaksi", page: () => const DraftTransaksiScreen()),
     GetPage(name: "/riwayatKiriman", page: () => const RiwayatKirimanScreen()),
     GetPage(name: "/lacakKiriman", page: () => const LacakKirimanScreen()),
-    GetPage(name: "/pembayaranAggregasi", page: () => const PembayaranAggergasiScreen()),
-    GetPage(name: "/aggregasiMinus", page: () => const AggregationMinusScreen()),
+    GetPage(
+        name: "/pembayaranAggregasi",
+        page: () => const PembayaranAggergasiScreen()),
+    GetPage(
+        name: "/aggregasiMinus", page: () => const AggregationMinusScreen()),
     GetPage(name: "/uangCODKamu", page: () => const UangCODScreen()),
     GetPage(name: "/profileGeneral", page: () => const DataUmumScreen()),
     GetPage(name: "/requestPickup", page: () => const RequestPickupScreen()),
     GetPage(name: "/notification", page: () => const NotificationScreen()),
     GetPage(name: "/pantauPaketmu", page: () => const PantauCardScreen()),
-    // GetPage(name: "/pantauPaketmu", page: () => const PantauPaketmuScreen()),
     GetPage(name: "/laporanku", page: () => const LaporankuScreen()),
     GetPage(name: "/invoice", page: () => const InvoiceScreen())
   ];

@@ -1,52 +1,52 @@
 class GetAggregationReportModel {
   GetAggregationReportModel({
-    num? code,
+    num? statusCode,
     String? message,
-    List<AggregationModel>? payload,
+    List<AggregationModel>? data,
   }) {
-    _code = code;
+    _statusCode = statusCode;
     _message = message;
-    _payload = payload;
+    _data = data;
   }
 
   GetAggregationReportModel.fromJson(dynamic json) {
-    _code = json['code'];
+    _statusCode = json['statusCode'];
     _message = json['message'];
-    if (json['payload'] != null) {
-      _payload = [];
-      json['payload'].forEach((v) {
-        _payload?.add(AggregationModel.fromJson(v));
+    if (json['data'] != null) {
+      _data = [];
+      json['data'].forEach((v) {
+        _data?.add(AggregationModel.fromJson(v));
       });
     }
   }
 
-  num? _code;
+  num? _statusCode;
   String? _message;
-  List<AggregationModel>? _payload;
+  List<AggregationModel>? _data;
 
   GetAggregationReportModel copyWith({
-    num? code,
+    num? statusCode,
     String? message,
-    List<AggregationModel>? payload,
+    List<AggregationModel>? data,
   }) =>
       GetAggregationReportModel(
-        code: code ?? _code,
+        statusCode: statusCode ?? _statusCode,
         message: message ?? _message,
-        payload: payload ?? _payload,
+        data: data ?? _data,
       );
 
-  num? get code => _code;
+  num? get statusCode => _statusCode;
 
   String? get message => _message;
 
-  List<AggregationModel>? get payload => _payload;
+  List<AggregationModel>? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['code'] = _code;
+    map['statusCode'] = _statusCode;
     map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.map((v) => v.toJson()).toList();
+    if (_data != null) {
+      map['data'] = _data?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -54,191 +54,191 @@ class GetAggregationReportModel {
 
 class AggregationModel {
   AggregationModel({
-    String? aggDocNo,
-    String? aggDocDate,
-    String? custGroup,
-    String? custId,
-    String? custName,
-    num? codAmt,
-    num? codFee,
-    num? netAmt,
-    num? paidAmt,
-    String? paidDate,
-    String? paidReffNo,
-    String? createDdtm,
-    String? createdBy,
+    String? mpayWdrGrpPayNo,
+    String? mpayWdrGrpPayDate,
+    String? mpayWdrGrpPayGroup,
+    String? mpayWdrGrpPayCode,
+    String? mpayWdrGrpPayName,
+    num? mpayWdrGrpPayCodAmt,
+    num? mpayWdrGrpPayCodFee,
+    num? mpayWdrGrpPayNetAmt,
+    num? mpayWdrGrpPayPaidAmt,
+    String? mpayWdrGrpPayDatePaid,
+    String? mpayWdrGrpPayReffPaid,
+    String? createddtm,
+    String? createdby,
     String? remarks,
     String? statusGv,
-    String? codType,
-    String? cssCreateDate,
+    String? mpayWdrGrpCodType,
+    String? oggcreateddtm,
     String? transferLog,
-    String? aggOrigin,
+    String? mpayWdrGrpPayOrgMain,
   }) {
-    _aggDocNo = aggDocNo;
-    _aggDocDate = aggDocDate;
-    _custGroup = custGroup;
-    _custId = custId;
-    _custName = custName;
-    _codAmt = codAmt;
-    _codFee = codFee;
-    _netAmt = netAmt;
-    _paidAmt = paidAmt;
-    _paidDate = paidDate;
-    _paidReffNo = paidReffNo;
-    _createDdtm = createDdtm;
-    _createdBy = createdBy;
+    _mpayWdrGrpPayNo = mpayWdrGrpPayNo;
+    _mpayWdrGrpPayDate = mpayWdrGrpPayDate;
+    _mpayWdrGrpPayGroup = mpayWdrGrpPayGroup;
+    _mpayWdrGrpPayCode = mpayWdrGrpPayCode;
+    _mpayWdrGrpPayName = mpayWdrGrpPayName;
+    _mpayWdrGrpPayCodAmt = mpayWdrGrpPayCodAmt;
+    _mpayWdrGrpPayCodFee = mpayWdrGrpPayCodFee;
+    _mpayWdrGrpPayNetAmt = mpayWdrGrpPayNetAmt;
+    _mpayWdrGrpPayPaidAmt = mpayWdrGrpPayPaidAmt;
+    _mpayWdrGrpPayDatePaid = mpayWdrGrpPayDatePaid;
+    _mpayWdrGrpPayReffPaid = mpayWdrGrpPayReffPaid;
+    _createddtm = createddtm;
+    _createdby = createdby;
     _remarks = remarks;
     _statusGv = statusGv;
-    _codType = codType;
-    _cssCreateDate = cssCreateDate;
+    _mpayWdrGrpCodType = mpayWdrGrpCodType;
+    _oggcreateddtm = oggcreateddtm;
     _transferLog = transferLog;
-    _aggOrigin = aggOrigin;
+    _mpayWdrGrpPayOrgMain = mpayWdrGrpPayOrgMain;
   }
 
   AggregationModel.fromJson(dynamic json) {
-    _aggDocNo = json['agg_doc_no'];
-    _aggDocDate = json['agg_doc_date'];
-    _custGroup = json['cust_group'];
-    _custId = json['cust_id'];
-    _custName = json['cust_name'];
-    _codAmt = json['cod_amt'];
-    _codFee = json['cod_fee'];
-    _netAmt = json['net_amt'];
-    _paidAmt = json['paid_amt'];
-    _paidDate = json['paid_date'];
-    _paidReffNo = json['paid_reff_no'];
-    _createDdtm = json['create_ddtm'];
-    _createdBy = json['created_by'];
+    _mpayWdrGrpPayNo = json['mpayWdrGrpPayNo'];
+    _mpayWdrGrpPayDate = json['mpayWdrGrpPayDate'];
+    _mpayWdrGrpPayGroup = json['mpayWdrGrpPayGroup'];
+    _mpayWdrGrpPayCode = json['mpayWdrGrpPayCode'];
+    _mpayWdrGrpPayName = json['mpayWdrGrpPayName'];
+    _mpayWdrGrpPayCodAmt = json['mpayWdrGrpPayCodAmt'];
+    _mpayWdrGrpPayCodFee = json['mpayWdrGrpPayCodFee'];
+    _mpayWdrGrpPayNetAmt = json['mpayWdrGrpPayNetAmt'];
+    _mpayWdrGrpPayPaidAmt = json['mpayWdrGrpPayPaidAmt'];
+    _mpayWdrGrpPayDatePaid = json['mpayWdrGrpPayDatePaid'];
+    _mpayWdrGrpPayReffPaid = json['mpayWdrGrpPayReffPaid'];
+    _createddtm = json['createddtm'];
+    _createdby = json['createdby'];
     _remarks = json['remarks'];
-    _statusGv = json['status_gv'];
-    _codType = json['cod_type'];
-    _cssCreateDate = json['css_create_date'];
-    _transferLog = json['transfer_log'];
-    _aggOrigin = json['agg_origin'];
+    _statusGv = json['statusGv'];
+    _mpayWdrGrpCodType = json['mpayWdrGrpCodType'];
+    _oggcreateddtm = json['oggcreateddtm'];
+    _transferLog = json['transferLog'];
+    _mpayWdrGrpPayOrgMain = json['mpayWdrGrpPayOrgMain'];
   }
 
-  String? _aggDocNo;
-  String? _aggDocDate;
-  String? _custGroup;
-  String? _custId;
-  String? _custName;
-  num? _codAmt;
-  num? _codFee;
-  num? _netAmt;
-  num? _paidAmt;
-  String? _paidDate;
-  String? _paidReffNo;
-  String? _createDdtm;
-  String? _createdBy;
+  String? _mpayWdrGrpPayNo;
+  String? _mpayWdrGrpPayDate;
+  String? _mpayWdrGrpPayGroup;
+  String? _mpayWdrGrpPayCode;
+  String? _mpayWdrGrpPayName;
+  num? _mpayWdrGrpPayCodAmt;
+  num? _mpayWdrGrpPayCodFee;
+  num? _mpayWdrGrpPayNetAmt;
+  num? _mpayWdrGrpPayPaidAmt;
+  String? _mpayWdrGrpPayDatePaid;
+  String? _mpayWdrGrpPayReffPaid;
+  String? _createddtm;
+  String? _createdby;
   String? _remarks;
   String? _statusGv;
-  String? _codType;
-  String? _cssCreateDate;
+  String? _mpayWdrGrpCodType;
+  String? _oggcreateddtm;
   String? _transferLog;
-  String? _aggOrigin;
+  String? _mpayWdrGrpPayOrgMain;
 
   AggregationModel copyWith({
-    String? aggDocNo,
-    String? aggDocDate,
-    String? custGroup,
-    String? custId,
-    String? custName,
-    num? codAmt,
-    num? codFee,
-    num? netAmt,
-    num? paidAmt,
-    String? paidDate,
-    String? paidReffNo,
-    String? createDdtm,
-    String? createdBy,
+    String? mpayWdrGrpPayNo,
+    String? mpayWdrGrpPayDate,
+    String? mpayWdrGrpPayGroup,
+    String? mpayWdrGrpPayCode,
+    String? mpayWdrGrpPayName,
+    num? mpayWdrGrpPayCodAmt,
+    num? mpayWdrGrpPayCodFee,
+    num? mpayWdrGrpPayNetAmt,
+    num? mpayWdrGrpPayPaidAmt,
+    String? mpayWdrGrpPayDatePaid,
+    String? mpayWdrGrpPayReffPaid,
+    String? createddtm,
+    String? createdby,
     String? remarks,
     String? statusGv,
-    String? codType,
-    String? cssCreateDate,
+    String? mpayWdrGrpCodType,
+    String? oggcreateddtm,
     String? transferLog,
-    String? aggOrigin,
+    String? mpayWdrGrpPayOrgMain,
   }) =>
       AggregationModel(
-        aggDocNo: aggDocNo ?? _aggDocNo,
-        aggDocDate: aggDocDate ?? _aggDocDate,
-        custGroup: custGroup ?? _custGroup,
-        custId: custId ?? _custId,
-        custName: custName ?? _custName,
-        codAmt: codAmt ?? _codAmt,
-        codFee: codFee ?? _codFee,
-        netAmt: netAmt ?? _netAmt,
-        paidAmt: paidAmt ?? _paidAmt,
-        paidDate: paidDate ?? _paidDate,
-        paidReffNo: paidReffNo ?? _paidReffNo,
-        createDdtm: createDdtm ?? _createDdtm,
-        createdBy: createdBy ?? _createdBy,
+        mpayWdrGrpPayNo: mpayWdrGrpPayNo ?? _mpayWdrGrpPayNo,
+        mpayWdrGrpPayDate: mpayWdrGrpPayDate ?? _mpayWdrGrpPayDate,
+        mpayWdrGrpPayGroup: mpayWdrGrpPayGroup ?? _mpayWdrGrpPayGroup,
+        mpayWdrGrpPayCode: mpayWdrGrpPayCode ?? _mpayWdrGrpPayCode,
+        mpayWdrGrpPayName: mpayWdrGrpPayName ?? _mpayWdrGrpPayName,
+        mpayWdrGrpPayCodAmt: mpayWdrGrpPayCodAmt ?? _mpayWdrGrpPayCodAmt,
+        mpayWdrGrpPayCodFee: mpayWdrGrpPayCodFee ?? _mpayWdrGrpPayCodFee,
+        mpayWdrGrpPayNetAmt: mpayWdrGrpPayNetAmt ?? _mpayWdrGrpPayNetAmt,
+        mpayWdrGrpPayPaidAmt: mpayWdrGrpPayPaidAmt ?? _mpayWdrGrpPayPaidAmt,
+        mpayWdrGrpPayDatePaid: mpayWdrGrpPayDatePaid ?? _mpayWdrGrpPayDatePaid,
+        mpayWdrGrpPayReffPaid: mpayWdrGrpPayReffPaid ?? _mpayWdrGrpPayReffPaid,
+        createddtm: createddtm ?? _createddtm,
+        createdby: createdby ?? _createdby,
         remarks: remarks ?? _remarks,
         statusGv: statusGv ?? _statusGv,
-        codType: codType ?? _codType,
-        cssCreateDate: cssCreateDate ?? _cssCreateDate,
+        mpayWdrGrpCodType: mpayWdrGrpCodType ?? _mpayWdrGrpCodType,
+        oggcreateddtm: oggcreateddtm ?? _oggcreateddtm,
         transferLog: transferLog ?? _transferLog,
-        aggOrigin: aggOrigin ?? _aggOrigin,
+        mpayWdrGrpPayOrgMain: mpayWdrGrpPayOrgMain ?? _mpayWdrGrpPayOrgMain,
       );
 
-  String? get aggDocNo => _aggDocNo;
+  String? get mpayWdrGrpPayNo => _mpayWdrGrpPayNo;
 
-  String? get aggDocDate => _aggDocDate;
+  String? get mpayWdrGrpPayDate => _mpayWdrGrpPayDate;
 
-  String? get custGroup => _custGroup;
+  String? get mpayWdrGrpPayGroup => _mpayWdrGrpPayGroup;
 
-  String? get custId => _custId;
+  String? get mpayWdrGrpPayCode => _mpayWdrGrpPayCode;
 
-  String? get custName => _custName;
+  String? get mpayWdrGrpPayName => _mpayWdrGrpPayName;
 
-  num? get codAmt => _codAmt;
+  num? get mpayWdrGrpPayCodAmt => _mpayWdrGrpPayCodAmt;
 
-  num? get codFee => _codFee;
+  num? get mpayWdrGrpPayCodFee => _mpayWdrGrpPayCodFee;
 
-  num? get netAmt => _netAmt;
+  num? get mpayWdrGrpPayNetAmt => _mpayWdrGrpPayNetAmt;
 
-  num? get paidAmt => _paidAmt;
+  num? get mpayWdrGrpPayPaidAmt => _mpayWdrGrpPayPaidAmt;
 
-  String? get paidDate => _paidDate;
+  String? get mpayWdrGrpPayDatePaid => _mpayWdrGrpPayDatePaid;
 
-  String? get paidReffNo => _paidReffNo;
+  String? get mpayWdrGrpPayReffPaid => _mpayWdrGrpPayReffPaid;
 
-  String? get createDdtm => _createDdtm;
+  String? get createddtm => _createddtm;
 
-  String? get createdBy => _createdBy;
+  String? get createdby => _createdby;
 
   String? get remarks => _remarks;
 
   String? get statusGv => _statusGv;
 
-  String? get codType => _codType;
+  String? get mpayWdrGrpCodType => _mpayWdrGrpCodType;
 
-  String? get cssCreateDate => _cssCreateDate;
+  String? get oggcreateddtm => _oggcreateddtm;
 
   String? get transferLog => _transferLog;
 
-  String? get aggOrigin => _aggOrigin;
+  String? get mpayWdrGrpPayOrgMain => _mpayWdrGrpPayOrgMain;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['agg_doc_no'] = _aggDocNo;
-    map['agg_doc_date'] = _aggDocDate;
-    map['cust_group'] = _custGroup;
-    map['cust_id'] = _custId;
-    map['cust_name'] = _custName;
-    map['cod_amt'] = _codAmt;
-    map['cod_fee'] = _codFee;
-    map['net_amt'] = _netAmt;
-    map['paid_amt'] = _paidAmt;
-    map['paid_date'] = _paidDate;
-    map['paid_reff_no'] = _paidReffNo;
-    map['create_ddtm'] = _createDdtm;
-    map['created_by'] = _createdBy;
+    map['mpayWdrGrpPayNo'] = _mpayWdrGrpPayNo;
+    map['mpayWdrGrpPayDate'] = _mpayWdrGrpPayDate;
+    map['mpayWdrGrpPayGroup'] = _mpayWdrGrpPayGroup;
+    map['mpayWdrGrpPayCode'] = _mpayWdrGrpPayCode;
+    map['mpayWdrGrpPayName'] = _mpayWdrGrpPayName;
+    map['mpayWdrGrpPayCodAmt'] = _mpayWdrGrpPayCodAmt;
+    map['mpayWdrGrpPayCodFee'] = _mpayWdrGrpPayCodFee;
+    map['mpayWdrGrpPayNetAmt'] = _mpayWdrGrpPayNetAmt;
+    map['mpayWdrGrpPayPaidAmt'] = _mpayWdrGrpPayPaidAmt;
+    map['mpayWdrGrpPayDatePaid'] = _mpayWdrGrpPayDatePaid;
+    map['mpayWdrGrpPayReffPaid'] = _mpayWdrGrpPayReffPaid;
+    map['createddtm'] = _createddtm;
+    map['createdby'] = _createdby;
     map['remarks'] = _remarks;
     map['status_gv'] = _statusGv;
-    map['cod_type'] = _codType;
-    map['css_create_date'] = _cssCreateDate;
-    map['transfer_log'] = _transferLog;
-    map['agg_origin'] = _aggOrigin;
+    map['mpayWdrGrpCodType'] = _mpayWdrGrpCodType;
+    map['oggcreateddtm'] = _oggcreateddtm;
+    map['transferLog'] = _transferLog;
+    map['mpayWdrGrpPayOrgMain'] = _mpayWdrGrpPayOrgMain;
     return map;
   }
 }

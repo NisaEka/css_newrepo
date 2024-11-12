@@ -9,8 +9,6 @@ import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggminus_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_item.dart';
-import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -66,10 +64,12 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
               onRefresh: () => Future.sync(() => c.pagingController.refresh()),
               child: PagedListView<int, AggregationMinusModel>(
                 pagingController: c.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<AggregationMinusModel>(
+                builderDelegate:
+                    PagedChildBuilderDelegate<AggregationMinusModel>(
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => _aggregationItem(item),
-                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      const DataEmpty(),
                 ),
               ),
             ),
@@ -83,7 +83,8 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
     return AggregationMinusItem(
         data: aggregation,
         onTap: () => {
-              Get.to(const AggregationMinusDocScreen(), arguments: {"doc": aggregation.aggMinDoc})
+              Get.to(const AggregationMinusDocScreen(),
+                  arguments: {"doc": aggregation.aggMinDoc})
             });
   }
 }

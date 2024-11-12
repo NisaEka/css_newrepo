@@ -1,5 +1,4 @@
 class RequestPickupCreateRequestModel {
-
   final List<String> awbs;
   final String pickupAddressId;
   final String pickupTime;
@@ -11,9 +10,8 @@ class RequestPickupCreateRequestModel {
   });
 
   Map<String, dynamic> toJson() => {
-    'awbs': awbs,
-    'pickup_address_id': pickupAddressId,
-    'pickup_time': pickupTime,
-  };
-
+        'awbs': awbs,
+        'pickupDataId': pickupAddressId,
+        'pickupTime': pickupTime,
+      };
 }

@@ -20,77 +20,83 @@ class LaporankuBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LaporankuController>(
-      init: LaporankuController(),
-      builder: (c) {
-        return Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
-          child: Column(
-            children: [
-              CustomSearchField(
-                hintText: "Cari".tr,
-                controller: c.state.searchField,
-                prefixIcon: SvgPicture.asset(
-                  IconsConstant.search,
-                  color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
-                ),
-                margin: EdgeInsets.zero,
-                onChanged: (p0) => c.state.pagingController.refresh(),
-              ),
-              const StatusLaporanku(),
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: () => Future.sync(
-                        () {
-                      c.state.pagingController.refresh();
-                    },
+        init: LaporankuController(),
+        builder: (c) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
+            child: Column(
+              children: [
+                CustomSearchField(
+                  hintText: "Cari".tr,
+                  controller: c.state.searchField,
+                  prefixIcon: SvgPicture.asset(
+                    IconsConstant.search,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? whiteColor
+                        : blueJNE,
                   ),
-                  child: PagedListView<int, TicketModel>(
-                    pagingController: c.state.pagingController,
-                    builderDelegate: PagedChildBuilderDelegate<TicketModel>(
-                      transitionDuration: const Duration(milliseconds: 500),
-                      itemBuilder: (context, item, index) => LaporankuListItem(
-                        data: item,
-                        index: index,
-                        onTap: () => Get.to(DetailLaporankuScreen(data: item))?.then(
-                              (_) => c.state.pagingController.refresh(),
-                        ),
-                      ),
-                      firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
-                      firstPageProgressIndicatorBuilder: (context) => Column(
-                        children: List.generate(
-                          10,
-                              (index) => const LaporankuListItem(
-                            isLoading: true,
-                            // onTap: () => Get.to(const DetailLaporankuScreen()),
+                  margin: EdgeInsets.zero,
+                  onChanged: (p0) => c.state.pagingController.refresh(),
+                ),
+                const StatusLaporanku(),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () => Future.sync(
+                      () {
+                        c.state.pagingController.refresh();
+                      },
+                    ),
+                    child: PagedListView<int, TicketModel>(
+                      pagingController: c.state.pagingController,
+                      builderDelegate: PagedChildBuilderDelegate<TicketModel>(
+                        transitionDuration: const Duration(milliseconds: 500),
+                        itemBuilder: (context, item, index) =>
+                            LaporankuListItem(
+                          data: item,
+                          index: index,
+                          onTap: () =>
+                              Get.to(DetailLaporankuScreen(data: item))?.then(
+                            (_) => c.state.pagingController.refresh(),
                           ),
                         ),
-                      ),
-                      // firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                      //   height: 100,
-                      //   background: Colors.transparent,
-                      // ),
-                      noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
-                      noMoreItemsIndicatorBuilder: (context) => const Center(
-                        child: Divider(
-                          indent: 100,
-                          endIndent: 100,
-                          thickness: 2,
-                          color: blueJNE,
+                        firstPageErrorIndicatorBuilder: (context) =>
+                            const DataEmpty(),
+                        firstPageProgressIndicatorBuilder: (context) => Column(
+                          children: List.generate(
+                            10,
+                            (index) => const LaporankuListItem(
+                              isLoading: true,
+                              // onTap: () => Get.to(const DetailLaporankuScreen()),
+                            ),
+                          ),
                         ),
-                      ),
-                      newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                        background: Colors.transparent,
-                        height: 50,
-                        size: 30,
+                        // firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                        //   height: 100,
+                        //   background: Colors.transparent,
+                        // ),
+                        noItemsFoundIndicatorBuilder: (context) =>
+                            const DataEmpty(),
+                        noMoreItemsIndicatorBuilder: (context) => const Center(
+                          child: Divider(
+                            indent: 100,
+                            endIndent: 100,
+                            thickness: 2,
+                            color: blueJNE,
+                          ),
+                        ),
+                        newPageProgressIndicatorBuilder: (context) =>
+                            const LoadingDialog(
+                          background: Colors.transparent,
+                          height: 50,
+                          size: 30,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        );;
-      }
-    );
+              ],
+            ),
+          );
+        });
   }
 }

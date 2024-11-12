@@ -13,6 +13,7 @@ import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -50,7 +51,8 @@ class DashboardController extends BaseController {
     state.isLogin = token != null;
     refreshToken();
     debugPrint("token : $token");
-    debugPrint("rtoken : ${await storage.readString(StorageCore.refreshToken)}");
+    debugPrint(
+        "rtoken : ${await storage.readString(StorageCore.refreshToken)}");
 
     update();
 
@@ -84,11 +86,10 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadNews() async {
-    String toDate = DateTime.now().toString().split(' ').first;
-    String fromDate = DateTime(DateTime.now().year, 01).toString().split(' ').first;
+    AppLogger.i('load news');
     try {
-      jlc.postDashboardNews('news', fromDate, toDate).then((value) {
-        state.newsList.addAll(value.message ?? []);
+      jlc.postDashboardNews().then((value) {
+        state.newsList.addAll(value.data ?? []);
         update();
       });
     } catch (e) {
@@ -134,7 +135,7 @@ class DashboardController extends BaseController {
       ),
     ];
     var favMenu = await storage.readString(StorageCore.favoriteMenu);
-    var stickerLabel = await storage.readString(StorageCore.transactionLabel);
+    // var stickerLabel = await storage.readString(StorageCore.transactionLabel);
     // var shipcost = await storage.readString(StorageCore.shippingCost);
     update();
     if (favMenu.isEmpty == true) {
@@ -151,17 +152,15 @@ class DashboardController extends BaseController {
 
     update();
 
-    bool label = (await storage.readString(StorageCore.transactionLabel)).isEmpty;
+    bool label =
+        (await storage.readString(StorageCore.transactionLabel)).isEmpty;
 
     if (label) {
       await setting.getSettingLabel().then(
-            (value) async {
+        (value) async {
           await storage.writeString(
             StorageCore.transactionLabel,
-            value.data
-                ?.where((e) => e.enable ?? false)
-                .first
-                .name,
+            value.data?.where((e) => e.enable ?? false).first.name,
           );
           await storage.writeString(
             StorageCore.shippingCost,
@@ -175,23 +174,41 @@ class DashboardController extends BaseController {
   }
 
   void cekAllowance() {
-    if (state.isLogin && state.allow.paketmuInput != "Y" && state.isOnline && state.allow.buatPesanan != "Y") {
+    if (state.isLogin &&
+        state.allow.paketmuInput != "Y" &&
+        state.isOnline &&
+        state.allow.buatPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (state.isLogin && state.allow.paketmuRiwayat != "Y" && state.isOnline && state.allow.riwayatPesanan != "Y") {
+    if (state.isLogin &&
+        state.allow.paketmuRiwayat != "Y" &&
+        state.isOnline &&
+        state.allow.riwayatPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
       state.menuItems.removeWhere((e) => e.title == "Draft Transaksi");
     }
-    if (state.isLogin && state.allow.paketmuLacak != "Y" && state.isOnline && state.allow.lacakPesanan != "Y") {
+    if (state.isLogin &&
+        state.allow.paketmuLacak != "Y" &&
+        state.isOnline &&
+        state.allow.lacakPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
     }
-    if (state.isLogin && state.allow.keuanganCod != "Y" && state.isOnline && state.allow.uangCod != "Y") {
+    if (state.isLogin &&
+        state.allow.keuanganCod != "Y" &&
+        state.isOnline &&
+        state.allow.uangCod != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (state.isLogin && state.allow.keuanganAggregasi != "Y" && state.isOnline && state.allow.monitoringAgg != "Y") {
+    if (state.isLogin &&
+        state.allow.keuanganAggregasi != "Y" &&
+        state.isOnline &&
+        state.allow.monitoringAgg != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (state.isLogin && state.allow.keuanganAggregasiMinus != "Y" && state.isOnline && state.allow.monitoringAggMinus != "Y") {
+    if (state.isLogin &&
+        state.allow.keuanganAggregasiMinus != "Y" &&
+        state.isOnline &&
+        state.allow.monitoringAggMinus != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
     }
     if (state.isLogin && state.allow.cekOngkir != "Y" && state.isOnline) {
@@ -205,7 +222,9 @@ class DashboardController extends BaseController {
   Future<void> cekLocalLanguage() async {
     state.local = await storage.readString(StorageCore.localeApp);
 
-    if (state.local.isEmpty || state.local == 'id_ID' || state.local == 'en_US') {
+    if (state.local.isEmpty ||
+        state.local == 'id_ID' ||
+        state.local == 'en_US') {
       if (Get.deviceLocale == const Locale("id", "ID")) {
         await storage.writeString(StorageCore.localeApp, "id");
         Get.updateLocale(const Locale("id", "ID"));
@@ -241,11 +260,13 @@ class DashboardController extends BaseController {
           .then((value) async {
         value.code == 409
             ? await auth.updateDeviceInfo(
-                await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+                await LoginController().getDeviceinfo(state.fcmToken ?? '') ??
+                    Device(),
               )
             // : value.code == 401 || value.code == 400 || value.code == null
             : await auth.postFcmTokenNonAuth(
-                await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+                await LoginController().getDeviceinfo(state.fcmToken ?? '') ??
+                    Device(),
               );
         // : debugPrint('post device info : ${value.code}'));
         debugPrint('post device info : ${value.code}');
@@ -259,12 +280,12 @@ class DashboardController extends BaseController {
   Future<void> loadTransCountList() async {
     state.transCountList.clear();
     try {
-      transaction.postTransactionDashboard('', '').then(
-        (value) {
-          state.transCountList.addAll(value.payload ?? []);
-          update();
-        },
-      );
+      var value = await transaction.postTransactionDashboard(QueryParamModel());
+      AppLogger.i("value : ${jsonEncode(value.data)}");
+      if (value.data?.countCardModel != null) {
+        state.transCountList.addAll(value.data?.countCardModel ?? []);
+      }
+      update();
     } catch (e) {
       e.printError();
     }
@@ -290,19 +311,24 @@ class DashboardController extends BaseController {
     state.isLoading = true;
 
     storage.deleteString(StorageCore.transactionTemp);
-    // loadTransCountList();
+    loadTransCountList();
 
-    bool accounts =
-        ((await storage.readString(StorageCore.accounts)).isEmpty || (await storage.readString(StorageCore.accounts)) == 'null') && state.isLogin;
-    bool dropshipper =
-        ((await storage.readString(StorageCore.dropshipper)).isEmpty || (await storage.readString(StorageCore.dropshipper)) == 'null') &&
-            state.isLogin;
-    bool receiver =
-        ((await storage.readString(StorageCore.receiver)).isEmpty || (await storage.readString(StorageCore.receiver)) == 'null') && state.isLogin;
-    bool sender =
-        ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null') && state.isLogin;
-    bool basic =
-        ((await storage.readString(StorageCore.userProfil)).isEmpty || (await storage.readString(StorageCore.userProfil)) == 'null') && state.isLogin;
+    bool accounts = ((await storage.readString(StorageCore.accounts)).isEmpty ||
+            (await storage.readString(StorageCore.accounts)) == 'null') &&
+        state.isLogin;
+    bool dropshipper = ((await storage.readString(StorageCore.dropshipper))
+                .isEmpty ||
+            (await storage.readString(StorageCore.dropshipper)) == 'null') &&
+        state.isLogin;
+    bool receiver = ((await storage.readString(StorageCore.receiver)).isEmpty ||
+            (await storage.readString(StorageCore.receiver)) == 'null') &&
+        state.isLogin;
+    bool sender = ((await storage.readString(StorageCore.shipper)).isEmpty ||
+            (await storage.readString(StorageCore.shipper)) == 'null') &&
+        state.isLogin;
+    bool basic = ((await storage.readString(StorageCore.userProfil)).isEmpty ||
+            (await storage.readString(StorageCore.userProfil)) == 'null') &&
+        state.isLogin;
     bool ccrfP = ((await storage.readString(StorageCore.ccrfProfil)).isEmpty ||
             (await storage.readString(StorageCore.ccrfProfil)) == 'null' ||
             (await storage.readString(StorageCore.ccrfProfil)) == '{}') &&
@@ -329,7 +355,8 @@ class DashboardController extends BaseController {
               value.data?.first,
             );
           } else {
-            var s = UserModel.fromJson(storage.readData(StorageCore.userProfil));
+            var s =
+                UserModel.fromJson(storage.readData(StorageCore.userProfil));
             await storage.saveData(
               StorageCore.shipper,
               s,
@@ -344,7 +371,8 @@ class DashboardController extends BaseController {
           await storage.saveData(StorageCore.ccrfProfil, value.data);
         });
       } else {
-        state.ccrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
+        state.ccrf = CcrfProfileModel.fromJson(
+            await storage.readData(StorageCore.ccrfProfil));
       }
 
       if (accounts) {
@@ -355,20 +383,25 @@ class DashboardController extends BaseController {
       }
 
       if (dropshipper) {
-        await master.getDropshippers(QueryParamModel()).then((value) async => await storage.saveData(
-              StorageCore.dropshipper,
-              value,
-            ));
+        await master
+            .getDropshippers(QueryParamModel())
+            .then((value) async => await storage.saveData(
+                  StorageCore.dropshipper,
+                  value,
+                ));
       }
 
       if (receiver) {
-        await master.getReceivers(QueryParamModel()).then((value) async => await storage.saveData(
-              StorageCore.receiver,
-              value,
-            ));
+        await master
+            .getReceivers(QueryParamModel())
+            .then((value) async => await storage.saveData(
+                  StorageCore.receiver,
+                  value,
+                ));
       }
 
-      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.ccrfApistatus == "Y");
+      state.isCcrf =
+          (state.ccrf != null && state.ccrf?.generalInfo?.ccrfApistatus == "Y");
 
       storage.saveData(StorageCore.ccrfProfil, state.ccrf);
       // #TODO : implement jlc api
@@ -383,9 +416,11 @@ class DashboardController extends BaseController {
       //   debugPrint("jlc error $value");
       // });
       update();
-      UserModel shipper = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+      UserModel shipper =
+          UserModel.fromJson(await storage.readData(StorageCore.userProfil));
       state.userName = shipper.name ?? '';
-      state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+      state.allow =
+          MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
       update();
     } catch (e, i) {
       e.printError();
@@ -401,7 +436,9 @@ class DashboardController extends BaseController {
 
   bool onPop() {
     DateTime now = DateTime.now();
-    if (state.currentBackPressTime == null || now.difference(state.currentBackPressTime!) > const Duration(seconds: 2)) {
+    if (state.currentBackPressTime == null ||
+        now.difference(state.currentBackPressTime!) >
+            const Duration(seconds: 2)) {
       state.currentBackPressTime = now;
       Get.showSnackbar(
         GetSnackBar(

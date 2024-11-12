@@ -13,9 +13,5 @@ abstract class JLCRepository {
 
   Future<DashboardBannerModel> postDashboardBanner();
 
-  Future<DashboardNewsModel> postDashboardNews(
-    String type,
-    String fromDate,
-    String toDate,
-  );
+  Future<DashboardNewsModel> postDashboardNews();
 }

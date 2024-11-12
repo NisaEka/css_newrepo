@@ -6,6 +6,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +42,10 @@ class InputLaporankuController extends BaseController {
     listCategory = [];
     isLoading = true;
     try {
-      await laporanku.getTicketCategory().then((value) {
-        listCategory.addAll(value.payload ?? []);
+      await laporanku
+          .getTicketCategory(QueryParamModel(table: true, limit: 0))
+          .then((value) {
+        listCategory.addAll(value.data ?? []);
         update();
       });
     } catch (e) {
@@ -76,7 +79,9 @@ class InputLaporankuController extends BaseController {
               Text(
                 "Kategori".tr,
                 style: appTitleTextStyle.copyWith(
-                  color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
+                  color: AppConst.isLightTheme(context)
+                      ? greyDarkColor1
+                      : greyLightColor1,
                 ),
               ),
               CustomSearchField(
@@ -104,13 +109,16 @@ class InputLaporankuController extends BaseController {
                                 ListTile(
                                   contentPadding: EdgeInsets.zero,
                                   title: Text(
-                                    e.description?.toUpperCase() ?? '',
-                                    style: Theme.of(context).textTheme.titleMedium,
+                                    e.categoryDescription?.toUpperCase() ?? '',
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                   style: ListTileStyle.list,
                                   onTap: () {
                                     selectedCategory = e;
-                                    category.text = e.description?.toUpperCase() ?? '';
+                                    category.text =
+                                        e.categoryDescription?.toUpperCase() ??
+                                            '';
                                     update();
                                     Get.back();
                                   },
@@ -127,13 +135,16 @@ class InputLaporankuController extends BaseController {
                                 ListTile(
                                   contentPadding: EdgeInsets.zero,
                                   title: Text(
-                                    e.description?.toUpperCase() ?? '',
-                                    style: Theme.of(context).textTheme.titleMedium,
+                                    e.categoryDescription?.toUpperCase() ?? '',
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                   style: ListTileStyle.list,
                                   onTap: () {
                                     selectedCategory = e;
-                                    category.text = e.description?.toUpperCase() ?? '';
+                                    category.text =
+                                        e.categoryDescription?.toUpperCase() ??
+                                            '';
                                     update();
                                     Get.back();
                                   },
@@ -159,7 +170,11 @@ class InputLaporankuController extends BaseController {
     } else {
       listSearchCategory = listCategory
           .where(
-            (e) => e.description?.toLowerCase().contains(search.toLowerCase()) ?? false,
+            (e) =>
+                e.categoryDescription
+                    ?.toLowerCase()
+                    .contains(search.toLowerCase()) ??
+                false,
           )
           .toList();
 
@@ -174,58 +189,66 @@ class InputLaporankuController extends BaseController {
     try {
       await laporanku
           .postTicket(DataPostTicketModel(
-            cnote: noResi.text,
-            categoryId: selectedCategory?.id,
-            subject: subject.text,
-            message: message.text,
-            priority: priority ? "Y" : "N",
-          ))
-          .then(
-            (value) => value.code == 201
-                ? Get.to(SuccessScreen(
-                    message: "Laporanmu berhasil dibuatdan akan diproses lebih lanjut".tr,
-                    buttonTitle: "OK".tr,
-                    nextAction: () => Get.close(2),
-                  ))
-                : value.code == 404
-                    ? Get.showSnackbar(
-                        GetSnackBar(
-                          icon: const Icon(
-                            Icons.warning,
-                            color: whiteColor,
-                          ),
-                          message: 'Nomor Resi Tidak Terdaftar'.tr,
-                          isDismissible: true,
-                          duration: const Duration(seconds: 3),
-                          backgroundColor: warningColor,
-                        ),
-                      )
-                    : value.code == 403
-                        ? Get.showSnackbar(
-                            GetSnackBar(
-                              icon: const Icon(
-                                Icons.warning,
-                                color: whiteColor,
-                              ),
-                              message: 'Tiket Sudah Terdaftar'.tr,
-                              isDismissible: true,
-                              duration: const Duration(seconds: 3),
-                              backgroundColor: warningColor,
-                            ),
-                          )
-                        : Get.showSnackbar(
-                            GetSnackBar(
-                              icon: const Icon(
-                                Icons.warning,
-                                color: whiteColor,
-                              ),
-                              message: 'Bad Request'.tr,
-                              isDismissible: true,
-                              duration: const Duration(seconds: 3),
-                              backgroundColor: errorColor,
-                            ),
-                          ),
-          );
+        cnote: noResi.text,
+        categoryId: selectedCategory?.categoryId,
+        subject: subject.text,
+        message: message.text,
+        priority: priority ? "Y" : "N",
+      ))
+          .then((value) {
+        switch (value.code) {
+          case 201:
+            Get.to(SuccessScreen(
+              message:
+                  'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'.tr,
+              buttonTitle: 'OK'.tr,
+              nextAction: () => Get.close(2),
+            ));
+            break;
+          case 404:
+            Get.showSnackbar(
+              GetSnackBar(
+                icon: const Icon(
+                  Icons.warning,
+                  color: whiteColor,
+                ),
+                message: 'Nomor Resi Tidak Terdaftar'.tr,
+                isDismissible: true,
+                duration: const Duration(seconds: 3),
+                backgroundColor: warningColor,
+              ),
+            );
+            break;
+          case 409:
+            Get.showSnackbar(
+              GetSnackBar(
+                icon: const Icon(
+                  Icons.warning,
+                  color: whiteColor,
+                ),
+                message: 'Tiket Sudah Terdaftar'.tr,
+                isDismissible: true,
+                duration: const Duration(seconds: 3),
+                backgroundColor: warningColor,
+              ),
+            );
+            break;
+          default:
+            Get.showSnackbar(
+              GetSnackBar(
+                icon: const Icon(
+                  Icons.warning,
+                  color: whiteColor,
+                ),
+                message: 'Bad Request'.tr,
+                isDismissible: true,
+                duration: const Duration(seconds: 3),
+                backgroundColor: errorColor,
+              ),
+            );
+            break;
+        }
+      });
     } catch (e) {
       e.printError();
     }

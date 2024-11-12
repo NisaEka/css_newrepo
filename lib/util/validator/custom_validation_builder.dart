@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 
 extension CustomValidationBuilder on ValidationBuilder {
   password() => add((value) {
-        String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+        String pattern =
+            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
         RegExp regex = RegExp(pattern);
 
         if (value == 'password') {
@@ -12,7 +13,8 @@ extension CustomValidationBuilder on ValidationBuilder {
         } else if (value!.length < 8) {
           return 'Kata sandi harus lebih dari 8 karakter'.tr;
         } else if (!regex.hasMatch(value)) {
-          return 'Kata sandi harus mengandung huruf besar, huruf kecil, angka dan karakter khusus'.tr;
+          return 'Kata sandi harus mengandung huruf besar, huruf kecil, angka dan karakter khusus'
+              .tr;
         }
         return null;
       });
@@ -59,7 +61,8 @@ extension CustomValidationBuilder on ValidationBuilder {
 
   ValidationBuilder max(int maxValue, [String? message]) => add((value) {
         if (int.parse(value!.digitOnly()) > maxValue) {
-          return message ?? "${'Isian tidak boleh lebih besar dari'.tr} ${maxValue.toString()}";
+          return message ??
+              "${'Isian tidak boleh lebih besar dari'.tr} ${maxValue.toString()}";
         }
 
         return null;
@@ -67,7 +70,8 @@ extension CustomValidationBuilder on ValidationBuilder {
 
   ValidationBuilder validLink() {
     return add((value) {
-      String pattern = r'(http|https)://[\w]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
+      String pattern =
+          r'(http|https)://[\w]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
       RegExp regExp = RegExp(pattern);
       if (!regExp.hasMatch(value!)) {
         return 'Silakan masukkan url yang valid'.tr;

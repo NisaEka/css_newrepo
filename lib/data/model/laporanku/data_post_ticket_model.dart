@@ -1,6 +1,13 @@
 class DataPostTicketModel {
   DataPostTicketModel(
-      {String? cnote, String? categoryId, String? subject, String? message, String? priority, String? image, String? type, String? id}) {
+      {String? cnote,
+      String? categoryId,
+      String? subject,
+      String? message,
+      String? priority,
+      String? image,
+      String? type,
+      String? ticketId}) {
     _cnote = cnote;
     _categoryId = categoryId;
     _subject = subject;
@@ -8,18 +15,18 @@ class DataPostTicketModel {
     _priority = priority;
     _image = image;
     _type = type;
-    _id = id;
+    _ticketId = ticketId;
   }
 
   DataPostTicketModel.fromJson(dynamic json) {
     _cnote = json['cnote'];
-    _categoryId = json['category_id'];
+    _categoryId = json['categoryId'];
     _subject = json['subject'];
     _message = json['message'];
     _priority = json['priority'];
     _image = json['image'];
     _type = json['type'];
-    _id = json['id'];
+    _ticketId = json['ticketId'];
   }
 
   String? _cnote;
@@ -29,7 +36,7 @@ class DataPostTicketModel {
   String? _priority;
   String? _image;
   String? _type;
-  String? _id;
+  String? _ticketId;
 
   DataPostTicketModel copyWith({
     String? cnote,
@@ -39,7 +46,7 @@ class DataPostTicketModel {
     String? priority,
     String? image,
     String? type,
-    String? id,
+    String? ticketId,
   }) =>
       DataPostTicketModel(
         cnote: cnote ?? _cnote,
@@ -49,7 +56,7 @@ class DataPostTicketModel {
         priority: priority ?? _priority,
         image: image ?? _image,
         type: type ?? _type,
-        id: id ?? _id,
+        ticketId: ticketId ?? _ticketId,
       );
 
   String? get cnote => _cnote;
@@ -66,18 +73,18 @@ class DataPostTicketModel {
 
   String? get type => _type;
 
-  String? get id => _id;
+  String? get ticketId => _ticketId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['cnote'] = _cnote;
-    map['category_id'] = _categoryId;
+    map['categoryId'] = _categoryId;
     map['subject'] = _subject;
     map['message'] = _message;
     map['priority'] = _priority;
     map['image'] = _image;
     map['type'] = _type;
-    map['id'] = _id;
+    map['ticketId'] = _ticketId;
     return map;
   }
 }

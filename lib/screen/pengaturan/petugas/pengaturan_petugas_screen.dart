@@ -30,7 +30,8 @@ class PengaturanPetugasScreen extends StatelessWidget {
         });
   }
 
-  CustomTopBar _appBarContent(PengaturanPetugasController c, BuildContext context){
+  CustomTopBar _appBarContent(
+      PengaturanPetugasController c, BuildContext context) {
     return CustomTopBar(
       title: 'Pengaturan Petugas'.tr,
       action: [
@@ -48,7 +49,7 @@ class PengaturanPetugasScreen extends StatelessWidget {
     );
   }
 
-  Widget _bodyContent(PengaturanPetugasController c, BuildContext context){
+  Widget _bodyContent(PengaturanPetugasController c, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -74,7 +75,7 @@ class PengaturanPetugasScreen extends StatelessWidget {
           Expanded(
             child: RefreshIndicator(
               onRefresh: () => Future.sync(
-                    () => c.pagingController.refresh(),
+                () => c.pagingController.refresh(),
               ),
               child: PagedListView<int, PetugasModel>(
                 pagingController: c.pagingController,
@@ -88,8 +89,10 @@ class PengaturanPetugasScreen extends StatelessWidget {
                       color: item.status == "Y" ? successColor : errorColor,
                     ),
                     title: item.name ?? '',
-                    subtitle: '${item.email ?? '-'}\n${item.phone ?? '-'}\n${item.branch ?? ''} - ${item.origin ?? ''}',
-                    onTap: () => Get.to(const TambahPetugasScreen(), arguments: {
+                    subtitle:
+                        '${item.email ?? '-'}\n${item.phone ?? '-'}\n${item.branch ?? ''} - ${item.origin ?? ''}',
+                    onTap: () =>
+                        Get.to(const TambahPetugasScreen(), arguments: {
                       'isEdit': true,
                       'data': item,
                     })?.then((value) => c.pagingController.refresh()),
@@ -107,11 +110,12 @@ class PengaturanPetugasScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(
                     children: List.generate(
                       3,
-                          (index) => PetugasListItem(
+                      (index) => PetugasListItem(
                         isLoading: c.isLoading,
                         title: '',
                         icon: const Icon(Icons.shield),
@@ -128,7 +132,8 @@ class PengaturanPetugasScreen extends StatelessWidget {
                       color: blueJNE,
                     ),
                   ),
-                  newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                  newPageProgressIndicatorBuilder: (context) =>
+                      const LoadingDialog(
                     background: Colors.transparent,
                     height: 50,
                     size: 30,

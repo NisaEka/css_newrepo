@@ -7,14 +7,15 @@ class LaporankuState {
   final searchField = TextEditingController();
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
-  final PagingController<int, TicketModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, TicketModel> pagingController =
+      PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
   bool isFiltered = false;
   bool isLoading = false;
   DateTime? startDate;
   DateTime? endDate;
-  String? date;
+  List<String> date = [];
   String? status = "";
   int selectedStatus = 0;
   int total = 0;

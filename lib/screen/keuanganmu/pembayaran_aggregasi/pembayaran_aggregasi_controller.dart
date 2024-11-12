@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +16,8 @@ class PembayaranAggergasiController extends BaseController {
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
   final searchField = TextEditingController();
-  final PagingController<int, AggregationModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, AggregationModel> pagingController =
+      PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
   DateTime? startDate;
@@ -23,7 +27,7 @@ class PembayaranAggergasiController extends BaseController {
   bool isSelect = false;
   bool isSelectAll = false;
 
-  String? transDate;
+  List<String> transDate = [];
   String dateFilter = '0';
   int? aggTotal;
 
@@ -37,6 +41,7 @@ class PembayaranAggergasiController extends BaseController {
     pagingController.addPageRequestListener((pageKey) {
       getAggregation(pageKey);
     });
+    fetchAggregationTotal();
     update();
   }
 
@@ -44,21 +49,40 @@ class PembayaranAggergasiController extends BaseController {
     isLoading = true;
 
     try {
-      final agg = await aggregation.getAggregationReport(
-        page,
-        pageSize,
-        searchField.text,
-        transDate ?? '',
-        selectedAccount,
-      );
+      final isIn = [];
+      final between = [];
 
-      final isLastPage = (agg.payload?.length ?? 0) < pageSize;
+      if (selectedAccount.isNotEmpty) {
+        isIn.add({
+          // TODO: TO BE REMOVED, TESTING PURPOSE
+          // "mpayWdrGrpPayCode": [
+          //   "10999302",
+          //   ...selectedAccount.map((e) => e.accountNumber).toList()
+          // ]
+          "mpayWdrGrpPayCode":
+              selectedAccount.map((e) => e.accountNumber).toList()
+        });
+      }
+
+      if (transDate.isNotEmpty) {
+        between.add({"mpayWdrGrpPayDate": transDate});
+      }
+
+      final agg = await aggregation.getAggregationReport(QueryParamModel(
+        page: page,
+        limit: pageSize,
+        search: searchField.text,
+        isIn: jsonEncode(isIn),
+        between: jsonEncode(between),
+      ));
+
+      final isLastPage = agg.meta!.currentPage == agg.meta!.lastPage;
       if (isLastPage) {
-        pagingController.appendLastPage(agg.payload ?? []);
+        pagingController.appendLastPage(agg.data ?? []);
         // transactionList.addAll(pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
-        pagingController.appendPage(agg.payload ?? [], nextPageKey);
+        pagingController.appendPage(agg.data ?? [], nextPageKey);
         // transactionList.addAll(pagingController.itemList ?? []);
       }
     } catch (e, i) {
@@ -71,6 +95,41 @@ class PembayaranAggergasiController extends BaseController {
     update();
   }
 
+  Future<void> fetchAggregationTotal() async {
+    try {
+      final isIn = [];
+      final between = [];
+
+      if (selectedAccount.isNotEmpty) {
+        isIn.add({
+          // TODO: TO BE REMOVED, TESTING PURPOSE
+          // "mpayWdrGrpPayCode": [
+          //   "10999302",
+          //   ...selectedAccount.map((e) => e.accountNumber).toList()
+          // ]
+          "mpayWdrGrpPayCode":
+              selectedAccount.map((e) => e.accountNumber).toList()
+        });
+      }
+
+      if (transDate.isNotEmpty) {
+        between.add({"mpayWdrGrpPayDate": transDate});
+      }
+
+      final total = await aggregation.getAggregationTotal(QueryParamModel(
+        search: searchField.text,
+        between: jsonEncode(between),
+        isIn: jsonEncode(isIn),
+      ));
+
+      aggTotal = total.data?.total?.toInt() ?? 0;
+      update();
+    } catch (e, i) {
+      e.printError();
+      i.printError();
+    }
+  }
+
   Future<void> initData() async {
     accountList = [];
     selectedAccount = [];
@@ -81,10 +140,21 @@ class PembayaranAggergasiController extends BaseController {
       update();
       selectedAccount.addAll(accountList);
 
-      await aggregation.getAggregationTotal().then((value) {
-        aggTotal = value.payload?.total?.toInt() ?? 0;
-        update();
-      });
+      // final isIn = [];
+      // final between = [];
+
+      // if (selectedAccount.isNotEmpty) {
+      //   isIn.add({
+      //     "mpayWdrGrpPayCode": [
+      //       "10999302",
+      //       ...selectedAccount.map((e) => e.accountNumber).toList()
+      //     ]
+      //   });
+      // }
+
+      // if (transDate.isNotEmpty) {
+      //   between.add({"mpayWdrGrpPayDate": transDate});
+      // }
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -148,13 +218,21 @@ class PembayaranAggergasiController extends BaseController {
   }
 
   void applyFilter() {
-    if (startDate != null || endDate != null || !accountList.equals(selectedAccount)) {
+    if (startDate != null ||
+        endDate != null ||
+        !accountList.equals(selectedAccount)) {
       isFiltered = true;
       if (startDate != null && endDate != null) {
-        transDate = "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+        transDate = [
+          DateTime(startDate!.year, startDate!.month, startDate!.day)
+              .toIso8601String(),
+          DateTime(endDate!.year, endDate!.month, endDate!.day, 23, 59, 59, 999)
+              .toIso8601String()
+        ];
       }
       update();
       pagingController.refresh();
+      fetchAggregationTotal();
       Get.back();
     }
   }
@@ -168,12 +246,13 @@ class PembayaranAggergasiController extends BaseController {
     isFiltered = false;
     selectedAccount = [];
     selectedAccount.addAll(accountList);
-    transDate = '';
+    transDate = [];
     dateFilter = '0';
 
     update();
 
     pagingController.refresh();
+    fetchAggregationTotal();
     Get.back();
     // }
   }

@@ -1,7 +1,6 @@
 import 'package:geocoding/geocoding.dart';
 
 extension PlacementExt on Placemark {
-  
   String toReadableAddress() {
     final addressBuffer = StringBuffer();
 
@@ -36,5 +35,4 @@ extension PlacementExt on Placemark {
 
     return addressBuffer.toString();
   }
-  
 }

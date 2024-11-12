@@ -12,7 +12,8 @@ class StickerMegahubHybrid2 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
 
-  const StickerMegahubHybrid2({super.key, required this.data, this.shippingCost = false});
+  const StickerMegahubHybrid2(
+      {super.key, required this.data, this.shippingCost = false});
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +125,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   width: (Get.width - 51) / 3.2,
                   alignment: Alignment.center,
                   child: Text(
-                    "Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() ?? '0' : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' :  data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}",
+                    "Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() ?? '0' : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}",
                     style: TextStyle(fontSize: 15, fontWeight: bold),
                   ),
                 ),
@@ -156,9 +157,13 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Deskripsi: \n${data.goods?.desc ?? '-'}\n\n', style: labelTextStyle),
+                              Text(
+                                  'Deskripsi: \n${data.goods?.desc ?? '-'}\n\n',
+                                  style: labelTextStyle),
                               const SolidBorder(),
-                              Text('Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n\n', style: labelTextStyle),
+                              Text(
+                                  'Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n\n',
+                                  style: labelTextStyle),
                             ],
                           ),
                           Container(
@@ -171,12 +176,22 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Tanggal: ${data.createdDate?.toShortDateFormat() ?? '-'}', style: labelTextStyle),
-                                Text('No. Pelanggan: ${data.account?.accountNumber ?? '-'}', style: labelTextStyle),
-                                Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? '-'}', style: labelTextStyle),
-                                Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
-                                Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}', style: labelTextStyle),
-                                Text('Pembayaran: ${data.type ?? '-'}', style: labelTextStyle),
+                                Text(
+                                    'Tanggal: ${data.createdDate?.toShortDateFormat() ?? '-'}',
+                                    style: labelTextStyle),
+                                Text(
+                                    'No. Pelanggan: ${data.account?.accountNumber ?? '-'}',
+                                    style: labelTextStyle),
+                                Text(
+                                    'Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? '-'}',
+                                    style: labelTextStyle),
+                                Text('Berat: ${data.goods?.weight ?? '0'} Kg',
+                                    style: labelTextStyle),
+                                Text(
+                                    'Jumlah Kiriman: ${data.goods?.quantity ?? '0'}',
+                                    style: labelTextStyle),
+                                Text('Pembayaran: ${data.type ?? '-'}',
+                                    style: labelTextStyle),
                                 // Text('Order ID: ${data.orderId}', style: labelTextStyle),
                               ],
                             ),

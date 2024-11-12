@@ -1,5 +1,5 @@
-class StickerLabel {
-  StickerLabel({
+class StickerLabelModel {
+  StickerLabelModel({
     num? index,
     String? name,
     String? image,
@@ -13,7 +13,7 @@ class StickerLabel {
     _showPrice = showPrice;
   }
 
-  StickerLabel.fromJson(dynamic json) {
+  StickerLabelModel.fromJson(dynamic json) {
     _index = json['index'];
     _name = json['name'];
     _image = json['image'];
@@ -27,14 +27,14 @@ class StickerLabel {
   bool? _enable;
   bool? _showPrice;
 
-  StickerLabel copyWith({
+  StickerLabelModel copyWith({
     num? index,
     String? name,
     String? image,
     bool? enable,
     bool? showPrice,
   }) =>
-      StickerLabel(
+      StickerLabelModel(
         index: index ?? _index,
         name: name ?? _name,
         image: image ?? _image,

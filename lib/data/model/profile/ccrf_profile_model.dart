@@ -1,34 +1,45 @@
 class CcrfProfileModel {
   CcrfProfileModel({
-      GeneralInfo? generalInfo, 
-      ReturnAddress? returnAddress, 
-      Document? document, 
-      BankAccount? bankAccount,}){
+    GeneralInfo? generalInfo,
+    ReturnAddress? returnAddress,
+    Document? document,
+    BankAccount? bankAccount,
+  }) {
     _generalInfo = generalInfo;
     _returnAddress = returnAddress;
     _document = document;
     _bankAccount = bankAccount;
-}
+  }
 
   CcrfProfileModel.fromJson(dynamic json) {
-    _generalInfo = json['generalInfo'] != null ? GeneralInfo.fromJson(json['generalInfo']) : null;
-    _returnAddress = json['returnAddress'] != null ? ReturnAddress.fromJson(json['returnAddress']) : null;
-    _document = json['document'] != null ? Document.fromJson(json['document']) : null;
-    _bankAccount = json['bankAccount'] != null ? BankAccount.fromJson(json['bankAccount']) : null;
+    _generalInfo = json['generalInfo'] != null
+        ? GeneralInfo.fromJson(json['generalInfo'])
+        : null;
+    _returnAddress = json['returnAddress'] != null
+        ? ReturnAddress.fromJson(json['returnAddress'])
+        : null;
+    _document =
+        json['document'] != null ? Document.fromJson(json['document']) : null;
+    _bankAccount = json['bankAccount'] != null
+        ? BankAccount.fromJson(json['bankAccount'])
+        : null;
   }
   GeneralInfo? _generalInfo;
   ReturnAddress? _returnAddress;
   Document? _document;
   BankAccount? _bankAccount;
-CcrfProfileModel copyWith({  GeneralInfo? generalInfo,
-  ReturnAddress? returnAddress,
-  Document? document,
-  BankAccount? bankAccount,
-}) => CcrfProfileModel(  generalInfo: generalInfo ?? _generalInfo,
-  returnAddress: returnAddress ?? _returnAddress,
-  document: document ?? _document,
-  bankAccount: bankAccount ?? _bankAccount,
-);
+  CcrfProfileModel copyWith({
+    GeneralInfo? generalInfo,
+    ReturnAddress? returnAddress,
+    Document? document,
+    BankAccount? bankAccount,
+  }) =>
+      CcrfProfileModel(
+        generalInfo: generalInfo ?? _generalInfo,
+        returnAddress: returnAddress ?? _returnAddress,
+        document: document ?? _document,
+        bankAccount: bankAccount ?? _bankAccount,
+      );
   GeneralInfo? get generalInfo => _generalInfo;
   ReturnAddress? get returnAddress => _returnAddress;
   Document? get document => _document;
@@ -50,18 +61,18 @@ CcrfProfileModel copyWith({  GeneralInfo? generalInfo,
     }
     return map;
   }
-
 }
 
 class BankAccount {
   BankAccount({
-      String? ccrfBankaccount, 
-      String? ccrfAccountname, 
-      String? ccrfAccountnumber,}){
+    String? ccrfBankaccount,
+    String? ccrfAccountname,
+    String? ccrfAccountnumber,
+  }) {
     _ccrfBankaccount = ccrfBankaccount;
     _ccrfAccountname = ccrfAccountname;
     _ccrfAccountnumber = ccrfAccountnumber;
-}
+  }
 
   BankAccount.fromJson(dynamic json) {
     _ccrfBankaccount = json['ccrfBankaccount'];
@@ -71,13 +82,16 @@ class BankAccount {
   String? _ccrfBankaccount;
   String? _ccrfAccountname;
   String? _ccrfAccountnumber;
-BankAccount copyWith({  String? ccrfBankaccount,
-  String? ccrfAccountname,
-  String? ccrfAccountnumber,
-}) => BankAccount(  ccrfBankaccount: ccrfBankaccount ?? _ccrfBankaccount,
-  ccrfAccountname: ccrfAccountname ?? _ccrfAccountname,
-  ccrfAccountnumber: ccrfAccountnumber ?? _ccrfAccountnumber,
-);
+  BankAccount copyWith({
+    String? ccrfBankaccount,
+    String? ccrfAccountname,
+    String? ccrfAccountnumber,
+  }) =>
+      BankAccount(
+        ccrfBankaccount: ccrfBankaccount ?? _ccrfBankaccount,
+        ccrfAccountname: ccrfAccountname ?? _ccrfAccountname,
+        ccrfAccountnumber: ccrfAccountnumber ?? _ccrfAccountnumber,
+      );
   String? get ccrfBankaccount => _ccrfBankaccount;
   String? get ccrfAccountname => _ccrfAccountname;
   String? get ccrfAccountnumber => _ccrfAccountnumber;
@@ -89,18 +103,18 @@ BankAccount copyWith({  String? ccrfBankaccount,
     map['ccrfAccountnumber'] = _ccrfAccountnumber;
     return map;
   }
-
 }
 
 class Document {
   Document({
-      String? ccrfKtpattached, 
-      String? ccrfNpwpattached, 
-      String? ccrfAccountattached,}){
+    String? ccrfKtpattached,
+    String? ccrfNpwpattached,
+    String? ccrfAccountattached,
+  }) {
     _ccrfKtpattached = ccrfKtpattached;
     _ccrfNpwpattached = ccrfNpwpattached;
     _ccrfAccountattached = ccrfAccountattached;
-}
+  }
 
   Document.fromJson(dynamic json) {
     _ccrfKtpattached = json['ccrfKtpattached'];
@@ -110,13 +124,16 @@ class Document {
   String? _ccrfKtpattached;
   String? _ccrfNpwpattached;
   String? _ccrfAccountattached;
-Document copyWith({  String? ccrfKtpattached,
-  String? ccrfNpwpattached,
-  String? ccrfAccountattached,
-}) => Document(  ccrfKtpattached: ccrfKtpattached ?? _ccrfKtpattached,
-  ccrfNpwpattached: ccrfNpwpattached ?? _ccrfNpwpattached,
-  ccrfAccountattached: ccrfAccountattached ?? _ccrfAccountattached,
-);
+  Document copyWith({
+    String? ccrfKtpattached,
+    String? ccrfNpwpattached,
+    String? ccrfAccountattached,
+  }) =>
+      Document(
+        ccrfKtpattached: ccrfKtpattached ?? _ccrfKtpattached,
+        ccrfNpwpattached: ccrfNpwpattached ?? _ccrfNpwpattached,
+        ccrfAccountattached: ccrfAccountattached ?? _ccrfAccountattached,
+      );
   String? get ccrfKtpattached => _ccrfKtpattached;
   String? get ccrfNpwpattached => _ccrfNpwpattached;
   String? get ccrfAccountattached => _ccrfAccountattached;
@@ -128,25 +145,25 @@ Document copyWith({  String? ccrfKtpattached,
     map['ccrfAccountattached'] = _ccrfAccountattached;
     return map;
   }
-
 }
 
 class ReturnAddress {
   ReturnAddress({
-      String? ccrfReturnaddress, 
-      String? ccrfReturnprovince, 
-      String? ccrfReturncity, 
-      String? ccrfReturndistrict, 
-      String? ccrfReturnsubdistrict, 
-      String? ccrfReturnzipcode, 
-      String? ccrfReturnphone, 
-      String? ccrfReturnhandphone, 
-      String? ccrfReturnresponsiblename, 
-      String? ccrfJlcnumber, 
-      String? ccrfCounter, 
-      String? ccrfNpwptype, 
-      String? ccrfNpwpname, 
-      String? ccrfNpwpnumber,}){
+    String? ccrfReturnaddress,
+    String? ccrfReturnprovince,
+    String? ccrfReturncity,
+    String? ccrfReturndistrict,
+    String? ccrfReturnsubdistrict,
+    String? ccrfReturnzipcode,
+    String? ccrfReturnphone,
+    String? ccrfReturnhandphone,
+    String? ccrfReturnresponsiblename,
+    String? ccrfJlcnumber,
+    String? ccrfCounter,
+    String? ccrfNpwptype,
+    String? ccrfNpwpname,
+    String? ccrfNpwpnumber,
+  }) {
     _ccrfReturnaddress = ccrfReturnaddress;
     _ccrfReturnprovince = ccrfReturnprovince;
     _ccrfReturncity = ccrfReturncity;
@@ -161,7 +178,7 @@ class ReturnAddress {
     _ccrfNpwptype = ccrfNpwptype;
     _ccrfNpwpname = ccrfNpwpname;
     _ccrfNpwpnumber = ccrfNpwpnumber;
-}
+  }
 
   ReturnAddress.fromJson(dynamic json) {
     _ccrfReturnaddress = json['ccrfReturnaddress'];
@@ -193,35 +210,39 @@ class ReturnAddress {
   String? _ccrfNpwptype;
   String? _ccrfNpwpname;
   String? _ccrfNpwpnumber;
-ReturnAddress copyWith({  String? ccrfReturnaddress,
-  String? ccrfReturnprovince,
-  String? ccrfReturncity,
-  String? ccrfReturndistrict,
-  String? ccrfReturnsubdistrict,
-  String? ccrfReturnzipcode,
-  String? ccrfReturnphone,
-  String? ccrfReturnhandphone,
-  String? ccrfReturnresponsiblename,
-  String? ccrfJlcnumber,
-  String? ccrfCounter,
-  String? ccrfNpwptype,
-  String? ccrfNpwpname,
-  String? ccrfNpwpnumber,
-}) => ReturnAddress(  ccrfReturnaddress: ccrfReturnaddress ?? _ccrfReturnaddress,
-  ccrfReturnprovince: ccrfReturnprovince ?? _ccrfReturnprovince,
-  ccrfReturncity: ccrfReturncity ?? _ccrfReturncity,
-  ccrfReturndistrict: ccrfReturndistrict ?? _ccrfReturndistrict,
-  ccrfReturnsubdistrict: ccrfReturnsubdistrict ?? _ccrfReturnsubdistrict,
-  ccrfReturnzipcode: ccrfReturnzipcode ?? _ccrfReturnzipcode,
-  ccrfReturnphone: ccrfReturnphone ?? _ccrfReturnphone,
-  ccrfReturnhandphone: ccrfReturnhandphone ?? _ccrfReturnhandphone,
-  ccrfReturnresponsiblename: ccrfReturnresponsiblename ?? _ccrfReturnresponsiblename,
-  ccrfJlcnumber: ccrfJlcnumber ?? _ccrfJlcnumber,
-  ccrfCounter: ccrfCounter ?? _ccrfCounter,
-  ccrfNpwptype: ccrfNpwptype ?? _ccrfNpwptype,
-  ccrfNpwpname: ccrfNpwpname ?? _ccrfNpwpname,
-  ccrfNpwpnumber: ccrfNpwpnumber ?? _ccrfNpwpnumber,
-);
+  ReturnAddress copyWith({
+    String? ccrfReturnaddress,
+    String? ccrfReturnprovince,
+    String? ccrfReturncity,
+    String? ccrfReturndistrict,
+    String? ccrfReturnsubdistrict,
+    String? ccrfReturnzipcode,
+    String? ccrfReturnphone,
+    String? ccrfReturnhandphone,
+    String? ccrfReturnresponsiblename,
+    String? ccrfJlcnumber,
+    String? ccrfCounter,
+    String? ccrfNpwptype,
+    String? ccrfNpwpname,
+    String? ccrfNpwpnumber,
+  }) =>
+      ReturnAddress(
+        ccrfReturnaddress: ccrfReturnaddress ?? _ccrfReturnaddress,
+        ccrfReturnprovince: ccrfReturnprovince ?? _ccrfReturnprovince,
+        ccrfReturncity: ccrfReturncity ?? _ccrfReturncity,
+        ccrfReturndistrict: ccrfReturndistrict ?? _ccrfReturndistrict,
+        ccrfReturnsubdistrict: ccrfReturnsubdistrict ?? _ccrfReturnsubdistrict,
+        ccrfReturnzipcode: ccrfReturnzipcode ?? _ccrfReturnzipcode,
+        ccrfReturnphone: ccrfReturnphone ?? _ccrfReturnphone,
+        ccrfReturnhandphone: ccrfReturnhandphone ?? _ccrfReturnhandphone,
+        ccrfReturnresponsiblename:
+            ccrfReturnresponsiblename ?? _ccrfReturnresponsiblename,
+        ccrfJlcnumber: ccrfJlcnumber ?? _ccrfJlcnumber,
+        ccrfCounter: ccrfCounter ?? _ccrfCounter,
+        ccrfNpwptype: ccrfNpwptype ?? _ccrfNpwptype,
+        ccrfNpwpname: ccrfNpwpname ?? _ccrfNpwpname,
+        ccrfNpwpnumber: ccrfNpwpnumber ?? _ccrfNpwpnumber,
+      );
   String? get ccrfReturnaddress => _ccrfReturnaddress;
   String? get ccrfReturnprovince => _ccrfReturnprovince;
   String? get ccrfReturncity => _ccrfReturncity;
@@ -255,25 +276,25 @@ ReturnAddress copyWith({  String? ccrfReturnaddress,
     map['ccrfNpwpnumber'] = _ccrfNpwpnumber;
     return map;
   }
-
 }
 
 class GeneralInfo {
   GeneralInfo({
-      String? ccrfBrand, 
-      String? ccrfName, 
-      String? ccrfKtp, 
-      String? ccrfAddress, 
-      String? ccrfCountry, 
-      String? ccrfProvince, 
-      String? ccrfCity, 
-      String? ccrfDistrict, 
-      String? ccrfSubdistrict, 
-      String? ccrfZipcode, 
-      String? ccrfPhone, 
-      String? ccrfHandphone, 
-      String? ccrfEmail, 
-      String? ccrfApistatus,}){
+    String? ccrfBrand,
+    String? ccrfName,
+    String? ccrfKtp,
+    String? ccrfAddress,
+    String? ccrfCountry,
+    String? ccrfProvince,
+    String? ccrfCity,
+    String? ccrfDistrict,
+    String? ccrfSubdistrict,
+    String? ccrfZipcode,
+    String? ccrfPhone,
+    String? ccrfHandphone,
+    String? ccrfEmail,
+    String? ccrfApistatus,
+  }) {
     _ccrfBrand = ccrfBrand;
     _ccrfName = ccrfName;
     _ccrfKtp = ccrfKtp;
@@ -288,7 +309,7 @@ class GeneralInfo {
     _ccrfHandphone = ccrfHandphone;
     _ccrfEmail = ccrfEmail;
     _ccrfApistatus = ccrfApistatus;
-}
+  }
 
   GeneralInfo.fromJson(dynamic json) {
     _ccrfBrand = json['ccrfBrand'];
@@ -320,35 +341,38 @@ class GeneralInfo {
   String? _ccrfHandphone;
   String? _ccrfEmail;
   String? _ccrfApistatus;
-GeneralInfo copyWith({  String? ccrfBrand,
-  String? ccrfName,
-  String? ccrfKtp,
-  String? ccrfAddress,
-  String? ccrfCountry,
-  String? ccrfProvince,
-  String? ccrfCity,
-  String? ccrfDistrict,
-  String? ccrfSubdistrict,
-  String? ccrfZipcode,
-  String? ccrfPhone,
-  String? ccrfHandphone,
-  String? ccrfEmail,
-  String? ccrfApistatus,
-}) => GeneralInfo(  ccrfBrand: ccrfBrand ?? _ccrfBrand,
-  ccrfName: ccrfName ?? _ccrfName,
-  ccrfKtp: ccrfKtp ?? _ccrfKtp,
-  ccrfAddress: ccrfAddress ?? _ccrfAddress,
-  ccrfCountry: ccrfCountry ?? _ccrfCountry,
-  ccrfProvince: ccrfProvince ?? _ccrfProvince,
-  ccrfCity: ccrfCity ?? _ccrfCity,
-  ccrfDistrict: ccrfDistrict ?? _ccrfDistrict,
-  ccrfSubdistrict: ccrfSubdistrict ?? _ccrfSubdistrict,
-  ccrfZipcode: ccrfZipcode ?? _ccrfZipcode,
-  ccrfPhone: ccrfPhone ?? _ccrfPhone,
-  ccrfHandphone: ccrfHandphone ?? _ccrfHandphone,
-  ccrfEmail: ccrfEmail ?? _ccrfEmail,
-  ccrfApistatus: ccrfApistatus ?? _ccrfApistatus,
-);
+  GeneralInfo copyWith({
+    String? ccrfBrand,
+    String? ccrfName,
+    String? ccrfKtp,
+    String? ccrfAddress,
+    String? ccrfCountry,
+    String? ccrfProvince,
+    String? ccrfCity,
+    String? ccrfDistrict,
+    String? ccrfSubdistrict,
+    String? ccrfZipcode,
+    String? ccrfPhone,
+    String? ccrfHandphone,
+    String? ccrfEmail,
+    String? ccrfApistatus,
+  }) =>
+      GeneralInfo(
+        ccrfBrand: ccrfBrand ?? _ccrfBrand,
+        ccrfName: ccrfName ?? _ccrfName,
+        ccrfKtp: ccrfKtp ?? _ccrfKtp,
+        ccrfAddress: ccrfAddress ?? _ccrfAddress,
+        ccrfCountry: ccrfCountry ?? _ccrfCountry,
+        ccrfProvince: ccrfProvince ?? _ccrfProvince,
+        ccrfCity: ccrfCity ?? _ccrfCity,
+        ccrfDistrict: ccrfDistrict ?? _ccrfDistrict,
+        ccrfSubdistrict: ccrfSubdistrict ?? _ccrfSubdistrict,
+        ccrfZipcode: ccrfZipcode ?? _ccrfZipcode,
+        ccrfPhone: ccrfPhone ?? _ccrfPhone,
+        ccrfHandphone: ccrfHandphone ?? _ccrfHandphone,
+        ccrfEmail: ccrfEmail ?? _ccrfEmail,
+        ccrfApistatus: ccrfApistatus ?? _ccrfApistatus,
+      );
   String? get ccrfBrand => _ccrfBrand;
   String? get ccrfName => _ccrfName;
   String? get ccrfKtp => _ccrfKtp;
@@ -382,5 +406,4 @@ GeneralInfo copyWith({  String? ccrfBrand,
     map['ccrfApistatus'] = _ccrfApistatus;
     return map;
   }
-
 }

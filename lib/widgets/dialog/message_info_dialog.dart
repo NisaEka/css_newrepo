@@ -7,7 +7,8 @@ class MessageInfoDialog extends StatelessWidget {
   final String message;
   final Function onClickAction;
 
-  const MessageInfoDialog({super.key, required this.message, required this.onClickAction});
+  const MessageInfoDialog(
+      {super.key, required this.message, required this.onClickAction});
 
   @override
   Widget build(BuildContext context) {

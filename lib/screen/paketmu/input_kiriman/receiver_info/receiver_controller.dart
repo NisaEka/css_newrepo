@@ -63,20 +63,24 @@ class ReceiverController extends BaseController {
     }
   }
 
-  FutureOr<Receiver?> getSelectedReceiver() async {
+  FutureOr<ReceiverModel?> getSelectedReceiver() async {
     state.receiverName.text = state.receiver?.name?.toUpperCase() ?? '';
     state.receiverPhone.text = state.receiver?.phone ?? '';
     state.receiverDest.text = state.receiver?.idDestination ?? '';
     state.receiverAddress.text = state.receiver?.address?.toUpperCase() ?? '';
     getDestinationList(state.receiver?.destinationCode ?? '').then((value) {
-      state.selectedDestination = value.where((element) => element.destinationCode == state.receiver?.destinationCode).first;
+      state.selectedDestination = value
+          .where((element) =>
+              element.destinationCode == state.receiver?.destinationCode)
+          .first;
     });
     update();
     return state.receiver;
   }
 
   bool isSaveReceiver() {
-    if (state.receiver?.name != state.receiverName.text && state.receiver?.phone != state.receiverPhone.text) {
+    if (state.receiver?.name != state.receiverName.text &&
+        state.receiver?.phone != state.receiverPhone.text) {
       return true;
     }
     return false;
@@ -86,7 +90,8 @@ class ReceiverController extends BaseController {
     state.isLoading = true;
     BaseResponse<List<Destination>>? response;
     try {
-      response = await master.getDestinations(QueryParamModel(search: keyword.toUpperCase()));
+      response = await master
+          .getDestinations(QueryParamModel(search: keyword.toUpperCase()));
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -98,7 +103,7 @@ class ReceiverController extends BaseController {
   }
 
   void nextStep() {
-    var receiver = Receiver(
+    var receiver = ReceiverModel(
       name: state.receiverName.text.toUpperCase(),
       address: state.receiverAddress.text.toUpperCase(),
       phone: state.receiverPhone.text,
@@ -107,8 +112,8 @@ class ReceiverController extends BaseController {
       region: state.selectedDestination?.provinceName,
       country: state.selectedDestination?.countryName,
       contact: state.receiverName.text.toUpperCase(),
-      district: state.selectedDestination?.districtName,
-      subdistrict: state.selectedDestination?.subdistrictName,
+      receiverDistrict: state.selectedDestination?.districtName,
+      receiverSubDistrict: state.selectedDestination?.subdistrictName,
     );
 
     var trans = DataTransactionModel(
@@ -137,7 +142,7 @@ class ReceiverController extends BaseController {
         "dropship": state.dropship,
         "dropshipper": state.dropshipper,
         "shipper": state.shipper,
-        "receiver": receiver ,
+        "receiver": receiver,
         "destination": state.selectedDestination,
       },
     );
@@ -148,7 +153,7 @@ class ReceiverController extends BaseController {
     update();
     try {
       await master
-          .postReceiver(Receiver(
+          .postReceiver(ReceiverModel(
             name: state.receiverName.text,
             contact: state.receiverName.text,
             phone: state.receiverPhone.text,
@@ -160,8 +165,9 @@ class ReceiverController extends BaseController {
             destinationCode: state.selectedDestination?.destinationCode ?? '-',
             destinationDescription: state.selectedDestination?.cityName ?? '-',
             idDestination: state.selectedDestination?.id.toString() ?? '-',
-            district: state.selectedDestination?.districtName ?? '-',
-            subdistrict: state.selectedDestination?.subdistrictName ?? '-',
+            receiverDistrict: state.selectedDestination?.districtName ?? '-',
+            receiverSubDistrict:
+                state.selectedDestination?.subdistrictName ?? '-',
           ))
           .then(
             (value) => value.code == 201
@@ -174,7 +180,8 @@ class ReceiverController extends BaseController {
                       message: "Data receiver telah disimpan".tr,
                       isDismissible: true,
                       duration: const Duration(seconds: 3),
-                      backgroundColor: value.code == 201 ? successColor : errorColor,
+                      backgroundColor:
+                          value.code == 201 ? successColor : errorColor,
                     ),
                   )
                 : Get.showSnackbar(
@@ -186,7 +193,8 @@ class ReceiverController extends BaseController {
                       message: value.error?.first.message ?? ''.tr,
                       isDismissible: true,
                       duration: const Duration(seconds: 3),
-                      backgroundColor: value.code == 201 ? successColor : errorColor,
+                      backgroundColor:
+                          value.code == 201 ? successColor : errorColor,
                     ),
                   ),
           );

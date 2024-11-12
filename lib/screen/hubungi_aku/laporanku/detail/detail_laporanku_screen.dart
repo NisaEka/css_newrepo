@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/detail/detail_laporanku_controller.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolan_laporanku_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -21,7 +22,7 @@ class DetailLaporankuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('ticketID : ${data.id}');
+    AppLogger.d('ticketID : ${data.id}');
     return GetBuilder<DetailLaporankuController>(
         init: DetailLaporankuController(),
         builder: (controller) {
@@ -34,7 +35,8 @@ class DetailLaporankuScreen extends StatelessWidget {
               ],
             ),
             floatingActionButton: _buttonContent(controller, context),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
           );
         });
   }
@@ -69,7 +71,7 @@ class DetailLaporankuScreen extends StatelessWidget {
           ),
           DetailContent(
             title: "Kategori".tr,
-            value: data.category?.description ?? '-',
+            value: data.category?.categoryDescription ?? '-',
           ),
           DetailContent(
             title: "Prioritas".tr,
@@ -77,11 +79,11 @@ class DetailLaporankuScreen extends StatelessWidget {
           ),
           DetailContent(
             title: "Tanggal Dibuat".tr,
-            value: data.createdAt?.toShortDateTimeFormat() ?? '-',
+            value: data.createdDate?.toShortDateTimeFormat() ?? '-',
           ),
           DetailContent(
             title: "Tanggal Diupdate".tr,
-            value: data.updatedAt?.toShortDateTimeFormat() ?? '-',
+            value: data.updatedDate?.toShortDateTimeFormat() ?? '-',
           ),
         ],
       ),
@@ -102,7 +104,8 @@ class DetailLaporankuScreen extends StatelessWidget {
             : const SizedBox(),
         CustomFilledButton(
           color: blueJNE,
-          title: data.status == "Closed" ? "Lapor Ulang".tr : "Lihat Obrolan".tr,
+          title:
+              data.status == "Closed" ? "Lapor Ulang".tr : "Lihat Obrolan".tr,
           width: Get.width - 50,
           onPressed: () => Get.to(const ObrolanLaporankuScreen(), arguments: {
             "id": data.id,

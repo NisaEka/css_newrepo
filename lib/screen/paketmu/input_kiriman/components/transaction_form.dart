@@ -37,7 +37,8 @@ class TransactionForm extends StatelessWidget {
                   Form(
                     key: c.state.formKey,
                     onChanged: () {
-                      c.state.formValidate = c.state.formKey.currentState?.validate() ?? false;
+                      c.state.formValidate =
+                          c.state.formKey.currentState?.validate() ?? false;
                       c.update();
                     },
                     child: Column(
@@ -58,14 +59,20 @@ class TransactionForm extends StatelessWidget {
                                   value: "PAKET",
                                   child: Text(
                                     'Paket'.tr,
-                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(fontWeight: regular),
                                   ),
                                 ),
                                 DropdownMenuItem(
                                   value: "DOKUMEN",
                                   child: Text(
                                     'Dokumen'.tr,
-                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(fontWeight: regular),
                                   ),
                                 ),
                               ],
@@ -91,7 +98,10 @@ class TransactionForm extends StatelessWidget {
                           controller: c.state.goodName,
                           hintText: 'Nama Barang'.tr,
                           isRequired: true,
-                          validator: ValidationBuilder().minLength(3).maxLength(100).build(),
+                          validator: ValidationBuilder()
+                              .minLength(3)
+                              .maxLength(100)
+                              .build(),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,7 +119,8 @@ class TransactionForm extends StatelessWidget {
                                 ThousandsSeparatorInputFormatter(),
                               ],
                               inputType: TextInputType.number,
-                              contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 40, right: 10),
+                              contentPadding: const EdgeInsets.only(
+                                  top: 0, bottom: 0, left: 40, right: 10),
                               width: Get.width / 2,
                               isRequired: c.state.insurance,
                               onChanged: (value) => c.getOngkir(),
@@ -129,7 +140,8 @@ class TransactionForm extends StatelessWidget {
                             border: Border.all(color: greyDarkColor2),
                           ),
                           child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 5),
                             leading: const Icon(
                               Icons.verified_user_outlined,
                               color: redJNE,
@@ -157,27 +169,36 @@ class TransactionForm extends StatelessWidget {
                           hintText: 'Instruksi Khusus (Opsional)'.tr,
                           validator: (value) => value!.isNotEmpty
                               ? value.length < 8
-                                  ? 'Masukan ini harus terdiri dari minimal 8 karakter'.tr
+                                  ? 'Masukan ini harus terdiri dari minimal 8 karakter'
+                                      .tr
                                   : null
                               : null,
                         ),
                         Container(
                           decoration: const BoxDecoration(),
                           child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 5),
                             leading: Switch(
                               value: c.state.woodPacking,
-                              activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                              activeColor: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : redJNE,
                               onChanged: (bool? value) {
                                 c.state.woodPacking = value!;
                                 var temp = c.state.specialInstruction.text;
-                                c.state.specialInstruction.text = value == true ? "MOHON DIPACKING KAYU $temp" : temp.substring(21, temp.length);
+                                c.state.specialInstruction.text = value == true
+                                    ? "MOHON DIPACKING KAYU $temp"
+                                    : temp.substring(21, temp.length);
                                 c.update();
                               },
                             ),
                             title: Text(
                               "Packing Kayu".tr,
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(fontWeight: regular),
                             ),
                             // trailing: IconButton(
                             //   onPressed: () {},
@@ -191,12 +212,15 @@ class TransactionForm extends StatelessWidget {
                               key: c.state.tooltipkey,
                               triggerMode: TooltipTriggerMode.tap,
                               showDuration: const Duration(seconds: 3),
-                              decoration: ShapeDecoration(
+                              decoration: const ShapeDecoration(
                                 color: greyColor,
                                 shape: ToolTipCustomShape(usePadding: false),
                               ),
-                              textStyle: listTitleTextStyle.copyWith(color: whiteColor),
-                              message: 'Hanya sebagai instruksi penggunaan packing kayu'.tr,
+                              textStyle: listTitleTextStyle.copyWith(
+                                  color: whiteColor),
+                              message:
+                                  'Hanya sebagai instruksi penggunaan packing kayu'
+                                      .tr,
                               child: const Icon(
                                 Icons.info_outline,
                                 color: redJNE,
@@ -214,7 +238,8 @@ class TransactionForm extends StatelessWidget {
                               width: Get.width / 3,
                               isRequired: true,
                               validator: ValidationBuilder().min(1).build(),
-                              suffixIcon: const SatuanFieldIcon(title: 'KG', isSuffix: true),
+                              suffixIcon: const SatuanFieldIcon(
+                                  title: 'KG', isSuffix: true),
                               onChanged: (value) {
                                 c.state.berat = value.toDouble();
                                 c.getOngkir();
@@ -224,7 +249,9 @@ class TransactionForm extends StatelessWidget {
                             Text('Dimensi Kiriman'.tr),
                             Switch(
                               value: c.state.dimension,
-                              activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                              activeColor: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : redJNE,
                               onChanged: (value) {
                                 c.state.dimension = value;
                                 c.state.goodLength.clear();
@@ -239,7 +266,8 @@ class TransactionForm extends StatelessWidget {
                         ),
                         c.state.dimension
                             ? Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   CustomTextFormField(
                                     controller: c.state.goodLength,
@@ -320,7 +348,11 @@ class TransactionForm extends StatelessWidget {
                                               : */
                             Column(
                                 children: [
-                                  c.state.account.accountService?.toUpperCase() == 'COD' && !c.state.isCalculate && !c.state.isServiceLoad
+                                  c.state.account.accountService
+                                                  ?.toUpperCase() ==
+                                              'COD' &&
+                                          !c.state.isCalculate &&
+                                          !c.state.isServiceLoad
                                       ? CustomTextFormField(
                                           controller: c.state.codAmountText,
                                           prefixIcon: const SatuanFieldIcon(
@@ -329,39 +361,57 @@ class TransactionForm extends StatelessWidget {
                                           ),
                                           hintText: "Harga COD".tr,
                                           inputFormatters: [
-                                            FilteringTextInputFormatter.digitsOnly,
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
                                             ThousandsSeparatorInputFormatter(),
                                           ],
-                                          validator: ValidationBuilder().min(1000).build(),
+                                          validator: ValidationBuilder()
+                                              .min(1000)
+                                              .build(),
                                           // validator: (value) =>
                                           //     ((value?.digitOnly().toInt() ?? 0) < 1000 && c.state.account.state.accountService?.toUpperCase() == 'COD')
                                           //         ? 'Harga COD Minimal 1000'.tr
                                           //         : null,
                                           inputType: TextInputType.number,
-                                          contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 40, right: 10),
-                                          onSaved: (value) => c.onChangeCodAmountText(value ?? ''),
+                                          contentPadding: const EdgeInsets.only(
+                                              top: 0,
+                                              bottom: 0,
+                                              left: 40,
+                                              right: 10),
+                                          onSaved: (value) =>
+                                              c.onChangeCodAmountText(
+                                                  value ?? ''),
                                         )
                                       : const SizedBox(),
                                   Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2),
+                                      border: Border.all(
+                                          color: AppConst.isLightTheme(context)
+                                              ? greyDarkColor2
+                                              : greyLightColor2),
                                     ),
                                     padding: const EdgeInsets.all(10),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        CustomFormLabel(label: 'Ringkasan Transaksimu'.tr),
-                                        c.state.isCalculate || c.state.isServiceLoad
+                                        CustomFormLabel(
+                                            label: 'Ringkasan Transaksimu'.tr),
+                                        c.state.isCalculate ||
+                                                c.state.isServiceLoad
                                             ? Column(
                                                 children: List.generate(
                                                   5,
                                                   (index) => Shimmer(
-                                                    isLoading: c.state.isCalculate,
+                                                    isLoading:
+                                                        c.state.isCalculate,
                                                     child: Container(
                                                       width: Get.width,
                                                       height: 15,
-                                                      margin: const EdgeInsets.symmetric(vertical: 5),
+                                                      margin: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 5),
                                                       color: greyLightColor3,
                                                     ),
                                                   ),
@@ -369,63 +419,137 @@ class TransactionForm extends StatelessWidget {
                                               )
                                             : Column(
                                                 children: [
-                                                  c.state.account.accountService?.toUpperCase() == 'COD'
+                                                  c.state.account.accountService
+                                                              ?.toUpperCase() ==
+                                                          'COD'
                                                       // &&
                                                       //     (controller.state.account.state.accountCustType?.toUpperCase() == "990" ||
                                                       //         controller.state.account.state.accountCustType?.toUpperCase() == "992")
                                                       ? Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
-                                                            Text('COD fee', style: Theme.of(context).textTheme.titleMedium),
-                                                            Text('${c.state.codfee * 100}%'.replaceAll('.', ','),
-                                                                style: Theme.of(context).textTheme.titleMedium),
+                                                            Text('COD fee',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleMedium),
+                                                            Text(
+                                                                '${c.state.codfee * 100}%'
+                                                                    .replaceAll(
+                                                                        '.',
+                                                                        ','),
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleMedium),
                                                           ],
                                                         )
                                                       : const SizedBox(),
-                                                  c.state.account.accountService?.toUpperCase() == 'COD'
+                                                  c.state.account.accountService
+                                                              ?.toUpperCase() ==
+                                                          'COD'
                                                       ? Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
-                                                            Text('Harga COD'.tr, style: Theme.of(context).textTheme.titleMedium),
-                                                            Text('Rp. ${c.state.codAmount.toInt().toCurrency()}',
-                                                                style: Theme.of(context).textTheme.titleMedium),
+                                                            Text('Harga COD'.tr,
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleMedium),
+                                                            Text(
+                                                                'Rp. ${c.state.codAmount.toInt().toCurrency()}',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleMedium),
                                                           ],
                                                         )
                                                       : const SizedBox(),
                                                   c.state.codOngkir
                                                       ? Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
-                                                            Text('Fee COD Ongkir'.tr, style: Theme.of(context).textTheme.titleMedium),
-                                                            Text('Rp. ${1000.toCurrency()}', style: Theme.of(context).textTheme.titleMedium),
+                                                            Text(
+                                                                'Fee COD Ongkir'
+                                                                    .tr,
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleMedium),
+                                                            Text(
+                                                                'Rp. ${1000.toCurrency()}',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleMedium),
                                                           ],
                                                         )
                                                       : const SizedBox(),
                                                   c.state.insurance
                                                       ? Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
-                                                            Text('Asuransi Pengiriman'.tr, style: Theme.of(context).textTheme.titleMedium),
-                                                            Text('Rp. ${c.state.isr.toInt().toCurrency()}',
-                                                                style: Theme.of(context).textTheme.titleMedium),
+                                                            Text(
+                                                                'Asuransi Pengiriman'
+                                                                    .tr,
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleMedium),
+                                                            Text(
+                                                                'Rp. ${c.state.isr.toInt().toCurrency()}',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleMedium),
                                                           ],
                                                         )
                                                       : const SizedBox(),
                                                   Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
-                                                      Text('Ongkos Kirim'.tr, style: Theme.of(context).textTheme.titleMedium),
-                                                      Text('Rp. ${c.state.freightCharge.toInt().toCurrency()}',
-                                                          style: Theme.of(context).textTheme.titleMedium),
+                                                      Text('Ongkos Kirim'.tr,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleMedium),
+                                                      Text(
+                                                          'Rp. ${c.state.freightCharge.toInt().toCurrency()}',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleMedium),
                                                     ],
                                                   ),
                                                   Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
-                                                      Text('Total Ongkos Kirim'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                      Text(
+                                                          'Total Ongkos Kirim'
+                                                              .tr,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleMedium),
                                                       //gak boleh lebih dari 1jt //kalo cod ongkir true // kasih notif gak bisa di simpan transaksi // button transaksi disable
-                                                      Text('Rp. ${(c.state.totalOngkir).toInt().toCurrency()}',
-                                                          style: Theme.of(context).textTheme.titleMedium),
+                                                      Text(
+                                                          'Rp. ${(c.state.totalOngkir).toInt().toCurrency()}',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleMedium),
                                                     ],
                                                   )
                                                 ],
@@ -439,15 +563,20 @@ class TransactionForm extends StatelessWidget {
                         c.state.isOnline
                             ? CustomFilledButton(
                                 color: c.isValidate() ? blueJNE : greyColor,
-                                title: c.state.dataEdit != null ? 'Edit Resi'.tr : 'Buat Resi'.tr,
+                                title: c.state.dataEdit != null
+                                    ? 'Edit Resi'.tr
+                                    : 'Buat Resi'.tr,
                                 onPressed: () => c.onSaved(),
                               )
                             : const SizedBox(),
-                        c.state.goods == null && !c.state.isOnline || c.state.draft != null
+                        c.state.goods == null && !c.state.isOnline ||
+                                c.state.draft != null
                             ? CustomFilledButton(
                                 color: whiteColor,
-                                borderColor: c.state.formValidate ? blueJNE : greyColor,
-                                fontColor: c.state.formValidate ? blueJNE : greyColor,
+                                borderColor:
+                                    c.state.formValidate ? blueJNE : greyColor,
+                                fontColor:
+                                    c.state.formValidate ? blueJNE : greyColor,
                                 title: 'Simpan ke Draft'.tr,
                                 onPressed: () {
                                   c.state.formValidate ? c.saveDraft() : null;

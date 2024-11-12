@@ -1,28 +1,22 @@
-class DefaultResponseModel <T> {
-
-  num _code = 0;
-  num get code => _code;
+class DefaultResponseModel<T> {
+  num _statusCode = 0;
+  num get statusCode => _statusCode;
 
   String _message = "";
   String get message => _message;
 
-  T? _payload;
-  T? get payload => _payload;
+  T? _data;
+  T? get data => _data;
 
-  DefaultResponseModel({
-    num code = 0,
-    String message = "",
-    T? payload
-  }) {
-    this._code = code;
+  DefaultResponseModel({num statusCode = 0, String message = "", T? data}) {
+    this._statusCode = statusCode;
     this._message = message;
-    this._payload = payload;
+    this._data = data;
   }
 
-  DefaultResponseModel.fromJson(dynamic json, T? payload) {
-    this._code = json["code"];
-    this._message = json["message"];
-    this._payload = payload;
+  DefaultResponseModel.fromJson(dynamic json, T? data) {
+    this._statusCode = json["statusCode"];
+    // this._message = json["message"];
+    this._data = data;
   }
-
 }

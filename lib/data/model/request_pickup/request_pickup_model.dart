@@ -1,10 +1,9 @@
 class RequestPickupModel {
-
-  String _awb =  "";
+  String _awb = "";
   String get awb => _awb;
 
-  String _officerEntry = "";
-  String get officerEntry => _officerEntry;
+  String _petugasEntry = "";
+  String get petugasEntry => _petugasEntry;
 
   String _shipperName = "";
   String get shipperName => _shipperName;
@@ -15,11 +14,11 @@ class RequestPickupModel {
   String _receiverName = "";
   String get receiverName => _receiverName;
 
-  String _date = "";
-  String get date => _date;
+  String _createdDateSearch = "";
+  String get createdDateSearch => _createdDateSearch;
 
-  String _type = "";
-  String get type => _type;
+  String _apiType = "";
+  String get apiType => _apiType;
 
   String _serviceCode = "";
   String get serviceCode => _serviceCode;
@@ -29,14 +28,13 @@ class RequestPickupModel {
 
   RequestPickupModel.fromJson(dynamic json) {
     _awb = json["awb"];
-    _officerEntry = json["officer_entry"];
-    _shipperName = json["shipper_name"];
-    _shipperCity = json["shipper_city"];
-    _receiverName = json["receiver_name"];
-    _date = json["date"];
-    _type = json["type"];
-    _serviceCode = json["service_code"];
+    _petugasEntry = json["petugasEntry"] ?? "";
+    _shipperName = json["shipperName"];
+    _shipperCity = json["shipperCity"];
+    _receiverName = json["receiverName"];
+    _createdDateSearch = json["createdDateSearch"];
+    _apiType = json["apiType"];
+    _serviceCode = json["serviceCode"];
     _status = json["status"];
   }
-
 }

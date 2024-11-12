@@ -1,4 +1,3 @@
-import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
 import 'package:css_mobile/data/repository/master/master_repository.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';

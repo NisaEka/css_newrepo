@@ -21,7 +21,8 @@ class SatuanFieldIcon extends StatelessWidget {
       alignment: Alignment.center,
       width: 30,
       height: 39,
-      margin: EdgeInsets.only(right: isPrefix! ? 10 : 0, left: isSuffix! ? 5 : 0),
+      margin:
+          EdgeInsets.only(right: isPrefix! ? 10 : 0, left: isSuffix! ? 5 : 0),
       decoration: BoxDecoration(
         color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
         borderRadius: BorderRadius.only(
@@ -31,7 +32,9 @@ class SatuanFieldIcon extends StatelessWidget {
           bottomLeft: isPrefix! ? const Radius.circular(8) : Radius.zero,
         ),
       ),
-      child: Text(title, style: listTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? whiteColor : blueJNE)),
+      child: Text(title,
+          style: listTitleTextStyle.copyWith(
+              color: AppConst.isLightTheme(context) ? whiteColor : blueJNE)),
     );
   }
 }

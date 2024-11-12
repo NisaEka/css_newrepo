@@ -22,8 +22,10 @@ class SignupOtpForm extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Kode OTP sudah dikirimkan ke alamat email berikut :'.tr),
-                  Text(c.getMail(), textAlign: TextAlign.left, style: formLabelTextStyle),
+                  Text(
+                      'Kode OTP sudah dikirimkan ke alamat email berikut :'.tr),
+                  Text(c.getMail(),
+                      textAlign: TextAlign.left, style: formLabelTextStyle),
                   Pinput(
                     controller: c.state.otpPin,
                     length: 6,
@@ -39,15 +41,19 @@ class SignupOtpForm extends StatelessWidget {
                   const SizedBox(height: 50),
                   Obx(
                     () => Center(
-                      child: Text(c.state.remainingSeconds != 0 ? c.state.time.value : '00.00'),
+                      child: Text(c.state.remainingSeconds != 0
+                          ? c.state.time.value
+                          : '00.00'),
                     ),
                   ),
                   TextButton(
-                    onPressed: () => c.state.remainingSeconds == 0 ? c.resendPin() : null,
+                    onPressed: () =>
+                        c.state.remainingSeconds == 0 ? c.resendPin() : null,
                     child: Text(
                       'Kirim ulang kode'.tr,
                       style: formLabelTextStyle.copyWith(
-                        color: c.state.remainingSeconds != 0 ? greyColor : blueJNE,
+                        color:
+                            c.state.remainingSeconds != 0 ? greyColor : blueJNE,
                       ),
                     ),
                   ),

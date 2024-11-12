@@ -26,7 +26,8 @@ extension DateExt on DateTime {
 
   bool isTimeAfter(DateTime other, {bool isInclusive = true}) {
     int thisTotalSecond = (hour * 60 * 60) + (minute * 60) + second;
-    int otherTotalSecond = (other.hour * 60 * 60) + (other.minute * 60) + other.second;
+    int otherTotalSecond =
+        (other.hour * 60 * 60) + (other.minute * 60) + other.second;
 
     if (isInclusive) {
       return thisTotalSecond >= otherTotalSecond;
@@ -36,7 +37,8 @@ extension DateExt on DateTime {
 
   bool isTimeBefore(DateTime other, {bool isInclusive = true}) {
     int thisTotalSecond = (hour * 60 * 60) + (minute * 60) + second;
-    int otherTotalSecond = (other.hour * 60 * 60) + (other.minute * 60) + other.second;
+    int otherTotalSecond =
+        (other.hour * 60 * 60) + (other.minute * 60) + other.second;
 
     if (isInclusive) {
       return thisTotalSecond <= otherTotalSecond;
@@ -46,7 +48,8 @@ extension DateExt on DateTime {
 
   bool isSameTime(DateTime other) {
     int thisTotalSecond = (hour * 60 * 60) + (minute * 60) + second;
-    int otherTotalSecond = (other.hour * 60 * 60) + (other.minute * 60) + other.second;
+    int otherTotalSecond =
+        (other.hour * 60 * 60) + (other.minute * 60) + other.second;
 
     return thisTotalSecond == otherTotalSecond;
   }
@@ -74,8 +77,11 @@ extension DateExt on DateTime {
 
     int days = (diffInSeconds / (60 * 60 * 24)).floor();
     int hours = ((diffInSeconds - days * 60 * 60 * 24) / (60 * 60)).floor();
-    int minutes = ((diffInSeconds - days * 60 * 60 * 24 - hours * 60 * 60) / 60).floor();
-    int seconds = ((diffInSeconds - days * 60 * 60 * 24 - hours * 60 * 60 - minutes * 60)).floor();
+    int minutes =
+        ((diffInSeconds - days * 60 * 60 * 24 - hours * 60 * 60) / 60).floor();
+    int seconds =
+        ((diffInSeconds - days * 60 * 60 * 24 - hours * 60 * 60 - minutes * 60))
+            .floor();
 
     debugPrint("days $days hours $hours minutes $minutes seconds $seconds");
     String result = "";

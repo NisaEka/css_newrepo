@@ -1,47 +1,47 @@
 class GetTicketSummaryModel {
   GetTicketSummaryModel({
-    num? code,
+    num? statusCode,
     String? message,
-    TicketSummary? payload,
+    TicketSummary? data,
   }) {
-    _code = code;
+    _statusCode = statusCode;
     _message = message;
-    _payload = payload;
+    _data = data;
   }
 
   GetTicketSummaryModel.fromJson(dynamic json) {
-    _code = json['code'];
+    _statusCode = json['statusCode'];
     _message = json['message'];
-    _payload = json['payload'] != null ? TicketSummary.fromJson(json['payload']) : null;
+    _data = json['data'] != null ? TicketSummary.fromJson(json['data']) : null;
   }
 
-  num? _code;
+  num? _statusCode;
   String? _message;
-  TicketSummary? _payload;
+  TicketSummary? _data;
 
   GetTicketSummaryModel copyWith({
-    num? code,
+    num? statusCode,
     String? message,
-    TicketSummary? payload,
+    TicketSummary? data,
   }) =>
       GetTicketSummaryModel(
-        code: code ?? _code,
+        statusCode: statusCode ?? _statusCode,
         message: message ?? _message,
-        payload: payload ?? _payload,
+        data: data ?? _data,
       );
 
-  num? get code => _code;
+  num? get statusCode => _statusCode;
 
   String? get message => _message;
 
-  TicketSummary? get payload => _payload;
+  TicketSummary? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['code'] = _code;
+    map['statusCode'] = _statusCode;
     map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.toJson();
+    if (_data != null) {
+      map['data'] = _data?.toJson();
     }
     return map;
   }
@@ -62,9 +62,9 @@ class TicketSummary {
 
   TicketSummary.fromJson(dynamic json) {
     _all = json['all'];
-    _onProcess = json['on_process'];
-    _finished = json['finished'];
-    _waiting = json['waiting'];
+    _onProcess = json['replyMiles'];
+    _finished = json['closed'];
+    _waiting = json['onProcess'];
   }
 
   num? _all;
@@ -96,9 +96,9 @@ class TicketSummary {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['all'] = _all;
-    map['on_process'] = _onProcess;
-    map['finished'] = _finished;
-    map['waiting'] = _waiting;
+    map['replyMiles'] = _onProcess;
+    map['closed'] = _finished;
+    map['onProcess'] = _waiting;
     return map;
   }
 }

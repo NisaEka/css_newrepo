@@ -33,7 +33,9 @@ class _ReceiverScreenState extends State<ReceiverScreen> {
                   child: const ReceiverForm(),
                 ),
               ),
-              controller.state.isLoadSave ? const LoadingDialog() : const SizedBox()
+              controller.state.isLoadSave
+                  ? const LoadingDialog()
+                  : const SizedBox()
             ],
           );
         });

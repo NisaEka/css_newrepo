@@ -47,17 +47,23 @@ class KirimanStepper extends StatelessWidget {
               child: SvgPicture.asset(
                 IconsConstant.box,
                 // height: 100,
-                color: currentStep == 0 ? (AppConst.isLightTheme(context) ? blueJNE : redJNE) : null,
+                color: currentStep == 0
+                    ? (AppConst.isLightTheme(context) ? blueJNE : redJNE)
+                    : null,
               ),
             ),
             Container(
-              height: ((currentStep == 0 && cnote?.photo != null)) && isLogin ? 110 : 60,
+              height: ((currentStep == 0 && cnote?.photo != null)) && isLogin
+                  ? 110
+                  : 60,
               margin: const EdgeInsets.only(left: 21),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
               decoration: BoxDecoration(
                 border: Border(
                   left: BorderSide(
-                    color: (currentStep + 1) != length ? greyDarkColor1 : Colors.transparent,
+                    color: (currentStep + 1) != length
+                        ? greyDarkColor1
+                        : Colors.transparent,
                   ),
                 ),
               ),
@@ -81,14 +87,19 @@ class KirimanStepper extends StatelessWidget {
                 ),
               ),
             ),
-            ((cnote?.photo != null || cnote?.signature != null || cnote?.lat != null) && (currentStep == 0)) && isLogin
+            ((cnote?.photo != null ||
+                            cnote?.signature != null ||
+                            cnote?.lat != null) &&
+                        (currentStep == 0)) &&
+                    isLogin
                 ? GestureDetector(
                     onTap: () {
                       Get.bottomSheet(
                         enableDrag: true,
                         isDismissible: true,
                         // isScrollControlled: true,
-                        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                        StatefulBuilder(builder:
+                            (BuildContext context, StateSetter setState) {
                           return Column(
                             children: [
                               DocumentImageItem(
@@ -119,7 +130,8 @@ class KirimanStepper extends StatelessWidget {
                                 title: 'Lokasi Penerima'.tr,
                                 lat: cnote?.lat?.toDouble(),
                                 lng: cnote?.long?.toDouble(),
-                                isLoading: isLoading || (cnote?.lat?.isEmpty ?? false),
+                                isLoading:
+                                    isLoading || (cnote?.lat?.isEmpty ?? false),
                                 onTap: () => showDialog(
                                   context: context,
                                   builder: (context) => ImagePopupDialog(
@@ -133,11 +145,16 @@ class KirimanStepper extends StatelessWidget {
                             ],
                           );
                         }),
-                        backgroundColor: AppConst.isLightTheme(context) ? Colors.white : Colors.black87,
+                        backgroundColor: AppConst.isLightTheme(context)
+                            ? Colors.white
+                            : Colors.black87,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(color: AppConst.isLightTheme(context) ? Colors.transparent : whiteColor)),
+                            side: BorderSide(
+                                color: AppConst.isLightTheme(context)
+                                    ? Colors.transparent
+                                    : whiteColor)),
                       );
                     },
                     child: Container(

@@ -117,15 +117,22 @@ class BonusKamuScreen extends StatelessWidget {
                                 .map(
                                   (e) => PointListItem(
                                     dateTime: e.tglTransaksi ?? '',
-                                    point: e.point == '0' ? 0 : e.point?.toDouble(),
+                                    point: e.point == '0'
+                                        ? 0
+                                        : e.point?.toDouble(),
                                     title: 'Resi'.tr,
                                     subtitle: e.noConnote ?? '',
-                                    status: e.status == "N" ? "Valid" : "Cancel",
+                                    status:
+                                        e.status == "N" ? "Valid" : "Cancel",
                                     amount: e.jmlTransaksi,
                                   ),
                                 )
                                 .toList()
-                            : [DataEmpty(text: 'Belum ada riwayat transaksi point'.tr)],
+                            : [
+                                DataEmpty(
+                                    text:
+                                        'Belum ada riwayat transaksi point'.tr)
+                              ],
                   )
                 : ListView(
                     shrinkWrap: c.reedemPointList.isEmpty,
@@ -146,7 +153,11 @@ class BonusKamuScreen extends StatelessWidget {
                                   ),
                                 )
                                 .toList()
-                            : [DataEmpty(text: "Belum ada riwayat penukaran point".tr)],
+                            : [
+                                DataEmpty(
+                                    text:
+                                        "Belum ada riwayat penukaran point".tr)
+                              ],
                   ),
           ),
         ),

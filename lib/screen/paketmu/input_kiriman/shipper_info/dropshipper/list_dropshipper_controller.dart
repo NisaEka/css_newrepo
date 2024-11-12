@@ -18,9 +18,9 @@ class ListDropshipperController extends BaseController {
   final search = TextEditingController();
   bool isLoading = false;
   bool isOnline = false;
-  List<Dropshipper> dropshipperList = [];
+  List<DropshipperModel> dropshipperList = [];
 
-  Dropshipper? selectedDropshipper;
+  DropshipperModel? selectedDropshipper;
 
   @override
   void onInit() {
@@ -55,12 +55,12 @@ class ListDropshipperController extends BaseController {
     } catch (e) {
       e.printError();
       dropshipperList.clear();
-      var dropshipper = BaseResponse<List<Dropshipper>>.fromJson(
+      var dropshipper = BaseResponse<List<DropshipperModel>>.fromJson(
         await storage.readData(StorageCore.dropshipper),
         (json) => json is List<dynamic>
             ? json
-                .map<Dropshipper>(
-                  (i) => Dropshipper.fromJson(i as Map<String, dynamic>),
+                .map<DropshipperModel>(
+                  (i) => DropshipperModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -72,7 +72,7 @@ class ListDropshipperController extends BaseController {
     update();
   }
 
-  void delete(Dropshipper data) async {
+  void delete(DropshipperModel data) async {
     try {
       await master.deleteDropshipper(data.id ?? '').then(
             (value) => Get.showSnackbar(
@@ -81,7 +81,8 @@ class ListDropshipperController extends BaseController {
                   value.code == 200 ? Icons.info : Icons.warning,
                   color: whiteColor,
                 ),
-                message: value.code == 200 ? 'Data Dihapus'.tr : "Bad Request".tr,
+                message:
+                    value.code == 200 ? 'Data Dihapus'.tr : "Bad Request".tr,
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
                 backgroundColor: value.code == 200 ? successColor : errorColor,
@@ -94,7 +95,7 @@ class ListDropshipperController extends BaseController {
     initData();
   }
 
-  Widget dropshipperItem(Dropshipper e, int i, BuildContext context) {
+  Widget dropshipperItem(DropshipperModel e, int i, BuildContext context) {
     return ContactRadioListItem(
       isLoading: isLoading,
       index: i,
@@ -105,7 +106,7 @@ class ListDropshipperController extends BaseController {
       city: e.city,
       address: e.address,
       onChanged: (value) {
-        selectedDropshipper = value as Dropshipper?;
+        selectedDropshipper = value as DropshipperModel?;
         update();
         Get.back(result: selectedDropshipper);
       },

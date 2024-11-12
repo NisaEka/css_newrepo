@@ -8,24 +8,30 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:css_mobile/util/logger.dart';
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  AppLogger.i("Handling background message: ${message.messageId}");
   saveUnreadMessage(message);
 }
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingOpenAppHandler(RemoteMessage message) async {
+  AppLogger.i("Handling app open message: ${message.messageId}");
   saveUnreadMessage(message);
 }
 
 Future<void> saveUnreadMessage(RemoteMessage data) async {
   List<Messages> listUnread = [];
   List<NotificationModel> listUnreadMessage = [];
-  var u = GetNotificationModel.fromJson(await StorageCore().readData(StorageCore.unreadMessage));
+  var u = GetNotificationModel.fromJson(
+      await StorageCore().readData(StorageCore.unreadMessage));
+
   if (u.payload?.isNotEmpty ?? false) {
     listUnreadMessage.addAll(u.payload ?? []);
   }
+
   listUnreadMessage.add(
     NotificationModel(
       id: data.messageId,
@@ -34,9 +40,9 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
       createDate: data.sentTime.toString(),
       isRead: true,
       title: data.notification?.title,
-      // img: data.
     ),
   );
+
   listUnread.add(Messages(
     senderId: data.senderId,
     category: data.category,
@@ -53,19 +59,21 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
     ttl: data.ttl,
     isRead: false,
   ));
-  // await StorageCore().saveData(StorageCore.unreadMessage, UnreadMessageModel(messages: listUnread));
-  await StorageCore().saveData(StorageCore.unreadMessage, GetNotificationModel(payload: listUnreadMessage)).then(
-        (value) => print("pesan tersimpan"),
-      );
-  // var u = await StorageCore().readData(StorageCore.unreadMessage);
-  // u.printInfo(info: "unread");
+
+  try {
+    await StorageCore().saveData(StorageCore.unreadMessage,
+        GetNotificationModel(payload: listUnreadMessage));
+    AppLogger.i("Message saved successfully");
+  } catch (e, stackTrace) {
+    AppLogger.e("Failed to save message", e, stackTrace);
+  }
 }
 
 String? payload;
 
 @pragma('vm:entry-point')
 void notificationTapBackground(NotificationResponse notificationResponse) {
-  if (payload != null) {
+  if (notificationResponse.payload != null) {
     Map<String, dynamic> data = jsonDecode(notificationResponse.payload!);
     var msg = RemoteMessage(data: data);
     FirebaseApi._handleTapOnNotification(msg);
@@ -77,57 +85,58 @@ class FirebaseApi {
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel',
       'High Importance Notifications',
-      description: 'This channel is used for important notification for GAIS app.',
+      description: 'This channel is used for important notifications.',
       importance: Importance.max,
     );
 
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
 
     final NotificationAppLaunchDetails? notificationAppLaunchDetails =
-        !kIsWeb && Platform.isLinux ? null : await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+        !kIsWeb && Platform.isLinux
+            ? null
+            : await flutterLocalNotificationsPlugin
+                .getNotificationAppLaunchDetails();
+
     if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
       payload = notificationAppLaunchDetails!.notificationResponse?.payload;
     }
 
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-
-    DarwinInitializationSettings initializationSettingsDarwin = const DarwinInitializationSettings(
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    DarwinInitializationSettings initializationSettingsDarwin =
+        const DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
-      // notificationCategories: darwinNotificationCategories,
     );
 
-    InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsDarwin);
+    InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsDarwin,
+    );
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) {
+      onDidReceiveNotificationResponse: (notificationResponse) {
         if (notificationResponse.payload != null) {
-          // Map<String, dynamic> data = jsonDecode(notificationResponse.payload!);
-          // _handleTapOnNotification(data);
+          AppLogger.i("Notification tapped: ${notificationResponse.payload}");
         }
       },
-      // onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
 
     await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     FirebaseMessaging messaging = FirebaseMessaging.instance;
+
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-    // NotificationSettings settings = await messaging.requestPermission(
-    //   alert: true,
-    //   announcement: false,
-    //   badge: true,
-    //   carPlay: false,
-    //   criticalAlert: false,
-    //   provisional: false,
-    //   sound: true,
-    // );
-    print("fcmTokens ${await messaging.getToken()}");
-    StorageCore().writeString(StorageCore.fcmToken, await messaging.getToken()).then((value) => print("fcm Token saved"),);
+
+    AppLogger.i("FCM Token: ${await messaging.getToken()}");
+    await StorageCore()
+        .writeString(StorageCore.fcmToken, await messaging.getToken());
 
     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
@@ -135,41 +144,42 @@ class FirebaseApi {
       sound: true,
     );
 
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-
+    FirebaseMessaging.onMessage.listen((message) {
       if (message.notification != null) {
-        AndroidNotification? android = message.notification?.android;
         saveUnreadMessage(message);
-        print(message.sentTime);
-        // If `onMessage` is triggered with a notification, construct our own
-        // local notification to show to users using the created channel.
+        AppLogger.i("Received message at ${message.sentTime}");
+
+        AndroidNotification? android = message.notification?.android;
         if (android != null) {
           flutterLocalNotificationsPlugin.show(
-              message.notification.hashCode,
-              message.notification?.title,
-              message.notification?.body,
-              payload: jsonEncode(message.data),
-              NotificationDetails(
-                android: AndroidNotificationDetails(
-                  channel.id,
-                  channel.name,
-                  channelDescription: channel.description,
-                  priority: Priority.max,
-                ),
-              ));
+            message.notification.hashCode,
+            message.notification?.title,
+            message.notification?.body,
+            payload: jsonEncode(message.data),
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channelDescription: channel.description,
+                priority: Priority.max,
+              ),
+            ),
+          );
         }
       }
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen(_handleTapOnNotification);
 
-    FirebaseMessaging.instance.getInitialMessage().then(
-          (value) => saveUnreadMessage(value ?? const RemoteMessage()),
-        );
+    FirebaseMessaging.instance.getInitialMessage().then((value) {
+      if (value != null) {
+        saveUnreadMessage(value);
+      }
+    });
   }
 
   static void _handleTapOnNotification(RemoteMessage data) {
+    AppLogger.i("Navigating to notification screen");
     Get.to(const NotificationScreen());
   }
 }

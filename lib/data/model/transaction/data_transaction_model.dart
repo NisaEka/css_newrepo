@@ -6,9 +6,11 @@ import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 
-DataTransactionModel transactionDataModelFromJson(String str) => DataTransactionModel.fromJson(json.decode(str));
+DataTransactionModel transactionDataModelFromJson(String str) =>
+    DataTransactionModel.fromJson(json.decode(str));
 
-String transactionDataModelToJson(DataTransactionModel data) => json.encode(data.toJson());
+String transactionDataModelToJson(DataTransactionModel data) =>
+    json.encode(data.toJson());
 
 class DataTransactionModel {
   DataTransactionModel({
@@ -23,17 +25,16 @@ class DataTransactionModel {
     String? pickupStatus,
     Delivery? delivery,
     Account? account,
-    Origin? origin,
+    OriginModel? origin,
     Destination? destination,
     Goods? goods,
-    Shipper? shipper,
-    Dropshipper? dropshipper,
-    Receiver? receiver,
+    ShipperModel? shipper,
+    DropshipperModel? dropshipper,
+    ReceiverModel? receiver,
     Account? dataAccount,
     Destination? dataDestination,
     String? createAt,
     String? updateAt,
-
   }) {
     _awb = awb;
     _awbType = awbType;
@@ -70,18 +71,29 @@ class DataTransactionModel {
     _delivery = json['delivery'] != null
         ? Delivery.fromJson(json['delivery'])
         : json['info'] != null
-        ? Delivery.fromJson(json['info'])
-        : json['transaction'] != null
-        ? Delivery.fromJson(json['transaction'])
+            ? Delivery.fromJson(json['info'])
+            : json['transaction'] != null
+                ? Delivery.fromJson(json['transaction'])
+                : null;
+    _account =
+        json['account'] != null ? Account.fromJson(json['account']) : null;
+    _origin =
+        json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
+    _destination = json['destination'] != null
+        ? Destination.fromJson(json['destination'])
         : null;
-    _account = json['account'] != null ? Account.fromJson(json['account']) : null;
-    _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
-    _destination = json['destination'] != null ? Destination.fromJson(json['destination']) : null;
     _goods = json['goods'] != null ? Goods.fromJson(json['goods']) : null;
-    _shipper = json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
-    _receiver = json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
-    _dataAccount = json['data_account'] != null ? Account.fromJson(json['data_account']) : null;
-    _dataDestination = json['data_destination'] != null ? Destination.fromJson(json['data_destination']) : null;
+    _shipper =
+        json['shipper'] != null ? ShipperModel.fromJson(json['shipper']) : null;
+    _receiver = json['receiver'] != null
+        ? ReceiverModel.fromJson(json['receiver'])
+        : null;
+    _dataAccount = json['data_account'] != null
+        ? Account.fromJson(json['data_account'])
+        : null;
+    _dataDestination = json['data_destination'] != null
+        ? Destination.fromJson(json['data_destination'])
+        : null;
     _createAt = json['create_at'];
     _updateAt = json['update_at'];
   }
@@ -97,11 +109,11 @@ class DataTransactionModel {
   String? _pickupStatus;
   Delivery? _delivery;
   Account? _account;
-  Origin? _origin;
+  OriginModel? _origin;
   Destination? _destination;
   Goods? _goods;
-  Shipper? _shipper;
-  Receiver? _receiver;
+  ShipperModel? _shipper;
+  ReceiverModel? _receiver;
   Account? _dataAccount;
   Destination? _dataDestination;
   String? _createAt;
@@ -119,11 +131,11 @@ class DataTransactionModel {
     String? pickupStatus,
     Delivery? delivery,
     Account? account,
-    Origin? origin,
+    OriginModel? origin,
     Destination? destination,
     Goods? goods,
-    Shipper? shipper,
-    Receiver? receiver,
+    ShipperModel? shipper,
+    ReceiverModel? receiver,
     Account? dataAccount,
     Destination? dataDestination,
     String? createAt,
@@ -174,15 +186,15 @@ class DataTransactionModel {
 
   Account? get account => _account;
 
-  Origin? get origin => _origin;
+  OriginModel? get origin => _origin;
 
   Destination? get destination => _destination;
 
   Goods? get goods => _goods;
 
-  Shipper? get shipper => _shipper;
+  ShipperModel? get shipper => _shipper;
 
-  Receiver? get receiver => _receiver;
+  ReceiverModel? get receiver => _receiver;
 
   Account? get dataAccount => _dataAccount;
 
@@ -394,7 +406,8 @@ class Delivery {
         flatRate: flatRate ?? _flatRate,
         flatRateWithInsurance: flatRateWithInsurance ?? _flatRateWithInsurance,
         freightCharge: freightCharge ?? _freightCharge,
-        freightChargeWithInsurance: freightChargeWithInsurance ?? _freightChargeWithInsurance,
+        freightChargeWithInsurance:
+            freightChargeWithInsurance ?? _freightChargeWithInsurance,
       );
 
   String? get serviceCode => _serviceCode;

@@ -25,7 +25,9 @@ class UserInfoCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           margin: const EdgeInsets.all(10),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(color: blueJNE)),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(color: blueJNE)),
           child: Image.asset(
             ImageConstant.userPic,
             height: 50,

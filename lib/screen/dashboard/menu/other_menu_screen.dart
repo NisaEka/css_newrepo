@@ -38,13 +38,21 @@ class OtherMenuScreen extends StatelessWidget {
             slivers: [
               MenuTitle("Favorit".tr),
               MenuItems(c.favoritList),
-              c.paketmuList.isNotEmpty ? MenuTitle("Paketmu".tr) : const SliverPadding(padding: EdgeInsets.zero),
+              c.paketmuList.isNotEmpty
+                  ? MenuTitle("Paketmu".tr)
+                  : const SliverPadding(padding: EdgeInsets.zero),
               MenuItems(c.paketmuList),
-              c.keuanganmuList.isNotEmpty ? MenuTitle("Keuanganmu".tr) : const SliverPadding(padding: EdgeInsets.zero),
+              c.keuanganmuList.isNotEmpty
+                  ? MenuTitle("Keuanganmu".tr)
+                  : const SliverPadding(padding: EdgeInsets.zero),
               MenuItems(c.keuanganmuList),
-              c.hubungiAkuList.isNotEmpty ? MenuTitle("Hubungi Aku".tr) : const SliverPadding(padding: EdgeInsets.zero),
+              c.hubungiAkuList.isNotEmpty
+                  ? MenuTitle("Hubungi Aku".tr)
+                  : const SliverPadding(padding: EdgeInsets.zero),
               MenuItems(c.hubungiAkuList),
-              c.otherList.isNotEmpty ? MenuTitle("Lainnya".tr) : const SliverPadding(padding: EdgeInsets.zero),
+              c.otherList.isNotEmpty
+                  ? MenuTitle("Lainnya".tr)
+                  : const SliverPadding(padding: EdgeInsets.zero),
               MenuItems(c.otherList),
             ],
           ),

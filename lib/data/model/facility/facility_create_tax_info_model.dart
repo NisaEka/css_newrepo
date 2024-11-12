@@ -1,5 +1,4 @@
 class FacilityCreateTaxInfoModel {
-
   String _type = '';
   String get type => _type;
 
@@ -46,5 +45,4 @@ class FacilityCreateTaxInfoModel {
 
     return json;
   }
-
 }

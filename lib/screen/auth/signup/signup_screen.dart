@@ -21,16 +21,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return Stack(
             children: [
               const Scaffold(
-                appBar: SignupAppbar(child: SizedBox(),),
+                appBar: SignupAppbar(
+                  child: SizedBox(),
+                ),
                 body: SignupForm(),
               ),
-              controller.state.isLoading ? const LoadingDialog() : const SizedBox()
+              controller.state.isLoading
+                  ? const LoadingDialog()
+                  : const SizedBox()
             ],
           );
         });
   }
-
-
-
-
 }

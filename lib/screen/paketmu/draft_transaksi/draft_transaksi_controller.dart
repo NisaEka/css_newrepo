@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -44,11 +43,14 @@ class DraftTransaksiController extends BaseController {
     update();
     searchList = [];
     draftList = [];
-    var data = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
+    var data = DraftTransactionModel.fromJson(
+        await storage.readData(StorageCore.draftTransaction));
     draftList.addAll(data.draft);
     update();
 
-    isSync = draftList.where((element) => element.delivery?.flatRate != 0).isNotEmpty;
+    isSync = draftList
+        .where((element) => element.delivery?.flatRate != 0)
+        .isNotEmpty;
 
     update();
   }

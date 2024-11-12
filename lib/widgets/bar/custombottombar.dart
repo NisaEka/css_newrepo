@@ -35,7 +35,8 @@ class BottomBar extends StatelessWidget {
           height: 70,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2,
+              color:
+                  AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -84,7 +85,7 @@ class BottomBar extends StatelessWidget {
                           : whiteColor.withOpacity(0.5),
                   // onTap: () => Get.offAll(const ProfileScreen()),
                   onTap: () => isLogin
-                      ? Get.offAll(AltProfileScreen())
+                      ? Get.offAll(const AltProfileScreen())
                       : showDialog(
                           context: context,
                           builder: (context) => const LoginAlertDialog(),

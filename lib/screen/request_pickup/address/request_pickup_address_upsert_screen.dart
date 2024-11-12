@@ -1,13 +1,10 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_screen.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -46,10 +43,12 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           ],
         ),
         controller.createDataLoading ? const LoadingDialog() : Container(),
-        controller.createDataFailed ? MessageInfoDialog(
-          message: "Data gagal ditambahkan",
-          onClickAction: () => controller.onRefreshCreateState(),
-        ) : Container()
+        controller.createDataFailed
+            ? MessageInfoDialog(
+                message: "Data gagal ditambahkan",
+                onClickAction: () => controller.onRefreshCreateState(),
+              )
+            : Container()
       ],
     );
   }
@@ -60,7 +59,8 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
         GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () async {
-            Placemark? selectedPlaceMark = await Get.to(() => const RequestPickupLocationScreen());
+            Placemark? selectedPlaceMark =
+                await Get.to(() => const RequestPickupLocationScreen());
             controller.onSelectedPlaceMark(selectedPlaceMark);
           },
           child: const Row(

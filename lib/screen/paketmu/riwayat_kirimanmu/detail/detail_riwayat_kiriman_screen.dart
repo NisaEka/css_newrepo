@@ -16,7 +16,7 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: CustomTopBar(title: 'Detail Kiriman'.tr),
-          body:const TransactionDetail(),
+          body: const TransactionDetail(),
           bottomNavigationBar: TransactionEditButton(
             isLoading: controller.isLoading,
             data: controller.transactionModel ?? TransactionModel(),
@@ -25,5 +25,4 @@ class DetailRiwayatKirimanScreen extends StatelessWidget {
       },
     );
   }
-
 }

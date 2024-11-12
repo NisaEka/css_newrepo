@@ -14,7 +14,7 @@ class RequestPickupBottomSheetScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         shape: BoxShape.rectangle,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(16),
@@ -36,8 +36,7 @@ class RequestPickupBottomSheetScaffold extends StatelessWidget {
                 child: Text(
                   title.tr,
                   style: listTitleTextStyle.copyWith(
-                    color: Theme.of(context).colorScheme.outline
-                  ),
+                      color: Theme.of(context).colorScheme.outline),
                   textAlign: TextAlign.center,
                 ),
               ),

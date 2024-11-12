@@ -38,7 +38,9 @@ class LoginController extends BaseController {
 
   bool onPop() {
     DateTime now = DateTime.now();
-    if (state.currentBackPressTime == null || now.difference(state.currentBackPressTime!) > const Duration(seconds: 2)) {
+    if (state.currentBackPressTime == null ||
+        now.difference(state.currentBackPressTime!) >
+            const Duration(seconds: 2)) {
       state.currentBackPressTime = now;
       Get.showSnackbar(
         GetSnackBar(
@@ -126,7 +128,10 @@ class LoginController extends BaseController {
           );
         } else if (value.message == "Email not verified") {
           try {
-            await auth.postRegistPinResend(InputPinconfirmModel(email: state.emailTextField.text)).then((value) {
+            await auth
+                .postRegistPinResend(
+                    InputPinconfirmModel(email: state.emailTextField.text))
+                .then((value) {
               if (value.code == 201) {
                 Get.showSnackbar(
                   GetSnackBar(
@@ -243,7 +248,8 @@ class LoginController extends BaseController {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
     position = await Geolocator.getCurrentPosition();
@@ -251,7 +257,9 @@ class LoginController extends BaseController {
   }
 
   showPassword() {
-    state.isObscurePasswordLogin ? state.isObscurePasswordLogin = false : state.isObscurePasswordLogin = true;
+    state.isObscurePasswordLogin
+        ? state.isObscurePasswordLogin = false
+        : state.isObscurePasswordLogin = true;
     state.isObscurePasswordLogin != false
         ? showIcon = const Icon(
             Icons.visibility,

@@ -1,52 +1,52 @@
 class GetAggregationDetailModel {
   GetAggregationDetailModel({
-    num? code,
+    num? statusCode,
     String? message,
-    List<AggregationDetailModel>? payload,
+    List<AggregationDetailModel>? data,
   }) {
-    _code = code;
+    _statusCode = statusCode;
     _message = message;
-    _payload = payload;
+    _data = data;
   }
 
   GetAggregationDetailModel.fromJson(dynamic json) {
-    _code = json['code'];
+    _statusCode = json['statusCode'];
     _message = json['message'];
-    if (json['payload'] != null) {
-      _payload = [];
-      json['payload'].forEach((v) {
-        _payload?.add(AggregationDetailModel.fromJson(v));
+    if (json['data'] != null) {
+      _data = [];
+      json['data'].forEach((v) {
+        _data?.add(AggregationDetailModel.fromJson(v));
       });
     }
   }
 
-  num? _code;
+  num? _statusCode;
   String? _message;
-  List<AggregationDetailModel>? _payload;
+  List<AggregationDetailModel>? _data;
 
   GetAggregationDetailModel copyWith({
-    num? code,
+    num? statusCode,
     String? message,
-    List<AggregationDetailModel>? payload,
+    List<AggregationDetailModel>? data,
   }) =>
       GetAggregationDetailModel(
-        code: code ?? _code,
+        statusCode: statusCode ?? _statusCode,
         message: message ?? _message,
-        payload: payload ?? _payload,
+        data: data ?? _data,
       );
 
-  num? get code => _code;
+  num? get statusCode => _statusCode;
 
   String? get message => _message;
 
-  List<AggregationDetailModel>? get payload => _payload;
+  List<AggregationDetailModel>? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['code'] = _code;
+    map['statusCode'] = _statusCode;
     map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.map((v) => v.toJson()).toList();
+    if (_data != null) {
+      map['data'] = _data?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -54,219 +54,221 @@ class GetAggregationDetailModel {
 
 class AggregationDetailModel {
   AggregationDetailModel({
-    String? aggDocNo,
-    String? aggPayReff,
-    String? aggDocDate,
-    String? cnoteNo,
-    String? cnoteDate,
-    String? podCode,
-    String? podDateSys,
-    num? shipmentFee,
-    num? freightCharge,
-    num? insuranceCharge,
-    num? codFee,
-    num? returnFee,
-    num? codAmount,
-    num? discount,
-    num? fchargeDisc,
-    num? fchargeVat,
-    num? packingFee,
-    num? surcharge,
-    num? rtfChargeDisc,
-    num? rtfChargeVat,
-    num? codFeeVat,
-    num? netAwbAmt,
-    String? paidDate,
+    String? mpayWdrGrpPayNo,
+    String? dpayDetWdrNo,
+    String? mpayWdrDate,
+    String? dpayDetWdrCnoteno,
+    String? dpayDetWdrCnotedate,
+    String? dpayDetWdrPod,
+    String? dpayDUpdPodDate,
+    num? dpayDShipFee,
+    num? dpayDFreightCharge,
+    num? dpayDInsCharge,
+    num? dpayDCodFee,
+    num? dpayDReturnFee,
+    num? dpayDetWdrCodamount,
+    num? dpayDWdrDisc,
+    num? dpayDWdrFchargeAftDisc,
+    num? dpayDWdrFchargeVat,
+    num? dpayDPackingFee,
+    num? dpayDSurcharge,
+    num? dpayDWdrRtFchargeAftDisc,
+    num? dpayDWdrCodFeeInclVat,
+    num? dpayDWdrRtFchargeVat,
+    num? dpayDNetAmt,
+    String? mpayWdrGrpPayDatePaid,
     String? orderIdTmp,
     String? custName,
     String? podGroupName,
   }) {
-    _aggDocNo = aggDocNo;
-    _aggPayReff = aggPayReff;
-    _aggDocDate = aggDocDate;
-    _cnoteNo = cnoteNo;
-    _cnoteDate = cnoteDate;
-    _podCode = podCode;
-    _podDateSys = podDateSys;
-    _shipmentFee = shipmentFee;
-    _freightCharge = freightCharge;
-    _insuranceCharge = insuranceCharge;
-    _codFee = codFee;
-    _returnFee = returnFee;
-    _codAmount = codAmount;
-    _discount = discount;
-    _fchargeDisc = fchargeDisc;
-    _fchargeVat = fchargeVat;
-    _packingFee = packingFee;
-    _surcharge = surcharge;
-    _rtfChargeDisc = rtfChargeDisc;
-    _rtfChargeVat = rtfChargeVat;
-    _codFeeVat = codFeeVat;
-    _netAwbAmt = netAwbAmt;
-    _paidDate = paidDate;
+    _mpayWdrGrpPayNo = mpayWdrGrpPayNo;
+    _dpayDetWdrNo = dpayDetWdrNo;
+    _mpayWdrDate = mpayWdrDate;
+    _dpayDetWdrCnoteno = dpayDetWdrCnoteno;
+    _dpayDetWdrCnotedate = dpayDetWdrCnotedate;
+    _dpayDetWdrPod = dpayDetWdrPod;
+    _dpayDUpdPodDate = dpayDUpdPodDate;
+    _dpayDShipFee = dpayDShipFee;
+    _dpayDFreightCharge = dpayDFreightCharge;
+    _dpayDInsCharge = dpayDInsCharge;
+    _dpayDCodFee = dpayDCodFee;
+    _dpayDReturnFee = dpayDReturnFee;
+    _dpayDetWdrCodamount = dpayDetWdrCodamount;
+    _dpayDWdrDisc = dpayDWdrDisc;
+    _dpayDWdrFchargeAftDisc = dpayDWdrFchargeAftDisc;
+    _dpayDWdrFchargeVat = dpayDWdrFchargeVat;
+    _dpayDPackingFee = dpayDPackingFee;
+    _dpayDSurcharge = dpayDSurcharge;
+    _dpayDWdrRtFchargeAftDisc = dpayDWdrRtFchargeAftDisc;
+    _dpayDWdrCodFeeInclVat = dpayDWdrCodFeeInclVat;
+    _dpayDWdrRtFchargeVat = dpayDWdrRtFchargeVat;
+    _dpayDNetAmt = dpayDNetAmt;
+    _mpayWdrGrpPayDatePaid = mpayWdrGrpPayDatePaid;
     _orderIdTmp = orderIdTmp;
     _custName = custName;
     _podGroupName = podGroupName;
   }
 
   AggregationDetailModel.fromJson(dynamic json) {
-    _aggDocNo = json['agg_doc_no'];
-    _aggPayReff = json['agg_pay_reff'];
-    _aggDocDate = json['agg_doc_date'];
-    _cnoteNo = json['cnote_no'];
-    _cnoteDate = json['cnote_date'];
-    _podCode = json['pod_code'];
-    _podDateSys = json['pod_date_sys'];
-    _shipmentFee = json['shipment_fee'];
-    _freightCharge = json['freight_charge'];
-    _insuranceCharge = json['insurance_charge'];
-    _codFee = json['cod_fee'];
-    _returnFee = json['return_fee'];
-    _codAmount = json['cod_amount'];
-    _discount = json['discount'];
-    _fchargeDisc = json['fcharge_disc'];
-    _fchargeVat = json['fcharge_vat'];
-    _packingFee = json['packing_fee'];
-    _surcharge = json['surcharge'];
-    _rtfChargeDisc = json['rtfCharge_disc'];
-    _rtfChargeVat = json['rtfCharge_vat'];
-    _codFeeVat = json['cod_fee_vat'];
-    _netAwbAmt = json['net_awb_amt'];
-    _paidDate = json['paid_date'];
-    _orderIdTmp = json['order_id_tmp'];
-    _custName = json['cust_name'];
-    _podGroupName = json['pod_group_name'];
+    _mpayWdrGrpPayNo = json['mpayWdrGrpPayNo'];
+    _dpayDetWdrNo = json['dpayDetWdrNo'];
+    _mpayWdrDate = json['mpayWdrDate'];
+    _dpayDetWdrCnoteno = json['dpayDetWdrCnoteno'];
+    _dpayDetWdrCnotedate = json['dpayDetWdrCnotedate'];
+    _dpayDetWdrPod = json['dpayDetWdrPod'];
+    _dpayDUpdPodDate = json['dpayDUpdPodDate'];
+    _dpayDShipFee = json['dpayDShipFee'];
+    _dpayDFreightCharge = json['dpayDFreightCharge'];
+    _dpayDInsCharge = json['dpayDInsCharge'];
+    _dpayDCodFee = json['dpayDCodFee'];
+    _dpayDReturnFee = json['dpayDReturnFee'];
+    _dpayDetWdrCodamount = json['dpayDetWdrCodamount'];
+    _dpayDWdrDisc = json['dpayDWdrDisc'];
+    _dpayDWdrFchargeAftDisc = json['dpayDWdrFchargeAftDisc'];
+    _dpayDWdrFchargeVat = json['dpayDWdrFchargeVat'];
+    _dpayDPackingFee = json['dpayDPackingFee'];
+    _dpayDSurcharge = json['dpayDSurcharge'];
+    _dpayDWdrRtFchargeAftDisc = json['dpayDWdrRtFchargeAftDisc'];
+    _dpayDWdrCodFeeInclVat = json['dpayDWdrCodFeeInclVat'];
+    _dpayDWdrRtFchargeVat = json['dpayDWdrRtFchargeVat'];
+    _dpayDNetAmt = json['dpayDNetAmt'];
+    _mpayWdrGrpPayDatePaid = json['mpayWdrGrpPayDatePaid'];
+    _orderIdTmp = json['orderIdTmp'];
+    _custName = json['custName'];
+    _podGroupName = json['podGroupName'];
   }
 
-  String? _aggDocNo;
-  String? _aggPayReff;
-  String? _aggDocDate;
-  String? _cnoteNo;
-  String? _cnoteDate;
-  String? _podCode;
-  String? _podDateSys;
-  num? _shipmentFee;
-  num? _freightCharge;
-  num? _insuranceCharge;
-  num? _codFee;
-  num? _returnFee;
-  num? _codAmount;
-  num? _discount;
-  num? _fchargeDisc;
-  num? _fchargeVat;
-  num? _packingFee;
-  num? _surcharge;
-  num? _rtfChargeDisc;
-  num? _rtfChargeVat;
-  num? _codFeeVat;
-  num? _netAwbAmt;
-  String? _paidDate;
+  String? _mpayWdrGrpPayNo;
+  String? _dpayDetWdrNo;
+  String? _mpayWdrDate;
+  String? _dpayDetWdrCnoteno;
+  String? _dpayDetWdrCnotedate;
+  String? _dpayDetWdrPod;
+  String? _dpayDUpdPodDate;
+  num? _dpayDShipFee;
+  num? _dpayDFreightCharge;
+  num? _dpayDInsCharge;
+  num? _dpayDCodFee;
+  num? _dpayDReturnFee;
+  num? _dpayDetWdrCodamount;
+  num? _dpayDWdrDisc;
+  num? _dpayDWdrFchargeAftDisc;
+  num? _dpayDWdrFchargeVat;
+  num? _dpayDPackingFee;
+  num? _dpayDSurcharge;
+  num? _dpayDWdrRtFchargeAftDisc;
+  num? _dpayDWdrCodFeeInclVat;
+  num? _dpayDWdrRtFchargeVat;
+  num? _dpayDNetAmt;
+  String? _mpayWdrGrpPayDatePaid;
   String? _orderIdTmp;
   String? _custName;
   String? _podGroupName;
 
   AggregationDetailModel copyWith({
-    String? aggDocNo,
-    String? aggPayReff,
-    String? aggDocDate,
-    String? cnoteNo,
-    String? cnoteDate,
-    String? podCode,
-    String? podDateSys,
-    num? shipmentFee,
-    num? freightCharge,
-    num? insuranceCharge,
-    num? codFee,
-    num? returnFee,
-    num? codAmount,
-    num? discount,
-    num? fchargeDisc,
-    num? fchargeVat,
-    num? packingFee,
-    num? surcharge,
-    num? rtfChargeDisc,
-    num? rtfChargeVat,
-    num? codFeeVat,
-    num? netAwbAmt,
-    String? paidDate,
+    String? mpayWdrGrpPayNo,
+    String? dpayDetWdrNo,
+    String? mpayWdrDate,
+    String? dpayDetWdrCnoteno,
+    String? dpayDetWdrCnotedate,
+    String? dpayDetWdrPod,
+    String? dpayDUpdPodDate,
+    num? dpayDShipFee,
+    num? dpayDFreightCharge,
+    num? dpayDInsCharge,
+    num? dpayDCodFee,
+    num? dpayDReturnFee,
+    num? dpayDetWdrCodamount,
+    num? dpayDWdrDisc,
+    num? dpayDWdrFchargeAftDisc,
+    num? dpayDWdrFchargeVat,
+    num? dpayDPackingFee,
+    num? dpayDSurcharge,
+    num? dpayDWdrRtFchargeAftDisc,
+    num? dpayDWdrCodFeeInclVat,
+    num? dpayDWdrRtFchargeVat,
+    num? dpayDNetAmt,
+    String? mpayWdrGrpPayDatePaid,
     String? orderIdTmp,
     String? custName,
     String? podGroupName,
   }) =>
       AggregationDetailModel(
-        aggDocNo: aggDocNo ?? _aggDocNo,
-        aggPayReff: aggPayReff ?? _aggPayReff,
-        aggDocDate: aggDocDate ?? _aggDocDate,
-        cnoteNo: cnoteNo ?? _cnoteNo,
-        cnoteDate: cnoteDate ?? _cnoteDate,
-        podCode: podCode ?? _podCode,
-        podDateSys: podDateSys ?? _podDateSys,
-        shipmentFee: shipmentFee ?? _shipmentFee,
-        freightCharge: freightCharge ?? _freightCharge,
-        insuranceCharge: insuranceCharge ?? _insuranceCharge,
-        codFee: codFee ?? _codFee,
-        returnFee: returnFee ?? _returnFee,
-        codAmount: codAmount ?? _codAmount,
-        discount: discount ?? _discount,
-        fchargeDisc: fchargeDisc ?? _fchargeDisc,
-        fchargeVat: fchargeVat ?? _fchargeVat,
-        packingFee: packingFee ?? _packingFee,
-        surcharge: surcharge ?? _surcharge,
-        rtfChargeDisc: rtfChargeDisc ?? _rtfChargeDisc,
-        rtfChargeVat: rtfChargeVat ?? _rtfChargeVat,
-        codFeeVat: codFeeVat ?? _codFeeVat,
-        netAwbAmt: netAwbAmt ?? _netAwbAmt,
-        paidDate: paidDate ?? _paidDate,
+        mpayWdrGrpPayNo: mpayWdrGrpPayNo ?? _mpayWdrGrpPayNo,
+        dpayDetWdrNo: dpayDetWdrNo ?? _dpayDetWdrNo,
+        mpayWdrDate: mpayWdrDate ?? _mpayWdrDate,
+        dpayDetWdrCnoteno: dpayDetWdrCnoteno ?? _dpayDetWdrCnoteno,
+        dpayDetWdrCnotedate: dpayDetWdrCnotedate ?? _dpayDetWdrCnotedate,
+        dpayDetWdrPod: dpayDetWdrPod ?? _dpayDetWdrPod,
+        dpayDUpdPodDate: dpayDUpdPodDate ?? _dpayDUpdPodDate,
+        dpayDShipFee: dpayDShipFee ?? _dpayDShipFee,
+        dpayDFreightCharge: dpayDFreightCharge ?? _dpayDFreightCharge,
+        dpayDInsCharge: dpayDInsCharge ?? _dpayDInsCharge,
+        dpayDCodFee: dpayDCodFee ?? _dpayDCodFee,
+        dpayDReturnFee: dpayDReturnFee ?? _dpayDReturnFee,
+        dpayDetWdrCodamount: dpayDetWdrCodamount ?? _dpayDetWdrCodamount,
+        dpayDWdrDisc: dpayDWdrDisc ?? _dpayDWdrDisc,
+        dpayDWdrFchargeAftDisc:
+            dpayDWdrFchargeAftDisc ?? _dpayDWdrFchargeAftDisc,
+        dpayDWdrFchargeVat: dpayDWdrFchargeVat ?? _dpayDWdrFchargeVat,
+        dpayDPackingFee: dpayDPackingFee ?? _dpayDPackingFee,
+        dpayDSurcharge: dpayDSurcharge ?? _dpayDSurcharge,
+        dpayDWdrRtFchargeAftDisc:
+            dpayDWdrRtFchargeAftDisc ?? _dpayDWdrRtFchargeAftDisc,
+        dpayDWdrCodFeeInclVat: dpayDWdrCodFeeInclVat ?? _dpayDWdrCodFeeInclVat,
+        dpayDWdrRtFchargeVat: dpayDWdrRtFchargeVat ?? _dpayDWdrRtFchargeVat,
+        dpayDNetAmt: dpayDNetAmt ?? _dpayDNetAmt,
+        mpayWdrGrpPayDatePaid: mpayWdrGrpPayDatePaid ?? _mpayWdrGrpPayDatePaid,
         orderIdTmp: orderIdTmp ?? _orderIdTmp,
         custName: custName ?? _custName,
         podGroupName: podGroupName ?? _podGroupName,
       );
 
-  String? get aggDocNo => _aggDocNo;
+  String? get mpayWdrGrpPayNo => _mpayWdrGrpPayNo;
 
-  String? get aggPayReff => _aggPayReff;
+  String? get dpayDetWdrNo => _dpayDetWdrNo;
 
-  String? get aggDocDate => _aggDocDate;
+  String? get mpayWdrDate => _mpayWdrDate;
 
-  String? get cnoteNo => _cnoteNo;
+  String? get dpayDetWdrCnoteno => _dpayDetWdrCnoteno;
 
-  String? get cnoteDate => _cnoteDate;
+  String? get dpayDetWdrCnotedate => _dpayDetWdrCnotedate;
 
-  String? get podCode => _podCode;
+  String? get dpayDetWdrPod => _dpayDetWdrPod;
 
-  String? get podDateSys => _podDateSys;
+  String? get dpayDUpdPodDate => _dpayDUpdPodDate;
 
-  num? get shipmentFee => _shipmentFee;
+  num? get dpayDShipFee => _dpayDShipFee;
 
-  num? get freightCharge => _freightCharge;
+  num? get dpayDFreightCharge => _dpayDFreightCharge;
 
-  num? get insuranceCharge => _insuranceCharge;
+  num? get dpayDInsCharge => _dpayDInsCharge;
 
-  num? get codFee => _codFee;
+  num? get dpayDCodFee => _dpayDCodFee;
 
-  num? get returnFee => _returnFee;
+  num? get dpayDReturnFee => _dpayDReturnFee;
 
-  num? get codAmount => _codAmount;
+  num? get dpayDetWdrCodamount => _dpayDetWdrCodamount;
 
-  num? get discount => _discount;
+  num? get dpayDWdrDisc => _dpayDWdrDisc;
 
-  num? get fchargeDisc => _fchargeDisc;
+  num? get dpayDWdrFchargeAftDisc => _dpayDWdrFchargeAftDisc;
 
-  num? get fchargeVat => _fchargeVat;
+  num? get dpayDWdrFchargeVat => _dpayDWdrFchargeVat;
 
-  num? get packingFee => _packingFee;
+  num? get dpayDPackingFee => _dpayDPackingFee;
 
-  num? get surcharge => _surcharge;
+  num? get dpayDSurcharge => _dpayDSurcharge;
 
-  num? get rtfChargeDisc => _rtfChargeDisc;
+  num? get dpayDWdrRtFchargeAftDisc => _dpayDWdrRtFchargeAftDisc;
 
-  num? get rtfChargeVat => _rtfChargeVat;
+  num? get dpayDWdrCodFeeInclVat => _dpayDWdrCodFeeInclVat;
 
-  num? get codFeeVat => _codFeeVat;
+  num? get dpayDWdrRtFchargeVat => _dpayDWdrRtFchargeVat;
 
-  num? get netAwbAmt => _netAwbAmt;
+  num? get dpayDNetAmt => _dpayDNetAmt;
 
-  String? get paidDate => _paidDate;
+  String? get mpayWdrGrpPayDatePaid => _mpayWdrGrpPayDatePaid;
 
   String? get orderIdTmp => _orderIdTmp;
 
@@ -276,32 +278,32 @@ class AggregationDetailModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['agg_doc_no'] = _aggDocNo;
-    map['agg_pay_reff'] = _aggPayReff;
-    map['agg_doc_date'] = _aggDocDate;
-    map['cnote_no'] = _cnoteNo;
-    map['cnote_date'] = _cnoteDate;
-    map['pod_code'] = _podCode;
-    map['pod_date_sys'] = _podDateSys;
-    map['shipment_fee'] = _shipmentFee;
-    map['freight_charge'] = _freightCharge;
-    map['insurance_charge'] = _insuranceCharge;
-    map['cod_fee'] = _codFee;
-    map['return_fee'] = _returnFee;
-    map['cod_amount'] = _codAmount;
-    map['discount'] = _discount;
-    map['fcharge_disc'] = _fchargeDisc;
-    map['fcharge_vat'] = _fchargeVat;
-    map['packing_fee'] = _packingFee;
-    map['surcharge'] = _surcharge;
-    map['rtfCharge_disc'] = _rtfChargeDisc;
-    map['rtfCharge_vat'] = _rtfChargeVat;
-    map['cod_fee_vat'] = _codFeeVat;
-    map['net_awb_amt'] = _netAwbAmt;
-    map['paid_date'] = _paidDate;
-    map['order_id_tmp'] = _orderIdTmp;
-    map['cust_name'] = _custName;
-    map['pod_group_name'] = _podGroupName;
+    map['mpayWdrGrpPayNo'] = _mpayWdrGrpPayNo;
+    map['dpayDetWdrNo'] = _dpayDetWdrNo;
+    map['mpayWdrDate'] = _mpayWdrDate;
+    map['dpayDetWdrCnoteno'] = _dpayDetWdrCnoteno;
+    map['dpayDetWdrCnotedate'] = _dpayDetWdrCnotedate;
+    map['dpayDetWdrPod'] = _dpayDetWdrPod;
+    map['dpayDUpdPodDate'] = _dpayDUpdPodDate;
+    map['dpayDShipFee'] = _dpayDShipFee;
+    map['dpayDFreightCharge'] = _dpayDFreightCharge;
+    map['dpayDInsCharge'] = _dpayDInsCharge;
+    map['dpayDCodFee'] = _dpayDCodFee;
+    map['dpayDReturnFee'] = _dpayDReturnFee;
+    map['dpayDetWdrCodamount'] = _dpayDetWdrCodamount;
+    map['dpayDWdrDisc'] = _dpayDWdrDisc;
+    map['dpayDWdrFchargeAftDisc'] = _dpayDWdrFchargeAftDisc;
+    map['dpayDWdrFchargeVat'] = _dpayDWdrFchargeVat;
+    map['dpayDPackingFee'] = _dpayDPackingFee;
+    map['dpayDSurcharge'] = _dpayDSurcharge;
+    map['dpayDWdrRtFchargeAftDisc'] = _dpayDWdrRtFchargeAftDisc;
+    map['dpayDWdrCodFeeInclVat'] = _dpayDWdrCodFeeInclVat;
+    map['dpayDWdrRtFchargeVat'] = _dpayDWdrRtFchargeVat;
+    map['dpayDNetAmt'] = _dpayDNetAmt;
+    map['mpayWdrGrpPayDatePaid'] = _mpayWdrGrpPayDatePaid;
+    map['orderIdTmp'] = _orderIdTmp;
+    map['custName'] = _custName;
+    map['podGroupName'] = _podGroupName;
     return map;
   }
 }

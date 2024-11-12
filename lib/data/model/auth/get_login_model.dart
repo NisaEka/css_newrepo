@@ -12,7 +12,8 @@ class GetLoginModel {
   GetLoginModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
-    _payload = json['payload'] != null ? Payload.fromJson(json['payload']) : null;
+    _payload =
+        json['payload'] != null ? Payload.fromJson(json['payload']) : null;
   }
 
   num? _code;
@@ -57,7 +58,9 @@ class Payload {
   }
 
   Payload.fromJson(dynamic json) {
-    _allowedMenu = json['allowed_menu'] != null ? AllowedMenu.fromJson(json['allowed_menu']) : null;
+    _allowedMenu = json['allowed_menu'] != null
+        ? AllowedMenu.fromJson(json['allowed_menu'])
+        : null;
     _token = json['token'];
   }
 
@@ -406,13 +409,15 @@ class AllowedMenu {
         keuanganJneMoney: keuanganJneMoney ?? _keuanganJneMoney,
         keuanganCod: keuanganCod ?? _keuanganCod,
         keuanganAggregasi: keuanganAggregasi ?? _keuanganAggregasi,
-        keuanganAggregasiMinus: keuanganAggregasiMinus ?? _keuanganAggregasiMinus,
+        keuanganAggregasiMinus:
+            keuanganAggregasiMinus ?? _keuanganAggregasiMinus,
         keuanganTagihan: keuanganTagihan ?? _keuanganTagihan,
         keuanganBonus: keuanganBonus ?? _keuanganBonus,
         hubungiLaporan: hubungiLaporan ?? _hubungiLaporan,
         hubungiEclaim: hubungiEclaim ?? _hubungiEclaim,
         laporanSummaryOrigin: laporanSummaryOrigin ?? _laporanSummaryOrigin,
-        laporanSummaryDestination: laporanSummaryDestination ?? _laporanSummaryDestination,
+        laporanSummaryDestination:
+            laporanSummaryDestination ?? _laporanSummaryDestination,
         dukunganTeknis: dukunganTeknis ?? _dukunganTeknis,
         pengaturanTema: pengaturanTema ?? _pengaturanTema,
         pengaturanLabel: pengaturanLabel ?? _pengaturanLabel,

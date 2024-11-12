@@ -3,7 +3,6 @@ import 'package:css_mobile/screen/invoice/cnote/detail/invoice_cnote_detail_scre
 import 'package:css_mobile/screen/invoice/cnote/invoice_cnote_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/invoice/invoice_cnote_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

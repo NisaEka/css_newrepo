@@ -1,26 +1,20 @@
-enum RequestPickupDeliveryType {
-  semua_tipe_kiriman,
-  cod,
-  non_cod,
-  cod_ongkir
-}
+enum RequestPickupDeliveryType { semuaTipeKiriman, cod, nonCod, codOngkir }
 
 extension RequestPickupDeliveryTypeExt on RequestPickupDeliveryType {
-
   String asName() {
     String result = "";
 
     switch (this) {
-      case RequestPickupDeliveryType.semua_tipe_kiriman:
+      case RequestPickupDeliveryType.semuaTipeKiriman:
         result = "Semua Tipe Kiriman";
         break;
       case RequestPickupDeliveryType.cod:
         result = "COD";
         break;
-      case RequestPickupDeliveryType.non_cod:
+      case RequestPickupDeliveryType.nonCod:
         result = "Non COD";
         break;
-      case RequestPickupDeliveryType.cod_ongkir:
+      case RequestPickupDeliveryType.codOngkir:
         result = "COD Ongkir";
         break;
       default:
@@ -30,5 +24,4 @@ extension RequestPickupDeliveryTypeExt on RequestPickupDeliveryType {
 
     return result;
   }
-
 }

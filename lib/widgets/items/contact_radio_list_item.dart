@@ -1,5 +1,4 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -65,7 +64,8 @@ class ContactRadioListItem extends StatelessWidget {
             onChanged: onChanged,
             shape: Border.all(color: isSelected ? redJNE : greyColor),
             selectedTileColor: redJNE,
-            title: Text(name ?? '', style: Theme.of(context).textTheme.titleMedium),
+            title: Text(name ?? '',
+                style: Theme.of(context).textTheme.titleMedium),
             subtitle: Text(
               '$phone \n$city \n$address',
               style: Theme.of(context).textTheme.titleSmall,

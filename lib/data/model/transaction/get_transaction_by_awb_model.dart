@@ -1,5 +1,4 @@
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 
 class GetTransactionByAwbModel {
   GetTransactionByAwbModel({
@@ -16,7 +15,9 @@ class GetTransactionByAwbModel {
     _code = json['code'];
     _message = json['message'];
     // _payload = json['payload'] != null ? TransactionModel.fromJson(json['payload']) : null;
-    _payload = json['payload'] != null ? DataTransactionModel.fromJson(json['payload']) : null;
+    _payload = json['payload'] != null
+        ? DataTransactionModel.fromJson(json['payload'])
+        : null;
   }
 
   num? _code;

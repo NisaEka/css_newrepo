@@ -45,7 +45,9 @@ class AggByDocScreen extends StatelessWidget {
             hintText: 'Cari Data Agregasi'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
-              color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? whiteColor
+                  : blueJNE,
             ),
             onChanged: (value) {
               c.searchField.text = value;
@@ -64,7 +66,8 @@ class AggByDocScreen extends StatelessWidget {
               ),
               child: PagedListView<int, AggregationDetailModel>(
                 pagingController: c.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<AggregationDetailModel>(
+                builderDelegate:
+                    PagedChildBuilderDelegate<AggregationDetailModel>(
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => ReportListItem(
                     det: item,
@@ -76,7 +79,8 @@ class AggByDocScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(
                     children: List.generate(
                       3,
@@ -94,7 +98,8 @@ class AggByDocScreen extends StatelessWidget {
                       color: blueJNE,
                     ),
                   ),
-                  newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                  newPageProgressIndicatorBuilder: (context) =>
+                      const LoadingDialog(
                     background: Colors.transparent,
                     height: 50,
                     size: 30,

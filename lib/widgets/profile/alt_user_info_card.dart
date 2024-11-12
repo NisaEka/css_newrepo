@@ -1,5 +1,4 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,29 +30,41 @@ class AltUserInfoCard extends StatelessWidget {
             margin: isLoading ? const EdgeInsets.all(2) : null,
             height: isLoading ? 20 : null,
             width: isLoading ? 100 : null,
-            decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
+            decoration: BoxDecoration(
+                color: isLoading ? greyColor : Colors.transparent,
+                borderRadius: BorderRadius.circular(5)),
             child: Text(
               name,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 16),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontSize: 16),
             ),
           ),
           Container(
               margin: isLoading ? const EdgeInsets.all(2) : null,
               height: isLoading ? 15 : null,
               width: isLoading ? 100 : null,
-              decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
-              child: Text(brand, style: Theme.of(context).textTheme.titleSmall)),
+              decoration: BoxDecoration(
+                  color: isLoading ? greyColor : Colors.transparent,
+                  borderRadius: BorderRadius.circular(5)),
+              child:
+                  Text(brand, style: Theme.of(context).textTheme.titleSmall)),
           Container(
               margin: isLoading ? const EdgeInsets.all(2) : null,
               height: isLoading ? 15 : null,
               width: isLoading ? 100 : null,
-              decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(
+                  color: isLoading ? greyColor : Colors.transparent,
+                  borderRadius: BorderRadius.circular(5)),
               child: Text(mail, style: Theme.of(context).textTheme.titleSmall)),
           Container(
             margin: isLoading ? const EdgeInsets.all(2) : null,
             height: isLoading ? 10 : null,
             width: isLoading ? 70 : null,
-            decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
+            decoration: BoxDecoration(
+                color: isLoading ? greyColor : Colors.transparent,
+                borderRadius: BorderRadius.circular(5)),
             child: Text(
               type.tr,
               style: Theme.of(context).textTheme.titleMedium,

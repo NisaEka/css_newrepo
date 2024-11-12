@@ -1,5 +1,5 @@
-class Receiver {
-  Receiver({
+class ReceiverModel {
+  ReceiverModel({
     String? name,
     String? address,
     String? city,
@@ -12,8 +12,8 @@ class Receiver {
     String? destinationDescription,
     String? idDestination,
     String? idReceive,
-    String? district,
-    String? subdistrict,
+    String? receiverDistrict,
+    String? receiverSubDistrict,
     String? registrationId,
   }) {
     _name = name;
@@ -28,12 +28,12 @@ class Receiver {
     _destinationDescription = destinationDescription;
     _idDestination = idDestination;
     _idReceive = idReceive;
-    _district = district;
-    _subdistrict = subdistrict;
+    _receiverDistrict = receiverDistrict;
+    _receiverSubDistrict = receiverSubDistrict;
     _registrationId = registrationId;
   }
 
-  Receiver.fromJson(dynamic json) {
+  ReceiverModel.fromJson(dynamic json) {
     _name = json['name'] ?? json['receiverName'];
     _address = json['address'] ?? json['receiverAddr'];
     _city = json['city'] ?? json['receiverCity'];
@@ -43,11 +43,15 @@ class Receiver {
     _contact = json['contact'] ?? json['receiverContact'];
     _phone = json['phone'] ?? json['receiverPhone'];
     _destinationCode = json['destination_code'] ?? json['destinationCode'];
-    _destinationDescription = json['destination_description'] ?? json['destinationDesc'] ?? json['destination_desc'];
-    _idDestination = json['id_destination'] ?? json['idDest'] ?? json['destination_id'];
+    _destinationDescription = json['destination_description'] ??
+        json['destinationDesc'] ??
+        json['destination_desc'];
+    _idDestination =
+        json['id_destination'] ?? json['idDest'] ?? json['destination_id'];
     _idReceive = json['id_receive'] ?? json['idReceive'];
-    _district = json['receiver_district'] ?? json['receiverDistrict'];
-    _subdistrict = json['receiver_sub_district'] ?? json['receiverSubdistrict'];
+    _receiverDistrict = json['receiver_district'] ?? json['receiverDistrict'];
+    _receiverSubDistrict =
+        json['receiver_sub_district'] ?? json['receiverSubdistrict'];
     _registrationId = json['registration_id'] ?? json['registrationId'];
   }
 
@@ -63,11 +67,11 @@ class Receiver {
   String? _destinationDescription;
   String? _idDestination;
   String? _idReceive;
-  String? _district;
-  String? _subdistrict;
+  String? _receiverDistrict;
+  String? _receiverSubDistrict;
   String? _registrationId;
 
-  Receiver copyWith({
+  ReceiverModel copyWith({
     String? name,
     String? address,
     String? city,
@@ -80,11 +84,11 @@ class Receiver {
     String? destinationDescription,
     String? idDestination,
     String? idReceive,
-    String? district,
-    String? subdistrict,
+    String? receiverDistrict,
+    String? receiverSubDistrict,
     String? registrationId,
   }) =>
-      Receiver(
+      ReceiverModel(
         name: name ?? _name,
         address: address ?? _address,
         city: city ?? _city,
@@ -94,11 +98,12 @@ class Receiver {
         contact: contact ?? _contact,
         phone: phone ?? _phone,
         destinationCode: destinationCode ?? _destinationCode,
-        destinationDescription: destinationDescription ?? _destinationDescription,
+        destinationDescription:
+            destinationDescription ?? _destinationDescription,
         idDestination: idDestination ?? _idDestination,
         idReceive: idReceive ?? _idReceive,
-        district: district ?? _district,
-        subdistrict: subdistrict ?? _subdistrict,
+        receiverDistrict: receiverDistrict ?? _receiverDistrict,
+        receiverSubDistrict: receiverSubDistrict ?? _receiverSubDistrict,
         registrationId: registrationId ?? _registrationId,
       );
 
@@ -126,9 +131,9 @@ class Receiver {
 
   String? get idReceive => _idReceive;
 
-  String? get district => _district;
+  String? get receiverDistrict => _receiverDistrict;
 
-  String? get subdistrict => _subdistrict;
+  String? get receiverSubDistrict => _receiverSubDistrict;
 
   String? get registrationId => _registrationId;
 
@@ -148,8 +153,8 @@ class Receiver {
     map['id_destination'] = _idDestination;
     map['destination_id'] = _idDestination;
     map['id_receive'] = _idReceive;
-    map['receiver_district'] = _district;
-    map['receiver_sub_district'] = _subdistrict;
+    map['receiver_district'] = _receiverDistrict;
+    map['receiver_sub_district'] = _receiverSubDistrict;
     map['registration_id'] = _registrationId;
 
     map['receiverName'] = _name;
@@ -164,8 +169,8 @@ class Receiver {
     map['destinationDesc'] = _destinationDescription;
     map['idDest'] = _destinationDescription;
     map['idReceive'] = _idReceive;
-    map['receiverDistrict'] = _district;
-    map['receiverSubdistrict'] = _subdistrict;
+    map['receiverDistrict'] = _receiverDistrict;
+    map['receiverSubdistrict'] = _receiverSubDistrict;
     map['registrationId'] = _registrationId;
 
     return map;

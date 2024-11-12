@@ -1,5 +1,5 @@
-class Branch {
-  Branch({
+class BranchModel {
+  BranchModel({
     String? code,
     String? desc,
     String? regionalCode,
@@ -9,7 +9,7 @@ class Branch {
     _regionalCode = regionalCode;
   }
 
-  Branch.fromJson(dynamic json) {
+  BranchModel.fromJson(dynamic json) {
     _code = json['code'] ?? json['branchCode'];
     _desc = json['desc'] ?? json['branchDesc'];
     _regionalCode = json['regional_code'] ?? json['regionalCode'];
@@ -19,12 +19,12 @@ class Branch {
   String? _desc;
   String? _regionalCode;
 
-  Branch copyWith({
+  BranchModel copyWith({
     String? code,
     String? desc,
     String? regionalCode,
   }) =>
-      Branch(
+      BranchModel(
         code: code ?? _code,
         desc: desc ?? _desc,
         regionalCode: regionalCode ?? _regionalCode,

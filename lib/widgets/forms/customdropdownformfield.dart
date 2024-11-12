@@ -1,5 +1,4 @@
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -51,7 +50,10 @@ class CustomDropDownFormField<T> extends StatelessWidget {
     }
     return DropdownSearch<String>(
       validator: (value) {
-        if (value == null || value.isEmpty || value == hintText || value == label) {
+        if (value == null ||
+            value.isEmpty ||
+            value == hintText ||
+            value == label) {
           // return validator!(value as T);
           return "This field is required";
         }
@@ -76,7 +78,10 @@ class CustomDropDownFormField<T> extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             child: Text(
               item,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: regular),
             ),
           );
         },
@@ -84,7 +89,8 @@ class CustomDropDownFormField<T> extends StatelessWidget {
       dropdownButtonProps: const DropdownButtonProps(
         icon: Icon(Icons.keyboard_arrow_down),
       ),
-      items: items!.map((DropdownMenuItem e) => (e.child as Text).data!).toList(),
+      items:
+          items!.map((DropdownMenuItem e) => (e.child as Text).data!).toList(),
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
           label: Text(hintText ?? ''),
@@ -103,7 +109,9 @@ class CustomDropDownFormField<T> extends StatelessWidget {
   }
 
   dynamic _getIdSelectedValue(String selected) {
-    DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => (item.child as Text).data == selected) as DropdownMenuItem;
+    DropdownMenuItem? item = items?.firstWhere(
+            (DropdownMenuItem item) => (item.child as Text).data == selected)
+        as DropdownMenuItem;
     return item.value;
   }
 
@@ -111,7 +119,9 @@ class CustomDropDownFormField<T> extends StatelessWidget {
     if (items != null) {
       if (items!.isNotEmpty) {
         if (value != null) {
-          DropdownMenuItem? item = items?.firstWhere((DropdownMenuItem item) => item.value == value, orElse: () => items!.first) as DropdownMenuItem;
+          DropdownMenuItem? item = items?.firstWhere(
+              (DropdownMenuItem item) => item.value == value,
+              orElse: () => items!.first) as DropdownMenuItem;
           Text textView = item.child as Text;
 
           return textView.data ?? hintText ?? label ?? '';
@@ -133,7 +143,9 @@ class CustomDropDownFormField<T> extends StatelessWidget {
                   text: label,
                   style: formLabelTextStyle,
                   children: <TextSpan>[
-                    TextSpan(text: isRequired ? "" : "", style: const TextStyle(color: Colors.red)),
+                    TextSpan(
+                        text: isRequired ? "" : "",
+                        style: const TextStyle(color: Colors.red)),
                   ],
                 ),
               )
@@ -146,7 +158,8 @@ class CustomDropDownFormField<T> extends StatelessWidget {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: readOnly
               ? TextField(
-                  controller: TextEditingController(text: selectedItem.toString()),
+                  controller:
+                      TextEditingController(text: selectedItem.toString()),
                   enabled: false,
                   style: Theme.of(context).textTheme.bodyLarge,
                   decoration: InputDecoration(

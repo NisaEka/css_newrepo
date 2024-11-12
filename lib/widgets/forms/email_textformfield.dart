@@ -24,14 +24,20 @@ class EmailTextformfield extends HookWidget {
   @override
   Widget build(BuildContext context) {
     String locale = 'en';
-    getLocale().then((value) => locale = value,);
+    getLocale().then(
+      (value) => locale = value,
+    );
 
     return CustomTextFormField(
       controller: controller,
       prefixIcon: const Icon(Icons.mail_outline),
       hintText: 'Email'.tr,
       isRequired: true,
-      validator: ValidationBuilder(localeName:locale).email().minLength(10).maxLength(50).build(),
+      validator: ValidationBuilder(localeName: locale)
+          .email()
+          .minLength(10)
+          .maxLength(50)
+          .build(),
       inputFormatters: [
         TextInputFormatter.withFunction((oldValue, newValue) {
           return newValue.copyWith(text: newValue.text.toLowerCase());

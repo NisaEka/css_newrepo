@@ -16,6 +16,7 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:css_mobile/util/logger.dart';
 
 import 'master_repository.dart';
 
@@ -24,7 +25,8 @@ class MasterRepositoryImpl extends MasterRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<Origin>>> getOrigins(QueryParamModel param) async {
+  Future<BaseResponse<List<OriginModel>>> getOrigins(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
 
     if (token != null) {
@@ -35,12 +37,12 @@ class MasterRepositoryImpl extends MasterRepository {
         '/master/origins',
         queryParameters: param.toJson(),
       );
-      return BaseResponse<List<Origin>>.fromJson(
+      return BaseResponse<List<OriginModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<Origin>(
-                  (i) => Origin.fromJson(i as Map<String, dynamic>),
+                .map<OriginModel>(
+                  (i) => OriginModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -51,7 +53,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Destination>>> getDestinations(QueryParamModel param) async {
+  Future<BaseResponse<List<Destination>>> getDestinations(
+      QueryParamModel param) async {
     try {
       Response response = await network.base.get(
         '/master/destinations',
@@ -73,7 +76,7 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Branch>>> getBranches() async {
+  Future<BaseResponse<List<BranchModel>>> getBranches() async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
@@ -84,8 +87,8 @@ class MasterRepositoryImpl extends MasterRepository {
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<Branch>(
-                  (i) => Branch.fromJson(i as Map<String, dynamic>),
+                .map<BranchModel>(
+                  (i) => BranchModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -96,7 +99,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<GroupOwnerModel>>> getReferals(String keyword) async {
+  Future<BaseResponse<List<GroupOwnerModel>>> getReferals(
+      String keyword) async {
     try {
       Response response = await network.base.get(
         '/master/group-owners',
@@ -144,7 +148,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Dropshipper>>> getDropshippers(QueryParamModel param) async {
+  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -159,12 +164,12 @@ class MasterRepositoryImpl extends MasterRepository {
         '/master/dropshippers',
         queryParameters: params.toJson(),
       );
-      return BaseResponse<List<Dropshipper>>.fromJson(
+      return BaseResponse<List<DropshipperModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<Dropshipper>(
-                  (i) => Dropshipper.fromJson(i as Map<String, dynamic>),
+                .map<DropshipperModel>(
+                  (i) => DropshipperModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -192,7 +197,7 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse> postDropshipper(Dropshipper data) async {
+  Future<BaseResponse> postDropshipper(DropshipperModel data) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     UserModel user = UserModel.fromJson(
@@ -217,7 +222,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Receiver>>> getReceivers(QueryParamModel param) async {
+  Future<BaseResponse<List<ReceiverModel>>> getReceivers(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -232,12 +238,12 @@ class MasterRepositoryImpl extends MasterRepository {
         '/master/receivers',
         queryParameters: params.toJson(),
       );
-      return BaseResponse<List<Receiver>>.fromJson(
+      return BaseResponse<List<ReceiverModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<Receiver>(
-                  (i) => Receiver.fromJson(i as Map<String, dynamic>),
+                .map<ReceiverModel>(
+                  (i) => ReceiverModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -260,13 +266,13 @@ class MasterRepositoryImpl extends MasterRepository {
       );
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
-      print('delete receiver error : ${e.response?.data}');
+      AppLogger.e('delete receiver error : ${e.response?.data}');
       return BaseResponse.fromJson(e.response?.data, (json) => null);
     }
   }
 
   @override
-  Future<BaseResponse> postReceiver(Receiver data) async {
+  Future<BaseResponse> postReceiver(ReceiverModel data) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -315,7 +321,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<ServiceModel>>> getServices(DataServiceModel param) async {
+  Future<BaseResponse<List<ServiceModel>>> getServices(
+      DataServiceModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {

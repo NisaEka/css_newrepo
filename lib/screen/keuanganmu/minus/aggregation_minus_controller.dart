@@ -1,11 +1,11 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class AggregasiMinusController extends BaseController {
-
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
   final searchField = TextEditingController();
@@ -19,7 +19,8 @@ class AggregasiMinusController extends BaseController {
   bool showMainContent = false;
   bool showErrorContent = false;
 
-  final PagingController<int, AggregationMinusModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, AggregationMinusModel> pagingController =
+      PagingController(firstPageKey: 1);
   static const pageSize = 20;
 
   // List<AggregationMinusModel> aggregations = [];
@@ -35,12 +36,16 @@ class AggregasiMinusController extends BaseController {
   Future<void> getAggregationMinuses(int page) async {
     showLoadingIndicator = true;
     try {
-      final aggregations = await aggregation.getAggregationMinus(
-        page, pageSize, searchField.text
-      );
+      final aggregations =
+          await aggregation.getAggregationMinus(QueryParamModel(
+        page: page,
+        limit: pageSize,
+        search: searchField.text,
+      ));
 
-      final payload = aggregations.payload ?? List.empty();
-      final isLastPage = payload.length < pageSize;
+      final payload = aggregations.data ?? List.empty();
+      final isLastPage =
+          aggregations.meta!.currentPage == aggregations.meta!.lastPage;
 
       if (isLastPage) {
         pagingController.appendLastPage(payload);
@@ -48,7 +53,6 @@ class AggregasiMinusController extends BaseController {
         final nextPageKey = page + 1;
         pagingController.appendPage(payload, nextPageKey);
       }
-
     } catch (e) {
       showErrorContent = true;
       update();
@@ -65,16 +69,16 @@ class AggregasiMinusController extends BaseController {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     ).then(
-          (selectedDate) => showTimePicker(
+      (selectedDate) => showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
       ).then((selectedTime) => DateTime(
-        selectedDate!.year,
-        selectedDate.month,
-        selectedDate.day,
-        selectedTime!.hour,
-        selectedTime.minute,
-      )),
+            selectedDate!.year,
+            selectedDate.month,
+            selectedDate.day,
+            selectedTime!.hour,
+            selectedTime.minute,
+          )),
     );
   }
 
@@ -87,5 +91,4 @@ class AggregasiMinusController extends BaseController {
     update();
     Get.back();
   }
-
 }

@@ -21,7 +21,8 @@ class DashboardKirimanCounts extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Kiriman Kamu'.tr, style: Theme.of(context).textTheme.titleLarge),
+                    Text('Kiriman Kamu'.tr,
+                        style: Theme.of(context).textTheme.titleLarge),
                     // const DateDropdownFilterButton(),
                   ],
                 ),
@@ -30,7 +31,8 @@ class DashboardKirimanCounts extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: controller.state.isLoading || controller.state.transCountList.isEmpty
+                      children: controller.state.isLoading ||
+                              controller.state.transCountList.isEmpty
                           ? ImageConstant.dashboardCountIcons
                               .mapIndexed(
                                 (i, e) => CountCardItem(

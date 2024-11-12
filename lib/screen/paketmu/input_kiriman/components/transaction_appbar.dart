@@ -24,12 +24,17 @@ class TransactionAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
+    List<String> steps = [
+      'Data Pengirim'.tr,
+      'Data Penerima'.tr,
+      'Data Kiriman'.tr
+    ];
 
     return CustomTopBar(
       title: 'Input Transaksi'.tr,
       leading: CustomBackButton(
-        onPressed: () => data != null ? Get.back() : Get.offAll(const DashboardScreen()),
+        onPressed: () =>
+            data != null ? Get.back() : Get.offAll(const DashboardScreen()),
       ),
       flexibleSpace: Column(
         children: [

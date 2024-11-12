@@ -371,13 +371,15 @@ class MenuModel {
         keuanganJneMoney: keuanganJneMoney ?? _keuanganJneMoney,
         keuanganCod: keuanganCod ?? _keuanganCod,
         keuanganAggregasi: keuanganAggregasi ?? _keuanganAggregasi,
-        keuanganAggregasiMinus: keuanganAggregasiMinus ?? _keuanganAggregasiMinus,
+        keuanganAggregasiMinus:
+            keuanganAggregasiMinus ?? _keuanganAggregasiMinus,
         keuanganTagihan: keuanganTagihan ?? _keuanganTagihan,
         keuanganBonus: keuanganBonus ?? _keuanganBonus,
         hubungiLaporan: hubungiLaporan ?? _hubungiLaporan,
         hubungiEclaim: hubungiEclaim ?? _hubungiEclaim,
         laporanSummaryOrigin: laporanSummaryOrigin ?? _laporanSummaryOrigin,
-        laporanSummaryDestination: laporanSummaryDestination ?? _laporanSummaryDestination,
+        laporanSummaryDestination:
+            laporanSummaryDestination ?? _laporanSummaryDestination,
         dukunganTeknis: dukunganTeknis ?? _dukunganTeknis,
         pengaturanTema: pengaturanTema ?? _pengaturanTema,
         pengaturanLabel: pengaturanLabel ?? _pengaturanLabel,

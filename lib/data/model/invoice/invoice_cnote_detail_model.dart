@@ -1,5 +1,4 @@
 class InvoiceCnoteDetailModel {
-
   String? _awbNumber = "";
   String? get awbNumber => _awbNumber;
 
@@ -67,28 +66,27 @@ class InvoiceCnoteDetailModel {
   String? get codFeeZone => _codFeeZone;
 
   InvoiceCnoteDetailModel.fromJson(dynamic json) {
-    _awbNumber = json["awb_number"];
-    _awbDate = json["awb_date"];
-    _shipperName = json["shipper_name"];
-    _consigneeName = json["consignee_name"];
+    _awbNumber = json["awbNumber"];
+    _awbDate = json["awbDate"];
+    _shipperName = json["shipperName"];
+    _consigneeName = json["consigneeName"];
     _quantity = json["quantity"];
-    _weightKg = json["weight_kg"];
-    _serviceCode = json["service_code"];
-    _originSysCode = json["origin_sys_code"];
-    _originName = json["origin_name"];
-    _destinationSysCode = json["destination_sys_code"];
-    _destinationName = json["destination_name"];
-    _originalAmountNumber = json["original_amount_number"];
+    _weightKg = json["weightKg"];
+    _serviceCode = json["serviceCode"];
+    _originSysCode = json["originSysCode"];
+    _originName = json["originName"];
+    _destinationSysCode = json["destinationSysCode"];
+    _destinationName = json["destinationName"];
+    _originalAmountNumber = json["originalAmountNumber"];
     _packing = json["packing"];
     _surcharge = json["surcharge"];
-    _otherCharges = json["other_charges"];
-    _discountAmountAwb = json["discount_amount_awb"];
-    _totalAdjustedInsAmt = json["total_adjusted_ins_amt"];
-    _goodsValue = json["goods_value"];
-    _codAmount = json["cod_amount"];
-    _persentaseCodFee = json["persentase_cod_fee"];
-    _codFeeAmount = json["cod_fee_amount"];
-    _codFeeZone = json["cod_fee_zone"];
+    _otherCharges = json["otherCharges"];
+    _discountAmountAwb = json["discountAmountAwb"];
+    _totalAdjustedInsAmt = json["totalAdjustedInsAmt"];
+    _goodsValue = json["goodsValue"];
+    _codAmount = json["codAmount"];
+    _persentaseCodFee = json["persentaseCodFee"];
+    _codFeeAmount = json["codFeeAmount"];
+    _codFeeZone = json["codFeeZone"];
   }
-
 }

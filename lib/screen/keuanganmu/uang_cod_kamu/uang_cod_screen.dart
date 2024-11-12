@@ -24,7 +24,8 @@ class UangCODScreen extends StatelessWidget {
         });
   }
 
-  Widget _filterContent(UangCODController c, BuildContext context, StateSetter setState) {
+  Widget _filterContent(
+      UangCODController c, BuildContext context, StateSetter setState) {
     return Expanded(
       child: CustomScrollView(
         slivers: [
@@ -80,9 +81,11 @@ class UangCODScreen extends StatelessWidget {
                       onTap: () => c.selectDate(context).then((value) {
                         setState(() {
                           c.startDate = value;
-                          c.startDateField.text = value.toString().toDateTimeFormat();
+                          c.startDateField.text =
+                              value.toString().toDateTimeFormat();
                           c.endDate = DateTime.now();
-                          c.endDateField.text = DateTime.now().toString().toDateTimeFormat();
+                          c.endDateField.text =
+                              DateTime.now().toString().toDateTimeFormat();
                           c.update();
                         });
                       }),
@@ -96,7 +99,8 @@ class UangCODScreen extends StatelessWidget {
                       onTap: () => c.selectDate(context).then((value) {
                         setState(() {
                           c.endDate = value;
-                          c.endDateField.text = value.toString().toDateTimeFormat();
+                          c.endDateField.text =
+                              value.toString().toDateTimeFormat();
                           c.update();
                         });
                       }),

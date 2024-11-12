@@ -89,7 +89,7 @@ class BottomBar2 extends StatelessWidget {
                         : whiteColor.withOpacity(0.5),
                 // onTap: () => Get.offAll(const ProfileScreen()),
                 onTap: () => isLogin
-                    ? Get.offAll(AltProfileScreen())
+                    ? Get.offAll(const AltProfileScreen())
                     : showDialog(
                         context: context,
                         builder: (context) => const LoginAlertDialog(),
@@ -140,14 +140,19 @@ class BottomBar2 extends StatelessWidget {
                     // padding: const EdgeInsets.all(40.0),
                     height: 60,
                     width: 60,
-                    decoration: BoxDecoration(color: isLogin ? redJNE : errorLightColor2, borderRadius: BorderRadius.circular(100), boxShadow: [
-                      BoxShadow(
-                        color: AppConst.isLightTheme(context) ? Colors.grey.withOpacity(0.5) : greyLightColor3.withOpacity(0.5),
-                        // spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(2, 3),
-                      )
-                    ]),
+                    decoration: BoxDecoration(
+                        color: isLogin ? redJNE : errorLightColor2,
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppConst.isLightTheme(context)
+                                ? Colors.grey.withOpacity(0.5)
+                                : greyLightColor3.withOpacity(0.5),
+                            // spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(2, 3),
+                          )
+                        ]),
                     alignment: Alignment.center,
                     child: Image.asset(
                       ImageConstant.paketmuIcon,

@@ -25,7 +25,8 @@ class PengaturanScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: false,
-            onPopInvoked: (didPop) => Get.off(const DashboardScreen()),
+            onPopInvokedWithResult: (didPop, result) =>
+                Get.off(const DashboardScreen()),
             child: Stack(
               children: [
                 Scaffold(
@@ -63,7 +64,8 @@ class PengaturanScreen extends StatelessWidget {
                   CustomFilledButton(
                     color: c.lang == "id" ? blueJNE : whiteColor,
                     fontColor: c.lang == "id" ? whiteColor : greyColor,
-                    borderColor: c.lang == "id" ? Colors.transparent : greyColor,
+                    borderColor:
+                        c.lang == "id" ? Colors.transparent : greyColor,
                     title: 'ID',
                     width: 40,
                     margin: EdgeInsets.zero,
@@ -74,7 +76,8 @@ class PengaturanScreen extends StatelessWidget {
                   CustomFilledButton(
                     color: c.lang == "en" ? blueJNE : whiteColor,
                     fontColor: c.lang == "en" ? whiteColor : greyColor,
-                    borderColor: c.lang == "en" ? Colors.transparent : greyColor,
+                    borderColor:
+                        c.lang == "en" ? Colors.transparent : greyColor,
                     margin: EdgeInsets.zero,
                     padding: EdgeInsets.zero,
                     title: 'EN',
@@ -85,7 +88,7 @@ class PengaturanScreen extends StatelessWidget {
               ),
             ),
           ),
-          c.allow.label == "Y" || c.allow.pengaturanLabel == "Y"
+          c.menu.label == "Y" || c.menu.pengaturanLabel == "Y"
               ? SettingListItem(
                   title: 'Pengaturan Label'.tr,
                   icon: Icons.label_outline,
@@ -97,7 +100,7 @@ class PengaturanScreen extends StatelessWidget {
                         ),
                 )
               : const SizedBox(),
-          c.allow.petugas == "Y" || c.allow.pengaturanPetugas == "Y"
+          c.menu.petugas == "Y" || c.menu.pengaturanPetugas == "Y"
               ? SettingListItem(
                   title: 'Pengaturan Petugas'.tr,
                   icon: Icons.account_circle,
@@ -109,7 +112,7 @@ class PengaturanScreen extends StatelessWidget {
                         ),
                 )
               : const SizedBox(),
-          c.isLogin && c.allow.katasandi == "Y"
+          c.isLogin && c.menu.katasandi == "Y"
               ? SettingListItem(
                   title: 'Ubah Kata Sandi'.tr,
                   icon: Icons.lock_open_outlined,

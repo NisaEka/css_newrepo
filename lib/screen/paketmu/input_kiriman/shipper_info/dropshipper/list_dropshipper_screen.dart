@@ -65,7 +65,8 @@ class ListDropshipperScreen extends StatelessWidget {
           c.isLoading
               ? Expanded(
                   child: ListView.builder(
-                  itemBuilder: (context, i) => c.dropshipperItem(Dropshipper(), i, context),
+                  itemBuilder: (context, i) =>
+                      c.dropshipperItem(DropshipperModel(), i, context),
                   itemCount: 5,
                 ))
               : Expanded(

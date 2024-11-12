@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/bottombar_controller.dart';
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 
@@ -23,7 +23,7 @@ class AltProfileController extends BaseController {
 
   UserModel? basicProfil;
   String? version;
-  AllowedMenu allow = AllowedMenu();
+  MenuModel menuModel = MenuModel();
   CcrfProfileModel? ccrf;
   bool isCcrf = false;
 
@@ -72,13 +72,11 @@ class AltProfileController extends BaseController {
       debugPrint("token : $token");
       isLogin = token != null;
       // if (await storage.readData(StorageCore.userProfil) == null) {
-        await profil.getBasicProfil().then((value) async {
-          basicProfil = value.data?.user;
-          update();
-        });
+      await profil.getBasicProfil().then((value) async {
+        basicProfil = value.data?.user;
+        update();
+      });
       // }
-
-
     } catch (e, i) {
       e.printError();
       i.printError();
@@ -87,7 +85,8 @@ class AltProfileController extends BaseController {
       );
     }
 
-    allow = AllowedMenu.fromJson(await storage.readData(StorageCore.allowedMenu));
+    menuModel =
+        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
     update();
 
     isLoading = false;
@@ -98,10 +97,10 @@ class AltProfileController extends BaseController {
     // bool ccrfProfile = await storage.readString(StorageCore.ccrfProfil) == null;
     try {
       // if (ccrfProfile) {
-        await profil.getCcrfProfil().then((value) {
-          ccrf = value.data;
-          update();
-        });
+      await profil.getCcrfProfil().then((value) {
+        ccrf = value.data;
+        update();
+      });
       // }
     } catch (e) {
       e.printError();
@@ -116,16 +115,16 @@ class AltProfileController extends BaseController {
     update();
     await auth
         .logout(
-      // Device(
-      //   fcmToken: await storage.readString(StorageCore.fcmToken),
-      // ),
-    )
+            // Device(
+            //   fcmToken: await storage.readString(StorageCore.fcmToken),
+            // ),
+            )
         .then((value) {
-      if (value.code == 201) {
-        storage.deleteLogin();
-        storage.deleteString(StorageCore.favoriteMenu);
-        Get.offAll(const LoginScreen());
-      }
+      // if (value.code == 201) {
+      storage.deleteLogin();
+      storage.deleteString(StorageCore.favoriteMenu);
+      Get.offAll(const LoginScreen());
+      // }
     });
     isLoading = false;
     update();
@@ -137,7 +136,9 @@ class AltProfileController extends BaseController {
         : showDialog(
             context: context,
             builder: (context) => InfoDialog(
-              infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas".tr,
+              infoText:
+                  "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas"
+                      .tr,
               nextButton: () => Get.off(const FacilityScreen()),
             ),
           );

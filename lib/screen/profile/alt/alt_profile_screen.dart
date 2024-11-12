@@ -30,7 +30,7 @@ class AltProfileScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: controller.pop,
-            onPopInvoked: (didPop) => controller.onPop(),
+            onPopInvokedWithResult: (didPop, result) => controller.onPop(),
             child: Stack(
               children: [
                 Scaffold(
@@ -60,8 +60,14 @@ class AltProfileScreen extends StatelessWidget {
       decoration: BoxDecoration(
           color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
           border: Border(
-            bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
-            top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
+            bottom: BorderSide(
+                color: AppConst.isLightTheme(context)
+                    ? Colors.black
+                    : Colors.white),
+            top: BorderSide(
+                color: AppConst.isLightTheme(context)
+                    ? Colors.black
+                    : Colors.white),
           )),
       child: Wrap(
         children: [
@@ -106,7 +112,9 @@ class AltProfileScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(color: blueJNE)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(color: blueJNE)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -121,53 +129,57 @@ class AltProfileScreen extends StatelessWidget {
           ),
           Column(
             children: [
-              c.allow.profil == "Y" && c.basicProfil?.userType == "PEMILIK"
+              c.menuModel.profil == "Y" && c.basicProfil?.userType == "PEMILIK"
                   ? SettingListItem(
                       title: 'Edit Profil'.tr,
                       icon: Icons.person,
                       onTap: () => Get.to(const EditProfilScreen()),
                     )
                   : const SizedBox(),
-              c.allow.fasilitas == 'Y' && c.basicProfil?.userType == "PEMILIK"
+              c.menuModel.fasilitas == 'Y' &&
+                      c.basicProfil?.userType == "PEMILIK"
                   ? SettingListItem(
                       title: 'Fasilitasku'.tr,
                       icon: Icons.format_list_numbered_rounded,
                       onTap: () => Get.to(const FacilityScreen()),
                     )
                   : const SizedBox(),
-              c.allow.profil == "Y"
+              c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Lihat Akun'.tr,
                       icon: Icons.account_tree_rounded,
                       onTap: () => Get.to(const NoAkunScreen()),
                     )
                   : const SizedBox(),
-              c.allow.profil == "Y"
+              c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Data Umum'.tr,
                       icon: Icons.person_pin_outlined,
                       onTap: () => Get.to(const DataUmumScreen()),
                     )
                   : const SizedBox(),
-              c.allow.profil == "Y"
+              c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Alamat Pengembalian'.tr,
                       icon: Icons.cached_rounded,
-                      onTap: () => c.isCcrfAction(const AlamatReturnScreen(), context),
+                      onTap: () =>
+                          c.isCcrfAction(const AlamatReturnScreen(), context),
                     )
                   : const SizedBox(),
-              c.allow.profil == "Y"
+              c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Data Rekening'.tr,
                       icon: Icons.credit_card_rounded,
-                      onTap: () => c.isCcrfAction(const AkunBankScreen(), context),
+                      onTap: () =>
+                          c.isCcrfAction(const AkunBankScreen(), context),
                     )
                   : const SizedBox(),
-              c.allow.profil == "Y"
+              c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Dokumen'.tr,
                       icon: Icons.file_present_rounded,
-                      onTap: () => c.isCcrfAction(const DokumenScreen(), context),
+                      onTap: () =>
+                          c.isCcrfAction(const DokumenScreen(), context),
                     )
                   : const SizedBox(),
               const SizedBox(height: 50),

@@ -13,9 +13,8 @@ class DraftTransactionListItem extends StatefulWidget {
   final VoidCallback? onDelete;
   final VoidCallback? onValidate;
   final int index;
-  bool showDetail = false;
 
-  DraftTransactionListItem({
+  const DraftTransactionListItem({
     super.key,
     required this.data,
     this.onDelete,
@@ -24,31 +23,34 @@ class DraftTransactionListItem extends StatefulWidget {
   });
 
   @override
-  State<DraftTransactionListItem> createState() => _DraftTransactionListItemState();
+  State<DraftTransactionListItem> createState() =>
+      _DraftTransactionListItemState();
 }
 
 class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
+  bool showDetail = false; // Moved the state to the State class
+
+  void toggleDetail() {
+    setState(() {
+      showDetail = !showDetail;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          widget.showDetail = (widget.showDetail == true)
-              ? false
-              : (widget.showDetail == false)
-                  ? true
-                  : false;
-        });
-      },
+      onTap: toggleDetail,
       child: Slidable(
         key: ValueKey(widget.index),
         startActionPane: ActionPane(
-          dragDismissible: true,
-          dismissible: DismissiblePane(onDismissed: widget.onDelete ?? () {}),
           motion: const DrawerMotion(),
+          dragDismissible: true,
+          dismissible: DismissiblePane(
+            onDismissed: widget.onDelete ?? () {},
+          ),
           children: [
             SlidableAction(
-              onPressed: (context) => widget.onDelete,
+              onPressed: (_) => widget.onDelete?.call(),
               backgroundColor: Colors.transparent,
               foregroundColor: errorColor,
               icon: Icons.delete,
@@ -63,15 +65,21 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
               right: 0,
               top: 5,
               child: Container(
-                padding: const EdgeInsets.only(top: 5, right: 5, left: 20, bottom: 2),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 5, left: 20, bottom: 2),
                 decoration: BoxDecoration(
-                    color: widget.data.delivery?.freightCharge == 0 ? infoColor : successColor,
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(8),
-                      bottomLeft: Radius.circular(20),
-                    )),
+                  color: widget.data.delivery?.freightCharge == 0
+                      ? infoColor
+                      : successColor,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(8),
+                    bottomLeft: Radius.circular(20),
+                  ),
+                ),
                 child: Text(
-                  widget.data.delivery?.freightCharge == 0 ? 'Draft' : 'Ready to Upload',
+                  widget.data.delivery?.freightCharge == 0
+                      ? 'Draft'
+                      : 'Ready to Upload',
                   style: listTitleTextStyle.copyWith(color: whiteColor),
                 ),
               ),
@@ -87,10 +95,16 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.data.createAt!.toDateTimeFormat().toString(), style: sublistTitleTextStyle),
-                      !widget.showDetail ? const Icon(Icons.keyboard_arrow_down) : const Icon(Icons.keyboard_arrow_up),
+                      Text(
+                        widget.data.createAt?.toDateTimeFormat() ?? '',
+                        style: sublistTitleTextStyle,
+                      ),
+                      Icon(
+                        showDetail
+                            ? Icons.keyboard_arrow_up
+                            : Icons.keyboard_arrow_down,
+                      ),
                     ],
                   ),
                   Row(
@@ -107,56 +121,51 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                       ),
                     ],
                   ),
-                  widget.showDetail
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Divider(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomLabelText(
-                                  title: 'Shipper'.tr,
-                                  value: widget.data.shipper?.name ?? '',
-                                ),
-                                CustomLabelText(
-                                  alignment: 'end',
-                                  title: 'Receiver'.tr,
-                                  value: widget.data.receiver?.name ?? '',
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomLabelText(
-                                  width: Get.width / 2,
-                                  title: 'Origin'.tr,
-                                  value: widget.data.origin?.originName ?? '',
-                                  valueMaxline: 3,
-                                ),
-                                CustomLabelText(
-                                  alignment: 'end',
-                                  title: 'Destination'.tr,
-                                  value: widget.data.dataDestination?.cityName ?? '',
-                                  valueMaxline: 3,
-                                ),
-                              ],
-                            ),
-                            const Divider(),
-                            CustomLabelText(
-                              title: 'Nama Barang'.tr,
-                              value: widget.data.goods?.desc ?? '',
-                            ),
-                            CustomFilledButton(
-                              color: blueJNE,
-                              title: 'Validasi'.tr,
-                              onPressed: widget.onValidate,
-                            )
-                          ],
-                        )
-                      : const SizedBox(),
+                  if (showDetail) ...[
+                    const Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomLabelText(
+                          title: 'Shipper'.tr,
+                          value: widget.data.shipper?.name ?? '',
+                        ),
+                        CustomLabelText(
+                          alignment: 'end',
+                          title: 'Receiver'.tr,
+                          value: widget.data.receiver?.name ?? '',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomLabelText(
+                          width: Get.width / 2,
+                          title: 'Origin'.tr,
+                          value: widget.data.origin?.originName ?? '',
+                          valueMaxline: 3,
+                        ),
+                        CustomLabelText(
+                          alignment: 'end',
+                          title: 'Destination'.tr,
+                          value: widget.data.dataDestination?.cityName ?? '',
+                          valueMaxline: 3,
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                    CustomLabelText(
+                      title: 'Nama Barang'.tr,
+                      value: widget.data.goods?.desc ?? '',
+                    ),
+                    CustomFilledButton(
+                      color: blueJNE,
+                      title: 'Validasi'.tr,
+                      onPressed: widget.onValidate,
+                    ),
+                  ],
                 ],
               ),
             ),

@@ -1,3 +1,1 @@
-class NewPasswordState {
-
-}
+class NewPasswordState {}

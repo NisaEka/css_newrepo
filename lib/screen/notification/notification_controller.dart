@@ -27,7 +27,8 @@ class NotificationController extends BaseController {
         update();
       });
 
-      var unread = GetNotificationModel.fromJson(await storage.readData(StorageCore.unreadMessage));
+      var unread = GetNotificationModel.fromJson(
+          await storage.readData(StorageCore.unreadMessage));
       unreadNotifList.addAll(unread.payload ?? []);
       // notificationList.addAll(unread.payload ?? []);
       update();
@@ -37,8 +38,12 @@ class NotificationController extends BaseController {
     }
 
     for (var local in unreadNotifList) {
-      if (notificationList.where((e) => e.createDate == local.createDate).isNotEmpty) {
-        temp.add(notificationList.where((e) => e.createDate == local.createDate).first);
+      if (notificationList
+          .where((e) => e.createDate == local.createDate)
+          .isNotEmpty) {
+        temp.add(notificationList
+            .where((e) => e.createDate == local.createDate)
+            .first);
         notificationList.removeWhere((e) => e.createDate == local.createDate);
       }
       update();
@@ -51,7 +56,8 @@ class NotificationController extends BaseController {
     unreadNotifList.removeWhere((e) => e.id == id || id.isEmpty);
     // notificationList.removeWhere((e) => e.id == id || id.isEmpty);
     update();
-    storage.saveData(StorageCore.unreadMessage, GetNotificationModel(payload: unreadNotifList));
+    storage.saveData(StorageCore.unreadMessage,
+        GetNotificationModel(payload: unreadNotifList));
     notificationList.addAll(temp);
   }
 }

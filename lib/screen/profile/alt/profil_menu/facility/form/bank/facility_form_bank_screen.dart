@@ -1,5 +1,4 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/bank/bank_model.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_terms_and_conditions_screen.dart';
@@ -12,7 +11,6 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/profile/image_picker_container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 

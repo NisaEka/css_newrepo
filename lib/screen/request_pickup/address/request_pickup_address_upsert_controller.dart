@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_create_request_model.dart';
 import 'package:css_mobile/util/ext/placement_ext.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
@@ -22,38 +25,49 @@ class RequestPickupAddressUpsertController extends BaseController {
   bool createDataFailed = false;
   bool createDataSuccess = false;
 
-  double? selectedLat;
-  double? selectedLng;
+  String? selectedLat;
+  String? selectedLng;
 
   /// Internal methods.
 
   Future<RequestPickupAddressCreateRequestModel> _prepareRequestData() async {
     await locationFromAddress(address.text).then((locations) {
       final location = locations.firstOrNull;
-      selectedLat = location?.latitude;
-      selectedLng = location?.longitude;
+      selectedLat = location?.latitude.toString();
+      selectedLng = location?.longitude.toString();
     }).onError((error, stackTrace) {
       // Do nothing for now.
     });
 
     return RequestPickupAddressCreateRequestModel(
-      name: name.text,
-      phone: phone.text,
-      address: address.text,
-      zipCode: selectedDestination?.zipCode ?? '',
-      city: selectedDestination?.cityName ?? '',
-      district: selectedDestination?.districtName ?? '',
-      subDistrict: selectedDestination?.subdistrictName ?? '',
-      region: selectedDestination?.provinceName ?? '',
-      lat: selectedLat,
-      lng: selectedLng,
+      pickupDataName: name.text,
+      pickupDataPhone: phone.text,
+      pickupDataAddress: address.text,
+      pickupDataZipCode: selectedDestination?.zipCode ?? '',
+      pickupDataCity: selectedDestination?.cityName ?? '',
+      pickupDataDistrict: selectedDestination?.districtName ?? '',
+      pickupDataSubdistrict: selectedDestination?.subdistrictName ?? '',
+      pickupDataRegion: selectedDestination?.provinceName ?? '',
+      pickupDataLatitude: selectedLat,
+      pickupDataLongitude: selectedLng,
     );
   }
 
-  _getDestinationByPostalCode(String postalCode) async {
-    // transaction.getDestination(postalCode)
-    //     .then((value) => _setSelectedDestination(value.payload?.first))
-    //     .onError((error, stackTrace) => null);
+  _getDestinationByPostalCode(Placemark placemark) async {
+    final where = [];
+    where.add({"zipCode": placemark.postalCode});
+
+    final soundex = [];
+    soundex.add({"subdistrictName": placemark.subLocality});
+
+    requestPickupRepository
+        .getRequestPickupDestinations(QueryParamModel(
+            table: true,
+            limit: 50,
+            where: jsonEncode(where),
+            soundex: jsonEncode(soundex)))
+        .then((value) => _setSelectedDestination(value.data?.first))
+        .onError((error, stackTrace) => null);
   }
 
   _setSelectedDestination(Destination? destination) {
@@ -91,6 +105,7 @@ class RequestPickupAddressUpsertController extends BaseController {
         createDataFailed = true;
       }
     }).catchError((error) {
+      AppLogger.e("Error on createRequestPickupAddress: $error");
       createDataFailed = true;
     });
     createDataLoading = false;
@@ -107,9 +122,9 @@ class RequestPickupAddressUpsertController extends BaseController {
     if (placeMark != null) {
       address.text = placeMark.toReadableAddress();
       if (placeMark.postalCode != null) {
-        _getDestinationByPostalCode(placeMark.postalCode!);
+        AppLogger.d("PlaceMark: ${jsonEncode(placeMark)}");
+        _getDestinationByPostalCode(placeMark);
       }
     }
   }
-
 }

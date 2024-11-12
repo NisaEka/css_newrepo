@@ -37,13 +37,20 @@ class InputEmailScreen extends StatelessWidget {
                               const SizedBox(height: 50),
                               Center(
                                 child: Text(
-                                  controller.isChange ? 'Ubah Kata Sandi'.tr : 'Lupa kata sandi?'.tr,
-                                  style:
-                                      appTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? Colors.black : whiteColor),
+                                  controller.isChange
+                                      ? 'Ubah Kata Sandi'.tr
+                                      : 'Lupa kata sandi?'.tr,
+                                  style: appTitleTextStyle.copyWith(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? Colors.black
+                                          : whiteColor),
                                 ),
                               ),
                               Text(
-                                controller.isChange ? "change_password".tr : "forgot_password".tr,
+                                controller.isChange
+                                    ? "change_password".tr
+                                    : "forgot_password".tr,
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 25),
@@ -51,23 +58,45 @@ class InputEmailScreen extends StatelessWidget {
                                 controller: controller.email,
                                 hintText: "Email".tr,
                                 isRequired: true,
-                                validator: ValidationBuilder(localeName: controller.locale).email().minLength(10).maxLength(50).build(),
+                                validator: ValidationBuilder(
+                                        localeName: controller.locale)
+                                    .email()
+                                    .minLength(10)
+                                    .maxLength(50)
+                                    .build(),
                                 inputFormatters: [
-                                  TextInputFormatter.withFunction((oldValue, newValue) {
-                                    return newValue.copyWith(text: newValue.text.toLowerCase());
+                                  TextInputFormatter.withFunction(
+                                      (oldValue, newValue) {
+                                    return newValue.copyWith(
+                                        text: newValue.text.toLowerCase());
                                   })
                                 ],
-                                onSubmit: (value) => controller.formKey.currentState?.validate() == true ? controller.sendEmail() : null,
-
+                                onSubmit: (value) => controller
+                                            .formKey.currentState
+                                            ?.validate() ==
+                                        true
+                                    ? controller.sendEmail()
+                                    : null,
                               ),
                               const SizedBox(height: 30),
                               CustomFilledButton(
-                                color: controller.formKey.currentState?.validate() == true ? blueJNE : greyColor,
+                                color: controller.formKey.currentState
+                                            ?.validate() ==
+                                        true
+                                    ? blueJNE
+                                    : greyColor,
                                 title: "Berikutnya".tr,
-                                onPressed: () => controller.formKey.currentState?.validate() == true ? controller.sendEmail() : null,
+                                onPressed: () => controller.formKey.currentState
+                                            ?.validate() ==
+                                        true
+                                    ? controller.sendEmail()
+                                    : null,
                               ),
                               CustomFilledButton(
-                                color: Theme.of(context).brightness == Brightness.light ? blueJNE : Colors.white,
+                                color: Theme.of(context).brightness ==
+                                        Brightness.light
+                                    ? blueJNE
+                                    : Colors.white,
                                 isTransparent: true,
                                 title: "Batal".tr,
                                 onPressed: () => Get.back(),

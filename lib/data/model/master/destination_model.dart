@@ -1,16 +1,17 @@
 class Destination {
   Destination({
-      num? id, 
-      String? countryName, 
-      String? provinceName, 
-      String? cityName, 
-      String? districtName, 
-      String? subdistrictName, 
-      String? zipCode, 
-      String? destinationCode,
-      String? status, 
-      String? facilityCode, 
-      String? cityZone,}){
+    num? id,
+    String? countryName,
+    String? provinceName,
+    String? cityName,
+    String? districtName,
+    String? subdistrictName,
+    String? zipCode,
+    String? destinationCode,
+    String? status,
+    String? facilityCode,
+    String? cityZone,
+  }) {
     _id = id;
     _countryName = countryName;
     _provinceName = provinceName;
@@ -22,7 +23,7 @@ class Destination {
     _status = status;
     _facilityCode = facilityCode;
     _cityZone = cityZone;
-}
+  }
 
   Destination.fromJson(dynamic json) {
     _id = json['id'];
@@ -48,29 +49,32 @@ class Destination {
   String? _status;
   String? _facilityCode;
   String? _cityZone;
-Destination copyWith({  num? id,
-  String? countryName,
-  String? provinceName,
-  String? cityName,
-  String? districtName,
-  String? subdistrictName,
-  String? zipCode,
-  String? destinationCode,
-  String? status,
-  String? facilityCode,
-  String? cityZone,
-}) => Destination(  id: id ?? _id,
-  countryName: countryName ?? _countryName,
-  provinceName: provinceName ?? _provinceName,
-  cityName: cityName ?? _cityName,
-  districtName: districtName ?? _districtName,
-  subdistrictName: subdistrictName ?? _subdistrictName,
-  zipCode: zipCode ?? _zipCode,
-  destinationCode: destinationCode ?? _destinationCode,
-  status: status ?? _status,
-  facilityCode: facilityCode ?? _facilityCode,
-  cityZone: cityZone ?? _cityZone,
-);
+  Destination copyWith({
+    num? id,
+    String? countryName,
+    String? provinceName,
+    String? cityName,
+    String? districtName,
+    String? subdistrictName,
+    String? zipCode,
+    String? destinationCode,
+    String? status,
+    String? facilityCode,
+    String? cityZone,
+  }) =>
+      Destination(
+        id: id ?? _id,
+        countryName: countryName ?? _countryName,
+        provinceName: provinceName ?? _provinceName,
+        cityName: cityName ?? _cityName,
+        districtName: districtName ?? _districtName,
+        subdistrictName: subdistrictName ?? _subdistrictName,
+        zipCode: zipCode ?? _zipCode,
+        destinationCode: destinationCode ?? _destinationCode,
+        status: status ?? _status,
+        facilityCode: facilityCode ?? _facilityCode,
+        cityZone: cityZone ?? _cityZone,
+      );
   num? get id => _id;
   String? get countryName => _countryName;
   String? get provinceName => _provinceName;
@@ -98,5 +102,4 @@ Destination copyWith({  num? id,
     map['cityZone'] = _cityZone;
     return map;
   }
-
 }

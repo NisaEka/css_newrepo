@@ -1,155 +1,227 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
+import 'package:css_mobile/data/model/query_count_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
+import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_pakemu_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:dio/dio.dart';
 
 class PantauPaketmuController extends BaseController {
-  final state = PantauPaketmuState();
+  final PantauPaketmuState state = PantauPaketmuState();
   static const pageSize = 10;
+  final network = Get.find<NetworkCore>();
+  final storageSecure = const FlutterSecureStorage();
 
   @override
   void onInit() {
     super.onInit();
     selectDateFilter(3);
-    Future.wait([initData(), loadPantauCountList()]);
+    initData();
     state.pagingController.addPageRequestListener((pageKey) {
       getPantauList(pageKey);
     });
-    update();
   }
 
-  Future<void> loadPantauCountList() async {
-    state.pantauCountList.clear();
-    try {
-      transaction.postTransactionDashboard('1722445200000 - 1725814800000', '').then(
-            (value) {
-          state.pantauCountList.addAll(value.payload ?? []);
-        },
-      );
-    } catch (e) {
-      e.printError();
-    }
-
-    update();
+  @override
+  void onClose() {
+    // Dispose of controllers and subscriptions if needed
+    state.pagingController.dispose();
+    state.startDateField.dispose();
+    state.endDateField.dispose();
+    state.searchField.dispose();
+    super.onClose();
   }
 
   Future<void> initData() async {
-    state.isLoading = true;
-    update();
-    // selectDateFilter(3);
-    // state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
-    // update();
-    // state.pagingController.refresh();
-
+    state.isLoading.value = true;
     try {
-      await profil.getBasicProfil().then((value) async => state.basic = value.data?.user);
+      var token = await storageSecure.read(key: 'token');
+      network.base.options.headers['Authorization'] = 'Bearer $token';
 
-      if (state.basic?.userType == "PEMILIK") {
-        await transaction.getTransOfficer().then((value) {
-          state.listOfficerEntry.add('SEMUA');
-          state.listOfficerEntry.add(state.basic?.name ?? '');
-          state.listOfficerEntry.addAll(value.payload ?? []);
-          update();
+      await profil
+          .getBasicProfil()
+          .then((value) async => state.basic.value = value.data?.user);
+
+      state.listOfficerEntry.add('SEMUA');
+      state.listOfficerEntry.add(state.basic.value?.name ?? '');
+
+      if (state.basic.value?.userType == "PEMILIK") {
+        Response officers = await network.base.get(
+          '/officers?select=["name"]',
+        );
+
+        officers.data['data'].map((e) => e['name']).forEach((element) {
+          state.listOfficerEntry.add(element);
         });
       }
 
-      await pantau.getPantauStatus().then((value) {
-        state.listStatusKiriman.addAll(value.payload ?? []);
-        update();
-      });
-    } catch (e, i) {
-      e.printError();
-      i.printError();
-    }
+      Response response = await network.base.get(
+        '/transaction/tracks/status',
+      );
 
-    state.selectedStatusKiriman = state.listStatusKiriman.first;
-    state.isLoading = false;
-    update();
-    applyFilter();
+      List<dynamic> statusList = response.data['data'];
+      if (statusList.every((element) => element is String)) {
+        state.listStatusKiriman.addAll(statusList.cast<String>());
+      } else {
+        AppLogger.w('Response contains non-string items.');
+      }
+    } catch (e, i) {
+      AppLogger.e('error pantau', e, i);
+    } finally {
+      state.selectedStatusKiriman.value = state.listStatusKiriman.first;
+      applyFilter();
+    }
   }
 
-  void selectDateFilter(int filter) {
-    state.dateFilter = filter.toString();
-    update();
-    if (filter == 0 || filter == 4) {
-      state.startDate = null;
-      state.endDate = null;
-      state.startDateField.text = '-';
-      state.endDateField.text = '-';
-    } else if (filter == 1) {
-      state.startDate = state.nowDay.subtract(const Duration(days: 30));
-      state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
-      state.endDateField.text = state.endDate.toString().toShortDateFormat();
-    } else if (filter == 2) {
-      state.startDate = state.nowDay.subtract(const Duration(days: 7));
-      state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
-      state.endDateField.text = state.endDate.toString().toShortDateFormat();
-    } else if (filter == 3) {
-      state.startDate = state.nowDay;
-      state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
-      state.endDateField.text = state.endDate.toString().toShortDateFormat();
-    }
+  Future<void> getCountList() async {
+    var token = await storageSecure.read(key: 'token');
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    var param = CountQueryModel(
+      between: [
+        {
+          "awbDate": [
+            state.startDate.value,
+            state.endDate.value,
+          ]
+        }
+      ],
+    );
 
-    update();
+    try {
+      Response responseCount = await network.base.get(
+        '/transaction/tracks/count',
+        queryParameters: param.toJson(),
+      );
+      AppLogger.d('Pantauuuuuu count ${responseCount.data}');
+
+      state.countList.value = responseCount.data['data'];
+    } catch (e, i) {
+      AppLogger.e('error pantau count', e, i);
+    } finally {
+      state.isLoading.value = false;
+    }
   }
 
   Future<void> getPantauList(int page) async {
-    state.isLoading = true;
-    try {
-      final trans = await pantau.getPantauList(
-        page,
-        pageSize,
-        state.date ?? '',
-        state.searchField.text,
-        state.selectedPetugasEntry != "SEMUA" ? (state.selectedPetugasEntry ?? '') : '',
-        state.selectedStatusKiriman ?? '',
-        state.selectedTipeKiriman ?? '',
-      );
+    var token = await storageSecure.read(key: 'token');
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    var param = QueryModel(
+      table: true,
+      page: page,
+      limit: pageSize,
+      between: [
+        {
+          "awbDate": [
+            state.startDate.value,
+            state.endDate.value,
+          ]
+        }
+      ],
+      entity: state.selectedStatusKiriman.value,
+      type: state.selectedTipeKiriman.value,
+      search: state.searchField.text,
+    );
 
-      final isLastPage = (trans.payload?.length ?? 0) < pageSize;
+    try {
+      Response response = await network.base.get(
+        '/transaction/tracks/count/detail',
+        queryParameters: param.toJson(),
+      );
+      AppLogger.d('Pantauuuuuu ${response.data}');
+
+      var trans = BaseResponse<List<PantauPaketmuModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<PantauPaketmuModel>(
+                  (i) => PantauPaketmuModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+      // return BaseResponse<List<PantauPaketmuModel>>
+
+      final isLastPage = trans.meta!.currentPage == trans.meta!.lastPage;
       if (isLastPage) {
-        state.pagingController.appendLastPage(trans.payload ?? []);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
+        state.pagingController.appendLastPage(trans.data ?? []);
+        return;
       } else {
         final nextPageKey = page + 1;
-        state.pagingController.appendPage(trans.payload ?? [], nextPageKey);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
+        state.pagingController.appendPage(trans.data ?? [], nextPageKey);
+        return;
       }
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error pantau list', e, i);
       state.pagingController.error = e;
+    } finally {
+      state.isLoading.value = false;
     }
-
-    state.isLoading = false;
-    update();
   }
 
-  void resetFilter() {
-    state.selectedPetugasEntry = state.basic?.userType == "PEMILIK" ? null : state.basic?.name;
-    state.selectedStatusKiriman = "Total Kiriman";
-    state.selectedTipeKiriman = "SEMUA";
-    state.tipeKiriman = 0;
-    state.isFiltered = false;
+  void selectDateFilter(int filter) {
+    final today = DateTime.now();
+    state.dateFilter.value = filter.toString();
+
+    switch (filter) {
+      case 1:
+        _setDateRange(today.subtract(const Duration(days: 30)), today);
+        break;
+      case 2:
+        _setDateRange(today.subtract(const Duration(days: 7)), today);
+        break;
+      case 3:
+        _setDateRange(today, today);
+        break;
+      case 4:
+        _clearDateRange();
+        break;
+      default:
+        _clearDateRange();
+    }
+  }
+
+  void _setDateRange(DateTime start, DateTime end) {
+    // Set start date time to 00:00:00
+    final startOfDay = DateTime(start.year, start.month, start.day);
+
+    state.startDate.value = startOfDay;
+    state.endDate.value = end;
+    state.startDateField.text = startOfDay.toString().toShortDateFormat();
+    state.endDateField.text = end.toString().toShortDateFormat();
+  }
+
+  void _clearDateRange() {
+    state.startDate.value = null;
+    state.endDate.value = null;
+    state.startDateField.text = '-';
+    state.endDateField.text = '-';
+  }
+
+  Future<void> resetFilter({bool? isDetail = false}) async {
+    state.countList.clear();
+    state.selectedPetugasEntry.value = state.basic.value?.userType == "PEMILIK"
+        ? null
+        : state.basic.value?.name;
+    state.selectedStatusKiriman.value = "Total Kiriman";
+    state.selectedTipeKiriman.value = "cod";
+    state.tipeKiriman.value = 0;
+    state.isFiltered.value = false;
     state.searchField.clear();
-    state.dateFilter = "3";
+    state.dateFilter.value = "3";
     selectDateFilter(3);
-    state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
-    count();
-    state.pagingController.refresh();
-    update();
-    Get.back();
-    applyFilter();
+    applyFilter(isDetail: isDetail);
   }
 
-  Future<DateTime?> selectDate(BuildContext context) {
-    return showDatePicker(
-      context: context,
+  Future<DateTime?> selectDate() async {
+    final selectedDate = await showDatePicker(
+      context: Get.context!,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
@@ -159,60 +231,38 @@ class PantauPaketmuController extends BaseController {
           child: child!,
         );
       },
-    ).then((selectedDate) => DateTime(
-          selectedDate!.year,
-          selectedDate.month,
-          selectedDate.day,
-          1,
-          0,
-        ));
+    );
+
+    // Check if selectedDate is null before creating a new DateTime instance
+    if (selectedDate != null) {
+      return DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        1,
+        0,
+      );
+    }
+    return null;
   }
 
-  applyFilter() {
-    if(state.dateFilter != '3'){
-      state.isFiltered = true;
+  applyFilter({bool? isDetail = false}) async {
+    if (state.dateFilter.value != '3') {
+      state.isFiltered.value = true;
     }
 
-    if (state.startDate != null && state.endDate != null) {
-      state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
+    if (state.startDate.value != null && state.endDate.value != null) {
+      state.date.value = "${state.startDate}-${state.endDate}";
       state.date.printInfo(info: "state.date filter");
       state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
     }
-    count();
-    update();
-    state.pagingController.refresh();
-  }
 
-  Future<void> count() async {
-    state.total = 0;
-    state.cod = 0;
-    state.noncod = 0;
-    state.codOngkir = 0;
-    state.isLoadCount = true;
-    update();
-    try {
-      await pantau
-          .getPantauCount(
-        state.date ?? '',
-        state.searchField.text,
-        state.selectedPetugasEntry != "SEMUA" ? (state.selectedPetugasEntry ?? '') : '',
-        state.selectedStatusKiriman ?? '',
-      )
-          .then((value) {
-state.        total = value.payload!.total!.toInt();
-        state.cod = value.payload!.cod!.toInt();
-        state.noncod = value.payload!.nonCod!.toInt();
-        state.codOngkir = value.payload!.codOngkir!.toInt();
-        update();
-      });
-    } catch (e,i) {
-      e.printError();
-      i.printError();
+    state.isLoading.value = true;
+
+    if (isDetail != null && !isDetail) {
+      getCountList();
+    } else {
+      state.pagingController.refresh();
     }
-
-    state.isLoadCount = false;
-    update();
   }
-
-
 }

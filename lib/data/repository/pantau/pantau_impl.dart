@@ -7,6 +7,7 @@ import 'package:css_mobile/data/repository/pantau/pantau_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:css_mobile/util/logger.dart';
 
 class PantauRepositoryImpl extends PantauRepository {
   final network = Get.find<NetworkCore>();
@@ -23,7 +24,8 @@ class PantauRepositoryImpl extends PantauRepository {
     String type,
   ) async {
     // var token = await storageSecure.read(key: "token");
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMjEwMjQxNzUxMzU1MjU3IiwiaWF0IjoxNzI1OTQxMTA0fQ.8NB6c_aHED2txzSjsuTDpE4oRsPdbAAhWV_e08M4ho4';
+    var token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMjEwMjQxNzUxMzU1MjU3IiwiaWF0IjoxNzI1OTQxMTA0fQ.8NB6c_aHED2txzSjsuTDpE4oRsPdbAAhWV_e08M4ho4';
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
@@ -59,22 +61,28 @@ class PantauRepositoryImpl extends PantauRepository {
       // response.data.printInfo(info: 'pantau status response');
       return ResponseModel<List<String>>.fromJson(
         response.data,
-        (json) => json is List<dynamic> ? response.data['payload'].cast<String>() : List.empty(),
+        (json) => json is List<dynamic>
+            ? response.data['payload'].cast<String>()
+            : List.empty(),
       );
     } on DioException catch (e) {
       e.response?.data.printError(info: 'pantau status response');
 
       return ResponseModel<List<String>>.fromJson(
         e.response?.data,
-        (json) => json is List<dynamic> ? e.response?.data['payload'].cast<String>() : List.empty(),
+        (json) => json is List<dynamic>
+            ? e.response?.data['payload'].cast<String>()
+            : List.empty(),
       );
     }
   }
 
   @override
-  Future<ResponseModel<TransactionCount>> getPantauCount(String date, String keyword, String officer, String status) async {
+  Future<ResponseModel<TransactionCount>> getPantauCount(
+      String date, String keyword, String officer, String status) async {
     // var token = await storageSecure.read(key: "token");
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMjEwMjQxNzUxMzU1MjU3IiwiaWF0IjoxNzI1OTQxMTA0fQ.8NB6c_aHED2txzSjsuTDpE4oRsPdbAAhWV_e08M4ho4';
+    var token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMjEwMjQxNzUxMzU1MjU3IiwiaWF0IjoxNzI1OTQxMTA0fQ.8NB6c_aHED2txzSjsuTDpE4oRsPdbAAhWV_e08M4ho4';
 
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
@@ -102,9 +110,11 @@ class PantauRepositoryImpl extends PantauRepository {
   }
 
   @override
-  Future<ResponseModel<List<CountCardModel>>> getPantauCountStatus(String date, String officer) async {
+  Future<ResponseModel<List<CountCardModel>>> getPantauCountStatus(
+      String date, String officer) async {
     // var token = await storageSecure.read(key: "token");
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMjEwMjQxNzUxMzU1MjU3IiwiaWF0IjoxNzI1OTQxMTA0fQ.8NB6c_aHED2txzSjsuTDpE4oRsPdbAAhWV_e08M4ho4';
+    var token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMjEwMjQxNzUxMzU1MjU3IiwiaWF0IjoxNzI1OTQxMTA0fQ.8NB6c_aHED2txzSjsuTDpE4oRsPdbAAhWV_e08M4ho4';
     network.local.options.headers['Authorization'] = 'Bearer $token';
 
     try {
@@ -115,27 +125,28 @@ class PantauRepositoryImpl extends PantauRepository {
           "officer_entry": officer,
         },
       );
-      print(response.data);
+      AppLogger.d(response.data);
+
       return ResponseModel<List<CountCardModel>>.fromJson(
         response.data,
-            (json) => json is List<dynamic>
+        (json) => json is List<dynamic>
             ? json
-            .map<CountCardModel>(
-              (i) => CountCardModel.fromJson(i as Map<String, dynamic>),
-        )
-            .toList()
+                .map<CountCardModel>(
+                  (i) => CountCardModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
             : List.empty(),
       );
     } on DioException catch (e) {
-      print('response: ${e.response?.data}');
+      AppLogger.e('error: ${e.response?.data}');
       return ResponseModel<List<CountCardModel>>.fromJson(
         e.response?.data,
-            (json) => json is List<dynamic>
+        (json) => json is List<dynamic>
             ? json
-            .map<CountCardModel>(
-              (i) => CountCardModel.fromJson(i as Map<String, dynamic>),
-        )
-            .toList()
+                .map<CountCardModel>(
+                  (i) => CountCardModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
             : List.empty(),
       );
     }

@@ -24,8 +24,7 @@ class ImagePickerContainer extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color:
-          Theme.of(context).brightness == Brightness.light
+          color: Theme.of(context).brightness == Brightness.light
               ? Colors.black
               : Colors.white,
         ),
@@ -60,5 +59,4 @@ class ImagePickerContainer extends StatelessWidget {
       );
     }
   }
-
 }

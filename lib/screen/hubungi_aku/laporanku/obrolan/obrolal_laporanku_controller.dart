@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,13 +23,14 @@ class ObrolanLaporankuController extends BaseController {
   String? subject;
   bool isLoading = false;
   int currentPage = 1;
-  var spellMsg;
-  var respMsg;
+  String? spellMsg;
+  String? respMsg;
 
   File? gettedPhoto;
   int? imageSize;
   var maxImageSize = 2 * 1048576;
-  final PagingController<int, TicketMessageModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, TicketMessageModel> pagingController =
+      PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
   @override
@@ -36,15 +40,26 @@ class ObrolanLaporankuController extends BaseController {
     pagingController.addPageRequestListener((pageKey) {
       getMessages(pageKey);
     });
-    print("idMessage$id");
+    AppLogger.d('idMessage$id');
   }
 
   Future<void> initData() async {
     messages = [];
     try {
-      await laporanku.getTickeMessage(id, 1, pageSize).then((value) {
-        messages.addAll(value.payload ?? []);
-        subject = value.payload?.first.subject;
+      await laporanku
+          .getTickeMessage(QueryParamModel(
+              table: true,
+              where: jsonEncode([
+                {"ticketId": id}
+              ]),
+              sort: jsonEncode([
+                {"createdDate": "desc"}
+              ]),
+              page: 1,
+              limit: pageSize))
+          .then((value) {
+        messages.addAll(value.data ?? []);
+        subject = value.data?.first.subject;
         update();
       });
     } catch (e) {
@@ -55,24 +70,33 @@ class ObrolanLaporankuController extends BaseController {
   Future<void> getMessages(int page) async {
     isLoading = true;
     try {
-      final message = await laporanku.getTickeMessage(id, page, pageSize);
+      final message = await laporanku.getTickeMessage(QueryParamModel(
+          table: true,
+          where: jsonEncode([
+            {"ticketId": id}
+          ]),
+          sort: jsonEncode([
+            {"createdDate": "desc"}
+          ]),
+          page: page,
+          limit: pageSize));
 
-      final isLastPage = (message.payload?.length ?? 0) < pageSize;
+      final isLastPage = message.meta!.currentPage == message.meta!.lastPage;
       if (isLastPage) {
-        pagingController.appendLastPage(message.payload ?? []);
-        messages.addAll(message.payload ?? []);
+        pagingController.appendLastPage(message.data ?? []);
+        messages.addAll(message.data ?? []);
         // subject = message.payload?.first.subject;
       } else {
         final nextPageKey = page + 1;
-        pagingController.appendPage(message.payload ?? [], nextPageKey);
-        messages.addAll(message.payload ?? []);
+        pagingController.appendPage(message.data ?? [], nextPageKey);
+        messages.addAll(message.data ?? []);
         // subject = message.payload?.first.subject;
       }
     } catch (e) {
       e.printError(info: 'error message paging');
       pagingController.error = e;
     }
-    print("messages.length ${messages.length}");
+    AppLogger.d('messages.length ${messages.length}');
     isLoading = false;
     update();
   }
@@ -93,8 +117,8 @@ class ObrolanLaporankuController extends BaseController {
           .postTicketMessage(
         DataPostTicketModel(
             cnote: ticket.cnote,
-            categoryId: ticket.category?.id,
-            id: id,
+            categoryId: ticket.category?.categoryId,
+            ticketId: id,
             subject: subject,
             message: messageInsert.text.toUpperCase(),
             type: 'S',

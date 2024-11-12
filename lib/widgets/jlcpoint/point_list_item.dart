@@ -54,11 +54,16 @@ class PointListItem extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3),
-                        border: Border.all(color: AppConst.isLightTheme(context) ? blueJNE : redJNE, width: 2),
+                        border: Border.all(
+                            color: AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : redJNE,
+                            width: 2),
                       ),
                       child: Icon(
                         Icons.playlist_add_check_rounded,
-                        color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                        color:
+                            AppConst.isLightTheme(context) ? blueJNE : redJNE,
                       ),
                     ),
                     Container(
@@ -70,10 +75,13 @@ class PointListItem extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: status == "Valid" ? successLightColor2 : errorLightColor2,
+                    color: status == "Valid"
+                        ? successLightColor2
+                        : errorLightColor2,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
@@ -104,7 +112,9 @@ class PointListItem extends StatelessWidget {
                               Text(
                                 subtitle ?? '',
                                 style: listTitleTextStyle.copyWith(
-                                  color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : redJNE,
                                 ),
                               ),
                             ],
@@ -127,7 +137,8 @@ class PointListItem extends StatelessWidget {
                             width: 84,
                             height: 20,
                             fontSize: 10,
-                            fontColor: status == 'Valid' ? successColor : errorColor,
+                            fontColor:
+                                status == 'Valid' ? successColor : errorColor,
                             title: status?.toUpperCase(),
                             padding: EdgeInsets.zero,
                             margin: const EdgeInsets.only(top: 10),
@@ -137,11 +148,15 @@ class PointListItem extends StatelessWidget {
                                 height: isLoading ? 20 : null,
                                 width: isLoading ? Get.width / 4 : null,
                                 color: isLoading ? greyColor : null,
-                                margin: isLoading ? const EdgeInsets.only(top: 2) : null,
+                                margin: isLoading
+                                    ? const EdgeInsets.only(top: 2)
+                                    : null,
                                 child: RichText(
                                   text: TextSpan(
                                       text: "Jumlah Hadiah".tr.toUpperCase(),
-                                      style: Theme.of(context).textTheme.titleMedium,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
                                       children: [TextSpan(text: ' $rewards')]),
                                 ),
                               )

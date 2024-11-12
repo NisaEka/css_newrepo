@@ -1,5 +1,4 @@
 class FacilityCreateIdCardModel {
-
   String _number = "";
   String get number => _number;
 
@@ -22,5 +21,4 @@ class FacilityCreateIdCardModel {
 
     return json;
   }
-
 }

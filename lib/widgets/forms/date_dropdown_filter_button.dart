@@ -9,14 +9,9 @@ class DateDropdownFilterButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
-          color: greyLightColor3,
-          borderRadius: BorderRadius.circular(8)
-      ),
+          color: greyLightColor3, borderRadius: BorderRadius.circular(8)),
       child: const Row(
-        children: [
-          Text('1 Agt - 2 Agt'),
-          Icon(Icons.arrow_drop_down)
-        ],
+        children: [Text('1 Agt - 2 Agt'), Icon(Icons.arrow_drop_down)],
       ),
     );
   }

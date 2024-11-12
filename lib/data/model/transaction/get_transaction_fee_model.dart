@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-TransactionFeeModel payloadFromJson(String str) => TransactionFeeModel.fromJson(json.decode(str));
+TransactionFeeModel payloadFromJson(String str) =>
+    TransactionFeeModel.fromJson(json.decode(str));
 
 String payloadToJson(TransactionFeeModel data) => json.encode(data.toJson());
 

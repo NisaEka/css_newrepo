@@ -6,7 +6,7 @@ import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
-import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 
 abstract class ProfilRepository {
@@ -16,13 +16,16 @@ abstract class ProfilRepository {
 
   Future<PostTransactionModel> putProfileCCRF(GeneralInfo data);
 
-  Future<DefaultResponseModel<String>> createProfileCcrf(FacilityCreateModel data);
+  Future<DefaultResponseModel<String>> createProfileCcrf(
+      FacilityCreateModel data);
 
-  Future<DefaultResponseModel<String>> createProfileCcrfExisting(FacilityCreateExistingModel data);
+  Future<DefaultResponseModel<String>> createProfileCcrfExisting(
+      FacilityCreateExistingModel data);
 
-  Future<GetCcrfActivityModel> getCcrfActivity();
+  Future<BaseResponse<List<CcrfActivityModel>>> getCcrfActivity(
+      QueryParamModel param);
 
   Future<BaseResponse> putProfileBasic(UserModel data);
 
-  Future<BaseResponse<List<Shipper>>> getShipper();
+  Future<BaseResponse<List<ShipperModel>>> getShipper();
 }

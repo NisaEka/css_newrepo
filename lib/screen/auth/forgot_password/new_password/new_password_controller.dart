@@ -32,29 +32,36 @@ class NewPasswordController extends BaseController {
     isLoading = true;
     update();
     try {
-      await auth.postPasswordChage(InputNewPasswordModel(password: newPW.text, token: token)).then((value) => value.code == 201
-          ? Get.to(
-              SuccessScreen(
-                message: "Password berhasil diperbaharui".tr,
-                buttonTitle: isChange ?? false ? "Kembali ke Beranda".tr : "Masuk".tr,
-                nextAction: () => Get.delete<LoginController>().then(
-                  (value) => Get.offAll(isChange ?? false ? const DashboardScreen() : const LoginScreen()),
-                ),
-              ),
-            )
-          : Get.showSnackbar(
-              GetSnackBar(
-                icon: const Icon(
-                  Icons.warning,
-                  color: whiteColor,
-                ),
-                message: value.message?[0].toString(),
-                isDismissible: true,
-                duration: const Duration(seconds: 3),
-                backgroundColor: errorColor,
-              ),
-            ));
-    } catch (e,i) {
+      await auth
+          .postPasswordChage(
+              InputNewPasswordModel(password: newPW.text, token: token))
+          .then((value) => value.code == 201
+              ? Get.to(
+                  SuccessScreen(
+                    message: "Password berhasil diperbaharui".tr,
+                    buttonTitle: isChange ?? false
+                        ? "Kembali ke Beranda".tr
+                        : "Masuk".tr,
+                    nextAction: () => Get.delete<LoginController>().then(
+                      (value) => Get.offAll(isChange ?? false
+                          ? const DashboardScreen()
+                          : const LoginScreen()),
+                    ),
+                  ),
+                )
+              : Get.showSnackbar(
+                  GetSnackBar(
+                    icon: const Icon(
+                      Icons.warning,
+                      color: whiteColor,
+                    ),
+                    message: value.message?[0].toString(),
+                    isDismissible: true,
+                    duration: const Duration(seconds: 3),
+                    backgroundColor: errorColor,
+                  ),
+                ));
+    } catch (e, i) {
       e.printError();
       i.printError();
     }
@@ -78,7 +85,9 @@ class NewPasswordController extends BaseController {
   }
 
   showConfirmPassword() {
-    isObscurePasswordConfirm ? isObscurePasswordConfirm = false : isObscurePasswordConfirm = true;
+    isObscurePasswordConfirm
+        ? isObscurePasswordConfirm = false
+        : isObscurePasswordConfirm = true;
     isObscurePasswordConfirm != false
         ? showConfirmIcon = const Icon(
             Icons.visibility,

@@ -60,7 +60,9 @@ class CustomLabelText extends StatelessWidget {
                   : alignment == 'center'
                       ? CrossAxisAlignment.center
                       : CrossAxisAlignment.start,
-              mainAxisAlignment: isHasSpace ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+              mainAxisAlignment: isHasSpace
+                  ? MainAxisAlignment.spaceBetween
+                  : MainAxisAlignment.start,
               children: [
                 Shimmer(
                   isLoading: isLoading,
@@ -74,7 +76,10 @@ class CustomLabelText extends StatelessWidget {
                       title,
                       style: titleTextStyle ??
                           subTitleTextStyle.copyWith(
-                            color: fontColor ?? (AppConst.isLightTheme(context) ? greyColor : whiteColor),
+                            color: fontColor ??
+                                (AppConst.isLightTheme(context)
+                                    ? greyColor
+                                    : whiteColor),
                             fontSize: fontSize,
                           ),
                     ),
@@ -83,7 +88,9 @@ class CustomLabelText extends StatelessWidget {
                 Shimmer(
                   isLoading: isLoading,
                   child: Container(
-                    decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
+                    decoration: BoxDecoration(
+                        color: isLoading ? greyColor : Colors.transparent,
+                        borderRadius: BorderRadius.circular(5)),
                     width: width != null ? width! - 100 : null,
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Text(
@@ -92,10 +99,15 @@ class CustomLabelText extends StatelessWidget {
                       // overflow: TextOverflow.ellipsis,
                       softWrap: true,
                       maxLines: valueMaxline ?? 1,
-                      textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
+                      textAlign:
+                          alignment == 'end' ? TextAlign.right : TextAlign.left,
                       style: valueTextStyle ??
                           listTitleTextStyle.copyWith(
-                            color: fontColor ?? valueColor ?? (AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
+                            color: fontColor ??
+                                valueColor ??
+                                (AppConst.isLightTheme(context)
+                                    ? greyDarkColor1
+                                    : greyLightColor1),
                             fontSize: fontSize,
                           ),
                     ),
@@ -114,12 +126,17 @@ class CustomLabelText extends StatelessWidget {
                   isLoading: isLoading,
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 5),
-                    decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
+                    decoration: BoxDecoration(
+                        color: isLoading ? greyColor : Colors.transparent,
+                        borderRadius: BorderRadius.circular(5)),
                     child: Text(
                       title,
                       style: titleTextStyle ??
                           subTitleTextStyle.copyWith(
-                            color: fontColor ?? (AppConst.isLightTheme(context) ? greyColor : whiteColor),
+                            color: fontColor ??
+                                (AppConst.isLightTheme(context)
+                                    ? greyColor
+                                    : whiteColor),
                             fontSize: fontSize,
                           ),
                     ),
@@ -129,7 +146,9 @@ class CustomLabelText extends StatelessWidget {
                   isLoading: isLoading,
                   child: Container(
                     width: width,
-                    decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
+                    decoration: BoxDecoration(
+                        color: isLoading ? greyColor : Colors.transparent,
+                        borderRadius: BorderRadius.circular(5)),
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Text(
                       value.toUpperCase(),
@@ -137,10 +156,15 @@ class CustomLabelText extends StatelessWidget {
                       // overflow: TextOverflow.fade,
                       // maxLines: 1,
                       softWrap: true,
-                      textAlign: alignment == 'end' ? TextAlign.right : TextAlign.left,
+                      textAlign:
+                          alignment == 'end' ? TextAlign.right : TextAlign.left,
                       style: valueTextStyle ??
                           listTitleTextStyle.copyWith(
-                            color: fontColor ?? valueColor ?? (AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
+                            color: fontColor ??
+                                valueColor ??
+                                (AppConst.isLightTheme(context)
+                                    ? greyDarkColor1
+                                    : greyLightColor1),
                             fontSize: fontSize,
                           ),
                     ),

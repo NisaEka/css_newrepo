@@ -6,11 +6,10 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 
 void main() {
   FlavorConfig(
-    name: "local",
-    location: BannerLocation.topEnd,
-    variables: stgEnvironment,
-    color: Colors.red
-  );
+      name: "local",
+      location: BannerLocation.topEnd,
+      variables: stgEnvironment,
+      color: Colors.red);
 
   WidgetsFlutterBinding.ensureInitialized();
   GlobalBinding().dependencies();

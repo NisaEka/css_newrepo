@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 //ignore: must_be_immutable
 class DashboardCarousel extends StatelessWidget {
-  var bannerIndex;
+  int? bannerIndex;
   final EdgeInsets? padding;
 
   DashboardCarousel({

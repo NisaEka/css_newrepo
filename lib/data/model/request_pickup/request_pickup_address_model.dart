@@ -1,50 +1,48 @@
 class RequestPickupAddressModel {
+  String _pickupDataId = "";
+  String get pickupDataId => _pickupDataId;
 
-  String _id = "";
-  String get id => _id;
+  String _pickupDataName = "";
+  String get pickupDataName => _pickupDataName;
 
-  String _name = "";
-  String get name => _name;
+  String _pickupDataPhone = "";
+  String get pickupDataPhone => _pickupDataPhone;
 
-  String _phone = "";
-  String get phone => _phone;
+  String _pickupDataAddress = "";
+  String get pickupDataAddress => _pickupDataAddress;
 
-  String _address = "";
-  String get address => _address;
+  String _pickupDataZipCode = "";
+  String get pickupDataZipCode => _pickupDataZipCode;
 
-  String _zipCode = "";
-  String get zipCode => _zipCode;
+  String _pickupDataSubdistrict = "";
+  String get pickupDataSubdistrict => _pickupDataSubdistrict;
 
-  String _subDistrict = "";
-  String get subDistrict => _subDistrict;
+  String _pickupDataDistrict = "";
+  String get pickupDataDistrict => _pickupDataDistrict;
 
-  String _district = "";
-  String get district => _district;
+  String _pickupDataCity = "";
+  String get pickupDataCity => _pickupDataCity;
 
-  String _city = "";
-  String get city => _city;
+  String _pickupDataRegion = "";
+  String get pickupDataRegion => _pickupDataRegion;
 
-  String _region = "";
-  String get region => _region;
+  String _pickupDataLatitude = "";
+  String get pickupDataLatitude => _pickupDataLatitude;
 
-  num _lat = 0.0;
-  num get lat => _lat;
-
-  num _lng = 0.0;
-  num get lng => _lng;
+  String _pickupDataLongitude = "";
+  String get pickupDataLongitude => _pickupDataLongitude;
 
   RequestPickupAddressModel.fromJson(dynamic json) {
-    _id = json["id"];
-    _name = json["name"];
-    _phone = json["phone"];
-    _address = json["address"];
-    _zipCode = json["zip_code"];
-    _subDistrict = json["sub_district"];
-    _district = json["district"];
-    _city = json["city"];
-    _region = json["region"];
-    _lat = json["lat"];
-    _lng = json["lng"];
+    _pickupDataId = json["pickupDataId"];
+    _pickupDataName = json["pickupDataName"];
+    _pickupDataPhone = json["pickupDataPhone"];
+    _pickupDataAddress = json["pickupDataAddress"];
+    _pickupDataZipCode = json["pickupDataZipCode"];
+    _pickupDataSubdistrict = json["pickupDataSubdistrict"];
+    _pickupDataDistrict = json["pickupDataDistrict"];
+    _pickupDataCity = json["pickupDataCity"];
+    _pickupDataRegion = json["pickupDataRegion"];
+    _pickupDataLatitude = json["pickupDataLatitude"] ?? "";
+    _pickupDataLongitude = json["pickupDataLongitude"] ?? "";
   }
-
 }

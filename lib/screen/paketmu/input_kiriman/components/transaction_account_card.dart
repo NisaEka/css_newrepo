@@ -1,7 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/trans_account/trans_account_screen.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +25,12 @@ class TransactionAccountCard extends StatelessWidget {
           Container(
             // alignment: Alignment.topRight,
             padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(color: redJNE, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12))),
-            child: Text(account.accountService ?? '', style: listTitleTextStyle.copyWith(color: whiteColor)),
+            decoration: const BoxDecoration(
+                color: redJNE,
+                borderRadius:
+                    BorderRadius.only(bottomLeft: Radius.circular(12))),
+            child: Text(account.accountService ?? '',
+                style: listTitleTextStyle.copyWith(color: whiteColor)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),

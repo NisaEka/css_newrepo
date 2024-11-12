@@ -14,7 +14,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<PetugasModel>>> getOfficer(int page, String keyword) async {
+  Future<BaseResponse<List<PetugasModel>>> getOfficer(
+      int page, String keyword) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
@@ -100,7 +101,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
       return BaseResponse.fromJson(e.response?.data, (json) => null);
-
     }
   }
 

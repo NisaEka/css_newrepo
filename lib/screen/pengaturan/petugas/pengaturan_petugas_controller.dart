@@ -7,7 +7,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class PengaturanPetugasController extends BaseController {
   final searchOfficer = TextEditingController();
-  final PagingController<int, PetugasModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, PetugasModel> pagingController =
+      PagingController(firstPageKey: 1);
   bool isLoading = false;
 
   @override

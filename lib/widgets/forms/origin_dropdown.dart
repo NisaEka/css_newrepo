@@ -16,7 +16,7 @@ class OriginDropdown extends StatefulHookWidget {
   final String? label;
   final bool isRequired;
   final bool readOnly;
-  final Origin? value;
+  final OriginModel? value;
   final String? selectedItem;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -51,14 +51,14 @@ class OriginDropdown extends StatefulHookWidget {
 class _OriginDropdownState extends State<OriginDropdown> {
   final searchTextfield = TextEditingController();
 
-  Future<List<Origin>> getOriginList(String keyword) async {
+  Future<List<OriginModel>> getOriginList(String keyword) async {
     final master = Get.find<MasterRepository>();
 
-    var branchCode = (widget.branch?.isNotEmpty ?? false) ? '[{"branchCode" : "${widget.branch}"}]' : '[]';
+    var branchCode = (widget.branch?.isNotEmpty ?? false)
+        ? '[{"branchCode" : "${widget.branch}"}]'
+        : '[]';
     var response = await master.getOrigins(QueryParamModel(
-      search: keyword.toUpperCase(),
-      where: branchCode, table: true
-    ));
+        search: keyword.toUpperCase(), where: branchCode, table: true));
     var models = response.data?.toList();
 
     return models ?? [];
@@ -79,18 +79,19 @@ class _OriginDropdownState extends State<OriginDropdown> {
             onChanged: widget.onChanged,
             onTap: () => showCityList('Kota Asal'.tr),
           )
-        : CustomSearchDropdownField<Origin>(
+        : CustomSearchDropdownField<OriginModel>(
             controller: widget.controller,
             asyncItems: (String filter) => getOriginList(filter),
             itemBuilder: (context, e, b) {
               return Container(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   e.originName.toString(),
                 ),
               );
             },
-            itemAsString: (Origin e) => e.originName.toString(),
+            itemAsString: (OriginModel e) => e.originName.toString(),
             onChanged: widget.onChanged,
             value: widget.value,
             selectedItem: widget.selectedItem,
@@ -171,7 +172,7 @@ class _OriginDropdownState extends State<OriginDropdown> {
     );
   }
 
-  Widget buildPosts(List<Origin> data, String title) {
+  Widget buildPosts(List<OriginModel> data, String title) {
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {

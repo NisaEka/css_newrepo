@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 class BankImpl extends BankRepository {
-
   final network = Get.find<NetworkCore>();
 
   @override
@@ -22,5 +21,4 @@ class BankImpl extends BankRepository {
       return DefaultResponseModel.fromJson(e.response?.data, List.empty());
     }
   }
-
 }

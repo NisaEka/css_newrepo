@@ -1,14 +1,14 @@
 class PostTotalPointModel {
   PostTotalPointModel({
-    bool? status,
+    int? statusCode,
     List<Data>? data,
   }) {
-    _status = status;
+    _statusCode = statusCode;
     _data = data;
   }
 
   PostTotalPointModel.fromJson(dynamic json) {
-    _status = json['status'];
+    _statusCode = json['statusCode'];
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
@@ -17,25 +17,25 @@ class PostTotalPointModel {
     }
   }
 
-  bool? _status;
+  int? _statusCode;
   List<Data>? _data;
 
   PostTotalPointModel copyWith({
-    bool? status,
+    int? statusCode,
     List<Data>? data,
   }) =>
       PostTotalPointModel(
-        status: status ?? _status,
+        statusCode: statusCode ?? _statusCode,
         data: data ?? _data,
       );
 
-  bool? get status => _status;
+  int? get statusCode => _statusCode;
 
   List<Data>? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['status'] = _status;
+    map['statusCode'] = _statusCode;
     if (_data != null) {
       map['data'] = _data?.map((v) => v.toJson()).toList();
     }
@@ -53,8 +53,8 @@ class Data {
   }
 
   Data.fromJson(dynamic json) {
-    _totalTransaksi = json['total_transaksi'];
-    _sisaPoint = json['sisa_point'];
+    _totalTransaksi = json['totalTransaksi'];
+    _sisaPoint = json['sisaPoint'];
   }
 
   String? _totalTransaksi;
@@ -75,8 +75,8 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['total_transaksi'] = _totalTransaksi;
-    map['sisa_point'] = _sisaPoint;
+    map['totalTransaksi'] = _totalTransaksi;
+    map['sisaPoint'] = _sisaPoint;
     return map;
   }
 }

@@ -13,7 +13,7 @@ class DetailLaporankuController extends BaseController {
 
     try {
       await laporanku.putTicket(id, "Closed").then(
-            (value) => value.code == 201
+            (value) => value.code == 200
                 ? Get.back()
                 : Get.showSnackbar(
                     GetSnackBar(

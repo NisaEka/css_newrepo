@@ -24,7 +24,7 @@ class AddReceiverController extends BaseController {
     update();
     try {
       await master
-          .postReceiver(Receiver(
+          .postReceiver(ReceiverModel(
         name: receiverName.text,
         contact: receiverName.text,
         phone: receiverPhone.text,
@@ -36,8 +36,8 @@ class AddReceiverController extends BaseController {
         destinationCode: selectedDestination?.destinationCode,
         destinationDescription: selectedDestination?.cityName,
         idDestination: selectedDestination?.id.toString(),
-        district: selectedDestination?.districtName,
-        subdistrict: selectedDestination?.subdistrictName,
+        receiverDistrict: selectedDestination?.districtName,
+        receiverSubDistrict: selectedDestination?.subdistrictName,
       ))
           .then((value) {
         Get.showSnackbar(
@@ -46,7 +46,9 @@ class AddReceiverController extends BaseController {
               Icons.info,
               color: whiteColor,
             ),
-            message: value.code == 201 ? "Data receiver telah disimpan".tr : value.error[0],
+            message: value.code == 201
+                ? "Data receiver telah disimpan".tr
+                : value.error[0],
             isDismissible: true,
             duration: const Duration(seconds: 3),
             backgroundColor: value.code == 201 ? successColor : errorColor,

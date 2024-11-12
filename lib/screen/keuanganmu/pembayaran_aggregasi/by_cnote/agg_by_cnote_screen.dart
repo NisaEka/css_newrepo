@@ -34,7 +34,7 @@ class AggByCnoteScreen extends StatelessWidget {
         children: [
           PaymentBox(
             title: "Connote No".tr,
-            value: "# ${c.data.cnoteNo}",
+            value: "# ${c.data.dpayDetWdrCnoteno}",
           ),
           Expanded(
             child: ListView(
@@ -50,7 +50,7 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 ValueItem(
                   title: "Tanggal Cnote".tr,
-                  value: c.data.cnoteDate?.toShortDateFormat() ?? '-',
+                  value: c.data.dpayDetWdrCnotedate?.toShortDateFormat() ?? '-',
                   fontSize: 12,
                 ),
                 ValueItem(
@@ -60,12 +60,13 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 ValueItem(
                   title: "POD".tr,
-                  value: '${c.data.podCode ?? ''} - ${c.data.podGroupName ?? '-'}',
+                  value:
+                      '${c.data.dpayDetWdrPod ?? ''} - ${c.data.podGroupName ?? '-'}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Tanggal POD".tr,
-                  value: c.data.podDateSys?.toDateTimeFormat(),
+                  value: c.data.dpayDUpdPodDate?.toDateTimeFormat(),
                   fontSize: 12,
                 ),
                 const Divider(
@@ -78,17 +79,17 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 ValueItem(
                   title: "Document No".tr,
-                  value: c.data.aggDocNo ?? '-',
+                  value: c.data.mpayWdrGrpPayNo ?? '-',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Pay Reff".tr,
-                  value: c.data.aggPayReff ?? '-',
+                  value: c.data.dpayDetWdrNo ?? '-',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Tanggal Aggregasi".tr,
-                  value: c.data.aggDocDate?.toShortDateFormat() ?? '-',
+                  value: c.data.mpayWdrDate?.toShortDateFormat() ?? '-',
                   fontSize: 12,
                 ),
                 const Divider(
@@ -101,78 +102,90 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 ValueItem(
                   title: "COD Amount".tr,
-                  value: 'Rp ${c.data.codAmount?.toInt().toCurrency()}',
+                  value:
+                      'Rp ${c.data.dpayDetWdrCodamount?.toInt().toCurrency()}',
                   fontSize: 12,
-                  valueFontColor: AppConst.isLightTheme(context) ? blueJNE : infoColor,
+                  valueFontColor:
+                      AppConst.isLightTheme(context) ? blueJNE : infoColor,
                 ),
                 const Divider(),
                 ValueItem(
                   title: "Freight Charge".tr,
-                  value: 'Rp ${c.data.freightCharge?.toInt().toCurrency() ?? 0}',
+                  value:
+                      'Rp ${c.data.dpayDFreightCharge?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Insurance Charge".tr,
-                  value: 'Rp ${c.data.insuranceCharge?.toInt().toCurrency() ?? 0}',
+                  value:
+                      'Rp ${c.data.dpayDInsCharge?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Discount".tr,
-                  value: 'Rp ${c.data.discount?.toInt().toCurrency() ?? 0}',
+                  value: 'Rp ${c.data.dpayDWdrDisc?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                 ),
                 ValueItem(
                   title: "Freight Charge After Discount".tr,
-                  value: '-Rp ${c.data.fchargeDisc?.toInt().toCurrency() ?? 0}',
+                  value:
+                      '-Rp ${c.data.dpayDWdrFchargeAftDisc?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Freight Charge VAT".tr,
-                  value: '-Rp ${c.data.fchargeVat?.toInt().toCurrency() ?? 0}',
+                  value:
+                      '-Rp ${c.data.dpayDWdrFchargeVat?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Packing Fee".tr,
-                  value: 'Rp ${c.data.packingFee?.toInt().toCurrency() ?? 0}',
+                  value:
+                      'Rp ${c.data.dpayDPackingFee?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Surcharge".tr,
-                  value: 'Rp ${c.data.surcharge?.toInt().toCurrency() ?? 0}',
+                  value:
+                      'Rp ${c.data.dpayDSurcharge?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Return Freight Charge After Discount".tr,
-                  value: 'Rp ${c.data.rtfChargeDisc?.toInt().toCurrency() ?? 0}',
+                  value:
+                      'Rp ${c.data.dpayDWdrRtFchargeAftDisc?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Return Freight Charge VAT".tr,
-                  value: 'Rp ${c.data.rtfChargeVat?.toInt().toCurrency() ?? 0}',
+                  value:
+                      'Rp ${c.data.dpayDWdrCodFeeInclVat?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 const Divider(),
                 ValueItem(
                   title: "COD Fee Include VAT".tr,
-                  value: 'Rp ${c.data.codFeeVat?.toInt().toCurrency() ?? 0}',
+                  value:
+                      'Rp ${c.data.dpayDWdrRtFchargeVat?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: errorColor,
                 ),
                 ValueItem(
                   title: "Netto AWB Amount".tr,
-                  value: 'Rp ${c.data.netAwbAmt?.toInt().toCurrency() ?? 0}',
+                  value: 'Rp ${c.data.dpayDNetAmt?.toInt().toCurrency() ?? 0}',
                   fontSize: 12,
                   valueFontColor: successColor,
                 ),
                 ValueItem(
                   title: 'Paid Date',
-                  value: c.data.paidDate?.toDateTimeFormat() ?? '-',
+                  value:
+                      c.data.mpayWdrGrpPayDatePaid?.toDateTimeFormat() ?? '-',
                   fontSize: 12,
                   valueTextStyle: TextStyle(fontWeight: regular, fontSize: 12),
                 ),

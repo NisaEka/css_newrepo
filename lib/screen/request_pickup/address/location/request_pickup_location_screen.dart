@@ -64,8 +64,9 @@ class RequestPickupLocationScreen extends StatelessWidget {
     final Completer<GoogleMapController> googleMapController =
         Completer<GoogleMapController>();
 
-    final CameraPosition kGooglePlex =
-        CameraPosition(target: LatLng(controller.selectedLat, controller.selectedLng), zoom: 16.0);
+    final CameraPosition kGooglePlex = CameraPosition(
+        target: LatLng(controller.selectedLat, controller.selectedLng),
+        zoom: 16.0);
 
     return Container(
       width: Get.width,

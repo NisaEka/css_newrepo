@@ -1,11 +1,9 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/contact_appbar.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver/add/add_receiver_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver/list_receiver_controller.dart';
-import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +61,8 @@ class ListPenerimaScreen extends StatelessWidget {
           c.isLoading
               ? Expanded(
                   child: ListView.builder(
-                  itemBuilder: (context, i) => c.receiverItem(Receiver(), i, context),
+                  itemBuilder: (context, i) =>
+                      c.receiverItem(ReceiverModel(), i, context),
                   itemCount: 10,
                 ))
               : Expanded(

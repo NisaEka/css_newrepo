@@ -1,5 +1,4 @@
 class AggregationMinusModel {
-
   String _aggMinDoc = "";
   String get aggMinDoc => _aggMinDoc;
 
@@ -12,14 +11,14 @@ class AggregationMinusModel {
   String _custName = "";
   String get custName => _custName;
 
-  int _codAmount = 0;
-  int get codAmount => _codAmount;
+  int _codAmt = 0;
+  int get codAmt => _codAmt;
 
   int _codFee = 0;
   int get codFee => _codFee;
 
-  int _netAmount = 0;
-  int get netAmount => _netAmount;
+  int _netAmt = 0;
+  int get netAmt => _netAmt;
 
   String _codType = "";
   String get codType => _codType;
@@ -27,20 +26,19 @@ class AggregationMinusModel {
   String _payType = "";
   String get payType => _payType;
 
-  String _createdDate = "";
-  String get createdDate => _createdDate;
+  String _createddtm = "";
+  String get createddtm => _createddtm;
 
   AggregationMinusModel.fromJson(dynamic json) {
-    _aggMinDoc = json["agg_min_doc"];
-    _custGroupId = json["cust_group_id"];
-    _custId = json["cust_id"];
-    _custName = json["cust_name"];
-    _codAmount = json["cod_amount"];
-    _codFee = json["cod_fee"];
-    _netAmount = json["net_amount"];
-    _codType = json["cod_type"];
-    _payType = json["pay_type"];
-    _createdDate = json["created_date"];
+    _aggMinDoc = json["aggMinDoc"];
+    _custGroupId = json["custGroupId"];
+    _custId = json["custId"];
+    _custName = json["custName"];
+    _codAmt = json["codAmt"];
+    _codFee = json["codFee"];
+    _netAmt = json["netAmt"];
+    _codType = json["codType"];
+    _payType = json["payType"];
+    _createddtm = json["createddtm"];
   }
-
 }

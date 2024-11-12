@@ -1,5 +1,4 @@
 class RequestPickupFilterModel {
-
   int _page = 1;
   int get page => _page;
 
@@ -18,14 +17,13 @@ class RequestPickupFilterModel {
   String _city = "";
   String get city => _city;
 
-  RequestPickupFilterModel({
-    int page = 1,
-    int limit = 10,
-    String date = "",
-    String pickupStatus = "",
-    String transactionType = "",
-    String city = ""
-  }) {
+  RequestPickupFilterModel(
+      {int page = 1,
+      int limit = 10,
+      String date = "",
+      String pickupStatus = "",
+      String transactionType = "",
+      String city = ""}) {
     _page = page;
     _limit = limit;
     _date = date;
@@ -62,5 +60,4 @@ class RequestPickupFilterModel {
 
     return json;
   }
-
 }

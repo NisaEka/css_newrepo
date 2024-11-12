@@ -1,7 +1,6 @@
 import 'package:css_mobile/util/constant.dart';
 
 class AdvanceFilterModel {
-
   int _page = Constant.defaultPage;
   int get page => _page;
 
@@ -14,12 +13,11 @@ class AdvanceFilterModel {
   String _keyword = "";
   String get keyword => _keyword;
 
-  AdvanceFilterModel({
-    int page = Constant.defaultPage,
-    int limit = Constant.defaultLimit,
-    String date = "",
-    String keyword = ""
-  }) {
+  AdvanceFilterModel(
+      {int page = Constant.defaultPage,
+      int limit = Constant.defaultLimit,
+      String date = "",
+      String keyword = ""}) {
     _page = page;
     _limit = limit;
     _date = date;
@@ -48,5 +46,4 @@ class AdvanceFilterModel {
 
     return json;
   }
-
 }

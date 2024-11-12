@@ -138,12 +138,14 @@ class CustomTheme {
           // side: const BorderSide(color: infoColor),
           // foregroundColor: infoColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+          textStyle:
+              const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
           minimumSize: WidgetStateProperty.all<Size>(const Size(100, 40)),
-          shape: WidgetStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+          shape: WidgetStateProperty.all<OutlinedBorder>(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
           elevation: WidgetStateProperty.resolveWith<double>(
             (Set<WidgetState> states) {
               if (states.contains(WidgetState.disabled)) {
@@ -152,9 +154,11 @@ class CustomTheme {
               return 0; // Defer to the widget's default.
             },
           ),
-          textStyle: WidgetStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
+          textStyle: WidgetStateProperty.all<TextStyle>(
+              const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
     ),
-    filledButtonTheme: FilledButtonThemeData(style: ButtonStyle(backgroundColor: WidgetStateProperty.all(blueJNE))),
+    filledButtonTheme: FilledButtonThemeData(
+        style: ButtonStyle(backgroundColor: WidgetStateProperty.all(blueJNE))),
   );
 
   static final dark = ThemeData(
@@ -292,12 +296,14 @@ class CustomTheme {
           // side: const BorderSide(color: infoColor),
           // foregroundColor: infoColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+          textStyle:
+              const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         minimumSize: WidgetStateProperty.all<Size>(const Size(100, 40)),
-        shape: WidgetStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+        shape: WidgetStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
         elevation: WidgetStateProperty.resolveWith<double>(
           (Set<WidgetState> states) {
             if (states.contains(WidgetState.disabled)) {
@@ -333,7 +339,9 @@ class CustomTheme {
   }
 
   Color? textColor(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : whiteColor;
+    return Theme.of(context).brightness == Brightness.light
+        ? greyDarkColor1
+        : whiteColor;
   }
 
   Color? cursorColor(BuildContext context) {
@@ -342,8 +350,9 @@ class CustomTheme {
 
   ThemeData dateTimePickerTheme(BuildContext context) {
     return Theme.of(context).copyWith(
-      colorScheme:
-          AppConst.isLightTheme(context) ? const ColorScheme.light().copyWith(primary: blueJNE) : const ColorScheme.dark().copyWith(primary: redJNE),
+      colorScheme: AppConst.isLightTheme(context)
+          ? const ColorScheme.light().copyWith(primary: blueJNE)
+          : const ColorScheme.dark().copyWith(primary: redJNE),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: redJNE, // button text color

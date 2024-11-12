@@ -1,47 +1,49 @@
 class GetAggregationTotalModel {
   GetAggregationTotalModel({
-    num? code,
+    num? statusCode,
     String? message,
-    AggTotal? payload,
+    AggTotal? data,
   }) {
-    _code = code;
+    _statusCode = statusCode;
     _message = message;
-    _payload = payload;
+    _data = data;
   }
 
   GetAggregationTotalModel.fromJson(dynamic json) {
-    _code = json['code'];
+    _statusCode = json['statusCode'];
     _message = json['message'];
-    _payload = json['payload'] != null ? AggTotal.fromJson(json['payload']) : AggTotal.fromJson("{'total': 0}");
+    _data = json['data'] != null
+        ? AggTotal.fromJson(json['data'])
+        : AggTotal.fromJson("{'total': 0}");
   }
 
-  num? _code;
+  num? _statusCode;
   String? _message;
-  AggTotal? _payload;
+  AggTotal? _data;
 
   GetAggregationTotalModel copyWith({
-    num? code,
+    num? statusCode,
     String? message,
-    AggTotal? payload,
+    AggTotal? data,
   }) =>
       GetAggregationTotalModel(
-        code: code ?? _code,
+        statusCode: statusCode ?? _statusCode,
         message: message ?? _message,
-        payload: payload ?? _payload,
+        data: data ?? _data,
       );
 
-  num? get code => _code;
+  num? get statusCode => _statusCode;
 
   String? get message => _message;
 
-  AggTotal? get payload => _payload;
+  AggTotal? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['code'] = _code;
+    map['statusCode'] = _statusCode;
     map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.toJson();
+    if (_data != null) {
+      map['data'] = _data?.toJson();
     }
     return map;
   }

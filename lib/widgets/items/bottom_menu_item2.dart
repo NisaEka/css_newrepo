@@ -44,7 +44,9 @@ class BottomMenuItem2 extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                         color: isSelected ? color : greyColor,
-                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8))),
                     child: Text(
                       title ?? '',
                       style: const TextStyle(

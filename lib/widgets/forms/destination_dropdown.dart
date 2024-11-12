@@ -49,7 +49,8 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
 
   Future<List<Destination>> getDestinationList(String keyword) async {
     final master = Get.find<MasterRepository>();
-    var response = await master.getDestinations(QueryParamModel(search: keyword.toUpperCase()));
+    var response = await master
+        .getDestinations(QueryParamModel(search: keyword.toUpperCase()));
     var models = response.data?.toList();
 
     return models ?? [];
@@ -75,7 +76,8 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             asyncItems: (String filter) => getDestinationList(filter),
             itemBuilder: (context, e, b) {
               return Container(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text('${e.zipCode == null || e.zipCode == '00000' ? '' : '${e.zipCode}; '}'
                         '${e.provinceName == null ? '' : '${e.provinceName}; '}'
                         '${e.cityName == null ? '' : '${e.cityName}; '}'
@@ -183,7 +185,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
         final post = data[index];
         return ListTile(
           title: Text(
-            post.cityName!,
+            '${post.districtName!}, ${post.cityName!}',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           onTap: () {

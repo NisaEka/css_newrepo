@@ -1,9 +1,6 @@
-import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/routes/app_page.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/onboarding/ob1_screen.dart';
 import 'package:css_mobile/util/lang/app_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,8 +48,4 @@ class App extends StatelessWidget {
       home: const DashboardScreen(),
     );
   }
-
-
 }
-
-

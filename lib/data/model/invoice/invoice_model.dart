@@ -1,5 +1,4 @@
 class InvoiceModel {
-
   String? _invoiceNoEncoded = "";
   String? get invoiceNoEncoded => _invoiceNoEncoded;
 
@@ -22,13 +21,12 @@ class InvoiceModel {
   num get invoiceTotalAmount => _invoiceTotalAmount;
 
   InvoiceModel.fromJson(dynamic json) {
-    _invoiceNoEncoded = json["invoice_number_encoded"];
-    _invoiceNo = json["invoice_number"];
-    _invoiceDate = json["invoice_date"];
-    _invoiceStartDate = json["invoice_start_date"];
-    _invoiceEndDate = json["invoice_end_date"];
-    _invoiceStatus = json["invoice_status"];
-    _invoiceTotalAmount = json["invoice_total_amount"];
+    _invoiceNoEncoded = json["invoiceNo"];
+    _invoiceNo = json["invoiceNo"];
+    _invoiceDate = json["invoiceDate"];
+    _invoiceStartDate = json["invoiceStartDate"];
+    _invoiceEndDate = json["invoiceEndDate"];
+    _invoiceStatus = json["invoiceStatus"];
+    _invoiceTotalAmount = json["invoiceTotalAmount"];
   }
-
 }

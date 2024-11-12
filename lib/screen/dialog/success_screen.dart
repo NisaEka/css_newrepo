@@ -41,11 +41,16 @@ class SuccessScreen extends StatelessWidget {
           const LogoHeader(),
           Column(
             children: [
-              icon ?? Lottie.asset(ImageConstant.successLottie, height: Get.width / 1.2),
+              icon ??
+                  Lottie.asset(ImageConstant.successLottie,
+                      height: Get.width / 1.2),
               Text(
                 message.tr,
                 style: appTitleTextStyle.copyWith(
-                    color: fontColor ?? (AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1)),
+                    color: fontColor ??
+                        (AppConst.isLightTheme(context)
+                            ? greyDarkColor1
+                            : greyLightColor1)),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -54,7 +59,8 @@ class SuccessScreen extends StatelessWidget {
             children: [
               secondAction != null
                   ? CustomFilledButton(
-                      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
                       color: whiteColor,
                       fontColor: blueJNE,
                       borderColor: blueJNE,
@@ -65,7 +71,8 @@ class SuccessScreen extends StatelessWidget {
                   : const SizedBox(),
               thirdAction != null
                   ? CustomFilledButton(
-                      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
                       color: blueJNE,
                       radius: 10,
                       title: thirdButtonTitle,
@@ -74,7 +81,8 @@ class SuccessScreen extends StatelessWidget {
                   : const SizedBox(),
               buttonTitle != null
                   ? CustomFilledButton(
-                      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
                       color: Colors.white,
                       borderColor: blueJNE,
                       fontColor: blueJNE,

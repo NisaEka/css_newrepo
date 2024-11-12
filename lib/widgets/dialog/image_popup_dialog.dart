@@ -28,9 +28,9 @@ class _ImagePopupDialogState extends State<ImagePopupDialog> {
   late GoogleMapController mapController;
   Completer<GoogleMapController>? googleMapController;
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
+  // void _onMapCreated(GoogleMapController controller) {
+  //   mapController = controller;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,8 @@ class _ImagePopupDialogState extends State<ImagePopupDialog> {
       content: widget.lat != null
           ? GoogleMap(
               // onMapCreated: _onMapCreated,
-              onMapCreated: (controller) => googleMapController?.complete(controller),
+              onMapCreated: (controller) =>
+                  googleMapController?.complete(controller),
               zoomControlsEnabled: false,
               myLocationButtonEnabled: false,
               markers: <Marker>{
@@ -72,16 +73,19 @@ class _ImagePopupDialogState extends State<ImagePopupDialog> {
                   // color: greyLightColor3,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: const Center(child: Icon(Icons.image_not_supported_outlined)),
+                child: const Center(
+                    child: Icon(Icons.image_not_supported_outlined)),
               ),
-              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) {
                   return child;
                 }
                 return Center(
                   child: CircularProgressIndicator(
                     value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
                         : null,
                   ),
                 );

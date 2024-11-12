@@ -13,7 +13,7 @@ class OfflineBar extends StatelessWidget {
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(vertical: 2),
       // margin: const EdgeInsets.only(bottom: 5),
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         color: redJNE.withOpacity(0.5),
       ),
       child: Text(

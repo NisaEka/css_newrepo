@@ -19,7 +19,8 @@ class CustomDropDownField<T> extends StatelessWidget {
       this.selectedItem,
       this.width}) {
     if (isRequired) {
-      validator ??= ValidationBuilder().required().build() as FormFieldValidator<T>?;
+      validator ??=
+          ValidationBuilder().required().build() as FormFieldValidator<T>?;
     }
   }
 
@@ -41,14 +42,18 @@ class CustomDropDownField<T> extends StatelessWidget {
     return DropdownButtonFormField(
       // autovalidateMode: AutovalidateMode.always,
       validator: validator,
-      decoration: const InputDecoration(contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 2)),
+      decoration: const InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 2)),
       icon: const Icon(Icons.keyboard_arrow_down),
       hint: Text(
         hintText ?? label ?? '',
         style: hintTextStyle,
       ),
       value: value,
-      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+      style: Theme.of(context)
+          .textTheme
+          .titleMedium
+          ?.copyWith(fontWeight: regular),
       isExpanded: true,
       items: items,
       onChanged: onChanged,
@@ -76,7 +81,8 @@ class CustomDropDownField<T> extends StatelessWidget {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: readOnly
               ? TextField(
-                  controller: TextEditingController(text: selectedItem.toString()),
+                  controller:
+                      TextEditingController(text: selectedItem.toString()),
                   enabled: false,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 16,

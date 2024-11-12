@@ -1,5 +1,4 @@
 class DefaultPageFilterModel {
-
   int _page = 10;
   int get page => _page;
 
@@ -36,5 +35,4 @@ class DefaultPageFilterModel {
 
     return json;
   }
-
 }

@@ -43,6 +43,4 @@ class LabelScreen extends StatelessWidget {
               ));
         });
   }
-
-
 }

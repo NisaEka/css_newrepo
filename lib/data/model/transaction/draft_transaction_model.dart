@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 
-DraftTransactionModel transactionDraftModelFromJson(String str) => DraftTransactionModel.fromJson(json.decode(str));
+DraftTransactionModel transactionDraftModelFromJson(String str) =>
+    DraftTransactionModel.fromJson(json.decode(str));
 
-String transactionDraftModelToJson(DraftTransactionModel data) => json.encode(data.toJson());
+String transactionDraftModelToJson(DraftTransactionModel data) =>
+    json.encode(data.toJson());
 
 class DraftTransactionModel {
   DraftTransactionModel({
@@ -36,7 +38,6 @@ class DraftTransactionModel {
       DraftTransactionModel(
         draft: draft ?? _draft,
       );
-
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

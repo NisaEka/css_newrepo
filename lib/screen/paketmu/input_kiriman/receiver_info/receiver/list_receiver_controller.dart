@@ -15,8 +15,8 @@ class ListPenerimaController extends BaseController {
 
   bool isLoading = false;
   bool isOnline = false;
-  List<Receiver> receiverList = [];
-  Receiver? selectedReceiver;
+  List<ReceiverModel> receiverList = [];
+  ReceiverModel? selectedReceiver;
 
   @override
   void onInit() {
@@ -41,18 +41,20 @@ class ListPenerimaController extends BaseController {
 
     update();
     try {
-      await master.getReceivers(QueryParamModel(search: search.text)).then((value) async {
+      await master
+          .getReceivers(QueryParamModel(search: search.text))
+          .then((value) async {
         receiverList.addAll(value.data ?? []);
         await storage.saveData(StorageCore.receiver, value);
       });
     } catch (e) {
       e.printError();
-      var receiver = BaseResponse<List<Receiver>>.fromJson(
+      var receiver = BaseResponse<List<ReceiverModel>>.fromJson(
           await storage.readData(StorageCore.receiver),
           (json) => json is List<dynamic>
               ? json
-                  .map<Receiver>(
-                    (i) => Receiver.fromJson(i as Map<String, dynamic>),
+                  .map<ReceiverModel>(
+                    (i) => ReceiverModel.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
               : List.empty());
@@ -62,7 +64,7 @@ class ListPenerimaController extends BaseController {
     update();
   }
 
-  void delete(Receiver data) async {
+  void delete(ReceiverModel data) async {
     try {
       await master.deleteReceiver(data.idReceive ?? '').then(
             (value) => Get.showSnackbar(
@@ -71,7 +73,8 @@ class ListPenerimaController extends BaseController {
                   value.code == 200 ? Icons.info : Icons.warning,
                   color: whiteColor,
                 ),
-                message: value.code == 200 ? 'Data Dihapus'.tr : "Bad Request".tr,
+                message:
+                    value.code == 200 ? 'Data Dihapus'.tr : "Bad Request".tr,
                 isDismissible: true,
                 duration: const Duration(seconds: 3),
                 backgroundColor: value.code == 200 ? successColor : errorColor,
@@ -84,7 +87,7 @@ class ListPenerimaController extends BaseController {
     initData();
   }
 
-  Widget receiverItem(Receiver e, int i, BuildContext context) {
+  Widget receiverItem(ReceiverModel e, int i, BuildContext context) {
     return ContactRadioListItem(
       isLoading: isLoading,
       index: i,
@@ -96,7 +99,7 @@ class ListPenerimaController extends BaseController {
       groupValue: selectedReceiver,
       isSelected: e == selectedReceiver ? true : false,
       onChanged: (value) {
-        selectedReceiver = value as Receiver?;
+        selectedReceiver = value as ReceiverModel?;
         update();
         Get.back(
           result: selectedReceiver,

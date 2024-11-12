@@ -5,7 +5,6 @@ import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:marquee/marquee.dart';
 
 class JlcPointBox extends StatelessWidget {
   final String totalTransaksi;
@@ -25,9 +24,14 @@ class JlcPointBox extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.only(right: 15, top: 10, bottom: 10, left: 10),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+        color: Theme.of(context).brightness == Brightness.light
+            ? whiteColor
+            : greyColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
+        border: Border.all(
+            color: Theme.of(context).brightness == Brightness.light
+                ? greyDarkColor1
+                : greyLightColor1),
         boxShadow: const [
           BoxShadow(
             color: blueJNE,

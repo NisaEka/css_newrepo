@@ -1,6 +1,7 @@
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_city_model.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
-import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/widgets/forms/destination_external_dropdown.dart';
+import 'package:css_mobile/widgets/forms/origin_external_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class CekOngkirState {
@@ -22,11 +23,10 @@ class CekOngkirState {
   bool isLoading = false;
 
   List<City> cityList = [];
-  List<Origin> originList = [];
-  List<Origin> destinationList = [];
+  List<OriginExternal> originList = [];
+  List<DestinationExternal> destinationList = [];
   List<Ongkir> ongkirList = [];
 
-  // GetOriginModel? cityModel;
-  Origin? selectedDestination;
-  Origin? selectedOrigin;
+  DestinationExternal? selectedDestination;
+  OriginExternal? selectedOrigin;
 }

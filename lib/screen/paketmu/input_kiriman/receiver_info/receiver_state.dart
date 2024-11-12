@@ -11,11 +11,11 @@ import 'package:get/get.dart';
 class ReceiverState {
   DataTransactionModel? data = Get.arguments['data'];
   DataTransactionModel? dataEdit = Get.arguments['dataEdit'];
-  Shipper shipper = Get.arguments['shipper'];
+  ShipperModel shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
-  Dropshipper? dropshipper = Get.arguments['dropshipper'];
+  DropshipperModel? dropshipper = Get.arguments['dropshipper'];
   bool codOngkir = Get.arguments['cod_ongkir'];
-  Origin origin = Get.arguments['origin'];
+  OriginModel origin = Get.arguments['origin'];
   Account account = Get.arguments['account'];
 
   final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
@@ -30,5 +30,5 @@ class ReceiverState {
   bool isLoadSave = false;
 
   Destination? selectedDestination;
-  Receiver? receiver;
+  ReceiverModel? receiver;
 }

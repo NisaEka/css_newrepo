@@ -24,7 +24,7 @@ class EditProfileController extends BaseController {
   bool isLoadOrigin = false;
   // GetDestinationModel? destinationModel;
   Destination? selectedCity;
-  Origin? selectedOrigin;
+  OriginModel? selectedOrigin;
   UserModel? basicProfil;
   CcrfProfileModel? ccrfProfil;
 
@@ -37,13 +37,16 @@ class EditProfileController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     try {
-      await profil.getBasicProfil().then((value) => basicProfil = value.data?.user);
+      await profil
+          .getBasicProfil()
+          .then((value) => basicProfil = value.data?.user);
       update();
 
       await profil.getCcrfProfil().then((value) {
         if (value.data != null) {
           ccrfProfil = value.data;
-          isCcrf = value.data != null  && value.data?.generalInfo?.ccrfApistatus == "Y";
+          isCcrf = value.data != null &&
+              value.data?.generalInfo?.ccrfApistatus == "Y";
         } else {
           ccrfProfil ??= CcrfProfileModel(
             generalInfo: GeneralInfo(
@@ -63,7 +66,8 @@ class EditProfileController extends BaseController {
       e.printError();
       i.printError();
 
-      var basic = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+      var basic =
+          UserModel.fromJson(await storage.readData(StorageCore.userProfil));
 
       brand.text = basic.brand ?? '';
       name.text = basic.name ?? '';
@@ -112,7 +116,7 @@ class EditProfileController extends BaseController {
     return [];
   }
 
-  Future<List<Origin>> getOriginList(String keyword) async {
+  Future<List<OriginModel>> getOriginList(String keyword) async {
     isLoadOrigin = true;
     // var response = await ongkir.postOrigin(keyword);
     // var models = response.payload?.toList();

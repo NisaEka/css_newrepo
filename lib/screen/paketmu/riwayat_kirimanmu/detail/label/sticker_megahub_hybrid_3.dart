@@ -8,7 +8,8 @@ class StickerMegahubHybrid3 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
 
-  const StickerMegahubHybrid3({super.key, required this.data, this.shippingCost = false});
+  const StickerMegahubHybrid3(
+      {super.key, required this.data, this.shippingCost = false});
 
   @override
   Widget build(BuildContext context) {

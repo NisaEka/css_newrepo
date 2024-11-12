@@ -25,7 +25,8 @@ class _DashboardInfoState extends State<DashboardInfo> {
                   onTap: () => Get.to(const FacilityScreen()),
                   child: Container(
                     padding: const EdgeInsets.all(8),
-                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     width: Get.width,
                     decoration: BoxDecoration(
                       color: blueJNE,
@@ -36,7 +37,8 @@ class _DashboardInfoState extends State<DashboardInfo> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Lengkapi profil Kamu untuk menikmati semua fitur unggulan.'.tr,
+                          'Lengkapi profil Kamu untuk menikmati semua fitur unggulan.'
+                              .tr,
                           textAlign: TextAlign.left,
                           style: const TextStyle(
                             fontSize: 10,

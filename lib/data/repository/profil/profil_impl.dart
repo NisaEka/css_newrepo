@@ -6,10 +6,11 @@ import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
-import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -51,7 +52,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
         (json) => CcrfProfileModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
-      print("ccrf error : ${e.response?.data}");
+      AppLogger.e("ccrf error : ${e.response?.data}");
       return e.response?.data;
     }
   }
@@ -72,11 +73,13 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future<DefaultResponseModel<String>> createProfileCcrf(FacilityCreateModel data) async {
+  Future<DefaultResponseModel<String>> createProfileCcrf(
+      FacilityCreateModel data) async {
     var token = await storageSecure.read(key: 'token');
     network.dio.options.headers['Authorization'] = 'Bearer $token';
     try {
-      var response = await network.dio.post('/profile/ccrf', data: data.toJson());
+      var response =
+          await network.dio.post('/profile/ccrf', data: data.toJson());
       return DefaultResponseModel.fromJson(response.data, '');
     } on DioException catch (e) {
       return DefaultResponseModel.fromJson(e.response?.data, '');
@@ -84,12 +87,14 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future<DefaultResponseModel<String>> createProfileCcrfExisting(FacilityCreateExistingModel data) async {
+  Future<DefaultResponseModel<String>> createProfileCcrfExisting(
+      FacilityCreateExistingModel data) async {
     var token = await storageSecure.read(key: 'token');
     network.dio.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      var response = await network.dio.post('/profile/ccrf/existing', data: data.toJson());
+      var response =
+          await network.dio.post('/profile/ccrf/existing', data: data.toJson());
       return DefaultResponseModel.fromJson(response.data, '');
     } on DioException catch (e) {
       return DefaultResponseModel.fromJson(e.response?.data, '');
@@ -97,17 +102,29 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future<GetCcrfActivityModel> getCcrfActivity() async {
+  Future<BaseResponse<List<CcrfActivityModel>>> getCcrfActivity(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: 'token');
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      var response = await network.dio.get(
-        '/ccrf-activity',
+      var response = await network.base.get(
+        '/master/ccrf-activities',
+        queryParameters: param.toJson(),
       );
-      return GetCcrfActivityModel.fromJson(response.data);
+      return BaseResponse<List<CcrfActivityModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<CcrfActivityModel>(
+                  (i) => CcrfActivityModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return GetCcrfActivityModel.fromJson(e.response?.data);
+      return BaseResponse<List<CcrfActivityModel>>.fromJson(
+          e.response?.data, (json) => List.empty());
     }
   }
 
@@ -137,25 +154,25 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future<BaseResponse<List<Shipper>>> getShipper() async {
+  Future<BaseResponse<List<ShipperModel>>> getShipper() async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/me/shipper",
       );
-      return BaseResponse<List<Shipper>>.fromJson(
+      return BaseResponse<List<ShipperModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<Shipper>(
-                  (i) => Shipper.fromJson(i as Map<String, dynamic>),
+                .map<ShipperModel>(
+                  (i) => ShipperModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
       );
     } on DioException catch (e) {
-      print("shipper error : ${e.response?.data}");
+      AppLogger.e("shipper error : ${e.response?.data}");
       return e.response?.data;
     }
   }

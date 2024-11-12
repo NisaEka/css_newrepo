@@ -42,9 +42,14 @@ class AkunBankScreen extends StatelessWidget {
                     Icons.credit_card_rounded,
                     color: blueJNE,
                   ),
-                  title: controller.ccrfProfil?.bankAccount?.ccrfBankaccount ?? '-',
-                  subtitle: controller.ccrfProfil?.bankAccount?.ccrfAccountnumber ?? '-',
-                  subtitle2: controller.ccrfProfil?.bankAccount?.ccrfAccountname ?? '-',
+                  title: controller.ccrfProfil?.bankAccount?.ccrfBankaccount ??
+                      '-',
+                  subtitle:
+                      controller.ccrfProfil?.bankAccount?.ccrfAccountnumber ??
+                          '-',
+                  subtitle2:
+                      controller.ccrfProfil?.bankAccount?.ccrfAccountname ??
+                          '-',
                 ),
               ],
             ),
@@ -66,10 +71,13 @@ class AkunBankScreen extends StatelessWidget {
                 enableDrag: true,
                 isDismissible: true,
                 // isScrollControlled: true,
-                StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-                  return SecretDataDialog(text: '${'bank_info'.tr}\n\n${'kerahasiaan_data'.tr}');
+                StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                  return SecretDataDialog(
+                      text: '${'bank_info'.tr}\n\n${'kerahasiaan_data'.tr}');
                 }),
-                backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                backgroundColor:
+                    AppConst.isLightTheme(context) ? whiteColor : greyColor,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

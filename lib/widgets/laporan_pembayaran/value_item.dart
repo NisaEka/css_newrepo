@@ -1,7 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ValueItem extends StatelessWidget {
   final String title;
@@ -35,7 +34,8 @@ class ValueItem extends StatelessWidget {
           width: titleWidth,
           child: Text(
             title,
-            style: titleTextStyle ?? subTitleTextStyle.copyWith(fontSize: fontSize ?? 8),
+            style: titleTextStyle ??
+                subTitleTextStyle.copyWith(fontSize: fontSize ?? 8),
           ),
         ),
         Container(
@@ -46,7 +46,10 @@ class ValueItem extends StatelessWidget {
             style: valueTextStyle ??
                 listTitleTextStyle.copyWith(
                   fontSize: fontSize ?? 8,
-                  color: valueFontColor ?? (Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : greyLightColor1),
+                  color: valueFontColor ??
+                      (Theme.of(context).brightness == Brightness.light
+                          ? greyDarkColor1
+                          : greyLightColor1),
                 ),
             textAlign: TextAlign.end,
           ),

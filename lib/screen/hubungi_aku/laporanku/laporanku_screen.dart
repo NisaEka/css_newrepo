@@ -16,7 +16,7 @@ class LaporankuScreen extends StatelessWidget {
         init: LaporankuController(),
         builder: (controller) {
           return Scaffold(
-            appBar: LaporankuAppbar(),
+            appBar: const LaporankuAppbar(),
             body: const LaporankuBody(),
             floatingActionButton: CustomFilledButton(
               color: redJNE,
@@ -35,10 +35,4 @@ class LaporankuScreen extends StatelessWidget {
           );
         });
   }
-
-
-
-
-
-
 }

@@ -1,4 +1,4 @@
-import 'meta_response_model.dart';
+import 'package:css_mobile/data/model/meta_response_model.dart';
 
 class BaseResponse<T> {
   BaseResponse({
@@ -19,13 +19,14 @@ class BaseResponse<T> {
     _message = json['message'] ?? json['messages'];
     _error = json['error'] ?? json['errors'];
     _code = json['statusCode'];
-    _data = _$nullableGenericFromJson(json['data'], fromJsonT);
+    _data = _nullableGenericFromJson(json['data'], fromJsonT);
     _meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 
-  T? _$nullableGenericFromJson<T>(
+  /// Avoids shadowing the class-level T by renaming the generic parameter to U.
+  U? _nullableGenericFromJson<U>(
     Object? input,
-    T Function(Object? json) fromJson,
+    U Function(Object? json) fromJson,
   ) =>
       input == null ? null : fromJson(input);
 
@@ -35,14 +36,14 @@ class BaseResponse<T> {
   T? _data;
   Meta? _meta;
 
-  BaseResponse copyWith({
+  BaseResponse<T> copyWith({
     dynamic message,
     dynamic error,
     num? code,
     T? data,
     Meta? meta,
   }) =>
-      BaseResponse(
+      BaseResponse<T>(
         message: message ?? _message,
         error: error ?? _error,
         code: code ?? _code,
@@ -51,13 +52,9 @@ class BaseResponse<T> {
       );
 
   dynamic get message => _message;
-
   dynamic get error => _error;
-
   num? get code => _code;
-
   T? get data => _data;
-
   Meta? get meta => _meta;
 
   Map<String, dynamic> toJson() {

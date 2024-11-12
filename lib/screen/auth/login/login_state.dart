@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LoginState{
+class LoginState {
   final formKey = GlobalKey<FormState>();
   final emailTextField = TextEditingController();
   final passwordTextField = TextEditingController();
@@ -16,5 +16,4 @@ class LoginState{
   String? fcmToken;
 
   DateTime? currentBackPressTime;
-
 }

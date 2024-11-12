@@ -26,7 +26,9 @@ class DataUmumController extends BaseController {
       String? token = await storage.readToken();
       debugPrint("token : $token");
       isLogin = token != null;
-      await profil.getBasicProfil().then((value) => basicProfil = value.data?.user);
+      await profil
+          .getBasicProfil()
+          .then((value) => basicProfil = value.data?.user);
       update();
       await profil.getCcrfProfil().then((value) {
         if (value.data != null) {
@@ -50,7 +52,8 @@ class DataUmumController extends BaseController {
       e.printError();
       i.printError();
 
-      var basic = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+      var basic =
+          UserModel.fromJson(await storage.readData(StorageCore.userProfil));
 
       ccrfProfil = CcrfProfileModel(
         generalInfo: GeneralInfo(

@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:css_mobile/screen/auth/signup/signup_state.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -23,13 +24,13 @@ class SignUpController extends BaseController {
     update();
   }
 
-  void selectOrigin(Origin value) {
+  void selectOrigin(OriginModel value) {
     {
       state.selectedOrigin = value;
       state.kotaPengirim.text = state.selectedOrigin?.originName ?? '';
       state.branchCode = state.selectedOrigin?.branchCode;
       update();
-      print(state.selectedOrigin);
+      AppLogger.d(state.selectedOrigin as String);
 
       getAgentList();
     }
@@ -47,7 +48,9 @@ class SignUpController extends BaseController {
     ];
     state.isLoadAgent = true;
     update();
-    await master.getAgents(state.selectedOrigin?.branchCode ?? '').then((value) {
+    await master
+        .getAgents(state.selectedOrigin?.branchCode ?? '')
+        .then((value) {
       state.agenList.addAll(value.data ?? []);
       update();
     });
@@ -60,16 +63,19 @@ class SignUpController extends BaseController {
     state.isLoading = true;
     update();
     try {
-      await auth
-          .getCheckMail(state.email.text)
-          .then((value) => value.data?.disposable == true || value.data?.publicDomain == false || value.data?.mx == false
+      await auth.getCheckMail(state.email.text).then((value) =>
+          value.data?.disposable == true ||
+                  value.data?.publicDomain == false ||
+                  value.data?.mx == false
               ? Get.showSnackbar(
                   GetSnackBar(
                     icon: const Icon(
                       Icons.warning,
                       color: whiteColor,
                     ),
-                    message: 'CSS tidak menerima pendaftaran menggunakan email temporary'.tr,
+                    message:
+                        'CSS tidak menerima pendaftaran menggunakan email temporary'
+                            .tr,
                     isDismissible: true,
                     duration: const Duration(seconds: 3),
                     backgroundColor: errorColor,
@@ -97,7 +103,8 @@ class SignUpController extends BaseController {
         referralCode: state.kodeReferal.text,
         originCode: state.selectedOrigin?.originCode ?? '',
         alreadyUseJne: state.pakaiJNE ? "YES" : null,
-        salesCounter: state.selectedAgent?.custNo ?? state.selectedAgent?.custName,
+        salesCounter:
+            state.selectedAgent?.custNo ?? state.selectedAgent?.custName,
       ),
     )
         .then((value) {
@@ -147,18 +154,20 @@ class SignUpController extends BaseController {
     update();
   }
 
-  Future<Origin> getOrigin(String keyword) async {
-    var response = await master.getOrigins(QueryParamModel(search: keyword.toUpperCase()));
+  Future<OriginModel> getOrigin(String keyword) async {
+    var response =
+        await master.getOrigins(QueryParamModel(search: keyword.toUpperCase()));
     var models = response.data?.toList();
-    print(models);
-    return models?.first ?? Origin();
+    AppLogger.d(models as String);
+    return models?.first ?? OriginModel();
   }
 
   Future<void> onSelectReferal(GroupOwnerModel value) async {
     state.kodeReferal.text = value.groupownerName ?? '';
     state.selectedReferal = value;
     state.selectedOrigin = await getOrigin(value.groupownerOrigin ?? '');
-    state.isDefaultOrigin = value.groupownerDefaultorigin == "FIXED" ? true : false;
+    state.isDefaultOrigin =
+        value.groupownerDefaultorigin == "FIXED" ? true : false;
     state.isSelectCounter = value.groupownerCounter == null ? true : false;
     update();
     state.kotaPengirim.text = state.selectedOrigin?.originName ?? '';
@@ -167,7 +176,9 @@ class SignUpController extends BaseController {
     update();
     getAgentList();
     if (value.groupownerCounter != null) {
-      state.selectedAgent = state.agenList.where((e) => e.custName == value.groupownerCounter).first;
+      state.selectedAgent = state.agenList
+          .where((e) => e.custName == value.groupownerCounter)
+          .first;
       update();
       state.selectedAgent?.custName.printInfo(info: "selectedAgent");
     } else {

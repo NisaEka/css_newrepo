@@ -14,18 +14,18 @@ import 'package:get/get.dart';
 class TransactionState {
   DataTransactionModel? data = Get.arguments['data'];
   DataTransactionModel? dataEdit = Get.arguments['dataEdit'];
-  Shipper shipper = Get.arguments['shipper'];
+  ShipperModel shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
-  Origin origin = Get.arguments['origin'];
+  OriginModel origin = Get.arguments['origin'];
   Account account = Get.arguments['account'];
-  Receiver receiver = Get.arguments['receiver'];
+  ReceiverModel receiver = Get.arguments['receiver'];
   Destination destination = Get.arguments['destination'];
   Delivery? delivery = Get.arguments['delivery'];
   Goods? goods = Get.arguments['goods'];
   int? draftIndex = Get.arguments['index'];
   DataTransactionModel? draft = Get.arguments['draft'];
-  Dropshipper? dropshipper = Get.arguments['dropshipper'];
+  DropshipperModel? dropshipper = Get.arguments['dropshipper'];
 
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
   final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
@@ -61,7 +61,11 @@ class TransactionState {
   bool isShowDialog = false;
   bool isCOD = false;
 
-  List<String> steps = ['Data Pengirim'.tr, 'Data Penerima'.tr, 'Data Kiriman'.tr];
+  List<String> steps = [
+    'Data Pengirim'.tr,
+    'Data Penerima'.tr,
+    'Data Kiriman'.tr
+  ];
   List<ServiceModel> serviceList = [];
   List<DataTransactionModel> draftList = [];
 

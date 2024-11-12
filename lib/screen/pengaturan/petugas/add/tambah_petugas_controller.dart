@@ -74,11 +74,11 @@ class TambahPetugasController extends BaseController {
 
   List<Account> accountList = [];
   List<Account> selectedAccountList = [];
-  RxList<Origin> originList = <Origin>[].obs;
-  final selectedOrigin = <Origin>[].obs;
+  RxList<OriginModel> originList = <OriginModel>[].obs;
+  final selectedOrigin = <OriginModel>[].obs;
   List<String> originCodes = [];
-  List<Branch> branchList = [];
-  List<Branch> selectedBranchList = [];
+  List<BranchModel> branchList = [];
+  List<BranchModel> selectedBranchList = [];
   List<String> branchs = [];
   String? status;
   PetugasModel dataPetugas = PetugasModel();
@@ -120,12 +120,17 @@ class TambahPetugasController extends BaseController {
         update();
         loadOrigin(dataPetugas.branches ?? []);
         dataPetugas.accounts?.forEach((account) {
-          selectedAccountList.add((accountList.where((e) => e.accountId == account.accountId).isNotEmpty
-              ? (accountList.where((e) => e.accountId == account.accountId).first)
+          selectedAccountList.add((accountList
+                  .where((e) => e.accountId == account.accountId)
+                  .isNotEmpty
+              ? (accountList
+                  .where((e) => e.accountId == account.accountId)
+                  .first)
               : Account()));
         });
         dataPetugas.branches?.forEach((branch) {
-          selectedBranchList.add(branchList.where((e) => e.code == branch.code).first);
+          selectedBranchList
+              .add(branchList.where((e) => e.code == branch.code).first);
           update();
         });
         // selectedOrigin = dataPetugas.origins ?? [];
@@ -148,28 +153,43 @@ class TambahPetugasController extends BaseController {
         fasilitas = dataPetugas.menu?.fasilitas == "Y";
         katasandi = dataPetugas.menu?.katasandi == "Y";
         beranda = dataPetugas.menu?.beranda == "Y";
-        buatPesanan = dataPetugas.menu?.buatPesanan == "Y" || dataPetugas.menu?.paketmuInput == "Y";
-        lacakPesanan = dataPetugas.menu?.lacakPesanan == "Y" || dataPetugas.menu?.paketmuLacak == "Y";
-        mintaDijemput = dataPetugas.menu?.mintaDijemput == "Y" || dataPetugas.menu?.paketmuMintaDijemput == "Y";
-        serahTerima = dataPetugas.menu?.serahTerima == "Y" || dataPetugas.menu?.paketmuSerahTerima == "Y";
-        saldo = dataPetugas.menu?.saldo == "Y" || dataPetugas.menu?.keuanganJneMoney == "Y";
-        uangCod = dataPetugas.menu?.uangCod == "Y" || dataPetugas.menu?.keuanganCod == "Y";
-        tagihan = dataPetugas.menu?.tagihan == "Y" || dataPetugas.menu?.keuanganTagihan == "Y";
-        bonus = dataPetugas.menu?.bonus == "Y" || dataPetugas.menu?.keuanganBonus == "y";
+        buatPesanan = dataPetugas.menu?.buatPesanan == "Y" ||
+            dataPetugas.menu?.paketmuInput == "Y";
+        lacakPesanan = dataPetugas.menu?.lacakPesanan == "Y" ||
+            dataPetugas.menu?.paketmuLacak == "Y";
+        mintaDijemput = dataPetugas.menu?.mintaDijemput == "Y" ||
+            dataPetugas.menu?.paketmuMintaDijemput == "Y";
+        serahTerima = dataPetugas.menu?.serahTerima == "Y" ||
+            dataPetugas.menu?.paketmuSerahTerima == "Y";
+        saldo = dataPetugas.menu?.saldo == "Y" ||
+            dataPetugas.menu?.keuanganJneMoney == "Y";
+        uangCod = dataPetugas.menu?.uangCod == "Y" ||
+            dataPetugas.menu?.keuanganCod == "Y";
+        tagihan = dataPetugas.menu?.tagihan == "Y" ||
+            dataPetugas.menu?.keuanganTagihan == "Y";
+        bonus = dataPetugas.menu?.bonus == "Y" ||
+            dataPetugas.menu?.keuanganBonus == "y";
         pantauPaketmu = dataPetugas.menu?.pantauPaketmu == "Y";
         laporan = dataPetugas.menu?.laporan == "Y";
         eclaim = dataPetugas.menu?.eclaim == "Y";
-        tema = dataPetugas.menu?.tema == "Y" || dataPetugas.menu?.pengaturanTema == "Y";
-        label = dataPetugas.menu?.label == "Y" || dataPetugas.menu?.pengaturanLabel == "Y";
-        petugas = dataPetugas.menu?.petugas == "Y" || dataPetugas.menu?.pengaturanPetugas == "Y";
-        riwayatPesanan = dataPetugas.menu?.riwayatPesanan == "Y" || dataPetugas.menu?.paketmuRiwayat == "Y";
+        tema = dataPetugas.menu?.tema == "Y" ||
+            dataPetugas.menu?.pengaturanTema == "Y";
+        label = dataPetugas.menu?.label == "Y" ||
+            dataPetugas.menu?.pengaturanLabel == "Y";
+        petugas = dataPetugas.menu?.petugas == "Y" ||
+            dataPetugas.menu?.pengaturanPetugas == "Y";
+        riwayatPesanan = dataPetugas.menu?.riwayatPesanan == "Y" ||
+            dataPetugas.menu?.paketmuRiwayat == "Y";
         cekOngkir = dataPetugas.menu?.cekOngkir == "Y";
         semuaTransaksi = dataPetugas.menu?.semuaTransaksi == "Y";
         hapusPesanan = dataPetugas.menu?.hapusPesanan == "Y";
         semuaHapus = dataPetugas.menu?.semuaHapus == "Y";
-        cetakPesanan = dataPetugas.menu?.cetakPesanan == "Y" || dataPetugas.menu?.paketmuPrint == "Y";
-        monitoringAgg = dataPetugas.menu?.monitoringAgg == "Y" || dataPetugas.menu?.keuanganAggregasi == "Y";
-        monitoringAggMinus = dataPetugas.menu?.monitoringAggMinus == "Y" || dataPetugas.menu?.keuanganAggregasiMinus == "Y";
+        cetakPesanan = dataPetugas.menu?.cetakPesanan == "Y" ||
+            dataPetugas.menu?.paketmuPrint == "Y";
+        monitoringAgg = dataPetugas.menu?.monitoringAgg == "Y" ||
+            dataPetugas.menu?.keuanganAggregasi == "Y";
+        monitoringAggMinus = dataPetugas.menu?.monitoringAggMinus == "Y" ||
+            dataPetugas.menu?.keuanganAggregasiMinus == "Y";
         update();
       } else {
         basic = UserModel.fromJson(
@@ -191,7 +211,7 @@ class TambahPetugasController extends BaseController {
     update();
   }
 
-  Future<void> loadOrigin(List<Branch> branches) async {
+  Future<void> loadOrigin(List<BranchModel> branches) async {
     originList.clear();
     selectedOrigin.clear();
     branchs = [];
@@ -208,7 +228,9 @@ class TambahPetugasController extends BaseController {
       }).then((value) {
         if (dataPetugas.origins?.isNotEmpty ?? false) {
           dataPetugas.origins?.forEach((origin) {
-            selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).first);
+            selectedOrigin.add(originList
+                .where((e) => e.originCode == origin.originCode)
+                .first);
             update();
           });
 
@@ -303,14 +325,17 @@ class TambahPetugasController extends BaseController {
                           Icons.warning,
                           color: whiteColor,
                         ),
-                        message: 'Alamat email atau nomor telepon sudah digunakan'.tr,
+                        message:
+                            'Alamat email atau nomor telepon sudah digunakan'
+                                .tr,
                         isDismissible: true,
                         duration: const Duration(seconds: 3),
                         backgroundColor: errorColor,
                       ),
                     )
                   }
-                else{
+                else
+                  {
                     Get.showSnackbar(
                       GetSnackBar(
                         icon: const Icon(

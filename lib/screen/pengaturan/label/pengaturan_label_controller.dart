@@ -9,10 +9,10 @@ class PengaturanLabelController extends BaseController {
   bool copyLabel = false;
   bool isLoading = false;
 
-  StickerLabel? selectedSticker;
+  StickerLabelModel? selectedSticker;
   String shipcost = "";
 
-  List<StickerLabel> labelList = [
+  List<StickerLabelModel> labelList = [
     // StickerLabel(
     //   image: "https://css.jne.co.id//assets/img/label-default1-webp.webp",
     //   name: "/sticker_default",
@@ -79,7 +79,9 @@ class PengaturanLabelController extends BaseController {
           .then((value) async {
         if (value.code == 200) {
           await storage.writeString(StorageCore.shippingCost, shipcost);
-          await storage.writeString(StorageCore.transactionLabel, selectedSticker?.name).then(
+          await storage
+              .writeString(StorageCore.transactionLabel, selectedSticker?.name)
+              .then(
                 (value) => Get.showSnackbar(
                   GetSnackBar(
                     icon: const Icon(

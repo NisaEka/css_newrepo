@@ -1,6 +1,4 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_form_bank_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/return/facility_form_return_controller.dart';
 import 'package:css_mobile/util/input_formatter/npwp_separator_input_formater.dart';
@@ -9,7 +7,6 @@ import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/profile/image_picker_container.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +31,9 @@ class FacilityFormReturnScreen extends StatelessWidget {
             ),
             controller.pickImageFailed
                 ? MessageInfoDialog(
-                    message: 'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'.tr,
+                    message:
+                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                            .tr,
                     onClickAction: () => controller.onRefreshPickImageState(),
                   )
                 : Container()
@@ -51,7 +50,8 @@ class FacilityFormReturnScreen extends StatelessWidget {
         color: redJNE,
         title: 'Selanjutnya'.tr,
         onPressed: () {
-          Get.to(const FacilityFormBankScreen(), arguments: {'data': c.submitData()});
+          Get.to(const FacilityFormBankScreen(),
+              arguments: {'data': c.submitData()});
         },
       ),
     );

@@ -1,7 +1,7 @@
-import 'package:css_mobile/config/api_config.dart';
-import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 
@@ -15,22 +15,19 @@ class CekOngkirRepositoryImpl extends CekOngkirRepository {
     String weight,
   ) async {
     try {
-      Response response = await network.jne.post('/pricedev',
-          data: {
-            'username': ApiConfig.username,
-            'api_key': ApiConfig.apikey,
-            'from': from,
-            'thru': to,
-            'weight': weight,
-          },
-          options: Options(
-            contentType: Headers.formUrlEncodedContentType,
-          ));
+      String url =
+          '/transaction/fees/external?originCode=$from&destinationCode=$to';
+
+      // Append the weight parameter if it's not empty
+      if (weight.isNotEmpty) {
+        url += '&weight=$weight';
+      }
+
+      Response response = await network.base.get(url);
       return PostCekongkirModel.fromJson(response.data);
     } on DioException catch (e) {
+      AppLogger.e('error: ${e.message}');
       return e.response?.data;
     }
   }
-
-
 }

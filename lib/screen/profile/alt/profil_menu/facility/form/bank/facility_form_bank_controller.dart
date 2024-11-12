@@ -31,7 +31,7 @@ class FacilityFormBankController extends BaseController {
   bool termsAndConditionsCheck = false;
   bool buttonEnabled = false;
 
-  List<BankModel> _banks = [];
+  final List<BankModel> _banks = [];
   List<BankModel> get banks => _banks;
 
   BankModel? _selectedBank;
@@ -70,8 +70,8 @@ class FacilityFormBankController extends BaseController {
 
   Future<void> getBanks() async {
     bank.getBanks().then((response) {
-      if (response.code == HttpStatus.ok && response.payload!.isNotEmpty) {
-        _banks.addAll(response.payload!);
+      if (response.statusCode == HttpStatus.ok && response.data!.isNotEmpty) {
+        _banks.addAll(response.data!);
         update();
       }
     });
@@ -81,7 +81,7 @@ class FacilityFormBankController extends BaseController {
     facility
         .getFacilityTermsAndConditions(facilityCreateArgs.getFacilityType())
         .then((response) {
-      _termsAndConditions = response.payload ?? '';
+      _termsAndConditions = response.data ?? '';
     });
   }
 
@@ -193,12 +193,12 @@ class FacilityFormBankController extends BaseController {
     };
 
     return await storageRepository.postCcrfFile(fileMap).then((response) {
-      if (response.code == HttpStatus.ok) {
-        ktpUrl = response.payload
+      if (response.statusCode == HttpStatus.ok) {
+        ktpUrl = response.data
             ?.firstWhere((element) => element.fileType == Constant.keyImageKtp);
-        npwpUrl = response.payload?.firstWhere(
+        npwpUrl = response.data?.firstWhere(
             (element) => element.fileType == Constant.keyImageNpwp);
-        rekeningUrl = response.payload?.firstWhere(
+        rekeningUrl = response.data?.firstWhere(
             (element) => element.fileType == Constant.keyImageRekening);
 
         facilityCreateArgs.setIdCardPath(ktpUrl?.fileUrl ?? '');
@@ -223,7 +223,7 @@ class FacilityFormBankController extends BaseController {
 
     if (fileUploaded) {
       profil.createProfileCcrf(facilityCreateArgs).then((response) {
-        if (response.code == HttpStatus.created) {
+        if (response.statusCode == HttpStatus.created) {
           Get.to(
             () => SuccessScreen(
               message:

@@ -28,6 +28,8 @@ class ImageConstant {
   static const String truckIcon = "assets/icons/truck.png";
   static const String arrowDownIcon = "assets/icons/keyboard-arrow-down.svg";
   static const String track = "assets/icons/029-track 1.png";
+  static const String belumTerkumpul = "assets/icons/belum-terkumpul.png";
+  static const String butuhDicek = "assets/icons/butuh-dicek.png";
   static const String dalamPeninjauan = "assets/icons/dalam peninjauan.png";
   static const String dalamPerjalanan = "assets/icons/dalam perjalanan.png";
   static const String dibatalkan = "assets/icons/dibatalkan oleh kamu.png";
@@ -51,5 +53,7 @@ class ImageConstant {
     dikembalikan,
     dalamPeninjauan,
     dibatalkan,
+    belumTerkumpul,
+    butuhDicek,
   ];
 }

@@ -1,9 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:get/get.dart';
 
 class PetugasListItem extends StatelessWidget {
   final int index;
@@ -61,19 +58,25 @@ class PetugasListItem extends StatelessWidget {
                       ? Column(
                           children: [
                             Container(
-                              color: isLoading ? greyLightColor2 : Colors.transparent,
+                              color: isLoading
+                                  ? greyLightColor2
+                                  : Colors.transparent,
                               width: isLoading ? 150 : null,
                               height: 10,
                               margin: const EdgeInsets.only(bottom: 2),
                             ),
                             Container(
-                              color: isLoading ? greyLightColor2 : Colors.transparent,
+                              color: isLoading
+                                  ? greyLightColor2
+                                  : Colors.transparent,
                               width: isLoading ? 150 : null,
                               height: 10,
                               margin: const EdgeInsets.only(bottom: 2),
                             ),
                             Container(
-                              color: isLoading ? greyLightColor2 : Colors.transparent,
+                              color: isLoading
+                                  ? greyLightColor2
+                                  : Colors.transparent,
                               width: isLoading ? 150 : null,
                               height: 10,
                               margin: const EdgeInsets.only(bottom: 2),

@@ -1,4 +1,3 @@
-import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/widgets/items/news_item.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,8 @@ class DashboardNews extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Jnews'.tr, style: Theme.of(context).textTheme.titleLarge),
+                    Text('Jnews'.tr,
+                        style: Theme.of(context).textTheme.titleLarge),
                     // const DateDropdownFilterButton(),
                   ],
                 ),

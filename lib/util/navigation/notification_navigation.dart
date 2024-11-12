@@ -1,3 +1,1 @@
-class NotificationNavigation{
-
-}
+class NotificationNavigation {}

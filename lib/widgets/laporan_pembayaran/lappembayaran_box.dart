@@ -24,7 +24,9 @@ class PaymentBox extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 20),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+        color: Theme.of(context).brightness == Brightness.light
+            ? whiteColor
+            : greyColor,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: greyDarkColor1),
         boxShadow: const [

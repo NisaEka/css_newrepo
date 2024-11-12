@@ -1,5 +1,4 @@
 class BankModel {
-
   String _id = '';
   String get id => _id;
 
@@ -10,5 +9,4 @@ class BankModel {
     _id = json['id'];
     _name = json['name'];
   }
-
 }

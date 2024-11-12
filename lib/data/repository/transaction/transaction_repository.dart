@@ -4,7 +4,6 @@ import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_by_awb_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_officer_model.dart';
@@ -44,14 +43,14 @@ abstract class TransactionRepository {
 
   Future<BaseResponse<List<String>>> getTransactionStatus();
 
-  Future<PostTransactionModel> putTransaction(DataTransactionModel data, String awb);
+  Future<PostTransactionModel> putTransaction(
+      DataTransactionModel data, String awb);
 
   Future<GetTransactionOfficerModel> getTransOfficer();
 
-  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data);
+  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(
+      DataTransactionOngkirModel data);
 
-  Future<ResponseModel<List<CountCardModel>>> postTransactionDashboard(
-    String transDate,
-    String officer,
-  );
+  Future<ResponseModel<PropertySummary>> postTransactionDashboard(
+      QueryParamModel param);
 }

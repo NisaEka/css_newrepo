@@ -74,10 +74,15 @@ class NewPasswordForm extends StatelessWidget {
                         ),
                       ),
                       CustomFilledButton(
-                        color: c.formKey.currentState?.validate() == true ? blueJNE : greyColor,
+                        color: c.formKey.currentState?.validate() == true
+                            ? blueJNE
+                            : greyColor,
                         title: 'Selanjutnya'.tr,
                         // radius: 50,
-                        onPressed: () => c.formKey.currentState?.validate() == true ? c.changePassword() : null,
+                        onPressed: () =>
+                            c.formKey.currentState?.validate() == true
+                                ? c.changePassword()
+                                : null,
                       )
                     ],
                   ),

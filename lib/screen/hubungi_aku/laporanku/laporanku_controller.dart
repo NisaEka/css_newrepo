@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -26,17 +29,28 @@ class LaporankuController extends BaseController {
 
   Future<void> countReports() async {
     try {
+      final where = [];
+      final between = [];
+
+      if (state.status != "") {
+        where.add({"status": state.status});
+      }
+
+      if (state.date.isNotEmpty) {
+        between.add({"createdDate": state.date});
+      }
+
       await laporanku
-          .getTicketSummary(
-        state.status ?? '',
-        state.date ?? '',
-        state.searchField.text,
-      )
+          .getTicketSummary(QueryParamModel(
+        where: jsonEncode(where),
+        between: jsonEncode(between),
+        search: state.searchField.text,
+      ))
           .then((value) {
-        state.total = value.payload?.all?.toInt() ?? 0;
-        state.onProcess = value.payload?.onProcess?.toInt() ?? 0;
-        state.closed = value.payload?.finished?.toInt() ?? 0;
-        state.waiting = value.payload?.waiting?.toInt() ?? 0;
+        state.total = value.data?.all?.toInt() ?? 0;
+        state.onProcess = value.data?.onProcess?.toInt() ?? 0;
+        state.closed = value.data?.finished?.toInt() ?? 0;
+        state.waiting = value.data?.waiting?.toInt() ?? 0;
         update();
       });
     } catch (e) {
@@ -47,21 +61,38 @@ class LaporankuController extends BaseController {
   Future<void> getTicketList(int page) async {
     state.isLoading = true;
     try {
-      final tickets = await laporanku.getTickets(
-        page,
-        LaporankuState.pageSize,
-        state.status ?? '',
-        state.date ?? '',
-        state.searchField.text,
-      );
+      final where = [];
+      final between = [];
+      final sort = [
+        {"createdDate": "desc"}
+      ];
 
-      final isLastPage = (tickets.payload?.length ?? 0) < LaporankuState.pageSize;
+      if (state.status != "") {
+        where.add({"status": state.status});
+      }
+
+      if (state.date.isNotEmpty) {
+        between.add({"createdDate": state.date});
+      }
+
+      final tickets = await laporanku.getTickets(QueryParamModel(
+        table: true,
+        relation: true,
+        page: page,
+        limit: LaporankuState.pageSize,
+        where: jsonEncode(where),
+        between: jsonEncode(between),
+        sort: jsonEncode(sort),
+        search: state.searchField.text,
+      ));
+
+      final isLastPage = (tickets.data?.length ?? 0) < LaporankuState.pageSize;
       if (isLastPage) {
-        state.pagingController.appendLastPage(tickets.payload ?? []);
+        state.pagingController.appendLastPage(tickets.data ?? []);
         // transactionList.addAll(state.pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
-        state.pagingController.appendPage(tickets.payload ?? [], nextPageKey);
+        state.pagingController.appendPage(tickets.data ?? [], nextPageKey);
         // transactionList.addAll(state.pagingController.itemList ?? []);
       }
     } catch (e) {
@@ -99,17 +130,20 @@ class LaporankuController extends BaseController {
     } else if (filter == 1) {
       state.startDate = DateTime.now().subtract(const Duration(days: 30));
       state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.startDateField.text =
+          state.startDate.toString().toShortDateFormat();
       state.endDateField.text = state.endDate.toString().toShortDateFormat();
     } else if (filter == 2) {
       state.startDate = DateTime.now().subtract(const Duration(days: 7));
       state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.startDateField.text =
+          state.startDate.toString().toShortDateFormat();
       state.endDateField.text = state.endDate.toString().toShortDateFormat();
     } else if (filter == 3) {
       state.startDate = DateTime.now();
       state.endDate = DateTime.now();
-      state.startDateField.text = state.startDate.toString().toShortDateFormat();
+      state.startDateField.text =
+          state.startDate.toString().toShortDateFormat();
       state.endDateField.text = state.endDate.toString().toShortDateFormat();
     }
 
@@ -117,10 +151,19 @@ class LaporankuController extends BaseController {
   }
 
   applyFilter() {
-    if (state.startDate != null || state.endDate != null || state.status != "") {
+    if (state.startDate != null ||
+        state.endDate != null ||
+        state.status != "") {
       state.isFiltered = true;
       if (state.startDate != null && state.endDate != null) {
-        state.date = "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
+        state.date = [
+          DateTime(state.startDate!.year, state.startDate!.month,
+                  state.startDate!.day)
+              .toIso8601String(),
+          DateTime(state.endDate!.year, state.endDate!.month,
+                  state.endDate!.day, 23, 59, 59, 999)
+              .toIso8601String()
+        ];
       }
       state.pagingController.refresh();
       countReports();
@@ -139,7 +182,7 @@ class LaporankuController extends BaseController {
     state.endDateField.clear();
     state.isFiltered = false;
     state.searchField.clear();
-    state.date = null;
+    state.date = [];
     state.dateFilter = '0';
     state.status = "";
 

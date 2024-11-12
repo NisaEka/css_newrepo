@@ -92,12 +92,17 @@ class RiwayatKirimanListItem extends StatelessWidget {
                     Container(
                       color: isLoading ? greyLightColor3 : Colors.transparent,
                       width: isLoading ? Get.width / 3 : null,
-                      child: Text('Order ID : ${data?.orderId ?? orderID ?? '-'}', style: Theme.of(context).textTheme.titleSmall),
+                      child: Text(
+                          'Order ID : ${data?.orderId ?? orderID ?? '-'}',
+                          style: Theme.of(context).textTheme.titleSmall),
                     ),
                     Container(
                       color: isLoading ? greyLightColor3 : Colors.transparent,
                       width: isLoading ? Get.width / 5 : null,
-                      child: Text(data?.createdDate?.toDateTimeFormat() ?? tanggalEntry?.toDateTimeFormat() ?? '-',
+                      child: Text(
+                          data?.createdDate?.toDateTimeFormat() ??
+                              tanggalEntry?.toDateTimeFormat() ??
+                              '-',
                           style: Theme.of(context).textTheme.titleSmall),
                     ),
                   ],
@@ -115,16 +120,21 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: data?.apiType == "COD" || apiType == "COD"
                                 ? successColor
-                                : data?.apiType == "NON COD" || apiType == "NON COD"
+                                : data?.apiType == "NON COD" ||
+                                        apiType == "NON COD"
                                     ? warningColor
-                                    : data?.apiType == "COD ONGKIR" || apiType == "COD ONGKIR"
+                                    : data?.apiType == "COD ONGKIR" ||
+                                            apiType == "COD ONGKIR"
                                         ? infoColor
                                         : errorColor,
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Text(
                             data?.apiType ?? apiType ?? '-',
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
                                   color: whiteColor,
                                   fontSize: 8,
                                 ),
@@ -142,58 +152,81 @@ class RiwayatKirimanListItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          color: isLoading ? greyLightColor3 : Colors.transparent,
+                          color:
+                              isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 3 : null,
                           margin: const EdgeInsets.only(bottom: 2),
                           child: Text(
                             data?.awb ?? noResi ?? '-',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : redJNE,
                                 ),
                           ),
                         ),
                         Container(
-                          color: isLoading ? greyLightColor3 : Colors.transparent,
+                          color:
+                              isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 5 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(data?.receiverName ?? penerima ?? '-', style: Theme.of(context).textTheme.titleSmall),
+                          child: Text(data?.receiverName ?? penerima ?? '-',
+                              style: Theme.of(context).textTheme.titleSmall),
                         ),
                         Container(
-                          color: isLoading ? greyLightColor3 : Colors.transparent,
+                          color:
+                              isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 10 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(data?.serviceCode ?? service ?? '-', style: Theme.of(context).textTheme.titleSmall),
+                          child: Text(data?.serviceCode ?? service ?? '-',
+                              style: Theme.of(context).textTheme.titleSmall),
                         ),
                         Column(
                           children: [
                             (data?.statusName?.isNotEmpty ?? false)
                                 ? Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 4),
                                     margin: const EdgeInsets.only(bottom: 10),
                                     width: isLoading ? Get.width / 5 : null,
                                     decoration: BoxDecoration(
-                                      color: data?.statusName == "MASIH DI KAMU" ||
+                                      color: data?.statusName ==
+                                                  "MASIH DI KAMU" ||
                                               apiType == "MASIH DI KAMU" ||
-                                              data?.statusName == "DIBATALKAN OLEH KAMU" ||
+                                              data?.statusName ==
+                                                  "DIBATALKAN OLEH KAMU" ||
                                               apiType == "DIBATALKAN OLEH KAMU"
                                           ? warningColor
-                                          : data?.statusName == "SUDAH DIJEMPUT" ||
+                                          : data?.statusName ==
+                                                      "SUDAH DIJEMPUT" ||
                                                   apiType == "SUDAH DIJEMPUT" ||
-                                                  data?.statusName == "DALAM PERJALANAN" ||
-                                                  apiType == "DALAM PERJALANAN" ||
-                                                  data?.statusName == "SUKSES DITERIMA" ||
-                                                  apiType == "SUKSES DITERIMA" ||
-                                                  data?.statusName == "SUDAH DI JNE" ||
+                                                  data?.statusName ==
+                                                      "DALAM PERJALANAN" ||
+                                                  apiType ==
+                                                      "DALAM PERJALANAN" ||
+                                                  data?.statusName ==
+                                                      "SUKSES DITERIMA" ||
+                                                  apiType ==
+                                                      "SUKSES DITERIMA" ||
+                                                  data?.statusName ==
+                                                      "SUDAH DI JNE" ||
                                                   apiType == "SUDAH DI JNE"
                                               ? warningColor
-                                              : data?.statusName == "Success" || apiType == "Success"
+                                              : data?.statusName == "Success" ||
+                                                      apiType == "Success"
                                                   ? successColor
                                                   : errorLightColor2,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(
                                       data?.statusName?.tr ?? status?.tr ?? '',
-                                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall
+                                          ?.copyWith(
                                             color: whiteColor,
                                             fontSize: 8,
                                           ),

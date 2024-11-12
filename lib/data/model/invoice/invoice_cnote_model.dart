@@ -1,5 +1,4 @@
 class InvoiceCnoteModel {
-
   String? _awbDate = "";
   String? get awbDate => _awbDate;
 
@@ -28,15 +27,14 @@ class InvoiceCnoteModel {
   num? get totalAdjustedInsAmt => _totalAdjustedInsAmt;
 
   InvoiceCnoteModel.fromJson(dynamic json) {
-    _awbDate = json["awb_date"];
-    _awbNumber = json["awb_number"];
-    _consigneeName = json["consignee_name"];
-    _originalAmountNumber = json["original_amount_number"];
+    _awbDate = json["awbDate"];
+    _awbNumber = json["awbNumber"];
+    _consigneeName = json["consigneeName"];
+    _originalAmountNumber = json["originalAmountNumber"];
     _packing = json["packing"];
     _surcharge = json["surcharge"];
-    _otherCharges = json["other_charges"];
-    _discountAmountAwb = json["discount_amount_awb"];
-    _totalAdjustedInsAmt = json["total_adjusted_ins_amt"];
+    _otherCharges = json["otherCharges"];
+    _discountAmountAwb = json["discountAmountAwb"];
+    _totalAdjustedInsAmt = json["totalAdjustedInsAmt"];
   }
-
 }

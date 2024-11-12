@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:css_mobile/data/model/response_model.dart';
 
-PostTransactionModel postTransactionModelFromJson(String str) => PostTransactionModel.fromJson(json.decode(str));
+PostTransactionModel postTransactionModelFromJson(String str) =>
+    PostTransactionModel.fromJson(json.decode(str));
 
-String postTransactionModelToJson(PostTransactionModel data) => json.encode(data.toJson());
+String postTransactionModelToJson(PostTransactionModel data) =>
+    json.encode(data.toJson());
 
 class PostTransactionModel {
   PostTransactionModel({
@@ -27,7 +29,8 @@ class PostTransactionModel {
         _error?.add(ErrorResponse.fromJson(v));
       });
     }
-    _payload = json['payload'] != null ? Payload.fromJson(json['payload']) : null;
+    _payload =
+        json['payload'] != null ? Payload.fromJson(json['payload']) : null;
   }
 
   num? _code;
