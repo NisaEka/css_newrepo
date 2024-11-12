@@ -88,7 +88,7 @@ class PengaturanScreen extends StatelessWidget {
               ),
             ),
           ),
-          c.menu.label == "Y" || c.menu.pengaturanLabel == "Y"
+          c.allow.label == "Y" || c.allow.pengaturanLabel == "Y"
               ? SettingListItem(
                   title: 'Pengaturan Label'.tr,
                   icon: Icons.label_outline,
@@ -100,7 +100,7 @@ class PengaturanScreen extends StatelessWidget {
                         ),
                 )
               : const SizedBox(),
-          c.menu.petugas == "Y" || c.menu.pengaturanPetugas == "Y"
+          c.allow.petugas == "Y" || c.allow.pengaturanPetugas == "Y"
               ? SettingListItem(
                   title: 'Pengaturan Petugas'.tr,
                   icon: Icons.account_circle,
@@ -112,7 +112,7 @@ class PengaturanScreen extends StatelessWidget {
                         ),
                 )
               : const SizedBox(),
-          c.isLogin && c.menu.katasandi == "Y"
+          c.isLogin && c.allow.katasandi == "Y"
               ? SettingListItem(
                   title: 'Ubah Kata Sandi'.tr,
                   icon: Icons.lock_open_outlined,
@@ -141,7 +141,10 @@ class PengaturanScreen extends StatelessWidget {
           c.isLogin ? 'Keluar'.tr : 'Masuk'.tr,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        trailing: Text('v ${c.version.toString()}'.tr, style: TextStyle(color: CustomTheme().textColor(context)),),
+        trailing: Text(
+          'v ${c.version.toString()}'.tr,
+          style: TextStyle(color: CustomTheme().textColor(context)),
+        ),
         shape: const Border(
           bottom: BorderSide(color: greyColor),
           top: BorderSide(color: greyColor),

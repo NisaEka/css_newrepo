@@ -20,6 +20,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transac
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -138,7 +139,7 @@ class TransactionController extends BaseController {
             isPrefix3: prefix3,
           ))
               .then((value) {
-            print('transaction ongkir : ${value.toJson()}');
+            AppLogger.d('transaction ongkir : ${value.toJson()}');
             state.getCodAmountMinimum = value.data?.codAmountMinimum ?? 0;
             state.congkirAmount = value.data?.codOngkirAmount ?? 0;
             state.codAmount = value.data?.codAmountMinimum ?? 0;

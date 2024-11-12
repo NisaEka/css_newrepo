@@ -114,7 +114,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
       await StorageCore().readData(StorageCore.userProfil),
     );
     String registID = '{"registrationId" : "${user.id}"}';
-    String type = transType.isNotEmpty ? ', {"apiType" : "${transType}"}' : "";
+    String type = transType.isNotEmpty ? ', {"apiType" : "$transType"}' : "";
     QueryParamModel params = QueryParamModel(
       where: "[$registID $type]",
       table: true,
@@ -128,7 +128,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/transaction/transactions",
         queryParameters: params.toJson(),
       );
-      print("get transactions : ${response.data}");
+      AppLogger.d("get transactions: ${response.data}");
       return BaseResponse.fromJson(
         response.data,
         (json) => json is List<dynamic>
@@ -228,7 +228,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.base.get(
         "/transaction/statuses",
       );
-      print("status transaksi : ${response}");
+      AppLogger.d("status transaksi : ${response.data}");
       return BaseResponse.fromJson(
         response.data,
         (json) => json is List<dynamic>

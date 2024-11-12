@@ -1,6 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
@@ -10,7 +9,6 @@ import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -20,7 +18,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:css_mobile/util/ext/num_ext.dart';
 
 class PantauPaketmuScreen extends StatelessWidget {
   const PantauPaketmuScreen({super.key});
@@ -306,145 +303,145 @@ class PantauPaketmuScreen extends StatelessWidget {
     );
   }
 
-  Widget _tipeKiriman(BuildContext context, PantauPaketmuController c) {
-    return Shimmer(
-      isLoading: c.state.isLoadCount.value,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 15),
-        decoration: BoxDecoration(
-          color: blueJNE,
-          border: Border.all(),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            // First GestureDetector wrapped in Expanded for equal width
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  AppLogger.i('Tapped');
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  decoration: const BoxDecoration(
-                    color: blueJNE,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      bottomLeft: Radius.circular(8),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Ensure center alignment
-                    children: [
-                      Text(
-                        c.state.total.toString(),
-                        style: listTitleTextStyle.copyWith(
-                          color: whiteColor,
-                        ),
-                      ),
-                      Text(
-                        c.state.selectedStatusKiriman.value.tr,
-                        style: sublistTitleTextStyle.copyWith(
-                          color: c.state.tipeKiriman.value == 0
-                              ? whiteColor
-                              : greyColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            // Second GestureDetector wrapped in Expanded for equal width
-            if (c.state.selectedTipeKiriman.value == 'cod')
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    AppLogger.i('Tapped');
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: const BoxDecoration(
-                      color: whiteColor,
-                    ),
-                    child: Column(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // Ensure center alignment
-                      children: [
-                        Text(
-                          'Rp ${c.state.cod.toInt().toCurrency()}',
-                          style: listTitleTextStyle.copyWith(
-                            color: c.state.tipeKiriman.value == 1
-                                ? whiteColor
-                                : blueJNE,
-                          ),
-                        ),
-                        Text(
-                          'COD'.tr,
-                          style: sublistTitleTextStyle.copyWith(
-                            color: c.state.tipeKiriman.value == 1
-                                ? whiteColor
-                                : greyColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            // Third GestureDetector wrapped in Expanded for equal width
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  c.state.tipeKiriman.value = 3;
-                  c.state.selectedTipeKiriman.value = 'cod ongkir';
-                  c.update();
-                  c.state.pagingController.refresh();
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  decoration: const BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(8),
-                      bottomRight: Radius.circular(8),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Ensure center alignment
-                    children: [
-                      Text(
-                        c.state.selectedTipeKiriman.value == 'cod ongkir'
-                            ? 'Rp ${c.state.codOngkir.toInt().toCurrency()}'
-                            : 'Rp ${c.state.ongkir.toInt().toCurrency()}',
-                        style: listTitleTextStyle.copyWith(
-                          color: c.state.tipeKiriman.value == 3
-                              ? whiteColor
-                              : blueJNE,
-                        ),
-                      ),
-                      Text(
-                        c.state.selectedTipeKiriman.value == 'cod ongkir'
-                            ? 'COD ONGKIR'.tr
-                            : 'ONGKIR'.tr,
-                        style: sublistTitleTextStyle.copyWith(
-                          color: c.state.tipeKiriman.value == 3
-                              ? whiteColor
-                              : greyColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _tipeKiriman(BuildContext context, PantauPaketmuController c) {
+  //   return Shimmer(
+  //     isLoading: c.state.isLoadCount.value,
+  //     child: Container(
+  //       margin: const EdgeInsets.symmetric(vertical: 15),
+  //       decoration: BoxDecoration(
+  //         color: blueJNE,
+  //         border: Border.all(),
+  //         borderRadius: BorderRadius.circular(8),
+  //       ),
+  //       child: Row(
+  //         children: [
+  //           // First GestureDetector wrapped in Expanded for equal width
+  //           Expanded(
+  //             child: GestureDetector(
+  //               onTap: () {
+  //                 AppLogger.i('Tapped');
+  //               },
+  //               child: Container(
+  //                 padding: const EdgeInsets.symmetric(vertical: 4),
+  //                 decoration: const BoxDecoration(
+  //                   color: blueJNE,
+  //                   borderRadius: BorderRadius.only(
+  //                     topLeft: Radius.circular(8),
+  //                     bottomLeft: Radius.circular(8),
+  //                   ),
+  //                 ),
+  //                 child: Column(
+  //                   mainAxisAlignment:
+  //                       MainAxisAlignment.center, // Ensure center alignment
+  //                   children: [
+  //                     Text(
+  //                       c.state.total.toString(),
+  //                       style: listTitleTextStyle.copyWith(
+  //                         color: whiteColor,
+  //                       ),
+  //                     ),
+  //                     Text(
+  //                       c.state.selectedStatusKiriman.value.tr,
+  //                       style: sublistTitleTextStyle.copyWith(
+  //                         color: c.state.tipeKiriman.value == 0
+  //                             ? whiteColor
+  //                             : greyColor,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //           // Second GestureDetector wrapped in Expanded for equal width
+  //           if (c.state.selectedTipeKiriman.value == 'cod')
+  //             Expanded(
+  //               child: GestureDetector(
+  //                 onTap: () {
+  //                   AppLogger.i('Tapped');
+  //                 },
+  //                 child: Container(
+  //                   padding: const EdgeInsets.symmetric(vertical: 4),
+  //                   decoration: const BoxDecoration(
+  //                     color: whiteColor,
+  //                   ),
+  //                   child: Column(
+  //                     mainAxisAlignment:
+  //                         MainAxisAlignment.center, // Ensure center alignment
+  //                     children: [
+  //                       Text(
+  //                         'Rp ${c.state.cod.toInt().toCurrency()}',
+  //                         style: listTitleTextStyle.copyWith(
+  //                           color: c.state.tipeKiriman.value == 1
+  //                               ? whiteColor
+  //                               : blueJNE,
+  //                         ),
+  //                       ),
+  //                       Text(
+  //                         'COD'.tr,
+  //                         style: sublistTitleTextStyle.copyWith(
+  //                           color: c.state.tipeKiriman.value == 1
+  //                               ? whiteColor
+  //                               : greyColor,
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           // Third GestureDetector wrapped in Expanded for equal width
+  //           Expanded(
+  //             child: GestureDetector(
+  //               onTap: () {
+  //                 c.state.tipeKiriman.value = 3;
+  //                 c.state.selectedTipeKiriman.value = 'cod ongkir';
+  //                 c.update();
+  //                 c.state.pagingController.refresh();
+  //               },
+  //               child: Container(
+  //                 padding: const EdgeInsets.symmetric(vertical: 4),
+  //                 decoration: const BoxDecoration(
+  //                   color: whiteColor,
+  //                   borderRadius: BorderRadius.only(
+  //                     topRight: Radius.circular(8),
+  //                     bottomRight: Radius.circular(8),
+  //                   ),
+  //                 ),
+  //                 child: Column(
+  //                   mainAxisAlignment:
+  //                       MainAxisAlignment.center, // Ensure center alignment
+  //                   children: [
+  //                     Text(
+  //                       c.state.selectedTipeKiriman.value == 'cod ongkir'
+  //                           ? 'Rp ${c.state.codOngkir.toInt().toCurrency()}'
+  //                           : 'Rp ${c.state.ongkir.toInt().toCurrency()}',
+  //                       style: listTitleTextStyle.copyWith(
+  //                         color: c.state.tipeKiriman.value == 3
+  //                             ? whiteColor
+  //                             : blueJNE,
+  //                       ),
+  //                     ),
+  //                     Text(
+  //                       c.state.selectedTipeKiriman.value == 'cod ongkir'
+  //                           ? 'COD ONGKIR'.tr
+  //                           : 'ONGKIR'.tr,
+  //                       style: sublistTitleTextStyle.copyWith(
+  //                         color: c.state.tipeKiriman.value == 3
+  //                             ? whiteColor
+  //                             : greyColor,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _loading() {
     return Column(

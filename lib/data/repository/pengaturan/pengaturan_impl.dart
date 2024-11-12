@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -105,7 +106,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   }
 
   @override
-  Future<BaseResponse<List<StickerLabel>>> getSettingLabel() async {
+  Future<BaseResponse<List<StickerLabelModel>>> getSettingLabel() async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
@@ -116,8 +117,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<StickerLabel>(
-                  (i) => StickerLabel.fromJson(i as Map<String, dynamic>),
+                .map<StickerLabelModel>(
+                  (i) => StickerLabelModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -127,8 +128,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
         e.response?.data,
         (json) => json is List<dynamic>
             ? json
-                .map<StickerLabel>(
-                  (i) => StickerLabel.fromJson(i as Map<String, dynamic>),
+                .map<StickerLabelModel>(
+                  (i) => StickerLabelModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -150,7 +151,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
       );
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
-      print('edit label error: ${e.response?.data}');
+      AppLogger.e(e.response?.data);
       return BaseResponse.fromJson(e.response?.data, (json) => null);
     }
   }
