@@ -67,7 +67,7 @@ class EditProfileController extends BaseController {
       i.printError();
 
       var basic =
-          UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
 
       brand.text = basic.brand ?? '';
       name.text = basic.name ?? '';
@@ -130,6 +130,7 @@ class EditProfileController extends BaseController {
   Future<void> updateBasic() async {
     isLoading = true;
     update();
+    String language = await storage.readString(StorageCore.localeApp);
     try {
       await profil
           .putProfileBasic(
@@ -140,6 +141,7 @@ class EditProfileController extends BaseController {
               address: address.text,
               origin: selectedOrigin,
               zipCode: selectedCity?.zipCode,
+              language: language == 'id' ? 'INDONESEIA' : 'ENGLISH',
             ),
           )
           .then(
@@ -175,6 +177,8 @@ class EditProfileController extends BaseController {
     } catch (e) {
       e.printError();
     }
+
+    updateBasic();
 
     isLoading = false;
     update();

@@ -146,13 +146,12 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
       Response response = await network.base.patch(
         "/settings/label",
         data: {
-          "labelPrinter": label,
+          "labelPrinter": label.toInt(),
           "priceLabel": price,
         },
       );
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
-      AppLogger.e(e.response?.data);
       return BaseResponse.fromJson(e.response?.data, (json) => null);
     }
   }

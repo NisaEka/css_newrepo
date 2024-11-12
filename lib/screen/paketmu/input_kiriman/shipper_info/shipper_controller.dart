@@ -112,7 +112,7 @@ class ShipperController extends BaseController {
       update();
 
       var user = CcrfProfileModel.fromJson(
-          await storage.readData(StorageCore.ccrfProfil));
+          await storage.readData(StorageCore.ccrfProfile));
 
       await profil.getShipper().then((value) async {
         if (value.data != null) {

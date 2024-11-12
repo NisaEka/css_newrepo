@@ -93,14 +93,17 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadNews() async {
-    AppLogger.i('load news');
     try {
       jlc.postDashboardNews().then((value) {
         state.newsList.addAll(value.data ?? []);
+        AppLogger.i('load news : ${value.toJson()}');
+
         update();
       });
-    } catch (e) {
+
+    } catch (e,i) {
       e.printError();
+      i.printError();
     }
 
     update();
@@ -341,10 +344,10 @@ class DashboardController extends BaseController {
     bool sender =
         ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null') && state.isLogin;
     bool basic =
-        ((await storage.readString(StorageCore.userProfil)).isEmpty || (await storage.readString(StorageCore.userProfil)) == 'null') && state.isLogin;
-    bool ccrfP = ((await storage.readString(StorageCore.ccrfProfil)).isEmpty ||
-            (await storage.readString(StorageCore.ccrfProfil)) == 'null' ||
-            (await storage.readString(StorageCore.ccrfProfil)) == '{}') &&
+        ((await storage.readString(StorageCore.basicProfile)).isEmpty || (await storage.readString(StorageCore.basicProfile)) == 'null') && state.isLogin;
+    bool ccrfP = ((await storage.readString(StorageCore.ccrfProfile)).isEmpty ||
+            (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
+            (await storage.readString(StorageCore.ccrfProfile)) == '{}') &&
         state.isLogin;
     update();
 
@@ -352,7 +355,7 @@ class DashboardController extends BaseController {
       if (basic) {
         await profil.getBasicProfil().then((value) async {
           await storage.saveData(
-            StorageCore.userProfil,
+            StorageCore.basicProfile,
             value.data?.user,
           );
 
@@ -367,7 +370,7 @@ class DashboardController extends BaseController {
           }
         });
       } else {
-        state.basic = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+        state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
         update();
         if (state.basic?.language == "INDONESIA") {
           await storage.writeString(StorageCore.localeApp, "id");
@@ -390,7 +393,7 @@ class DashboardController extends BaseController {
               value.data?.first,
             );
           } else {
-            var s = UserModel.fromJson(storage.readData(StorageCore.userProfil));
+            var s = UserModel.fromJson(storage.readData(StorageCore.basicProfile));
             await storage.saveData(
               StorageCore.shipper,
               s,
@@ -402,10 +405,10 @@ class DashboardController extends BaseController {
       if (ccrfP) {
         await profil.getCcrfProfil().then((value) async {
           state.ccrf = value.data;
-          await storage.saveData(StorageCore.ccrfProfil, value.data);
+          await storage.saveData(StorageCore.ccrfProfile, value.data);
         });
       } else {
-        state.ccrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfil));
+        state.ccrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
       }
 
       if (accounts) {
@@ -431,7 +434,7 @@ class DashboardController extends BaseController {
 
       state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.ccrfApistatus == "Y");
 
-      storage.saveData(StorageCore.ccrfProfil, state.ccrf);
+      storage.saveData(StorageCore.ccrfProfile, state.ccrf);
       // #TODO : implement jlc api
       // await jlc.postTotalPoint().then((value) {
       //   if (value.status == true) {
@@ -444,7 +447,7 @@ class DashboardController extends BaseController {
       //   debugPrint("jlc error $value");
       // });
       update();
-      UserModel shipper = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+      UserModel shipper = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
       state.userName = shipper.name ?? '';
       state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
       update();

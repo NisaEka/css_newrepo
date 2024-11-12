@@ -112,7 +112,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     transDate.printInfo(info: "transaction date");
 
     UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.userProfil),
+      await StorageCore().readData(StorageCore.basicProfile),
     );
     String registID = '{"registrationId" : "${user.id}"}';
     String type = transType.isNotEmpty ? ', {"apiType" : "$transType"}' : "";
@@ -330,7 +330,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
           return TransactionSummaryModel.fromJson(json as Map<String, dynamic>);
         },
       );
-      AppLogger.i("test: ${test.toJson()}");
+      AppLogger.i("test: ${test.data?.toJson()}");
       return test;
     } on DioException catch (e) {
       return ResponseModel<TransactionSummaryModel>.fromJson(

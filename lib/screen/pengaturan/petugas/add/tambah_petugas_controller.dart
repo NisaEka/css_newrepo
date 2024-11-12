@@ -193,10 +193,10 @@ class TambahPetugasController extends BaseController {
         update();
       } else {
         basic = UserModel.fromJson(
-          await storage.readData(StorageCore.userProfil),
+          await storage.readData(StorageCore.basicProfile),
         );
         ccrf = CcrfProfileModel.fromJson(
-          await storage.readData(StorageCore.ccrfProfil),
+          await storage.readData(StorageCore.ccrfProfile),
         );
         alamat.text = basic?.address ?? '';
         zipCode.text = ccrf?.generalInfo?.ccrfZipcode ?? '';

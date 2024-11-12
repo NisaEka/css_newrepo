@@ -154,7 +154,7 @@ class MasterRepositoryImpl extends MasterRepository {
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.userProfil),
+      await StorageCore().readData(StorageCore.basicProfile),
     );
     String registID = '[{"registrationId" : "${user.id}"}]';
     QueryParamModel params = param.copyWith(where: registID, table: true);
@@ -201,7 +201,7 @@ class MasterRepositoryImpl extends MasterRepository {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.userProfil),
+      await StorageCore().readData(StorageCore.basicProfile),
     );
 
     try {
@@ -228,7 +228,7 @@ class MasterRepositoryImpl extends MasterRepository {
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.userProfil),
+      await StorageCore().readData(StorageCore.basicProfile),
     );
     String registID = '[{"registrationId" : "${user.id}"}]';
     QueryParamModel params = param.copyWith(where: registID, table: true);
@@ -277,7 +277,7 @@ class MasterRepositoryImpl extends MasterRepository {
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.userProfil),
+      await StorageCore().readData(StorageCore.basicProfile),
     );
 
     try {

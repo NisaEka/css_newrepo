@@ -53,7 +53,7 @@ class DataUmumController extends BaseController {
       i.printError();
 
       var basic =
-          UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
 
       ccrfProfil = CcrfProfileModel(
         generalInfo: GeneralInfo(
