@@ -110,14 +110,8 @@ class PantauPaketmuController extends BaseController {
   }
 
   Future<void> getPantauList(int page) async {
-    AppLogger.i('Pantauuuuuu list');
     var token = await storageSecure.read(key: 'token');
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    AppLogger.i('start date: ${state.startDate}');
-    AppLogger.i('end date: ${state.endDate}');
-    AppLogger.i('selected status kiriman: ${state.selectedStatusKiriman}');
-    AppLogger.i('selected tipe kiriman: ${state.selectedTipeKiriman}');
-    AppLogger.i('search: ${state.searchField}');
     var param = QueryModel(
       table: true,
       page: page,
@@ -141,7 +135,7 @@ class PantauPaketmuController extends BaseController {
         queryParameters: param.toJson(),
       );
       AppLogger.d('Pantauuuuuu ${response.data}');
-      // var trans = GetPantauPaketmuModel.fromJson(response.data);
+
       var trans = BaseResponse<List<PantauPaketmuModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
@@ -155,13 +149,11 @@ class PantauPaketmuController extends BaseController {
       // return BaseResponse<List<PantauPaketmuModel>>
 
       final isLastPage = trans.meta!.currentPage == trans.meta!.lastPage;
-      AppLogger.d('Pantauuuuuu isLastPage $isLastPage');
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
         return;
       } else {
         final nextPageKey = page + 1;
-        AppLogger.w('Pantauuuuuu nextPageKey $nextPageKey');
         state.pagingController.appendPage(trans.data ?? [], nextPageKey);
         return;
       }
@@ -213,7 +205,6 @@ class PantauPaketmuController extends BaseController {
   }
 
   Future<void> resetFilter({bool? isDetail = false}) async {
-    AppLogger.i('Reset Filter');
     state.countList.clear();
     state.selectedPetugasEntry.value = state.basic.value?.userType == "PEMILIK"
         ? null
@@ -265,8 +256,7 @@ class PantauPaketmuController extends BaseController {
       state.date.printInfo(info: "state.date filter");
       state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
     }
-    AppLogger.i('Apply Filter');
-    AppLogger.i('Apply Filter ${state.selectedTipeKiriman.value}');
+
     state.isLoading.value = true;
 
     if (isDetail != null && !isDetail) {
