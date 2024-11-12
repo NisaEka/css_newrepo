@@ -158,7 +158,7 @@ class TransactionFilterButton extends HookWidget {
                                 .map(
                                   (e) => DropdownMenuItem(
                                 value: e,
-                                child: Text(e),
+                                child: Text(e.name ?? ''),
                               ),
                             )
                                 .toList(),

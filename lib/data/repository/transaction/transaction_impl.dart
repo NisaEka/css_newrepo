@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
@@ -110,7 +111,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     );
     String registID = '{"registrationId" : "${user.id}"}';
     String type = transType.isNotEmpty ? ', {"apiType" : "$transType"}' : "";
-    String petugasEntry = officer.isNotEmpty ? ', {"petugasEntry" : $officer}' : '';
+    String petugasEntry = officer.isNotEmpty ? ', {"petugasEntry" : "$officer"}' : '';
     // String status = transStatus.isNotEmpty ? ', {"statusAwb" : "$transStatus"}' : "";
     QueryParamModel params = QueryParamModel(
       table: true,
@@ -186,11 +187,18 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
+    UserModel user = UserModel.fromJson(
+      await StorageCore().readData(StorageCore.basicProfile),
+    );
+    String registID = '{"registrationId" : "${user.id}"}';
+    String type = transType.isNotEmpty ? ', {"apiType" : "$transType"}' : "";
+    String petugasEntry = officer.isNotEmpty ? ', {"petugasEntry" : "$officer"}' : '';
+    // String status = transStatus.isNotEmpty ? ', {"statusAwb" : "$transStatus"}' : "";
     QueryParamModel params = QueryParamModel(
       table: true,
       search: keyword,
       between: transDate,
-      where: transType.isNotEmpty ? '[{"apiType" : "$transType"}]' : '[]',
+      where: '[$registID $type $petugasEntry]',
       sort: '[{"createdDateSearch":"desc"}]',
     );
 
@@ -288,7 +296,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
         (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
-
       AppLogger.e('error update transaksi : ${e.response?.data}');
       return BaseResponse.fromJson(
         e.response?.data,
@@ -298,16 +305,40 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<GetTransactionOfficerModel> getTransOfficer() async {
+  Future<BaseResponse<List<PetugasModel>>> getTransOfficer() async {
     var token = await storageSecure.read(key: 'token');
     network.base.options.headers['Authorization'] = 'Bearer $token';
+    UserModel user = UserModel.fromJson(
+      await StorageCore().readData(StorageCore.basicProfile),
+    );
+
+    QueryParamModel params = QueryParamModel(table: true, like: '[{"id" : "${user.id}"}]');
     try {
       Response response = await network.base.get(
-        "/officers",
+        "/transaction/officers",
+        queryParameters: params.toJson(),
       );
-      return GetTransactionOfficerModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<PetugasModel>(
+                  (i) => PetugasModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return GetTransactionOfficerModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<PetugasModel>(
+                  (i) => PetugasModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     }
   }
 

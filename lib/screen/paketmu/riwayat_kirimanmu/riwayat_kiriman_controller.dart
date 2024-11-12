@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_state.dart';
@@ -25,8 +26,8 @@ class RiwayatKirimanController extends BaseController {
 
   void cekAllowance() {
     if (state.basic?.userType != "PEMILIK") {
-      state.selectedPetugasEntry = state.basic?.name;
-      state.listOfficerEntry.add(state.basic?.name ?? '');
+      state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
+      state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
     }
     update();
     state.pagingController.refresh();
@@ -41,7 +42,7 @@ class RiwayatKirimanController extends BaseController {
         state.transDate ?? '[]',
         state.selectedStatusKiriman ?? '',
         state.searchField.text,
-        state.selectedPetugasEntry ?? '',
+        state.selectedPetugasEntry?.name ?? '',
       )
           .then((value) {
         state.total = value.data?.total?.toInt() ?? 0;
@@ -50,7 +51,7 @@ class RiwayatKirimanController extends BaseController {
         state.codOngkir = value.data?.codOngkir?.toInt() ?? 0;
         update();
       });
-    } catch (e,i) {
+    } catch (e, i) {
       e.printError();
       i.printError();
     }
@@ -70,8 +71,7 @@ class RiwayatKirimanController extends BaseController {
 
       if (state.basic?.userType == "PEMILIK") {
         await transaction.getTransOfficer().then((value) {
-          state.listOfficerEntry.add(state.basic?.name ?? '');
-          state.listOfficerEntry.addAll(value.payload ?? []);
+          state.listOfficerEntry.addAll(value.data ?? []);
           update();
         });
       }
@@ -94,7 +94,7 @@ class RiwayatKirimanController extends BaseController {
         state.transDate ?? '[]',
         state.selectedStatusKiriman ?? '',
         state.searchField.text,
-        state.selectedPetugasEntry ?? '',
+        state.selectedPetugasEntry?.name ?? '',
       );
 
       final isLastPage = (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
@@ -124,18 +124,18 @@ class RiwayatKirimanController extends BaseController {
       state.startDateField.text = '-';
       state.endDateField.text = '-';
     } else if (filter == 1) {
-      state.startDate = DateTime.now().copyWith(hour: 0,minute: 0).subtract(const Duration(days: 30));
-      state.endDate = DateTime.now().copyWith(hour: 23,minute: 59, second: 59);
+      state.startDate = DateTime.now().copyWith(hour: 0, minute: 0).subtract(const Duration(days: 30));
+      state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       state.startDateField.text = state.startDate.toString().toLongDateTimeFormat();
       state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     } else if (filter == 2) {
-      state.startDate = DateTime.now().copyWith(hour: 0,minute: 0).subtract(const Duration(days: 7));
-      state.endDate = DateTime.now().copyWith(hour: 23,minute: 59, second: 59);
+      state.startDate = DateTime.now().copyWith(hour: 0, minute: 0).subtract(const Duration(days: 7));
+      state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       state.startDateField.text = state.startDate.toString().toLongDateTimeFormat();
       state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     } else if (filter == 3) {
-      state.startDate = DateTime.now().copyWith(hour: 0,minute: 0);
-      state.endDate = DateTime.now().copyWith(hour: 23,minute: 59, second: 59);
+      state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+      state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       state.startDateField.text = state.startDate.toString().toLongDateTimeFormat();
       state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     }
@@ -182,7 +182,7 @@ class RiwayatKirimanController extends BaseController {
     state.endDate = null;
     state.startDateField.clear();
     state.endDateField.clear();
-    state.selectedPetugasEntry = state.basic?.userType == "PEMILIK" ? null : state.basic?.name;
+    state.selectedPetugasEntry = null;
     state.selectedStatusKiriman = null;
     state.isFiltered = false;
     state.searchField.clear();
