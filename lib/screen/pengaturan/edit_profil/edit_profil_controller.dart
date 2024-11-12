@@ -1,5 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 
@@ -22,6 +23,7 @@ class EditProfileController extends BaseController {
   bool isLoading = false;
   bool isCcrf = false;
   bool isLoadOrigin = false;
+
   // GetDestinationModel? destinationModel;
   Destination? selectedCity;
   Origin? selectedOrigin;
@@ -37,16 +39,13 @@ class EditProfileController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     try {
-      await profil
-          .getBasicProfil()
-          .then((value) => basicProfil = value.data?.user);
+      await profil.getBasicProfil().then((value) => basicProfil = value.data?.user);
       update();
 
       await profil.getCcrfProfil().then((value) {
         if (value.data != null) {
           ccrfProfil = value.data;
-          isCcrf = value.data != null &&
-              value.data?.generalInfo?.apiStatus == "Y";
+          isCcrf = value.data != null && value.data?.generalInfo?.apiStatus == "Y";
         } else {
           ccrfProfil ??= CcrfProfileModel(
             generalInfo: GeneralInfo(
@@ -66,8 +65,7 @@ class EditProfileController extends BaseController {
       e.printError();
       i.printError();
 
-      var basic =
-          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+      var basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
 
       brand.text = basic.brand ?? '';
       name.text = basic.name ?? '';
@@ -134,19 +132,39 @@ class EditProfileController extends BaseController {
     try {
       await profil
           .putProfileBasic(
-            UserModel(
-              name: name.text,
-              brand: brand.text,
-              phone: phone.text,
-              address: address.text,
-              origin: selectedOrigin,
-              zipCode: selectedCity?.zipCode,
-              language: language == 'id' ? 'INDONESEIA' : 'ENGLISH',
-            ),
-          )
-          .then(
-            (value) => Get.offAndToNamed("/profileGeneral"),
+        UserModel(
+          name: name.text,
+          brand: brand.text,
+          phone: phone.text,
+          address: address.text,
+          origin: selectedOrigin,
+          zipCode: selectedCity?.zipCode,
+          language: language == 'id' ? 'INDONESEIA' : 'ENGLISH',
+        ),
+      )
+          .then((_) async {
+        await profil.getBasicProfil().then((value) async {
+          await storage.saveData(
+            StorageCore.basicProfile,
+            value.data?.user,
           );
+
+          await storage.saveData(
+              StorageCore.shipper,
+              ShipperModel(
+                name: value.data?.user?.brand,
+                phone: value.data?.user?.phone,
+                address: value.data?.user?.address,
+                zipCode: value.data?.user?.zipCode,
+                city: value.data?.user?.origin?.originName,
+                origin: value.data?.user?.origin,
+                country: value.data?.user?.language,
+                region: value.data?.user?.region,
+              ));
+        });
+      }).then(
+        (value) => Get.offAndToNamed("/profileGeneral"),
+      );
     } catch (e) {
       e.printError();
     }
@@ -171,6 +189,9 @@ class EditProfileController extends BaseController {
             subDistrict: selectedCity?.subdistrictName,
             zipCode: selectedCity?.zipCode,
           ))
+          .then((_) async => await profil.getCcrfProfil().then((value) async {
+                await storage.saveData(StorageCore.ccrfProfile, value.data);
+              }))
           .then(
             (value) => Get.offAndToNamed("/profileGeneral"),
           );
@@ -189,5 +210,9 @@ class EditProfileController extends BaseController {
       selectedOrigin = value;
       update();
     }
+  }
+
+  void editProfile() {
+    isCcrf ? updateCcrf() : updateBasic();
   }
 }

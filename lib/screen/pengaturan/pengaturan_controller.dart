@@ -2,6 +2,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
@@ -93,7 +94,25 @@ class PengaturanController extends BaseController {
         }
       }
     });
+    await profil.getBasicProfil().then((value) async {
+      await storage.saveData(
+        StorageCore.basicProfile,
+        value.data?.user,
+      );
 
+      await storage.saveData(
+          StorageCore.shipper,
+          ShipperModel(
+            name: value.data?.user?.brand,
+            phone: value.data?.user?.phone,
+            address: value.data?.user?.address,
+            zipCode: value.data?.user?.zipCode,
+            city: value.data?.user?.origin?.originName,
+            origin: value.data?.user?.origin,
+            country: value.data?.user?.language,
+            region: value.data?.user?.region,
+          ));
+    });
     initData();
     update();
   }

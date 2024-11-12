@@ -120,7 +120,7 @@ class EditProfilScreen extends StatelessWidget {
             CustomFilledButton(
               color: blueJNE,
               title: "Edit Profil".tr,
-              onPressed: () => c.isCcrf ? c.updateCcrf() : c.updateBasic(),
+              onPressed: () => c.editProfile(),
             )
           ],
         ),
