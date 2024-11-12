@@ -128,7 +128,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/transaction/dashboards/detail",
         queryParameters: params.toJson(),
       );
-      AppLogger.d("get transactions: ${response.data}");
       return BaseResponse.fromJson(
         response.data,
         (json) => json is List<dynamic>

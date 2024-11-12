@@ -11,6 +11,7 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -133,8 +134,11 @@ class AuthRepositoryImpl extends AuthRepository {
           "email": email,
         },
       );
+
+      AppLogger.d('post email : ${response.data.toString()}');
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
+      AppLogger.e('error post email : ${e.response?.data}');
       return BaseResponse.fromJson(e.response?.data, (json) => null);
     }
   }

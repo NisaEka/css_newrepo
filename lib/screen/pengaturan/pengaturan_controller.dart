@@ -141,7 +141,7 @@ class PengaturanController extends BaseController {
   Future<void> sendEmail() async {
     try {
       await auth.postEmailForgotPassword(basicProfil?.email ?? '').then(
-            (value) => value.code == 200
+            (value) => value.code == 201
                 ? Get.to(
                     const ForgotPasswordOTPScreen(),
                     arguments: {

@@ -10,6 +10,8 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
+import 'package:css_mobile/widgets/bar/custombottombar.dart';
+import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/logout_button.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
@@ -39,12 +41,13 @@ class AltProfileScreen extends StatelessWidget {
                       builder: (context, bool value, child) {
                         return AnimatedContainer(
                           duration: const Duration(milliseconds: 500),
-                          height: value ? 113 : kBottomNavigationBarHeight,
-                          child: LogoutButton(
-                            version: controller.version,
-                            isLogin: controller.isLogin,
-                            showBottomBar: true,
-                          ),
+                          // height: value ? 113 : kBottomNavigationBarHeight,
+                          child: BottomBar4(menu: 3),
+                          // child: LogoutButton(
+                          //   version: controller.version,
+                          //   isLogin: controller.isLogin,
+                          //   showBottomBar: true,
+                          // ),
                         );
                       }),
                 ),
@@ -138,7 +141,11 @@ class AltProfileScreen extends StatelessWidget {
                       onTap: () => c.isCcrfAction(const DokumenScreen(), context),
                     )
                   : const SizedBox(),
-              const SizedBox(height: 50),
+              LogoutButton(
+                isLogin: c.isLogin,
+                version: c.version,
+                showBottomBar: true,
+              )
             ],
           ),
           // : const SizedBox(),
