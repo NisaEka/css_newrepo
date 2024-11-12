@@ -20,13 +20,13 @@ class DataTransactionOngkirModel {
   }
 
   DataTransactionOngkirModel.fromJson(dynamic json) {
-    _goodsAmount = json['goods_amount'];
-    _isIsr = json['is_isr'];
+    _goodsAmount = json['goodsAmount'];
+    _isIsr = json['isInsurance'];
     _ongkir = json['ongkir'];
-    _accountNumber = json['account_number'];
-    _isCod = json['is_cod'];
-    _codFee = json['cod_fee'];
-    _isCongkir = json['is_congkir'];
+    _accountNumber = json['account'];
+    _isCod = json['isCOD'];
+    _codFee = json['codFee'];
+    _isCongkir = json['isCodOngkir'];
     _isPrefix3 = json['isPrefix3'];
   }
 
@@ -78,13 +78,13 @@ class DataTransactionOngkirModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['goods_amount'] = _goodsAmount;
-    map['is_isr'] = _isIsr;
+    map['goodsAmount'] = _goodsAmount;
+    map['isInsurance'] = _isIsr;
     map['ongkir'] = _ongkir;
-    map['account_number'] = _accountNumber;
-    map['is_cod'] = _isCod;
-    map['cod_fee'] = _codFee;
-    map['is_congkir'] = _isCongkir;
+    map['account'] = _accountNumber;
+    map['isCOD'] = _isCod;
+    map['codFee'] = _codFee;
+    map['isCodOngkir'] = _isCongkir;
     map['isPrefix3'] = _isPrefix3;
     return map;
   }

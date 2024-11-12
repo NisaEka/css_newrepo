@@ -82,7 +82,7 @@ class StickerDefault extends StatelessWidget {
                               data.shipper?.origin?.originName ??
                               ''),
                           Text(data.shipper?.address ?? ''),
-                          Text("\n\nKode Pos : ${data.shipper?.zip ?? ''}"),
+                          Text("\n\nKode Pos : ${data.shipper?.zipCode ?? ''}"),
                           Text(data.shipper?.phone ?? '')
                         ],
                       ),
@@ -97,7 +97,8 @@ class StickerDefault extends StatelessWidget {
                           Text(data.destination?.cityName ?? ''),
                           Text(data.receiver?.city ?? ''),
                           Text(data.receiver?.address ?? ''),
-                          Text("\n\nKode Pos : ${data.receiver?.zip ?? ''}"),
+                          Text(
+                              "\n\nKode Pos : ${data.receiver?.zipCode ?? ''}"),
                           Text(data.receiver?.phone ?? ''),
                           Text(
                             data.destination?.destinationCode
@@ -212,7 +213,7 @@ class StickerDefault extends StatelessWidget {
                   ],
                 ),
                 CustomLabelText(
-                  title: "Goods Value  :   ",
+                  title: "Goods Amount  :   ",
                   value:
                       'Rp ${data.goods?.amount?.toInt().toCurrency() ?? '0'}',
                   titleTextStyle: TextStyle(fontWeight: bold),

@@ -14,7 +14,7 @@ class PengaturanController extends BaseController {
   bool isLoading = false;
   String? version;
   String? lang;
-  MenuModel menu = MenuModel();
+  MenuModel allow = MenuModel();
   UserModel? basicProfil;
 
   @override
@@ -32,7 +32,7 @@ class PengaturanController extends BaseController {
 
     lang = await storage.readString(StorageCore.localeApp);
 
-    menu = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+    allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
 
     basicProfil = UserModel.fromJson(
       await storage.readData(StorageCore.userProfil),
@@ -51,11 +51,12 @@ class PengaturanController extends BaseController {
             // ),
             )
         .then((value) async {
-      if (value.code == 200) {
-        await auth.logout();
-        storage.deleteLogin();
-        Get.offAll(const LoginScreen());
-      }
+      debugPrint(value.toJson().toString());
+      // if (value.code == 200) {
+      await auth.logout();
+      storage.deleteLogin();
+      Get.offAll(const LoginScreen());
+      // }
     });
     isLoading = false;
     update();

@@ -118,19 +118,19 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           padding: const EdgeInsets.all(5),
                           width: isLoading ? 50 : null,
                           decoration: BoxDecoration(
-                            color: data?.type == "COD" || apiType == "COD"
+                            color: data?.apiType == "COD" || apiType == "COD"
                                 ? successColor
-                                : data?.type == "NON COD" ||
+                                : data?.apiType == "NON COD" ||
                                         apiType == "NON COD"
                                     ? warningColor
-                                    : data?.type == "COD ONGKIR" ||
+                                    : data?.apiType == "COD ONGKIR" ||
                                             apiType == "COD ONGKIR"
                                         ? infoColor
                                         : errorColor,
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Text(
-                            data?.type ?? apiType ?? '-',
+                            data?.apiType ?? apiType ?? '-',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall
@@ -173,7 +173,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                               isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 5 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(data?.receiver?.name ?? penerima ?? '-',
+                          child: Text(data?.receiverName ?? penerima ?? '-',
                               style: Theme.of(context).textTheme.titleSmall),
                         ),
                         Container(
@@ -181,46 +181,48 @@ class RiwayatKirimanListItem extends StatelessWidget {
                               isLoading ? greyLightColor3 : Colors.transparent,
                           width: isLoading ? Get.width / 10 : null,
                           margin: const EdgeInsets.only(bottom: 2),
-                          child: Text(data?.service ?? service ?? '-',
+                          child: Text(data?.serviceCode ?? service ?? '-',
                               style: Theme.of(context).textTheme.titleSmall),
                         ),
                         Column(
                           children: [
-                            (data?.status?.isNotEmpty ?? false)
+                            (data?.statusName?.isNotEmpty ?? false)
                                 ? Container(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 4),
                                     margin: const EdgeInsets.only(bottom: 10),
                                     width: isLoading ? Get.width / 5 : null,
                                     decoration: BoxDecoration(
-                                      color: data?.status == "MASIH DI KAMU" ||
+                                      color: data?.statusName ==
+                                                  "MASIH DI KAMU" ||
                                               apiType == "MASIH DI KAMU" ||
-                                              data?.status ==
+                                              data?.statusName ==
                                                   "DIBATALKAN OLEH KAMU" ||
                                               apiType == "DIBATALKAN OLEH KAMU"
                                           ? warningColor
-                                          : data?.status == "SUDAH DIJEMPUT" ||
+                                          : data?.statusName ==
+                                                      "SUDAH DIJEMPUT" ||
                                                   apiType == "SUDAH DIJEMPUT" ||
-                                                  data?.status ==
+                                                  data?.statusName ==
                                                       "DALAM PERJALANAN" ||
                                                   apiType ==
                                                       "DALAM PERJALANAN" ||
-                                                  data?.status ==
+                                                  data?.statusName ==
                                                       "SUKSES DITERIMA" ||
                                                   apiType ==
                                                       "SUKSES DITERIMA" ||
-                                                  data?.status ==
+                                                  data?.statusName ==
                                                       "SUDAH DI JNE" ||
                                                   apiType == "SUDAH DI JNE"
                                               ? warningColor
-                                              : data?.status == "Success" ||
+                                              : data?.statusName == "Success" ||
                                                       apiType == "Success"
                                                   ? successColor
                                                   : errorLightColor2,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(
-                                      data?.status?.tr ?? status?.tr ?? '',
+                                      data?.statusName?.tr ?? status?.tr ?? '',
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleSmall

@@ -81,7 +81,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                 SizedBox(
                   width: (Get.width - 51) / 1.5,
                   child: Text(
-                    'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zip ?? ''}, Telp.${data.shipper?.phone ?? ''}',
+                    'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zipCode ?? ''}, Telp.${data.shipper?.phone ?? ''}',
                     style: labelTextStyle,
                   ),
                 ),
@@ -115,7 +115,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                 SizedBox(
                   width: (Get.width - 51) / 1.5,
                   child: Text(
-                      'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zip ?? ''}, Telp.${data.receiver?.phone ?? ''}\n',
+                      'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zipCode ?? ''}, Telp.${data.receiver?.phone ?? ''}\n',
                       style: labelTextStyle),
                 ),
                 const SolidBorder(width: 1, height: 50),
@@ -207,7 +207,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   alignment: Alignment.center,
                   // color: Colors.grey,
                   child: Text(
-                    "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.receiver?.destinationCode?.substring(0, 3) ?? '-'}\n${data.receiver?.zip}",
+                    "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.receiver?.destinationCode?.substring(0, 3) ?? '-'}\n${data.receiver?.zipCode}",
                     style: TextStyle(fontSize: 15, fontWeight: bold),
                     textAlign: TextAlign.center,
                   ),

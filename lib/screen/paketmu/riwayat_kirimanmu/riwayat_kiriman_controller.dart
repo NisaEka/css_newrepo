@@ -1,52 +1,22 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RiwayatKirimanController extends BaseController {
-  bool? isLastScreen = Get.arguments['isLastScreen'];
-  final startDateField = TextEditingController();
-  final endDateField = TextEditingController();
-  final searchField = TextEditingController();
-  final PagingController<int, TransactionModel> pagingController =
-      PagingController(firstPageKey: 1);
+  final state = RiwayatKirimanState();
   static const pageSize = 10;
-
-  int selectedKiriman = 0;
-  int total = 0;
-  int cod = 0;
-  int noncod = 0;
-  int codOngkir = 0;
-  DateTime? startDate;
-  DateTime? endDate;
-  String? selectedStatusKiriman;
-  String? selectedPetugasEntry;
-  String? transType;
-  String? transDate;
-  String dateFilter = '0';
-
-  bool isFiltered = false;
-  bool isLoading = false;
-  bool isSelect = false;
-  bool isSelectAll = false;
-
-  List<String> listStatusKiriman = [];
-  List<String> listOfficerEntry = [];
-  List<TransactionModel> selectedTransaction = [];
-
-  UserModel? basic;
 
   @override
   void onInit() {
     super.onInit();
     Future.wait([transactionCount(), initData()]);
-    pagingController.addPageRequestListener((pageKey) {
+    state.pagingController.addPageRequestListener((pageKey) {
       getTransaction(pageKey);
     });
     // categoryList();
@@ -54,12 +24,12 @@ class RiwayatKirimanController extends BaseController {
   }
 
   void cekAllowance() {
-    if (basic?.userType != "PEMILIK") {
-      selectedPetugasEntry = basic?.name;
-      listOfficerEntry.add(basic?.name ?? '');
+    if (state.basic?.userType != "PEMILIK") {
+      state.selectedPetugasEntry = state.basic?.name;
+      state.listOfficerEntry.add(state.basic?.name ?? '');
     }
     update();
-    pagingController.refresh();
+    state.pagingController.refresh();
     transactionCount();
   }
 
@@ -67,17 +37,17 @@ class RiwayatKirimanController extends BaseController {
     try {
       await transaction
           .getTransactionCount(
-        transType ?? '',
-        transDate ?? '',
-        selectedStatusKiriman ?? '',
-        searchField.text,
-        selectedPetugasEntry ?? '',
+        state.transType ?? '',
+        state.transDate ?? '',
+        state.selectedStatusKiriman ?? '',
+        state.searchField.text,
+        state.selectedPetugasEntry ?? '',
       )
           .then((value) {
-        total = value.payload?.total?.toInt() ?? 0;
-        cod = value.payload?.cod?.toInt() ?? 0;
-        noncod = value.payload?.nonCod?.toInt() ?? 0;
-        codOngkir = value.payload?.codOngkir?.toInt() ?? 0;
+        state.total = value.data?.total?.toInt() ?? 0;
+        state.cod = value.data?.cod?.toInt() ?? 0;
+        state.noncod = value.data?.nonCod?.toInt() ?? 0;
+        state.codOngkir = value.data?.codOngkir?.toInt() ?? 0;
         update();
       });
     } catch (e) {
@@ -87,22 +57,22 @@ class RiwayatKirimanController extends BaseController {
 
   Future<void> initData() async {
     // transactionList = [];
-    selectedTransaction = [];
-    listStatusKiriman = [];
+    state.selectedTransaction = [];
+    state.listStatusKiriman = [];
     try {
       await profil
           .getBasicProfil()
-          .then((value) async => basic = value.data?.user);
+          .then((value) async => state.basic = value.data?.user);
 
       await transaction.getTransactionStatus().then((value) {
-        listStatusKiriman.addAll(value.payload ?? []);
+        state.listStatusKiriman.addAll(value.data ?? []);
         update();
       });
 
-      if (basic?.userType == "PEMILIK") {
+      if (state.basic?.userType == "PEMILIK") {
         await transaction.getTransOfficer().then((value) {
-          listOfficerEntry.add(basic?.name ?? '');
-          listOfficerEntry.addAll(value.payload ?? []);
+          state.listOfficerEntry.add(state.basic?.name ?? '');
+          state.listOfficerEntry.addAll(value.payload ?? []);
           update();
         });
       }
@@ -116,59 +86,63 @@ class RiwayatKirimanController extends BaseController {
   }
 
   Future<void> getTransaction(int page) async {
-    isLoading = true;
+    state.isLoading = true;
     try {
       final trans = await transaction.getTransaction(
         page,
         pageSize,
-        transType ?? '',
-        transDate ?? '',
-        selectedStatusKiriman ?? '',
-        searchField.text,
-        selectedPetugasEntry ?? '',
+        state.transType ?? '',
+        state.transDate ?? '',
+        state.selectedStatusKiriman ?? '',
+        state.searchField.text,
+        state.selectedPetugasEntry ?? '',
       );
 
-      final isLastPage = (trans.payload?.length ?? 0) < pageSize;
+      final isLastPage =
+          (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
-        pagingController.appendLastPage(trans.payload ?? []);
-        // transactionList.addAll(pagingController.itemList ?? []);
+        state.pagingController.appendLastPage(trans.data ?? []);
+        // transactionList.addAll(state.pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
-        pagingController.appendPage(trans.payload ?? [], nextPageKey);
-        // transactionList.addAll(pagingController.itemList ?? []);
+        state.pagingController.appendPage(trans.data ?? [], nextPageKey);
+        // transactionList.addAll(state.pagingController.itemList ?? []);
       }
     } catch (e) {
       e.printError();
-      pagingController.error = e;
+      state.pagingController.error = e;
     }
 
-    isLoading = false;
+    state.isLoading = false;
     update();
   }
 
   void selectDateFilter(int filter) {
-    dateFilter = filter.toString();
+    state.dateFilter = filter.toString();
     update();
     if (filter == 0 || filter == 4) {
-      startDate = null;
-      endDate = null;
-      startDateField.text = '-';
-      endDateField.text = '-';
+      state.startDate = null;
+      state.endDate = null;
+      state.startDateField.text = '-';
+      state.endDateField.text = '-';
     } else if (filter == 1) {
-      startDate = DateTime.now().subtract(const Duration(days: 30));
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toLongDateTimeFormat();
-      endDateField.text = endDate.toString().toLongDateTimeFormat();
+      state.startDate = DateTime.now().subtract(const Duration(days: 30));
+      state.endDate = DateTime.now();
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
+      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     } else if (filter == 2) {
-      startDate = DateTime.now().subtract(const Duration(days: 7));
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toLongDateTimeFormat();
-      endDateField.text = endDate.toString().toLongDateTimeFormat();
+      state.startDate = DateTime.now().subtract(const Duration(days: 7));
+      state.endDate = DateTime.now();
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
+      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     } else if (filter == 3) {
-      startDate = DateTime.now();
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toLongDateTimeFormat();
-      endDateField.text = endDate.toString().toLongDateTimeFormat();
+      state.startDate = DateTime.now();
+      state.endDate = DateTime.now();
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
+      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     }
 
     update();
@@ -207,54 +181,57 @@ class RiwayatKirimanController extends BaseController {
   }
 
   void resetFilter() {
-    startDate = null;
-    endDate = null;
-    startDateField.clear();
-    endDateField.clear();
-    selectedPetugasEntry = basic?.userType == "PEMILIK" ? null : basic?.name;
-    selectedStatusKiriman = null;
-    isFiltered = false;
-    searchField.clear();
-    transDate = null;
-    dateFilter = '0';
+    state.startDate = null;
+    state.endDate = null;
+    state.startDateField.clear();
+    state.endDateField.clear();
+    state.selectedPetugasEntry =
+        state.basic?.userType == "PEMILIK" ? null : state.basic?.name;
+    state.selectedStatusKiriman = null;
+    state.isFiltered = false;
+    state.searchField.clear();
+    state.transDate = null;
+    state.dateFilter = '0';
 
-    pagingController.refresh();
+    state.pagingController.refresh();
     update();
     Get.back();
     transactionCount();
   }
 
   void selectAll(bool value) {
-    isSelectAll = value;
-    // selectedTransaction = value ? transactionList : [];
-    selectedTransaction = value ? pagingController.itemList ?? [] : [];
+    state.isSelectAll = value;
+    // state.selectedTransaction = value ? transactionList : [];
+    state.selectedTransaction =
+        value ? state.pagingController.itemList ?? [] : [];
     update();
-    selectedTransaction.isEmpty ? isSelect = false : null;
+    state.selectedTransaction.isEmpty ? state.isSelect = false : null;
     update();
   }
 
   void select(TransactionModel item) {
-    selectedTransaction.add(item);
-    isSelect = true;
+    state.selectedTransaction.add(item);
+    state.isSelect = true;
     update();
   }
 
   void unselect(TransactionModel item) {
-    if (isSelect) {
-      if (selectedTransaction.where((e) => e == item).isNotEmpty) {
-        selectedTransaction.removeWhere((e) => e == item);
+    if (state.isSelect) {
+      if (state.selectedTransaction.where((e) => e == item).isNotEmpty) {
+        state.selectedTransaction.removeWhere((e) => e == item);
         update();
-        if (selectedTransaction.isEmpty) {
-          isSelect = false;
+        if (state.selectedTransaction.isEmpty) {
+          state.isSelect = false;
         }
       } else {
-        selectedTransaction.add(item);
+        state.selectedTransaction.add(item);
       }
       update();
-      // selectedTransaction.length == transactionList.length ? isSelectAll = true : isSelectAll = false;
-      selectedTransaction.length == pagingController.itemList?.length
-          ? isSelectAll = true
-          : isSelectAll = false;
+      // state.selectedTransaction.length == transactionList.length ? state.isSelectAll = true : state.isSelectAll = false;
+      state.selectedTransaction.length ==
+              state.pagingController.itemList?.length
+          ? state.isSelectAll = true
+          : state.isSelectAll = false;
     } else {
       Get.to(const DetailRiwayatKirimanScreen(), arguments: {
         'awb': item.awb,
@@ -279,7 +256,7 @@ class RiwayatKirimanController extends BaseController {
             ),
           );
         } else {
-          pagingController.refresh();
+          state.pagingController.refresh();
           initData();
           update();
         }
@@ -306,22 +283,22 @@ class RiwayatKirimanController extends BaseController {
   @override
   void dispose() {
     super.dispose();
-    pagingController.dispose();
+    state.pagingController.dispose();
   }
 
   applyFilter() {
-    if (startDate != null ||
-        endDate != null ||
-        selectedPetugasEntry != null ||
-        selectedStatusKiriman != null) {
-      isFiltered = true;
-      if (startDate != null && endDate != null) {
-        transDate =
-            "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
+    if (state.startDate != null ||
+        state.endDate != null ||
+        state.selectedPetugasEntry != null ||
+        state.selectedStatusKiriman != null) {
+      state.isFiltered = true;
+      if (state.startDate != null && state.endDate != null) {
+        state.transDate =
+            "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
       }
       update();
       transactionCount();
-      pagingController.refresh();
+      state.pagingController.refresh();
       update();
       Get.back();
     }

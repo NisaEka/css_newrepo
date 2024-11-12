@@ -1,10 +1,9 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/components/contact_appbar.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/dropshipper/add/add_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/dropshipper/list_dropshipper_controller.dart';
-import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:collection/collection.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -21,36 +20,19 @@ class ListDropshipperScreen extends StatelessWidget {
         init: ListDropshipperController(),
         builder: (controller) {
           return Scaffold(
-            appBar: _appBarContent(controller, context),
-            body: _bodyContent(controller, context),
+            appBar: ContactAppbar(
+              isDropshipper: true,
+              isOnline: controller.isOnline,
+              onAdd: () => Get.to(const AddDropshipperScreen(), arguments: {
+                'account': controller.account,
+              })?.then((value) => controller.initData()),
+            ),
+            body: RefreshIndicator(
+              onRefresh: () => controller.initData(),
+              child: _bodyContent(controller, context),
+            ),
           );
         });
-  }
-
-  AppBar _appBarContent(ListDropshipperController c, BuildContext context) {
-    return AppBar(
-      elevation: 2,
-      leading: const CustomBackButton(),
-      title: Text(
-        'Pilih Data Dropshipper'.tr,
-        style: appTitleTextStyle.copyWith(
-            color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
-      ),
-      actions: [
-        c.isOnline
-            ? IconButton(
-                onPressed: () =>
-                    Get.to(const AddDropshipperScreen(), arguments: {
-                  'account': c.account,
-                })?.then((value) => c.initData()),
-                icon: Icon(
-                  Icons.add,
-                  color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                ),
-              )
-            : const SizedBox()
-      ],
-    );
   }
 
   Widget _bodyContent(ListDropshipperController c, BuildContext context) {
@@ -79,7 +61,7 @@ class ListDropshipperScreen extends StatelessWidget {
               c.initData();
             },
           ),
-          const SizedBox(height: 20),
+          // const SizedBox(height: 20),
           c.isLoading
               ? Expanded(
                   child: ListView.builder(

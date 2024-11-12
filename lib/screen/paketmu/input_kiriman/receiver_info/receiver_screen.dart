@@ -23,7 +23,8 @@ class _ReceiverScreenState extends State<ReceiverScreen> {
             children: [
               Scaffold(
                 appBar: TransactionAppbar(
-                  isOnline: controller.isOnline,
+                  data: controller.state.data,
+                  isOnline: controller.state.isOnline,
                   currentStep: 1,
                 ),
                 body: RefreshIndicator(
@@ -32,7 +33,9 @@ class _ReceiverScreenState extends State<ReceiverScreen> {
                   child: const ReceiverForm(),
                 ),
               ),
-              controller.isLoadSave ? const LoadingDialog() : const SizedBox()
+              controller.state.isLoadSave
+                  ? const LoadingDialog()
+                  : const SizedBox()
             ],
           );
         });

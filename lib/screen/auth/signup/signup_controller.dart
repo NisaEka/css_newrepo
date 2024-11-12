@@ -24,7 +24,7 @@ class SignUpController extends BaseController {
     update();
   }
 
-  void selectOrigin(Origin value) {
+  void selectOrigin(OriginModel value) {
     {
       state.selectedOrigin = value;
       state.kotaPengirim.text = state.selectedOrigin?.originName ?? '';
@@ -154,12 +154,12 @@ class SignUpController extends BaseController {
     update();
   }
 
-  Future<Origin> getOrigin(String keyword) async {
+  Future<OriginModel> getOrigin(String keyword) async {
     var response =
         await master.getOrigins(QueryParamModel(search: keyword.toUpperCase()));
     var models = response.data?.toList();
     AppLogger.d(models as String);
-    return models?.first ?? Origin();
+    return models?.first ?? OriginModel();
   }
 
   Future<void> onSelectReferal(GroupOwnerModel value) async {

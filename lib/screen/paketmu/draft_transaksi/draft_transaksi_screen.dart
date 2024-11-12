@@ -48,7 +48,7 @@ class DraftTransaksiScreen extends StatelessWidget {
                 icon: Icons.sync,
                 width: 100,
                 title: 'Sync Data'.tr,
-                onPressed: () => c.syncData(),
+                // onPressed: () => c.syncData(),
               )
             : const SizedBox(),
         const SizedBox(width: 20)

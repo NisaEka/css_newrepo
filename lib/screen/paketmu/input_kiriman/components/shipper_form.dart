@@ -106,7 +106,9 @@ class ShipperForm extends StatelessWidget {
                             OriginDropdown(
                               label: "Kota Pengirim".tr,
                               isRequired: c.state.isOnline,
+                              value: c.state.selectedOrigin,
                               selectedItem: c.state.shipperOrigin.text,
+                              branch: c.state.selectedAccount?.accountBranch,
                               readOnly: c.state.selectedAccount == null ||
                                       c.state.isOnline == false
                                   ? true
@@ -120,12 +122,11 @@ class ShipperForm extends StatelessWidget {
                                 c.update();
                               },
                             ),
-                            //TODO: implement profile ccrf
                             CustomTextFormField(
                               controller: c.state.shipperZipCode,
                               hintText: "Kode Pos".tr,
-                              // readOnly: !c.state.isDropshipper,
-                              // isRequired: true, implement profile ccrf
+                              readOnly: !c.state.isDropshipper,
+                              isRequired: true,
                               prefixIcon: const Icon(Icons.line_style),
                               // validator: ValidationBuilder().zipCode().build(),
                               inputType: TextInputType.number,

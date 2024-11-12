@@ -60,7 +60,7 @@ class ReferalModel {
     String? id,
     String? name,
     String? defaultOrigin,
-    Origin? origin,
+    OriginModel? origin,
   }) {
     _counter = counter;
     _id = id;
@@ -74,21 +74,22 @@ class ReferalModel {
     _id = json['id'];
     _name = json['name'];
     _defaultOrigin = json['default_origin'];
-    _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
+    _origin =
+        json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
   }
 
   String? _counter;
   String? _id;
   String? _name;
   String? _defaultOrigin;
-  Origin? _origin;
+  OriginModel? _origin;
 
   ReferalModel copyWith({
     String? counter,
     String? id,
     String? name,
     String? defaultOrigin,
-    Origin? origin,
+    OriginModel? origin,
   }) =>
       ReferalModel(
         counter: counter ?? _counter,
@@ -106,7 +107,7 @@ class ReferalModel {
 
   String? get defaultOrigin => _defaultOrigin;
 
-  Origin? get origin => _origin;
+  OriginModel? get origin => _origin;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

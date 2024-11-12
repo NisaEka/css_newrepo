@@ -45,12 +45,16 @@ class ListDropshipperController extends BaseController {
     update();
 
     try {
-      await master
-          .getDropshippers(QueryParamModel(search: search.text))
-          .then((value) => dropshipperList.addAll(value.data ?? []));
+      await master.getDropshippers(QueryParamModel(search: search.text)).then(
+        (value) async {
+          dropshipperList.addAll(value.data ?? []);
+          await storage.saveData(StorageCore.dropshipper, value);
+        },
+      );
       update();
     } catch (e) {
       e.printError();
+      dropshipperList.clear();
       var dropshipper = BaseResponse<List<DropshipperModel>>.fromJson(
         await storage.readData(StorageCore.dropshipper),
         (json) => json is List<dynamic>
@@ -70,7 +74,7 @@ class ListDropshipperController extends BaseController {
 
   void delete(DropshipperModel data) async {
     try {
-      await transaction.deleteDropshipper(data.id ?? '').then(
+      await master.deleteDropshipper(data.id ?? '').then(
             (value) => Get.showSnackbar(
               GetSnackBar(
                 icon: Icon(

@@ -49,8 +49,8 @@ class UserModel {
   UserModel({
     String? id,
     Region? region,
-    Branch? branch,
-    Origin? origin,
+    BranchModel? branch,
+    OriginModel? origin,
     String? zipCode,
     String? name,
     String? brand,
@@ -79,8 +79,10 @@ class UserModel {
   UserModel.fromJson(dynamic json) {
     _id = json['id'];
     _region = json['region'] != null ? Region.fromJson(json['region']) : null;
-    _branch = json['branch'] != null ? Branch.fromJson(json['branch']) : null;
-    _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
+    _branch =
+        json['branch'] != null ? BranchModel.fromJson(json['branch']) : null;
+    _origin =
+        json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
     _zipCode = json['zipCode'];
     _name = json['name'];
     _brand = json['brand'];
@@ -94,8 +96,8 @@ class UserModel {
 
   String? _id;
   Region? _region;
-  Branch? _branch;
-  Origin? _origin;
+  BranchModel? _branch;
+  OriginModel? _origin;
   String? _zipCode;
   String? _name;
   String? _brand;
@@ -109,8 +111,8 @@ class UserModel {
   UserModel copyWith({
     String? id,
     Region? region,
-    Branch? branch,
-    Origin? origin,
+    BranchModel? branch,
+    OriginModel? origin,
     String? zipCode,
     String? name,
     String? brand,
@@ -141,9 +143,9 @@ class UserModel {
 
   Region? get region => _region;
 
-  Branch? get branch => _branch;
+  BranchModel? get branch => _branch;
 
-  Origin? get origin => _origin;
+  OriginModel? get origin => _origin;
 
   String? get zipCode => _zipCode;
 

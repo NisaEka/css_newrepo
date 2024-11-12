@@ -37,10 +37,16 @@ class ListPenerimaController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     receiverList = [];
+    connection.isOnline().then((value) => isOnline = value);
+
+    update();
     try {
       await master
           .getReceivers(QueryParamModel(search: search.text))
-          .then((value) => receiverList.addAll(value.data ?? []));
+          .then((value) async {
+        receiverList.addAll(value.data ?? []);
+        await storage.saveData(StorageCore.receiver, value);
+      });
     } catch (e) {
       e.printError();
       var receiver = BaseResponse<List<ReceiverModel>>.fromJson(
@@ -60,7 +66,7 @@ class ListPenerimaController extends BaseController {
 
   void delete(ReceiverModel data) async {
     try {
-      await transaction.deleteReceiver(data.idReceive ?? '').then(
+      await master.deleteReceiver(data.idReceive ?? '').then(
             (value) => Get.showSnackbar(
               GetSnackBar(
                 icon: Icon(

@@ -1,10 +1,9 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/components/contact_appbar.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver/add/add_receiver_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver/list_receiver_controller.dart';
-import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
@@ -21,31 +20,17 @@ class ListPenerimaScreen extends StatelessWidget {
         init: ListPenerimaController(),
         builder: (controller) {
           return Scaffold(
-            appBar: _appBarContent(context),
-            body: _bodyContent(controller, context),
+            appBar: ContactAppbar(
+              isDropshipper: false,
+              isOnline: controller.isOnline,
+              onAdd: () => Get.to(const AddReceiverScreen()),
+            ),
+            body: RefreshIndicator(
+              onRefresh: () => controller.initData(),
+              child: _bodyContent(controller, context),
+            ),
           );
         });
-  }
-
-  AppBar _appBarContent(BuildContext context) {
-    return AppBar(
-      elevation: 2,
-      leading: const CustomBackButton(),
-      title: Text(
-        'Pilih Data Penerima'.tr,
-        style: appTitleTextStyle.copyWith(
-            color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
-      ),
-      actions: [
-        IconButton(
-          onPressed: () => Get.to(const AddPenerimaScreen()),
-          icon: Icon(
-            Icons.add,
-            color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-          ),
-        )
-      ],
-    );
   }
 
   Widget _bodyContent(ListPenerimaController c, BuildContext context) {
@@ -73,13 +58,12 @@ class ListPenerimaScreen extends StatelessWidget {
               c.initData();
             },
           ),
-          const SizedBox(height: 30),
           c.isLoading
               ? Expanded(
                   child: ListView.builder(
                   itemBuilder: (context, i) =>
                       c.receiverItem(ReceiverModel(), i, context),
-                  itemCount: 5,
+                  itemCount: 10,
                 ))
               : Expanded(
                   child: ListView(

@@ -1,73 +1,91 @@
 class PostTransactionOngkirModel {
   PostTransactionOngkirModel({
-    num? insurance,
-    num? codAmountMinimum,
+    num? ongkir,
     num? codFee,
-    num? codAmount,
-    num? congkirAmount,
+    num? goodsAmount,
+    num? insurance,
+    num? codFeeAmount,
+    num? codAmountMinimum,
+    num? codOngkirAmount,
     num? totalOngkir,
   }) {
-    _insurance = insurance;
-    _codAmountMinimum = codAmountMinimum;
+    _ongkir = ongkir;
     _codFee = codFee;
-    _codAmount = codAmount;
-    _congkirAmount = congkirAmount;
+    _goodsAmount = goodsAmount;
+    _insurance = insurance;
+    _codFeeAmount = codFeeAmount;
+    _codAmountMinimum = codAmountMinimum;
+    _codOngkirAmount = codOngkirAmount;
     _totalOngkir = totalOngkir;
   }
 
   PostTransactionOngkirModel.fromJson(dynamic json) {
+    _ongkir = json['ongkir'];
+    _codFee = json['codFee'];
+    _goodsAmount = json['goodsAmount'];
     _insurance = json['insurance'];
-    _codAmountMinimum = json['cod_amount_minimum'];
-    _codFee = json['cod_fee'];
-    _codAmount = json['cod_amount'];
-    _congkirAmount = json['congkir_amount'];
-    _totalOngkir = json['total_ongkir'];
+    _codFeeAmount = json['codFeeAmount'];
+    _codAmountMinimum = json['codAmountMinimum'];
+    _codOngkirAmount = json['codOngkirAmount'];
+    _totalOngkir = json['totalOngkir'];
   }
 
-  num? _insurance;
-  num? _codAmountMinimum;
+  num? _ongkir;
   num? _codFee;
-  num? _codAmount;
-  num? _congkirAmount;
+  num? _goodsAmount;
+  num? _insurance;
+  num? _codFeeAmount;
+  num? _codAmountMinimum;
+  num? _codOngkirAmount;
   num? _totalOngkir;
 
   PostTransactionOngkirModel copyWith({
-    num? insurance,
-    num? codAmountMinimum,
+    num? ongkir,
     num? codFee,
-    num? codAmount,
-    num? congkirAmount,
+    num? goodsAmount,
+    num? insurance,
+    num? codFeeAmount,
+    num? codAmountMinimum,
+    num? codOngkirAmount,
     num? totalOngkir,
   }) =>
       PostTransactionOngkirModel(
-        insurance: insurance ?? _insurance,
-        codAmountMinimum: codAmountMinimum ?? _codAmountMinimum,
+        ongkir: ongkir ?? _ongkir,
         codFee: codFee ?? _codFee,
-        codAmount: codAmount ?? _codAmount,
-        congkirAmount: congkirAmount ?? _congkirAmount,
+        goodsAmount: goodsAmount ?? _goodsAmount,
+        insurance: insurance ?? _insurance,
+        codFeeAmount: codFeeAmount ?? _codFeeAmount,
+        codAmountMinimum: codAmountMinimum ?? _codAmountMinimum,
+        codOngkirAmount: codOngkirAmount ?? _codOngkirAmount,
         totalOngkir: totalOngkir ?? _totalOngkir,
       );
 
-  num? get insurance => _insurance;
-
-  num? get codAmountMinimum => _codAmountMinimum;
+  num? get ongkir => _ongkir;
 
   num? get codFee => _codFee;
 
-  num? get codAmount => _codAmount;
+  num? get goodsAmount => _goodsAmount;
 
-  num? get congkirAmount => _congkirAmount;
+  num? get insurance => _insurance;
+
+  num? get codFeeAmount => _codFeeAmount;
+
+  num? get codAmountMinimum => _codAmountMinimum;
+
+  num? get codOngkirAmount => _codOngkirAmount;
 
   num? get totalOngkir => _totalOngkir;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['ongkir'] = _ongkir;
+    map['codFee'] = _codFee;
+    map['goodsAmount'] = _goodsAmount;
     map['insurance'] = _insurance;
-    map['cod_amount_minimum'] = _codAmountMinimum;
-    map['cod_fee'] = _codFee;
-    map['cod_amount'] = _codAmount;
-    map['congkir_amount'] = _congkirAmount;
-    map['total_ongkir'] = _totalOngkir;
+    map['codFeeAmount'] = _codFeeAmount;
+    map['codAmountMinimum'] = _codAmountMinimum;
+    map['codOngkirAmount'] = _codOngkirAmount;
+    map['totalOngkir'] = _totalOngkir;
     return map;
   }
 }

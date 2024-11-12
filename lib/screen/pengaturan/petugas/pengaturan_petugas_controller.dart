@@ -63,13 +63,13 @@ class PengaturanPetugasController extends BaseController {
     try {
       final officer = await setting.getOfficer(page, searchOfficer.text);
 
-      final isLastPage = (officer.payload?.length ?? 0) < 10;
+      final isLastPage = (officer.meta?.currentPage ?? 0) == (officer.meta?.lastPage ?? 0);
       if (isLastPage) {
-        pagingController.appendLastPage(officer.payload ?? []);
+        pagingController.appendLastPage(officer.data ?? []);
         // transactionList.addAll(pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
-        pagingController.appendPage(officer.payload ?? [], nextPageKey);
+        pagingController.appendPage(officer.data ?? [], nextPageKey);
         // transactionList.addAll(pagingController.itemList ?? []);
       }
     } catch (e) {

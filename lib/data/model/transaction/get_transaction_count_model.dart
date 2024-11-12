@@ -65,8 +65,8 @@ class TransactionCount {
   TransactionCount.fromJson(dynamic json) {
     _total = json['total'];
     _cod = json['cod'];
-    _nonCod = json['non_cod'];
-    _codOngkir = json['cod_ongkir'];
+    _nonCod = json['nonCod'];
+    _codOngkir = json['codOngkir'];
   }
 
   num? _total;
@@ -99,8 +99,8 @@ class TransactionCount {
     final map = <String, dynamic>{};
     map['total'] = _total;
     map['cod'] = _cod;
-    map['non_cod'] = _nonCod;
-    map['cod_ongkir'] = _codOngkir;
+    map['nonCod'] = _nonCod;
+    map['codOngkir'] = _codOngkir;
     return map;
   }
 }

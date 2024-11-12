@@ -1,3 +1,4 @@
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -11,6 +12,7 @@ import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/forms/origin_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
@@ -164,6 +166,8 @@ class TambahPetugasScreen extends StatelessWidget {
                             searchable: true,
                             buttonIcon: const Icon(Icons.keyboard_arrow_down),
                             buttonText: Text('Akun'.tr),
+                            itemsTextStyle: TextStyle(
+                                color: CustomTheme().textColor(context)),
                             dialogWidth: Get.width,
                             initialValue: c.selectedAccountList,
                             items: c.accountList
@@ -203,6 +207,8 @@ class TambahPetugasScreen extends StatelessWidget {
                                       '${e.code}-${e.desc}',
                                     ))
                                 .toList(),
+                            itemsTextStyle: TextStyle(
+                                color: CustomTheme().textColor(context)),
                             listType: MultiSelectListType.CHIP,
                             backgroundColor: AppConst.isLightTheme(context)
                                 ? whiteColor
@@ -220,7 +226,7 @@ class TambahPetugasScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Obx(
-                            () => MultiSelectDialogField<Origin>(
+                            () => MultiSelectDialogField<OriginModel>(
                               decoration: BoxDecoration(
                                 border: Border.all(
                                     color: AppConst.isLightTheme(context)
@@ -243,6 +249,8 @@ class TambahPetugasScreen extends StatelessWidget {
                               backgroundColor: AppConst.isLightTheme(context)
                                   ? whiteColor
                                   : greyColor,
+                              itemsTextStyle: TextStyle(
+                                  color: CustomTheme().textColor(context)),
                               onConfirm: (values) {
                                 // controller.selectedOrigin = values;
                                 c.selectedOrigin.clear();

@@ -2,7 +2,6 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
-import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -264,11 +263,9 @@ class PantauPaketmuScreen extends StatelessWidget {
                       awb: item.awbNo,
                       // orderId: item.orderId,
                       // status: item.statusPod ?? item.status,
-                      service: item.service,
+                      serviceCode: item.service,
                       // type: item.awbType,
-                      receiver: Receiver(
-                        name: item.receiverName,
-                      ),
+                      receiverName: item.receiverName,
                       createdDate: item.awbDate,
                     ),
                     isLoading: false,

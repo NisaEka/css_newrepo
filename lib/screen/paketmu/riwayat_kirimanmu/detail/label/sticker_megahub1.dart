@@ -134,11 +134,11 @@ class StickerMegahub1 extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                            'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zip ?? ''}, Telp.${data.shipper?.phone ?? ''}\n\n',
+                            'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zipCode ?? ''}, Telp.${data.shipper?.phone ?? ''}\n\n',
                             style: labelTextStyle),
                         const Divider(height: 1),
                         Text(
-                            'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zip ?? ''}. Telp.${data.receiver?.phone ?? ''}\n\n',
+                            'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zipCode ?? ''}. Telp.${data.receiver?.phone ?? ''}\n\n',
                             style: labelTextStyle),
                       ],
                     ),
@@ -146,7 +146,7 @@ class StickerMegahub1 extends StatelessWidget {
                   SizedBox(
                     width: Get.width / 3.6,
                     child: Text(
-                      '${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.receiver?.destinationCode ?? '-'} \n${data.receiver?.zip ?? ''}',
+                      '${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.receiver?.destinationCode ?? '-'} \n${data.receiver?.zipCode ?? ''}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -327,7 +327,7 @@ class StickerMegahub1 extends StatelessWidget {
                     pw.SizedBox(
                       width: Get.width / 3.6,
                       child: pw.Text(
-                        '${data.shipper?.origin} - ${data.receiver?.destinationCode}\n${data.receiver?.zip}',
+                        '${data.shipper?.origin} - ${data.receiver?.destinationCode}\n${data.receiver?.zipCode}',
                         textAlign: pw.TextAlign.center,
                         style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                       ),

@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import 'package:css_mobile/data/model/master/destination_model.dart';
-
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/get_receiver_model.dart';
+import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 
 DataTransactionModel transactionDataModelFromJson(String str) =>
     DataTransactionModel.fromJson(json.decode(str));
@@ -25,12 +25,12 @@ class DataTransactionModel {
     String? pickupStatus,
     Delivery? delivery,
     Account? account,
-    Origin? origin,
+    OriginModel? origin,
     Destination? destination,
     Goods? goods,
-    Shipper? shipper,
+    ShipperModel? shipper,
     DropshipperModel? dropshipper,
-    Receiver? receiver,
+    ReceiverModel? receiver,
     Account? dataAccount,
     Destination? dataDestination,
     String? createAt,
@@ -77,15 +77,17 @@ class DataTransactionModel {
                 : null;
     _account =
         json['account'] != null ? Account.fromJson(json['account']) : null;
-    _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
+    _origin =
+        json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
     _destination = json['destination'] != null
         ? Destination.fromJson(json['destination'])
         : null;
     _goods = json['goods'] != null ? Goods.fromJson(json['goods']) : null;
     _shipper =
-        json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null;
-    _receiver =
-        json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
+        json['shipper'] != null ? ShipperModel.fromJson(json['shipper']) : null;
+    _receiver = json['receiver'] != null
+        ? ReceiverModel.fromJson(json['receiver'])
+        : null;
     _dataAccount = json['data_account'] != null
         ? Account.fromJson(json['data_account'])
         : null;
@@ -107,11 +109,11 @@ class DataTransactionModel {
   String? _pickupStatus;
   Delivery? _delivery;
   Account? _account;
-  Origin? _origin;
+  OriginModel? _origin;
   Destination? _destination;
   Goods? _goods;
-  Shipper? _shipper;
-  Receiver? _receiver;
+  ShipperModel? _shipper;
+  ReceiverModel? _receiver;
   Account? _dataAccount;
   Destination? _dataDestination;
   String? _createAt;
@@ -129,11 +131,11 @@ class DataTransactionModel {
     String? pickupStatus,
     Delivery? delivery,
     Account? account,
-    Origin? origin,
+    OriginModel? origin,
     Destination? destination,
     Goods? goods,
-    Shipper? shipper,
-    Receiver? receiver,
+    ShipperModel? shipper,
+    ReceiverModel? receiver,
     Account? dataAccount,
     Destination? dataDestination,
     String? createAt,
@@ -184,15 +186,15 @@ class DataTransactionModel {
 
   Account? get account => _account;
 
-  Origin? get origin => _origin;
+  OriginModel? get origin => _origin;
 
   Destination? get destination => _destination;
 
   Goods? get goods => _goods;
 
-  Shipper? get shipper => _shipper;
+  ShipperModel? get shipper => _shipper;
 
-  Receiver? get receiver => _receiver;
+  ReceiverModel? get receiver => _receiver;
 
   Account? get dataAccount => _dataAccount;
 
@@ -244,347 +246,6 @@ class DataTransactionModel {
     }
     map['create_at'] = _createAt;
     map['update_at'] = _updateAt;
-    return map;
-  }
-}
-
-Receiver receiverFromJson(String str) => Receiver.fromJson(json.decode(str));
-
-String receiverToJson(Receiver data) => json.encode(data.toJson());
-
-class Receiver {
-  Receiver({
-    String? name,
-    String? address,
-    String? address1,
-    String? address2,
-    String? address3,
-    String? city,
-    String? zip,
-    String? region,
-    String? country,
-    String? contact,
-    String? phone,
-    String? district,
-    String? subDistrict,
-    String? destinationCode,
-    String? destinationDescription,
-    String? idDestination,
-    String? idReceive,
-    String? registrationId,
-  }) {
-    _name = name;
-    _address = address;
-    _address1 = address1;
-    _address2 = address2;
-    _address3 = address3;
-    _city = city;
-    _zip = zip;
-    _region = region;
-    _country = country;
-    _contact = contact;
-    _phone = phone;
-    _district = district;
-    _subDistrict = subDistrict;
-    _destinationCode = destinationCode;
-    _destinationDescription = destinationDescription;
-    _idDestination = idDestination;
-    _idReceive = idReceive;
-    _registrationId = registrationId;
-  }
-
-  Receiver.fromJson(dynamic json) {
-    _name = json['name'];
-    _address = json['address'];
-    _address1 = json['address1'];
-    _address2 = json['address2'];
-    _address3 = json['address3'];
-    _city = json['city'];
-    _zip = json['zip_code'] ?? json['zip'];
-    _region = json['region'];
-    _country = json['country'];
-    _contact = json['contact'];
-    _phone = json['phone'];
-    _district = json['district'] ?? json['receiver_district'];
-    _subDistrict = json['sub_district'] ?? json['receiver_sub_district'];
-    _destinationCode = json['destination_code'];
-    _destinationDescription = json['destination_description'];
-    _idDestination = json['id_destination'];
-    _idReceive = json['id_receive'];
-    _registrationId = json['registration_id'];
-  }
-
-  String? _name;
-  String? _address;
-  String? _address1;
-  String? _address2;
-  String? _address3;
-  String? _city;
-  String? _zip;
-  String? _region;
-  String? _country;
-  String? _contact;
-  String? _phone;
-  String? _district;
-  String? _subDistrict;
-  String? _destinationCode;
-  String? _destinationDescription;
-  String? _idDestination;
-  String? _idReceive;
-  String? _registrationId;
-
-  Receiver copyWith({
-    String? name,
-    String? address,
-    String? address1,
-    String? address2,
-    String? address3,
-    String? city,
-    String? zip,
-    String? region,
-    String? country,
-    String? contact,
-    String? phone,
-    String? district,
-    String? subDistrict,
-    String? destinationCode,
-    String? destinationDescription,
-    String? idDestination,
-    String? idReceive,
-    String? registrationId,
-  }) =>
-      Receiver(
-        name: name ?? _name,
-        address: address ?? _address,
-        address1: address1 ?? _address1,
-        address2: address2 ?? _address2,
-        address3: address3 ?? _address3,
-        city: city ?? _city,
-        zip: zip ?? _zip,
-        region: region ?? _region,
-        country: country ?? _country,
-        contact: contact ?? _contact,
-        phone: phone ?? _phone,
-        district: district ?? _district,
-        subDistrict: subDistrict ?? _subDistrict,
-        destinationCode: destinationCode ?? _destinationCode,
-        destinationDescription:
-            destinationDescription ?? _destinationDescription,
-        idDestination: idDestination ?? _idDestination,
-        idReceive: idReceive ?? _idReceive,
-        registrationId: registrationId ?? _registrationId,
-      );
-
-  String? get name => _name;
-
-  String? get address => _address;
-
-  String? get address1 => _address1;
-
-  String? get address2 => _address2;
-
-  String? get address3 => _address3;
-
-  String? get city => _city;
-
-  String? get zip => _zip;
-
-  String? get region => _region;
-
-  String? get country => _country;
-
-  String? get contact => _contact;
-
-  String? get phone => _phone;
-
-  String? get district => _district;
-
-  String? get subDistrict => _subDistrict;
-
-  String? get destinationCode => _destinationCode;
-
-  String? get destinationDescription => _destinationDescription;
-
-  String? get idDestination => _idDestination;
-
-  String? get idReceive => _idReceive;
-
-  String? get registrationId => _registrationId;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['name'] = _name;
-    map['address'] = _address;
-    map['address1'] = _address1;
-    map['address2'] = _address2;
-    map['address3'] = _address3;
-    map['city'] = _city;
-    map['zip'] = _zip;
-    map['region'] = _region;
-    map['country'] = _country;
-    map['contact'] = _contact;
-    map['phone'] = _phone;
-    map['district'] = _district;
-    map['sub_district'] = _subDistrict;
-    map['zip_code'] = _zip;
-    map['destination_code'] = _destinationCode;
-    map['destination_description'] = _destinationDescription;
-    map['id_destination'] = _idDestination;
-    map['id_receive'] = _idReceive;
-    map['receiver_district'] = _district;
-    map['receiver_sub_district'] = _subDistrict;
-    map['registration_id'] = _registrationId;
-
-    return map;
-  }
-}
-
-Shipper shipperFromJson(String str) => Shipper.fromJson(json.decode(str));
-
-String shipperToJson(Shipper data) => json.encode(data.toJson());
-
-class Shipper {
-  Shipper({
-    String? name,
-    String? address,
-    String? address1,
-    String? address2,
-    String? address3,
-    String? city,
-    String? zip,
-    String? region,
-    String? country,
-    String? contact,
-    String? phone,
-    bool? dropship,
-    Origin? origin,
-  }) {
-    _name = name;
-    _address = address;
-    _address1 = address1;
-    _address2 = address2;
-    _address3 = address3;
-    _city = city;
-    _zip = zip;
-    _region = region;
-    _country = country;
-    _contact = contact;
-    _phone = phone;
-    _dropship = dropship;
-    _origin = origin;
-  }
-
-  Shipper.fromJson(dynamic json) {
-    _name = json['name'];
-    _address = json['address'];
-    _address1 = json['address1'];
-    _address2 = json['address2'];
-    _address3 = json['address3'];
-    _city = json['city'];
-    _zip = json['zip'] ?? json['zip_code'];
-    _region = json['region'];
-    _country = json['country'];
-    _contact = json['contact'];
-    _phone = json['phone'];
-    _dropship = json['dropship'];
-    // _zip = json['zip_code'];
-    _origin = json['origin'] != null
-        ? Origin.fromJson(json['origin'])
-        : json['origin'];
-  }
-
-  String? _name;
-  String? _address;
-  String? _address1;
-  String? _address2;
-  String? _address3;
-  String? _city;
-  String? _zip;
-  String? _region;
-  String? _country;
-  String? _contact;
-  String? _phone;
-  bool? _dropship;
-  Origin? _origin;
-
-  Shipper copyWith({
-    String? name,
-    String? address,
-    String? address1,
-    String? address2,
-    String? address3,
-    String? city,
-    String? zip,
-    String? region,
-    String? country,
-    String? contact,
-    String? phone,
-    bool? dropship,
-    Origin? origin,
-  }) =>
-      Shipper(
-        name: name ?? _name,
-        address: address ?? _address,
-        address1: address1 ?? _address1,
-        address2: address2 ?? _address2,
-        address3: address3 ?? _address3,
-        city: city ?? _city,
-        zip: zip ?? _zip,
-        region: region ?? _region,
-        country: country ?? _country,
-        contact: contact ?? _contact,
-        phone: phone ?? _phone,
-        dropship: dropship ?? _dropship,
-        origin: origin ?? _origin,
-      );
-
-  String? get name => _name;
-
-  String? get address => _address;
-
-  String? get address1 => _address1;
-
-  String? get address2 => _address2;
-
-  String? get address3 => _address3;
-
-  String? get city => _city;
-
-  String? get zip => _zip;
-
-  String? get region => _region;
-
-  String? get country => _country;
-
-  String? get contact => _contact;
-
-  String? get phone => _phone;
-
-  bool? get dropship => _dropship;
-
-  Origin? get origin => _origin;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['name'] = _name;
-    map['address'] = _address;
-    map['address1'] = _address1;
-    map['address2'] = _address2;
-    map['address3'] = _address3;
-    map['city'] = _city;
-    map['zip'] = _zip;
-    map['region'] = _region;
-    map['country'] = _country;
-    map['contact'] = _contact;
-    map['phone'] = _phone;
-    map['dropship'] = _dropship;
-    map['zip_code'] = _zip;
-    if (_origin != null) {
-      map['origin'] = _origin?.toJson();
-    } else {
-      map['origin'] = _origin;
-    }
-
     return map;
   }
 }

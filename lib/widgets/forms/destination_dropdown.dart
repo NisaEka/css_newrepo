@@ -41,10 +41,10 @@ class DestinationDropdown extends StatefulHookWidget {
   });
 
   @override
-  State<DestinationDropdown> createState() => _OriginDropdownState();
+  State<DestinationDropdown> createState() => _DestinationDropdownState();
 }
 
-class _OriginDropdownState extends State<DestinationDropdown> {
+class _DestinationDropdownState extends State<DestinationDropdown> {
   final searchTextfield = TextEditingController();
 
   Future<List<Destination>> getDestinationList(String keyword) async {
@@ -96,7 +96,8 @@ class _OriginDropdownState extends State<DestinationDropdown> {
                 '${e.cityName == null ? '' : '${e.cityName}; '}'
                 '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
                 '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
-                '${e.destinationCode == null ? '' : '${e.destinationCode}'}',
+                '${e.destinationCode == null ? '' : '${e.destinationCode}; '}',
+                // '${e.countryName == null ? '' : '${e.countryName}'}',
             onChanged: widget.onChanged,
             value: widget.value,
             selectedItem: widget.selectedItem,

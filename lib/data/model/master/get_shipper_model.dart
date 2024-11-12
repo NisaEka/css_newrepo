@@ -1,93 +1,130 @@
-import 'dart:convert';
-
-import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
+import 'get_origin_model.dart';
+
+import 'dart:convert';
 
 ShipperModel payloadFromJson(String str) =>
     ShipperModel.fromJson(json.decode(str));
 
-String payloadToJson(ShipperModel data) => json.encode(data.toJson());
-
 class ShipperModel {
   ShipperModel({
-    String? name,
-    String? phone,
-    String? zipCode,
-    String? address,
-    Origin? origin,
-    Region? region,
-  }) {
-    _name = name;
-    _phone = phone;
-    _zipCode = zipCode;
-    _address = address;
-    _origin = origin;
-    _region = region;
-  }
+    this.name,
+    this.address,
+    this.address1,
+    this.address2,
+    this.address3,
+    this.city,
+    this.zipCode,
+    this.region,
+    this.country,
+    this.contact,
+    this.phone,
+    this.dropship = false,
+    this.origin,
+  });
 
-  ShipperModel.fromJson(dynamic json) {
-    _name = json['name'] ?? json['ccrfName'];
-    _phone = json['phone'] ?? json['ccrfPhone'];
-    _zipCode = json['zip_code'] ?? json['ccrfZipcode'] ?? json['zipCode'];
-    _address = json['address'] ?? json['ccrfAddress'];
-    _origin = json['origin'] != null ? Origin.fromJson(json['origin']) : null;
-    _region = json['region'] != null ? Region.fromJson(json['region']) : null;
-  }
+  ShipperModel.fromJson(dynamic json)
+      : name = json['name'] ?? json['ccrfName'],
+        address = json['address'] ?? json['ccrfAddress'],
+        address1 = json['address1'],
+        address2 = json['address2'],
+        address3 = json['address3'],
+        city = json['city'],
+        zipCode = json['zip'] ?? json['zip_code'] ?? json['ccrfZipcode'],
+        country = json['country'],
+        contact = json['contact'],
+        phone = json['phone'] ?? json['ccrfPhone'],
+        dropship = json['dropship'] ?? false,
+        origin = json['origin'] != null
+            ? OriginModel.fromJson(json['origin'])
+            : null,
+        region =
+            json['region'] != null ? Region.fromJson(json['region']) : null;
 
-  String? _name;
-  String? _phone;
-  String? _zipCode;
-  String? _address;
-  Origin? _origin;
-  Region? _region;
+  /// Shipper attributes
+  String? name;
+  String? address;
+  String? address1;
+  String? address2;
+  String? address3;
+  String? city;
+  String? zipCode;
+  Region? region;
+  String? country;
+  String? contact;
+  String? phone;
+  bool dropship;
+  OriginModel? origin;
 
+  /// Copy with method
   ShipperModel copyWith({
     String? name,
-    String? phone,
-    String? zipCode,
     String? address,
-    Origin? origin,
+    String? address1,
+    String? address2,
+    String? address3,
+    String? city,
+    String? zipCode,
     Region? region,
-  }) =>
-      ShipperModel(
-        name: name ?? _name,
-        phone: phone ?? _phone,
-        zipCode: zipCode ?? _zipCode,
-        address: address ?? _address,
-        origin: origin ?? _origin,
-        region: region ?? _region,
-      );
+    String? country,
+    String? contact,
+    String? phone,
+    bool? dropship,
+    OriginModel? origin,
+  }) {
+    return ShipperModel(
+      name: name ?? this.name,
+      address: address ?? this.address,
+      address1: address1 ?? this.address1,
+      address2: address2 ?? this.address2,
+      address3: address3 ?? this.address3,
+      city: city ?? this.city,
+      zipCode: zipCode ?? this.zipCode,
+      region: region ?? this.region,
+      country: country ?? this.country,
+      contact: contact ?? this.contact,
+      phone: phone ?? this.phone,
+      dropship: dropship ?? this.dropship,
+      origin: origin ?? this.origin,
+    );
+  }
 
-  String? get name => _name;
+  /// Getters
+  String? get getName => name;
+  String? get getAddress => address;
+  String? get getAddress1 => address1;
+  String? get getAddress2 => address2;
+  String? get getAddress3 => address3;
+  String? get getCity => city;
+  String? get getZipCode => zipCode;
+  Region? get getRegion => region;
+  String? get getCountry => country;
+  String? get getContact => contact;
+  String? get getPhone => phone;
+  bool get isDropship => dropship;
+  OriginModel? get getOrigin => origin;
 
-  String? get phone => _phone;
-
-  String? get zipCode => _zipCode;
-
-  String? get address => _address;
-
-  Origin? get origin => _origin;
-
-  Region? get region => _region;
-
+  /// toJson method
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['name'] = _name;
-    map['phone'] = _phone;
-    map['zip_code'] = _zipCode;
-    map['zipCode'] = _zipCode;
-    map['address'] = _address;
-    map['ccrfName'] = _name;
-    map['ccrfPhone'] = _phone;
-    map['ccrfZipcode'] = _zipCode;
-    map['ccrfAddress'] = _address;
-
-    if (_origin != null) {
-      map['origin'] = _origin?.toJson();
-    }
-    if (_region != null) {
-      map['region'] = _region?.toJson();
-    }
-    return map;
+    return {
+      'name': name,
+      'ccrfName': name,
+      'address': address,
+      'ccrfAddress': address,
+      'address1': address1,
+      'address2': address2,
+      'address3': address3,
+      'city': city,
+      'zip_code': zipCode,
+      'ccrfZipcode': zipCode,
+      'zip': zipCode,
+      'country': country,
+      'contact': contact,
+      'phone': phone,
+      'ccrfPhone': phone,
+      'dropship': dropship,
+      'origin': origin?.toJson(),
+      'region': region?.toJson(),
+    };
   }
 }

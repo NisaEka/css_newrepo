@@ -185,7 +185,7 @@ class StickerA6 extends StatelessWidget {
                                     fontWeight: bold),
                               ),
                               TextSpan(
-                                text: data.shipper?.region ?? '',
+                                text: data.shipper?.region?.name ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
                               // TextSpan(
@@ -211,7 +211,7 @@ class StickerA6 extends StatelessWidget {
                                     fontWeight: bold),
                               ),
                               TextSpan(
-                                text: data.shipper?.zip ?? '',
+                                text: data.shipper?.zipCode ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
                             ],
@@ -294,7 +294,7 @@ class StickerA6 extends StatelessWidget {
                                     fontWeight: bold),
                               ),
                               TextSpan(
-                                text: data.receiver?.zip ?? '',
+                                text: data.receiver?.zipCode ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
                               TextSpan(
@@ -376,7 +376,7 @@ class StickerA6 extends StatelessWidget {
                 ),
                 const SizedBox(width: 5),
                 CustomLabelText(
-                  title: 'Goods Value',
+                  title: 'Goods Amount',
                   value:
                       "Rp ${data.goods?.amount?.toInt().toCurrency() ?? '0'}",
                   titleTextStyle:

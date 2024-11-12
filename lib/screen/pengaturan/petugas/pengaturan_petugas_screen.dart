@@ -72,7 +72,6 @@ class PengaturanPetugasScreen extends StatelessWidget {
               c.pagingController.refresh();
             },
           ),
-          const SizedBox(height: 21),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () => Future.sync(

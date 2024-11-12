@@ -187,7 +187,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   "Rp${(invoiceDetail.totalAdjustedInsAmt ?? 0).toCurrency()}",
             ),
             TextColItem(
-              title: "Goods Value".tr,
+              title: "Goods Amount".tr,
               value: "Rp${(invoiceDetail.goodsValue ?? 0).toCurrency()}",
             ),
             TextColItem(

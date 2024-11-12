@@ -66,7 +66,7 @@ class EditProfilScreen extends StatelessWidget {
               validator: ValidationBuilder().address().build(),
             ),
             !c.isCcrf
-                ? CustomSearchDropdownField<Origin>(
+                ? CustomSearchDropdownField<OriginModel>(
                     asyncItems: (String filter) => c.getOriginList(filter),
                     itemBuilder: (context, e, b) {
                       return Container(
@@ -77,7 +77,7 @@ class EditProfilScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    itemAsString: (Origin e) => e.originName.toString(),
+                    itemAsString: (OriginModel e) => e.originName.toString(),
                     onChanged: (value) => c.selectOrigin(value),
                     value: c.selectedOrigin,
                     // selectedItem: c.kotaPengirim.text,

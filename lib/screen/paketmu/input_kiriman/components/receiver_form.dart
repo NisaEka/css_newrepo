@@ -29,9 +29,9 @@ class ReceiverForm extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Form(
-                        key: c.formKey,
+                        key: c.state.formKey,
                         onChanged: () {
-                          c.formKey.currentState?.validate();
+                          c.state.formKey.currentState?.validate();
                           c.update();
                         },
                         child: Column(
@@ -40,7 +40,7 @@ class ReceiverForm extends StatelessWidget {
                               onTap: () =>
                                   Get.to(const ListPenerimaScreen())?.then(
                                 (result) {
-                                  c.receiver = result;
+                                  c.state.receiver = result;
                                   c.update();
                                   c.getSelectedReceiver();
                                 },
@@ -76,14 +76,14 @@ class ReceiverForm extends StatelessWidget {
                               ),
                             ),
                             CustomTextFormField(
-                              controller: c.namaPenerima,
+                              controller: c.state.receiverName,
                               hintText: "Nama Penerima".tr,
                               prefixIcon: const Icon(Icons.person),
                               isRequired: true,
                               validator: ValidationBuilder().name().build(),
                             ),
                             CustomTextFormField(
-                              controller: c.nomorTelpon,
+                              controller: c.state.receiverPhone,
                               hintText: "Nomor Telepon".tr,
                               inputType: TextInputType.number,
                               prefixIcon: const Icon(Icons.phone),
@@ -93,12 +93,13 @@ class ReceiverForm extends StatelessWidget {
                             ),
                             DestinationDropdown(
                               onChanged: (value) {
-                                c.selectedDestination = value;
+                                c.state.selectedDestination = value;
                                 c.update();
                               },
-                              value: c.selectedDestination,
-                              isRequired:
-                                  c.selectedDestination == null ? true : false,
+                              value: c.state.selectedDestination,
+                              isRequired: c.state.selectedDestination == null
+                                  ? true
+                                  : false,
                               readOnly: false,
                               label: "Kota Tujuan".tr,
                               prefixIcon: Icon(
@@ -109,41 +110,44 @@ class ReceiverForm extends StatelessWidget {
                               ),
                             ),
                             CustomTextFormField(
-                              controller: c.alamatLengkap,
+                              controller: c.state.receiverAddress,
                               hintText: "Alamat".tr,
                               prefixIcon: const Icon(Icons.location_city),
                               multiLine: true,
                               isRequired: true,
                               validator: ValidationBuilder().address().build(),
                             ),
-                            c.isOnline && c.isSaveReceiver()
+                            c.state.isOnline && c.isSaveReceiver()
                                 ? CustomFilledButton(
                                     color: whiteColor,
                                     title: 'Simpan Data Penerima'.tr,
-                                    borderColor:
-                                        c.formKey.currentState?.validate() ==
-                                                true
-                                            ? blueJNE
-                                            : greyColor,
-                                    fontColor:
-                                        c.formKey.currentState?.validate() ==
-                                                true
-                                            ? blueJNE
-                                            : greyColor,
-                                    onPressed: () =>
-                                        c.formKey.currentState?.validate() ==
-                                                true
-                                            ? c.saveReceiver()
-                                            : null,
+                                    borderColor: c.state.formKey.currentState
+                                                ?.validate() ==
+                                            true
+                                        ? blueJNE
+                                        : greyColor,
+                                    fontColor: c.state.formKey.currentState
+                                                ?.validate() ==
+                                            true
+                                        ? blueJNE
+                                        : greyColor,
+                                    onPressed: () => c
+                                                .state.formKey.currentState
+                                                ?.validate() ==
+                                            true
+                                        ? c.saveReceiver()
+                                        : null,
                                   )
                                 : const SizedBox(),
                             CustomFilledButton(
-                              color: c.formKey.currentState?.validate() == true
+                              color: c.state.formKey.currentState?.validate() ==
+                                      true
                                   ? blueJNE
                                   : greyColor,
                               title: "Selanjutnya".tr,
                               onPressed: () =>
-                                  c.formKey.currentState?.validate() == true
+                                  c.state.formKey.currentState?.validate() ==
+                                          true
                                       ? c.nextStep()
                                       : null,
                             )

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -85,51 +84,47 @@ class DraftTransaksiController extends BaseController {
     });
   }
 
-  Future<void> syncData() async {
-    draftList.where((e) => e.delivery?.flatRate != 0).forEach((upload) async {
-      update();
-      try {
-        isLoading = true;
-        update();
-        await transaction.postTransaction(upload).then((value) async {
-          if (value.code == 201) {
-            draftList.removeWhere((draft) => draft.delivery?.flatRate != 0);
-            var data = '{"draft" : ${jsonEncode(draftList)}}';
-            draftData = DraftTransactionModel.fromJson(jsonDecode(data));
-
-            await storage
-                .saveData(StorageCore.draftTransaction, draftData)
-                .then((_) {
-              initData();
-              isLoading = false;
-            });
-          }
-
-          update();
-
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.info,
-                color: whiteColor,
-              ),
-              message: value.code == 201
-                  ? "Draft berhasil di upload"
-                  : "Draft gagal di upload",
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: value.code == 201 ? successColor : errorColor,
-            ),
-          );
-        });
-      } catch (e) {
-        e.printError();
-      }
-    });
-    initData();
-    isLoading = false;
-    update();
-  }
+  // Future<void> syncData() async {
+  //   draftList.where((e) => e.delivery?.flatRate != 0).forEach((upload) async {
+  //     update();
+  //     try {
+  //       isLoading = true;
+  //       update();
+  //       await transaction.postTransaction(upload).then((value) async {
+  //         if (value.code == 201) {
+  //           draftList.removeWhere((draft) => draft.delivery?.flatRate != 0);
+  //           var data = '{"draft" : ${jsonEncode(draftList)}}';
+  //           draftData = DraftTransactionModel.fromJson(jsonDecode(data));
+  //
+  //           await storage.saveData(StorageCore.draftTransaction, draftData).then((_) {
+  //             initData();
+  //             isLoading = false;
+  //           });
+  //         }
+  //
+  //         update();
+  //
+  //         Get.showSnackbar(
+  //           GetSnackBar(
+  //             icon: const Icon(
+  //               Icons.info,
+  //               color: whiteColor,
+  //             ),
+  //             message: value.code == 201 ? "Draft berhasil di upload" : "Draft gagal di upload",
+  //             isDismissible: true,
+  //             duration: const Duration(seconds: 3),
+  //             backgroundColor: value.code == 201 ? successColor : errorColor,
+  //           ),
+  //         );
+  //       });
+  //     } catch (e) {
+  //       e.printError();
+  //     }
+  //   });
+  //   initData();
+  //   isLoading = false;
+  //   update();
+  // }
 
   void searchDraft(String text) {
     searchList = [];
