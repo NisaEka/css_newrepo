@@ -131,9 +131,9 @@ class ReceiverModel {
 
   String? get idReceive => _idReceive;
 
-  String? get receiverDistrict => _receiverDistrict;
+  String? get district => _receiverDistrict;
 
-  String? get receiverSubDistrict => _receiverSubDistrict;
+  String? get subDistrict => _receiverSubDistrict;
 
   String? get registrationId => _registrationId;
 

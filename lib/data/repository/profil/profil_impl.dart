@@ -10,6 +10,7 @@ import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -58,15 +59,18 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future<PostTransactionModel> putProfileCCRF(GeneralInfo data) async {
+  Future<BaseResponse> putProfileCCRF(GeneralInfo data) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.put(
-        "/profile/ccrf",
+      Response response = await network.base.put(
+        "/me/ccrf",
         data: data,
       );
-      return PostTransactionModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => null,
+      );
     } on DioException catch (e) {
       return e.response?.data;
     }
@@ -125,6 +129,8 @@ class ProfilRepositoryImpl extends ProfilRepository {
   @override
   Future<BaseResponse> putProfileBasic(UserModel data) async {
     var token = await storageSecure.read(key: "token");
+    UserModel user = UserModel.fromJson(await StorageCore().readData(StorageCore.basicProfile));
+
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.patch(
@@ -134,7 +140,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
           "name": data.name,
           "phone": data.phone,
           "address": data.address,
-          "origin": data.origin?.originCode,
+          "origin": data.origin?.originCode ?? user.origin?.originCode,
           "zipCode": data.zipCode,
           "language": data.language,
         },

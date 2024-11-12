@@ -199,7 +199,7 @@ class TambahPetugasController extends BaseController {
           await storage.readData(StorageCore.ccrfProfile),
         );
         alamat.text = basic?.address ?? '';
-        zipCode.text = ccrf?.generalInfo?.ccrfZipcode ?? '';
+        zipCode.text = ccrf?.generalInfo?.zipCode ?? '';
         update();
       }
     } catch (e, i) {

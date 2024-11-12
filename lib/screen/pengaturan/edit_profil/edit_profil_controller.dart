@@ -46,16 +46,16 @@ class EditProfileController extends BaseController {
         if (value.data != null) {
           ccrfProfil = value.data;
           isCcrf = value.data != null &&
-              value.data?.generalInfo?.ccrfApistatus == "Y";
+              value.data?.generalInfo?.apiStatus == "Y";
         } else {
           ccrfProfil ??= CcrfProfileModel(
             generalInfo: GeneralInfo(
-              ccrfName: basicProfil?.name?.toUpperCase(),
-              ccrfBrand: basicProfil?.brand?.toUpperCase(),
-              ccrfAddress: basicProfil?.address?.toUpperCase(),
-              ccrfEmail: basicProfil?.email,
-              ccrfPhone: basicProfil?.phone,
-              ccrfZipcode: basicProfil?.zipCode,
+              name: basicProfil?.name?.toUpperCase(),
+              brand: basicProfil?.brand?.toUpperCase(),
+              address: basicProfil?.address?.toUpperCase(),
+              email: basicProfil?.email,
+              phone: basicProfil?.phone,
+              zipCode: basicProfil?.zipCode,
             ),
           );
           selectedOrigin = basicProfil?.origin;
@@ -76,25 +76,25 @@ class EditProfileController extends BaseController {
       email.text = basic.email ?? '';
       update();
     }
-    brand.text = ccrfProfil?.generalInfo?.ccrfBrand ?? '';
-    name.text = ccrfProfil?.generalInfo?.ccrfName ?? '';
-    address.text = ccrfProfil?.generalInfo?.ccrfAddress ?? '';
-    city.text = '${ccrfProfil?.generalInfo?.ccrfCity}; '
-        '${ccrfProfil?.generalInfo?.ccrfDistrict}; '
-        '${ccrfProfil?.generalInfo?.ccrfSubdistrict}; '
-        '${ccrfProfil?.generalInfo?.ccrfZipcode}';
+    brand.text = ccrfProfil?.generalInfo?.brand ?? '';
+    name.text = ccrfProfil?.generalInfo?.name ?? '';
+    address.text = ccrfProfil?.generalInfo?.address ?? '';
+    city.text = '${ccrfProfil?.generalInfo?.city}; '
+        '${ccrfProfil?.generalInfo?.district}; '
+        '${ccrfProfil?.generalInfo?.subDistrict}; '
+        '${ccrfProfil?.generalInfo?.zipCode}';
     selectedCity = Destination(
-      cityName: ccrfProfil?.generalInfo?.ccrfCity,
-      countryName: ccrfProfil?.generalInfo?.ccrfCountry,
-      districtName: ccrfProfil?.generalInfo?.ccrfDistrict,
-      subdistrictName: ccrfProfil?.generalInfo?.ccrfSubdistrict,
-      zipCode: ccrfProfil?.generalInfo?.ccrfZipcode,
-      provinceName: ccrfProfil?.generalInfo?.ccrfProvince,
+      cityName: ccrfProfil?.generalInfo?.city,
+      countryName: ccrfProfil?.generalInfo?.country,
+      districtName: ccrfProfil?.generalInfo?.district,
+      subdistrictName: ccrfProfil?.generalInfo?.subDistrict,
+      zipCode: ccrfProfil?.generalInfo?.zipCode,
+      provinceName: ccrfProfil?.generalInfo?.province,
     );
-    ktp.text = ccrfProfil?.generalInfo?.ccrfKtp ?? '';
-    phone.text = ccrfProfil?.generalInfo?.ccrfPhone ?? '';
-    whatsapp.text = ccrfProfil?.generalInfo?.ccrfHandphone ?? '';
-    email.text = ccrfProfil?.generalInfo?.ccrfEmail ?? '';
+    ktp.text = ccrfProfil?.generalInfo?.ktp ?? '';
+    phone.text = ccrfProfil?.generalInfo?.phone ?? '';
+    whatsapp.text = ccrfProfil?.generalInfo?.secondPhone ?? '';
+    email.text = ccrfProfil?.generalInfo?.email ?? '';
     update();
     isLoading = false;
     update();
@@ -103,7 +103,7 @@ class EditProfileController extends BaseController {
   Future<List<Destination>> getDestinationList(String keyword) async {
     isLoading = true;
     try {
-      // var response = await transaction.getDestination(keyword);
+      // var response = await master.getdes(keyword);
       // destinationModel = response;
     } catch (e, i) {
       e.printError();
@@ -155,21 +155,21 @@ class EditProfileController extends BaseController {
     update();
   }
 
-  Future<void> updateData() async {
+  Future<void> updateCcrf() async {
     isLoading = true;
     update();
     try {
       await profil
           .putProfileCCRF(GeneralInfo(
-            ccrfBrand: brand.text,
-            ccrfName: name.text,
-            ccrfAddress: address.text,
-            ccrfCountry: selectedCity?.countryName,
-            ccrfDistrict: selectedCity?.districtName,
-            ccrfProvince: selectedCity?.provinceName,
-            ccrfCity: selectedCity?.cityName,
-            ccrfSubdistrict: selectedCity?.subdistrictName,
-            ccrfZipcode: selectedCity?.zipCode,
+            brand: brand.text,
+            name: name.text,
+            address: address.text,
+            country: selectedCity?.countryName,
+            district: selectedCity?.districtName,
+            province: selectedCity?.provinceName,
+            city: selectedCity?.cityName,
+            subDistrict: selectedCity?.subdistrictName,
+            zipCode: selectedCity?.zipCode,
           ))
           .then(
             (value) => Get.offAndToNamed("/profileGeneral"),

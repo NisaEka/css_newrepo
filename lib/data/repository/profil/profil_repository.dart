@@ -14,7 +14,7 @@ abstract class ProfilRepository {
 
   Future<BaseResponse<CcrfProfileModel>> getCcrfProfil();
 
-  Future<PostTransactionModel> putProfileCCRF(GeneralInfo data);
+  Future<BaseResponse> putProfileCCRF(GeneralInfo data);
 
   Future<DefaultResponseModel<String>> createProfileCcrf(
       FacilityCreateModel data);

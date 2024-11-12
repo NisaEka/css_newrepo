@@ -106,7 +106,7 @@ class AltProfileController extends BaseController {
       e.printError();
     }
 
-    isCcrf = ccrf != null && ccrf?.generalInfo?.ccrfApistatus == "Y";
+    isCcrf = ccrf != null && ccrf?.generalInfo?.apiStatus == "Y";
     update();
   }
 

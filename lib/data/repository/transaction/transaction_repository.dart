@@ -40,11 +40,11 @@ abstract class TransactionRepository {
     String officer,
   );
 
-  Future<PostTransactionModel> deleteTransaction(String awb);
+  Future<BaseResponse<TransactionModel>> deleteTransaction(String awb);
 
   Future<BaseResponse<List<String>>> getTransactionStatus();
 
-  Future<PostTransactionModel> putTransaction(DataTransactionModel data, String awb);
+  Future<BaseResponse<TransactionModel>> putTransaction(TransactionModel data, String awb);
 
   Future<GetTransactionOfficerModel> getTransOfficer();
 

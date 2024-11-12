@@ -36,11 +36,11 @@ class DataUmumController extends BaseController {
         } else {
           ccrfProfil ??= CcrfProfileModel(
             generalInfo: GeneralInfo(
-              ccrfName: basicProfil?.name,
-              ccrfBrand: basicProfil?.brand,
-              ccrfAddress: basicProfil?.address,
-              ccrfEmail: basicProfil?.email,
-              ccrfPhone: basicProfil?.phone,
+              name: basicProfil?.name,
+              brand: basicProfil?.brand,
+              address: basicProfil?.address,
+              email: basicProfil?.email,
+              phone: basicProfil?.phone,
             ),
           );
         }
@@ -57,11 +57,11 @@ class DataUmumController extends BaseController {
 
       ccrfProfil = CcrfProfileModel(
         generalInfo: GeneralInfo(
-          ccrfName: basic.name,
-          ccrfBrand: basic.brand,
-          ccrfAddress: basic.address,
-          ccrfEmail: basic.email,
-          ccrfPhone: basic.phone,
+          name: basic.name,
+          brand: basic.brand,
+          address: basic.address,
+          email: basic.email,
+          phone: basic.phone,
         ),
       );
     }

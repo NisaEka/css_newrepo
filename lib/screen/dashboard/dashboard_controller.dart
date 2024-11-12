@@ -145,7 +145,6 @@ class DashboardController extends BaseController {
       ),
     ];
     var favMenu = await storage.readString(StorageCore.favoriteMenu);
-    // var shipcost = await storage.readString(StorageCore.shippingCost);
     update();
     if (favMenu.isEmpty == true) {
       await storage.saveData(
@@ -432,7 +431,7 @@ class DashboardController extends BaseController {
             ));
       }
 
-      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.ccrfApistatus == "Y");
+      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y");
 
       storage.saveData(StorageCore.ccrfProfile, state.ccrf);
       // #TODO : implement jlc api

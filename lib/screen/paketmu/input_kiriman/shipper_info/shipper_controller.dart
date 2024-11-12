@@ -123,10 +123,10 @@ class ShipperController extends BaseController {
             zipCode: value.data?.first.zipCode,
             address: value.data?.first.address,
             phone: value.data?.first.phone,
-            city: user.generalInfo?.ccrfCity,
-            country: user.generalInfo?.ccrfCountry,
+            city: user.generalInfo?.city,
+            country: user.generalInfo?.country,
             dropship: state.isDropshipper,
-            contact: user.generalInfo?.ccrfName,
+            contact: user.generalInfo?.name,
             address1: value.data?.first.address?.substring(
                 0,
                 (value.data?.first.address?.length ?? 0) > 30

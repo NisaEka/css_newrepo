@@ -37,43 +37,43 @@ class DataUmumScreen extends StatelessWidget {
               )
             : [
                 DataUmumListItem(
-                  title: c.ccrfProfil?.generalInfo?.ccrfBrand ?? '-',
-                  subtitle: c.ccrfProfil?.generalInfo?.ccrfEmail ?? '-',
+                  title: c.ccrfProfil?.generalInfo?.brand ?? '-',
+                  subtitle: c.ccrfProfil?.generalInfo?.email ?? '-',
                   icon: Icons.store_mall_directory_rounded,
                   tooltip: '${'Nama Brand / Bisnis'.tr}\n${'Alamat email'.tr}',
                 ),
                 DataUmumListItem(
-                  title: c.ccrfProfil?.generalInfo?.ccrfName ?? '-',
-                  subtitle: c.ccrfProfil?.generalInfo?.ccrfKtp ?? '-',
+                  title: c.ccrfProfil?.generalInfo?.name ?? '-',
+                  subtitle: c.ccrfProfil?.generalInfo?.ktp ?? '-',
                   icon: Icons.person,
                   tooltip:
                       '${'Nama Lengkap'.tr}\n${'Nomor Identitas / KTP'.tr}',
                 ),
                 DataUmumListItem(
-                  title: c.ccrfProfil?.generalInfo?.ccrfPhone ??
-                      c.ccrfProfil?.generalInfo?.ccrfHandphone ??
+                  title: c.ccrfProfil?.generalInfo?.phone ??
+                      c.ccrfProfil?.generalInfo?.secondPhone ??
                       '-',
-                  subtitle: c.ccrfProfil?.generalInfo?.ccrfHandphone ?? '-',
+                  subtitle: c.ccrfProfil?.generalInfo?.secondPhone ?? '-',
                   icon: Icons.phone,
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
                 DataUmumListItem(
                   title:
-                      "${(c.ccrfProfil?.generalInfo?.ccrfAddress == null) ? ""
-                          "" : "${c.ccrfProfil?.generalInfo?.ccrfAddress}, "}"
-                      "${(c.ccrfProfil?.generalInfo?.ccrfSubdistrict == null) ? ""
+                      "${(c.ccrfProfil?.generalInfo?.address == null) ? ""
+                          "" : "${c.ccrfProfil?.generalInfo?.address}, "}"
+                      "${(c.ccrfProfil?.generalInfo?.subDistrict == null) ? ""
                           "${c.basicProfil?.origin?.originName ?? ''}" : ""
-                          ",  ${c.ccrfProfil?.generalInfo?.ccrfSubdistrict ?? '-'}"}"
-                      "${(c.ccrfProfil?.generalInfo?.ccrfDistrict == null) ? "" : ""
-                          ", ${c.ccrfProfil?.generalInfo?.ccrfDistrict ?? '-'}"}"
-                      "${(c.ccrfProfil?.generalInfo?.ccrfCity == null) ? "" : ""
-                          ", ${c.ccrfProfil?.generalInfo?.ccrfCity ?? '-'}"}"
-                      "${(c.ccrfProfil?.generalInfo?.ccrfProvince == null) ? "" : ""
-                          ", ${c.ccrfProfil?.generalInfo?.ccrfProvince ?? '-'}"}"
-                      "${(c.ccrfProfil?.generalInfo?.ccrfZipcode == null) ? ""
+                          ",  ${c.ccrfProfil?.generalInfo?.subDistrict ?? '-'}"}"
+                      "${(c.ccrfProfil?.generalInfo?.district == null) ? "" : ""
+                          ", ${c.ccrfProfil?.generalInfo?.district ?? '-'}"}"
+                      "${(c.ccrfProfil?.generalInfo?.city == null) ? "" : ""
+                          ", ${c.ccrfProfil?.generalInfo?.city ?? '-'}"}"
+                      "${(c.ccrfProfil?.generalInfo?.province == null) ? "" : ""
+                          ", ${c.ccrfProfil?.generalInfo?.province ?? '-'}"}"
+                      "${(c.ccrfProfil?.generalInfo?.zipCode == null) ? ""
                           "${(c.basicProfil?.zipCode) == null ? '' : ''
                               ', ${c.basicProfil?.zipCode}'}" : ""
-                          ", ${c.ccrfProfil?.generalInfo?.ccrfZipcode ?? '-'}"}",
+                          ", ${c.ccrfProfil?.generalInfo?.zipCode ?? '-'}"}",
                   // subtitle: c.ccrfProfil?.generalInfo?.zipCode ?? '-',
                   icon: Icons.home,
                   tooltip: 'Alamat Lengkap'.tr,

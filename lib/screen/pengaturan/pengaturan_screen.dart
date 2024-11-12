@@ -129,11 +129,6 @@ class PengaturanScreen extends StatelessWidget {
           SettingListItem(
               title: 'Tema Aplikasi'.tr,
               leading: Icons.color_lens,
-              // onTap: () => Get.to(const InputEmailScreen(), arguments: {
-              //   'isChange': true,
-              //   'email': controller.basicProfil?.email,
-              // }),
-              onTap: () => c.sendEmail(),
               trailing: SizedBox(
                 width: 90,
                 child: Row(

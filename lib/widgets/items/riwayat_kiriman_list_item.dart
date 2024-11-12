@@ -100,7 +100,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                       color: isLoading ? greyLightColor3 : Colors.transparent,
                       width: isLoading ? Get.width / 5 : null,
                       child: Text(
-                          data?.createdDate?.toDateTimeFormat() ??
+                          data?.createdDateSearch?.toDateTimeFormat() ??
                               tanggalEntry?.toDateTimeFormat() ??
                               '-',
                           style: Theme.of(context).textTheme.titleSmall),
@@ -186,43 +186,43 @@ class RiwayatKirimanListItem extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                            (data?.statusName?.isNotEmpty ?? false)
+                            (data?.statusAwb?.isNotEmpty ?? false)
                                 ? Container(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 4),
                                     margin: const EdgeInsets.only(bottom: 10),
                                     width: isLoading ? Get.width / 5 : null,
                                     decoration: BoxDecoration(
-                                      color: data?.statusName ==
+                                      color: data?.statusAwb ==
                                                   "MASIH DI KAMU" ||
                                               apiType == "MASIH DI KAMU" ||
-                                              data?.statusName ==
+                                              data?.statusAwb ==
                                                   "DIBATALKAN OLEH KAMU" ||
                                               apiType == "DIBATALKAN OLEH KAMU"
                                           ? warningColor
-                                          : data?.statusName ==
+                                          : data?.statusAwb ==
                                                       "SUDAH DIJEMPUT" ||
                                                   apiType == "SUDAH DIJEMPUT" ||
-                                                  data?.statusName ==
+                                                  data?.statusAwb ==
                                                       "DALAM PERJALANAN" ||
                                                   apiType ==
                                                       "DALAM PERJALANAN" ||
-                                                  data?.statusName ==
+                                                  data?.statusAwb ==
                                                       "SUKSES DITERIMA" ||
                                                   apiType ==
                                                       "SUKSES DITERIMA" ||
-                                                  data?.statusName ==
+                                                  data?.statusAwb ==
                                                       "SUDAH DI JNE" ||
                                                   apiType == "SUDAH DI JNE"
                                               ? warningColor
-                                              : data?.statusName == "Success" ||
+                                              : data?.statusAwb == "Success" ||
                                                       apiType == "Success"
                                                   ? successColor
                                                   : errorLightColor2,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(
-                                      data?.statusName?.tr ?? status?.tr ?? '',
+                                      data?.statusAwb?.tr ?? status?.tr ?? '',
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleSmall

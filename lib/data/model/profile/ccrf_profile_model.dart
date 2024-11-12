@@ -12,22 +12,17 @@ class CcrfProfileModel {
   }
 
   CcrfProfileModel.fromJson(dynamic json) {
-    _generalInfo = json['generalInfo'] != null
-        ? GeneralInfo.fromJson(json['generalInfo'])
-        : null;
-    _returnAddress = json['returnAddress'] != null
-        ? ReturnAddress.fromJson(json['returnAddress'])
-        : null;
-    _document =
-        json['document'] != null ? Document.fromJson(json['document']) : null;
-    _bankAccount = json['bankAccount'] != null
-        ? BankAccount.fromJson(json['bankAccount'])
-        : null;
+    _generalInfo = json['generalInfo'] != null ? GeneralInfo.fromJson(json['generalInfo']) : null;
+    _returnAddress = json['returnAddress'] != null ? ReturnAddress.fromJson(json['returnAddress']) : null;
+    _document = json['document'] != null ? Document.fromJson(json['document']) : null;
+    _bankAccount = json['bankAccount'] != null ? BankAccount.fromJson(json['bankAccount']) : null;
   }
+
   GeneralInfo? _generalInfo;
   ReturnAddress? _returnAddress;
   Document? _document;
   BankAccount? _bankAccount;
+
   CcrfProfileModel copyWith({
     GeneralInfo? generalInfo,
     ReturnAddress? returnAddress,
@@ -40,9 +35,13 @@ class CcrfProfileModel {
         document: document ?? _document,
         bankAccount: bankAccount ?? _bankAccount,
       );
+
   GeneralInfo? get generalInfo => _generalInfo;
+
   ReturnAddress? get returnAddress => _returnAddress;
+
   Document? get document => _document;
+
   BankAccount? get bankAccount => _bankAccount;
 
   Map<String, dynamic> toJson() {
@@ -79,9 +78,11 @@ class BankAccount {
     _ccrfAccountname = json['ccrfAccountname'];
     _ccrfAccountnumber = json['ccrfAccountnumber'];
   }
+
   String? _ccrfBankaccount;
   String? _ccrfAccountname;
   String? _ccrfAccountnumber;
+
   BankAccount copyWith({
     String? ccrfBankaccount,
     String? ccrfAccountname,
@@ -92,8 +93,11 @@ class BankAccount {
         ccrfAccountname: ccrfAccountname ?? _ccrfAccountname,
         ccrfAccountnumber: ccrfAccountnumber ?? _ccrfAccountnumber,
       );
+
   String? get ccrfBankaccount => _ccrfBankaccount;
+
   String? get ccrfAccountname => _ccrfAccountname;
+
   String? get ccrfAccountnumber => _ccrfAccountnumber;
 
   Map<String, dynamic> toJson() {
@@ -121,9 +125,11 @@ class Document {
     _ccrfNpwpattached = json['ccrfNpwpattached'];
     _ccrfAccountattached = json['ccrfAccountattached'];
   }
+
   String? _ccrfKtpattached;
   String? _ccrfNpwpattached;
   String? _ccrfAccountattached;
+
   Document copyWith({
     String? ccrfKtpattached,
     String? ccrfNpwpattached,
@@ -134,8 +140,11 @@ class Document {
         ccrfNpwpattached: ccrfNpwpattached ?? _ccrfNpwpattached,
         ccrfAccountattached: ccrfAccountattached ?? _ccrfAccountattached,
       );
+
   String? get ccrfKtpattached => _ccrfKtpattached;
+
   String? get ccrfNpwpattached => _ccrfNpwpattached;
+
   String? get ccrfAccountattached => _ccrfAccountattached;
 
   Map<String, dynamic> toJson() {
@@ -196,6 +205,7 @@ class ReturnAddress {
     _ccrfNpwpname = json['ccrfNpwpname'];
     _ccrfNpwpnumber = json['ccrfNpwpnumber'];
   }
+
   String? _ccrfReturnaddress;
   String? _ccrfReturnprovince;
   String? _ccrfReturncity;
@@ -210,6 +220,7 @@ class ReturnAddress {
   String? _ccrfNpwptype;
   String? _ccrfNpwpname;
   String? _ccrfNpwpnumber;
+
   ReturnAddress copyWith({
     String? ccrfReturnaddress,
     String? ccrfReturnprovince,
@@ -235,27 +246,40 @@ class ReturnAddress {
         ccrfReturnzipcode: ccrfReturnzipcode ?? _ccrfReturnzipcode,
         ccrfReturnphone: ccrfReturnphone ?? _ccrfReturnphone,
         ccrfReturnhandphone: ccrfReturnhandphone ?? _ccrfReturnhandphone,
-        ccrfReturnresponsiblename:
-            ccrfReturnresponsiblename ?? _ccrfReturnresponsiblename,
+        ccrfReturnresponsiblename: ccrfReturnresponsiblename ?? _ccrfReturnresponsiblename,
         ccrfJlcnumber: ccrfJlcnumber ?? _ccrfJlcnumber,
         ccrfCounter: ccrfCounter ?? _ccrfCounter,
         ccrfNpwptype: ccrfNpwptype ?? _ccrfNpwptype,
         ccrfNpwpname: ccrfNpwpname ?? _ccrfNpwpname,
         ccrfNpwpnumber: ccrfNpwpnumber ?? _ccrfNpwpnumber,
       );
+
   String? get ccrfReturnaddress => _ccrfReturnaddress;
+
   String? get ccrfReturnprovince => _ccrfReturnprovince;
+
   String? get ccrfReturncity => _ccrfReturncity;
+
   String? get ccrfReturndistrict => _ccrfReturndistrict;
+
   String? get ccrfReturnsubdistrict => _ccrfReturnsubdistrict;
+
   String? get ccrfReturnzipcode => _ccrfReturnzipcode;
+
   String? get ccrfReturnphone => _ccrfReturnphone;
+
   String? get ccrfReturnhandphone => _ccrfReturnhandphone;
+
   String? get ccrfReturnresponsiblename => _ccrfReturnresponsiblename;
+
   String? get ccrfJlcnumber => _ccrfJlcnumber;
+
   String? get ccrfCounter => _ccrfCounter;
+
   String? get ccrfNpwptype => _ccrfNpwptype;
+
   String? get ccrfNpwpname => _ccrfNpwpname;
+
   String? get ccrfNpwpnumber => _ccrfNpwpnumber;
 
   Map<String, dynamic> toJson() {
@@ -280,130 +304,156 @@ class ReturnAddress {
 
 class GeneralInfo {
   GeneralInfo({
-    String? ccrfBrand,
-    String? ccrfName,
-    String? ccrfKtp,
-    String? ccrfAddress,
-    String? ccrfCountry,
-    String? ccrfProvince,
-    String? ccrfCity,
-    String? ccrfDistrict,
-    String? ccrfSubdistrict,
-    String? ccrfZipcode,
-    String? ccrfPhone,
-    String? ccrfHandphone,
-    String? ccrfEmail,
-    String? ccrfApistatus,
+    String? brand,
+    String? name,
+    String? ktp,
+    String? address,
+    String? country,
+    String? province,
+    String? city,
+    String? district,
+    String? subDistrict,
+    String? zipCode,
+    String? phone,
+    String? secondPhone,
+    String? email,
+    String? apiStatus,
   }) {
-    _ccrfBrand = ccrfBrand;
-    _ccrfName = ccrfName;
-    _ccrfKtp = ccrfKtp;
-    _ccrfAddress = ccrfAddress;
-    _ccrfCountry = ccrfCountry;
-    _ccrfProvince = ccrfProvince;
-    _ccrfCity = ccrfCity;
-    _ccrfDistrict = ccrfDistrict;
-    _ccrfSubdistrict = ccrfSubdistrict;
-    _ccrfZipcode = ccrfZipcode;
-    _ccrfPhone = ccrfPhone;
-    _ccrfHandphone = ccrfHandphone;
-    _ccrfEmail = ccrfEmail;
-    _ccrfApistatus = ccrfApistatus;
+    _brand = brand;
+    _name = name;
+    _ktp = ktp;
+    _address = address;
+    _country = country;
+    _province = province;
+    _city = city;
+    _district = district;
+    _subDistrict = subDistrict;
+    _zipCode = zipCode;
+    _phone = phone;
+    _secondPhone = secondPhone;
+    _email = email;
+    _apiStatus = apiStatus;
   }
 
   GeneralInfo.fromJson(dynamic json) {
-    _ccrfBrand = json['ccrfBrand'];
-    _ccrfName = json['ccrfName'];
-    _ccrfKtp = json['ccrfKtp'];
-    _ccrfAddress = json['ccrfAddress'];
-    _ccrfCountry = json['ccrfCountry'];
-    _ccrfProvince = json['ccrfProvince'];
-    _ccrfCity = json['ccrfCity'];
-    _ccrfDistrict = json['ccrfDistrict'];
-    _ccrfSubdistrict = json['ccrfSubdistrict'];
-    _ccrfZipcode = json['ccrfZipcode'];
-    _ccrfPhone = json['ccrfPhone'];
-    _ccrfHandphone = json['ccrfHandphone'];
-    _ccrfEmail = json['ccrfEmail'];
-    _ccrfApistatus = json['ccrfApistatus'];
+    _brand = json['ccrfBrand'] ?? json['brand'];
+    _name = json['ccrfName'] ?? json['name'];
+    _ktp = json['ccrfKtp'];
+    _address = json['ccrfAddress'] ?? json['address'];
+    _country = json['ccrfCountry'] ?? json['country'];
+    _province = json['ccrfProvince'] ?? json['province'];
+    _city = json['ccrfCity'] ?? json['city'];
+    _district = json['ccrfDistrict'] ?? json['district'];
+    _subDistrict = json['ccrfSubdistrict'] ?? json['subDistrict'];
+    _zipCode = json['ccrfZipcode'] ?? json['zipCode'];
+    _zipCode = json['ccrfZipcode'] ?? json['zipCode'];
+    _phone = json['ccrfPhone'];
+    _secondPhone = json['ccrfHandphone'];
+    _email = json['ccrfEmail'];
+    _apiStatus = json['ccrfApistatus'];
   }
-  String? _ccrfBrand;
-  String? _ccrfName;
-  String? _ccrfKtp;
-  String? _ccrfAddress;
-  String? _ccrfCountry;
-  String? _ccrfProvince;
-  String? _ccrfCity;
-  String? _ccrfDistrict;
-  String? _ccrfSubdistrict;
-  String? _ccrfZipcode;
-  String? _ccrfPhone;
-  String? _ccrfHandphone;
-  String? _ccrfEmail;
-  String? _ccrfApistatus;
+
+  String? _brand;
+  String? _name;
+  String? _ktp;
+  String? _address;
+  String? _country;
+  String? _province;
+  String? _city;
+  String? _district;
+  String? _subDistrict;
+  String? _zipCode;
+  String? _phone;
+  String? _secondPhone;
+  String? _email;
+  String? _apiStatus;
+
   GeneralInfo copyWith({
-    String? ccrfBrand,
-    String? ccrfName,
-    String? ccrfKtp,
-    String? ccrfAddress,
-    String? ccrfCountry,
-    String? ccrfProvince,
-    String? ccrfCity,
-    String? ccrfDistrict,
-    String? ccrfSubdistrict,
-    String? ccrfZipcode,
-    String? ccrfPhone,
-    String? ccrfHandphone,
-    String? ccrfEmail,
-    String? ccrfApistatus,
+    String? brand,
+    String? name,
+    String? ktp,
+    String? address,
+    String? country,
+    String? province,
+    String? city,
+    String? district,
+    String? subDistrict,
+    String? zipCode,
+    String? phone,
+    String? secondPhone,
+    String? email,
+    String? apiStatus,
   }) =>
       GeneralInfo(
-        ccrfBrand: ccrfBrand ?? _ccrfBrand,
-        ccrfName: ccrfName ?? _ccrfName,
-        ccrfKtp: ccrfKtp ?? _ccrfKtp,
-        ccrfAddress: ccrfAddress ?? _ccrfAddress,
-        ccrfCountry: ccrfCountry ?? _ccrfCountry,
-        ccrfProvince: ccrfProvince ?? _ccrfProvince,
-        ccrfCity: ccrfCity ?? _ccrfCity,
-        ccrfDistrict: ccrfDistrict ?? _ccrfDistrict,
-        ccrfSubdistrict: ccrfSubdistrict ?? _ccrfSubdistrict,
-        ccrfZipcode: ccrfZipcode ?? _ccrfZipcode,
-        ccrfPhone: ccrfPhone ?? _ccrfPhone,
-        ccrfHandphone: ccrfHandphone ?? _ccrfHandphone,
-        ccrfEmail: ccrfEmail ?? _ccrfEmail,
-        ccrfApistatus: ccrfApistatus ?? _ccrfApistatus,
+        brand: brand ?? _brand,
+        name: name ?? _name,
+        ktp: ktp ?? _ktp,
+        address: address ?? _address,
+        country: country ?? _country,
+        province: province ?? _province,
+        city: city ?? _city,
+        district: district ?? _district,
+        subDistrict: subDistrict ?? _subDistrict,
+        zipCode: zipCode ?? _zipCode,
+        phone: phone ?? _phone,
+        secondPhone: secondPhone ?? _secondPhone,
+        email: email ?? _email,
+        apiStatus: apiStatus ?? _apiStatus,
       );
-  String? get ccrfBrand => _ccrfBrand;
-  String? get ccrfName => _ccrfName;
-  String? get ccrfKtp => _ccrfKtp;
-  String? get ccrfAddress => _ccrfAddress;
-  String? get ccrfCountry => _ccrfCountry;
-  String? get ccrfProvince => _ccrfProvince;
-  String? get ccrfCity => _ccrfCity;
-  String? get ccrfDistrict => _ccrfDistrict;
-  String? get ccrfSubdistrict => _ccrfSubdistrict;
-  String? get ccrfZipcode => _ccrfZipcode;
-  String? get ccrfPhone => _ccrfPhone;
-  String? get ccrfHandphone => _ccrfHandphone;
-  String? get ccrfEmail => _ccrfEmail;
-  String? get ccrfApistatus => _ccrfApistatus;
+
+  String? get brand => _brand;
+
+  String? get name => _name;
+
+  String? get ktp => _ktp;
+
+  String? get address => _address;
+
+  String? get country => _country;
+
+  String? get province => _province;
+
+  String? get city => _city;
+
+  String? get district => _district;
+
+  String? get subDistrict => _subDistrict;
+
+  String? get zipCode => _zipCode;
+
+  String? get phone => _phone;
+
+  String? get secondPhone => _secondPhone;
+
+  String? get email => _email;
+
+  String? get apiStatus => _apiStatus;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['ccrfBrand'] = _ccrfBrand;
-    map['ccrfName'] = _ccrfName;
-    map['ccrfKtp'] = _ccrfKtp;
-    map['ccrfAddress'] = _ccrfAddress;
-    map['ccrfCountry'] = _ccrfCountry;
-    map['ccrfProvince'] = _ccrfProvince;
-    map['ccrfCity'] = _ccrfCity;
-    map['ccrfDistrict'] = _ccrfDistrict;
-    map['ccrfSubdistrict'] = _ccrfSubdistrict;
-    map['ccrfZipcode'] = _ccrfZipcode;
-    map['ccrfPhone'] = _ccrfPhone;
-    map['ccrfHandphone'] = _ccrfHandphone;
-    map['ccrfEmail'] = _ccrfEmail;
-    map['ccrfApistatus'] = _ccrfApistatus;
+    map['ccrfBrand'] = _brand;
+    map['brand'] = _brand;
+    map['ccrfName'] = _name;
+    map['name'] = _name;
+    map['ccrfKtp'] = _ktp;
+    map['address'] = _address;
+    map['ccrfAddress'] = _address;
+    map['ccrfCountry'] = _country;
+    map['country'] = _country;
+    map['ccrfProvince'] = _province;
+    map['province'] = _province;
+    map['ccrfCity'] = _city;
+    map['city'] = _city;
+    map['ccrfDistrict'] = _district;
+    map['district'] = _district;
+    map['ccrfSubdistrict'] = _subDistrict;
+    map['subDistrict'] = _subDistrict;
+    map['ccrfZipcode'] = _zipCode;
+    map['zipCode'] = _zipCode;
+    map['ccrfPhone'] = _phone;
+    map['ccrfHandphone'] = _secondPhone;
+    map['ccrfEmail'] = _email;
+    map['ccrfApistatus'] = _apiStatus;
     return map;
   }
 }
