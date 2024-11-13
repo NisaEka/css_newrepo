@@ -1,12 +1,13 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
@@ -74,23 +75,12 @@ class ListDropshipperController extends BaseController {
 
   void delete(DropshipperModel data) async {
     try {
-      await master.deleteDropshipper(data.id ?? '').then(
-            (value) => Get.showSnackbar(
-              GetSnackBar(
-                icon: Icon(
-                  value.code == 200 ? Icons.info : Icons.warning,
-                  color: whiteColor,
-                ),
-                message:
-                    value.code == 200 ? 'Data Dihapus'.tr : "Bad Request".tr,
-                isDismissible: true,
-                duration: const Duration(seconds: 3),
-                backgroundColor: value.code == 200 ? successColor : errorColor,
-              ),
-            ),
-          );
+      await master.deleteDropshipper(data.id ?? '').then((value) =>
+          value.code == 200
+              ? AppSnackBar.success('Data Dihapus'.tr)
+              : AppSnackBar.error('Bad Request'.tr));
     } catch (e) {
-      e.printError();
+      AppLogger.e('error delete dropshipper $e');
     }
     initData();
   }

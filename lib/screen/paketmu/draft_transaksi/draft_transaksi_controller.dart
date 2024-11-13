@@ -95,30 +95,23 @@ class DraftTransaksiController extends BaseController {
   //           draftList.removeWhere((draft) => draft.delivery?.flatRate != 0);
   //           var data = '{"draft" : ${jsonEncode(draftList)}}';
   //           draftData = DraftTransactionModel.fromJson(jsonDecode(data));
-  //
-  //           await storage.saveData(StorageCore.draftTransaction, draftData).then((_) {
+
+  //           await storage
+  //               .saveData(StorageCore.draftTransaction, draftData)
+  //               .then((_) {
   //             initData();
   //             isLoading = false;
   //           });
   //         }
-  //
+
   //         update();
-  //
-  //         Get.showSnackbar(
-  //           GetSnackBar(
-  //             icon: const Icon(
-  //               Icons.info,
-  //               color: whiteColor,
-  //             ),
-  //             message: value.code == 201 ? "Draft berhasil di upload" : "Draft gagal di upload",
-  //             isDismissible: true,
-  //             duration: const Duration(seconds: 3),
-  //             backgroundColor: value.code == 201 ? successColor : errorColor,
-  //           ),
-  //         );
+
+  //         value.code == 201
+  //             ? AppSnackBar.success('Draft berhasil di upload')
+  //             : AppSnackBar.error('Draft gagal di upload');
   //       });
   //     } catch (e) {
-  //       e.printError();
+  //       AppLogger.e('error sync $e');
   //     }
   //   });
   //   initData();

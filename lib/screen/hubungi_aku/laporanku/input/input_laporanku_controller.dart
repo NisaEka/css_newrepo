@@ -8,6 +8,8 @@ import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -206,51 +208,18 @@ class InputLaporankuController extends BaseController {
             ));
             break;
           case 404:
-            Get.showSnackbar(
-              GetSnackBar(
-                icon: const Icon(
-                  Icons.warning,
-                  color: whiteColor,
-                ),
-                message: 'Nomor Resi Tidak Terdaftar'.tr,
-                isDismissible: true,
-                duration: const Duration(seconds: 3),
-                backgroundColor: warningColor,
-              ),
-            );
+            AppSnackBar.warning('Nomor Resi Tidak Terdaftar'.tr);
             break;
           case 409:
-            Get.showSnackbar(
-              GetSnackBar(
-                icon: const Icon(
-                  Icons.warning,
-                  color: whiteColor,
-                ),
-                message: 'Tiket Sudah Terdaftar'.tr,
-                isDismissible: true,
-                duration: const Duration(seconds: 3),
-                backgroundColor: warningColor,
-              ),
-            );
+            AppSnackBar.warning('Tiket Sudah Terdaftar'.tr);
             break;
           default:
-            Get.showSnackbar(
-              GetSnackBar(
-                icon: const Icon(
-                  Icons.warning,
-                  color: whiteColor,
-                ),
-                message: 'Bad Request'.tr,
-                isDismissible: true,
-                duration: const Duration(seconds: 3),
-                backgroundColor: errorColor,
-              ),
-            );
+            AppSnackBar.error('Bad Request'.tr);
             break;
         }
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error sendReport $e');
     }
 
     isLoading = false;

@@ -1,10 +1,10 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -49,18 +49,7 @@ class NewPasswordController extends BaseController {
                     ),
                   ),
                 )
-              : Get.showSnackbar(
-                  GetSnackBar(
-                    icon: const Icon(
-                      Icons.warning,
-                      color: whiteColor,
-                    ),
-                    message: value.message?[0].toString(),
-                    isDismissible: true,
-                    duration: const Duration(seconds: 3),
-                    backgroundColor: errorColor,
-                  ),
-                ));
+              : AppSnackBar.error(value.message[0].toString()));
     } catch (e, i) {
       e.printError();
       i.printError();

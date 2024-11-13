@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -134,34 +134,12 @@ class ObrolanLaporankuController extends BaseController {
           gettedPhoto = null;
           update();
         } else {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.warning,
-                color: whiteColor,
-              ),
-              message: value.message?.tr,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: errorColor,
-            ),
-          );
+          AppSnackBar.error(value.message?.tr);
         }
       });
     } catch (e) {
-      e.printError();
-      Get.showSnackbar(
-        GetSnackBar(
-          icon: const Icon(
-            Icons.warning,
-            color: whiteColor,
-          ),
-          message: 'Bad Request'.tr,
-          isDismissible: true,
-          duration: const Duration(seconds: 3),
-          backgroundColor: errorColor,
-        ),
-      );
+      AppLogger.e('error sendMessage $e');
+      AppSnackBar.error('Bad Request'.tr);
     }
   }
 

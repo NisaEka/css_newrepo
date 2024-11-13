@@ -1,10 +1,11 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -243,18 +244,7 @@ class RiwayatKirimanController extends BaseController {
     try {
       await transaction.deleteTransaction(item.awb.toString()).then((value) {
         if (value.code == 400) {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.warning,
-                color: whiteColor,
-              ),
-              message: value.message?.tr,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: errorColor,
-            ),
-          );
+          AppSnackBar.error(value.message!.tr);
         } else {
           state.pagingController.refresh();
           initData();
@@ -262,19 +252,8 @@ class RiwayatKirimanController extends BaseController {
         }
       });
     } catch (e) {
-      e.printError();
-      Get.showSnackbar(
-        GetSnackBar(
-          icon: const Icon(
-            Icons.warning,
-            color: whiteColor,
-          ),
-          message: 'Bad Request'.tr,
-          isDismissible: true,
-          duration: const Duration(seconds: 3),
-          backgroundColor: errorColor,
-        ),
-      );
+      AppLogger.e('error delete transaction $e');
+      AppSnackBar.error('Bad Request'.tr);
     }
 
     update();

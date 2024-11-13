@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -27,34 +28,12 @@ class PengaturanPetugasController extends BaseController {
         pagingController.refresh();
         update();
         if (value.code == 403) {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.info,
-                color: whiteColor,
-              ),
-              message: value.message,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: errorColor,
-            ),
-          );
+          AppSnackBar.error(value.message!);
         }
       });
     } catch (e) {
-      e.printError();
-      Get.showSnackbar(
-        const GetSnackBar(
-          icon: Icon(
-            Icons.info,
-            color: whiteColor,
-          ),
-          message: "Forbidden",
-          isDismissible: true,
-          duration: Duration(seconds: 3),
-          backgroundColor: errorColor,
-        ),
-      );
+      AppLogger.e('error delete petugas', e);
+      AppSnackBar.error('Forbidden');
     }
 
     update();
@@ -65,7 +44,8 @@ class PengaturanPetugasController extends BaseController {
     try {
       final officer = await setting.getOfficer(page, searchOfficer.text);
 
-      final isLastPage = (officer.meta?.currentPage ?? 0) == (officer.meta?.lastPage ?? 0);
+      final isLastPage =
+          (officer.meta?.currentPage ?? 0) == (officer.meta?.lastPage ?? 0);
       if (isLastPage) {
         pagingController.appendLastPage(officer.data ?? []);
         // transactionList.addAll(pagingController.itemList ?? []);

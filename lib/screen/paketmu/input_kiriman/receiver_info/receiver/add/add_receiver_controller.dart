@@ -1,7 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,26 +41,15 @@ class AddReceiverController extends BaseController {
         receiverSubDistrict: selectedDestination?.subdistrictName,
       ))
           .then((value) {
-        Get.showSnackbar(
-          GetSnackBar(
-            icon: const Icon(
-              Icons.info,
-              color: whiteColor,
-            ),
-            message: value.code == 201
-                ? "Data receiver telah disimpan".tr
-                : value.error[0],
-            isDismissible: true,
-            duration: const Duration(seconds: 3),
-            backgroundColor: value.code == 201 ? successColor : errorColor,
-          ),
-        );
         if (value.code == 201) {
+          AppSnackBar.success("Data receiver telah disimpan".tr);
           Get.close(2);
+        } else {
+          AppSnackBar.error(value.error[0]);
         }
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error saveReceiver $e');
     }
 
     isLoading = false;

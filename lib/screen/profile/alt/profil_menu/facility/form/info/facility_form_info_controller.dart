@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/facility/facility_create_id_card_model.dar
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/util/constant.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -75,37 +76,35 @@ class FacilityFormInfoController extends BaseController {
       connection.isOnline().then((value) {
         _isOnline = value && (result != ConnectivityResult.none);
         if (_isOnline) {
-          Get.showSnackbar(
-            GetSnackBar(
-              padding: const EdgeInsets.symmetric(vertical: 1.5),
-              margin: const EdgeInsets.only(top: 195),
-              snackPosition: SnackPosition.TOP,
-              messageText: Center(
+          AppSnackBar.custom(
+            message: '',
+            snackPosition: SnackPosition.TOP,
+            margin: const EdgeInsets.only(top: 195),
+            padding: const EdgeInsets.symmetric(vertical: 1.5),
+            messageText: Container(
+              color: successColor, // Set your desired background color here
+              child: Center(
                 child: Text(
                   'Online Mode'.tr,
                   style: listTitleTextStyle.copyWith(color: whiteColor),
                 ),
               ),
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: successColor.withOpacity(0.7),
             ),
           );
         } else {
-          Get.showSnackbar(
-            GetSnackBar(
-              padding: const EdgeInsets.symmetric(vertical: 1.5),
-              margin: const EdgeInsets.only(top: 195),
-              snackPosition: SnackPosition.TOP,
-              messageText: Center(
+          AppSnackBar.custom(
+            message: '',
+            snackPosition: SnackPosition.TOP,
+            margin: const EdgeInsets.only(top: 195),
+            padding: const EdgeInsets.symmetric(vertical: 1.5),
+            messageText: Container(
+              color: greyDarkColor1, // Set your desired background color here
+              child: Center(
                 child: Text(
                   'Offline Mode'.tr,
                   style: listTitleTextStyle.copyWith(color: whiteColor),
                 ),
               ),
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: greyDarkColor1.withOpacity(0.7),
             ),
           );
         }

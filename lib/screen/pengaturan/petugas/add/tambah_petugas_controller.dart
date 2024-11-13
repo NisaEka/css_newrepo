@@ -12,6 +12,8 @@ import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -319,52 +321,17 @@ class TambahPetugasController extends BaseController {
                   {Get.back()}
                 else if (value.code == 409)
                   {
-                    Get.showSnackbar(
-                      GetSnackBar(
-                        icon: const Icon(
-                          Icons.warning,
-                          color: whiteColor,
-                        ),
-                        message:
-                            'Alamat email atau nomor telepon sudah digunakan'
-                                .tr,
-                        isDismissible: true,
-                        duration: const Duration(seconds: 3),
-                        backgroundColor: errorColor,
-                      ),
-                    )
+                    AppSnackBar.error(
+                        'Alamat email atau nomor telepon sudah digunakan'.tr)
                   }
                 else
                   {
-                    Get.showSnackbar(
-                      GetSnackBar(
-                        icon: const Icon(
-                          Icons.warning,
-                          color: whiteColor,
-                        ),
-                        message: value.error[0],
-                        isDismissible: true,
-                        duration: const Duration(seconds: 3),
-                        backgroundColor: errorColor,
-                      ),
-                    )
+                    AppSnackBar.error(value.error[0]),
                   }
               });
     } catch (e, i) {
-      e.printError();
-      i.printError();
-      Get.showSnackbar(
-        GetSnackBar(
-          icon: const Icon(
-            Icons.warning,
-            color: whiteColor,
-          ),
-          message: 'Bad Request'.tr,
-          isDismissible: true,
-          duration: const Duration(seconds: 3),
-          backgroundColor: errorColor,
-        ),
-      );
+      AppLogger.e('error saveOfficer $e, $i');
+      AppSnackBar.error('Bad Request'.tr);
     }
 
     isLoading = false;
@@ -439,19 +406,8 @@ class TambahPetugasController extends BaseController {
           )
           .then((value) => Get.back());
     } catch (e) {
-      e.printError();
-      Get.showSnackbar(
-        GetSnackBar(
-          icon: const Icon(
-            Icons.warning,
-            color: whiteColor,
-          ),
-          message: 'Bad Request'.tr,
-          isDismissible: true,
-          duration: const Duration(seconds: 3),
-          backgroundColor: errorColor,
-        ),
-      );
+      AppLogger.e('error updateOfficer', e);
+      AppSnackBar.error('Bad Request'.tr);
     }
     isLoading = false;
     update();

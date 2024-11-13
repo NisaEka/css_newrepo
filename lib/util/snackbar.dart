@@ -37,9 +37,9 @@ class AppSnackBar {
 
   static void custom({
     required String message,
-    Color backgroundColor = Colors.black,
+    Color backgroundColor = Colors.transparent,
     Icon? icon,
-    int durationInSeconds = 3,
+    int durationInSeconds = 15,
     SnackPosition snackPosition = SnackPosition.BOTTOM,
     SnackStyle snackStyle = SnackStyle.GROUNDED,
     EdgeInsets? margin,

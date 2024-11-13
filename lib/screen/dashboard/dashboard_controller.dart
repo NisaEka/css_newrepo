@@ -68,18 +68,7 @@ class DashboardController extends BaseController {
   }
 
   void loadMenu() async {
-    Get.showSnackbar(
-      const GetSnackBar(
-        icon: Icon(
-          Icons.info,
-          color: whiteColor,
-        ),
-        message: 'test cek favmenu',
-        isDismissible: true,
-        duration: Duration(seconds: 3),
-        backgroundColor: successColor,
-      ),
-    );
+    AppSnackBar.success('test cek fav menu');
   }
 
   Future<void> loadBanner() async {
