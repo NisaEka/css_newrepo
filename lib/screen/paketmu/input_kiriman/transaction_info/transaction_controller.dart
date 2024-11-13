@@ -625,7 +625,7 @@ class TransactionController extends BaseController {
         destinationCode: trans.receiver?.destinationCode,
         goodsAmount: state.goodAmount.text.isNotEmpty
             ? state.goodAmount.text.digitOnly().toInt()
-            : 0,
+            : null,
         goodsDesc: state.goodName.text,
         goodsType: state.goodType.text,
         qty: state.goodQty.text.toDouble(),
