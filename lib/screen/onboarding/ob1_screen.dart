@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -17,12 +19,12 @@ class Ob1Screen extends StatefulWidget {
 class _Ob1ScreenState extends State<Ob1Screen> {
   final CarouselSliderController sliderController = CarouselSliderController();
   int currentIndex = 0;
+  String lang = 'id';
 
   final List<Map<String, String>> bannerTexts = [
     {
       "title": "Permintaan Pickup",
-      "desc":
-          "Kamu dapat melakukan permintaan pickup dan akan kami jemput ke tempat kamu.",
+      "desc": "Kamu dapat melakukan permintaan pickup dan akan kami jemput ke tempat kamu.",
     },
     {
       "title": "Pencairan COD Cepat dan Detail",
@@ -31,49 +33,80 @@ class _Ob1ScreenState extends State<Ob1Screen> {
     },
     {
       "title": "Pantau Progres Pengiriman Realtime",
-      "desc":
-          "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.",
+      "desc": "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.",
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          const SizedBox(height: 80),
-          CarouselSlider(
-            carouselController: sliderController,
-            items: [
-              _buildCarouselItem(ImageConstant.slice1, Alignment.centerLeft),
-              _buildCarouselItem(ImageConstant.slice2, Alignment.bottomCenter),
-              _buildCarouselItem(ImageConstant.slice3, Alignment.topCenter),
-            ],
-            options: CarouselOptions(
-              autoPlay: false,
-              viewportFraction: 1,
-              enableInfiniteScroll: false,
-              height: Get.height / 2,
-              onPageChanged: (index, reason) => setState(() {
-                currentIndex = index;
-              }),
-            ),
-          ),
-          const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                Text(
-                  bannerTexts[currentIndex]['title']!.tr,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineLarge,
+          Column(
+            children: [
+              const SizedBox(height: 80),
+              CarouselSlider(
+                carouselController: sliderController,
+                items: [
+                  _buildCarouselItem(ImageConstant.slice1, Alignment.centerLeft, 1),
+                  _buildCarouselItem(ImageConstant.slice2, Alignment.bottomCenter, 2),
+                  _buildCarouselItem(ImageConstant.slice3, Alignment.centerRight, 3),
+                ],
+                options: CarouselOptions(
+                  autoPlay: false,
+                  viewportFraction: 1,
+                  enableInfiniteScroll: false,
+                  height: Get.height - 120,
+                  onPageChanged: (index, reason) => setState(() {
+                    currentIndex = index;
+                  }),
                 ),
-                const SizedBox(height: 15),
-                Text(
-                  bannerTexts[currentIndex]['desc']!,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              //     Padding(
+              //       padding: const EdgeInsets.symmetric(horizontal: 20),
+              //       child: Column(
+              //         children: [
+              //           Text(
+              //             bannerTexts[currentIndex]['title']!.tr,
+              //             textAlign: TextAlign.center,
+              //             style: Theme.of(context).textTheme.headlineLarge,
+              //           ),
+              //           const SizedBox(height: 15),
+              //           Text(
+              //             bannerTexts[currentIndex]['desc']!,
+              //             textAlign: TextAlign.center,
+              //             style: Theme.of(context).textTheme.bodyLarge,
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+            ],
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CustomFilledButton(
+                  color: lang == "id" ? redJNE : whiteColor,
+                  fontColor: lang == "id" ? whiteColor : greyColor,
+                  borderColor: lang == "id" ? Colors.transparent : greyColor,
+                  title: 'ID',
+                  width: 40,
+                  margin: EdgeInsets.zero,
+                  padding: EdgeInsets.zero,
+                  onPressed: () => changeLanguage("ID"),
+                ),
+                const SizedBox(width: 10),
+                CustomFilledButton(
+                  color: lang == "en" ? redJNE : whiteColor,
+                  fontColor: lang == "en" ? whiteColor : greyColor,
+                  borderColor: lang == "en" ? Colors.transparent : greyColor,
+                  margin: EdgeInsets.zero,
+                  padding: EdgeInsets.zero,
+                  title: 'EN',
+                  width: 40,
+                  onPressed: () => changeLanguage("EN"),
                 ),
               ],
             ),
@@ -95,8 +128,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.linear,
                   )
-                : Get.delete<DashboardController>()
-                    .then((_) => Get.offAll(const DashboardScreen())),
+                : Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
           ),
         ],
       ),
@@ -104,26 +136,70 @@ class _Ob1ScreenState extends State<Ob1Screen> {
     );
   }
 
+  void changeLanguage(String language) async {
+    final storage = Get.find<StorageCore>();
+    setState(() async {
+      if (language == "ID") {
+        Get.updateLocale(const Locale("id", "ID"));
+        await storage.writeString(StorageCore.localeApp, "id");
+        lang = "id";
+      } else {
+        Get.updateLocale(const Locale("en", "US"));
+        await storage.writeString(StorageCore.localeApp, "en");
+        lang = "en";
+      }
+    });
+  }
+
   /// Helper method to build carousel items.
-  Widget _buildCarouselItem(String imagePath, Alignment alignment) {
-    return Stack(
+  Widget _buildCarouselItem(String imagePath, Alignment alignment, int index) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Align(
-          alignment: Alignment.center,
-          child: Image.asset(
-            ImageConstant.sliceU,
-            height: Get.height / 2,
-            fit: BoxFit.cover,
+        Container(
+          height: Get.height / 2,
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  ImageConstant.sliceU,
+                  height: Get.height / 2,
+                  fit: BoxFit.cover,
+                  alignment: alignment,
+                ),
+              ),
+              Align(
+                alignment: index == 2 ? Alignment.bottomCenter : Alignment.center,
+                child: Image.asset(
+                  imagePath,
+                  height: Get.height / 2.5,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
           ),
         ),
-        Align(
-          alignment: alignment,
-          child: Image.asset(
-            imagePath,
-            height: Get.height / 2.5,
-            fit: BoxFit.cover,
+        const SizedBox(height: 40),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                bannerTexts[currentIndex]['title']!.tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
+              const SizedBox(height: 15),
+              Text(
+                bannerTexts[currentIndex]['desc']!.tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
           ),
-        ),
+        )
       ],
     );
   }

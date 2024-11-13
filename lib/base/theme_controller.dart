@@ -197,7 +197,7 @@ class CustomTheme {
         ),
         bodyLarge: const TextStyle(
           fontSize: 16,
-          color: greyDarkColor1,
+          color: greyLightColor1,
           // fontWeight: FontWeight.w600,
         ),
         headlineLarge: const TextStyle(

@@ -84,11 +84,9 @@ class LanguageEN {
       "Cari Transaksimu": "Search Your Transaction",
       "Hapus": "Delete",
       "kembali": "Back",
-      "Anda harus login untuk menggunakan fitur ini":
-      "You must be logged in to use this feature",
+      "Anda harus login untuk menggunakan fitur ini": "You must be logged in to use this feature",
       "Akses Terbatas": "Access Denied",
-      "Anda yakin akan menghapus data ini ?":
-      "Are you sure you want to delete this data ?",
+      "Anda yakin akan menghapus data ini ?": "Are you sure you want to delete this data ?",
       "Data akan dihapus": "Data will be deleted",
       "Tidak": "Decline",
       "Ya": "Yes",
@@ -107,8 +105,7 @@ class LanguageEN {
       "Gunakan Asuransi Pengiriman": "Use Shipping Insurance",
       "No Referensi (opsional)": "Reference Number (Optional)",
       "Packing Kayu": "Use Wooden Packaging",
-      "Hanya sebagai instruksi penggunaan packing kayu":
-      "Only as instruction for using wooden packaging",
+      "Hanya sebagai instruksi penggunaan packing kayu": "Only as instruction for using wooden packaging",
       "Instruksi Khusus (Opsional)": "Special Instructions (Optional)",
       "Biaya & Durasi": "Tariff & ETD",
       "Estimasi Harga Barang": "Estimated Goods Amount",
@@ -189,15 +186,12 @@ class LanguageEN {
       "Daftar Akun Transaksi": "Transaction Account List",
       "Account Kosong": "Account Empty",
       "Data Kosong": "Data Empty",
-      "kerahasiaan_data":
-      "This information is confidential, only you can see it and it is not shared with anyone",
+      "kerahasiaan_data": "This information is confidential, only you can see it and it is not shared with anyone",
       "Kerahasiaan Data": "Data Confidentiality",
       "informasi": "Information",
-      "return_info":
-      "This data is used in the process of returning your shipment.",
+      "return_info": "This data is used in the process of returning your shipment.",
       "Akun Bank": "Bank Account",
-      "bank_info":
-      "This data is used in the process of transferring your COD money.",
+      "bank_info": "This data is used in the process of transferring your COD money.",
       "Lihat Semua Layanan": "See All Services",
       "Tutup": "Close",
       "Masukan 3 atau lebih karakter": "Please enter 3 or more character",
@@ -241,14 +235,10 @@ class LanguageEN {
       "Update Berhasil": "Data Updated",
       "Edit Resi": "Update Transaction",
       "Bad Request": "something went wrong, please try again later",
-      "Belum ada riwayat transaksi point":
-      "There is no point transaction history yet",
-      "Belum ada riwayat penukaran point":
-      "There is no history of point reedem",
-      "Email atau nomor telepon sudah terdaftar":
-      "Email or phone number is registered",
-      "Selamat, kamu sudah berhasil mendaftar":
-      "Congratulations, you have successfully registered",
+      "Belum ada riwayat transaksi point": "There is no point transaction history yet",
+      "Belum ada riwayat penukaran point": "There is no history of point reedem",
+      "Email atau nomor telepon sudah terdaftar": "Email or phone number is registered",
+      "Selamat, kamu sudah berhasil mendaftar": "Congratulations, you have successfully registered",
       "Silahkan cek email anda": "Please check your email",
       "PIN tidak sesuai": "PIN does not match",
       "Saldo Kamu": "Your Balance",
@@ -273,10 +263,8 @@ class LanguageEN {
       "Kode Pos/Provinsi/Kota/Kecamatan/Kelurahan": "Zip Code/Province/City/District/Sub District",
       "Berikutnya": "Next",
       "Batal": "Cancel",
-      "forgot_password":
-      "Enter your email and we will send you a pin to reset your password",
-      "change_password":
-      "Enter your email and we will send you a pin to change your password",
+      "forgot_password": "Enter your email and we will send you a pin to reset your password",
+      "change_password": "Enter your email and we will send you a pin to change your password",
       "login_failed": "The email and password you entered don't match",
       "User Not Found": "The email you entered is not registered",
       "Password berhasil diperbaharui": "Your password is updated",
@@ -288,31 +276,23 @@ class LanguageEN {
       "Kirim ulang kode": "Resend code",
       "Gunakan cara lain": "Use another method",
       "Peringatan": "Alert",
-      "Total Ongkos Kirim tidak bisa lebih dari Rp.1000.000":
-      "Total shipping costs cannot exceed Rp. 1000,000",
+      "Total Ongkos Kirim tidak bisa lebih dari Rp.1000.000": "Total shipping costs cannot exceed Rp. 1000,000",
       "Tidak dapat menyimpan data": "Cannot save data",
       "Draft Kosong": "Draft Empty",
       "Mode offline": "Offline Mode",
-      "CSS tidak menerima pendaftaran menggunakan email temporary":
-      "CSS does not accept registration using temporary email",
+      "CSS tidak menerima pendaftaran menggunakan email temporary": "CSS does not accept registration using temporary email",
       "Masukan tidak boleh kosong": "This field is required",
-      "Nomor telepon harus lebih dari 10 karakter":
-      "Phone number must be more than 10 characters",
-      "Nomor telepon tidak boleh lebih dari 12 karakter":
-      "Phone number can't be more than 12 characters",
+      "Nomor telepon harus lebih dari 10 karakter": "Phone number must be more than 10 characters",
+      "Nomor telepon tidak boleh lebih dari 12 karakter": "Phone number can't be more than 12 characters",
       "Kode Pos harus terdiri dari 5 karakter": "Zip Code must be 5 characters",
       "Silakan masukkan url yang valid": "Please enter valid url",
       'Kata sandi tidak boleh "password"': 'Password should not "password"',
-      "Kata sandi harus lebih dari 8 karakter":
-      "Password must have more than 8 characters",
+      "Kata sandi harus lebih dari 8 karakter": "Password must have more than 8 characters",
       "Kata sandi harus mengandung huruf besar, huruf kecil, angka dan karakter khusus":
-      "Password should contain upper,lower,digit and Special character",
-      "Nama tidak boleh lebih dari 30 karakter":
-      "Names cannot be more than 30 characters",
-      "Alamat tidak boleh lebih dari 100 karakter":
-      "Address cannot be more than 100 characters",
-      "Bidang ini harus terdiri dari minimal 8 karakter":
-      "This field must be at least 8 characters long",
+          "Password should contain upper,lower,digit and Special character",
+      "Nama tidak boleh lebih dari 30 karakter": "Names cannot be more than 30 characters",
+      "Alamat tidak boleh lebih dari 100 karakter": "Address cannot be more than 100 characters",
+      "Bidang ini harus terdiri dari minimal 8 karakter": "This field must be at least 8 characters long",
       "Lihat Detail": "View Detail",
       "Tanggal Cnote": "Cnote Date",
       "Tanggal POD": "POD Date",
@@ -326,19 +306,15 @@ class LanguageEN {
       "Masukan Kota Pengiriman": "Type Shipment City",
       "tutup": "close",
       "Akun recovery belum tersedia": "Account recovery is not available",
-      "Kode OTP akan dikirimkan ke alamat email berikut :":
-      "OTP Code will be sent to this email:",
-      "Kode OTP sudah dikirimkan ke alamat email berikut :":
-      "OTP code was sent to this email :",
+      "Kode OTP akan dikirimkan ke alamat email berikut :": "OTP Code will be sent to this email:",
+      "Kode OTP sudah dikirimkan ke alamat email berikut :": "OTP code was sent to this email :",
       "Akun Pemulihan": "Recovery Account",
-      "Favorit tidak dapat lebih dari 4 item":
-      "Favorite can't more than 4 items",
-      "Lengkapi profil Kamu untuk menikmati semua fitur unggulan.":
-      "Complete your profile to enjoy all the features.",
+      "Favorit tidak dapat lebih dari 4 item": "Favorite can't more than 4 items",
+      "Lengkapi profil Kamu untuk menikmati semua fitur unggulan.": "Complete your profile to enjoy all the features.",
       "Buat kata sandi baru anda": "Create your new password",
       "Konfirmasi Kata Sandi Baru": "Confirm New Password",
       "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas":
-      "To access this menu, please activate it first in the facilities menu",
+          "To access this menu, please activate it first in the facilities menu",
       "Notifikasi": "Notification",
       "Belum ada notifikasi tersedia": "No notifications available yet",
       "Data dropshipper telah disimpan": "Dropshipper data is saved",
@@ -366,10 +342,8 @@ class LanguageEN {
       "Pilih Tanggal Sendiri": "Custom Range",
       "Nomor Resi Tidak Terdaftar": "Receipt number not found",
       "Tiket Sudah Terdaftar": "This Ticket is already exist",
-      "Isian Harus lebih besar atau sama dengan":
-      "Value must be greater than or equal",
-      "Harga COD tidak boleh kurang dari":
-      "COD Price can't must be greater than or equal",
+      "Isian Harus lebih besar atau sama dengan": "Value must be greater than or equal",
+      "Harga COD tidak boleh kurang dari": "COD Price can't must be greater than or equal",
       "Isian tidak boleh lebih besar dari": "Value must be less than",
       "Karakter": "Character",
       "Lihat Obrolan": "View Chats",
@@ -388,7 +362,15 @@ class LanguageEN {
       "COD": "COD",
       "NON COD": "NON COD",
       "COD ONGKIR": "COD PAYMENT",
-      "Tema Aplikasi": "App Theme"
+      "Tema Aplikasi": "App Theme",
+      "Permintaan Pickup": "Request Pickup",
+      "Kamu dapat melakukan permintaan pickup dan akan kami jemput ke tempat kamu.":
+          "You can make a pickup request and we will pick you up at your place.",
+      "Pencairan COD Cepat dan Detail": "Fast and Detailed COD Disbursement",
+      "Kamu dapat memilih skema pencairan otomatis ke rekening setiap hari atau withdraw dengan penarikan dana suka-suka kapanpun dan dimanapun.":
+          "You can choose an automatic withdrawal scheme to your account every day or withdraw funds whenever and wherever you like.",
+      "Pantau Progres Pengiriman Realtime": "Monitor Realtime Delivery Progress",
+      "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.": "At any time you can see all your shipment status in real time.",
     };
   }
 }
