@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,19 +26,19 @@ class FileDownloaderHelper {
 
         final res = await outFile.writeAsBytes(bytes, flush: true);
         log("=> saved file: ${res.path}");
-        Get.showSnackbar(
-          GetSnackBar(
-            padding: const EdgeInsets.symmetric(vertical: 1.5),
-            margin: const EdgeInsets.only(top: 195),
-            messageText: Center(
+        AppSnackBar.custom(
+          message: '',
+          snackPosition: SnackPosition.TOP,
+          margin: const EdgeInsets.only(top: 195),
+          padding: const EdgeInsets.symmetric(vertical: 1.5),
+          messageText: Container(
+            color: successColor, // Set your desired background color here
+            child: Center(
               child: Text(
                 'File Berhasil Disimpan: ${res.path}'.tr,
                 style: listTitleTextStyle.copyWith(color: whiteColor),
               ),
             ),
-            isDismissible: true,
-            duration: const Duration(seconds: 3),
-            backgroundColor: successColor.withOpacity(0.7),
           ),
         );
       } else {

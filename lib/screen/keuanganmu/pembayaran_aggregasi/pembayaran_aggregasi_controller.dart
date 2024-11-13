@@ -54,11 +54,6 @@ class PembayaranAggergasiController extends BaseController {
 
       if (selectedAccount.isNotEmpty) {
         isIn.add({
-          // TODO: TO BE REMOVED, TESTING PURPOSE
-          // "mpayWdrGrpPayCode": [
-          //   "10999302",
-          //   ...selectedAccount.map((e) => e.accountNumber).toList()
-          // ]
           "mpayWdrGrpPayCode":
               selectedAccount.map((e) => e.accountNumber).toList()
         });
@@ -102,11 +97,6 @@ class PembayaranAggergasiController extends BaseController {
 
       if (selectedAccount.isNotEmpty) {
         isIn.add({
-          // TODO: TO BE REMOVED, TESTING PURPOSE
-          // "mpayWdrGrpPayCode": [
-          //   "10999302",
-          //   ...selectedAccount.map((e) => e.accountNumber).toList()
-          // ]
           "mpayWdrGrpPayCode":
               selectedAccount.map((e) => e.accountNumber).toList()
         });

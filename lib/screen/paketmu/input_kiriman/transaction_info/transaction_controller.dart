@@ -21,6 +21,7 @@ import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_scre
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,20 +40,22 @@ class TransactionController extends BaseController {
         state.isOnline = value && (result != ConnectivityResult.none);
         update();
         if (state.isOnline) {
-          Get.showSnackbar(
-            GetSnackBar(
-              padding: const EdgeInsets.symmetric(vertical: 1.5),
-              margin: const EdgeInsets.only(top: 195),
-              snackPosition: SnackPosition.TOP,
-              messageText: Center(
+          AppSnackBar.custom(
+            message: '',
+            backgroundColor: Colors.transparent,
+            durationInSeconds: 3,
+            snackPosition: SnackPosition.TOP,
+            snackStyle: SnackStyle.GROUNDED,
+            margin: const EdgeInsets.only(top: 195),
+            padding: const EdgeInsets.symmetric(vertical: 1.5),
+            messageText: Container(
+              color: successColor, // Set your desired background color here
+              child: Center(
                 child: Text(
                   'Online Mode'.tr,
                   style: listTitleTextStyle.copyWith(color: whiteColor),
                 ),
               ),
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: successColor.withOpacity(0.7),
             ),
           );
         }
@@ -230,22 +233,13 @@ class TransactionController extends BaseController {
       state.freightCharge = value.data?.where((e) => e.serviceCode == state.selectedService?.serviceCode).first.price?.toInt() ?? 0;
       update();
     } catch (e, i) {
-      e.printError();
-      i.printError();
-      String message;
+      AppLogger.e('error get ongkir $e, $i');
       if (state.selectedService == null && state.isOnline) {
-        message = "Service harus diisi".tr;
-        Get.showSnackbar(
-          GetSnackBar(
-            message: message,
-            isDismissible: true,
-            margin: const EdgeInsets.only(bottom: 0),
-            duration: const Duration(seconds: 3),
-            backgroundColor: Colors.red,
-            snackPosition: SnackPosition.BOTTOM,
-            snackStyle: SnackStyle.FLOATING,
-            animationDuration: const Duration(milliseconds: 500),
-          ),
+        AppSnackBar.custom(
+          message: 'Service harus diisi'.tr,
+          backgroundColor: Colors.red,
+          snackStyle: SnackStyle.FLOATING,
+          margin: const EdgeInsets.only(bottom: 0),
         );
       }
     }
@@ -305,32 +299,10 @@ class TransactionController extends BaseController {
         state.serviceList.addAll(value.data ?? []);
         update();
         if (value.data?.isEmpty ?? false) {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.error,
-                color: whiteColor,
-              ),
-              message: 'Service tidak tersedia'.tr,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: errorColor,
-            ),
-          );
+          AppSnackBar.error('Service tidak tersedia'.tr);
         }
         if (value.code != 200) {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.error,
-                color: whiteColor,
-              ),
-              message: value.message.toString(),
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: Colors.red,
-            ),
-          );
+          AppSnackBar.error(value.message.toString());
           // state.isOnline = false;
           update();
         }
@@ -456,7 +428,7 @@ class TransactionController extends BaseController {
   Future<void> updateTransaction() async {
     state.isLoading = true;
     update();
-    AppLogger.i('shipper region : ${state.shipper.region?.name}');
+
     try {
       await transaction
           .putTransaction(
@@ -513,23 +485,13 @@ class TransactionController extends BaseController {
         state.data?.awb ?? '',
       )
           .then((v) {
-            print(v.toJson());
         if (v.code != 200) {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.warning,
-                color: warningColor,
-              ),
-              message: v.error[0],
-              isDismissible: true,
-              margin: const EdgeInsets.only(bottom: 0),
-              duration: const Duration(seconds: 3),
-              backgroundColor: Colors.red,
-              snackPosition: SnackPosition.BOTTOM,
-              snackStyle: SnackStyle.FLOATING,
-              animationDuration: const Duration(milliseconds: 500),
-            ),
+          AppSnackBar.custom(
+            message: v.message!.tr,
+            backgroundColor: Colors.red,
+            icon: const Icon(Icons.warning, color: warningColor),
+            snackStyle: SnackStyle.FLOATING,
+            margin: const EdgeInsets.only(bottom: 0),
           );
         } else {
           Get.to(
@@ -669,21 +631,12 @@ class TransactionController extends BaseController {
           deleteDraft(state.draftIndex!);
         }
         if (v.code == 400 || v.code == 500) {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.warning,
-                color: warningColor,
-              ),
-              message: v.error?[0] ?? v.message,
-              isDismissible: true,
-              margin: const EdgeInsets.only(bottom: 0),
-              duration: const Duration(seconds: 3),
-              backgroundColor: Colors.red,
-              snackPosition: SnackPosition.BOTTOM,
-              snackStyle: SnackStyle.FLOATING,
-              animationDuration: const Duration(milliseconds: 500),
-            ),
+          AppSnackBar.custom(
+            message: v.error?[0] ?? v.message,
+            backgroundColor: Colors.red,
+            icon: const Icon(Icons.warning, color: warningColor),
+            snackStyle: SnackStyle.FLOATING,
+            margin: const EdgeInsets.only(bottom: 0),
           );
         } else {
           Get.to(

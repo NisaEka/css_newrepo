@@ -5,6 +5,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_screen.dart';
 import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_screen.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -123,18 +124,7 @@ class ForgotPasswordOTPController extends BaseController {
             },
           );
         } else {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.warning,
-                color: whiteColor,
-              ),
-              message: 'PIN tidak sesuai'.tr,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: errorColor,
-            ),
-          );
+          AppSnackBar.error('PIN tidak sesuai');
         }
       });
     } catch (e) {
@@ -154,18 +144,7 @@ class ForgotPasswordOTPController extends BaseController {
     try {
       await auth.postEmailForgotPassword(email).then((value) {
         if (value.code == 201) {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.info,
-                color: whiteColor,
-              ),
-              message: 'Silahkan cek email anda'.tr,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: successColor,
-            ),
-          );
+          AppSnackBar.success('Silahkan cek email anda'.tr);
         }
       });
     } catch (e) {

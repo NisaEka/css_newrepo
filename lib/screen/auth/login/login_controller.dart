@@ -11,6 +11,8 @@ import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart'
 import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -42,19 +44,19 @@ class LoginController extends BaseController {
         now.difference(state.currentBackPressTime!) >
             const Duration(seconds: 2)) {
       state.currentBackPressTime = now;
-      Get.showSnackbar(
-        GetSnackBar(
-          icon: const Icon(
-            Icons.info,
-            color: whiteColor,
-          ),
-          message: 'Double click back button to exit',
-          isDismissible: true,
-          duration: const Duration(seconds: 3),
-          backgroundColor: greyColor.withOpacity(0.8),
-          padding: const EdgeInsets.all(10),
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+      AppSnackBar.custom(
+        message: 'Double click back button to exit',
+        backgroundColor: greyColor.withOpacity(0.8),
+        icon: const Icon(
+          Icons.info,
+          color: whiteColor,
         ),
+        durationInSeconds: 3,
+        snackPosition: SnackPosition.BOTTOM,
+        snackStyle: SnackStyle.GROUNDED,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+        padding: const EdgeInsets.all(10),
+        messageText: null,
       );
       state.pop = false;
       update();
@@ -114,18 +116,7 @@ class LoginController extends BaseController {
             ),
           );
         } else if (value.code == 401) {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.error,
-                color: whiteColor,
-              ),
-              message: "login_failed".tr,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: Colors.red,
-            ),
-          );
+          AppSnackBar.error("login_failed".tr);
         } else if (value.message == "Email not verified") {
           try {
             await auth
@@ -133,18 +124,7 @@ class LoginController extends BaseController {
                     InputPinconfirmModel(email: state.emailTextField.text))
                 .then((value) {
               if (value.code == 201) {
-                Get.showSnackbar(
-                  GetSnackBar(
-                    icon: const Icon(
-                      Icons.info,
-                      color: whiteColor,
-                    ),
-                    message: 'Silahkan cek email anda'.tr,
-                    isDismissible: true,
-                    duration: const Duration(seconds: 3),
-                    backgroundColor: successColor,
-                  ),
-                );
+                AppSnackBar.success('Silahkan cek email anda'.tr);
                 Get.to(const SignUpOTPScreen(), arguments: {
                   'email': state.emailTextField.text,
                   'isActivation': true,
@@ -155,34 +135,12 @@ class LoginController extends BaseController {
             e.printError();
           }
         } else {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.error,
-                color: whiteColor,
-              ),
-              message: value.message.toString(),
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: Colors.red,
-            ),
-          );
+          AppSnackBar.error(value.message.toString());
         }
       });
     } catch (e) {
-      e.printError();
-      Get.showSnackbar(
-        const GetSnackBar(
-          icon: Icon(
-            Icons.error,
-            color: whiteColor,
-          ),
-          message: 'Connection times out',
-          isDismissible: true,
-          duration: Duration(seconds: 3),
-          backgroundColor: Colors.red,
-        ),
-      );
+      AppLogger.e('error login $e');
+      AppSnackBar.error('Connection times out');
     }
     state.isLoading = false;
     update();

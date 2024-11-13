@@ -1,9 +1,10 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,26 +39,15 @@ class AddDropshipperController extends BaseController {
         ),
       )
           .then((value) {
-        Get.showSnackbar(
-          GetSnackBar(
-            icon: const Icon(
-              Icons.info,
-              color: whiteColor,
-            ),
-            message: value.code == 201
-                ? "Data dropshipper berhasil di simpan".tr
-                : value.error[0].toString(),
-            isDismissible: true,
-            duration: const Duration(seconds: 3),
-            backgroundColor: value.code == 201 ? successColor : errorColor,
-          ),
-        );
         if (value.code == 201) {
+          AppSnackBar.success('Data dropshipper berhasil di simpan'.tr);
           Get.close(1);
+        } else {
+          AppSnackBar.error(value.error[0].toString());
         }
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error save dropshipper $e');
     }
 
     isLoading = false;

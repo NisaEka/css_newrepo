@@ -3,11 +3,13 @@ import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
+import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_officer_model.dart';
+import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -138,8 +140,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      AppLogger.e("get transactions: ${e.response?.data}");
-
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>
@@ -166,8 +166,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
         (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
-      AppLogger.e(e.response?.data);
-
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
@@ -204,15 +202,11 @@ class TransactionRepositoryImpl extends TransactionRepository {
         "/transaction/transactions/count",
         queryParameters: params.toJson(),
       );
-      AppLogger.d("get transactions count: ${response.data}");
-
       return BaseResponse<TransactionCount>.fromJson(
         response.data,
         (json) => TransactionCount.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
-      AppLogger.e("get transactions count: ${e.response?.data}");
-
       return BaseResponse<TransactionCount>.fromJson(
         e.response?.data,
         (json) => TransactionCount.fromJson(json as Map<String, dynamic>),

@@ -1,7 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -32,43 +32,10 @@ class InputEmailController extends BaseController {
                     },
                   )
                 : value.code == 404
-                    ? Get.showSnackbar(
-                        GetSnackBar(
-                          icon: const Icon(
-                            Icons.warning,
-                            color: whiteColor,
-                          ),
-                          message: 'User Not Found'.tr,
-                          isDismissible: true,
-                          duration: const Duration(seconds: 3),
-                          backgroundColor: errorColor,
-                        ),
-                      )
+                    ? AppSnackBar.error('User Not Found')
                     : value.code == 400
-                        ? Get.showSnackbar(
-                            GetSnackBar(
-                              icon: const Icon(
-                                Icons.warning,
-                                color: whiteColor,
-                              ),
-                              message: value.error?.first.message?.tr,
-                              isDismissible: true,
-                              duration: const Duration(seconds: 3),
-                              backgroundColor: errorColor,
-                            ),
-                          )
-                        : Get.showSnackbar(
-                            GetSnackBar(
-                              icon: const Icon(
-                                Icons.warning,
-                                color: whiteColor,
-                              ),
-                              message: value.message?.tr,
-                              isDismissible: true,
-                              duration: const Duration(seconds: 3),
-                              backgroundColor: errorColor,
-                            ),
-                          ),
+                        ? AppSnackBar.error(value.error?.first.message?.tr)
+                        : AppSnackBar.error(value.message?.tr),
           );
     } catch (e) {
       e.printError();

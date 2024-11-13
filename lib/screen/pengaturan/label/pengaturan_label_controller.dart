@@ -1,8 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/dashboard/sticker_label_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:flutter/material.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:get/get.dart';
 
 class PengaturanLabelController extends BaseController {
@@ -29,7 +29,8 @@ class PengaturanLabelController extends BaseController {
       });
     } catch (e) {
       e.printError();
-      selectedSticker = StickerLabelModel.fromJson(await storage.readData(StorageCore.transactionLabel));
+      selectedSticker = StickerLabelModel.fromJson(
+          await storage.readData(StorageCore.transactionLabel));
       shipcost = await storage.readString(StorageCore.shippingCost);
     }
 
@@ -48,37 +49,15 @@ class PengaturanLabelController extends BaseController {
           .then((value) async {
         if (value.code == 200) {
           await storage.writeString(StorageCore.shippingCost, shipcost);
-          await storage.writeString(StorageCore.transactionLabel, selectedSticker?.name).then(
-                (value) => Get.showSnackbar(
-                  GetSnackBar(
-                    icon: const Icon(
-                      Icons.info,
-                      color: whiteColor,
-                    ),
-                    message: 'Label di update'.tr,
-                    isDismissible: true,
-                    duration: const Duration(seconds: 3),
-                    backgroundColor: successColor,
-                  ),
-                ),
-              );
+          await storage
+              .writeString(StorageCore.transactionLabel, selectedSticker?.name)
+              .then((value) => AppSnackBar.success('Label di update'.tr));
         } else {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.info,
-                color: whiteColor,
-              ),
-              message: value.error[0],
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: errorColor,
-            ),
-          );
+          AppSnackBar.error(value.error[0]);
         }
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error saveLabel', e);
     }
     isLoading = false;
     update();

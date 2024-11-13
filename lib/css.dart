@@ -7,8 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:get/get.dart';
 
-import 'util/theme/theme_changer.dart';
-
 class CSS extends StatelessWidget {
   const CSS({super.key});
 
@@ -49,8 +47,4 @@ class App extends StatelessWidget {
       home: const DashboardScreen(),
     );
   }
-
-
 }
-
-

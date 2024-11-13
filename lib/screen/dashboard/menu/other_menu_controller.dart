@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -259,18 +259,7 @@ class OtherMenuCotroller extends BaseController {
         update();
         favoritList.add(menu);
       } else {
-        Get.showSnackbar(
-          GetSnackBar(
-            icon: const Icon(
-              Icons.warning,
-              color: whiteColor,
-            ),
-            message: 'Favorit tidak dapat lebih dari 4 item'.tr,
-            isDismissible: true,
-            duration: const Duration(seconds: 3),
-            backgroundColor: errorColor,
-          ),
-        );
+        AppSnackBar.error('Favorit tidak dapat lebih dari 4 item'.tr);
       }
     } else {
       paketmuList.where((e) => e == menu).isNotEmpty

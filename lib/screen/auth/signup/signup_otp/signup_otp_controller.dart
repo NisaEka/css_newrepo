@@ -5,7 +5,9 @@ import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_state.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:css_mobile/util/snackbar.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:get/get.dart';
 
 class SignUpOTPController extends BaseController {
@@ -49,22 +51,11 @@ class SignUpOTPController extends BaseController {
             nextAction: () => Get.offAll(const LoginScreen()),
           ));
         } else {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.warning,
-                color: whiteColor,
-              ),
-              message: value.message,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: errorColor,
-            ),
-          );
+          AppSnackBar.error('PIN tidak sesuai'.tr);
         }
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error signup $e');
     }
 
     state.isLoading = false;
@@ -80,36 +71,13 @@ class SignUpOTPController extends BaseController {
           .postRegistPinResend(InputPinconfirmModel(email: state.email))
           .then((value) {
         if (value.code == 201) {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.info,
-                color: whiteColor,
-              ),
-              message: 'Silahkan cek email anda'.tr,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: successColor,
-            ),
-          );
+          AppSnackBar.success('Silahkan cek email anda'.tr);
         } else {
-          Get.showSnackbar(
-            GetSnackBar(
-              icon: const Icon(
-                Icons.info,
-                color: whiteColor,
-              ),
-              message: value.message,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: errorColor,
-            ),
-          );
+          AppSnackBar.error(value.message);
         }
       });
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error resend pin $e, $i');
     }
 
     state.isLoading = false;

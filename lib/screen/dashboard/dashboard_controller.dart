@@ -16,6 +16,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
@@ -68,18 +69,7 @@ class DashboardController extends BaseController {
   }
 
   void loadMenu() async {
-    Get.showSnackbar(
-      const GetSnackBar(
-        icon: Icon(
-          Icons.info,
-          color: whiteColor,
-        ),
-        message: 'test cek favmenu',
-        isDismissible: true,
-        duration: Duration(seconds: 3),
-        backgroundColor: successColor,
-      ),
-    );
+    AppSnackBar.success('test cek fav menu');
   }
 
   Future<void> loadBanner() async {
@@ -87,8 +77,6 @@ class DashboardController extends BaseController {
       jlc.postDashboardBanner().then((value) {
         state.bannerList.addAll(value.data ?? []);
         update();
-        debugPrint('get banner : ${value.toJson()}');
-
       });
     } catch (e) {
       e.printError();
@@ -96,11 +84,10 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadNews() async {
+    AppLogger.i('load news');
     try {
       jlc.postDashboardNews().then((value) {
         state.newsList.addAll(value.data ?? []);
-        AppLogger.i('load news : ${value.toJson()}');
-
         update();
       });
     } catch (e, i) {
@@ -147,6 +134,7 @@ class DashboardController extends BaseController {
       ),
     ];
     var favMenu = await storage.readString(StorageCore.favoriteMenu);
+    // var shipcost = await storage.readString(StorageCore.shippingCost);
     update();
     if (favMenu.isEmpty == true) {
       await storage.saveData(
@@ -348,11 +336,11 @@ class DashboardController extends BaseController {
         ((await storage.readString(StorageCore.receiver)).isEmpty || (await storage.readString(StorageCore.receiver)) == 'null') && state.isLogin;
     bool sender =
         ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null') && state.isLogin;
-    bool basic = ((await storage.readString(StorageCore.basicProfile)).isEmpty || (await storage.readString(StorageCore.basicProfile)) == 'null') &&
-        state.isLogin;
-    bool ccrfP = ((await storage.readString(StorageCore.ccrfProfile)).isEmpty ||
-            (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
-            (await storage.readString(StorageCore.ccrfProfile)) == '{}') &&
+    bool basic =
+        ((await storage.readString(StorageCore.userProfil)).isEmpty || (await storage.readString(StorageCore.userProfil)) == 'null') && state.isLogin;
+    bool ccrfP = ((await storage.readString(StorageCore.ccrfProfil)).isEmpty ||
+            (await storage.readString(StorageCore.ccrfProfil)) == 'null' ||
+            (await storage.readString(StorageCore.ccrfProfil)) == '{}') &&
         state.isLogin;
     update();
 
@@ -388,7 +376,7 @@ class DashboardController extends BaseController {
           }
         });
       } else {
-        state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+        state.basic = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
         update();
         if (state.basic?.language == "INDONESIA") {
           await storage.writeString(StorageCore.localeApp, "id");
@@ -450,7 +438,7 @@ class DashboardController extends BaseController {
             ));
       }
 
-      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y");
+      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.ccrfApistatus == "Y");
 
       storage.saveData(StorageCore.ccrfProfile, state.ccrf);
       // #TODO : implement jlc api
@@ -465,7 +453,7 @@ class DashboardController extends BaseController {
       //   debugPrint("jlc error $value");
       // });
       update();
-      UserModel shipper = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+      UserModel shipper = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
       state.userName = shipper.name ?? '';
       state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
       update();

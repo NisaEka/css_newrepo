@@ -15,6 +15,8 @@ import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_state.dart';
+import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -25,7 +27,6 @@ class ShipperController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    print('edit transaksi : ${state.data?.shipper?.region?.name}');
     Future.wait([
       initData(),
     ]);
@@ -35,20 +36,19 @@ class ShipperController extends BaseController {
       connection.isOnline().then((value) {
         state.isOnline = value && (result != ConnectivityResult.none);
         if (state.isOnline) {
-          Get.showSnackbar(
-            GetSnackBar(
-              padding: const EdgeInsets.symmetric(vertical: 1.5),
-              margin: const EdgeInsets.only(top: 195),
-              snackPosition: SnackPosition.TOP,
-              messageText: Center(
+          AppSnackBar.custom(
+            message: '',
+            snackPosition: SnackPosition.TOP,
+            margin: const EdgeInsets.only(top: 195),
+            padding: const EdgeInsets.symmetric(vertical: 1.5),
+            messageText: Container(
+              color: successColor, // Set your desired background color here
+              child: Center(
                 child: Text(
                   'Online Mode'.tr,
                   style: listTitleTextStyle.copyWith(color: whiteColor),
                 ),
               ),
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: successColor.withOpacity(0.7),
             ),
           );
         }
@@ -320,21 +320,11 @@ class ShipperController extends BaseController {
             city: state.selectedOrigin?.originName,
           ))
           .then(
-            (value) => Get.showSnackbar(
-              GetSnackBar(
-                icon: const Icon(
-                  Icons.info,
-                  color: whiteColor,
-                ),
-                message: value.code == 201 ? "Data dropshipper telah disimpan".tr : value.error[0].toString(),
-                isDismissible: true,
-                duration: const Duration(seconds: 3),
-                backgroundColor: value.code == 201 ? successColor : errorColor,
-              ),
-            ),
+            (value) =>
+                AppSnackBar.success('Data dropshipper telah disimpan'.tr),
           );
     } catch (e) {
-      e.printError();
+      AppLogger.e('error save dropshipper $e');
     }
 
     state.isLoadSave = false;

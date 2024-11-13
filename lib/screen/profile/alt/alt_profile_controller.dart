@@ -37,19 +37,19 @@ class AltProfileController extends BaseController {
     // DateTime now = DateTime.now();
     // if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
     //   currentBackPressTime = now;
-    //   Get.showSnackbar(
-    //     GetSnackBar(
-    //       icon: const Icon(
-    //         Icons.info,
-    //         color: whiteColor,
-    //       ),
-    //       message: 'Double click back button to exit',
-    //       isDismissible: true,
-    //       duration: const Duration(seconds: 3),
-    //       backgroundColor: greyColor.withOpacity(0.8),
-    //       padding: const EdgeInsets.all(10),
-    //       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+    //   AppSnackBar.custom(
+    //     message: 'Double click back button to exit',
+    //     backgroundColor: greyColor.withOpacity(0.8),
+    //     icon: const Icon(
+    //       Icons.info,
+    //       color: whiteColor,
     //     ),
+    //     durationInSeconds: 3,
+    //     snackPosition: SnackPosition.BOTTOM,
+    //     snackStyle: SnackStyle.GROUNDED,
+    //     margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+    //     padding: const EdgeInsets.all(10),
+    //     messageText: null,
     //   );
     //   pop = false;
     //   update();

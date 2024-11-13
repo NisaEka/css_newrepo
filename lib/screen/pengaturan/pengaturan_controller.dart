@@ -1,12 +1,12 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -165,31 +165,8 @@ class PengaturanController extends BaseController {
           },
         )
             : value.code == 404
-            ? Get.showSnackbar(
-          GetSnackBar(
-            icon: const Icon(
-              Icons.warning,
-              color: whiteColor,
-            ),
-            message: 'User Not Found'.tr,
-            isDismissible: true,
-            duration: const Duration(seconds: 3),
-            backgroundColor: errorColor,
-          ),
-        )
-            : Get.showSnackbar(
-          GetSnackBar(
-            icon: const Icon(
-              Icons.warning,
-              color: whiteColor,
-            ),
-            message: 'Bad Request'.tr,
-            isDismissible: true,
-            duration: const Duration(seconds: 3),
-            backgroundColor: errorColor,
-          ),
-        ),
-      );
+            ? AppSnackBar.error('User Not Found'.tr)
+            : AppSnackBar.error('Bad Request'.tr));
     } catch (e) {
       e.printError();
     }

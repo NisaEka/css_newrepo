@@ -1,5 +1,4 @@
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
-import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';

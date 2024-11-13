@@ -32,7 +32,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
         "/officers",
         queryParameters: params.toJson(),
       );
-      AppLogger.d('get officers : ${response.data.toString()}');
       return BaseResponse.fromJson(
         response.data,
         (json) => json is List<dynamic>
@@ -44,8 +43,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      AppLogger.e('error get officers : ${e.response?.data.toString()}');
-
       return e.response?.data;
     }
   }

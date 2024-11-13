@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/dropshipper/list_dropshipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_controller.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,14 +25,7 @@ class ListDropshipperButton extends StatelessWidget {
                         c.getSelectedDropshipper();
                       },
                     )
-                  : Get.showSnackbar(
-                      GetSnackBar(
-                        message: 'Pilih Account Terlebih dahulu'.tr,
-                        backgroundColor: errorColor,
-                        isDismissible: true,
-                        duration: const Duration(seconds: 5),
-                      ),
-                    ),
+                  : AppSnackBar.error('Pilih Account Terlebih dahulu'.tr),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 5),

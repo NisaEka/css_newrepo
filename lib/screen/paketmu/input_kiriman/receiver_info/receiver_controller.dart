@@ -11,6 +11,7 @@ import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_state.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,20 +31,19 @@ class ReceiverController extends BaseController {
         state.isOnline = value && (result != ConnectivityResult.none);
         update();
         if (state.isOnline) {
-          Get.showSnackbar(
-            GetSnackBar(
-              padding: const EdgeInsets.symmetric(vertical: 1.5),
-              margin: const EdgeInsets.only(top: 195),
-              snackPosition: SnackPosition.TOP,
-              messageText: Center(
+          AppSnackBar.custom(
+            message: '',
+            snackPosition: SnackPosition.TOP,
+            margin: const EdgeInsets.only(top: 195),
+            padding: const EdgeInsets.symmetric(vertical: 1.5),
+            messageText: Container(
+              color: successColor, // Set your desired background color here
+              child: Center(
                 child: Text(
                   'Online Mode'.tr,
                   style: listTitleTextStyle.copyWith(color: whiteColor),
                 ),
               ),
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-              backgroundColor: successColor.withOpacity(0.7),
             ),
           );
         }
@@ -192,20 +192,12 @@ class ReceiverController extends BaseController {
                     ),
                   ),
           );
+          .then((value) => value.code == 201
+              ? AppSnackBar.success('Data receiver telah disimpan'.tr)
+              : AppSnackBar.error(value.error?.first.message.tr));
     } catch (e) {
       e.printError();
-      Get.showSnackbar(
-        GetSnackBar(
-          icon: const Icon(
-            Icons.info,
-            color: whiteColor,
-          ),
-          message: 'Tidak dapat menyimpan state.data'.tr,
-          isDismissible: true,
-          duration: const Duration(seconds: 3),
-          backgroundColor: errorColor,
-        ),
-      );
+      AppSnackBar.error('Tidak dapat menyimpan state.data'.tr);
     }
 
     state.isLoadSave = false;

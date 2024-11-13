@@ -10,6 +10,7 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:css_mobile/screen/auth/signup/signup_state.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -109,45 +110,18 @@ class SignUpController extends BaseController {
     )
         .then((value) {
       if (value.code == 201) {
-        Get.showSnackbar(
-          GetSnackBar(
-            icon: const Icon(
-              Icons.info,
-              color: whiteColor,
-            ),
-            message: 'Silahkan cek email anda'.tr,
-            isDismissible: true,
-            duration: const Duration(seconds: 3),
-            backgroundColor: successColor,
-          ),
-        );
+        AppSnackBar.success('Silahkan cek email anda'.tr);
         Get.to(const SignUpOTPScreen(), arguments: {
           'email': state.email.text,
           'isActivation': false,
         });
       } else if (value.code == 409 || value.message == "Conflict") {
-        Get.showSnackbar(
-          GetSnackBar(
-            icon: const Icon(Icons.warning, color: whiteColor),
-            message: 'email atau nomor telepon sudah terdaftar'.tr,
-            isDismissible: true,
-            duration: const Duration(seconds: 3),
-            backgroundColor: errorColor,
-          ),
-        );
+        AppSnackBar.error('email atau nomor telepon sudah terdaftar'.tr);
       } else {
-        Get.showSnackbar(
-          GetSnackBar(
-            icon: const Icon(Icons.warning, color: whiteColor),
-            message: value.error[0].toString(),
-            isDismissible: true,
-            duration: const Duration(seconds: 3),
-            backgroundColor: errorColor,
-          ),
-        );
+        AppSnackBar.error(value.error[0].toString());
       }
     }).catchError((error) {
-      error.printError(info: 'signup error');
+      AppLogger.e('error signup $error');
     });
 
     state.isLoading = false;
