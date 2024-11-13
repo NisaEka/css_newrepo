@@ -109,17 +109,16 @@ class TransactionRepositoryImpl extends TransactionRepository {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
-    String registID = '{"registrationId" : "${user.id}"}';
-    String type = transType.isNotEmpty ? ', {"apiType" : "$transType"}' : "";
-    String petugasEntry = officer.isNotEmpty ? ', {"petugasEntry" : "$officer"}' : '';
-    // String status = transStatus.isNotEmpty ? ', {"statusAwb" : "$transStatus"}' : "";
+    print(transType);
     QueryParamModel params = QueryParamModel(
       table: true,
       limit: limit,
       page: page,
       search: keyword,
       between: transDate,
-      where: '[$registID $type $petugasEntry]',
+      type: transType.isNotEmpty ? transType : null,
+      status: transStatus.isNotEmpty ? transStatus : null,
+      // where: '[$registID $type $petugasEntry]',
       sort: '[{"createdDateSearch":"desc"}]',
     );
 
@@ -189,15 +188,14 @@ class TransactionRepositoryImpl extends TransactionRepository {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
-    String registID = '{"registrationId" : "${user.id}"}';
-    String type = transType.isNotEmpty ? ', {"apiType" : "$transType"}' : "";
-    String petugasEntry = officer.isNotEmpty ? ', {"petugasEntry" : "$officer"}' : '';
-    // String status = transStatus.isNotEmpty ? ', {"statusAwb" : "$transStatus"}' : "";
+
     QueryParamModel params = QueryParamModel(
       table: true,
       search: keyword,
       between: transDate,
-      where: '[$registID $type $petugasEntry]',
+      type: transType.isNotEmpty ? transType : null,
+      status: transStatus.isNotEmpty ? transStatus : null,
+      // where: '[$registID $type $petugasEntry]',
       sort: '[{"createdDateSearch":"desc"}]',
     );
 
