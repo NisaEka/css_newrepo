@@ -50,10 +50,10 @@ class PengaturanController extends BaseController {
     update();
     await auth
         .logout(
-            // Device(
-            //   fcmToken: await storage.readString(StorageCore.fcmToken),
-            // ),
-            )
+      // Device(
+      //   fcmToken: await storage.readString(StorageCore.fcmToken),
+      // ),
+    )
         .then((value) async {
       debugPrint(value.toJson().toString());
       // if (value.code == 200) {
@@ -141,40 +141,41 @@ class PengaturanController extends BaseController {
   Future<void> sendEmail() async {
     try {
       await auth.postEmailForgotPassword(basicProfil?.email ?? '').then(
-            (value) => value.code == 201
-                ? Get.to(
-                    const ForgotPasswordOTPScreen(),
-                    arguments: {
-                      'email': basicProfil?.email ?? '',
-                      'isChange': true,
-                    },
-                  )
-                : value.code == 404
-                    ? Get.showSnackbar(
-                        GetSnackBar(
-                          icon: const Icon(
-                            Icons.warning,
-                            color: whiteColor,
-                          ),
-                          message: 'User Not Found'.tr,
-                          isDismissible: true,
-                          duration: const Duration(seconds: 3),
-                          backgroundColor: errorColor,
-                        ),
-                      )
-                    : Get.showSnackbar(
-                        GetSnackBar(
-                          icon: const Icon(
-                            Icons.warning,
-                            color: whiteColor,
-                          ),
-                          message: 'Bad Request'.tr,
-                          isDismissible: true,
-                          duration: const Duration(seconds: 3),
-                          backgroundColor: errorColor,
-                        ),
-                      ),
-          );
+            (value) =>
+        value.code == 201
+            ? Get.to(
+          const ForgotPasswordOTPScreen(),
+          arguments: {
+            'email': basicProfil?.email ?? '',
+            'isChange': true,
+          },
+        )
+            : value.code == 404
+            ? Get.showSnackbar(
+          GetSnackBar(
+            icon: const Icon(
+              Icons.warning,
+              color: whiteColor,
+            ),
+            message: 'User Not Found'.tr,
+            isDismissible: true,
+            duration: const Duration(seconds: 3),
+            backgroundColor: errorColor,
+          ),
+        )
+            : Get.showSnackbar(
+          GetSnackBar(
+            icon: const Icon(
+              Icons.warning,
+              color: whiteColor,
+            ),
+            message: 'Bad Request'.tr,
+            isDismissible: true,
+            duration: const Duration(seconds: 3),
+            backgroundColor: errorColor,
+          ),
+        ),
+      );
     } catch (e) {
       e.printError();
     }
