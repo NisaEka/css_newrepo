@@ -166,35 +166,8 @@ class ReceiverController extends BaseController {
             subDistrict: state.selectedDestination?.subdistrictName ?? '-',
           ))
           .then(
-            (value) => value.code == 201
-                ? Get.showSnackbar(
-                    GetSnackBar(
-                      icon: const Icon(
-                        Icons.info,
-                        color: whiteColor,
-                      ),
-                      message: "Data receiver telah disimpan".tr,
-                      isDismissible: true,
-                      duration: const Duration(seconds: 3),
-                      backgroundColor: value.code == 201 ? successColor : errorColor,
-                    ),
-                  )
-                : Get.showSnackbar(
-                    GetSnackBar(
-                      icon: const Icon(
-                        Icons.info,
-                        color: whiteColor,
-                      ),
-                      message: value.error?.first.message ?? ''.tr,
-                      isDismissible: true,
-                      duration: const Duration(seconds: 3),
-                      backgroundColor: value.code == 201 ? successColor : errorColor,
-                    ),
-                  ),
+            (value) => value.code == 201 ? AppSnackBar.success('Data receiver telah disimpan'.tr) : AppSnackBar.error(value.error?.first.message.trs),
           );
-          .then((value) => value.code == 201
-              ? AppSnackBar.success('Data receiver telah disimpan'.tr)
-              : AppSnackBar.error(value.error?.first.message.tr));
     } catch (e) {
       e.printError();
       AppSnackBar.error('Tidak dapat menyimpan state.data'.tr);

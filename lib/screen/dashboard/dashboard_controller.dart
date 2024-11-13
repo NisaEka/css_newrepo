@@ -337,10 +337,10 @@ class DashboardController extends BaseController {
     bool sender =
         ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null') && state.isLogin;
     bool basic =
-        ((await storage.readString(StorageCore.userProfil)).isEmpty || (await storage.readString(StorageCore.userProfil)) == 'null') && state.isLogin;
-    bool ccrfP = ((await storage.readString(StorageCore.ccrfProfil)).isEmpty ||
-            (await storage.readString(StorageCore.ccrfProfil)) == 'null' ||
-            (await storage.readString(StorageCore.ccrfProfil)) == '{}') &&
+        ((await storage.readString(StorageCore.basicProfile)).isEmpty || (await storage.readString(StorageCore.basicProfile)) == 'null') && state.isLogin;
+    bool ccrfP = ((await storage.readString(StorageCore.ccrfProfile)).isEmpty ||
+            (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
+            (await storage.readString(StorageCore.ccrfProfile)) == '{}') &&
         state.isLogin;
     update();
 
@@ -376,7 +376,7 @@ class DashboardController extends BaseController {
           }
         });
       } else {
-        state.basic = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+        state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
         update();
         if (state.basic?.language == "INDONESIA") {
           await storage.writeString(StorageCore.localeApp, "id");
@@ -438,7 +438,7 @@ class DashboardController extends BaseController {
             ));
       }
 
-      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.ccrfApistatus == "Y");
+      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y");
 
       storage.saveData(StorageCore.ccrfProfile, state.ccrf);
       // #TODO : implement jlc api
@@ -453,7 +453,7 @@ class DashboardController extends BaseController {
       //   debugPrint("jlc error $value");
       // });
       update();
-      UserModel shipper = UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+      UserModel shipper = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
       state.userName = shipper.name ?? '';
       state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
       update();
