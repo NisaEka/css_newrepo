@@ -54,7 +54,10 @@ class ProfilRepositoryImpl extends ProfilRepository {
       );
     } on DioException catch (e) {
       AppLogger.e("ccrf error : ${e.response?.data}");
-      return e.response?.data;
+      return BaseResponse<CcrfProfileModel>.fromJson(
+        e.response?.data,
+        (json) => CcrfProfileModel.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 

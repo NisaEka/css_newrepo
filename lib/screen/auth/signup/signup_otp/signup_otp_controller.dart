@@ -55,7 +55,7 @@ class SignUpOTPController extends BaseController {
                 Icons.warning,
                 color: whiteColor,
               ),
-              message: 'PIN tidak sesuai'.tr,
+              message: value.message,
               isDismissible: true,
               duration: const Duration(seconds: 3),
               backgroundColor: errorColor,

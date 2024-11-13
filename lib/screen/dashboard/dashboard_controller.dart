@@ -87,6 +87,8 @@ class DashboardController extends BaseController {
       jlc.postDashboardBanner().then((value) {
         state.bannerList.addAll(value.data ?? []);
         update();
+        debugPrint('get banner : ${value.toJson()}');
+
       });
     } catch (e) {
       e.printError();
@@ -101,8 +103,7 @@ class DashboardController extends BaseController {
 
         update();
       });
-
-    } catch (e,i) {
+    } catch (e, i) {
       e.printError();
       i.printError();
     }
@@ -282,13 +283,17 @@ class DashboardController extends BaseController {
       )
           .then((value) async {
         value.code == 409
-            ? await auth.updateDeviceInfo(
-                await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
-              )
+            ? await auth
+                .updateDeviceInfo(
+                  await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+                )
+                .then((v) => AppLogger.i('update device info ${v.code}'))
             // : value.code == 401 || value.code == 400 || value.code == null
-            : await auth.postFcmTokenNonAuth(
-                await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
-              );
+            : await auth
+                .postFcmTokenNonAuth(
+                  await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+                )
+                .then((v) => AppLogger.i('add device info non auth ${v.code}'));
         // : debugPrint('post device info : ${value.code}'));
         debugPrint('post device info : ${value.code}');
       });
@@ -343,8 +348,8 @@ class DashboardController extends BaseController {
         ((await storage.readString(StorageCore.receiver)).isEmpty || (await storage.readString(StorageCore.receiver)) == 'null') && state.isLogin;
     bool sender =
         ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null') && state.isLogin;
-    bool basic =
-        ((await storage.readString(StorageCore.basicProfile)).isEmpty || (await storage.readString(StorageCore.basicProfile)) == 'null') && state.isLogin;
+    bool basic = ((await storage.readString(StorageCore.basicProfile)).isEmpty || (await storage.readString(StorageCore.basicProfile)) == 'null') &&
+        state.isLogin;
     bool ccrfP = ((await storage.readString(StorageCore.ccrfProfile)).isEmpty ||
             (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
             (await storage.readString(StorageCore.ccrfProfile)) == '{}') &&
@@ -359,16 +364,18 @@ class DashboardController extends BaseController {
             value.data?.user,
           );
 
-          await storage.saveData(StorageCore.shipper, ShipperModel(
-            name: value.data?.user?.brand,
-            phone: value.data?.user?.phone,
-            address: value.data?.user?.address,
-            zipCode: value.data?.user?.zipCode,
-            city: value.data?.user?.origin?.originName,
-            origin: value.data?.user?.origin,
-            country: value.data?.user?.language,
-            region: value.data?.user?.region,
-          ));
+          await storage.saveData(
+              StorageCore.shipper,
+              ShipperModel(
+                name: value.data?.user?.brand,
+                phone: value.data?.user?.phone,
+                address: value.data?.user?.address,
+                zipCode: value.data?.user?.zipCode,
+                city: value.data?.user?.origin?.originName,
+                origin: value.data?.user?.origin,
+                country: value.data?.user?.language,
+                region: value.data?.user?.region,
+              ));
 
           if (state.basic?.language == "INDONESIA") {
             await storage.writeString(StorageCore.localeApp, "id");

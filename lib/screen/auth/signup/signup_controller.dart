@@ -139,7 +139,7 @@ class SignUpController extends BaseController {
         Get.showSnackbar(
           GetSnackBar(
             icon: const Icon(Icons.warning, color: whiteColor),
-            message: value.message[0].toString(),
+            message: value.error[0].toString(),
             isDismissible: true,
             duration: const Duration(seconds: 3),
             backgroundColor: errorColor,

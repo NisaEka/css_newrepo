@@ -202,11 +202,14 @@ class AuthRepositoryImpl extends AuthRepository {
         '/auth/device-infos',
         data: data,
       );
+      AppLogger.d('post fcm token ${response.data.toString()}');
       return BaseResponse.fromJson(
         response.data,
         (json) => null,
       );
     } on DioException catch (e) {
+
+      AppLogger.e('post fcm token ${e.response?.data.toString()}');
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => null,
@@ -275,6 +278,7 @@ class AuthRepositoryImpl extends AuthRepository {
       );
       return BaseResponse.fromJson(response.data, (json) => json);
     } on DioException catch (e) {
+      AppLogger.e('error update device info : ${e.response?.data}');
       return BaseResponse.fromJson(e.response?.data, (json) => json);
     }
   }
