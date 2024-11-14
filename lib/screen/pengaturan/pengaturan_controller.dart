@@ -56,7 +56,7 @@ class PengaturanController extends BaseController {
             // ),
             )
         .then((value) async {
-      debugPrint(value.toJson().toString());
+      AppLogger.d(value.toJson().toString());
       // if (value.code == 200) {
       await auth.logout();
       storage.deleteLogin();
@@ -170,7 +170,7 @@ class PengaturanController extends BaseController {
                   ? AppSnackBar.error('User Not Found'.tr)
                   : AppSnackBar.error('Bad Request'.tr));
     } catch (e) {
-      e.printError();
+      AppLogger.e('error sendEmail $e');
     }
   }
 }

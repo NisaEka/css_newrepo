@@ -8,6 +8,7 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,7 @@ class AltProfileController extends BaseController {
 
     try {
       String? token = await storage.readAccessToken();
-      debugPrint("token : $token");
+      AppLogger.i('token : $token');
       isLogin = token != null;
       // if (await storage.readData(StorageCore.userProfil) == null) {
       await profil.getBasicProfil().then((value) async {
@@ -78,8 +79,7 @@ class AltProfileController extends BaseController {
       });
       // }
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error initData alt profile $e, $i');
       basicProfil = UserModel.fromJson(
         await storage.readData(StorageCore.basicProfile),
       );
@@ -103,7 +103,7 @@ class AltProfileController extends BaseController {
       });
       // }
     } catch (e) {
-      e.printError();
+      AppLogger.e('error getCcrf', e);
     }
 
     isCcrf = ccrf != null && ccrf?.generalInfo?.apiStatus == "Y";

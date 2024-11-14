@@ -187,8 +187,7 @@ class TambahPetugasController extends BaseController {
         update();
       }
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error initData tambah petugas $e, $i');
     }
 
     isLoading = false;
@@ -230,8 +229,7 @@ class TambahPetugasController extends BaseController {
       });
       update();
     } catch (e, i) {
-      e.printError();
-      i.printError(info: "error load origin:");
+      AppLogger.e('error loadOrigin $e, $i');
     }
     for (var value in originCodes) {
       selectedOrigin.add(originList.where((e) => e.originCode == value).isNotEmpty ? originList.where((e) => e.originCode == value).first : Origin());

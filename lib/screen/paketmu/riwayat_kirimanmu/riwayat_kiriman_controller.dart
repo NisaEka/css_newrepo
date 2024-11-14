@@ -53,8 +53,7 @@ class RiwayatKirimanController extends BaseController {
         update();
       });
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error transactionCount $e, $i');
     }
   }
 
@@ -81,7 +80,7 @@ class RiwayatKirimanController extends BaseController {
 
       update();
     } catch (e) {
-      e.printError();
+      AppLogger.e('error initData riwayat kiriman $e');
     }
 
     cekAllowance();
@@ -111,7 +110,7 @@ class RiwayatKirimanController extends BaseController {
         // transactionList.addAll(state.pagingController.itemList ?? []);
       }
     } catch (e) {
-      e.printError();
+      AppLogger.e('error getTransaction $e');
       state.pagingController.error = e;
     }
 

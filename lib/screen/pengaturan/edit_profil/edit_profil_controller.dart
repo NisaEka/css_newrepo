@@ -6,6 +6,7 @@ import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -62,8 +63,7 @@ class EditProfileController extends BaseController {
       });
       update();
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error initData edit profil $e, $i');
 
       var basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
 
@@ -104,8 +104,7 @@ class EditProfileController extends BaseController {
       // var response = await master.getdes(keyword);
       // destinationModel = response;
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error getDestinationList $e, $i');
     }
 
     isLoading = false;
@@ -166,7 +165,7 @@ class EditProfileController extends BaseController {
         (value) => Get.offAndToNamed("/profileGeneral"),
       );
     } catch (e) {
-      e.printError();
+      AppLogger.e('error updateBasic $e');
     }
 
     isLoading = false;
@@ -196,7 +195,7 @@ class EditProfileController extends BaseController {
             (value) => Get.offAndToNamed("/profileGeneral"),
           );
     } catch (e) {
-      e.printError();
+      AppLogger.e('error updateData $e');
     }
 
     updateBasic();
