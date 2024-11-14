@@ -1,5 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 
@@ -22,9 +23,10 @@ class EditProfileController extends BaseController {
   bool isLoading = false;
   bool isCcrf = false;
   bool isLoadOrigin = false;
+
   // GetDestinationModel? destinationModel;
   Destination? selectedCity;
-  OriginModel? selectedOrigin;
+  Origin? selectedOrigin;
   UserModel? basicProfil;
   CcrfProfileModel? ccrfProfil;
 
@@ -37,25 +39,22 @@ class EditProfileController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     try {
-      await profil
-          .getBasicProfil()
-          .then((value) => basicProfil = value.data?.user);
+      await profil.getBasicProfil().then((value) => basicProfil = value.data?.user);
       update();
 
       await profil.getCcrfProfil().then((value) {
         if (value.data != null) {
           ccrfProfil = value.data;
-          isCcrf = value.data != null &&
-              value.data?.generalInfo?.ccrfApistatus == "Y";
+          isCcrf = value.data != null && value.data?.generalInfo?.apiStatus == "Y";
         } else {
           ccrfProfil ??= CcrfProfileModel(
             generalInfo: GeneralInfo(
-              ccrfName: basicProfil?.name?.toUpperCase(),
-              ccrfBrand: basicProfil?.brand?.toUpperCase(),
-              ccrfAddress: basicProfil?.address?.toUpperCase(),
-              ccrfEmail: basicProfil?.email,
-              ccrfPhone: basicProfil?.phone,
-              ccrfZipcode: basicProfil?.zipCode,
+              name: basicProfil?.name?.toUpperCase(),
+              brand: basicProfil?.brand?.toUpperCase(),
+              address: basicProfil?.address?.toUpperCase(),
+              email: basicProfil?.email,
+              phone: basicProfil?.phone,
+              zipCode: basicProfil?.zipCode,
             ),
           );
           selectedOrigin = basicProfil?.origin;
@@ -66,8 +65,7 @@ class EditProfileController extends BaseController {
       e.printError();
       i.printError();
 
-      var basic =
-          UserModel.fromJson(await storage.readData(StorageCore.userProfil));
+      var basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
 
       brand.text = basic.brand ?? '';
       name.text = basic.name ?? '';
@@ -76,25 +74,25 @@ class EditProfileController extends BaseController {
       email.text = basic.email ?? '';
       update();
     }
-    brand.text = ccrfProfil?.generalInfo?.ccrfBrand ?? '';
-    name.text = ccrfProfil?.generalInfo?.ccrfName ?? '';
-    address.text = ccrfProfil?.generalInfo?.ccrfAddress ?? '';
-    city.text = '${ccrfProfil?.generalInfo?.ccrfCity}; '
-        '${ccrfProfil?.generalInfo?.ccrfDistrict}; '
-        '${ccrfProfil?.generalInfo?.ccrfSubdistrict}; '
-        '${ccrfProfil?.generalInfo?.ccrfZipcode}';
+    brand.text = ccrfProfil?.generalInfo?.brand ?? '';
+    name.text = ccrfProfil?.generalInfo?.name ?? '';
+    address.text = ccrfProfil?.generalInfo?.address ?? '';
+    city.text = '${ccrfProfil?.generalInfo?.city}; '
+        '${ccrfProfil?.generalInfo?.district}; '
+        '${ccrfProfil?.generalInfo?.subDistrict}; '
+        '${ccrfProfil?.generalInfo?.zipCode}';
     selectedCity = Destination(
-      cityName: ccrfProfil?.generalInfo?.ccrfCity,
-      countryName: ccrfProfil?.generalInfo?.ccrfCountry,
-      districtName: ccrfProfil?.generalInfo?.ccrfDistrict,
-      subdistrictName: ccrfProfil?.generalInfo?.ccrfSubdistrict,
-      zipCode: ccrfProfil?.generalInfo?.ccrfZipcode,
-      provinceName: ccrfProfil?.generalInfo?.ccrfProvince,
+      cityName: ccrfProfil?.generalInfo?.city,
+      countryName: ccrfProfil?.generalInfo?.country,
+      districtName: ccrfProfil?.generalInfo?.district,
+      subdistrictName: ccrfProfil?.generalInfo?.subDistrict,
+      zipCode: ccrfProfil?.generalInfo?.zipCode,
+      provinceName: ccrfProfil?.generalInfo?.province,
     );
-    ktp.text = ccrfProfil?.generalInfo?.ccrfKtp ?? '';
-    phone.text = ccrfProfil?.generalInfo?.ccrfPhone ?? '';
-    whatsapp.text = ccrfProfil?.generalInfo?.ccrfHandphone ?? '';
-    email.text = ccrfProfil?.generalInfo?.ccrfEmail ?? '';
+    ktp.text = ccrfProfil?.generalInfo?.ktp ?? '';
+    phone.text = ccrfProfil?.generalInfo?.phone ?? '';
+    whatsapp.text = ccrfProfil?.generalInfo?.secondPhone ?? '';
+    email.text = ccrfProfil?.generalInfo?.email ?? '';
     update();
     isLoading = false;
     update();
@@ -103,7 +101,7 @@ class EditProfileController extends BaseController {
   Future<List<Destination>> getDestinationList(String keyword) async {
     isLoading = true;
     try {
-      // var response = await transaction.getDestination(keyword);
+      // var response = await master.getdes(keyword);
       // destinationModel = response;
     } catch (e, i) {
       e.printError();
@@ -116,7 +114,7 @@ class EditProfileController extends BaseController {
     return [];
   }
 
-  Future<List<OriginModel>> getOriginList(String keyword) async {
+  Future<List<Origin>> getOriginList(String keyword) async {
     isLoadOrigin = true;
     // var response = await ongkir.postOrigin(keyword);
     // var models = response.payload?.toList();
@@ -130,21 +128,43 @@ class EditProfileController extends BaseController {
   Future<void> updateBasic() async {
     isLoading = true;
     update();
+    String language = await storage.readString(StorageCore.localeApp);
     try {
       await profil
           .putProfileBasic(
-            UserModel(
-              name: name.text,
-              brand: brand.text,
-              phone: phone.text,
-              address: address.text,
-              origin: selectedOrigin,
-              zipCode: selectedCity?.zipCode,
-            ),
-          )
-          .then(
-            (value) => Get.offAndToNamed("/profileGeneral"),
+        UserModel(
+          name: name.text,
+          brand: brand.text,
+          phone: phone.text,
+          address: address.text,
+          origin: selectedOrigin,
+          zipCode: selectedCity?.zipCode,
+          language: language == 'id' ? 'INDONESEIA' : 'ENGLISH',
+        ),
+      )
+          .then((_) async {
+        await profil.getBasicProfil().then((value) async {
+          await storage.saveData(
+            StorageCore.basicProfile,
+            value.data?.user,
           );
+
+          await storage.saveData(
+              StorageCore.shipper,
+              ShipperModel(
+                name: value.data?.user?.brand,
+                phone: value.data?.user?.phone,
+                address: value.data?.user?.address,
+                zipCode: value.data?.user?.zipCode,
+                city: value.data?.user?.origin?.originName,
+                origin: value.data?.user?.origin,
+                country: value.data?.user?.language,
+                region: value.data?.user?.region,
+              ));
+        });
+      }).then(
+        (value) => Get.offAndToNamed("/profileGeneral"),
+      );
     } catch (e) {
       e.printError();
     }
@@ -153,28 +173,33 @@ class EditProfileController extends BaseController {
     update();
   }
 
-  Future<void> updateData() async {
+  Future<void> updateCcrf() async {
     isLoading = true;
     update();
     try {
       await profil
           .putProfileCCRF(GeneralInfo(
-            ccrfBrand: brand.text,
-            ccrfName: name.text,
-            ccrfAddress: address.text,
-            ccrfCountry: selectedCity?.countryName,
-            ccrfDistrict: selectedCity?.districtName,
-            ccrfProvince: selectedCity?.provinceName,
-            ccrfCity: selectedCity?.cityName,
-            ccrfSubdistrict: selectedCity?.subdistrictName,
-            ccrfZipcode: selectedCity?.zipCode,
+            brand: brand.text,
+            name: name.text,
+            address: address.text,
+            country: selectedCity?.countryName,
+            district: selectedCity?.districtName,
+            province: selectedCity?.provinceName,
+            city: selectedCity?.cityName,
+            subDistrict: selectedCity?.subdistrictName,
+            zipCode: selectedCity?.zipCode,
           ))
+          .then((_) async => await profil.getCcrfProfil().then((value) async {
+                await storage.saveData(StorageCore.ccrfProfile, value.data);
+              }))
           .then(
             (value) => Get.offAndToNamed("/profileGeneral"),
           );
     } catch (e) {
       e.printError();
     }
+
+    updateBasic();
 
     isLoading = false;
     update();
@@ -185,5 +210,9 @@ class EditProfileController extends BaseController {
       selectedOrigin = value;
       update();
     }
+  }
+
+  void editProfile() {
+    isCcrf ? updateCcrf() : updateBasic();
   }
 }

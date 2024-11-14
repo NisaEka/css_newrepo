@@ -9,6 +9,7 @@ import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/forms/destination_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
@@ -66,72 +67,36 @@ class EditProfilScreen extends StatelessWidget {
               validator: ValidationBuilder().address().build(),
             ),
             !c.isCcrf
-                ? CustomSearchDropdownField<OriginModel>(
+                ? CustomSearchDropdownField<Origin>(
                     asyncItems: (String filter) => c.getOriginList(filter),
                     itemBuilder: (context, e, b) {
                       return Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                         child: Text(
                           e.originName.toString(),
                         ),
                       );
                     },
-                    itemAsString: (OriginModel e) => e.originName.toString(),
+                    itemAsString: (Origin e) => e.originName.toString(),
                     onChanged: (value) => c.selectOrigin(value),
                     value: c.selectedOrigin,
                     // selectedItem: c.kotaPengirim.text,
-                    hintText:
-                        c.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
+                    hintText: c.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
                     searchHintText: 'Masukan Kota Pengiriman'.tr,
-                    textStyle: c.selectedOrigin != null
-                        ? subTitleTextStyle
-                        : hintTextStyle,
+                    textStyle: c.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
                     isRequired: true,
                     readOnly: false,
                   )
                 : const SizedBox(),
-            CustomSearchDropdownField<Destination>(
-              asyncItems: (String filter) => c.getDestinationList(filter),
-              itemBuilder: (context, e, b) {
-                return GestureDetector(
-                  onTap: () => c.update(),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                    child: Text(
-                      '${e.zipCode ?? ''}; '
-                      '${e.provinceName ?? ''}; '
-                      '${e.cityName ?? ''}; '
-                      '${e.districtName ?? ''}; '
-                      '${e.subdistrictName ?? ''}; '
-                      '${e.destinationCode ?? ''}; ',
-                    ),
-                  ),
-                );
-              },
-              selectedItem: c.ccrfProfil?.generalInfo?.ccrfZipcode,
-              itemAsString: (Destination e) => c.isCcrf
-                  ? '${e.cityName ?? ''}; '
-                      '${e.districtName ?? ''}; '
-                      '${e.subdistrictName ?? ''}; '
-                      '${e.zipCode ?? ''}'
-                  : e.zipCode ?? '',
+            DestinationDropdown(
+              label: c.isCcrf ? "Kode Pos/Provinsi/Kota/Kecamatan/Kelurahan".tr : "Kode Pos".tr,
+              selectedItem: c.ccrfProfil?.generalInfo?.zipCode,
               onChanged: (value) {
                 c.selectedCity = value;
                 c.update();
               },
               value: c.selectedCity,
               isRequired: c.selectedCity == null ? true : false,
-              readOnly: false,
-              hintText: c.isLoading
-                  ? "Loading..."
-                  : c.isCcrf
-                      ? "Kota/Kecamatan/Kelurahan/Kode Pos".tr
-                      : "Kode Pos".tr,
-              // prefixIcon: const Icon(Icons.location_city),
-              textStyle:
-                  c.selectedCity != null ? subTitleTextStyle : hintTextStyle,
             ),
             CustomTextFormField(
               controller: c.phone,
@@ -155,7 +120,7 @@ class EditProfilScreen extends StatelessWidget {
             CustomFilledButton(
               color: blueJNE,
               title: "Edit Profil".tr,
-              onPressed: () => c.isCcrf ? c.updateData() : c.updateBasic(),
+              onPressed: () => c.editProfile(),
             )
           ],
         ),

@@ -16,8 +16,8 @@ class StorageCore {
   static const String draftTransaction = 'transaction_drafts';
   static const String dropshipper = 'dropshipper';
   static const String receiver = 'receiver';
-  static const String userProfil = 'user_profil';
-  static const String ccrfProfil = 'ccrf_profil';
+  static const String basicProfile = 'user_profil';
+  static const String ccrfProfile = 'ccrf_profil';
   static const String transactionLabel = "transaction_label";
   static const String shippingCost = "shipping_const";
   static const String fcmToken = "fcm_token";
@@ -76,10 +76,10 @@ class StorageCore {
     await storage.delete(key: draftTransaction);
     await storage.delete(key: dropshipper);
     await storage.delete(key: receiver);
-    await storage.delete(key: userProfil);
+    await storage.delete(key: basicProfile);
     await storage.delete(key: transactionLabel);
     await storage.delete(key: shippingCost);
-    await storage.delete(key: ccrfProfil);
+    await storage.delete(key: ccrfProfile);
     // await storage.delete(key: isFirst);
     deleteString(StorageCore.favoriteMenu);
   }

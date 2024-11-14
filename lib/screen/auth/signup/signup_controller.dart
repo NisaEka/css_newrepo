@@ -1,4 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/get_agent_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
@@ -10,6 +11,7 @@ import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart'
 import 'package:css_mobile/screen/auth/signup/signup_state.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +25,7 @@ class SignUpController extends BaseController {
     update();
   }
 
-  void selectOrigin(OriginModel value) {
+  void selectOrigin(Origin value) {
     {
       state.selectedOrigin = value;
       state.kotaPengirim.text = state.selectedOrigin?.originName ?? '';
@@ -62,16 +64,27 @@ class SignUpController extends BaseController {
     state.isLoading = true;
     update();
     try {
-      await auth.getCheckMail(state.email.text).then((value) => value
-                      .data?.disposable ==
-                  true ||
-              value.data?.publicDomain == false ||
-              value.data?.mx == false
-          ? AppSnackBar.error(
-              'CSS tidak menerima pendaftaran menggunakan email temporary'.tr)
-          : saveRegistration());
+      await auth.getCheckMail(state.email.text).then((value) =>
+          value.data?.disposable == true ||
+                  value.data?.publicDomain == false ||
+                  value.data?.mx == false
+              ? Get.showSnackbar(
+                  GetSnackBar(
+                    icon: const Icon(
+                      Icons.warning,
+                      color: whiteColor,
+                    ),
+                    message:
+                        'CSS tidak menerima pendaftaran menggunakan email temporary'
+                            .tr,
+                    isDismissible: true,
+                    duration: const Duration(seconds: 3),
+                    backgroundColor: errorColor,
+                  ),
+                )
+              : saveRegistration());
     } catch (e) {
-      AppLogger.e('error signup $e');
+      e.printError();
     }
     state.isLoading = false;
     update();
@@ -105,7 +118,7 @@ class SignUpController extends BaseController {
       } else if (value.code == 409 || value.message == "Conflict") {
         AppSnackBar.error('email atau nomor telepon sudah terdaftar'.tr);
       } else {
-        AppSnackBar.error(value.message[0].toString());
+        AppSnackBar.error(value.error[0].toString());
       }
     }).catchError((error) {
       AppLogger.e('error signup $error');
@@ -115,12 +128,12 @@ class SignUpController extends BaseController {
     update();
   }
 
-  Future<OriginModel> getOrigin(String keyword) async {
+  Future<Origin> getOrigin(String keyword) async {
     var response =
         await master.getOrigins(QueryParamModel(search: keyword.toUpperCase()));
     var models = response.data?.toList();
     AppLogger.d(models as String);
-    return models?.first ?? OriginModel();
+    return models?.first ?? Origin();
   }
 
   Future<void> onSelectReferal(GroupOwnerModel value) async {

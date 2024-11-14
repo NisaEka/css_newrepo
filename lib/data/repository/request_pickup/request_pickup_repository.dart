@@ -21,7 +21,7 @@ abstract class RequestPickupRepository {
       QueryParamModel param);
   Future<BaseResponse<String>> createRequestPickupAddress(
       RequestPickupAddressCreateRequestModel createRequest);
-  Future<BaseResponse<List<OriginModel>>> getRequestPickupOrigins(
+  Future<BaseResponse<List<Origin>>> getRequestPickupOrigins(
       QueryParamModel param);
   Future<BaseResponse<List<String>>> getRequestPickupStatuses();
   Future<BaseResponse<List<String>>> getRequestPickupTypes();

@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class RiwayatKirimanState {
   DateTime? startDate;
   DateTime? endDate;
   String? selectedStatusKiriman;
-  String? selectedPetugasEntry;
+  PetugasModel? selectedPetugasEntry;
   String? transType;
   String? transDate;
   String dateFilter = '0';
@@ -30,7 +31,7 @@ class RiwayatKirimanState {
   bool isSelectAll = false;
 
   List<String> listStatusKiriman = [];
-  List<String> listOfficerEntry = [];
+  List<PetugasModel> listOfficerEntry = [];
   List<TransactionModel> selectedTransaction = [];
 
   UserModel? basic;

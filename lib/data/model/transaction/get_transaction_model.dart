@@ -28,7 +28,7 @@ class TransactionModel {
     String? orderId,
     String? courierId,
     String? destinationCode,
-    String? deliveryAmountPublish,
+    dynamic deliveryAmountPublish,
     String? statusName,
     String? specialIns,
     String? courierName,
@@ -93,6 +93,12 @@ class TransactionModel {
     String? createdDate,
     String? receiverRegion,
     String? inputType,
+    String? accountName,
+    String? accountNumber,
+    String? accountService,
+    String? accountType,
+    String? statusAwb,
+    String? pickupStatus,
   }) {
     _awb = awb;
     _taxValue = taxValue;
@@ -187,6 +193,12 @@ class TransactionModel {
     _createdDate = createdDate;
     _receiverRegion = receiverRegion;
     _inputType = inputType;
+    _accountName = accountName;
+    _accountNumber = accountNumber;
+    _accountService = accountService;
+    _accountType = accountType;
+    _statusAwb = statusAwb;
+    _pickupStatus = pickupStatus;
   }
 
   TransactionModel.fromJson(dynamic json) {
@@ -283,6 +295,12 @@ class TransactionModel {
     _createdDate = json['createdDate'];
     _receiverRegion = json['receiverRegion'];
     _inputType = json['inputType'];
+    _accountName = json['accountName'];
+    _accountNumber = json['accountNumber'];
+    _accountService = json['accountService'];
+    _accountType = json['accountType'];
+    _statusAwb = json['statusAwb'];
+    _pickupStatus = json['pickupStatus'];
   }
 
   String? _awb;
@@ -378,6 +396,12 @@ class TransactionModel {
   String? _createdDate;
   String? _receiverRegion;
   String? _inputType;
+  String? _accountName;
+  String? _accountNumber;
+  String? _accountService;
+  String? _accountType;
+  String? _statusAwb;
+  String? _pickupStatus;
 
   TransactionModel copyWith({
     String? awb,
@@ -473,6 +497,12 @@ class TransactionModel {
     String? createdDate,
     String? receiverRegion,
     String? inputType,
+    String? accountName,
+    String? accountNumber,
+    String? accountService,
+    String? accountType,
+    String? statusAwb,
+    String? pickupStatus,
   }) =>
       TransactionModel(
         awb: awb ?? _awb,
@@ -568,6 +598,12 @@ class TransactionModel {
         createdDate: createdDate ?? _createdDate,
         receiverRegion: receiverRegion ?? _receiverRegion,
         inputType: inputType ?? _inputType,
+        accountName: accountName ?? _accountName,
+        accountNumber: accountNumber ?? _accountNumber,
+        accountService: accountService ?? _accountService,
+        accountType: accountType ?? _accountType,
+        statusAwb: statusAwb ?? _statusAwb,
+        pickupStatus: pickupStatus ?? _pickupStatus,
       );
 
   String? get awb => _awb;
@@ -756,6 +792,18 @@ class TransactionModel {
 
   String? get inputType => _inputType;
 
+  String? get accountName => _accountName;
+
+  String? get accountNumber => _accountNumber;
+
+  String? get accountService => _accountService;
+
+  String? get accountType => _accountType;
+
+  String? get statusAwb => _statusAwb;
+
+  String? get pickupStatus => _pickupStatus;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['awb'] = _awb;
@@ -855,6 +903,12 @@ class TransactionModel {
     map['createdDate'] = _createdDate;
     map['receiverRegion'] = _receiverRegion;
     map['inputType'] = _inputType;
+    map['accountName'] = _accountName;
+    map['accountNumber'] = _accountNumber;
+    map['accountService'] = _accountService;
+    map['accountType'] = _accountType;
+    map['statusAwb'] = _statusAwb;
+    map['pickupStatus'] = _pickupStatus;
     return map;
   }
 }

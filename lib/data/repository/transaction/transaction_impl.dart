@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
@@ -53,8 +54,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   // }
 
   @override
-  Future<BaseResponse<TransactionModel>> postTransaction(
-      TransactionModel data) async {
+  Future<BaseResponse<TransactionModel>> postTransaction(TransactionModel data) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo(info: "kiriman data");
@@ -97,7 +97,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<BaseResponse<List<TransactionModel>>> getTransaction(
+  Future<BaseResponse<List<TransactionModel>>> getAllTransaction(
     int page,
     int limit,
     String transType,
@@ -108,27 +108,27 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    transDate.printInfo(info: "transaction date");
-
     UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.userProfil),
+      await StorageCore().readData(StorageCore.basicProfile),
     );
-    String registID = '{"registrationId" : "${user.id}"}';
-    String type = transType.isNotEmpty ? ', {"apiType" : "$transType"}' : "";
+    print(transType);
     QueryParamModel params = QueryParamModel(
-      where: "[$registID $type]",
       table: true,
       limit: limit,
       page: page,
       search: keyword,
+      between: transDate,
+      type: transType.isNotEmpty ? transType : null,
+      status: transStatus.isNotEmpty ? transStatus : null,
+      // where: '[$registID $type $petugasEntry]',
+      sort: '[{"createdDateSearch":"desc"}]',
     );
 
     try {
       Response response = await network.base.get(
-        "/transaction/transactions",
+        "/transaction/dashboards/detail",
         queryParameters: params.toJson(),
       );
-      AppLogger.d("get transactions: ${response.data}");
       return BaseResponse.fromJson(
         response.data,
         (json) => json is List<dynamic>
@@ -183,16 +183,24 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
+    UserModel user = UserModel.fromJson(
+      await StorageCore().readData(StorageCore.basicProfile),
+    );
+
+    QueryParamModel params = QueryParamModel(
+      table: true,
+      search: keyword,
+      between: transDate,
+      type: transType.isNotEmpty ? transType : null,
+      status: transStatus.isNotEmpty ? transStatus : null,
+      // where: '[$registID $type $petugasEntry]',
+      sort: '[{"createdDateSearch":"desc"}]',
+    );
+
     try {
       Response response = await network.base.get(
         "/transaction/transactions/count",
-        queryParameters: {
-          "transaction_status": transStatus,
-          "transaction_date": transDate,
-          "transaction_type": transType,
-          "keyword": keyword,
-          "officer": officer,
-        },
+        queryParameters: params.toJson(),
       );
       return BaseResponse<TransactionCount>.fromJson(
         response.data,
@@ -207,16 +215,25 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<PostTransactionModel> deleteTransaction(String awb) async {
+  Future<BaseResponse<TransactionModel>> deleteTransaction(String awb) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.delete(
-        "/transaction/$awb",
+      Response response = await network.base.delete(
+        "/transaction/transactions/$awb",
+        queryParameters: {
+          'permanent': true,
+        },
       );
-      return PostTransactionModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 
@@ -254,38 +271,70 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<PostTransactionModel> putTransaction(
-    DataTransactionModel data,
+  Future<BaseResponse<TransactionModel>> putTransaction(
+    TransactionModel data,
     String awb,
   ) async {
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
-    try {
-      Response response =
-          await network.dio.put("/transaction/$awb", data: data);
-      return PostTransactionModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return PostTransactionModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
-  Future<GetTransactionOfficerModel> getTransOfficer() async {
-    var token = await storageSecure.read(key: 'token');
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.base.get(
-        "/officers",
+      Response response = await network.base.patch(
+        "/transaction/transactions/$awb",
+        data: data,
       );
-      return GetTransactionOfficerModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
+      );
     } on DioException catch (e) {
-      return GetTransactionOfficerModel.fromJson(e.response?.data);
+      AppLogger.e('error update transaksi : ${e.response?.data}');
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => TransactionModel.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 
   @override
-  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(
-      DataTransactionOngkirModel data) async {
+  Future<BaseResponse<List<PetugasModel>>> getTransOfficer() async {
+    var token = await storageSecure.read(key: 'token');
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    UserModel user = UserModel.fromJson(
+      await StorageCore().readData(StorageCore.basicProfile),
+    );
+
+    QueryParamModel params = QueryParamModel(table: true, like: '[{"id" : "${user.id}"}]');
+    try {
+      Response response = await network.base.get(
+        "/transaction/officers",
+        queryParameters: params.toJson(),
+      );
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<PetugasModel>(
+                  (i) => PetugasModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<PetugasModel>(
+                  (i) => PetugasModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    }
+  }
+
+  @override
+  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo();
@@ -297,30 +346,23 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
       return BaseResponse<PostTransactionOngkirModel>.fromJson(
         response.data,
-        (json) =>
-            PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
+        (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
       return BaseResponse<PostTransactionOngkirModel>.fromJson(
         e.response?.data,
-        (json) =>
-            PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
+        (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }
 
   @override
-  Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(
-      QueryParamModel param) async {
-    AppLogger.i("param toJson ${param.toJson()}");
+  Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.base
-          .get("/transaction/dashboards", queryParameters: param.toJson());
-
-      AppLogger.d("response: ${response.data}");
+      Response response = await network.base.get("/transaction/dashboards", queryParameters: param.toJson());
 
       final test = ResponseModel<TransactionSummaryModel>.fromJson(
         response.data,
@@ -329,13 +371,11 @@ class TransactionRepositoryImpl extends TransactionRepository {
           return TransactionSummaryModel.fromJson(json as Map<String, dynamic>);
         },
       );
-      AppLogger.i("test: ${test.toJson()}");
       return test;
     } on DioException catch (e) {
       return ResponseModel<TransactionSummaryModel>.fromJson(
         e.response?.data,
-        (json) =>
-            TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
+        (json) => TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }

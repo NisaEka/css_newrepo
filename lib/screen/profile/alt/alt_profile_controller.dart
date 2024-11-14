@@ -81,7 +81,7 @@ class AltProfileController extends BaseController {
       e.printError();
       i.printError();
       basicProfil = UserModel.fromJson(
-        await storage.readData(StorageCore.userProfil),
+        await storage.readData(StorageCore.basicProfile),
       );
     }
 
@@ -106,7 +106,7 @@ class AltProfileController extends BaseController {
       e.printError();
     }
 
-    isCcrf = ccrf != null && ccrf?.generalInfo?.ccrfApistatus == "Y";
+    isCcrf = ccrf != null && ccrf?.generalInfo?.apiStatus == "Y";
     update();
   }
 

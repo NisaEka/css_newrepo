@@ -54,7 +54,6 @@ class JLCRepositoryImpl extends JLCRepository {
   Future<DashboardBannerModel> postDashboardBanner() async {
     try {
       Response response = await network.base.get('/accounts/jlc/banner');
-      AppLogger.i('response: ${response.data}');
       return DashboardBannerModel.fromJson(response.data);
     } on DioException catch (e) {
       AppLogger.e('error: ${e.message}');
@@ -66,7 +65,6 @@ class JLCRepositoryImpl extends JLCRepository {
   Future<DashboardNewsModel> postDashboardNews() async {
     try {
       Response response = await network.base.get('/news');
-      AppLogger.i('response: ${response.data}');
       return DashboardNewsModel.fromJson(response.data);
     } on DioException catch (e) {
       AppLogger.e('News error: ${e.message}');

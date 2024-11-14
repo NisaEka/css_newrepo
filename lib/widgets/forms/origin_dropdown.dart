@@ -16,7 +16,7 @@ class OriginDropdown extends StatefulHookWidget {
   final String? label;
   final bool isRequired;
   final bool readOnly;
-  final OriginModel? value;
+  final Origin? value;
   final String? selectedItem;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -51,7 +51,7 @@ class OriginDropdown extends StatefulHookWidget {
 class _OriginDropdownState extends State<OriginDropdown> {
   final searchTextfield = TextEditingController();
 
-  Future<List<OriginModel>> getOriginList(String keyword) async {
+  Future<List<Origin>> getOriginList(String keyword) async {
     final master = Get.find<MasterRepository>();
 
     var branchCode = (widget.branch?.isNotEmpty ?? false)
@@ -79,7 +79,7 @@ class _OriginDropdownState extends State<OriginDropdown> {
             onChanged: widget.onChanged,
             onTap: () => showCityList('Kota Asal'.tr),
           )
-        : CustomSearchDropdownField<OriginModel>(
+        : CustomSearchDropdownField<Origin>(
             controller: widget.controller,
             asyncItems: (String filter) => getOriginList(filter),
             itemBuilder: (context, e, b) {
@@ -91,14 +91,14 @@ class _OriginDropdownState extends State<OriginDropdown> {
                 ),
               );
             },
-            itemAsString: (OriginModel e) => e.originName.toString(),
+            itemAsString: (Origin e) => e.originName.toString(),
             onChanged: widget.onChanged,
             value: widget.value,
             selectedItem: widget.selectedItem,
             hintText: widget.label ?? "Kota Pengiriman".tr,
             searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
             prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.titleSmall,
+            textStyle: Theme.of(context).textTheme.titleMedium,
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,
           );
@@ -172,7 +172,7 @@ class _OriginDropdownState extends State<OriginDropdown> {
     );
   }
 
-  Widget buildPosts(List<OriginModel> data, String title) {
+  Widget buildPosts(List<Origin> data, String title) {
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {

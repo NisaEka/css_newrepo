@@ -37,8 +37,8 @@ class AddReceiverController extends BaseController {
         destinationCode: selectedDestination?.destinationCode,
         destinationDescription: selectedDestination?.cityName,
         idDestination: selectedDestination?.id.toString(),
-        receiverDistrict: selectedDestination?.districtName,
-        receiverSubDistrict: selectedDestination?.subdistrictName,
+        district: selectedDestination?.districtName,
+        subDistrict: selectedDestination?.subdistrictName,
       ))
           .then((value) {
         if (value.code == 201) {

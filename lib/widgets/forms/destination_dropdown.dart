@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-class DestinationDropdown extends StatefulHookWidget {
+class DestinationDropdown<T> extends StatefulHookWidget {
   final String? label;
   final bool isRequired;
   final bool readOnly;
@@ -24,6 +24,8 @@ class DestinationDropdown extends StatefulHookWidget {
   final bool showfromBottom;
   final TextEditingController? controller;
   final void Function(dynamic)? onSelect;
+  final String Function(T)? itemAsString;
+  final String? displayText;
 
   const DestinationDropdown({
     super.key,
@@ -38,6 +40,8 @@ class DestinationDropdown extends StatefulHookWidget {
     this.showfromBottom = false,
     this.controller,
     this.onSelect,
+    this.itemAsString,
+    this.displayText,
   });
 
   @override
@@ -49,8 +53,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
 
   Future<List<Destination>> getDestinationList(String keyword) async {
     final master = Get.find<MasterRepository>();
-    var response = await master
-        .getDestinations(QueryParamModel(search: keyword.toUpperCase()));
+    var response = await master.getDestinations(QueryParamModel(search: keyword.toUpperCase()));
     var models = response.data?.toList();
 
     return models ?? [];
@@ -76,8 +79,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             asyncItems: (String filter) => getDestinationList(filter),
             itemBuilder: (context, e, b) {
               return Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text('${e.zipCode == null || e.zipCode == '00000' ? '' : '${e.zipCode}; '}'
                         '${e.provinceName == null ? '' : '${e.provinceName}; '}'
                         '${e.cityName == null ? '' : '${e.cityName}; '}'
@@ -90,21 +92,22 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
                 )),
               );
             },
-            itemAsString: (Destination e) => ''
-                '${e.zipCode == null ? '' : '${e.zipCode}; '}'
-                '${e.provinceName == null ? '' : '${e.provinceName}; '}'
-                '${e.cityName == null ? '' : '${e.cityName}; '}'
-                '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
-                '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
-                '${e.destinationCode == null ? '' : '${e.destinationCode}; '}',
-                // '${e.countryName == null ? '' : '${e.countryName}'}',
+            itemAsString: widget.itemAsString ??
+                (Destination e) => ''
+                    '${e.zipCode == null ? '' : '${e.zipCode}; '}'
+                    '${e.provinceName == null ? '' : '${e.provinceName}; '}'
+                    '${e.cityName == null ? '' : '${e.cityName}; '}'
+                    '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
+                    '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
+                    '${e.destinationCode == null ? '' : '${e.destinationCode}; '}',
+            // '${e.countryName == null ? '' : '${e.countryName}'}',
             onChanged: widget.onChanged,
             value: widget.value,
             selectedItem: widget.selectedItem,
             hintText: widget.label ?? "Kota Pengiriman".tr,
             searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
             prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.titleSmall,
+            textStyle: Theme.of(context).textTheme.titleMedium,
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,
           );

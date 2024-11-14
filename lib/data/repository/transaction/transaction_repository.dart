@@ -1,4 +1,6 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/dashboard/count_card_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
@@ -19,7 +21,7 @@ abstract class TransactionRepository {
 
   Future<BaseResponse<CODFeeModel>> getCODFee(String accountID);
 
-  Future<BaseResponse<List<TransactionModel>>> getTransaction(
+  Future<BaseResponse<List<TransactionModel>>> getAllTransaction(
     int page,
     int limit,
     String transType,
@@ -39,18 +41,15 @@ abstract class TransactionRepository {
     String officer,
   );
 
-  Future<PostTransactionModel> deleteTransaction(String awb);
+  Future<BaseResponse<TransactionModel>> deleteTransaction(String awb);
 
   Future<BaseResponse<List<String>>> getTransactionStatus();
 
-  Future<PostTransactionModel> putTransaction(
-      DataTransactionModel data, String awb);
+  Future<BaseResponse<TransactionModel>> putTransaction(TransactionModel data, String awb);
 
-  Future<GetTransactionOfficerModel> getTransOfficer();
+  Future<BaseResponse<List<PetugasModel>>> getTransOfficer();
 
-  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(
-      DataTransactionOngkirModel data);
+  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data);
 
-  Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(
-      QueryParamModel param);
+  Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(QueryParamModel param);
 }

@@ -25,7 +25,7 @@ class MasterRepositoryImpl extends MasterRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<OriginModel>>> getOrigins(
+  Future<BaseResponse<List<Origin>>> getOrigins(
       QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
 
@@ -37,17 +37,18 @@ class MasterRepositoryImpl extends MasterRepository {
         '/master/origins',
         queryParameters: param.toJson(),
       );
-      return BaseResponse<List<OriginModel>>.fromJson(
+      return BaseResponse<List<Origin>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<OriginModel>(
-                  (i) => OriginModel.fromJson(i as Map<String, dynamic>),
+                .map<Origin>(
+                  (i) => Origin.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
       );
     } on DioException catch (e) {
+      print('error get origin : ${e.response?.data}');
       return e.response?.data;
     }
   }
@@ -154,7 +155,7 @@ class MasterRepositoryImpl extends MasterRepository {
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.userProfil),
+      await StorageCore().readData(StorageCore.basicProfile),
     );
     String registID = '[{"registrationId" : "${user.id}"}]';
     QueryParamModel params = param.copyWith(where: registID, table: true);
@@ -201,7 +202,7 @@ class MasterRepositoryImpl extends MasterRepository {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.userProfil),
+      await StorageCore().readData(StorageCore.basicProfile),
     );
 
     try {
@@ -228,7 +229,7 @@ class MasterRepositoryImpl extends MasterRepository {
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.userProfil),
+      await StorageCore().readData(StorageCore.basicProfile),
     );
     String registID = '[{"registrationId" : "${user.id}"}]';
     QueryParamModel params = param.copyWith(where: registID, table: true);
@@ -277,7 +278,7 @@ class MasterRepositoryImpl extends MasterRepository {
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.userProfil),
+      await StorageCore().readData(StorageCore.basicProfile),
     );
 
     try {

@@ -225,7 +225,7 @@ class TambahPetugasScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Obx(
-                            () => MultiSelectDialogField<OriginModel>(
+                            () => MultiSelectDialogField<Origin>(
                               decoration: BoxDecoration(
                                 border: Border.all(
                                     color: AppConst.isLightTheme(context)

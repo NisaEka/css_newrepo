@@ -1,26 +1,27 @@
 class QueryParamModel {
-  QueryParamModel({
-    bool? table,
-    bool? trash,
-    bool? includeDeleted,
-    bool? relation,
-    num? page,
-    num? limit,
-    String? search,
-    String? where,
-    String? notEqual,
-    String? greaterThan,
-    String? lessThan,
-    String? like,
-    String? sort,
-    String? between,
-    String? isIn,
-    String? notin,
-    String? isNull,
-    String? isNotNull,
-    String? select,
-    String? soundex,
-  }) {
+  QueryParamModel(
+      {bool? table,
+      bool? trash,
+      bool? includeDeleted,
+      bool? relation,
+      num? page,
+      num? limit,
+      String? search,
+      String? where,
+      String? notEqual,
+      String? greaterThan,
+      String? lessThan,
+      String? like,
+      String? sort,
+      String? between,
+      String? isIn,
+      String? notin,
+      String? isNull,
+      String? isNotNull,
+      String? select,
+      String? soundex,
+      String? status,
+      String? type}) {
     _table = table;
     _trash = trash;
     _includeDeleted = includeDeleted;
@@ -41,6 +42,8 @@ class QueryParamModel {
     _isNotNull = isNotNull;
     _select = select;
     _soundex = soundex;
+    _status = status;
+    _type = type;
   }
 
   QueryParamModel.fromJson(dynamic json) {
@@ -64,6 +67,8 @@ class QueryParamModel {
     _isNotNull = json['isNotNull'];
     _select = json['select'];
     _soundex = json['soundex'];
+    _status = json['status'];
+    _type = json['type'];
   }
 
   bool? _table;
@@ -86,67 +91,93 @@ class QueryParamModel {
   String? _isNotNull;
   String? _select;
   String? _soundex;
+  String? _status;
+  String? _type;
 
   // Getters
   bool? get table => _table;
+
   void setTable(bool? value) => _table = value;
 
   bool? get trash => _trash;
+
   void setTrash(bool? value) => _trash = value;
 
   bool? get includeDeleted => _includeDeleted;
+
   void setIncludeDeleted(bool? value) => _includeDeleted = value;
 
   bool? get relation => _relation;
+
   void setRelation(bool? value) => _relation = value;
 
   num? get page => _page;
+
   void setPage(num? value) => _page = value;
 
   num? get limit => _limit;
+
   void setLimit(num? value) => _limit = value;
 
   String? get search => _search;
+
   void setSearch(String? value) => _search = value;
 
   String? get where => _where;
+
   void setWhere(String? value) => _where = value;
 
   String? get notEqual => _notEqual;
+
   void setNotEqual(String? value) => _notEqual = value;
 
   String? get greaterThan => _greaterThan;
+
   void setGreaterThan(String? value) => _greaterThan = value;
 
   String? get lessThan => _lessThan;
+
   void setLessThan(String? value) => _lessThan = value;
 
   String? get like => _like;
+
   void setLike(String? value) => _like = value;
 
   String? get sort => _sort;
+
   void setSort(String? value) => _sort = value;
 
   String? get between => _between;
+
   void setBetween(String? value) => _between = value;
 
   String? get isIn => _in;
+
   void setIsIn(String? value) => _in = value;
 
   String? get notin => _notin;
+
   void setNotin(String? value) => _notin = value;
 
   String? get isNull => _isNull;
+
   void setIsNull(String? value) => _isNull = value;
 
   String? get isNotNull => _isNotNull;
+
   void setIsNotNull(String? value) => _isNotNull = value;
 
   String? get select => _select;
+
   void setSelect(String? value) => _select = value;
 
   String? get soundex => _soundex;
+
   void setSoundex(String? value) => _soundex = value;
+
+  String? get status => _status;
+
+  String? get type => _type;
 
   // CopyWith method
   QueryParamModel copyWith({
@@ -170,6 +201,8 @@ class QueryParamModel {
     String? isNotNull,
     String? select,
     String? soundex,
+    String? status,
+    String? type,
   }) =>
       QueryParamModel(
         table: table ?? _table,
@@ -192,6 +225,8 @@ class QueryParamModel {
         isNotNull: isNotNull ?? _isNotNull,
         select: select ?? _select,
         soundex: soundex ?? _soundex,
+        status: status ?? _status,
+        type: type ?? _type,
       );
 
   // toJson method
@@ -217,6 +252,8 @@ class QueryParamModel {
     if (_isNotNull != null) map['isNotNull'] = _isNotNull;
     if (_select != null) map['select'] = _select;
     if (_soundex != null) map['soundex'] = _soundex;
+    if (_status != null || (_status?.isNotEmpty ?? false) ) map['status'] = _status;
+    if (_type != null ||(_type?.isNotEmpty ?? false) ) map['type'] = _type;
 
     return map;
   }

@@ -10,9 +10,9 @@ import 'add/tambah_petugas_screen.dart';
 
 class PengaturanPetugasController extends BaseController {
   final searchOfficer = TextEditingController();
-  final PagingController<int, PetugasModel> pagingController =
-      PagingController(firstPageKey: 1);
+  final PagingController<int, PetugasModel> pagingController = PagingController(firstPageKey: 1);
   bool isLoading = false;
+  int limit = 10;
 
   @override
   void onInit() {
@@ -42,7 +42,7 @@ class PengaturanPetugasController extends BaseController {
   Future<void> getOfficerList(int page) async {
     isLoading = true;
     try {
-      final officer = await setting.getOfficer(page, searchOfficer.text);
+      final officer = await setting.getOfficers(page, searchOfficer.text, limit);
 
       final isLastPage =
           (officer.meta?.currentPage ?? 0) == (officer.meta?.lastPage ?? 0);
@@ -60,10 +60,9 @@ class PengaturanPetugasController extends BaseController {
     }
 
     isLoading = false;
-    update();
   }
 
-  onAdd() {
+  void onAdd() {
     Get.to(const TambahPetugasScreen(), arguments: {
       'isEdit': false,
     })?.then((value) => pagingController.refresh());

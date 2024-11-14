@@ -35,7 +35,7 @@ class TransactionItems extends StatelessWidget {
                     onRefresh: () => Future.sync(
                       () {
                         c.state.pagingController.refresh();
-                        c.transactionCount();
+                        // c.transactionCount();
                       },
                     ),
                     child: PagedListView<int, TransactionModel>(
@@ -45,6 +45,7 @@ class TransactionItems extends StatelessWidget {
                         itemBuilder: (context, item, index) => RiwayatKirimanListItem(
                           data: item,
                           isLoading: false,
+                          status: item.statusAwb,
                           index: index,
                           isSelected: c.state.selectedTransaction.where((e) => e == item).isNotEmpty,
                           onLongPress: () {
@@ -53,7 +54,7 @@ class TransactionItems extends StatelessWidget {
                           onTap: () {
                             c.unselect(item);
                           },
-                          isDelete: item.statusName == "MASIH DI KAMU",
+                          isDelete: item.statusAwb == "MASIH DI KAMU",
                           onDelete: (context) => showDialog(
                             context: context,
                             builder: (context) => DeleteAlertDialog(

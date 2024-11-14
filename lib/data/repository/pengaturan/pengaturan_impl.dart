@@ -2,10 +2,13 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/sticker_label_model.dart';
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -15,18 +18,19 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<PetugasModel>>> getOfficer(
-      int page, String keyword) async {
+  Future<BaseResponse<List<PetugasModel>>> getOfficers(int page, String keyword, int limit) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
+    QueryParamModel params = QueryParamModel(
+      search: keyword,
+      page: page,
+      limit: limit,
+      table: true,
+    );
     try {
       Response response = await network.base.get(
         "/officers",
-        queryParameters: {
-          "keyword": keyword,
-          "page": page,
-          "limit": 10,
-        },
+        queryParameters: params.toJson(),
       );
       return BaseResponse.fromJson(
         response.data,
@@ -145,13 +149,12 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
       Response response = await network.base.patch(
         "/settings/label",
         data: {
-          "labelPrinter": label,
+          "labelPrinter": label.toInt(),
           "priceLabel": price,
         },
       );
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
-      AppLogger.e(e.response?.data);
       return BaseResponse.fromJson(e.response?.data, (json) => null);
     }
   }

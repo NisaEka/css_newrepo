@@ -23,8 +23,7 @@ class PengaturanScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: false,
-            onPopInvokedWithResult: (bool didPop, Object? result) =>
-                Get.off(const DashboardScreen()),
+            onPopInvokedWithResult: (bool didPop, Object? result) => Get.off(const DashboardScreen()),
             child: Stack(
               children: [
                 Scaffold(
@@ -68,8 +67,7 @@ class PengaturanScreen extends StatelessWidget {
                     CustomFilledButton(
                       color: c.lang == "id" ? blueJNE : whiteColor,
                       fontColor: c.lang == "id" ? whiteColor : greyColor,
-                      borderColor:
-                          c.lang == "id" ? Colors.transparent : greyColor,
+                      borderColor: c.lang == "id" ? Colors.transparent : greyColor,
                       title: 'ID',
                       width: 40,
                       margin: EdgeInsets.zero,
@@ -80,8 +78,7 @@ class PengaturanScreen extends StatelessWidget {
                     CustomFilledButton(
                       color: c.lang == "en" ? blueJNE : whiteColor,
                       fontColor: c.lang == "en" ? whiteColor : greyColor,
-                      borderColor:
-                          c.lang == "en" ? Colors.transparent : greyColor,
+                      borderColor: c.lang == "en" ? Colors.transparent : greyColor,
                       margin: EdgeInsets.zero,
                       padding: EdgeInsets.zero,
                       title: 'EN',
@@ -129,11 +126,6 @@ class PengaturanScreen extends StatelessWidget {
           SettingListItem(
               title: 'Tema Aplikasi'.tr,
               leading: Icons.color_lens,
-              // onTap: () => Get.to(const InputEmailScreen(), arguments: {
-              //   'isChange': true,
-              //   'email': controller.basicProfil?.email,
-              // }),
-              onTap: () => c.sendEmail(),
               trailing: SizedBox(
                 width: 90,
                 child: Row(
@@ -141,8 +133,7 @@ class PengaturanScreen extends StatelessWidget {
                     CustomFilledButton(
                       color: c.mode == "dark" ? blueJNE : whiteColor,
                       fontColor: c.mode == "dark" ? whiteColor : greyColor,
-                      borderColor:
-                          c.mode == "dark" ? Colors.transparent : greyColor,
+                      borderColor: c.mode == "dark" ? Colors.transparent : greyColor,
                       icon: Icons.dark_mode,
                       width: 40,
                       margin: EdgeInsets.zero,
@@ -153,8 +144,7 @@ class PengaturanScreen extends StatelessWidget {
                     CustomFilledButton(
                       color: c.mode == "light" ? blueJNE : whiteColor,
                       fontColor: c.mode == "light" ? whiteColor : greyColor,
-                      borderColor:
-                          c.mode == "light" ? Colors.transparent : greyColor,
+                      borderColor: c.mode == "light" ? Colors.transparent : greyColor,
                       margin: EdgeInsets.zero,
                       padding: EdgeInsets.zero,
                       icon: Icons.light_mode,
@@ -169,28 +159,4 @@ class PengaturanScreen extends StatelessWidget {
     );
   }
 
-  // Widget _logoutButton(PengaturanController c, BuildContext context) {
-  //   return Container(
-  //     margin: const EdgeInsets.only(bottom: 50),
-  //     child: ListTile(
-  //       onTap: () => c.isLogin ? c.doLogout() : Get.to(const LoginScreen()),
-  //       leading: Icon(
-  //         c.isLogin ? Icons.logout : Icons.login,
-  //         color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-  //       ),
-  //       title: Text(
-  //         c.isLogin ? 'Keluar'.tr : 'Masuk'.tr,
-  //         style: Theme.of(context).textTheme.titleMedium,
-  //       ),
-  //       trailing: Text(
-  //         'v ${c.version.toString()}'.tr,
-  //         style: TextStyle(color: CustomTheme().textColor(context)),
-  //       ),
-  //       shape: const Border(
-  //         bottom: BorderSide(color: greyColor),
-  //         top: BorderSide(color: greyColor),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

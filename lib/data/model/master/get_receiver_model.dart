@@ -12,8 +12,8 @@ class ReceiverModel {
     String? destinationDescription,
     String? idDestination,
     String? idReceive,
-    String? receiverDistrict,
-    String? receiverSubDistrict,
+    String? district,
+    String? subDistrict,
     String? registrationId,
   }) {
     _name = name;
@@ -28,8 +28,8 @@ class ReceiverModel {
     _destinationDescription = destinationDescription;
     _idDestination = idDestination;
     _idReceive = idReceive;
-    _receiverDistrict = receiverDistrict;
-    _receiverSubDistrict = receiverSubDistrict;
+    _receiverDistrict = district;
+    _receiverSubDistrict = subDistrict;
     _registrationId = registrationId;
   }
 
@@ -102,8 +102,8 @@ class ReceiverModel {
             destinationDescription ?? _destinationDescription,
         idDestination: idDestination ?? _idDestination,
         idReceive: idReceive ?? _idReceive,
-        receiverDistrict: receiverDistrict ?? _receiverDistrict,
-        receiverSubDistrict: receiverSubDistrict ?? _receiverSubDistrict,
+        district: receiverDistrict ?? _receiverDistrict,
+        subDistrict: receiverSubDistrict ?? _receiverSubDistrict,
         registrationId: registrationId ?? _registrationId,
       );
 
@@ -131,9 +131,9 @@ class ReceiverModel {
 
   String? get idReceive => _idReceive;
 
-  String? get receiverDistrict => _receiverDistrict;
+  String? get district => _receiverDistrict;
 
-  String? get receiverSubDistrict => _receiverSubDistrict;
+  String? get subDistrict => _receiverSubDistrict;
 
   String? get registrationId => _registrationId;
 

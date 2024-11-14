@@ -563,7 +563,7 @@ class TransactionForm extends StatelessWidget {
                         c.state.isOnline
                             ? CustomFilledButton(
                                 color: c.isValidate() ? blueJNE : greyColor,
-                                title: c.state.dataEdit != null
+                                title: (c.state.isEdit ?? false)
                                     ? 'Edit Resi'.tr
                                     : 'Buat Resi'.tr,
                                 onPressed: () => c.onSaved(),

@@ -1,3 +1,4 @@
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -24,13 +25,18 @@ class ForgotPasswordOTPForm extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                      'Kode OTP sudah dikirimkan ke alamat email berikut :'.tr),
-                  Text(c.getMail(),
-                      textAlign: TextAlign.left,
-                      style: formLabelTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? greyDarkColor2
-                              : greyLightColor2)),
+                    'Kode OTP sudah dikirimkan ke alamat email berikut :'.tr,
+                    style: TextStyle(
+                      color: CustomTheme().textColor(context),
+                    ),
+                  ),
+                  Text(
+                    c.getMail(),
+                    textAlign: TextAlign.left,
+                    style: formLabelTextStyle.copyWith(
+                      color: AppConst.isLightTheme(context) ? greyDarkColor2 : greyLightColor2,
+                    ),
+                  ),
                   Pinput(
                     controller: c.otpPin,
                     length: 6,
@@ -47,39 +53,28 @@ class ForgotPasswordOTPForm extends StatelessWidget {
                   const SizedBox(height: 50),
                   Obx(
                     () => Center(
-                      child: Text(
-                          c.remainingSeconds != 0 ? c.time.value : '00.00'),
+                      child: Text(c.remainingSeconds != 0 ? c.time.value : '00.00'),
                     ),
                   ),
                   TextButton(
-                    onPressed: () =>
-                        c.remainingSeconds == 0 ? c.resendPin() : null,
+                    onPressed: () => c.remainingSeconds == 0 ? c.resendPin() : null,
                     child: Text(
                       'Kirim ulang kode'.tr,
                       style: formLabelTextStyle.copyWith(
-                        color: c.remainingSeconds != 0
-                            ? greyColor
-                            : Theme.of(context).colorScheme.onPrimary,
+                        color: c.remainingSeconds != 0 ? greyColor : Theme.of(context).colorScheme.onPrimary,
                       ),
                     ),
                   ),
                   const SizedBox(height: 60),
                   CustomFilledButton(
-                    color: c.otpPin.text.isNotEmpty && c.otpPin.length >= 6
-                        ? blueJNE
-                        : greyColor,
+                    color: c.otpPin.text.isNotEmpty && c.otpPin.length >= 6 ? blueJNE : greyColor,
                     title: 'Selanjutnya'.tr,
                     // radius: 50,
-                    onPressed: () =>
-                        c.otpPin.text.isNotEmpty && c.otpPin.length >= 6
-                            ? c.pinConfirmation()
-                            : null,
+                    onPressed: () => c.otpPin.text.isNotEmpty && c.otpPin.length >= 6 ? c.pinConfirmation() : null,
                   ),
                   c.isLogin
                       ? CustomFilledButton(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : whiteColor,
+                          color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                           isTransparent: true,
                           title: 'Gunakan cara lain'.tr,
                           onPressed: () => c.useOtherMethod(context),
