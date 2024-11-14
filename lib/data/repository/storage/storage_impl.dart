@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/storage/ccrf_file_model.dart';
 import 'package:css_mobile/data/model/storage/storage_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/storage/storage_repository.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 
@@ -52,7 +53,7 @@ class StorageImpl extends StorageRepository {
       });
       return DefaultResponseModel.fromJson(response.data, fileModels);
     } on DioException catch (e) {
-      e.printError();
+      AppLogger.e('error postCcrfFile $e');
       return DefaultResponseModel.fromJson(e.response?.data, null);
     }
   }

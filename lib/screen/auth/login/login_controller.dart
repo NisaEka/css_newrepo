@@ -132,7 +132,7 @@ class LoginController extends BaseController {
               }
             });
           } catch (e) {
-            e.printError();
+            AppLogger.e('error resend pin $e');
           }
         } else {
           AppSnackBar.error(value.message.toString());
@@ -176,7 +176,7 @@ class LoginController extends BaseController {
     state.isLoading = true;
     update();
     String? token = await storage.readAccessToken();
-    debugPrint("token : $token");
+    AppLogger.e('token : $token');
     if (token != null) {
       Get.offAll(const DashboardScreen());
       // String all = await storage.readString(StorageCore.allowedMenu);

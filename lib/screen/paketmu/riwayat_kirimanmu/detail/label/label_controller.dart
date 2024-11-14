@@ -10,6 +10,7 @@ import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub_hybrid_2.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub_hybrid_3.dart';
 import 'package:css_mobile/util/helper/file_download_helper.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -82,7 +83,7 @@ class LabelController extends BaseController {
 
       update();
     } catch (e) {
-      e.printError();
+      AppLogger.e('error initData label $e');
     }
   }
 

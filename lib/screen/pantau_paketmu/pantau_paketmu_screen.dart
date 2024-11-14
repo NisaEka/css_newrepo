@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
@@ -107,7 +108,7 @@ class PantauPaketmuScreen extends StatelessWidget {
                             if (value != null) {
                               if (c.state.endDate.value != null &&
                                   value.isAfter(c.state.endDate.value!)) {
-                                Get.snackbar('Error',
+                                AppSnackBar.error(
                                     'Start date cannot be after end date');
                                 return;
                               }

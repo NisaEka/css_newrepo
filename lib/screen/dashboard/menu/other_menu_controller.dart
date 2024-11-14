@@ -4,6 +4,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class OtherMenuCotroller extends BaseController {
       favoritList.addAll(menu.items ?? []);
       update();
     } catch (e) {
-      e.printError();
+      AppLogger.e('error initData other menu $e');
     }
 
     paketmuList = [

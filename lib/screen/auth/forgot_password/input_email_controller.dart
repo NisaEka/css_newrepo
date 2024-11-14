@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
@@ -38,7 +39,7 @@ class InputEmailController extends BaseController {
                         : AppSnackBar.error(value.message?.tr),
           );
     } catch (e) {
-      e.printError();
+      AppLogger.e('error sendEmail $e');
     }
     isLoading = false;
     update();

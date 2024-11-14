@@ -1,7 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:css_mobile/util/logger.dart';
 
 class AlamatReturnController extends BaseController {
   bool isLogin = false;
@@ -19,15 +18,14 @@ class AlamatReturnController extends BaseController {
     isLoading = true;
     try {
       String? token = await storage.readAccessToken();
-      debugPrint("token : $token");
+      AppLogger.i('token : $token');
       isLogin = token != null;
 
       await profil.getCcrfProfil().then(
             (value) => ccrfProfil = value.data,
           );
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error initData alamat return $e, $i');
     }
 
     isLoading = false;

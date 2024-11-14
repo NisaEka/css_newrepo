@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:css_mobile/util/logger.dart';
 
 extension DateExt on DateTime {
   DateTime copyDateWith({
@@ -71,9 +72,9 @@ extension DateExt on DateTime {
     }
 
     int diffInSeconds = firstDate.difference(secondDate).inSeconds;
-    debugPrint("FIRSTDATE $firstDate");
-    debugPrint("SEECONDDATE $secondDate");
-    debugPrint("SECONDS $diffInSeconds");
+    AppLogger.i('First Date $firstDate');
+    AppLogger.i('Second Date $secondDate');
+    AppLogger.i('Seconds $diffInSeconds');
 
     int days = (diffInSeconds / (60 * 60 * 24)).floor();
     int hours = ((diffInSeconds - days * 60 * 60 * 24) / (60 * 60)).floor();
@@ -83,7 +84,7 @@ extension DateExt on DateTime {
         ((diffInSeconds - days * 60 * 60 * 24 - hours * 60 * 60 - minutes * 60))
             .floor();
 
-    debugPrint("days $days hours $hours minutes $minutes seconds $seconds");
+    AppLogger.i('days $days hours $hours minutes $minutes seconds $seconds');
     String result = "";
     if (days > 0) {
       result += "$days d";

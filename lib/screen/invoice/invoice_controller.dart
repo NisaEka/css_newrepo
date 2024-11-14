@@ -6,6 +6,7 @@ import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/date_ext.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -168,8 +169,7 @@ class InvoiceController extends BaseController {
         pagingController.appendPage(payload, nextPageKey);
       }
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error getInvoices $e, $i');
     }
   }
 

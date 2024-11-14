@@ -51,7 +51,7 @@ class InputLaporankuController extends BaseController {
         update();
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error initData input laporanku $e');
     }
 
     isLoading = false;

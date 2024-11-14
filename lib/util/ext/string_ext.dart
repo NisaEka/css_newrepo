@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:css_mobile/util/logger.dart';
 
 extension StringExt on String {
   String digitOnly() {
@@ -26,7 +26,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      debugPrint("ERROR toDateFormat $e");
+      AppLogger.e("ERROR toDateFormat $e");
       return "-";
     }
   }
@@ -39,7 +39,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      debugPrint("ERROR toLongDateFormat $e");
+      AppLogger.e("ERROR toLongDateFormat $e");
       return "-";
     }
   }
@@ -52,7 +52,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      debugPrint("ERROR toShortDateFormat $e");
+      AppLogger.e("ERROR toShortDateFormat $e");
       return "-";
     }
   }
@@ -64,7 +64,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      debugPrint("ERROR toTimeFormat $e");
+      AppLogger.e("ERROR toTimeFormat $e");
       return "-";
     }
   }
@@ -77,7 +77,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      debugPrint("ERROR toLongDateFormat $e");
+      AppLogger.e("ERROR toLongDateFormat $e");
       return "-";
     }
   }
@@ -90,7 +90,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      debugPrint("ERROR toLongDateFormat $e");
+      AppLogger.e("ERROR toShortDateFormat $e");
       return "-";
     }
   }
@@ -103,7 +103,7 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
-      debugPrint("ERROR toDateFormat $e");
+      AppLogger.e("ERROR toDateTimeFormat $e");
       return "-";
     }
   }
@@ -114,10 +114,10 @@ extension StringExt on String {
 
       return dateTime;
     } on FormatException catch (e) {
-      debugPrint("ERROR toDateFormat $e");
+      AppLogger.e("ERROR toDateFormat $e");
       rethrow;
     } catch (e) {
-      debugPrint("ERROR toDateFormat $e");
+      AppLogger.e("ERROR toDateFormat $e");
       return null;
     }
   }

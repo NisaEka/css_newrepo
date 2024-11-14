@@ -8,6 +8,7 @@ import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_pakemu_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -74,6 +75,7 @@ class PantauPaketmuController extends BaseController {
       }
     } catch (e, i) {
       AppLogger.e('error pantau', e, i);
+      AppSnackBar.error('Gagal mengambil data');
     } finally {
       state.selectedStatusKiriman.value = state.listStatusKiriman.first;
       applyFilter();
@@ -104,6 +106,7 @@ class PantauPaketmuController extends BaseController {
       state.countList.value = responseCount.data['data'];
     } catch (e, i) {
       AppLogger.e('error pantau count', e, i);
+      AppSnackBar.error('Gagal mengambil data pantau');
     } finally {
       state.isLoading.value = false;
     }
@@ -159,6 +162,7 @@ class PantauPaketmuController extends BaseController {
       }
     } catch (e, i) {
       AppLogger.e('error pantau list', e, i);
+      AppSnackBar.error('Gagal mengambil data pantau list');
       state.pagingController.error = e;
     } finally {
       state.isLoading.value = false;
