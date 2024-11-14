@@ -25,8 +25,7 @@ class MasterRepositoryImpl extends MasterRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<Origin>>> getOrigins(
-      QueryParamModel param) async {
+  Future<BaseResponse<List<Origin>>> getOrigins(QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
 
     if (token != null) {
@@ -48,7 +47,7 @@ class MasterRepositoryImpl extends MasterRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      print('error get origin : ${e.response?.data}');
+      AppLogger.e('error get origin : ${e.response?.data}');
       return e.response?.data;
     }
   }

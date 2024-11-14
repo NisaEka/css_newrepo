@@ -7,8 +7,6 @@ import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'custombottombar4.dart';
-
 class LogoutButton extends StatelessWidget {
   final bool isLogin;
   final String? version;
@@ -62,7 +60,6 @@ class LogoutButton extends StatelessWidget {
               top: BorderSide(color: greyColor),
             ),
             contentPadding: showBottomBar ? EdgeInsets.zero : null,
-
           ),
           // showBottomBar ? const BottomBar4(menu: 3) : const SizedBox()
         ],

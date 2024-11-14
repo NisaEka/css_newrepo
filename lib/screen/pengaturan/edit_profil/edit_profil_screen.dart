@@ -1,6 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_controller.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
@@ -71,7 +70,8 @@ class EditProfilScreen extends StatelessWidget {
                     asyncItems: (String filter) => c.getOriginList(filter),
                     itemBuilder: (context, e, b) {
                       return Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
                         child: Text(
                           e.originName.toString(),
                         ),
@@ -81,15 +81,20 @@ class EditProfilScreen extends StatelessWidget {
                     onChanged: (value) => c.selectOrigin(value),
                     value: c.selectedOrigin,
                     // selectedItem: c.kotaPengirim.text,
-                    hintText: c.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
+                    hintText:
+                        c.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
                     searchHintText: 'Masukan Kota Pengiriman'.tr,
-                    textStyle: c.selectedOrigin != null ? subTitleTextStyle : hintTextStyle,
+                    textStyle: c.selectedOrigin != null
+                        ? subTitleTextStyle
+                        : hintTextStyle,
                     isRequired: true,
                     readOnly: false,
                   )
                 : const SizedBox(),
             DestinationDropdown(
-              label: c.isCcrf ? "Kode Pos/Provinsi/Kota/Kecamatan/Kelurahan".tr : "Kode Pos".tr,
+              label: c.isCcrf
+                  ? "Kode Pos/Provinsi/Kota/Kecamatan/Kelurahan".tr
+                  : "Kode Pos".tr,
               selectedItem: c.ccrfProfil?.generalInfo?.zipCode,
               onChanged: (value) {
                 c.selectedCity = value;

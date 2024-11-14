@@ -3,13 +3,10 @@ import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
-import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_officer_model.dart';
-import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -54,7 +51,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
   // }
 
   @override
-  Future<BaseResponse<TransactionModel>> postTransaction(TransactionModel data) async {
+  Future<BaseResponse<TransactionModel>> postTransaction(
+      TransactionModel data) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo(info: "kiriman data");
@@ -108,10 +106,10 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.basicProfile),
-    );
-    print(transType);
+    // UserModel user = UserModel.fromJson(
+    //   await StorageCore().readData(StorageCore.basicProfile),
+    // );
+    AppLogger.d("transType : $transType");
     QueryParamModel params = QueryParamModel(
       table: true,
       limit: limit,
@@ -183,9 +181,9 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.basicProfile),
-    );
+    // UserModel user = UserModel.fromJson(
+    //   await StorageCore().readData(StorageCore.basicProfile),
+    // );
 
     QueryParamModel params = QueryParamModel(
       table: true,
@@ -303,7 +301,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
       await StorageCore().readData(StorageCore.basicProfile),
     );
 
-    QueryParamModel params = QueryParamModel(table: true, like: '[{"id" : "${user.id}"}]');
+    QueryParamModel params =
+        QueryParamModel(table: true, like: '[{"id" : "${user.id}"}]');
     try {
       Response response = await network.base.get(
         "/transaction/officers",
@@ -334,7 +333,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data) async {
+  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(
+      DataTransactionOngkirModel data) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo();
@@ -346,23 +346,27 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
       return BaseResponse<PostTransactionOngkirModel>.fromJson(
         response.data,
-        (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
+        (json) =>
+            PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
       return BaseResponse<PostTransactionOngkirModel>.fromJson(
         e.response?.data,
-        (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
+        (json) =>
+            PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }
 
   @override
-  Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(QueryParamModel param) async {
+  Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response = await network.base.get("/transaction/dashboards", queryParameters: param.toJson());
+      Response response = await network.base
+          .get("/transaction/dashboards", queryParameters: param.toJson());
 
       final test = ResponseModel<TransactionSummaryModel>.fromJson(
         response.data,
@@ -375,7 +379,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
     } on DioException catch (e) {
       return ResponseModel<TransactionSummaryModel>.fromJson(
         e.response?.data,
-        (json) => TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
+        (json) =>
+            TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }

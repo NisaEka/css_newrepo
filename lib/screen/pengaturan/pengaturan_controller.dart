@@ -6,6 +6,7 @@ import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,10 +51,10 @@ class PengaturanController extends BaseController {
     update();
     await auth
         .logout(
-      // Device(
-      //   fcmToken: await storage.readString(StorageCore.fcmToken),
-      // ),
-    )
+            // Device(
+            //   fcmToken: await storage.readString(StorageCore.fcmToken),
+            // ),
+            )
         .then((value) async {
       debugPrint(value.toJson().toString());
       // if (value.code == 200) {
@@ -67,20 +68,21 @@ class PengaturanController extends BaseController {
   }
 
   void changeLanguage(String language) async {
-    UserModel user = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
-    print("user : ${user.toJson()}");
+    UserModel user =
+        UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    AppLogger.d('user : ${user.toJson()}');
 
-    if(isLogin){
+    if (isLogin) {
       // if (value.code == 200) {
-        if (language == "ID") {
-          Get.updateLocale(const Locale("id", "ID"));
-          await storage.writeString(StorageCore.localeApp, "id");
-          lang = "id";
-        } else {
-          Get.updateLocale(const Locale("en", "US"));
-          await storage.writeString(StorageCore.localeApp, "en");
-          lang = "en";
-        }
+      if (language == "ID") {
+        Get.updateLocale(const Locale("id", "ID"));
+        await storage.writeString(StorageCore.localeApp, "id");
+        lang = "id";
+      } else {
+        Get.updateLocale(const Locale("en", "US"));
+        await storage.writeString(StorageCore.localeApp, "en");
+        lang = "en";
+      }
       // }
     }
     await profil
@@ -154,19 +156,19 @@ class PengaturanController extends BaseController {
 
   Future<void> sendEmail() async {
     try {
-      await auth.postEmailForgotPassword(basicProfil?.email ?? '').then(
-            (value) =>
-        value.code == 201
-            ? Get.to(
-          const ForgotPasswordOTPScreen(),
-          arguments: {
-            'email': basicProfil?.email ?? '',
-            'isChange': true,
-          },
-        )
-            : value.code == 404
-            ? AppSnackBar.error('User Not Found'.tr)
-            : AppSnackBar.error('Bad Request'.tr));
+      await auth
+          .postEmailForgotPassword(basicProfil?.email ?? '')
+          .then((value) => value.code == 201
+              ? Get.to(
+                  const ForgotPasswordOTPScreen(),
+                  arguments: {
+                    'email': basicProfil?.email ?? '',
+                    'isChange': true,
+                  },
+                )
+              : value.code == 404
+                  ? AppSnackBar.error('User Not Found'.tr)
+                  : AppSnackBar.error('Bad Request'.tr));
     } catch (e) {
       e.printError();
     }

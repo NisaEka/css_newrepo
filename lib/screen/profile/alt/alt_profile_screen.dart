@@ -10,7 +10,6 @@ import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
-import 'package:css_mobile/widgets/bar/custombottombar.dart';
 import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/logout_button.dart';
@@ -42,7 +41,7 @@ class AltProfileScreen extends StatelessWidget {
                         return AnimatedContainer(
                           duration: const Duration(milliseconds: 500),
                           // height: value ? 113 : kBottomNavigationBarHeight,
-                          child: BottomBar4(menu: 3),
+                          child: const BottomBar4(menu: 3),
                           // child: LogoutButton(
                           //   version: controller.version,
                           //   isLogin: controller.isLogin,
@@ -77,7 +76,9 @@ class AltProfileScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(color: blueJNE)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(color: blueJNE)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -99,7 +100,8 @@ class AltProfileScreen extends StatelessWidget {
                       onTap: () => Get.to(const EditProfilScreen()),
                     )
                   : const SizedBox(),
-              c.menuModel.fasilitas == 'Y' && c.basicProfil?.userType == "PEMILIK"
+              c.menuModel.fasilitas == 'Y' &&
+                      c.basicProfil?.userType == "PEMILIK"
                   ? SettingListItem(
                       title: 'Fasilitasku'.tr,
                       leading: Icons.format_list_numbered_rounded,
@@ -124,21 +126,24 @@ class AltProfileScreen extends StatelessWidget {
                   ? SettingListItem(
                       title: 'Alamat Pengembalian'.tr,
                       leading: Icons.cached_rounded,
-                      onTap: () => c.isCcrfAction(const AlamatReturnScreen(), context),
+                      onTap: () =>
+                          c.isCcrfAction(const AlamatReturnScreen(), context),
                     )
                   : const SizedBox(),
               c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Data Rekening'.tr,
                       leading: Icons.credit_card_rounded,
-                      onTap: () => c.isCcrfAction(const AkunBankScreen(), context),
+                      onTap: () =>
+                          c.isCcrfAction(const AkunBankScreen(), context),
                     )
                   : const SizedBox(),
               c.menuModel.profil == "Y"
                   ? SettingListItem(
                       title: 'Dokumen'.tr,
                       leading: Icons.file_present_rounded,
-                      onTap: () => c.isCcrfAction(const DokumenScreen(), context),
+                      onTap: () =>
+                          c.isCcrfAction(const DokumenScreen(), context),
                     )
                   : const SizedBox(),
               LogoutButton(
