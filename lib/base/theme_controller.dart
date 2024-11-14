@@ -79,7 +79,7 @@ class CustomTheme {
       ),
     ),
     switchTheme: SwitchThemeData(
-      trackColor: WidgetStateColor.resolveWith((states) => greyColor),
+      // trackColor: WidgetStateColor.resolveWith((states) => greyColor),
       thumbColor: WidgetStateColor.resolveWith((states) => blueJNE),
     ),
     radioTheme: RadioThemeData(

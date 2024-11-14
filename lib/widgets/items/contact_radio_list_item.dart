@@ -57,12 +57,14 @@ class ContactRadioListItem extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
             color: isLoading ? greyColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: isSelected ? redJNE : greyColor),
           ),
           child: RadioListTile(
             value: value,
             groupValue: groupValue,
             onChanged: onChanged,
-            shape: Border.all(color: isSelected ? redJNE : greyColor),
+            // shape: Border.all(color: isSelected ? redJNE : greyColor),
             selectedTileColor: redJNE,
             title: Text(name ?? '',
                 style: Theme.of(context).textTheme.titleMedium),

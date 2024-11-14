@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
@@ -40,24 +39,25 @@ class TransactionController extends BaseController {
         state.isOnline = value && (result != ConnectivityResult.none);
         update();
         if (state.isOnline) {
-          AppSnackBar.custom(
-            message: '',
-            backgroundColor: Colors.transparent,
-            durationInSeconds: 3,
-            snackPosition: SnackPosition.TOP,
-            snackStyle: SnackStyle.GROUNDED,
-            margin: const EdgeInsets.only(top: 195),
-            padding: const EdgeInsets.symmetric(vertical: 1.5),
-            messageText: Container(
-              color: successColor, // Set your desired background color here
-              child: Center(
-                child: Text(
-                  'Online Mode'.tr,
-                  style: listTitleTextStyle.copyWith(color: whiteColor),
-                ),
-              ),
-            ),
-          );
+          AppSnackBar.success('Online Mode'.tr);
+          // AppSnackBar.custom(
+          //   message: '',
+          //   backgroundColor: Colors.transparent,
+          //   durationInSeconds: 3,
+          //   snackPosition: SnackPosition.TOP,
+          //   snackStyle: SnackStyle.GROUNDED,
+          //   margin: const EdgeInsets.only(top: 195),
+          //   padding: const EdgeInsets.symmetric(vertical: 1.5),
+          //   messageText: Container(
+          //     color: successColor, // Set your desired background color here
+          //     child: Center(
+          //       child: Text(
+          //         'Online Mode'.tr,
+          //         style: listTitleTextStyle.copyWith(color: whiteColor),
+          //       ),
+          //     ),
+          //   ),
+          // );
         }
       });
       initData();
@@ -126,7 +126,7 @@ class TransactionController extends BaseController {
         try {
           await transaction
               .postCalcOngkir(DataTransactionOngkirModel(
-            goodsAmount: goodsAmount,
+            goodsAmount: goodsAmount == 0 ? 0 : goodsAmount,
             isIsr: state.insurance,
             ongkir: state.freightCharge,
             accountNumber: state.account.accountNumber,
@@ -436,7 +436,7 @@ class TransactionController extends BaseController {
           apiType: state.account.accountType ?? state.account.accountService,
           serviceCode: state.selectedService?.serviceDisplay,
           packingkayuFlag: state.woodPacking ? "Y" : "N",
-          specialIns: state.specialInstruction.text,
+          specialIns: state.specialIns,
           codFlag: state.account.accountService == "COD"
               ? "YES"
               : state.codOngkir
@@ -447,7 +447,7 @@ class TransactionController extends BaseController {
           insuranceAmount: state.insurance ? state.isr : 0,
           deliveryPrice: state.freightCharge,
           deliveryPricePublish: state.freightCharge,
-          codAmount: state.isCOD ? state.codAmountText.text.digitOnly().toInt() : null,
+          codAmount: state.isCOD ? state.codAmountText.text.digitOnly().toInt() : 0,
           custId: state.account.accountNumber,
           originCode: state.origin.originCode,
           originDesc: state.origin.originName,
@@ -459,6 +459,7 @@ class TransactionController extends BaseController {
           qty: state.goodQty.text.toInt(),
           weight: state.berat,
           orderId: state.noReference.text,
+          apiStatus: 0,
           shipperName: state.shipper.name,
           shipperPhone: state.shipper.phone,
           shipperAddr: state.shipper.address,
@@ -480,7 +481,7 @@ class TransactionController extends BaseController {
           receiverDistrict: state.receiver.district,
           receiverSubdistrict: state.receiver.subDistrict,
           receiverCountry: state.receiver.country,
-          goodsType: state.goodType.text,
+          goodsType: state.goodType.text.isNotEmpty ? state.goodType.text : "PAKET",
         ),
         state.data?.awb ?? '',
       )
@@ -567,10 +568,12 @@ class TransactionController extends BaseController {
     try {
       await transaction
           .postTransaction(TransactionModel(
+        orderId: state.noReference.text,
+        apiStatus: 0,
         apiType: trans.account?.accountService,
         custId: state.account.accountNumber,
         branch: state.account.accountBranch,
-        codAmount: state.isCOD ? state.codAmountText.text.digitOnly().toInt() : null,
+        codAmount: state.isCOD ? state.codAmountText.text.digitOnly().toInt() : 0,
         codFlag: state.account.accountService == "COD"
             ? "YES"
             : state.codOngkir
@@ -587,7 +590,7 @@ class TransactionController extends BaseController {
         destinationCode: trans.receiver?.destinationCode,
         goodsAmount: state.goodAmount.text.isNotEmpty ? state.goodAmount.text.digitOnly().toInt() : 0,
         goodsDesc: state.goodName.text,
-        goodsType: state.goodType.text,
+        goodsType: state.goodType.text.isNotEmpty ? state.goodType.text : "PAKET",
         qty: state.goodQty.text.toDouble(),
         insuranceAmount: state.insurance ? state.isr : 0,
         insuranceFlag: state.insurance ? "Y" : "N",
@@ -623,7 +626,7 @@ class TransactionController extends BaseController {
         shipperAddr1: trans.shipper?.address1,
         shipperAddr2: trans.shipper?.address2,
         shipperAddr3: trans.shipper?.address3,
-        specialIns: state.specialInstruction.text,
+        specialIns: state.specialIns,
         weight: state.berat,
       ))
           .then((v) {
@@ -680,7 +683,7 @@ class TransactionController extends BaseController {
   }
 
   void onSaved() {
-    if (state.codAmountText.text.digitOnly().toInt() < state.getCodAmountMinimum) {
+    if ((state.codAmountText.text.digitOnly().toInt() < state.getCodAmountMinimum) && state.codOngkir) {
       Get.dialog(StatefulBuilder(
         builder: (context, setState) => AlertDialog(
           scrollable: false,

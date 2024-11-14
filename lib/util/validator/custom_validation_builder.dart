@@ -24,8 +24,8 @@ extension CustomValidationBuilder on ValidationBuilder {
           return 'Masukan tidak boleh kosong'.tr;
           // } else if (value!.length < 10) {
           //   return 'Nomor telepon harus lebih dari 10 karakter'.tr;
-        } else if (value!.length > 12) {
-          return "Nomor telepon tidak boleh lebih dari 12 karakter".tr;
+        } else if (value!.length > 13) {
+          return "Nomor telepon tidak boleh lebih dari 13 karakter".tr;
         }
         return null;
       });

@@ -41,6 +41,7 @@ class DashboardState {
   List<BannerModel> bannerList = [];
   List<NewsModel> newsList = [];
   List<CountCardModel> transCountList = [];
+  List<CountCardModel> transCountCodList = [];
   List<String> transType = [
     'Jumlah Transaksi',
     'Masih Dikamu',
@@ -50,6 +51,16 @@ class DashboardState {
     'Sudah Dikembalikan',
     'Dalam Peninjauan',
     'Dibatalkan Oleh Kamu'
+  ];
+
+  List<String> transCountCod = [
+    'Total Kiriman COD',
+    'Terkumpul dari Pembeli',
+    'Belum Terkumpul Dari Pembeli',
+    'Butuh Dicek',
+    'Sudah Dikembalikan',
+    'Dalam Peninjauan',
+    'Dibatalkan Oleh Kamu',
   ];
   var bannerIndex = 0.obs;
   MenuModel allow = MenuModel();

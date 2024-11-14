@@ -51,6 +51,7 @@ class TransactionState {
   // final codFee = TextEditingController();
   // final codAmount = TextEditingController();
 
+  String specialIns = '';
   bool insurance = false;
   bool woodPacking = false;
   bool isServiceLoad = false;

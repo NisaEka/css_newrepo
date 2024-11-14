@@ -254,33 +254,33 @@ class ReturnAddress {
         ccrfNpwpnumber: ccrfNpwpnumber ?? _ccrfNpwpnumber,
       );
 
-  String? get ccrfReturnaddress => _ccrfReturnaddress;
+  String? get address => _ccrfReturnaddress;
 
-  String? get ccrfReturnprovince => _ccrfReturnprovince;
+  String? get province => _ccrfReturnprovince;
 
-  String? get ccrfReturncity => _ccrfReturncity;
+  String? get city => _ccrfReturncity;
 
-  String? get ccrfReturndistrict => _ccrfReturndistrict;
+  String? get district => _ccrfReturndistrict;
 
-  String? get ccrfReturnsubdistrict => _ccrfReturnsubdistrict;
+  String? get subDistrict => _ccrfReturnsubdistrict;
 
-  String? get ccrfReturnzipcode => _ccrfReturnzipcode;
+  String? get zipCode => _ccrfReturnzipcode;
 
-  String? get ccrfReturnphone => _ccrfReturnphone;
+  String? get phone => _ccrfReturnphone;
 
-  String? get ccrfReturnhandphone => _ccrfReturnhandphone;
+  String? get secondPhone => _ccrfReturnhandphone;
 
-  String? get ccrfReturnresponsiblename => _ccrfReturnresponsiblename;
+  String? get responsibleName => _ccrfReturnresponsiblename;
 
-  String? get ccrfJlcnumber => _ccrfJlcnumber;
+  String? get jlcNumber => _ccrfJlcnumber;
 
-  String? get ccrfCounter => _ccrfCounter;
+  String? get counter => _ccrfCounter;
 
-  String? get ccrfNpwptype => _ccrfNpwptype;
+  String? get npwpType => _ccrfNpwptype;
 
-  String? get ccrfNpwpname => _ccrfNpwpname;
+  String? get npwpName => _ccrfNpwpname;
 
-  String? get ccrfNpwpnumber => _ccrfNpwpnumber;
+  String? get npwpNumber => _ccrfNpwpnumber;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

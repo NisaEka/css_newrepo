@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -62,24 +61,6 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                   }),
                 ),
               ),
-              //     Padding(
-              //       padding: const EdgeInsets.symmetric(horizontal: 20),
-              //       child: Column(
-              //         children: [
-              //           Text(
-              //             bannerTexts[currentIndex]['title']!.tr,
-              //             textAlign: TextAlign.center,
-              //             style: Theme.of(context).textTheme.headlineLarge,
-              //           ),
-              //           const SizedBox(height: 15),
-              //           Text(
-              //             bannerTexts[currentIndex]['desc']!,
-              //             textAlign: TextAlign.center,
-              //             style: Theme.of(context).textTheme.bodyLarge,
-              //           ),
-              //         ],
-              //       ),
-              //     ),
             ],
           ),
           Container(

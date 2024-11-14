@@ -5,6 +5,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/master/get_region_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -36,21 +37,22 @@ class ShipperController extends BaseController {
       connection.isOnline().then((value) {
         state.isOnline = value && (result != ConnectivityResult.none);
         if (state.isOnline) {
-          AppSnackBar.custom(
-            message: '',
-            snackPosition: SnackPosition.TOP,
-            margin: const EdgeInsets.only(top: 195),
-            padding: const EdgeInsets.symmetric(vertical: 1.5),
-            messageText: Container(
-              color: successColor, // Set your desired background color here
-              child: Center(
-                child: Text(
-                  'Online Mode'.tr,
-                  style: listTitleTextStyle.copyWith(color: whiteColor),
-                ),
-              ),
-            ),
-          );
+          AppSnackBar.success('Online Mode'.tr);
+          // AppSnackBar.custom(
+          //   message: '',
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   margin: const EdgeInsets.only(top: 195),
+          //   padding: const EdgeInsets.symmetric(vertical: 1.5),
+          //   messageText: Container(
+          //     color: successColor, // Set your desired background color here
+          //     child: Center(
+          //       child: Text(
+          //         'Online Mode'.tr,
+          //         style: listTitleTextStyle.copyWith(color: whiteColor),
+          //       ),
+          //     ),
+          //   ),
+          // );
         }
 
         update();
@@ -106,36 +108,38 @@ class ShipperController extends BaseController {
       update();
 
       var user = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
+      var resp = await profil.getShipper();
+      ShipperModel shipper = resp.data?.first ?? ShipperModel();
 
-      await profil.getBasicProfil().then((value) async {
+      await profil.getCcrfProfil().then((value) async {
         if (value.data != null) {
           state.shipper = ShipperModel(
-            name: value.data?.user?.brand,
-            region: value.data?.user?.region,
-            origin: value.data?.user?.origin,
-            zipCode: value.data?.user?.zipCode,
-            address: value.data?.user?.address,
-            phone: value.data?.user?.phone,
+            name: value.data?.generalInfo?.brand,
+            region: shipper.region,
+            origin: shipper.origin,
+            zipCode: value.data?.generalInfo?.zipCode,
+            address: value.data?.generalInfo?.address,
+            phone: value.data?.generalInfo?.phone,
             city: user.generalInfo?.city,
             country: user.generalInfo?.country,
             dropship: state.isDropshipper,
             contact: user.generalInfo?.name,
-            address1: value.data?.user?.address
-                ?.substring(0, (value.data?.user?.address?.length ?? 0) > 30 ? 29 : (value.data?.user?.address?.length ?? 0)),
-            address2: (value.data?.user?.address?.length ?? 0) > 30
-                ? value.data?.user?.address
-                    ?.substring(30, (value.data?.user?.address?.length ?? 0) > 60 ? 59 : (value.data?.user?.address?.length ?? 0))
+            address1: value.data?.generalInfo?.address
+                ?.substring(0, (value.data?.generalInfo?.address?.length ?? 0) > 30 ? 29 : (value.data?.generalInfo?.address?.length ?? 0)),
+            address2: (value.data?.generalInfo?.address?.length ?? 0) > 30
+                ? value.data?.generalInfo?.address
+                    ?.substring(30, (value.data?.generalInfo?.address?.length ?? 0) > 60 ? 59 : (value.data?.generalInfo?.address?.length ?? 0))
                 : '',
-            address3: (value.data?.user?.address?.length ?? 0) >= 60
-                ? value.data?.user?.address?.substring(60, (value.data?.user?.address?.length ?? 0))
+            address3: (value.data?.generalInfo?.address?.length ?? 0) >= 60
+                ? value.data?.generalInfo?.address?.substring(60, (value.data?.generalInfo?.address?.length ?? 0))
                 : '',
           );
-          state.shipperName.text = value.data?.user?.brand ?? '';
-          state.shipperPhone.text = value.data?.user?.phone ?? '';
-          state.shipperOrigin.text = value.data?.user?.origin?.originName ?? '';
-          state.shipperZipCode.text = value.data?.user?.zipCode ?? '';
-          state.shipperAddress.text = value.data?.user?.address ?? '';
-          state.selectedOrigin = value.data?.user?.origin;
+          state.shipperName.text = value.data?.generalInfo?.brand ?? '';
+          state.shipperPhone.text = value.data?.generalInfo?.phone ?? '';
+          state.shipperOrigin.text = shipper.origin?.originName ?? '';
+          state.shipperZipCode.text = value.data?.generalInfo?.zipCode ?? '';
+          state.shipperAddress.text = value.data?.generalInfo?.address ?? '';
+          state.selectedOrigin = shipper.origin;
         } else {
           await profil.getBasicProfil().then((value) {
             state.shipper = ShipperModel(
@@ -320,8 +324,7 @@ class ShipperController extends BaseController {
             city: state.selectedOrigin?.originName,
           ))
           .then(
-            (value) =>
-                AppSnackBar.success('Data dropshipper telah disimpan'.tr),
+            (value) => AppSnackBar.success('Data dropshipper telah disimpan'.tr),
           );
     } catch (e) {
       AppLogger.e('error save dropshipper $e');

@@ -39,7 +39,7 @@ class AppSnackBar {
     required String message,
     Color backgroundColor = Colors.transparent,
     Icon? icon,
-    int durationInSeconds = 15,
+    int durationInSeconds = 10,
     SnackPosition snackPosition = SnackPosition.BOTTOM,
     SnackStyle snackStyle = SnackStyle.GROUNDED,
     EdgeInsets? margin,

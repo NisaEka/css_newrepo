@@ -34,9 +34,7 @@ class ShipperForm extends StatelessWidget {
                         key: c.state.formKey,
                         onChanged: () {
                           c.formValidate();
-                          c.connection
-                              .isOnline()
-                              .then((value) => c.state.isOnline = value);
+                          c.connection.isOnline().then((value) => c.state.isOnline = value);
                           c.update();
                         },
                         child: Column(
@@ -49,8 +47,7 @@ class ShipperForm extends StatelessWidget {
                                   ? Row(
                                       children: List.generate(
                                         3,
-                                        (index) =>
-                                            AccountListItem(isLoading: true),
+                                        (index) => AccountListItem(isLoading: true),
                                       ),
                                     )
                                   : Row(
@@ -58,10 +55,7 @@ class ShipperForm extends StatelessWidget {
                                           .map(
                                             (e) => AccountListItem(
                                               data: e,
-                                              isSelected:
-                                                  c.state.selectedAccount == e
-                                                      ? true
-                                                      : false,
+                                              isSelected: c.state.selectedAccount == e ? true : false,
                                               onTap: () => c.selectAccount(e),
                                             ),
                                           )
@@ -71,8 +65,7 @@ class ShipperForm extends StatelessWidget {
                             CustomSwitch(
                               value: c.state.isDropshipper,
                               label: 'Kirim sebagai dropshipper'.tr,
-                              onChange: (bool? value) =>
-                                  c.sendAsDropshipper(value),
+                              onChange: (bool? value) => c.sendAsDropshipper(value),
                             ),
                             c.state.selectedAccount?.accountService == "JLC"
                                 ? CustomSwitch(
@@ -100,24 +93,19 @@ class ShipperForm extends StatelessWidget {
                               readOnly: !c.state.isDropshipper,
                               isRequired: true,
                               prefixIcon: const Icon(Icons.phone),
-                              validator:
-                                  ValidationBuilder().phoneNumber().build(),
+                              validator: ValidationBuilder().phoneNumber().build(),
                             ),
                             OriginDropdown(
                               label: "Kota Pengirim".tr,
                               isRequired: c.state.isOnline,
                               value: c.state.selectedOrigin,
                               selectedItem: c.state.shipperOrigin.text,
-                              branch: c.state.selectedAccount?.accountBranch,
-                              readOnly: c.state.selectedAccount == null ||
-                                      c.state.isOnline == false
-                                  ? true
-                                  : !c.state.isDropshipper,
+                              branch: c.state.selectedAccount?.accountService != "JLC" ? c.state.selectedAccount?.accountBranch : null,
+                              readOnly: c.state.selectedAccount == null || c.state.isOnline == false ? true : !c.state.isDropshipper,
                               prefixIcon: const Icon(Icons.location_city),
                               onChanged: (value) {
                                 c.state.selectedOrigin = value;
-                                c.state.shipperOrigin.text =
-                                    c.state.selectedOrigin?.originName ?? '';
+                                c.state.shipperOrigin.text = c.state.selectedOrigin?.originName ?? '';
                                 // controller.kodePos.text = controller.selectedOrigin?.
                                 c.update();
                               },
@@ -140,21 +128,13 @@ class ShipperForm extends StatelessWidget {
                               prefixIcon: const Icon(Icons.location_city),
                               validator: ValidationBuilder().address().build(),
                             ),
-                            c.state.isDropshipper &&
-                                    c.state.isOnline &&
-                                    c.isSaveDropshipper()
+                            c.state.isDropshipper && c.state.isOnline && c.isSaveDropshipper()
                                 ? CustomFilledButton(
                                     color: whiteColor,
-                                    borderColor: c.state.isValidate
-                                        ? blueJNE
-                                        : greyColor,
+                                    borderColor: c.state.isValidate ? blueJNE : greyColor,
                                     title: 'Simpan Data Dropshipper'.tr,
-                                    fontColor: c.state.isValidate
-                                        ? blueJNE
-                                        : greyColor,
-                                    onPressed: () => c.state.isValidate
-                                        ? c.saveDropshipper()
-                                        : null,
+                                    fontColor: c.state.isValidate ? blueJNE : greyColor,
+                                    onPressed: () => c.state.isValidate ? c.saveDropshipper() : null,
                                   )
                                 : const SizedBox(),
                             CustomFilledButton(

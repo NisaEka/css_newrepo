@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
@@ -31,21 +29,22 @@ class ReceiverController extends BaseController {
         state.isOnline = value && (result != ConnectivityResult.none);
         update();
         if (state.isOnline) {
-          AppSnackBar.custom(
-            message: '',
-            snackPosition: SnackPosition.TOP,
-            margin: const EdgeInsets.only(top: 195),
-            padding: const EdgeInsets.symmetric(vertical: 1.5),
-            messageText: Container(
-              color: successColor, // Set your desired background color here
-              child: Center(
-                child: Text(
-                  'Online Mode'.tr,
-                  style: listTitleTextStyle.copyWith(color: whiteColor),
-                ),
-              ),
-            ),
-          );
+          AppSnackBar.success('Online Mode'.tr);
+          // AppSnackBar.custom(
+          //   message: '',
+          //   snackPosition: SnackPosition.TOP,
+          //   margin: const EdgeInsets.only(top: 195),
+          //   padding: const EdgeInsets.symmetric(vertical: 1.5),
+          //   messageText: Container(
+          //     color: successColor, // Set your desired background color here
+          //     child: Center(
+          //       child: Text(
+          //         'Online Mode'.tr,
+          //         style: listTitleTextStyle.copyWith(color: whiteColor),
+          //       ),
+          //     ),
+          //   ),
+          // );
         }
       });
       update();
@@ -59,7 +58,7 @@ class ReceiverController extends BaseController {
       state.receiverAddress.text = state.data?.receiver?.address ?? '';
       state.receiverDest.text = state.data?.destination?.cityName ?? '';
       state.selectedDestination = state.data?.destination;
-      state.isValidate = true;
+      state.isValidate = state.isEdit ?? false;
       update();
     }
   }
@@ -110,6 +109,7 @@ class ReceiverController extends BaseController {
       contact: state.receiverName.text.toUpperCase(),
       district: state.selectedDestination?.districtName,
       subDistrict: state.selectedDestination?.subdistrictName,
+      destinationCode: state.selectedDestination?.destinationCode,
     );
 
     var trans = DataTransactionModel(
