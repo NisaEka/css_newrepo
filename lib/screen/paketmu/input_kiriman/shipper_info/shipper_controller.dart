@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
-import 'package:css_mobile/data/model/master/get_region_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -18,7 +15,6 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_s
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_state.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -279,7 +275,7 @@ class ShipperController extends BaseController {
       address3: (state.shipperAddress.text.length) >= 60 ? state.shipperAddress.text.substring(60, (state.shipperAddress.text.length)) : '',
       city: state.shipperOrigin.text.toUpperCase(),
       zipCode: state.shipperZipCode.text,
-      region: state.isDropshipper ? state.selectedOrigin?.region : (state.shipper?.region ?? state.data?.shipper?.region),
+      region: state.isDropshipper ? state.selectedOrigin?.branch?.regional : (state.shipper?.region ?? state.data?.shipper?.region),
       //province
       country: "ID",
       contact: state.shipperName.text.toUpperCase(),
@@ -379,7 +375,7 @@ class ShipperController extends BaseController {
         originCode: state.shipper?.origin?.originCode,
         branchCode: state.shipper?.origin?.branchCode,
         originName: state.shipper?.origin?.originName,
-        region: state.shipper?.region,
+        branch: OriginBranch(region: state.shipper?.region),
       );
       state.isValidate = true;
     }

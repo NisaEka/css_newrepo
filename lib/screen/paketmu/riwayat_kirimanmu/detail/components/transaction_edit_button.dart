@@ -47,7 +47,7 @@ class TransactionEditButton extends StatelessWidget {
           Get.to(
             const InformasiPengirimScreen(),
             arguments: {
-              'isEdit':true,
+              'isEdit': true,
               'data': DataTransactionModel(
                 shipper: ShipperModel(
                   name: data.shipperName,
@@ -66,18 +66,20 @@ class TransactionEditButton extends StatelessWidget {
                   origin: Origin(
                     originCode: data.originCode,
                     originName: data.originDesc,
-                    region: Region(
+                    branch: OriginBranch(
+                        region: Region(
                       name: data.shipperRegion,
-                    ),
+                    )),
                     branchCode: data.branch,
                   ),
                 ),
                 origin: Origin(
                   originCode: data.originCode,
                   originName: data.originDesc,
-                  region: Region(
+                  branch: OriginBranch(
+                      region: Region(
                     name: data.shipperRegion,
-                  ),
+                  )),
                   branchCode: data.branch,
                 ),
                 awb: data.awb,

@@ -276,18 +276,20 @@ class TransactionDetail extends StatelessWidget {
                                 originCode: c.transactionModel?.originCode,
                                 originName: c.transactionModel?.originDesc,
                                 branchCode: c.transactionModel?.branch,
-                                region: Region(
+                                branch: OriginBranch(
+                                    region: Region(
                                   name: c.transactionModel?.shipperRegion,
-                                ),
+                                )),
                               ),
                             ),
                             origin: Origin(
                               originCode: c.transactionModel?.originCode,
                               originName: c.transactionModel?.originDesc,
                               branchCode: c.transactionModel?.branch,
-                              region: Region(
+                              branch: OriginBranch(
+                                  region: Region(
                                 name: c.transactionModel?.shipperRegion,
-                              ),
+                              )),
                             ),
                             registrationId: c.transactionModel?.registrationId,
                             status: c.transactionModel?.statusAwb,
