@@ -48,8 +48,6 @@ class BasicProfileModel {
 class UserModel {
   UserModel({
     String? id,
-    Region? region,
-    BranchModel? branch,
     OriginModel? origin,
     String? zipCode,
     String? name,
@@ -63,8 +61,6 @@ class UserModel {
     String? language,
   }) {
     _id = id;
-    _region = region;
-    _branch = branch;
     _origin = origin;
     _zipCode = zipCode;
     _name = name;
@@ -80,9 +76,6 @@ class UserModel {
 
   UserModel.fromJson(dynamic json) {
     _id = json['id'];
-    _region = json['region'] != null ? Region.fromJson(json['region']) : null;
-    _branch =
-        json['branch'] != null ? BranchModel.fromJson(json['branch']) : null;
     _origin =
         json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
     _zipCode = json['zipCode'];
@@ -98,8 +91,6 @@ class UserModel {
   }
 
   String? _id;
-  Region? _region;
-  BranchModel? _branch;
   OriginModel? _origin;
   String? _zipCode;
   String? _name;
@@ -114,8 +105,6 @@ class UserModel {
 
   UserModel copyWith({
     String? id,
-    Region? region,
-    BranchModel? branch,
     OriginModel? origin,
     String? zipCode,
     String? name,
@@ -130,8 +119,6 @@ class UserModel {
   }) =>
       UserModel(
         id: id ?? _id,
-        region: region ?? _region,
-        branch: branch ?? _branch,
         origin: origin ?? _origin,
         zipCode: zipCode ?? _zipCode,
         name: name ?? _name,
@@ -146,10 +133,6 @@ class UserModel {
       );
 
   String? get id => _id;
-
-  Region? get region => _region;
-
-  BranchModel? get branch => _branch;
 
   OriginModel? get origin => _origin;
 
@@ -176,12 +159,6 @@ class UserModel {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    if (_region != null) {
-      map['region'] = _region?.toJson();
-    }
-    if (_branch != null) {
-      map['branch'] = _branch?.toJson();
-    }
     if (_origin != null) {
       map['origin'] = _origin?.toJson();
     }

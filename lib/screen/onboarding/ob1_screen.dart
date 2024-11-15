@@ -20,6 +20,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
   int currentIndex = 0;
   String lang = 'id';
 
+
   final List<Map<String, String>> bannerTexts = [
     {
       "title": "Permintaan Pickup",
@@ -35,6 +36,15 @@ class _Ob1ScreenState extends State<Ob1Screen> {
       "desc": "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.",
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      Get.updateLocale(const Locale("id", "ID"));
+      lang = "id";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -353,15 +353,7 @@ class DashboardController extends BaseController {
         await profil.getBasicProfil().then((value) async {
           await storage.saveData(
             StorageCore.basicProfile,
-            value.data?.user?.copyWith(
-              origin: value.data?.user?.origin?.copyWith(
-                  branchCode: value.data?.user?.branch?.branchCode,
-                  branch: BranchModel(
-                    branchCode: value.data?.user?.branch?.branchCode,
-                    branchDesc: value.data?.user?.branch?.branchDesc,
-                    region: value.data?.user?.region,
-                  )),
-            ),
+            value.data?.user
           );
 
           await storage.saveData(
@@ -374,7 +366,7 @@ class DashboardController extends BaseController {
                 city: value.data?.user?.origin?.originName,
                 origin: value.data?.user?.origin,
                 country: value.data?.user?.language,
-                region: value.data?.user?.region,
+                region: value.data?.user?.origin?.branch?.regional,
               ));
 
           if (state.basic?.language == "INDONESIA") {
@@ -460,7 +452,7 @@ class DashboardController extends BaseController {
       //     update();
       //   } else {
       //     state.jlcPoint = '0';
-      //   }
+      //
       // }).catchError((value) {
       //   debugPrint("jlc error $value");
       // });

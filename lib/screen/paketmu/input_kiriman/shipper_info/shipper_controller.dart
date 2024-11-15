@@ -146,7 +146,7 @@ class ShipperController extends BaseController {
               address: value.data?.user?.address,
               zipCode: value.data?.user?.zipCode,
               origin: value.data?.user?.origin,
-              region: value.data?.user?.region,
+              region: value.data?.user?.origin?.branch?.regional,
               contact: value.data?.user?.name,
               city: value.data?.user?.origin?.originName,
               country: 'INDONESIA',
