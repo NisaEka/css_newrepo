@@ -12,9 +12,8 @@ class CssFirebaseConfig {
     );
     await FirebaseApi.initNotification();
 
-    if (kDebugMode) {
-      await FirebaseCrashlytics.instance
-          .setCrashlyticsCollectionEnabled(true);
-    }
+    // if (kDebugMode) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    // }
   }
 }

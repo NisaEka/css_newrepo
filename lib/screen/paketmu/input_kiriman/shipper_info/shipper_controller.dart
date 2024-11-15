@@ -68,6 +68,7 @@ class ShipperController extends BaseController {
       state.selectedOrigin = value.where((element) => element.originCode == state.dropshipper?.originCode).first;
       update();
     });
+    print("selected dropshipper ${state.selectedOrigin?.toJson()}");
 
     update();
     // return state.dropshipper;
@@ -256,7 +257,7 @@ class ShipperController extends BaseController {
     state.isLoadOrigin = true;
     BaseResponse<List<OriginModel>>? response;
     try {
-      response = await master.getOrigins(QueryParamModel(search: keyword.toUpperCase()));
+      response = await master.getOrigins(QueryParamModel(search: keyword.toUpperCase(), relation: true, table: true));
     } catch (e) {
       e.printError();
     }
