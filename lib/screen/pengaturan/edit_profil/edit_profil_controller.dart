@@ -26,7 +26,7 @@ class EditProfileController extends BaseController {
 
   // GetDestinationModel? destinationModel;
   Destination? selectedCity;
-  Origin? selectedOrigin;
+  OriginModel? selectedOrigin;
   UserModel? basicProfil;
   CcrfProfileModel? ccrfProfil;
 
@@ -114,7 +114,7 @@ class EditProfileController extends BaseController {
     return [];
   }
 
-  Future<List<Origin>> getOriginList(String keyword) async {
+  Future<List<OriginModel>> getOriginList(String keyword) async {
     isLoadOrigin = true;
     // var response = await ongkir.postOrigin(keyword);
     // var models = response.payload?.toList();

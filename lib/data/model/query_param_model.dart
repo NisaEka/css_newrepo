@@ -238,7 +238,7 @@ class QueryParamModel {
     if (_relation != null) map['relation'] = _relation;
     if (_search != null) map['search'] = _search;
     if (_where != null) map['where'] = _where;
-    map['page'] = _page ?? 1; // Default value
+    if (_page != null) map['page'] = _page;
     if (_limit != null) map['limit'] = _limit;
     if (_notEqual != null) map['notEqual'] = _notEqual;
     if (_greaterThan != null) map['greaterThan'] = _greaterThan;

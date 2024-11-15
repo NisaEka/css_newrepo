@@ -21,7 +21,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<UserProfileModel>> getBasicProfil() async {
+  Future<BaseResponse<BasicProfileModel>> getBasicProfil() async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
@@ -30,12 +30,13 @@ class ProfilRepositoryImpl extends ProfilRepository {
       );
       return BaseResponse.fromJson(
         response.data,
-        (json) => UserProfileModel.fromJson(json as Map<String, dynamic>),
+        (json) => BasicProfileModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
+      AppLogger.e("error get basic profile ${e.response?.data}");
       return BaseResponse.fromJson(
         e.response?.data,
-        (json) => UserProfileModel.fromJson(json as Map<String, dynamic>),
+        (json) => BasicProfileModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }
@@ -166,6 +167,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
       Response response = await network.base.get(
         "/me/shipper",
       );
+      AppLogger.d("get shipper : ${response.data.toString()}");
       return BaseResponse<List<ShipperModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>

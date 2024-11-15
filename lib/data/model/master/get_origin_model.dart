@@ -1,12 +1,12 @@
-import 'get_region_model.dart';
+import 'get_branch_model.dart';
 
-class Origin {
-  Origin({
+class OriginModel {
+  OriginModel({
     String? originCode,
     String? originName,
     String? branchCode,
     String? originStatus,
-    OriginBranch? branch,
+    BranchModel? branch,
   }) {
     _originCode = originCode;
     _originName = originName;
@@ -15,28 +15,28 @@ class Origin {
     _branch = branch;
   }
 
-  Origin.fromJson(dynamic json) {
+  OriginModel.fromJson(dynamic json) {
     _originCode = json['originCode'] ?? json['code'];
     _originName = json['originName'];
-    _branchCode = json['branchCode'] ?? json['branch'];
+    _branchCode = json['branchCode'];
     _originStatus = json['originStatus'];
-    _branch = json['branch'] != null ? OriginBranch.fromJson(json['branch']) : null;
+    _branch = json['branch'] != null ? BranchModel.fromJson(json['branch']) : BranchModel();
   }
 
   String? _originCode;
   String? _originName;
   String? _branchCode;
   String? _originStatus;
-  OriginBranch? _branch;
+  BranchModel? _branch;
 
-  Origin copyWith({
+  OriginModel copyWith({
     String? originCode,
     String? originName,
     String? branchCode,
     String? originStatus,
-    OriginBranch? branch,
+    BranchModel? branch,
   }) =>
-      Origin(
+      OriginModel(
         originCode: originCode ?? _originCode,
         originName: originName ?? _originName,
         branchCode: branchCode ?? _branchCode,
@@ -52,7 +52,7 @@ class Origin {
 
   String? get originStatus => _originStatus;
 
-  OriginBranch? get branch => _branch;
+  BranchModel? get branch => _branch;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -60,60 +60,12 @@ class Origin {
     map['code'] = _originCode;
     map['originName'] = _originName;
     map['branchCode'] = _branchCode;
-    map['branch'] = _branchCode;
     map['originStatus'] = _originStatus;
     if (_branch != null) {
       map['branch'] = _branch?.toJson();
     }
-    return map;
-  }
-}
+    // map['branch'] = _branchCode;
 
-class OriginBranch {
-  OriginBranch({
-    String? branchDesc,
-    String? regionalCode,
-    Region? region,
-  }) {
-    _branchDesc = branchDesc;
-    _regionalCode = regionalCode;
-    _regional = regional;
-  }
-
-  OriginBranch.fromJson(dynamic json) {
-    _branchDesc = json['branchDesc'];
-    _regionalCode = json['regionalCode'];
-    _regional = json['regional'] != null ? Region.fromJson(json['regional']) : null;
-  }
-
-  String? _branchDesc;
-  String? _regionalCode;
-  Region? _regional;
-
-  OriginBranch copyWith({
-    String? branchDesc,
-    String? regionalCode,
-    Region? region,
-  }) =>
-      OriginBranch(
-        branchDesc: branchDesc ?? _branchDesc,
-        regionalCode: regionalCode ?? _regionalCode,
-        region: regional ?? _regional,
-      );
-
-  String? get branchDesc => _branchDesc;
-
-  String? get regionalCode => _regionalCode;
-
-  Region? get regional => _regional;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['branchDesc'] = _branchDesc;
-    map['regionalCode'] = _regionalCode;
-    if (_regional != null) {
-      map['regional'] = _regional?.toJson();
-    }
     return map;
   }
 }

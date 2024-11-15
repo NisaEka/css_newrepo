@@ -15,6 +15,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../dashboard/dashboard_controller.dart';
+
 class DraftTransaksiScreen extends StatelessWidget {
   const DraftTransaksiScreen({super.key});
 
@@ -39,7 +41,7 @@ class DraftTransaksiScreen extends StatelessWidget {
     return CustomTopBar(
       title: 'Draft Transaksi'.tr,
       leading: CustomBackButton(
-        onPressed: () => Get.offAll(const DashboardScreen()),
+        onPressed: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
       ),
       action: [
         c.isOnline && c.isSync

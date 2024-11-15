@@ -3,12 +3,11 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
-import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
-
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -76,8 +75,8 @@ class TambahPetugasController extends BaseController {
 
   List<Account> accountList = [];
   List<Account> selectedAccountList = [];
-  RxList<Origin> originList = <Origin>[].obs;
-  final selectedOrigin = <Origin>[].obs;
+  RxList<OriginModel> originList = <OriginModel>[].obs;
+  final selectedOrigin = <OriginModel>[].obs;
   List<String> originCodes = [];
   List<BranchModel> branchList = [];
   List<BranchModel> selectedBranchList = [];
@@ -128,7 +127,7 @@ class TambahPetugasController extends BaseController {
         });
         dataPetugas.branches?.forEach((branch) {
           selectedBranchList.add(
-            branchList.where((e) => e.code == branch.code).isNotEmpty ? branchList.where((e) => e.code == branch.code).first : BranchModel(),
+            branchList.where((e) => e.branchCode == branch.branchCode).isNotEmpty ? branchList.where((e) => e.branchCode == branch.branchCode).first : BranchModel(),
           );
           update();
         });
@@ -202,7 +201,7 @@ class TambahPetugasController extends BaseController {
     isLoadOrigin = true;
     update();
     for (var element in branches) {
-      branch.add(element.code ?? '');
+      branch.add(element.branchCode ?? '');
       update();
     }
     try {
@@ -219,7 +218,7 @@ class TambahPetugasController extends BaseController {
           dataPetugas.origins?.forEach((origin) {
             selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).isNotEmpty
                 ? originList.where((e) => e.originCode == origin.originCode).first
-                : Origin());
+                : OriginModel());
             update();
           });
 
@@ -234,7 +233,7 @@ class TambahPetugasController extends BaseController {
       i.printError(info: "error load origin:");
     }
     for (var value in originCodes) {
-      selectedOrigin.add(originList.where((e) => e.originCode == value).isNotEmpty ? originList.where((e) => e.originCode == value).first : Origin());
+      selectedOrigin.add(originList.where((e) => e.originCode == value).isNotEmpty ? originList.where((e) => e.originCode == value).first : OriginModel());
     }
     isLoadOrigin = false;
     update();

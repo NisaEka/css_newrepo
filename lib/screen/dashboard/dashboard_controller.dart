@@ -3,9 +3,11 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/css.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -336,20 +338,30 @@ class DashboardController extends BaseController {
         ((await storage.readString(StorageCore.receiver)).isEmpty || (await storage.readString(StorageCore.receiver)) == 'null') && state.isLogin;
     bool sender =
         ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null') && state.isLogin;
-    bool basic =
-        ((await storage.readString(StorageCore.basicProfile)).isEmpty || (await storage.readString(StorageCore.basicProfile)) == 'null') && state.isLogin;
+    bool basic = ((await storage.readString(StorageCore.basicProfile)).isEmpty || (await storage.readString(StorageCore.basicProfile)) == 'null') &&
+        state.isLogin;
     bool ccrfP = ((await storage.readString(StorageCore.ccrfProfile)).isEmpty ||
             (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
             (await storage.readString(StorageCore.ccrfProfile)) == '{}') &&
         state.isLogin;
     update();
 
+    AppLogger.i("basic profile : ${await storage.readString(StorageCore.basicProfile)}");
+
     try {
       if (basic) {
         await profil.getBasicProfil().then((value) async {
           await storage.saveData(
             StorageCore.basicProfile,
-            value.data?.user,
+            value.data?.user?.copyWith(
+              origin: value.data?.user?.origin?.copyWith(
+                  branchCode: value.data?.user?.branch?.branchCode,
+                  branch: BranchModel(
+                    branchCode: value.data?.user?.branch?.branchCode,
+                    branchDesc: value.data?.user?.branch?.branchDesc,
+                    region: value.data?.user?.region,
+                  )),
+            ),
           );
 
           await storage.saveData(

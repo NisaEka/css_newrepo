@@ -10,7 +10,7 @@ import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 
 abstract class ProfilRepository {
-  Future<BaseResponse<UserProfileModel>> getBasicProfil();
+  Future<BaseResponse<BasicProfileModel>> getBasicProfil();
 
   Future<BaseResponse<CcrfProfileModel>> getCcrfProfil();
 
@@ -27,5 +27,5 @@ abstract class ProfilRepository {
 
   Future<BaseResponse> putProfileBasic(UserModel data);
 
-  Future<BaseResponse<List<ShipperModel>>> getShipper();
+  Future<BaseResponse<List<ShipperModel>>>  getShipper();
 }

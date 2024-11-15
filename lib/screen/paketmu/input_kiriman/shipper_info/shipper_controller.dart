@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -106,12 +107,13 @@ class ShipperController extends BaseController {
       var user = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
       var resp = await profil.getShipper();
       ShipperModel shipper = resp.data?.first ?? ShipperModel();
+      print("shipper region : ${shipper.origin?.toJson()}");
 
       await profil.getCcrfProfil().then((value) async {
         if (value.data != null) {
           state.shipper = ShipperModel(
             name: value.data?.generalInfo?.brand,
-            region: shipper.region,
+            region: shipper.origin?.branch?.regional,
             origin: shipper.origin,
             zipCode: value.data?.generalInfo?.zipCode,
             address: value.data?.generalInfo?.address,
@@ -190,10 +192,11 @@ class ShipperController extends BaseController {
       state.shipperOrigin.text = state.shipper?.origin?.originName ?? '';
       state.shipperZipCode.text = state.shipper?.zipCode ?? '';
       state.shipperAddress.text = state.shipper?.address ?? '';
-      state.selectedOrigin = Origin(
+      state.selectedOrigin = OriginModel(
           originCode: state.shipper?.origin?.originCode,
           branchCode: state.shipper?.origin?.branchCode,
-          originName: state.shipper?.origin?.originName);
+          originName: state.shipper?.origin?.originName,
+          branch: state.shipper?.origin?.branch);
     }
 
     state.isLoading = false;
@@ -249,9 +252,9 @@ class ShipperController extends BaseController {
     }
   }
 
-  Future<List<Origin>> getOriginList(String keyword) async {
+  Future<List<OriginModel>> getOriginList(String keyword) async {
     state.isLoadOrigin = true;
-    BaseResponse<List<Origin>>? response;
+    BaseResponse<List<OriginModel>>? response;
     try {
       response = await master.getOrigins(QueryParamModel(search: keyword.toUpperCase()));
     } catch (e) {
@@ -276,6 +279,7 @@ class ShipperController extends BaseController {
       city: state.shipperOrigin.text.toUpperCase(),
       zipCode: state.shipperZipCode.text,
       region: state.isDropshipper ? state.selectedOrigin?.branch?.regional : (state.shipper?.region ?? state.data?.shipper?.region),
+      // region: state.selectedOrigin?.branch?.regional,
       //province
       country: "ID",
       contact: state.shipperName.text.toUpperCase(),
@@ -285,7 +289,7 @@ class ShipperController extends BaseController {
     );
 
     var trans = DataTransactionModel(
-      shipper: state.shipper,
+      shipper: shipper,
       origin: state.selectedOrigin,
       account: state.selectedAccount,
       dataAccount: state.selectedAccount,
@@ -341,6 +345,7 @@ class ShipperController extends BaseController {
     }
     formValidate();
     update();
+    AppLogger.i("selected account : ${state.selectedAccount?.toJson()}");
   }
 
   sendAsDropshipper(bool? value) {
@@ -371,11 +376,11 @@ class ShipperController extends BaseController {
       state.shipperOrigin.text = state.shipper?.origin?.originName ?? '';
       state.shipperZipCode.text = state.shipper?.zipCode ?? '';
       state.shipperAddress.text = state.shipper?.address ?? '';
-      state.selectedOrigin = Origin(
+      state.selectedOrigin = OriginModel(
         originCode: state.shipper?.origin?.originCode,
         branchCode: state.shipper?.origin?.branchCode,
         originName: state.shipper?.origin?.originName,
-        branch: OriginBranch(region: state.shipper?.region),
+        branch: BranchModel(region: state.shipper?.region),
       );
       state.isValidate = true;
     }

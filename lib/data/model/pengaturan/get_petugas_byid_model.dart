@@ -1,7 +1,6 @@
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
-import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
-
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 
 class GetPetugasByidModel {
@@ -66,7 +65,7 @@ class PetugasModel {
     String? status,
     AllowedMenu? menu,
     List<Account>? accounts,
-    List<Origin>? origins,
+    List<OriginModel>? origins,
     List<BranchModel>? branches,
   }) {
     _id = id;
@@ -104,7 +103,7 @@ class PetugasModel {
     if (json['origins'] != null) {
       _origins = [];
       json['origins'].forEach((v) {
-        _origins?.add(Origin.fromJson(v));
+        _origins?.add(OriginModel.fromJson(v));
       });
     }
     if (json['branches'] != null) {
@@ -126,7 +125,7 @@ class PetugasModel {
   String? _status;
   AllowedMenu? _menu;
   List<Account>? _accounts;
-  List<Origin>? _origins;
+  List<OriginModel>? _origins;
   List<BranchModel>? _branches;
 
   PetugasModel copyWith({
@@ -140,7 +139,7 @@ class PetugasModel {
     String? status,
     AllowedMenu? menu,
     List<Account>? accounts,
-    List<Origin>? origins,
+    List<OriginModel>? origins,
     List<BranchModel>? branches,
   }) =>
       PetugasModel(
@@ -178,7 +177,7 @@ class PetugasModel {
 
   List<Account>? get accounts => _accounts;
 
-  List<Origin>? get origins => _origins;
+  List<OriginModel>? get origins => _origins;
 
   List<BranchModel>? get branches => _branches;
 

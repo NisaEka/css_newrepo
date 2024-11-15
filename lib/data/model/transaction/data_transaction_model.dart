@@ -25,7 +25,7 @@ class DataTransactionModel {
     String? pickupStatus,
     Delivery? delivery,
     Account? account,
-    Origin? origin,
+    OriginModel? origin,
     Destination? destination,
     Goods? goods,
     ShipperModel? shipper,
@@ -78,7 +78,7 @@ class DataTransactionModel {
     _account =
         json['account'] != null ? Account.fromJson(json['account']) : null;
     _origin =
-        json['origin'] != null ? Origin.fromJson(json['origin']) : null;
+        json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
     _destination = json['destination'] != null
         ? Destination.fromJson(json['destination'])
         : null;
@@ -109,7 +109,7 @@ class DataTransactionModel {
   String? _pickupStatus;
   Delivery? _delivery;
   Account? _account;
-  Origin? _origin;
+  OriginModel? _origin;
   Destination? _destination;
   Goods? _goods;
   ShipperModel? _shipper;
@@ -131,7 +131,7 @@ class DataTransactionModel {
     String? pickupStatus,
     Delivery? delivery,
     Account? account,
-    Origin? origin,
+    OriginModel? origin,
     Destination? destination,
     Goods? goods,
     ShipperModel? shipper,
@@ -186,7 +186,7 @@ class DataTransactionModel {
 
   Account? get account => _account;
 
-  Origin? get origin => _origin;
+  OriginModel? get origin => _origin;
 
   Destination? get destination => _destination;
 

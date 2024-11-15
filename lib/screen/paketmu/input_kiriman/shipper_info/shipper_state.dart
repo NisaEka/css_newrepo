@@ -33,7 +33,7 @@ class ShipperState {
   Account? selectedAccount;
 
   // GetOriginModel? originModel;
-  Origin? selectedOrigin;
+  OriginModel? selectedOrigin;
   ShipperModel? shipper;
   UserModel? userBasic;
   DropshipperModel? dropshipper;

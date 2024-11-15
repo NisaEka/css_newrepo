@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
@@ -58,7 +59,7 @@ class BottomBar extends StatelessWidget {
                   icon: Icon(Icons.home, color: menu == 0 ? redJNE : blueJNE),
                   title: "Beranda".tr,
                   color: menu == 0 ? redJNE : blueJNE,
-                  onTap: () => Get.offAll(const DashboardScreen()),
+                  onTap: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
                 ),
                 const SizedBox(width: 30, height: 30),
                 const SizedBox(width: 30, height: 30),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/facility/facility_create_existing_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,7 +39,7 @@ class FacilityFormExistingController extends BaseController {
                   'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'
                       .tr,
               buttonTitle: 'Selesai'.tr,
-              nextAction: () => Get.offAll(const DashboardScreen()),
+              nextAction: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
             ),
           );
         } else {

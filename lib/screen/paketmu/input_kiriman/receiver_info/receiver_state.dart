@@ -16,7 +16,7 @@ class ReceiverState {
   bool dropship = Get.arguments['dropship'];
   DropshipperModel? dropshipper = Get.arguments['dropshipper'];
   bool codOngkir = Get.arguments['cod_ongkir'];
-  Origin origin = Get.arguments['origin'];
+  OriginModel origin = Get.arguments['origin'];
   Account account = Get.arguments['account'];
 
   final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();

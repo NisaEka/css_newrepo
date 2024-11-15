@@ -568,7 +568,7 @@ class TransactionController extends BaseController {
     try {
       await transaction
           .postTransaction(TransactionModel(
-        orderId: state.noReference.text,
+        orderId: state.noReference.text.isNotEmpty ? state.noReference.text : null,
         apiStatus: 0,
         apiType: trans.account?.accountService,
         custId: state.account.accountNumber,
@@ -621,7 +621,7 @@ class TransactionController extends BaseController {
         shipperCity: trans.shipper?.city,
         shipperZip: trans.shipper?.zipCode,
         shipperContact: trans.shipper?.contact,
-        shipperRegion: trans.shipper?.region?.name,
+        shipperRegion: trans.shipper?.region?.name ?? trans.origin?.branch?.regional?.name,
         shipperCountry: trans.shipper?.country,
         shipperAddr1: trans.shipper?.address1,
         shipperAddr2: trans.shipper?.address2,

@@ -371,6 +371,7 @@ class LanguageEN {
           "You can choose an automatic withdrawal scheme to your account every day or withdraw funds whenever and wherever you like.",
       "Pantau Progres Pengiriman Realtime": "Monitor Realtime Delivery Progress",
       "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.": "At any time you can see all your shipment status in real time.",
+      "Lewati": "Skip",
     };
   }
 }

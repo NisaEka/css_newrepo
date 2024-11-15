@@ -35,6 +35,7 @@ class LoginController extends BaseController {
     state.lang = await storage.readString(StorageCore.localeApp);
     state.fcmToken = await storage.readString(StorageCore.fcmToken);
     update();
+    storage.deleteLogin();
     ValidationBuilder.setLocale(state.lang!);
   }
 
@@ -178,7 +179,7 @@ class LoginController extends BaseController {
     String? token = await storage.readAccessToken();
     debugPrint("token : $token");
     if (token != null) {
-      Get.offAll(const DashboardScreen());
+      Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen()));
       // String all = await storage.readString(StorageCore.allowedMenu);
       // AllowedMenu menu = AllowedMenu.fromJson(jsonDecode(all));
       // print(menu.beranda);

@@ -100,7 +100,7 @@ class ShipperForm extends StatelessWidget {
                               isRequired: c.state.isOnline,
                               value: c.state.selectedOrigin,
                               selectedItem: c.state.shipperOrigin.text,
-                              branch: c.state.selectedAccount?.accountService != "JLC" ? c.state.selectedAccount?.accountBranch : null,
+                              branch: c.state.selectedAccount?.accountNumber?.substring(0,1) == "3" ? c.state.selectedAccount?.accountBranch : null,
                               readOnly: c.state.selectedAccount == null || c.state.isOnline == false ? true : !c.state.isDropshipper,
                               prefixIcon: const Icon(Icons.location_city),
                               onChanged: (value) {

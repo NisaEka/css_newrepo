@@ -1,6 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
@@ -63,20 +65,20 @@ class TransactionEditButton extends StatelessWidget {
                   ),
                   city: data.shipperCity,
                   zipCode: data.shipperZip,
-                  origin: Origin(
+                  origin: OriginModel(
                     originCode: data.originCode,
                     originName: data.originDesc,
-                    branch: OriginBranch(
+                    branch: BranchModel(
                         region: Region(
                       name: data.shipperRegion,
                     )),
                     branchCode: data.branch,
                   ),
                 ),
-                origin: Origin(
+                origin: OriginModel(
                   originCode: data.originCode,
                   originName: data.originDesc,
-                  branch: OriginBranch(
+                  branch: BranchModel(
                       region: Region(
                     name: data.shipperRegion,
                   )),

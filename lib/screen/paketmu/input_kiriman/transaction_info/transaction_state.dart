@@ -18,7 +18,7 @@ class TransactionState {
   ShipperModel shipper = Get.arguments['shipper'];
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
-  Origin origin = Get.arguments['origin'];
+  OriginModel origin = Get.arguments['origin'];
   Account account = Get.arguments['account'];
   ReceiverModel receiver = Get.arguments['receiver'];
   Destination destination = Get.arguments['destination'];

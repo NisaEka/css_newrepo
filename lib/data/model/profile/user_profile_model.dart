@@ -1,10 +1,10 @@
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
-import 'package:css_mobile/data/model/pengaturan/get_branch_model.dart';
 
-class UserProfileModel {
-  UserProfileModel({
+class BasicProfileModel {
+  BasicProfileModel({
     UserModel? user,
     MenuModel? menu,
   }) {
@@ -12,7 +12,7 @@ class UserProfileModel {
     _menu = menu;
   }
 
-  UserProfileModel.fromJson(dynamic json) {
+  BasicProfileModel.fromJson(dynamic json) {
     _user = json['me'] != null ? UserModel.fromJson(json['me']) : null;
     _menu = json['menu'] != null ? MenuModel.fromJson(json['menu']) : null;
   }
@@ -20,11 +20,11 @@ class UserProfileModel {
   UserModel? _user;
   MenuModel? _menu;
 
-  UserProfileModel copyWith({
+  BasicProfileModel copyWith({
     UserModel? user,
     MenuModel? menu,
   }) =>
-      UserProfileModel(
+      BasicProfileModel(
         user: user ?? _user,
         menu: menu ?? _menu,
       );
@@ -50,7 +50,7 @@ class UserModel {
     String? id,
     Region? region,
     BranchModel? branch,
-    Origin? origin,
+    OriginModel? origin,
     String? zipCode,
     String? name,
     String? brand,
@@ -84,7 +84,7 @@ class UserModel {
     _branch =
         json['branch'] != null ? BranchModel.fromJson(json['branch']) : null;
     _origin =
-        json['origin'] != null ? Origin.fromJson(json['origin']) : null;
+        json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
     _zipCode = json['zipCode'];
     _name = json['name'];
     _brand = json['brand'];
@@ -100,7 +100,7 @@ class UserModel {
   String? _id;
   Region? _region;
   BranchModel? _branch;
-  Origin? _origin;
+  OriginModel? _origin;
   String? _zipCode;
   String? _name;
   String? _brand;
@@ -116,7 +116,7 @@ class UserModel {
     String? id,
     Region? region,
     BranchModel? branch,
-    Origin? origin,
+    OriginModel? origin,
     String? zipCode,
     String? name,
     String? brand,
@@ -151,7 +151,7 @@ class UserModel {
 
   BranchModel? get branch => _branch;
 
-  Origin? get origin => _origin;
+  OriginModel? get origin => _origin;
 
   String? get zipCode => _zipCode;
 

@@ -1,6 +1,8 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_controller.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
@@ -272,21 +274,21 @@ class TransactionDetail extends StatelessWidget {
                               phone: c.transactionModel?.shipperPhone,
                               contact: c.transactionModel?.shipperContact,
                               zipCode: c.transactionModel?.shipperZip,
-                              origin: Origin(
+                              origin: OriginModel(
                                 originCode: c.transactionModel?.originCode,
                                 originName: c.transactionModel?.originDesc,
                                 branchCode: c.transactionModel?.branch,
-                                branch: OriginBranch(
+                                branch: BranchModel(
                                     region: Region(
                                   name: c.transactionModel?.shipperRegion,
                                 )),
                               ),
                             ),
-                            origin: Origin(
+                            origin: OriginModel(
                               originCode: c.transactionModel?.originCode,
                               originName: c.transactionModel?.originDesc,
                               branchCode: c.transactionModel?.branch,
-                              branch: OriginBranch(
+                              branch: BranchModel(
                                   region: Region(
                                 name: c.transactionModel?.shipperRegion,
                               )),

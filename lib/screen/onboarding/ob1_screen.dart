@@ -101,7 +101,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
           const SizedBox(height: 20),
           CustomFilledButton(
             color: redJNE,
-            margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            margin: const EdgeInsets.symmetric(horizontal: 50),
             height: 51,
             title: 'Selanjutnya'.tr,
             onPressed: () => currentIndex != 2
@@ -111,6 +111,14 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                   )
                 : Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
           ),
+          CustomFilledButton(
+            color: redJNE,
+            margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
+            height: 51,
+            isTransparent: true,
+            title: 'Lewati'.tr,
+            onPressed: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -119,17 +127,19 @@ class _Ob1ScreenState extends State<Ob1Screen> {
 
   void changeLanguage(String language) async {
     final storage = Get.find<StorageCore>();
-    setState(() async {
-      if (language == "ID") {
+    if (language == "ID") {
+      await storage.writeString(StorageCore.localeApp, "id");
+      setState(() {
         Get.updateLocale(const Locale("id", "ID"));
-        await storage.writeString(StorageCore.localeApp, "id");
         lang = "id";
-      } else {
+      });
+    } else {
+      await storage.writeString(StorageCore.localeApp, "en");
+      setState(() {
         Get.updateLocale(const Locale("en", "US"));
-        await storage.writeString(StorageCore.localeApp, "en");
         lang = "en";
-      }
-    });
+      });
+    }
   }
 
   /// Helper method to build carousel items.
@@ -137,7 +147,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        SizedBox(
           height: Get.height / 2,
           child: Stack(
             children: [

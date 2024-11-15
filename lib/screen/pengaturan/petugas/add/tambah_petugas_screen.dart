@@ -203,7 +203,7 @@ class TambahPetugasScreen extends StatelessWidget {
                             items: c.branchList
                                 .map((e) => MultiSelectItem(
                                       e,
-                                      '${e.code}-${e.desc}',
+                                      '${e.branchCode}-${e.branchDesc}',
                                     ))
                                 .toList(),
                             itemsTextStyle: TextStyle(
@@ -225,7 +225,7 @@ class TambahPetugasScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Obx(
-                            () => MultiSelectDialogField<Origin>(
+                            () => MultiSelectDialogField<OriginModel>(
                               decoration: BoxDecoration(
                                 border: Border.all(
                                     color: AppConst.isLightTheme(context)
