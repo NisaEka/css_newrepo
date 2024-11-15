@@ -105,9 +105,8 @@ class LoginController extends BaseController {
               .then((_) => Get.delete<DashboardController>())
               .then((_) => Get.offAll(const DashboardScreen()));
         } else if (value.code == 403) {
-          showDialog(
-            context: context,
-            builder: (context) => InfoDialog(
+          Get.dialog(
+            InfoDialog(
               infoText: "Silahkan aktivasi akun terlebih dahulu".tr,
               nextButton: () => Get.off(const SignUpOTPScreen(), arguments: {
                 'email': state.emailTextField.text,

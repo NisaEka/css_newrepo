@@ -177,9 +177,8 @@ class ForgotPasswordOTPController extends BaseController {
           'isChange': isChange,
         });
       } else {
-        showDialog(
-          context: context,
-          builder: (context) => const InfoDialog(
+        Get.dialog(
+          const InfoDialog(
             infoText: "Akun recovery belum tersedia",
           ),
         );
