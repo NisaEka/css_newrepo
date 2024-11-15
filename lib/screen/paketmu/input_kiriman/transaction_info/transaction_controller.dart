@@ -447,7 +447,7 @@ class TransactionController extends BaseController {
           insuranceAmount: state.insurance ? state.isr : 0,
           deliveryPrice: state.freightCharge,
           deliveryPricePublish: state.freightCharge,
-          codAmount: state.isCOD ? state.codAmountText.text.digitOnly().toInt() : 0,
+          codAmount: state.isCOD ? state.codAmountText.text.digitOnly().toInt() : null,
           custId: state.account.accountNumber,
           originCode: state.origin.originCode,
           originDesc: state.origin.originName,
@@ -573,7 +573,7 @@ class TransactionController extends BaseController {
         apiType: trans.account?.accountService,
         custId: state.account.accountNumber,
         branch: state.account.accountBranch,
-        codAmount: state.isCOD ? state.codAmountText.text.digitOnly().toInt() : 0,
+        codAmount: state.isCOD ? state.codAmountText.text.digitOnly().toInt() : null,
         codFlag: state.account.accountService == "COD"
             ? "YES"
             : state.codOngkir
