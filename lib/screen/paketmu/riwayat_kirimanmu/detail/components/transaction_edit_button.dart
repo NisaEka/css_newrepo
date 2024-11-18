@@ -2,7 +2,6 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_branch_model.dart';
-import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
@@ -18,7 +17,8 @@ class TransactionEditButton extends StatelessWidget {
   final bool isLoading;
   final TransactionModel data;
 
-  const TransactionEditButton({super.key, required this.isLoading, required this.data});
+  const TransactionEditButton(
+      {super.key, required this.isLoading, required this.data});
 
   @override
   Widget build(BuildContext context) {
