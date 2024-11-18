@@ -1,7 +1,5 @@
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
-import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/master/get_region_model.dart';
 
 class BasicProfileModel {
   BasicProfileModel({

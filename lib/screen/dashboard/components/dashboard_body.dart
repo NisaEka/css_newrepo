@@ -1,11 +1,9 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/dashboard/components/dashboard_kiriman_cod.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_promo.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/onboarding/splash_screen.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +51,8 @@ class DashboardBody extends StatelessWidget {
                             children: [
                               c.state.isLogin
                                   ? Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         CustomLabelText(
                                           title: 'Selamat Datang'.tr,
@@ -61,28 +60,38 @@ class DashboardBody extends StatelessWidget {
                                           fontColor: whiteColor,
                                           isLoading: c.state.isLoading,
                                         ),
-                                        JLCPointWidget(point: c.state.jlcPoint ?? '0')
+                                        JLCPointWidget(
+                                            point: c.state.jlcPoint ?? '0')
                                       ],
                                     )
                                   : const SizedBox(),
                               SizedBox(height: c.state.isCcrf ? 15 : 0),
-                              c.state.isLogin ? const DashboardInfo() : const SizedBox(),
-                              !c.state.isLogin || (c.state.allow.lacakPesanan == "Y" || c.state.allow.keuanganBonus == "Y")
+                              c.state.isLogin
+                                  ? const DashboardInfo()
+                                  : const SizedBox(),
+                              !c.state.isLogin ||
+                                      (c.state.allow.lacakPesanan == "Y" ||
+                                          c.state.allow.keuanganBonus == "Y")
                                   ? TextField(
                                       controller: c.state.nomorResi,
-                                      cursorColor: CustomTheme().cursorColor(context),
+                                      cursorColor:
+                                          CustomTheme().cursorColor(context),
                                       decoration: InputDecoration(
-                                        hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
+                                        hintText:
+                                            'Masukan nomor resi untuk lacak kiriman'
+                                                .tr,
                                         hintStyle: hintTextStyle,
                                         suffixIcon: GestureDetector(
-                                          onTap: () => c.onLacakKiriman(true, ''),
+                                          onTap: () =>
+                                              c.onLacakKiriman(true, ''),
                                           child: const Icon(
                                             Icons.qr_code,
                                             color: redJNE,
                                           ),
                                         ),
                                       ),
-                                      onSubmitted: (value) => c.onLacakKiriman(false, value),
+                                      onSubmitted: (value) =>
+                                          c.onLacakKiriman(false, value),
                                     )
                                   : const SizedBox(),
                             ],
@@ -92,7 +101,9 @@ class DashboardBody extends StatelessWidget {
                       ],
                     ),
                     const DashboardMenu2(),
-                    c.state.isLogin ? const DashboardKirimanCounts() : const SizedBox(),
+                    c.state.isLogin
+                        ? const DashboardKirimanCounts()
+                        : const SizedBox(),
                     // c.state.isLogin ? const DashboardKirimanCod() : const SizedBox(),
                     const DashboardPromo(),
                     const DashboardNews(),
