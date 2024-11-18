@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:css_mobile/base/theme_controller.dart';
 
 class AggregasiMinusController extends BaseController {
   final startDateField = TextEditingController();
@@ -62,23 +63,44 @@ class AggregasiMinusController extends BaseController {
     update();
   }
 
-  Future<DateTime?> selectDate(BuildContext context) {
-    return showDatePicker(
+  Future<DateTime?> selectDate(BuildContext context) async {
+    // Show date picker
+    final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
-    ).then(
-      (selectedDate) => showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-      ).then((selectedTime) => DateTime(
-            selectedDate!.year,
-            selectedDate.month,
-            selectedDate.day,
-            selectedTime!.hour,
-            selectedTime.minute,
-          )),
+      builder: (context, child) {
+        return Theme(
+          data: CustomTheme().dateTimePickerTheme(context),
+          child: child!,
+        );
+      },
+    );
+
+    if (selectedDate == null || !context.mounted) return null;
+
+    // Show time picker
+    final TimeOfDay? selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (context, child) {
+        return Theme(
+          data: CustomTheme().dateTimePickerTheme(context),
+          child: child!,
+        );
+      },
+    );
+
+    if (selectedTime == null || !context.mounted) return null;
+
+    // Combine date and time
+    return DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTime.hour,
+      selectedTime.minute,
     );
   }
 

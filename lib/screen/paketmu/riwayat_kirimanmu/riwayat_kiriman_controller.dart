@@ -153,8 +153,9 @@ class RiwayatKirimanController extends BaseController {
     update();
   }
 
-  Future<DateTime?> selectDate(BuildContext context) {
-    return showDatePicker(
+  Future<DateTime?> selectDate(BuildContext context) async {
+    // Show date picker
+    final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
@@ -165,23 +166,31 @@ class RiwayatKirimanController extends BaseController {
           child: child!,
         );
       },
-    ).then(
-      (selectedDate) => showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        builder: (context, child) {
-          return Theme(
-            data: CustomTheme().dateTimePickerTheme(context),
-            child: child!,
-          );
-        },
-      ).then((selectedTime) => DateTime(
-            selectedDate!.year,
-            selectedDate.month,
-            selectedDate.day,
-            selectedTime!.hour,
-            selectedTime.minute,
-          )),
+    );
+
+    if (selectedDate == null || !context.mounted) return null;
+
+    // Show time picker
+    final TimeOfDay? selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (context, child) {
+        return Theme(
+          data: CustomTheme().dateTimePickerTheme(context),
+          child: child!,
+        );
+      },
+    );
+
+    if (selectedTime == null || !context.mounted) return null;
+
+    // Combine date and time
+    return DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTime.hour,
+      selectedTime.minute,
     );
   }
 
