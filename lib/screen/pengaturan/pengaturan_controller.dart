@@ -93,21 +93,5 @@ class PengaturanController extends BaseController {
     update();
   }
 
-  Future<void> sendEmail() async {
-    try {
-      await auth.postEmailForgotPassword(basicProfil?.email ?? '').then((value) => value.code == 201
-          ? Get.to(
-              const ForgotPasswordOTPScreen(),
-              arguments: {
-                'email': basicProfil?.email ?? '',
-                'isChange': true,
-              },
-            )
-          : value.code == 404
-              ? AppSnackBar.error('User Not Found'.tr)
-              : AppSnackBar.error('Bad Request'.tr));
-    } catch (e) {
-      AppLogger.e('error sendEmail $e');
-    }
-  }
+
 }

@@ -3,6 +3,8 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
+import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_screen.dart';
+import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_screen.dart';
 import 'package:css_mobile/screen/profile/alt/alt_profile_controller.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/akun_bank_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/alamat_return_screen.dart';
@@ -15,6 +17,7 @@ import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/logout_button.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
 import 'package:flutter/material.dart';
@@ -145,6 +148,41 @@ class AltProfileScreen extends StatelessWidget {
                       leading: Icons.file_present_rounded,
                       onTap: () =>
                           c.isCcrfAction(const DokumenScreen(), context),
+                    )
+                  : const SizedBox(),
+              c.menuModel.label == "Y" || c.menuModel.pengaturanLabel == "Y"
+                  ? SettingListItem(
+                      title: 'Pengaturan Label'.tr,
+                      leading: Icons.label_outline,
+                      onTap: () => c.isLogin
+                          ? Get.to(const PengaturanLabelScreen())
+                          : showDialog(
+                              context: context,
+                              builder: (context) => const LoginAlertDialog(),
+                            ),
+                    )
+                  : const SizedBox(),
+              c.menuModel.petugas == "Y" || c.menuModel.pengaturanPetugas == "Y"
+                  ? SettingListItem(
+                      title: 'Pengaturan Petugas'.tr,
+                      leading: Icons.account_circle,
+                      onTap: () => c.isLogin
+                          ? Get.to(const PengaturanPetugasScreen())
+                          : showDialog(
+                              context: context,
+                              builder: (context) => const LoginAlertDialog(),
+                            ),
+                    )
+                  : const SizedBox(),
+              c.isLogin && c.menuModel.katasandi == "Y"
+                  ? SettingListItem(
+                      title: 'Ubah Kata Sandi'.tr,
+                      leading: Icons.lock_open_outlined,
+                      // onTap: () => Get.to(const InputEmailScreen(), arguments: {
+                      //   'isChange': true,
+                      //   'email': controller.basicProfil?.email,
+                      // }),
+                      onTap: () => c.sendEmail(),
                     )
                   : const SizedBox(),
               LogoutButton(

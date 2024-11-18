@@ -5,10 +5,12 @@ import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,31 +37,28 @@ class AltProfileController extends BaseController {
   }
 
   bool onPop() {
-    // DateTime now = DateTime.now();
-    // if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
-    //   currentBackPressTime = now;
-    //   AppSnackBar.custom(
-    //     message: 'Double click back button to exit',
-    //     backgroundColor: greyColor.withOpacity(0.8),
-    //     icon: const Icon(
-    //       Icons.info,
-    //       color: whiteColor,
-    //     ),
-    //     durationInSeconds: 3,
-    //     snackPosition: SnackPosition.BOTTOM,
-    //     snackStyle: SnackStyle.GROUNDED,
-    //     margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
-    //     padding: const EdgeInsets.all(10),
-    //     messageText: null,
-    //   );
-    //   pop = false;
-    //   update();
-    //   return false;
-    // }
     pop = true;
     update();
     Get.off(const DashboardScreen());
     return true;
+  }
+
+  Future<void> sendEmail() async {
+    try {
+      await auth.postEmailForgotPassword(basicProfil?.email ?? '').then((value) => value.code == 201
+          ? Get.to(
+              const ForgotPasswordOTPScreen(),
+              arguments: {
+                'email': basicProfil?.email ?? '',
+                'isChange': true,
+              },
+            )
+          : value.code == 404
+              ? AppSnackBar.error('User Not Found'.tr)
+              : AppSnackBar.error('Bad Request'.tr));
+    } catch (e) {
+      AppLogger.e('error sendEmail $e');
+    }
   }
 
   Future<void> initData() async {
@@ -85,8 +84,7 @@ class AltProfileController extends BaseController {
       );
     }
 
-    menuModel =
-        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+    menuModel = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
     update();
 
     isLoading = false;
@@ -136,9 +134,7 @@ class AltProfileController extends BaseController {
         : showDialog(
             context: context,
             builder: (context) => InfoDialog(
-              infoText:
-                  "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas"
-                      .tr,
+              infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas".tr,
               nextButton: () => Get.off(const FacilityScreen()),
             ),
           );
