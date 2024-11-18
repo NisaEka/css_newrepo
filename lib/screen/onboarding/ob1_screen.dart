@@ -127,12 +127,12 @@ class _Ob1ScreenState extends State<Ob1Screen> {
               ),
             ],
           ),
+
         ],
       ),
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildIndicator(),
           const SizedBox(height: 20),
           CustomFilledButton(
             color: redJNE,
@@ -198,7 +198,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
             ],
           ),
         ),
-        const SizedBox(height: 40),
+        _buildIndicator(),
+        // const SizedBox(height: 40),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
