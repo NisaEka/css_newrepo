@@ -54,7 +54,6 @@ class AltProfileScreen extends StatelessWidget {
                         );
                       }),
                 ),
-                controller.isLoading ? const LoadingDialog() : const SizedBox(),
               ],
             ),
           );
@@ -80,9 +79,7 @@ class AltProfileScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(color: blueJNE)),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(color: blueJNE)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -96,101 +93,102 @@ class AltProfileScreen extends StatelessWidget {
             ],
           ),
           Column(
-            children: [
-              c.menuModel.profil == "Y" && c.basicProfil?.userType == "PEMILIK"
-                  ? SettingListItem(
-                      title: 'Edit Profil'.tr,
-                      leading: Icons.person,
-                      onTap: () => Get.to(const EditProfilScreen()),
+            children: c.isLoading
+                ? List.generate(
+                    8,
+                    (index) => const SettingListItem(isLoading: true),
+                  )
+                : [
+                    c.menuModel.profil == "Y" && c.basicProfil?.userType == "PEMILIK"
+                        ? SettingListItem(
+                            title: 'Edit Profil'.tr,
+                            leading: Icons.person,
+                            onTap: () => Get.to(const EditProfilScreen()),
+                          )
+                        : const SizedBox(),
+                    c.menuModel.fasilitas == 'Y' && c.basicProfil?.userType == "PEMILIK"
+                        ? SettingListItem(
+                            title: 'Fasilitasku'.tr,
+                            leading: Icons.format_list_numbered_rounded,
+                            onTap: () => Get.to(const FacilityScreen()),
+                          )
+                        : const SizedBox(),
+                    c.menuModel.profil == "Y"
+                        ? SettingListItem(
+                            title: 'Lihat Akun'.tr,
+                            leading: Icons.account_tree_rounded,
+                            onTap: () => Get.to(const NoAkunScreen()),
+                          )
+                        : const SizedBox(),
+                    c.menuModel.profil == "Y"
+                        ? SettingListItem(
+                            title: 'Data Umum'.tr,
+                            leading: Icons.person_pin_outlined,
+                            onTap: () => Get.to(const DataUmumScreen()),
+                          )
+                        : const SizedBox(),
+                    c.menuModel.profil == "Y"
+                        ? SettingListItem(
+                            title: 'Alamat Pengembalian'.tr,
+                            leading: Icons.cached_rounded,
+                            onTap: () => c.isCcrfAction(const AlamatReturnScreen(), context),
+                          )
+                        : const SizedBox(),
+                    c.menuModel.profil == "Y"
+                        ? SettingListItem(
+                            title: 'Data Rekening'.tr,
+                            leading: Icons.credit_card_rounded,
+                            onTap: () => c.isCcrfAction(const AkunBankScreen(), context),
+                          )
+                        : const SizedBox(),
+                    c.menuModel.profil == "Y"
+                        ? SettingListItem(
+                            title: 'Dokumen'.tr,
+                            leading: Icons.file_present_rounded,
+                            onTap: () => c.isCcrfAction(const DokumenScreen(), context),
+                          )
+                        : const SizedBox(),
+                    c.menuModel.label == "Y" || c.menuModel.pengaturanLabel == "Y"
+                        ? SettingListItem(
+                            title: 'Pengaturan Label'.tr,
+                            leading: Icons.label_outline,
+                            onTap: () => c.isLogin
+                                ? Get.to(const PengaturanLabelScreen())
+                                : showDialog(
+                                    context: context,
+                                    builder: (context) => const LoginAlertDialog(),
+                                  ),
+                          )
+                        : const SizedBox(),
+                    c.menuModel.petugas == "Y" || c.menuModel.pengaturanPetugas == "Y"
+                        ? SettingListItem(
+                            title: 'Pengaturan Petugas'.tr,
+                            leading: Icons.account_circle,
+                            onTap: () => c.isLogin
+                                ? Get.to(const PengaturanPetugasScreen())
+                                : showDialog(
+                                    context: context,
+                                    builder: (context) => const LoginAlertDialog(),
+                                  ),
+                          )
+                        : const SizedBox(),
+                    c.isLogin && c.menuModel.katasandi == "Y"
+                        ? SettingListItem(
+                            title: 'Ubah Kata Sandi'.tr,
+                            leading: Icons.lock_open_outlined,
+                            // onTap: () => Get.to(const InputEmailScreen(), arguments: {
+                            //   'isChange': true,
+                            //   'email': controller.basicProfil?.email,
+                            // }),
+                            onTap: () => c.sendEmail(),
+                          )
+                        : const SizedBox(),
+                    LogoutButton(
+                      isLogin: c.isLogin,
+                      version: c.version,
+                      showBottomBar: true,
                     )
-                  : const SizedBox(),
-              c.menuModel.fasilitas == 'Y' &&
-                      c.basicProfil?.userType == "PEMILIK"
-                  ? SettingListItem(
-                      title: 'Fasilitasku'.tr,
-                      leading: Icons.format_list_numbered_rounded,
-                      onTap: () => Get.to(const FacilityScreen()),
-                    )
-                  : const SizedBox(),
-              c.menuModel.profil == "Y"
-                  ? SettingListItem(
-                      title: 'Lihat Akun'.tr,
-                      leading: Icons.account_tree_rounded,
-                      onTap: () => Get.to(const NoAkunScreen()),
-                    )
-                  : const SizedBox(),
-              c.menuModel.profil == "Y"
-                  ? SettingListItem(
-                      title: 'Data Umum'.tr,
-                      leading: Icons.person_pin_outlined,
-                      onTap: () => Get.to(const DataUmumScreen()),
-                    )
-                  : const SizedBox(),
-              c.menuModel.profil == "Y"
-                  ? SettingListItem(
-                      title: 'Alamat Pengembalian'.tr,
-                      leading: Icons.cached_rounded,
-                      onTap: () =>
-                          c.isCcrfAction(const AlamatReturnScreen(), context),
-                    )
-                  : const SizedBox(),
-              c.menuModel.profil == "Y"
-                  ? SettingListItem(
-                      title: 'Data Rekening'.tr,
-                      leading: Icons.credit_card_rounded,
-                      onTap: () =>
-                          c.isCcrfAction(const AkunBankScreen(), context),
-                    )
-                  : const SizedBox(),
-              c.menuModel.profil == "Y"
-                  ? SettingListItem(
-                      title: 'Dokumen'.tr,
-                      leading: Icons.file_present_rounded,
-                      onTap: () =>
-                          c.isCcrfAction(const DokumenScreen(), context),
-                    )
-                  : const SizedBox(),
-              c.menuModel.label == "Y" || c.menuModel.pengaturanLabel == "Y"
-                  ? SettingListItem(
-                      title: 'Pengaturan Label'.tr,
-                      leading: Icons.label_outline,
-                      onTap: () => c.isLogin
-                          ? Get.to(const PengaturanLabelScreen())
-                          : showDialog(
-                              context: context,
-                              builder: (context) => const LoginAlertDialog(),
-                            ),
-                    )
-                  : const SizedBox(),
-              c.menuModel.petugas == "Y" || c.menuModel.pengaturanPetugas == "Y"
-                  ? SettingListItem(
-                      title: 'Pengaturan Petugas'.tr,
-                      leading: Icons.account_circle,
-                      onTap: () => c.isLogin
-                          ? Get.to(const PengaturanPetugasScreen())
-                          : showDialog(
-                              context: context,
-                              builder: (context) => const LoginAlertDialog(),
-                            ),
-                    )
-                  : const SizedBox(),
-              c.isLogin && c.menuModel.katasandi == "Y"
-                  ? SettingListItem(
-                      title: 'Ubah Kata Sandi'.tr,
-                      leading: Icons.lock_open_outlined,
-                      // onTap: () => Get.to(const InputEmailScreen(), arguments: {
-                      //   'isChange': true,
-                      //   'email': controller.basicProfil?.email,
-                      // }),
-                      onTap: () => c.sendEmail(),
-                    )
-                  : const SizedBox(),
-              LogoutButton(
-                isLogin: c.isLogin,
-                version: c.version,
-                showBottomBar: true,
-              )
-            ],
+                  ],
           ),
           // : const SizedBox(),
         ],
