@@ -349,9 +349,9 @@ class TransactionForm extends StatelessWidget {
                                               : */
                             Column(
                                 children: [
-                                  c.state.account.accountService
+                                  (c.state.account.accountService
                                                   ?.toUpperCase() ==
-                                              'COD' &&
+                                              'COD' || c.state.codOngkir) &&
                                           !c.state.isCalculate &&
                                           !c.state.isServiceLoad
                                       ? CustomTextFormField(
