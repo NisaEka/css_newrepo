@@ -54,12 +54,6 @@ class PengaturanScreen extends StatelessWidget {
           SettingListItem(
               title: 'Bahasa'.tr,
               leading: Icons.language,
-              onTap: () => c.isLogin
-                  ? Get.to(const PengaturanPetugasScreen())
-                  : showDialog(
-                      context: context,
-                      builder: (context) => const LoginAlertDialog(),
-                    ),
               trailing: SizedBox(
                 width: 90,
                 child: Row(
