@@ -1,10 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
-
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:css_mobile/util/logger.dart';
 
 class DataUmumController extends BaseController {
   bool isLogin = false;
@@ -24,7 +22,7 @@ class DataUmumController extends BaseController {
     isLoading = true;
     try {
       String? token = await storage.readAccessToken();
-      debugPrint("token : $token");
+      AppLogger.i('token : $token');
       isLogin = token != null;
       await profil
           .getBasicProfil()
@@ -49,8 +47,7 @@ class DataUmumController extends BaseController {
         update();
       });
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error initData data umum $e, $i');
 
       var basic =
           UserModel.fromJson(await storage.readData(StorageCore.basicProfile));

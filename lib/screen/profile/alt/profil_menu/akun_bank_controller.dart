@@ -1,7 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
-
-import 'package:get/get.dart';
+import 'package:css_mobile/util/logger.dart';
 
 class AkunBankController extends BaseController {
   bool isLogin = false;
@@ -22,8 +21,7 @@ class AkunBankController extends BaseController {
             (value) => ccrfProfil = value.data,
           );
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error initData akun bank $e, $i');
     }
 
     isLoading = false;

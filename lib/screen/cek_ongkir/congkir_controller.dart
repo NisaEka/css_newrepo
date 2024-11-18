@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/screen/cek_ongkir/congkir_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/forms/destination_external_dropdown.dart';
 import 'package:css_mobile/widgets/forms/origin_external_dropdown.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,7 @@ class CekOngkirController extends BaseController {
           state.ongkirList.addAll(value.ongkir ?? []);
         });
       } catch (e, i) {
-        e.printError();
-        i.printError();
+        AppLogger.e('error loadOngkir $e, $i');
       }
 
       state.isLoading = false;

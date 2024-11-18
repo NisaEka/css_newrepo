@@ -4,10 +4,9 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'custombottombar4.dart';
 
 class LogoutButton extends StatelessWidget {
   final bool isLogin;
@@ -62,7 +61,6 @@ class LogoutButton extends StatelessWidget {
               top: BorderSide(color: greyColor),
             ),
             contentPadding: showBottomBar ? EdgeInsets.zero : null,
-
           ),
           // showBottomBar ? const BottomBar4(menu: 3) : const SizedBox()
         ],
@@ -81,7 +79,7 @@ class LogoutButton extends StatelessWidget {
             // ),
             )
         .then((value) async {
-      debugPrint(value.toJson().toString());
+      AppLogger.d(value.toJson().toString());
       // if (value.code == 200) {
       await auth.logout();
       storage.deleteLogin();

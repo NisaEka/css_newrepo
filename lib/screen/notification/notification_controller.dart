@@ -1,7 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:get/get.dart';
+import 'package:css_mobile/util/logger.dart';
 
 class NotificationController extends BaseController {
   // final message = Get.arguments['message'] as RemoteMessage;
@@ -33,8 +33,7 @@ class NotificationController extends BaseController {
       // notificationList.addAll(unread.payload ?? []);
       update();
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error getNotification $e, $i');
     }
 
     for (var local in unreadNotifList) {

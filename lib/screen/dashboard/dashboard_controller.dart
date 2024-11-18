@@ -45,7 +45,7 @@ class DashboardController extends BaseController {
   Future<void> refreshToken() async {
     if (state.isLogin) {
       await auth.postRefreshToken().then((value) async {
-        debugPrint("nrToken : ${value.data?.token?.refreshToken}");
+        AppLogger.i('refresh token : ${value.data?.token?.refreshToken}');
 
         storage.saveToken(
           value.data?.token?.accessToken ?? '',
@@ -62,8 +62,8 @@ class DashboardController extends BaseController {
     String? aToken = await storage.readAccessToken();
     String? rToken = await storage.readRefreshToken();
     state.isLogin = aToken?.isNotEmpty ?? false;
-    debugPrint("token : $aToken");
-    debugPrint("rtoken : $rToken");
+    AppLogger.i('token : $aToken');
+    AppLogger.i('rtoken : $rToken');
 
     refreshToken();
     update();
@@ -94,8 +94,7 @@ class DashboardController extends BaseController {
         update();
       });
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error loadNews $e, $i');
     }
 
     update();
@@ -153,7 +152,8 @@ class DashboardController extends BaseController {
 
     update();
 
-    bool label = (await storage.readString(StorageCore.transactionLabel)).isEmpty;
+    bool label =
+        (await storage.readString(StorageCore.transactionLabel)).isEmpty;
 
     if (label) {
       await setting.getSettingLabel().then(
@@ -289,12 +289,10 @@ class DashboardController extends BaseController {
                   await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? DeviceModel(),
                 )
                 .then((v) => AppLogger.i('add device info non auth ${v.code}'));
-        // : debugPrint('post device info : ${value.code}'));
-        debugPrint('post device info : ${value.code}');
+        AppLogger.i('post device info : ${value.code}');
       });
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error saveFCMToken $e, $i');
     }
   }
 
@@ -454,7 +452,7 @@ class DashboardController extends BaseController {
       //     update();
       //   } else {
       //     state.jlcPoint = '0';
-      //
+      //   }
       // }).catchError((value) {
       //   debugPrint("jlc error $value");
       // });

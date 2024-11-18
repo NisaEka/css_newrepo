@@ -49,7 +49,7 @@ class ListPenerimaController extends BaseController {
         await storage.saveData(StorageCore.receiver, value);
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error getReceiver $e');
       var receiver = BaseResponse<List<ReceiverModel>>.fromJson(
           await storage.readData(StorageCore.receiver),
           (json) => json is List<dynamic>

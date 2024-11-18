@@ -173,7 +173,7 @@ class ShipperController extends BaseController {
       });
       update();
     } catch (e) {
-      e.printError();
+      AppLogger.e('error getAccounts $e');
       var accounts = BaseResponse<List<Account>>.fromJson(
         await storage.readData(StorageCore.accounts),
         (json) => json is List<dynamic>
@@ -259,7 +259,7 @@ class ShipperController extends BaseController {
     try {
       response = await master.getOrigins(QueryParamModel(search: keyword.toUpperCase(), relation: true, table: true));
     } catch (e) {
-      e.printError();
+      AppLogger.e('error getOriginList $e');
     }
 
     state.isLoadOrigin = false;

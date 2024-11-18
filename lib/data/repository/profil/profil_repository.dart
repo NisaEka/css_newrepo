@@ -7,7 +7,6 @@ import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
-import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 
 abstract class ProfilRepository {
   Future<BaseResponse<BasicProfileModel>> getBasicProfil();

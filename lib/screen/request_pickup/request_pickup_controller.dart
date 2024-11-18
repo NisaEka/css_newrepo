@@ -12,7 +12,6 @@ import 'package:css_mobile/util/ext/date_ext.dart';
 import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RequestPickupController extends BaseController {
@@ -345,8 +344,7 @@ class RequestPickupController extends BaseController {
       statuses.add(Constant.allStatus);
       statuses.addAll(payload);
     } catch (e) {
-      e.printError();
-      // Do nothing for now.
+      AppLogger.e('error getStatuses $e');
     }
   }
 

@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_state.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -88,8 +89,7 @@ class ReceiverController extends BaseController {
     try {
       response = await master.getDestinations(QueryParamModel(search: keyword.toUpperCase()));
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error getDestinationList $e, $i');
     }
 
     state.isLoading = false;
@@ -169,7 +169,7 @@ class ReceiverController extends BaseController {
             (value) => value.code == 201 ? AppSnackBar.success('Data receiver telah disimpan'.tr) : AppSnackBar.error(value.error?.first.message.trs),
           );
     } catch (e) {
-      e.printError();
+      AppLogger.e('error saveReceiver $e');
       AppSnackBar.error('Tidak dapat menyimpan state.data'.tr);
     }
 

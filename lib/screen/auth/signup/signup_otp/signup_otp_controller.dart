@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_state.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/util/logger.dart';
-import 'package:css_mobile/util/snackbar.dart';
 import 'package:get/get.dart';
 
 class SignUpOTPController extends BaseController {

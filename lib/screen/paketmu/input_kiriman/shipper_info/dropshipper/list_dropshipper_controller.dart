@@ -54,7 +54,7 @@ class ListDropshipperController extends BaseController {
       );
       update();
     } catch (e) {
-      e.printError();
+      AppLogger.e('error get dropshipper $e');
       dropshipperList.clear();
       var dropshipper = BaseResponse<List<DropshipperModel>>.fromJson(
         await storage.readData(StorageCore.dropshipper),

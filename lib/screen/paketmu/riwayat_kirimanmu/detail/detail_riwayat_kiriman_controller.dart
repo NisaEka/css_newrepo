@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -43,8 +44,7 @@ class DetailRiwayatKirimanController extends BaseController {
           update();
         });
       } catch (e, i) {
-        e.printError();
-        i.printError();
+        AppLogger.e('error initData detail riwayat kiriman $e, $i');
       }
 
       isLoading = false;

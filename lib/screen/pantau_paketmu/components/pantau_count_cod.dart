@@ -1,4 +1,5 @@
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,7 +106,7 @@ class PantauCountCod extends StatelessWidget {
       child: InkWell(
         splashColor: redJNE.withOpacity(0.3),
         onTap: () {
-          debugPrint('Card tapped.');
+          AppLogger.i('Card tapped.');
           controller.state.selectedStatusKiriman.value = title;
           controller.state.selectedTipeKiriman.value = 'cod';
           controller.applyFilter(isDetail: true);

@@ -19,7 +19,6 @@ class DetailLaporankuController extends BaseController {
           );
     } catch (e) {
       AppLogger.e('error updateStatus $e');
-      e.printError();
     }
 
     isLoading = false;

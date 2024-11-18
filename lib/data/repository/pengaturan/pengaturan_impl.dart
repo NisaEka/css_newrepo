@@ -16,7 +16,8 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<PetugasModel>>> getOfficers(int page, String keyword, int limit) async {
+  Future<BaseResponse<List<PetugasModel>>> getOfficers(
+      int page, String keyword, int limit) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     QueryParamModel params = QueryParamModel(

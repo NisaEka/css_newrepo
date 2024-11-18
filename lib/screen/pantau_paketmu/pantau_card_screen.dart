@@ -2,6 +2,7 @@ import 'package:css_mobile/screen/pantau_paketmu/components/pantau_count_cod.dar
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_count_cod_ongkir.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_count_non_cod.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
@@ -119,7 +120,7 @@ class PantauCardScreen extends StatelessWidget {
                               if (value != null) {
                                 if (c.state.endDate.value != null &&
                                     value.isAfter(c.state.endDate.value!)) {
-                                  Get.snackbar('Error',
+                                  AppSnackBar.error(
                                       'Start date cannot be after end date');
                                   return;
                                 }

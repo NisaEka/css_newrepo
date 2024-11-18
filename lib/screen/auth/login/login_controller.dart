@@ -107,9 +107,8 @@ class LoginController extends BaseController {
               .then((_) => Get.delete<DashboardController>())
               .then((_) => Get.offAll(const DashboardScreen()));
         } else if (value.code == 403) {
-          showDialog(
-            context: context,
-            builder: (context) => InfoDialog(
+          Get.dialog(
+            InfoDialog(
               infoText: "Silahkan aktivasi akun terlebih dahulu".tr,
               nextButton: () => Get.off(const SignUpOTPScreen(), arguments: {
                 'email': state.emailTextField.text,
@@ -134,7 +133,7 @@ class LoginController extends BaseController {
               }
             });
           } catch (e) {
-            e.printError();
+            AppLogger.e('error resend pin $e');
           }
         } else {
           AppSnackBar.error(value.message.toString());
@@ -178,7 +177,7 @@ class LoginController extends BaseController {
     state.isLoading = true;
     update();
     String? token = await storage.readAccessToken();
-    debugPrint("token : $token");
+    AppLogger.e('token : $token');
     if (token != null) {
       Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen()));
       // String all = await storage.readString(StorageCore.allowedMenu);

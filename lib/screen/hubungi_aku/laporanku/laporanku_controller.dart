@@ -5,8 +5,8 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class LaporankuController extends BaseController {
   final state = LaporankuState();
@@ -54,7 +54,7 @@ class LaporankuController extends BaseController {
         update();
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error countReports $e');
     }
   }
 
@@ -96,7 +96,7 @@ class LaporankuController extends BaseController {
         // transactionList.addAll(state.pagingController.itemList ?? []);
       }
     } catch (e) {
-      e.printError();
+      AppLogger.e('error getTicketList $e');
       state.pagingController.error = e;
     }
 

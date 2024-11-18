@@ -2,6 +2,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/invoice/invoice_cnote_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/util/constant.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -40,7 +41,7 @@ class InvoiceCnoteController extends BaseController {
         pagingController.appendPage(payload, nextPageKey);
       }
     } catch (e) {
-      e.printError();
+      AppLogger.e('error getInvoiceCnotes $e');
     }
   }
 

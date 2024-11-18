@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -45,8 +46,7 @@ class AggByDocController extends BaseController {
         // transactionList.addAll(pagingController.itemList ?? []);
       }
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error getAggregation $e, $i');
       pagingController.error = e;
     }
 

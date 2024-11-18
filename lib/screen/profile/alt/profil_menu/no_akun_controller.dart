@@ -7,7 +7,7 @@ import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:get/get.dart';
+import 'package:css_mobile/util/logger.dart';
 
 class NoAkunController extends BaseController {
   bool isLogin = false;
@@ -31,8 +31,7 @@ class NoAkunController extends BaseController {
         update();
       });
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error initData no akun $e, $i');
       accountList = [];
       var accounts = BaseResponse<List<Account>>.fromJson(
         await storage.readData(StorageCore.accounts),
@@ -64,8 +63,7 @@ class NoAkunController extends BaseController {
         update();
       });
     } catch (e, i) {
-      e.printError();
-      i.printError(info: "Error info:");
+      AppLogger.e('error loadActivity no akun $e, $i');
     }
   }
 }

@@ -43,8 +43,7 @@ class PantauRepositoryImpl extends PantauRepository {
       );
       return GetPantauPaketmuModel.fromJson(response.data);
     } on DioException catch (e) {
-      e.printError();
-      e.response?.data.printError(info: "pantau error");
+      AppLogger.e('error getPantauList $e');
       return GetPantauPaketmuModel.fromJson(e.response?.data);
     }
   }

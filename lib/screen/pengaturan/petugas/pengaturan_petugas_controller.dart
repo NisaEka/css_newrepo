@@ -55,7 +55,7 @@ class PengaturanPetugasController extends BaseController {
         // transactionList.addAll(pagingController.itemList ?? []);
       }
     } catch (e) {
-      e.printError();
+      AppLogger.e('error getOfficerList $e');
       pagingController.error = e;
     }
 

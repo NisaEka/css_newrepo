@@ -5,6 +5,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_screen.dart';
 import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_screen.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +129,7 @@ class ForgotPasswordOTPController extends BaseController {
         }
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error pinConfirmation $e');
     }
 
     isLoading = false;
@@ -148,7 +149,7 @@ class ForgotPasswordOTPController extends BaseController {
         }
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error resendPin $e');
     }
 
     isLoading = false;
@@ -157,7 +158,7 @@ class ForgotPasswordOTPController extends BaseController {
 
   Future<bool> cekToken() async {
     String? token = await storage.readAccessToken();
-    debugPrint("token : $token");
+    AppLogger.i('token : $token');
     isLogin = token != null;
     update();
 
@@ -176,9 +177,8 @@ class ForgotPasswordOTPController extends BaseController {
           'isChange': isChange,
         });
       } else {
-        showDialog(
-          context: context,
-          builder: (context) => const InfoDialog(
+        Get.dialog(
+          const InfoDialog(
             infoText: "Akun recovery belum tersedia",
           ),
         );

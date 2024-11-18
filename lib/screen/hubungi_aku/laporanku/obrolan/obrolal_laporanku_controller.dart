@@ -63,7 +63,7 @@ class ObrolanLaporankuController extends BaseController {
         update();
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error initData obrolan laporanku $e');
     }
   }
 

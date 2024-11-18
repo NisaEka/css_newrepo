@@ -28,7 +28,7 @@ class PengaturanLabelController extends BaseController {
         shipcost = (selectedSticker?.showPrice ?? false) ? "PUBLISH" : "HIDE";
       });
     } catch (e) {
-      e.printError();
+      AppLogger.e('error initData pengaturan label', e);
       selectedSticker = StickerLabelModel.fromJson(
           await storage.readData(StorageCore.transactionLabel));
       shipcost = await storage.readString(StorageCore.shippingCost);

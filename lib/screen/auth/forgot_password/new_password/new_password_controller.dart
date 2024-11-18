@@ -4,6 +4,7 @@ import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,8 +52,7 @@ class NewPasswordController extends BaseController {
                 )
               : AppSnackBar.error(value.message[0].toString()));
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error change password $e, $i');
     }
 
     isLoading = false;

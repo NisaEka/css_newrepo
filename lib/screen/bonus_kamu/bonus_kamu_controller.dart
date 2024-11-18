@@ -1,8 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_point_reedem_model.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_transactions_model.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class BonusKamuController extends BaseController {
   TabController? tabController;
@@ -41,8 +41,7 @@ class BonusKamuController extends BaseController {
         update();
       });
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e('error initData bonus kamu $e, $i');
     }
 
     isLoading = false;
