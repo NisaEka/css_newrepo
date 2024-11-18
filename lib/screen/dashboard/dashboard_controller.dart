@@ -3,12 +3,9 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/css.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
-import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
-import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -34,7 +31,6 @@ class DashboardController extends BaseController {
     Future.wait([
       isFirst(),
       cekToken(),
-      saveFCMToken(),
       initData(),
       cekLocalLanguage(),
       loadBanner(),
@@ -152,8 +148,7 @@ class DashboardController extends BaseController {
 
     update();
 
-    bool label =
-        (await storage.readString(StorageCore.transactionLabel)).isEmpty;
+    bool label = (await storage.readString(StorageCore.transactionLabel)).isEmpty;
 
     if (label) {
       await setting.getSettingLabel().then(
@@ -265,31 +260,26 @@ class DashboardController extends BaseController {
   Future<void> saveFCMToken() async {
     try {
       state.fcmToken = await storage.readString(StorageCore.fcmToken);
-      // print('fcm token : ${state.fcmToken}');
-      // print('fcm token : ${token}');
 
       await auth
           .postFcmToken(
         await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? DeviceModel(),
       )
           .then((value) async {
+            print('userID : ${state.basic?.id}');
         value.code == 409
-            ? await auth.getFcmToken().then((value) {
-                if (value.data?.first.registrationId?.isEmpty ?? false) {
-
-                }
-              })
-            // ? await auth
-            //     .updateDeviceInfo(
-            //       await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
-            //     )
-            // : value.code == 401 || value.code == 400 || value.code == null
+            ? await auth.updateDeviceInfo(
+                (await LoginController().getDeviceinfo(state.fcmToken ?? ''))?.copyWith(registrationId: state.basic?.id) ?? DeviceModel(),
+              )
             : await auth
                 .postFcmTokenNonAuth(
                   await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? DeviceModel(),
                 )
-                .then((v) => AppLogger.i('add device info non auth ${v.code}'));
-        AppLogger.i('post device info : ${value.code}');
+                .then((v) async => v.code == 409
+                    ? await auth.updateDeviceInfo(
+                        await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? DeviceModel(),
+                      )
+                    : null);
       });
     } catch (e, i) {
       AppLogger.e('error saveFCMToken $e, $i');
@@ -349,12 +339,16 @@ class DashboardController extends BaseController {
         state.isLogin;
     update();
 
-    AppLogger.i("basic profile : ${await storage.readString(StorageCore.basicProfile)}");
+    AppLogger.i("basic profile : ${UserModel.fromJson(await storage.readData(StorageCore.basicProfile)).toJson()}");
+    state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    saveFCMToken();
 
     try {
       if (basic) {
         await profil.getBasicProfil().then((value) async {
           await storage.saveData(StorageCore.basicProfile, value.data?.user);
+          state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+          saveFCMToken();
 
           await storage.saveData(
               StorageCore.shipper,
@@ -380,7 +374,6 @@ class DashboardController extends BaseController {
           }
         });
       } else {
-        state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
         update();
         if (state.basic?.language == "INDONESIA") {
           await storage.writeString(StorageCore.localeApp, "id");

@@ -181,9 +181,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    // UserModel user = UserModel.fromJson(
-    //   await StorageCore().readData(StorageCore.basicProfile),
-    // );
 
     QueryParamModel params = QueryParamModel(
       table: true,

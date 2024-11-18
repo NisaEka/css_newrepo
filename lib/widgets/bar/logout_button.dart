@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
@@ -29,14 +30,8 @@ class LogoutButton extends StatelessWidget {
           ? BoxDecoration(
               color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
               border: Border(
-                bottom: BorderSide(
-                    color: AppConst.isLightTheme(context)
-                        ? Colors.black
-                        : Colors.white),
-                top: BorderSide(
-                    color: AppConst.isLightTheme(context)
-                        ? Colors.black
-                        : Colors.white),
+                bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
+                top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
               ),
             )
           : null,
@@ -81,7 +76,11 @@ class LogoutButton extends StatelessWidget {
         .then((value) async {
       AppLogger.d(value.toJson().toString());
       // if (value.code == 200) {
-      await auth.logout();
+      await auth.logout().then(
+        (value) async {
+          await auth.updateDeviceInfo(DeviceModel(fcmToken: await storage.readString(StorageCore.fcmToken)));
+        },
+      );
       storage.deleteLogin();
       Get.offAll(const LoginScreen());
       // }

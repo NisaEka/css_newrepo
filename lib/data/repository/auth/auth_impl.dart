@@ -1,6 +1,5 @@
 import 'package:css_mobile/data/model/auth/get_check_mail_model.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
@@ -9,6 +8,7 @@ import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/auth/pin_confirm_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
@@ -206,7 +206,7 @@ class AuthRepositoryImpl extends AuthRepository {
         (json) => null,
       );
     } on DioException catch (e) {
-      AppLogger.e('error post fcm token ${e.response?.data.toString()}');
+      AppLogger.i('error post fcm token ${e.response?.data.toString()}');
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => null,
@@ -251,23 +251,17 @@ class AuthRepositoryImpl extends AuthRepository {
         '/auth/device-infos/save',
         data: data,
       );
-      return BaseResponse.fromJson(
-        response.data,
-        (json) => null,
-      );
+      AppLogger.i("post device info non auth : ${response.data}");
+      return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
-      return BaseResponse.fromJson(
-        e.response?.data,
-        (json) => null,
-      );
+      AppLogger.i("error post device info non auth : ${e.response?.data}");
+
+      return BaseResponse.fromJson(e.response?.data, (json) => null);
     }
   }
 
   @override
   Future<BaseResponse> updateDeviceInfo(DeviceModel data) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response = await network.base.patch(
         '/auth/device-infos/update',
@@ -278,19 +272,6 @@ class AuthRepositoryImpl extends AuthRepository {
     } on DioException catch (e) {
       AppLogger.e('error update device info : ${e.response?.data}');
       return BaseResponse.fromJson(e.response?.data, (json) => json);
-    }
-  }
-
-  @override
-  Future<GetLoginModel> updateDeviceInfoNonAuth(DeviceModel data) async {
-    try {
-      Response response = await network.dio.put(
-        '/device_info/update',
-        data: data,
-      );
-      return GetLoginModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return GetLoginModel.fromJson(e.response?.data);
     }
   }
 
@@ -330,11 +311,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
       Response response = await network.base.get(
         "/auth/device-infos",
-        queryParameters: QueryParamModel(
-                table: true,
-                where:
-                    '[{"fcmToken" : "${await storageSecure.read(key: StorageCore.fcmToken)}"}]')
-            .toJson(),
+        queryParameters: QueryParamModel(table: true, where: '[{"fcmToken" : "${await storageSecure.read(key: StorageCore.fcmToken)}"}]').toJson(),
       );
       AppLogger.i("get fcm token : ${response.data}");
       return BaseResponse.fromJson(
