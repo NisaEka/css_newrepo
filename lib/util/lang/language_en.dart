@@ -372,6 +372,8 @@ class LanguageEN {
       "Pantau Progres Pengiriman Realtime": "Monitor Realtime Delivery Progress",
       "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.": "At any time you can see all your shipment status in real time.",
       "Lewati": "Skip",
+      "Anda akan keluar" : "You will be logged out",
+      "Anda yakin Keluar ?" : "Are you sure you want to Logout?",
     };
   }
 }

@@ -6,6 +6,7 @@ import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/widgets/dialog/logout_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,7 +39,12 @@ class LogoutButton extends StatelessWidget {
       child: Wrap(
         children: [
           ListTile(
-            onTap: () => isLogin ? doLogout() : Get.to(const LoginScreen()),
+            onTap: () => isLogin
+                ? showDialog(
+                    context: context,
+                    builder: (context) => LogoutAlertDialog(onLogout: () => doLogout()),
+                  )
+                : Get.to(const LoginScreen()),
             leading: Icon(
               isLogin ? Icons.logout : Icons.login,
               color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
