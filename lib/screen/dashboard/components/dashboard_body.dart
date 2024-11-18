@@ -1,7 +1,6 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/dashboard/components/dashboard_kiriman_cod.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_promo.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
@@ -99,8 +98,8 @@ class DashboardBody extends StatelessWidget {
                     const SizedBox(height: 50),
                     CustomFilledButton(
                       color: Colors.blue,
-                      // onPressed: () => Get.to(const SplashScreen()),
-                      onPressed: () => throw Exception(),
+                      onPressed: () => Get.to(const SplashScreen()),
+                      // onPressed: () => throw Exception(),
                     )
                   ],
                 ),

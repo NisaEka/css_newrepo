@@ -20,7 +20,6 @@ class _Ob1ScreenState extends State<Ob1Screen> {
   int currentIndex = 0;
   String lang = 'id';
 
-
   final List<Map<String, String>> bannerTexts = [
     {
       "title": "Permintaan Pickup",
@@ -73,34 +72,60 @@ class _Ob1ScreenState extends State<Ob1Screen> {
               ),
             ],
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                CustomFilledButton(
-                  color: lang == "id" ? redJNE : whiteColor,
-                  fontColor: lang == "id" ? whiteColor : greyColor,
-                  borderColor: lang == "id" ? Colors.transparent : greyColor,
-                  title: 'ID',
-                  width: 40,
-                  margin: EdgeInsets.zero,
-                  padding: EdgeInsets.zero,
-                  onPressed: () => changeLanguage("ID"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // CustomFilledButton(
+              //   color: redJNE,
+              //   margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
+              //   height: 51,
+              //   width: 20,
+              //   isTransparent: true,
+              //   title: 'Lewati'.tr,
+              //   onPressed: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+              // ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                child: GestureDetector(
+                  child: Text(
+                    'Lewati'.tr,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: redJNE),
+                  ),
+                  onTap: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
                 ),
-                const SizedBox(width: 10),
-                CustomFilledButton(
-                  color: lang == "en" ? redJNE : whiteColor,
-                  fontColor: lang == "en" ? whiteColor : greyColor,
-                  borderColor: lang == "en" ? Colors.transparent : greyColor,
-                  margin: EdgeInsets.zero,
-                  padding: EdgeInsets.zero,
-                  title: 'EN',
-                  width: 40,
-                  onPressed: () => changeLanguage("EN"),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CustomFilledButton(
+                      color: lang == "id" ? redJNE : whiteColor,
+                      fontColor: lang == "id" ? whiteColor : greyColor,
+                      borderColor: lang == "id" ? Colors.transparent : greyColor,
+                      title: 'ID',
+                      width: 40,
+                      margin: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
+                      onPressed: () => changeLanguage("ID"),
+                    ),
+                    const SizedBox(width: 10),
+                    CustomFilledButton(
+                      color: lang == "en" ? redJNE : whiteColor,
+                      fontColor: lang == "en" ? whiteColor : greyColor,
+                      borderColor: lang == "en" ? Colors.transparent : greyColor,
+                      margin: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
+                      title: 'EN',
+                      width: 40,
+                      onPressed: () => changeLanguage("EN"),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
@@ -120,14 +145,6 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                     curve: Curves.linear,
                   )
                 : Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
-          ),
-          CustomFilledButton(
-            color: redJNE,
-            margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
-            height: 51,
-            isTransparent: true,
-            title: 'Lewati'.tr,
-            onPressed: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
           ),
         ],
       ),
