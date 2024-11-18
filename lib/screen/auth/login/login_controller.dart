@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
@@ -96,11 +97,11 @@ class LoginController extends BaseController {
               )
               // .then((_) async => auth
               //     .postFcmToken(
-              //       await getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+              //       await getDeviceinfo(state.fcmToken ?? '') ?? DeviceModel(),
               //     )
               //     .then((value) async => value.code == 201
               //         ? await auth.updateDeviceInfo(
-              //             await getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+              //             await getDeviceinfo(state.fcmToken ?? '') ?? DeviceModel(),
               //           )
               //         : null))
               .then((_) => Get.delete<DashboardController>())
@@ -148,7 +149,7 @@ class LoginController extends BaseController {
     // Get.offAll(DashboardScreen());
   }
 
-  Future<Device?> getDeviceinfo(String token) async {
+  Future<DeviceModel?> getDeviceinfo(String token) async {
     var deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) {
       // import 'dart:io'
@@ -156,18 +157,18 @@ class LoginController extends BaseController {
       var systemName = iosDeviceInfo.systemName;
       var version = iosDeviceInfo.systemVersion;
 
-      return Device(
+      return DeviceModel(
         fcmToken: token,
         deviceId: iosDeviceInfo.identifierForVendor,
-        deviceVersion: '$systemName $version',
+        versionOs: '$systemName $version',
       );
     } else if (Platform.isAndroid) {
       var androidDeviceInfo = await deviceInfo.androidInfo;
       var release = androidDeviceInfo.version.release;
-      return Device(
+      return DeviceModel(
         fcmToken: token,
         deviceId: androidDeviceInfo.id,
-        deviceVersion: 'Android $release',
+        versionOs: 'Android $release',
       );
     }
     return null;

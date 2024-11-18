@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/pin_confirm_model.dart';
 import 'package:css_mobile/data/model/auth/get_check_mail_model.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
@@ -8,6 +9,7 @@ import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 
 abstract class AuthRepository {
   Future<BaseResponse<PostLoginModel>> postLogin(InputLoginModel loginData);
@@ -29,15 +31,17 @@ abstract class AuthRepository {
 
   Future<BaseResponse<MailCheckModel>> getCheckMail(String email);
 
-  Future<BaseResponse> postFcmToken(Device data);
+  Future<BaseResponse> postFcmToken(DeviceModel data);
 
-  Future<BaseResponse> postFcmTokenNonAuth(Device data);
+  Future<BaseResponse> postFcmTokenNonAuth(DeviceModel data);
+
+  Future<BaseResponse<List<DeviceModel>>> getFcmToken();
 
   Future<BaseResponse> logout();
 
-  Future<BaseResponse> updateDeviceInfo(Device data);
+  Future<BaseResponse> updateDeviceInfo(DeviceModel data);
 
-  Future<GetLoginModel> updateDeviceInfoNonAuth(Device data);
+  Future<GetLoginModel> updateDeviceInfoNonAuth(DeviceModel data);
 
   Future<BaseResponse<PostLoginModel>> postRefreshToken();
 }

@@ -97,10 +97,11 @@ class DashboardBody extends StatelessWidget {
                     const DashboardPromo(),
                     const DashboardNews(),
                     const SizedBox(height: 50),
-                    // CustomFilledButton(
-                    //   color: Colors.blue,
-                    //   onPressed: () => Get.to(const SplashScreen()),
-                    // )
+                    CustomFilledButton(
+                      color: Colors.blue,
+                      // onPressed: () => Get.to(const SplashScreen()),
+                      onPressed: () => throw Exception(),
+                    )
                   ],
                 ),
               ),

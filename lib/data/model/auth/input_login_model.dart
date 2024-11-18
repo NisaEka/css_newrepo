@@ -1,8 +1,10 @@
+import 'get_device_info_model.dart';
+
 class InputLoginModel {
   InputLoginModel({
     String? email,
     String? password,
-    Device? device,
+    DeviceModel? device,
     Coordinate? coordinate,
   }) {
     _email = email;
@@ -14,7 +16,7 @@ class InputLoginModel {
   InputLoginModel.fromJson(dynamic json) {
     _email = json['email'];
     _password = json['password'];
-    _device = json['device'] != null ? Device.fromJson(json['device']) : null;
+    _device = json['device'] != null ? DeviceModel.fromJson(json['device']) : null;
     _coordinate = json['coordinate'] != null
         ? Coordinate.fromJson(json['coordinate'])
         : null;
@@ -22,13 +24,13 @@ class InputLoginModel {
 
   String? _email;
   String? _password;
-  Device? _device;
+  DeviceModel? _device;
   Coordinate? _coordinate;
 
   InputLoginModel copyWith({
     String? email,
     String? password,
-    Device? device,
+    DeviceModel? device,
     Coordinate? coordinate,
   }) =>
       InputLoginModel(
@@ -42,7 +44,7 @@ class InputLoginModel {
 
   String? get password => _password;
 
-  Device? get device => _device;
+  DeviceModel? get device => _device;
 
   Coordinate? get coordinate => _coordinate;
 
@@ -98,49 +100,4 @@ class Coordinate {
   }
 }
 
-class Device {
-  Device({
-    String? fcmToken,
-    String? deviceId,
-    String? deviceVersion,
-  }) {
-    _fcmToken = fcmToken;
-    _deviceId = deviceId;
-    _deviceVersion = deviceVersion;
-  }
 
-  Device.fromJson(dynamic json) {
-    _fcmToken = json['fcmToken'];
-    _deviceId = json['deviceId'];
-    _deviceVersion = json['versionOs'];
-  }
-
-  String? _fcmToken;
-  String? _deviceId;
-  String? _deviceVersion;
-
-  Device copyWith({
-    String? fcmToken,
-    String? deviceId,
-    String? deviceVersion,
-  }) =>
-      Device(
-        fcmToken: fcmToken ?? _fcmToken,
-        deviceId: deviceId ?? _deviceId,
-        deviceVersion: deviceVersion ?? _deviceVersion,
-      );
-
-  String? get fcmToken => _fcmToken;
-
-  String? get deviceId => _deviceId;
-
-  String? get deviceVersion => _deviceVersion;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['fcmToken'] = _fcmToken;
-    map['deviceId'] = _deviceId;
-    map['versionOs'] = _deviceVersion;
-    return map;
-  }
-}

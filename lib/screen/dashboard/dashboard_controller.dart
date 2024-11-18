@@ -4,6 +4,7 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/css.dart';
+import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
@@ -269,19 +270,23 @@ class DashboardController extends BaseController {
 
       await auth
           .postFcmToken(
-        await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+        await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? DeviceModel(),
       )
           .then((value) async {
         value.code == 409
-            ? await auth
-                .updateDeviceInfo(
-                  await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
-                )
-                .then((v) => AppLogger.i('update device info ${v.code}'))
+            ? await auth.getFcmToken().then((value) {
+                if (value.data?.first.registrationId?.isEmpty ?? false) {
+
+                }
+              })
+            // ? await auth
+            //     .updateDeviceInfo(
+            //       await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+            //     )
             // : value.code == 401 || value.code == 400 || value.code == null
             : await auth
                 .postFcmTokenNonAuth(
-                  await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? Device(),
+                  await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? DeviceModel(),
                 )
                 .then((v) => AppLogger.i('add device info non auth ${v.code}'));
         // : debugPrint('post device info : ${value.code}'));
@@ -351,10 +356,7 @@ class DashboardController extends BaseController {
     try {
       if (basic) {
         await profil.getBasicProfil().then((value) async {
-          await storage.saveData(
-            StorageCore.basicProfile,
-            value.data?.user
-          );
+          await storage.saveData(StorageCore.basicProfile, value.data?.user);
 
           await storage.saveData(
               StorageCore.shipper,

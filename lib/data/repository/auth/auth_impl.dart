@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/auth/get_check_mail_model.dart';
+import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
@@ -8,6 +9,7 @@ import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/auth/pin_confirm_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -21,8 +23,7 @@ class AuthRepositoryImpl extends AuthRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<PostLoginModel>> postLogin(
-      InputLoginModel loginData) async {
+  Future<BaseResponse<PostLoginModel>> postLogin(InputLoginModel loginData) async {
     try {
       Response response = await network.base.post(
         '/authentications/login',
@@ -157,18 +158,15 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(
-      InputPinconfirmModel data) async {
+  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(InputPinconfirmModel data) async {
     try {
       Response response = await network.base.post(
         '/authentications/forgot-password/confirm',
         data: data,
       );
-      return BaseResponse.fromJson(response.data,
-          (json) => PinConfirmModel.fromJson(json as Map<String, dynamic>));
+      return BaseResponse.fromJson(response.data, (json) => PinConfirmModel.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
-      return BaseResponse.fromJson(
-          e.response?.data, (json) => PinConfirmModel());
+      return BaseResponse.fromJson(e.response?.data, (json) => PinConfirmModel());
     }
   }
 
@@ -193,7 +191,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse> postFcmToken(Device data) async {
+  Future<BaseResponse> postFcmToken(DeviceModel data) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -208,8 +206,7 @@ class AuthRepositoryImpl extends AuthRepository {
         (json) => null,
       );
     } on DioException catch (e) {
-
-      AppLogger.e('post fcm token ${e.response?.data.toString()}');
+      AppLogger.e('error post fcm token ${e.response?.data.toString()}');
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => null,
@@ -248,7 +245,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse> postFcmTokenNonAuth(Device data) async {
+  Future<BaseResponse> postFcmTokenNonAuth(DeviceModel data) async {
     try {
       Response response = await network.base.post(
         '/auth/device-infos/save',
@@ -267,7 +264,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse> updateDeviceInfo(Device data) async {
+  Future<BaseResponse> updateDeviceInfo(DeviceModel data) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -276,6 +273,7 @@ class AuthRepositoryImpl extends AuthRepository {
         '/auth/device-infos/update',
         data: data,
       );
+      AppLogger.i('update device info : ${response.data}');
       return BaseResponse.fromJson(response.data, (json) => json);
     } on DioException catch (e) {
       AppLogger.e('error update device info : ${e.response?.data}');
@@ -284,7 +282,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<GetLoginModel> updateDeviceInfoNonAuth(Device data) async {
+  Future<GetLoginModel> updateDeviceInfoNonAuth(DeviceModel data) async {
     try {
       Response response = await network.dio.put(
         '/device_info/update',
@@ -320,6 +318,45 @@ class AuthRepositoryImpl extends AuthRepository {
         (json) => PostLoginModel.fromJson(
           json as Map<String, dynamic>,
         ),
+      );
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<DeviceModel>>> getFcmToken() async {
+    try {
+      var token = await storageSecure.read(key: "token");
+      network.base.options.headers['Authorization'] = 'Bearer $token';
+
+      Response response = await network.base.get(
+        "/auth/device-infos",
+        queryParameters: QueryParamModel(
+                table: true,
+                where:
+                    '[{"fcmToken" : "${await storageSecure.read(key: StorageCore.fcmToken)}"}]')
+            .toJson(),
+      );
+      AppLogger.i("get fcm token : ${response.data}");
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<DeviceModel>(
+                  (i) => DeviceModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<DeviceModel>(
+                  (i) => DeviceModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
       );
     }
   }

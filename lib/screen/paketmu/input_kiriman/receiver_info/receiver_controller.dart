@@ -76,7 +76,7 @@ class ReceiverController extends BaseController {
   }
 
   bool isSaveReceiver() {
-    if (state.receiver?.name != state.receiverName.text && state.receiver?.phone != state.receiverPhone.text) {
+    if (state.receiver?.phone != state.receiverPhone.text) {
       return true;
     }
     return false;
