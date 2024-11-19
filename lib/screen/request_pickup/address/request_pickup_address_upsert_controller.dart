@@ -81,14 +81,20 @@ class RequestPickupAddressUpsertController extends BaseController {
     isLoadDestination = true;
     destinationList.clear();
 
-    // var response = await transaction.getDestination(keyword);
-    // var models = response.payload?.toList();
+    var response = await requestPickupRepository
+        .getRequestPickupDestinations(QueryParamModel(
+            table: true,
+            limit: 50,
+            search: keyword.toUpperCase(),
+            sort: jsonEncode([
+              {"id": "asc"}
+            ])));
+    var models = response.data ?? List.empty();
 
     isLoadDestination = false;
     update();
 
-    // return models ?? List.empty();
-    return [];
+    return models;
   }
 
   void onSubmitAction() async {

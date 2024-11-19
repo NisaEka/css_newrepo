@@ -288,7 +288,11 @@ class RequestPickupController extends BaseController {
   Future<void> getAddresses() async {
     try {
       final response = await requestPickupRepository
-          .getRequestPickupAddresses(QueryParamModel());
+          .getRequestPickupAddresses(QueryParamModel(
+              limit: 0,
+              sort: jsonEncode([
+                {"createdDate": "desc"}
+              ])));
       final payload = response.data ?? List.empty();
       addresses.clear();
       addresses.addAll(payload);
