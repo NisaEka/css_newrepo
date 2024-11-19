@@ -2,7 +2,6 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/get_branch_model.dart';
-import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_controller.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
@@ -46,7 +45,9 @@ class TransactionDetail extends StatelessWidget {
                           width: Get.width / 2.5,
                           readOnly: true,
                           hintText: '',
-                          backgroundColor: AppConst.isLightTheme(context) ? greyLightColor2 : greyDarkColor2,
+                          backgroundColor: AppConst.isLightTheme(context)
+                              ? greyLightColor2
+                              : greyDarkColor2,
                           noBorder: true,
                           isLoading: c.isLoading,
                         ),
@@ -56,7 +57,9 @@ class TransactionDetail extends StatelessWidget {
                           width: Get.width / 2.5,
                           readOnly: true,
                           hintText: '',
-                          backgroundColor: AppConst.isLightTheme(context) ? greyLightColor2 : greyDarkColor2,
+                          backgroundColor: AppConst.isLightTheme(context)
+                              ? greyLightColor2
+                              : greyDarkColor2,
                           noBorder: true,
                           isLoading: c.isLoading,
                         ),
@@ -77,7 +80,8 @@ class TransactionDetail extends StatelessWidget {
                           drawText: false,
                           height: 120,
                           width: 120,
-                          color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                          color:
+                              AppConst.isLightTheme(context) ? blueJNE : redJNE,
                         ),
                       ),
                     )
@@ -88,11 +92,17 @@ class TransactionDetail extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(13),
                     decoration: BoxDecoration(
-                      color: c.isLoading ? greyColor : (AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2),
+                      color: c.isLoading
+                          ? greyColor
+                          : (AppConst.isLightTheme(context)
+                              ? whiteColor
+                              : greyDarkColor2),
                       borderRadius: BorderRadius.circular(5),
                       boxShadow: [
                         BoxShadow(
-                          color: AppConst.isLightTheme(context) ? greyLightColor3 : greyDarkColor2,
+                          color: AppConst.isLightTheme(context)
+                              ? greyLightColor3
+                              : greyDarkColor2,
                           spreadRadius: 1,
                           offset: const Offset(-2, 2),
                         ),
@@ -103,9 +113,17 @@ class TransactionDetail extends StatelessWidget {
                       children: [
                         CustomLabelText(
                           title: 'Tanggal Pesanan'.tr,
-                          value: c.transactionModel?.createdDateSearch?.toLongDateTimeFormat() ?? '-',
-                          titleTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, fontWeight: medium),
-                          valueTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10),
+                          value: c.transactionModel?.createdDateSearch
+                                  ?.toLongDateTimeFormat() ??
+                              '-',
+                          titleTextStyle: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(fontSize: 10, fontWeight: medium),
+                          valueTextStyle: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(fontSize: 10),
                           alignment: 'end',
                         ),
                         Row(
@@ -115,46 +133,83 @@ class TransactionDetail extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Text("No Resi".tr, style: Theme.of(context).textTheme.bodySmall),
+                                    Text("No Resi".tr,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall),
                                     GestureDetector(
-                                      onTap: () => Clipboard.setData(ClipboardData(text: c.transactionModel?.awb ?? '')),
+                                      onTap: () => Clipboard.setData(
+                                          ClipboardData(
+                                              text: c.transactionModel?.awb ??
+                                                  '')),
                                       child: Container(
                                         margin: const EdgeInsets.only(left: 10),
                                         child: Icon(
                                           size: 10,
                                           Icons.copy_rounded,
-                                          color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                                          color: AppConst.isLightTheme(context)
+                                              ? blueJNE
+                                              : redJNE,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                Text("Tipe".tr, style: Theme.of(context).textTheme.bodySmall),
-                                Text("Service".tr, style: Theme.of(context).textTheme.bodySmall),
-                                Text("Dana COD".tr, style: Theme.of(context).textTheme.bodySmall),
-                                Text("Petugas Entry".tr, style: Theme.of(context).textTheme.bodySmall),
-                                Text("Pengirim".tr, style: Theme.of(context).textTheme.bodySmall),
-                                Text("Kota Pengiriman".tr, style: Theme.of(context).textTheme.bodySmall),
-                                Text("Penerima".tr, style: Theme.of(context).textTheme.bodySmall),
-                                Text("Kontak Penerima".tr, style: Theme.of(context).textTheme.bodySmall),
+                                Text("Tipe".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                                Text("Service".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                                Text("Dana COD".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                                Text("Petugas Entry".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                                Text("Pengirim".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                                Text("Kota Pengiriman".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                                Text("Penerima".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                                Text("Kontak Penerima".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
                                 Row(
                                   children: [
-                                    Text("Order ID".tr, style: Theme.of(context).textTheme.bodySmall),
+                                    Text("Order ID".tr,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall),
                                     GestureDetector(
-                                      onTap: () => Clipboard.setData(ClipboardData(text: c.transactionModel?.orderId ?? '')),
+                                      onTap: () => Clipboard.setData(
+                                          ClipboardData(
+                                              text:
+                                                  c.transactionModel?.orderId ??
+                                                      '')),
                                       child: Container(
                                         margin: const EdgeInsets.only(left: 10),
                                         child: Icon(
                                           size: 10,
                                           Icons.copy_rounded,
-                                          color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                                          color: AppConst.isLightTheme(context)
+                                              ? blueJNE
+                                              : redJNE,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                Text("Account".tr, style: Theme.of(context).textTheme.bodySmall),
-                                Text("Deskripsi".tr, style: Theme.of(context).textTheme.bodySmall),
+                                Text("Account".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                                Text("Deskripsi".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
                               ],
                             ),
                             const SizedBox(width: 15),
@@ -163,7 +218,10 @@ class TransactionDetail extends StatelessWidget {
                               children: [
                                 Text(
                                   c.transactionModel?.awb ?? '-',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
                                         fontWeight: medium,
                                       ),
                                 ),
@@ -185,7 +243,10 @@ class TransactionDetail extends StatelessWidget {
                                 ),
                                 Text(
                                   c.transactionModel?.shipperName ?? '-',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: medium),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(fontWeight: medium),
                                 ),
                                 Text(
                                   "${c.transactionModel?.receiverCity} / ${c.transactionModel?.receiverDistrict}",
@@ -207,7 +268,8 @@ class TransactionDetail extends StatelessWidget {
                                   width: Get.width - 200,
                                   child: Text(
                                     '${c.transactionModel?.accountNumber}/ ${c.transactionModel?.accountName} / ${c.transactionModel?.accountType}',
-                                    style: Theme.of(context).textTheme.bodySmall,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -230,28 +292,36 @@ class TransactionDetail extends StatelessWidget {
                       ? Get.to(const LabelScreen(), arguments: {
                           'data': DataTransactionModel(
                             destination: Destination(
-                              destinationCode: c.transactionModel?.destinationCode,
+                              destinationCode:
+                                  c.transactionModel?.destinationCode,
                               zipCode: c.transactionModel?.receiverZip,
                               cityName: c.transactionModel?.receiverCity,
                               countryName: c.transactionModel?.receiverCountry,
-                              districtName: c.transactionModel?.receiverDistrict,
+                              districtName:
+                                  c.transactionModel?.receiverDistrict,
                               provinceName: c.transactionModel?.receiverRegion,
-                              subdistrictName: c.transactionModel?.receiverSubdistrict,
+                              subdistrictName:
+                                  c.transactionModel?.receiverSubdistrict,
                             ),
                             dataDestination: Destination(
-                              destinationCode: c.transactionModel?.destinationCode,
+                              destinationCode:
+                                  c.transactionModel?.destinationCode,
                               zipCode: c.transactionModel?.receiverZip,
                               cityName: c.transactionModel?.receiverCity,
                               countryName: c.transactionModel?.receiverCountry,
-                              districtName: c.transactionModel?.receiverDistrict,
+                              districtName:
+                                  c.transactionModel?.receiverDistrict,
                               provinceName: c.transactionModel?.receiverRegion,
-                              subdistrictName: c.transactionModel?.receiverSubdistrict,
+                              subdistrictName:
+                                  c.transactionModel?.receiverSubdistrict,
                             ),
                             receiver: ReceiverModel(
                                 name: c.transactionModel?.receiverName,
                                 zipCode: c.transactionModel?.receiverZip,
-                                destinationCode: c.transactionModel?.destinationCode,
-                                destinationDescription: c.transactionModel?.destinationDesc,
+                                destinationCode:
+                                    c.transactionModel?.destinationCode,
+                                destinationDescription:
+                                    c.transactionModel?.destinationDesc,
                                 city: c.transactionModel?.receiverCity,
                                 country: c.transactionModel?.receiverCountry,
                                 contact: c.transactionModel?.receiverContact,
@@ -259,7 +329,8 @@ class TransactionDetail extends StatelessWidget {
                                 address: c.transactionModel?.receiverAddr,
                                 region: c.transactionModel?.receiverRegion,
                                 district: c.transactionModel?.receiverDistrict,
-                                subDistrict: c.transactionModel?.receiverSubdistrict),
+                                subDistrict:
+                                    c.transactionModel?.receiverSubdistrict),
                             shipper: ShipperModel(
                               name: c.transactionModel?.shipperName,
                               address: c.transactionModel?.shipperAddr,
@@ -302,17 +373,24 @@ class TransactionDetail extends StatelessWidget {
                             createAt: c.transactionModel?.createdDate,
                             delivery: Delivery(
                                 serviceCode: c.transactionModel?.serviceCode,
-                                insuranceFlag: c.transactionModel?.insuranceFlag,
+                                insuranceFlag:
+                                    c.transactionModel?.insuranceFlag,
                                 codFlag: c.transactionModel?.codFlag,
                                 codFee: c.transactionModel?.codAmount,
                                 codOngkir: c.transactionModel?.codOngkir,
                                 flatRate: c.transactionModel?.deliveryPrice,
-                                freightCharge: c.transactionModel?.deliveryPrice,
-                                specialInstruction: c.transactionModel?.specialIns,
-                                woodPackaging: c.transactionModel?.packingkayuFlag,
-                                flatRateWithInsurance: c.transactionModel?.insuranceAmount,
-                                freightChargeWithInsurance: c.transactionModel?.insuranceAmount,
-                                insuranceFee: c.transactionModel?.insuranceAmount),
+                                freightCharge:
+                                    c.transactionModel?.deliveryPrice,
+                                specialInstruction:
+                                    c.transactionModel?.specialIns,
+                                woodPackaging:
+                                    c.transactionModel?.packingkayuFlag,
+                                flatRateWithInsurance:
+                                    c.transactionModel?.insuranceAmount,
+                                freightChargeWithInsurance:
+                                    c.transactionModel?.insuranceAmount,
+                                insuranceFee:
+                                    c.transactionModel?.insuranceAmount),
                             goods: Goods(
                               weight: c.transactionModel?.weight,
                               type: c.transactionModel?.goodsType,

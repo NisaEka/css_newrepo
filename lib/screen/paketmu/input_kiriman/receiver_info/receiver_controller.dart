@@ -11,7 +11,6 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_s
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReceiverController extends BaseController {
@@ -70,7 +69,10 @@ class ReceiverController extends BaseController {
     state.receiverDest.text = state.receiver?.idDestination ?? '';
     state.receiverAddress.text = state.receiver?.address?.toUpperCase() ?? '';
     getDestinationList(state.receiver?.destinationCode ?? '').then((value) {
-      state.selectedDestination = value.where((element) => element.destinationCode == state.receiver?.destinationCode).first;
+      state.selectedDestination = value
+          .where((element) =>
+              element.destinationCode == state.receiver?.destinationCode)
+          .first;
     });
     update();
     return state.receiver;
@@ -87,7 +89,8 @@ class ReceiverController extends BaseController {
     state.isLoading = true;
     BaseResponse<List<Destination>>? response;
     try {
-      response = await master.getDestinations(QueryParamModel(search: keyword.toUpperCase()));
+      response = await master
+          .getDestinations(QueryParamModel(search: keyword.toUpperCase()));
     } catch (e, i) {
       AppLogger.e('error getDestinationList $e, $i');
     }
@@ -166,7 +169,9 @@ class ReceiverController extends BaseController {
             subDistrict: state.selectedDestination?.subdistrictName ?? '-',
           ))
           .then(
-            (value) => value.code == 201 ? AppSnackBar.success('Data receiver telah disimpan'.tr) : AppSnackBar.error(value.error?.first.message.trs),
+            (value) => value.code == 201
+                ? AppSnackBar.success('Data receiver telah disimpan'.tr)
+                : AppSnackBar.error(value.error?.first.message.trs),
           );
     } catch (e) {
       AppLogger.e('error saveReceiver $e');

@@ -1,6 +1,5 @@
 import 'package:css_mobile/screen/dashboard/components/dashboard_body.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/onboarding/ob1_screen.dart';
 import 'package:css_mobile/screen/onboarding/splash_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:flutter/material.dart';

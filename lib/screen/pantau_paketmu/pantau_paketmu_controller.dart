@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -19,6 +22,7 @@ class PantauPaketmuController extends BaseController {
   static const pageSize = 10;
   final network = Get.find<NetworkCore>();
   final storageSecure = const FlutterSecureStorage();
+  Timer? _debounceTimer;
 
   @override
   void onInit() {
@@ -37,19 +41,20 @@ class PantauPaketmuController extends BaseController {
     state.startDateField.dispose();
     state.endDateField.dispose();
     state.searchField.dispose();
+    _debounceTimer
+        ?.cancel(); // Cancel the timer when the controller is disposed
     super.onClose();
   }
 
   Future<void> initData() async {
     state.isLoading.value = true;
+    AppLogger.i('initDataaaa');
     try {
       var token = await storageSecure.read(key: 'token');
       network.base.options.headers['Authorization'] = 'Bearer $token';
 
-      await profil
-          .getBasicProfil()
-          .then((value) async => state.basic.value = value.data?.user);
-
+      BaseResponse<BasicProfileModel> profile = await profil.getBasicProfil();
+      state.basic.value = profile.data?.user;
       state.listOfficerEntry.add('SEMUA');
       state.listOfficerEntry.add(state.basic.value?.name ?? '');
 
@@ -268,5 +273,19 @@ class PantauPaketmuController extends BaseController {
     } else {
       state.pagingController.refresh();
     }
+  }
+
+  void onSearchChanged(String value) {
+    // Cancel the previous timer if it exists
+    if (_debounceTimer?.isActive ?? false) {
+      _debounceTimer!.cancel();
+    }
+
+    // Set a new timer for debounce
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      // Trigger the search or refresh when the user stops typing
+      state.searchField.text = value;
+      state.pagingController.refresh();
+    });
   }
 }

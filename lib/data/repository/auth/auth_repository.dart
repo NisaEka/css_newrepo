@@ -9,7 +9,6 @@ import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
 
 abstract class AuthRepository {
   Future<BaseResponse<PostLoginModel>> postLogin(InputLoginModel loginData);

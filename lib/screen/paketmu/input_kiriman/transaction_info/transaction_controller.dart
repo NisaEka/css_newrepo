@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
@@ -187,7 +186,7 @@ class TransactionController extends BaseController {
   }
 
   bool isValidate() {
-    if (state.formValidate && state.selectedService != null && !state.isCalculate && state.totalOngkir <= 1000000) {
+    if (state.formValidate && state.selectedService != null && !state.isCalculate ) {
       return true;
     }
 
