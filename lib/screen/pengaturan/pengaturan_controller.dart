@@ -1,12 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
-import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
-import 'package:css_mobile/util/logger.dart';
-import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -38,7 +34,8 @@ class PengaturanController extends BaseController {
 
     allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
 
-    basicProfil = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    basicProfil =
+        UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
 
     update();
   }
@@ -92,6 +89,4 @@ class PengaturanController extends BaseController {
     initData();
     update();
   }
-
-
 }

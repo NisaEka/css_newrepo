@@ -1,13 +1,10 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
-import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/logout_button.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +20,8 @@ class PengaturanScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: false,
-            onPopInvokedWithResult: (bool didPop, Object? result) => Get.off(const DashboardScreen()),
+            onPopInvokedWithResult: (bool didPop, Object? result) =>
+                Get.off(const DashboardScreen()),
             child: Stack(
               children: [
                 Scaffold(
@@ -61,7 +59,8 @@ class PengaturanScreen extends StatelessWidget {
                     CustomFilledButton(
                       color: c.lang == "id" ? blueJNE : whiteColor,
                       fontColor: c.lang == "id" ? whiteColor : greyColor,
-                      borderColor: c.lang == "id" ? Colors.transparent : greyColor,
+                      borderColor:
+                          c.lang == "id" ? Colors.transparent : greyColor,
                       title: 'ID',
                       width: 40,
                       margin: EdgeInsets.zero,
@@ -72,7 +71,8 @@ class PengaturanScreen extends StatelessWidget {
                     CustomFilledButton(
                       color: c.lang == "en" ? blueJNE : whiteColor,
                       fontColor: c.lang == "en" ? whiteColor : greyColor,
-                      borderColor: c.lang == "en" ? Colors.transparent : greyColor,
+                      borderColor:
+                          c.lang == "en" ? Colors.transparent : greyColor,
                       margin: EdgeInsets.zero,
                       padding: EdgeInsets.zero,
                       title: 'EN',
@@ -127,7 +127,8 @@ class PengaturanScreen extends StatelessWidget {
                     CustomFilledButton(
                       color: c.mode == "dark" ? blueJNE : whiteColor,
                       fontColor: c.mode == "dark" ? whiteColor : greyColor,
-                      borderColor: c.mode == "dark" ? Colors.transparent : greyColor,
+                      borderColor:
+                          c.mode == "dark" ? Colors.transparent : greyColor,
                       icon: Icons.dark_mode,
                       width: 40,
                       margin: EdgeInsets.zero,
@@ -138,7 +139,8 @@ class PengaturanScreen extends StatelessWidget {
                     CustomFilledButton(
                       color: c.mode == "light" ? blueJNE : whiteColor,
                       fontColor: c.mode == "light" ? whiteColor : greyColor,
-                      borderColor: c.mode == "light" ? Colors.transparent : greyColor,
+                      borderColor:
+                          c.mode == "light" ? Colors.transparent : greyColor,
                       margin: EdgeInsets.zero,
                       padding: EdgeInsets.zero,
                       icon: Icons.light_mode,
@@ -152,5 +154,4 @@ class PengaturanScreen extends StatelessWidget {
       ),
     );
   }
-
 }
