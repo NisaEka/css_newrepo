@@ -7,6 +7,7 @@ import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/fp_otp/fp_otp_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -39,7 +40,9 @@ class AltProfileController extends BaseController {
   bool onPop() {
     pop = true;
     update();
-    Get.off(const DashboardScreen());
+    Get.delete<DashboardController>().then(
+      (_) => Get.offAll(const DashboardScreen()),
+    );
     return true;
   }
 

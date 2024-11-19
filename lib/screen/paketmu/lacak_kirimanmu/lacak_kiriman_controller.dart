@@ -34,7 +34,9 @@ class LacakKirimanController extends BaseController {
   }
 
   Future<BaseResponse<PostLacakKirimanModel>> cekResi(
-      String nomorResi, String pin) async {
+    String nomorResi,
+    String pin,
+  ) async {
     isLoading = true;
     update();
     try {

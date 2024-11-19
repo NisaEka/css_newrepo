@@ -31,8 +31,8 @@ class LogoutButton extends StatelessWidget {
           ? BoxDecoration(
               color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
               border: Border(
-                bottom: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
-                top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
+                bottom: BorderSide(color: AppConst.isLightTheme(context) ? greyColor : Colors.white),
+                // top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
               ),
             )
           : null,
