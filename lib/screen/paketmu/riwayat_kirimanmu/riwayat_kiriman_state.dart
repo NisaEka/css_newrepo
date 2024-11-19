@@ -18,7 +18,7 @@ class RiwayatKirimanState {
   int noncod = 0;
   int codOngkir = 0;
   DateTime? startDate;
-  DateTime? endDate;
+  DateTime? endDate ;
   String? selectedStatusKiriman;
   PetugasModel? selectedPetugasEntry;
   String? transType;
