@@ -45,7 +45,7 @@ class LacakKirimanScreen extends StatelessWidget {
                 c.searchField.text = result;
                 c.update();
                 Get.to(
-                  PinConfirmationScreen(
+                  PhoneNumberConfirmationScreen(
                     awb: result,
                     cekResi: c.cekResi,
                   ),
@@ -61,7 +61,7 @@ class LacakKirimanScreen extends StatelessWidget {
             // onSubmit: (value) => c.cekResi(value),
             onSubmit: (value) {
               Get.to(
-                PinConfirmationScreen(
+                PhoneNumberConfirmationScreen(
                   awb: value,
                   cekResi: c.cekResi,
                 ),

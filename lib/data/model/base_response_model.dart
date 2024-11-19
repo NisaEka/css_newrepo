@@ -17,7 +17,7 @@ class BaseResponse<T> {
 
   BaseResponse.fromJson(dynamic json, T Function(Object? json) fromJsonT) {
     _message = json['message'] ?? json['messages'];
-    _error = json['error'] ?? json['errors'];
+    _error = json['error'] ?? json['errors']?.join(', ');
     _code = json['statusCode'];
     _data = _nullableGenericFromJson(json['data'], fromJsonT);
     _meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;

@@ -405,8 +405,8 @@ class LanguageEN {
       "Anda yakin Keluar ?": "Are you sure you want to Logout?",
       "Konfirmasi": "Confirm",
       "Verifikasi Nomor Telepon": "Verify Phone Number",
-      "Untuk menjaga privasi pengguna, mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima yang terkait dengan nomor resi":
-          "To protect user privacy, please enter the last four digits of the sender's or recipient's phone number associated with the tracking number",
+      "Mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima":
+          "Please enter the last four digits of the sender's or recipient's phone number",
     };
   }
 }

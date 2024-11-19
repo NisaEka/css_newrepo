@@ -10,10 +10,10 @@ class LacakKirimanRepositoryImpl extends LacakKirimanRepository {
 
   @override
   Future<BaseResponse<PostLacakKirimanModel>> postTracingByCnote(
-      String cnote, String pin) async {
+      String cnote, String phoneNumber) async {
     try {
-      Response response = await network.base
-          .post('/transaction/traces', data: {'awb': cnote, 'pin': pin});
+      Response response = await network.base.post('/transaction/traces',
+          data: {'awb': cnote, 'phoneNumber': phoneNumber});
       return BaseResponse.fromJson(
           response.data,
           (json) => PostLacakKirimanModel.fromJson(
