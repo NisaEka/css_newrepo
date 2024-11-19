@@ -55,14 +55,17 @@ class PhoneNumberConfirmationScreenState
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima'
-                  .tr,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 16),
+            Padding(
+              padding: const EdgeInsets.only(top: 80.0),
+              child: Text(
+                'Mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima'
+                    .tr,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 16),
+              ),
             ),
             const SizedBox(height: 10),
             Text(
