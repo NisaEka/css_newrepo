@@ -1,4 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/lacak_kiriman/post_lacak_kiriman_model.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class LacakKirimanController extends BaseController {
   bool isLoading = false;
   bool isLogin = false;
 
-  PostLacakKirimanModel? trackModel;
+  BaseResponse<PostLacakKirimanModel>? trackModel;
 
   @override
   void onInit() {
@@ -19,7 +20,7 @@ class LacakKirimanController extends BaseController {
     cekToken();
     if (resi != null) {
       searchField.text = resi ?? '';
-      cekResi(resi ?? '');
+      cekResi(resi ?? '', '');
     }
   }
 
@@ -32,11 +33,12 @@ class LacakKirimanController extends BaseController {
     return isLogin;
   }
 
-  Future<PostLacakKirimanModel> cekResi(String nomorResi) async {
+  Future<BaseResponse<PostLacakKirimanModel>> cekResi(
+      String nomorResi, String pin) async {
     isLoading = true;
     update();
     try {
-      await trace.postTracingByCnote(nomorResi).then(
+      await trace.postTracingByCnote(nomorResi, pin).then(
             (value) => trackModel = value,
           );
     } catch (e, i) {
@@ -46,6 +48,6 @@ class LacakKirimanController extends BaseController {
     isLoading = false;
     update();
 
-    return trackModel ?? PostLacakKirimanModel();
+    return trackModel ?? BaseResponse();
   }
 }

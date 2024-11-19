@@ -2,15 +2,11 @@ class PostLacakKirimanModel {
   Cnote? cnote;
   List<Detail>? detail;
   List<HistoryKiriman>? history;
-  String? error;
-  bool? status;
 
   PostLacakKirimanModel({
     this.cnote,
     this.detail,
     this.history,
-    this.error,
-    this.status,
   });
 
   factory PostLacakKirimanModel.fromJson(Map<String, dynamic> json) {
@@ -23,8 +19,6 @@ class PostLacakKirimanModel {
           ? List<HistoryKiriman>.from(
               json['history'].map((x) => HistoryKiriman.fromJson(x)))
           : null,
-      error: json['error'],
-      status: json['status'],
     );
   }
 
@@ -33,8 +27,6 @@ class PostLacakKirimanModel {
       'cnote': cnote?.toJson(),
       'detail': detail?.map((x) => x.toJson()).toList(),
       'history': history?.map((x) => x.toJson()).toList(),
-      'error': error,
-      'status': status,
     };
   }
 }
