@@ -8,7 +8,6 @@ import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/auth/pin_confirm_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
@@ -23,7 +22,8 @@ class AuthRepositoryImpl extends AuthRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<PostLoginModel>> postLogin(InputLoginModel loginData) async {
+  Future<BaseResponse<PostLoginModel>> postLogin(
+      InputLoginModel loginData) async {
     try {
       Response response = await network.base.post(
         '/authentications/login',
@@ -158,15 +158,18 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(InputPinconfirmModel data) async {
+  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(
+      InputPinconfirmModel data) async {
     try {
       Response response = await network.base.post(
         '/authentications/forgot-password/confirm',
         data: data,
       );
-      return BaseResponse.fromJson(response.data, (json) => PinConfirmModel.fromJson(json as Map<String, dynamic>));
+      return BaseResponse.fromJson(response.data,
+          (json) => PinConfirmModel.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
-      return BaseResponse.fromJson(e.response?.data, (json) => PinConfirmModel());
+      return BaseResponse.fromJson(
+          e.response?.data, (json) => PinConfirmModel());
     }
   }
 
@@ -311,7 +314,11 @@ class AuthRepositoryImpl extends AuthRepository {
 
       Response response = await network.base.get(
         "/auth/device-infos",
-        queryParameters: QueryParamModel(table: true, where: '[{"fcmToken" : "${await storageSecure.read(key: StorageCore.fcmToken)}"}]').toJson(),
+        queryParameters: QueryParamModel(
+                table: true,
+                where:
+                    '[{"fcmToken" : "${await storageSecure.read(key: StorageCore.fcmToken)}"}]')
+            .toJson(),
       );
       AppLogger.i("get fcm token : ${response.data}");
       return BaseResponse.fromJson(

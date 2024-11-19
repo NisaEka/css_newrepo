@@ -5,7 +5,6 @@ import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/forgot_password/input_email_screen.dart';
 import 'package:css_mobile/screen/auth/login/login_state.dart';
@@ -151,7 +150,7 @@ class LoginController extends BaseController {
 
   Future<DeviceModel?> getDeviceinfo(String token) async {
     var deviceInfo = DeviceInfoPlugin();
-    var user = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    // var user = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
     if (Platform.isIOS) {
       // import 'dart:io'
       var iosDeviceInfo = await deviceInfo.iosInfo;
@@ -181,7 +180,8 @@ class LoginController extends BaseController {
     String? token = await storage.readAccessToken();
     AppLogger.e('token : $token');
     if (token != null) {
-      Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen()));
+      Get.delete<DashboardController>()
+          .then((_) => Get.offAll(const DashboardScreen()));
       // String all = await storage.readString(StorageCore.allowedMenu);
       // AllowedMenu menu = AllowedMenu.fromJson(jsonDecode(all));
       // print(menu.beranda);

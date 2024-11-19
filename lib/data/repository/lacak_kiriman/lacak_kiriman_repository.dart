@@ -3,5 +3,5 @@ import 'package:css_mobile/data/model/lacak_kiriman/post_lacak_kiriman_model.dar
 
 abstract class LacakKirimanRepository {
   Future<BaseResponse<PostLacakKirimanModel>> postTracingByCnote(
-      String cnote, String pin);
+      String cnote, String phoneNumber);
 }

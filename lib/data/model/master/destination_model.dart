@@ -102,4 +102,8 @@ class Destination {
     map['cityZone'] = _cityZone;
     return map;
   }
+
+  String asFacilityFormFormat() {
+    return "$zipCode; $provinceName; $cityName; $districtName; $subdistrictName; $destinationCode";
+  }
 }

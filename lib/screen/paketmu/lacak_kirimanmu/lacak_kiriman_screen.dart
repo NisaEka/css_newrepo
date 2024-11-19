@@ -3,7 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:collection/collection.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_controller.dart';
-import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/pin_confirmation_screen.dart';
+import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/phone_number_confirmation_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/kiriman_stepper.dart';
@@ -45,7 +45,7 @@ class LacakKirimanScreen extends StatelessWidget {
                 c.searchField.text = result;
                 c.update();
                 Get.to(
-                  PinConfirmationScreen(
+                  PhoneNumberConfirmationScreen(
                     awb: result,
                     cekResi: c.cekResi,
                   ),
@@ -61,7 +61,7 @@ class LacakKirimanScreen extends StatelessWidget {
             // onSubmit: (value) => c.cekResi(value),
             onSubmit: (value) {
               Get.to(
-                PinConfirmationScreen(
+                PhoneNumberConfirmationScreen(
                   awb: value,
                   cekResi: c.cekResi,
                 ),

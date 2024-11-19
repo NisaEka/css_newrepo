@@ -1,14 +1,17 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_screen.dart';
+import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+// import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_screen.dart';
+// import 'package:geocoding/geocoding.dart';
 
 class RequestPickupAddressUpsertScreen extends StatelessWidget {
   const RequestPickupAddressUpsertScreen({super.key});
@@ -56,21 +59,21 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
   Widget _bodyForm(RequestPickupAddressUpsertController controller) {
     return Column(
       children: [
-        GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () async {
-            Placemark? selectedPlaceMark =
-                await Get.to(() => const RequestPickupLocationScreen());
-            controller.onSelectedPlaceMark(selectedPlaceMark);
-          },
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Pilih berdasarkan lokasi"),
-              Icon(Icons.keyboard_arrow_right)
-            ],
-          ),
-        ),
+        // GestureDetector(
+        //   behavior: HitTestBehavior.translucent,
+        //   onTap: () async {
+        //     Placemark? selectedPlaceMark =
+        //         await Get.to(() => const RequestPickupLocationScreen());
+        //     controller.onSelectedPlaceMark(selectedPlaceMark);
+        //   },
+        //   child: const Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       Text("Pilih berdasarkan lokasi"),
+        //       Icon(Icons.keyboard_arrow_right)
+        //     ],
+        //   ),
+        // ),
         const SizedBox(height: 16),
         CustomTextFormField(
           controller: controller.name,
@@ -84,6 +87,42 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           hintText: "Masukkan no handphone".tr,
           inputType: TextInputType.phone,
         ),
+        Align(
+          alignment: Alignment.centerLeft, // Aligns the text to the left
+          child: RichText(
+            text: TextSpan(
+              text: "Kota Penjemputan".tr,
+              style: formLabelTextStyle,
+            ),
+          ),
+        ),
+        CustomSearchDropdownField<Destination>(
+          // label: "Kota Penjemputan".tr,
+          asyncItems: (String filter) => controller.getDestinationList(filter),
+          itemBuilder: (context, e, b) {
+            return GestureDetector(
+                onTap: () => controller.update(),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  child: Text(e.asFacilityFormFormat()),
+                ));
+          },
+          itemAsString: (Destination e) => e.asFacilityFormFormat(),
+          onChanged: (value) {
+            controller.selectedDestination = value;
+            controller.update();
+          },
+          value: controller.selectedDestination,
+          isRequired: controller.selectedDestination == null ? true : false,
+          readOnly: false,
+          hintText: controller.isLoadDestination
+              ? "Loading..."
+              : "Kota Penjemputan".tr,
+          textStyle: controller.selectedDestination != null
+              ? subTitleTextStyle
+              : hintTextStyle,
+        ),
         CustomTextFormField(
           controller: controller.address,
           label: "Alamat Penjemputan".tr,
@@ -91,34 +130,6 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           inputType: TextInputType.streetAddress,
           multiLine: true,
         ),
-        // CustomSearchDropdownField<Destination>(
-        //   label: "Kota Penjemputan".tr,
-        //   asyncItems: (String filter) => controller.getDestinationList(filter),
-        //   itemBuilder: (context, e, b) {
-        //     return GestureDetector(
-        //       onTap: () => controller.update(),
-        //       child: Container(
-        //         padding:
-        //             const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        //         child: Text(e.asFacilityFormFormat()),
-        //       ),
-        //     );
-        //   },
-        //   itemAsString: (Destination e) => e.asFacilityFormFormat(),
-        //   onChanged: (value) {
-        //     controller.selectedDestination = value;
-        //     controller.update();
-        //   },
-        //   value: controller.selectedDestination,
-        //   isRequired: controller.selectedDestination == null ? true : false,
-        //   readOnly: false,
-        //   hintText: controller.isLoadDestination
-        //       ? "Loading..."
-        //       : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
-        //   textStyle: controller.selectedDestination != null
-        //       ? subTitleTextStyle
-        //       : hintTextStyle,
-        // ),
         const SizedBox(height: 16),
         CustomFilledButton(
           color: redJNE,

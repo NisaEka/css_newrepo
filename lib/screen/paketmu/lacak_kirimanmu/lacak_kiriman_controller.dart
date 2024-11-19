@@ -20,7 +20,12 @@ class LacakKirimanController extends BaseController {
     cekToken();
     if (resi != null) {
       searchField.text = resi ?? '';
-      cekResi(resi ?? '', '');
+      Future.delayed(Duration.zero, () {
+        Get.to(() => PhoneNumberConfirmationScreen(
+              awb: resi ?? '',
+              cekResi: cekResi,
+            ));
+      });
     }
   }
 
@@ -34,15 +39,12 @@ class LacakKirimanController extends BaseController {
   }
 
   Future<BaseResponse<PostLacakKirimanModel>> cekResi(
-    String nomorResi,
-    String pin,
-  ) async {
+      String nomorResi, String phoneNumber) async {
     isLoading = true;
     update();
     try {
-      await trace.postTracingByCnote(nomorResi, pin).then(
-            (value) => trackModel = value,
-          );
+      final response = await trace.postTracingByCnote(nomorResi, phoneNumber);
+      trackModel = response;
     } catch (e, i) {
       AppLogger.e('error cekResi $e, $i');
     }
@@ -50,6 +52,6 @@ class LacakKirimanController extends BaseController {
     isLoading = false;
     update();
 
-    return trackModel ?? BaseResponse();
+    return trackModel ?? BaseResponse(data: null);
   }
 }
