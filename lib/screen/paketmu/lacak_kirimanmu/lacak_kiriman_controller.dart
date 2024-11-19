@@ -5,7 +5,7 @@ import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/pin_confirmation_screen.dart';
+import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/phone_number_confirmation_screen.dart';
 
 class LacakKirimanController extends BaseController {
   final searchField = TextEditingController();
