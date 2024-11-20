@@ -358,7 +358,7 @@ class DashboardController extends BaseController {
             await storage.writeString(StorageCore.localeApp, "id");
             Get.updateLocale(const Locale("id", "ID"));
             update();
-          } else {
+          } else if (state.basic?.language == "ENGLISH") {
             await storage.writeString(StorageCore.localeApp, "en");
             Get.updateLocale(const Locale("en", "ES"));
             update();
@@ -370,7 +370,7 @@ class DashboardController extends BaseController {
           await storage.writeString(StorageCore.localeApp, "id");
           Get.updateLocale(const Locale("id", "ID"));
           update();
-        } else {
+        } else if (state.basic?.language == "ENGLISH") {
           await storage.writeString(StorageCore.localeApp, "en");
           Get.updateLocale(const Locale("en", "ES"));
           update();
