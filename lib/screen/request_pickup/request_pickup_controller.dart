@@ -5,6 +5,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_request_model.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_create_response_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/util/constant.dart';
@@ -69,6 +70,10 @@ class RequestPickupController extends BaseController {
   bool _createDataSuccess = false;
 
   bool get createDataSuccess => _createDataSuccess;
+
+  RequestPickupCreateResponseModel? _data;
+
+  RequestPickupCreateResponseModel? get data => _data;
 
   @override
   void onInit() {
@@ -421,7 +426,9 @@ class RequestPickupController extends BaseController {
     requestPickupRepository
         .createRequestPickup(_prepareCreateData())
         .then((response) {
-      if (response.code == HttpStatus.created) {
+      _data = response.data;
+      if (response.code == HttpStatus.created &&
+          response.data!.errorDetails.isEmpty) {
         _createDataSuccess = true;
         refreshPickups();
         refreshState();
