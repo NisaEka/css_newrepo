@@ -4,7 +4,6 @@ import 'package:css_mobile/data/connection_test.dart';
 import 'package:css_mobile/data/repository/aggregasi/aggregasi_repository.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/repository/bank/bank_repository.dart';
-import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
 import 'package:css_mobile/data/repository/facility/facility_repository.dart';
 import 'package:css_mobile/data/repository/invoice/invoice_repository.dart';
 import 'package:css_mobile/data/repository/jlc/jlc_repository.dart';
@@ -12,7 +11,6 @@ import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_repositor
 import 'package:css_mobile/data/repository/laporanku/laporanku_repository.dart';
 import 'package:css_mobile/data/repository/master/master_repository.dart';
 import 'package:css_mobile/data/repository/notification/notification_repository.dart';
-import 'package:css_mobile/data/repository/pantau/pantau_repository.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
 import 'package:css_mobile/data/repository/request_pickup/request_pickup_repository.dart';
@@ -27,7 +25,6 @@ abstract class BaseController extends GetxController {
   final storage = Get.find<StorageCore>();
   final connection = Get.find<ConnectionTest>();
   final profil = Get.find<ProfilRepository>();
-  final ongkir = Get.find<CekOngkirRepository>();
   final trace = Get.find<LacakKirimanRepository>();
   final jlc = Get.find<JLCRepository>();
   final setting = Get.find<PengaturanRepository>();
@@ -38,7 +35,6 @@ abstract class BaseController extends GetxController {
   final requestPickupRepository = Get.find<RequestPickupRepository>();
   late StreamSubscription<ConnectivityResult> connectivitySubscription;
   final notification = Get.find<NotificationRepository>();
-  final pantau = Get.find<PantauRepository>();
   final laporanku = Get.find<LaporankuRepository>();
   final invoiceRepository = Get.find<InvoiceRepository>();
   final master = Get.find<MasterRepository>();

@@ -1,73 +1,96 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
+import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/screen/cek_ongkir/congkir_state.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/forms/destination_external_dropdown.dart';
 import 'package:css_mobile/widgets/forms/origin_external_dropdown.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:dio/dio.dart';
 
 class CekOngkirController extends BaseController {
   final state = CekOngkirState();
+  final network = Get.find<NetworkCore>();
 
   Future<void> loadOngkir() async {
     if (state.formKey.currentState!.validate() == true) {
-      if (state.asuransi) hitungAsuransi();
       state.ongkirList = [];
       state.isLoading = true;
       update();
       try {
-        await ongkir
-            .postCekOngkir(
-          state.selectedOrigin?.code ?? '',
-          state.selectedDestination?.code ?? '',
-          state.beratKiriman.text,
-        )
-            .then((value) {
-          state.ongkirList.addAll(value.ongkir ?? []);
-        });
+        String baseUrl = AppConst.base.endsWith('/')
+            ? AppConst.base.substring(0, AppConst.base.length - 1)
+            : AppConst.base;
+
+        final Map<String, String> queryParams = {
+          'originCode': state.selectedOrigin?.code ?? '',
+          'destinationCode': state.selectedDestination?.code ?? '',
+          'isInsurance': state.asuransi.toString(),
+        };
+
+        if (state.beratKiriman.text.isNotEmpty) {
+          queryParams['weight'] = state.beratKiriman.text;
+        }
+
+        if (state.dimensi) {
+          queryParams['length'] = state.panjang.text;
+          queryParams['width'] = state.lebar.text;
+          queryParams['height'] = state.tinggi.text;
+        }
+
+        if (state.asuransi) {
+          queryParams['goodsAmount'] =
+              state.estimasiHargaBarang.text.replaceAll('.', '');
+        }
+
+        // Manually build query string from the queryParams map
+        final queryString = Uri(queryParameters: queryParams).query;
+
+        String fullUrl = '$baseUrl/transaction/fees/external?$queryString';
+
+        AppLogger.i('fullUrl: $fullUrl');
+
+        Response response = await network.base.get(
+          '/transaction/fees/external',
+          queryParameters: queryParams,
+        );
+
+        state.weightExpress = '${response.data['data']['weightExpress']} KG';
+        state.weightJtr = '${response.data['data']['weightJtr']} KG';
+        if (state.dimensi) {
+          state.weightExpress +=
+              ' (${response.data['data']['length']} CM x ${response.data['data']['width']} CM x ${response.data['data']['height']} CM)';
+          state.weightJtr +=
+              ' (${response.data['data']['length']} CM x ${response.data['data']['width']} CM x ${response.data['data']['height']} CM)';
+        }
+        AppLogger.d('Congkirrr count ${response.data}');
+        AppLogger.d(
+            'Congkirrr count ${response.data['data']['resultExpress']}');
+
+        List<Ongkir> resultExpressList =
+            (response.data['data']['resultExpress'] as List)
+                .map((item) => Ongkir.fromJson(item))
+                .toList();
+        List<Ongkir> resultJtrList =
+            (response.data['data']['resultJtr'] as List)
+                .map((item) => Ongkir.fromJson(item))
+                .toList();
+
+        // Add all the mapped Ongkir objects to state.ongkirList
+        state.ongkirList.addAll(resultExpressList);
+        state.ongkirList.addAll(resultJtrList);
+        update();
       } catch (e, i) {
         AppLogger.e('error loadOngkir $e, $i');
+        AppSnackBar.error('Failed to load cek ongkir');
+      } finally {
+        state.isLoading = false;
+        update();
       }
-
-      state.isLoading = false;
-      update();
-    }
-  }
-
-  void hitungAsuransi() {
-    state.isr = 0;
-    state.isr = (0.002 *
-            (state.estimasiHargaBarang.text == ''
-                ? 0
-                : state.estimasiHargaBarang.text.digitOnly().toInt())) +
-        5000;
-    update();
-  }
-
-  void hitungBerat(double p, double l, double t) {
-    state.isCalculate = true;
-    state.berat = 0;
-    update();
-
-    if (state.dimensi) {
-      state.berat = (p * l * t) / 6000;
-      String b = "0.${state.berat.toStringAsFixed(2).split('.').last}";
-
-      if (state.berat < 1) {
-        state.beratKiriman.text = '1';
-      } else if (b.toDouble() >= 0.31) {
-        state.beratKiriman.text = state.berat.ceil().toString();
-      } else {
-        state.beratKiriman.text = state.berat.truncate().toString();
-      }
-
-      // if (b.split('.').last.toInt() > 30) {
-      // state.beratKiriman.text = state.berat.truncate().toString();
-      // }
-
-      update();
     }
   }
 

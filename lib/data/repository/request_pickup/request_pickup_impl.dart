@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_create_request_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_request_model.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_create_response_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_detail_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -46,18 +47,22 @@ class RequestPickupImpl extends RequestPickupRepository {
   }
 
   @override
-  Future<BaseResponse<String>> createRequestPickup(
+  Future<BaseResponse<RequestPickupCreateResponseModel>> createRequestPickup(
       RequestPickupCreateRequestModel createRequest) async {
     try {
       var response = await network.base
           .post('/transaction/pickups', data: createRequest.toJson());
-      return BaseResponse<String>.fromJson(
+      return BaseResponse<RequestPickupCreateResponseModel>.fromJson(
         response.data,
-        (json) => response.data['message'],
+        (json) => RequestPickupCreateResponseModel.fromJson(
+            json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
-      return BaseResponse<String>.fromJson(
-          e.response?.data, (json) => e.response?.data['message']);
+      return BaseResponse<RequestPickupCreateResponseModel>.fromJson(
+        e.response?.data,
+        (json) => RequestPickupCreateResponseModel.fromJson(
+            json as Map<String, dynamic>),
+      );
     }
   }
 

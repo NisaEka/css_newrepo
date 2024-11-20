@@ -123,19 +123,20 @@ class RequestPickupScreen extends StatelessWidget {
     return Stack(
       children: [
         _mainContent(context, controller),
-        controller.createDataLoading ? const LoadingDialog() : Container(),
-        controller.createDataFailed
-            ? MessageInfoDialog(
-                message: 'Gagal membuat permintaan pickup',
-                onClickAction: () => controller.refreshState(),
-              )
-            : Container(),
-        controller.createDataSuccess
-            ? MessageInfoDialog(
-                message: 'Berhasil membuat permintaan pickup',
-                onClickAction: () => controller.refreshState(),
-              )
-            : Container(),
+        if (controller.createDataLoading) const LoadingDialog(),
+        if (controller.createDataFailed || controller.createDataSuccess)
+          MessageInfoDialog(
+            message:
+                'Success: ${controller.data?.successCount}. Error: ${controller.data?.errorCount}\n'
+                'Error Details:\n'
+                '${controller.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
+            onClickAction: () => controller.refreshState(),
+          ),
+        // if (controller.createDataSuccess)
+        //   MessageInfoDialog(
+        //     message: 'Pickup request created successfully!',
+        //     onClickAction: () => controller.refreshState(),
+        //   ),
       ],
     );
   }
