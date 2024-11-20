@@ -83,7 +83,6 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadNews() async {
-    AppLogger.i('load news');
     try {
       jlc.postDashboardNews().then((value) {
         state.newsList.addAll(value.data ?? []);

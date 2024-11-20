@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/bank/bank_model.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/bank/facility_terms_and_conditions_screen.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facility_terms_and_conditions_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';

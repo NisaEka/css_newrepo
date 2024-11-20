@@ -1,9 +1,9 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/facility/facility_model.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/facility/detail/facility_detail_screen.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_banner.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_controller.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/detail/facility_detail_screen.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/facility_banner.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/facility_controller.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/items/facility_item.dart';

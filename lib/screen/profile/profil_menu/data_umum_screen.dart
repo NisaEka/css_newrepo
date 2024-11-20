@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_controller.dart';
+import 'package:css_mobile/screen/profile/profil_menu/data_umum_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/secret_data_dialog.dart';
 import 'package:css_mobile/widgets/items/data_umum_list_item.dart';

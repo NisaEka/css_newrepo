@@ -6,7 +6,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
-import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
+import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item2.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +100,7 @@ class BottomBar4 extends StatelessWidget {
                       .withOpacity(1),
                   // onTap: () => Get.offAll(const ProfileScreen()),
                   onTap: () => controller.state.isLogin
-                      ? Get.offAll(const AltProfileScreen(),
+                      ? Get.offAll(const ProfileScreen(),
                           transition: Transition.rightToLeft)
                       : showDialog(
                           context: context,

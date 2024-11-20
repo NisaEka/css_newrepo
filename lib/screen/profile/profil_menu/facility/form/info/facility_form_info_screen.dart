@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/info/facility_form_info_controller.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/facility/form/return/facility_form_return_screen.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/form/info/facility_form_info_controller.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';

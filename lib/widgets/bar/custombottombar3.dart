@@ -4,7 +4,7 @@ import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
-import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
+import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,7 +32,7 @@ class BottomBar3 extends StatelessWidget {
       const LacakKirimanScreen(),
       const InformasiPengirimScreen(),
       const DashboardScreen(),
-      const AltProfileScreen(),
+      const ProfileScreen(),
     ];
 
     return Builder(

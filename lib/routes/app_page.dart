@@ -10,7 +10,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_scr
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_card_screen.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_screen.dart';
+import 'package:css_mobile/screen/profile/profil_menu/data_umum_screen.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_screen.dart';
 import 'package:get/get.dart';
 

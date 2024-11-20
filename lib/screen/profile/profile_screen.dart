@@ -1,157 +1,117 @@
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
 import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_screen.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_screen.dart';
-import 'package:css_mobile/screen/profile/alt/alt_profile_controller.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/akun_bank_screen.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/alamat_return_screen.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/data_umum_screen.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/dokumen_screen.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/facility/facility_screen.dart';
-import 'package:css_mobile/screen/profile/alt/profil_menu/no_akun_screen.dart';
+import 'package:css_mobile/screen/profile/components/profile_user_info.dart';
+import 'package:css_mobile/screen/profile/profile_controller.dart';
+import 'package:css_mobile/screen/profile/profil_menu/akun_bank_screen.dart';
+import 'package:css_mobile/screen/profile/profil_menu/alamat_return_screen.dart';
+import 'package:css_mobile/screen/profile/profil_menu/data_umum_screen.dart';
+import 'package:css_mobile/screen/profile/profil_menu/dokumen_screen.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/facility_screen.dart';
+import 'package:css_mobile/screen/profile/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/custombottombar4.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/logout_button.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
-import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AltProfileScreen extends StatelessWidget {
-  const AltProfileScreen({super.key});
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AltProfileController>(
-        init: AltProfileController(),
+    return GetBuilder<ProfileController>(
+        init: ProfileController(),
         builder: (controller) {
           return PopScope(
-            canPop: controller.pop,
+            canPop: controller.state.pop,
             onPopInvokedWithResult: (didPop, result) => controller.onPop(),
-            child: Stack(
-              children: [
-                Scaffold(
-                  appBar: _appBarContent(),
-                  body: _bodyContent(controller, context),
-                  bottomNavigationBar: ValueListenableBuilder(
-                      valueListenable: controller.bottom.visible,
-                      builder: (context, bool value, child) {
-                        return AnimatedContainer(
-                          duration: const Duration(milliseconds: 500),
-                          // height: value ? 113 : kBottomNavigationBarHeight,
-                          child: const BottomBar4(menu: 3),
-                          // child: LogoutButton(
-                          //   version: controller.version,
-                          //   isLogin: controller.isLogin,
-                          //   showBottomBar: true,
-                          // ),
-                        );
-                      }),
-                ),
-              ],
+            child: Scaffold(
+              appBar: CustomTopBar(
+                  leading: CustomBackButton(
+                    onPressed: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+                  ),
+                  title: 'Profil'.tr),
+              body: _bodyContent(controller, context),
+              bottomNavigationBar: const BottomBar4(menu: 3),
             ),
           );
         });
   }
 
-  Widget _bodyContent(AltProfileController c, BuildContext context) {
+  Widget _bodyContent(ProfileController c, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: ListView(
-        controller: c.bottom.controller,
+        controller: c.state.bottom.controller,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AltUserInfoCard(
-                isLoading: c.basicProfil == null,
-                name: c.basicProfil?.name ?? '-',
-                brand: c.basicProfil?.brand ?? '-',
-                mail: c.basicProfil?.email ?? '-',
-                type: c.basicProfil?.userType?.capitalizeFirst ?? '-',
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(color: blueJNE)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Image.asset(
-                      ImageConstant.userPic,
-                      height: 50,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+           ProfileUserInfo(basicProfile: c.state.basicProfile,),
           Column(
-            children: c.isLoading
+            children: c.state.isLoading
                 ? List.generate(
                     8,
                     (index) => const SettingListItem(isLoading: true),
                   )
                 : [
-                    c.menuModel.profil == "Y" && c.basicProfil?.userType == "PEMILIK"
+                    c.state.menuModel.profil == "Y" && c.state.basicProfile?.userType == "PEMILIK"
                         ? SettingListItem(
                             title: 'Edit Profil'.tr,
                             leading: Icons.person,
                             onTap: () => Get.to(const EditProfilScreen()),
                           )
                         : const SizedBox(),
-                    c.menuModel.fasilitas == 'Y' && c.basicProfil?.userType == "PEMILIK"
+                    c.state.menuModel.fasilitas == 'Y' && c.state.basicProfile?.userType == "PEMILIK"
                         ? SettingListItem(
                             title: 'Fasilitasku'.tr,
                             leading: Icons.format_list_numbered_rounded,
                             onTap: () => Get.to(const FacilityScreen()),
                           )
                         : const SizedBox(),
-                    c.menuModel.profil == "Y"
+                    c.state.menuModel.profil == "Y"
                         ? SettingListItem(
                             title: 'Lihat Akun'.tr,
                             leading: Icons.account_tree_rounded,
                             onTap: () => Get.to(const NoAkunScreen()),
                           )
                         : const SizedBox(),
-                    c.menuModel.profil == "Y"
+                    c.state.menuModel.profil == "Y"
                         ? SettingListItem(
                             title: 'Data Umum'.tr,
                             leading: Icons.person_pin_outlined,
                             onTap: () => Get.to(const DataUmumScreen()),
                           )
                         : const SizedBox(),
-                    c.menuModel.profil == "Y"
+                    c.state.menuModel.profil == "Y"
                         ? SettingListItem(
                             title: 'Alamat Pengembalian'.tr,
                             leading: Icons.cached_rounded,
                             onTap: () => c.isCcrfAction(const AlamatReturnScreen(), context),
                           )
                         : const SizedBox(),
-                    c.menuModel.profil == "Y"
+                    c.state.menuModel.profil == "Y"
                         ? SettingListItem(
                             title: 'Data Rekening'.tr,
                             leading: Icons.credit_card_rounded,
                             onTap: () => c.isCcrfAction(const AkunBankScreen(), context),
                           )
                         : const SizedBox(),
-                    c.menuModel.profil == "Y"
+                    c.state.menuModel.profil == "Y"
                         ? SettingListItem(
                             title: 'Dokumen'.tr,
                             leading: Icons.file_present_rounded,
                             onTap: () => c.isCcrfAction(const DokumenScreen(), context),
                           )
                         : const SizedBox(),
-                    c.menuModel.label == "Y" || c.menuModel.pengaturanLabel == "Y"
+                    c.state.menuModel.label == "Y" || c.state.menuModel.pengaturanLabel == "Y"
                         ? SettingListItem(
                             title: 'Pengaturan Label'.tr,
                             leading: Icons.label_outline,
-                            onTap: () => c.isLogin
+                            onTap: () => c.state.isLogin
                                 ? Get.to(const PengaturanLabelScreen())
                                 : showDialog(
                                     context: context,
@@ -159,11 +119,11 @@ class AltProfileScreen extends StatelessWidget {
                                   ),
                           )
                         : const SizedBox(),
-                    c.menuModel.petugas == "Y" || c.menuModel.pengaturanPetugas == "Y"
+                    c.state.menuModel.petugas == "Y" || c.state.menuModel.pengaturanPetugas == "Y"
                         ? SettingListItem(
                             title: 'Pengaturan Petugas'.tr,
                             leading: Icons.account_circle,
-                            onTap: () => c.isLogin
+                            onTap: () => c.state.isLogin
                                 ? Get.to(const PengaturanPetugasScreen())
                                 : showDialog(
                                     context: context,
@@ -171,20 +131,16 @@ class AltProfileScreen extends StatelessWidget {
                                   ),
                           )
                         : const SizedBox(),
-                    c.isLogin && c.menuModel.katasandi == "Y"
+                    c.state.isLogin && c.state.menuModel.katasandi == "Y"
                         ? SettingListItem(
                             title: 'Ubah Kata Sandi'.tr,
                             leading: Icons.lock_open_outlined,
-                            // onTap: () => Get.to(const InputEmailScreen(), arguments: {
-                            //   'isChange': true,
-                            //   'email': controller.basicProfil?.email,
-                            // }),
                             onTap: () => c.sendEmail(),
                           )
                         : const SizedBox(),
                     LogoutButton(
-                      isLogin: c.isLogin,
-                      version: c.version,
+                      isLogin: c.state.isLogin,
+                      version: c.state.version,
                       showBottomBar: true,
                     )
                   ],
@@ -192,15 +148,6 @@ class AltProfileScreen extends StatelessWidget {
           // : const SizedBox(),
         ],
       ),
-    );
-  }
-
-  CustomTopBar _appBarContent() {
-    return CustomTopBar(
-      leading: CustomBackButton(
-        onPressed: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
-      ),
-      title: 'Profil'.tr,
     );
   }
 }

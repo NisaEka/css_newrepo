@@ -6,7 +6,7 @@ import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
+import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +33,7 @@ class DashboardState {
 
   List<Widget> widgetOptions = <Widget>[
     const DashboardScreen(),
-    const AltProfileScreen(),
+    const ProfileScreen(),
   ];
 
   List<Items> menuItems = [];

@@ -25,8 +25,11 @@ class SettingListItem extends StatelessWidget {
     return Shimmer(
       isLoading: isLoading,
       child: Container(
-        color: isLoading ? greyColor : Colors.transparent,
         margin: isLoading ? const EdgeInsets.symmetric(vertical: 5) : EdgeInsets.zero,
+        decoration: BoxDecoration(
+          color: isLoading ? greyColor : Colors.transparent,
+          borderRadius: isLoading ? BorderRadius.circular(8) : null,
+        ),
         child: ListTile(
           leading: Icon(
             leading,
@@ -39,7 +42,9 @@ class SettingListItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          shape: const Border(bottom: BorderSide(color: greyColor)),
+          shape: Border(
+            bottom: !isLoading ? const BorderSide(color: greyColor) : const BorderSide(color: Colors.transparent),
+          ),
           contentPadding: EdgeInsets.zero,
           onTap: onTap,
           trailing: trailing,
