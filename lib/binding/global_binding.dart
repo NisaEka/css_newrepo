@@ -6,8 +6,6 @@ import 'package:css_mobile/data/repository/auth/auth_impl.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/repository/bank/bank_impl.dart';
 import 'package:css_mobile/data/repository/bank/bank_repository.dart';
-import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_impl.dart';
-import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
 import 'package:css_mobile/data/repository/facility/facility_impl.dart';
 import 'package:css_mobile/data/repository/facility/facility_repository.dart';
 import 'package:css_mobile/data/repository/invoice/invoice_impl.dart';
@@ -22,8 +20,6 @@ import 'package:css_mobile/data/repository/master/master_impl.dart';
 import 'package:css_mobile/data/repository/master/master_repository.dart';
 import 'package:css_mobile/data/repository/notification/notification_impl.dart';
 import 'package:css_mobile/data/repository/notification/notification_repository.dart';
-import 'package:css_mobile/data/repository/pantau/pantau_impl.dart';
-import 'package:css_mobile/data/repository/pantau/pantau_repository.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_impl.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/data/repository/profil/profil_impl.dart';
@@ -47,7 +43,6 @@ class GlobalBinding extends Bindings {
         permanent: true);
     Get.put<ConnectionTest>(ConnectionTest(), permanent: true);
     Get.put<ProfilRepository>(ProfilRepositoryImpl(), permanent: true);
-    Get.put<CekOngkirRepository>(CekOngkirRepositoryImpl(), permanent: false);
     Get.put<LacakKirimanRepository>(LacakKirimanRepositoryImpl(),
         permanent: false);
     Get.put<JLCRepository>(JLCRepositoryImpl(), permanent: false);
@@ -59,7 +54,6 @@ class GlobalBinding extends Bindings {
     Get.put<RequestPickupRepository>(RequestPickupImpl(), permanent: true);
     Get.put<NotificationRepository>(NotificationRepositoryImpl(),
         permanent: true);
-    Get.put<PantauRepository>(PantauRepositoryImpl(), permanent: true);
     Get.put<LaporankuRepository>(LaporankuRepositoryImpl(), permanent: true);
     Get.put<InvoiceRepository>(InvoiceImpl(), permanent: true);
     Get.put<MasterRepository>(MasterRepositoryImpl(), permanent: true);

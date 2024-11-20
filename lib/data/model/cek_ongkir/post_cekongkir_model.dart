@@ -46,6 +46,7 @@ class Ongkir {
     String? etdFrom,
     String? etdThru,
     String? times,
+    int? insuranceAmount,
   }) {
     _originName = originName;
     _destinationName = destinationName;
@@ -57,6 +58,7 @@ class Ongkir {
     _etdFrom = etdFrom;
     _etdThru = etdThru;
     _times = times;
+    _insuranceAmount = insuranceAmount;
   }
 
   Ongkir.fromJson(dynamic json) {
@@ -70,6 +72,7 @@ class Ongkir {
     _etdFrom = json['etdFrom'];
     _etdThru = json['etdThru'];
     _times = json['times'];
+    _insuranceAmount = json['insuranceAmount'];
   }
 
   String? _originName;
@@ -82,6 +85,7 @@ class Ongkir {
   String? _etdFrom;
   String? _etdThru;
   String? _times;
+  int? _insuranceAmount;
 
   Ongkir copyWith({
     String? originName,
@@ -94,6 +98,7 @@ class Ongkir {
     String? etdFrom,
     String? etdThru,
     String? times,
+    int? insuranceAmount,
   }) =>
       Ongkir(
         originName: originName ?? _originName,
@@ -106,6 +111,7 @@ class Ongkir {
         etdFrom: etdFrom ?? _etdFrom,
         etdThru: etdThru ?? _etdThru,
         times: times ?? _times,
+        insuranceAmount: insuranceAmount ?? _insuranceAmount,
       );
 
   String? get originName => _originName;
@@ -128,6 +134,8 @@ class Ongkir {
 
   String? get times => _times;
 
+  int? get insuranceAmount => _insuranceAmount;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['originName'] = _originName;
@@ -140,6 +148,7 @@ class Ongkir {
     map['etdFrom'] = _etdFrom;
     map['etdThru'] = _etdThru;
     map['times'] = _times;
+    map['insuranceAmount'] = _insuranceAmount;
     return map;
   }
 }
