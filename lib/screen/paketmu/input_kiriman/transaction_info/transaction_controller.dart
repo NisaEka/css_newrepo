@@ -39,25 +39,7 @@ class TransactionController extends BaseController {
         state.isOnline = value && (result != ConnectivityResult.none);
         update();
         if (state.isOnline) {
-          AppSnackBar.success('Online Mode'.tr);
-          // AppSnackBar.custom(
-          //   message: '',
-          //   backgroundColor: Colors.transparent,
-          //   durationInSeconds: 3,
-          //   snackPosition: SnackPosition.TOP,
-          //   snackStyle: SnackStyle.GROUNDED,
-          //   margin: const EdgeInsets.only(top: 195),
-          //   padding: const EdgeInsets.symmetric(vertical: 1.5),
-          //   messageText: Container(
-          //     color: successColor, // Set your desired background color here
-          //     child: Center(
-          //       child: Text(
-          //         'Online Mode'.tr,
-          //         style: listTitleTextStyle.copyWith(color: whiteColor),
-          //       ),
-          //     ),
-          //   ),
-          // );
+          // AppSnackBar.success('Online Mode'.tr);
         }
       });
       initData();
@@ -186,7 +168,7 @@ class TransactionController extends BaseController {
   }
 
   bool isValidate() {
-    if (state.formValidate && state.selectedService != null && !state.isCalculate ) {
+    if (state.formValidate && state.selectedService != null && !state.isCalculate) {
       return true;
     }
 
@@ -230,7 +212,11 @@ class TransactionController extends BaseController {
       );
 
       // state.flatRate = value.data?.where((e)=> e == state.selectedService).first.price?.toInt() ?? 0;
-      state.freightCharge = value.data?.where((e) => e.serviceCode == state.selectedService?.serviceCode).first.price?.toInt() ?? 0;
+      if (state.selectedService?.serviceDisplay?.substring(0, 3) == "JTR") {
+        state.freightCharge = value.data?.resultJtr?.where((e) => e.serviceCode == state.selectedService?.serviceCode).first.price?.toInt() ?? 0;
+      } else {
+        state.freightCharge = value.data?.resultExpress?.where((e) => e.serviceCode == state.selectedService?.serviceCode).first.price?.toInt() ?? 0;
+      }
       update();
     } catch (e, i) {
       AppLogger.e('error get ongkir $e, $i');
@@ -290,20 +276,22 @@ class TransactionController extends BaseController {
     update();
     try {
       await master
-          .getServices(DataServiceModel(
-        accountNumber: state.account.accountNumber,
-        originCode: state.origin.originCode,
-        destinationCode: state.destination.destinationCode,
-      ))
+          .getServices(
+        DataServiceModel(
+          accountNumber: state.account.accountNumber,
+          originCode: state.origin.originCode,
+          destinationCode: state.destination.destinationCode,
+        ),
+      )
           .then((value) {
-        state.serviceList.addAll(value.data ?? []);
+        state.serviceList.addAll(value.data?.resultExpress ?? []);
+        state.serviceList.addAll(value.data?.resultJtr ?? []);
         update();
-        if (value.data?.isEmpty ?? false) {
+        if ((value.data?.resultExpress?.isEmpty ?? false) && (value.data?.resultJtr?.isEmpty ?? false)) {
           AppSnackBar.error('Service tidak tersedia'.tr);
         }
         if (value.code != 200) {
           AppSnackBar.error(value.message.toString());
-          // state.isOnline = false;
           update();
         }
       });
@@ -723,5 +711,18 @@ class TransactionController extends BaseController {
               : saveTransaction()
           : null;
     }
+  }
+
+  void onSelectService(int index) {
+    state.selectedService = state.serviceList[index];
+    if (state.selectedService?.serviceDisplay == 'INTL') {
+      state.isSelectGoodsType = true;
+      state.goodType.text = state.selectedService?.goodsType == 'Paket' ? 'PAKET' : 'DOKUMEN';
+    }
+
+    getOngkir();
+    state.formValidate = state.formKey.currentState?.validate() ?? false;
+
+    update();
   }
 }

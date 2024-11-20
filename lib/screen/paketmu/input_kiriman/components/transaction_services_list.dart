@@ -46,18 +46,7 @@ class TransactionServicesList extends StatelessWidget {
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         return GestureDetector(
-                          onTap: () {
-                            c.state.selectedService = c.state.serviceList[index];
-                            if (c.state.selectedService?.serviceDisplay == 'INTL') {
-                              c.state.isSelectGoodsType = true;
-                              c.state.goodType.text = c.state.selectedService?.goodsType == 'Paket' ? 'PAKET' : 'DOKUMEN';
-                            }
-
-                            c.getOngkir();
-                            c.state.formValidate = c.state.formKey.currentState?.validate() ?? false;
-
-                            c.update();
-                          },
+                          onTap: () => c.onSelectService(index),
                           child: Shimmer(
                             isLoading: c.state.isServiceLoad,
                             child: Container(

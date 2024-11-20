@@ -320,12 +320,13 @@ class MasterRepositoryImpl extends MasterRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
+      AppLogger.e("error get account : ${e.response?.data}");
       return e.response?.data;
     }
   }
 
   @override
-  Future<BaseResponse<List<ServiceModel>>> getServices(DataServiceModel param) async {
+  Future<BaseResponse<GetServiceModel>> getServices(DataServiceModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
@@ -334,26 +335,19 @@ class MasterRepositoryImpl extends MasterRepository {
         queryParameters: param.toJson(),
       );
 
-      return BaseResponse<List<ServiceModel>>.fromJson(
+      return BaseResponse<GetServiceModel>.fromJson(
         response.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<ServiceModel>(
-                  (i) => ServiceModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
+        (json) => GetServiceModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
       );
     } on DioException catch (e) {
-      return BaseResponse<List<ServiceModel>>.fromJson(
+      AppLogger.e("Error get service : ${e.response?.data}");
+      return BaseResponse<GetServiceModel>.fromJson(
         e.response?.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<ServiceModel>(
-                  (i) => ServiceModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
+        (json) => GetServiceModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
       );
     }
   }

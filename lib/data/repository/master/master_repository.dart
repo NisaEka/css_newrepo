@@ -38,5 +38,5 @@ abstract class MasterRepository {
 
   Future<BaseResponse<List<Account>>> getAccounts();
 
-  Future<BaseResponse<List<ServiceModel>>> getServices(DataServiceModel param);
+  Future<BaseResponse<GetServiceModel>> getServices(DataServiceModel param);
 }

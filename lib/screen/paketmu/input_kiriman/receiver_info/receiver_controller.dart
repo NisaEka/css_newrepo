@@ -29,22 +29,7 @@ class ReceiverController extends BaseController {
         state.isOnline = value && (result != ConnectivityResult.none);
         update();
         if (state.isOnline) {
-          AppSnackBar.success('Online Mode'.tr);
-          // AppSnackBar.custom(
-          //   message: '',
-          //   snackPosition: SnackPosition.TOP,
-          //   margin: const EdgeInsets.only(top: 195),
-          //   padding: const EdgeInsets.symmetric(vertical: 1.5),
-          //   messageText: Container(
-          //     color: successColor, // Set your desired background color here
-          //     child: Center(
-          //       child: Text(
-          //         'Online Mode'.tr,
-          //         style: listTitleTextStyle.copyWith(color: whiteColor),
-          //       ),
-          //     ),
-          //   ),
-          // );
+          // AppSnackBar.success('Online Mode'.tr);
         }
       });
       update();
