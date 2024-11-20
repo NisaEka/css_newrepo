@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/cek_ongkir/post_cekongkir_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/screen/cek_ongkir/congkir_state.dart';
@@ -22,10 +21,6 @@ class CekOngkirController extends BaseController {
       state.isLoading = true;
       update();
       try {
-        String baseUrl = AppConst.base.endsWith('/')
-            ? AppConst.base.substring(0, AppConst.base.length - 1)
-            : AppConst.base;
-
         final Map<String, String> queryParams = {
           'originCode': state.selectedOrigin?.code ?? '',
           'destinationCode': state.selectedDestination?.code ?? '',
@@ -47,13 +42,6 @@ class CekOngkirController extends BaseController {
               state.estimasiHargaBarang.text.replaceAll('.', '');
         }
 
-        // Manually build query string from the queryParams map
-        final queryString = Uri(queryParameters: queryParams).query;
-
-        String fullUrl = '$baseUrl/transaction/fees/external?$queryString';
-
-        AppLogger.i('fullUrl: $fullUrl');
-
         Response response = await network.base.get(
           '/transaction/fees/external',
           queryParameters: queryParams,
@@ -67,9 +55,6 @@ class CekOngkirController extends BaseController {
           state.weightJtr +=
               ' (${response.data['data']['length']} CM x ${response.data['data']['width']} CM x ${response.data['data']['height']} CM)';
         }
-        AppLogger.d('Congkirrr count ${response.data}');
-        AppLogger.d(
-            'Congkirrr count ${response.data['data']['resultExpress']}');
 
         List<Ongkir> resultExpressList =
             (response.data['data']['resultExpress'] as List)
