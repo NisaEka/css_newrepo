@@ -62,6 +62,7 @@ class NoAkunController extends BaseController {
       });
     } catch (e, i) {
       AppLogger.e('error loadActivity no akun $e, $i');
+
     }
   }
 }

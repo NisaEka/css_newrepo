@@ -23,99 +23,95 @@ class DashboardBody extends StatelessWidget {
     return GetBuilder<DashboardController>(
         init: DashboardController(),
         builder: (c) {
-          return CustomScrollView(
-            slivers: [
-              const DashboardAppbar(),
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          // height: c.state.isLogin && c.state.allow.lacakPesanan == "Y" ? 160 : 120,
-                          height: !c.state.isLogin
-                              ? 120
-                              : !c.state.isCcrf
-                                  ? 200
-                                  : 180,
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
+          return RefreshIndicator(
+            onRefresh: () => c
+                .initData()
+                .then(
+                  (_) => c.loadBanner(),
+                )
+                .then((_) => c.loadNews())
+                .then((_) => c.loadTransCountList()),
+            child: CustomScrollView(
+              slivers: [
+                const DashboardAppbar(),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            // height: c.state.isLogin && c.state.allow.lacakPesanan == "Y" ? 160 : 120,
+                            height: !c.state.isLogin
+                                ? 120
+                                : !c.state.isCcrf
+                                    ? 200
+                                    : 180,
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
+                              ),
                             ),
-                          ),
-                          child: Column(
-                            children: [
-                              c.state.isLogin
-                                  ? Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        CustomLabelText(
-                                          title: 'Selamat Datang'.tr,
-                                          value: c.state.userName ?? '',
-                                          fontColor: whiteColor,
-                                          isLoading: c.state.isLoading,
-                                        ),
-                                        JLCPointWidget(
-                                            point: c.state.jlcPoint ?? '0')
-                                      ],
-                                    )
-                                  : const SizedBox(),
-                              SizedBox(height: c.state.isCcrf ? 15 : 0),
-                              c.state.isLogin
-                                  ? const DashboardInfo()
-                                  : const SizedBox(),
-                              !c.state.isLogin ||
-                                      (c.state.allow.lacakPesanan == "Y" ||
-                                          c.state.allow.keuanganBonus == "Y")
-                                  ? TextField(
-                                      controller: c.state.nomorResi,
-                                      cursorColor:
-                                          CustomTheme().cursorColor(context),
-                                      decoration: InputDecoration(
-                                        hintText:
-                                            'Masukan nomor resi untuk lacak kiriman'
-                                                .tr,
-                                        hintStyle: hintTextStyle,
-                                        suffixIcon: GestureDetector(
-                                          onTap: () =>
-                                              c.onLacakKiriman(true, ''),
-                                          child: const Icon(
-                                            Icons.qr_code,
-                                            color: redJNE,
+                            child: Column(
+                              children: [
+                                c.state.isLogin
+                                    ? Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          CustomLabelText(
+                                            title: 'Selamat Datang'.tr,
+                                            value: c.state.userName ?? '',
+                                            fontColor: whiteColor,
+                                            isLoading: c.state.isLoading,
+                                          ),
+                                          JLCPointWidget(point: c.state.jlcPoint ?? '0')
+                                        ],
+                                      )
+                                    : const SizedBox(),
+                                SizedBox(height: c.state.isCcrf ? 15 : 0),
+                                c.state.isLogin ? const DashboardInfo() : const SizedBox(),
+                                !c.state.isLogin || (c.state.allow.lacakPesanan == "Y" || c.state.allow.keuanganBonus == "Y")
+                                    ? TextField(
+                                        controller: c.state.nomorResi,
+                                        cursorColor: CustomTheme().cursorColor(context),
+                                        decoration: InputDecoration(
+                                          hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
+                                          hintStyle: hintTextStyle,
+                                          suffixIcon: GestureDetector(
+                                            onTap: () => c.onLacakKiriman(true, ''),
+                                            child: const Icon(
+                                              Icons.qr_code,
+                                              color: redJNE,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      onSubmitted: (value) =>
-                                          c.onLacakKiriman(false, value),
-                                    )
-                                  : const SizedBox(),
-                            ],
+                                        onSubmitted: (value) => c.onLacakKiriman(false, value),
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
                           ),
-                        ),
-                        DashboardCarousel(),
-                      ],
-                    ),
-                    const DashboardMenu2(),
-                    c.state.isLogin
-                        ? const DashboardKirimanCounts()
-                        : const SizedBox(),
-                    // c.state.isLogin ? const DashboardKirimanCod() : const SizedBox(),
-                    const DashboardPromo(),
-                    const DashboardNews(),
-                    const SizedBox(height: 50),
-                    // CustomFilledButton(
-                    //   color: Colors.blue,
-                    //   onPressed: () => Get.to(const SplashScreen()),
-                    //   // onPressed: () => throw Exception(),
-                    // )
-                  ],
+                          DashboardCarousel(),
+                        ],
+                      ),
+                      const DashboardMenu2(),
+                      c.state.isLogin ? const DashboardKirimanCounts() : const SizedBox(),
+                      // c.state.isLogin ? const DashboardKirimanCod() : const SizedBox(),
+                      const DashboardPromo(),
+                      const DashboardNews(),
+                      const SizedBox(height: 50),
+                      // CustomFilledButton(
+                      //   color: Colors.blue,
+                      //   onPressed: () => Get.to(const SplashScreen()),
+                      //   // onPressed: () => throw Exception(),
+                      // )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         });
   }

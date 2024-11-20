@@ -1,5 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 
 class DokumenController extends BaseController {
@@ -22,6 +23,8 @@ class DokumenController extends BaseController {
           );
     } catch (e, i) {
       AppLogger.e('error initData dokumen $e, $i');
+      ccrfProfil = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
+
     }
 
     isLoading = false;

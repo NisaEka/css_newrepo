@@ -96,12 +96,9 @@ class TransactionController extends BaseController {
       state.isCalculate = true;
       update();
       if (state.isOnline) {
-        // if (state.asuransi) {
-        // state.isr = (0.002 * (state.hargaBarang.text == '' ? 0 : state.hargaBarang.text.digitOnly().toInt())) + 5000;
         state.flatRateISR = state.flatRate + state.isr;
         state.freightChargeISR = state.freightCharge + state.isr;
         update();
-        // }
         bool prefix3 = state.account.accountNumber?.substring(0, 1) != "3";
         state.isCOD = state.account.accountService?.toUpperCase() == 'COD';
 
