@@ -252,8 +252,10 @@ class QueryParamModel {
     if (_isNotNull != null) map['isNotNull'] = _isNotNull;
     if (_select != null) map['select'] = _select;
     if (_soundex != null) map['soundex'] = _soundex;
-    if (_status != null || (_status?.isNotEmpty ?? false) ) map['status'] = _status;
-    if (_type != null ||(_type?.isNotEmpty ?? false) ) map['type'] = _type;
+    if (_status != null || (_status?.isNotEmpty ?? false)) {
+      map['status'] = _status;
+    }
+    if (_type != null || (_type?.isNotEmpty ?? false)) map['type'] = _type;
 
     return map;
   }

@@ -84,12 +84,18 @@ class TransactionController extends BaseController {
     state.totalOngkir = 0;
     state.isr = 0;
     double vat = (1.1 / 100);
-    state.isr = (0.002 * (state.goodAmount.text == '' ? 0 : state.goodAmount.text.digitOnly().toInt())) + 5000;
+    state.isr = (0.002 *
+            (state.goodAmount.text == ''
+                ? 0
+                : state.goodAmount.text.digitOnly().toInt())) +
+        5000;
     state.flatRateISR = state.flatRate + state.isr;
     state.freightChargeISR = state.freightCharge + state.isr;
     state.getInsurance = state.insurance ? state.isr : 0;
     update();
-    int goodsAmount = state.goodAmount.text == '' ? 0 : state.goodAmount.text.digitOnly().toInt();
+    int goodsAmount = state.goodAmount.text == ''
+        ? 0
+        : state.goodAmount.text.digitOnly().toInt();
 
     if (state.isOnline) {
       state.isCalculate = true;
@@ -118,15 +124,24 @@ class TransactionController extends BaseController {
             state.getCodAmountMinimum = value.data?.codAmountMinimum ?? 0;
             state.congkirAmount = value.data?.codOngkirAmount ?? 0;
             state.codAmount = value.data?.codAmountMinimum ?? 0;
-            state.totalOngkir = state.codOngkir && state.account.accountService == "JLC" ? state.congkirAmount.toInt() : value.data?.totalOngkir ?? 0;
+            state.totalOngkir =
+                state.codOngkir && state.account.accountService == "JLC"
+                    ? state.congkirAmount.toInt()
+                    : value.data?.totalOngkir ?? 0;
             state.getCodAmount = value.data?.codAmountMinimum ?? 0;
-            state.codAmountText.text = value.data?.codAmountMinimum?.toInt().toCurrency().toString() ?? '0';
+            state.codAmountText.text =
+                value.data?.codAmountMinimum?.toInt().toCurrency().toString() ??
+                    '0';
             state.getCodFee = value.data?.codFee ?? 0;
           });
         } catch (e) {
           num getVat = state.isCOD && prefix3 ? state.freightCharge * vat : 0;
-          state.getCodFeeMinimum = (state.freightCharge + goodsAmount) * state.codfee;
-          state.getCodAmountMinimum = goodsAmount + state.freightCharge + state.getCodFeeMinimum + getVat;
+          state.getCodFeeMinimum =
+              (state.freightCharge + goodsAmount) * state.codfee;
+          state.getCodAmountMinimum = goodsAmount +
+              state.freightCharge +
+              state.getCodFeeMinimum +
+              getVat;
 
           //cod amount text >= cod amount minimum
           /*tanpa harga barang
@@ -140,15 +155,19 @@ class TransactionController extends BaseController {
 
           // state.hargacod = (codfee * (goodsAmount) + (goodsAmount) + state.totalOngkir);
           state.codAmount = state.isCOD ? state.getCodAmount : 0;
-          state.codAmountText.text = state.isCOD ? state.getCodAmountMinimum.toInt().toCurrency().toString() : '0';
-          state.congkirAmount = state.freightCharge + (state.insurance ? state.isr : 0) + 1000;
+          state.codAmountText.text = state.isCOD
+              ? state.getCodAmountMinimum.toInt().toCurrency().toString()
+              : '0';
+          state.congkirAmount =
+              state.freightCharge + (state.insurance ? state.isr : 0) + 1000;
           state.congkirAmountISR = state.freightCharge + state.isr;
           update();
-          state.totalOngkir = state.codOngkir && state.account.accountService == "JLC"
-              ? state.congkirAmount.toInt()
-              : state.insurance
-                  ? (state.freightChargeISR.toInt() + state.codAmount)
-                  : (state.freightCharge.toInt() + state.codAmount);
+          state.totalOngkir =
+              state.codOngkir && state.account.accountService == "JLC"
+                  ? state.congkirAmount.toInt()
+                  : state.insurance
+                      ? (state.freightChargeISR.toInt() + state.codAmount)
+                      : (state.freightCharge.toInt() + state.codAmount);
         }
 
         update();
@@ -164,7 +183,9 @@ class TransactionController extends BaseController {
   }
 
   bool isValidate() {
-    if (state.formValidate && state.selectedService != null && !state.isCalculate) {
+    if (state.formValidate &&
+        state.selectedService != null &&
+        !state.isCalculate) {
       if ((state.totalOngkir > 1000000) && state.codOngkir) {
         return false;
       }
@@ -203,7 +224,8 @@ class TransactionController extends BaseController {
           accountNumber: state.account.accountNumber,
           originCode: state.origin.originCode,
           destinationCode: state.destination.destinationCode,
-          weight: state.weight.text.isNotEmpty ? state.weight.text.toDouble() : 1,
+          weight:
+              state.weight.text.isNotEmpty ? state.weight.text.toDouble() : 1,
           // custNo: state.account.accountNumber,
           // type: state.goodType.text == "PAKET" ? "PAKET" : "DOCUMENT"),
         ),
@@ -211,9 +233,21 @@ class TransactionController extends BaseController {
 
       // state.flatRate = value.data?.where((e)=> e == state.selectedService).first.price?.toInt() ?? 0;
       if (state.selectedService?.serviceDisplay?.substring(0, 3) == "JTR") {
-        state.freightCharge = value.data?.resultJtr?.where((e) => e.serviceCode == state.selectedService?.serviceCode).first.price?.toInt() ?? 0;
+        state.freightCharge = value.data?.resultJtr
+                ?.where(
+                    (e) => e.serviceCode == state.selectedService?.serviceCode)
+                .first
+                .price
+                ?.toInt() ??
+            0;
       } else {
-        state.freightCharge = value.data?.resultExpress?.where((e) => e.serviceCode == state.selectedService?.serviceCode).first.price?.toInt() ?? 0;
+        state.freightCharge = value.data?.resultExpress
+                ?.where(
+                    (e) => e.serviceCode == state.selectedService?.serviceCode)
+                .first
+                .price
+                ?.toInt() ??
+            0;
       }
       update();
     } catch (e, i) {
@@ -234,18 +268,22 @@ class TransactionController extends BaseController {
 
   void loadDraft() async {
     state.draftList = [];
-    DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
+    DraftTransactionModel temp = DraftTransactionModel.fromJson(
+        await storage.readData(StorageCore.draftTransaction));
     state.draftList.addAll(temp.draft);
 
     state.goodName.text = state.goods?.desc ?? '';
     state.goodType.text = state.goods?.type ?? '';
-    state.goodAmount.text = state.goods?.amount?.toInt().toCurrency().toString() ?? '';
+    state.goodAmount.text =
+        state.goods?.amount?.toInt().toCurrency().toString() ?? '';
     state.goodQty.text = state.goods?.quantity.toString() ?? '';
     state.insurance = state.delivery?.insuranceFlag == "Y" ? true : false;
     state.specialInstruction.text = state.delivery?.specialInstruction ?? '';
     state.woodPacking = state.delivery?.woodPackaging == "Y" ? true : false;
     state.weight.text = state.goods?.weight.toString().split('.').first ?? '1';
-    state.selectedService = state.serviceList.where((e) => e.serviceCode == state.delivery?.serviceCode).first;
+    state.selectedService = state.serviceList
+        .where((e) => e.serviceCode == state.delivery?.serviceCode)
+        .first;
 
     if (state.delivery?.flatRate != null) {
       getOngkir();
@@ -283,7 +321,8 @@ class TransactionController extends BaseController {
         state.serviceList.addAll(value.data?.resultExpress ?? []);
         state.serviceList.addAll(value.data?.resultJtr ?? []);
         update();
-        if ((value.data?.resultExpress?.isEmpty ?? false) && (value.data?.resultJtr?.isEmpty ?? false)) {
+        if ((value.data?.resultExpress?.isEmpty ?? false) &&
+            (value.data?.resultJtr?.isEmpty ?? false)) {
           AppSnackBar.error('Service tidak tersedia'.tr);
         }
         if (value.code != 200) {
@@ -302,16 +341,24 @@ class TransactionController extends BaseController {
       state.goodType.text = state.data?.goods?.type ?? '';
       state.goodName.text = state.data?.goods?.desc ?? '';
       state.noReference.text = state.data?.orderId ?? '';
-      state.goodAmount.text = state.data?.goods?.amount?.toInt().toCurrency().toString() ?? '';
+      state.goodAmount.text =
+          state.data?.goods?.amount?.toInt().toCurrency().toString() ?? '';
       state.goodQty.text = state.data?.goods?.quantity.toString() ?? '';
       state.insurance = state.data?.delivery?.insuranceFlag == "Y";
-      state.specialInstruction.text = state.data?.delivery?.specialInstruction ?? '';
+      state.specialInstruction.text =
+          state.data?.delivery?.specialInstruction ?? '';
       state.woodPacking = state.data?.delivery?.woodPackaging == "Y";
       state.weight.text = state.data?.goods?.weight.toString() ?? '';
       state.berat = state.data?.goods?.weight?.toDouble() ?? 0;
       // ServiceModel servicecode = state.serviceList.where((element) => element.serviceCode == state.dataEdit?.delivery?.serviceCode).first;
-      ServiceModel? servicedisplay = state.serviceList.where((element) => element.serviceDisplay == state.data?.delivery?.serviceCode).isNotEmpty
-          ? state.serviceList.where((element) => element.serviceDisplay == state.data?.delivery?.serviceCode).first
+      ServiceModel? servicedisplay = state.serviceList
+              .where((element) =>
+                  element.serviceDisplay == state.data?.delivery?.serviceCode)
+              .isNotEmpty
+          ? state.serviceList
+              .where((element) =>
+                  element.serviceDisplay == state.data?.delivery?.serviceCode)
+              .first
           : ServiceModel();
       state.selectedService = servicedisplay;
 
@@ -319,7 +366,8 @@ class TransactionController extends BaseController {
       getOngkir();
     }
     if (state.draft != null) {
-      state.weight.text = state.draft?.goods?.weight.toString().split('.').first ?? '';
+      state.weight.text =
+          state.draft?.goods?.weight.toString().split('.').first ?? '';
       update();
     }
     hitungOngkir();
@@ -333,7 +381,8 @@ class TransactionController extends BaseController {
     state.isLoading = true;
     update();
     state.draftList = [];
-    DraftTransactionModel temp = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
+    DraftTransactionModel temp = DraftTransactionModel.fromJson(
+        await storage.readData(StorageCore.draftTransaction));
     state.draftList.addAll(temp.draft);
     state.draftList.add(DataTransactionModel(
       delivery: Delivery(
@@ -367,7 +416,9 @@ class TransactionController extends BaseController {
       goods: Goods(
           type: state.goodType.text,
           desc: state.goodName.text,
-          amount: state.goodAmount.text.isNotEmpty ? state.goodAmount.text.digitOnly().toInt() : 0,
+          amount: state.goodAmount.text.isNotEmpty
+              ? state.goodAmount.text.digitOnly().toInt()
+              : 0,
           quantity: state.goodQty.text.toInt(),
           weight: state.berat),
       shipper: state.shipper,
@@ -393,9 +444,11 @@ class TransactionController extends BaseController {
                 const DashboardScreen(),
               ),
               secondButtonTitle: "Lihat Draft".tr,
-              secondAction: () => Get.delete<DraftTransaksiController>().then((value) => Get.offAll(const DraftTransaksiScreen())),
+              secondAction: () => Get.delete<DraftTransaksiController>()
+                  .then((value) => Get.offAll(const DraftTransaksiScreen())),
               thirdButtonTitle: "Buat Transaksi Lainnya".tr,
-              thirdAction: () => Get.offAll(const InformasiPengirimScreen(), arguments: {}),
+              thirdAction: () =>
+                  Get.offAll(const InformasiPengirimScreen(), arguments: {}),
             ),
             transition: Transition.rightToLeft,
             arguments: {
@@ -430,7 +483,9 @@ class TransactionController extends BaseController {
           insuranceAmount: state.insurance ? state.isr : 0,
           deliveryPrice: state.freightCharge,
           deliveryPricePublish: state.freightCharge,
-          codAmount: state.isCOD || state.codOngkir ? state.codAmountText.text.digitOnly().toInt() : null,
+          codAmount: state.isCOD || state.codOngkir
+              ? state.codAmountText.text.digitOnly().toInt()
+              : null,
           custId: state.account.accountNumber,
           originCode: state.origin.originCode,
           originDesc: state.origin.originName,
@@ -464,7 +519,8 @@ class TransactionController extends BaseController {
           receiverDistrict: state.receiver.district,
           receiverSubdistrict: state.receiver.subDistrict,
           receiverCountry: state.receiver.country,
-          goodsType: state.goodType.text.isNotEmpty ? state.goodType.text : "PAKET",
+          goodsType:
+              state.goodType.text.isNotEmpty ? state.goodType.text : "PAKET",
         ),
         state.data?.awb ?? '',
       )
@@ -484,7 +540,8 @@ class TransactionController extends BaseController {
                 },
               ),
               thirdButtonTitle: "Lihat Transaksi",
-              thirdAction: () => Get.offAll(const RiwayatKirimanScreen(), arguments: {"isLastScreen": true}),
+              thirdAction: () => Get.offAll(const RiwayatKirimanScreen(),
+                  arguments: {"isLastScreen": true}),
             ),
           );
         }
@@ -535,7 +592,9 @@ class TransactionController extends BaseController {
       goods: Goods(
           type: state.goodType.text,
           desc: state.goodName.text,
-          amount: state.goodAmount.text.isNotEmpty ? state.goodAmount.text.digitOnly().toInt() : 0,
+          amount: state.goodAmount.text.isNotEmpty
+              ? state.goodAmount.text.digitOnly().toInt()
+              : 0,
           quantity: state.goodQty.text.toInt(),
           weight: state.berat),
       shipper: state.shipper,
@@ -544,12 +603,15 @@ class TransactionController extends BaseController {
     try {
       await transaction
           .postTransaction(TransactionModel(
-        orderId: state.noReference.text.isNotEmpty ? state.noReference.text : null,
+        orderId:
+            state.noReference.text.isNotEmpty ? state.noReference.text : null,
         apiStatus: 0,
         apiType: trans.account?.accountService,
         custId: state.account.accountNumber,
         branch: state.account.accountBranch, //TODO: ambil branch origin
-        codAmount: state.isCOD || state.codOngkir ? state.codAmountText.text.digitOnly().toInt() : null,
+        codAmount: state.isCOD || state.codOngkir
+            ? state.codAmountText.text.digitOnly().toInt()
+            : null,
         codFlag: state.account.accountService == "COD"
             ? "YES"
             : state.codOngkir
@@ -564,9 +626,12 @@ class TransactionController extends BaseController {
         deliveryPrice: state.freightCharge,
         deliveryPricePublish: state.freightCharge,
         destinationCode: trans.receiver?.destinationCode,
-        goodsAmount: state.goodAmount.text.isNotEmpty ? state.goodAmount.text.digitOnly().toInt() : 0,
+        goodsAmount: state.goodAmount.text.isNotEmpty
+            ? state.goodAmount.text.digitOnly().toInt()
+            : 0,
         goodsDesc: state.goodName.text,
-        goodsType: state.goodType.text.isNotEmpty ? state.goodType.text : "PAKET",
+        goodsType:
+            state.goodType.text.isNotEmpty ? state.goodType.text : "PAKET",
         qty: state.goodQty.text.toDouble(),
         insuranceAmount: state.insurance ? state.isr : 0,
         insuranceFlag: state.insurance ? "Y" : "N",
@@ -580,13 +645,22 @@ class TransactionController extends BaseController {
         receiverSubdistrict: trans.receiver?.subDistrict,
         receiverRegion: trans.receiver?.region,
         receiverZip: trans.receiver?.zipCode,
-        receiverAddr1:
-            trans.receiver?.address?.substring(0, (trans.receiver?.address?.length ?? 0) > 30 ? 29 : (trans.receiver?.address?.length ?? 0)),
+        receiverAddr1: trans.receiver?.address?.substring(
+            0,
+            (trans.receiver?.address?.length ?? 0) > 30
+                ? 29
+                : (trans.receiver?.address?.length ?? 0)),
         receiverAddr2: (trans.receiver?.address?.length ?? 0) > 30
-            ? trans.receiver?.address?.substring(30, (trans.receiver?.address?.length ?? 0) > 60 ? 59 : (trans.receiver?.address?.length ?? 0))
+            ? trans.receiver?.address?.substring(
+                30,
+                (trans.receiver?.address?.length ?? 0) > 60
+                    ? 59
+                    : (trans.receiver?.address?.length ?? 0))
             : '',
-        receiverAddr3:
-            (trans.receiver?.address?.length ?? 0) >= 60 ? trans.receiver?.address?.substring(60, (trans.receiver?.address?.length ?? 0)) : '',
+        receiverAddr3: (trans.receiver?.address?.length ?? 0) >= 60
+            ? trans.receiver?.address
+                ?.substring(60, (trans.receiver?.address?.length ?? 0))
+            : '',
         receiverName: trans.receiver?.name,
         receiverPhone: trans.receiver?.phone,
         receiverContact: trans.receiver?.contact,
@@ -597,7 +671,8 @@ class TransactionController extends BaseController {
         shipperCity: trans.shipper?.city,
         shipperZip: trans.shipper?.zipCode,
         shipperContact: trans.shipper?.contact,
-        shipperRegion: trans.shipper?.region?.name ?? trans.origin?.branch?.regional?.name,
+        shipperRegion:
+            trans.shipper?.region?.name ?? trans.origin?.branch?.regional?.name,
         shipperCountry: trans.shipper?.country,
         shipperAddr1: trans.shipper?.address1,
         shipperAddr2: trans.shipper?.address2,
@@ -630,7 +705,8 @@ class TransactionController extends BaseController {
                 },
               ),
               thirdButtonTitle: "Buat Transaksi Lainnya".tr,
-              thirdAction: () => Get.offAll(const InformasiPengirimScreen(), arguments: {}),
+              thirdAction: () =>
+                  Get.offAll(const InformasiPengirimScreen(), arguments: {}),
             ),
           );
         }
@@ -659,7 +735,8 @@ class TransactionController extends BaseController {
   }
 
   void onSaved() {
-    if ((state.codAmountText.text.digitOnly().toInt() < state.getCodAmountMinimum)) {
+    if ((state.codAmountText.text.digitOnly().toInt() <
+        state.getCodAmountMinimum)) {
       Get.dialog(StatefulBuilder(
         builder: (context, setState) => AlertDialog(
           scrollable: false,
@@ -705,7 +782,8 @@ class TransactionController extends BaseController {
     state.selectedService = state.serviceList[index];
     if (state.selectedService?.serviceDisplay == 'INTL') {
       state.isSelectGoodsType = true;
-      state.goodType.text = state.selectedService?.goodsType == 'Paket' ? 'PAKET' : 'DOKUMEN';
+      state.goodType.text =
+          state.selectedService?.goodsType == 'Paket' ? 'PAKET' : 'DOKUMEN';
     }
 
     getOngkir();

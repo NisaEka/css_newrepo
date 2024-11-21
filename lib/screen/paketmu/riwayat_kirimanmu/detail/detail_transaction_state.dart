@@ -13,5 +13,4 @@ class DetailTransactionState {
   final transStatus = TextEditingController();
 
   bool isLoading = false;
-
 }

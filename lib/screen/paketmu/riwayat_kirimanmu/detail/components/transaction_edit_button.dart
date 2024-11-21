@@ -1,14 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/jlc/post_total_point_model.dart';
-import 'package:css_mobile/data/model/master/destination_model.dart';
-import 'package:css_mobile/data/model/master/get_accounts_model.dart';
-import 'package:css_mobile/data/model/master/get_branch_model.dart';
-import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/master/get_receiver_model.dart';
-import 'package:css_mobile/data/model/master/get_region_model.dart';
-import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_screen.dart';
@@ -61,7 +52,8 @@ class TransactionEditButton extends StatelessWidget {
                   fontSize: 23,
                   isLoading: isLoading,
                   onPressed: () {
-                    if (c.state.transactionModel?.statusAwb == "MASIH DI KAMU") {
+                    if (c.state.transactionModel?.statusAwb ==
+                        "MASIH DI KAMU") {
                       Get.to(
                         const InformasiPengirimScreen(),
                         arguments: {
@@ -81,7 +73,8 @@ class TransactionEditButton extends StatelessWidget {
                   fontSize: 23,
                   isLoading: isLoading,
                   onPressed: () {
-                    if (c.state.transactionModel?.statusAwb == "MASIH DI KAMU") {
+                    if (c.state.transactionModel?.statusAwb ==
+                        "MASIH DI KAMU") {
                       showDialog(
                         context: context,
                         builder: (context) => DeleteAlertDialog(
@@ -110,7 +103,8 @@ class TransactionEditButton extends StatelessWidget {
                       enableDrag: true,
                       isDismissible: true,
                       // isScrollControlled: true,
-                      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                      StatefulBuilder(builder:
+                          (BuildContext context, StateSetter setState) {
                         return Container();
                       }),
                     );

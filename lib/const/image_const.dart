@@ -56,5 +56,4 @@ class ImageConstant {
     belumTerkumpul,
     butuhDicek,
   ];
-
 }

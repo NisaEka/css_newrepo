@@ -34,7 +34,8 @@ class PengaturanController extends BaseController {
 
     allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
 
-    basicProfil = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    basicProfil =
+        UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
 
     update();
   }

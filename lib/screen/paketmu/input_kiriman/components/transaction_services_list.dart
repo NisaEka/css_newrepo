@@ -16,7 +16,9 @@ class TransactionServicesList extends StatelessWidget {
         builder: (c) {
           return SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            sliver: c.state.serviceList.isEmpty && c.state.isOnline && !c.state.isServiceLoad
+            sliver: c.state.serviceList.isEmpty &&
+                    c.state.isOnline &&
+                    !c.state.isServiceLoad
                 ? SliverToBoxAdapter(
                     child: GestureDetector(
                       onTap: () => c.initData(),
@@ -36,7 +38,8 @@ class TransactionServicesList extends StatelessWidget {
                     ),
                   )
                 : SliverGrid(
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 170,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 10,
@@ -54,7 +57,8 @@ class TransactionServicesList extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: c.state.isServiceLoad
                                     ? greyColor
-                                    : c.state.selectedService == c.state.serviceList[index]
+                                    : c.state.selectedService ==
+                                            c.state.serviceList[index]
                                         ? AppConst.isLightTheme(context)
                                             ? blueJNE
                                             : redJNE
@@ -64,18 +68,27 @@ class TransactionServicesList extends StatelessWidget {
                               child: c.state.serviceList.isEmpty
                                   ? const SizedBox()
                                   : Text(
-                                      c.state.serviceList[index].serviceDisplay == 'INTL'
+                                      c.state.serviceList[index]
+                                                  .serviceDisplay ==
+                                              'INTL'
                                           ? '${c.state.serviceList[index].serviceDisplay} - ${c.state.serviceList[index].goodsType}'
-                                          : c.state.serviceList[index].serviceDisplay ?? '',
+                                          : c.state.serviceList[index]
+                                                  .serviceDisplay ??
+                                              '',
                                       style: listTitleTextStyle.copyWith(
-                                        color: c.state.selectedService == c.state.serviceList[index] ? whiteColor : blueJNE,
+                                        color: c.state.selectedService ==
+                                                c.state.serviceList[index]
+                                            ? whiteColor
+                                            : blueJNE,
                                       ),
                                     ),
                             ),
                           ),
                         );
                       },
-                      childCount: c.state.isServiceLoad ? 6 : c.state.serviceList.length,
+                      childCount: c.state.isServiceLoad
+                          ? 6
+                          : c.state.serviceList.length,
                     ),
                   ),
           );

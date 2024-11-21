@@ -46,7 +46,8 @@ class DropshipperForm extends StatelessWidget {
                       label: "Kota Pengirim".tr,
                       onChanged: (value) {
                         c.selectedOrigin = value;
-                        c.dropshipperOrigin.text = c.selectedOrigin?.originName ?? '';
+                        c.dropshipperOrigin.text =
+                            c.selectedOrigin?.originName ?? '';
                         c.update();
                       },
                       branch: c.account.accountBranch,
@@ -73,10 +74,15 @@ class DropshipperForm extends StatelessWidget {
                       validator: ValidationBuilder().address().build(),
                     ),
                     CustomFilledButton(
-                        color: c.formKey.currentState?.validate() ?? false ? blueJNE : greyColor,
+                        color: c.formKey.currentState?.validate() ?? false
+                            ? blueJNE
+                            : greyColor,
                         title: "Simpan Data Dropshipper".tr,
                         // radius: 20,
-                        onPressed: () => c.formKey.currentState?.validate() == true ? c.saveDropshipper() : null),
+                        onPressed: () =>
+                            c.formKey.currentState?.validate() == true
+                                ? c.saveDropshipper()
+                                : null),
                   ],
                 ),
               ),

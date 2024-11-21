@@ -15,7 +15,9 @@ class LogoutAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).brightness == Brightness.light ? whiteColor : greyColor,
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+          ? whiteColor
+          : greyColor,
       title: Text('Anda akan keluar'.tr),
       content: Text(
         'Anda yakin Keluar ?'.tr,

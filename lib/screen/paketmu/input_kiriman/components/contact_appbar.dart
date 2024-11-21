@@ -29,11 +29,17 @@ class ContactAppbar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 2,
       leading: const CustomBackButton(),
       title: Text(
-        title ?? (isDropshipper ? 'Pilih Data Dropshipper'.tr : 'Pilih Data Penerima'.tr),
-        style: appTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
+        title ??
+            (isDropshipper
+                ? 'Pilih Data Dropshipper'.tr
+                : 'Pilih Data Penerima'.tr),
+        style: appTitleTextStyle.copyWith(
+            color: AppConst.isLightTheme(context) ? blueJNE : whiteColor),
       ),
       actions: [
-        isOnline && (title?.isEmpty ?? true) ? AddButton(onPressed: onAdd) : const SizedBox(),
+        isOnline && (title?.isEmpty ?? true)
+            ? AddButton(onPressed: onAdd)
+            : const SizedBox(),
       ],
     );
   }

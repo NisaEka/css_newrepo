@@ -23,8 +23,8 @@ class AkunBankController extends BaseController {
           );
     } catch (e, i) {
       AppLogger.e('error initData akun bank $e, $i');
-      ccrfProfil = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
-
+      ccrfProfil = CcrfProfileModel.fromJson(
+          await storage.readData(StorageCore.ccrfProfile));
     }
 
     isLoading = false;

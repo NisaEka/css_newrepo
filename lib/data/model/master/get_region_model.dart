@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-RegionModel regionFromJson(String str) => RegionModel.fromJson(json.decode(str));
+RegionModel regionFromJson(String str) =>
+    RegionModel.fromJson(json.decode(str));
 
 String regionToJson(RegionModel data) => json.encode(data.toJson());
 

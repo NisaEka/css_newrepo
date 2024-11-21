@@ -57,6 +57,5 @@ class GlobalBinding extends Bindings {
     Get.put<LaporankuRepository>(LaporankuRepositoryImpl(), permanent: true);
     Get.put<InvoiceRepository>(InvoiceImpl(), permanent: true);
     Get.put<MasterRepository>(MasterRepositoryImpl(), permanent: true);
-
   }
 }

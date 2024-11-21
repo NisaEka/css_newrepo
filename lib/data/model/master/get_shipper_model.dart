@@ -38,8 +38,9 @@ class ShipperModel {
         origin = json['origin'] != null
             ? OriginModel.fromJson(json['origin'])
             : null,
-        region =
-            json['region'] != null ? RegionModel.fromJson(json['region']) : null;
+        region = json['region'] != null
+            ? RegionModel.fromJson(json['region'])
+            : null;
 
   /// Shipper attributes
   String? name;

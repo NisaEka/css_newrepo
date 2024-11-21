@@ -20,7 +20,9 @@ class OriginModel {
     _originName = json['originName'];
     _branchCode = json['branchCode'];
     _originStatus = json['originStatus'];
-    _branch = json['branch'] != null ? BranchModel.fromJson(json['branch']) : BranchModel();
+    _branch = json['branch'] != null
+        ? BranchModel.fromJson(json['branch'])
+        : BranchModel();
   }
 
   String? _originCode;

@@ -59,7 +59,8 @@ class BottomBar extends StatelessWidget {
                   icon: Icon(Icons.home, color: menu == 0 ? redJNE : blueJNE),
                   title: "Beranda".tr,
                   color: menu == 0 ? redJNE : blueJNE,
-                  onTap: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+                  onTap: () => Get.delete<DashboardController>()
+                      .then((_) => Get.offAll(const DashboardScreen())),
                 ),
                 const SizedBox(width: 30, height: 30),
                 const SizedBox(width: 30, height: 30),

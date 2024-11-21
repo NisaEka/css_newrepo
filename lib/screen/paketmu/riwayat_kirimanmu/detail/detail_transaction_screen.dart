@@ -1,4 +1,3 @@
-import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/components/transaction_detail.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/components/transaction_edit_button.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';

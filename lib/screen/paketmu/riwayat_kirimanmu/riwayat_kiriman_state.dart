@@ -10,7 +10,8 @@ class RiwayatKirimanState {
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
   final searchField = TextEditingController();
-  final PagingController<int, TransactionModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, TransactionModel> pagingController =
+      PagingController(firstPageKey: 1);
 
   int selectedKiriman = 0;
   int total = 0;
@@ -18,7 +19,7 @@ class RiwayatKirimanState {
   int noncod = 0;
   int codOngkir = 0;
   DateTime? startDate;
-  DateTime? endDate ;
+  DateTime? endDate;
   String? selectedStatusKiriman;
   PetugasModel? selectedPetugasEntry;
   String? transType;

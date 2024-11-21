@@ -39,7 +39,8 @@ class FacilityFormExistingController extends BaseController {
                   'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'
                       .tr,
               buttonTitle: 'Selesai'.tr,
-              nextAction: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+              nextAction: () => Get.delete<DashboardController>()
+                  .then((_) => Get.offAll(const DashboardScreen())),
             ),
           );
         } else {

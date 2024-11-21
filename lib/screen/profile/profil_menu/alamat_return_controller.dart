@@ -27,7 +27,8 @@ class AlamatReturnController extends BaseController {
           );
     } catch (e, i) {
       AppLogger.e('error initData alamat return $e, $i');
-      ccrfProfil = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
+      ccrfProfil = CcrfProfileModel.fromJson(
+          await storage.readData(StorageCore.ccrfProfile));
     }
 
     isLoading = false;

@@ -26,5 +26,5 @@ abstract class ProfilRepository {
 
   Future<BaseResponse> putProfileBasic(UserModel data);
 
-  Future<BaseResponse<List<ShipperModel>>>  getShipper();
+  Future<BaseResponse<List<ShipperModel>>> getShipper();
 }
