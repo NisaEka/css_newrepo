@@ -43,15 +43,11 @@ class ReceiverModel {
     _contact = json['contact'] ?? json['receiverContact'];
     _phone = json['phone'] ?? json['receiverPhone'];
     _destinationCode = json['destination_code'] ?? json['destinationCode'];
-    _destinationDescription = json['destination_description'] ??
-        json['destinationDesc'] ??
-        json['destination_desc'];
-    _idDestination =
-        json['id_destination'] ?? json['idDest'] ?? json['destination_id'];
+    _destinationDescription = json['destination_description'] ?? json['destinationDesc'] ?? json['destination_desc'];
+    _idDestination = json['idDest'];
     _idReceive = json['id_receive'] ?? json['idReceive'];
     _receiverDistrict = json['receiver_district'] ?? json['receiverDistrict'];
-    _receiverSubDistrict =
-        json['receiver_sub_district'] ?? json['receiverSubdistrict'];
+    _receiverSubDistrict = json['receiver_sub_district'] ?? json['receiverSubdistrict'];
     _registrationId = json['registration_id'] ?? json['registrationId'];
   }
 
@@ -98,8 +94,7 @@ class ReceiverModel {
         contact: contact ?? _contact,
         phone: phone ?? _phone,
         destinationCode: destinationCode ?? _destinationCode,
-        destinationDescription:
-            destinationDescription ?? _destinationDescription,
+        destinationDescription: destinationDescription ?? _destinationDescription,
         idDestination: idDestination ?? _idDestination,
         idReceive: idReceive ?? _idReceive,
         district: receiverDistrict ?? _receiverDistrict,
