@@ -37,9 +37,7 @@ class AlamatReturnScreen extends StatelessWidget {
               )
             : [
                 DataUmumListItem(
-                  title:
-                      c.ccrfProfil?.returnAddress?.responsibleName ??
-                          '-',
+                  title: c.ccrfProfil?.returnAddress?.responsibleName ?? '-',
                   subtitle: c.ccrfProfil?.returnAddress?.npwpName ?? '-',
                   icon: Icons.person_pin,
                   tooltip: '${'Nama Penanggung Jawab'.tr}\n${'Nama NPWP'.tr}',
@@ -66,8 +64,7 @@ class AlamatReturnScreen extends StatelessWidget {
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
                 DataUmumListItem(
-                  title:
-                      "${c.ccrfProfil?.returnAddress?.address ?? '-'}"
+                  title: "${c.ccrfProfil?.returnAddress?.address ?? '-'}"
                       ",  ${c.ccrfProfil?.returnAddress?.subDistrict ?? '-'}"
                       ", ${c.ccrfProfil?.returnAddress?.district ?? '-'}"
                       ", ${c.ccrfProfil?.returnAddress?.city ?? '-'}"

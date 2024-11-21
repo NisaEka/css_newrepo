@@ -8,7 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 
 Future<void> main() async {
-  FlavorConfig(name: "local", location: BannerLocation.topEnd, variables: stgEnvironment, color: Colors.red);
+  FlavorConfig(
+      name: "local",
+      location: BannerLocation.topEnd,
+      variables: stgEnvironment,
+      color: Colors.red);
 
   WidgetsFlutterBinding.ensureInitialized();
   GlobalBinding().dependencies();

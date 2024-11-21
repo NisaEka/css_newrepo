@@ -187,7 +187,8 @@ class TransactionForm extends StatelessWidget {
                               onChanged: (bool? value) {
                                 c.state.woodPacking = value!;
                                 var temp = c.state.specialInstruction.text;
-                                c.state.specialIns = c.state.specialInstruction.text;
+                                c.state.specialIns =
+                                    c.state.specialInstruction.text;
                                 c.state.specialInstruction.text = value == true
                                     ? "MOHON DIPACKING KAYU $temp"
                                     : temp.substring(21, temp.length);
@@ -350,8 +351,9 @@ class TransactionForm extends StatelessWidget {
                             Column(
                                 children: [
                                   (c.state.account.accountService
-                                                  ?.toUpperCase() ==
-                                              'COD' || c.state.codOngkir) &&
+                                                      ?.toUpperCase() ==
+                                                  'COD' ||
+                                              c.state.codOngkir) &&
                                           !c.state.isCalculate &&
                                           !c.state.isServiceLoad
                                       ? CustomTextFormField(

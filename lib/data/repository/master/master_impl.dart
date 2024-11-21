@@ -25,7 +25,8 @@ class MasterRepositoryImpl extends MasterRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<OriginModel>>> getOrigins(QueryParamModel param) async {
+  Future<BaseResponse<List<OriginModel>>> getOrigins(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
 
     if (token != null) {
@@ -62,7 +63,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Destination>>> getDestinations(QueryParamModel param) async {
+  Future<BaseResponse<List<Destination>>> getDestinations(
+      QueryParamModel param) async {
     try {
       Response response = await network.base.get(
         '/master/destinations',
@@ -107,7 +109,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<GroupOwnerModel>>> getReferals(String keyword) async {
+  Future<BaseResponse<List<GroupOwnerModel>>> getReferals(
+      String keyword) async {
     try {
       Response response = await network.base.get(
         '/master/group-owners',
@@ -155,13 +158,16 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(QueryParamModel param) async {
+  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
-    UserModel user = UserModel.fromJson(await StorageCore().readData(StorageCore.basicProfile));
+    UserModel user = UserModel.fromJson(
+        await StorageCore().readData(StorageCore.basicProfile));
     String registID = '[{"registrationId" : "${user.id}"}]';
-    QueryParamModel params = param.copyWith(where: registID, table: true, relation: true);
+    QueryParamModel params =
+        param.copyWith(where: registID, table: true, relation: true);
 
     try {
       Response response = await network.base.get(
@@ -227,7 +233,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<ReceiverModel>>> getReceivers(QueryParamModel param) async {
+  Future<BaseResponse<List<ReceiverModel>>> getReceivers(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -326,7 +333,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<GetServiceModel>> getServices(DataServiceModel param) async {
+  Future<BaseResponse<GetServiceModel>> getServices(
+      DataServiceModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {

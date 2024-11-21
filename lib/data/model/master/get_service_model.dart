@@ -122,7 +122,6 @@ class GetServiceModel {
   }
 }
 
-
 class ServiceModel {
   ServiceModel({
     String? originName,

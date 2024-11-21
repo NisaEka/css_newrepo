@@ -31,7 +31,10 @@ class LogoutButton extends StatelessWidget {
           ? BoxDecoration(
               color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
               border: Border(
-                bottom: BorderSide(color: AppConst.isLightTheme(context) ? greyColor : Colors.white),
+                bottom: BorderSide(
+                    color: AppConst.isLightTheme(context)
+                        ? greyColor
+                        : Colors.white),
                 // top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
               ),
             )
@@ -42,7 +45,8 @@ class LogoutButton extends StatelessWidget {
             onTap: () => isLogin
                 ? showDialog(
                     context: context,
-                    builder: (context) => LogoutAlertDialog(onLogout: () => doLogout()),
+                    builder: (context) =>
+                        LogoutAlertDialog(onLogout: () => doLogout()),
                   )
                 : Get.to(const LoginScreen()),
             leading: Icon(

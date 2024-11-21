@@ -17,7 +17,8 @@ class BranchModel {
     _branchCode = json['branchCode'];
     _branchDesc = json['branchDesc'];
     _regionalCode = json['regionalCode'];
-    _regional = json['regional'] != null ? Region.fromJson(json['regional']) : null;
+    _regional =
+        json['regional'] != null ? Region.fromJson(json['regional']) : null;
   }
 
   String? _branchCode;

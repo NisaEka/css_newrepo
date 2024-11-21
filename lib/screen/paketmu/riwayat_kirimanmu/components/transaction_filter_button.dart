@@ -35,36 +35,46 @@ class TransactionFilterButton extends HookWidget {
                               title: "Semua Tanggal".tr,
                               value: '0',
                               groupValue: c.state.dateFilter,
-                              onChanged: (value) => setState(() => c.selectDateFilter(0)),
-                              onTap: () => setState(() => c.selectDateFilter(0)),
+                              onChanged: (value) =>
+                                  setState(() => c.selectDateFilter(0)),
+                              onTap: () =>
+                                  setState(() => c.selectDateFilter(0)),
                             ),
                             Customradiobutton(
                               title: "1 Bulan Terakhir".tr,
                               value: '1',
                               groupValue: c.state.dateFilter,
-                              onChanged: (value) => setState(() => c.selectDateFilter(1)),
-                              onTap: () => setState(() => c.selectDateFilter(1)),
+                              onChanged: (value) =>
+                                  setState(() => c.selectDateFilter(1)),
+                              onTap: () =>
+                                  setState(() => c.selectDateFilter(1)),
                             ),
                             Customradiobutton(
                               title: "1 Minggu Terakhir".tr,
                               value: '2',
                               groupValue: c.state.dateFilter,
-                              onChanged: (value) => setState(() => c.selectDateFilter(2)),
-                              onTap: () => setState(() => c.selectDateFilter(2)),
+                              onChanged: (value) =>
+                                  setState(() => c.selectDateFilter(2)),
+                              onTap: () =>
+                                  setState(() => c.selectDateFilter(2)),
                             ),
                             Customradiobutton(
                               title: "Hari Ini".tr,
                               value: '3',
                               groupValue: c.state.dateFilter,
-                              onChanged: (value) => setState(() => c.selectDateFilter(3)),
-                              onTap: () => setState(() => c.selectDateFilter(3)),
+                              onChanged: (value) =>
+                                  setState(() => c.selectDateFilter(3)),
+                              onTap: () =>
+                                  setState(() => c.selectDateFilter(3)),
                             ),
                             Customradiobutton(
                               title: "Pilih Tanggal Sendiri".tr,
                               value: '4',
                               groupValue: c.state.dateFilter,
-                              onChanged: (value) => setState(() => c.selectDateFilter(4)),
-                              onTap: () => setState(() => c.selectDateFilter(4)),
+                              onChanged: (value) =>
+                                  setState(() => c.selectDateFilter(4)),
+                              onTap: () =>
+                                  setState(() => c.selectDateFilter(4)),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,12 +84,16 @@ class TransactionFilterButton extends HookWidget {
                                   readOnly: true,
                                   width: Get.width / 2.3,
                                   hintText: 'Tanggal Awal'.tr,
-                                  onTap: () => c.selectDate(context).then((value) {
+                                  onTap: () =>
+                                      c.selectDate(context).then((value) {
                                     setState(() {
                                       c.state.startDate = value;
-                                      c.state.startDateField.text = value.toString().toDateTimeFormat();
+                                      c.state.startDateField.text =
+                                          value.toString().toDateTimeFormat();
                                       c.state.endDate = DateTime.now();
-                                      c.state.endDateField.text = DateTime.now().toString().toDateTimeFormat();
+                                      c.state.endDateField.text = DateTime.now()
+                                          .toString()
+                                          .toDateTimeFormat();
                                       c.update();
                                     });
                                   }),
@@ -90,10 +104,12 @@ class TransactionFilterButton extends HookWidget {
                                   readOnly: true,
                                   width: Get.width / 2.3,
                                   hintText: 'Tanggal Akhir'.tr,
-                                  onTap: () => c.selectDate(context).then((value) {
+                                  onTap: () =>
+                                      c.selectDate(context).then((value) {
                                     setState(() {
                                       c.state.endDate = value;
-                                      c.state.endDateField.text = value.toString().toDateTimeFormat();
+                                      c.state.endDateField.text =
+                                          value.toString().toDateTimeFormat();
                                       c.update();
                                     });
                                   }),
@@ -112,8 +128,10 @@ class TransactionFilterButton extends HookWidget {
                           delegate: SliverChildBuilderDelegate(
                             (context, index) => GestureDetector(
                               onTap: () => setState(() {
-                                if (c.state.selectedStatusKiriman != c.state.listStatusKiriman[index]) {
-                                  c.state.selectedStatusKiriman = c.state.listStatusKiriman[index];
+                                if (c.state.selectedStatusKiriman !=
+                                    c.state.listStatusKiriman[index]) {
+                                  c.state.selectedStatusKiriman =
+                                      c.state.listStatusKiriman[index];
                                 } else {
                                   c.state.selectedStatusKiriman = null;
                                 }
@@ -122,9 +140,15 @@ class TransactionFilterButton extends HookWidget {
                               child: Container(
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: c.state.selectedStatusKiriman == c.state.listStatusKiriman[index] ? blueJNE : whiteColor,
+                                  color: c.state.selectedStatusKiriman ==
+                                          c.state.listStatusKiriman[index]
+                                      ? blueJNE
+                                      : whiteColor,
                                   border: Border.all(
-                                    color: c.state.selectedStatusKiriman != c.state.listStatusKiriman[index] ? blueJNE : whiteColor,
+                                    color: c.state.selectedStatusKiriman !=
+                                            c.state.listStatusKiriman[index]
+                                        ? blueJNE
+                                        : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
@@ -132,13 +156,17 @@ class TransactionFilterButton extends HookWidget {
                                   c.state.listStatusKiriman[index].tr,
                                   textAlign: TextAlign.center,
                                   style: listTitleTextStyle.copyWith(
-                                      color: c.state.selectedStatusKiriman == c.state.listStatusKiriman[index] ? whiteColor : blueJNE),
+                                      color: c.state.selectedStatusKiriman ==
+                                              c.state.listStatusKiriman[index]
+                                          ? whiteColor
+                                          : blueJNE),
                                 ),
                               ),
                             ),
                             childCount: c.state.listStatusKiriman.length,
                           ),
-                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 140,
                             mainAxisSpacing: 5,
                             crossAxisSpacing: 16,

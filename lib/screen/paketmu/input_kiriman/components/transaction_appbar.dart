@@ -34,8 +34,10 @@ class TransactionAppbar extends StatelessWidget implements PreferredSizeWidget {
     return CustomTopBar(
       title: 'Input Transaksi'.tr,
       leading: CustomBackButton(
-        onPressed: () =>
-            data != null ? Get.back() : Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+        onPressed: () => data != null
+            ? Get.back()
+            : Get.delete<DashboardController>()
+                .then((_) => Get.offAll(const DashboardScreen())),
       ),
       flexibleSpace: Column(
         children: [
