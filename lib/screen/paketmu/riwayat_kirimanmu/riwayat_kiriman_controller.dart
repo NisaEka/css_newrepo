@@ -17,7 +17,7 @@ class RiwayatKirimanController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([transactionCount(), initData()]);
+    Future.wait([ initData()]);
     state.pagingController.addPageRequestListener((pageKey) {
       getTransaction(pageKey);
     });
