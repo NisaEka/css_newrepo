@@ -1,4 +1,5 @@
 import 'package:css_mobile/screen/cek_ongkir/congkir_screen.dart';
+import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_screen.dart';
 import 'package:css_mobile/screen/invoice/invoice_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_screen.dart';
@@ -34,6 +35,7 @@ class AppPages {
     GetPage(name: "/notification", page: () => const NotificationScreen()),
     GetPage(name: "/pantauPaketmu", page: () => const PantauCardScreen()),
     GetPage(name: "/laporanku", page: () => const LaporankuScreen()),
+    GetPage(name: "/eclaim", page: () => const EclaimScreen()),
     GetPage(name: "/invoice", page: () => const InvoiceScreen())
 
   ];
