@@ -53,7 +53,7 @@ class PengaturanController extends BaseController {
     }
     // }
 
-    if (!isLogin) {
+    if (isLogin) {
       await profil.putProfileBasic(
         UserModel(
           language: language == "ID" ? 'INDONESIA' : 'ENGLISH',
@@ -65,6 +65,11 @@ class PengaturanController extends BaseController {
           zipCode: basicProfil?.zipCode,
         ),
       );
+
+      await profil.getBasicProfil().then((value) async {
+        await storage.saveData(StorageCore.basicProfile, value.data?.user);
+        basicProfil = value.data?.user;
+      });
     }
 
     initData();

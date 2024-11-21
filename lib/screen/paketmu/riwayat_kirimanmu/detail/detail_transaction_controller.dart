@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
@@ -55,6 +56,18 @@ class DetailTransactionController extends BaseController {
           districtName: data?.receiverDistrict,
           provinceName: data?.receiverRegion,
           subdistrictName: data?.receiverSubdistrict,
+        ),
+        account: Account(
+          accountNumber: data?.accountNumber,
+          accountService: data?.accountService,
+          accountName: data?.accountName,
+          accountType: data?.accountType,
+        ),
+        dataAccount: Account(
+          accountNumber: data?.accountNumber,
+          accountService: data?.accountService,
+          accountName: data?.accountName,
+          accountType: data?.accountType,
         ),
         dataDestination: Destination(
           destinationCode: data?.destinationCode,
