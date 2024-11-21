@@ -4,11 +4,8 @@
 # Run unit tests
 # flutter test
 
-# Check formatting
-dart format . --set-exit-if-changed
-
-# Analyze code
-flutter analyze --fatal-infos --fatal-warnings
+# check formatting & fix problems & analyze code using lint_staged
+dart run lint_staged
 
 # Ensure pubspec.lock is up-to-date
 flutter pub get
