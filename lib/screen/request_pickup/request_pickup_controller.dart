@@ -266,7 +266,6 @@ class RequestPickupController extends BaseController {
     try {
       queryParam.setPage(pageKey);
       queryParam.setSearch(searchField.text);
-      AppLogger.d("queryParam: ${queryParam.toJson()}");
       final response = await requestPickupRepository.getRequestPickups(
           queryParam, filterStatus);
 
