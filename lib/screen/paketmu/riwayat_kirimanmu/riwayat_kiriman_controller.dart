@@ -2,7 +2,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
-import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -246,10 +246,10 @@ class RiwayatKirimanController extends BaseController {
           ? state.isSelectAll = true
           : state.isSelectAll = false;
     } else {
-      Get.to(const DetailRiwayatKirimanScreen(), arguments: {
+      Get.to(const DetailTransactionScreen(), arguments: {
         'awb': item.awb,
         'data': item,
-      });
+      })?.then((_) => initData());
     }
   }
 

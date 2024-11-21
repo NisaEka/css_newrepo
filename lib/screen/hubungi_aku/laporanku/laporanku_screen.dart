@@ -22,7 +22,7 @@ class LaporankuScreen extends StatelessWidget {
               color: redJNE,
               title: "Buat Laporan".tr,
               width: Get.width / 3,
-              icon: Icons.add,
+              prefixIcon: Icons.add,
               radius: 30,
               height: 50,
               onPressed: () => Get.to(const InputLaporankuScreen())?.then(

@@ -48,7 +48,7 @@ class DraftTransaksiScreen extends StatelessWidget {
         c.isOnline && c.isSync
             ? CustomFilledButton(
                 color: successColor,
-                icon: Icons.sync,
+                prefixIcon: Icons.sync,
                 width: 100,
                 title: 'Sync Data'.tr,
                 // onPressed: () => c.syncData(),

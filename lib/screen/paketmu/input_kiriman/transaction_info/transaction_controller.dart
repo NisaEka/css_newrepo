@@ -37,9 +37,8 @@ class TransactionController extends BaseController {
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       connection.isOnline().then((value) {
         state.isOnline = value && (result != ConnectivityResult.none);
-        update();
         if (state.isOnline) {
-          // AppSnackBar.success('Online Mode'.tr);
+          AppSnackBar.success('Online Mode'.tr);
         }
       });
       initData();
@@ -121,7 +120,7 @@ class TransactionController extends BaseController {
             isPrefix3: prefix3,
           ))
               .then((value) {
-            AppLogger.d('transaction ongkir : ${value.toJson()}');
+            AppLogger.d('transaction ongkir : ${value.data?.toJson()}');
             state.getCodAmountMinimum = value.data?.codAmountMinimum ?? 0;
             state.congkirAmount = value.data?.codOngkirAmount ?? 0;
             state.codAmount = value.data?.codAmountMinimum ?? 0;
@@ -173,7 +172,7 @@ class TransactionController extends BaseController {
 
         update();
       }
-      state.isShowDialog = (state.totalOngkir > 1000000);
+      state.isShowDialog = (state.totalOngkir > 1000000) && state.codOngkir;
       update();
 
       isValidate();
@@ -187,6 +186,9 @@ class TransactionController extends BaseController {
     if (state.formValidate &&
         state.selectedService != null &&
         !state.isCalculate) {
+      if ((state.totalOngkir > 1000000) && state.codOngkir) {
+        return false;
+      }
       return true;
     }
 
@@ -219,12 +221,11 @@ class TransactionController extends BaseController {
     try {
       var value = await master.getServices(
         DataServiceModel(
-          destinationCode: state.destination.destinationCode,
+          accountNumber: state.account.accountNumber,
           originCode: state.origin.originCode,
-          // serviceCode: state.selectedService?.serviceCode,
+          destinationCode: state.destination.destinationCode,
           weight:
               state.weight.text.isNotEmpty ? state.weight.text.toDouble() : 1,
-          accountNumber: state.account.accountNumber,
           // custNo: state.account.accountNumber,
           // type: state.goodType.text == "PAKET" ? "PAKET" : "DOCUMENT"),
         ),
@@ -311,13 +312,11 @@ class TransactionController extends BaseController {
     update();
     try {
       await master
-          .getServices(
-        DataServiceModel(
-          accountNumber: state.account.accountNumber,
-          originCode: state.origin.originCode,
-          destinationCode: state.destination.destinationCode,
-        ),
-      )
+          .getServices(DataServiceModel(
+        accountNumber: state.account.accountNumber,
+        originCode: state.origin.originCode,
+        destinationCode: state.destination.destinationCode,
+      ))
           .then((value) {
         state.serviceList.addAll(value.data?.resultExpress ?? []);
         state.serviceList.addAll(value.data?.resultJtr ?? []);
@@ -386,12 +385,8 @@ class TransactionController extends BaseController {
         await storage.readData(StorageCore.draftTransaction));
     state.draftList.addAll(temp.draft);
     state.draftList.add(DataTransactionModel(
-      createAt: state.goods == null
-          ? DateTime.now().toString()
-          : state.draft?.createAt,
-      updateAt: DateTime.now().toString(),
       delivery: Delivery(
-        serviceCode: state.selectedService?.serviceCode,
+        serviceCode: state.selectedService?.serviceDisplay,
         woodPackaging: state.woodPacking ? "Y" : "N",
         specialInstruction: state.specialInstruction.text,
         codFlag: state.account.accountService == "COD"
@@ -399,7 +394,11 @@ class TransactionController extends BaseController {
             : state.codOngkir
                 ? "YES"
                 : "NO",
-        codOngkir: state.codOngkir ? "YES" : "NO",
+        codOngkir: state.selectedService?.serviceDisplay == 'INTL'
+            ? 'NO'
+            : state.codOngkir
+                ? "YES"
+                : "NO",
         insuranceFlag: state.insurance ? "Y" : "N",
         insuranceFee: state.isr,
         flatRate: state.flatRate,
@@ -414,7 +413,6 @@ class TransactionController extends BaseController {
       ),
       origin: state.origin,
       destination: state.destination,
-      // destination: Destination(code: state.destination.destinationCode, desc: state.destination.cityName),
       goods: Goods(
           type: state.goodType.text,
           desc: state.goodName.text,
@@ -422,11 +420,9 @@ class TransactionController extends BaseController {
               ? state.goodAmount.text.digitOnly().toInt()
               : 0,
           quantity: state.goodQty.text.toInt(),
-          weight: state.berat != 0 ? state.berat : state.weight.text.toInt()),
+          weight: state.berat),
       shipper: state.shipper,
       receiver: state.receiver,
-      dataAccount: state.account,
-      dataDestination: state.destination,
     ));
 
     var data = '{"draft" : ${jsonEncode(state.draftList)}}';
@@ -473,7 +469,7 @@ class TransactionController extends BaseController {
       await transaction
           .putTransaction(
         TransactionModel(
-          apiType: state.account.accountType ?? state.account.accountService,
+          apiType: state.account.accountService,
           serviceCode: state.selectedService?.serviceDisplay,
           packingkayuFlag: state.woodPacking ? "Y" : "N",
           specialIns: state.specialIns,
@@ -530,13 +526,7 @@ class TransactionController extends BaseController {
       )
           .then((v) {
         if (v.code != 200) {
-          AppSnackBar.custom(
-            message: v.message!.tr,
-            backgroundColor: Colors.red,
-            icon: const Icon(Icons.warning, color: warningColor),
-            snackStyle: SnackStyle.FLOATING,
-            margin: const EdgeInsets.only(bottom: 0),
-          );
+          AppSnackBar.error(v.error);
         } else {
           Get.to(
             SuccessScreen(
@@ -559,7 +549,6 @@ class TransactionController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-      // saveDraft();
     }
     state.isLoading = false;
     update();
@@ -619,7 +608,7 @@ class TransactionController extends BaseController {
         apiStatus: 0,
         apiType: trans.account?.accountService,
         custId: state.account.accountNumber,
-        branch: state.account.accountBranch,
+        branch: state.account.accountBranch, //TODO: ambil branch origin
         codAmount: state.isCOD || state.codOngkir
             ? state.codAmountText.text.digitOnly().toInt()
             : null,
@@ -725,7 +714,7 @@ class TransactionController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-      // saveDraft();
+      saveDraft();
     }
     state.isLoading = false;
     update();
@@ -747,8 +736,7 @@ class TransactionController extends BaseController {
 
   void onSaved() {
     if ((state.codAmountText.text.digitOnly().toInt() <
-            state.getCodAmountMinimum) &&
-        state.codOngkir) {
+        state.getCodAmountMinimum)) {
       Get.dialog(StatefulBuilder(
         builder: (context, setState) => AlertDialog(
           scrollable: false,
