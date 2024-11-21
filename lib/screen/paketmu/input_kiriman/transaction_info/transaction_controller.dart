@@ -418,7 +418,7 @@ class TransactionController extends BaseController {
       await transaction
           .putTransaction(
         TransactionModel(
-          apiType: state.account.accountType ?? state.account.accountService,
+          apiType: state.account.accountService,
           serviceCode: state.selectedService?.serviceDisplay,
           packingkayuFlag: state.woodPacking ? "Y" : "N",
           specialIns: state.specialIns,
@@ -500,7 +500,7 @@ class TransactionController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-      // saveDraft();
+      saveDraft();
     }
     state.isLoading = false;
     update();
