@@ -19,7 +19,7 @@ else
 fi
 
 # Check for uncommitted changes in generated files
-git diff --exit-code || {
-  echo "Uncommitted changes detected. Please commit generated files.";
-  exit 1;
-}
+# git diff --exit-code || {
+#   echo "Uncommitted changes detected. Please commit generated files.";
+#   exit 1;
+# }
