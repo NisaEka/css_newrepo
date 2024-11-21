@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -17,6 +18,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RequestPickupController extends BaseController {
   bool _checkMode = false;
+  Timer? _debounceTimer;
 
   bool get checkMode => _checkMode;
 
@@ -26,6 +28,7 @@ class RequestPickupController extends BaseController {
   }
 
   TextEditingController cityKeyword = TextEditingController();
+  final searchField = TextEditingController();
 
   bool showLoadingIndicator = false;
   bool showMainContent = true;
@@ -262,6 +265,8 @@ class RequestPickupController extends BaseController {
 
     try {
       queryParam.setPage(pageKey);
+      queryParam.setSearch(searchField.text);
+      AppLogger.d("queryParam: ${queryParam.toJson()}");
       final response = await requestPickupRepository.getRequestPickups(
           queryParam, filterStatus);
 
@@ -455,6 +460,20 @@ class RequestPickupController extends BaseController {
     }
 
     return selectedPickupTime;
+  }
+
+  void onSearchChanged(String value) {
+    // Cancel the previous timer if it exists
+    if (_debounceTimer?.isActive ?? false) {
+      _debounceTimer!.cancel();
+    }
+
+    // Set a new timer for debounce
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      // Trigger the search or refresh when the user stops typing
+      searchField.text = value;
+      pagingController.refresh();
+    });
   }
 
   /// Internal methods.
