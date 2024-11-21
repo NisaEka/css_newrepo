@@ -115,7 +115,7 @@ class TransactionController extends BaseController {
             isPrefix3: prefix3,
           ))
               .then((value) {
-            AppLogger.d('transaction ongkir : ${value.toJson()}');
+            AppLogger.d('transaction ongkir : ${value.data?.toJson()}');
             state.getCodAmountMinimum = value.data?.codAmountMinimum ?? 0;
             state.congkirAmount = value.data?.codOngkirAmount ?? 0;
             state.codAmount = value.data?.codAmountMinimum ?? 0;
@@ -154,7 +154,7 @@ class TransactionController extends BaseController {
 
         update();
       }
-      state.isShowDialog = (state.totalOngkir > 1000000);
+      state.isShowDialog = (state.totalOngkir > 1000000) && state.codOngkir;
       update();
 
       isValidate();
@@ -166,6 +166,9 @@ class TransactionController extends BaseController {
 
   bool isValidate() {
     if (state.formValidate && state.selectedService != null && !state.isCalculate) {
+      if ((state.totalOngkir > 1000000) && state.codOngkir) {
+        return false;
+      }
       return true;
     }
 
@@ -668,7 +671,7 @@ class TransactionController extends BaseController {
   }
 
   void onSaved() {
-    if ((state.codAmountText.text.digitOnly().toInt() < state.getCodAmountMinimum) && state.codOngkir) {
+    if ((state.codAmountText.text.digitOnly().toInt() < state.getCodAmountMinimum)) {
       Get.dialog(StatefulBuilder(
         builder: (context, setState) => AlertDialog(
           scrollable: false,
