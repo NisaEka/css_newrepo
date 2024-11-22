@@ -165,6 +165,13 @@ class OtherMenuCotroller extends BaseController {
               favoritList.where((e) => e.title == "Laporanku").isNotEmpty,
           isEdit: isEdit,
           route: "/laporanku"),
+      Items(
+          title: "E-Claim",
+          icon: ImageConstant.hubungiAkuIcon,
+          isAuth: true,
+          isFavorite: favoritList.where((e) => e.title == "E-Claim").isNotEmpty,
+          isEdit: isEdit,
+          route: "/eclaim"),
     ];
 
     update();
