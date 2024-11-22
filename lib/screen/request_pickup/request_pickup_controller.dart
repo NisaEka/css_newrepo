@@ -39,12 +39,12 @@ class RequestPickupController extends BaseController {
 
   QueryParamModel queryParam = QueryParamModel();
   String filterStatus = "";
-  String filterDateText = Constant.allDate;
+  String filterDateText = RequestPickupDateEnum.today.asName();
   String filterStatusText = Constant.allStatus;
   String filterDeliveryTypeText = Constant.allDeliveryType;
   String filterDeliveryCityText = Constant.allDeliveryCity;
 
-  RequestPickupDateEnum selectedFilterDate = RequestPickupDateEnum.all;
+  RequestPickupDateEnum selectedFilterDate = RequestPickupDateEnum.today;
 
   DateTime? selectedDateStart;
   DateTime? selectedDateEnd;
@@ -81,6 +81,7 @@ class RequestPickupController extends BaseController {
     queryParam.setSort(jsonEncode([
       {"createdDateSearch": "desc"}
     ]));
+    applyFilterDate();
     Future.wait([
       getAddresses(),
       getCities(''),

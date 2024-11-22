@@ -232,19 +232,24 @@ class RequestPickupScreen extends StatelessWidget {
         child: Row(
           children: [
             const SizedBox(width: 16),
-            _buttonFilter(context, controller.filterDateText.tr, () {
+            _buttonFilter(
+                context, controller.filterDateText.tr, Constant.allDate, () {
               _filterDateBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(context, controller.filterStatusText.tr, () {
+            _buttonFilter(
+                context, controller.filterStatusText.tr, Constant.allStatus,
+                () {
               _filterStatusBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(context, controller.filterDeliveryTypeText.tr, () {
+            _buttonFilter(context, controller.filterDeliveryTypeText.tr,
+                Constant.allDeliveryType, () {
               _filterDeliveryTypeBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(context, controller.filterDeliveryCityText.tr, () {
+            _buttonFilter(context, controller.filterDeliveryCityText.tr,
+                Constant.allDeliveryCity, () {
               _filterDeliveryCityBottomSheet(controller);
             }),
             const SizedBox(width: 16),
@@ -254,7 +259,8 @@ class RequestPickupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buttonFilter(BuildContext context, String text, Function onPressed) {
+  Widget _buttonFilter(BuildContext context, String text, String defaultFilter,
+      Function onPressed) {
     return OutlinedButton(
       onPressed: () {
         onPressed();
@@ -262,13 +268,15 @@ class RequestPickupScreen extends StatelessWidget {
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         side: const BorderSide(width: 1, color: greyColor),
+        backgroundColor: text == defaultFilter ? whiteColor : blueJNE,
       ),
       child: Row(
         children: [
-          Text(
-            text.tr,
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
+          Text(text.tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium
+                  ?.copyWith(color: text == defaultFilter ? null : whiteColor)),
           const SizedBox(width: 8),
           Icon(
             Icons.keyboard_arrow_down,
