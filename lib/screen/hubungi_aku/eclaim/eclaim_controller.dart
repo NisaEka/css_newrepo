@@ -26,17 +26,13 @@ class EclaimController extends BaseController {
   Future<void> eclaimCount() async {
     try {
       await eclaims
-          .getEclaimCount(
-        QueryParamModel(
-          search: state.searchField.text,
-          between: state.transDate
-        )
-      )
+          .getEclaimCount(QueryParamModel(
+              search: state.searchField.text, between: state.transDate))
           .then((value) {
-            state.countModel = value.data;
-            state.total = value.data?.totalCount?.toInt() ?? 0;
-            state.diterima = value.data?.acceptedCount?.toInt() ?? 0;
-            state.ditolak = value.data?.rejectedCount?.toInt() ?? 0;
+        state.countModel = value.data;
+        state.total = value.data?.totalCount?.toInt() ?? 0;
+        state.diterima = value.data?.acceptedCount?.toInt() ?? 0;
+        state.ditolak = value.data?.rejectedCount?.toInt() ?? 0;
         update();
       });
     } catch (e, i) {
@@ -47,21 +43,16 @@ class EclaimController extends BaseController {
   Future<void> initData() async {
     // transactionList = [];
     state.selectedStatusClaim = '';
-
   }
 
   Future<void> getEclaim(int page) async {
     state.isLoading = true;
     try {
-      final trans = await eclaims.getEclaim(
-        QueryParamModel(
-          search: state.searchField.text,
-          between: state.transDate
+      final trans = await eclaims.getEclaim(QueryParamModel(
+          search: state.searchField.text, between: state.transDate));
 
-        )
-      );
-
-      final isLastPage = (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
+      final isLastPage =
+          (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
         // transactionList.addAll(state.pagingController.itemList ?? []);
@@ -89,19 +80,26 @@ class EclaimController extends BaseController {
       state.endDateField.clear();
       state.transDate = '[]';
     } else if (filter == 1) {
-      state.startDate = DateTime.now().copyWith(hour: 0, minute: 0).subtract(const Duration(days: 30));
+      state.startDate = DateTime.now()
+          .copyWith(hour: 0, minute: 0)
+          .subtract(const Duration(days: 30));
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text = state.startDate.toString().toLongDateTimeFormat();
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
       state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     } else if (filter == 2) {
-      state.startDate = DateTime.now().copyWith(hour: 0, minute: 0).subtract(const Duration(days: 7));
+      state.startDate = DateTime.now()
+          .copyWith(hour: 0, minute: 0)
+          .subtract(const Duration(days: 7));
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text = state.startDate.toString().toLongDateTimeFormat();
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
       state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     } else if (filter == 3) {
       state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text = state.startDate.toString().toLongDateTimeFormat();
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
       state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     }
     update();
@@ -175,14 +173,15 @@ class EclaimController extends BaseController {
     //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
-      state.transDate = '[{"createDate":["${state.startDate}","${state.endDate}"]}]';
+      state.transDate =
+          '[{"createDate":["${state.startDate}","${state.endDate}"]}]';
       // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     }
     update();
     eclaimCount();
     state.pagingController.refresh();
     update();
-    if(state.dateFilter == '0'){
+    if (state.dateFilter == '0') {
       resetFilter();
     }
     // } else {
@@ -190,4 +189,3 @@ class EclaimController extends BaseController {
     // }
   }
 }
-

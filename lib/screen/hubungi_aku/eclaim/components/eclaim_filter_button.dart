@@ -34,36 +34,46 @@ class TransactionFilterButton extends HookWidget {
                               title: "Semua Tanggal".tr,
                               value: '0',
                               groupValue: c.state.dateFilter,
-                              onChanged: (value) => setState(() => c.selectDateFilter(0)),
-                              onTap: () => setState(() => c.selectDateFilter(0)),
+                              onChanged: (value) =>
+                                  setState(() => c.selectDateFilter(0)),
+                              onTap: () =>
+                                  setState(() => c.selectDateFilter(0)),
                             ),
                             Customradiobutton(
                               title: "1 Bulan Terakhir".tr,
                               value: '1',
                               groupValue: c.state.dateFilter,
-                              onChanged: (value) => setState(() => c.selectDateFilter(1)),
-                              onTap: () => setState(() => c.selectDateFilter(1)),
+                              onChanged: (value) =>
+                                  setState(() => c.selectDateFilter(1)),
+                              onTap: () =>
+                                  setState(() => c.selectDateFilter(1)),
                             ),
                             Customradiobutton(
                               title: "1 Minggu Terakhir".tr,
                               value: '2',
                               groupValue: c.state.dateFilter,
-                              onChanged: (value) => setState(() => c.selectDateFilter(2)),
-                              onTap: () => setState(() => c.selectDateFilter(2)),
+                              onChanged: (value) =>
+                                  setState(() => c.selectDateFilter(2)),
+                              onTap: () =>
+                                  setState(() => c.selectDateFilter(2)),
                             ),
                             Customradiobutton(
                               title: "Hari Ini".tr,
                               value: '3',
                               groupValue: c.state.dateFilter,
-                              onChanged: (value) => setState(() => c.selectDateFilter(3)),
-                              onTap: () => setState(() => c.selectDateFilter(3)),
+                              onChanged: (value) =>
+                                  setState(() => c.selectDateFilter(3)),
+                              onTap: () =>
+                                  setState(() => c.selectDateFilter(3)),
                             ),
                             Customradiobutton(
                               title: "Pilih Tanggal Sendiri".tr,
                               value: '4',
                               groupValue: c.state.dateFilter,
-                              onChanged: (value) => setState(() => c.selectDateFilter(4)),
-                              onTap: () => setState(() => c.selectDateFilter(4)),
+                              onChanged: (value) =>
+                                  setState(() => c.selectDateFilter(4)),
+                              onTap: () =>
+                                  setState(() => c.selectDateFilter(4)),
                             ),
                             //Pilih Tanggal Sendiri
                             Row(
@@ -74,12 +84,16 @@ class TransactionFilterButton extends HookWidget {
                                   readOnly: true,
                                   width: Get.width / 2.3,
                                   hintText: 'Tanggal Awal'.tr,
-                                  onTap: () => c.selectDate(context).then((value) {
+                                  onTap: () =>
+                                      c.selectDate(context).then((value) {
                                     setState(() {
                                       c.state.startDate = value;
-                                      c.state.startDateField.text = value.toString().toDateTimeFormat();
+                                      c.state.startDateField.text =
+                                          value.toString().toDateTimeFormat();
                                       c.state.endDate = DateTime.now();
-                                      c.state.endDateField.text = DateTime.now().toString().toDateTimeFormat();
+                                      c.state.endDateField.text = DateTime.now()
+                                          .toString()
+                                          .toDateTimeFormat();
                                       c.update();
                                     });
                                   }),
@@ -90,10 +104,12 @@ class TransactionFilterButton extends HookWidget {
                                   readOnly: true,
                                   width: Get.width / 2.3,
                                   hintText: 'Tanggal Akhir'.tr,
-                                  onTap: () => c.selectDate(context).then((value) {
+                                  onTap: () =>
+                                      c.selectDate(context).then((value) {
                                     setState(() {
                                       c.state.endDate = value;
-                                      c.state.endDateField.text = value.toString().toDateTimeFormat();
+                                      c.state.endDateField.text =
+                                          value.toString().toDateTimeFormat();
                                       c.update();
                                     });
                                   }),
@@ -103,7 +119,6 @@ class TransactionFilterButton extends HookWidget {
                             // CustomFormLabel(label: 'Status Kiriman'.tr),
                             // const SizedBox(height: 10),
                             // CustomFormLabel(label: 'Petugas Entry'),
-
                           ],
                         ),
                       ),
@@ -217,8 +232,6 @@ class TransactionFilterButton extends HookWidget {
                       //     ],
                       //   ),
                       // ),
-
-
                     ],
                   ),
                 );

@@ -7,5 +7,4 @@ abstract class EclaimRepository {
   Future<BaseResponse<List<EclaimModel>>> getEclaim(QueryParamModel param);
 
   Future<BaseResponse<EclaimCountModel>> getEclaimCount(QueryParamModel param);
-
 }

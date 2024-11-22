@@ -7,7 +7,8 @@ class EclaimModel {
     String? isipesan,
     String? fileClaim,
     String? id,
-    String? createDate,}) {
+    String? createDate,
+  }) {
     _awb = awb;
     _kategori = kategori;
     _valueclaim = valueclaim;
@@ -38,7 +39,8 @@ class EclaimModel {
   String? _id;
   String? _createDate;
 
-  EclaimModel copyWith({ String? awb,
+  EclaimModel copyWith({
+    String? awb,
     String? kategori,
     String? valueclaim,
     String? statusClaim,
@@ -86,5 +88,4 @@ class EclaimModel {
     map['createDate'] = _createDate;
     return map;
   }
-
 }

@@ -24,5 +24,4 @@ class EclaimState {
 
   bool isFiltered = false;
   bool isLoading = false;
-
 }

@@ -15,8 +15,8 @@ class EclaimListItem extends StatelessWidget {
     this.awb,
     this.date,
     this.amount,
-    this.isSuccess=true,
-    this.isLoading=false,
+    this.isSuccess = true,
+    this.isLoading = false,
     Key? key,
   }) : super(key: key);
 
@@ -39,19 +39,20 @@ class EclaimListItem extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     color: blueJNE,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    claimType??'',
+                    claimType ?? '',
                     style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
                 const Spacer(),
                 Text(
-                  date??'',
+                  date ?? '',
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
@@ -60,19 +61,22 @@ class EclaimListItem extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  awb??'',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  awb ?? '',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 const Spacer(),
                 Row(
                   children: [
                     Icon(
-                      isSuccess ? Icons.check_circle_outline : Icons.cancel_outlined,
+                      isSuccess
+                          ? Icons.check_circle_outline
+                          : Icons.cancel_outlined,
                       color: isSuccess ? Colors.green : Colors.red,
                       size: 18,
                     ),
                     Text(
-                      'Rp. ${amount?.toString()??'0'}',
+                      'Rp. ${amount?.toString() ?? '0'}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -80,7 +84,7 @@ class EclaimListItem extends StatelessWidget {
                       ),
                     ),
                   ],
-                              ),
+                ),
               ],
             ),
           ],

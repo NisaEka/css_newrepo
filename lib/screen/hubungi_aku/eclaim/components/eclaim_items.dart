@@ -22,8 +22,8 @@ class EclaimItems extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(2),
+            const Padding(
+              padding: EdgeInsets.all(2),
               child: Text(
                 'Daftar Klaim',
                 style: TextStyle(
@@ -49,17 +49,16 @@ class EclaimItems extends StatelessWidget {
                       isSuccess: true,
                     ),
                     firstPageErrorIndicatorBuilder: (context) =>
-                    const DataEmpty(),
+                        const DataEmpty(),
                     firstPageProgressIndicatorBuilder: (context) => Column(
                       children: List.generate(
                         3,
-                            (index) => const EclaimListItem(isLoading: true),
+                        (index) => const EclaimListItem(isLoading: true),
                       ),
                     ),
                     noItemsFoundIndicatorBuilder: (context) =>
-                    const DataEmpty(),
-                    noMoreItemsIndicatorBuilder: (context) =>
-                    const Center(
+                        const DataEmpty(),
+                    noMoreItemsIndicatorBuilder: (context) => const Center(
                       child: Divider(
                         indent: 100,
                         endIndent: 100,
@@ -68,7 +67,7 @@ class EclaimItems extends StatelessWidget {
                       ),
                     ),
                     newPageProgressIndicatorBuilder: (context) =>
-                    const LoadingDialog(
+                        const LoadingDialog(
                       background: Colors.transparent,
                       height: 50,
                       size: 30,

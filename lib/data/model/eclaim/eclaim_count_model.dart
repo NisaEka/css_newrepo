@@ -1,18 +1,19 @@
 class EclaimCountModel {
   EclaimCountModel({
-      num? totalCount, 
-      num? totalAmount, 
-      num? acceptedCount, 
-      num? acceptedAmount, 
-      num? rejectedCount, 
-      num? rejectedAmount,}){
+    num? totalCount,
+    num? totalAmount,
+    num? acceptedCount,
+    num? acceptedAmount,
+    num? rejectedCount,
+    num? rejectedAmount,
+  }) {
     _totalCount = totalCount;
     _totalAmount = totalAmount;
     _acceptedCount = acceptedCount;
     _acceptedAmount = acceptedAmount;
     _rejectedCount = rejectedCount;
     _rejectedAmount = rejectedAmount;
-}
+  }
 
   EclaimCountModel.fromJson(dynamic json) {
     _totalCount = json['totalCount'];
@@ -28,19 +29,22 @@ class EclaimCountModel {
   num? _acceptedAmount;
   num? _rejectedCount;
   num? _rejectedAmount;
-EclaimCountModel copyWith({  num? totalCount,
-  num? totalAmount,
-  num? acceptedCount,
-  num? acceptedAmount,
-  num? rejectedCount,
-  num? rejectedAmount,
-}) => EclaimCountModel(  totalCount: totalCount ?? _totalCount,
-  totalAmount: totalAmount ?? _totalAmount,
-  acceptedCount: acceptedCount ?? _acceptedCount,
-  acceptedAmount: acceptedAmount ?? _acceptedAmount,
-  rejectedCount: rejectedCount ?? _rejectedCount,
-  rejectedAmount: rejectedAmount ?? _rejectedAmount,
-);
+  EclaimCountModel copyWith({
+    num? totalCount,
+    num? totalAmount,
+    num? acceptedCount,
+    num? acceptedAmount,
+    num? rejectedCount,
+    num? rejectedAmount,
+  }) =>
+      EclaimCountModel(
+        totalCount: totalCount ?? _totalCount,
+        totalAmount: totalAmount ?? _totalAmount,
+        acceptedCount: acceptedCount ?? _acceptedCount,
+        acceptedAmount: acceptedAmount ?? _acceptedAmount,
+        rejectedCount: rejectedCount ?? _rejectedCount,
+        rejectedAmount: rejectedAmount ?? _rejectedAmount,
+      );
   num? get totalCount => _totalCount;
   num? get totalAmount => _totalAmount;
   num? get acceptedCount => _acceptedCount;
@@ -58,5 +62,4 @@ EclaimCountModel copyWith({  num? totalCount,
     map['rejectedAmount'] = _rejectedAmount;
     return map;
   }
-
 }
