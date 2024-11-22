@@ -48,6 +48,7 @@ class LacakKirimanScreen extends StatelessWidget {
                   PhoneNumberConfirmationScreen(
                     awb: result,
                     cekResi: c.cekResi,
+                    isLoading: c.isLoading,
                   ),
                 );
                 // c.cekResi(result);
@@ -64,6 +65,7 @@ class LacakKirimanScreen extends StatelessWidget {
                 PhoneNumberConfirmationScreen(
                   awb: value,
                   cekResi: c.cekResi,
+                  isLoading: c.isLoading,
                 ),
               );
             },

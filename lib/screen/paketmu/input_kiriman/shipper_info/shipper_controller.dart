@@ -7,6 +7,7 @@ import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
@@ -95,7 +96,9 @@ class ShipperController extends BaseController {
 
     try {
       await master
-          .getAccounts()
+          .getAccounts(QueryModel(limit: 0, sort: [
+            {"accountNumber": "asc"}
+          ]))
           .then((value) => state.accountList.addAll(value.data ?? []));
       update();
 

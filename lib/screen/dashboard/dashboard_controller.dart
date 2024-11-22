@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
@@ -444,10 +445,14 @@ class DashboardController extends BaseController {
       }
 
       if (accounts) {
-        await master.getAccounts().then((value) async => await storage.saveData(
-              StorageCore.accounts,
-              value,
-            ));
+        await master
+            .getAccounts(QueryModel(limit: 0, sort: [
+              {"accountNumber": "asc"}
+            ]))
+            .then((value) async => await storage.saveData(
+                  StorageCore.accounts,
+                  value,
+                ));
       }
 
       if (dropshipper) {

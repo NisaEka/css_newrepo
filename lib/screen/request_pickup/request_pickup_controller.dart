@@ -62,6 +62,10 @@ class RequestPickupController extends BaseController {
   String selectedPickupTime = Constant.defaultPickupTime;
   String? selectedAddressId;
 
+  final PagingController<int, RequestPickupAddressModel>
+      pagingControllerPickupDataAddress =
+      PagingController(firstPageKey: Constant.defaultPage);
+
   bool _createDataLoading = false;
 
   bool get createDataLoading => _createDataLoading;
@@ -86,13 +90,16 @@ class RequestPickupController extends BaseController {
     ]));
     applyFilterDate();
     Future.wait([
-      getAddresses(),
+      getAddresses(1),
       getCities(''),
       getStatuses(),
       getTypes(),
     ]);
     pagingController.addPageRequestListener((pageKey) {
       getRequestPickups(pageKey);
+    });
+    pagingControllerPickupDataAddress.addPageRequestListener((pageKey) {
+      getAddresses(pageKey);
     });
   }
 
@@ -295,22 +302,54 @@ class RequestPickupController extends BaseController {
     update();
   }
 
-  Future<void> getAddresses() async {
+  Future<void> getAddresses(int page) async {
+    // try {
+    //   final response = await requestPickupRepository
+    //       .getRequestPickupAddresses(QueryParamModel(
+    //           limit: 0,
+    //           sort: jsonEncode([
+    //             {"createdDate": "desc"}
+    //           ])));
+    //   final payload = response.data ?? List.empty();
+    //   addresses.clear();
+    //   addresses.addAll(payload);
+    //   AppLogger.i("addresses: $addresses");
+    // } catch (e) {
+    //   AppLogger.e("getAddresses error: $e");
+    //   e.toString();
+    //   // Do nothing for now.
+    // }
+
     try {
       final response = await requestPickupRepository
           .getRequestPickupAddresses(QueryParamModel(
-              limit: 0,
+              // limit: 0,
+              page: page,
               sort: jsonEncode([
                 {"createdDate": "desc"}
               ])));
+      AppLogger.i("addresses: ${response.data}");
       final payload = response.data ?? List.empty();
       addresses.clear();
       addresses.addAll(payload);
-      AppLogger.i("addresses: $addresses");
+
+      AppLogger.i("addresses from controller: $addresses");
+      // return BaseResponse<List<PantauPaketmuModel>>
+
+      final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
+      if (isLastPage) {
+        pagingControllerPickupDataAddress.appendLastPage(payload);
+        AppLogger.i(
+            "pagingControllerPickupDataAddress, $pagingControllerPickupDataAddress");
+      } else {
+        final nextPageKey = page + 1;
+        pagingControllerPickupDataAddress.appendPage(payload, nextPageKey);
+        AppLogger.i(
+            "pagingControllerPickupDataAddress, $pagingControllerPickupDataAddress");
+      }
     } catch (e) {
       AppLogger.e("getAddresses error: $e");
-      e.toString();
-      // Do nothing for now.
+      pagingControllerPickupDataAddress.error = e;
     }
   }
 
@@ -400,11 +439,13 @@ class RequestPickupController extends BaseController {
   }
 
   void onUpdateAddresses() {
-    getAddresses();
+    // pagingControllerPickupDataAddress.refresh();
+    // getAddresses(1);
   }
 
   void refreshPickups() {
     pagingController.refresh();
+    // pagingControllerPickupDataAddress.refresh();
   }
 
   void refreshState() {
@@ -481,7 +522,7 @@ class RequestPickupController extends BaseController {
   RequestPickupCreateRequestModel _prepareCreateData() {
     return RequestPickupCreateRequestModel(
       awbs: selectedAwbs,
-      pickupAddressId: addresses.first.pickupDataId,
+      pickupAddressId: selectedAddressId ?? '',
       pickupTime: getSelectedPickupTime(),
     );
   }

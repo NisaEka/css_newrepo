@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -105,7 +106,11 @@ class TambahPetugasController extends BaseController {
     branchList = [];
     update();
     try {
-      await master.getAccounts().then((value) {
+      await master
+          .getAccounts(QueryModel(limit: 0, sort: [
+        {"accountNumber": "asc"}
+      ]))
+          .then((value) {
         accountList.addAll(value.data ?? []);
         update();
       });
