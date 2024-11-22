@@ -13,6 +13,8 @@ class EclaimItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return GetBuilder<EclaimController>(
       init: EclaimController(),
       builder: (c) {
@@ -30,7 +32,7 @@ class EclaimItems extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height - 500, // Adjust height as needed
+              height: screenHeight * 0.5,
               child: RefreshIndicator(
                 onRefresh: () => Future.sync(() {
                   c.state.pagingController.refresh();

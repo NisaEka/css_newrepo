@@ -1,7 +1,5 @@
+import 'package:css_mobile/data/model/eclaim/eclaim_count_model.dart';
 import 'package:css_mobile/data/model/eclaim/eclaim_model.dart';
-import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
-import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -14,6 +12,7 @@ class EclaimState {
   final PagingController<int, EclaimModel> pagingController =
       PagingController(firstPageKey: 1);
 
+  EclaimCountModel? countModel;
   int total = 0;
   int diterima = 0;
   int ditolak = 0;
@@ -21,7 +20,7 @@ class EclaimState {
   DateTime? endDate;
   String? transDate;
   String dateFilter = '0';
-  String? selectedStatusClaim;
+  String? selectedStatusClaim = "Total";
 
   bool isFiltered = false;
   bool isLoading = false;

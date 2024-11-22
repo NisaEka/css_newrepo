@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_controller.dart';
+import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,9 @@ class EclaimStatusButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double fontSize = screenWidth > 600 ? 20 : 16;
+
     return GetBuilder<EclaimController>(
         init: EclaimController(),
         builder: (c) {
@@ -20,7 +24,8 @@ class EclaimStatusButton extends StatelessWidget {
               children: [
                 // Total Pengajuan
                 Container(
-                    decoration: BoxDecoration(
+                  width: screenWidth * 0.3,
+                  decoration: BoxDecoration(
                       color: blueJNE,
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -28,7 +33,8 @@ class EclaimStatusButton extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: const EdgeInsets.only(left: 10, right: 30, top: 16, bottom: 16),
+                          width: double.infinity,
+                          padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: whiteColor,
                             borderRadius: BorderRadius.circular(8),
@@ -44,11 +50,11 @@ class EclaimStatusButton extends StatelessWidget {
                                     fontSize: 12,
                                     fontWeight: bold,
                                     color: Colors.black
-                                ),
+                                )
                               ),
-                              const SizedBox(height: 6),
+                              SizedBox(height: 7),
                                Text(
-                                c.state.total.toString(),
+                                c.state.countModel?.totalCount.toString()??'0',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 20,
@@ -56,16 +62,16 @@ class EclaimStatusButton extends StatelessWidget {
                                     color: Colors.black
                                 ),
                               ),
-                              const SizedBox(height: 6),
+                              const SizedBox(height: 7),
                             ],
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10, right: 10, bottom: 3, top: 3),
+                        Padding(
+                        padding: EdgeInsets.only(left: 8, bottom: 4, top: 2),
                           child: Text(
-                                'Rp. 1.000.000',
+                                'Rp. ${c.state.countModel?.totalAmount?.toCurrency().toString()??'0'}',
                                 style: TextStyle(
-                                  fontSize: 8,
+                                  fontSize: 10,
                                   color: whiteColor,
                                 ),
                           ),
@@ -75,7 +81,8 @@ class EclaimStatusButton extends StatelessWidget {
                   ),
                 // Diterima
                 Container(
-                      decoration: BoxDecoration(
+                  width: screenWidth * 0.2,
+                  decoration: BoxDecoration(
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -83,7 +90,8 @@ class EclaimStatusButton extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            padding: const EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
+                              width: double.infinity,
+                              padding: EdgeInsets.all(8),
                               decoration: BoxDecoration(
                               color: whiteColor,
                               borderRadius: BorderRadius.circular(8),
@@ -92,41 +100,50 @@ class EclaimStatusButton extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle_outline,
-                                      color: Colors.green,
-                                      size: 18,
-                                    )
-                                  ],
+                                Icon(
+                                  Icons.check_circle_outline,
+                                  color: Colors.green,
+                                  size: 18,
                                 ),
-                                const Text(
-                                  "1",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  'Diterima',
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: bold,
-                                      color: Colors.black
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 5),
+                                        child: Text(
+                                          c.state.countModel?.acceptedCount.toString()??'0',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 5),
+                                        child: Text(
+                                          'Diterima',
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: bold,
+                                              color: Colors.black
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, right: 10, bottom: 3, top: 3),
+                          Padding(
+                            padding: EdgeInsets.only(left: 8, bottom: 4, top: 2),
                             child: Text(
-                              'Rp. 500.000',
+                              'Rp. ${c.state.countModel?.acceptedAmount?.toCurrency().toString()??'0'}',
                               style: TextStyle(
-                                fontSize: 8,
+                                fontSize: 10,
                                 color: whiteColor,
                               ),
                             ),
@@ -136,7 +153,8 @@ class EclaimStatusButton extends StatelessWidget {
                     ),
                 // Ditolak
                 Container(
-                      decoration: BoxDecoration(
+                  width: screenWidth * 0.2,
+                  decoration: BoxDecoration(
                         color: redJNE,
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -144,7 +162,8 @@ class EclaimStatusButton extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                              padding: const EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
+                              width: double.infinity,
+                              padding: EdgeInsets.all(8),
                               decoration: BoxDecoration(
                               color: whiteColor,
                               borderRadius: BorderRadius.circular(8),
@@ -153,41 +172,50 @@ class EclaimStatusButton extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.cancel_outlined,
-                                      color: redJNE,
-                                      size: 18,
-                                    ),
-                                  ],
+                                Icon(
+                                  Icons.cancel_outlined,
+                                  color: redJNE,
+                                  size: 18,
                                 ),
-                                const Text(
-                                  "1",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  'Ditolak',
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: bold,
-                                      color: Colors.black
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 5),
+                                        child: Text(
+                                          c.state.countModel?.rejectedCount.toString()??'0',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 5.0),
+                                        child: Text(
+                                          'Ditolak',
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: bold,
+                                              color: Colors.black
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, right: 10, bottom: 3, top: 3),
+                          Padding(
+                            padding: EdgeInsets.only(left: 8, bottom: 4, top: 2),
                             child: Text(
-                              'Rp. 500.000',
+                              'Rp. ${c.state.countModel?.rejectedAmount?.toCurrency().toString()??'0'}',
                               style: TextStyle(
-                                fontSize: 8,
+                                fontSize: 10,
                                 color: whiteColor,
                               ),
                             ),

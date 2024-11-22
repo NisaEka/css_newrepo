@@ -31,12 +31,14 @@ class EclaimScreen extends StatelessWidget {
             ),
             body: const Padding(
               padding: EdgeInsets.only(left: 30, right: 30, top: 30),
-              child: Column(
-                children: [
-                  TransactionSearchField(),
-                  EclaimStatusButton(),
-                  EclaimItems(),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TransactionSearchField(),
+                    EclaimStatusButton(),
+                    EclaimItems(),
+                  ],
+                ),
               ),
             ),
           );

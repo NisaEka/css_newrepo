@@ -58,7 +58,7 @@ class EclaimRepositoryImpl extends EclaimRepository {
 
     try {
       var response = await network.base
-          .get("'/contact-me/e-claims'/count",
+          .get("/contact-me/e-claims/count",
           queryParameters: param.toJson());
       return BaseResponse<EclaimCountModel>.fromJson(
         response.data,
@@ -67,6 +67,7 @@ class EclaimRepositoryImpl extends EclaimRepository {
             ),
       );
     } on DioException catch (e) {
+      AppLogger.e('Error getEclaim Count :  ${e.response?.data}');
       return BaseResponse<EclaimCountModel>.fromJson(
         e.response?.data,
             (json) => EclaimCountModel.fromJson(

@@ -1,7 +1,5 @@
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_controller.dart';
-import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
@@ -116,30 +114,37 @@ class TransactionFilterButton extends HookWidget {
                             const SizedBox(height: 10),
                             // const CustomFormLabel(label: 'Petugas Entry'),
                             CustomDropDownField(
-                                items: [
-                                  DropdownMenuItem<String>(
-                                    value: 'Total',
-                                    child: Text('Total'),  // Diterima
-                                  ),
-                                  DropdownMenuItem<String>(
-                                    value: 'Diterima',
-                                    child: Text('Diterima'),  // Diterima
-                                  ),
-                                  DropdownMenuItem<String>(
-                                    value: 'Ditolak',
-                                    child: Text('Ditolak'),  // Ditolak
-                                  ),
-                                ],
                               label: 'Status Claim'.tr,
-                              hintText: 'Select Status'.tr,
                               value: c.state.selectedStatusClaim,
+                              hintText: 'Status Claim'.tr,
+                              items: [
+                                DropdownMenuItem(
+                                  value: 'Total',
+                                  child: Text(
+                                    'Total'.tr.toUpperCase(),
+                                    style: subTitleTextStyle,
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Diterima',
+                                  child: Text(
+                                    'Diterima'.tr.toUpperCase(),
+                                    style: subTitleTextStyle,
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Ditolak',
+                                  child: Text(
+                                    'Ditolak'.tr.toUpperCase(),
+                                    style: subTitleTextStyle,
+                                  ),
+                                ),
+                              ],
                               onChanged: (value) {
-                                setState(() {
-                                  c.state.selectedStatusClaim = value;
-                                  c.update();
-                                });
+                                c.state.selectedStatusClaim = value ?? '';
+                                c.update();
                               },
-                            )
+                            ),
                           ],
                         ),
                       ),

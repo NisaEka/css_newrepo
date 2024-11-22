@@ -72,7 +72,7 @@ class EclaimListItem extends StatelessWidget {
                       size: 18,
                     ),
                     Text(
-                      amount??'',
+                      'Rp. ${amount?.toString()??'0'}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
