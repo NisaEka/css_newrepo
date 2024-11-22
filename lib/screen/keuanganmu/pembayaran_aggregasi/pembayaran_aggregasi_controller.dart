@@ -6,6 +6,7 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -123,27 +124,15 @@ class PembayaranAggergasiController extends BaseController {
     accountList = [];
     selectedAccount = [];
     try {
-      await master.getAccounts().then(
+      await master
+          .getAccounts(QueryModel(limit: 0, sort: [
+            {"accountNumber": "asc"}
+          ]))
+          .then(
             (value) => accountList.addAll(value.data ?? []),
           );
       update();
       selectedAccount.addAll(accountList);
-
-      // final isIn = [];
-      // final between = [];
-
-      // if (selectedAccount.isNotEmpty) {
-      //   isIn.add({
-      //     "mpayWdrGrpPayCode": [
-      //       "10999302",
-      //       ...selectedAccount.map((e) => e.accountNumber).toList()
-      //     ]
-      //   });
-      // }
-
-      // if (transDate.isNotEmpty) {
-      //   between.add({"mpayWdrGrpPayDate": transDate});
-      // }
     } catch (e, i) {
       AppLogger.e('error initData pembayaran aggregasi $e, $i');
     }
@@ -267,5 +256,11 @@ class PembayaranAggergasiController extends BaseController {
     endDate = value;
     endDateField.text = value.toString().toShortDateFormat();
     update();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pagingController.dispose();
   }
 }

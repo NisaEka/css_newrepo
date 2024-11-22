@@ -41,13 +41,14 @@ class DraftTransaksiScreen extends StatelessWidget {
     return CustomTopBar(
       title: 'Draft Transaksi'.tr,
       leading: CustomBackButton(
-        onPressed: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+        onPressed: () => Get.delete<DashboardController>()
+            .then((_) => Get.offAll(const DashboardScreen())),
       ),
       action: [
         c.isOnline && c.isSync
             ? CustomFilledButton(
                 color: successColor,
-                icon: Icons.sync,
+                prefixIcon: Icons.sync,
                 width: 100,
                 title: 'Sync Data'.tr,
                 // onPressed: () => c.syncData(),

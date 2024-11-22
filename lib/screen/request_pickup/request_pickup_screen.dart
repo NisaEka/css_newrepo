@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
@@ -11,13 +12,17 @@ import 'package:css_mobile/screen/request_pickup/request_pickup_confirmation_dia
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
 import 'package:css_mobile/util/constant.dart';
+import 'package:css_mobile/util/input_formatter/custom_formatter.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
+import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -123,19 +128,20 @@ class RequestPickupScreen extends StatelessWidget {
     return Stack(
       children: [
         _mainContent(context, controller),
-        controller.createDataLoading ? const LoadingDialog() : Container(),
-        controller.createDataFailed
-            ? MessageInfoDialog(
-                message: 'Gagal membuat permintaan pickup',
-                onClickAction: () => controller.refreshState(),
-              )
-            : Container(),
-        controller.createDataSuccess
-            ? MessageInfoDialog(
-                message: 'Berhasil membuat permintaan pickup',
-                onClickAction: () => controller.refreshState(),
-              )
-            : Container(),
+        if (controller.createDataLoading) const LoadingDialog(),
+        if (controller.createDataFailed || controller.createDataSuccess)
+          MessageInfoDialog(
+            message:
+                'Success: ${controller.data?.successCount}. Error: ${controller.data?.errorCount}\n'
+                'Error Details:\n'
+                '${controller.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
+            onClickAction: () => controller.refreshState(),
+          ),
+        // if (controller.createDataSuccess)
+        //   MessageInfoDialog(
+        //     message: 'Pickup request created successfully!',
+        //     onClickAction: () => controller.refreshState(),
+        //   ),
       ],
     );
   }
@@ -146,6 +152,27 @@ class RequestPickupScreen extends StatelessWidget {
       children: [
         _buttonFilters(context, controller),
         _checkAllItemBox(context, controller),
+        CustomSearchField(
+          controller: controller.searchField,
+          hintText: 'Cari'.tr,
+          inputFormatters: [
+            UpperCaseTextFormatter(),
+          ],
+          prefixIcon: SvgPicture.asset(
+            IconsConstant.search,
+            color: Theme.of(context).brightness == Brightness.light
+                ? whiteColor
+                : blueJNE,
+          ),
+          onChanged: (value) {
+            controller.onSearchChanged(value);
+          },
+          onClear: () {
+            controller.searchField.clear();
+            controller.pagingController.refresh();
+          },
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+        ),
         Expanded(
             child: RefreshIndicator(
           onRefresh: () =>
@@ -231,19 +258,24 @@ class RequestPickupScreen extends StatelessWidget {
         child: Row(
           children: [
             const SizedBox(width: 16),
-            _buttonFilter(context, controller.filterDateText.tr, () {
+            _buttonFilter(
+                context, controller.filterDateText.tr, Constant.allDate, () {
               _filterDateBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(context, controller.filterStatusText.tr, () {
+            _buttonFilter(
+                context, controller.filterStatusText.tr, Constant.allStatus,
+                () {
               _filterStatusBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(context, controller.filterDeliveryTypeText.tr, () {
+            _buttonFilter(context, controller.filterDeliveryTypeText.tr,
+                Constant.allDeliveryType, () {
               _filterDeliveryTypeBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(context, controller.filterDeliveryCityText.tr, () {
+            _buttonFilter(context, controller.filterDeliveryCityText.tr,
+                Constant.allDeliveryCity, () {
               _filterDeliveryCityBottomSheet(controller);
             }),
             const SizedBox(width: 16),
@@ -253,7 +285,8 @@ class RequestPickupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buttonFilter(BuildContext context, String text, Function onPressed) {
+  Widget _buttonFilter(BuildContext context, String text, String defaultFilter,
+      Function onPressed) {
     return OutlinedButton(
       onPressed: () {
         onPressed();
@@ -261,13 +294,15 @@ class RequestPickupScreen extends StatelessWidget {
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         side: const BorderSide(width: 1, color: greyColor),
+        backgroundColor: text == defaultFilter ? whiteColor : blueJNE,
       ),
       child: Row(
         children: [
-          Text(
-            text.tr,
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
+          Text(text.tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium
+                  ?.copyWith(color: text == defaultFilter ? null : whiteColor)),
           const SizedBox(width: 8),
           Icon(
             Icons.keyboard_arrow_down,
@@ -519,13 +554,13 @@ class RequestPickupScreen extends StatelessWidget {
           title: 'Pilih Alamat Penjemputan'.tr,
           content: RequestPickupSelectAddressContent(
             addresses: controller.addresses,
+            pagingController: controller.pagingControllerPickupDataAddress,
             onAddNewAddressClick: () {
               Get.to(() => const RequestPickupAddressUpsertScreen())
                   ?.then((result) {
                 if (result == HttpStatus.created) {
-                  controller.getAddresses().then((value) {
-                    setState(() => controller.update());
-                  });
+                  controller.pagingControllerPickupDataAddress.refresh();
+                  setState(() => controller.update());
                 }
               });
             },

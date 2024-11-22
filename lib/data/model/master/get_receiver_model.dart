@@ -46,8 +46,7 @@ class ReceiverModel {
     _destinationDescription = json['destination_description'] ??
         json['destinationDesc'] ??
         json['destination_desc'];
-    _idDestination =
-        json['id_destination'] ?? json['idDest'] ?? json['destination_id'];
+    _idDestination = json['idDest'];
     _idReceive = json['id_receive'] ?? json['idReceive'];
     _receiverDistrict = json['receiver_district'] ?? json['receiverDistrict'];
     _receiverSubDistrict =

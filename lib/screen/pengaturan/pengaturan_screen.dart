@@ -129,7 +129,7 @@ class PengaturanScreen extends StatelessWidget {
                       fontColor: c.mode == "dark" ? whiteColor : greyColor,
                       borderColor:
                           c.mode == "dark" ? Colors.transparent : greyColor,
-                      icon: Icons.dark_mode,
+                      prefixIcon: Icons.dark_mode,
                       width: 40,
                       margin: EdgeInsets.zero,
                       padding: EdgeInsets.zero,
@@ -143,7 +143,7 @@ class PengaturanScreen extends StatelessWidget {
                           c.mode == "light" ? Colors.transparent : greyColor,
                       margin: EdgeInsets.zero,
                       padding: EdgeInsets.zero,
-                      icon: Icons.light_mode,
+                      prefixIcon: Icons.light_mode,
                       width: 40,
                       onPressed: () => c.changeTheme("light"),
                     ),

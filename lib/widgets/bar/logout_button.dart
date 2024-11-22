@@ -31,7 +31,10 @@ class LogoutButton extends StatelessWidget {
           ? BoxDecoration(
               color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
               border: Border(
-                bottom: BorderSide(color: AppConst.isLightTheme(context) ? greyColor : Colors.white),
+                bottom: BorderSide(
+                    color: AppConst.isLightTheme(context)
+                        ? greyColor
+                        : Colors.white),
                 // top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
               ),
             )
@@ -42,7 +45,8 @@ class LogoutButton extends StatelessWidget {
             onTap: () => isLogin
                 ? showDialog(
                     context: context,
-                    builder: (context) => LogoutAlertDialog(onLogout: () => doLogout()),
+                    builder: (context) =>
+                        LogoutAlertDialog(onLogout: () => doLogout()),
                   )
                 : Get.to(const LoginScreen()),
             leading: Icon(
@@ -73,19 +77,10 @@ class LogoutButton extends StatelessWidget {
     final auth = Get.find<AuthRepository>();
     final storage = Get.find<StorageCore>();
 
-    await auth
-        .logout(
-            // Device(
-            //   fcmToken: await storage.readString(StorageCore.fcmToken),
-            // ),
-            )
-        .then((value) async {
+    await auth.logout().then((value) async {
       AppLogger.d(value.toJson().toString());
-      // if (value.code == 200) {
-      await auth.logout().then(
-        (value) async {
-          await auth.updateDeviceInfo(DeviceModel(fcmToken: await storage.readString(StorageCore.fcmToken)));
-        },
+      await auth.updateDeviceInfo(
+        DeviceModel(fcmToken: await storage.readString(StorageCore.fcmToken)),
       );
       storage.deleteLogin();
       Get.offAll(const LoginScreen());

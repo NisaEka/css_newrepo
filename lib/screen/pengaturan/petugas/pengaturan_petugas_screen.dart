@@ -74,8 +74,10 @@ class PengaturanPetugasScreen extends StatelessWidget {
                       color: item.status == "Y" ? successColor : errorColor,
                     ),
                     title: item.name ?? '',
-                    subtitle: '${item.email ?? '-'}\n${item.phone ?? '-'}\n${item.branch ?? ''} - ${item.origin ?? ''}',
-                    onTap: () => Get.to(const TambahPetugasScreen(), arguments: {
+                    subtitle:
+                        '${item.email ?? '-'}\n${item.phone ?? '-'}\n${item.branch ?? ''} - ${item.origin ?? ''}',
+                    onTap: () =>
+                        Get.to(const TambahPetugasScreen(), arguments: {
                       'isEdit': true,
                       'data': item,
                     })?.then((value) => c.pagingController.refresh()),
@@ -93,7 +95,8 @@ class PengaturanPetugasScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(
                     children: List.generate(
                       3,
@@ -114,7 +117,8 @@ class PengaturanPetugasScreen extends StatelessWidget {
                       color: blueJNE,
                     ),
                   ),
-                  newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                  newPageProgressIndicatorBuilder: (context) =>
+                      const LoadingDialog(
                     background: Colors.transparent,
                     height: 50,
                     size: 30,

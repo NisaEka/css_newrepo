@@ -21,6 +21,8 @@ class CekOngkirState {
   double berat = 0;
   double isr = 0;
   bool isLoading = false;
+  String weightExpress = '';
+  String weightJtr = '';
 
   List<City> cityList = [];
   List<OriginExternal> originList = [];

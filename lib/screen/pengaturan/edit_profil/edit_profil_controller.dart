@@ -40,13 +40,16 @@ class EditProfileController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     try {
-      await profil.getBasicProfil().then((value) => basicProfil = value.data?.user);
+      await profil
+          .getBasicProfil()
+          .then((value) => basicProfil = value.data?.user);
       update();
 
       await profil.getCcrfProfil().then((value) {
         if (value.data != null) {
           ccrfProfil = value.data;
-          isCcrf = value.data != null && value.data?.generalInfo?.apiStatus == "Y";
+          isCcrf =
+              value.data != null && value.data?.generalInfo?.apiStatus == "Y";
         } else {
           ccrfProfil ??= CcrfProfileModel(
             generalInfo: GeneralInfo(
@@ -65,7 +68,8 @@ class EditProfileController extends BaseController {
     } catch (e, i) {
       AppLogger.e('error initData edit profil $e, $i');
 
-      var basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+      var basic =
+          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
 
       brand.text = basic.brand ?? '';
       name.text = basic.name ?? '';

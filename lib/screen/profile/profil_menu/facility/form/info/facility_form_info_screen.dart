@@ -1,0 +1,165 @@
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/form/info/facility_form_info_controller.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_screen.dart';
+import 'package:css_mobile/widgets/bar/customstepper.dart';
+import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/profile/image_picker_container.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:form_validator/form_validator.dart';
+import 'package:get/get.dart';
+
+class FacilityFormInfoScreen extends StatelessWidget {
+  const FacilityFormInfoScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder(
+      init: FacilityFormInfoController(),
+      builder: (controller) {
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: _appBarContent(controller),
+              body: _bodyContent(controller, context),
+              bottomNavigationBar: _nextButton(controller),
+            ),
+            controller.pickImageFailed
+                ? MessageInfoDialog(
+                    message:
+                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                            .tr,
+                    onClickAction: () => controller.onRefreshUploadState(),
+                  )
+                : Container(),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _nextButton(FacilityFormInfoController c) {
+    return Padding(
+        padding: const EdgeInsets.all(16),
+        child: CustomFilledButton(
+          color: redJNE,
+          title: 'Selanjutnya'.tr,
+          onPressed: () {
+            Get.to(const FacilityFormReturnScreen(), arguments: {
+              'data': c.submitData(),
+              'destination': c.selectedDestination
+            });
+          },
+        ));
+  }
+
+  Widget _bodyContent(FacilityFormInfoController c, BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Container(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextFormField(
+                  controller: c.brand,
+                  hintText: 'Nama Toko / Perusahaan',
+                  validator: ValidationBuilder().maxLength(32).build(),
+                ),
+                CustomTextFormField(
+                  controller: c.idCardNumber,
+                  hintText: 'No Identitas / KTP',
+                  inputType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(16),
+                  ],
+                  validator:
+                      ValidationBuilder().maxLength(16).minLength(16).build(),
+                ),
+                ImagePickerContainer(
+                  containerTitle: 'Pilih Gambar Identitas / KTP',
+                  pickedImagePath: c.pickedImageUrl,
+                  onPickImage: () => c.pickImage(),
+                ),
+                CustomTextFormField(
+                  controller: c.fullName,
+                  hintText: 'Nama Lengkap',
+                  inputType: TextInputType.name,
+                  validator: ValidationBuilder().maxLength(32).build(),
+                ),
+                CustomTextFormField(
+                  controller: c.fullAddress,
+                  hintText: 'Alamat Lengkap',
+                  inputType: TextInputType.streetAddress,
+                  validator: ValidationBuilder().maxLength(128).build(),
+                ),
+                // CustomSearchDropdownField<Destination>(
+                //   asyncItems: (String filter) => c.getDestinationList(filter),
+                //   itemBuilder: (context, e, b) {
+                //     return GestureDetector(
+                //       onTap: () => c.update(),
+                //       child: Container(
+                //         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                //         child: Text(e.asFacilityFormFormat()),
+                //       ),
+                //     );
+                //   },
+                //   itemAsString: (Destination e) => e.asFacilityFormFormat(),
+                //   onChanged: (value) {
+                //     c.selectedDestination = value;
+                //     c.update();
+                //   },
+                //   value: c.selectedDestination,
+                //   isRequired: c.selectedDestination == null ? true : false,
+                //   readOnly: false,
+                //   hintText: c.isLoadDestination ? "Loading..." : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
+                //   textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
+                // ),
+                CustomTextFormField(
+                  controller: c.phone,
+                  hintText: 'No. Telp'.tr,
+                  inputType: TextInputType.phone,
+                  validator: ValidationBuilder().maxLength(15).phone().build(),
+                ),
+                CustomTextFormField(
+                  controller: c.whatsAppPhone,
+                  hintText: 'No. WhatsApp'.tr,
+                  inputType: TextInputType.phone,
+                  validator: ValidationBuilder().maxLength(15).phone().build(),
+                ),
+                CustomTextFormField(
+                  controller: c.email,
+                  hintText: 'Email'.tr,
+                  inputType: TextInputType.emailAddress,
+                  inputFormatters: const [],
+                  validator: ValidationBuilder().maxLength(64).email().build(),
+                )
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  CustomTopBar _appBarContent(FacilityFormInfoController c) {
+    return CustomTopBar(
+      title: 'Upgrade Profil Kamu'.tr,
+      flexibleSpace: Column(
+        children: [
+          CustomStepper(
+            currentStep: 0,
+            totalStep: c.steps.length,
+            steps: c.steps,
+          ),
+          const SizedBox(height: 8)
+        ],
+      ),
+    );
+  }
+}

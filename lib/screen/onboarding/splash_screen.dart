@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Replace this with your actual data loading logic.
     Future.delayed(
       const Duration(seconds: 2),
-          () {
+      () {
         Get.offAll(const Ob1Screen());
       },
     );
@@ -42,12 +42,14 @@ class _SplashScreenState extends State<SplashScreen> {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                 Text('Powered By ', style: Theme.of(context).textTheme.titleMedium,),
+                Text(
+                  'Powered By ',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 Image.asset(
                   ImageConstant.logoJNE,
                   width: 50,
                   color: AppConst.isDarkTheme(context) ? whiteColor : null,
-
                 ),
               ],
             )

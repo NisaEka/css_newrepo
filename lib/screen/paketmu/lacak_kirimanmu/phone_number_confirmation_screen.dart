@@ -10,9 +10,13 @@ import 'package:get/get.dart';
 class PhoneNumberConfirmationScreen extends StatefulWidget {
   final String awb;
   final Function(String awb, String phoneNumber) cekResi;
+  final bool isLoading;
 
   const PhoneNumberConfirmationScreen(
-      {Key? key, required this.awb, required this.cekResi})
+      {Key? key,
+      required this.awb,
+      required this.cekResi,
+      required this.isLoading})
       : super(key: key);
 
   @override
@@ -101,13 +105,15 @@ class PhoneNumberConfirmationScreenState
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                widget.cekResi(widget.awb, _phoneNumber).then((value) {
-                  if (value.code == 200) {
-                    Navigator.pop(context);
-                  } else {
-                    AppSnackBar.error(value.message);
-                  }
-                });
+                if (!widget.isLoading) {
+                  widget.cekResi(widget.awb, _phoneNumber).then((value) {
+                    if (value.code == 200) {
+                      Navigator.pop(context);
+                    } else {
+                      AppSnackBar.error(value.message);
+                    }
+                  });
+                }
               },
               child: Text('Konfirmasi'.tr),
             ),

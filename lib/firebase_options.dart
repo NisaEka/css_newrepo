@@ -85,5 +85,4 @@ class CssFirebaseOptions {
     storageBucket: 'cssmobile-jne.firebasestorage.app',
     measurementId: 'G-ZL3R4SC4HT',
   );
-
 }

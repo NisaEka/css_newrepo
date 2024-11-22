@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_agent_model.dart';
@@ -8,6 +10,7 @@ import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
@@ -25,7 +28,8 @@ class MasterRepositoryImpl extends MasterRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<OriginModel>>> getOrigins(QueryParamModel param) async {
+  Future<BaseResponse<List<OriginModel>>> getOrigins(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
 
     if (token != null) {
@@ -62,7 +66,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Destination>>> getDestinations(QueryParamModel param) async {
+  Future<BaseResponse<List<Destination>>> getDestinations(
+      QueryParamModel param) async {
     try {
       Response response = await network.base.get(
         '/master/destinations',
@@ -107,7 +112,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<GroupOwnerModel>>> getReferals(String keyword) async {
+  Future<BaseResponse<List<GroupOwnerModel>>> getReferals(
+      String keyword) async {
     try {
       Response response = await network.base.get(
         '/master/group-owners',
@@ -155,13 +161,16 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(QueryParamModel param) async {
+  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
-    UserModel user = UserModel.fromJson(await StorageCore().readData(StorageCore.basicProfile));
+    UserModel user = UserModel.fromJson(
+        await StorageCore().readData(StorageCore.basicProfile));
     String registID = '[{"registrationId" : "${user.id}"}]';
-    QueryParamModel params = param.copyWith(where: registID, table: true, relation: true);
+    QueryParamModel params =
+        param.copyWith(where: registID, table: true, relation: true);
 
     try {
       Response response = await network.base.get(
@@ -227,7 +236,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<ReceiverModel>>> getReceivers(QueryParamModel param) async {
+  Future<BaseResponse<List<ReceiverModel>>> getReceivers(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
@@ -235,7 +245,12 @@ class MasterRepositoryImpl extends MasterRepository {
       await StorageCore().readData(StorageCore.basicProfile),
     );
     String registID = '[{"registrationId" : "${user.id}"}]';
-    QueryParamModel params = param.copyWith(where: registID, table: true);
+    QueryParamModel params = param.copyWith(
+        where: registID,
+        table: true,
+        sort: jsonEncode([
+          {"receiverName": "asc"}
+        ]));
 
     try {
       Response response = await network.base.get(
@@ -302,12 +317,13 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Account>>> getAccounts() async {
+  Future<BaseResponse<List<Account>>> getAccounts(QueryModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         '/accounts',
+        queryParameters: param.toJson(),
       );
       return BaseResponse<List<Account>>.fromJson(
         response.data,
@@ -320,12 +336,14 @@ class MasterRepositoryImpl extends MasterRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
+      AppLogger.e("error get account : ${e.response?.data}");
       return e.response?.data;
     }
   }
 
   @override
-  Future<BaseResponse<List<ServiceModel>>> getServices(DataServiceModel param) async {
+  Future<BaseResponse<GetServiceModel>> getServices(
+      DataServiceModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
@@ -334,26 +352,19 @@ class MasterRepositoryImpl extends MasterRepository {
         queryParameters: param.toJson(),
       );
 
-      return BaseResponse<List<ServiceModel>>.fromJson(
+      return BaseResponse<GetServiceModel>.fromJson(
         response.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<ServiceModel>(
-                  (i) => ServiceModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
+        (json) => GetServiceModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
       );
     } on DioException catch (e) {
-      return BaseResponse<List<ServiceModel>>.fromJson(
+      AppLogger.e("Error get service : ${e.response?.data}");
+      return BaseResponse<GetServiceModel>.fromJson(
         e.response?.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<ServiceModel>(
-                  (i) => ServiceModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
+        (json) => GetServiceModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
       );
     }
   }

@@ -5,7 +5,7 @@ class BranchModel {
     String? branchCode,
     String? branchDesc,
     String? regionalCode,
-    Region? region,
+    RegionModel? region,
   }) {
     _branchCode = branchCode;
     _branchDesc = branchDesc;
@@ -17,19 +17,21 @@ class BranchModel {
     _branchCode = json['branchCode'];
     _branchDesc = json['branchDesc'];
     _regionalCode = json['regionalCode'];
-    _regional = json['regional'] != null ? Region.fromJson(json['regional']) : null;
+    _regional = json['regional'] != null
+        ? RegionModel.fromJson(json['regional'])
+        : null;
   }
 
   String? _branchCode;
   String? _branchDesc;
   String? _regionalCode;
-  Region? _regional;
+  RegionModel? _regional;
 
   BranchModel copyWith({
     String? branchCode,
     String? branchDesc,
     String? regionalCode,
-    Region? region,
+    RegionModel? region,
   }) =>
       BranchModel(
         branchCode: branchCode ?? _branchCode,
@@ -44,7 +46,7 @@ class BranchModel {
 
   String? get regionalCode => _regionalCode;
 
-  Region? get regional => _regional;
+  RegionModel? get regional => _regional;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

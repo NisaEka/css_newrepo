@@ -25,6 +25,7 @@ class LacakKirimanController extends BaseController {
         Get.to(() => PhoneNumberConfirmationScreen(
               awb: resi ?? '',
               cekResi: cekResi,
+              isLoading: isLoading,
             ));
       });
     }

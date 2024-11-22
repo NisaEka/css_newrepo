@@ -23,7 +23,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
   final List<Map<String, String>> bannerTexts = [
     {
       "title": "Permintaan Pickup",
-      "desc": "Kamu dapat melakukan permintaan pickup dan akan kami jemput ke tempat kamu.",
+      "desc":
+          "Kamu dapat melakukan permintaan pickup dan akan kami jemput ke tempat kamu.",
     },
     {
       "title": "Pencairan COD Cepat dan Detail",
@@ -32,7 +33,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
     },
     {
       "title": "Pantau Progres Pengiriman Realtime",
-      "desc": "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.",
+      "desc":
+          "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.",
     },
   ];
 
@@ -56,9 +58,12 @@ class _Ob1ScreenState extends State<Ob1Screen> {
               CarouselSlider(
                 carouselController: sliderController,
                 items: [
-                  _buildCarouselItem(ImageConstant.slice1, Alignment.centerLeft, 1),
-                  _buildCarouselItem(ImageConstant.slice2, Alignment.bottomCenter, 2),
-                  _buildCarouselItem(ImageConstant.slice3, Alignment.centerRight, 3),
+                  _buildCarouselItem(
+                      ImageConstant.slice1, Alignment.centerLeft, 1),
+                  _buildCarouselItem(
+                      ImageConstant.slice2, Alignment.bottomCenter, 2),
+                  _buildCarouselItem(
+                      ImageConstant.slice3, Alignment.centerRight, 3),
                 ],
                 options: CarouselOptions(
                   autoPlay: false,
@@ -86,17 +91,23 @@ class _Ob1ScreenState extends State<Ob1Screen> {
               //   onPressed: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
               // ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                 child: GestureDetector(
                   child: Text(
                     'Lewati'.tr,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: redJNE),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(color: redJNE),
                   ),
-                  onTap: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+                  onTap: () => Get.delete<DashboardController>()
+                      .then((_) => Get.offAll(const DashboardScreen())),
                 ),
               ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -104,7 +115,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                     CustomFilledButton(
                       color: lang == "id" ? redJNE : whiteColor,
                       fontColor: lang == "id" ? whiteColor : greyColor,
-                      borderColor: lang == "id" ? Colors.transparent : greyColor,
+                      borderColor:
+                          lang == "id" ? Colors.transparent : greyColor,
                       title: 'ID',
                       width: 40,
                       margin: EdgeInsets.zero,
@@ -115,7 +127,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                     CustomFilledButton(
                       color: lang == "en" ? redJNE : whiteColor,
                       fontColor: lang == "en" ? whiteColor : greyColor,
-                      borderColor: lang == "en" ? Colors.transparent : greyColor,
+                      borderColor:
+                          lang == "en" ? Colors.transparent : greyColor,
                       margin: EdgeInsets.zero,
                       padding: EdgeInsets.zero,
                       title: 'EN',
@@ -127,7 +140,6 @@ class _Ob1ScreenState extends State<Ob1Screen> {
               ),
             ],
           ),
-
         ],
       ),
       floatingActionButton: Column(
@@ -144,7 +156,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.linear,
                   )
-                : Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+                : Get.delete<DashboardController>()
+                    .then((_) => Get.offAll(const DashboardScreen())),
           ),
         ],
       ),
@@ -188,7 +201,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                 ),
               ),
               Align(
-                alignment: index == 2 ? Alignment.bottomCenter : Alignment.center,
+                alignment:
+                    index == 2 ? Alignment.bottomCenter : Alignment.center,
                 child: Image.asset(
                   imagePath,
                   height: Get.height / 2.5,

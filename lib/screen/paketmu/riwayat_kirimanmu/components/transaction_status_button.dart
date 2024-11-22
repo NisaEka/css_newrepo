@@ -33,7 +33,8 @@ class TransactionStatusButton extends StatelessWidget {
                     width: Get.width / 5,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color: c.state.selectedKiriman == 0 ? blueJNE : whiteColor,
+                      color:
+                          c.state.selectedKiriman == 0 ? blueJNE : whiteColor,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(8),
                         bottomLeft: Radius.circular(8),
@@ -47,13 +48,17 @@ class TransactionStatusButton extends StatelessWidget {
                         Text(
                           c.state.total.toString(),
                           style: listTitleTextStyle.copyWith(
-                            color: c.state.selectedKiriman == 0 ? whiteColor : blueJNE,
+                            color: c.state.selectedKiriman == 0
+                                ? whiteColor
+                                : blueJNE,
                           ),
                         ),
                         Text(
                           'Kiriman'.tr,
                           style: sublistTitleTextStyle.copyWith(
-                            color: c.state.selectedKiriman == 0 ? whiteColor : greyColor,
+                            color: c.state.selectedKiriman == 0
+                                ? whiteColor
+                                : greyColor,
                           ),
                         )
                       ],
@@ -71,7 +76,8 @@ class TransactionStatusButton extends StatelessWidget {
                     width: Get.width / 4.76,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color: c.state.selectedKiriman == 1 ? blueJNE : whiteColor,
+                      color:
+                          c.state.selectedKiriman == 1 ? blueJNE : whiteColor,
                       // border: const Border(
                       //   right: BorderSide(color: greyDarkColor1),
                       //   left: BorderSide(color: greyDarkColor1),
@@ -82,13 +88,17 @@ class TransactionStatusButton extends StatelessWidget {
                         Text(
                           c.state.cod.toString(),
                           style: listTitleTextStyle.copyWith(
-                            color: c.state.selectedKiriman == 1 ? whiteColor : blueJNE,
+                            color: c.state.selectedKiriman == 1
+                                ? whiteColor
+                                : blueJNE,
                           ),
                         ),
                         Text(
                           'COD'.tr,
                           style: sublistTitleTextStyle.copyWith(
-                            color: c.state.selectedKiriman == 1 ? whiteColor : greyColor,
+                            color: c.state.selectedKiriman == 1
+                                ? whiteColor
+                                : greyColor,
                           ),
                         )
                       ],
@@ -106,7 +116,8 @@ class TransactionStatusButton extends StatelessWidget {
                     width: Get.width / 4.76,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color: c.state.selectedKiriman == 2 ? blueJNE : whiteColor,
+                      color:
+                          c.state.selectedKiriman == 2 ? blueJNE : whiteColor,
                       // border: const Border(
                       //   right: BorderSide(color: greyDarkColor1),
                       // ),
@@ -116,13 +127,17 @@ class TransactionStatusButton extends StatelessWidget {
                         Text(
                           c.state.noncod.toString(),
                           style: listTitleTextStyle.copyWith(
-                            color: c.state.selectedKiriman == 2 ? whiteColor : blueJNE,
+                            color: c.state.selectedKiriman == 2
+                                ? whiteColor
+                                : blueJNE,
                           ),
                         ),
                         Text(
                           'NON COD'.tr,
                           style: sublistTitleTextStyle.copyWith(
-                            color: c.state.selectedKiriman == 2 ? whiteColor : greyColor,
+                            color: c.state.selectedKiriman == 2
+                                ? whiteColor
+                                : greyColor,
                           ),
                         )
                       ],
@@ -140,7 +155,8 @@ class TransactionStatusButton extends StatelessWidget {
                     width: Get.width / 4.76,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color: c.state.selectedKiriman == 3 ? blueJNE : whiteColor,
+                      color:
+                          c.state.selectedKiriman == 3 ? blueJNE : whiteColor,
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(8),
                         bottomRight: Radius.circular(8),
@@ -151,13 +167,17 @@ class TransactionStatusButton extends StatelessWidget {
                         Text(
                           c.state.codOngkir.toString(),
                           style: listTitleTextStyle.copyWith(
-                            color: c.state.selectedKiriman == 3 ? whiteColor : blueJNE,
+                            color: c.state.selectedKiriman == 3
+                                ? whiteColor
+                                : blueJNE,
                           ),
                         ),
                         Text(
                           'COD ONGKIR'.tr,
                           style: sublistTitleTextStyle.copyWith(
-                            color: c.state.selectedKiriman == 3 ? whiteColor : greyColor,
+                            color: c.state.selectedKiriman == 3
+                                ? whiteColor
+                                : greyColor,
                           ),
                         ),
                       ],

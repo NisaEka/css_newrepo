@@ -47,7 +47,9 @@ class CountCodItem extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 5),
-                    _loadingText(Text('Rp. ${data.total?.toInt().toCurrency() ?? 0}', style: Theme.of(context).textTheme.headlineLarge)),
+                    _loadingText(Text(
+                        'Rp. ${data.total?.toInt().toCurrency() ?? 0}',
+                        style: Theme.of(context).textTheme.headlineLarge)),
                     const SizedBox(height: 18),
                   ],
                 ),

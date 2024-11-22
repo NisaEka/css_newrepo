@@ -1,0 +1,27 @@
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/components/transaction_detail.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/components/transaction_edit_button.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';
+import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class DetailTransactionScreen extends StatelessWidget {
+  const DetailTransactionScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<DetailTransactionController>(
+      init: DetailTransactionController(),
+      builder: (controller) {
+        return Scaffold(
+          appBar: CustomTopBar(title: 'Detail Kiriman'.tr),
+          body: const TransactionDetail(),
+          bottomNavigationBar: TransactionEditButton(
+            isLoading: controller.state.isLoading,
+            transactionData: controller.state.transactionData,
+          ),
+        );
+      },
+    );
+  }
+}

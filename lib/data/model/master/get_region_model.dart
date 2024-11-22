@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-Region regionFromJson(String str) => Region.fromJson(json.decode(str));
+RegionModel regionFromJson(String str) =>
+    RegionModel.fromJson(json.decode(str));
 
-String regionToJson(Region data) => json.encode(data.toJson());
+String regionToJson(RegionModel data) => json.encode(data.toJson());
 
-class Region {
-  Region({
+class RegionModel {
+  RegionModel({
     String? code,
     String? name,
   }) {
@@ -13,7 +14,7 @@ class Region {
     _name = name;
   }
 
-  Region.fromJson(dynamic json) {
+  RegionModel.fromJson(dynamic json) {
     _code = json['code'] ?? json['regionalCode'];
     _name = json['name'] ?? json['regionalName'];
   }
@@ -21,11 +22,11 @@ class Region {
   String? _code;
   String? _name;
 
-  Region copyWith({
+  RegionModel copyWith({
     String? code,
     String? name,
   }) =>
-      Region(
+      RegionModel(
         code: code ?? _code,
         name: name ?? _name,
       );

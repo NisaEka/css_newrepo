@@ -41,7 +41,6 @@ class PengaturanController extends BaseController {
   }
 
   void changeLanguage(String language) async {
-    // if (!isLogin) {
     // if (value.code == 200) {
     if (language == "ID") {
       Get.updateLocale(const Locale("id", "ID"));
@@ -53,18 +52,26 @@ class PengaturanController extends BaseController {
       lang = "en";
     }
     // }
-    // }
-    await profil.putProfileBasic(
-      UserModel(
-        language: language == "ID" ? 'INDONESIA' : 'ENGLISH',
-        name: basicProfil?.name,
-        brand: basicProfil?.brand,
-        phone: basicProfil?.phone,
-        address: basicProfil?.address,
-        origin: basicProfil?.origin,
-        zipCode: basicProfil?.zipCode,
-      ),
-    );
+
+    if (isLogin) {
+      await profil.putProfileBasic(
+        UserModel(
+          language: language == "ID" ? 'INDONESIA' : 'ENGLISH',
+          name: basicProfil?.name,
+          brand: basicProfil?.brand,
+          phone: basicProfil?.phone,
+          address: basicProfil?.address,
+          origin: basicProfil?.origin,
+          zipCode: basicProfil?.zipCode,
+        ),
+      );
+
+      await profil.getBasicProfil().then((value) async {
+        await storage.saveData(StorageCore.basicProfile, value.data?.user);
+        basicProfil = value.data?.user;
+      });
+    }
+
     initData();
     update();
   }

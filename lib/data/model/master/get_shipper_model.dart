@@ -38,8 +38,9 @@ class ShipperModel {
         origin = json['origin'] != null
             ? OriginModel.fromJson(json['origin'])
             : null,
-        region =
-            json['region'] != null ? Region.fromJson(json['region']) : null;
+        region = json['region'] != null
+            ? RegionModel.fromJson(json['region'])
+            : null;
 
   /// Shipper attributes
   String? name;
@@ -49,7 +50,7 @@ class ShipperModel {
   String? address3;
   String? city;
   String? zipCode;
-  Region? region;
+  RegionModel? region;
   String? country;
   String? contact;
   String? phone;
@@ -65,7 +66,7 @@ class ShipperModel {
     String? address3,
     String? city,
     String? zipCode,
-    Region? region,
+    RegionModel? region,
     String? country,
     String? contact,
     String? phone,
@@ -97,7 +98,7 @@ class ShipperModel {
   String? get getAddress3 => address3;
   String? get getCity => city;
   String? get getZipCode => zipCode;
-  Region? get getRegion => region;
+  RegionModel? get getRegion => region;
   String? get getCountry => country;
   String? get getContact => contact;
   String? get getPhone => phone;

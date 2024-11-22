@@ -42,18 +42,23 @@ class CekOngkirForm extends StatelessWidget {
                 CustomTextFormField(
                   controller: c.state.beratKiriman,
                   hintText: 'Berat Kiriman'.tr,
-                  isRequired: true,
+                  isRequired: !c.state.dimensi,
                   suffixIcon: const SatuanFieldIcon(
                     title: 'KG',
                     isSuffix: true,
                   ),
                   inputType: TextInputType.number,
+                  readOnly: c.state.dimensi,
                 ),
                 CustomSwitch(
                   value: c.state.dimensi,
                   label: 'Dimensi'.tr,
                   onChange: (value) {
                     c.state.dimensi = value;
+                    c.state.beratKiriman.clear();
+                    c.state.panjang.clear();
+                    c.state.lebar.clear();
+                    c.state.tinggi.clear();
                     c.update();
                   },
                 ),
@@ -64,6 +69,7 @@ class CekOngkirForm extends StatelessWidget {
                           CustomTextFormField(
                             controller: c.state.panjang,
                             hintText: 'Panjang'.tr,
+                            isRequired: c.state.dimensi,
                             suffixIcon: const SatuanFieldIcon(
                               title: 'CM',
                               isSuffix: true,
@@ -71,15 +77,14 @@ class CekOngkirForm extends StatelessWidget {
                             width: Get.width / 3.8,
                             inputType: TextInputType.number,
                             readOnly: !c.state.dimensi,
-                            onChanged: (value) => c.hitungBerat(
+                            onChanged: (value) => {
                               c.state.panjang.text.toDouble(),
-                              c.state.lebar.text.toDouble(),
-                              c.state.tinggi.text.toDouble(),
-                            ),
+                            },
                           ),
                           CustomTextFormField(
                             controller: c.state.lebar,
                             hintText: 'Lebar'.tr,
+                            isRequired: c.state.dimensi,
                             suffixIcon: const SatuanFieldIcon(
                               title: 'CM',
                               isSuffix: true,
@@ -87,15 +92,14 @@ class CekOngkirForm extends StatelessWidget {
                             width: Get.width / 3.8,
                             inputType: TextInputType.number,
                             readOnly: !c.state.dimensi,
-                            onChanged: (value) => c.hitungBerat(
-                              c.state.panjang.text.toDouble(),
+                            onChanged: (value) => {
                               c.state.lebar.text.toDouble(),
-                              c.state.tinggi.text.toDouble(),
-                            ),
+                            },
                           ),
                           CustomTextFormField(
                             controller: c.state.tinggi,
                             hintText: 'Tinggi'.tr,
+                            isRequired: c.state.dimensi,
                             suffixIcon: const SatuanFieldIcon(
                               title: 'CM',
                               isSuffix: true,
@@ -103,11 +107,9 @@ class CekOngkirForm extends StatelessWidget {
                             width: Get.width / 3.8,
                             inputType: TextInputType.number,
                             readOnly: !c.state.dimensi,
-                            onChanged: (value) => c.hitungBerat(
-                              c.state.panjang.text.toDouble(),
-                              c.state.lebar.text.toDouble(),
+                            onChanged: (value) => {
                               c.state.tinggi.text.toDouble(),
-                            ),
+                            },
                           ),
                         ],
                       )
@@ -120,7 +122,6 @@ class CekOngkirForm extends StatelessWidget {
                     if (value == false) {
                       c.state.isr = 0;
                       c.state.estimasiHargaBarang.clear();
-                      // controller.loadOngkir();
                     }
                     c.update();
                   },

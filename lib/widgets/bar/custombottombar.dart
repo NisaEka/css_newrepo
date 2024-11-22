@@ -4,7 +4,7 @@ import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
-import 'package:css_mobile/screen/profile/alt/alt_profile_screen.dart';
+import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +59,8 @@ class BottomBar extends StatelessWidget {
                   icon: Icon(Icons.home, color: menu == 0 ? redJNE : blueJNE),
                   title: "Beranda".tr,
                   color: menu == 0 ? redJNE : blueJNE,
-                  onTap: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+                  onTap: () => Get.delete<DashboardController>()
+                      .then((_) => Get.offAll(const DashboardScreen())),
                 ),
                 const SizedBox(width: 30, height: 30),
                 const SizedBox(width: 30, height: 30),
@@ -86,7 +87,7 @@ class BottomBar extends StatelessWidget {
                           : whiteColor.withOpacity(0.5),
                   // onTap: () => Get.offAll(const ProfileScreen()),
                   onTap: () => isLogin
-                      ? Get.offAll(const AltProfileScreen())
+                      ? Get.offAll(const ProfileScreen())
                       : showDialog(
                           context: context,
                           builder: (context) => const LoginAlertDialog(),

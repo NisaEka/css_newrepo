@@ -12,10 +12,17 @@ class CcrfProfileModel {
   }
 
   CcrfProfileModel.fromJson(dynamic json) {
-    _generalInfo = json['generalInfo'] != null ? GeneralInfo.fromJson(json['generalInfo']) : null;
-    _returnAddress = json['returnAddress'] != null ? ReturnAddress.fromJson(json['returnAddress']) : null;
-    _document = json['document'] != null ? Document.fromJson(json['document']) : null;
-    _bankAccount = json['bankAccount'] != null ? BankAccount.fromJson(json['bankAccount']) : null;
+    _generalInfo = json['generalInfo'] != null
+        ? GeneralInfo.fromJson(json['generalInfo'])
+        : null;
+    _returnAddress = json['returnAddress'] != null
+        ? ReturnAddress.fromJson(json['returnAddress'])
+        : null;
+    _document =
+        json['document'] != null ? Document.fromJson(json['document']) : null;
+    _bankAccount = json['bankAccount'] != null
+        ? BankAccount.fromJson(json['bankAccount'])
+        : null;
   }
 
   GeneralInfo? _generalInfo;
@@ -246,7 +253,8 @@ class ReturnAddress {
         ccrfReturnzipcode: ccrfReturnzipcode ?? _ccrfReturnzipcode,
         ccrfReturnphone: ccrfReturnphone ?? _ccrfReturnphone,
         ccrfReturnhandphone: ccrfReturnhandphone ?? _ccrfReturnhandphone,
-        ccrfReturnresponsiblename: ccrfReturnresponsiblename ?? _ccrfReturnresponsiblename,
+        ccrfReturnresponsiblename:
+            ccrfReturnresponsiblename ?? _ccrfReturnresponsiblename,
         ccrfJlcnumber: ccrfJlcnumber ?? _ccrfJlcnumber,
         ccrfCounter: ccrfCounter ?? _ccrfCounter,
         ccrfNpwptype: ccrfNpwptype ?? _ccrfNpwptype,

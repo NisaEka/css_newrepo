@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
@@ -83,7 +84,6 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadNews() async {
-    AppLogger.i('load news');
     try {
       jlc.postDashboardNews().then((value) {
         state.newsList.addAll(value.data ?? []);
@@ -351,30 +351,22 @@ class DashboardController extends BaseController {
     loadTransCountList();
 
     bool accounts = ((await storage.readString(StorageCore.accounts)).isEmpty ||
-            (await storage.readString(StorageCore.accounts)) == 'null') &&
-        state.isLogin;
-    bool dropshipper = ((await storage.readString(StorageCore.dropshipper))
-                .isEmpty ||
-            (await storage.readString(StorageCore.dropshipper)) == 'null') &&
-        state.isLogin;
+        ((await storage.readString(StorageCore.accounts)) == 'null'));
+    bool dropshipper =
+        ((await storage.readString(StorageCore.dropshipper)).isEmpty ||
+            (await storage.readString(StorageCore.dropshipper)) == 'null');
     bool receiver = ((await storage.readString(StorageCore.receiver)).isEmpty ||
-            (await storage.readString(StorageCore.receiver)) == 'null') &&
-        state.isLogin;
+        (await storage.readString(StorageCore.receiver)) == 'null');
     bool sender = ((await storage.readString(StorageCore.shipper)).isEmpty ||
-            (await storage.readString(StorageCore.shipper)) == 'null') &&
-        state.isLogin;
+        (await storage.readString(StorageCore.shipper)) == 'null');
     bool basic = ((await storage.readString(StorageCore.basicProfile))
                 .isEmpty ||
             (await storage.readString(StorageCore.basicProfile)) == 'null') &&
         state.isLogin;
     bool ccrfP = ((await storage.readString(StorageCore.ccrfProfile)).isEmpty ||
-            (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
-            (await storage.readString(StorageCore.ccrfProfile)) == '{}') &&
-        state.isLogin;
+        (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
+        (await storage.readString(StorageCore.ccrfProfile)) == '{}');
     update();
-
-    AppLogger.i(
-        "basic profile : ${UserModel.fromJson(await storage.readData(StorageCore.basicProfile)).toJson()}");
     state.basic =
         UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
     saveFCMToken();
@@ -404,7 +396,7 @@ class DashboardController extends BaseController {
             await storage.writeString(StorageCore.localeApp, "id");
             Get.updateLocale(const Locale("id", "ID"));
             update();
-          } else {
+          } else if (state.basic?.language == "ENGLISH") {
             await storage.writeString(StorageCore.localeApp, "en");
             Get.updateLocale(const Locale("en", "ES"));
             update();
@@ -416,7 +408,7 @@ class DashboardController extends BaseController {
           await storage.writeString(StorageCore.localeApp, "id");
           Get.updateLocale(const Locale("id", "ID"));
           update();
-        } else {
+        } else if (state.basic?.language == "ENGLISH") {
           await storage.writeString(StorageCore.localeApp, "en");
           Get.updateLocale(const Locale("en", "ES"));
           update();
@@ -453,10 +445,14 @@ class DashboardController extends BaseController {
       }
 
       if (accounts) {
-        await master.getAccounts().then((value) async => await storage.saveData(
-              StorageCore.accounts,
-              value,
-            ));
+        await master
+            .getAccounts(QueryModel(limit: 0, sort: [
+              {"accountNumber": "asc"}
+            ]))
+            .then((value) async => await storage.saveData(
+                  StorageCore.accounts,
+                  value,
+                ));
       }
 
       if (dropshipper) {
