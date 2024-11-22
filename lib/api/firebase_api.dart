@@ -28,7 +28,8 @@ Future<void> firebaseMessagingOpenAppHandler(RemoteMessage message) async {
 Future<void> saveUnreadMessage(RemoteMessage data) async {
   List<Messages> listUnread = [];
   List<NotificationModel> listUnreadMessage = [];
-  var u = GetNotificationModel.fromJson(await StorageCore().readData(StorageCore.unreadMessage));
+  var u = GetNotificationModel.fromJson(
+      await StorageCore().readData(StorageCore.unreadMessage));
   if (u.payload?.isNotEmpty ?? false) {
     listUnreadMessage.addAll(u.payload ?? []);
   }

@@ -12,12 +12,18 @@ class CustomFormLabel extends StatelessWidget {
     this.showRequired = false,
     this.isLoading = false,
     this.isBold = false,
+    this.value,
+    this.fontColor,
+    this.width,
   });
 
   final String label;
+  final String? value;
   final bool showRequired;
   final bool isLoading;
   final bool isBold;
+  final Color? fontColor;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +31,23 @@ class CustomFormLabel extends StatelessWidget {
       isLoading: isLoading,
       child: Container(
         color: isLoading ? greyLightColor3 : Colors.transparent,
-        width: isLoading ? Get.width / 3 : null,
+        width: width ?? (isLoading ? Get.width / 3 : null),
+        margin: const EdgeInsets.symmetric(vertical: 5),
         child: RichText(
+          overflow: TextOverflow.ellipsis,
           text: TextSpan(
             text: label,
             style: subformLabelTextStyle.copyWith(
               fontWeight: isBold ? FontWeight.bold : regular,
               color: AppConst.isLightTheme(context)
-                  ? greyDarkColor2
+                  ? (fontColor ?? greyDarkColor2)
                   : greyLightColor2,
             ),
             children: <TextSpan>[
               TextSpan(
                   text: showRequired ? "*" : "",
                   style: const TextStyle(color: Colors.red)),
+              // TextSpan(text: value),
             ],
           ),
         ),

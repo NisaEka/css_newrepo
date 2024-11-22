@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class CustomFilledButton extends StatelessWidget {
   final String? title;
-  final IconData? icon;
+  final IconData? prefixIcon;
+  final IconData? suffixIcon;
   final Color color;
   final Color? borderColor;
   final Color? fontColor;
@@ -26,7 +27,7 @@ class CustomFilledButton extends StatelessWidget {
       this.title = '',
       this.width = double.infinity,
       this.height,
-      this.icon,
+      this.prefixIcon,
       required this.color,
       this.onPressed,
       this.borderColor = Colors.transparent,
@@ -38,7 +39,8 @@ class CustomFilledButton extends StatelessWidget {
       this.fontStyle,
       this.boxShadow,
       this.isTransparent = false,
-      this.isLoading = false})
+      this.isLoading = false,
+      this.suffixIcon})
       : super(key: key);
 
   @override
@@ -72,9 +74,10 @@ class CustomFilledButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                icon != null
+                const SizedBox(width: 5),
+                prefixIcon != null
                     ? Icon(
-                        icon,
+                        prefixIcon,
                         color: isTransparent
                             ? AppConst.isLightTheme(context)
                                 ? color
@@ -82,22 +85,39 @@ class CustomFilledButton extends StatelessWidget {
                             : fontColor,
                         size: fontSize! + 2,
                       )
-                    : Container(),
+                    : const SizedBox(),
                 title != null
-                    ? Text(
-                        ' $title',
-                        style: fontStyle ??
-                            TextStyle(
-                                color: isTransparent
-                                    ? AppConst.isLightTheme(context)
-                                        ? color
-                                        : whiteColor
-                                    : fontColor,
-                                fontWeight: FontWeight.w900,
-                                fontSize: fontSize),
-                        textAlign: TextAlign.center,
+                    ? Container(
+                        margin: EdgeInsets.only(
+                          left: prefixIcon != null && title != null ? 5 : 0,
+                          right: suffixIcon != null && title != null ? 5 : 0,
+                        ),
+                        child: Text(
+                          '$title',
+                          style: fontStyle ??
+                              TextStyle(
+                                  color: isTransparent
+                                      ? AppConst.isLightTheme(context)
+                                          ? color
+                                          : whiteColor
+                                      : fontColor,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: fontSize),
+                          textAlign: TextAlign.center,
+                        ),
                       )
-                    : Container(),
+                    : const SizedBox(),
+                suffixIcon != null
+                    ? Icon(
+                        suffixIcon,
+                        color: isTransparent
+                            ? AppConst.isLightTheme(context)
+                                ? color
+                                : whiteColor
+                            : fontColor,
+                        size: fontSize! + 2,
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

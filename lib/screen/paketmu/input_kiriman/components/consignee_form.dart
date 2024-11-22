@@ -51,7 +51,7 @@ class ConsigneeForm extends StatelessWidget {
                         c.update();
                       },
                       value: c.selectedDestination,
-                      isRequired: c.selectedDestination == null ,
+                      isRequired: c.selectedDestination == null,
                       readOnly: false,
                       prefixIcon: const Icon(Icons.location_city),
                     ),
@@ -64,9 +64,14 @@ class ConsigneeForm extends StatelessWidget {
                       validator: ValidationBuilder().address().build(),
                     ),
                     CustomFilledButton(
-                      color: c.formKey.currentState?.validate() == true ? blueJNE : greyColor,
+                      color: c.formKey.currentState?.validate() == true
+                          ? blueJNE
+                          : greyColor,
                       title: 'Simpan Data Penerima'.tr,
-                      onPressed: () => c.formKey.currentState?.validate() == true ? c.saveReceiver() : null,
+                      onPressed: () =>
+                          c.formKey.currentState?.validate() == true
+                              ? c.saveReceiver()
+                              : null,
                     ),
                   ],
                 ),

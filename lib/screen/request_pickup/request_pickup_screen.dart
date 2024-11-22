@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
@@ -11,13 +12,16 @@ import 'package:css_mobile/screen/request_pickup/request_pickup_confirmation_dia
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
 import 'package:css_mobile/util/constant.dart';
+import 'package:css_mobile/util/input_formatter/custom_formatter.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
+import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -147,6 +151,27 @@ class RequestPickupScreen extends StatelessWidget {
       children: [
         _buttonFilters(context, controller),
         _checkAllItemBox(context, controller),
+        CustomSearchField(
+          controller: controller.searchField,
+          hintText: 'Cari'.tr,
+          inputFormatters: [
+            UpperCaseTextFormatter(),
+          ],
+          prefixIcon: SvgPicture.asset(
+            IconsConstant.search,
+            color: Theme.of(context).brightness == Brightness.light
+                ? whiteColor
+                : blueJNE,
+          ),
+          onChanged: (value) {
+            controller.onSearchChanged(value);
+          },
+          onClear: () {
+            controller.searchField.clear();
+            controller.pagingController.refresh();
+          },
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+        ),
         Expanded(
             child: RefreshIndicator(
           onRefresh: () =>

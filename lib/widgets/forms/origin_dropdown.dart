@@ -55,9 +55,14 @@ class _OriginDropdownState extends State<OriginDropdown> {
   Future<List<OriginModel>> getOriginList(String keyword) async {
     final master = Get.find<MasterRepository>();
     AppLogger.i("branch code : ${widget.branch}");
-    var branchCode = (widget.branch?.isNotEmpty ?? false) ? '[{"branchCode" : "${widget.branch}"}]' : '[]';
-    var response =
-        await master.getOrigins(QueryParamModel(search: keyword.toUpperCase(), where: branchCode, table: widget.branch?.isNotEmpty, relation: true));
+    var branchCode = (widget.branch?.isNotEmpty ?? false)
+        ? '[{"branchCode" : "${widget.branch}"}]'
+        : '[]';
+    var response = await master.getOrigins(QueryParamModel(
+        search: keyword.toUpperCase(),
+        where: branchCode,
+        table: widget.branch?.isNotEmpty,
+        relation: true));
     var models = response.data?.toList();
 
     return models ?? [];
@@ -83,7 +88,8 @@ class _OriginDropdownState extends State<OriginDropdown> {
             asyncItems: (String filter) => getOriginList(filter),
             itemBuilder: (context, e, b) {
               return Container(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   e.originName.toString(),
                 ),

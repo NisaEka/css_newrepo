@@ -25,7 +25,9 @@ class SettingListItem extends StatelessWidget {
     return Shimmer(
       isLoading: isLoading,
       child: Container(
-        margin: isLoading ? const EdgeInsets.symmetric(vertical: 5) : EdgeInsets.zero,
+        margin: isLoading
+            ? const EdgeInsets.symmetric(vertical: 5)
+            : EdgeInsets.zero,
         decoration: BoxDecoration(
           color: isLoading ? greyColor : Colors.transparent,
           borderRadius: isLoading ? BorderRadius.circular(8) : null,
@@ -43,7 +45,9 @@ class SettingListItem extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           shape: Border(
-            bottom: !isLoading ? const BorderSide(color: greyColor) : const BorderSide(color: Colors.transparent),
+            bottom: !isLoading
+                ? const BorderSide(color: greyColor)
+                : const BorderSide(color: Colors.transparent),
           ),
           contentPadding: EdgeInsets.zero,
           onTap: onTap,

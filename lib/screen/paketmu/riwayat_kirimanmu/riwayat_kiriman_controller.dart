@@ -2,7 +2,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
-import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_screen.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -17,7 +17,7 @@ class RiwayatKirimanController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([transactionCount(), initData()]);
+    Future.wait([initData()]);
     state.pagingController.addPageRequestListener((pageKey) {
       getTransaction(pageKey);
     });
@@ -63,7 +63,9 @@ class RiwayatKirimanController extends BaseController {
     state.selectedTransaction = [];
     state.listStatusKiriman = [];
     try {
-      await profil.getBasicProfil().then((value) async => state.basic = value.data?.user);
+      await profil
+          .getBasicProfil()
+          .then((value) async => state.basic = value.data?.user);
 
       await transaction.getTransactionStatus().then((value) {
         state.listStatusKiriman.addAll(value.data ?? []);
@@ -98,7 +100,8 @@ class RiwayatKirimanController extends BaseController {
         state.selectedPetugasEntry?.name ?? '',
       );
 
-      final isLastPage = (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
+      final isLastPage =
+          (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
         // transactionList.addAll(state.pagingController.itemList ?? []);
@@ -126,19 +129,26 @@ class RiwayatKirimanController extends BaseController {
       state.endDateField.clear();
       state.transDate = '[]';
     } else if (filter == 1) {
-      state.startDate = DateTime.now().copyWith(hour: 0, minute: 0).subtract(const Duration(days: 30));
+      state.startDate = DateTime.now()
+          .copyWith(hour: 0, minute: 0)
+          .subtract(const Duration(days: 30));
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text = state.startDate.toString().toLongDateTimeFormat();
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
       state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     } else if (filter == 2) {
-      state.startDate = DateTime.now().copyWith(hour: 0, minute: 0).subtract(const Duration(days: 7));
+      state.startDate = DateTime.now()
+          .copyWith(hour: 0, minute: 0)
+          .subtract(const Duration(days: 7));
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text = state.startDate.toString().toLongDateTimeFormat();
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
       state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     } else if (filter == 3) {
       state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text = state.startDate.toString().toLongDateTimeFormat();
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
       state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
     }
 
@@ -205,7 +215,8 @@ class RiwayatKirimanController extends BaseController {
   void selectAll(bool value) {
     state.isSelectAll = value;
     // state.selectedTransaction = value ? transactionList : [];
-    state.selectedTransaction = value ? state.pagingController.itemList ?? [] : [];
+    state.selectedTransaction =
+        value ? state.pagingController.itemList ?? [] : [];
     update();
     state.selectedTransaction.isEmpty ? state.isSelect = false : null;
     update();
@@ -230,12 +241,15 @@ class RiwayatKirimanController extends BaseController {
       }
       update();
       // state.selectedTransaction.length == transactionList.length ? state.isSelectAll = true : state.isSelectAll = false;
-      state.selectedTransaction.length == state.pagingController.itemList?.length ? state.isSelectAll = true : state.isSelectAll = false;
+      state.selectedTransaction.length ==
+              state.pagingController.itemList?.length
+          ? state.isSelectAll = true
+          : state.isSelectAll = false;
     } else {
-      Get.to(const DetailRiwayatKirimanScreen(), arguments: {
+      Get.to(const DetailTransactionScreen(), arguments: {
         'awb': item.awb,
         'data': item,
-      });
+      })?.then((_) => initData());
     }
   }
 
@@ -271,14 +285,15 @@ class RiwayatKirimanController extends BaseController {
     //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
-      state.transDate = '[{"createdDateSearch":["${state.startDate}","${state.endDate}"]}]';
+      state.transDate =
+          '[{"createdDateSearch":["${state.startDate}","${state.endDate}"]}]';
       // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     }
     update();
     transactionCount();
     state.pagingController.refresh();
     update();
-    if(state.dateFilter == '0'){
+    if (state.dateFilter == '0') {
       resetFilter();
     }
     // } else {

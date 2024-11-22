@@ -40,14 +40,18 @@ class TransactionItems extends StatelessWidget {
                     ),
                     child: PagedListView<int, TransactionModel>(
                       pagingController: c.state.pagingController,
-                      builderDelegate: PagedChildBuilderDelegate<TransactionModel>(
+                      builderDelegate:
+                          PagedChildBuilderDelegate<TransactionModel>(
                         transitionDuration: const Duration(milliseconds: 500),
-                        itemBuilder: (context, item, index) => RiwayatKirimanListItem(
+                        itemBuilder: (context, item, index) =>
+                            RiwayatKirimanListItem(
                           data: item,
                           isLoading: false,
                           status: item.statusAwb,
                           index: index,
-                          isSelected: c.state.selectedTransaction.where((e) => e == item).isNotEmpty,
+                          isSelected: c.state.selectedTransaction
+                              .where((e) => e == item)
+                              .isNotEmpty,
                           onLongPress: () {
                             c.select(item);
                           },
@@ -71,18 +75,21 @@ class TransactionItems extends StatelessWidget {
                             ),
                           ),
                         ),
-                        firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+                        firstPageErrorIndicatorBuilder: (context) =>
+                            const DataEmpty(),
                         firstPageProgressIndicatorBuilder: (context) => Column(
                           children: List.generate(
                             3,
-                            (index) => const RiwayatKirimanListItem(isLoading: true),
+                            (index) =>
+                                const RiwayatKirimanListItem(isLoading: true),
                           ),
                         ),
                         // firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
                         //   height: 100,
                         //   background: Colors.transparent,
                         // ),
-                        noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
+                        noItemsFoundIndicatorBuilder: (context) =>
+                            const DataEmpty(),
                         noMoreItemsIndicatorBuilder: (context) => const Center(
                           child: Divider(
                             indent: 100,
@@ -91,7 +98,8 @@ class TransactionItems extends StatelessWidget {
                             color: blueJNE,
                           ),
                         ),
-                        newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                        newPageProgressIndicatorBuilder: (context) =>
+                            const LoadingDialog(
                           background: Colors.transparent,
                           height: 50,
                           size: 30,

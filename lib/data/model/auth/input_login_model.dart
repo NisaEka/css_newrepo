@@ -16,7 +16,8 @@ class InputLoginModel {
   InputLoginModel.fromJson(dynamic json) {
     _email = json['email'];
     _password = json['password'];
-    _device = json['device'] != null ? DeviceModel.fromJson(json['device']) : null;
+    _device =
+        json['device'] != null ? DeviceModel.fromJson(json['device']) : null;
     _coordinate = json['coordinate'] != null
         ? Coordinate.fromJson(json['coordinate'])
         : null;
@@ -99,5 +100,3 @@ class Coordinate {
     return map;
   }
 }
-
-

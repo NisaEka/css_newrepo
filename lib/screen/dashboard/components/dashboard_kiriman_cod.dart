@@ -16,12 +16,13 @@ class DashboardKirimanCod extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              CountCodItem(data: CountCardModel(),),
+              CountCodItem(
+                data: CountCardModel(),
+              ),
             ],
           ),
         );
       },
     );
   }
-
 }

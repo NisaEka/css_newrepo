@@ -14,7 +14,9 @@ class TransactionSummaryModel {
         _summary?.add(CountCardModel.fromJson(v));
       });
     }
-    _totalKirimanCod = json['totalKirimanCod'] != null ? TotalKirimanCod.fromJson(json['totalKirimanCod']) : null;
+    _totalKirimanCod = json['totalKirimanCod'] != null
+        ? TotalKirimanCod.fromJson(json['totalKirimanCod'])
+        : null;
   }
 
   List<CountCardModel>? _summary;

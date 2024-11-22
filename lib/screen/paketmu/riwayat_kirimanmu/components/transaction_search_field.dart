@@ -19,7 +19,9 @@ class TransactionSearchField extends StatelessWidget {
             hintText: 'Cari Transaksimu'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
-              color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? whiteColor
+                  : blueJNE,
             ),
             margin: EdgeInsets.zero,
             onChanged: (value) {

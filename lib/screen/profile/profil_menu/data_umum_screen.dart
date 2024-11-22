@@ -58,8 +58,7 @@ class DataUmumScreen extends StatelessWidget {
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
                 DataUmumListItem(
-                  title:
-                      "${(c.ccrfProfil?.generalInfo?.address == null) ? ""
+                  title: "${(c.ccrfProfil?.generalInfo?.address == null) ? ""
                           "" : "${c.ccrfProfil?.generalInfo?.address}, "}"
                       "${(c.ccrfProfil?.generalInfo?.subDistrict == null) ? ""
                           "${c.basicProfil?.origin?.originName ?? ''}" : ""

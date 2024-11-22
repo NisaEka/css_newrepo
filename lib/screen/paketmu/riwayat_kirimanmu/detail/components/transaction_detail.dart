@@ -1,24 +1,10 @@
 import 'package:barcode_widget/barcode_widget.dart';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/master/get_branch_model.dart';
-import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_riwayat_kiriman_controller.dart';
-import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
-import 'package:css_mobile/widgets/forms/customlabel.dart';
-import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';
+import 'package:css_mobile/util/ext/num_ext.dart';
+import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/master/destination_model.dart';
-import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/master/get_receiver_model.dart';
-import 'package:css_mobile/data/model/master/get_region_model.dart';
-import 'package:css_mobile/data/model/master/get_shipper_model.dart';
-import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
-import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_screen.dart';
-import 'package:css_mobile/util/ext/int_ext.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/services.dart';
 
 class TransactionDetail extends StatelessWidget {
@@ -26,384 +12,239 @@ class TransactionDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DetailRiwayatKirimanController>(
-        init: DetailRiwayatKirimanController(),
+    return GetBuilder<DetailTransactionController>(
+        init: DetailTransactionController(),
         builder: (c) {
           return Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(30),
             child: ListView(
               children: [
+                BarcodeWidget(
+                  barcode: Barcode.code128(
+                    useCode128A: true,
+                    // escapes: true,
+                  ),
+                  color: greyDarkColor1,
+                  data: c.state.awb,
+                  drawText: false,
+                  height: 80,
+                  width: Get.width / 1.7,
+                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        CustomTextFormField(
-                          controller: c.transStatus,
-                          // controller: TextEditingController(text: c.transactionModel?.status?.isNotEmpty.toString() ?? ''),
-                          label: 'Status Transaksi'.tr,
-                          width: Get.width / 2.5,
-                          readOnly: true,
-                          hintText: '',
-                          backgroundColor: AppConst.isLightTheme(context)
-                              ? greyLightColor2
-                              : greyDarkColor2,
-                          noBorder: true,
-                          isLoading: c.isLoading,
-                        ),
-                        CustomTextFormField(
-                          controller: c.pickupStatus,
-                          label: 'Status Pickup'.tr,
-                          width: Get.width / 2.5,
-                          readOnly: true,
-                          hintText: '',
-                          backgroundColor: AppConst.isLightTheme(context)
-                              ? greyLightColor2
-                              : greyDarkColor2,
-                          noBorder: true,
-                          isLoading: c.isLoading,
-                        ),
-                      ],
+                    Text(
+                      c.state.awb,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    Shimmer(
-                      isLoading: c.transactionModel == null,
-                      child: Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          color: c.isLoading ? greyColor : Colors.transparent,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: BarcodeWidget(
-                          barcode: Barcode.qrCode(),
-                          data: c.transactionModel?.awb ?? '',
-                          drawText: false,
-                          height: 120,
-                          width: 120,
-                          color:
-                              AppConst.isLightTheme(context) ? blueJNE : redJNE,
-                        ),
-                      ),
+                    IconButton(
+                      onPressed: () => Clipboard.setData(ClipboardData(
+                          text: c.state.transactionModel?.awb ?? '')),
+                      icon: const Icon(Icons.copy),
                     )
                   ],
                 ),
-                Shimmer(
-                  isLoading: c.transactionModel == null,
-                  child: Container(
-                    padding: const EdgeInsets.all(13),
-                    decoration: BoxDecoration(
-                      color: c.isLoading
-                          ? greyColor
-                          : (AppConst.isLightTheme(context)
-                              ? whiteColor
-                              : greyDarkColor2),
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppConst.isLightTheme(context)
-                              ? greyLightColor3
-                              : greyDarkColor2,
-                          spreadRadius: 1,
-                          offset: const Offset(-2, 2),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                const SizedBox(height: 35),
+                CustomFormLabel(
+                    isLoading: c.state.isLoading,
+                    label: 'Detail Kiriman'.tr,
+                    isBold: true,
+                    fontColor: blueJNE),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomLabelText(
-                          title: 'Tanggal Pesanan'.tr,
-                          value: c.transactionModel?.createdDateSearch
-                                  ?.toLongDateTimeFormat() ??
-                              '-',
-                          titleTextStyle: Theme.of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(fontSize: 10, fontWeight: medium),
-                          valueTextStyle: Theme.of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(fontSize: 10),
-                          alignment: 'end',
-                        ),
-                        Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text("No Resi".tr,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall),
-                                    GestureDetector(
-                                      onTap: () => Clipboard.setData(
-                                          ClipboardData(
-                                              text: c.transactionModel?.awb ??
-                                                  '')),
-                                      child: Container(
-                                        margin: const EdgeInsets.only(left: 10),
-                                        child: Icon(
-                                          size: 10,
-                                          Icons.copy_rounded,
-                                          color: AppConst.isLightTheme(context)
-                                              ? blueJNE
-                                              : redJNE,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Text("Tipe".tr,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                                Text("Service".tr,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                                Text("Dana COD".tr,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                                Text("Petugas Entry".tr,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                                Text("Pengirim".tr,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                                Text("Kota Pengiriman".tr,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                                Text("Penerima".tr,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                                Text("Kontak Penerima".tr,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                                Row(
-                                  children: [
-                                    Text("Order ID".tr,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall),
-                                    GestureDetector(
-                                      onTap: () => Clipboard.setData(
-                                          ClipboardData(
-                                              text:
-                                                  c.transactionModel?.orderId ??
-                                                      '')),
-                                      child: Container(
-                                        margin: const EdgeInsets.only(left: 10),
-                                        child: Icon(
-                                          size: 10,
-                                          Icons.copy_rounded,
-                                          color: AppConst.isLightTheme(context)
-                                              ? blueJNE
-                                              : redJNE,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Text("Account".tr,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                                Text("Deskripsi".tr,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                              ],
-                            ),
-                            const SizedBox(width: 15),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  c.transactionModel?.awb ?? '-',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(
-                                        fontWeight: medium,
-                                      ),
-                                ),
-                                Text(
-                                  c.transactionModel?.type ?? '-',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Text(
-                                  c.transactionModel?.serviceCode ?? '-',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Text(
-                                  'Rp. ${c.transactionModel?.deliveryPrice?.toInt().toCurrency() ?? '-'}',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Text(
-                                  c.transactionModel?.petugasEntry ?? '-',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Text(
-                                  c.transactionModel?.shipperName ?? '-',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(fontWeight: medium),
-                                ),
-                                Text(
-                                  "${c.transactionModel?.receiverCity} / ${c.transactionModel?.receiverDistrict}",
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Text(
-                                  c.transactionModel?.receiverName ?? '-',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Text(
-                                  c.transactionModel?.receiverPhone ?? '-',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Text(
-                                  c.transactionModel?.orderId ?? '-',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                SizedBox(
-                                  width: Get.width - 200,
-                                  child: Text(
-                                    '${c.transactionModel?.accountNumber}/ ${c.transactionModel?.accountName} / ${c.transactionModel?.accountType}',
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                Text(
-                                  c.transactionModel?.goodsDesc ?? '-',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
-                            )
-                          ],
-                        )
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading, label: "Account".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading, label: "Pengirim".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Petugas Entry".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Kota Pengiriman".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading, label: "Penerima".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Kota Penerima".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Nama Barang".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Berat Kiriman".tr),
                       ],
                     ),
-                  ),
+                    const SizedBox(width: 50),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                c.state.transactionModel?.accountNumber ?? ''),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: c.state.transactionModel?.shipperName ?? ''),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                c.state.transactionModel?.petugasEntry ?? ''),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: c.state.transactionModel?.shipperCity ?? ''),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                c.state.transactionModel?.receiverName ?? ''),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                c.state.transactionModel?.receiverCity ?? ''),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: c.state.transactionModel?.goodsDesc ?? '',
+                            width: Get.width / 2.1),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                c.state.transactionModel?.weight.toString() ??
+                                    ''),
+                      ],
+                    ),
+                  ],
                 ),
-                CustomFilledButton(
-                  color: blueJNE,
-                  title: 'Lihat Resi'.tr,
-                  onPressed: () => c.transactionModel != null
-                      ? Get.to(const LabelScreen(), arguments: {
-                          'data': DataTransactionModel(
-                            destination: Destination(
-                              destinationCode:
-                                  c.transactionModel?.destinationCode,
-                              zipCode: c.transactionModel?.receiverZip,
-                              cityName: c.transactionModel?.receiverCity,
-                              countryName: c.transactionModel?.receiverCountry,
-                              districtName:
-                                  c.transactionModel?.receiverDistrict,
-                              provinceName: c.transactionModel?.receiverRegion,
-                              subdistrictName:
-                                  c.transactionModel?.receiverSubdistrict,
-                            ),
-                            dataDestination: Destination(
-                              destinationCode:
-                                  c.transactionModel?.destinationCode,
-                              zipCode: c.transactionModel?.receiverZip,
-                              cityName: c.transactionModel?.receiverCity,
-                              countryName: c.transactionModel?.receiverCountry,
-                              districtName:
-                                  c.transactionModel?.receiverDistrict,
-                              provinceName: c.transactionModel?.receiverRegion,
-                              subdistrictName:
-                                  c.transactionModel?.receiverSubdistrict,
-                            ),
-                            receiver: ReceiverModel(
-                                name: c.transactionModel?.receiverName,
-                                zipCode: c.transactionModel?.receiverZip,
-                                destinationCode:
-                                    c.transactionModel?.destinationCode,
-                                destinationDescription:
-                                    c.transactionModel?.destinationDesc,
-                                city: c.transactionModel?.receiverCity,
-                                country: c.transactionModel?.receiverCountry,
-                                contact: c.transactionModel?.receiverContact,
-                                phone: c.transactionModel?.receiverPhone,
-                                address: c.transactionModel?.receiverAddr,
-                                region: c.transactionModel?.receiverRegion,
-                                district: c.transactionModel?.receiverDistrict,
-                                subDistrict:
-                                    c.transactionModel?.receiverSubdistrict),
-                            shipper: ShipperModel(
-                              name: c.transactionModel?.shipperName,
-                              address: c.transactionModel?.shipperAddr,
-                              address1: c.transactionModel?.shipperAddr1,
-                              address2: c.transactionModel?.shipperAddr2,
-                              address3: c.transactionModel?.shipperAddr3,
-                              country: c.transactionModel?.shipperCountry,
-                              region: Region(
-                                name: c.transactionModel?.shipperRegion,
-                              ),
-                              city: c.transactionModel?.shipperCity,
-                              phone: c.transactionModel?.shipperPhone,
-                              contact: c.transactionModel?.shipperContact,
-                              zipCode: c.transactionModel?.shipperZip,
-                              origin: OriginModel(
-                                originCode: c.transactionModel?.originCode,
-                                originName: c.transactionModel?.originDesc,
-                                branchCode: c.transactionModel?.branch,
-                                branch: BranchModel(
-                                    region: Region(
-                                  name: c.transactionModel?.shipperRegion,
-                                )),
-                              ),
-                            ),
-                            origin: OriginModel(
-                              originCode: c.transactionModel?.originCode,
-                              originName: c.transactionModel?.originDesc,
-                              branchCode: c.transactionModel?.branch,
-                              branch: BranchModel(
-                                  region: Region(
-                                name: c.transactionModel?.shipperRegion,
-                              )),
-                            ),
-                            registrationId: c.transactionModel?.registrationId,
-                            status: c.transactionModel?.statusAwb,
-                            createdDate: c.transactionModel?.createdDateSearch,
-                            awb: c.transactionModel?.awb,
-                            type: c.transactionModel?.apiType,
-                            awbType: c.transactionModel?.apiType,
-                            createAt: c.transactionModel?.createdDate,
-                            delivery: Delivery(
-                                serviceCode: c.transactionModel?.serviceCode,
-                                insuranceFlag:
-                                    c.transactionModel?.insuranceFlag,
-                                codFlag: c.transactionModel?.codFlag,
-                                codFee: c.transactionModel?.codAmount,
-                                codOngkir: c.transactionModel?.codOngkir,
-                                flatRate: c.transactionModel?.deliveryPrice,
-                                freightCharge:
-                                    c.transactionModel?.deliveryPrice,
-                                specialInstruction:
-                                    c.transactionModel?.specialIns,
-                                woodPackaging:
-                                    c.transactionModel?.packingkayuFlag,
-                                flatRateWithInsurance:
-                                    c.transactionModel?.insuranceAmount,
-                                freightChargeWithInsurance:
-                                    c.transactionModel?.insuranceAmount,
-                                insuranceFee:
-                                    c.transactionModel?.insuranceAmount),
-                            goods: Goods(
-                              weight: c.transactionModel?.weight,
-                              type: c.transactionModel?.goodsType,
-                              amount: c.transactionModel?.goodsAmount,
-                              desc: c.transactionModel?.goodsDesc,
-                              quantity: c.transactionModel?.qty,
-                            ),
-                            officerEntry: c.transactionModel?.petugasEntry,
-                            orderId: c.transactionModel?.orderId,
-                          ),
-                        })
-                      : null,
-                  isLoading: c.isLoading,
+                const SizedBox(height: 10),
+                const Divider(color: greyColor),
+                const SizedBox(height: 20),
+                CustomFormLabel(
+                    isLoading: c.state.isLoading,
+                    label: 'Status Kiriman'.tr,
+                    isBold: true,
+                    fontColor: blueJNE),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Status Kiriman".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Permintaan Pickup".tr),
+                      ],
+                    ),
+                    const SizedBox(width: 40),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: c.state.transactionModel?.statusAwb ?? ''),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                c.state.transactionModel?.pickupStatus ?? ''),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                const Divider(color: greyColor),
+                const SizedBox(height: 20),
+                CustomFormLabel(
+                    isLoading: c.state.isLoading,
+                    label: 'Rincian Pembayaran'.tr,
+                    isBold: true,
+                    fontColor: blueJNE),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading, label: "Service".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Ongkos Kirim".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Admin COD Ongkir".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading, label: "Asuransi".tr),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading, label: "Dana COD".tr),
+                      ],
+                    ),
+                    const SizedBox(width: 35),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: c.state.transactionModel?.serviceCode ?? ''),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? ' '}'),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                'Rp. ${c.state.transactionModel?.codAmount?.toInt().toCurrency().toString() ?? ' '}'),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                'Rp. ${c.state.transactionModel?.insuranceAmount?.toCurrency().toString() ?? ' '}'),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? ' '}'),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                const Divider(color: greyColor),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Grand Total COD Amount".tr,
+                            isBold: true),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: "Grand Total Ongkos Kirim".tr,
+                            isBold: true),
+                      ],
+                    ),
+                    const SizedBox(width: 50),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? ' '}',
+                            isBold: true),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? ' '}',
+                            isBold: true),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),

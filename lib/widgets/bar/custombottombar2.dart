@@ -63,7 +63,8 @@ class BottomBar2 extends StatelessWidget {
                   size: 30,
                 ),
                 color: menu == 0 ? redJNE : blueJNE,
-                onTap: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
+                onTap: () => Get.delete<DashboardController>()
+                    .then((_) => Get.offAll(const DashboardScreen())),
               ),
               const SizedBox(width: 30, height: 30),
               const SizedBox(width: 30, height: 30),
