@@ -14,7 +14,8 @@ class EclaimRepositoryImpl extends EclaimRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<EclaimModel>>> getEclaim(QueryParamModel param) async {
+  Future<BaseResponse<List<EclaimModel>>> getEclaim(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
 
     if (token != null) {
@@ -27,51 +28,86 @@ class EclaimRepositoryImpl extends EclaimRepository {
       );
       return BaseResponse<List<EclaimModel>>.fromJson(
         response.data,
-            (json) => json is List<dynamic>
+        (json) => json is List<dynamic>
             ? json
-            .map<EclaimModel>(
-              (i) => EclaimModel.fromJson(i as Map<String, dynamic>),
-            )
-            .toList()
+                .map<EclaimModel>(
+                  (i) => EclaimModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
             : List.empty(),
       );
     } on DioException catch (e) {
       AppLogger.e('error get origin : ${e.response?.data}');
       return BaseResponse<List<EclaimModel>>.fromJson(
         e.response?.data,
-            (json) => json is List<dynamic>
+        (json) => json is List<dynamic>
             ? json
-            .map<EclaimModel>(
-              (i) => EclaimModel.fromJson(i as Map<String, dynamic>),
-        )
-            .toList()
+                .map<EclaimModel>(
+                  (i) => EclaimModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
             : List.empty(),
       );
     }
   }
 
   @override
-  Future<BaseResponse<EclaimCountModel>> getEclaimCount(QueryParamModel param) async {
+  Future<BaseResponse<EclaimCountModel>> getEclaimCount(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
       var response = await network.base
-          .get("/contact-me/e-claims/count",
-          queryParameters: param.toJson());
+          .get("/contact-me/e-claims/count", queryParameters: param.toJson());
       return BaseResponse<EclaimCountModel>.fromJson(
         response.data,
-            (json) => EclaimCountModel.fromJson(
-              json as Map<String, dynamic>,
-            ),
+        (json) => EclaimCountModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
       );
     } on DioException catch (e) {
       AppLogger.e('Error getEclaim Count :  ${e.response?.data}');
       return BaseResponse<EclaimCountModel>.fromJson(
         e.response?.data,
-            (json) => EclaimCountModel.fromJson(
-        json as Map<String, dynamic>,),
+        (json) => EclaimCountModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<String>>> getEclaimStatus() async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.base.get(
+        "/contact-me/e-claims/category",
+      );
+      AppLogger.d("status claim : ${response.data}");
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<String>(
+                  (i) => i as String,
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      AppLogger.e("status claim : ${e.response?.data}");
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<String>(
+                  (i) => i as String,
+                )
+                .toList()
+            : List.empty(),
       );
     }
   }

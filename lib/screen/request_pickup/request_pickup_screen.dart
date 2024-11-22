@@ -13,7 +13,6 @@ import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart'
 import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/input_formatter/custom_formatter.dart';
-import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
