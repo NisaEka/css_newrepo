@@ -1,3 +1,4 @@
+import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/cek_ongkir/congkir_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_screen.dart';
@@ -19,6 +20,7 @@ class AppPages {
   AppPages._();
 
   static final routes = [
+    GetPage(name: "/login", page: () => const LoginScreen()),
     GetPage(name: "/inputKiriman", page: () => const InformasiPengirimScreen()),
     GetPage(name: "/cekOngkir", page: () => const CekOngkirScreen()),
     GetPage(name: "/draftTransaksi", page: () => const DraftTransaksiScreen()),

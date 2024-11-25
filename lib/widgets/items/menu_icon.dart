@@ -13,7 +13,7 @@ class MenuIcon extends StatelessWidget {
 
   const MenuIcon({
     super.key,
-    this.isActive = true,
+    this.isActive = false,
     this.icon,
     this.menuIcon,
     this.padding,

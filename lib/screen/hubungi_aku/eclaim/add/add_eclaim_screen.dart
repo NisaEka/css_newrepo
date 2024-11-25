@@ -186,12 +186,16 @@ class AddEclaimScreen extends StatelessWidget {
                         color: blueJNE,
                         title: "Ambil Gambar".tr,
                         isTransparent: true,
-                        onPressed: () => c.addImage(ImageSource.camera),
+                        onPressed: () => c
+                            .addImage(ImageSource.camera)
+                            .then((_) => Get.back()),
                       ),
                       CustomFilledButton(
                         color: blueJNE,
                         title: "Pilih dari galeri".tr,
-                        onPressed: () => c.addImage(ImageSource.gallery),
+                        onPressed: () => c
+                            .addImage(ImageSource.gallery)
+                            .then((_) => Get.back()),
                       )
                     ],
                   ),

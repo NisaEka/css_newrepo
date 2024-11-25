@@ -48,9 +48,7 @@ class TransactionEditButton extends StatelessWidget {
                           })
                         : null,
                   ),
-                  c.state.transactionModel?.statusAwb == "MASIH DI KAMU" &&
-                          (c.state.transactionModel?.apiStatus == 2 ||
-                              c.state.transactionModel?.apiStatus == 7)
+                  c.isEdit()
                       ? CustomFilledButton(
                           color: successColor,
                           isTransparent: true,
@@ -60,10 +58,7 @@ class TransactionEditButton extends StatelessWidget {
                           fontSize: 23,
                           isLoading: isLoading,
                           onPressed: () {
-                            if (c.state.transactionModel?.statusAwb ==
-                                    "MASIH DI KAMU" &&
-                                (c.state.transactionModel?.apiStatus == 2 ||
-                                    c.state.transactionModel?.apiStatus == 7)) {
+                            if (c.isEdit()) {
                               Get.to(
                                 const InformasiPengirimScreen(),
                                 arguments: {

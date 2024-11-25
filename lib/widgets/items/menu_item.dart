@@ -49,6 +49,7 @@ class MenuItem extends StatelessWidget {
                   MenuIcon(
                     icon: data?.icon,
                     menuIcon: menuIcon,
+                    isActive: isActive,
                   ),
                   SizedBox(
                     // width: 65,

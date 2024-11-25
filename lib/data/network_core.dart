@@ -1,8 +1,20 @@
 import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
+import 'package:get/get.dart';
+import 'model/auth/post_login_model.dart';
+import 'repository/auth/auth_repository.dart';
+import 'storage_core.dart';
 
 class NetworkCore {
+  static final noNeedToken = ['/login'];
+
+  static bool isNeedToken(String route) => !noNeedToken.contains(route);
+  final storage = Get.find<StorageCore>();
+  final auth = Get.find<AuthRepository>();
+
   Dio dio = Dio();
   Dio city = Dio();
   Dio jne = Dio();
@@ -69,6 +81,52 @@ class NetworkCore {
       jne.interceptors
           .add(LogInterceptor(responseBody: true, requestBody: true));
     }
+    base.interceptors.add(
+      InterceptorsWrapper(onRequest: (options, handler) async {
+        AppLogger.i('Option path ${options.path}');
+        if (isNeedToken(options.path)) {
+          final accessToken = await storage.readAccessToken();
+          // final refreshToken = await storage.readRefreshToken();
+          options.headers = {
+            ...options.headers,
+            'Authorization': 'Bearer $accessToken'
+          };
+        }
+        return handler.next(options);
+      }, onResponse: (response, handler) {
+        if (kDebugMode) {
+          AppLogger.d("response : $response");
+        }
+        return handler.next(response);
+      }, onError: (dioError, handler) async {
+        AppLogger.e("dio erroor : $dioError");
+        if (dioError.response?.statusCode == 401) {
+          // If a 401 response is received, refresh the access token
+          await refreshToken();
+          final String? newAccessToken = await storage.readAccessToken();
+
+          // Update the request header with the new access token
+          dioError.requestOptions.headers['Authorization'] =
+              'Bearer $newAccessToken';
+
+          // Repeat the request with the updated header
+          return handler.resolve(await base.fetch(dioError.requestOptions));
+        }
+        return handler.next(dioError);
+      }),
+    );
+  }
+
+  Future<void> refreshToken() async {
+    await auth.postRefreshToken().then((value) async {
+      AppLogger.i('refresh token : ${value.data?.token?.refreshToken}');
+
+      storage.saveToken(
+        value.data?.token?.accessToken ?? '',
+        value.data?.menu ?? MenuModel(),
+        value.data?.token?.refreshToken ?? '',
+      );
+    });
   }
 }
 

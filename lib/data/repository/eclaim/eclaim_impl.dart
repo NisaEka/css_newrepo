@@ -132,6 +132,7 @@ class EclaimRepositoryImpl extends EclaimRepository {
         (json) => EclaimModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
+      AppLogger.e("error post eclaim : ${e.response?.data}");
       return BaseResponse<EclaimModel>.fromJson(
         e.response?.data,
         (json) => EclaimModel.fromJson(json as Map<String, dynamic>),

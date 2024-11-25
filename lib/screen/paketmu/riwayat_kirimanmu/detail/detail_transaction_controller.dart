@@ -181,4 +181,17 @@ class DetailTransactionController extends BaseController {
 
     update();
   }
+
+  bool isEdit() {
+    if (state.transactionModel?.statusAwb == "MASIH DI KAMU") {
+      if (state.transactionModel?.apiStatus == 2 ||
+          state.transactionModel?.apiStatus == 7) {
+        return true; //tombol hapus // gak ada edit
+      } else {
+        // edit & hapus //call
+      }
+      return false;
+    }
+    return false;
+  }
 }
