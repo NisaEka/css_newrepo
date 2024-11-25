@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-class TransactionSearchField extends StatelessWidget {
-  const TransactionSearchField({super.key});
+class EclaimSearchField extends StatelessWidget {
+  const EclaimSearchField({super.key});
 
   @override
   Widget build(BuildContext context) {
