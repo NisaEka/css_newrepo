@@ -8,6 +8,7 @@ import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_state.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
@@ -24,6 +25,7 @@ class DetailTransactionController extends BaseController {
 
   Future<void> initData() async {
     state.isLoading = true;
+    state.locale = await storage.readString(StorageCore.localeApp);
     update();
     Timer(const Duration(seconds: 1), () {
       state.transStatus.text = state.data?.statusAwb ?? '';

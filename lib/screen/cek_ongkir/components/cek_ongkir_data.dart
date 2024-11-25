@@ -28,7 +28,7 @@ class CekOngkirData extends StatelessWidget {
                         right: 20), // Margin between the two text widgets
                     child: Text(
                       'Berat Express'.tr,
-                      style: listTitleTextStyle,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   Flexible(

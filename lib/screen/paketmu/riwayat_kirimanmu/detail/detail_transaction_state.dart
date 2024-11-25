@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class DetailTransactionState {
   String awb = Get.arguments['awb'];
   TransactionModel? data = Get.arguments['data'];
+  String? locale;
 
   DataTransactionModel? transactionData;
   TransactionModel? transactionModel;

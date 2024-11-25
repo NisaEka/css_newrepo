@@ -26,11 +26,13 @@ class TransactionAccountCard extends StatelessWidget {
             // alignment: Alignment.topRight,
             padding: const EdgeInsets.all(10),
             decoration: const BoxDecoration(
-                color: redJNE,
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(12))),
-            child: Text(account.accountService ?? '',
-                style: listTitleTextStyle.copyWith(color: whiteColor)),
+              color: redJNE,
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12)),
+            ),
+            child: Text(
+              account.accountService ?? '',
+              style: listTitleTextStyle.copyWith(color: whiteColor),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),

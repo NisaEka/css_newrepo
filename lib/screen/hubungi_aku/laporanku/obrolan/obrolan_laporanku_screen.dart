@@ -291,7 +291,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
               color: greyLightColor3, borderRadius: BorderRadius.circular(50)),
           child: Text(
             name.substring(0, 1),
-            style: listTitleTextStyle,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
         Text(

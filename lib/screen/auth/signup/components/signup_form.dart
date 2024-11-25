@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/versionsection.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
@@ -39,8 +38,10 @@ class SignupForm extends StatelessWidget {
                     child: Column(
                       children: [
                         Center(
-                            child: Text('Buat akun anda'.tr,
-                                style: listTitleTextStyle)),
+                            child: Text(
+                          'Buat akun anda'.tr,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        )),
                         const SizedBox(height: 25),
                         CustomTextFormField(
                           controller: c.state.namaLengkap,

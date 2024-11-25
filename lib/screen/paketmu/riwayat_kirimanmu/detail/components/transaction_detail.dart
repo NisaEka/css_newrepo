@@ -53,33 +53,39 @@ class TransactionDetail extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading, label: "Account".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading, label: "Pengirim".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Petugas Entry".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Kota Pengiriman".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading, label: "Penerima".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Kota Penerima".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Nama Barang".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Berat Kiriman".tr),
-                      ],
+                    SizedBox(
+                      width: Get.width / 2.5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Account".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Pengirim".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Petugas Entry".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Kota Pengiriman".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Penerima".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Kota Penerima".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Nama Barang".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Berat Kiriman".tr),
+                        ],
+                      ),
                     ),
-                    const SizedBox(width: 50),
+                    const SizedBox(width: 30),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -108,7 +114,7 @@ class TransactionDetail extends StatelessWidget {
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label: c.state.transactionModel?.goodsDesc ?? '',
-                            width: Get.width / 2.1),
+                            width: Get.width / 3),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
@@ -129,18 +135,21 @@ class TransactionDetail extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Status Kiriman".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Permintaan Pickup".tr),
-                      ],
+                    SizedBox(
+                      width: Get.width / 2.5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Status Kiriman".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Permintaan Pickup".tr),
+                        ],
+                      ),
                     ),
-                    const SizedBox(width: 40),
+                    const SizedBox(width: 30),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -166,24 +175,30 @@ class TransactionDetail extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading, label: "Service".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Ongkos Kirim".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Admin COD Ongkir".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading, label: "Asuransi".tr),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading, label: "Dana COD".tr),
-                      ],
+                    SizedBox(
+                      width: Get.width / 2.5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Service".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Ongkos Kirim".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Admin COD Ongkir".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Asuransi".tr),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Dana COD".tr),
+                        ],
+                      ),
                     ),
-                    const SizedBox(width: 35),
+                    const SizedBox(width: 30),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -215,20 +230,23 @@ class TransactionDetail extends StatelessWidget {
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Grand Total COD Amount".tr,
-                            isBold: true),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: "Grand Total Ongkos Kirim".tr,
-                            isBold: true),
-                      ],
+                    SizedBox(
+                      width: Get.width / 2.5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Grand Total COD Amount".tr,
+                              isBold: true),
+                          CustomFormLabel(
+                              isLoading: c.state.isLoading,
+                              label: "Grand Total Ongkos Kirim".tr,
+                              isBold: true),
+                        ],
+                      ),
                     ),
-                    const SizedBox(width: 50),
+                    const SizedBox(width: 30),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

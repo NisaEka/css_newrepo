@@ -1,6 +1,5 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -35,7 +34,7 @@ class LoginForm extends StatelessWidget {
                       Center(
                         child: Text(
                           'Masuk ke akun anda'.tr,
-                          style: listTitleTextStyle,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       const SizedBox(height: 25),
@@ -82,9 +81,13 @@ class LoginForm extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () => c.forgotPassword(),
-                          child: Text("Lupa kata sandi?".tr,
-                              style: listTitleTextStyle.copyWith(
-                                  color: infoColor)),
+                          child: Text(
+                            "Lupa kata sandi?".tr,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(color: infoColor),
+                          ),
                         ),
                       ),
                       CustomFilledButton(
@@ -108,8 +111,10 @@ class LoginForm extends StatelessWidget {
                       // ),
                       Container(
                         alignment: Alignment.center,
-                        child: Text("Belum punya akun?".tr,
-                            style: listTitleTextStyle),
+                        child: Text(
+                          "Belum punya akun?".tr,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                       ),
                       CustomFilledButton(
                         color: AppConst.isLightTheme(context)
