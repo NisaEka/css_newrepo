@@ -139,7 +139,7 @@ class PantauPaketmuController extends BaseController {
 
     try {
       Response response = await network.base.get(
-        '/transaction/tracks/count/detail',
+        '/transaction/tracks/count/details',
         queryParameters: param.toJson(),
       );
       AppLogger.d('Pantauuuuuu ${response.data}');

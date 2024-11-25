@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/eclaim/eclaim_count_model.dart';
 import 'package:css_mobile/data/model/eclaim/eclaim_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/storage/ccrf_file_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/eclaim/eclaim_repository.dart';
 import 'package:dio/dio.dart';
@@ -74,6 +77,102 @@ class EclaimRepositoryImpl extends EclaimRepository {
         (json) => EclaimCountModel.fromJson(
           json as Map<String, dynamic>,
         ),
+
+      );
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<String>>> getEclaimStatus() async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.base.get(
+        "/contact-me/e-claims/category",
+      );
+      AppLogger.d("status claim : ${response.data}");
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<String>(
+                  (i) => i as String,
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      AppLogger.e("status claim : ${e.response?.data}");
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<String>(
+                  (i) => i as String,
+                )
+                .toList()
+            : List.empty(),
+      );
+    }
+  }
+
+  @override
+  Future<BaseResponse<EclaimModel>> postEclaim(EclaimModel data) async {
+    AppLogger.i("param toJson ${data.toJson()}");
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+
+    try {
+      Response response =
+          await network.base.post("/uploads/e-claim", data: data);
+
+      return BaseResponse<EclaimModel>.fromJson(
+        response.data,
+        (json) => EclaimModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on DioException catch (e) {
+      return BaseResponse<EclaimModel>.fromJson(
+        e.response?.data,
+        (json) => EclaimModel.fromJson(json as Map<String, dynamic>),
+      );
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<CcrfFileModel>>> postEclaimImage(File photo) async {
+    try {
+      var formData = FormData.fromMap({});
+
+      formData.files
+          .addAll([MapEntry("file", await MultipartFile.fromFile(photo.path))]);
+
+      AppLogger.i("file : ${formData.files.first.value.filename}");
+
+      var response = await network.base.post("/uploads/e-claim",
+          data: formData,
+          options: Options(headers: {"Content-Type": "multipart/form-data"}));
+      return BaseResponse<List<CcrfFileModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<CcrfFileModel>(
+                  (i) => CcrfFileModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      AppLogger.e('error post eclaim file ${e.response?.data}');
+      return BaseResponse<List<CcrfFileModel>>.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<CcrfFileModel>(
+                  (i) => CcrfFileModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+
       );
     }
   }

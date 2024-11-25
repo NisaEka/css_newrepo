@@ -10,9 +10,7 @@ class EclaimStatusButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    // double fontSize = screenWidth > 600 ? 20 : 16;
-
+    double screenWidth = Get.width;
     return GetBuilder<EclaimController>(
         init: EclaimController(),
         builder: (c) {
@@ -24,7 +22,7 @@ class EclaimStatusButton extends StatelessWidget {
               children: [
                 // Total Pengajuan
                 Container(
-                  width: screenWidth * 0.3,
+                  width: screenWidth * 0.4,
                   decoration: BoxDecoration(
                     color: blueJNE,
                     borderRadius: BorderRadius.circular(8),
