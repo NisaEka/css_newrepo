@@ -63,12 +63,7 @@ class CustomFilledButton extends StatelessWidget {
                       ? Colors.transparent
                       : color,
               borderRadius: BorderRadius.circular(radius),
-              border: Border.all(
-                  color: isTransparent
-                      ? AppConst.isLightTheme(context)
-                          ? color
-                          : whiteColor
-                      : borderColor!),
+              border: Border.all(color: isTransparent ? color : borderColor!),
               boxShadow: boxShadow,
             ),
             child: Row(

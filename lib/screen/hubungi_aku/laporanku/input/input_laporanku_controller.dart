@@ -16,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class InputLaporankuController extends BaseController {
+  final String? awb = Get.arguments['awb'];
+
   final formKey = GlobalKey<FormState>();
   final noResi = TextEditingController();
   final category = TextEditingController();
@@ -43,6 +45,10 @@ class InputLaporankuController extends BaseController {
   Future<void> initData() async {
     listCategory = [];
     isLoading = true;
+    if (awb != null) {
+      noResi.text = awb ?? '';
+      update();
+    }
     try {
       await laporanku
           .getTicketCategory(QueryParamModel(table: true, limit: 0))

@@ -25,7 +25,8 @@ class LaporankuScreen extends StatelessWidget {
               prefixIcon: Icons.add,
               radius: 30,
               height: 50,
-              onPressed: () => Get.to(const InputLaporankuScreen())?.then(
+              onPressed: () =>
+                  Get.to(const InputLaporankuScreen(), arguments: {})?.then(
                 (_) {
                   controller.state.pagingController.refresh();
                   controller.initData();

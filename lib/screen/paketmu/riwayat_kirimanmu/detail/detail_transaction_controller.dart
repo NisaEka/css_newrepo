@@ -27,96 +27,86 @@ class DetailTransactionController extends BaseController {
     state.isLoading = true;
     state.locale = await storage.readString(StorageCore.localeApp);
     update();
-    Timer(const Duration(seconds: 1), () {
-      state.transStatus.text = state.data?.statusAwb ?? '';
-      state.pickupStatus.text = state.data?.pickupStatus ?? '';
-      update();
 
-      try {
-        transaction.getTransactionByAWB(state.awb).then((value) {
-          state.transactionModel = value.data?.copyWith(
-            accountNumber: state.data?.accountNumber,
-            accountService: state.data?.accountService,
-            accountName: state.data?.accountName,
-            accountType: state.data?.accountType,
-            statusAwb: state.data?.statusAwb,
-          );
-          // state.transStatus.text = state.transactionModel?.statusAwb ?? '';
-          // state.pickupStatus.text = state.transactionModel?.state.pickupStatus ?? '';
-          update();
-        });
-      } catch (e, i) {
-        AppLogger.e('error initData detail riwayat kiriman $e, $i');
-      }
-      var data = state.transactionModel ?? state.data;
-      state.transactionData = DataTransactionModel(
-        destination: Destination(
-          destinationCode: data?.destinationCode,
+    state.transStatus.text = state.data?.statusAwb ?? '';
+    state.pickupStatus.text = state.data?.pickupStatus ?? '';
+    update();
+
+    try {
+      transaction.getTransactionByAWB(state.awb).then((value) {
+        state.transactionModel = value.data?.copyWith(
+          accountNumber: state.data?.accountNumber,
+          accountService: state.data?.accountService,
+          accountName: state.data?.accountName,
+          accountType: state.data?.accountType,
+          statusAwb: state.data?.statusAwb,
+        );
+        // state.transStatus.text = state.transactionModel?.statusAwb ?? '';
+        // state.pickupStatus.text = state.transactionModel?.state.pickupStatus ?? '';
+        update();
+      });
+    } catch (e, i) {
+      AppLogger.e('error initData detail riwayat kiriman $e, $i');
+    }
+    var data = state.transactionModel ?? state.data;
+    state.transactionData = DataTransactionModel(
+      destination: Destination(
+        destinationCode: data?.destinationCode,
+        zipCode: data?.receiverZip,
+        cityName: data?.receiverCity,
+        countryName: data?.receiverCountry,
+        districtName: data?.receiverDistrict,
+        provinceName: data?.receiverRegion,
+        subdistrictName: data?.receiverSubdistrict,
+      ),
+      account: Account(
+        accountNumber: data?.accountNumber,
+        accountService: data?.accountService,
+        accountName: data?.accountName,
+        accountType: data?.accountType,
+      ),
+      dataAccount: Account(
+        accountNumber: data?.accountNumber,
+        accountService: data?.accountService,
+        accountName: data?.accountName,
+        accountType: data?.accountType,
+      ),
+      dataDestination: Destination(
+        destinationCode: data?.destinationCode,
+        zipCode: data?.receiverZip,
+        cityName: data?.receiverCity,
+        countryName: data?.receiverCountry,
+        districtName: data?.receiverDistrict,
+        provinceName: data?.receiverRegion,
+        subdistrictName: data?.receiverSubdistrict,
+      ),
+      receiver: ReceiverModel(
+          name: data?.receiverName,
           zipCode: data?.receiverZip,
-          cityName: data?.receiverCity,
-          countryName: data?.receiverCountry,
-          districtName: data?.receiverDistrict,
-          provinceName: data?.receiverRegion,
-          subdistrictName: data?.receiverSubdistrict,
-        ),
-        account: Account(
-          accountNumber: data?.accountNumber,
-          accountService: data?.accountService,
-          accountName: data?.accountName,
-          accountType: data?.accountType,
-        ),
-        dataAccount: Account(
-          accountNumber: data?.accountNumber,
-          accountService: data?.accountService,
-          accountName: data?.accountName,
-          accountType: data?.accountType,
-        ),
-        dataDestination: Destination(
           destinationCode: data?.destinationCode,
-          zipCode: data?.receiverZip,
-          cityName: data?.receiverCity,
-          countryName: data?.receiverCountry,
-          districtName: data?.receiverDistrict,
-          provinceName: data?.receiverRegion,
-          subdistrictName: data?.receiverSubdistrict,
+          destinationDescription: data?.destinationDesc,
+          city: data?.receiverCity,
+          country: data?.receiverCountry,
+          contact: data?.receiverContact,
+          phone: data?.receiverPhone,
+          address: data?.receiverAddr,
+          region: data?.receiverRegion,
+          district: data?.receiverDistrict,
+          subDistrict: data?.receiverSubdistrict),
+      shipper: ShipperModel(
+        name: data?.shipperName,
+        address: data?.shipperAddr,
+        address1: data?.shipperAddr1,
+        address2: data?.shipperAddr2,
+        address3: data?.shipperAddr3,
+        country: data?.shipperCountry,
+        region: RegionModel(
+          name: data?.shipperRegion,
         ),
-        receiver: ReceiverModel(
-            name: data?.receiverName,
-            zipCode: data?.receiverZip,
-            destinationCode: data?.destinationCode,
-            destinationDescription: data?.destinationDesc,
-            city: data?.receiverCity,
-            country: data?.receiverCountry,
-            contact: data?.receiverContact,
-            phone: data?.receiverPhone,
-            address: data?.receiverAddr,
-            region: data?.receiverRegion,
-            district: data?.receiverDistrict,
-            subDistrict: data?.receiverSubdistrict),
-        shipper: ShipperModel(
-          name: data?.shipperName,
-          address: data?.shipperAddr,
-          address1: data?.shipperAddr1,
-          address2: data?.shipperAddr2,
-          address3: data?.shipperAddr3,
-          country: data?.shipperCountry,
-          region: RegionModel(
-            name: data?.shipperRegion,
-          ),
-          city: data?.shipperCity,
-          phone: data?.shipperPhone,
-          contact: data?.shipperContact,
-          zipCode: data?.shipperZip,
-          origin: OriginModel(
-            originCode: data?.originCode,
-            originName: data?.originDesc,
-            branchCode: data?.branch,
-            branch: BranchModel(
-                region: RegionModel(
-              name: data?.shipperRegion,
-            )),
-          ),
-        ),
+        city: data?.shipperCity,
+        phone: data?.shipperPhone,
+        contact: data?.shipperContact,
+        zipCode: data?.shipperZip,
         origin: OriginModel(
           originCode: data?.originCode,
           originName: data?.originDesc,
@@ -126,37 +116,47 @@ class DetailTransactionController extends BaseController {
             name: data?.shipperRegion,
           )),
         ),
-        registrationId: data?.registrationId,
-        status: data?.statusAwb,
-        createdDate: data?.createdDateSearch,
-        awb: data?.awb,
-        type: data?.apiType,
-        awbType: data?.apiType,
-        createAt: data?.createdDate,
-        delivery: Delivery(
-            serviceCode: data?.serviceCode,
-            insuranceFlag: data?.insuranceFlag,
-            codFlag: data?.codFlag,
-            codFee: data?.codAmount,
-            codOngkir: data?.codOngkir,
-            flatRate: data?.deliveryPrice,
-            freightCharge: data?.deliveryPrice,
-            specialInstruction: data?.specialIns,
-            woodPackaging: data?.packingkayuFlag,
-            flatRateWithInsurance: data?.insuranceAmount,
-            freightChargeWithInsurance: data?.insuranceAmount,
-            insuranceFee: data?.insuranceAmount),
-        goods: Goods(
-          weight: data?.weight,
-          type: data?.goodsType,
-          amount: data?.goodsAmount,
-          desc: data?.goodsDesc,
-          quantity: data?.qty,
-        ),
-        officerEntry: data?.petugasEntry,
-        orderId: data?.orderId,
-      );
-
+      ),
+      origin: OriginModel(
+        originCode: data?.originCode,
+        originName: data?.originDesc,
+        branchCode: data?.branch,
+        branch: BranchModel(
+            region: RegionModel(
+          name: data?.shipperRegion,
+        )),
+      ),
+      registrationId: data?.registrationId,
+      status: data?.statusAwb,
+      createdDate: data?.createdDateSearch,
+      awb: data?.awb,
+      type: data?.apiType,
+      awbType: data?.apiType,
+      createAt: data?.createdDate,
+      delivery: Delivery(
+          serviceCode: data?.serviceCode,
+          insuranceFlag: data?.insuranceFlag,
+          codFlag: data?.codFlag,
+          codFee: data?.codAmount,
+          codOngkir: data?.codOngkir,
+          flatRate: data?.deliveryPrice,
+          freightCharge: data?.deliveryPrice,
+          specialInstruction: data?.specialIns,
+          woodPackaging: data?.packingkayuFlag,
+          flatRateWithInsurance: data?.insuranceAmount,
+          freightChargeWithInsurance: data?.insuranceAmount,
+          insuranceFee: data?.insuranceAmount),
+      goods: Goods(
+        weight: data?.weight,
+        type: data?.goodsType,
+        amount: data?.goodsAmount,
+        desc: data?.goodsDesc,
+        quantity: data?.qty,
+      ),
+      officerEntry: data?.petugasEntry,
+      orderId: data?.orderId,
+    );
+    Timer(const Duration(seconds: 2), () {
       state.isLoading = false;
       update();
     });

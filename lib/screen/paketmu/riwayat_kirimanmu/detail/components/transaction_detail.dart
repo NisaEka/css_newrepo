@@ -1,4 +1,5 @@
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
@@ -24,7 +25,7 @@ class TransactionDetail extends StatelessWidget {
                     useCode128A: true,
                     // escapes: true,
                   ),
-                  color: greyDarkColor1,
+                  color: CustomTheme().textColor(context) ?? greyColor,
                   data: c.state.awb,
                   drawText: false,
                   height: 80,
