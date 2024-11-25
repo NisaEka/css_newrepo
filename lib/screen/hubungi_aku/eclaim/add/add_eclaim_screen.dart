@@ -78,7 +78,7 @@ class AddEclaimScreen extends StatelessWidget {
             CustomFormLabel(label: 'Ajukan Claim'.tr),
             const SizedBox(height: 10),
             Container(
-              height: 60, // Tinggi kotak
+              height: 70, // Tinggi kotak
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(8),
@@ -86,12 +86,12 @@ class AddEclaimScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   // Date
-                  const Positioned(
+                  Positioned(
                     top: 10,
                     right: 10,
                     child: Text(
-                      "25 Oktober 2024",
-                      style: TextStyle(fontSize: 12),
+                      DateTime.now().toString(),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
                   // AWB
@@ -105,9 +105,9 @@ class AddEclaimScreen extends StatelessWidget {
                         color: Colors.orange,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Text(
-                        "CSS5321000336159",
-                        style: TextStyle(
+                      child: Text(
+                        c.awb ?? '',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         ),

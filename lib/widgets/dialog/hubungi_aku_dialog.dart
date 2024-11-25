@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/screen/hubungi_aku/eclaim/add/add_eclaim_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/input/input_laporanku_screen.dart';
 import 'package:css_mobile/widgets/items/menu_icon.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,8 @@ class HubungiAkuDialog extends StatelessWidget {
               'Pengajuan Eclaim'.tr,
               style: Theme.of(context).textTheme.titleMedium,
             ),
+            onTap: () =>
+                Get.to(const AddEclaimScreen(), arguments: {'awb': awb}),
           ),
           const SizedBox(height: 20),
         ],

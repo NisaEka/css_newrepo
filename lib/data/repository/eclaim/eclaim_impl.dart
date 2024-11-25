@@ -77,7 +77,6 @@ class EclaimRepositoryImpl extends EclaimRepository {
         (json) => EclaimCountModel.fromJson(
           json as Map<String, dynamic>,
         ),
-
       );
     }
   }
@@ -123,8 +122,10 @@ class EclaimRepositoryImpl extends EclaimRepository {
     network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      Response response =
-          await network.base.post("/uploads/e-claim", data: data);
+      Response response = await network.base.post(
+        "/uploads/e-claim",
+        data: data,
+      );
 
       return BaseResponse<EclaimModel>.fromJson(
         response.data,
@@ -139,7 +140,7 @@ class EclaimRepositoryImpl extends EclaimRepository {
   }
 
   @override
-  Future<BaseResponse<List<CcrfFileModel>>> postEclaimImage(File photo) async {
+  Future<BaseResponse<List<FileModel>>> postEclaimImage(File photo) async {
     try {
       var formData = FormData.fromMap({});
 
@@ -151,28 +152,27 @@ class EclaimRepositoryImpl extends EclaimRepository {
       var response = await network.base.post("/uploads/e-claim",
           data: formData,
           options: Options(headers: {"Content-Type": "multipart/form-data"}));
-      return BaseResponse<List<CcrfFileModel>>.fromJson(
+      return BaseResponse<List<FileModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<CcrfFileModel>(
-                  (i) => CcrfFileModel.fromJson(i as Map<String, dynamic>),
+                .map<FileModel>(
+                  (i) => FileModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
       );
     } on DioException catch (e) {
       AppLogger.e('error post eclaim file ${e.response?.data}');
-      return BaseResponse<List<CcrfFileModel>>.fromJson(
+      return BaseResponse<List<FileModel>>.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>
             ? json
-                .map<CcrfFileModel>(
-                  (i) => CcrfFileModel.fromJson(i as Map<String, dynamic>),
+                .map<FileModel>(
+                  (i) => FileModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
-
       );
     }
   }

@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddEclaimController extends BaseController {
+  final String? awb = Get.arguments['awb'];
+
   final formKey = GlobalKey<FormState>();
   final category = TextEditingController();
   final nominalPengajuan = TextEditingController();
@@ -112,6 +114,7 @@ class AddEclaimController extends BaseController {
           .then((response) async {
         // await eclaims
         //     .postEclaim(EclaimModel(
+        // awb: awb,
         //   kategori: category.text,
         //   isipesan: description.text,
         //   valueclaim: nominalPengajuan.text,
