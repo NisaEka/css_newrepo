@@ -25,6 +25,7 @@ import 'package:get/get.dart';
 
 class DashboardController extends BaseController {
   final state = DashboardState();
+  Timer? _tokenRefreshTimer;
 
   @override
   void onInit() {
@@ -38,6 +39,26 @@ class DashboardController extends BaseController {
       loadBanner(),
       loadNews(),
     ]);
+  }
+
+  @override
+  void onClose() {
+    _tokenRefreshTimer
+        ?.cancel(); // Cancel the timer when the controller is disposed
+    super.onClose();
+  }
+
+  void startTokenRefreshScheduler() {
+    // Cancel any existing timer
+    _tokenRefreshTimer?.cancel();
+
+    // Schedule the refreshToken method to run every 2 hours
+    _tokenRefreshTimer = Timer.periodic(
+      const Duration(hours: 2), // Set duration to 2 hours
+      (timer) {
+        refreshToken();
+      },
+    );
   }
 
   Future<void> refreshToken() async {

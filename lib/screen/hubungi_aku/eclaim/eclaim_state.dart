@@ -20,9 +20,8 @@ class EclaimState {
   DateTime? endDate;
   String? transDate;
   String dateFilter = '0';
-  String? selectedStatusClaim = "Total";
+  String? selectedStatusClaim;
 
   bool isFiltered = false;
   bool isLoading = false;
-
 }

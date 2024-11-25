@@ -1,38 +1,32 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
-import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
-import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/logger.dart';
-import 'package:css_mobile/util/snackbar.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddEclaimController extends BaseController {
   final formKey = GlobalKey<FormState>();
-  final noResi = TextEditingController();
   final category = TextEditingController();
-  final subject = TextEditingController();
-  final message = TextEditingController();
+  final nominalPengajuan = TextEditingController();
+  final description = TextEditingController();
   final imageFile = TextEditingController();
   final searchCategory = TextEditingController();
-  final int maxImages = 5;
+  final int maxImages = 1;
+  File? selectedFile;
+  String? selectedFileName;
+  String? fileExtension;
+  int? fileSize;
 
   bool priority = false;
   bool isLoading = false;
-  File? gettedPhoto;
+  File? selectedImage;
   int? imageSize;
   var maxImageSize = 2 * 1048576;
+  final int maxFileSize = 5 * 1048576; // Membatasi ukuran file 5MB
 
-  List<TicketCategory> listCategory = [];
-  List<TicketCategory> listSearchCategory = [];
-  TicketCategory? selectedCategory;
-  List<File> selectedImages = [];
   List<String> manualCategories = [];
 
   @override
@@ -42,7 +36,6 @@ class AddEclaimController extends BaseController {
   }
 
   Future<void> initData() async {
-    listCategory = [];
     isLoading = true;
     try {
       await eclaims.getEclaimStatus().then((value) {
@@ -58,12 +51,6 @@ class AddEclaimController extends BaseController {
   }
 
   void showManualCategoryList() {
-    // List<String> manualCategories = [
-    //   "Claim Gagal YES",
-    //   "Claim Kiriman Hilang",
-    //   "Claim Kiriman Rusak",
-    // ];
-
     Get.bottomSheet(
       enableDrag: true,
       isDismissible: true,
@@ -113,198 +100,112 @@ class AddEclaimController extends BaseController {
     );
   }
 
-  void showCategoryList() {
-    searchCategory.clear();
-    selectedCategory = null;
-    update();
-    Get.bottomSheet(
-      enableDrag: true,
-      isDismissible: true,
-      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          decoration: BoxDecoration(
-            color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor1,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(15),
-              topRight: Radius.circular(15),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Kategori".tr,
-                style: appTitleTextStyle.copyWith(
-                  color: AppConst.isLightTheme(context)
-                      ? greyDarkColor1
-                      : greyLightColor1,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Expanded(
-                child: ListView(
-                  children: listSearchCategory.isNotEmpty
-                      ? listSearchCategory
-                          .map(
-                            (e) => Column(
-                              children: [
-                                ListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  title: Text(
-                                    e.categoryDescription?.toUpperCase() ?? '',
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  style: ListTileStyle.list,
-                                  onTap: () {
-                                    selectedCategory = e;
-                                    category.text =
-                                        e.categoryDescription?.toUpperCase() ??
-                                            '';
-                                    update();
-                                    Get.back();
-                                  },
-                                ),
-                                const Divider(color: greyColor, height: 1),
-                              ],
-                            ),
-                          )
-                          .toList()
-                      : listCategory
-                          .map(
-                            (e) => Column(
-                              children: [
-                                ListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  title: Text(
-                                    e.categoryDescription?.toUpperCase() ?? '',
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  style: ListTileStyle.list,
-                                  onTap: () {
-                                    selectedCategory = e;
-                                    category.text =
-                                        e.categoryDescription?.toUpperCase() ??
-                                            '';
-                                    update();
-                                    Get.back();
-                                  },
-                                ),
-                                const Divider(color: greyColor, height: 1),
-                              ],
-                            ),
-                          )
-                          .toList(),
-                ),
-              )
-            ],
-          ),
-        );
-      }),
-    );
-  }
-
-  void searchListCategory(String search) {
-    if (search == "") {
-      listSearchCategory = [];
-      update();
-    } else {
-      listSearchCategory = listCategory
-          .where(
-            (e) =>
-                e.categoryDescription
-                    ?.toLowerCase()
-                    .contains(search.toLowerCase()) ??
-                false,
-          )
-          .toList();
-
-      update();
-    }
-  }
-
   Future<void> sendReport() async {
     isLoading = true;
     update();
-
+    // var fileMap = {
+    //   "file" : selectedImage?.path??''
+    // };
     try {
-      await laporanku
-          .postTicket(DataPostTicketModel(
-        cnote: noResi.text,
-        categoryId: selectedCategory?.categoryId,
-        subject: subject.text,
-        message: message.text,
-        priority: priority ? "Y" : "N",
-      ))
-          .then((value) {
-        switch (value.code) {
-          case 201:
-            Get.to(SuccessScreen(
-              message:
-                  'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'.tr,
-              buttonTitle: 'OK'.tr,
-              nextAction: () => Get.close(2),
-            ));
-            break;
-          case 404:
-            AppSnackBar.warning('Nomor Resi Tidak Terdaftar'.tr);
-            break;
-          case 409:
-            AppSnackBar.warning('Tiket Sudah Terdaftar'.tr);
-            break;
-          default:
-            AppSnackBar.error('Bad Request'.tr);
-            break;
-        }
+      await eclaims
+          .postEclaimImage(selectedImage ?? File(''))
+          .then((response) async {
+        // await eclaims
+        //     .postEclaim(EclaimModel(
+        //   kategori: category.text,
+        //   isipesan: description.text,
+        //   valueclaim: nominalPengajuan.text,
+        // ))
+        //     .then((value) {
+        //   switch (value.code) {
+        //     case 201:
+        //       Get.to(SuccessScreen(
+        //         message:
+        //         'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'.tr,
+        //         buttonTitle: 'OK'.tr,
+        //         nextAction: () => Get.close(2),
+        //       ));
+        //       break;
+        //     case 404:
+        //       AppSnackBar.warning('Nomor Resi Tidak Terdaftar'.tr);
+        //       break;
+        //     case 409:
+        //       AppSnackBar.warning('Tiket Sudah Terdaftar'.tr);
+        //       break;
+        //     default:
+        //       AppSnackBar.error('Bad Request'.tr);
+        //       break;
+        //   }
+        // });
       });
     } catch (e) {
       AppLogger.e('error sendReport $e');
     }
-
     isLoading = false;
     update();
   }
 
-  getSinglePhoto(ImageSource source) async {
-    final ImagePicker picker = ImagePicker();
-    // Pick an image
-    final XFile? image = await picker.pickImage(source: source);
-
-    if (image != null) {
-      File file = File(image.path);
-      gettedPhoto = file;
-      var imagePath = await image.readAsBytes();
-      imageSize = imagePath.length;
-      imageFile.text = file.path.split('/').last.toString();
-      update();
-    } else {
-      // User canceled the picker
-    }
-    Get.back();
-  }
-
-  // Menambahkan Gambar
   Future<void> addImage(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: source);
 
     if (image != null) {
-      if (selectedImages.length < maxImages) {
-        selectedImages.add(File(image.path));
-        update(); // Update UI
-      } else {
-        AppSnackBar.warning('Maksimal $maxImages gambar');
-      }
+      selectedImage = File(image.path);
+      imageFile.text = selectedImage?.path ?? '';
+      AppLogger.i(selectedImage?.lengthSync().toString() ?? '');
+      update(); // Update UI setelah gambar dipilih
     }
   }
 
-  // Menghapus Gambar
-  void removeImage(int index) {
-    if (index < selectedImages.length) {
-      selectedImages.removeAt(index);
-      update(); // Update UI
+  void removeImage() {
+    selectedImage = null;
+    update(); // Update UI setelah gambar dihapus
+  }
+
+  // Mengunduh gambar
+  Future<void> downloadImage() async {
+    if (selectedImage != null) {
+      try {
+        // Gunakan Dio untuk mengunduh gambar
+        setLoading(true);
+
+        // Tentukan direktori tempat file disimpan
+        String savePath =
+            '/storage/emulated/0/Download/${selectedImage!.path.split('/').last}';
+        await Dio().download(selectedImage!.path, savePath);
+
+        // Setelah gambar berhasil diunduh, beri notifikasi atau feedback
+        setLoading(false);
+        Get.snackbar('Berhasil', 'Gambar berhasil diunduh!',
+            snackPosition: SnackPosition.BOTTOM);
+      } catch (e) {
+        setLoading(false);
+        Get.snackbar('Gagal', 'Terjadi kesalahan saat mengunduh gambar.',
+            snackPosition: SnackPosition.BOTTOM);
+      }
+    } else {
+      Get.snackbar('Gagal', 'Tidak ada gambar untuk diunduh.',
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  // Fungsi untuk mengatur status loading
+  void setLoading(bool value) {
+    isLoading = value;
+    update();
+  }
+
+  // Menambahkan file gambar atau file lain
+  Future<void> addFile(ImageSource source) async {
+    final ImagePicker picker = ImagePicker();
+
+    // Memilih file (gambar atau video)
+    final XFile? file = await picker.pickImage(source: source);
+
+    if (file != null) {
+      selectedFile = File(file.path);
+      fileSize = selectedFile!.lengthSync();
+      update();
     }
   }
 }

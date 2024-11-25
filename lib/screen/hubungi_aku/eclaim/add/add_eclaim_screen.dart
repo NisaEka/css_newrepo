@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/add/add_eclaim_controller.dart';
+import 'package:css_mobile/screen/hubungi_aku/eclaim/add/image_preview_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -53,11 +54,10 @@ class AddEclaimScreen extends StatelessWidget {
                           horizontal: 15, vertical: 15),
                       color: blueJNE,
                       title: 'Ajukan'.tr,
-                      // onPressed: () => controller.loadOngkir(),
-                      onPressed: () {
-                        // Aksi untuk tombol "Ajukan"
-                        // controller.submitEClaim();
-                      },
+                      onPressed: () =>
+                          controller.formKey.currentState?.validate() == true
+                              ? controller.sendReport()
+                              : null,
                     ),
                   ),
                 ],
@@ -106,7 +106,7 @@ class AddEclaimScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Text(
-                        "AWB123456789",
+                        "CSS5321000336159",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,
@@ -127,15 +127,17 @@ class AddEclaimScreen extends StatelessWidget {
               suffixIcon: const Icon(Icons.keyboard_arrow_down),
             ),
             CustomTextFormField(
-              controller: c.message,
+              controller: c.description,
               hintText: "Deskripsi".tr,
               isRequired: true,
               multiLine: true,
               onChanged: (value) => c.formKey.currentState?.validate(),
             ),
             CustomTextFormField(
-              // controller: c.state.beratKiriman,
+              controller: c.nominalPengajuan,
               hintText: 'Nominal Pengajuan'.tr,
+              contentPadding:
+                  const EdgeInsets.only(top: 0, bottom: 0, left: 40, right: 10),
               isRequired: true,
               prefixIcon: const SatuanFieldIcon(
                 title: 'RP',
@@ -145,13 +147,13 @@ class AddEclaimScreen extends StatelessWidget {
             ),
             CustomTextFormField(
               controller: c.imageFile,
-              isRequired: true,
+              // isRequired: true,
               hintText: "Pilih berkas lampiran".tr,
               readOnly: true,
               suffixIcon: GestureDetector(
-                onTap: c.gettedPhoto != null
+                onTap: c.selectedImage != null
                     ? () {
-                        c.gettedPhoto = null;
+                        c.selectedImage = null;
                         c.imageFile.clear();
                         c.update();
                       }
@@ -196,37 +198,44 @@ class AddEclaimScreen extends StatelessWidget {
                 ),
               )),
             ),
+            const SizedBox(height: 10),
+            // Preview Image
             Wrap(
               spacing: 10,
               runSpacing: 10,
-              children: List.generate(
-                c.selectedImages.length,
-                (index) => Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(
-                          image: FileImage(c.selectedImages[index]),
-                          fit: BoxFit.cover,
+              children: [
+                if (c.selectedImage != null)
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => ImagePreviewScreen(image: c.selectedImage!));
+                    },
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(8),
+                            image: DecorationImage(
+                              image: FileImage(c.selectedImage!),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                      ),
+                        Positioned(
+                          top: -10,
+                          right: -10,
+                          child: IconButton(
+                            icon: const Icon(Icons.close, color: Colors.red),
+                            onPressed: () => c.removeImage(),
+                          ),
+                        ),
+                      ],
                     ),
-                    Positioned(
-                      top: -10,
-                      right: -10,
-                      child: IconButton(
-                        icon: const Icon(Icons.close, color: Colors.red),
-                        onPressed: () => c.removeImage(index),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                  ),
+              ],
             ),
           ],
         ),
