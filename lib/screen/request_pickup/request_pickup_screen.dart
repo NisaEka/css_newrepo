@@ -5,7 +5,10 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_screen.dart';
+import 'package:css_mobile/screen/request_pickup/components/request_pickup_filter_button.dart';
 import 'package:css_mobile/screen/request_pickup/detail/request_pickup_detail_screen.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_filter_item.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_confirmation_dialog.dart';
@@ -13,6 +16,7 @@ import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart'
 import 'package:css_mobile/screen/request_pickup/request_pickup_select_address_content.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/input_formatter/custom_formatter.dart';
+import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
@@ -34,7 +38,16 @@ class RequestPickupScreen extends StatelessWidget {
       init: RequestPickupController(),
       builder: (controller) {
         return Scaffold(
-          appBar: _requestPickupAppBar(),
+          appBar: CustomTopBar(
+            title: 'Minta Dijemput'.tr,
+            leading: CustomBackButton(
+              onPressed: () => Get.delete<DashboardController>()
+                  .then((_) => Get.offAll(const DashboardScreen())),
+            ),
+            action: const [
+              RequstPickupFilterButton(),
+            ],
+          ),
           body: _requestPickupBody(context, controller),
           bottomNavigationBar: _requestPickupBottomBar(context, controller),
         );
@@ -42,13 +55,9 @@ class RequestPickupScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _requestPickupAppBar() {
-    return CustomTopBar(title: "Minta Dijemput".tr);
-  }
-
   Widget? _requestPickupBottomBar(
       BuildContext context, RequestPickupController controller) {
-    if (controller.checkMode) {
+    if (controller.state.checkMode) {
       return Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -65,7 +74,7 @@ class RequestPickupScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    controller.selectedAwbs.length.toString(),
+                    controller.state.selectedAwbs.length.toString(),
                     style: sublistTitleTextStyle.copyWith(
                         fontWeight: FontWeight.bold),
                   )
@@ -92,15 +101,15 @@ class RequestPickupScreen extends StatelessWidget {
 
   Widget _requestPickupBody(
       BuildContext context, RequestPickupController controller) {
-    if (controller.showLoadingIndicator) {
+    if (controller.state.showLoadingIndicator) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (controller.showEmptyContent) {
+    if (controller.state.showEmptyContent) {
       return const Center(child: Text("Tidak ada data tersedia"));
     }
 
-    if (controller.showErrorContent) {
+    if (controller.state.showErrorContent) {
       return Center(
         child: Column(
           children: [
@@ -115,7 +124,7 @@ class RequestPickupScreen extends StatelessWidget {
       );
     }
 
-    if (controller.showMainContent) {
+    if (controller.state.showMainContent) {
       return _mainContentStack(context, controller);
     }
 
@@ -127,13 +136,14 @@ class RequestPickupScreen extends StatelessWidget {
     return Stack(
       children: [
         _mainContent(context, controller),
-        if (controller.createDataLoading) const LoadingDialog(),
-        if (controller.createDataFailed || controller.createDataSuccess)
+        if (controller.state.createDataLoading) const LoadingDialog(),
+        if (controller.state.createDataFailed ||
+            controller.state.createDataSuccess)
           MessageInfoDialog(
             message:
-                'Success: ${controller.data?.successCount}. Error: ${controller.data?.errorCount}\n'
+                'Success: ${controller.state.data?.successCount}. Error: ${controller.state.data?.errorCount}\n'
                 'Error Details:\n'
-                '${controller.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
+                '${controller.state.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
             onClickAction: () => controller.refreshState(),
           ),
         // if (controller.createDataSuccess)
@@ -149,10 +159,10 @@ class RequestPickupScreen extends StatelessWidget {
       BuildContext context, RequestPickupController controller) {
     return Column(
       children: [
-        _buttonFilters(context, controller),
+        // _buttonFilters(context, controller),
         _checkAllItemBox(context, controller),
         CustomSearchField(
-          controller: controller.searchField,
+          controller: controller.state.searchField,
           hintText: 'Cari'.tr,
           inputFormatters: [
             UpperCaseTextFormatter(),
@@ -167,24 +177,24 @@ class RequestPickupScreen extends StatelessWidget {
             controller.onSearchChanged(value);
           },
           onClear: () {
-            controller.searchField.clear();
-            controller.pagingController.refresh();
+            controller.state.searchField.clear();
+            controller.state.pagingController.refresh();
           },
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
         ),
         Expanded(
             child: RefreshIndicator(
           onRefresh: () =>
-              Future.sync(() => controller.pagingController.refresh()),
+              Future.sync(() => controller.state.pagingController.refresh()),
           child: PagedListView<int, RequestPickupModel>(
-            pagingController: controller.pagingController,
+            pagingController: controller.state.pagingController,
             builderDelegate: PagedChildBuilderDelegate<RequestPickupModel>(
               transitionDuration: const Duration(milliseconds: 500),
               itemBuilder: (context, item, index) {
                 return RequestPickupItem(
                   data: item,
                   onTap: (String awb) {
-                    if (controller.checkMode) {
+                    if (controller.state.checkMode) {
                       if (item.status !=
                           Constant.statusAlreadyRequestPickedUp) {
                         controller.selectItem(awb);
@@ -199,7 +209,7 @@ class RequestPickupScreen extends StatelessWidget {
                   onLongTap: () {
                     controller.setCheckMode(true);
                   },
-                  checkMode: controller.checkMode,
+                  checkMode: controller.state.checkMode,
                   checked: controller.isItemChecked(item.awb),
                 );
               },
@@ -225,7 +235,7 @@ class RequestPickupScreen extends StatelessWidget {
 
   Widget _checkAllItemBox(
       BuildContext context, RequestPickupController controller) {
-    if (controller.checkMode) {
+    if (controller.state.checkMode) {
       return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
@@ -248,6 +258,7 @@ class RequestPickupScreen extends StatelessWidget {
     }
   }
 
+  // ignore: unused_element
   Widget _buttonFilters(
       BuildContext context, RequestPickupController controller) {
     return SizedBox(
@@ -258,22 +269,22 @@ class RequestPickupScreen extends StatelessWidget {
           children: [
             const SizedBox(width: 16),
             _buttonFilter(
-                context, controller.filterDateText.tr, Constant.allDate, () {
+                context, controller.state.filterDateText.tr, Constant.allDate,
+                () {
               _filterDateBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(
-                context, controller.filterStatusText.tr, Constant.allStatus,
-                () {
+            _buttonFilter(context, controller.state.filterStatusText.tr,
+                Constant.allStatus, () {
               _filterStatusBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(context, controller.filterDeliveryTypeText.tr,
+            _buttonFilter(context, controller.state.filterDeliveryTypeText.tr,
                 Constant.allDeliveryType, () {
               _filterDeliveryTypeBottomSheet(controller);
             }),
             const SizedBox(width: 16),
-            _buttonFilter(context, controller.filterDeliveryCityText.tr,
+            _buttonFilter(context, controller.state.filterDeliveryCityText.tr,
                 Constant.allDeliveryCity, () {
               _filterDeliveryCityBottomSheet(controller);
             }),
@@ -341,8 +352,8 @@ class RequestPickupScreen extends StatelessWidget {
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     bool isSelected =
-                        controller.selectedFilterDate == items[index];
-                    bool isCustom = controller.selectedFilterDate ==
+                        controller.state.selectedFilterDate == items[index];
+                    bool isCustom = controller.state.selectedFilterDate ==
                         RequestPickupDateEnum.custom;
                     bool showDatePickerContent = isCustom && isSelected;
 
@@ -354,8 +365,8 @@ class RequestPickupScreen extends StatelessWidget {
                       itemName: items[index].asName(),
                       isSelected: isSelected,
                       requireDatePicker: showDatePickerContent,
-                      startDate: controller.selectedDateStartText,
-                      endDate: controller.selectedDateEndText,
+                      startDate: controller.state.selectedDateStartText,
+                      endDate: controller.state.selectedDateEndText,
                       onStartDateChange: (newDateTime) {
                         setState(
                             () => controller.setSelectedDateStart(newDateTime));
@@ -393,7 +404,7 @@ class RequestPickupScreen extends StatelessWidget {
   }
 
   _filterStatusBottomSheet(RequestPickupController controller) {
-    List<String> items = controller.statuses;
+    List<String> items = controller.state.statuses;
 
     _requestPickupBottomSheetScaffold(
       "Pilih Status".tr,
@@ -411,7 +422,7 @@ class RequestPickupScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           itemCount: items.length,
           itemBuilder: (context, index) {
-            bool isSelected = controller.filterStatusText == items[index];
+            bool isSelected = controller.state.filterStatusText == items[index];
             return GestureDetector(
               onTap: () {
                 controller.setSelectedFilterStatus(items[index]);
@@ -434,7 +445,7 @@ class RequestPickupScreen extends StatelessWidget {
   }
 
   _filterDeliveryTypeBottomSheet(RequestPickupController controller) {
-    List<String> items = controller.types;
+    List<String> items = controller.state.types;
 
     _requestPickupBottomSheetScaffold(
       "Pilih Tipe Kiriman".tr,
@@ -452,7 +463,8 @@ class RequestPickupScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           itemCount: items.length,
           itemBuilder: (context, index) {
-            bool isSelected = controller.filterDeliveryTypeText == items[index];
+            bool isSelected =
+                controller.state.filterDeliveryTypeText == items[index];
             return GestureDetector(
               onTap: () {
                 controller.setSelectedDeliveryType(items[index]);
@@ -475,7 +487,7 @@ class RequestPickupScreen extends StatelessWidget {
   }
 
   _filterDeliveryCityBottomSheet(RequestPickupController controller) {
-    List<Map<String, dynamic>> items = controller.cities;
+    List<Map<String, dynamic>> items = controller.state.cities;
 
     Get.bottomSheet(
       enableDrag: true,
@@ -489,7 +501,7 @@ class RequestPickupScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                 child: CustomTextFormField(
-                  controller: controller.cityKeyword,
+                  controller: controller.state.cityKeyword,
                   label: 'Nama Kota'.tr,
                   hintText: 'Masukkan nama kota',
                   inputType: TextInputType.streetAddress,
@@ -515,7 +527,7 @@ class RequestPickupScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   itemCount: items.length,
                   itemBuilder: (context, index) {
-                    bool isSelected = controller.filterDeliveryCityText ==
+                    bool isSelected = controller.state.filterDeliveryCityText ==
                         items[index]['label'];
                     return GestureDetector(
                       onTap: () {
@@ -552,13 +564,14 @@ class RequestPickupScreen extends StatelessWidget {
         return RequestPickupBottomSheetScaffold(
           title: 'Pilih Alamat Penjemputan'.tr,
           content: RequestPickupSelectAddressContent(
-            addresses: controller.addresses,
-            pagingController: controller.pagingControllerPickupDataAddress,
+            addresses: controller.state.addresses,
+            pagingController:
+                controller.state.pagingControllerPickupDataAddress,
             onAddNewAddressClick: () {
               Get.to(() => const RequestPickupAddressUpsertScreen())
                   ?.then((result) {
                 if (result == HttpStatus.created) {
-                  controller.pagingControllerPickupDataAddress.refresh();
+                  controller.state.pagingControllerPickupDataAddress.refresh();
                   setState(() => controller.update());
                 }
               });
@@ -579,11 +592,11 @@ class RequestPickupScreen extends StatelessWidget {
             onTimeSet: (String newTime) {
               setState(() => controller.onSetPickupTime(newTime));
             },
-            selectedTime: controller.selectedPickupTime,
+            selectedTime: controller.state.selectedPickupTime,
             onSelectAddress: (String addressId) {
               setState(() => controller.onSelectAddress(addressId));
             },
-            selectedAddressId: controller.selectedAddressId,
+            selectedAddressId: controller.state.selectedAddressId,
           ),
         );
       }),

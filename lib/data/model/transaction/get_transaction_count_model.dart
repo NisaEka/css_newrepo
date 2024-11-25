@@ -1,106 +1,64 @@
-class GetTransactionCountModel {
-  GetTransactionCountModel({
-    num? code,
-    String? message,
-    TransactionCount? payload,
-  }) {
-    _code = code;
-    _message = message;
-    _payload = payload;
-  }
-
-  GetTransactionCountModel.fromJson(dynamic json) {
-    _code = json['code'];
-    _message = json['message'];
-    _payload = json['payload'] != null
-        ? TransactionCount.fromJson(json['payload'])
-        : null;
-  }
-
-  num? _code;
-  String? _message;
-  TransactionCount? _payload;
-
-  GetTransactionCountModel copyWith({
-    num? code,
-    String? message,
-    TransactionCount? payload,
-  }) =>
-      GetTransactionCountModel(
-        code: code ?? _code,
-        message: message ?? _message,
-        payload: payload ?? _payload,
-      );
-
-  num? get code => _code;
-
-  String? get message => _message;
-
-  TransactionCount? get payload => _payload;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.toJson();
-    }
-    return map;
-  }
-}
-
 class TransactionCount {
   TransactionCount({
     num? total,
-    num? cod,
-    num? nonCod,
-    num? codOngkir,
+    num? totalCod,
+    num? totalNonCod,
+    num? totalCodOngkir,
+    String? status,
   }) {
     _total = total;
-    _cod = cod;
-    _nonCod = nonCod;
-    _codOngkir = codOngkir;
+    _totalCod = totalCod;
+    _totalNonCod = totalNonCod;
+    _totalCodOngkir = totalCodOngkir;
+    _status = status;
   }
 
   TransactionCount.fromJson(dynamic json) {
     _total = json['total'];
-    _cod = json['cod'];
-    _nonCod = json['nonCod'];
-    _codOngkir = json['codOngkir'];
+    _totalCod = json['totalCod'];
+    _totalNonCod = json['totalNonCod'];
+    _totalCodOngkir = json['totalCodOngkir'];
+    _status = json['status'];
   }
 
   num? _total;
-  num? _cod;
-  num? _nonCod;
-  num? _codOngkir;
+  num? _totalCod;
+  num? _totalNonCod;
+  num? _totalCodOngkir;
+  String? _status;
 
   TransactionCount copyWith({
     num? total,
-    num? cod,
-    num? nonCod,
-    num? codOngkir,
+    num? totalCod,
+    num? totalNonCod,
+    num? totalCodOngkir,
+    String? status,
   }) =>
       TransactionCount(
         total: total ?? _total,
-        cod: cod ?? _cod,
-        nonCod: nonCod ?? _nonCod,
-        codOngkir: codOngkir ?? _codOngkir,
+        totalCod: totalCod ?? _totalCod,
+        totalNonCod: totalNonCod ?? _totalNonCod,
+        totalCodOngkir: totalCodOngkir ?? _totalCodOngkir,
+        status: status ?? _status,
       );
 
   num? get total => _total;
 
-  num? get cod => _cod;
+  num? get totalCod => _totalCod;
 
-  num? get nonCod => _nonCod;
+  num? get totalNonCod => _totalNonCod;
 
-  num? get codOngkir => _codOngkir;
+  num? get totalCodOngkir => _totalCodOngkir;
+
+  String? get status => _status;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['total'] = _total;
-    map['cod'] = _cod;
-    map['nonCod'] = _nonCod;
-    map['codOngkir'] = _codOngkir;
+    map['totalCod'] = _totalCod;
+    map['totalNonCod'] = _totalNonCod;
+    map['totalCodOngkir'] = _totalCodOngkir;
+    map['status'] = _status;
     return map;
   }
 }
