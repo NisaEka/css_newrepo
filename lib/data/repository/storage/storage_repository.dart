@@ -6,6 +6,6 @@ import 'package:css_mobile/data/model/storage/storage_model.dart';
 
 abstract class StorageRepository {
   Future<DefaultResponseModel<StorageModel?>> postStorage(File file);
-  Future<DefaultResponseModel<List<CcrfFileModel>?>> postCcrfFile(
+  Future<DefaultResponseModel<List<FileModel>?>> postCcrfFile(
       Map<String, String> files);
 }

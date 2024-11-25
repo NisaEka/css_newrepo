@@ -312,7 +312,9 @@ class Goods {
     final map = <String, dynamic>{};
     map['type'] = _type;
     map['desc'] = _desc;
-    map['amount'] = _amount;
+    if (_amount != null) {
+      map['amount'] = _amount;
+    }
     map['quantity'] = _quantity;
     map['weight'] = _weight;
     return map;

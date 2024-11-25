@@ -6,8 +6,6 @@ import 'package:css_mobile/data/repository/auth/auth_impl.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/repository/bank/bank_impl.dart';
 import 'package:css_mobile/data/repository/bank/bank_repository.dart';
-// import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_impl.dart';
-// import 'package:css_mobile/data/repository/cek_ongkir/cek_ongkir_repository.dart';
 import 'package:css_mobile/data/repository/eclaim/eclaim_impl.dart';
 import 'package:css_mobile/data/repository/eclaim/eclaim_repository.dart';
 import 'package:css_mobile/data/repository/facility/facility_impl.dart';

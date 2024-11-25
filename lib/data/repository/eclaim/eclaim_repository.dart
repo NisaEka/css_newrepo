@@ -11,9 +11,11 @@ abstract class EclaimRepository {
 
   Future<BaseResponse<EclaimCountModel>> getEclaimCount(QueryParamModel param);
 
+
   Future<BaseResponse<List<String>>> getEclaimStatus();
 
   Future<BaseResponse<List<CcrfFileModel>>> postEclaimImage(File photo);
 
   Future<BaseResponse<EclaimModel>> postEclaim(EclaimModel data);
+
 }

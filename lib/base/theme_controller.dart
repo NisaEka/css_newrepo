@@ -344,6 +344,12 @@ class CustomTheme {
         : whiteColor;
   }
 
+  Color? menuColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light
+        ? blueJNE
+        : infoColor;
+  }
+
   Color? cursorColor(BuildContext context) {
     return AppConst.isLightTheme(context) ? blueJNE : whiteColor;
   }

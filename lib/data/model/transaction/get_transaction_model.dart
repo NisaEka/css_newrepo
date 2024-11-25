@@ -852,7 +852,9 @@ class TransactionModel {
     map['dateSerahTerima'] = _dateSerahTerima;
     map['apiStatus'] = _apiStatus;
     map['codFlag'] = _codFlag;
-    map['goodsAmount'] = _goodsAmount;
+    if (_goodsAmount != null) {
+      map['goodsAmount'] = _goodsAmount;
+    }
     map['receiverCity'] = _receiverCity;
     map['branch'] = _branch;
     map['responsePickup'] = _responsePickup;

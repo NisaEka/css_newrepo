@@ -9,16 +9,19 @@ import 'package:get/get.dart';
 class CustomCodeLabel extends StatelessWidget {
   final String label;
   final bool isLoading;
+  final MainAxisAlignment alignment;
 
   const CustomCodeLabel({
     super.key,
     required this.label,
     this.isLoading = false,
+    this.alignment = MainAxisAlignment.start,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: alignment,
       children: [
         Shimmer(
           isLoading: isLoading,

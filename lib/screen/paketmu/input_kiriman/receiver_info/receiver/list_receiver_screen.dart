@@ -5,11 +5,12 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/components/contact_appba
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver/add/add_receiver_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver/list_receiver_controller.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:collection/collection.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ListPenerimaScreen extends StatelessWidget {
   const ListPenerimaScreen({super.key});
@@ -51,11 +52,11 @@ class ListPenerimaScreen extends StatelessWidget {
               })
             ],
             onChanged: (value) {
-              c.initData();
+              c.pagingController.refresh();
             },
             onClear: () {
               c.search.clear();
-              c.initData();
+              c.pagingController.refresh();
             },
           ),
           c.isLoading
@@ -66,17 +67,34 @@ class ListPenerimaScreen extends StatelessWidget {
                   itemCount: 10,
                 ))
               : Expanded(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: c.receiverList.isNotEmpty
-                        ? c.receiverList
-                            .mapIndexed(
-                              (i, e) => c.receiverItem(e, i, context),
-                            )
-                            .toList()
-                        : [const Center(child: DataEmpty())],
-                  ),
-                )
+                  child: PagedListView<int, ReceiverModel>(
+                      pagingController: c.pagingController,
+                      builderDelegate: PagedChildBuilderDelegate<ReceiverModel>(
+                        transitionDuration: const Duration(milliseconds: 500),
+                        itemBuilder: (context, item, index) =>
+                            c.pagingController.itemList!.isNotEmpty
+                                ? c.receiverItem(item, index, context)
+                                : const Center(child: DataEmpty()),
+                        noItemsFoundIndicatorBuilder: (context) =>
+                            const DataEmpty(),
+                        newPageProgressIndicatorBuilder: (context) =>
+                            const LoadingDialog(
+                          background: Colors.transparent,
+                          height: 50,
+                          size: 30,
+                        ),
+                      )
+                      //  ListView(
+                      //   shrinkWrap: true,
+                      //   children: c.pagingController.itemList!.isNotEmpty
+                      //       ? c.pagingController.itemList!
+                      //           .mapIndexed(
+                      //             (i, e) => c.receiverItem(e, i, context),
+                      //           )
+                      //           .toList()
+                      //       : [const Center(child: DataEmpty())],
+                      // ),
+                      ))
         ],
       ),
     );

@@ -33,7 +33,7 @@ class StorageImpl extends StorageRepository {
   }
 
   @override
-  Future<DefaultResponseModel<List<CcrfFileModel>?>> postCcrfFile(
+  Future<DefaultResponseModel<List<FileModel>?>> postCcrfFile(
       Map<String, String> files) async {
     try {
       var formData = FormData.fromMap({});
@@ -47,9 +47,9 @@ class StorageImpl extends StorageRepository {
             "Content-Type": "multipart/form-data"
           }));
       var payload = response.data["payload"];
-      List<CcrfFileModel> fileModels = [];
+      List<FileModel> fileModels = [];
       payload.forEach((fileModel) {
-        fileModels.add(CcrfFileModel.fromJson(fileModel));
+        fileModels.add(FileModel.fromJson(fileModel));
       });
       return DefaultResponseModel.fromJson(response.data, fileModels);
     } on DioException catch (e) {

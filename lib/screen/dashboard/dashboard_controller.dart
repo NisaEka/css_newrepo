@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
@@ -30,7 +30,6 @@ class DashboardController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-
     Future.wait([
       isFirst(),
       cekToken(),
@@ -122,7 +121,7 @@ class DashboardController extends BaseController {
     state.menuItems = [
       Items(
         title: "Input Kirimanmu",
-        icon: ImageConstant.paketmuIcon,
+        icon: IconsConstant.add,
         route: "/inputKiriman",
         isFavorite: true,
         isEdit: false,
@@ -130,7 +129,7 @@ class DashboardController extends BaseController {
       ),
       Items(
         title: "Cek Ongkir",
-        icon: ImageConstant.cekOngkirIcon,
+        icon: IconsConstant.cekOngkir,
         route: "/cekOngkir",
         isFavorite: true,
         isEdit: false,
@@ -138,7 +137,7 @@ class DashboardController extends BaseController {
       ),
       Items(
         title: "Draft Transaksi",
-        icon: ImageConstant.paketmuIcon,
+        icon: IconsConstant.bookmark,
         route: "/draftTransaksi",
         isFavorite: true,
         isEdit: false,
@@ -146,14 +145,14 @@ class DashboardController extends BaseController {
       ),
       Items(
         title: "Riwayat Kiriman",
-        icon: ImageConstant.paketmuIcon,
+        icon: IconsConstant.history,
         route: "/riwayatKiriman",
         isFavorite: true,
         isEdit: false,
         isAuth: true,
       ),
     ];
-    var favMenu = await storage.readString(StorageCore.favoriteMenu);
+    var favMenu = await storage.readData(StorageCore.favoriteMenu);
     // var shipcost = await storage.readString(StorageCore.shippingCost);
     update();
     if (favMenu.isEmpty == true) {
@@ -164,7 +163,7 @@ class DashboardController extends BaseController {
       update();
     } else {
       state.menuItems = [];
-      var menu = MenuItemModel.fromJson(jsonDecode(favMenu));
+      var menu = MenuItemModel.fromJson(favMenu);
       state.menuItems.addAll(menu.items ?? []);
     }
 
@@ -364,7 +363,9 @@ class DashboardController extends BaseController {
 
   Future<void> initData() async {
     connection.isOnline().then((value) => state.isOnline = value);
+
     cekFavoritMenu();
+
     update();
     cekTheme();
     state.isLoading = true;
@@ -379,8 +380,7 @@ class DashboardController extends BaseController {
             (await storage.readString(StorageCore.dropshipper)) == 'null');
     bool receiver = ((await storage.readString(StorageCore.receiver)).isEmpty ||
         (await storage.readString(StorageCore.receiver)) == 'null');
-    bool sender = ((await storage.readString(StorageCore.shipper)).isEmpty ||
-        (await storage.readString(StorageCore.shipper)) == 'null');
+    // bool sender = ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null');
     bool basic = ((await storage.readString(StorageCore.basicProfile))
                 .isEmpty ||
             (await storage.readString(StorageCore.basicProfile)) == 'null') &&
@@ -437,26 +437,7 @@ class DashboardController extends BaseController {
         }
       }
 
-      if (sender) {
-        // await profil.getShipper().then((value) async {
-        //   AppLogger.i("shipper data : ${value.data?.first.toJson()}");
-        //
-        //   // if (value.data != null) {
-        //   //   await storage.saveData(
-        //   //     StorageCore.shipper,
-        //   //     value.data?.first,
-        //   //   );
-        //   // } else {
-        //     var s = UserModel.fromJson(storage.readData(StorageCore.basicProfile));
-        //     await storage.saveData(
-        //       StorageCore.shipper,
-        //       s,
-        //     );
-        //   // }
-        // });
-      }
-
-      if (ccrfP) {
+      if (ccrfP && state.isLogin) {
         await profil.getCcrfProfil().then((value) async {
           state.ccrf = value.data;
           await storage.saveData(StorageCore.ccrfProfile, value.data);
@@ -466,7 +447,7 @@ class DashboardController extends BaseController {
             await storage.readData(StorageCore.ccrfProfile));
       }
 
-      if (accounts) {
+      if (accounts && state.isLogin) {
         await master
             .getAccounts(QueryModel(limit: 0, sort: [
               {"accountNumber": "asc"}
@@ -477,7 +458,7 @@ class DashboardController extends BaseController {
                 ));
       }
 
-      if (dropshipper) {
+      if (dropshipper && state.isLogin) {
         await master
             .getDropshippers(QueryParamModel())
             .then((value) async => await storage.saveData(
@@ -486,7 +467,7 @@ class DashboardController extends BaseController {
                 ));
       }
 
-      if (receiver) {
+      if (receiver && state.isLogin) {
         await master
             .getReceivers(QueryParamModel())
             .then((value) async => await storage.saveData(

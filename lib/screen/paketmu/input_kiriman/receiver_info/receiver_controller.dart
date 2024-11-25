@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
@@ -49,15 +50,37 @@ class ReceiverController extends BaseController {
   }
 
   FutureOr<ReceiverModel?> getSelectedReceiver() async {
+    AppLogger.i("state.receiver ${jsonEncode(state.receiver)}");
     state.receiverName.text = state.receiver?.name?.toUpperCase() ?? '';
     state.receiverPhone.text = state.receiver?.phone ?? '';
     state.receiverDest.text = state.receiver?.idDestination ?? '';
     state.receiverAddress.text = state.receiver?.address?.toUpperCase() ?? '';
-    getDestinationList(state.receiver?.destinationCode ?? '').then((value) {
-      state.selectedDestination = value
-          .where((element) =>
-              element.destinationCode == state.receiver?.destinationCode)
-          .first;
+    getDestinationList(QueryParamModel(
+      table: true,
+      limit: 1,
+      where: jsonEncode([
+        {
+          "countryName": state.receiver?.country,
+        },
+        {
+          "provinceName": state.receiver?.region,
+        },
+        {
+          "cityName": state.receiver?.city,
+        },
+        {
+          "districtName": state.receiver?.district,
+        },
+        {
+          "subdistrictName": state.receiver?.subDistrict,
+        },
+        {
+          "zipCode": state.receiver?.zipCode,
+        },
+      ]),
+    )).then((value) {
+      AppLogger.i("getSelectedReceiver destination ${jsonEncode(value)}");
+      state.selectedDestination = value.first;
     });
     update();
     return state.receiver;
@@ -70,12 +93,11 @@ class ReceiverController extends BaseController {
     return false;
   }
 
-  Future<List<Destination>> getDestinationList(String keyword) async {
+  Future<List<Destination>> getDestinationList(QueryParamModel param) async {
     state.isLoading = true;
     BaseResponse<List<Destination>>? response;
     try {
-      response = await master
-          .getDestinations(QueryParamModel(search: keyword.toUpperCase()));
+      response = await master.getDestinations(param);
     } catch (e, i) {
       AppLogger.e('error getDestinationList $e, $i');
     }

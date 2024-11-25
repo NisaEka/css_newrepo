@@ -12,7 +12,17 @@ class IconsConstant {
   static const String qrcode = "assets/icons/qrcode-scan.svg";
   static const String search = "assets/icons/search.svg";
   static const String transaction = "assets/icons/transaction.svg";
-  // static const String paket = "assets/icons/paket.png";
   static const String paket =
       "https://github.com/NisaEka/assets/blob/css/icons/paket.png?raw=true";
+  static const String add = "assets/icons/add.svg";
+  static const String agg = "assets/icons/aggregasi-pembayaran.svg";
+  static const String aggMinus = "assets/icons/aggregasi-minus.svg";
+  static const String bookmark = "assets/icons/bookmark.svg";
+  static const String cekOngkir = "assets/icons/cek-ongkir.svg";
+  static const String eclaim = "assets/icons/eclaim.svg";
+  static const String invoice = "assets/icons/invoice.svg";
+  static const String pantau = "assets/icons/pantau.svg";
+  static const String ticket = "assets/icons/ticket.svg";
+  static const String requestPickup = "assets/icons/request-pickup.svg";
+  static const String history = "assets/icons/history.svg";
 }

@@ -77,6 +77,7 @@ class EclaimRepositoryImpl extends EclaimRepository {
         (json) => EclaimCountModel.fromJson(
           json as Map<String, dynamic>,
         ),
+
       );
     }
   }
@@ -171,6 +172,7 @@ class EclaimRepositoryImpl extends EclaimRepository {
                 )
                 .toList()
             : List.empty(),
+
       );
     }
   }

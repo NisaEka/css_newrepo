@@ -166,7 +166,7 @@ class ReceiverModel {
     map['receiverPhone'] = _phone;
     map['destinationCode'] = _destinationCode;
     map['destinationDesc'] = _destinationDescription;
-    map['idDest'] = _destinationDescription;
+    map['idDest'] = _idDestination;
     map['idReceive'] = _idReceive;
     map['receiverDistrict'] = _receiverDistrict;
     map['receiverSubdistrict'] = _receiverSubDistrict;

@@ -181,9 +181,9 @@ class FacilityFormBankController extends BaseController {
     facilityCreateArgs.setBankInfo(bankInfo);
   }
 
-  CcrfFileModel? ktpUrl;
-  CcrfFileModel? npwpUrl;
-  CcrfFileModel? rekeningUrl;
+  FileModel? ktpUrl;
+  FileModel? npwpUrl;
+  FileModel? rekeningUrl;
 
   Future<bool> _uploadFiles() async {
     var fileMap = {
