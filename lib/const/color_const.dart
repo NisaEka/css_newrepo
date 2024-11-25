@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const Color neutralColor = Color(0xffE0E0E0);
 const Color whiteColor = Colors.white;
 const Color blueJNE = Color(0xff202F72);
+const Color blueJNEna = Color(0xff4B5B93);
 const Color redJNE = Color(0xffE01B22);
 const Color successColor = Color(0xff22A121);
 const Color successDarkColor = Color(0xff1D8C1D);

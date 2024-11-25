@@ -43,53 +43,61 @@ class TransactionEditButton extends StatelessWidget {
                         })
                       : null,
                 ),
-                CustomFilledButton(
-                  color: successColor,
-                  isTransparent: true,
-                  prefixIcon: Icons.edit,
-                  width: 50,
-                  height: 50,
-                  fontSize: 23,
-                  isLoading: isLoading,
-                  onPressed: () {
-                    if (c.state.transactionModel?.statusAwb ==
-                        "MASIH DI KAMU") {
-                      Get.to(
-                        const InformasiPengirimScreen(),
-                        arguments: {
-                          'isEdit': true,
-                          'data': transactionData,
+                c.state.transactionModel?.statusAwb == "MASIH DI KAMU" &&
+                        (c.state.transactionModel?.apiStatus == 2 ||
+                            c.state.transactionModel?.apiStatus == 7)
+                    ? CustomFilledButton(
+                        color: successColor,
+                        isTransparent: true,
+                        prefixIcon: Icons.edit,
+                        width: 50,
+                        height: 50,
+                        fontSize: 23,
+                        isLoading: isLoading,
+                        onPressed: () {
+                          if (c.state.transactionModel?.statusAwb ==
+                                  "MASIH DI KAMU" &&
+                              (c.state.transactionModel?.apiStatus == 2 ||
+                                  c.state.transactionModel?.apiStatus == 7)) {
+                            Get.to(
+                              const InformasiPengirimScreen(),
+                              arguments: {
+                                'isEdit': true,
+                                'data': transactionData,
+                              },
+                            );
+                          }
                         },
-                      );
-                    }
-                  },
-                ),
-                CustomFilledButton(
-                  color: errorColor,
-                  isTransparent: true,
-                  prefixIcon: Icons.delete,
-                  width: 50,
-                  height: 50,
-                  fontSize: 23,
-                  isLoading: isLoading,
-                  onPressed: () {
-                    if (c.state.transactionModel?.statusAwb ==
-                        "MASIH DI KAMU") {
-                      showDialog(
-                        context: context,
-                        builder: (context) => DeleteAlertDialog(
-                          onDelete: () {
-                            c.deleteTransaction();
-                            Get.close(2);
-                          },
-                          onBack: () {
-                            Get.back();
-                          },
-                        ),
-                      );
-                    }
-                  },
-                ),
+                      )
+                    : const SizedBox(),
+                c.state.transactionModel?.statusAwb == "MASIH DI KAMU"
+                    ? CustomFilledButton(
+                        color: errorColor,
+                        isTransparent: true,
+                        prefixIcon: Icons.delete,
+                        width: 50,
+                        height: 50,
+                        fontSize: 23,
+                        isLoading: isLoading,
+                        onPressed: () {
+                          if (c.state.transactionModel?.statusAwb ==
+                              "MASIH DI KAMU") {
+                            showDialog(
+                              context: context,
+                              builder: (context) => DeleteAlertDialog(
+                                onDelete: () {
+                                  c.deleteTransaction();
+                                  Get.close(2);
+                                },
+                                onBack: () {
+                                  Get.back();
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      )
+                    : const SizedBox(),
                 CustomFilledButton(
                   color: warningColor,
                   isTransparent: true,

@@ -1,5 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/screen/cek_ongkir/congkir_screen.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:flutter/material.dart';
@@ -30,19 +30,19 @@ class DashboardMenu1 extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               MenuItem(
-                menuImg: ImageConstant.paketmuIcon,
+                menuImg: IconsConstant.add,
                 menuTitle: "Paketmu\n".tr,
               ),
               MenuItem(
-                menuImg: ImageConstant.keuanganmuIcon,
+                // menuImg: ImageConstant.keuanganmuIcon,
                 menuTitle: "Keuanganmu\n".tr,
               ),
               MenuItem(
-                menuImg: ImageConstant.pantauPaketmuIcon,
+                // menuImg: ImageConstant.pantauPaketmuIcon,
                 menuTitle: "Pantau\nPaketmu".tr,
               ),
               MenuItem(
-                menuImg: ImageConstant.hubungiAkuIcon,
+                // menuImg: ImageConstant.hubungiAkuIcon,
                 menuTitle: "Hubungi\nAku".tr,
               ),
             ],
@@ -51,16 +51,16 @@ class DashboardMenu1 extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               MenuItem(
-                menuImg: ImageConstant.cekOngkirIcon,
+                // menuImg: ImageConstant.cekOngkirIcon,
                 menuTitle: "Cek Ongkir\n".tr,
                 onTap: () => Get.to(const CekOngkirScreen()),
               ),
               MenuItem(
-                menuImg: ImageConstant.dukunganTeknisIcon,
+                // menuImg: ImageConstant.dukunganTeknisIcon,
                 menuTitle: "Dukungan\nTeknis".tr,
               ),
               MenuItem(
-                menuImg: ImageConstant.pengaturanIcon,
+                // menuImg: ImageConstant.pengaturanIcon,
                 menuTitle: "Pengaturan\n".tr,
               ),
               SizedBox(width: Get.width / 6, height: Get.width / 6)

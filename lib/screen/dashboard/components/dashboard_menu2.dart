@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/menu/other_menu_screen.dart';
@@ -42,6 +43,7 @@ class DashboardMenu2 extends StatelessWidget {
                               .map((e) => MenuItem(
                                     menuTitle: e.title?.tr ?? '',
                                     menuImg: e.icon,
+                                    data: e,
                                     isLoading: controller.state.isLoading,
                                     isActive: (e.isAuth ?? false)
                                         ? controller.state.isLogin
@@ -73,9 +75,11 @@ class DashboardMenu2 extends StatelessWidget {
                               controller.cekAllowance();
                             },
                           ),
-                          menuIcon: const Icon(
+                          menuIcon: Icon(
                             Icons.more_horiz,
-                            color: whiteColor,
+                            color: AppConst.isLightTheme(context)
+                                ? whiteColor
+                                : infoColor,
                             size: 46,
                           ),
                         ),

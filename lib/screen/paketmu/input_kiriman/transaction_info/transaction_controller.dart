@@ -489,7 +489,7 @@ class TransactionController extends BaseController {
           custId: state.account.accountNumber,
           originCode: state.origin.originCode,
           originDesc: state.origin.originName,
-          branch: state.origin.branchCode,
+          branch: state.origin.branchCode ?? state.origin.branch?.branchCode,
           destinationCode: state.destination.destinationCode,
           type: state.goodType.text,
           goodsDesc: state.goodName.text,
@@ -497,7 +497,7 @@ class TransactionController extends BaseController {
           qty: state.goodQty.text.toInt(),
           weight: state.berat,
           orderId: state.noReference.text,
-          apiStatus: 0,
+          // apiStatus: 0,
           shipperName: state.shipper.name,
           shipperPhone: state.shipper.phone,
           shipperAddr: state.shipper.address,
@@ -594,7 +594,7 @@ class TransactionController extends BaseController {
           desc: state.goodName.text,
           amount: state.goodAmount.text.isNotEmpty
               ? state.goodAmount.text.digitOnly().toInt()
-              : 0,
+              : null,
           quantity: state.goodQty.text.toInt(),
           weight: state.berat),
       shipper: state.shipper,
@@ -605,10 +605,10 @@ class TransactionController extends BaseController {
           .postTransaction(TransactionModel(
         orderId:
             state.noReference.text.isNotEmpty ? state.noReference.text : null,
-        apiStatus: 0,
+        // apiStatus: 0,
         apiType: trans.account?.accountService,
         custId: state.account.accountNumber,
-        branch: state.account.accountBranch, //TODO: ambil branch origin
+        branch: trans.origin?.branchCode ?? trans.origin?.branch?.branchCode,
         codAmount: state.isCOD || state.codOngkir
             ? state.codAmountText.text.digitOnly().toInt()
             : null,
@@ -628,7 +628,7 @@ class TransactionController extends BaseController {
         destinationCode: trans.receiver?.destinationCode,
         goodsAmount: state.goodAmount.text.isNotEmpty
             ? state.goodAmount.text.digitOnly().toInt()
-            : 0,
+            : null,
         goodsDesc: state.goodName.text,
         goodsType:
             state.goodType.text.isNotEmpty ? state.goodType.text : "PAKET",
