@@ -1,6 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_state.dart';
@@ -28,8 +27,10 @@ class RiwayatKirimanController extends BaseController {
 
   void cekAllowance() {
     if (state.basic?.userType != "PEMILIK") {
-      state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
-      state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
+      final petugasEntry = state.listOfficerEntry
+          .firstWhere((element) => element.id == state.basic?.id);
+      state.selectedPetugasEntry = petugasEntry;
+      // state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
     }
     update();
     state.pagingController.refresh();
@@ -48,9 +49,9 @@ class RiwayatKirimanController extends BaseController {
       )
           .then((value) {
         state.total = value.data?.total?.toInt() ?? 0;
-        state.cod = value.data?.cod?.toInt() ?? 0;
-        state.noncod = value.data?.nonCod?.toInt() ?? 0;
-        state.codOngkir = value.data?.codOngkir?.toInt() ?? 0;
+        state.cod = value.data?.totalCod?.toInt() ?? 0;
+        state.noncod = value.data?.totalNonCod?.toInt() ?? 0;
+        state.codOngkir = value.data?.totalCodOngkir?.toInt() ?? 0;
         update();
       });
     } catch (e, i) {
@@ -72,12 +73,12 @@ class RiwayatKirimanController extends BaseController {
         update();
       });
 
-      if (state.basic?.userType == "PEMILIK") {
-        await transaction.getTransOfficer().then((value) {
-          state.listOfficerEntry.addAll(value.data ?? []);
-          update();
-        });
-      }
+      // if (state.basic?.userType == "PEMILIK") {
+      await transaction.getTransOfficer().then((value) {
+        state.listOfficerEntry.addAll(value.data ?? []);
+        update();
+      });
+      // }
 
       update();
     } catch (e) {
@@ -207,8 +208,8 @@ class RiwayatKirimanController extends BaseController {
     state.searchField.clear();
     state.transDate = '[]';
     state.dateFilter = '0';
-    state.pagingController.refresh();
     update();
+    state.pagingController.refresh();
     transactionCount();
   }
 
@@ -290,11 +291,12 @@ class RiwayatKirimanController extends BaseController {
       // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     }
     update();
-    transactionCount();
-    state.pagingController.refresh();
-    update();
+    // update();
     if (state.dateFilter == '0') {
       resetFilter();
+    } else {
+      state.pagingController.refresh();
+      transactionCount();
     }
     // } else {
     //   resetFilter();

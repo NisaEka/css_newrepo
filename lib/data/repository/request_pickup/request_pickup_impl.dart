@@ -10,6 +10,7 @@ import 'package:css_mobile/data/model/request_pickup/request_pickup_detail_model
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/request_pickup/request_pickup_repository.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -20,11 +21,12 @@ class RequestPickupImpl extends RequestPickupRepository {
   @override
   Future<BaseResponse<List<RequestPickupModel>>> getRequestPickups(
       QueryParamModel param, String status) async {
+    AppLogger.i("getRequestPickups param: ${param.toJson()}");
     try {
       var response = await network.base.get("/transaction/pickups",
           queryParameters: {
             ...param.toJson(),
-            if (status.isNotEmpty) 'status': status
+            if (status != Constant.allStatus) 'status': status
           });
 
       AppLogger.i("getRequestPickups response: ${response.data}");

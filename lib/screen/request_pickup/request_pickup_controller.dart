@@ -3,157 +3,123 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/base/theme_controller.dart';
+import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
-import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_request_model.dart';
-import 'package:css_mobile/data/model/request_pickup/request_pickup_create_response_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
-import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
+import 'package:css_mobile/screen/request_pickup/request_pickup_state.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/date_ext.dart';
 import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 
 class RequestPickupController extends BaseController {
-  bool _checkMode = false;
-  Timer? _debounceTimer;
-
-  bool get checkMode => _checkMode;
+  final state = RequestPickupState();
 
   void setCheckMode(bool newState) {
-    _checkMode = newState;
+    state.checkMode = newState;
     update();
   }
-
-  TextEditingController cityKeyword = TextEditingController();
-  final searchField = TextEditingController();
-
-  bool showLoadingIndicator = false;
-  bool showMainContent = true;
-  bool showErrorContent = false;
-  bool showEmptyContent = false;
-
-  List<RequestPickupAddressModel> addresses = [];
-  List<Map<String, dynamic>> cities = [];
-  List<String> statuses = [];
-  List<String> types = [];
-
-  QueryParamModel queryParam = QueryParamModel();
-  String filterStatus = "";
-  String filterDateText = RequestPickupDateEnum.today.asName();
-  String filterStatusText = Constant.allStatus;
-  String filterDeliveryTypeText = Constant.allDeliveryType;
-  String filterDeliveryCityText = Constant.allDeliveryCity;
-
-  RequestPickupDateEnum selectedFilterDate = RequestPickupDateEnum.today;
-
-  DateTime? selectedDateStart;
-  DateTime? selectedDateEnd;
-  String selectedDateStartText = "Pilih Tanggal Awal";
-  String selectedDateEndText = "Pilih Tanggal Akhir";
-
-  final PagingController<int, RequestPickupModel> pagingController =
-      PagingController(firstPageKey: Constant.defaultPage);
-  static const pageSize = Constant.defaultLimit;
-
-  List<String> selectedAwbs = [];
-  String selectedPickupTime = Constant.defaultPickupTime;
-  String? selectedAddressId;
-
-  final PagingController<int, RequestPickupAddressModel>
-      pagingControllerPickupDataAddress =
-      PagingController(firstPageKey: Constant.defaultPage);
-
-  bool _createDataLoading = false;
-
-  bool get createDataLoading => _createDataLoading;
-
-  bool _createDataFailed = false;
-
-  bool get createDataFailed => _createDataFailed;
-
-  bool _createDataSuccess = false;
-
-  bool get createDataSuccess => _createDataSuccess;
-
-  RequestPickupCreateResponseModel? _data;
-
-  RequestPickupCreateResponseModel? get data => _data;
 
   @override
   void onInit() {
     super.onInit();
-    queryParam.setSort(jsonEncode([
+    state.queryParam.setSort(jsonEncode([
       {"createdDateSearch": "desc"}
     ]));
     applyFilterDate();
+    selectDateFilter(3);
     Future.wait([
       getAddresses(1),
       getCities(''),
       getStatuses(),
       getTypes(),
     ]);
-    pagingController.addPageRequestListener((pageKey) {
+    state.pagingController.addPageRequestListener((pageKey) {
       getRequestPickups(pageKey);
     });
-    pagingControllerPickupDataAddress.addPageRequestListener((pageKey) {
+    state.pagingControllerPickupDataAddress.addPageRequestListener((pageKey) {
       getAddresses(pageKey);
     });
   }
 
   void setSelectedFilterDate(RequestPickupDateEnum? date) {
     if (date != null) {
-      selectedFilterDate = date;
-      filterDateText = date.asName();
+      state.selectedFilterDate = date;
+      state.filterDateText = date.asName();
     }
   }
 
   void applyFilterDate() {
-    bool startDateAvailable = selectedDateStart != null;
-    bool endDateAvailable = selectedDateEnd != null;
+    bool startDateAvailable = state.selectedDateStart != null;
+    bool endDateAvailable = state.selectedDateEnd != null;
 
     List<Map<String, dynamic>> between = [];
 
-    switch (selectedFilterDate) {
+    switch (state.selectedFilterDate) {
       case RequestPickupDateEnum.custom:
         if (startDateAvailable && endDateAvailable) {
           between.add({
             "createdDateSearch": [
-              DateTime(selectedDateStart!.year, selectedDateStart!.month,
-                      selectedDateStart!.day)
+              DateTime(
+                      state.selectedDateStart!.year,
+                      state.selectedDateStart!.month,
+                      state.selectedDateStart!.day)
                   .toIso8601String(),
-              DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
-                      selectedDateEnd!.day, 23, 59, 59, 999)
+              DateTime(
+                      state.selectedDateEnd!.year,
+                      state.selectedDateEnd!.month,
+                      state.selectedDateEnd!.day,
+                      23,
+                      59,
+                      59,
+                      999)
                   .toIso8601String()
             ]
           });
-          filterDateText = '$selectedDateStartText - $selectedDateEndText';
+          state.filterDateText =
+              '${state.selectedDateStartText} - ${state.selectedDateEndText}';
         } else if (startDateAvailable) {
           between.add({
             "createdDateSearch": [
-              DateTime(selectedDateStart!.year, selectedDateStart!.month,
-                      selectedDateStart!.day)
+              DateTime(
+                      state.selectedDateStart!.year,
+                      state.selectedDateStart!.month,
+                      state.selectedDateStart!.day)
                   .toIso8601String(),
-              DateTime(selectedDateStart!.year, selectedDateStart!.month,
-                      selectedDateStart!.day, 23, 59, 59, 999)
+              DateTime(
+                      state.selectedDateStart!.year,
+                      state.selectedDateStart!.month,
+                      state.selectedDateStart!.day,
+                      23,
+                      59,
+                      59,
+                      999)
                   .toIso8601String()
             ]
           });
-          filterDateText = selectedDateStartText;
+          state.filterDateText = state.selectedDateStartText;
         } else if (endDateAvailable) {
           between.add({
             "createdDateSearch": [
-              DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
-                      selectedDateEnd!.day)
+              DateTime(state.selectedDateEnd!.year,
+                      state.selectedDateEnd!.month, state.selectedDateEnd!.day)
                   .toIso8601String(),
-              DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
-                      selectedDateEnd!.day, 23, 59, 59, 999)
+              DateTime(
+                      state.selectedDateEnd!.year,
+                      state.selectedDateEnd!.month,
+                      state.selectedDateEnd!.day,
+                      23,
+                      59,
+                      59,
+                      999)
                   .toIso8601String()
             ]
           });
-          filterDateText = selectedDateEndText;
+          state.filterDateText = state.selectedDateEndText;
         }
         break;
       case RequestPickupDateEnum.all:
@@ -203,29 +169,177 @@ class RequestPickupController extends BaseController {
         break;
     }
 
-    queryParam.setBetween(jsonEncode(between));
+    state.queryParam.setBetween(jsonEncode(between));
 
     refreshPickups();
     update();
   }
 
+  void selectDateFilter(int filter) {
+    state.dateFilter = filter.toString();
+    update();
+    if (filter == 0 || filter == 4) {
+      state.startDate = null;
+      state.endDate = null;
+      state.startDateField.clear();
+      state.endDateField.clear();
+      state.transDate = '[]';
+    } else if (filter == 1) {
+      state.startDate = DateTime.now()
+          .copyWith(hour: 0, minute: 0)
+          .subtract(const Duration(days: 30));
+      state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
+      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
+    } else if (filter == 2) {
+      state.startDate = DateTime.now()
+          .copyWith(hour: 0, minute: 0)
+          .subtract(const Duration(days: 7));
+      state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
+      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
+    } else if (filter == 3) {
+      state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+      state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+      state.startDateField.text =
+          state.startDate.toString().toLongDateTimeFormat();
+      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
+    }
+
+    update();
+  }
+
+  Future<DateTime?> selectDate(BuildContext context) async {
+    // Show date picker
+    final DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+      builder: (context, child) {
+        return Theme(
+          data: CustomTheme().dateTimePickerTheme(context),
+          child: child!,
+        );
+      },
+    );
+
+    if (selectedDate == null || !context.mounted) return null;
+
+    // Show time picker
+    final TimeOfDay? selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (context, child) {
+        return Theme(
+          data: CustomTheme().dateTimePickerTheme(context),
+          child: child!,
+        );
+      },
+    );
+
+    if (selectedTime == null || !context.mounted) return null;
+
+    // Combine date and time
+    return DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTime.hour,
+      selectedTime.minute,
+    );
+  }
+
+  applyFilter() {
+    // if (state.startDate != null ||
+    //     state.endDate != null ||
+    //     state.selectedPetugasEntry != null ||
+    //     state.selectedStatusKiriman != null) {
+    state.isFiltered = true;
+    if (state.startDate != null && state.endDate != null) {
+      state.transDate =
+          '[{"createdDateSearch":["${state.startDate}","${state.endDate}"]}]';
+      state.queryParam.setBetween(jsonEncode([
+        {
+          "createdDateSearch": [
+            state.startDate?.toIso8601String() ?? '',
+            state.endDate?.toIso8601String() ?? ''
+          ]
+        }
+      ]));
+      // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
+    } else {
+      state.transDate = '[]';
+      state.queryParam.setBetween(jsonEncode([]));
+    }
+
+    // state.pagingController.refresh();
+    update();
+    // if (state.dateFilter == '0') {
+    //   resetFilter(true);
+    // }
+
+    // if (state.dateFilter == '0') {
+    //   resetFilter(true);
+    // } else {
+    //   // update();
+    refreshPickups();
+    //   // state.pagingController.refresh();
+    //   // transactionCount();
+    // }
+    // } else {
+    //   resetFilter();
+    // }
+  }
+
+  void resetQueryParam() {
+    state.queryParam.setWhere(jsonEncode([]));
+    state.queryParam.setBetween(jsonEncode([]));
+    update();
+  }
+
+  void resetFilter(bool forceRefresh) {
+    state.startDate = null;
+    state.endDate = null;
+    state.startDateField.clear();
+    state.endDateField.clear();
+    // state.selectedPetugasEntry = null;
+    state.selectedOrigin = null;
+    state.selectedStatusKiriman = null;
+    // state.isFiltered = false;
+    state.searchField.clear();
+    state.transDate = '[]';
+    state.dateFilter = '0';
+    state.filterStatus = Constant.allStatus;
+    state.selectedPetugasEntry = Constant.allDeliveryType;
+    state.queryParam.setWhere(jsonEncode([]));
+    state.queryParam.setBetween(jsonEncode([]));
+    update();
+    if (forceRefresh) {
+      refreshPickups();
+    }
+    // state.pagingController.refresh();
+  }
+
   void setSelectedFilterStatus(String? status) {
     if (status != null) {
       if (status == Constant.allStatus) {
-        filterStatus = "";
+        state.filterStatus = "";
       } else {
-        filterStatus = status;
+        state.filterStatus = status;
       }
       refreshPickups();
-      filterStatusText = status;
+      state.filterStatusText = status;
       update();
     }
   }
 
-  void setSelectedDeliveryType(String? deliveryType) {
+  void setSelectedDeliveryTypeTwo(String? deliveryType) {
     if (deliveryType != null) {
       final where =
-          (jsonDecode(queryParam.where ?? '[]') ?? []) as List<dynamic>;
+          (jsonDecode(state.queryParam.where ?? '[]') ?? []) as List<dynamic>;
       where.removeWhere((element) => element["codFlag"] != null);
       if (deliveryType == "COD") {
         where.removeWhere((element) => element["codFlag"] != null);
@@ -234,48 +348,96 @@ class RequestPickupController extends BaseController {
         where.removeWhere((element) => element["codFlag"] != null);
         where.add({"codFlag": "NO"});
       }
-      queryParam.setWhere(jsonEncode(where));
-      refreshPickups();
-      filterDeliveryTypeText = deliveryType;
+      state.queryParam.setWhere(jsonEncode(where));
+      state.queryParam.setPage(1);
+      // refreshPickups();
+      // state.filterDeliveryTypeText = deliveryType;
+      // update();
+    }
+  }
+
+  void setSelectedDeliveryType(String? deliveryType) {
+    if (deliveryType != null) {
+      final where =
+          (jsonDecode(state.queryParam.where ?? '[]') ?? []) as List<dynamic>;
+      where.removeWhere((element) => element["codFlag"] != null);
+      if (deliveryType == "COD") {
+        where.removeWhere((element) => element["codFlag"] != null);
+        where.add({"codFlag": "YES"});
+      } else if (deliveryType == "NON COD") {
+        where.removeWhere((element) => element["codFlag"] != null);
+        where.add({"codFlag": "NO"});
+      }
+      state.queryParam.setWhere(jsonEncode(where));
+      // refreshPickups();
+      state.filterDeliveryTypeText = deliveryType;
       update();
     }
   }
 
+  void setSelectedFilterCityTwo(OriginModel? origin) {
+    if (origin != null) {
+      final where =
+          (jsonDecode(state.queryParam.where ?? '[]') ?? []) as List<dynamic>;
+      where.removeWhere((element) => element["originCode"] != null);
+      where.add({"originCode": origin.originCode});
+      state.queryParam.setWhere(jsonEncode(where));
+      // update();
+    }
+    // refreshPickups();
+    // state.filterDeliveryCityText = city['label'];
+  }
+
   void setSelectedFilterCity(Map<String, dynamic> city) {
-    final where = (jsonDecode(queryParam.where ?? '[]') ?? []) as List<dynamic>;
+    final where =
+        (jsonDecode(state.queryParam.where ?? '[]') ?? []) as List<dynamic>;
     where.removeWhere((element) => element["originCode"] != null);
     if (city['label'] != Constant.allDeliveryCity) {
       where.add({"originCode": city['value']});
     }
-    queryParam.setWhere(jsonEncode(where));
+    state.queryParam.setWhere(jsonEncode(where));
     refreshPickups();
-    filterDeliveryCityText = city['label'];
+    state.filterDeliveryCityText = city['label'];
     update();
   }
 
   void setSelectedDateStart(DateTime? dateTime) {
     if (dateTime != null) {
-      selectedDateStart = dateTime;
-      selectedDateStartText =
+      state.selectedDateStart = dateTime;
+      state.selectedDateStartText =
           dateTime.toStringWithFormat(format: "dd MMM yyyy");
     }
   }
 
   void setSelectedDateEnd(DateTime? dateTime) {
     if (dateTime != null) {
-      selectedDateEnd = dateTime;
-      selectedDateEndText = dateTime.toStringWithFormat(format: "dd MMM yyyy");
+      state.selectedDateEnd = dateTime;
+      state.selectedDateEndText =
+          dateTime.toStringWithFormat(format: "dd MMM yyyy");
     }
   }
 
   Future<void> getRequestPickups(int pageKey) async {
-    showLoadingIndicator = true;
+    state.showLoadingIndicator = true;
 
     try {
-      queryParam.setPage(pageKey);
-      queryParam.setSearch(searchField.text);
+      AppLogger.i("pageKey: $pageKey");
+      state.queryParam.setPage(pageKey);
+      state.queryParam.setSearch(state.searchField.text);
+      setSelectedDeliveryTypeTwo(state.selectedPetugasEntry);
+      AppLogger.i("selectedorigin: ${state.selectedOrigin}");
+      setSelectedFilterCityTwo(state.selectedOrigin);
       final response = await requestPickupRepository.getRequestPickups(
-          queryParam, filterStatus);
+          QueryParamModel(
+            limit: state.queryParam.limit,
+            page: pageKey,
+            sort: state.queryParam.sort,
+            where: state.queryParam.where,
+            between: state.queryParam.between,
+            search: state.queryParam.search,
+          ),
+          state.filterStatus);
+      // setSelectedDeliveryType(state.filterDeliveryTypeText);
 
       AppLogger.d("getRequestPickups response: ${response.data}");
 
@@ -284,21 +446,21 @@ class RequestPickupController extends BaseController {
       final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
 
       if (isLastPage) {
-        pagingController.appendLastPage(payload);
+        state.pagingController.appendLastPage(payload);
       } else {
         final nextPageKey = pageKey + 1;
-        pagingController.appendPage(payload, nextPageKey);
+        state.pagingController.appendPage(payload, nextPageKey);
       }
 
-      showMainContent = true;
+      state.showMainContent = true;
       update();
     } catch (e) {
       AppLogger.e("getRequestPickups error: $e");
-      showErrorContent = true;
+      state.showErrorContent = true;
       update();
     }
 
-    showLoadingIndicator = false;
+    state.showLoadingIndicator = false;
     update();
   }
 
@@ -330,26 +492,27 @@ class RequestPickupController extends BaseController {
               ])));
       AppLogger.i("addresses: ${response.data}");
       final payload = response.data ?? List.empty();
-      addresses.clear();
-      addresses.addAll(payload);
+      state.addresses.clear();
+      state.addresses.addAll(payload);
 
-      AppLogger.i("addresses from controller: $addresses");
+      AppLogger.i("addresses from controller: ${state.addresses}");
       // return BaseResponse<List<PantauPaketmuModel>>
 
       final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
       if (isLastPage) {
-        pagingControllerPickupDataAddress.appendLastPage(payload);
+        state.pagingControllerPickupDataAddress.appendLastPage(payload);
         AppLogger.i(
-            "pagingControllerPickupDataAddress, $pagingControllerPickupDataAddress");
+            "pagingControllerPickupDataAddress, ${state.pagingControllerPickupDataAddress}");
       } else {
         final nextPageKey = page + 1;
-        pagingControllerPickupDataAddress.appendPage(payload, nextPageKey);
+        state.pagingControllerPickupDataAddress
+            .appendPage(payload, nextPageKey);
         AppLogger.i(
-            "pagingControllerPickupDataAddress, $pagingControllerPickupDataAddress");
+            "pagingControllerPickupDataAddress, ${state.pagingControllerPickupDataAddress}");
       }
     } catch (e) {
       AppLogger.e("getAddresses error: $e");
-      pagingControllerPickupDataAddress.error = e;
+      state.pagingControllerPickupDataAddress.error = e;
     }
   }
 
@@ -368,15 +531,15 @@ class RequestPickupController extends BaseController {
         {"originName": keyword}
       ])));
       final payload = response.data ?? List.empty();
-      cities.clear();
-      cities.add({
+      state.cities.clear();
+      state.cities.add({
         "label": Constant.allDeliveryCity,
         "value": "",
       });
       // final test = city.whereType<String>();
       // AppLogger.d("test: $test");
       // cities.addAll(payload.map((e) => e.originName ?? "").toList());
-      cities.addAll(payload
+      state.cities.addAll(payload
           .map((e) => {
                 "label": e.originName,
                 "value": e.originCode,
@@ -394,8 +557,11 @@ class RequestPickupController extends BaseController {
     try {
       final response = await requestPickupRepository.getRequestPickupStatuses();
       final payload = response.data ?? List.empty();
-      statuses.add(Constant.allStatus);
-      statuses.addAll(payload);
+      state.statuses.add(Constant.allStatus);
+      state.statuses.addAll(payload);
+
+      state.listStatusKiriman.add(Constant.allStatus);
+      state.listStatusKiriman.addAll(payload);
     } catch (e) {
       AppLogger.e('error getStatuses $e');
     }
@@ -405,29 +571,32 @@ class RequestPickupController extends BaseController {
     try {
       final response = await requestPickupRepository.getRequestPickupTypes();
       final payload = response.data ?? List.empty();
-      types.add(Constant.allDeliveryType);
-      types.addAll(payload);
+      state.types.add(Constant.allDeliveryType);
+      state.types.addAll(payload);
+
+      state.listOfficerEntry.add(Constant.allDeliveryType);
+      state.listOfficerEntry.addAll(payload);
     } catch (e) {
       // Do nothing for now.
     }
   }
 
   void onSelectAddress(String id) {
-    selectedAddressId = id;
+    state.selectedAddressId = id;
   }
 
   void selectItem(String awb) {
     if (isItemChecked(awb)) {
-      selectedAwbs.remove(awb);
+      state.selectedAwbs.remove(awb);
     } else {
-      selectedAwbs.add(awb);
+      state.selectedAwbs.add(awb);
     }
 
     update();
   }
 
   bool isItemChecked(String awb) {
-    return selectedAwbs.contains(awb);
+    return state.selectedAwbs.contains(awb);
   }
 
   void onCheckAll() {
@@ -435,7 +604,7 @@ class RequestPickupController extends BaseController {
   }
 
   void onCancel() {
-    selectedAwbs.clear();
+    state.selectedAwbs.clear();
   }
 
   void onUpdateAddresses() {
@@ -444,16 +613,16 @@ class RequestPickupController extends BaseController {
   }
 
   void refreshPickups() {
-    pagingController.refresh();
+    state.pagingController.refresh();
     // pagingControllerPickupDataAddress.refresh();
   }
 
   void refreshState() {
-    _createDataLoading = false;
-    _createDataSuccess = false;
-    _createDataFailed = false;
-    _checkMode = false;
-    selectedAwbs.clear();
+    state.createDataLoading = false;
+    state.createDataSuccess = false;
+    state.createDataFailed = false;
+    state.checkMode = false;
+    state.selectedAwbs.clear();
     update();
   }
 
@@ -462,32 +631,32 @@ class RequestPickupController extends BaseController {
   }
 
   void onSetPickupTime(String newTime) {
-    selectedPickupTime = newTime;
+    state.selectedPickupTime = newTime;
   }
 
   void onPickupAction() async {
-    _createDataLoading = true;
+    state.createDataLoading = true;
     update();
 
     requestPickupRepository
         .createRequestPickup(_prepareCreateData())
         .then((response) {
-      _data = response.data;
+      state.data = response.data;
       if (response.code == HttpStatus.created &&
           response.data!.errorDetails.isEmpty) {
-        _createDataSuccess = true;
+        state.createDataSuccess = true;
         refreshPickups();
         refreshState();
       } else {
-        _createDataFailed = true;
+        state.createDataFailed = true;
       }
       update();
     }).catchError((error) {
-      _createDataFailed = true;
+      state.createDataFailed = true;
       update();
     });
 
-    _createDataLoading = false;
+    state.createDataLoading = false;
     update();
   }
 
@@ -496,24 +665,24 @@ class RequestPickupController extends BaseController {
   }
 
   String getSelectedPickupTime() {
-    if (selectedPickupTime == Constant.defaultPickupTime) {
+    if (state.selectedPickupTime == Constant.defaultPickupTime) {
       return TimeOfDay.now().asPickupTimeFormat();
     }
 
-    return selectedPickupTime;
+    return state.selectedPickupTime;
   }
 
   void onSearchChanged(String value) {
     // Cancel the previous timer if it exists
-    if (_debounceTimer?.isActive ?? false) {
-      _debounceTimer!.cancel();
+    if (state.debounceTimer?.isActive ?? false) {
+      state.debounceTimer!.cancel();
     }
 
     // Set a new timer for debounce
-    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+    state.debounceTimer = Timer(const Duration(milliseconds: 500), () {
       // Trigger the search or refresh when the user stops typing
-      searchField.text = value;
-      pagingController.refresh();
+      state.searchField.text = value;
+      state.pagingController.refresh();
     });
   }
 
@@ -521,8 +690,8 @@ class RequestPickupController extends BaseController {
 
   RequestPickupCreateRequestModel _prepareCreateData() {
     return RequestPickupCreateRequestModel(
-      awbs: selectedAwbs,
-      pickupAddressId: selectedAddressId ?? '',
+      awbs: state.selectedAwbs,
+      pickupAddressId: state.selectedAddressId ?? '',
       pickupTime: getSelectedPickupTime(),
     );
   }

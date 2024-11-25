@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
@@ -11,7 +12,6 @@ import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -88,6 +88,11 @@ class TransactionRepositoryImpl extends TransactionRepository {
       between: transDate,
       type: transType.isNotEmpty ? transType : null,
       status: transStatus.isNotEmpty ? transStatus : null,
+      where: officer.isNotEmpty
+          ? jsonEncode([
+              {"petugasEntry": officer}
+            ])
+          : null,
       // where: '[$registID $type $petugasEntry]',
       sort: '[{"createdDateSearch":"desc"}]',
     );
@@ -161,6 +166,11 @@ class TransactionRepositoryImpl extends TransactionRepository {
       type: transType.isNotEmpty ? transType : null,
       status: transStatus.isNotEmpty ? transStatus : null,
       // where: '[$registID $type $petugasEntry]',
+      where: officer.isNotEmpty
+          ? jsonEncode([
+              {"petugasEntry": officer}
+            ])
+          : null,
       sort: '[{"createdDateSearch":"desc"}]',
     );
 
@@ -168,7 +178,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
     try {
       Response response = await network.base.get(
-        "/transaction/transactions/count",
+        "/transaction/dashboards/count",
         queryParameters: params.toJson(),
       );
       AppLogger.i('get transaction count : ${response.data}');
@@ -271,12 +281,11 @@ class TransactionRepositoryImpl extends TransactionRepository {
   Future<BaseResponse<List<PetugasModel>>> getTransOfficer() async {
     var token = await storageSecure.read(key: 'token');
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.basicProfile),
-    );
+    // UserModel user = UserModel.fromJson(
+    //   await StorageCore().readData(StorageCore.basicProfile),
+    // );
 
-    QueryParamModel params =
-        QueryParamModel(table: true, like: '[{"id" : "${user.id}"}]');
+    QueryParamModel params = QueryParamModel(table: true, limit: 0);
     try {
       Response response = await network.base.get(
         "/transaction/officers",
