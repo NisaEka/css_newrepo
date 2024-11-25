@@ -142,12 +142,17 @@ class EclaimRepositoryImpl extends EclaimRepository {
   @override
   Future<BaseResponse<List<FileModel>>> postEclaimImage(File photo) async {
     try {
-      var formData = FormData.fromMap({});
+      String fileExtension = photo.path.split('.').last.toLowerCase();
 
-      formData.files
-          .addAll([MapEntry("file", await MultipartFile.fromFile(photo.path))]);
+      String mimeType = _getMimeType(fileExtension);
 
-      AppLogger.i("file : ${formData.files.first.value.filename}");
+      var formData = FormData.fromMap({
+        'files': await MultipartFile.fromFile(
+          photo.path,
+          filename: photo.uri.pathSegments.last,
+          contentType: DioMediaType.parse(mimeType),
+        ),
+      });
 
       var response = await network.base.post("/uploads/e-claim",
           data: formData,
@@ -174,6 +179,20 @@ class EclaimRepositoryImpl extends EclaimRepository {
                 .toList()
             : List.empty(),
       );
+    }
+  }
+
+  String _getMimeType(String fileExtension) {
+    switch (fileExtension) {
+      case 'jpg':
+      case 'jpeg':
+        return 'image/jpeg';
+      case 'png':
+        return 'image/png';
+      case 'pdf':
+        return 'application/pdf';
+      default:
+        return 'application/octet-stream';
     }
   }
 }
