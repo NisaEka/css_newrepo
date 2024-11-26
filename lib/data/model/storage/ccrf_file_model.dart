@@ -6,7 +6,7 @@ class FileModel {
   String get fileUrl => _fileUrl;
 
   FileModel.fromJson(dynamic json) {
-    _fileType = json["file_type"];
-    _fileUrl = json["file_url"];
+    _fileType = json["fileType"];
+    _fileUrl = json["fileUrl"];
   }
 }

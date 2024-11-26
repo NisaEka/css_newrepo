@@ -112,38 +112,42 @@ class AddEclaimController extends BaseController {
       await eclaims
           .postEclaimImage(selectedImage ?? File(''))
           .then((response) async {
-        await eclaims
-            .postEclaim(EclaimModel(
-          awb: awb,
-          kategori: category.text,
-          isipesan: description.text,
-          valueclaim: nominalPengajuan.text,
-        ))
-            .then((value) {
-          switch (value.code) {
-            case 201:
-              Get.to(SuccessScreen(
-                message:
-                    'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'
-                        .tr,
-                buttonTitle: 'OK'.tr,
-                nextAction: () => Get.close(2),
-              ));
-              break;
-            case 404:
-              AppSnackBar.warning('Nomor Resi Tidak Terdaftar'.tr);
-              break;
-            case 409:
-              AppSnackBar.warning('Tiket Sudah Terdaftar'.tr);
-              break;
-            default:
-              AppSnackBar.error('Bad Request'.tr);
-              break;
-          }
-        });
+        if (response.code == 201) {
+          await eclaims
+              .postEclaim(EclaimModel(
+            awb: awb,
+            kategori: category.text,
+            isipesan: description.text,
+            valueclaim: nominalPengajuan.text,
+            fileClaim: response.data?.first.fileUrl,
+          ))
+              .then((value) {
+            switch (value.code) {
+              case 201:
+                Get.to(SuccessScreen(
+                  message:
+                      'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'
+                          .tr,
+                  buttonTitle: 'OK'.tr,
+                  nextAction: () => Get.close(2),
+                ));
+                break;
+              case 404:
+                AppSnackBar.warning('Nomor Resi Tidak Terdaftar'.tr);
+                break;
+              case 409:
+                AppSnackBar.warning('Tiket Sudah Terdaftar'.tr);
+                break;
+              default:
+                AppSnackBar.error('Bad Request'.tr);
+                break;
+            }
+          });
+        }
       });
-    } catch (e) {
+    } catch (e, i) {
       AppLogger.e('error sendReport $e');
+      AppLogger.e('error sendReport $i');
     }
     isLoading = false;
     update();
