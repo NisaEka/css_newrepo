@@ -9,17 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 
 void main() async {
+  FlavorConfig(
+    name: "DEV",
+    location: BannerLocation.topEnd,
+    variables: devEnvironment,
+  );
+
   await runZonedGuarded(
     () async {
-      FlavorConfig(
-        name: "DEV",
-        location: BannerLocation.topEnd,
-        variables: devEnvironment,
-      );
-
       WidgetsFlutterBinding.ensureInitialized();
-      GlobalBinding().dependencies();
       CssFirebaseConfig.init();
+      GlobalBinding().dependencies();
       runApp(const CSS());
     },
     (error, stackTrace) {

@@ -78,7 +78,7 @@ android {
         applicationId "com.jne.cssmobile"
         minSdkVersion 21
         multiDexEnabled true
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         manifestPlaceholders = [MAPS_API_KEY: mapsApiKey]

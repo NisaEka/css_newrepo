@@ -14,11 +14,12 @@ class StorageImpl extends StorageRepository {
 
   @override
   Future<DefaultResponseModel<StorageModel?>> postStorage(File file) async {
+    // todo : implement post storage
     try {
       var formData = FormData.fromMap({});
       formData.files
           .add(MapEntry("file", await MultipartFile.fromFile(file.path)));
-      var response = await network.dio.post("/storage",
+      var response = await network.base.post("/storage",
           data: formData,
           options: Options(headers: {
             "Accept": "application/json",
@@ -35,12 +36,13 @@ class StorageImpl extends StorageRepository {
   @override
   Future<DefaultResponseModel<List<FileModel>?>> postCcrfFile(
       Map<String, String> files) async {
+    // todo : implement post ccrf file
     try {
       var formData = FormData.fromMap({});
       files.forEach((key, value) {
         formData.files.add(MapEntry(key, MultipartFile.fromFileSync(value)));
       });
-      var response = await network.dio.post("/storage/ccrf",
+      var response = await network.base.post("/storage/ccrf",
           data: formData,
           options: Options(headers: {
             "Accept": "application/json",

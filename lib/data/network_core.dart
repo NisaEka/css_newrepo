@@ -1,21 +1,17 @@
 import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/data/repository/auth/auth_impl.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
-import 'package:get/get.dart';
 import 'model/auth/post_login_model.dart';
-import 'repository/auth/auth_repository.dart';
 import 'storage_core.dart';
 
 class NetworkCore {
   static final noNeedToken = ['/login'];
 
   static bool isNeedToken(String route) => !noNeedToken.contains(route);
-  final storage = Get.find<StorageCore>();
-  final auth = Get.find<AuthRepository>();
 
-  Dio dio = Dio();
   Dio city = Dio();
   Dio jne = Dio();
   Dio myJNE = Dio();
@@ -23,14 +19,6 @@ class NetworkCore {
   Dio base = Dio();
 
   NetworkCore() {
-    dio.options = BaseOptions(
-      baseUrl: AppConst.baseUrl,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    );
-
     base.options = BaseOptions(
       baseUrl: AppConst.base,
       headers: {
@@ -74,7 +62,7 @@ class NetworkCore {
 
     String env = FlavorConfig.instance.name ?? "PROD";
     if (env != "PROD") {
-      dio.interceptors
+      base.interceptors
           .add(LogInterceptor(responseBody: true, requestBody: true));
       city.interceptors
           .add(LogInterceptor(responseBody: true, requestBody: true));
@@ -85,7 +73,7 @@ class NetworkCore {
       InterceptorsWrapper(onRequest: (options, handler) async {
         AppLogger.i('Option path ${options.path}');
         if (isNeedToken(options.path)) {
-          final accessToken = await storage.readAccessToken();
+          final accessToken = await StorageCore().readAccessToken();
           // final refreshToken = await storage.readRefreshToken();
           options.headers = {
             ...options.headers,
@@ -99,11 +87,11 @@ class NetworkCore {
         }
         return handler.next(response);
       }, onError: (dioError, handler) async {
-        AppLogger.e("dio erroor : $dioError");
+        AppLogger.e("dio error : $dioError");
         if (dioError.response?.statusCode == 401) {
           // If a 401 response is received, refresh the access token
           await refreshToken();
-          final String? newAccessToken = await storage.readAccessToken();
+          final String? newAccessToken = await StorageCore().readAccessToken();
 
           // Update the request header with the new access token
           dioError.requestOptions.headers['Authorization'] =
@@ -118,10 +106,10 @@ class NetworkCore {
   }
 
   Future<void> refreshToken() async {
-    await auth.postRefreshToken().then((value) async {
+    await AuthRepositoryImpl().postRefreshToken().then((value) async {
       AppLogger.i('refresh token : ${value.data?.token?.refreshToken}');
 
-      storage.saveToken(
+      StorageCore().saveToken(
         value.data?.token?.accessToken ?? '',
         value.data?.menu ?? MenuModel(),
         value.data?.token?.refreshToken ?? '',

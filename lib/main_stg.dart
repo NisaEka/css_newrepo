@@ -7,6 +7,8 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 
+import 'config/firebase_config.dart';
+
 Future<void> main() async {
   FlavorConfig(
       name: "local",
@@ -14,11 +16,11 @@ Future<void> main() async {
       variables: stgEnvironment,
       color: Colors.red);
 
-  WidgetsFlutterBinding.ensureInitialized();
-  GlobalBinding().dependencies();
-
   await runZonedGuarded(
     () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      CssFirebaseConfig.init();
+      GlobalBinding().dependencies();
       runApp(const CSS());
     },
     (error, stackTrace) {

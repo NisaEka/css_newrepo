@@ -11,12 +11,11 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 void main() async {
   FlavorConfig(variables: prodEnvironment);
 
-  WidgetsFlutterBinding.ensureInitialized();
-  GlobalBinding().dependencies();
-  CssFirebaseConfig.init();
-
   await runZonedGuarded(
     () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      CssFirebaseConfig.init();
+      GlobalBinding().dependencies();
       runApp(const CSS());
     },
     (error, stackTrace) {

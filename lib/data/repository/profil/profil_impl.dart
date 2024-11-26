@@ -82,11 +82,12 @@ class ProfilRepositoryImpl extends ProfilRepository {
   @override
   Future<DefaultResponseModel<String>> createProfileCcrf(
       FacilityCreateModel data) async {
+    //todo:implement create profile ccrf
     var token = await storageSecure.read(key: 'token');
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       var response =
-          await network.dio.post('/profile/ccrf', data: data.toJson());
+          await network.base.post('/profile/ccrf', data: data.toJson());
       return DefaultResponseModel.fromJson(response.data, '');
     } on DioException catch (e) {
       return DefaultResponseModel.fromJson(e.response?.data, '');
@@ -96,12 +97,13 @@ class ProfilRepositoryImpl extends ProfilRepository {
   @override
   Future<DefaultResponseModel<String>> createProfileCcrfExisting(
       FacilityCreateExistingModel data) async {
+    //todo: implement create profile ccrf existing
     var token = await storageSecure.read(key: 'token');
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
 
     try {
-      var response =
-          await network.dio.post('/profile/ccrf/existing', data: data.toJson());
+      var response = await network.base
+          .post('/profile/ccrf/existing', data: data.toJson());
       return DefaultResponseModel.fromJson(response.data, '');
     } on DioException catch (e) {
       return DefaultResponseModel.fromJson(e.response?.data, '');

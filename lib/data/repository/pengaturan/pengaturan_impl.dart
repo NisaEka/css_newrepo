@@ -48,10 +48,11 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
 
   @override
   Future<PostTransactionModel> deleteOfficer(String id) async {
+    //todo : implement delete officer
     var token = await storageSecure.read(key: "token");
-    network.dio.options.headers['Authorization'] = 'Bearer $token';
+    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
-      Response response = await network.dio.delete(
+      Response response = await network.base.delete(
         "/officer/$id",
       );
       return PostTransactionModel.fromJson(response.data);

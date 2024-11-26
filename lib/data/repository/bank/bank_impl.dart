@@ -10,8 +10,9 @@ class BankImpl extends BankRepository {
 
   @override
   Future<DefaultResponseModel<List<BankModel>>> getBanks() async {
+    // todo : implement get bank
     try {
-      var response = await network.dio.get('/bank');
+      var response = await network.base.get('/bank');
       List<BankModel> banks = [];
       response.data['payload'].forEach((bank) {
         banks.add(BankModel.fromJson(bank));
