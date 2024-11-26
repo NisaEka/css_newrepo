@@ -50,10 +50,10 @@ class JlcPointReedem {
   }
 
   JlcPointReedem.fromJson(dynamic json) {
-    _noPenukaran = json['no_penukaran'];
-    _tglPenukaran = json['tgl_penukaran'];
-    _jmlHadiah = json['jml_hadiah'];
-    _penukaranPoint = json['penukaran_point'];
+    _noPenukaran = json['noPenukaran'];
+    _tglPenukaran = json['tglPenukaran'];
+    _jmlHadiah = json['jmlHadiah'];
+    _penukaranPoint = json['penukaranPoint'];
     _status = json['status'];
   }
 
@@ -90,10 +90,10 @@ class JlcPointReedem {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['no_penukaran'] = _noPenukaran;
-    map['tgl_penukaran'] = _tglPenukaran;
-    map['jml_hadiah'] = _jmlHadiah;
-    map['penukaran_point'] = _penukaranPoint;
+    map['noPenukaran'] = _noPenukaran;
+    map['tglPenukaran'] = _tglPenukaran;
+    map['jmlHadiah'] = _jmlHadiah;
+    map['penukaranPoint'] = _penukaranPoint;
     map['status'] = _status;
     return map;
   }

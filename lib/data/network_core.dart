@@ -8,7 +8,7 @@ import 'model/auth/post_login_model.dart';
 import 'storage_core.dart';
 
 class NetworkCore {
-  static final noNeedToken = ['/login'];
+  static final noNeedToken = ['/login', '/auth/device-infos'];
 
   static bool isNeedToken(String route) => !noNeedToken.contains(route);
 
@@ -70,38 +70,47 @@ class NetworkCore {
           .add(LogInterceptor(responseBody: true, requestBody: true));
     }
     base.interceptors.add(
-      InterceptorsWrapper(onRequest: (options, handler) async {
-        AppLogger.i('Option path ${options.path}');
-        if (isNeedToken(options.path)) {
-          final accessToken = await StorageCore().readAccessToken();
-          // final refreshToken = await storage.readRefreshToken();
-          options.headers = {
-            ...options.headers,
-            'Authorization': 'Bearer $accessToken'
-          };
-        }
-        return handler.next(options);
-      }, onResponse: (response, handler) {
-        if (kDebugMode) {
-          AppLogger.d("response : $response");
-        }
-        return handler.next(response);
-      }, onError: (dioError, handler) async {
-        AppLogger.e("dio error : $dioError");
-        if (dioError.response?.statusCode == 401) {
-          // If a 401 response is received, refresh the access token
-          await refreshToken();
-          final String? newAccessToken = await StorageCore().readAccessToken();
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          AppLogger.i('Option path ${options.path}');
+          if (isNeedToken(options.path)) {
+            final accessToken = await StorageCore().readAccessToken();
+            // final refreshToken = await storage.readRefreshToken();
+            options.headers = {
+              ...options.headers,
+              'Authorization': 'Bearer $accessToken'
+            };
+          }
+          return handler.next(options);
+        },
+        onResponse: (response, handler) {
+          if (kDebugMode) {
+            AppLogger.d("response : $response");
+          }
+          return handler.next(response);
+        },
+        onError: (dioError, handler) async {
+          AppLogger.e("dio error : $dioError");
+          if ((dioError.requestOptions.path != '/auth/device-infos')) {
+            AppLogger.i("ini device info");
+            if (dioError.response?.statusCode == 401) {
+              // If a 401 response is received, refresh the access token
+              await refreshToken();
+              final String? newAccessToken =
+                  await StorageCore().readAccessToken();
 
-          // Update the request header with the new access token
-          dioError.requestOptions.headers['Authorization'] =
-              'Bearer $newAccessToken';
+              // Update the request header with the new access token
+              dioError.requestOptions.headers['Authorization'] =
+                  'Bearer $newAccessToken';
 
-          // Repeat the request with the updated header
-          return handler.resolve(await base.fetch(dioError.requestOptions));
-        }
-        return handler.next(dioError);
-      }),
+              // Repeat the request with the updated header
+              return handler.resolve(await base.fetch(dioError.requestOptions));
+            }
+          }
+
+          return handler.next(dioError);
+        },
+      ),
     );
   }
 

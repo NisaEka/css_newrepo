@@ -11,13 +11,15 @@ class DashboardKirimanCod extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
       init: DashboardController(),
-      builder: (controller) {
+      builder: (c) {
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
               CountCodItem(
-                data: CountCardModel(),
+                data: CountCardModel(
+                  total: c.state.transSummary?.totalKirimanCod?.totalCod,
+                ),
               ),
             ],
           ),

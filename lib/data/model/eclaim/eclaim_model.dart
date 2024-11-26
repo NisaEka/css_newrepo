@@ -81,7 +81,9 @@ class EclaimModel {
     map['awb'] = _awb;
     map['kategori'] = _kategori;
     map['valueclaim'] = _valueclaim;
-    map['statusClaim'] = _statusClaim;
+    if (_statusClaim != null) {
+      map['statusClaim'] = _statusClaim;
+    }
     map['isipesan'] = _isipesan;
     map['fileClaim'] = _fileClaim;
     map['id'] = _id;

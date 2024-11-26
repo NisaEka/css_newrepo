@@ -3,7 +3,6 @@ import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_point_reedem_model.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_transactions_model.dart';
 import 'package:css_mobile/data/model/jlc/post_total_point_model.dart';
-
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/jlc/jlc_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';

@@ -9,11 +9,15 @@ import 'package:get/get.dart';
 class CountCodItem extends StatelessWidget {
   final CountCardModel data;
   final bool isLoading;
+  final int? totalCOD;
+  final double? percentage;
 
   const CountCodItem({
     super.key,
     this.isLoading = false,
     required this.data,
+    this.totalCOD,
+    this.percentage,
   });
 
   @override
@@ -55,7 +59,9 @@ class CountCodItem extends StatelessWidget {
                 ),
               ),
               CustomLabelText(
-                title: '0 dari 0 Kiriman (0%)'.tr,
+                title:
+                    '${data.totalCod ?? totalCOD} dari ${data.total} Kiriman ($percentage%)'
+                        .tr,
                 value: data.totalCod?.toInt().toCurrency() ?? '',
                 isHorizontal: true,
                 isHasSpace: true,

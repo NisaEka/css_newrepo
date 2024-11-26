@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'dashboard_appbar.dart';
 import 'dashboard_carousel.dart';
 import 'dashboard_info.dart';
+import 'dashboard_kiriman_cod.dart';
 import 'dashboard_kiriman_counts.dart';
 import 'dashboard_menu2.dart';
 import 'jlcpoint_widget.dart';
@@ -111,7 +112,9 @@ class DashboardBody extends StatelessWidget {
                       c.state.isLogin
                           ? const DashboardKirimanCounts()
                           : const SizedBox(),
-                      // c.state.isLogin ? const DashboardKirimanCod() : const SizedBox(),
+                      c.state.isLogin
+                          ? const DashboardKirimanCod()
+                          : const SizedBox(),
                       const DashboardPromo(),
                       const DashboardNews(),
                       const SizedBox(height: 50),

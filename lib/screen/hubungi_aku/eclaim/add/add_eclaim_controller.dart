@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/eclaim/eclaim_model.dart';
+import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,44 +108,46 @@ class AddEclaimController extends BaseController {
   Future<void> sendReport() async {
     isLoading = true;
     update();
-    // var fileMap = {
-    //   "file" : selectedImage?.path??''
-    // };
     try {
       await eclaims
           .postEclaimImage(selectedImage ?? File(''))
           .then((response) async {
-        // await eclaims
-        //     .postEclaim(EclaimModel(
-        // awb: awb,
-        //   kategori: category.text,
-        //   isipesan: description.text,
-        //   valueclaim: nominalPengajuan.text,
-        // ))
-        //     .then((value) {
-        //   switch (value.code) {
-        //     case 201:
-        //       Get.to(SuccessScreen(
-        //         message:
-        //         'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'.tr,
-        //         buttonTitle: 'OK'.tr,
-        //         nextAction: () => Get.close(2),
-        //       ));
-        //       break;
-        //     case 404:
-        //       AppSnackBar.warning('Nomor Resi Tidak Terdaftar'.tr);
-        //       break;
-        //     case 409:
-        //       AppSnackBar.warning('Tiket Sudah Terdaftar'.tr);
-        //       break;
-        //     default:
-        //       AppSnackBar.error('Bad Request'.tr);
-        //       break;
-        //   }
-        // });
+        if (response.code == 201) {
+          await eclaims
+              .postEclaim(EclaimModel(
+            awb: awb,
+            kategori: category.text,
+            isipesan: description.text,
+            valueclaim: nominalPengajuan.text,
+            fileClaim: response.data?.first.fileUrl,
+          ))
+              .then((value) {
+            switch (value.code) {
+              case 201:
+                Get.to(SuccessScreen(
+                  message:
+                      'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'
+                          .tr,
+                  buttonTitle: 'OK'.tr,
+                  nextAction: () => Get.close(2),
+                ));
+                break;
+              case 404:
+                AppSnackBar.warning('Nomor Resi Tidak Terdaftar'.tr);
+                break;
+              case 409:
+                AppSnackBar.warning('Tiket Sudah Terdaftar'.tr);
+                break;
+              default:
+                AppSnackBar.error('Bad Request'.tr);
+                break;
+            }
+          });
+        }
       });
-    } catch (e) {
+    } catch (e, i) {
       AppLogger.e('error sendReport $e');
+      AppLogger.e('error sendReport $i');
     }
     isLoading = false;
     update();
