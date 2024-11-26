@@ -345,6 +345,7 @@ class DashboardController extends BaseController {
       try {
         transaction.postTransactionDashboard(QueryParamModel()).then(
           (value) {
+            state.transSummary = value.data;
             state.transCountList.addAll(value.data?.summary ?? []);
             update();
           },
