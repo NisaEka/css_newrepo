@@ -24,6 +24,7 @@ import 'package:get/get.dart';
 
 class DashboardController extends BaseController {
   final state = DashboardState();
+
   // Timer? _tokenRefreshTimer;
 
   @override
@@ -171,7 +172,7 @@ class DashboardController extends BaseController {
     bool label =
         (await storage.readString(StorageCore.transactionLabel)).isEmpty;
 
-    if (label) {
+    if (label && state.isLogin) {
       await setting.getSettingLabel().then(
         (value) async {
           await storage.writeString(
@@ -316,18 +317,21 @@ class DashboardController extends BaseController {
                         ?.copyWith(registrationId: state.basic?.id) ??
                     DeviceModel(),
               )
-            : await auth
-                .postFcmTokenNonAuth(
-                  await LoginController().getDeviceinfo(state.fcmToken ?? '') ??
-                      DeviceModel(),
-                )
-                .then((v) async => v.code == 409
-                    ? await auth.updateDeviceInfo(
-                        await LoginController()
-                                .getDeviceinfo(state.fcmToken ?? '') ??
-                            DeviceModel(),
-                      )
-                    : null);
+            : value.code == 401
+                ? await auth
+                    .postFcmTokenNonAuth(
+                      await LoginController()
+                              .getDeviceinfo(state.fcmToken ?? '') ??
+                          DeviceModel(),
+                    )
+                    .then((v) async => v.code == 409
+                        ? await auth.updateDeviceInfo(
+                            await LoginController()
+                                    .getDeviceinfo(state.fcmToken ?? '') ??
+                                DeviceModel(),
+                          )
+                        : null)
+                : null;
       });
     } catch (e, i) {
       AppLogger.e('error saveFCMToken $e, $i');
@@ -336,15 +340,18 @@ class DashboardController extends BaseController {
 
   Future<void> loadTransCountList() async {
     state.transCountList.clear();
-    try {
-      transaction.postTransactionDashboard(QueryParamModel()).then(
-        (value) {
-          state.transCountList.addAll(value.data?.summary ?? []);
-          update();
-        },
-      );
-    } catch (e) {
-      e.printError();
+
+    if (state.isLogin) {
+      try {
+        transaction.postTransactionDashboard(QueryParamModel()).then(
+          (value) {
+            state.transCountList.addAll(value.data?.summary ?? []);
+            update();
+          },
+        );
+      } catch (e) {
+        e.printError();
+      }
     }
 
     update();
@@ -479,18 +486,21 @@ class DashboardController extends BaseController {
           (state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y");
 
       storage.saveData(StorageCore.ccrfProfile, state.ccrf);
-      // #TODO : implement jlc api
-      // await jlc.postTotalPoint().then((value) {
-      //   if (value.status == true) {
-      //     state.jlcPoint = value.data?.first.sisaPoint.toString();
-      //     update();
-      //   } else {
-      //     state.jlcPoint = '0';
-      //   }
-      // }).catchError((value) {
-      //   debugPrint("jlc error $value");
-      // });
-      update();
+
+      if (state.isLogin) {
+        await jlc.postTotalPoint().then((value) {
+          if (value.statusCode == 200) {
+            state.jlcPoint = value.data?.first.sisaPoint.toString();
+            update();
+          } else {
+            state.jlcPoint = '0';
+          }
+        }).catchError((value) {
+          debugPrint("jlc error $value");
+        });
+        update();
+      }
+
       UserModel shipper =
           UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
       state.userName = shipper.name ?? '';
