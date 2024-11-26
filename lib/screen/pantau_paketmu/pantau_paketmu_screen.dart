@@ -2,8 +2,10 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/screen/pantau_paketmu/detail/pantau_paketmu_detail_screen.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/util/input_formatter/custom_formatter.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -230,6 +232,9 @@ class PantauPaketmuScreen extends StatelessWidget {
           CustomSearchField(
             controller: c.state.searchField,
             hintText: 'Cari'.tr,
+            inputFormatters: [
+              UpperCaseTextFormatter(),
+            ],
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
               color: Theme.of(context).brightness == Brightness.light
@@ -277,7 +282,10 @@ class PantauPaketmuScreen extends StatelessWidget {
                       // c.select(item);
                     },
                     onTap: () {
-                      // c.unselect(item);
+                      Get.to(
+                        const PantauPaketmuDetailScreen(),
+                        arguments: {"awbNo": item.awbNo},
+                      );
                     },
                   ),
                   firstPageErrorIndicatorBuilder: (context) => _loading(),
