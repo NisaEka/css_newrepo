@@ -280,26 +280,13 @@ class RiwayatKirimanController extends BaseController {
   }
 
   applyFilter() {
-    // if (state.startDate != null ||
-    //     state.endDate != null ||
-    //     state.selectedPetugasEntry != null ||
-    //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
       state.transDate =
           '[{"createdDateSearch":["${state.startDate}","${state.endDate}"]}]';
-      // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     }
     update();
-    // update();
-    if (state.dateFilter == '0') {
-      resetFilter();
-    } else {
-      state.pagingController.refresh();
-      transactionCount();
-    }
-    // } else {
-    //   resetFilter();
-    // }
+    state.pagingController.refresh();
+    transactionCount();
   }
 }
