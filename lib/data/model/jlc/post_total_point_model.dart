@@ -1,50 +1,5 @@
-class PostTotalPointModel {
-  PostTotalPointModel({
-    int? statusCode,
-    List<Data>? data,
-  }) {
-    _statusCode = statusCode;
-    _data = data;
-  }
-
-  PostTotalPointModel.fromJson(dynamic json) {
-    _statusCode = json['statusCode'];
-    if (json['data'] != null) {
-      _data = [];
-      json['data'].forEach((v) {
-        _data?.add(Data.fromJson(v));
-      });
-    }
-  }
-
-  int? _statusCode;
-  List<Data>? _data;
-
-  PostTotalPointModel copyWith({
-    int? statusCode,
-    List<Data>? data,
-  }) =>
-      PostTotalPointModel(
-        statusCode: statusCode ?? _statusCode,
-        data: data ?? _data,
-      );
-
-  int? get statusCode => _statusCode;
-
-  List<Data>? get data => _data;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['statusCode'] = _statusCode;
-    if (_data != null) {
-      map['data'] = _data?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
-class Data {
-  Data({
+class JlcCountModel {
+  JlcCountModel({
     String? totalTransaksi,
     String? sisaPoint,
   }) {
@@ -52,7 +7,7 @@ class Data {
     _sisaPoint = sisaPoint;
   }
 
-  Data.fromJson(dynamic json) {
+  JlcCountModel.fromJson(dynamic json) {
     _totalTransaksi = json['totalTransaksi'];
     _sisaPoint = json['sisaPoint'];
   }
@@ -60,11 +15,11 @@ class Data {
   String? _totalTransaksi;
   String? _sisaPoint;
 
-  Data copyWith({
+  JlcCountModel copyWith({
     String? totalTransaksi,
     String? sisaPoint,
   }) =>
-      Data(
+      JlcCountModel(
         totalTransaksi: totalTransaksi ?? _totalTransaksi,
         sisaPoint: sisaPoint ?? _sisaPoint,
       );

@@ -490,12 +490,12 @@ class DashboardController extends BaseController {
 
       if (state.isLogin) {
         await jlc.postTotalPoint().then((value) {
-          if (value.statusCode == 200) {
-            state.jlcPoint = value.data?.first.sisaPoint.toString();
-            update();
-          } else {
-            state.jlcPoint = '0';
-          }
+          // if (value.statusCode == 200) {
+          //   state.jlcPoint = value.data?.first.sisaPoint.toString();
+          //   update();
+          // } else {
+          //   state.jlcPoint = '0';
+          // }
         }).catchError((value) {
           debugPrint("jlc error $value");
         });

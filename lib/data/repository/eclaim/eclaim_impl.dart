@@ -123,7 +123,7 @@ class EclaimRepositoryImpl extends EclaimRepository {
 
     try {
       Response response = await network.base.post(
-        "/uploads/e-claim",
+        "/contact-me/e-claims",
         data: data,
       );
 
@@ -132,7 +132,7 @@ class EclaimRepositoryImpl extends EclaimRepository {
         (json) => EclaimModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
-      AppLogger.e("error post eclaim : ${e.response?.data}");
+      AppLogger.e('post eclaim error : ${e.response?.data}');
       return BaseResponse<EclaimModel>.fromJson(
         e.response?.data,
         (json) => EclaimModel.fromJson(json as Map<String, dynamic>),

@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_point_reedem_model.dart';
@@ -18,13 +19,26 @@ class JLCRepositoryImpl extends JLCRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<PostTotalPointModel> postTotalPoint() async {
+  Future<BaseResponse<List<JlcCountModel>>> postTotalPoint() async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+
     try {
-      Response response = await network.base.get('/accounts/jlc/total');
-      return PostTotalPointModel.fromJson(response.data);
+      Response response = await network.base.get(
+        "/accounts/jlc/total",
+      );
+
+      return BaseResponse<List<JlcCountModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<JlcCountModel>(
+                    (i) => JlcCountModel.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      AppLogger.e('error: ${e.message}');
-      return PostTotalPointModel.fromJson(e.response?.data);
+      return e.response?.data;
     }
   }
 
