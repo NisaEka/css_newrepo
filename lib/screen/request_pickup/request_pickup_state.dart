@@ -29,7 +29,7 @@ class RequestPickupState {
   DateTime? startDate;
   DateTime? endDate;
   String? selectedStatusKiriman;
-  String? selectedPetugasEntry;
+  String? selectedPetugasEntry = Constant.allDeliveryType;
   OriginModel? selectedOrigin;
   String? transType;
   String? transDate;

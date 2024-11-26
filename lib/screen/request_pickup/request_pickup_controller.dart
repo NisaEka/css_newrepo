@@ -32,6 +32,7 @@ class RequestPickupController extends BaseController {
     ]));
     applyFilterDate();
     selectDateFilter(3);
+    applyFilter();
     Future.wait([
       getAddresses(1),
       getCities(''),
