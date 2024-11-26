@@ -9,6 +9,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_screen.dart';
 import 'package:css_mobile/screen/request_pickup/components/request_pickup_filter_button.dart';
+import 'package:css_mobile/screen/request_pickup/components/request_pickup_status_button.dart';
 import 'package:css_mobile/screen/request_pickup/detail/request_pickup_detail_screen.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_filter_item.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_confirmation_dialog.dart';
@@ -180,8 +181,9 @@ class RequestPickupScreen extends StatelessWidget {
             controller.state.searchField.clear();
             controller.state.pagingController.refresh();
           },
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+          margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
         ),
+        const RequestPickupStatusButton(),
         Expanded(
             child: RefreshIndicator(
           onRefresh: () =>
