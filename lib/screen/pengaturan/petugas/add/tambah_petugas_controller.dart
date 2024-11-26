@@ -171,9 +171,9 @@ class TambahPetugasController extends BaseController {
         lacakPesanan = dataPetugas.menu?.lacakPesanan == "Y" ||
             dataPetugas.menu?.paketmuLacak == "Y";
         mintaDijemput = dataPetugas.menu?.mintaDijemput == "Y" ||
-            dataPetugas.menu?.paketmuMintaDijemput == "Y";
+            dataPetugas.menu?.paketmuMintadijemput == "Y";
         serahTerima = dataPetugas.menu?.serahTerima == "Y" ||
-            dataPetugas.menu?.paketmuSerahTerima == "Y";
+            dataPetugas.menu?.paketmuSerahterima == "Y";
         saldo = dataPetugas.menu?.saldo == "Y" ||
             dataPetugas.menu?.keuanganJneMoney == "Y";
         uangCod = dataPetugas.menu?.uangCod == "Y" ||
