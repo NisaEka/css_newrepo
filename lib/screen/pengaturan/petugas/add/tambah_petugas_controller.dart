@@ -350,7 +350,8 @@ class TambahPetugasController extends BaseController {
                   }
                 else
                   {
-                    AppSnackBar.error(value.error[0]),
+                    AppSnackBar.error(
+                        value.message ?? value.error ?? 'Bad Request'.tr),
                   }
               });
     } catch (e, i) {
