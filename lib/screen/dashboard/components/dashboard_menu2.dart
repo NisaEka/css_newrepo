@@ -71,8 +71,9 @@ class DashboardMenu2 extends StatelessWidget {
                             'allowance': controller.state.allow,
                           })?.then(
                             (result) {
-                              controller.cekFavoritMenu();
-                              controller.cekAllowance();
+                              // controller.cekFavoritMenu();
+                              // controller.cekAllowance();
+                              controller.initData();
                             },
                           ),
                           menuIcon: Icon(

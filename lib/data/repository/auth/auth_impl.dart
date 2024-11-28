@@ -225,7 +225,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
     // var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
     // String id = deviceInfo?.deviceId ?? '';
-
+    AppLogger.w("refresh token : $token");
     try {
       Response response = await network.base.post(
         '/authentications/logout',

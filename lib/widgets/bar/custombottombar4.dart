@@ -79,8 +79,7 @@ class BottomBar4 extends StatelessWidget {
                             : showDialog(
                                 context: context,
                                 builder: (context) => const LoginAlertDialog(),
-                              ),
-                      )
+                              ))
                     // ? FloatingActionButton(
                     //     shape: const CircleBorder(),
                     //     backgroundColor: controller.state.isLogin
