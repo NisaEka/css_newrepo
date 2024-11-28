@@ -47,7 +47,7 @@ class TransactionItems extends StatelessWidget {
                             RiwayatKirimanListItem(
                           data: item,
                           isLoading: false,
-                          status: item.statusAwb,
+                          // status: item.statusAwb,
                           index: index,
                           isSelected: c.state.selectedTransaction
                               .where((e) => e == item)
@@ -58,7 +58,8 @@ class TransactionItems extends StatelessWidget {
                           onTap: () {
                             c.unselect(item);
                           },
-                          isDelete: item.statusAwb == "MASIH DI KAMU",
+                          isDelete: item.statusAwb == "MASIH DI KAMU" &&
+                              c.state.allow?.hapusPesanan == 'Y',
                           onDelete: (context) => showDialog(
                             context: context,
                             builder: (context) => DeleteAlertDialog(

@@ -34,20 +34,23 @@ class TransactionEditButton extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CustomFilledButton(
-                    color: blueJNE,
-                    title: "Lihar Resi".tr,
-                    suffixIcon: Icons.receipt_outlined,
-                    width: Get.width / 2,
-                    height: 50,
-                    fontSize: 15,
-                    isLoading: isLoading,
-                    onPressed: () => transactionData != null
-                        ? Get.to(const LabelScreen(), arguments: {
-                            'data': transactionData,
-                          })
-                        : null,
-                  ),
+                  c.state.allow?.paketmuPrint == 'Y' ||
+                          c.state.allow?.cetakPesanan == 'Y'
+                      ? CustomFilledButton(
+                          color: blueJNE,
+                          title: "Lihar Resi".tr,
+                          suffixIcon: Icons.receipt_outlined,
+                          width: Get.width / 2,
+                          height: 50,
+                          fontSize: 15,
+                          isLoading: isLoading,
+                          onPressed: () => transactionData != null
+                              ? Get.to(const LabelScreen(), arguments: {
+                                  'data': transactionData,
+                                })
+                              : null,
+                        )
+                      : const SizedBox(),
                   c.isEdit()
                       ? CustomFilledButton(
                           color: successColor,
@@ -70,7 +73,8 @@ class TransactionEditButton extends StatelessWidget {
                           },
                         )
                       : const SizedBox(),
-                  c.state.transactionModel?.statusAwb == "MASIH DI KAMU"
+                  c.state.transactionModel?.statusAwb == "MASIH DI KAMU" &&
+                          (c.state.allow?.hapusPesanan == 'Y')
                       ? CustomFilledButton(
                           color: errorColor,
                           isTransparent: true,

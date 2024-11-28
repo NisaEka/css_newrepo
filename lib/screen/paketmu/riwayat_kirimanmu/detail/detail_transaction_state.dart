@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ class DetailTransactionState {
   TransactionModel? transactionModel;
   final pickupStatus = TextEditingController();
   final transStatus = TextEditingController();
+
+  MenuModel? allow;
 
   bool isLoading = false;
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_branch_model.dart';
@@ -27,6 +28,8 @@ class DetailTransactionController extends BaseController {
     state.isLoading = true;
     state.locale = await storage.readString(StorageCore.localeApp);
     update();
+    state.allow =
+        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
 
     state.transStatus.text = state.data?.statusAwb ?? '';
     state.pickupStatus.text = state.data?.pickupStatus ?? '';
