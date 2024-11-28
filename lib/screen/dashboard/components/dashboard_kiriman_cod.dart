@@ -12,13 +12,42 @@ class DashboardKirimanCod extends StatelessWidget {
     return GetBuilder<DashboardController>(
       init: DashboardController(),
       builder: (c) {
-        return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
             children: [
-              CountCodItem(
-                data: CountCardModel(
-                  total: c.state.transSummary?.totalKirimanCod?.totalCod,
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Kiriman COD Kamu'.tr,
+                      style: Theme.of(context).textTheme.titleLarge),
+                  // const DateDropdownFilterButton(),
+                ],
+              ),
+              const SizedBox(height: 10),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CountCodItem(
+                      data: CountCardModel(
+                        // image: c.state,
+                        status: c.state.transCountCod.first,
+                        total: c.state.transSummary?.totalKirimanCod?.totalCod,
+                        totalCod:
+                            c.state.transSummary?.totalKirimanCod?.totalCod,
+                      ),
+                    ),
+                    CountCodItem(
+                      data: CountCardModel(
+                        status: c.state.transCountCod.last,
+                        total: c.state.transSummary?.totalKirimanCod
+                            ?.codOngkirAmount,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

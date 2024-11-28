@@ -66,7 +66,7 @@ class CountCodItem extends StatelessWidget {
                 isHorizontal: true,
                 isHasSpace: true,
                 fontColor: Colors.black,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 color: greyColor.withOpacity(0.2),
               ),
             ],
