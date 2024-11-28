@@ -279,34 +279,6 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse<PostLoginModel>> postRefreshToken() async {
-    var token = await storageSecure.read(key: StorageCore.refreshToken);
-    // network.dio.options.headers['Authorization'] = 'Bearer $token';
-    AppLogger.w("refresh token : $token");
-    try {
-      Response response = await network.base.post(
-        '/authentications/refresh',
-        data: {
-          "refreshToken": token,
-        },
-      );
-      return BaseResponse<PostLoginModel>.fromJson(
-        response.data,
-        (json) => PostLoginModel.fromJson(
-          json as Map<String, dynamic>,
-        ),
-      );
-    } on DioException catch (e) {
-      return BaseResponse<PostLoginModel>.fromJson(
-        e.response?.data,
-        (json) => PostLoginModel.fromJson(
-          json as Map<String, dynamic>,
-        ),
-      );
-    }
-  }
-
-  @override
   Future<BaseResponse<List<DeviceModel>>> getFcmToken() async {
     try {
       var token = await storageSecure.read(key: "token");

@@ -1,14 +1,22 @@
 import 'package:css_mobile/const/app_const.dart';
-import 'package:css_mobile/data/repository/auth/auth_impl.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
-import 'model/auth/post_login_model.dart';
+import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'storage_core.dart';
 
 class NetworkCore {
-  static final noNeedToken = ['/login', '/auth/device-infos'];
+  static final noNeedToken = [
+    '/login',
+    '/auth/device-infos/update',
+    '/auth/device-infos/save',
+    '/news',
+    '/authentications/refresh'
+  ];
 
   static bool isNeedToken(String route) => !noNeedToken.contains(route);
 
@@ -17,9 +25,18 @@ class NetworkCore {
   Dio myJNE = Dio();
   Dio local = Dio();
   Dio base = Dio();
+  Dio refreshDio = Dio();
 
   NetworkCore() {
     base.options = BaseOptions(
+      baseUrl: AppConst.base,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    refreshDio.options = BaseOptions(
       baseUrl: AppConst.base,
       headers: {
         'Accept': 'application/json',
@@ -73,38 +90,64 @@ class NetworkCore {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           AppLogger.i('Option path ${options.path}');
-          if (isNeedToken(options.path)) {
+          // Skip attaching token if `useAuth` is false
+          if (options.extra['skipAuth'] == false) {
             final accessToken = await StorageCore().readAccessToken();
-            // final refreshToken = await storage.readRefreshToken();
-            options.headers = {
-              ...options.headers,
-              'Authorization': 'Bearer $accessToken'
-            };
+            if (accessToken != null) {
+              options.headers['Authorization'] = 'Bearer $accessToken';
+            }
           }
           return handler.next(options);
         },
         onResponse: (response, handler) {
           if (kDebugMode) {
-            AppLogger.d("response : $response");
+            AppLogger.d("kDebugMode response : $response");
           }
           return handler.next(response);
         },
         onError: (dioError, handler) async {
           AppLogger.e("dio error : $dioError");
-          if ((dioError.requestOptions.path != '/auth/device-infos')) {
-            AppLogger.i("ini device info");
-            if (dioError.response?.statusCode == 401) {
-              // If a 401 response is received, refresh the access token
-              await refreshToken();
-              final String? newAccessToken =
-                  await StorageCore().readAccessToken();
+          if (dioError.response?.statusCode == 401) {
+            // Handle token refresh logic
+            final refreshToken = await StorageCore().readRefreshToken();
+            if (refreshToken != null) {
+              try {
+                Response response = await refreshDio.post(
+                  '/authentications/refresh',
+                  data: {
+                    "refreshToken": refreshToken,
+                  },
+                  options: Options(extra: {'skipAuth': true}),
+                );
 
-              // Update the request header with the new access token
-              dioError.requestOptions.headers['Authorization'] =
-                  'Bearer $newAccessToken';
+                final newToken = BaseResponse<PostLoginModel>.fromJson(
+                  response.data,
+                  (json) => PostLoginModel.fromJson(
+                    json as Map<String, dynamic>,
+                  ),
+                );
 
-              // Repeat the request with the updated header
-              return handler.resolve(await base.fetch(dioError.requestOptions));
+                await StorageCore().saveToken(
+                  newToken.data?.token?.accessToken,
+                  newToken.data?.menu ?? MenuModel(),
+                  newToken.data?.token?.refreshToken,
+                );
+
+                dioError.requestOptions.headers['Authorization'] =
+                    'Bearer ${newToken.data?.token?.accessToken}';
+
+                AppLogger.i("new token : $newToken");
+                return handler
+                    .resolve(await base.fetch(dioError.requestOptions));
+              } on DioException catch (e) {
+                AppLogger.e("error refresh token8 : ${e.response?.statusCode}");
+                AppLogger.e("error refresh token9 : $e");
+                if (e.response?.statusCode == 401) {
+                  StorageCore().deleteLogin();
+                  Get.offAll(const DashboardScreen());
+                }
+                return handler.reject(dioError);
+              }
             }
           }
 
@@ -113,27 +156,4 @@ class NetworkCore {
       ),
     );
   }
-
-  Future<void> refreshToken() async {
-    await AuthRepositoryImpl().postRefreshToken().then((value) async {
-      AppLogger.i('refresh token : ${value.data?.token?.refreshToken}');
-
-      StorageCore().saveToken(
-        value.data?.token?.accessToken ?? '',
-        value.data?.menu ?? MenuModel(),
-        value.data?.token?.refreshToken ?? '',
-      );
-    });
-  }
 }
-
-// class MyHttpOverrides extends HttpOverrides{
-//   @override
-//   HttpClient createHttpClient(SecurityContext? context){
-//     return super.createHttpClient(context)
-//       ..badCertificateCallback = ((X509Certificate cert, String host, int port) {
-//         final isValidHost = ["38.47.76.138"].contains(host);
-//         return isValidHost;
-//       });
-//   }
-// }
