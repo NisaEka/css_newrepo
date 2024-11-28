@@ -282,7 +282,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<BaseResponse<PostLoginModel>> postRefreshToken() async {
     var token = await storageSecure.read(key: StorageCore.refreshToken);
     // network.dio.options.headers['Authorization'] = 'Bearer $token';
-
+    AppLogger.w("refresh token : $token");
     try {
       Response response = await network.base.post(
         '/authentications/refresh',

@@ -10,6 +10,12 @@ class MenuIcon extends StatelessWidget {
   final Icon? menuIcon;
   final EdgeInsets? padding;
   final bool isTransparent;
+  final bool showContainer;
+  final double? size;
+  final Color? background;
+  final double? radius;
+  final VoidCallback? onTap;
+  final Color? iconColor;
 
   const MenuIcon({
     super.key,
@@ -18,63 +24,80 @@ class MenuIcon extends StatelessWidget {
     this.menuIcon,
     this.padding,
     this.isTransparent = false,
+    this.showContainer = true,
+    this.size,
+    this.background,
+    this.radius,
+    this.onTap,
+    this.iconColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding ?? const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: isTransparent
-            ? Colors.transparent
-            : (isActive
-                ? (AppConst.isLightTheme(context) ? blueJNE : bgDarkColor)
-                : AppConst.isLightTheme(context)
-                    ? blueJNEna
-                    : greyColor),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          width: 3,
-          strokeAlign: BorderSide.strokeAlignInside,
-          color: (AppConst.isDarkTheme(context)
-              ? infoColor
-              : (isTransparent ? blueJNE : Colors.transparent)),
-        ),
-      ),
-      child: menuIcon ??
-          Stack(
-            children: [
-              Icon(
-                CupertinoIcons.cube,
-                size: 50,
-                color: AppConst.isLightTheme(context)
-                    ? (isTransparent ? blueJNE : whiteColor)
-                    : infoColor,
-              ),
-              Positioned(
-                bottom: 3,
-                right: 0,
-                child: Container(
-                  width: 20,
-                  height: 22,
-                  color: isActive
-                      ? (AppConst.isLightTheme(context)
-                          ? (isTransparent ? whiteColor : blueJNE)
-                          : bgDarkColor)
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: padding ?? const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: (showContainer
+              ? (isTransparent
+                  ? Colors.transparent
+                  : (isActive
+                      ? (AppConst.isLightTheme(context) ? blueJNE : bgDarkColor)
                       : AppConst.isLightTheme(context)
-                          ? (isTransparent ? whiteColor : blueJNEna)
-                          : greyColor,
-                  child: SvgPicture.asset(
-                    icon ?? '_',
-                    //   IconData( int.parse('0xE04F'), fontFamily: 'MaterialIcons'),
-                    color: AppConst.isLightTheme(context)
-                        ? (isTransparent ? blueJNE : whiteColor)
-                        : infoColor,
-                  ),
-                ),
-              )
-            ],
+                          ? blueJNEna
+                          : greyColor))
+              : background),
+          borderRadius: BorderRadius.circular(radius ?? 10),
+          border: Border.all(
+            width: 3,
+            strokeAlign: BorderSide.strokeAlignInside,
+            color: background ??
+                ((AppConst.isDarkTheme(context)
+                    ? infoColor
+                    : (isTransparent ? blueJNE : Colors.transparent))),
           ),
+        ),
+        child: menuIcon ??
+            Stack(
+              children: [
+                Icon(
+                  CupertinoIcons.cube,
+                  size: size ?? 50,
+                  color: iconColor ??
+                      (AppConst.isLightTheme(context)
+                          ? (isTransparent ? blueJNE : whiteColor)
+                          : infoColor),
+                ),
+                Positioned(
+                  bottom: 2,
+                  right: -1,
+                  child: Container(
+                    width: size != null ? (size! / 2.3) : 20,
+                    height: size != null ? (size! / 2.3) : 22,
+                    color: background ??
+                        (showContainer
+                            ? (isActive
+                                ? (AppConst.isLightTheme(context)
+                                    ? (isTransparent ? whiteColor : blueJNE)
+                                    : bgDarkColor)
+                                : AppConst.isLightTheme(context)
+                                    ? (isTransparent ? whiteColor : blueJNEna)
+                                    : greyColor)
+                            : background),
+                    child: SvgPicture.asset(
+                      icon ?? '_',
+                      //   IconData( int.parse('0xE04F'), fontFamily: 'MaterialIcons'),
+                      color: iconColor ??
+                          (AppConst.isLightTheme(context)
+                              ? (isTransparent ? blueJNE : whiteColor)
+                              : infoColor),
+                    ),
+                  ),
+                )
+              ],
+            ),
+      ),
     );
   }
 }
