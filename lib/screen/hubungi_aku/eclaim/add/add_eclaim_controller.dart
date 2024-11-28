@@ -5,13 +5,12 @@ import 'package:css_mobile/data/model/eclaim/eclaim_model.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddEclaimController extends BaseController {
-  final String? awb = Get.arguments['awb'];
+  final String? awb = Get.arguments?['awb'];
 
   final formKey = GlobalKey<FormState>();
   final category = TextEditingController();
@@ -171,31 +170,31 @@ class AddEclaimController extends BaseController {
   }
 
   // Mengunduh gambar
-  Future<void> downloadImage() async {
-    if (selectedImage != null) {
-      try {
-        // Gunakan Dio untuk mengunduh gambar
-        setLoading(true);
-
-        // Tentukan direktori tempat file disimpan
-        String savePath =
-            '/storage/emulated/0/Download/${selectedImage!.path.split('/').last}';
-        await Dio().download(selectedImage!.path, savePath);
-
-        // Setelah gambar berhasil diunduh, beri notifikasi atau feedback
-        setLoading(false);
-        Get.snackbar('Berhasil', 'Gambar berhasil diunduh!',
-            snackPosition: SnackPosition.BOTTOM);
-      } catch (e) {
-        setLoading(false);
-        Get.snackbar('Gagal', 'Terjadi kesalahan saat mengunduh gambar.',
-            snackPosition: SnackPosition.BOTTOM);
-      }
-    } else {
-      Get.snackbar('Gagal', 'Tidak ada gambar untuk diunduh.',
-          snackPosition: SnackPosition.BOTTOM);
-    }
-  }
+  // Future<void> downloadImage() async {
+  //   if (selectedImage != null) {
+  //     try {
+  //       // Gunakan Dio untuk mengunduh gambar
+  //       setLoading(true);
+  //
+  //       // Tentukan direktori tempat file disimpan
+  //       String savePath =
+  //           '/storage/emulated/0/Download/${selectedImage!.path.split('/').last}';
+  //       await Dio().download(selectedImage!.path, savePath);
+  //
+  //       // Setelah gambar berhasil diunduh, beri notifikasi atau feedback
+  //       setLoading(false);
+  //       Get.snackbar('Berhasil', 'Gambar berhasil diunduh!',
+  //           snackPosition: SnackPosition.BOTTOM);
+  //     } catch (e) {
+  //       setLoading(false);
+  //       Get.snackbar('Gagal', 'Terjadi kesalahan saat mengunduh gambar.',
+  //           snackPosition: SnackPosition.BOTTOM);
+  //     }
+  //   } else {
+  //     Get.snackbar('Gagal', 'Tidak ada gambar untuk diunduh.',
+  //         snackPosition: SnackPosition.BOTTOM);
+  //   }
+  // }
 
   // Fungsi untuk mengatur status loading
   void setLoading(bool value) {

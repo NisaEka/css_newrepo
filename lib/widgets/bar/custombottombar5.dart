@@ -39,7 +39,8 @@ class BottomBar5 extends StatelessWidget {
                     height: 50,
                     margin: const EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
-                      color: blueJNE,
+                      color:
+                          AppConst.isLightTheme(context) ? blueJNE : infoColor,
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: Row(
@@ -50,8 +51,8 @@ class BottomBar5 extends StatelessWidget {
                           icon: Icons.home,
                           isSelected: menu == 0,
                           color: AppConst.isLightTheme(context)
-                              ? whiteColor
-                              : redJNE,
+                              ? Colors.red
+                              : warningColor,
                           onTap: () => Get.offAll(const DashboardScreen(),
                               transition: Transition.leftToRight),
                         ),
@@ -59,18 +60,17 @@ class BottomBar5 extends StatelessWidget {
                           icon: Icons.local_shipping,
                           isSelected: menu == 1,
                           color: AppConst.isLightTheme(context)
-                              ? whiteColor
-                              : redJNE,
+                              ? Colors.red
+                              : warningColor,
                           onTap: () =>
                               Get.to(const CekOngkirScreen(), arguments: {}),
                         ),
                         BottomMenuItem2(
                           icon: Icons.person,
                           isSelected: menu == 2,
-                          color: (AppConst.isLightTheme(context)
-                                  ? whiteColor
-                                  : redJNE)
-                              .withOpacity(1),
+                          color: AppConst.isLightTheme(context)
+                              ? Colors.red
+                              : warningColor,
                           // onTap: () => Get.offAll(const ProfileScreen()),
                           onTap: () => controller.state.isLogin
                               ? Get.offAll(const ProfileScreen(),
@@ -94,9 +94,9 @@ class BottomBar5 extends StatelessWidget {
                       left: 57, // Tetap di sisi kiri
                       child: FloatingActionButton(
                         shape: const CircleBorder(),
-                        backgroundColor: controller.state.isLogin
+                        backgroundColor: AppConst.isLightTheme(context)
                             ? redJNE
-                            : errorLightColor2,
+                            : warningColor,
                         // onPressed: () => Get.to(const InputKirimanScreen()),
                         onPressed: () => controller.state.isLogin
                             ? Get.to(const InformasiPengirimScreen(),

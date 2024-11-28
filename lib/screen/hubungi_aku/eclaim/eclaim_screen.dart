@@ -1,14 +1,11 @@
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/screen/hubungi_aku/eclaim/add/add_eclaim_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_controller.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/components/eclaim_items.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/components/eclaim_search_field.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/components/eclaim_status_button.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'components/eclaim_filter_button.dart';
@@ -42,21 +39,6 @@ class EclaimScreen extends StatelessWidget {
                     EclaimItems(),
                   ],
                 ),
-              ),
-            ),
-            floatingActionButton: CustomFilledButton(
-              color: redJNE,
-              title: "Ajukan Claim".tr,
-              width: Get.width / 3,
-              prefixIcon: Icons.add,
-              radius: 30,
-              height: 50,
-              onPressed: () =>
-                  Get.to(const AddEclaimScreen(), arguments: {})?.then(
-                (_) {
-                  controller.state.pagingController.refresh();
-                  controller.initData();
-                },
               ),
             ),
           );
