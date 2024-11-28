@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -168,7 +167,7 @@ class OtherMenuCotroller extends BaseController {
           route: "/laporanku"),
       Items(
           title: "E-Claim",
-          icon: ImageConstant.hubungiAkuIcon,
+          icon: IconsConstant.eclaim,
           isAuth: true,
           isFavorite: favoritList.where((e) => e.title == "E-Claim").isNotEmpty,
           isEdit: isEdit,
@@ -222,6 +221,8 @@ class OtherMenuCotroller extends BaseController {
       otherList.removeWhere((e) => e.title == "Laporanku");
       favoritList.removeWhere((e) => e.title == "Laporanku");
     }
+
+    // todo : admin & petugas gak bisa akses ke aggregasi pembayaran
 
     update();
   }

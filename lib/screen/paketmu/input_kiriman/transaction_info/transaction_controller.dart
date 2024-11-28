@@ -38,7 +38,7 @@ class TransactionController extends BaseController {
       connection.isOnline().then((value) {
         state.isOnline = value && (result != ConnectivityResult.none);
         if (state.isOnline) {
-          AppSnackBar.success('Online Mode'.tr);
+          // AppSnackBar.success('Online Mode'.tr);
         }
       });
       initData();
