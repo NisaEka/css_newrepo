@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:css_mobile/binding/global_binding.dart';
 import 'package:css_mobile/config/env.dart';
 import 'package:css_mobile/config/firebase_config.dart';
@@ -14,11 +13,10 @@ void main() async {
     location: BannerLocation.topEnd,
     variables: devEnvironment,
   );
-
+  WidgetsFlutterBinding.ensureInitialized();
+  CssFirebaseConfig.init();
   await runZonedGuarded(
     () async {
-      WidgetsFlutterBinding.ensureInitialized();
-      CssFirebaseConfig.init();
       GlobalBinding().dependencies();
       runApp(const CSS());
     },

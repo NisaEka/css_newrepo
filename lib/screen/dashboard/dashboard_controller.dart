@@ -61,19 +61,16 @@ class DashboardController extends BaseController {
   // }
 
   Future<void> refreshToken() async {
-    if (state.isLogin) {
-      await auth.postRefreshToken().then((value) async {
-        AppLogger.i('refresh token : ${value.data?.token?.refreshToken}');
-
+    await auth.postRefreshToken().then((value) async {
+      AppLogger.i('refresh token : ${value.data?.token?.refreshToken}');
+      if (value.code == 201) {
         storage.saveToken(
           value.data?.token?.accessToken ?? '',
           value.data?.menu ?? MenuModel(),
           value.data?.token?.refreshToken ?? '',
         );
-      });
-    } else {
-      storage.deleteLogin();
-    }
+      }
+    });
   }
 
   Future<bool> cekToken() async {
