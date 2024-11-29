@@ -47,9 +47,9 @@ class StorageCore {
   }
 
   Future<void> saveToken(
-    String t,
-    MenuModel m,
-    String rt,
+    String? t,
+    MenuModel? m,
+    String? rt,
   ) async {
     await storage.write(key: token, value: t);
     await storage.write(key: refreshToken, value: rt);

@@ -10,7 +10,7 @@ class CssFirebaseConfig {
     await Firebase.initializeApp(
       options: CssFirebaseOptions.currentPlatform,
     ).whenComplete(() {
-      AppLogger.w("complete");
+      AppLogger.d("complete");
     });
     await FirebaseApi.initNotification();
     await Permission.notification.isDenied.then((value) {

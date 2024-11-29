@@ -225,7 +225,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
     // var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
     // String id = deviceInfo?.deviceId ?? '';
-
+    AppLogger.w("refresh token : $token");
     try {
       Response response = await network.base.post(
         '/authentications/logout',
@@ -275,34 +275,6 @@ class AuthRepositoryImpl extends AuthRepository {
     } on DioException catch (e) {
       AppLogger.e('error update device info : ${e.response?.data}');
       return BaseResponse.fromJson(e.response?.data, (json) => json);
-    }
-  }
-
-  @override
-  Future<BaseResponse<PostLoginModel>> postRefreshToken() async {
-    var token = await storageSecure.read(key: StorageCore.refreshToken);
-    // network.dio.options.headers['Authorization'] = 'Bearer $token';
-
-    try {
-      Response response = await network.base.post(
-        '/authentications/refresh',
-        data: {
-          "refreshToken": token,
-        },
-      );
-      return BaseResponse<PostLoginModel>.fromJson(
-        response.data,
-        (json) => PostLoginModel.fromJson(
-          json as Map<String, dynamic>,
-        ),
-      );
-    } on DioException catch (e) {
-      return BaseResponse<PostLoginModel>.fromJson(
-        e.response?.data,
-        (json) => PostLoginModel.fromJson(
-          json as Map<String, dynamic>,
-        ),
-      );
     }
   }
 

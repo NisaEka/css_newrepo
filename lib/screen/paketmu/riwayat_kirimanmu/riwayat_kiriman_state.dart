@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
@@ -36,4 +37,5 @@ class RiwayatKirimanState {
   List<TransactionModel> selectedTransaction = [];
 
   UserModel? basic;
+  MenuModel? allow;
 }

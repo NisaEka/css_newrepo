@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/screen/cek_ongkir/congkir_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -9,6 +9,7 @@ import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.d
 import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item2.dart';
+import 'package:css_mobile/widgets/items/menu_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -66,24 +67,40 @@ class BottomBar4 extends StatelessWidget {
                 controller.state.menuItems
                         .where((e) => e.title == "Input Kirimanmu")
                         .isNotEmpty
-                    ? FloatingActionButton(
-                        shape: const CircleBorder(),
-                        backgroundColor: controller.state.isLogin
-                            ? redJNE
-                            : errorLightColor2,
-                        // onPressed: () => Get.to(const InputKirimanScreen()),
-                        onPressed: () => controller.state.isLogin
+                    ? MenuIcon(
+                        background: redJNE,
+                        size: 35,
+                        icon: IconsConstant.add,
+                        radius: 50,
+                        showContainer: false,
+                        onTap: () => controller.state.isLogin
                             ? Get.to(const InformasiPengirimScreen(),
                                 arguments: {})
                             : showDialog(
                                 context: context,
                                 builder: (context) => const LoginAlertDialog(),
-                              ),
-                        child: Image.asset(
-                          ImageConstant.paketmuIcon,
-                          height: Get.width / 12,
-                        ),
-                      )
+                              ))
+                    // ? FloatingActionButton(
+                    //     shape: const CircleBorder(),
+                    //     backgroundColor: controller.state.isLogin
+                    //         ? redJNE
+                    //         : errorLightColor2,
+                    //     // onPressed: () => Get.to(const InputKirimanScreen()),
+                    //     onPressed: () => controller.state.isLogin
+                    //         ? Get.to(const InformasiPengirimScreen(),
+                    //             arguments: {})
+                    //         : showDialog(
+                    //             context: context,
+                    //             builder: (context) => const LoginAlertDialog(),
+                    //           ),
+                    //     child: MenuIcon(
+                    //       icon: IconsConstant.add,
+                    //       showContainer: false,
+                    //       size:35,
+                    //       background: redJNE,
+                    //       radius: 35,
+                    //     ),
+                    //   )
                     : const SizedBox(),
                 BottomMenuItem2(
                   icon: Icons.local_shipping,

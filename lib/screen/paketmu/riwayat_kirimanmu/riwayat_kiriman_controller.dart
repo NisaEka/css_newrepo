@@ -1,6 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -63,6 +65,9 @@ class RiwayatKirimanController extends BaseController {
     // transactionList = [];
     state.selectedTransaction = [];
     state.listStatusKiriman = [];
+    state.allow =
+        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+
     try {
       await profil
           .getBasicProfil()
@@ -280,26 +285,13 @@ class RiwayatKirimanController extends BaseController {
   }
 
   applyFilter() {
-    // if (state.startDate != null ||
-    //     state.endDate != null ||
-    //     state.selectedPetugasEntry != null ||
-    //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
       state.transDate =
           '[{"createdDateSearch":["${state.startDate}","${state.endDate}"]}]';
-      // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     }
     update();
-    // update();
-    if (state.dateFilter == '0') {
-      resetFilter();
-    } else {
-      state.pagingController.refresh();
-      transactionCount();
-    }
-    // } else {
-    //   resetFilter();
-    // }
+    state.pagingController.refresh();
+    transactionCount();
   }
 }

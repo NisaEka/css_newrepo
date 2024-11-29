@@ -1,4 +1,4 @@
-import 'package:css_mobile/data/model/auth/get_login_model.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
@@ -63,7 +63,7 @@ class PetugasModel {
     String? zipCode,
     String? origin,
     String? status,
-    AllowedMenu? menu,
+    MenuModel? menu,
     List<Account>? accounts,
     List<OriginModel>? origins,
     List<BranchModel>? branches,
@@ -89,11 +89,11 @@ class PetugasModel {
     _email = json['email'];
     _phone = json['phone'];
     _branch = json['branch'];
-    _zipCode = json['zip_code'];
+    _zipCode = json['zipCode'];
     _origin = json['origin'];
 
     _status = json['status'];
-    _menu = json['menu'] != null ? AllowedMenu.fromJson(json['menu']) : null;
+    _menu = json['menu'] != null ? MenuModel.fromJson(json['menu']) : null;
     if (json['accounts'] != null) {
       _accounts = [];
       json['accounts'].forEach((v) {
@@ -123,7 +123,7 @@ class PetugasModel {
   String? _origin;
 
   String? _status;
-  AllowedMenu? _menu;
+  MenuModel? _menu;
   List<Account>? _accounts;
   List<OriginModel>? _origins;
   List<BranchModel>? _branches;
@@ -137,7 +137,7 @@ class PetugasModel {
     String? zipCode,
     String? origin,
     String? status,
-    AllowedMenu? menu,
+    MenuModel? menu,
     List<Account>? accounts,
     List<OriginModel>? origins,
     List<BranchModel>? branches,
@@ -173,7 +173,7 @@ class PetugasModel {
 
   String? get status => _status;
 
-  AllowedMenu? get menu => _menu;
+  MenuModel? get menu => _menu;
 
   List<Account>? get accounts => _accounts;
 
@@ -188,7 +188,7 @@ class PetugasModel {
     map['email'] = _email;
     map['phone'] = _phone;
     map['branch'] = _branch;
-    map['zip_code'] = _zipCode;
+    map['zipCode'] = _zipCode;
     map['origin'] = _origin;
     map['status'] = _status;
     if (_menu != null) {

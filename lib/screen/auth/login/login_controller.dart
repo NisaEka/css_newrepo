@@ -91,9 +91,9 @@ class LoginController extends BaseController {
         if (value.code == 201) {
           await storage
               .saveToken(
-                value.data?.token?.accessToken ?? '',
+                value.data?.token?.accessToken,
                 value.data?.menu ?? MenuModel(),
-                value.data?.token?.refreshToken ?? '',
+                value.data?.token?.refreshToken,
               )
               // .then((_) async => auth
               //     .postFcmToken(
@@ -141,7 +141,7 @@ class LoginController extends BaseController {
       });
     } catch (e) {
       AppLogger.e('error login $e');
-      AppSnackBar.error('Connection times out');
+      AppSnackBar.error('Login failed: $e');
     }
     state.isLoading = false;
     update();

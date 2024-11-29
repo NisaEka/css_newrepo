@@ -196,42 +196,42 @@ class RequstPickupFilterButton extends HookWidget {
                           delegate: SliverChildBuilderDelegate(
                             (context, index) => GestureDetector(
                               onTap: () => setState(() {
-                                if (c.state.selectedPetugasEntry !=
-                                    c.state.listOfficerEntry[index]) {
-                                  c.state.selectedPetugasEntry =
-                                      c.state.listOfficerEntry[index];
+                                if (c.state.selectedDeliveryType !=
+                                    c.state.listDeliveryType[index]) {
+                                  c.state.selectedDeliveryType =
+                                      c.state.listDeliveryType[index];
                                 } else {
-                                  c.state.selectedPetugasEntry = null;
+                                  c.state.selectedDeliveryType = null;
                                 }
                                 c.update();
                               }),
                               child: Container(
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: c.state.selectedPetugasEntry ==
-                                          c.state.listOfficerEntry[index]
+                                  color: c.state.selectedDeliveryType ==
+                                          c.state.listDeliveryType[index]
                                       ? blueJNE
                                       : whiteColor,
                                   border: Border.all(
-                                    color: c.state.selectedPetugasEntry !=
-                                            c.state.listOfficerEntry[index]
+                                    color: c.state.selectedDeliveryType !=
+                                            c.state.listDeliveryType[index]
                                         ? blueJNE
                                         : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: Text(
-                                  c.state.listOfficerEntry[index].tr,
+                                  c.state.listDeliveryType[index].tr,
                                   textAlign: TextAlign.center,
                                   style: listTitleTextStyle.copyWith(
-                                      color: c.state.selectedPetugasEntry ==
-                                              c.state.listOfficerEntry[index]
+                                      color: c.state.selectedDeliveryType ==
+                                              c.state.listDeliveryType[index]
                                           ? whiteColor
                                           : blueJNE),
                                 ),
                               ),
                             ),
-                            childCount: c.state.listOfficerEntry.length,
+                            childCount: c.state.listDeliveryType.length,
                           ),
                           gridDelegate:
                               const SliverGridDelegateWithMaxCrossAxisExtent(

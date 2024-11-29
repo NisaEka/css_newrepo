@@ -43,7 +43,7 @@ class AddReceiverController extends BaseController {
           .then((value) {
         if (value.code == 201) {
           AppSnackBar.success("Data receiver telah disimpan".tr);
-          Get.close(2);
+          Get.close(1);
         } else {
           AppSnackBar.error(value.error[0]);
         }

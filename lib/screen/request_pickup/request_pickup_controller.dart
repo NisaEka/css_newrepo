@@ -7,10 +7,8 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_request_model.dart';
-import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_state.dart';
 import 'package:css_mobile/util/constant.dart';
-import 'package:css_mobile/util/ext/date_ext.dart';
 import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
@@ -30,12 +28,10 @@ class RequestPickupController extends BaseController {
     state.queryParam.setSort(jsonEncode([
       {"createdDateSearch": "desc"}
     ]));
-    applyFilterDate();
     selectDateFilter(3);
     applyFilter();
     Future.wait([
       getAddresses(1),
-      getCities(''),
       getStatuses(),
       getTypes(),
     ]);
@@ -47,135 +43,6 @@ class RequestPickupController extends BaseController {
     });
   }
 
-  void setSelectedFilterDate(RequestPickupDateEnum? date) {
-    if (date != null) {
-      state.selectedFilterDate = date;
-      state.filterDateText = date.asName();
-    }
-  }
-
-  void applyFilterDate() {
-    bool startDateAvailable = state.selectedDateStart != null;
-    bool endDateAvailable = state.selectedDateEnd != null;
-
-    List<Map<String, dynamic>> between = [];
-
-    switch (state.selectedFilterDate) {
-      case RequestPickupDateEnum.custom:
-        if (startDateAvailable && endDateAvailable) {
-          between.add({
-            "createdDateSearch": [
-              DateTime(
-                      state.selectedDateStart!.year,
-                      state.selectedDateStart!.month,
-                      state.selectedDateStart!.day)
-                  .toIso8601String(),
-              DateTime(
-                      state.selectedDateEnd!.year,
-                      state.selectedDateEnd!.month,
-                      state.selectedDateEnd!.day,
-                      23,
-                      59,
-                      59,
-                      999)
-                  .toIso8601String()
-            ]
-          });
-          state.filterDateText =
-              '${state.selectedDateStartText} - ${state.selectedDateEndText}';
-        } else if (startDateAvailable) {
-          between.add({
-            "createdDateSearch": [
-              DateTime(
-                      state.selectedDateStart!.year,
-                      state.selectedDateStart!.month,
-                      state.selectedDateStart!.day)
-                  .toIso8601String(),
-              DateTime(
-                      state.selectedDateStart!.year,
-                      state.selectedDateStart!.month,
-                      state.selectedDateStart!.day,
-                      23,
-                      59,
-                      59,
-                      999)
-                  .toIso8601String()
-            ]
-          });
-          state.filterDateText = state.selectedDateStartText;
-        } else if (endDateAvailable) {
-          between.add({
-            "createdDateSearch": [
-              DateTime(state.selectedDateEnd!.year,
-                      state.selectedDateEnd!.month, state.selectedDateEnd!.day)
-                  .toIso8601String(),
-              DateTime(
-                      state.selectedDateEnd!.year,
-                      state.selectedDateEnd!.month,
-                      state.selectedDateEnd!.day,
-                      23,
-                      59,
-                      59,
-                      999)
-                  .toIso8601String()
-            ]
-          });
-          state.filterDateText = state.selectedDateEndText;
-        }
-        break;
-      case RequestPickupDateEnum.all:
-        between = [];
-        break;
-      case RequestPickupDateEnum.oneMonth:
-        final currentDateTime = DateTime.now();
-        final oneMonthAgo = currentDateTime.subtract(const Duration(days: 30));
-        between.add({
-          "createdDateSearch": [
-            DateTime(oneMonthAgo.year, oneMonthAgo.month, oneMonthAgo.day)
-                .toIso8601String(),
-            DateTime(currentDateTime.year, currentDateTime.month,
-                    currentDateTime.day, 23, 59, 59, 999)
-                .toIso8601String()
-          ]
-        });
-        break;
-      case RequestPickupDateEnum.oneWeek:
-        final currentDateTime = DateTime.now();
-        final oneWeekAgo = currentDateTime.subtract(const Duration(days: 7));
-        between.add({
-          "createdDateSearch": [
-            DateTime(oneWeekAgo.year, oneWeekAgo.month, oneWeekAgo.day)
-                .toIso8601String(),
-            DateTime(currentDateTime.year, currentDateTime.month,
-                    currentDateTime.day, 23, 59, 59, 999)
-                .toIso8601String()
-          ]
-        });
-        break;
-      case RequestPickupDateEnum.today:
-        final currentDateTime = DateTime.now();
-        final startOfDay = DateTime(
-            currentDateTime.year, currentDateTime.month, currentDateTime.day);
-        final endOfDay = DateTime(currentDateTime.year, currentDateTime.month,
-            currentDateTime.day, 23, 59, 59, 999);
-        between.add({
-          "createdDateSearch": [
-            startOfDay.toIso8601String(),
-            endOfDay.toIso8601String()
-          ]
-        });
-        break;
-      default:
-        between = [];
-        break;
-    }
-
-    state.queryParam.setBetween(jsonEncode(between));
-
-    refreshPickups();
-    update();
-  }
-
   void selectDateFilter(int filter) {
     state.dateFilter = filter.toString();
     update();
@@ -184,7 +51,6 @@ class RequestPickupController extends BaseController {
       state.endDate = null;
       state.startDateField.clear();
       state.endDateField.clear();
-      state.transDate = '[]';
     } else if (filter == 1) {
       state.startDate = DateTime.now()
           .copyWith(hour: 0, minute: 0)
@@ -260,8 +126,6 @@ class RequestPickupController extends BaseController {
     //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
-      state.transDate =
-          '[{"createdDateSearch":["${state.startDate}","${state.endDate}"]}]';
       state.queryParam.setBetween(jsonEncode([
         {
           "createdDateSearch": [
@@ -272,7 +136,6 @@ class RequestPickupController extends BaseController {
       ]));
       // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     } else {
-      state.transDate = '[]';
       state.queryParam.setBetween(jsonEncode([]));
     }
 
@@ -308,13 +171,11 @@ class RequestPickupController extends BaseController {
     state.endDateField.clear();
     // state.selectedPetugasEntry = null;
     state.selectedOrigin = null;
-    state.selectedStatusKiriman = null;
     // state.isFiltered = false;
     state.searchField.clear();
-    state.transDate = '[]';
     state.dateFilter = '0';
     state.filterStatus = Constant.allStatus;
-    state.selectedPetugasEntry = Constant.allDeliveryType;
+    state.selectedDeliveryType = Constant.allDeliveryType;
     state.queryParam.setWhere(jsonEncode([]));
     state.queryParam.setBetween(jsonEncode([]));
     update();
@@ -322,19 +183,6 @@ class RequestPickupController extends BaseController {
       refreshPickups();
     }
     // state.pagingController.refresh();
-  }
-
-  void setSelectedFilterStatus(String? status) {
-    if (status != null) {
-      if (status == Constant.allStatus) {
-        state.filterStatus = "";
-      } else {
-        state.filterStatus = status;
-      }
-      refreshPickups();
-      state.filterStatusText = status;
-      update();
-    }
   }
 
   void setSelectedDeliveryTypeTwo(String? deliveryType) {
@@ -357,25 +205,6 @@ class RequestPickupController extends BaseController {
     }
   }
 
-  void setSelectedDeliveryType(String? deliveryType) {
-    if (deliveryType != null) {
-      final where =
-          (jsonDecode(state.queryParam.where ?? '[]') ?? []) as List<dynamic>;
-      where.removeWhere((element) => element["codFlag"] != null);
-      if (deliveryType == "COD") {
-        where.removeWhere((element) => element["codFlag"] != null);
-        where.add({"codFlag": "YES"});
-      } else if (deliveryType == "NON COD") {
-        where.removeWhere((element) => element["codFlag"] != null);
-        where.add({"codFlag": "NO"});
-      }
-      state.queryParam.setWhere(jsonEncode(where));
-      // refreshPickups();
-      state.filterDeliveryTypeText = deliveryType;
-      update();
-    }
-  }
-
   void setSelectedFilterCityTwo(OriginModel? origin) {
     if (origin != null) {
       final where =
@@ -389,35 +218,6 @@ class RequestPickupController extends BaseController {
     // state.filterDeliveryCityText = city['label'];
   }
 
-  void setSelectedFilterCity(Map<String, dynamic> city) {
-    final where =
-        (jsonDecode(state.queryParam.where ?? '[]') ?? []) as List<dynamic>;
-    where.removeWhere((element) => element["originCode"] != null);
-    if (city['label'] != Constant.allDeliveryCity) {
-      where.add({"originCode": city['value']});
-    }
-    state.queryParam.setWhere(jsonEncode(where));
-    refreshPickups();
-    state.filterDeliveryCityText = city['label'];
-    update();
-  }
-
-  void setSelectedDateStart(DateTime? dateTime) {
-    if (dateTime != null) {
-      state.selectedDateStart = dateTime;
-      state.selectedDateStartText =
-          dateTime.toStringWithFormat(format: "dd MMM yyyy");
-    }
-  }
-
-  void setSelectedDateEnd(DateTime? dateTime) {
-    if (dateTime != null) {
-      state.selectedDateEnd = dateTime;
-      state.selectedDateEndText =
-          dateTime.toStringWithFormat(format: "dd MMM yyyy");
-    }
-  }
-
   Future<void> getRequestPickups(int pageKey) async {
     state.showLoadingIndicator = true;
 
@@ -425,7 +225,7 @@ class RequestPickupController extends BaseController {
       AppLogger.i("pageKey: $pageKey");
       state.queryParam.setPage(pageKey);
       state.queryParam.setSearch(state.searchField.text);
-      setSelectedDeliveryTypeTwo(state.selectedPetugasEntry);
+      setSelectedDeliveryTypeTwo(state.selectedDeliveryType);
       AppLogger.i("selectedorigin: ${state.selectedOrigin}");
       setSelectedFilterCityTwo(state.selectedOrigin);
       final response = await requestPickupRepository.getRequestPickups(
@@ -466,23 +266,6 @@ class RequestPickupController extends BaseController {
   }
 
   Future<void> getAddresses(int page) async {
-    // try {
-    //   final response = await requestPickupRepository
-    //       .getRequestPickupAddresses(QueryParamModel(
-    //           limit: 0,
-    //           sort: jsonEncode([
-    //             {"createdDate": "desc"}
-    //           ])));
-    //   final payload = response.data ?? List.empty();
-    //   addresses.clear();
-    //   addresses.addAll(payload);
-    //   AppLogger.i("addresses: $addresses");
-    // } catch (e) {
-    //   AppLogger.e("getAddresses error: $e");
-    //   e.toString();
-    //   // Do nothing for now.
-    // }
-
     try {
       final response = await requestPickupRepository
           .getRequestPickupAddresses(QueryParamModel(
@@ -497,7 +280,6 @@ class RequestPickupController extends BaseController {
       state.addresses.addAll(payload);
 
       AppLogger.i("addresses from controller: ${state.addresses}");
-      // return BaseResponse<List<PantauPaketmuModel>>
 
       final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
       if (isLastPage) {
@@ -517,49 +299,10 @@ class RequestPickupController extends BaseController {
     }
   }
 
-  Future<void> getCities(String keyword) async {
-    try {
-      // final response = await master.getDestinations(QueryParamModel(
-      //   select: jsonEncode(["cityName"]),
-      // ));
-      // AppLogger.d("getCities response: ${jsonEncode(response.data)}");
-      // final payload = response.data ?? List.empty();
-      // final city = payload.map((e) => e.cityName).toSet().toList();
-      // AppLogger.d("city: $city");
-      final response =
-          await requestPickupRepository.getRequestPickupOrigins(QueryParamModel(
-              like: jsonEncode([
-        {"originName": keyword}
-      ])));
-      final payload = response.data ?? List.empty();
-      state.cities.clear();
-      state.cities.add({
-        "label": Constant.allDeliveryCity,
-        "value": "",
-      });
-      // final test = city.whereType<String>();
-      // AppLogger.d("test: $test");
-      // cities.addAll(payload.map((e) => e.originName ?? "").toList());
-      state.cities.addAll(payload
-          .map((e) => {
-                "label": e.originName,
-                "value": e.originCode,
-              })
-          .toList());
-      // cities.addAll([]);
-
-      update();
-    } catch (e) {
-      // Do nothing for now.
-    }
-  }
-
   Future<void> getStatuses() async {
     try {
       final response = await requestPickupRepository.getRequestPickupStatuses();
       final payload = response.data ?? List.empty();
-      state.statuses.add(Constant.allStatus);
-      state.statuses.addAll(payload);
 
       state.listStatusKiriman.add(Constant.allStatus);
       state.listStatusKiriman.addAll(payload);
@@ -572,11 +315,9 @@ class RequestPickupController extends BaseController {
     try {
       final response = await requestPickupRepository.getRequestPickupTypes();
       final payload = response.data ?? List.empty();
-      state.types.add(Constant.allDeliveryType);
-      state.types.addAll(payload);
 
-      state.listOfficerEntry.add(Constant.allDeliveryType);
-      state.listOfficerEntry.addAll(payload);
+      state.listDeliveryType.add(Constant.allDeliveryType);
+      state.listDeliveryType.addAll(payload);
     } catch (e) {
       // Do nothing for now.
     }
@@ -642,7 +383,6 @@ class RequestPickupController extends BaseController {
     requestPickupRepository
         .createRequestPickup(_prepareCreateData())
         .then((response) {
-      state.data = response.data;
       if (response.code == HttpStatus.created &&
           response.data!.errorDetails.isEmpty) {
         state.createDataSuccess = true;
@@ -659,10 +399,6 @@ class RequestPickupController extends BaseController {
 
     state.createDataLoading = false;
     update();
-  }
-
-  void onCityKeywordChange(String newText) {
-    getCities(newText);
   }
 
   String getSelectedPickupTime() {

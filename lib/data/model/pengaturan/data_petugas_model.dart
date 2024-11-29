@@ -35,7 +35,7 @@ class DataPetugasModel {
     _phone = json['phone'];
     _password = json['password'];
     _address = json['address'];
-    _zipCode = json['zip_code'];
+    _zipCode = json['zipCode'];
     _menu = json['menu'] != null ? MenuModel.fromJson(json['menu']) : null;
     _transaction = json['transaction'] != null
         ? Transaction.fromJson(json['transaction'])
@@ -118,7 +118,7 @@ class DataPetugasModel {
     map['phone'] = _phone;
     map['password'] = _password;
     map['address'] = _address;
-    map['zip_code'] = _zipCode;
+    map['zipCode'] = _zipCode;
     if (_menu != null) {
       map['menu'] = _menu?.toJson();
     }
