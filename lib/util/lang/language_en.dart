@@ -263,7 +263,7 @@ class LanguageEN {
       "Minta Dijemput": "Request Pickup",
       "Simpan Petugas": "Save Officer",
       "Kata sandi tidak sama": "Password does not match",
-      "Tampilkan transaksi": "Show Transaction",
+      "Tampilkan Transaksi": "Show Transaction",
       "Semua": "All",
       "Dibatasi": "Restricted",
       "Akun": 'Account',

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:core';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
@@ -9,6 +10,7 @@ import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -34,6 +36,7 @@ class TambahPetugasController extends BaseController {
   PetugasModel? data = Get.arguments['data'];
   bool isLoading = false;
   bool isLoadOrigin = false;
+  bool isCountAccount = false;
   bool isObscurePassword = true;
   bool isObscurePasswordConfirm = true;
   UserModel? basic;
@@ -73,16 +76,20 @@ class TambahPetugasController extends BaseController {
   bool cetakPesanan = false;
   bool monitoringAgg = false;
   bool monitoringAggMinus = false;
+  bool laporanReturn = false;
+  bool summaryOrigin = false;
+  bool summaryDestination = false;
 
   List<Account> accountList = [];
   List<Account> selectedAccountList = [];
   RxList<OriginModel> originList = <OriginModel>[].obs;
-  final selectedOrigin = <OriginModel>[].obs;
+  RxList<OriginModel> selectedOrigin = <OriginModel>[].obs;
   List<String> originCodes = [];
   List<BranchModel> branchList = [];
   List<BranchModel> selectedBranchList = [];
   List<String> branch = [];
   String? status;
+  int? countAccount = 0;
   PetugasModel dataPetugas = PetugasModel();
 
   @override
@@ -107,7 +114,7 @@ class TambahPetugasController extends BaseController {
     update();
     try {
       await master
-          .getAccounts(QueryModel(limit: 0, sort: [
+          .getAccounts(QueryModel(table: true, limit: 0, sort: [
         {"accountNumber": "asc"}
       ]))
           .then((value) {
@@ -115,7 +122,9 @@ class TambahPetugasController extends BaseController {
         update();
       });
 
-      await master.getBranches().then((value) {
+      await master
+          .getBranches(QueryParamModel(table: true, limit: 0))
+          .then((value) {
         branchList.addAll(value.data ?? []);
         update();
       });
@@ -158,7 +167,7 @@ class TambahPetugasController extends BaseController {
         alamatEmail.text = dataPetugas.email ?? '';
         nomorTelepon.text = dataPetugas.phone ?? '';
         status = dataPetugas.status ?? '';
-        alamat.text = dataPetugas.branch ?? '';
+        alamat.text = dataPetugas.address ?? '';
         zipCode.text = dataPetugas.zipCode ?? '';
         status = dataPetugas.status ?? 'N';
 
@@ -203,6 +212,9 @@ class TambahPetugasController extends BaseController {
             dataPetugas.menu?.keuanganAggregasi == "Y";
         monitoringAggMinus = dataPetugas.menu?.monitoringAggMinus == "Y" ||
             dataPetugas.menu?.keuanganAggregasiMinus == "Y";
+        laporanReturn = dataPetugas.menu?.laporanReturn == "Y";
+        summaryOrigin = dataPetugas.menu?.summaryOrigin == "Y";
+        summaryDestination = dataPetugas.menu?.summaryDestination == "Y";
         update();
       } else {
         basic = UserModel.fromJson(
@@ -223,6 +235,35 @@ class TambahPetugasController extends BaseController {
     update();
   }
 
+  Future<void> getCountAccount() async {
+    isCountAccount = true;
+    update();
+    try {
+      await master
+          .getAccountCount(CountQueryModel(
+        where: [
+          {"accountCategory": "NA"}
+        ],
+        inValues: [
+          {
+            "accountNumber": selectedAccountList.isNotEmpty
+                ? selectedAccountList.map((e) => e.accountNumber).toList()
+                : [""]
+          }
+        ],
+      ))
+          .then((value) {
+        AppLogger.i("value count account ${value.data}");
+        countAccount = value.data ?? 0;
+        update();
+      });
+    } catch (e, i) {
+      AppLogger.e('error countAccount $e, $i');
+    }
+    isCountAccount = false;
+    update();
+  }
+
   Future<void> loadOrigin(List<BranchModel> branches) async {
     originList.clear();
     selectedOrigin.clear();
@@ -237,8 +278,16 @@ class TambahPetugasController extends BaseController {
       await master
           .getOrigins(QueryParamModel(
         table: true,
-        isIn:
-            '[{"branchCode" : [${branch.map((item) => '"$item"').join(', ')}]}]',
+        limit: 0,
+        where: jsonEncode([
+          {"originStatus": "Y"}
+        ]),
+        sort: jsonEncode([
+          {"originCode": "asc"}
+        ]),
+        isIn: jsonEncode([
+          {"branchCode": branch.map((e) => e).toList()}
+        ]),
       ))
           .then((value) {
         originList.addAll(value.data ?? []);
@@ -265,12 +314,12 @@ class TambahPetugasController extends BaseController {
     } catch (e, i) {
       AppLogger.e('error loadOrigin $e, $i');
     }
-    for (var value in originCodes) {
-      selectedOrigin.add(
-          originList.where((e) => e.originCode == value).isNotEmpty
-              ? originList.where((e) => e.originCode == value).first
-              : OriginModel());
-    }
+    // for (var value in originCodes) {
+    //   selectedOrigin.add(
+    //       originList.where((e) => e.originCode == value).isNotEmpty
+    //           ? originList.where((e) => e.originCode == value).first
+    //           : OriginModel());
+    // }
     isLoadOrigin = false;
     update();
   }
@@ -278,6 +327,7 @@ class TambahPetugasController extends BaseController {
   Future<void> saveOfficer() async {
     isLoading = true;
     update();
+    originCodes.clear();
     for (var element in selectedOrigin) {
       originCodes.add(element.originCode ?? '');
       update();
@@ -293,44 +343,47 @@ class TambahPetugasController extends BaseController {
               address: alamat.text,
               zipCode: zipCode.text,
               menu: MenuModel(
-                profil: profilku ? "Y" : null,
-                fasilitas: fasilitas ? "Y" : null,
-                katasandi: katasandi ? "Y" : null,
-                beranda: beranda ? "Y" : null,
-                buatPesanan: buatPesanan ? "Y" : null,
-                paketmuInput: buatPesanan ? "Y" : null,
-                riwayatPesanan: riwayatPesanan ? "Y" : null,
-                paketmuRiwayat: riwayatPesanan ? "Y" : null,
-                lacakPesanan: lacakPesanan ? "Y" : null,
-                paketmuLacak: lacakPesanan ? "Y" : null,
-                mintaDijemput: mintaDijemput ? "Y" : null,
-                serahTerima: serahTerima ? "Y" : null,
-                cetakPesanan: cetakPesanan ? "Y" : null,
-                paketmuPrint: cetakPesanan ? "Y" : null,
-                hapusPesanan: hapusPesanan ? "Y" : null,
-                saldo: saldo ? "Y" : null,
-                uangCod: uangCod ? "Y" : null,
-                keuanganCod: uangCod ? "Y" : null,
-                keuanganBonus: saldo ? "Y" : null,
-                keuanganAggregasi: monitoringAgg ? "Y" : null,
-                keuanganAggregasiMinus: monitoringAggMinus ? "Y" : null,
-                monitoringAgg: monitoringAgg ? "Y" : null,
-                monitoringAggMinus: monitoringAggMinus ? "Y" : null,
-                tagihan: tagihan ? "Y" : null,
-                bonus: bonus ? "Y" : null,
-                pantauPaketmu: pantauPaketmu ? "Y" : null,
-                laporan: laporan ? "Y" : null,
-                eclaim: eclaim ? "Y" : null,
-                hubungiEclaim: eclaim ? "Y" : null,
-                cekOngkir: cekOngkir ? "Y" : null,
-                label: label ? "Y" : null,
-                petugas: petugas ? "Y" : null,
-                pengaturanLabel: label ? "Y" : null,
-                pengaturanPetugas: petugas ? "Y" : null,
-                pengaturanTema: tema ? "Y" : null,
-                semuaHapus: semuaHapus ? "Y" : null,
-                semuaTransaksi: semuaTransaksi ? "Y" : null,
-                tema: tema ? "Y" : null,
+                profil: profilku ? "Y" : "N",
+                fasilitas: fasilitas ? "Y" : "N",
+                katasandi: katasandi ? "Y" : "N",
+                beranda: beranda ? "Y" : "N",
+                buatPesanan: buatPesanan ? "Y" : "N",
+                paketmuInput: buatPesanan ? "Y" : "N",
+                riwayatPesanan: riwayatPesanan ? "Y" : "N",
+                paketmuRiwayat: riwayatPesanan ? "Y" : "N",
+                lacakPesanan: lacakPesanan ? "Y" : "N",
+                paketmuLacak: lacakPesanan ? "Y" : "N",
+                mintaDijemput: mintaDijemput ? "Y" : "N",
+                serahTerima: serahTerima ? "Y" : "N",
+                cetakPesanan: cetakPesanan ? "Y" : "N",
+                paketmuPrint: cetakPesanan ? "Y" : "N",
+                hapusPesanan: hapusPesanan ? "Y" : "N",
+                saldo: saldo ? "Y" : "N",
+                uangCod: uangCod ? "Y" : "N",
+                keuanganCod: uangCod ? "Y" : "N",
+                keuanganBonus: saldo ? "Y" : "N",
+                keuanganAggregasi: monitoringAgg ? "Y" : "N",
+                keuanganAggregasiMinus: monitoringAggMinus ? "Y" : "N",
+                monitoringAgg: monitoringAgg ? "Y" : "N",
+                monitoringAggMinus: monitoringAggMinus ? "Y" : "N",
+                tagihan: tagihan ? "Y" : "N",
+                bonus: bonus ? "Y" : "N",
+                pantauPaketmu: pantauPaketmu ? "Y" : "N",
+                laporan: laporan ? "Y" : "N",
+                eclaim: eclaim ? "Y" : "N",
+                hubungiEclaim: eclaim ? "Y" : "N",
+                cekOngkir: cekOngkir ? "Y" : "N",
+                label: label ? "Y" : "N",
+                petugas: petugas ? "Y" : "N",
+                pengaturanLabel: label ? "Y" : "N",
+                pengaturanPetugas: petugas ? "Y" : "N",
+                pengaturanTema: tema ? "Y" : "N",
+                semuaHapus: semuaHapus ? "Y" : "N",
+                semuaTransaksi: semuaTransaksi ? "Y" : "N",
+                tema: tema ? "Y" : "N",
+                laporanReturn: laporanReturn ? "Y" : "N",
+                summaryOrigin: summaryOrigin ? "Y" : "N",
+                summaryDestination: summaryDestination ? "Y" : "N",
               ),
               transaction: Transaction(
                 show: "RESTRICTED",
@@ -366,6 +419,7 @@ class TambahPetugasController extends BaseController {
   Future<void> updateOfficer() async {
     isLoading = true;
     update();
+    originCodes.clear();
     for (var element in selectedOrigin) {
       originCodes.add(element.originCode ?? '');
       update();
@@ -381,45 +435,49 @@ class TambahPetugasController extends BaseController {
               password: password.text,
               address: alamat.text,
               zipCode: zipCode.text,
+              status: status,
               menu: MenuModel(
-                profil: profilku ? "Y" : null,
-                fasilitas: fasilitas ? "Y" : null,
-                katasandi: katasandi ? "Y" : null,
-                beranda: beranda ? "Y" : null,
-                buatPesanan: buatPesanan ? "Y" : null,
-                paketmuInput: buatPesanan ? "Y" : null,
-                riwayatPesanan: riwayatPesanan ? "Y" : null,
-                paketmuRiwayat: riwayatPesanan ? "Y" : null,
-                lacakPesanan: lacakPesanan ? "Y" : null,
-                paketmuLacak: lacakPesanan ? "Y" : null,
-                mintaDijemput: mintaDijemput ? "Y" : null,
-                serahTerima: serahTerima ? "Y" : null,
-                cetakPesanan: cetakPesanan ? "Y" : null,
-                paketmuPrint: cetakPesanan ? "Y" : null,
-                hapusPesanan: hapusPesanan ? "Y" : null,
-                saldo: saldo ? "Y" : null,
-                uangCod: uangCod ? "Y" : null,
-                keuanganCod: uangCod ? "Y" : null,
-                keuanganBonus: saldo ? "Y" : null,
-                keuanganAggregasi: monitoringAgg ? "Y" : null,
-                keuanganAggregasiMinus: monitoringAggMinus ? "Y" : null,
-                monitoringAgg: monitoringAgg ? "Y" : null,
-                monitoringAggMinus: monitoringAggMinus ? "Y" : null,
-                tagihan: tagihan ? "Y" : null,
-                bonus: bonus ? "Y" : null,
-                pantauPaketmu: pantauPaketmu ? "Y" : null,
-                laporan: laporan ? "Y" : null,
-                eclaim: eclaim ? "Y" : null,
-                hubungiEclaim: eclaim ? "Y" : null,
-                cekOngkir: cekOngkir ? "Y" : null,
-                label: label ? "Y" : null,
-                petugas: petugas ? "Y" : null,
-                pengaturanLabel: label ? "Y" : null,
-                pengaturanPetugas: petugas ? "Y" : null,
-                pengaturanTema: tema ? "Y" : null,
-                semuaHapus: semuaHapus ? "Y" : null,
-                semuaTransaksi: semuaTransaksi ? "Y" : null,
-                tema: tema ? "Y" : null,
+                profil: profilku ? "Y" : "N",
+                fasilitas: fasilitas ? "Y" : "N",
+                katasandi: katasandi ? "Y" : "N",
+                beranda: beranda ? "Y" : "N",
+                buatPesanan: buatPesanan ? "Y" : "N",
+                paketmuInput: buatPesanan ? "Y" : "N",
+                riwayatPesanan: riwayatPesanan ? "Y" : "N",
+                paketmuRiwayat: riwayatPesanan ? "Y" : "N",
+                lacakPesanan: lacakPesanan ? "Y" : "N",
+                paketmuLacak: lacakPesanan ? "Y" : "N",
+                mintaDijemput: mintaDijemput ? "Y" : "N",
+                serahTerima: serahTerima ? "Y" : "N",
+                cetakPesanan: cetakPesanan ? "Y" : "N",
+                paketmuPrint: cetakPesanan ? "Y" : "N",
+                hapusPesanan: hapusPesanan ? "Y" : "N",
+                saldo: saldo ? "Y" : "N",
+                uangCod: uangCod ? "Y" : "N",
+                keuanganCod: uangCod ? "Y" : "N",
+                keuanganBonus: saldo ? "Y" : "N",
+                keuanganAggregasi: monitoringAgg ? "Y" : "N",
+                keuanganAggregasiMinus: monitoringAggMinus ? "Y" : "N",
+                monitoringAgg: monitoringAgg ? "Y" : "N",
+                monitoringAggMinus: monitoringAggMinus ? "Y" : "N",
+                tagihan: tagihan ? "Y" : "N",
+                bonus: bonus ? "Y" : "N",
+                pantauPaketmu: pantauPaketmu ? "Y" : "N",
+                laporan: laporan ? "Y" : "N",
+                eclaim: eclaim ? "Y" : "N",
+                hubungiEclaim: eclaim ? "Y" : "N",
+                cekOngkir: cekOngkir ? "Y" : "N",
+                label: label ? "Y" : "N",
+                petugas: petugas ? "Y" : "N",
+                pengaturanLabel: label ? "Y" : "N",
+                pengaturanPetugas: petugas ? "Y" : "N",
+                pengaturanTema: tema ? "Y" : "N",
+                semuaHapus: semuaHapus ? "Y" : "N",
+                semuaTransaksi: semuaTransaksi ? "Y" : "N",
+                tema: tema ? "Y" : "N",
+                laporanReturn: laporanReturn ? "Y" : "N",
+                summaryOrigin: summaryOrigin ? "Y" : "N",
+                summaryDestination: summaryDestination ? "Y" : "N",
               ),
               transaction: Transaction(
                 show: "RESTRICTED",

@@ -181,9 +181,11 @@ class TambahPetugasScreen extends StatelessWidget {
                                 : greyColor,
                             onConfirm: (values) {
                               c.selectedAccountList = values;
+                              c.getCountAccount();
                             },
                             onSelectionChanged: (values) {
                               c.selectedAccountList = values;
+                              c.getCountAccount();
                               c.update();
                             },
                           ),
@@ -257,9 +259,8 @@ class TambahPetugasScreen extends StatelessWidget {
                                 c.update();
                               },
                               onSelectionChanged: (values) {
-                                // controller.selectedOrigin = values;
-                                c.selectedOrigin.clear();
-                                c.selectedOrigin.addAll(values);
+                                c.selectedOrigin.value =
+                                    List<OriginModel>.from(values);
                                 c.update();
                               },
                             ),
@@ -270,24 +271,44 @@ class TambahPetugasScreen extends StatelessWidget {
                           // Column(
                           //   children: controller.originCodes.map((e) => Text(e.toString())).toList(),
                           // ),
-                          const SizedBox(height: 5),
-                          CustomTextFormField(
-                            controller: c.alamat,
-                            hintText: 'Alamat'.tr,
-                            validator: ValidationBuilder().address().build(),
-                          ),
-                          CustomTextFormField(
-                            controller: c.zipCode,
-                            hintText: 'Kode Pos'.tr,
-                            validator: ValidationBuilder().zipCode().build(),
-                            inputType: TextInputType.number,
-                          ),
+                          (c.countAccount ?? 0) > 0
+                              ? Column(
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    CustomTextFormField(
+                                      controller: c.alamat,
+                                      hintText: 'Alamat'.tr,
+                                      validator:
+                                          ValidationBuilder().address().build(),
+                                    ),
+                                    CustomTextFormField(
+                                      controller: c.zipCode,
+                                      hintText: 'Kode Pos'.tr,
+                                      validator:
+                                          ValidationBuilder().zipCode().build(),
+                                      inputType: TextInputType.number,
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox(),
+                          // const SizedBox(height: 5),
+                          // CustomTextFormField(
+                          //   controller: c.alamat,
+                          //   hintText: 'Alamat'.tr,
+                          //   validator: ValidationBuilder().address().build(),
+                          // ),
+                          // CustomTextFormField(
+                          //   controller: c.zipCode,
+                          //   hintText: 'Kode Pos'.tr,
+                          //   validator: ValidationBuilder().zipCode().build(),
+                          //   inputType: TextInputType.number,
+                          // ),
                         ],
                       )
                     : const SizedBox(),
-                c.beranda
+                c.beranda || c.riwayatPesanan || c.pantauPaketmu
                     ? CustomDropDownFormField(
-                        hintText: 'Tampilkan transaksi'.tr,
+                        hintText: 'Tampilkan Transaksi'.tr,
                         value: c.semuaTransaksi ? "Y" : "N",
                         items: [
                           DropdownMenuItem(
@@ -302,6 +323,34 @@ class TambahPetugasScreen extends StatelessWidget {
                         onChanged: (value) {
                           if (value == "Y") {
                             c.semuaTransaksi = true;
+                            c.update();
+                          } else {
+                            c.semuaTransaksi = false;
+                            c.update();
+                          }
+                        },
+                      )
+                    : const SizedBox(),
+                c.hapusPesanan
+                    ? CustomDropDownFormField(
+                        hintText: 'Hapus Transaksi'.tr,
+                        value: c.semuaHapus ? "Y" : "N",
+                        items: [
+                          DropdownMenuItem(
+                            value: "Y",
+                            child: Text('Semua'.tr.toUpperCase()),
+                          ),
+                          DropdownMenuItem(
+                            value: "N",
+                            child: Text('Dibatasi'.tr.toUpperCase()),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          if (value == "Y") {
+                            c.semuaHapus = true;
+                            c.update();
+                          } else {
+                            c.semuaHapus = false;
                             c.update();
                           }
                         },
@@ -344,14 +393,14 @@ class TambahPetugasScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomFormLabel(label: 'Profil'.tr),
-                          // CustomCheckbox(
-                          //   label: 'profilku'.tr,
-                          //   value: c.profilku,
-                          //   onChanged: (value) {
-                          //     c.profilku = value!;
-                          //     c.update();
-                          //   },
-                          // ),
+                          CustomCheckbox(
+                            label: 'Profilku'.tr,
+                            value: c.profilku,
+                            onChanged: (value) {
+                              c.profilku = value!;
+                              c.update();
+                            },
+                          ),
                           // CustomCheckbox(
                           //   label: 'Fasilitasku'.tr,
                           //   value: c.fasilitas,
@@ -443,14 +492,14 @@ class TambahPetugasScreen extends StatelessWidget {
                             },
                           ),
                           CustomFormLabel(label: 'Keuanganmu'.tr),
-                          CustomCheckbox(
-                            label: 'Saldo Kamu'.tr,
-                            value: c.saldo,
-                            onChanged: (value) {
-                              c.saldo = value!;
-                              c.update();
-                            },
-                          ),
+                          // CustomCheckbox(
+                          //   label: 'Saldo Kamu'.tr,
+                          //   value: c.saldo,
+                          //   onChanged: (value) {
+                          //     c.saldo = value!;
+                          //     c.update();
+                          //   },
+                          // ),
                           CustomCheckbox(
                             label: 'Uang_COD Kamu'
                                 .tr
@@ -533,31 +582,37 @@ class TambahPetugasScreen extends StatelessWidget {
                               c.update();
                             },
                           ),
-                          // CustomFormLabel(label: "Laporanku".tr),
-                          // CustomCheckbox(
-                          //   label: 'Laporan Return'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
-                          //   value: controller.beranda,
-                          //   onChanged: (value) {
-                          //     controller.beranda = value!;
-                          //     controller.update();
-                          //   },
-                          // ),
-                          // CustomCheckbox(
-                          //   label: 'Summary Origin'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
-                          //   value: controller.beranda,
-                          //   onChanged: (value) {
-                          //     controller.beranda = value!;
-                          //     controller.update();
-                          //   },
-                          // ),
-                          // CustomCheckbox(
-                          //   label: 'Summary Destination'.tr.splitMapJoin('_', onMatch: (p0) => ' '),
-                          //   value: controller.beranda,
-                          //   onChanged: (value) {
-                          //     controller.beranda = value!;
-                          //     controller.update();
-                          //   },
-                          // ),
+                          CustomFormLabel(label: "Laporanku".tr),
+                          CustomCheckbox(
+                            label: 'Laporan Return'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
+                            value: c.laporanReturn,
+                            onChanged: (value) {
+                              c.laporanReturn = value!;
+                              c.update();
+                            },
+                          ),
+                          CustomCheckbox(
+                            label: 'Summary Origin'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
+                            value: c.summaryOrigin,
+                            onChanged: (value) {
+                              c.summaryOrigin = value!;
+                              c.update();
+                            },
+                          ),
+                          CustomCheckbox(
+                            label: 'Summary Destination'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
+                            value: c.summaryDestination,
+                            onChanged: (value) {
+                              c.summaryDestination = value!;
+                              c.update();
+                            },
+                          ),
                           CustomFormLabel(label: "Cek Ongkir".tr),
                           CustomCheckbox(
                             label: 'Cek Ongkir'
@@ -570,6 +625,16 @@ class TambahPetugasScreen extends StatelessWidget {
                             },
                           ),
                           CustomFormLabel(label: "Pengaturan".tr),
+                          CustomCheckbox(
+                            label: 'Tema'
+                                .tr
+                                .splitMapJoin('_', onMatch: (p0) => ' '),
+                            value: c.tema,
+                            onChanged: (value) {
+                              c.tema = value!;
+                              c.update();
+                            },
+                          ),
                           CustomCheckbox(
                             label: 'Label'
                                 .tr

@@ -10,6 +10,7 @@ import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
@@ -91,12 +92,14 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<BranchModel>>> getBranches() async {
+  Future<BaseResponse<List<BranchModel>>> getBranches(
+      QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/master/branches",
+        queryParameters: param.toJson(),
       );
       return BaseResponse.fromJson(
         response.data,
@@ -338,6 +341,25 @@ class MasterRepositoryImpl extends MasterRepository {
                 )
                 .toList()
             : List.empty(),
+      );
+    } on DioException catch (e) {
+      AppLogger.e("error get account : ${e.response?.data}");
+      return e.response?.data;
+    }
+  }
+
+  @override
+  Future<BaseResponse<int>> getAccountCount(CountQueryModel countQuery) async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response = await network.base.get(
+        '/accounts/count',
+        queryParameters: countQuery.toJson(),
+      );
+      return BaseResponse<int>.fromJson(
+        response.data,
+        (json) => json as int,
       );
     } on DioException catch (e) {
       AppLogger.e("error get account : ${e.response?.data}");

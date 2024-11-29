@@ -3,62 +3,13 @@ import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 
-class GetPetugasByidModel {
-  GetPetugasByidModel({
-    num? code,
-    String? message,
-    PetugasModel? payload,
-  }) {
-    _code = code;
-    _message = message;
-    _payload = payload;
-  }
-
-  GetPetugasByidModel.fromJson(dynamic json) {
-    _code = json['code'];
-    _message = json['message'];
-    _payload =
-        json['payload'] != null ? PetugasModel.fromJson(json['payload']) : null;
-  }
-
-  num? _code;
-  String? _message;
-  PetugasModel? _payload;
-
-  GetPetugasByidModel copyWith({
-    num? code,
-    String? message,
-    PetugasModel? payload,
-  }) =>
-      GetPetugasByidModel(
-        code: code ?? _code,
-        message: message ?? _message,
-        payload: payload ?? _payload,
-      );
-
-  num? get code => _code;
-
-  String? get message => _message;
-
-  PetugasModel? get payload => _payload;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['code'] = _code;
-    map['message'] = _message;
-    if (_payload != null) {
-      map['payload'] = _payload?.toJson();
-    }
-    return map;
-  }
-}
-
 class PetugasModel {
   PetugasModel({
     String? id,
     String? name,
     String? email,
     String? phone,
+    String? address,
     String? branch,
     String? zipCode,
     String? origin,
@@ -72,6 +23,7 @@ class PetugasModel {
     _name = name;
     _email = email;
     _phone = phone;
+    _address = address;
     _branch = branch;
     _zipCode = zipCode;
     _origin = origin;
@@ -88,6 +40,7 @@ class PetugasModel {
     _name = json['name'];
     _email = json['email'];
     _phone = json['phone'];
+    _address = json['address'];
     _branch = json['branch'];
     _zipCode = json['zipCode'];
     _origin = json['origin'];
@@ -118,6 +71,7 @@ class PetugasModel {
   String? _name;
   String? _email;
   String? _phone;
+  String? _address;
   String? _branch;
   String? _zipCode;
   String? _origin;
@@ -133,6 +87,7 @@ class PetugasModel {
     String? name,
     String? email,
     String? phone,
+    String? address,
     String? branch,
     String? zipCode,
     String? origin,
@@ -147,6 +102,7 @@ class PetugasModel {
         name: name ?? _name,
         email: email ?? _email,
         phone: phone ?? _phone,
+        address: address ?? _address,
         branch: branch ?? _branch,
         zipCode: zipCode ?? _zipCode,
         origin: origin ?? _origin,
@@ -164,6 +120,8 @@ class PetugasModel {
   String? get email => _email;
 
   String? get phone => _phone;
+
+  String? get address => _address;
 
   String? get branch => _branch;
 
@@ -187,6 +145,7 @@ class PetugasModel {
     map['name'] = _name;
     map['email'] = _email;
     map['phone'] = _phone;
+    map['address'] = _address;
     map['branch'] = _branch;
     map['zipCode'] = _zipCode;
     map['origin'] = _origin;
