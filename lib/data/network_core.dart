@@ -140,8 +140,8 @@ class NetworkCore {
                 return handler
                     .resolve(await base.fetch(dioError.requestOptions));
               } on DioException catch (e) {
-                AppLogger.e("error refresh token8 : ${e.response?.statusCode}");
-                AppLogger.e("error refresh token9 : $e");
+                AppLogger.e(
+                    "refresh token error status code : ${e.response?.statusCode}");
                 if (e.response?.statusCode == 401) {
                   StorageCore().deleteLogin();
                   Get.offAll(const DashboardScreen());
