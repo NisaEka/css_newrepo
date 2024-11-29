@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_screen.dart';
@@ -34,9 +35,8 @@ class RiwayatKirimanController extends BaseController {
       state.selectedPetugasEntry = petugasEntry;
       // state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
     }
-    update();
-    state.pagingController.refresh();
-    transactionCount();
+    // state.pagingController.refresh();
+    // transactionCount();
   }
 
   Future<void> transactionCount() async {
@@ -67,12 +67,11 @@ class RiwayatKirimanController extends BaseController {
     state.listStatusKiriman = [];
     state.allow =
         MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+    state.basic =
+        UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    update();
 
     try {
-      await profil
-          .getBasicProfil()
-          .then((value) async => state.basic = value.data?.user);
-
       await transaction.getTransactionStatus().then((value) {
         state.listStatusKiriman.addAll(value.data ?? []);
         update();
@@ -95,6 +94,7 @@ class RiwayatKirimanController extends BaseController {
 
   Future<void> getTransaction(int page) async {
     state.isLoading = true;
+
     try {
       final trans = await transaction.getAllTransaction(
         page,
@@ -207,7 +207,9 @@ class RiwayatKirimanController extends BaseController {
     state.endDate = null;
     state.startDateField.clear();
     state.endDateField.clear();
-    state.selectedPetugasEntry = null;
+    if (state.basic?.userType == "PEMILIK") {
+      state.selectedPetugasEntry = null;
+    }
     state.selectedStatusKiriman = null;
     // state.isFiltered = false;
     state.searchField.clear();

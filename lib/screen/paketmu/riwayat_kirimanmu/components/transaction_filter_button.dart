@@ -192,6 +192,8 @@ class TransactionFilterButton extends HookWidget {
                                   .toList(),
                               label: 'Petugas Entry'.tr,
                               hintText: 'Petugas Entry'.tr,
+                              readOnly: c.state.basic?.userType != "PEMILIK",
+                              selectedItem: c.state.selectedPetugasEntry?.name,
                               value: c.state.selectedPetugasEntry,
                               onChanged: (value) {
                                 setState(() {

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_agent_model.dart';
@@ -168,7 +167,7 @@ class MasterRepositoryImpl extends MasterRepository {
 
     UserModel user = UserModel.fromJson(
         await StorageCore().readData(StorageCore.basicProfile));
-    String registID = '[{"registrationId" : "${user.id}"}]';
+    String registID = '[{"registrationId" : "${user.id?.split('-').first}"}]';
     QueryParamModel params =
         param.copyWith(where: registID, table: true, relation: true);
 
@@ -222,7 +221,7 @@ class MasterRepositoryImpl extends MasterRepository {
       Response response = await network.base.post(
         "/master/dropshippers",
         data: data.copyWith(
-          registrationId: user.id,
+          registrationId: user.id?.split('-').first,
           createdDate: DateTime.now().toString(),
         ),
       );
@@ -244,7 +243,7 @@ class MasterRepositoryImpl extends MasterRepository {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
-    String registID = '[{"registrationId" : "${user.id}"}]';
+    String registID = '[{"registrationId" : "${user.id?.split('-').first}"}]';
     QueryParamModel params = param.copyWith(
         where: registID,
         table: true,
@@ -302,7 +301,7 @@ class MasterRepositoryImpl extends MasterRepository {
     try {
       Response response = await network.base.post(
         "/master/receivers",
-        data: data.copyWith(registrationId: user.id),
+        data: data.copyWith(registrationId: user.id?.split('-').first),
       );
       return BaseResponse.fromJson(
         response.data,
