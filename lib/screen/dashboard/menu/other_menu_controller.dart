@@ -221,6 +221,27 @@ class OtherMenuCotroller extends BaseController {
       otherList.removeWhere((e) => e.title == "Laporanku");
       favoritList.removeWhere((e) => e.title == "Laporanku");
     }
+    if (isLogin &&
+        (allow.mintaDijemput != "Y" || allow.paketmuMintadijemput != "Y")) {
+      paketmuList.removeWhere((e) => e.title == "Request Pickup");
+      favoritList.removeWhere((e) => e.title == "Request Pickup");
+    }
+    if (isLogin && (allow.pantauPaketmu != "Y")) {
+      paketmuList.removeWhere((e) => e.title == "Pantau Paketmu");
+      favoritList.removeWhere((e) => e.title == "Pantau Paketmu");
+    }
+    if (isLogin && (allow.keuanganTagihan != "Y")) {
+      keuanganmuList.removeWhere((e) => e.title == "Invoice");
+      favoritList.removeWhere((e) => e.title == "Invoice");
+    }
+    if (isLogin && (allow.hubungiLaporan != "Y")) {
+      hubungiAkuList.removeWhere((e) => e.title == "Laporanku");
+      favoritList.removeWhere((e) => e.title == "Laporanku");
+    }
+    if (isLogin && (allow.eclaim != "Y")) {
+      hubungiAkuList.removeWhere((e) => e.title == "E-Claim");
+      favoritList.removeWhere((e) => e.title == "E-Claim");
+    }
 
     // todo : admin & petugas gak bisa akses ke aggregasi pembayaran
 

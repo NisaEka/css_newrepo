@@ -18,6 +18,7 @@ class ListDropshipperButton extends StatelessWidget {
               onTap: () => c.state.selectedAccount != null
                   ? Get.to(const ListDropshipperScreen(), arguments: {
                       'account': c.state.selectedAccount,
+                      'isOfficer': c.state.userBasic?.userType != 'PEMILIK',
                     })?.then(
                       (result) {
                         c.state.dropshipper = result;

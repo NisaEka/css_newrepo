@@ -10,6 +10,7 @@ class DataPetugasModel {
     String? password,
     String? address,
     String? zipCode,
+    String? status,
     MenuModel? menu,
     Transaction? transaction,
     List<Account>? accounts,

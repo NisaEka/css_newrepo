@@ -77,17 +77,6 @@ class DataUmumScreen extends StatelessWidget {
                   icon: Icons.home,
                   tooltip: 'Alamat Lengkap'.tr,
                 ),
-                // DataUmumListItem(
-                //   title: controller.ccrfProfil?.generalInfo?.district ?? '-',
-                //   subtitle: controller.ccrfProfil?.generalInfo?.subDistrict ?? '-',
-                //   icon: Icons.location_pin,
-                // ),
-                // DataUmumListItem(
-                //   title: controller.ccrfProfil?.generalInfo?.city ?? '-',
-                //   subtitle: controller.ccrfProfil?.generalInfo?.province ?? '-',
-                //   icon: Icons.location_on,
-                // ),
-                // CustomFilledButton(color: blueJNE, title: "Edit Profil".tr,)
               ],
       ),
     );

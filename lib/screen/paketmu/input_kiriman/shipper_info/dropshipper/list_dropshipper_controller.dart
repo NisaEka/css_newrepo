@@ -15,6 +15,7 @@ import 'package:get/get.dart';
 
 class ListDropshipperController extends BaseController {
   Account account = Get.arguments['account'];
+  bool isOfficer = Get.arguments['isOfficer'];
 
   final search = TextEditingController();
   bool isLoading = false;

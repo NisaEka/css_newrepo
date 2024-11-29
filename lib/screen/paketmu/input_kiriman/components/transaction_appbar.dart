@@ -1,4 +1,5 @@
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
@@ -36,8 +37,10 @@ class TransactionAppbar extends StatelessWidget implements PreferredSizeWidget {
       leading: CustomBackButton(
         onPressed: () => data != null
             ? Get.back()
-            : Get.delete<DashboardController>()
-                .then((_) => Get.offAll(const DashboardScreen())),
+            : Get.delete<DashboardController>().then((_) {
+                StorageCore().deleteString(StorageCore.transactionTemp);
+                Get.offAll(const DashboardScreen());
+              }),
       ),
       flexibleSpace: Column(
         children: [

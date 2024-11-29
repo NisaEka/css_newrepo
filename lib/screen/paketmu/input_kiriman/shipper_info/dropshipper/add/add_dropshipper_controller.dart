@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 class AddDropshipperController extends BaseController {
   Account account = Get.arguments['account'];
+  bool isOfficer = Get.arguments['isOfficer'];
 
   final formKey = GlobalKey<FormState>();
   final dropshipperName = TextEditingController();
