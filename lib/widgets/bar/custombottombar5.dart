@@ -90,8 +90,8 @@ class BottomBar5 extends StatelessWidget {
                       .where((e) => e.title == "Input Kirimanmu")
                       .isNotEmpty
                   ? Positioned(
-                      bottom: 50, // Mengangkat posisi FAB dari navbar
-                      left: 57, // Tetap di sisi kiri
+                      bottom: 50,
+                      left: 55,
                       child: FloatingActionButton(
                         shape: const CircleBorder(),
                         backgroundColor: AppConst.isLightTheme(context)
