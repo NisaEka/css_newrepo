@@ -28,6 +28,7 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.post(
         '/authentications/login',
         data: loginData,
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse<PostLoginModel>.fromJson(
         response.data,
@@ -51,6 +52,7 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.post(
         '/authentications/email-confirm',
         data: data,
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse.fromJson(
         response.data,
@@ -70,6 +72,7 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.post(
         '/authentications/email-confirm/resend',
         data: data,
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
@@ -83,6 +86,7 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.post(
         '/authentications/signup',
         data: data,
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse.fromJson(
         response.data,
@@ -119,6 +123,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       Response response = await network.base.get(
         '/master/group-owners?search=$keyword',
+        options: Options(extra: {'skipAuth': true}),
       );
       return GetReferalModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -134,6 +139,7 @@ class AuthRepositoryImpl extends AuthRepository {
         data: {
           "email": email,
         },
+        options: Options(extra: {'skipAuth': true}),
       );
 
       AppLogger.d('post email : ${response.data.toString()}');
@@ -150,6 +156,7 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.patch(
         '/authentications/reset-password',
         data: data,
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
@@ -164,6 +171,7 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.post(
         '/authentications/forgot-password/confirm',
         data: data,
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse.fromJson(response.data,
           (json) => PinConfirmModel.fromJson(json as Map<String, dynamic>));
@@ -178,6 +186,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       Response response = await network.base.get(
         '/authentications/email-check/$email',
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse<MailCheckModel>.fromJson(
         response.data,
@@ -230,6 +239,7 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.post(
         '/authentications/logout',
         data: {},
+        options: Options(extra: {'skipAuth': true}),
       );
       // .then((value) async => await network.base.patch(
       //       '/auth/device-infos/update',
@@ -253,6 +263,7 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.post(
         '/auth/device-infos/save',
         data: data,
+        options: Options(extra: {'skipAuth': true}),
       );
       AppLogger.i("post device info non auth : ${response.data}");
       return BaseResponse.fromJson(response.data, (json) => null);
@@ -269,6 +280,7 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.patch(
         '/auth/device-infos/update',
         data: data,
+        options: Options(extra: {'skipAuth': true}),
       );
       AppLogger.i('update device info : ${response.data}');
       return BaseResponse.fromJson(response.data, (json) => json);

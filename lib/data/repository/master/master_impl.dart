@@ -39,6 +39,7 @@ class MasterRepositoryImpl extends MasterRepository {
       Response response = await network.base.get(
         '/master/origins',
         queryParameters: param.toJson(),
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse<List<OriginModel>>.fromJson(
         response.data,
@@ -72,6 +73,7 @@ class MasterRepositoryImpl extends MasterRepository {
       Response response = await network.base.get(
         '/master/destinations',
         queryParameters: param.toJson(),
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse<List<Destination>>.fromJson(
         response.data,
@@ -120,6 +122,7 @@ class MasterRepositoryImpl extends MasterRepository {
         queryParameters: {
           'search': keyword.toUpperCase(),
         },
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse<List<GroupOwnerModel>>.fromJson(
         response.data,
@@ -144,6 +147,7 @@ class MasterRepositoryImpl extends MasterRepository {
         queryParameters: {
           'branch': branch.toUpperCase(),
         },
+        options: Options(extra: {'skipAuth': true}),
       );
       return BaseResponse<List<AgentModel>>.fromJson(
         response.data,
