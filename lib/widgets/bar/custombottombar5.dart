@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/screen/cek_ongkir/congkir_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -8,8 +8,12 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_scr
 import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item2.dart';
+import 'package:css_mobile/widgets/items/menu_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/majesticons.dart';
+import 'package:iconify_flutter/icons/material_symbols.dart';
 
 class BottomBar5 extends StatelessWidget {
   final int menu;
@@ -48,7 +52,11 @@ class BottomBar5 extends StatelessWidget {
                       children: [
                         const SizedBox(width: 60), // Placeholder untuk FAB
                         BottomMenuItem2(
-                          icon: Icons.home,
+                          icon: Iconify(
+                            Majesticons.home,
+                            color: menu == 1 ? redJNE : whiteColor,
+                            size: 30,
+                          ),
                           isSelected: menu == 0,
                           color: AppConst.isLightTheme(context)
                               ? Colors.red
@@ -57,7 +65,15 @@ class BottomBar5 extends StatelessWidget {
                               transition: Transition.leftToRight),
                         ),
                         BottomMenuItem2(
-                          icon: Icons.local_shipping,
+                          icon: MenuIcon(
+                            icon: IconsConstant.pantau,
+                            size: 30,
+                            showContainer: false,
+                            iconColor: menu == 1 ? redJNE : whiteColor,
+                            background: AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : infoColor,
+                          ),
                           isSelected: menu == 1,
                           color: AppConst.isLightTheme(context)
                               ? Colors.red
@@ -66,7 +82,11 @@ class BottomBar5 extends StatelessWidget {
                               Get.to(const CekOngkirScreen(), arguments: {}),
                         ),
                         BottomMenuItem2(
-                          icon: Icons.person,
+                          icon: Iconify(
+                            MaterialSymbols.person,
+                            color: menu == 1 ? redJNE : whiteColor,
+                            size: 30,
+                          ),
                           isSelected: menu == 2,
                           color: AppConst.isLightTheme(context)
                               ? Colors.red
@@ -105,9 +125,12 @@ class BottomBar5 extends StatelessWidget {
                                 context: context,
                                 builder: (context) => const LoginAlertDialog(),
                               ),
-                        child: Image.asset(
-                          ImageConstant.paketmuIcon,
-                          height: Get.width / 12,
+                        child: const MenuIcon(
+                          icon: IconsConstant.add,
+                          size: 40,
+                          background: redJNE,
+                          showContainer: false,
+                          radius: 50,
                         ),
                       ))
                   : const SizedBox(),
