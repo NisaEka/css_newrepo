@@ -59,7 +59,6 @@ dependencies:
   file_picker: ^5.2.0
   firebase_core: ^3.8.0
   fl_chart: ^0.40.0
-  iconify_flutter: ^0.0.5
 
 dependency_overrides:
   fading_edge_scrollview: ^4.1.1
