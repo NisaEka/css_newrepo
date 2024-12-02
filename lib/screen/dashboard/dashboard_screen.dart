@@ -1,7 +1,7 @@
 import 'package:css_mobile/screen/dashboard/components/dashboard_body.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/onboarding/splash_screen.dart';
-import 'package:css_mobile/widgets/bar/custombottombar4.dart';
+import 'package:css_mobile/widgets/bar/custombottombar5.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             onPopInvokedWithResult: (didPop, result) => controller.onPop(),
             child: const Scaffold(
               body: DashboardBody(),
-              bottomNavigationBar: BottomBar4(menu: 0),
+              bottomNavigationBar: BottomBar5(menu: 0),
             ),
           );
         }

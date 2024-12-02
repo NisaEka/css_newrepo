@@ -23,6 +23,7 @@ class DataPetugasModel {
     _password = password;
     _address = address;
     _zipCode = zipCode;
+    _status = status;
     _menu = menu;
     _transaction = transaction;
     _accounts = accounts;
@@ -37,6 +38,7 @@ class DataPetugasModel {
     _password = json['password'];
     _address = json['address'];
     _zipCode = json['zipCode'];
+    _status = json['status'];
     _menu = json['menu'] != null ? MenuModel.fromJson(json['menu']) : null;
     _transaction = json['transaction'] != null
         ? Transaction.fromJson(json['transaction'])
@@ -57,6 +59,7 @@ class DataPetugasModel {
   String? _password;
   String? _address;
   String? _zipCode;
+  String? _status;
   MenuModel? _menu;
   Transaction? _transaction;
   List<Account>? _accounts;
@@ -70,6 +73,7 @@ class DataPetugasModel {
     String? password,
     String? address,
     String? zipCode,
+    String? status,
     MenuModel? menu,
     Transaction? transaction,
     List<Account>? accounts,
@@ -83,6 +87,7 @@ class DataPetugasModel {
         password: password ?? _password,
         address: address ?? _address,
         zipCode: zipCode ?? _zipCode,
+        status: status ?? _status,
         menu: menu ?? _menu,
         transaction: transaction ?? _transaction,
         accounts: accounts ?? _accounts,
@@ -103,6 +108,8 @@ class DataPetugasModel {
 
   String? get zipCode => _zipCode;
 
+  String? get status => _status;
+
   MenuModel? get menu => _menu;
 
   Transaction? get transaction => _transaction;
@@ -120,6 +127,7 @@ class DataPetugasModel {
     map['password'] = _password;
     map['address'] = _address;
     map['zipCode'] = _zipCode;
+    map['status'] = _status;
     if (_menu != null) {
       map['menu'] = _menu?.toJson();
     }

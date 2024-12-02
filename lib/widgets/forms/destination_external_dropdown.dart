@@ -66,8 +66,10 @@ class _DestinationExternalDropdownState
   Future<List<DestinationExternal>> getDestinationList(String keyword) async {
     final network = Get.find<NetworkCore>();
 
-    Response response = await network.base
-        .get('/master/destinations/external/${keyword.toUpperCase()}');
+    Response response = await network.base.get(
+      '/master/destinations/external/${keyword.toUpperCase()}',
+      options: Options(extra: {'skipAuth': true}),
+    );
 
     if (response.data['data'] != null && response.data['data'] is List) {
       return (response.data['data'] as List)

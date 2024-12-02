@@ -34,7 +34,7 @@ class BottomMenuItem2 extends StatelessWidget {
             Icon(
               icon,
               size: 30,
-              color: isSelected ? color : greyColor,
+              color: isSelected ? color : whiteColor,
             ),
             (title?.isNotEmpty ?? false) && isSelected
                 ? Container(

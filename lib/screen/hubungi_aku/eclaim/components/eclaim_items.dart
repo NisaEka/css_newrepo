@@ -22,14 +22,10 @@ class EclaimItems extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(2),
-              child: Text(
-                'Daftar Klaim',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
+            Padding(
+              padding: const EdgeInsets.all(2),
+              child: Text('Daftar Klaim',
+                  style: Theme.of(context).textTheme.titleMedium),
             ),
             SizedBox(
               height: screenHeight * 0.5,

@@ -84,16 +84,18 @@ class LoginController extends BaseController {
           email: state.emailTextField.text,
           password: state.passwordTextField.text,
           device: await getDeviceinfo(state.fcmToken ?? ''),
-          coordinate: await getCurrentLocation(),
+          // this location service sometimes cause error in emulator
+          // NOTE: uncomment this line if you want to use location service
+          // coordinate: await getCurrentLocation(),
         ),
       )
           .then((value) async {
         if (value.code == 201) {
           await storage
               .saveToken(
-                value.data?.token?.accessToken ?? '',
+                value.data?.token?.accessToken,
                 value.data?.menu ?? MenuModel(),
-                value.data?.token?.refreshToken ?? '',
+                value.data?.token?.refreshToken,
               )
               // .then((_) async => auth
               //     .postFcmToken(
@@ -141,7 +143,7 @@ class LoginController extends BaseController {
       });
     } catch (e) {
       AppLogger.e('error login $e');
-      AppSnackBar.error('Connection times out');
+      AppSnackBar.error('Login failed: $e');
     }
     state.isLoading = false;
     update();

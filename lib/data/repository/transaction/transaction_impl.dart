@@ -334,6 +334,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.base.post(
         "/transaction/fees/ongkir",
         data: data,
+        options: Options(extra: {'skipAuth': true}),
       );
 
       return BaseResponse<PostTransactionOngkirModel>.fromJson(

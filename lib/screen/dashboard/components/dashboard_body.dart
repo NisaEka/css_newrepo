@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/dashboard/components/dashboard_count_items.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_promo.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
@@ -10,7 +11,6 @@ import 'package:get/get.dart';
 import 'dashboard_appbar.dart';
 import 'dashboard_carousel.dart';
 import 'dashboard_info.dart';
-import 'dashboard_kiriman_counts.dart';
 import 'dashboard_menu2.dart';
 import 'jlcpoint_widget.dart';
 
@@ -108,8 +108,11 @@ class DashboardBody extends StatelessWidget {
                       ),
                       const DashboardMenu2(),
                       c.state.isLogin
-                          ? const DashboardKirimanCounts()
+                          ? const DashboardCountItems()
                           : const SizedBox(),
+                      // c.state.isLogin,
+                      //     ? const DashboardKirimanCounts()
+                      //     : const SizedBox(),
                       // c.state.isLogin
                       //     ? const DashboardKirimanCod()
                       //     : const SizedBox(),

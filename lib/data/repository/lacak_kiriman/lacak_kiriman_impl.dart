@@ -13,7 +13,8 @@ class LacakKirimanRepositoryImpl extends LacakKirimanRepository {
       String cnote, String phoneNumber) async {
     try {
       Response response = await network.base.post('/transaction/traces',
-          data: {'awb': cnote, 'phoneNumber': phoneNumber});
+          data: {'awb': cnote, 'phoneNumber': phoneNumber},
+          options: Options(extra: {'skipAuth': true}));
       return BaseResponse.fromJson(
           response.data,
           (json) => PostLacakKirimanModel.fromJson(

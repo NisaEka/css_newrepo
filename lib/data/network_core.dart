@@ -10,16 +10,6 @@ import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'storage_core.dart';
 
 class NetworkCore {
-  static final noNeedToken = [
-    '/login',
-    '/auth/device-infos/update',
-    '/auth/device-infos/save',
-    '/news',
-    '/authentications/refresh'
-  ];
-
-  static bool isNeedToken(String route) => !noNeedToken.contains(route);
-
   Dio city = Dio();
   Dio jne = Dio();
   Dio myJNE = Dio();
@@ -91,7 +81,8 @@ class NetworkCore {
         onRequest: (options, handler) async {
           AppLogger.i('Option path ${options.path}');
           // Skip attaching token if `useAuth` is false
-          if (options.extra['skipAuth'] == false) {
+          if (options.extra['skipAuth'] == false ||
+              options.extra['skipAuth'] == null) {
             final accessToken = await StorageCore().readAccessToken();
             if (accessToken != null) {
               options.headers['Authorization'] = 'Bearer $accessToken';
@@ -140,8 +131,8 @@ class NetworkCore {
                 return handler
                     .resolve(await base.fetch(dioError.requestOptions));
               } on DioException catch (e) {
-                AppLogger.e("error refresh token8 : ${e.response?.statusCode}");
-                AppLogger.e("error refresh token9 : $e");
+                AppLogger.e(
+                    "refresh token error status code : ${e.response?.statusCode}");
                 if (e.response?.statusCode == 401) {
                   StorageCore().deleteLogin();
                   Get.offAll(const DashboardScreen());

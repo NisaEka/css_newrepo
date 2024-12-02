@@ -63,7 +63,8 @@ class JLCRepositoryImpl extends JLCRepository {
   @override
   Future<DashboardNewsModel> postDashboardNews() async {
     try {
-      Response response = await network.base.get('/news');
+      Response response = await network.base
+          .get('/news', options: Options(extra: {'skipAuth': true}));
       return DashboardNewsModel.fromJson(response.data);
     } on DioException catch (e) {
       AppLogger.e('News error: ${e.message}');
