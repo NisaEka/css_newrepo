@@ -8,12 +8,12 @@ import 'package:get/get.dart';
 
 //ignore: must_be_immutable
 class CustomSearchDropdownField<T> extends StatefulWidget {
-  final Future<List<T>> Function(String) asyncItems;
+  final Future<List<T>> Function(String)? asyncItems;
 
   final void Function(dynamic)? onChanged;
 
   // final ValueChanged<T?>? onChanged;
-  final List<DropdownMenuItem<T>>? items;
+  final List<T>? items;
   final String Function(T) itemAsString;
   final Widget Function(BuildContext, T, bool) itemBuilder;
   final String? label;
@@ -31,11 +31,12 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
   final VoidCallback? onClear;
   final String? searchHintText;
   final TextEditingController? controller;
+  final bool isFilterOnline;
 
   CustomSearchDropdownField(
       {super.key,
       this.items,
-      required this.asyncItems,
+      this.asyncItems,
       this.onChanged,
       required this.itemAsString,
       required this.itemBuilder,
@@ -51,6 +52,7 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
       this.value,
       this.showClearButton = false,
       this.showDropdownButton = true,
+      this.isFilterOnline = true,
       this.onClear,
       this.searchHintText,
       this.controller}) {
@@ -126,6 +128,7 @@ class _CustomSearchDropdownFieldState<T>
             }
             return null;
           },
+          items: widget.items ?? [],
           popupProps: PopupProps.menu(
             constraints: const BoxConstraints(maxHeight: 200),
             fit: FlexFit.loose,
@@ -137,7 +140,7 @@ class _CustomSearchDropdownFieldState<T>
             ),
             showSearchBox: true,
             searchDelay: const Duration(milliseconds: 500),
-            isFilterOnline: true,
+            isFilterOnline: widget.isFilterOnline,
             itemBuilder: widget.itemBuilder,
             searchFieldProps: TextFieldProps(
                 cursorColor: CustomTheme().cursorColor(context),

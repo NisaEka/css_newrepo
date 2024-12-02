@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/repository/master/master_repository.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
@@ -27,6 +29,7 @@ class OriginDropdown extends StatefulHookWidget {
   final void Function(dynamic)? onSelect;
   final String? branch;
   final bool showDialog;
+  final bool isOfficer;
 
   const OriginDropdown({
     super.key,
@@ -43,6 +46,7 @@ class OriginDropdown extends StatefulHookWidget {
     this.onSelect,
     this.branch,
     this.showDialog = false,
+    this.isOfficer = false,
   });
 
   @override
@@ -51,6 +55,7 @@ class OriginDropdown extends StatefulHookWidget {
 
 class _OriginDropdownState extends State<OriginDropdown> {
   final searchTextfield = TextEditingController();
+  PetugasModel? officer;
 
   Future<List<OriginModel>> getOriginList(String keyword) async {
     final master = Get.find<MasterRepository>();
@@ -66,6 +71,13 @@ class _OriginDropdownState extends State<OriginDropdown> {
     var models = response.data?.toList();
 
     return models ?? [];
+  }
+
+  Future<List<OriginModel>> getOfficerOriginList() async {
+    officer = PetugasModel.fromJson(
+        await StorageCore().readData(StorageCore.officerProfile));
+
+    return officer?.origins ?? [];
   }
 
   @override
@@ -85,7 +97,10 @@ class _OriginDropdownState extends State<OriginDropdown> {
           )
         : CustomSearchDropdownField<OriginModel>(
             controller: widget.controller,
-            asyncItems: (String filter) => getOriginList(filter),
+            isFilterOnline: !widget.isOfficer,
+            asyncItems: (String filter) => widget.isOfficer
+                ? getOfficerOriginList()
+                : getOriginList(filter),
             itemBuilder: (context, e, b) {
               return Container(
                 padding:

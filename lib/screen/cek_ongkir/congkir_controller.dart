@@ -45,6 +45,7 @@ class CekOngkirController extends BaseController {
         Response response = await network.base.get(
           '/transaction/fees/external',
           queryParameters: queryParams,
+          options: Options(extra: {'skipAuth': true}),
         );
 
         state.weightExpress = '${response.data['data']['weightExpress']} KG';

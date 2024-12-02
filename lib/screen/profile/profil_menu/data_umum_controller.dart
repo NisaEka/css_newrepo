@@ -29,13 +29,13 @@ class DataUmumController extends BaseController {
           .then((value) => basicProfil = value.data?.user);
       update();
       await profil.getCcrfProfil().then((value) {
-        if (value.data != null) {
+        if (value.data != null && basicProfil?.userType == "PEMILIK") {
           ccrfProfil = value.data;
         } else {
           ccrfProfil ??= CcrfProfileModel(
             generalInfo: GeneralInfo(
               name: basicProfil?.name,
-              brand: basicProfil?.brand,
+              brand: value.data?.generalInfo?.brand ?? basicProfil?.brand,
               address: basicProfil?.address,
               email: basicProfil?.email,
               phone: basicProfil?.phone,

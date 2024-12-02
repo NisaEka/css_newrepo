@@ -2,7 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 
 class BottomMenuItem2 extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String? title;
   final Color? color;
   final VoidCallback? onTap;
@@ -31,11 +31,11 @@ class BottomMenuItem2 extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 30,
-              color: isSelected ? color : whiteColor,
-            ),
+            // Icon(
+            icon,
+            // size: 30,
+            // color: isSelected ? color : whiteColor,
+            // ),
             (title?.isNotEmpty ?? false) && isSelected
                 ? Container(
                     padding: const EdgeInsets.symmetric(

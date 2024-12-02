@@ -31,7 +31,7 @@ class DashboardController extends BaseController {
     Future.wait([
       isFirst(),
       cekToken(),
-      initData(),
+      initData().then((_) => loadTransCountList()),
       cekLocalLanguage(),
       loadBanner(),
       loadNews(),
@@ -301,7 +301,7 @@ class DashboardController extends BaseController {
 
   Future<void> loadTransCountList() async {
     state.transCountList.clear();
-
+    update();
     if (state.isLogin) {
       try {
         transaction.postTransactionDashboard(QueryParamModel()).then(
@@ -339,7 +339,8 @@ class DashboardController extends BaseController {
     state.isLoading = true;
 
     storage.deleteString(StorageCore.transactionTemp);
-    loadTransCountList();
+
+    update();
 
     bool accounts = ((await storage.readString(StorageCore.accounts)).isEmpty ||
         ((await storage.readString(StorageCore.accounts)) == 'null'));
@@ -353,6 +354,9 @@ class DashboardController extends BaseController {
                 .isEmpty ||
             (await storage.readString(StorageCore.basicProfile)) == 'null') &&
         state.isLogin;
+    bool officer =
+        ((await storage.readString(StorageCore.officerProfile)).isEmpty ||
+            (await storage.readString(StorageCore.officerProfile)) == 'null');
     bool ccrfP = ((await storage.readString(StorageCore.ccrfProfile)).isEmpty ||
         (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
         (await storage.readString(StorageCore.ccrfProfile)) == '{}');
@@ -381,6 +385,14 @@ class DashboardController extends BaseController {
                 country: value.data?.user?.language,
                 region: value.data?.user?.origin?.branch?.regional,
               ));
+
+          if (state.basic?.userType != "PEMILIK" && officer) {
+            await setting.getOfficerByID(state.basic?.id ?? '').then(
+              (value) async {
+                await storage.saveData(StorageCore.officerProfile, value.data);
+              },
+            );
+          }
 
           if (state.basic?.language == "INDONESIA") {
             await storage.writeString(StorageCore.localeApp, "id");

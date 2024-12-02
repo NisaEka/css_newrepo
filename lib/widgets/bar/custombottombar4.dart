@@ -49,7 +49,13 @@ class BottomBar4 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 BottomMenuItem2(
-                  icon: Icons.home,
+                  icon: Icon(
+                    Icons.home,
+                    size: 30,
+                    color: menu == 0
+                        ? (AppConst.isLightTheme(context) ? blueJNE : redJNE)
+                        : whiteColor,
+                  ),
                   title: "Beranda".tr,
                   isSelected: menu == 0,
                   color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
@@ -57,7 +63,13 @@ class BottomBar4 extends StatelessWidget {
                       transition: Transition.leftToRight),
                 ),
                 BottomMenuItem2(
-                  icon: Icons.qr_code,
+                  icon: Icon(
+                    Icons.qr_code,
+                    size: 30,
+                    color: menu == 1
+                        ? (AppConst.isLightTheme(context) ? blueJNE : redJNE)
+                        : whiteColor,
+                  ),
                   title: "Lacak Kiriman".tr,
                   isSelected: menu == 1,
                   color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
@@ -103,14 +115,26 @@ class BottomBar4 extends StatelessWidget {
                     //   )
                     : const SizedBox(),
                 BottomMenuItem2(
-                  icon: Icons.local_shipping,
+                  icon: Icon(
+                    Icons.local_shipping,
+                    size: 30,
+                    color: menu == 2
+                        ? (AppConst.isLightTheme(context) ? blueJNE : redJNE)
+                        : whiteColor,
+                  ),
                   title: "Cek Ongkir".tr,
                   isSelected: menu == 2,
                   color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                   onTap: () => Get.to(const CekOngkirScreen(), arguments: {}),
                 ),
                 BottomMenuItem2(
-                  icon: Icons.person,
+                  icon: Icon(
+                    Icons.person,
+                    size: 30,
+                    color: menu == 3
+                        ? (AppConst.isLightTheme(context) ? blueJNE : redJNE)
+                        : whiteColor,
+                  ),
                   title: "Profil".tr,
                   isSelected: menu == 3,
                   color: (AppConst.isLightTheme(context) ? blueJNE : redJNE)

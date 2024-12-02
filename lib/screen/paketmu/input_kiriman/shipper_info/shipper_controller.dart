@@ -108,79 +108,81 @@ class ShipperController extends BaseController {
       ShipperModel shipper = resp.data?.first ?? ShipperModel();
       AppLogger.i("shipper region : ${shipper.origin?.toJson()}");
 
-      await profil.getCcrfProfil().then((value) async {
-        if (value.data != null) {
+      await profil.getCcrfProfil().then((ccrf) async {
+        if (ccrf.data != null && state.userBasic?.userType == "PEMILIK") {
+          state.userCcrf = ccrf.data;
           state.shipper = ShipperModel(
-            name: value.data?.generalInfo?.brand,
+            name: ccrf.data?.generalInfo?.brand,
             region: shipper.origin?.branch?.regional,
             origin: shipper.origin,
-            zipCode: value.data?.generalInfo?.zipCode,
-            address: value.data?.generalInfo?.address,
-            phone: value.data?.generalInfo?.phone,
+            zipCode: ccrf.data?.generalInfo?.zipCode,
+            address: ccrf.data?.generalInfo?.address,
+            phone: ccrf.data?.generalInfo?.phone,
             city: user.generalInfo?.city,
             country: user.generalInfo?.country,
             dropship: state.isDropshipper,
             contact: user.generalInfo?.name,
-            address1: value.data?.generalInfo?.address?.substring(
+            address1: ccrf.data?.generalInfo?.address?.substring(
                 0,
-                (value.data?.generalInfo?.address?.length ?? 0) > 30
+                (ccrf.data?.generalInfo?.address?.length ?? 0) > 30
                     ? 29
-                    : (value.data?.generalInfo?.address?.length ?? 0)),
-            address2: (value.data?.generalInfo?.address?.length ?? 0) > 30
-                ? value.data?.generalInfo?.address?.substring(
+                    : (ccrf.data?.generalInfo?.address?.length ?? 0)),
+            address2: (ccrf.data?.generalInfo?.address?.length ?? 0) > 30
+                ? ccrf.data?.generalInfo?.address?.substring(
                     30,
-                    (value.data?.generalInfo?.address?.length ?? 0) > 60
+                    (ccrf.data?.generalInfo?.address?.length ?? 0) > 60
                         ? 59
-                        : (value.data?.generalInfo?.address?.length ?? 0))
+                        : (ccrf.data?.generalInfo?.address?.length ?? 0))
                 : '',
-            address3: (value.data?.generalInfo?.address?.length ?? 0) >= 60
-                ? value.data?.generalInfo?.address?.substring(
-                    60, (value.data?.generalInfo?.address?.length ?? 0))
+            address3: (ccrf.data?.generalInfo?.address?.length ?? 0) >= 60
+                ? ccrf.data?.generalInfo?.address?.substring(
+                    60, (ccrf.data?.generalInfo?.address?.length ?? 0))
                 : '',
           );
-          state.shipperName.text = value.data?.generalInfo?.brand ?? '';
-          state.shipperPhone.text = value.data?.generalInfo?.phone ?? '';
+          state.shipperName.text = ccrf.data?.generalInfo?.brand ?? '';
+          state.shipperPhone.text = ccrf.data?.generalInfo?.phone ?? '';
           state.shipperOrigin.text = shipper.origin?.originName ?? '';
-          state.shipperZipCode.text = value.data?.generalInfo?.zipCode ?? '';
-          state.shipperAddress.text = value.data?.generalInfo?.address ?? '';
+          state.shipperZipCode.text = ccrf.data?.generalInfo?.zipCode ?? '';
+          state.shipperAddress.text = ccrf.data?.generalInfo?.address ?? '';
           state.selectedOrigin = shipper.origin;
         } else {
-          await profil.getBasicProfil().then((value) {
+          await profil.getBasicProfil().then((basic) {
             state.shipper = ShipperModel(
-              name: value.data?.user?.brand,
-              phone: value.data?.user?.phone,
-              address: value.data?.user?.address,
-              zipCode: value.data?.user?.zipCode,
-              origin: value.data?.user?.origin,
-              region: value.data?.user?.origin?.branch?.regional,
-              contact: value.data?.user?.name,
-              city: value.data?.user?.origin?.originName,
+              name: ccrf.data?.generalInfo?.brand ?? basic.data?.user?.brand,
+              phone: basic.data?.user?.phone,
+              address: basic.data?.user?.address,
+              zipCode: basic.data?.user?.zipCode,
+              origin: basic.data?.user?.origin,
+              region: basic.data?.user?.origin?.branch?.regional,
+              contact: basic.data?.user?.name,
+              city: basic.data?.user?.origin?.originName,
               country: 'INDONESIA',
               dropship: state.isDropshipper,
-              address1: value.data?.user?.address?.substring(
+              address1: basic.data?.user?.address?.substring(
                   0,
-                  (value.data?.user?.address?.length ?? 0) > 30
+                  (basic.data?.user?.address?.length ?? 0) > 30
                       ? 29
-                      : (value.data?.user?.address?.length ?? 0)),
-              address2: (value.data?.user?.address?.length ?? 0) > 30
-                  ? value.data?.user?.address?.substring(
+                      : (basic.data?.user?.address?.length ?? 0)),
+              address2: (basic.data?.user?.address?.length ?? 0) > 30
+                  ? basic.data?.user?.address?.substring(
                       30,
-                      (value.data?.user?.address?.length ?? 0) > 60
+                      (basic.data?.user?.address?.length ?? 0) > 60
                           ? 59
-                          : (value.data?.user?.address?.length ?? 0))
+                          : (basic.data?.user?.address?.length ?? 0))
                   : '',
-              address3: (value.data?.user?.address?.length ?? 0) >= 60
-                  ? value.data?.user?.address
-                      ?.substring(60, (value.data?.user?.address?.length ?? 0))
+              address3: (basic.data?.user?.address?.length ?? 0) >= 60
+                  ? basic.data?.user?.address
+                      ?.substring(60, (basic.data?.user?.address?.length ?? 0))
                   : '',
             );
-            state.shipperName.text = value.data?.user?.brand ?? '';
-            state.shipperPhone.text = value.data?.user?.phone ?? '';
+            state.shipperName.text =
+                ccrf.data?.generalInfo?.brand ?? basic.data?.user?.brand ?? '';
+            state.shipperPhone.text = basic.data?.user?.phone ?? '';
             state.shipperOrigin.text =
-                value.data?.user?.origin?.originName ?? '';
-            state.shipperZipCode.text = value.data?.user?.zipCode ?? '';
-            state.shipperAddress.text = value.data?.user?.address ?? '';
-            state.selectedOrigin = value.data?.user?.origin;
+                basic.data?.user?.origin?.originName ?? '';
+            state.shipperZipCode.text = basic.data?.user?.zipCode ?? '';
+            state.shipperAddress.text = basic.data?.user?.address ?? '';
+            state.selectedOrigin = basic.data?.user?.origin;
           });
         }
       });
@@ -204,6 +206,8 @@ class ShipperController extends BaseController {
           ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
       state.userBasic =
           UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+      state.userCcrf = CcrfProfileModel.fromJson(
+          await storage.readData(StorageCore.ccrfProfile));
       state.shipperName.text = state.userBasic?.brand ?? '';
       state.shipperPhone.text = state.shipper?.phone ?? '';
       state.shipperOrigin.text = state.shipper?.origin?.originName ?? '';

@@ -13,10 +13,11 @@ void main() async {
     location: BannerLocation.topEnd,
     variables: devEnvironment,
   );
-  WidgetsFlutterBinding.ensureInitialized();
-  CssFirebaseConfig.init();
+
   await runZonedGuarded(
     () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      CssFirebaseConfig.init();
       GlobalBinding().dependencies();
       runApp(const CSS());
     },

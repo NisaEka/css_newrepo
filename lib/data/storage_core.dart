@@ -18,6 +18,7 @@ class StorageCore {
   static const String receiver = 'receiver';
   static const String basicProfile = 'user_profil';
   static const String ccrfProfile = 'ccrf_profil';
+  static const String officerProfile = 'officer_profil';
   static const String transactionLabel = "transaction_label";
   static const String shippingCost = "shipping_const";
   static const String fcmToken = "fcm_token";

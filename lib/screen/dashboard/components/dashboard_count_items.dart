@@ -81,6 +81,7 @@ class DashboardCountItems extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TransactionCard(
+
                                       title: "Jumlah Transaksi",
                                       count: total,
                                       subtitle: "7 Hari Terakhir",
@@ -246,82 +247,82 @@ class DashboardCountItems extends StatelessWidget {
           );
         });
   }
-  // Jumlah Transaksi & Transaksi Terkirim
-  // Widget _transactionCard({
-  //   required String title,
-  //   required String value,
-  //   required String subtitle,
-  //   required Color color,
-  //   required IconData icon,
-  // }) {
-  //   return Container(
-  //     padding: EdgeInsets.all(8),
-  //     width: Get.width * 0.3,
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.circular(8),
-  //       border: Border.all(color: greyLightColor3),
-  //       color: whiteColor,
-  //     ),
-  //     child: Column(
-  //       mainAxisSize: MainAxisSize.min,
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Row(
-  //           children: [
-  //             Container(
-  //               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-  //               decoration: BoxDecoration(
-  //                 color: blueJNE,
-  //                 borderRadius: BorderRadius.circular(8),
-  //               ),
-  //               child: Row(
-  //                 children: [
-  //                   Icon(
-  //                       Icons.circle,
-  //                       color: whiteColor,
-  //                       size: 10
-  //                   ),
-  //                   SizedBox(width: 8),
-  //                   Text(
-  //                     title,
-  //                     style: TextStyle(
-  //                       color: Colors.white,
-  //                       fontWeight: FontWeight.bold,
-  //                       fontSize: 8
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //         SizedBox(height: 12),
-  //         Row(
-  //           children: [
-  //             Text(
-  //               value.toString(),
-  //               style: TextStyle(
-  //                 fontSize: 16,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //             Spacer(),
-  //             Icon(
-  //               icon,
-  //               color: Colors.green,
-  //             ),
-  //           ],
-  //         ),
-  //         SizedBox(height: 8),
-  //         Text(
-  //           subtitle,
-  //           style: TextStyle(
-  //             color: Colors.grey[600],
-  //             fontSize: 8
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+// Jumlah Transaksi & Transaksi Terkirim
+// Widget _transactionCard({
+//   required String title,
+//   required String value,
+//   required String subtitle,
+//   required Color color,
+//   required IconData icon,
+// }) {
+//   return Container(
+//     padding: EdgeInsets.all(8),
+//     width: Get.width * 0.3,
+//     decoration: BoxDecoration(
+//       borderRadius: BorderRadius.circular(8),
+//       border: Border.all(color: greyLightColor3),
+//       color: whiteColor,
+//     ),
+//     child: Column(
+//       mainAxisSize: MainAxisSize.min,
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Row(
+//           children: [
+//             Container(
+//               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+//               decoration: BoxDecoration(
+//                 color: blueJNE,
+//                 borderRadius: BorderRadius.circular(8),
+//               ),
+//               child: Row(
+//                 children: [
+//                   Icon(
+//                       Icons.circle,
+//                       color: whiteColor,
+//                       size: 10
+//                   ),
+//                   SizedBox(width: 8),
+//                   Text(
+//                     title,
+//                     style: TextStyle(
+//                       color: Colors.white,
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 8
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//         SizedBox(height: 12),
+//         Row(
+//           children: [
+//             Text(
+//               value.toString(),
+//               style: TextStyle(
+//                 fontSize: 16,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//             ),
+//             Spacer(),
+//             Icon(
+//               icon,
+//               color: Colors.green,
+//             ),
+//           ],
+//         ),
+//         SizedBox(height: 8),
+//         Text(
+//           subtitle,
+//           style: TextStyle(
+//             color: Colors.grey[600],
+//             fontSize: 8
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 }

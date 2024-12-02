@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
@@ -12,6 +13,7 @@ import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -77,9 +79,9 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    // UserModel user = UserModel.fromJson(
-    //   await StorageCore().readData(StorageCore.basicProfile),
-    // );
+    UserModel user = UserModel.fromJson(
+      await StorageCore().readData(StorageCore.basicProfile),
+    );
     QueryParamModel params = QueryParamModel(
       table: true,
       limit: limit,
@@ -88,11 +90,13 @@ class TransactionRepositoryImpl extends TransactionRepository {
       between: transDate,
       type: transType.isNotEmpty ? transType : null,
       status: transStatus.isNotEmpty ? transStatus : null,
-      where: officer.isNotEmpty
+      where: officer.isNotEmpty && user.userType == 'PEMILIK'
           ? jsonEncode([
               {"petugasEntry": officer}
             ])
-          : null,
+          : jsonEncode([
+              {"petugasEntry": user.name}
+            ]),
       // where: '[$registID $type $petugasEntry]',
       sort: '[{"createdDateSearch":"desc"}]',
     );
@@ -159,6 +163,9 @@ class TransactionRepositoryImpl extends TransactionRepository {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     AppLogger.w('transDate : $transDate');
+    UserModel user = UserModel.fromJson(
+      await StorageCore().readData(StorageCore.basicProfile),
+    );
     QueryParamModel params = QueryParamModel(
       table: true,
       search: keyword,
@@ -166,11 +173,13 @@ class TransactionRepositoryImpl extends TransactionRepository {
       type: transType.isNotEmpty ? transType : null,
       status: transStatus.isNotEmpty ? transStatus : null,
       // where: '[$registID $type $petugasEntry]',
-      where: officer.isNotEmpty
+      where: officer.isNotEmpty && user.userType == 'PEMILIK'
           ? jsonEncode([
               {"petugasEntry": officer}
             ])
-          : null,
+          : jsonEncode([
+              {"petugasEntry": user.name}
+            ]),
       sort: '[{"createdDateSearch":"desc"}]',
     );
 
@@ -325,6 +334,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
       Response response = await network.base.post(
         "/transaction/fees/ongkir",
         data: data,
+        options: Options(extra: {'skipAuth': true}),
       );
 
       return BaseResponse<PostTransactionOngkirModel>.fromJson(
@@ -346,10 +356,18 @@ class TransactionRepositoryImpl extends TransactionRepository {
       QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
+    var startDate = DateTime.now().subtract(const Duration(days: 7));
+    var endDate = DateTime.now();
 
     try {
-      Response response = await network.base
-          .get("/transaction/dashboards", queryParameters: param.toJson());
+      Response response = await network.base.get(
+        "/transaction/dashboards",
+        queryParameters: param
+            .copyWith(
+              between: '[{"createdDateSearch":["$startDate","$endDate"]}]',
+            )
+            .toJson(),
+      );
 
       final test = ResponseModel<TransactionSummaryModel>.fromJson(
         response.data,

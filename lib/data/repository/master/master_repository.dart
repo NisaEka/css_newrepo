@@ -8,6 +8,7 @@ import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
+import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
@@ -18,7 +19,7 @@ abstract class MasterRepository {
   Future<BaseResponse<List<Destination>>> getDestinations(
       QueryParamModel param);
 
-  Future<BaseResponse<List<BranchModel>>> getBranches();
+  Future<BaseResponse<List<BranchModel>>> getBranches(QueryParamModel param);
 
   Future<BaseResponse<List<GroupOwnerModel>>> getReferals(String keyword);
 
@@ -38,6 +39,8 @@ abstract class MasterRepository {
   Future<BaseResponse> postReceiver(ReceiverModel data);
 
   Future<BaseResponse<List<Account>>> getAccounts(QueryModel param);
+
+  Future<BaseResponse<int>> getAccountCount(CountQueryModel countQuery);
 
   Future<BaseResponse<GetServiceModel>> getServices(DataServiceModel param);
 }

@@ -25,6 +25,7 @@ class ListDropshipperScreen extends StatelessWidget {
               isOnline: controller.isOnline,
               onAdd: () => Get.to(const AddDropshipperScreen(), arguments: {
                 'account': controller.account,
+                'isOfficer': controller.isOfficer,
               })?.then((value) => controller.initData()),
             ),
             body: RefreshIndicator(

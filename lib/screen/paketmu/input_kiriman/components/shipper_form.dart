@@ -106,6 +106,8 @@ class ShipperForm extends StatelessWidget {
                             OriginDropdown(
                               label: "Kota Pengirim".tr,
                               isRequired: c.state.isOnline,
+                              isOfficer:
+                                  c.state.userBasic?.userType != "PEMILIK",
                               value: c.state.selectedOrigin,
                               selectedItem: c.state.shipperOrigin.text,
                               branch: c.state.selectedAccount?.accountNumber

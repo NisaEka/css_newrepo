@@ -84,7 +84,9 @@ class LoginController extends BaseController {
           email: state.emailTextField.text,
           password: state.passwordTextField.text,
           device: await getDeviceinfo(state.fcmToken ?? ''),
-          coordinate: await getCurrentLocation(),
+          // this location service sometimes cause error in emulator
+          // NOTE: uncomment this line if you want to use location service
+          // coordinate: await getCurrentLocation(),
         ),
       )
           .then((value) async {

@@ -25,4 +25,5 @@ class IconsConstant {
   static const String ticket = "assets/icons/ticket.svg";
   static const String requestPickup = "assets/icons/request-pickup.svg";
   static const String history = "assets/icons/history.svg";
+  static const String home = "assets/icons/home.svg";
 }

@@ -32,7 +32,7 @@ class TransactionEditButton extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   c.state.allow?.paketmuPrint == 'Y' ||
                           c.state.allow?.cetakPesanan == 'Y'
@@ -53,6 +53,8 @@ class TransactionEditButton extends StatelessWidget {
                       : const SizedBox(),
                   c.isEdit()
                       ? CustomFilledButton(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 2, vertical: 10),
                           color: successColor,
                           isTransparent: true,
                           prefixIcon: Icons.edit,
@@ -76,6 +78,8 @@ class TransactionEditButton extends StatelessWidget {
                   c.state.transactionModel?.statusAwb == "MASIH DI KAMU" &&
                           (c.state.allow?.hapusPesanan == 'Y')
                       ? CustomFilledButton(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 2, vertical: 10),
                           color: errorColor,
                           isTransparent: true,
                           prefixIcon: Icons.delete,
@@ -103,6 +107,8 @@ class TransactionEditButton extends StatelessWidget {
                         )
                       : const SizedBox(),
                   CustomFilledButton(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 3, vertical: 10),
                     color: warningColor,
                     isTransparent: true,
                     prefixIcon: Icons.phone,
