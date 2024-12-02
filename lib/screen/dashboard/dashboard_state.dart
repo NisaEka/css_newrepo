@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/model/transaction/count_card_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';

@@ -1,5 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
+import 'package:css_mobile/data/model/transaction/count_card_model.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
