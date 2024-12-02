@@ -31,7 +31,7 @@ class DashboardController extends BaseController {
     Future.wait([
       isFirst(),
       cekToken(),
-      initData(),
+      initData().then((_) => loadTransCountList()),
       cekLocalLanguage(),
       loadBanner(),
       loadNews(),
@@ -301,7 +301,7 @@ class DashboardController extends BaseController {
 
   Future<void> loadTransCountList() async {
     state.transCountList.clear();
-
+    update();
     if (state.isLogin) {
       try {
         transaction.postTransactionDashboard(QueryParamModel()).then(
@@ -339,7 +339,8 @@ class DashboardController extends BaseController {
     state.isLoading = true;
 
     storage.deleteString(StorageCore.transactionTemp);
-    loadTransCountList();
+
+    update();
 
     bool accounts = ((await storage.readString(StorageCore.accounts)).isEmpty ||
         ((await storage.readString(StorageCore.accounts)) == 'null'));

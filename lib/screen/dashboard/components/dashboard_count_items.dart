@@ -9,7 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardCountItems extends StatelessWidget {
-  const DashboardCountItems({super.key});
+  final String title;
+  final int total;
+  final int totalCOD;
+
+  const DashboardCountItems({
+    super.key,
+    required this.title,
+    required this.total,
+    required this.totalCOD,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +45,7 @@ class DashboardCountItems extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Agregasi Pembayaran',
+                      Text(title,
                           textAlign: TextAlign.left,
                           style: Theme.of(context).textTheme.titleMedium),
                       Column(
@@ -45,24 +54,24 @@ class DashboardCountItems extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               // Jumlah Transaksi
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TransactionCard(
                                     title: "Jumlah Transaksi",
-                                    count: 200,
+                                    count: total,
                                     subtitle: "7 Hari Terakhir",
                                     color: Colors.blue,
                                     icon: Icons.show_chart,
                                     statusColor: whiteColor,
-                                    chart: Icon(
+                                    chart: const Icon(
                                       Icons.show_chart,
                                       color: Colors.green,
                                     ),
                                   ),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   TypeTransactionCard(
-                                    count: "100",
+                                    count: totalCOD.toString(),
                                     amount: "Rp. 2.000.000",
                                     description: "Transaksi COD",
                                     lineColor: Colors.red,
@@ -215,82 +224,82 @@ class DashboardCountItems extends StatelessWidget {
           );
         });
   }
-  // Jumlah Transaksi & Transaksi Terkirim
-  // Widget _transactionCard({
-  //   required String title,
-  //   required String value,
-  //   required String subtitle,
-  //   required Color color,
-  //   required IconData icon,
-  // }) {
-  //   return Container(
-  //     padding: EdgeInsets.all(8),
-  //     width: Get.width * 0.3,
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.circular(8),
-  //       border: Border.all(color: greyLightColor3),
-  //       color: whiteColor,
-  //     ),
-  //     child: Column(
-  //       mainAxisSize: MainAxisSize.min,
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Row(
-  //           children: [
-  //             Container(
-  //               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-  //               decoration: BoxDecoration(
-  //                 color: blueJNE,
-  //                 borderRadius: BorderRadius.circular(8),
-  //               ),
-  //               child: Row(
-  //                 children: [
-  //                   Icon(
-  //                       Icons.circle,
-  //                       color: whiteColor,
-  //                       size: 10
-  //                   ),
-  //                   SizedBox(width: 8),
-  //                   Text(
-  //                     title,
-  //                     style: TextStyle(
-  //                       color: Colors.white,
-  //                       fontWeight: FontWeight.bold,
-  //                       fontSize: 8
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //         SizedBox(height: 12),
-  //         Row(
-  //           children: [
-  //             Text(
-  //               value.toString(),
-  //               style: TextStyle(
-  //                 fontSize: 16,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //             Spacer(),
-  //             Icon(
-  //               icon,
-  //               color: Colors.green,
-  //             ),
-  //           ],
-  //         ),
-  //         SizedBox(height: 8),
-  //         Text(
-  //           subtitle,
-  //           style: TextStyle(
-  //             color: Colors.grey[600],
-  //             fontSize: 8
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+// Jumlah Transaksi & Transaksi Terkirim
+// Widget _transactionCard({
+//   required String title,
+//   required String value,
+//   required String subtitle,
+//   required Color color,
+//   required IconData icon,
+// }) {
+//   return Container(
+//     padding: EdgeInsets.all(8),
+//     width: Get.width * 0.3,
+//     decoration: BoxDecoration(
+//       borderRadius: BorderRadius.circular(8),
+//       border: Border.all(color: greyLightColor3),
+//       color: whiteColor,
+//     ),
+//     child: Column(
+//       mainAxisSize: MainAxisSize.min,
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Row(
+//           children: [
+//             Container(
+//               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+//               decoration: BoxDecoration(
+//                 color: blueJNE,
+//                 borderRadius: BorderRadius.circular(8),
+//               ),
+//               child: Row(
+//                 children: [
+//                   Icon(
+//                       Icons.circle,
+//                       color: whiteColor,
+//                       size: 10
+//                   ),
+//                   SizedBox(width: 8),
+//                   Text(
+//                     title,
+//                     style: TextStyle(
+//                       color: Colors.white,
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 8
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//         SizedBox(height: 12),
+//         Row(
+//           children: [
+//             Text(
+//               value.toString(),
+//               style: TextStyle(
+//                 fontSize: 16,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//             ),
+//             Spacer(),
+//             Icon(
+//               icon,
+//               color: Colors.green,
+//             ),
+//           ],
+//         ),
+//         SizedBox(height: 8),
+//         Text(
+//           subtitle,
+//           style: TextStyle(
+//             color: Colors.grey[600],
+//             fontSize: 8
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 }

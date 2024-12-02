@@ -108,8 +108,28 @@ class DashboardBody extends StatelessWidget {
                       ),
                       const DashboardMenu2(),
                       c.state.isLogin
-                          ? const DashboardCountItems()
+                          ? DashboardCountItems(
+                              title: 'Kiriman Kamu'.tr,
+                              total: c.state.transSummary?.summary
+                                      ?.where(
+                                          (e) => e.status == 'Jumlah Transaksi')
+                                      .first
+                                      .total
+                                      ?.toInt() ??
+                                  0,
+                              totalCOD: c.state.transSummary?.totalKirimanCod
+                                      ?.totalCod
+                                      ?.toInt() ??
+                                  0,
+                            )
                           : const SizedBox(),
+                      const SizedBox(height: 50),
+                      // c.state.isLogin
+                      //     ? DashboardCountItems(
+                      //         title: 'Kiriman Kamu'.tr,
+                      //         total: c.state.transSummary?.summary?.where((e) => e.status == 'Jumlah Transaksi').first.total?.toInt() ?? 0,
+                      //       )
+                      //     : const SizedBox(),
                       // c.state.isLogin,
                       //     ? const DashboardKirimanCounts()
                       //     : const SizedBox(),

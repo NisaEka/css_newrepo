@@ -356,10 +356,18 @@ class TransactionRepositoryImpl extends TransactionRepository {
       QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
+    var startDate = DateTime.now().subtract(const Duration(days: 7));
+    var endDate = DateTime.now();
 
     try {
-      Response response = await network.base
-          .get("/transaction/dashboards", queryParameters: param.toJson());
+      Response response = await network.base.get(
+        "/transaction/dashboards",
+        queryParameters: param
+            .copyWith(
+              between: '[{"createdDateSearch":["$startDate","$endDate"]}]',
+            )
+            .toJson(),
+      );
 
       final test = ResponseModel<TransactionSummaryModel>.fromJson(
         response.data,
