@@ -49,14 +49,16 @@ class BottomBar5 extends StatelessWidget {
                       children: [
                         const SizedBox(width: 60), // Placeholder untuk FAB
                         BottomMenuItem2(
-                          icon: SvgPicture.asset(
-                            IconsConstant.home,
-                            height: 35,
-                            color: menu == 0 ? redJNE : whiteColor,
-                          ),
+                          icon: SvgPicture.asset(IconsConstant.home,
+                              height: 35,
+                              color: menu == 0
+                                  ? AppConst.isLightTheme(context)
+                                      ? redJNE
+                                      : warningColor
+                                  : whiteColor),
                           isSelected: menu == 0,
                           color: AppConst.isLightTheme(context)
-                              ? Colors.red
+                              ? redJNE
                               : warningColor,
                           onTap: () => Get.offAll(const DashboardScreen(),
                               transition: Transition.leftToRight),
@@ -66,14 +68,18 @@ class BottomBar5 extends StatelessWidget {
                             icon: IconsConstant.pantau,
                             size: 30,
                             showContainer: false,
-                            iconColor: menu == 1 ? redJNE : whiteColor,
+                            iconColor: menu == 1
+                                ? AppConst.isLightTheme(context)
+                                    ? redJNE
+                                    : warningColor
+                                : whiteColor,
                             background: AppConst.isLightTheme(context)
                                 ? blueJNE
                                 : infoColor,
                           ),
                           isSelected: menu == 1,
                           color: AppConst.isLightTheme(context)
-                              ? Colors.red
+                              ? redJNE
                               : warningColor,
                           onTap: () =>
                               Get.toNamed('/pantauPaketmu', arguments: {}),
@@ -81,12 +87,16 @@ class BottomBar5 extends StatelessWidget {
                         BottomMenuItem2(
                           icon: Icon(
                             Icons.person,
-                            color: menu == 2 ? redJNE : whiteColor,
+                            color: menu == 2
+                                ? AppConst.isLightTheme(context)
+                                    ? redJNE
+                                    : warningColor
+                                : whiteColor,
                             size: 35,
                           ),
                           isSelected: menu == 2,
                           color: AppConst.isLightTheme(context)
-                              ? Colors.red
+                              ? redJNE
                               : warningColor,
                           // onTap: () => Get.offAll(const ProfileScreen()),
                           onTap: () => controller.state.isLogin
@@ -122,10 +132,15 @@ class BottomBar5 extends StatelessWidget {
                                 context: context,
                                 builder: (context) => const LoginAlertDialog(),
                               ),
-                        child: const MenuIcon(
+                        child: MenuIcon(
                           icon: IconsConstant.add,
                           size: 40,
-                          background: redJNE,
+                          iconColor: AppConst.isLightTheme(context)
+                              ? redJNE
+                              : warningColor,
+                          background: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : infoColor,
                           showContainer: false,
                           radius: 50,
                         ),

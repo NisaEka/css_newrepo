@@ -113,14 +113,13 @@ class DashboardBody extends StatelessWidget {
                               title: 'Kiriman Kamu',
                               total: c.state.transSummary?.summary
                                       ?.where(
-                                          (e) => e.status == "Jumlah Transaksi")\
+                                          (e) => e.status == "Jumlah Transaksi")
                                       .first
                                       .total
                                       ?.toInt() ??
                                   0,
-                              totalCod:
-                                  c.state.transSummary?.totalKirimanCod?.totalCod.toString() ??
-                                      '',
+                              totalCod: c.state.transSummary?.totalKirimanCod?.totalCod.toString() ??
+                                  '',
                               codAmount:
                                   "Rp. ${c.state.transSummary?.totalKirimanCod?.codAmount?.toCurrency().toString() ?? ''}",
                               totalPeninjauan: c.state.transSummary?.summary
@@ -144,9 +143,8 @@ class DashboardBody extends StatelessWidget {
                               codOngkirAmount: "Rp. ${c.state.transSummary?.totalKirimanCod?.codOngkirAmount?.toCurrency().toString() ?? ''}",
                               totalTerkini: c.state.transSummary?.summary?.where((e) => e.status == "Sukses Diterima").first.total?.toInt() ?? 0,
                               totalNonCod: c.state.transSummary?.totalKirimanCod?.totalNonCod?.toCurrency().toString() ?? '')
-                        
                           : const SizedBox(),
-                      const SizedBox(height: 50),
+                      // const SizedBox(height: 50),
                       // c.state.isLogin
                       //     ? DashboardCountItems(
                       //         title: 'Kiriman Kamu'.tr,
