@@ -181,14 +181,22 @@ class TambahPetugasScreen extends StatelessWidget {
                                 : greyColor,
                             onConfirm: (values) {
                               c.selectedAccountList = values;
-                              c.getCountAccount();
+                              c.getCountSelectedAccountNA();
                             },
                             onSelectionChanged: (values) {
                               c.selectedAccountList = values;
-                              c.getCountAccount();
+                              c.getCountSelectedAccountNA();
                               c.update();
                             },
                           ),
+                        ],
+                      )
+                    : const SizedBox(),
+                (c.buatPesanan && (c.countSelectedAccountNA ?? 0) > 0) ||
+                        (c.buatPesanan && (c.countAllAccountNA ?? 0) > 0) ||
+                        (c.serahTerima && (c.countAllAccountNA ?? 0) > 0)
+                    ? Column(
+                        children: [
                           const SizedBox(height: 10),
                           MultiSelectDialogField(
                             decoration: BoxDecoration(
@@ -265,47 +273,45 @@ class TambahPetugasScreen extends StatelessWidget {
                               },
                             ),
                           ),
-                          // Column(
-                          //   children: controller.selectedOrigin.toSet().toList().map((e) => Text("${e.originCode.toString()}-${e.originName}")).toList(),
-                          // ),
-                          // Column(
-                          //   children: controller.originCodes.map((e) => Text(e.toString())).toList(),
-                          // ),
-                          (c.countAccount ?? 0) > 0
-                              ? Column(
-                                  children: [
-                                    const SizedBox(height: 10),
-                                    CustomTextFormField(
-                                      controller: c.alamat,
-                                      hintText: 'Alamat'.tr,
-                                      validator:
-                                          ValidationBuilder().address().build(),
-                                    ),
-                                    CustomTextFormField(
-                                      controller: c.zipCode,
-                                      hintText: 'Kode Pos'.tr,
-                                      validator:
-                                          ValidationBuilder().zipCode().build(),
-                                      inputType: TextInputType.number,
-                                    ),
-                                  ],
-                                )
-                              : const SizedBox(),
-                          // const SizedBox(height: 5),
-                          // CustomTextFormField(
-                          //   controller: c.alamat,
-                          //   hintText: 'Alamat'.tr,
-                          //   validator: ValidationBuilder().address().build(),
-                          // ),
-                          // CustomTextFormField(
-                          //   controller: c.zipCode,
-                          //   hintText: 'Kode Pos'.tr,
-                          //   validator: ValidationBuilder().zipCode().build(),
-                          //   inputType: TextInputType.number,
-                          // ),
                         ],
                       )
                     : const SizedBox(),
+                // Column(
+                //   children: controller.selectedOrigin.toSet().toList().map((e) => Text("${e.originCode.toString()}-${e.originName}")).toList(),
+                // ),
+                // Column(
+                //   children: controller.originCodes.map((e) => Text(e.toString())).toList(),
+                // ),
+                c.buatPesanan && (c.countSelectedAccountNA ?? 0) > 0
+                    ? Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          CustomTextFormField(
+                            controller: c.alamat,
+                            hintText: 'Alamat'.tr,
+                            validator: ValidationBuilder().address().build(),
+                          ),
+                          CustomTextFormField(
+                            controller: c.zipCode,
+                            hintText: 'Kode Pos'.tr,
+                            validator: ValidationBuilder().zipCode().build(),
+                            inputType: TextInputType.number,
+                          ),
+                        ],
+                      )
+                    : const SizedBox(),
+                // const SizedBox(height: 5),
+                // CustomTextFormField(
+                //   controller: c.alamat,
+                //   hintText: 'Alamat'.tr,
+                //   validator: ValidationBuilder().address().build(),
+                // ),
+                // CustomTextFormField(
+                //   controller: c.zipCode,
+                //   hintText: 'Kode Pos'.tr,
+                //   validator: ValidationBuilder().zipCode().build(),
+                //   inputType: TextInputType.number,
+                // ),
                 c.beranda || c.riwayatPesanan || c.pantauPaketmu
                     ? CustomDropDownFormField(
                         hintText: 'Tampilkan Transaksi'.tr,
@@ -438,6 +444,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                 c.selectedAccountList = [];
                                 c.selectedOrigin.clear();
                                 c.update();
+                                c.getCountSelectedAccountNA();
                               }
 
                               c.update();
