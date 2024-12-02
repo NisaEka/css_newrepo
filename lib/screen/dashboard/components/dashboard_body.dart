@@ -5,6 +5,7 @@ import 'package:css_mobile/screen/dashboard/components/dashboard_count_items.dar
 import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_promo.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -108,7 +109,42 @@ class DashboardBody extends StatelessWidget {
                       ),
                       const DashboardMenu2(),
                       c.state.isLogin
-                          ? const DashboardCountItems()
+                          ? DashboardCountItems(
+                              title: 'Kiriman Kamu',
+                              total: c.state.transSummary?.summary
+                                      ?.where(
+                                          (e) => e.status == "Jumlah Transaksi")
+                                      .first
+                                      .total
+                                      ?.toInt() ??
+                                  0,
+                              totalCod:
+                                  c.state.transSummary?.totalKirimanCod?.totalCod.toString() ??
+                                      '',
+                              codAmount:
+                                  "Rp. ${c.state.transSummary?.totalKirimanCod?.codAmount?.toCurrency().toString() ?? ''}",
+                              totalPeninjauan: c.state.transSummary?.summary
+                                      ?.where(
+                                          (e) => e.status == "Dalam Peninjauan")
+                                      .first
+                                      .total
+                                      ?.toInt() ??
+                                  0,
+                              totalMasihDikamu: c.state.transSummary?.summary
+                                      ?.where(
+                                          (e) => e.status == "Masih di Kamu")
+                                      .first
+                                      .total
+                                      ?.toInt() ??
+                                  0,
+                              totalCodOngkir: c.state.transSummary
+                                      ?.totalKirimanCod?.totalCodOngkir
+                                      .toString() ??
+                                  '',
+                              codOngkirAmount: "Rp. ${c.state.transSummary?.totalKirimanCod?.codOngkirAmount?.toCurrency().toString() ?? ''}",
+                              totalTerkini: c.state.transSummary?.summary?.where((e) => e.status == "Sukses Diterima").first.total?.toInt() ?? 0,
+                              totalNonCod: c.state.transSummary?.totalKirimanCod?.totalNonCod?.toCurrency().toString() ?? '')
+                          // percentagePeninjauan: c.state.transSummary?.summary?.where((e) => e.status == "Dalam Peninjauan").first.percentageCod?.toDouble()?? 0.0
                           : const SizedBox(),
                       // c.state.isLogin,
                       //     ? const DashboardKirimanCounts()

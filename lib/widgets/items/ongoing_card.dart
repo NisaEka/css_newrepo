@@ -1,4 +1,6 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +11,7 @@ class OngoingTransactionCard extends StatelessWidget {
   final String subtitle;
   final String notificationLabel;
   final int notificationCount;
+  final bool isLoading;
 
   const OngoingTransactionCard({
     super.key,
@@ -18,106 +21,46 @@ class OngoingTransactionCard extends StatelessWidget {
     required this.subtitle,
     required this.notificationLabel,
     required this.notificationCount,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-          width: Get.width * 0.25,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: greyLightColor3),
-            color: whiteColor,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Dalam Peninjauan
-              Row(
-                children: [
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: redJNE,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.circle, color: whiteColor, size: 6),
-                        const SizedBox(width: 5),
-                        Text(
-                          title,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 6),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+    return Shimmer(
+      isLoading: isLoading,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            width: Get.width * 0.25,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor3
+                    : greyDarkColor1,
               ),
-              const SizedBox(height: 2),
-              // Circular Indicator
-              Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      value: percentage,
-                      backgroundColor: Colors.grey[300],
-                      color: redJNE,
-                      strokeWidth: 4,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '$count',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 2),
-              Text(
-                subtitle,
-                style: const TextStyle(color: greyDarkColor1, fontSize: 6),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 5),
-        Container(
-          decoration: BoxDecoration(
-            color: greyLightColor3,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: blueJNE,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Row(
+              color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Dalam Peninjauan
+                Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(
-                          top: 4, bottom: 4, left: 8, right: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 4, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: redJNE,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                       child: Row(
                         children: [
-                          const Icon(Icons.circle,
-                              size: 8, color: Colors.orange),
-                          const SizedBox(width: 10),
+                          const Icon(Icons.circle, color: whiteColor, size: 6),
+                          const SizedBox(width: 5),
                           Text(
-                            notificationLabel,
+                            title,
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -128,20 +71,89 @@ class OngoingTransactionCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 5),
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0, top: 3, bottom: 3),
-                child: Text(
-                  '$notificationCount',
-                  style: const TextStyle(
-                      color: redJNE, fontWeight: FontWeight.bold, fontSize: 8),
+                const SizedBox(height: 5),
+                // Circular Indicator
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        value: percentage,
+                        backgroundColor: Colors.grey[300],
+                        color: redJNE,
+                        strokeWidth: 4,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text('$count',
+                        style: Theme.of(context).textTheme.titleLarge),
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 3),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                      color: AppConst.isLightTheme(context)
+                          ? greyDarkColor1
+                          : greyLightColor1,
+                      fontSize: 6),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+          const SizedBox(height: 5),
+          Container(
+            decoration: BoxDecoration(
+              color: greyLightColor3,
+              borderRadius: BorderRadius.circular(3),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: blueJNE,
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 3),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.circle,
+                                size: 8, color: Colors.orange),
+                            const SizedBox(width: 10),
+                            Text(
+                              notificationLabel,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 6),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Padding(
+                  padding: const EdgeInsets.only(right: 6),
+                  child: Text(
+                    '$notificationCount',
+                    style: const TextStyle(
+                        color: redJNE,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 8),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

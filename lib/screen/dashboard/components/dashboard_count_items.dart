@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/widgets/items/line_chart_item.dart';
 import 'package:css_mobile/widgets/items/ongoing_card.dart';
 import 'package:css_mobile/widgets/items/transaction_card.dart';
 import 'package:css_mobile/widgets/items/type_transaction_card.dart';
@@ -9,7 +10,31 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardCountItems extends StatelessWidget {
-  const DashboardCountItems({super.key});
+  final String title;
+  final int total;
+  final int totalPeninjauan;
+  final int totalMasihDikamu;
+  final int totalTerkini;
+  // final double percentagePeninjauan;
+  final String totalCod;
+  final String codAmount;
+  final String totalCodOngkir;
+  final String codOngkirAmount;
+  final String totalNonCod;
+
+  const DashboardCountItems(
+      {super.key,
+      required this.title,
+      required this.total,
+      required this.totalCod,
+      required this.codAmount,
+      required this.totalPeninjauan,
+      required this.totalCodOngkir,
+      required this.codOngkirAmount,
+      // required this.percentagePeninjauan,
+      required this.totalMasihDikamu,
+      required this.totalTerkini,
+      required this.totalNonCod});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +45,14 @@ class DashboardCountItems extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: greyLightColor3),
-              color: greyLightColor3,
+              border: Border.all(
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor3
+                    : greyDarkColor1,
+              ),
+              color: AppConst.isLightTheme(context)
+                  ? greyLightColor3
+                  : greyDarkColor1,
             ),
             child: Column(
               children: [
@@ -36,55 +67,56 @@ class DashboardCountItems extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Agregasi Pembayaran',
+                      Text(title,
                           textAlign: TextAlign.left,
                           style: Theme.of(context).textTheme.titleMedium),
+                      const SizedBox(height: 3),
                       Column(
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               // Jumlah Transaksi
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TransactionCard(
-                                    title: "Jumlah Transaksi",
-                                    count: 200,
-                                    subtitle: "7 Hari Terakhir",
-                                    color: Colors.blue,
-                                    icon: Icons.show_chart,
-                                    statusColor: whiteColor,
-                                    chart: Icon(
-                                      Icons.show_chart,
-                                      color: Colors.green,
-                                    ),
-                                  ),
-                                  SizedBox(height: 5),
+                                      title: "Jumlah Transaksi",
+                                      count: total,
+                                      subtitle: "7 Hari Terakhir",
+                                      color: Colors.blue,
+                                      icon: Icons.show_chart,
+                                      statusColor: whiteColor,
+                                      chart: const SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child:
+                                              LineChartItem([10, 30, 20, 50]))),
+                                  const SizedBox(height: 5),
                                   TypeTransactionCard(
-                                    count: "100",
-                                    amount: "Rp. 2.000.000",
+                                    count: totalCod,
+                                    amount: codAmount,
                                     description: "Transaksi COD",
-                                    lineColor: Colors.red,
+                                    lineColor: redJNE,
                                   ),
                                 ],
                               ),
                               // Dalam Perjalanan
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   OngoingTransactionCard(
                                     title: "Dalam Peninjauan",
                                     percentage: 0.90,
-                                    count: 10,
+                                    count: totalPeninjauan,
                                     subtitle: "100% dari jumlah transaksi",
                                     notificationLabel: "Masih dikamu",
-                                    notificationCount: 10,
+                                    notificationCount: totalMasihDikamu,
                                   ),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   TypeTransactionCard(
-                                    count: "50",
-                                    amount: "Rp. 2.00.000",
+                                    count: totalCodOngkir,
+                                    amount: codOngkirAmount,
                                     description: "Transaksi COD Ongkir",
                                     lineColor: warningColor,
                                   ),
@@ -96,7 +128,7 @@ class DashboardCountItems extends StatelessWidget {
                                 children: [
                                   TransactionCard(
                                     title: "Transaksi Terkini",
-                                    count: 50,
+                                    count: totalTerkini,
                                     subtitle: "25% dari jumlah transaksi",
                                     color: Colors.blue,
                                     statusColor: Colors.green,
@@ -112,9 +144,8 @@ class DashboardCountItems extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 5),
-                                  const TypeTransactionCard(
-                                    count: "50",
-                                    amount: "Rp. 2.000.000",
+                                  TypeTransactionCard(
+                                    count: totalNonCod,
                                     description: "Transaksi NON COD",
                                     lineColor: Colors.green,
                                   ),
