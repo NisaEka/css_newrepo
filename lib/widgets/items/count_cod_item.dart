@@ -28,7 +28,7 @@ class CountCodItem extends StatelessWidget {
         ),
         child: Container(
           // padding: const EdgeInsets.all(10),
-          width: Get.width / 2,
+          width: Get.width * 0.55,
           margin: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
@@ -66,7 +66,7 @@ class CountCodItem extends StatelessWidget {
                 isHorizontal: true,
                 isHasSpace: true,
                 fontColor: Colors.black,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 color: greyColor.withOpacity(0.2),
               ),
             ],

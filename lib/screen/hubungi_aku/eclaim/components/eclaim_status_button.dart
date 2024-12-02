@@ -1,5 +1,6 @@
+import 'package:css_mobile/base/theme_controller.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_controller.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:flutter/material.dart';
@@ -34,27 +35,30 @@ class EclaimStatusButton extends StatelessWidget {
                         width: double.infinity,
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: whiteColor,
+                          color: AppConst.isLightTheme(context)
+                              ? whiteColor
+                              : bgDarkColor,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.black),
+                          border: Border.all(
+                            color: AppConst.isLightTheme(context)
+                                ? bgDarkColor
+                                : greyColor,
+                          ),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('Total Pengajuan',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: bold,
-                                    color: Colors.black)),
+                                style: Theme.of(context).textTheme.titleMedium),
                             const SizedBox(height: 7),
                             Text(
                               c.state.countModel?.totalCount.toString() ?? '0',
                               textAlign: TextAlign.left,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                                  color: CustomTheme().textColor(context)),
                             ),
                             const SizedBox(height: 7),
                           ],
@@ -88,9 +92,15 @@ class EclaimStatusButton extends StatelessWidget {
                         width: double.infinity,
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: whiteColor,
+                          color: AppConst.isLightTheme(context)
+                              ? whiteColor
+                              : bgDarkColor,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.black),
+                          border: Border.all(
+                            color: AppConst.isLightTheme(context)
+                                ? Colors.black
+                                : greyColor,
+                          ),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,10 +121,10 @@ class EclaimStatusButton extends StatelessWidget {
                                       c.state.countModel?.acceptedCount
                                               .toString() ??
                                           '0',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: CustomTheme().textColor(context),
                                       ),
                                     ),
                                   ),
@@ -122,10 +132,11 @@ class EclaimStatusButton extends StatelessWidget {
                                     padding: const EdgeInsets.only(right: 5),
                                     child: Text(
                                       'Diterima',
-                                      style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: bold,
-                                          color: Colors.black),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ],
@@ -162,9 +173,15 @@ class EclaimStatusButton extends StatelessWidget {
                         width: double.infinity,
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: whiteColor,
+                          color: AppConst.isLightTheme(context)
+                              ? whiteColor
+                              : bgDarkColor,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.black),
+                          border: Border.all(
+                            color: AppConst.isLightTheme(context)
+                                ? Colors.black
+                                : greyColor,
+                          ),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,22 +202,21 @@ class EclaimStatusButton extends StatelessWidget {
                                       c.state.countModel?.rejectedCount
                                               .toString() ??
                                           '0',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: CustomTheme().textColor(context),
                                       ),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(right: 5.0),
-                                    child: Text(
-                                      'Ditolak',
-                                      style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: bold,
-                                          color: Colors.black),
-                                    ),
+                                    child: Text('Ditolak',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.bold)),
                                   ),
                                 ],
                               ),

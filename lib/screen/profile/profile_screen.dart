@@ -12,7 +12,7 @@ import 'package:css_mobile/screen/profile/profil_menu/dokumen_screen.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/facility_screen.dart';
 import 'package:css_mobile/screen/profile/profil_menu/no_akun_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
-import 'package:css_mobile/widgets/bar/custombottombar4.dart';
+import 'package:css_mobile/widgets/bar/custombottombar5.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/logout_button.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
@@ -39,7 +39,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   title: 'Profil'.tr),
               body: _bodyContent(controller, context),
-              bottomNavigationBar: const BottomBar4(menu: 3),
+              bottomNavigationBar: const BottomBar5(menu: 2),
             ),
           );
         });
