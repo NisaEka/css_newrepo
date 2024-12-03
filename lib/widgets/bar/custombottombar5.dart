@@ -122,10 +122,12 @@ class BottomBar5 extends StatelessWidget {
                                 context: context,
                                 builder: (context) => const LoginAlertDialog(),
                               ),
-                        child: const MenuIcon(
+                        child: MenuIcon(
                           icon: IconsConstant.add,
                           size: 40,
-                          background: redJNE,
+                          background: AppConst.isLightTheme(context)
+                              ? redJNE
+                              : warningColor,
                           showContainer: false,
                           radius: 50,
                         ),

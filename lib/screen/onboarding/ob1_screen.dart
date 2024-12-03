@@ -4,6 +4,9 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/onboarding/components/vec1.dart';
+import 'package:css_mobile/screen/onboarding/components/vec2.dart';
+import 'package:css_mobile/screen/onboarding/components/vec3.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -191,15 +194,25 @@ class _Ob1ScreenState extends State<Ob1Screen> {
           height: Get.height / 2,
           child: Stack(
             children: [
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  ImageConstant.sliceU,
-                  height: Get.height / 2,
-                  fit: BoxFit.cover,
-                  alignment: alignment,
-                ),
-              ),
+              index == 1
+                  ? const Vec1()
+                  : index == 2
+                      ? const Vec2()
+                      : const Vec3(),
+              // Align(
+              //   alignment: Alignment.topCenter,
+              //   child: index == 1
+              //       ? const Vec1()
+              //       : index == 2
+              //           ? const Vec2()
+              //           : const Vec3(),
+              // child: Image.asset(
+              //   ImageConstant.sliceU,
+              //   height: Get.height / 2,
+              //   fit: BoxFit.cover,
+              //   alignment: alignment,
+              // ),
+              // ),
               Align(
                 alignment:
                     index == 2 ? Alignment.bottomCenter : Alignment.center,
