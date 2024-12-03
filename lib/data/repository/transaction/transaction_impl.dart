@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
@@ -13,11 +12,12 @@ import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/transaction/transaction_repository.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+// import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+// import 'package:css_mobile/data/storage_core.dart';
 
 class TransactionRepositoryImpl extends TransactionRepository {
   final network = Get.find<NetworkCore>();
@@ -79,9 +79,9 @@ class TransactionRepositoryImpl extends TransactionRepository {
   ) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.basicProfile),
-    );
+    // UserModel user = UserModel.fromJson(
+    //   await StorageCore().readData(StorageCore.basicProfile),
+    // );
     QueryParamModel params = QueryParamModel(
       table: true,
       limit: limit,
@@ -90,13 +90,11 @@ class TransactionRepositoryImpl extends TransactionRepository {
       between: transDate,
       type: transType.isNotEmpty ? transType : null,
       status: transStatus.isNotEmpty ? transStatus : null,
-      where: officer.isNotEmpty && user.userType == 'PEMILIK'
+      where: officer.isNotEmpty
           ? jsonEncode([
               {"petugasEntry": officer}
             ])
-          : jsonEncode([
-              {"petugasEntry": user.name}
-            ]),
+          : null,
       // where: '[$registID $type $petugasEntry]',
       sort: '[{"createdDateSearch":"desc"}]',
     );
@@ -163,9 +161,9 @@ class TransactionRepositoryImpl extends TransactionRepository {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     AppLogger.w('transDate : $transDate');
-    UserModel user = UserModel.fromJson(
-      await StorageCore().readData(StorageCore.basicProfile),
-    );
+    // UserModel user = UserModel.fromJson(
+    //   await StorageCore().readData(StorageCore.basicProfile),
+    // );
     QueryParamModel params = QueryParamModel(
       table: true,
       search: keyword,
@@ -173,13 +171,18 @@ class TransactionRepositoryImpl extends TransactionRepository {
       type: transType.isNotEmpty ? transType : null,
       status: transStatus.isNotEmpty ? transStatus : null,
       // where: '[$registID $type $petugasEntry]',
-      where: officer.isNotEmpty && user.userType == 'PEMILIK'
+      // where: officer.isNotEmpty && user.userType == 'PEMILIK'
+      //     ? jsonEncode([
+      //         {"petugasEntry": officer}
+      //       ])
+      //     : jsonEncode([
+      //         {"petugasEntry": user.name}
+      //       ]),
+      where: officer.isNotEmpty
           ? jsonEncode([
               {"petugasEntry": officer}
             ])
-          : jsonEncode([
-              {"petugasEntry": user.name}
-            ]),
+          : null,
       sort: '[{"createdDateSearch":"desc"}]',
     );
 
