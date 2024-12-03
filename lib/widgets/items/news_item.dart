@@ -96,6 +96,7 @@ class NewsItem extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: Colors.black,
               elevation: 0,
+              automaticallyImplyLeading: false,
               actions: [
                 IconButton(
                   icon: const Icon(Icons.close, color: whiteColor),
