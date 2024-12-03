@@ -35,7 +35,7 @@ class BottomBar5 extends StatelessWidget {
               child: Container(
                 height: 50,
                 width: Get.width * 0.9,
-                margin: const EdgeInsets.only(bottom: 20),
+                margin: const EdgeInsets.only(bottom: 10),
                 decoration: BoxDecoration(
                   color: AppConst.isLightTheme(context) ? blueJNE : infoColor,
                   borderRadius: BorderRadius.circular(50),

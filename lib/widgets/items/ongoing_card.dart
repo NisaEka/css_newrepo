@@ -32,7 +32,7 @@ class OngoingTransactionCard extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            width: Get.width * 0.25,
+            width: Get.width * 0.3,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
@@ -120,6 +120,7 @@ class OngoingTransactionCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 6, vertical: 3),
+                        // width: Get.width * 0.25,
                         child: Row(
                           children: [
                             const Icon(Icons.circle,

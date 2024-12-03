@@ -37,7 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   FloatingActionButtonLocation.miniStartDocked,
               floatingActionButton: MenuIcon(
                 icon: IconsConstant.add,
-                margin: const EdgeInsets.only(left: 38, bottom: 29),
+                margin: EdgeInsets.only(left: Get.width * 0.09, bottom: 29),
                 radius: 100,
                 background:
                     AppConst.isLightTheme(context) ? redJNE : warningColor,

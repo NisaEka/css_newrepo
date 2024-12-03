@@ -74,8 +74,10 @@ class TransactionCard extends StatelessWidget {
             const SizedBox(height: 13),
             Row(
               children: [
-                Text(count.toString(),
-                    style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  count.toString(),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 const Spacer(),
                 chart ?? const SizedBox(),
               ],
@@ -83,11 +85,8 @@ class TransactionCard extends StatelessWidget {
             const SizedBox(height: 13),
             Text(
               subtitle,
-              style: TextStyle(
-                  color: AppConst.isLightTheme(context)
-                      ? greyDarkColor1
-                      : greyLightColor1,
-                  fontSize: 6),
+              style:
+                  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 6),
             ),
           ],
         ),

@@ -1,18 +1,15 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/dashboard/components/dashboard_count_items.dart';
+import 'package:css_mobile/screen/dashboard/components/dashboard_agg_count_items.dart';
+import 'package:css_mobile/screen/dashboard/components/dashboard_kiriman_count_items.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_promo.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/onboarding/ob1_screen.dart';
-import 'package:css_mobile/util/ext/num_ext.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dashboard_appbar.dart';
-import 'dashboard_carousel.dart';
 import 'dashboard_info.dart';
 import 'dashboard_menu2.dart';
 import 'jlcpoint_widget.dart';
@@ -106,47 +103,25 @@ class DashboardBody extends StatelessWidget {
                               ],
                             ),
                           ),
-                          DashboardCarousel(),
+                          // DashboardCarousel(),
                         ],
                       ),
                       const DashboardMenu2(),
-                      c.state.isLogin
-                          ? DashboardCountItems(
-                              title: 'Kiriman Kamu',
-                              total: c.state.transSummary?.summary
-                                      ?.where(
-                                          (e) => e.status == "Jumlah Transaksi")
-                                      .first
-                                      .total
-                                      ?.toInt() ??
-                                  0,
-                              totalCod: c.state.transSummary?.totalKirimanCod?.totalCod.toString() ??
-                                  '',
-                              codAmount:
-                                  "Rp. ${c.state.transSummary?.totalKirimanCod?.codAmount?.toCurrency().toString() ?? ''}",
-                              totalPeninjauan: c.state.transSummary?.summary
-                                      ?.where(
-                                          (e) => e.status == "Dalam Peninjauan")
-                                      .first
-                                      .total
-                                      ?.toInt() ??
-                                  0,
-                              totalMasihDikamu: c.state.transSummary?.summary
-                                      ?.where(
-                                          (e) => e.status == "Masih di Kamu")
-                                      .first
-                                      .total
-                                      ?.toInt() ??
-                                  0,
-                              totalCodOngkir: c.state.transSummary
-                                      ?.totalKirimanCod?.totalCodOngkir
-                                      .toString() ??
-                                  '',
-                              codOngkirAmount: "Rp. ${c.state.transSummary?.totalKirimanCod?.codOngkirAmount?.toCurrency().toString() ?? ''}",
-                              totalTerkini: c.state.transSummary?.summary?.where((e) => e.status == "Sukses Diterima").first.total?.toInt() ?? 0,
-                              totalNonCod: c.state.transSummary?.totalKirimanCod?.totalNonCod?.toCurrency().toString() ?? '')
+                      const SizedBox(height: 40),
+                      c.state.isLogin &&
+                              (c.state.allow.keuanganAggregasi == "Y" ||
+                                  c.state.allow.monitoringAgg == "Y")
+                          ? DashboardAggCountItem(
+                              transSummary: c.state.transSummary,
+                            )
                           : const SizedBox(),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 20),
+                      c.state.isLogin
+                          ? DashboardKirimanCountItem(
+                              transSummary: c.state.transSummary,
+                            )
+                          : const SizedBox(),
+
                       // c.state.isLogin
                       //     ? DashboardCountItems(
                       //         title: 'Kiriman Kamu'.tr,
@@ -162,10 +137,10 @@ class DashboardBody extends StatelessWidget {
                       const DashboardPromo(),
                       const DashboardNews(),
                       const SizedBox(height: 50),
-                      CustomFilledButton(
-                        color: Colors.blue,
-                        onPressed: () => Get.to(const Ob1Screen()),
-                      )
+                      // CustomFilledButton(
+                      //   color: Colors.blue,
+                      //   onPressed: () => Get.to(const Ob1Screen()),
+                      // )
                     ],
                   ),
                 ),

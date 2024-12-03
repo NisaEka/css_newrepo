@@ -32,6 +32,7 @@ class DashboardState {
   String themeMode = '';
   UserModel? basic;
   TransactionSummaryModel? transSummary;
+  TransactionSummaryModel? aggSummary;
 
   List<Widget> widgetOptions = <Widget>[
     const DashboardScreen(),
