@@ -99,6 +99,9 @@ class PantauPaketmuController extends BaseController {
           ]
         }
       ],
+      petugasEntry: state.selectedPetugasEntry.value == "SEMUA"
+          ? null
+          : state.selectedPetugasEntry.value,
     );
 
     try {
@@ -135,6 +138,9 @@ class PantauPaketmuController extends BaseController {
       entity: state.selectedStatusKiriman.value,
       type: state.selectedTipeKiriman.value,
       search: state.searchField.text,
+      petugasEntry: state.selectedPetugasEntry.value == "SEMUA"
+          ? null
+          : state.selectedPetugasEntry.value,
     );
 
     try {

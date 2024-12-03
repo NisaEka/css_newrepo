@@ -6,6 +6,7 @@ import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
@@ -153,24 +154,22 @@ class PantauCardScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                // CustomDropDownField(
-                //   items: c.state.listOfficerEntry
-                //       .map(
-                //         (e) => DropdownMenuItem(
-                //           value: e,
-                //           child: Text(e),
-                //         ),
-                //       )
-                //       .toList(),
-                //   label: 'Petugas Entry'.tr,
-                //   hintText: 'Petugas Entry'.tr,
-                //   value: c.state.selectedPetugasEntry,
-                //   onChanged: (value) {
-                //     setState(() {
-                //       c.state.selectedPetugasEntry = value;
-                //     });
-                //   },
-                // )
+                CustomDropDownField(
+                  items: c.state.listOfficerEntry
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e),
+                        ),
+                      )
+                      .toList(),
+                  label: 'Petugas Entry'.tr,
+                  hintText: 'Petugas Entry'.tr,
+                  value: c.state.selectedPetugasEntry.value,
+                  onChanged: (value) {
+                    c.state.selectedPetugasEntry.value = value as String;
+                  },
+                )
               ],
             ),
           ),

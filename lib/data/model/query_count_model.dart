@@ -13,6 +13,7 @@ class CountQueryModel {
     this.isNull = const [],
     this.isNotNull = const [],
     this.search,
+    this.petugasEntry,
   });
 
   bool trash;
@@ -28,6 +29,7 @@ class CountQueryModel {
   List<String> isNull;
   List<String> isNotNull;
   String? search;
+  String? petugasEntry;
 
   // Convert all fields to JSON, handling DateTime objects
   Map<String, dynamic> toJson() {
@@ -45,6 +47,7 @@ class CountQueryModel {
       'isNull': isNull,
       'isNotNull': isNotNull,
       'search': search,
+      'petugasEntry': petugasEntry,
     }..removeWhere((key, value) => value == null);
   }
 
@@ -75,7 +78,8 @@ class CountQueryModel {
         notInValues = _convertConditionList(json['notin']),
         isNull = List<String>.from(json['isNull'] ?? []),
         isNotNull = List<String>.from(json['isNotNull'] ?? []),
-        search = json['search'];
+        search = json['search'],
+        petugasEntry = json['petugasEntry'];
 
   // Helper function to convert JSON list into List<Map<String, dynamic>>
   static List<Map<String, dynamic>> _convertConditionList(dynamic jsonList) {

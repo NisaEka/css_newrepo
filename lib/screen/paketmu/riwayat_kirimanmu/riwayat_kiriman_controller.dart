@@ -35,6 +35,9 @@ class RiwayatKirimanController extends BaseController {
       state.selectedPetugasEntry = petugasEntry;
       // state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
     }
+    update();
+    state.pagingController.refresh();
+    transactionCount();
     // state.pagingController.refresh();
     // transactionCount();
   }
@@ -207,9 +210,9 @@ class RiwayatKirimanController extends BaseController {
     state.endDate = null;
     state.startDateField.clear();
     state.endDateField.clear();
-    if (state.basic?.userType == "PEMILIK") {
-      state.selectedPetugasEntry = null;
-    }
+    // if (state.basic?.userType == "PEMILIK") {
+    state.selectedPetugasEntry = null;
+    // }
     state.selectedStatusKiriman = null;
     // state.isFiltered = false;
     state.searchField.clear();

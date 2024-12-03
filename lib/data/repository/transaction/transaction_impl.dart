@@ -360,8 +360,12 @@ class TransactionRepositoryImpl extends TransactionRepository {
       QueryParamModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    var startDate = DateTime.now().subtract(const Duration(days: 7));
-    var endDate = DateTime.now();
+    var now = DateTime.now().toLocal();
+    var startDate = DateTime(now.year, now.month, now.day)
+        .subtract(const Duration(days: 7))
+        .toIso8601String();
+    var endDate = DateTime(now.year, now.month, now.day, 23, 59, 59, 999)
+        .toIso8601String();
 
     try {
       Response response = await network.base.get(

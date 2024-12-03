@@ -21,6 +21,7 @@ class QueryModel {
     this.select = const [],
     this.entity,
     this.type,
+    this.petugasEntry,
   });
 
   bool table;
@@ -44,6 +45,7 @@ class QueryModel {
   List<String> select;
   String? entity;
   String? type;
+  String? petugasEntry;
 
   // Convert all fields to JSON, handling DateTime objects
   Map<String, dynamic> toJson() {
@@ -69,6 +71,7 @@ class QueryModel {
       'select': select,
       'entity': entity,
       'type': type,
+      'petugasEntry': petugasEntry,
     }..removeWhere((key, value) => value == null);
   }
 
@@ -107,7 +110,8 @@ class QueryModel {
         isNotNull = List<String>.from(json['isNotNull'] ?? []),
         select = List<String>.from(json['select'] ?? []),
         entity = json['entity'],
-        type = json['type'];
+        type = json['type'],
+        petugasEntry = json['petugasEntry'];
 
   // Helper function to convert JSON list into List<Map<String, dynamic>>
   static List<Map<String, dynamic>> _convertConditionList(dynamic jsonList) {
