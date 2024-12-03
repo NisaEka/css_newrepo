@@ -41,15 +41,16 @@ class TypeTransactionCard extends StatelessWidget {
                         .textTheme
                         .bodySmall
                         ?.copyWith(fontWeight: FontWeight.bold)),
-                Text(
-                  amount ?? '',
-                  style: TextStyle(
-                    fontSize: 8,
-                    color: AppConst.isLightTheme(context)
-                        ? greyDarkColor1
-                        : greyLightColor1,
+                if (amount != null && amount!.isNotEmpty)
+                  Text(
+                    amount ?? '',
+                    style: TextStyle(
+                      fontSize: 8,
+                      color: AppConst.isLightTheme(context)
+                          ? greyDarkColor1
+                          : greyLightColor1,
+                    ),
                   ),
-                ),
                 Text(
                   description,
                   style: TextStyle(

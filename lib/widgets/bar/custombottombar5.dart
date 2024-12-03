@@ -4,6 +4,7 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_card_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item2.dart';
@@ -64,26 +65,27 @@ class BottomBar5 extends StatelessWidget {
                               transition: Transition.leftToRight),
                         ),
                         BottomMenuItem2(
-                          icon: MenuIcon(
-                            icon: IconsConstant.pantau,
-                            size: 30,
-                            showContainer: false,
-                            iconColor: menu == 1
-                                ? AppConst.isLightTheme(context)
-                                    ? redJNE
-                                    : warningColor
-                                : whiteColor,
-                            background: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : infoColor,
-                          ),
-                          isSelected: menu == 1,
-                          color: AppConst.isLightTheme(context)
-                              ? redJNE
-                              : warningColor,
-                          onTap: () =>
-                              Get.toNamed('/pantauPaketmu', arguments: {}),
-                        ),
+                            icon: MenuIcon(
+                              icon: IconsConstant.pantau,
+                              size: 30,
+                              showContainer: false,
+                              iconColor: menu == 1
+                                  ? AppConst.isLightTheme(context)
+                                      ? redJNE
+                                      : warningColor
+                                  : whiteColor,
+                              background: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : infoColor,
+                            ),
+                            isSelected: menu == 1,
+                            color: AppConst.isLightTheme(context)
+                                ? redJNE
+                                : warningColor,
+                            onTap: () => Get.to(const PantauCardScreen(),
+                                transition: Transition.rightToLeft)
+                            // Get.toNamed('/pantauPaketmu', arguments: {}),
+                            ),
                         BottomMenuItem2(
                           icon: Icon(
                             Icons.person,
@@ -117,7 +119,7 @@ class BottomBar5 extends StatelessWidget {
                       .where((e) => e.title == "Input Kirimanmu")
                       .isNotEmpty
                   ? Positioned(
-                      bottom: 50,
+                      bottom: 45,
                       left: 55,
                       child: FloatingActionButton(
                         shape: const CircleBorder(),

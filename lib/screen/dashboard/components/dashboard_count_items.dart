@@ -81,7 +81,6 @@ class DashboardCountItems extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TransactionCard(
-
                                       title: "Jumlah Transaksi",
                                       count: total,
                                       subtitle: "7 Hari Terakhir",
@@ -144,12 +143,13 @@ class DashboardCountItems extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 5),
+                                  const SizedBox(height: 10),
                                   TypeTransactionCard(
                                     count: totalNonCod,
                                     description: "Transaksi NON COD",
                                     lineColor: Colors.green,
                                   ),
+                                  const SizedBox(height: 2)
                                 ],
                               ),
                             ],
