@@ -147,6 +147,7 @@ class TambahPetugasController extends BaseController {
                   .first)
               : Account()));
         });
+        getCountSelectedAccountNA();
         dataPetugas.branches?.forEach((branch) {
           selectedBranchList.add(
             branchList

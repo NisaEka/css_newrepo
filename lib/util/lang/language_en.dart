@@ -13,6 +13,7 @@ class LanguageEN {
       "Input Kirimanmu": "Input Transaction",
       "Draft Transaksi": "Draft Transaction",
       "Riwayat Kiriman": "History Transaction",
+      "Riwayat Kirimanmu": "Your History Transaction",
       "Tanggal Entry": "Entry Date",
       "Deskripsi": "Description",
       "Tanggal Kirim": "Transaction Date",
@@ -116,6 +117,7 @@ class LanguageEN {
       "Ringkasan Transaksimu": "Summary Transaction",
       "Rincian Pembayaran": "Payment Details ",
       "Lacak Kiriman": "Shipment Tracking",
+      "Lacak Kirimanmu": "Track Your Shipment",
       "Masukan Nomor Resimu": "Airwaybill Number",
       "Lihat Akun": "Account List",
       "Data Umum": "General Information",
@@ -226,6 +228,7 @@ class LanguageEN {
       "Laporan Aggregasi Minus": "Aggregation Minus Report",
       "Cari Data Aggregasi Minus": "Search Aggregation Minus Data",
       "Uang_COD Kamu": "Your_COD Fee",
+      "Uang COD Kamu": "Your COD Fee",
       "Tanggal Pencarian": "Search Date",
       "COD Terkumpul Dari Pelanggan": "COD Collected From Customers",
       "Pilih Semua": "Select All",
@@ -259,6 +262,7 @@ class LanguageEN {
       "Laporan Return": "Return Reports",
       "Serah Terima": "Handover",
       "Cetak Pesanan": "Print Transaction",
+      "Print Kirimanmu": "Print Your Shipment",
       "Hapus Transaksi": "Delete Transaction",
       "Minta Dijemput": "Request Pickup",
       "Simpan Petugas": "Save Officer",
@@ -409,6 +413,10 @@ class LanguageEN {
       "Verifikasi Nomor Telepon": "Verify Phone Number",
       "Mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima":
           "Please enter the last four digits of the sender's or recipient's phone number",
+      "Dipilih": "Selected",
+      "Tampilkan Seluruh Transaksi": "Show All Transactions",
+      "Hapus Seluruh Transaksi": "Delete All Transactions",
+      "Tema": "Theme",
     };
   }
 }

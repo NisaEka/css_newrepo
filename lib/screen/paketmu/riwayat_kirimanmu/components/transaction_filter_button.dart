@@ -215,6 +215,10 @@ class TransactionFilterButton extends HookWidget {
             // isApplyFilter: c.state.startDate != null || c.state.endDate != null,
             onResetFilter: () {
               // c.resetFilter();
+              if (c.state.listOfficerEntry.length > 1) {
+                c.state.selectedPetugasEntry = null;
+                c.update();
+              }
               c.selectDateFilter(3);
               c.applyFilter();
               Get.back();

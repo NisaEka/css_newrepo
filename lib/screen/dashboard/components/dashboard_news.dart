@@ -35,8 +35,6 @@ class DashboardNews extends StatelessWidget {
                             lang: c.state.local,
                           ),
                         )
-                        .toList()
-                        .reversed
                         .toList(),
                   ),
                 )

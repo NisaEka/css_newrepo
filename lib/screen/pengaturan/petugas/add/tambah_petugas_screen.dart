@@ -2,6 +2,8 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/add/tambah_petugas_controller.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
@@ -10,7 +12,6 @@ import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcheckbox.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -151,217 +152,6 @@ class TambahPetugasScreen extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(),
-                c.buatPesanan
-                    ? Column(
-                        children: [
-                          MultiSelectDialogField(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppConst.isLightTheme(context)
-                                      ? greyDarkColor1
-                                      : greyLightColor1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            searchable: true,
-                            buttonIcon: const Icon(Icons.keyboard_arrow_down),
-                            buttonText: Text('Akun'.tr),
-                            itemsTextStyle: TextStyle(
-                                color: CustomTheme().textColor(context)),
-                            dialogWidth: Get.width,
-                            initialValue: c.selectedAccountList,
-                            items: c.accountList
-                                .map((e) => MultiSelectItem(
-                                      e,
-                                      '${e.accountNumber}/${e.accountName}/${e.accountType ?? e.accountService}',
-                                    ))
-                                .toList(),
-                            listType: MultiSelectListType.CHIP,
-                            backgroundColor: AppConst.isLightTheme(context)
-                                ? whiteColor
-                                : greyColor,
-                            onConfirm: (values) {
-                              c.selectedAccountList = values;
-                              c.getCountSelectedAccountNA();
-                            },
-                            onSelectionChanged: (values) {
-                              c.selectedAccountList = values;
-                              c.getCountSelectedAccountNA();
-                              c.update();
-                            },
-                          ),
-                        ],
-                      )
-                    : const SizedBox(),
-                (c.buatPesanan && (c.countSelectedAccountNA ?? 0) > 0) ||
-                        (c.buatPesanan && (c.countAllAccountNA ?? 0) > 0) ||
-                        (c.serahTerima && (c.countAllAccountNA ?? 0) > 0)
-                    ? Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          MultiSelectDialogField(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppConst.isLightTheme(context)
-                                      ? greyDarkColor1
-                                      : greyLightColor1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            searchable: true,
-                            buttonIcon: const Icon(Icons.keyboard_arrow_down),
-                            buttonText: Text('Branch'.tr),
-                            initialValue: c.selectedBranchList,
-                            items: c.branchList
-                                .map((e) => MultiSelectItem(
-                                      e,
-                                      '${e.branchCode}-${e.branchDesc}',
-                                    ))
-                                .toList(),
-                            itemsTextStyle: TextStyle(
-                                color: CustomTheme().textColor(context)),
-                            listType: MultiSelectListType.CHIP,
-                            backgroundColor: AppConst.isLightTheme(context)
-                                ? whiteColor
-                                : greyColor,
-                            onConfirm: (values) {
-                              c.selectedBranchList = values;
-                              c.update();
-                              c.loadOrigin(values);
-                            },
-                            onSelectionChanged: (values) {
-                              c.selectedBranchList = values;
-                              c.update();
-                              c.loadOrigin(values);
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          Obx(
-                            () => MultiSelectDialogField<OriginModel>(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: AppConst.isLightTheme(context)
-                                        ? greyDarkColor1
-                                        : greyLightColor1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              searchable: true,
-                              buttonIcon: const Icon(Icons.keyboard_arrow_down),
-                              buttonText: Text(
-                                  c.isLoadOrigin ? 'Loading...' : 'Origin'.tr),
-                              initialValue: c.selectedOrigin,
-                              items: c.originList
-                                  .map((e) => MultiSelectItem(
-                                        e,
-                                        '${e.originCode}-${e.originName}',
-                                      ))
-                                  .toList(),
-                              listType: MultiSelectListType.CHIP,
-                              backgroundColor: AppConst.isLightTheme(context)
-                                  ? whiteColor
-                                  : greyColor,
-                              itemsTextStyle: TextStyle(
-                                  color: CustomTheme().textColor(context)),
-                              onConfirm: (values) {
-                                // controller.selectedOrigin = values;
-                                c.selectedOrigin.clear();
-                                c.selectedOrigin.addAll(values);
-                                c.update();
-                              },
-                              onSelectionChanged: (values) {
-                                c.selectedOrigin.value =
-                                    List<OriginModel>.from(values);
-                                c.update();
-                              },
-                            ),
-                          ),
-                        ],
-                      )
-                    : const SizedBox(),
-                // Column(
-                //   children: controller.selectedOrigin.toSet().toList().map((e) => Text("${e.originCode.toString()}-${e.originName}")).toList(),
-                // ),
-                // Column(
-                //   children: controller.originCodes.map((e) => Text(e.toString())).toList(),
-                // ),
-                c.buatPesanan && (c.countSelectedAccountNA ?? 0) > 0
-                    ? Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          CustomTextFormField(
-                            controller: c.alamat,
-                            hintText: 'Alamat'.tr,
-                            validator: ValidationBuilder().address().build(),
-                          ),
-                          CustomTextFormField(
-                            controller: c.zipCode,
-                            hintText: 'Kode Pos'.tr,
-                            validator: ValidationBuilder().zipCode().build(),
-                            inputType: TextInputType.number,
-                          ),
-                        ],
-                      )
-                    : const SizedBox(),
-                // const SizedBox(height: 5),
-                // CustomTextFormField(
-                //   controller: c.alamat,
-                //   hintText: 'Alamat'.tr,
-                //   validator: ValidationBuilder().address().build(),
-                // ),
-                // CustomTextFormField(
-                //   controller: c.zipCode,
-                //   hintText: 'Kode Pos'.tr,
-                //   validator: ValidationBuilder().zipCode().build(),
-                //   inputType: TextInputType.number,
-                // ),
-                c.beranda || c.riwayatPesanan || c.pantauPaketmu
-                    ? CustomDropDownFormField(
-                        hintText: 'Tampilkan Transaksi'.tr,
-                        value: c.semuaTransaksi ? "Y" : "N",
-                        items: [
-                          DropdownMenuItem(
-                            value: "Y",
-                            child: Text('Semua'.tr.toUpperCase()),
-                          ),
-                          DropdownMenuItem(
-                            value: "N",
-                            child: Text('Dibatasi'.tr.toUpperCase()),
-                          ),
-                        ],
-                        onChanged: (value) {
-                          if (value == "Y") {
-                            c.semuaTransaksi = true;
-                            c.update();
-                          } else {
-                            c.semuaTransaksi = false;
-                            c.update();
-                          }
-                        },
-                      )
-                    : const SizedBox(),
-                c.hapusPesanan
-                    ? CustomDropDownFormField(
-                        hintText: 'Hapus Transaksi'.tr,
-                        value: c.semuaHapus ? "Y" : "N",
-                        items: [
-                          DropdownMenuItem(
-                            value: "Y",
-                            child: Text('Semua'.tr.toUpperCase()),
-                          ),
-                          DropdownMenuItem(
-                            value: "N",
-                            child: Text('Dibatasi'.tr.toUpperCase()),
-                          ),
-                        ],
-                        onChanged: (value) {
-                          if (value == "Y") {
-                            c.semuaHapus = true;
-                            c.update();
-                          } else {
-                            c.semuaHapus = false;
-                            c.update();
-                          }
-                        },
-                      )
-                    : const SizedBox(),
                 c.isEdit
                     ? CustomDropDownFormField(
                         hintText: 'Status'.tr,
@@ -388,278 +178,556 @@ class TambahPetugasScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: greyColor),
                   ),
-                  padding: const EdgeInsets.all(10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                   child: Column(
                     children: [
-                      Center(
-                        child: Text('Tentukan Hak Akses'.tr,
-                            style: listTitleTextStyle),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Hak Akses'.tr,
+                          style: listTitleTextStyle.copyWith(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? blueJNE
+                                    : Colors.white,
+                          ),
+                        ),
                       ),
+                      const SizedBox(height: 10),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomFormLabel(label: 'Profil'.tr),
-                          CustomCheckbox(
-                            label: 'Profilku'.tr,
-                            value: c.profilku,
-                            onChanged: (value) {
-                              c.profilku = value!;
-                              c.update();
-                            },
+                          _buildSectionTitle(
+                            context,
+                            title: 'Profil'.tr,
+                            icon: Icons.person,
                           ),
-                          // CustomCheckbox(
-                          //   label: 'Fasilitasku'.tr,
-                          //   value: c.fasilitas,
-                          //   onChanged: (value) {
-                          //     c.fasilitas = value!;
-                          //     c.update();
-                          //   },
-                          // ),
-                          CustomCheckbox(
-                            label: 'Ubah Kata Sandi'.tr,
-                            value: c.katasandi,
-                            onChanged: (value) {
-                              c.katasandi = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomFormLabel(label: 'Beranda'.tr),
-                          CustomCheckbox(
-                            label: 'Beranda'.tr,
-                            value: c.beranda,
-                            onChanged: (value) {
-                              c.beranda = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomFormLabel(label: 'Paketmu'.tr),
-                          CustomCheckbox(
-                            label: 'Input Transaksi'.tr,
-                            value: c.buatPesanan,
-                            onChanged: (value) {
-                              c.buatPesanan = value!;
-                              if (value == false) {
-                                c.selectedBranchList = [];
-                                c.selectedBranchList = [];
-                                c.selectedAccountList = [];
-                                c.selectedOrigin.clear();
+                          _buildCheckboxGroup(
+                            context,
+                            checkboxes: [
+                              _buildCheckboxItem('Profilku', c.profilku,
+                                  (value) {
+                                c.profilku = value!;
                                 c.update();
-                                c.getCountSelectedAccountNA();
-                              }
+                              }),
+                              _buildCheckboxItem('Ubah Kata Sandi', c.katasandi,
+                                  (value) {
+                                c.katasandi = value!;
+                                c.update();
+                              }),
+                            ],
+                          ),
 
-                              c.update();
-                            },
+                          _buildSectionTitle(
+                            context,
+                            title: 'Beranda'.tr,
+                            icon: Icons.home_outlined,
                           ),
-                          CustomCheckbox(
-                            label: 'Riwayat Kiriman'.tr,
-                            value: c.riwayatPesanan,
-                            onChanged: (value) {
-                              c.riwayatPesanan = value!;
-                              c.update();
-                            },
+                          _buildCheckboxGroup(
+                            context,
+                            checkboxes: [
+                              _buildCheckboxItem('Beranda', c.beranda, (value) {
+                                c.beranda = value!;
+                                if (value == false) {
+                                  c.semuaTransaksi = false;
+                                }
+                                c.update();
+                              }),
+                              _buildCheckboxItem(
+                                  'Pantau Paketmu', c.pantauPaketmu, (value) {
+                                c.pantauPaketmu = value!;
+                                if (value == false) {
+                                  c.semuaTransaksi = false;
+                                }
+                                c.update();
+                              }),
+                            ],
                           ),
-                          CustomCheckbox(
-                            label: 'Lacak Kiriman'.tr,
-                            value: c.lacakPesanan,
-                            onChanged: (value) {
-                              c.lacakPesanan = value!;
-                              c.update();
-                            },
+
+                          _buildSectionTitle(
+                            context,
+                            title: 'Transaksi'.tr,
+                            icon: Icons.receipt_outlined,
                           ),
-                          CustomCheckbox(
-                            label: 'Minta Dijemput'.tr,
-                            value: c.mintaDijemput,
-                            onChanged: (value) {
-                              c.mintaDijemput = value!;
-                              c.update();
-                            },
+                          const SizedBox(height: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 32),
+                            child: Column(
+                              children: [
+                                _buildCheckboxItem(
+                                    'Input Kirimanmu', c.buatPesanan, (value) {
+                                  c.buatPesanan = value!;
+                                  if (value == false) {
+                                    c.selectedBranchList = [];
+                                    c.selectedAccountList = [];
+                                    c.selectedOrigin.clear();
+                                    c.update();
+                                    c.getCountSelectedAccountNA();
+                                  }
+                                  c.update();
+                                }),
+                                c.buatPesanan
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 32),
+                                        child: Column(
+                                          children: [
+                                            MultiSelectDialogField(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color:
+                                                        AppConst.isLightTheme(
+                                                                context)
+                                                            ? greyDarkColor1
+                                                            : greyLightColor1),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              searchable: true,
+                                              buttonIcon: const Icon(
+                                                  Icons.keyboard_arrow_down),
+                                              buttonText: Text(
+                                                c.selectedAccountList.isNotEmpty
+                                                    ? '${c.selectedAccountList.length} ${'Akun'.tr} ${'Dipilih'.tr}'
+                                                    : 'Akun'.tr,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  color: CustomTheme()
+                                                      .textColor(context),
+                                                ),
+                                              ),
+                                              itemsTextStyle: TextStyle(
+                                                  color: CustomTheme()
+                                                      .textColor(context)),
+                                              dialogWidth: Get.width,
+                                              initialValue:
+                                                  c.selectedAccountList,
+                                              items: c.accountList
+                                                  .map((e) => MultiSelectItem(
+                                                        e,
+                                                        '${e.accountNumber}/${e.accountName}/${e.accountType ?? e.accountService}',
+                                                      ))
+                                                  .toList(),
+                                              listType:
+                                                  MultiSelectListType.CHIP,
+                                              chipDisplay:
+                                                  MultiSelectChipDisplay.none(),
+                                              backgroundColor:
+                                                  AppConst.isLightTheme(context)
+                                                      ? whiteColor
+                                                      : greyColor,
+                                              onConfirm: (values) {
+                                                c.selectedAccountList =
+                                                    List<Account>.from(values);
+                                                c.getCountSelectedAccountNA();
+                                              },
+                                              onSelectionChanged: (values) {
+                                                c.selectedAccountList =
+                                                    List<Account>.from(values);
+                                                c.getCountSelectedAccountNA();
+                                                c.update();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                                (c.buatPesanan &&
+                                            (c.countSelectedAccountNA ?? 0) >
+                                                0) ||
+                                        (c.buatPesanan &&
+                                            (c.countAllAccountNA ?? 0) > 0) ||
+                                        (c.serahTerima &&
+                                            (c.countAllAccountNA ?? 0) > 0)
+                                    ? GridView.builder(
+                                        shrinkWrap: true,
+                                        padding:
+                                            const EdgeInsets.only(left: 32),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10,
+                                          childAspectRatio: 1.9,
+                                        ),
+                                        itemCount: 2,
+                                        itemBuilder: (context, index) {
+                                          if (index == 0) {
+                                            return Column(
+                                              children: [
+                                                const SizedBox(height: 10),
+                                                MultiSelectDialogField(
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color:
+                                                          AppConst.isLightTheme(
+                                                                  context)
+                                                              ? greyDarkColor1
+                                                              : greyLightColor1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  searchable: true,
+                                                  buttonIcon: const Icon(Icons
+                                                      .keyboard_arrow_down),
+                                                  // buttonText: Text('Branch'.tr),
+                                                  buttonText: Text(
+                                                    c.selectedBranchList.isNotEmpty
+                                                        ? '${c.selectedBranchList.length} ${'Branch'.tr}...'
+                                                            .tr
+                                                        : 'Branch'.tr,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      color: CustomTheme()
+                                                          .textColor(context),
+                                                    ),
+                                                  ),
+                                                  initialValue:
+                                                      c.selectedBranchList,
+                                                  items: c.branchList
+                                                      .map((e) =>
+                                                          MultiSelectItem(
+                                                            e,
+                                                            '${e.branchCode}-${e.branchDesc}',
+                                                          ))
+                                                      .toList(),
+                                                  itemsTextStyle: TextStyle(
+                                                      color: CustomTheme()
+                                                          .textColor(context)),
+                                                  listType:
+                                                      MultiSelectListType.CHIP,
+                                                  chipDisplay:
+                                                      MultiSelectChipDisplay
+                                                          .none(),
+                                                  backgroundColor:
+                                                      AppConst.isLightTheme(
+                                                              context)
+                                                          ? whiteColor
+                                                          : greyColor,
+                                                  onConfirm: (values) {
+                                                    c.selectedBranchList =
+                                                        List<BranchModel>.from(
+                                                            values);
+                                                    c.update();
+                                                    c.loadOrigin(
+                                                        c.selectedBranchList);
+                                                  },
+                                                  onSelectionChanged: (values) {
+                                                    c.selectedBranchList =
+                                                        List<BranchModel>.from(
+                                                            values);
+                                                    c.update();
+                                                    c.loadOrigin(
+                                                        c.selectedBranchList);
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          } else if (index == 1) {
+                                            return Column(
+                                              children: [
+                                                const SizedBox(height: 10),
+                                                Obx(
+                                                  () => MultiSelectDialogField<
+                                                      OriginModel>(
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: AppConst
+                                                                .isLightTheme(
+                                                                    context)
+                                                            ? greyDarkColor1
+                                                            : greyLightColor1,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                    searchable: true,
+                                                    buttonIcon: const Icon(Icons
+                                                        .keyboard_arrow_down),
+                                                    buttonText: c.isLoadOrigin
+                                                        ? const Text(
+                                                            'Loading...')
+                                                        : Text(
+                                                            c.selectedOrigin
+                                                                    .isNotEmpty
+                                                                ? '${c.selectedOrigin.length} ${'Origin'.tr}...'
+                                                                    .tr
+                                                                : 'Origin'.tr,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: TextStyle(
+                                                              color: CustomTheme()
+                                                                  .textColor(
+                                                                      context),
+                                                            ),
+                                                          ),
+                                                    initialValue:
+                                                        c.selectedOrigin,
+                                                    items: c.originList
+                                                        .map((e) =>
+                                                            MultiSelectItem(
+                                                              e,
+                                                              '${e.originCode}-${e.originName}',
+                                                            ))
+                                                        .toList(),
+                                                    listType:
+                                                        MultiSelectListType
+                                                            .CHIP,
+                                                    chipDisplay:
+                                                        MultiSelectChipDisplay
+                                                            .none(),
+                                                    backgroundColor:
+                                                        AppConst.isLightTheme(
+                                                                context)
+                                                            ? whiteColor
+                                                            : greyColor,
+                                                    itemsTextStyle: TextStyle(
+                                                        color: CustomTheme()
+                                                            .textColor(
+                                                                context)),
+                                                    onConfirm: (values) {
+                                                      c.selectedOrigin.clear();
+                                                      c.selectedOrigin
+                                                          .addAll(values);
+                                                      c.update();
+                                                    },
+                                                    onSelectionChanged:
+                                                        (values) {
+                                                      c.selectedOrigin
+                                                          .value = List<
+                                                              OriginModel>.from(
+                                                          values);
+                                                      c.update();
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          }
+                                          return const SizedBox();
+                                        },
+                                      )
+                                    : const SizedBox(),
+                                c.buatPesanan &&
+                                        (c.countSelectedAccountNA ?? 0) > 0
+                                    ? Container(
+                                        margin: const EdgeInsets.only(left: 32),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            CustomTextFormField(
+                                              width: Get.width * 0.39,
+                                              multiLine: true,
+                                              controller: c.alamat,
+                                              hintText: 'Alamat'.tr,
+                                              validator: ValidationBuilder()
+                                                  .address()
+                                                  .build(),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            CustomTextFormField(
+                                              width: Get.width * 0.18,
+                                              controller: c.zipCode,
+                                              hintText: 'Kode Pos'.tr,
+                                              validator: ValidationBuilder()
+                                                  .zipCode()
+                                                  .build(),
+                                              inputType: TextInputType.number,
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                                c.beranda || c.riwayatPesanan || c.pantauPaketmu
+                                    ? _buildCheckboxItem(
+                                        'Tampilkan Seluruh Transaksi',
+                                        c.semuaTransaksi, (value) {
+                                        c.semuaTransaksi = value!;
+                                        c.update();
+                                      })
+                                    : const SizedBox(),
+                                c.hapusPesanan
+                                    ? _buildCheckboxItem(
+                                        'Hapus Seluruh Transaksi', c.semuaHapus,
+                                        (value) {
+                                        c.semuaHapus = value!;
+                                        c.update();
+                                      })
+                                    : const SizedBox(),
+                              ],
+                            ),
                           ),
-                          CustomCheckbox(
-                            label: 'Serah Terima'.tr,
-                            value: c.serahTerima,
-                            onChanged: (value) {
-                              c.serahTerima = value!;
-                              c.update();
-                            },
+                          _buildCheckboxGroup(
+                            context,
+                            checkboxes: [
+                              _buildCheckboxItem(
+                                  'Riwayat Kirimanmu', c.riwayatPesanan,
+                                  (value) {
+                                c.riwayatPesanan = value!;
+                                if (value == false) {
+                                  c.semuaTransaksi = false;
+                                }
+                                c.update();
+                              }),
+                              _buildCheckboxItem(
+                                  'Lacak Kirimanmu', c.lacakPesanan, (value) {
+                                c.lacakPesanan = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem(
+                                  'Minta Dijemput', c.mintaDijemput, (value) {
+                                c.mintaDijemput = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem('Serah Terima', c.serahTerima,
+                                  (value) {
+                                c.serahTerima = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem(
+                                  'Print Kirimanmu', c.cetakPesanan, (value) {
+                                c.cetakPesanan = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem(
+                                  'Hapus Transaksi', c.hapusPesanan, (value) {
+                                c.hapusPesanan = value!;
+                                if (value == false) {
+                                  c.semuaHapus = false;
+                                }
+                                c.update();
+                              }),
+                            ],
                           ),
-                          CustomCheckbox(
-                            label: 'Cetak Pesanan'.tr,
-                            value: c.cetakPesanan,
-                            onChanged: (value) {
-                              c.cetakPesanan = value!;
-                              c.update();
-                            },
+
+                          // Keuanganmu Section with Icon
+                          _buildSectionTitle(
+                            context,
+                            title: 'Keuanganmu'.tr,
+                            icon: Icons.account_balance_wallet_outlined,
                           ),
-                          CustomCheckbox(
-                            label: 'Hapus Transaksi'.tr,
-                            value: c.hapusPesanan,
-                            onChanged: (value) {
-                              c.hapusPesanan = value!;
-                              c.update();
-                            },
+                          const SizedBox(height: 10),
+                          _buildCheckboxGroup(
+                            context,
+                            checkboxes: [
+                              _buildCheckboxItem('Uang COD Kamu', c.uangCod,
+                                  (value) {
+                                c.uangCod = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem('Tagihan Kamu', c.tagihan,
+                                  (value) {
+                                c.tagihan = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem('Laporan Pembayaran Aggregasi',
+                                  c.monitoringAgg, (value) {
+                                c.monitoringAgg = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem('Bonus Kamu', c.bonus,
+                                  (value) {
+                                c.bonus = value!;
+                                c.update();
+                              }),
+                            ],
                           ),
-                          CustomFormLabel(label: 'Keuanganmu'.tr),
-                          // CustomCheckbox(
-                          //   label: 'Saldo Kamu'.tr,
-                          //   value: c.saldo,
-                          //   onChanged: (value) {
-                          //     c.saldo = value!;
-                          //     c.update();
-                          //   },
-                          // ),
-                          CustomCheckbox(
-                            label: 'Uang_COD Kamu'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.uangCod,
-                            onChanged: (value) {
-                              c.uangCod = value!;
-                              c.update();
-                            },
+
+                          // Hubungi Aku Section with Icon
+                          _buildSectionTitle(
+                            context,
+                            title: 'Hubungi Aku'.tr,
+                            icon: Icons.phone,
                           ),
-                          CustomCheckbox(
-                            label: 'Laporan Pembayaran Aggregasi'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.monitoringAgg,
-                            onChanged: (value) {
-                              c.monitoringAgg = value!;
-                              c.update();
-                            },
+                          const SizedBox(height: 10),
+                          _buildCheckboxGroup(
+                            context,
+                            checkboxes: [
+                              _buildCheckboxItem('Laporanku', c.laporan,
+                                  (value) {
+                                c.laporan = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem('E-Claim', c.eclaim, (value) {
+                                c.eclaim = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem('Cek Ongkir', c.cekOngkir,
+                                  (value) {
+                                c.cekOngkir = value!;
+                                c.update();
+                              }),
+                            ],
                           ),
-                          CustomCheckbox(
-                            label: 'Aggregasi Minus'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.monitoringAggMinus,
-                            onChanged: (value) {
-                              c.monitoringAggMinus = value!;
-                              c.update();
-                            },
+
+                          // Laporanku Section with Icon
+                          _buildSectionTitle(
+                            context,
+                            title: 'Laporanku'.tr,
+                            icon: Icons.library_books_outlined,
                           ),
-                          CustomCheckbox(
-                            label: 'Tagihan Kamu'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.tagihan,
-                            onChanged: (value) {
-                              c.tagihan = value!;
-                              c.update();
-                            },
+                          const SizedBox(height: 10),
+                          _buildCheckboxGroup(
+                            context,
+                            checkboxes: [
+                              _buildCheckboxItem(
+                                  'Laporan Return', c.laporanReturn, (value) {
+                                c.laporanReturn = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem(
+                                  'Summary Origin', c.summaryOrigin, (value) {
+                                c.summaryOrigin = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem(
+                                  'Summary Destination', c.summaryDestination,
+                                  (value) {
+                                c.summaryDestination = value!;
+                                c.update();
+                              }),
+                            ],
                           ),
-                          CustomCheckbox(
-                            label: 'Bonus Kamu'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.bonus,
-                            onChanged: (value) {
-                              c.bonus = value!;
-                              c.update();
-                            },
+
+                          // Pengaturan Section with Icon
+                          _buildSectionTitle(
+                            context,
+                            title: 'Pengaturan'.tr,
+                            icon: Icons.settings,
                           ),
-                          CustomFormLabel(label: "Pantau Paketmu".tr),
-                          CustomCheckbox(
-                            label: 'Pantau Paketmu'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.pantauPaketmu,
-                            onChanged: (value) {
-                              c.pantauPaketmu = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomFormLabel(label: "Hubungi Aku".tr),
-                          CustomCheckbox(
-                            label: 'Laporanku'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.laporan,
-                            onChanged: (value) {
-                              c.laporan = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomCheckbox(
-                            label: 'E-Claim'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.eclaim,
-                            onChanged: (value) {
-                              c.eclaim = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomFormLabel(label: "Laporanku".tr),
-                          CustomCheckbox(
-                            label: 'Laporan Return'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.laporanReturn,
-                            onChanged: (value) {
-                              c.laporanReturn = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomCheckbox(
-                            label: 'Summary Origin'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.summaryOrigin,
-                            onChanged: (value) {
-                              c.summaryOrigin = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomCheckbox(
-                            label: 'Summary Destination'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.summaryDestination,
-                            onChanged: (value) {
-                              c.summaryDestination = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomFormLabel(label: "Cek Ongkir".tr),
-                          CustomCheckbox(
-                            label: 'Cek Ongkir'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.cekOngkir,
-                            onChanged: (value) {
-                              c.cekOngkir = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomFormLabel(label: "Pengaturan".tr),
-                          CustomCheckbox(
-                            label: 'Tema'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.tema,
-                            onChanged: (value) {
-                              c.tema = value!;
-                              c.update();
-                            },
-                          ),
-                          CustomCheckbox(
-                            label: 'Label'
-                                .tr
-                                .splitMapJoin('_', onMatch: (p0) => ' '),
-                            value: c.label,
-                            onChanged: (value) {
-                              c.label = value!;
-                              c.update();
-                            },
+                          const SizedBox(height: 10),
+                          _buildCheckboxGroup(
+                            context,
+                            checkboxes: [
+                              _buildCheckboxItem('Tema', c.tema, (value) {
+                                c.tema = value!;
+                                c.update();
+                              }),
+                              _buildCheckboxItem('Label', c.label, (value) {
+                                c.label = value!;
+                                c.update();
+                              }),
+                            ],
                           ),
                         ],
-                      ),
+                      )
                     ],
                   ),
                 ),
                 CustomFilledButton(
                   color: blueJNE,
                   title: c.isEdit ? "Edit Petugas".tr : "Simpan Petugas".tr,
+                  suffixIcon: Icons.file_download_outlined,
                   onPressed: () => c.formKey.currentState?.validate() == true
                       ? c.isEdit
                           ? c.updateOfficer()
@@ -671,6 +739,58 @@ class TambahPetugasScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  // Builds section title with icon
+  Widget _buildSectionTitle(BuildContext context,
+      {required String title, required IconData icon}) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: Theme.of(context).brightness == Brightness.light
+                ? blueJNE
+                : Colors.white,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            title,
+            style: listTitleTextStyle.copyWith(
+                color: Theme.of(context).brightness == Brightness.light
+                    ? greyDarkColor1
+                    : whiteColor),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Builds a group of checkboxes in two columns
+  Widget _buildCheckboxGroup(BuildContext context,
+      {required List<Widget> checkboxes}) {
+    return GridView.builder(
+      shrinkWrap: true,
+      padding: const EdgeInsets.only(left: 32, right: 0, top: 0, bottom: 12),
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, childAspectRatio: 3),
+      itemCount: checkboxes.length,
+      itemBuilder: (context, index) {
+        return checkboxes[index];
+      },
+    );
+  }
+
+  // Builds individual checkbox with label
+  Widget _buildCheckboxItem(
+      String label, bool value, ValueChanged<bool?> onChanged) {
+    return CustomCheckbox(
+      label: label.tr,
+      value: value,
+      onChanged: onChanged,
     );
   }
 }

@@ -20,10 +20,14 @@ class CustomCheckbox extends StatelessWidget {
       minVerticalPadding: 0,
       contentPadding: EdgeInsets.zero,
       dense: true,
-      leading: Checkbox(
-        value: value,
-        onChanged: onChanged,
-        activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+      leading: SizedBox(
+        height: 24.0,
+        width: 24.0,
+        child: Checkbox(
+          value: value,
+          onChanged: onChanged,
+          activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+        ),
       ),
       title: Text(label, style: Theme.of(context).textTheme.titleSmall),
     );

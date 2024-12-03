@@ -1,3 +1,4 @@
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/util/snackbar.dart';
@@ -68,14 +69,21 @@ class PhoneNumberConfirmationScreenState
                 'Mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima'
                     .tr,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: CustomTheme().textColor(context),
+                ),
               ),
             ),
             const SizedBox(height: 10),
             Text(
               widget.awb,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: CustomTheme().textColor(context),
+              ),
             ),
             const SizedBox(height: 40),
             Pinput(
@@ -115,7 +123,12 @@ class PhoneNumberConfirmationScreenState
                   });
                 }
               },
-              child: Text('Konfirmasi'.tr),
+              child: Text(
+                'Konfirmasi'.tr,
+                style: TextStyle(
+                  color: CustomTheme().textColor(context),
+                ),
+              ),
             ),
           ],
         ),
