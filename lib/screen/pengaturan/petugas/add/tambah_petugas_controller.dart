@@ -36,7 +36,8 @@ class TambahPetugasController extends BaseController {
   PetugasModel? data = Get.arguments['data'];
   bool isLoading = false;
   bool isLoadOrigin = false;
-  bool isCountAccount = false;
+  bool isCountSelectedAccountNA = false;
+  bool isCountAllAccountNA = false;
   bool isObscurePassword = true;
   bool isObscurePasswordConfirm = true;
   UserModel? basic;
@@ -89,7 +90,8 @@ class TambahPetugasController extends BaseController {
   List<BranchModel> selectedBranchList = [];
   List<String> branch = [];
   String? status;
-  int? countAccount = 0;
+  int? countSelectedAccountNA = 0;
+  int? countAllAccountNA = 0;
   PetugasModel dataPetugas = PetugasModel();
 
   @override
@@ -121,6 +123,8 @@ class TambahPetugasController extends BaseController {
         accountList.addAll(value.data ?? []);
         update();
       });
+
+      getCountAllAccountNA();
 
       await master
           .getBranches(QueryParamModel(table: true, limit: 0))
@@ -235,8 +239,8 @@ class TambahPetugasController extends BaseController {
     update();
   }
 
-  Future<void> getCountAccount() async {
-    isCountAccount = true;
+  Future<void> getCountSelectedAccountNA() async {
+    isCountSelectedAccountNA = true;
     update();
     try {
       await master
@@ -253,14 +257,36 @@ class TambahPetugasController extends BaseController {
         ],
       ))
           .then((value) {
-        AppLogger.i("value count account ${value.data}");
-        countAccount = value.data ?? 0;
+        AppLogger.i("value getCountSelectedAccountNA ${value.data}");
+        countSelectedAccountNA = value.data ?? 0;
         update();
       });
     } catch (e, i) {
-      AppLogger.e('error countAccount $e, $i');
+      AppLogger.e('error getCountSelectedAccountNA $e, $i');
     }
-    isCountAccount = false;
+    isCountSelectedAccountNA = false;
+    update();
+  }
+
+  Future<void> getCountAllAccountNA() async {
+    isCountAllAccountNA = true;
+    update();
+    try {
+      await master
+          .getAccountCount(CountQueryModel(
+        where: [
+          {"accountCategory": "NA"}
+        ],
+      ))
+          .then((value) {
+        AppLogger.i("value getCountAllAccountNA ${value.data}");
+        countAllAccountNA = value.data ?? 0;
+        update();
+      });
+    } catch (e, i) {
+      AppLogger.e('error getCountAllAccountNA $e, $i');
+    }
+    isCountAllAccountNA = false;
     update();
   }
 
