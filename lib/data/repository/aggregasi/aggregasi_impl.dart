@@ -6,6 +6,8 @@ import 'package:css_mobile/data/model/aggregasi/get_aggregation_total_model.dart
 import 'package:css_mobile/data/model/base_response_model.dart';
 
 import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/response_model.dart';
+import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/aggregasi/aggregasi_repository.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -135,6 +137,39 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
       );
     } on DioException catch (e) {
       return e.response?.data;
+    }
+  }
+
+  @override
+  Future<ResponseModel<TransactionSummaryModel>> getAggSummary() async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    var startDate = DateTime.now().subtract(const Duration(days: 7));
+    var endDate = DateTime.now();
+
+    try {
+      Response response = await network.base.get(
+        "/aggregations/summary",
+        queryParameters: QueryParamModel(
+          between: '[{"mpayWdrGrpPayDatePaid":["$startDate","$endDate"]}]',
+        ).toJson(),
+      );
+
+      final test = ResponseModel<TransactionSummaryModel>.fromJson(
+        response.data,
+        (json) {
+          // Deserialize the PropertySummary
+          return TransactionSummaryModel.fromJson(json as Map<String, dynamic>);
+        },
+      );
+      AppLogger.i("agg summary : ${test.data?.summary?.first.toJson()}");
+      return test;
+    } on DioException catch (e) {
+      return ResponseModel<TransactionSummaryModel>.fromJson(
+        e.response?.data,
+        (json) =>
+            TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
+      );
     }
   }
 }

@@ -4,7 +4,6 @@ import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/items/line_chart_item.dart';
-import 'package:css_mobile/widgets/items/ongoing_card.dart';
 import 'package:css_mobile/widgets/items/transaction_card.dart';
 import 'package:css_mobile/widgets/items/type_transaction_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,12 +23,15 @@ class DashboardAggCountItem extends StatelessWidget {
     int total = transSummary?.summary
             ?.where((e) => e.status == "Jumlah Transaksi")
             .first
-            .total
+            .totalCod
             ?.toInt() ??
         0;
 
     double percentage(double part) {
       double percent = ((part / total) * (100)) / 100;
+      if (percent.isInfinite || percent.isNaN) {
+        return 0;
+      }
       return percent;
     }
 
@@ -55,7 +57,7 @@ class DashboardAggCountItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("kiriman Kamu".tr,
+                Text("Aggregasi Pembayaran".tr,
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 3),
@@ -83,33 +85,43 @@ class DashboardAggCountItem extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              OngoingTransactionCard(
-                                title: "Dalam Peninjauan".tr,
-                                percentage: transSummary?.summary
-                                        ?.where((e) =>
-                                            e.status == "Dalam Peninjauan")
-                                        .first
-                                        .total
-                                        ?.toDouble() ??
-                                    0,
+                              TransactionCard(
+                                title: "Belum di Transfer",
                                 count: transSummary?.summary
                                         ?.where((e) =>
-                                            e.status == "Dalam Peninjauan")
+                                            e.status == "Belum di Transfer")
                                         .first
-                                        .total
+                                        .totalCod
                                         ?.toInt() ??
                                     0,
                                 subtitle:
-                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Dalam Peninjauan").first.total?.toDouble() ?? 0)}% dari jumlah transaksi",
-                                notificationLabel: "Masih dikamu",
-                                notificationCount: transSummary?.summary
-                                        ?.where(
-                                            (e) => e.status == "Masih di Kamu")
-                                        .first
-                                        .total
-                                        ?.toInt() ??
-                                    0,
+                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Belum di Transfer").first.totalCod?.toDouble() ?? 0)}% dari jumlah transaksi",
+                                color: Colors.blue,
+                                statusColor: Colors.red,
+                                chart: SizedBox(
+                                  width: 25,
+                                  height: 25,
+                                  child: CircularProgressIndicator(
+                                    value: percentage(transSummary?.summary
+                                            ?.where((e) =>
+                                                e.status == "Belum di Transfer")
+                                            .first
+                                            .totalCod
+                                            ?.toDouble() ??
+                                        0),
+                                    backgroundColor: Colors.grey[300],
+                                    color: Colors.red,
+                                    strokeWidth: 4,
+                                  ),
+                                ),
                               ),
+                              // OngoingTransactionCard(
+                              //   title: "Belum di Transfer".tr,
+                              //   percentage: transSummary?.summary?.where((e) => e.status == "Belum di Transfer").first.totalCod?.toDouble() ?? 0,
+                              //   count: transSummary?.summary?.where((e) => e.status == "Belum di Transfer").first.totalCod?.toInt() ?? 0,
+                              //   subtitle:
+                              //       "${percentage(transSummary?.summary?.where((e) => e.status == "Belum di Transfer").first.totalCod?.toDouble() ?? 0)}% dari jumlah transaksi",
+                              // ),
                               const SizedBox(height: 5),
                             ],
                           ),
@@ -118,16 +130,16 @@ class DashboardAggCountItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TransactionCard(
-                                title: "Transaksi Terkirim".tr,
+                                title: "Sudah di Transfer",
                                 count: transSummary?.summary
                                         ?.where((e) =>
-                                            e.status == "Sukses Diterima")
+                                            e.status == "Sudah di Transfer")
                                         .first
-                                        .total
+                                        .totalCod
                                         ?.toInt() ??
                                     0,
                                 subtitle:
-                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Sukses Diterima").first.total?.toDouble() ?? 0)}% dari jumlah transaksi",
+                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Sudah di Transfer").first.totalCod?.toDouble() ?? 0)}% dari jumlah transaksi",
                                 color: Colors.blue,
                                 statusColor: Colors.green,
                                 chart: SizedBox(
@@ -136,9 +148,9 @@ class DashboardAggCountItem extends StatelessWidget {
                                   child: CircularProgressIndicator(
                                     value: percentage(transSummary?.summary
                                             ?.where((e) =>
-                                                e.status == "Sukses Diterima")
+                                                e.status == "Sudah di Transfer")
                                             .first
-                                            .total
+                                            .totalCod
                                             ?.toDouble() ??
                                         0),
                                     backgroundColor: Colors.grey[300],
@@ -168,28 +180,19 @@ class DashboardAggCountItem extends StatelessWidget {
                           lineColor: redJNE,
                           isLoading: transSummary == null,
                         ),
-                        TypeTransactionCard(
-                          count: transSummary?.totalKirimanCod?.totalCodOngkir
-                                  .toString() ??
-                              '',
-                          amount: transSummary?.totalKirimanCod?.codOngkirAmount
-                              ?.toInt()
-                              .toCurrency()
-                              .toString(),
-                          description: "Transaksi COD Ongkir",
-                          lineColor: warningColor,
-                          isLoading: transSummary == null,
-                        ),
-                        TypeTransactionCard(
-                          count: transSummary?.totalKirimanCod?.totalNonCod
-                                  ?.toInt()
-                                  .toCurrency()
-                                  .toString() ??
-                              '',
-                          description: "Transaksi NON COD",
-                          lineColor: Colors.green,
-                          isLoading: transSummary == null,
-                        ),
+                        // TypeTransactionCard(
+                        //   count: transSummary?.totalKirimanCod?.totalCodOngkir.toString() ?? '',
+                        //   amount: transSummary?.totalKirimanCod?.codOngkirAmount?.toInt().toCurrency().toString(),
+                        //   description: "Transaksi COD Ongkir",
+                        //   lineColor: warningColor,
+                        //   isLoading: transSummary == null,
+                        // ),
+                        // TypeTransactionCard(
+                        //   count: transSummary?.totalKirimanCod?.totalNonCod?.toInt().toCurrency().toString() ?? '',
+                        //   description: "Transaksi NON COD",
+                        //   lineColor: Colors.green,
+                        //   isLoading: transSummary == null,
+                        // ),
                       ],
                     )
                   ],

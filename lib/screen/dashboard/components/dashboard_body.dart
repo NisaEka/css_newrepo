@@ -112,7 +112,7 @@ class DashboardBody extends StatelessWidget {
                               (c.state.allow.keuanganAggregasi == "Y" ||
                                   c.state.allow.monitoringAgg == "Y")
                           ? DashboardAggCountItem(
-                              transSummary: c.state.transSummary,
+                              transSummary: c.state.aggSummary,
                             )
                           : const SizedBox(),
                       const SizedBox(height: 20),

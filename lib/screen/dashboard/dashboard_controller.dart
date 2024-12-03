@@ -311,6 +311,13 @@ class DashboardController extends BaseController {
             update();
           },
         );
+
+        aggregation.getAggSummary().then(
+          (value) {
+            state.aggSummary = value.data;
+            update();
+          },
+        );
       } catch (e) {
         e.printError();
       }

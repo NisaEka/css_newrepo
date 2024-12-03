@@ -6,6 +6,8 @@ import 'package:css_mobile/data/model/aggregasi/get_aggregation_total_model.dart
 import 'package:css_mobile/data/model/base_response_model.dart';
 
 import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/response_model.dart';
+import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 
 abstract class AggregasiRepository {
   Future<BaseResponse<List<AggregationModel>>> getAggregationReport(
@@ -21,4 +23,6 @@ abstract class AggregasiRepository {
 
   Future<BaseResponse<List<AggregationMinusDocModel>>> getAggregationMinusDoc(
       String doc, QueryParamModel param);
+
+  Future<ResponseModel<TransactionSummaryModel>> getAggSummary();
 }

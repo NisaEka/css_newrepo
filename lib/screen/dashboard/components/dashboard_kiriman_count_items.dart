@@ -30,6 +30,10 @@ class DashboardKirimanCountItem extends StatelessWidget {
 
     double percentage(double part) {
       double percent = ((part / total) * (100)) / 100;
+
+      if (percent.isInfinite || percent.isNaN) {
+        return 0;
+      }
       return percent;
     }
 
@@ -55,7 +59,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("kiriman Kamu".tr,
+                Text("Kiriman Kamu".tr,
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 3),

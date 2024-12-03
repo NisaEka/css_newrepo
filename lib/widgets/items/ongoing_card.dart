@@ -9,8 +9,8 @@ class OngoingTransactionCard extends StatelessWidget {
   final double percentage;
   final int count;
   final String subtitle;
-  final String notificationLabel;
-  final int notificationCount;
+  final String? notificationLabel;
+  final int? notificationCount;
   final bool isLoading;
 
   const OngoingTransactionCard({
@@ -19,8 +19,8 @@ class OngoingTransactionCard extends StatelessWidget {
     required this.percentage,
     required this.count,
     required this.subtitle,
-    required this.notificationLabel,
-    required this.notificationCount,
+    this.notificationLabel,
+    this.notificationCount,
     this.isLoading = false,
   });
 
@@ -103,56 +103,58 @@ class OngoingTransactionCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          Container(
-            decoration: BoxDecoration(
-              color: greyLightColor3,
-              borderRadius: BorderRadius.circular(3),
-            ),
-            child: Row(
-              children: [
-                Container(
+          (notificationLabel?.isNotEmpty ?? false)
+              ? Container(
                   decoration: BoxDecoration(
-                    color: blueJNE,
+                    color: greyLightColor3,
                     borderRadius: BorderRadius.circular(3),
                   ),
                   child: Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 3),
-                        // width: Get.width * 0.25,
+                        decoration: BoxDecoration(
+                          color: blueJNE,
+                          borderRadius: BorderRadius.circular(3),
+                        ),
                         child: Row(
                           children: [
-                            const Icon(Icons.circle,
-                                size: 8, color: Colors.orange),
-                            const SizedBox(width: 10),
-                            Text(
-                              notificationLabel,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 6),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 3),
+                              // width: Get.width * 0.25,
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.circle,
+                                      size: 8, color: Colors.orange),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    notificationLabel ?? '',
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 6),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       ),
+                      const SizedBox(width: 5),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 6),
+                        child: Text(
+                          '$notificationCount',
+                          style: const TextStyle(
+                              color: redJNE,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 8),
+                        ),
+                      ),
                     ],
                   ),
-                ),
-                const SizedBox(width: 5),
-                Padding(
-                  padding: const EdgeInsets.only(right: 6),
-                  child: Text(
-                    '$notificationCount',
-                    style: const TextStyle(
-                        color: redJNE,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 8),
-                  ),
-                ),
-              ],
-            ),
-          ),
+                )
+              : const SizedBox(),
         ],
       ),
     );
