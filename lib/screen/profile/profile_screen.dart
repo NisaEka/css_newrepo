@@ -1,5 +1,9 @@
+import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
 import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_screen.dart';
 import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_screen.dart';
@@ -16,6 +20,7 @@ import 'package:css_mobile/widgets/bar/custombottombar5.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/logout_button.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
+import 'package:css_mobile/widgets/items/menu_icon.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,6 +45,22 @@ class ProfileScreen extends StatelessWidget {
                   title: 'Profil'.tr),
               body: _bodyContent(controller, context),
               bottomNavigationBar: const BottomBar5(menu: 2),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.miniStartDocked,
+              floatingActionButton: MenuIcon(
+                icon: IconsConstant.add,
+                margin: const EdgeInsets.only(left: 38, bottom: 29),
+                radius: 100,
+                background:
+                    AppConst.isLightTheme(context) ? redJNE : warningColor,
+                showContainer: false,
+                onTap: () => controller.state.isLogin
+                    ? Get.to(const InformasiPengirimScreen(), arguments: {})
+                    : showDialog(
+                        context: context,
+                        builder: (context) => const LoginAlertDialog(),
+                      ),
+              ),
             ),
           );
         });

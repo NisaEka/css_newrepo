@@ -16,6 +16,7 @@ class MenuIcon extends StatelessWidget {
   final double? radius;
   final VoidCallback? onTap;
   final Color? iconColor;
+  final EdgeInsets? margin;
 
   const MenuIcon({
     super.key,
@@ -30,6 +31,7 @@ class MenuIcon extends StatelessWidget {
     this.radius,
     this.onTap,
     this.iconColor,
+    this.margin,
   });
 
   @override
@@ -38,6 +40,7 @@ class MenuIcon extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: padding ?? const EdgeInsets.all(5),
+        margin: margin ?? EdgeInsets.zero,
         decoration: BoxDecoration(
           color: (showContainer
               ? (isTransparent

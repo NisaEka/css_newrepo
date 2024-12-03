@@ -1,7 +1,13 @@
+import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_body.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/onboarding/splash_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar5.dart';
+import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
+import 'package:css_mobile/widgets/items/menu_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,9 +30,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return PopScope(
             canPop: controller.pop,
             onPopInvokedWithResult: (didPop, result) => controller.onPop(),
-            child: const Scaffold(
-              body: DashboardBody(),
-              bottomNavigationBar: BottomBar5(menu: 0),
+            child: Scaffold(
+              body: const DashboardBody(),
+              bottomNavigationBar: const BottomBar5(menu: 0),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.miniStartDocked,
+              floatingActionButton: MenuIcon(
+                icon: IconsConstant.add,
+                margin: const EdgeInsets.only(left: 38, bottom: 29),
+                radius: 100,
+                background:
+                    AppConst.isLightTheme(context) ? redJNE : warningColor,
+                showContainer: false,
+                onTap: () => controller.state.isLogin
+                    ? Get.to(const InformasiPengirimScreen(), arguments: {})
+                    : showDialog(
+                        context: context,
+                        builder: (context) => const LoginAlertDialog(),
+                      ),
+              ),
             ),
           );
         }
