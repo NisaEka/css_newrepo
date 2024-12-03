@@ -197,25 +197,22 @@ class PantauPaketmuScreen extends StatelessWidget {
                     c.state.selectedTipeKiriman.value = value as String;
                   },
                 ),
-                // CustomDropDownField(
-                //   items: c.state.listOfficerEntry
-                //       .map(
-                //         (e) => DropdownMenuItem(
-                //           value: e,
-                //           child: Text(e),
-                //         ),
-                //       )
-                //       .toList(),
-                //   label: 'Petugas Entry'.tr,
-                //   hintText: 'Petugas Entry'.tr,
-                //   value: c.state.selectedPetugasEntry,
-                //   onChanged: (value) {
-                //     setState(() {
-                //       c.state.selectedPetugasEntry = value;
-                //       c.update();
-                //     });
-                //   },
-                // )
+                CustomDropDownField(
+                  items: c.state.listOfficerEntry
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e),
+                        ),
+                      )
+                      .toList(),
+                  label: 'Petugas Entry'.tr,
+                  hintText: 'Petugas Entry'.tr,
+                  value: c.state.selectedPetugasEntry.value,
+                  onChanged: (value) {
+                    c.state.selectedPetugasEntry.value = value as String;
+                  },
+                )
               ],
             ),
           ),
@@ -266,10 +263,10 @@ class PantauPaketmuScreen extends StatelessWidget {
                   itemBuilder: (context, item, index) => RiwayatKirimanListItem(
                     data: TransactionModel(
                       awb: item.awbNo,
-                      // orderId: item.orderId,
-                      // status: item.statusPod ?? item.status,
+                      orderId: item.orderId,
+                      statusAwb: item.statusPod ?? item.statusAwb,
                       serviceCode: item.service,
-                      // type: item.awbType,
+                      type: item.awbType,
                       receiverName: item.receiverName,
                       createdDate: item.awbDate,
                     ),

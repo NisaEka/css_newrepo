@@ -45,13 +45,13 @@ class GetPantauPaketmuModel {
 }
 
 class PantauPaketmuModel {
-  // final String? petugasEntry;
+  final String? petugasEntry;
   final String? custNo;
   final String? custName;
-  // final String? orderId;
+  final String? orderId;
   final String? awbNo;
   final String? awbRefno;
-  // final String? awbType;
+  final String? awbType;
   final String? cnoteReceiverPhone;
   final String? awbDate;
   final String? hoCourierDate;
@@ -61,7 +61,6 @@ class PantauPaketmuModel {
   final String? cnoteReceiverAddr1;
   final String? cnoteReceiverAddr2;
   final String? cnoteReceiverAddr3;
-  final String? desteReceiverAddr3;
   final String? destinationName;
   final String? service;
   final num? weightAwb;
@@ -78,16 +77,16 @@ class PantauPaketmuModel {
   final String? repcssPaymentReffid;
   final String? podlEpodUrlPic;
   final String? podlEpodUrl;
-  // final String? status;
+  final String? statusAwb;
 
   PantauPaketmuModel({
-    // this.petugasEntry,
+    this.petugasEntry,
     this.custNo,
     this.custName,
-    // this.orderId,
+    this.orderId,
     this.awbNo,
     this.awbRefno,
-    // this.awbType,
+    this.awbType,
     this.cnoteReceiverPhone,
     this.awbDate,
     this.hoCourierDate,
@@ -97,7 +96,6 @@ class PantauPaketmuModel {
     this.cnoteReceiverAddr1,
     this.cnoteReceiverAddr2,
     this.cnoteReceiverAddr3,
-    this.desteReceiverAddr3,
     this.destinationName,
     this.service,
     this.weightAwb,
@@ -114,19 +112,19 @@ class PantauPaketmuModel {
     this.repcssPaymentReffid,
     this.podlEpodUrlPic,
     this.podlEpodUrl,
-    // this.status,
+    this.statusAwb,
   });
 
   // Named constructor for JSON parsing
   factory PantauPaketmuModel.fromJson(Map<String, dynamic> json) {
     return PantauPaketmuModel(
-      // petugasEntry: json['petugasEntry'],
+      petugasEntry: json['petugasEntry'],
       custNo: json['custNo'],
       custName: json['custName'],
-      // orderId: json['orderId'],
+      orderId: json['orderId'],
       awbNo: json['awbNo'],
       awbRefno: json['awbRefno'],
-      // awbType: json['awbType'],
+      awbType: json['awbType'],
       cnoteReceiverPhone: json['cnoteReceiverPhone'],
       awbDate: json['awbDate'],
       hoCourierDate: json['hoCourierDate'],
@@ -136,7 +134,6 @@ class PantauPaketmuModel {
       cnoteReceiverAddr1: json['cnoteReceiverAddr1'],
       cnoteReceiverAddr2: json['cnoteReceiverAddr2'],
       cnoteReceiverAddr3: json['cnoteReceiverAddr3'],
-      desteReceiverAddr3: json['desteReceiverAddr3'],
       destinationName: json['destinationName'],
       service: json['service'],
       weightAwb: json['weightAwb'],
@@ -153,19 +150,19 @@ class PantauPaketmuModel {
       repcssPaymentReffid: json['repcssPaymentReffid'],
       podlEpodUrlPic: json['podlEpodUrlPic'],
       podlEpodUrl: json['podlEpodUrl'],
-      // status: json['status'],
+      statusAwb: json['statusAwb'],
     );
   }
 
   // Copy constructor
   PantauPaketmuModel copyWith({
-    // String? petugasEntry,
+    String? petugasEntry,
     String? custNo,
     String? custName,
-    // String? orderId,
+    String? orderId,
     String? awbNo,
     String? awbRefno,
-    // String? awbType,
+    String? awbType,
     String? cnoteReceiverPhone,
     String? awbDate,
     String? hoCourierDate,
@@ -175,7 +172,6 @@ class PantauPaketmuModel {
     String? cnoteReceiverAddr1,
     String? cnoteReceiverAddr2,
     String? cnoteReceiverAddr3,
-    String? desteReceiverAddr3,
     String? destinationName,
     String? service,
     num? weightAwb,
@@ -192,16 +188,16 @@ class PantauPaketmuModel {
     String? repcssPaymentReffid,
     String? podlEpodUrlPic,
     String? podlEpodUrl,
-    String? status,
+    String? statusAwb,
   }) {
     return PantauPaketmuModel(
-      // petugasEntry: petugasEntry ?? this.petugasEntry,
+      petugasEntry: petugasEntry ?? this.petugasEntry,
       custNo: custNo ?? this.custNo,
       custName: custName ?? this.custName,
-      // orderId: orderId ?? this.orderId,
+      orderId: orderId ?? this.orderId,
       awbNo: awbNo ?? this.awbNo,
       awbRefno: awbRefno ?? this.awbRefno,
-      // awbType: awbType ?? this.awbType,
+      awbType: awbType ?? this.awbType,
       cnoteReceiverPhone: cnoteReceiverPhone ?? this.cnoteReceiverPhone,
       awbDate: awbDate ?? this.awbDate,
       hoCourierDate: hoCourierDate ?? this.hoCourierDate,
@@ -212,7 +208,6 @@ class PantauPaketmuModel {
       cnoteReceiverAddr1: cnoteReceiverAddr1 ?? this.cnoteReceiverAddr1,
       cnoteReceiverAddr2: cnoteReceiverAddr2 ?? this.cnoteReceiverAddr2,
       cnoteReceiverAddr3: cnoteReceiverAddr3 ?? this.cnoteReceiverAddr3,
-      desteReceiverAddr3: desteReceiverAddr3 ?? this.desteReceiverAddr3,
       destinationName: destinationName ?? this.destinationName,
       service: service ?? this.service,
       weightAwb: weightAwb ?? this.weightAwb,
@@ -229,20 +224,20 @@ class PantauPaketmuModel {
       repcssPaymentReffid: repcssPaymentReffid ?? this.repcssPaymentReffid,
       podlEpodUrlPic: podlEpodUrlPic ?? this.podlEpodUrlPic,
       podlEpodUrl: podlEpodUrl ?? this.podlEpodUrl,
-      // status: status ?? this.status,
+      statusAwb: statusAwb ?? this.statusAwb,
     );
   }
 
   // Convert to JSON
   Map<String, dynamic> toJson() {
     return {
-      // 'petugasEntry': petugasEntry,
+      'petugasEntry': petugasEntry,
       'custNo': custNo,
       'custName': custName,
-      // 'orderId': orderId,
+      'orderId': orderId,
       'awbNo': awbNo,
       'awbRefno': awbRefno,
-      // 'awbType': awbType,
+      'awbType': awbType,
       'cnoteReceiverPhone': cnoteReceiverPhone,
       'awbDate': awbDate,
       'hoCourierDate': hoCourierDate,
@@ -252,7 +247,6 @@ class PantauPaketmuModel {
       'cnoteReceiverAddr1': cnoteReceiverAddr1,
       'cnoteReceiverAddr2': cnoteReceiverAddr2,
       'cnoteReceiverAddr3': cnoteReceiverAddr3,
-      'desteReceiverAddr3': desteReceiverAddr3,
       'destinationName': destinationName,
       'service': service,
       'weightAwb': weightAwb,
@@ -269,7 +263,7 @@ class PantauPaketmuModel {
       'repcssPaymentReffid': repcssPaymentReffid,
       'podlEpodUrlPic': podlEpodUrlPic,
       'podlEpodUrl': podlEpodUrl,
-      // 'status': status,
+      'statusAwb': statusAwb,
     };
   }
 }
