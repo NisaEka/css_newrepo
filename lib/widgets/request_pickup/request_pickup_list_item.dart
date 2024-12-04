@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -95,11 +96,14 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
       children: [
         Text(
           requestPickup.awb,
-          style: itemTextStyle.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context)
+              .textTheme
+              .labelSmall
+              ?.copyWith(fontWeight: FontWeight.bold),
         ),
         Text(
           requestPickup.receiverName,
-          style: itemTextStyle,
+          style: Theme.of(context).textTheme.labelSmall,
         ),
         _requestPickupServiceAndType(requestPickup)
       ],
@@ -111,15 +115,15 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
       children: [
         Text(
           requestPickup.apiType,
-          style: itemTextStyle,
+          style: Theme.of(context).textTheme.labelSmall,
         ),
         Text(
           " - ",
-          style: itemTextStyle,
+          style: Theme.of(context).textTheme.labelSmall,
         ),
         Text(
           requestPickup.serviceCode,
-          style: itemTextStyle,
+          style: Theme.of(context).textTheme.labelSmall,
         )
       ],
     );
@@ -131,7 +135,11 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
       children: [
         Text(
           requestPickup.createdDateSearch.toLongDateTimeFormat(),
-          style: labelTextStyle,
+          style: TextStyle(
+              color: AppConst.isLightTheme(context)
+                  ? greyDarkColor1
+                  : greyLightColor1,
+              fontSize: 8),
         ),
         const SizedBox(
           height: 8,

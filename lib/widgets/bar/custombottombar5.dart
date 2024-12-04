@@ -4,6 +4,8 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_card_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item2.dart';
@@ -66,42 +68,89 @@ class BottomBar5 extends StatelessWidget {
                               icon: IconsConstant.pantau,
                               size: 30,
                               showContainer: false,
-                              iconColor: menu == 1 ? redJNE : whiteColor,
+
+                              iconColor: menu == 1
+                                  ? AppConst.isLightTheme(context)
+                                      ? redJNE
+                                      : warningColor
+                                  : whiteColor,
                               background: AppConst.isLightTheme(context)
                                   ? blueJNE
                                   : infoColor,
                             ),
                             isSelected: menu == 1,
                             color: AppConst.isLightTheme(context)
-                                ? Colors.red
+
+                                ? redJNE
                                 : warningColor,
                             onTap: () =>
                                 Get.toNamed('/pantauPaketmu', arguments: {}),
                           )
                         : const SizedBox(),
-                    BottomMenuItem2(
-                      icon: Icon(
-                        Icons.person,
-                        color: menu == 2 ? redJNE : whiteColor,
-                        size: 35,
-                      ),
-                      isSelected: menu == 2,
-                      color: AppConst.isLightTheme(context)
-                          ? Colors.red
-                          : warningColor,
-                      // onTap: () => Get.offAll(const ProfileScreen()),
-                      onTap: () => controller.state.isLogin
-                          ? Get.offAll(const ProfileScreen(),
-                              transition: Transition.rightToLeft)
-                          : showDialog(
-                              context: context,
-                              builder: (context) => const LoginAlertDialog(),
-                            ),
+                   
+                        BottomMenuItem2(
+                          icon: Icon(
+                            Icons.person,
+                            color: menu == 2
+                                ? AppConst.isLightTheme(context)
+                                    ? redJNE
+                                    : warningColor
+                                : whiteColor,
+                            size: 35,
+                          ),
+                          isSelected: menu == 2,
+                          color: AppConst.isLightTheme(context)
+                              ? redJNE
+                              : warningColor,
+                          // onTap: () => Get.offAll(const ProfileScreen()),
+                          onTap: () => controller.state.isLogin
+                              ? Get.offAll(const ProfileScreen(),
+                                  transition: Transition.rightToLeft)
+                              : showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const LoginAlertDialog(),
+                                ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              controller.state.menuItems
+                      .where((e) => e.title == "Input Kirimanmu")
+                      .isNotEmpty
+                  ? Positioned(
+                      bottom: 50,
+                      left: 55,
+                      child: FloatingActionButton(
+                        shape: const CircleBorder(),
+                        backgroundColor: AppConst.isLightTheme(context)
+                            ? redJNE
+                            : warningColor,
+                        // onPressed: () => Get.to(const InputKirimanScreen()),
+                        onPressed: () => controller.state.isLogin
+                            ? Get.to(const InformasiPengirimScreen(),
+                                arguments: {})
+                            : showDialog(
+                                context: context,
+                                builder: (context) => const LoginAlertDialog(),
+                              ),
+                        child: MenuIcon(
+                          icon: IconsConstant.add,
+                          size: 40,
+                          iconColor: AppConst.isLightTheme(context)
+                              ? redJNE
+                              : warningColor,
+                          background: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : infoColor,
+                          showContainer: false,
+                          radius: 50,
+                        ),
+                      ))
+                  : const SizedBox(),
+            ],
           );
         });
   }

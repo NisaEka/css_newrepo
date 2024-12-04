@@ -121,7 +121,7 @@ class _ReportListItemState extends State<ReportListItem> {
                                   widget.det?.dpayDetWdrCnotedate
                                       ?.toDateTimeFormat() ??
                                   '',
-                              style: sublistTitleTextStyle,
+                              style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ),
                           Container(
@@ -203,8 +203,6 @@ class _ReportListItemState extends State<ReportListItem> {
                               title: "PAID AMOUNT",
                               value:
                                   "RP. ${widget.data?.mpayWdrGrpPayPaidAmt?.toInt().toCurrency() ?? '-'}",
-                              titleTextStyle:
-                                  listTitleTextStyle.copyWith(fontSize: 8),
                               valueFontColor: successColor,
                             ),
                             ValueItem(
@@ -212,20 +210,14 @@ class _ReportListItemState extends State<ReportListItem> {
                               value: widget.data?.mpayWdrGrpPayDatePaid
                                       ?.toShortDateFormat() ??
                                   '-',
-                              valueTextStyle:
-                                  sublistTitleTextStyle.copyWith(fontSize: 8),
                             ),
                             ValueItem(
                               title: "PAID REFF NO",
                               value: widget.data?.mpayWdrGrpPayReffPaid ?? '-',
-                              valueTextStyle:
-                                  sublistTitleTextStyle.copyWith(fontSize: 8),
                             ),
                             ValueItem(
                               title: "REMARKS",
                               value: widget.data?.remarks ?? '-',
-                              valueTextStyle:
-                                  sublistTitleTextStyle.copyWith(fontSize: 8),
                             ),
                             CustomFilledButton(
                               color: blueJNE,

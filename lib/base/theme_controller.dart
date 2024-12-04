@@ -50,11 +50,19 @@ class CustomTheme {
         titleLarge: appTitleTextStyle.copyWith(
           color: greyDarkColor1,
         ),
-        bodySmall: itemTextStyle.copyWith(
-          color: greyDarkColor1,
-        ),
+        bodySmall: itemTextStyle.copyWith(color: greyDarkColor1, fontSize: 12),
         bodyLarge: const TextStyle(
           fontSize: 16,
+          color: greyDarkColor1,
+          // fontWeight: FontWeight.w600,
+        ),
+        labelSmall: const TextStyle(
+          fontSize: 10,
+          color: greyDarkColor1,
+          // fontWeight: FontWeight.w600,
+        ),
+        labelMedium: const TextStyle(
+          fontSize: 12,
           color: greyDarkColor1,
           // fontWeight: FontWeight.w600,
         ),
@@ -197,6 +205,16 @@ class CustomTheme {
         ),
         bodyLarge: const TextStyle(
           fontSize: 16,
+          color: greyLightColor1,
+          // fontWeight: FontWeight.w600,
+        ),
+        labelSmall: const TextStyle(
+          fontSize: 10,
+          color: greyLightColor1,
+          // fontWeight: FontWeight.w600,
+        ),
+        labelMedium: const TextStyle(
+          fontSize: 12,
           color: greyLightColor1,
           // fontWeight: FontWeight.w600,
         ),

@@ -7,6 +7,7 @@ import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/screen/pantau_paketmu/detail/pantau_paketmu_detail_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/hubungi_aku_dialog.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
@@ -31,14 +32,14 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
 
   Widget _detailBody(
       BuildContext context, PantauPaketmuDetailController controller) {
-    if (controller.showLoadingIndicator) {
-      return Container(
-        alignment: Alignment.center,
-        child: CircularProgressIndicator(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      );
-    }
+    // if (controller.showLoadingIndicator) {
+    //   return Container(
+    //     alignment: Alignment.center,
+    //     child: CircularProgressIndicator(
+    //       color: Theme.of(context).colorScheme.primary,
+    //     ),
+    //   );
+    // }
 
     if (controller.showEmptyContainer) {
       return const Center(child: Text("Not Found"));
@@ -126,174 +127,249 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(
-                          right: 20), // Margin between the two text widgets
-                      child: Text(
-                        'Informasi Transaksi'.tr,
-                        style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : whiteColor,
+                    Shimmer(
+                      isLoading: controller.isLoading,
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(
+                            right: 20), // Margin between the two text widgets
+                        child: Text(
+                          'Informasi Transaksi'.tr,
+                          style: listTitleTextStyle.copyWith(
+                            color: AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : redJNE,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    _textRow("Nomor Akun", controller.pantauPaketmu.custNo,
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
-                    const SizedBox(height: 6),
-                    _textRow("Nama Akun", controller.pantauPaketmu.custName,
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
-                    const SizedBox(height: 6),
-                    _textRow("Order Id",
-                        controller.pantauPaketmu.transaction?.orderId ?? "-",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                    _textRow(
+                      context,
+                      "Nomor Akun",
+                      controller.pantauPaketmu.custNo,
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
                     _textRow(
-                        "Petugas Entry",
-                        controller.pantauPaketmu.transaction?.petugasEntry ??
-                            "-",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
-                    const SizedBox(height: 6),
-                    _textRow("Tanggal Transaksi",
-                        controller.pantauPaketmu.createDate.toDateTimeFormat(),
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                      context,
+                      "Nama Akun",
+                      controller.pantauPaketmu.custName,
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
                     _textRow(
-                        "Tangal Serah Terima / Pickup",
-                        controller.pantauPaketmu.hoCourierDate
-                                ?.toDateTimeFormat() ??
-                            controller.pantauPaketmu.puLastAttempStatusDate
-                                ?.toDateTimeFormat() ??
-                            "-",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                      context,
+                      "Order Id",
+                      controller.pantauPaketmu.transaction?.orderId ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Petugas Entry",
+                      controller.pantauPaketmu.transaction?.petugasEntry ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Tanggal Transaksi",
+                      controller.pantauPaketmu.createDate.toDateTimeFormat(),
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Tanggal Serah Terima / Pickup",
+                      controller.pantauPaketmu.hoCourierDate
+                              ?.toDateTimeFormat() ??
+                          controller.pantauPaketmu.puLastAttempStatusDate
+                              ?.toDateTimeFormat() ??
+                          "-",
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 16),
                     const Divider(
                       color: greyLightColor3,
                     ),
                     const SizedBox(height: 16),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(
-                          right: 20), // Margin between the two text widgets
-                      child: Text(
-                        'Detail Kiriman'.tr,
-                        style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : whiteColor,
+                    Shimmer(
+                      isLoading: controller.isLoading,
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(
+                            right: 20), // Margin between the two text widgets
+                        child: Text(
+                          'Detail Kiriman'.tr,
+                          style: listTitleTextStyle.copyWith(
+                            color: AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : redJNE,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    _textRow("Nama Pengirim",
-                        controller.pantauPaketmu.cnoteShipperName,
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
-                    const SizedBox(height: 6),
-                    _textRow("Nama Penerima",
-                        controller.pantauPaketmu.cnoteReceiverName,
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
-                    const SizedBox(height: 6),
-                    _textRow("Alamat Penerima",
-                        '${controller.pantauPaketmu.cnoteReceiverAddr1}${controller.pantauPaketmu.cnoteReceiverAddr2}${controller.pantauPaketmu.cnoteReceiverAddr3}',
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
-                    const SizedBox(height: 6),
-                    _textRow("Kota Tujuan Penerima",
-                        controller.pantauPaketmu.destinationName,
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
-                    const SizedBox(height: 6),
-                    _textRow("Isi Kiriman",
-                        controller.pantauPaketmu.awbGoodsDescr ?? "-",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
-                    const SizedBox(height: 6),
-                    _textRow("Special Instructions",
-                        controller.pantauPaketmu.awbSpecialIns ?? "-",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                    _textRow(
+                      context,
+                      "Nama Pengirim",
+                      controller.pantauPaketmu.cnoteShipperName,
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
                     _textRow(
-                        "Berat Kiriman",
-                        controller.pantauPaketmu.weightAwb != null
-                            ? '${controller.pantauPaketmu.weightAwb?.toDouble().toString()} KG'
-                            : "- KG",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                      context,
+                      "Nama Penerima",
+                      controller.pantauPaketmu.cnoteReceiverName,
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
-                    _textRow("Service", controller.pantauPaketmu.service,
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                    _textRow(
+                      context,
+                      "Alamat Penerima",
+                      '${controller.pantauPaketmu.cnoteReceiverAddr1}${controller.pantauPaketmu.cnoteReceiverAddr2}${controller.pantauPaketmu.cnoteReceiverAddr3}',
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
-                    _textRow("Nominal COD",
-                        'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString()}',
-                        style: listTitleTextStyle.copyWith(color: blueJNE)),
+                    _textRow(
+                      context,
+                      "Kota Tujuan Penerima",
+                      controller.pantauPaketmu.destinationName,
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
-                    _textRow("Nominal Asuransi",
-                        'Rp. ${controller.pantauPaketmu.awbInsuranceValue?.toCurrency().toString()}',
-                        style: listTitleTextStyle.copyWith(color: blueJNE)),
+                    _textRow(
+                      context,
+                      "Isi Kiriman",
+                      controller.pantauPaketmu.awbGoodsDescr ?? "-",
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
-                    _textRow("Ongkos Kirim",
-                        'Rp. ${controller.pantauPaketmu.awbAmount?.toCurrency().toString()}',
-                        style: listTitleTextStyle.copyWith(color: blueJNE)),
+                    _textRow(
+                      context,
+                      "Special Instructions",
+                      controller.pantauPaketmu.awbSpecialIns ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Berat Kiriman",
+                      controller.pantauPaketmu.weightAwb != null
+                          ? '${controller.pantauPaketmu.weightAwb?.toDouble().toString()} KG'
+                          : "- KG",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Service",
+                      controller.pantauPaketmu.service,
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                        context,
+                        "Nominal COD",
+                        'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? ''}',
+                        controller.isLoading,
+                        style: listTitleTextStyle.copyWith(
+                            color: AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : redJNE)),
+                    const SizedBox(height: 6),
+                    _textRow(
+                        context,
+                        "Nominal Asuransi",
+                        'Rp. ${controller.pantauPaketmu.awbInsuranceValue?.toCurrency().toString() ?? ''}',
+                        controller.isLoading,
+                        style: listTitleTextStyle.copyWith(
+                          color:
+                              AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                        )),
+                    const SizedBox(height: 6),
+                    _textRow(
+                        context,
+                        "Ongkos Kirim",
+                        'Rp. ${controller.pantauPaketmu.awbAmount?.toCurrency().toString() ?? ''}',
+                        controller.isLoading,
+                        style: listTitleTextStyle.copyWith(
+                            color: AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : redJNE)),
                     const SizedBox(height: 16),
                     const Divider(
                       color: greyLightColor3,
                     ),
                     const SizedBox(height: 16),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(
-                          right: 20), // Margin between the two text widgets
-                      child: Text(
-                        'Informasi Pengantaran'.tr,
-                        style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : whiteColor,
+                    Shimmer(
+                      isLoading: controller.isLoading,
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(
+                            right: 20), // Margin between the two text widgets
+                        child: Text(
+                          'Informasi Pengantaran'.tr,
+                          style: listTitleTextStyle.copyWith(
+                            color: AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : redJNE,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
                     _textRow(
-                        "Tanggal Status Pengantaran",
-                        controller.pantauPaketmu.tglReceived
-                            ?.toDateTimeFormat(),
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                      context,
+                      "Tanggal Status Pengantaran",
+                      controller.pantauPaketmu.tglReceived?.toDateTimeFormat(),
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
-                    _textRow("Status Pengantaran",
-                        controller.pantauPaketmu.statusPod ?? "-"),
+                    _textRow(
+                      context,
+                      "Status Pengantaran",
+                      controller.pantauPaketmu.statusPod ?? "-",
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
-                    _textRow("Deskripsi Status",
-                        controller.pantauPaketmu.codingPod ?? "-",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                    _textRow(
+                      context,
+                      "Deskripsi Status",
+                      controller.pantauPaketmu.codingPod ?? "-",
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
-                    _textRow("Keterangan Status Penerima",
-                        controller.pantauPaketmu.receivedReason ?? "-",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                    _textRow(
+                      context,
+                      "Keterangan Status Penerima",
+                      controller.pantauPaketmu.receivedReason ?? "-",
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
-                    _textRow("Bukti Foto Penerima",
-                        controller.pantauPaketmu.podlEpodUrlPic ?? "-",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                    _textRow(
+                      context,
+                      "Bukti Foto Penerima",
+                      controller.pantauPaketmu.podlEpodUrlPic ?? "-",
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
-                    _textRow("Bukti Tanda Tangan Penerima",
-                        controller.pantauPaketmu.podlEpodUrl ?? "-",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                    _textRow(
+                      context,
+                      "Bukti Tanda Tangan Penerima",
+                      controller.pantauPaketmu.podlEpodUrl ?? "-",
+                      controller.isLoading,
+                    ),
                     if (controller.pantauPaketmu.codFlag == 'Y') ...[
                       const SizedBox(height: 16),
                       const Divider(
@@ -309,45 +385,58 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                           style: listTitleTextStyle.copyWith(
                             color: AppConst.isLightTheme(context)
                                 ? blueJNE
-                                : whiteColor,
+                                : redJNE,
                           ),
                         ),
                       ),
                       const SizedBox(height: 16),
-                      _textRow("Reff ID",
-                          controller.pantauPaketmu.repcssPaymentReffid ?? "-",
-                          style:
-                              listTitleTextStyle.copyWith(fontWeight: regular)),
+                      _textRow(
+                        context,
+                        "Reff ID",
+                        controller.pantauPaketmu.repcssPaymentReffid ?? "-",
+                        controller.isLoading,
+                      ),
                       const SizedBox(height: 6),
                       _textRow(
-                          "Tanggal Pembayaran",
-                          controller.pantauPaketmu.repcssPaymentDate
-                                  ?.toDateTimeFormat() ??
-                              "-"),
+                        context,
+                        "Tanggal Pembayaran",
+                        controller.pantauPaketmu.repcssPaymentDate
+                                ?.toDateTimeFormat() ??
+                            "-",
+                        controller.isLoading,
+                      ),
                     ],
                     const SizedBox(height: 16),
                     const Divider(
                       color: greyLightColor3,
                     ),
                     const SizedBox(height: 16),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(
-                          right: 20), // Margin between the two text widgets
-                      child: Text(
-                        'Informasi Tiket Laporan'.tr,
-                        style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : whiteColor,
+                    Shimmer(
+                      isLoading: controller.isLoading,
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(
+                            right: 20), // Margin between the two text widgets
+                        child: Text(
+                          'Informasi Tiket Laporan'.tr,
+                          style: listTitleTextStyle.copyWith(
+                            color: AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : redJNE,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    _textRow("No Tiket Laporan",
-                        controller.pantauPaketmu.ticket?.id ?? "-",
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                    _textRow(
+                      context,
+                      "No Tiket Laporan",
+                      controller.pantauPaketmu.ticket?.id ?? "-",
+                      controller.isLoading,
+                    ),
                   ],
                 ),
               ),
@@ -359,30 +448,52 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _textRow(String title, String? value, {TextStyle? style}) {
+  Widget _textRow(
+      BuildContext context, String title, String? value, bool isLoading,
+      {TextStyle? style}) {
     if (value == null) {
       return Container();
     }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start, // Spread the columns
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           // Ensures that the title takes up only as much space as it needs
-          child: Text(
-            title.tr,
-            style: sublistTitleTextStyle,
+          child: Shimmer(
+            isLoading: isLoading,
+            child: Container(
+              color: isLoading ? greyColor : Colors.transparent,
+              child: Text(
+                title.tr,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: regular),
+              ),
+            ),
           ),
         ),
+        const SizedBox(width: 10),
         Expanded(
           // Makes the value take the rest of the space in the row
-          child: Text(
-            value,
-            style: style ?? listTitleTextStyle,
-            textAlign: TextAlign.start, // Align the value to the right
+          child: Shimmer(
+            isLoading: isLoading,
+            child: Container(
+              color: isLoading ? greyColor : Colors.transparent,
+              child: Text(
+                value,
+                style: style ??
+                    Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: regular),
+                textAlign: TextAlign.start, // Align the value to the right
+              ),
+            ),
           ),
-        ),
+        )
       ],
     );
   }

@@ -35,7 +35,10 @@ class ValueItem extends StatelessWidget {
           child: Text(
             title,
             style: titleTextStyle ??
-                subTitleTextStyle.copyWith(fontSize: fontSize ?? 8),
+                Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(fontSize: fontSize ?? 8),
           ),
         ),
         Container(
