@@ -98,9 +98,10 @@ class NetworkCore {
         },
         onError: (dioError, handler) async {
           AppLogger.e("dio error : $dioError");
+          final refreshToken = await StorageCore().readRefreshToken();
+          AppLogger.i("refresh token local : $refreshToken");
           if (dioError.response?.statusCode == 401) {
             // Handle token refresh logic
-            final refreshToken = await StorageCore().readRefreshToken();
             if (refreshToken != null) {
               try {
                 Response response = await refreshDio.post(

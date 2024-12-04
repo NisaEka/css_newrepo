@@ -79,9 +79,10 @@ class DashboardKirimanCountItem extends StatelessWidget {
                               icon: Icons.show_chart,
                               statusColor: whiteColor,
                               chart: const SizedBox(
-                                  width: 20,
+                                  width: 45,
                                   height: 20,
-                                  child: LineChartItem([10, 30, 20, 50]))),
+                                  child: LineChartItem(
+                                      [100, 30, 20, 50, 60, 80, 100]))),
                           const SizedBox(height: 5),
                           // Dalam Perjalanan
                           Column(

@@ -121,19 +121,6 @@ class DashboardBody extends StatelessWidget {
                               transSummary: c.state.transSummary,
                             )
                           : const SizedBox(),
-
-                      // c.state.isLogin
-                      //     ? DashboardCountItems(
-                      //         title: 'Kiriman Kamu'.tr,
-                      //         total: c.state.transSummary?.summary?.where((e) => e.status == 'Jumlah Transaksi').first.total?.toInt() ?? 0,
-                      //       )
-                      //     : const SizedBox(),
-                      // c.state.isLogin,
-                      //     ? const DashboardKirimanCounts()
-                      //     : const SizedBox(),
-                      // c.state.isLogin
-                      //     ? const DashboardKirimanCod()
-                      //     : const SizedBox(),
                       const DashboardPromo(),
                       const DashboardNews(),
                       const SizedBox(height: 50),
