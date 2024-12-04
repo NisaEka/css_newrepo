@@ -2,7 +2,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_screen.dart';
-import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/screen/pantau_paketmu/detail/pantau_paketmu_detail_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/hubungi_aku_dialog.dart';
