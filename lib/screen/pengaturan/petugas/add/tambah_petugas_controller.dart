@@ -459,7 +459,7 @@ class TambahPetugasController extends BaseController {
               name: namaPetugas.text,
               email: alamatEmail.text,
               phone: nomorTelepon.text,
-              password: password.text,
+              password: password.text.isNotEmpty ? password.text : null,
               address: alamat.text,
               zipCode: zipCode.text,
               status: status,
@@ -514,9 +514,22 @@ class TambahPetugasController extends BaseController {
               origins: originCodes.toSet().toList(),
             ),
           )
-          .then((value) => Get.back());
-    } catch (e) {
-      AppLogger.e('error updateOfficer', e);
+          .then((value) => {
+                if (value.code == 201)
+                  {Get.back()}
+                else if (value.code == 409)
+                  {
+                    AppSnackBar.error(
+                        'Alamat email atau nomor telepon sudah digunakan'.tr)
+                  }
+                else
+                  {
+                    AppSnackBar.error(
+                        value.message ?? value.error ?? 'Bad Request'.tr),
+                  }
+              });
+    } catch (e, i) {
+      AppLogger.e('error updateOfficer $e, $i');
       AppSnackBar.error('Bad Request'.tr);
     }
     isLoading = false;
