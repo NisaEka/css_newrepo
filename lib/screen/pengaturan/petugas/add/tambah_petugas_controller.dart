@@ -515,13 +515,8 @@ class TambahPetugasController extends BaseController {
             ),
           )
           .then((value) => {
-                if (value.code == 201)
+                if (value.code == 200)
                   {Get.back()}
-                else if (value.code == 409)
-                  {
-                    AppSnackBar.error(
-                        'Alamat email atau nomor telepon sudah digunakan'.tr)
-                  }
                 else
                   {
                     AppSnackBar.error(
