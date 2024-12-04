@@ -48,7 +48,7 @@ class BottomBar5 extends StatelessWidget {
                       icon: SvgPicture.asset(
                         IconsConstant.home,
                         height: 35,
-                        color: menu == 0 ? redJNE : whiteColor,
+                        color: menu == 0 ? redJNE : warningColor,
                       ),
                       isSelected: menu == 0,
                       color: AppConst.isLightTheme(context)

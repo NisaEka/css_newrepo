@@ -31,14 +31,14 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
 
   Widget _detailBody(
       BuildContext context, PantauPaketmuDetailController controller) {
-    if (controller.showLoadingIndicator) {
-      return Container(
-        alignment: Alignment.center,
-        child: CircularProgressIndicator(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      );
-    }
+    // if (controller.showLoadingIndicator) {
+    //   return Container(
+    //     alignment: Alignment.center,
+    //     child: CircularProgressIndicator(
+    //       color: Theme.of(context).colorScheme.primary,
+    //     ),
+    //   );
+    // }
 
     if (controller.showEmptyContainer) {
       return const Center(child: Text("Not Found"));
@@ -327,13 +327,11 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     _textRow(
-                        context,
-                        "Tanggal Status Pengantaran",
-                        controller.pantauPaketmu.tglReceived
-                            ?.toDateTimeFormat(),
-                        controller.isLoading,
-                        style:
-                            listTitleTextStyle.copyWith(fontWeight: regular)),
+                      context,
+                      "Tanggal Status Pengantaran",
+                      controller.pantauPaketmu.tglReceived?.toDateTimeFormat(),
+                      controller.isLoading,
+                    ),
                     const SizedBox(height: 6),
                     _textRow(
                       context,

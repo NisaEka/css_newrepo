@@ -133,6 +133,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                           ),
                           Container(
                             padding: const EdgeInsets.all(3),
+                            width: Get.width / 3,
                             // decoration: const BoxDecoration(
                             //   border: Border(
                             //     left: BorderSide(),
