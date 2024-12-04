@@ -262,7 +262,6 @@ class PantauPaketmuScreen extends StatelessWidget {
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => RiwayatKirimanListItem(
                     data: TransactionModel(
-                      // apiType: item.cnoteShipperName?.split('/').last.toUpperCase(),
                       awb: item.awbNo,
                       orderId: item.orderId,
                       statusAwb: item.statusPod ?? item.statusAwb,
