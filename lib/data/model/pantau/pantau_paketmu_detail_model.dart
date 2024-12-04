@@ -466,7 +466,9 @@ class PantauPaketmuDetailModel {
       registrationId: json['registrationId'],
       hvoHubDestination: json['hvoHubDestination'],
       weightAwb: json['weightAwb'],
-      transaction: json['transaction'],
+      transaction: json['transaction'] != null
+          ? TransactionModel.fromJson(json['transaction'])
+          : null,
       ticket: json['ticket'],
     );
   }
