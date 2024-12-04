@@ -121,7 +121,7 @@ class DashboardBody extends StatelessWidget {
                               transSummary: c.state.transSummary,
                             )
                           : const SizedBox(),
-                      const SizedBox(height: 50),
+                      // const SizedBox(height: 50),
                       // c.state.isLogin
                       //     ? DashboardCountItems(
                       //         title: 'Kiriman Kamu'.tr,
