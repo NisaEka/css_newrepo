@@ -160,8 +160,8 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
                       c.update();
                     }
                   : null,
-              child: const SatuanFieldIcon(
-                title: 'Pilih',
+              child: SatuanFieldIcon(
+                title: 'Pilih'.tr,
                 width: 100,
                 isSuffix: true,
               ),

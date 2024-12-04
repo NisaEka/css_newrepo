@@ -147,14 +147,14 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     _textRow(
                       context,
                       "Nomor Akun",
-                      controller.pantauPaketmu.custNo,
+                      controller.pantauPaketmu.custNo ?? "-",
                       controller.isLoading,
                     ),
                     const SizedBox(height: 6),
                     _textRow(
                       context,
                       "Nama Akun",
-                      controller.pantauPaketmu.custName,
+                      controller.pantauPaketmu.custName ?? "-",
                       controller.isLoading,
                     ),
                     const SizedBox(height: 6),
@@ -217,28 +217,28 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     _textRow(
                       context,
                       "Nama Pengirim",
-                      controller.pantauPaketmu.cnoteShipperName,
+                      controller.pantauPaketmu.cnoteShipperName ?? "-",
                       controller.isLoading,
                     ),
                     const SizedBox(height: 6),
                     _textRow(
                       context,
                       "Nama Penerima",
-                      controller.pantauPaketmu.cnoteReceiverName,
+                      controller.pantauPaketmu.cnoteReceiverName ?? "-",
                       controller.isLoading,
                     ),
                     const SizedBox(height: 6),
                     _textRow(
                       context,
                       "Alamat Penerima",
-                      '${controller.pantauPaketmu.cnoteReceiverAddr1}${controller.pantauPaketmu.cnoteReceiverAddr2}${controller.pantauPaketmu.cnoteReceiverAddr3}',
+                      '${controller.pantauPaketmu.cnoteReceiverAddr1 ?? ''}${controller.pantauPaketmu.cnoteReceiverAddr2 ?? ''}${controller.pantauPaketmu.cnoteReceiverAddr3 ?? ''}',
                       controller.isLoading,
                     ),
                     const SizedBox(height: 6),
                     _textRow(
                       context,
                       "Kota Tujuan Penerima",
-                      controller.pantauPaketmu.destinationName,
+                      controller.pantauPaketmu.destinationName ?? "-",
                       controller.isLoading,
                     ),
                     const SizedBox(height: 6),
@@ -275,7 +275,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     _textRow(
                         context,
                         "Nominal COD",
-                        'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? ''}',
+                        'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
                         controller.isLoading,
                         style: listTitleTextStyle.copyWith(
                             color: AppConst.isLightTheme(context)
@@ -285,7 +285,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     _textRow(
                         context,
                         "Nominal Asuransi",
-                        'Rp. ${controller.pantauPaketmu.awbInsuranceValue?.toCurrency().toString() ?? ''}',
+                        'Rp. ${controller.pantauPaketmu.awbInsuranceValue?.toCurrency().toString() ?? '0'}',
                         controller.isLoading,
                         style: listTitleTextStyle.copyWith(
                           color:
@@ -295,7 +295,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     _textRow(
                         context,
                         "Ongkos Kirim",
-                        'Rp. ${controller.pantauPaketmu.awbAmount?.toCurrency().toString() ?? ''}',
+                        'Rp. ${controller.pantauPaketmu.awbAmount?.toCurrency().toString() ?? '0'}',
                         controller.isLoading,
                         style: listTitleTextStyle.copyWith(
                             color: AppConst.isLightTheme(context)

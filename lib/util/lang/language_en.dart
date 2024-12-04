@@ -417,6 +417,20 @@ class LanguageEN {
       "Tampilkan Seluruh Transaksi": "Show All Transactions",
       "Hapus Seluruh Transaksi": "Delete All Transactions",
       "Tema": "Theme",
+      "Nominal Pengajuan": "Claim Amount",
+      "Pilih berkas lampiran": "Supporting Evidence",
+      "Ajukan Claim": "Create Claim Ticket",
+      "Pilih": "Browse",
+      "Ajukan": "Submit",
+      "Transaksi Terkirim": "Succesfully Received",
+      "7 Hari Terakhir": "Last 7 Days",
+      "Masih dikamu": "Not Received",
+      "dari jumlah transaksi": "from all transactions",
+      "Sentuh untuk sinkronisasi manual": "Touch to manual sync",
+      "Promo Terkini": "Latest Promo",
+      "Buat Tiket Laporan": "Create Report Ticket",
+      "Pengajuan Eclaim": "Create Claim Ticket",
+      "Aggregasi Pembayaran": "Aggregation Payment"
     };
   }
 }

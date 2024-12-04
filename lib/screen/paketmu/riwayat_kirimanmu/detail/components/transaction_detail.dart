@@ -156,7 +156,8 @@ class TransactionDetail extends StatelessWidget {
                       children: [
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
-                            label: c.state.transactionModel?.statusAwb ?? ''),
+                            label:
+                                c.state.transactionModel?.statusAwb?.tr ?? ''),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:

@@ -248,7 +248,9 @@ class TransactionForm extends StatelessWidget {
                                 c.update();
                               },
                             ),
-                            Text('Dimensi Kiriman'.tr),
+                            const Spacer(),
+                            Text('Dimensi Kiriman'.tr,
+                                style: Theme.of(context).textTheme.titleSmall),
                             Switch(
                               value: c.state.dimension,
                               activeColor: AppConst.isLightTheme(context)
@@ -575,11 +577,12 @@ class TransactionForm extends StatelessWidget {
                         c.state.goods == null && !c.state.isOnline ||
                                 c.state.draft != null
                             ? CustomFilledButton(
-                                color: whiteColor,
-                                borderColor:
+                                color:
                                     c.state.formValidate ? blueJNE : greyColor,
-                                fontColor:
-                                    c.state.formValidate ? blueJNE : greyColor,
+                                // borderColor:
+                                //     c.state.formValidate ? greyLightColor1 : greyLightColor3,
+                                // fontColor:
+                                //     c.state.formValidate ? greyLightColor1 : greyDarkColor1,
                                 title: 'Simpan ke Draft'.tr,
                                 onPressed: () {
                                   c.state.formValidate ? c.saveDraft() : null;
