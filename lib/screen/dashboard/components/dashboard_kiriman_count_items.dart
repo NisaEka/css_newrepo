@@ -107,7 +107,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                         ?.toInt() ??
                                     0,
                                 subtitle:
-                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Dalam Peninjauan").first.total?.toDouble() ?? 0)}% dari jumlah transaksi",
+                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Dalam Peninjauan").first.total?.toDouble() ?? 0)}% ${'dari jumlah transaksi'.tr}",
                                 notificationLabel: "Masih dikamu",
                                 notificationCount: transSummary?.summary
                                         ?.where(
@@ -134,7 +134,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                         ?.toInt() ??
                                     0,
                                 subtitle:
-                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Sukses Diterima").first.total?.toDouble() ?? 0)}% dari jumlah transaksi",
+                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Sukses Diterima").first.total?.toDouble() ?? 0)}% ${'dari jumlah transaksi'.tr}",
                                 color: Colors.blue,
                                 statusColor: Colors.green,
                                 chart: SizedBox(

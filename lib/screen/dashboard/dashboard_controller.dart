@@ -152,47 +152,42 @@ class DashboardController extends BaseController {
   }
 
   void cekAllowance() {
+    AppLogger.w("allowance : ${state.allow.toJson()}");
     if (state.isLogin &&
         state.allow.paketmuInput != "Y" &&
-        state.isOnline &&
         state.allow.buatPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
     }
     if (state.isLogin &&
         state.allow.paketmuRiwayat != "Y" &&
-        state.isOnline &&
         state.allow.riwayatPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
       state.menuItems.removeWhere((e) => e.title == "Draft Transaksi");
     }
     if (state.isLogin &&
         state.allow.paketmuLacak != "Y" &&
-        state.isOnline &&
         state.allow.lacakPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
     }
     if (state.isLogin &&
         state.allow.keuanganCod != "Y" &&
-        state.isOnline &&
         state.allow.uangCod != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
     if (state.isLogin &&
         state.allow.keuanganAggregasi != "Y" &&
-        state.isOnline &&
         state.allow.monitoringAgg != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
     if (state.isLogin &&
         state.allow.keuanganAggregasiMinus != "Y" &&
-        state.isOnline &&
         state.allow.monitoringAggMinus != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
     }
-    if (state.isLogin && state.allow.cekOngkir != "Y" && state.isOnline) {
+    if (state.isLogin && state.allow.cekOngkir != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Cek Ongkir");
     }
-    if (state.isLogin && state.allow.pantauPaketmu != "Y" && state.isOnline) {
+    if (state.isLogin && state.allow.pantauPaketmu != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Pantau Paketmu");
     }
   }
@@ -378,6 +373,8 @@ class DashboardController extends BaseController {
           await storage.saveData(StorageCore.basicProfile, value.data?.user);
           state.basic = UserModel.fromJson(
               await storage.readData(StorageCore.basicProfile));
+          state.allow = value.data?.menu ?? MenuModel();
+          storage.saveData(StorageCore.userMenu, value.data?.menu);
           saveFCMToken();
 
           await storage.saveData(
@@ -485,8 +482,7 @@ class DashboardController extends BaseController {
       UserModel shipper =
           UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
       state.userName = shipper.name ?? '';
-      state.allow =
-          MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+      // state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
       update();
     } catch (e, i) {
       e.printError();

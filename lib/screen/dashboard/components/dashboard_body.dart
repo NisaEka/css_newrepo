@@ -29,7 +29,9 @@ class DashboardBody extends StatelessWidget {
                   (_) => c.loadBanner(),
                 )
                 .then((_) => c.loadNews())
-                .then((_) => c.loadTransCountList()),
+                .then((_) {
+              c.loadTransCountList();
+            }),
             child: CustomScrollView(
               slivers: [
                 const DashboardAppbar(),
