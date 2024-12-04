@@ -2,6 +2,7 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -133,6 +134,8 @@ class _CustomSearchDropdownFieldState<T>
             constraints: const BoxConstraints(maxHeight: 200),
             fit: FlexFit.loose,
             showSelectedItems: false,
+            errorBuilder: (context, searchEntry, exception) =>
+                DataEmpty(text: "Anda sedang offline".tr),
             menuProps: MenuProps(
               backgroundColor:
                   AppConst.isLightTheme(context) ? null : greyColor,

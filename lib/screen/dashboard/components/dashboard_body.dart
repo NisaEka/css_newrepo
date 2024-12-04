@@ -107,18 +107,18 @@ class DashboardBody extends StatelessWidget {
                         ],
                       ),
                       const DashboardMenu2(),
-                      const SizedBox(height: 40),
                       c.state.isLogin &&
                               (c.state.allow.keuanganAggregasi == "Y" ||
                                   c.state.allow.monitoringAgg == "Y")
                           ? DashboardAggCountItem(
                               transSummary: c.state.aggSummary,
+                              isLoading: c.state.isLoading,
                             )
                           : const SizedBox(),
-                      const SizedBox(height: 20),
                       c.state.isLogin
                           ? DashboardKirimanCountItem(
                               transSummary: c.state.transSummary,
+                              isLoading: c.state.isLoading,
                             )
                           : const SizedBox(),
                       const DashboardPromo(),

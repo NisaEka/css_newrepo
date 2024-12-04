@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';
@@ -123,7 +124,10 @@ class TransactionEditButton extends StatelessWidget {
                         // isScrollControlled: true,
                         StatefulBuilder(builder:
                             (BuildContext context, StateSetter setState) {
-                          return HubungiAkuDialog(awb: c.state.awb);
+                          return HubungiAkuDialog(
+                            awb: c.state.awb,
+                            allow: c.state.allow ?? MenuModel(),
+                          );
                         }),
                       );
                     },

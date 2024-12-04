@@ -10,6 +10,7 @@ import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_state.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:get/get.dart';
@@ -55,33 +56,46 @@ class ReceiverController extends BaseController {
     state.receiverPhone.text = state.receiver?.phone ?? '';
     state.receiverDest.text = state.receiver?.idDestination ?? '';
     state.receiverAddress.text = state.receiver?.address?.toUpperCase() ?? '';
-    getDestinationList(QueryParamModel(
-      table: true,
-      limit: 1,
-      where: jsonEncode([
-        {
-          "countryName": state.receiver?.country,
-        },
-        {
-          "provinceName": state.receiver?.region,
-        },
-        {
-          "cityName": state.receiver?.city,
-        },
-        {
-          "districtName": state.receiver?.district,
-        },
-        {
-          "subdistrictName": state.receiver?.subDistrict,
-        },
-        {
-          "zipCode": state.receiver?.zipCode,
-        },
-      ]),
-    )).then((value) {
-      AppLogger.i("getSelectedReceiver destination ${jsonEncode(value)}");
-      state.selectedDestination = value.first;
-    });
+    if (state.isOnline) {
+      getDestinationList(QueryParamModel(
+        table: true,
+        limit: 1,
+        where: jsonEncode([
+          {
+            "countryName": state.receiver?.country,
+          },
+          {
+            "provinceName": state.receiver?.region,
+          },
+          {
+            "cityName": state.receiver?.city,
+          },
+          {
+            "districtName": state.receiver?.district,
+          },
+          {
+            "subdistrictName": state.receiver?.subDistrict,
+          },
+          {
+            "zipCode": state.receiver?.zipCode,
+          },
+        ]),
+      )).then((value) {
+        AppLogger.i("getSelectedReceiver destination ${jsonEncode(value)}");
+        state.selectedDestination = value.first;
+      });
+    } else {
+      state.selectedDestination = Destination(
+        destinationCode: state.receiver?.destinationCode,
+        zipCode: state.receiver?.zipCode,
+        cityName: state.receiver?.city,
+        countryName: state.receiver?.country,
+        provinceName: state.receiver?.region,
+        districtName: state.receiver?.district,
+        subdistrictName: state.receiver?.subDistrict,
+        id: state.receiver?.idDestination?.toInt(),
+      );
+    }
     update();
     return state.receiver;
   }

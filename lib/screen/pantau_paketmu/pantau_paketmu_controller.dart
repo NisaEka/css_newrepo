@@ -80,7 +80,7 @@ class PantauPaketmuController extends BaseController {
       }
     } catch (e, i) {
       AppLogger.e('error pantau', e, i);
-      AppSnackBar.error('Gagal mengambil data');
+      AppSnackBar.error('Gagal mengambil data'.tr);
     } finally {
       state.selectedStatusKiriman.value = state.listStatusKiriman.first;
       applyFilter();

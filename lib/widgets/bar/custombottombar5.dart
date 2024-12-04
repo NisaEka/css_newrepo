@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
@@ -14,6 +15,7 @@ import 'package:get/get.dart';
 class BottomBar5 extends StatelessWidget {
   final int menu;
   final String? label;
+  final MenuModel? allow;
   final void Function(int)? onTap;
 
   const BottomBar5({
@@ -21,6 +23,7 @@ class BottomBar5 extends StatelessWidget {
     required this.menu,
     this.label,
     this.onTap,
+    required this.allow,
   });
 
   @override
@@ -57,22 +60,25 @@ class BottomBar5 extends StatelessWidget {
                       onTap: () => Get.offAll(const DashboardScreen(),
                           transition: Transition.leftToRight),
                     ),
-                    BottomMenuItem2(
-                      icon: MenuIcon(
-                        icon: IconsConstant.pantau,
-                        size: 30,
-                        showContainer: false,
-                        iconColor: menu == 1 ? redJNE : whiteColor,
-                        background: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : infoColor,
-                      ),
-                      isSelected: menu == 1,
-                      color: AppConst.isLightTheme(context)
-                          ? Colors.red
-                          : warningColor,
-                      onTap: () => Get.toNamed('/pantauPaketmu', arguments: {}),
-                    ),
+                    allow?.pantauPaketmu == "Y"
+                        ? BottomMenuItem2(
+                            icon: MenuIcon(
+                              icon: IconsConstant.pantau,
+                              size: 30,
+                              showContainer: false,
+                              iconColor: menu == 1 ? redJNE : whiteColor,
+                              background: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : infoColor,
+                            ),
+                            isSelected: menu == 1,
+                            color: AppConst.isLightTheme(context)
+                                ? Colors.red
+                                : warningColor,
+                            onTap: () =>
+                                Get.toNamed('/pantauPaketmu', arguments: {}),
+                          )
+                        : const SizedBox(),
                     BottomMenuItem2(
                       icon: Icon(
                         Icons.person,

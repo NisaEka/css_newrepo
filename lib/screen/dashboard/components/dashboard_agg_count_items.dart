@@ -12,10 +12,12 @@ import 'package:get/get.dart';
 
 class DashboardAggCountItem extends StatelessWidget {
   final TransactionSummaryModel? transSummary;
+  final bool isLoading;
 
   const DashboardAggCountItem({
     super.key,
     this.transSummary,
+    this.isLoading = false,
   });
 
   @override
@@ -36,7 +38,7 @@ class DashboardAggCountItem extends StatelessWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
@@ -64,7 +66,7 @@ class DashboardAggCountItem extends StatelessWidget {
                 Column(
                   children: [
                     Shimmer(
-                      isLoading: transSummary == null,
+                      isLoading: isLoading,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,20 +180,20 @@ class DashboardAggCountItem extends StatelessWidget {
                               '',
                           description: "Transaksi COD",
                           lineColor: redJNE,
-                          isLoading: transSummary == null,
+                          isLoading: isLoading,
                         ),
                         // TypeTransactionCard(
                         //   count: transSummary?.totalKirimanCod?.totalCodOngkir.toString() ?? '',
                         //   amount: transSummary?.totalKirimanCod?.codOngkirAmount?.toInt().toCurrency().toString(),
                         //   description: "Transaksi COD Ongkir",
                         //   lineColor: warningColor,
-                        //   isLoading: transSummary == null,
+                        //   isLoading: isLoading,
                         // ),
                         // TypeTransactionCard(
                         //   count: transSummary?.totalKirimanCod?.totalNonCod?.toInt().toCurrency().toString() ?? '',
                         //   description: "Transaksi NON COD",
                         //   lineColor: Colors.green,
-                        //   isLoading: transSummary == null,
+                        //   isLoading: isLoading,
                         // ),
                       ],
                     )

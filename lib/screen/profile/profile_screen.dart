@@ -44,23 +44,31 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   title: 'Profil'.tr),
               body: _bodyContent(controller, context),
-              bottomNavigationBar: const BottomBar5(menu: 2),
+              bottomNavigationBar: BottomBar5(
+                menu: 2,
+                allow: controller.state.menuModel,
+              ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.miniStartDocked,
-              floatingActionButton: MenuIcon(
-                icon: IconsConstant.add,
-                margin: const EdgeInsets.only(left: 38, bottom: 29),
-                radius: 100,
-                background:
-                    AppConst.isLightTheme(context) ? redJNE : warningColor,
-                showContainer: false,
-                onTap: () => controller.state.isLogin
-                    ? Get.to(const InformasiPengirimScreen(), arguments: {})
-                    : showDialog(
-                        context: context,
-                        builder: (context) => const LoginAlertDialog(),
-                      ),
-              ),
+              floatingActionButton: controller.state.menuModel.paketmuInput ==
+                      "Y"
+                  ? MenuIcon(
+                      icon: IconsConstant.add,
+                      margin: const EdgeInsets.only(left: 38, bottom: 29),
+                      radius: 100,
+                      background: AppConst.isLightTheme(context)
+                          ? redJNE
+                          : warningColor,
+                      showContainer: false,
+                      onTap: () => controller.state.isLogin
+                          ? Get.to(const InformasiPengirimScreen(),
+                              arguments: {})
+                          : showDialog(
+                              context: context,
+                              builder: (context) => const LoginAlertDialog(),
+                            ),
+                    )
+                  : const SizedBox(),
             ),
           );
         });

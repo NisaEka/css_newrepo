@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_screen.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/screen/pantau_paketmu/detail/pantau_paketmu_detail_controller.dart';
@@ -98,7 +99,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                                       (BuildContext context,
                                           StateSetter setState) {
                                     return HubungiAkuDialog(
-                                        awb: controller.pantauPaketmu.awbNo);
+                                      awb: controller.pantauPaketmu.awbNo,
+                                      allow: controller.allow ?? MenuModel(),
+                                    );
                                   }),
                                 );
                               },
