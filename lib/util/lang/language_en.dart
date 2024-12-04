@@ -417,6 +417,8 @@ class LanguageEN {
       "Tampilkan Seluruh Transaksi": "Show All Transactions",
       "Hapus Seluruh Transaksi": "Delete All Transactions",
       "Tema": "Theme",
+      "Anda sedang offline": "You are offline",
+      "Gagal mengambil data": "Failed to load data",
     };
   }
 }

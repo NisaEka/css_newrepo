@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
@@ -12,6 +13,7 @@ import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:dio/dio.dart';
@@ -24,26 +26,33 @@ class PantauPaketmuDetailController extends BaseController {
   bool isLoading = false;
 
   bool _showLoadingIndicator = false;
+
   bool get showLoadingIndicator => _showLoadingIndicator;
 
   bool _showContent = false;
+
   bool get showContent => _showContent;
 
   bool _showEmptyContainer = false;
+
   bool get showEmptyContainer => _showEmptyContainer;
 
   bool _showErrorContainer = false;
+
   bool get showErrorContainer => _showErrorContainer;
 
   late PantauPaketmuDetailModel _pantauPaketmu;
+
   PantauPaketmuDetailModel get pantauPaketmu => _pantauPaketmu;
 
   DataTransactionModel? transactionData;
+  MenuModel? allow;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     Future.wait([_getRequestPickupByAwb()]);
+    allow = MenuModel.fromJson(storage.readData(StorageCore.userMenu));
   }
 
   Future<void> _getRequestPickupByAwb() async {

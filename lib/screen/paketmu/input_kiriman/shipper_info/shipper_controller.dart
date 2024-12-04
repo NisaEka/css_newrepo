@@ -430,7 +430,8 @@ class ShipperController extends BaseController {
         originName: state.shipper?.origin?.originName,
         branch: BranchModel(region: state.shipper?.region),
       );
-      state.isValidate = true;
+
+      state.isValidate = state.selectedAccount != null;
     }
     update();
   }

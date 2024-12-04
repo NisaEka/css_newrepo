@@ -5,7 +5,7 @@ class PantauPaketmuDetailModel {
   String awbNo;
   String? manifestInbNo;
   String? repcssDailyPayAggDatefrom;
-  int? awbInsuranceValue;
+  num? awbInsuranceValue;
   num? repcssRtFchargeAftDiscAmt;
   String? receivingCourier;
   String? receivingUserId;
@@ -18,7 +18,7 @@ class PantauPaketmuDetailModel {
   String? tglReceived;
   String? origin;
   String? hvoNo;
-  int? repcssVatFchargeAftDisc;
+  num? repcssVatFchargeAftDisc;
   String? cnoteCancel;
   String? rdoDate;
   String? awbUserName;
@@ -61,7 +61,7 @@ class PantauPaketmuDetailModel {
   String? repcssPaymentCustid;
   String? smuDate;
   String? podlEpodUrl;
-  int? qtyAwb;
+  num? qtyAwb;
   String? manBagNo;
   String? awbGoodsDescr;
   String createDate;
@@ -69,7 +69,7 @@ class PantauPaketmuDetailModel {
   String? repcssInvoiceNo;
   String? manifestOutb;
   String? awbDate;
-  int? repcssNetCodAmt;
+  num? repcssNetCodAmt;
   String? awbInsuranceId;
   num? repcssVatRtFchargeAftDisc;
   String? manifestInbDate;
@@ -110,7 +110,7 @@ class PantauPaketmuDetailModel {
   String? repcssEpayTrxid;
   String? repcssEpayVend;
   String? smuFlagApprove;
-  int? awbAmount;
+  num? awbAmount;
   String? hvoHub;
   num? repcssCustDiscDm;
   String? manifestUserId;
@@ -131,7 +131,7 @@ class PantauPaketmuDetailModel {
   String? doNo;
   String? repcssRtRsheetInsSys;
   String? awbUserId;
-  int? smuQty;
+  num? smuQty;
   String? smuFlagCancel;
   String? smuRemarksDate;
   num? repcssCustDiscIc;
@@ -144,7 +144,7 @@ class PantauPaketmuDetailModel {
   num? awbAdditionalFee;
   num? repcssFchargeAftDiscAmt;
   String? receivingDate;
-  int? codAmount;
+  num? codAmount;
   String? cnotePaymentType;
   String? repcssPaymentNo;
   String? runsheetCourierId;
@@ -466,7 +466,9 @@ class PantauPaketmuDetailModel {
       registrationId: json['registrationId'],
       hvoHubDestination: json['hvoHubDestination'],
       weightAwb: json['weightAwb'],
-      transaction: json['transaction'],
+      transaction: json['transaction'] != null
+          ? TransactionModel.fromJson(json['transaction'])
+          : null,
       ticket: json['ticket'],
     );
   }

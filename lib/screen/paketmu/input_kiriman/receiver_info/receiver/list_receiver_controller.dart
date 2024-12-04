@@ -99,7 +99,6 @@ class ListPenerimaController extends BaseController {
 
   Future<void> initData() async {
     await checkConnectionStatus();
-    await fetchReceiverData(1);
   }
 
   @override
