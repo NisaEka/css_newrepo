@@ -119,7 +119,7 @@ class BottomBar5 extends StatelessWidget {
                       .where((e) => e.title == "Input Kirimanmu")
                       .isNotEmpty
                   ? Positioned(
-                      bottom: 45,
+                      bottom: 50,
                       left: 55,
                       child: FloatingActionButton(
                         shape: const CircleBorder(),

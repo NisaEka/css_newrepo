@@ -21,6 +21,8 @@ class PantauPaketmuDetailController extends BaseController {
   final network = Get.find<NetworkCore>();
   String awbNo = Get.arguments["awbNo"];
 
+  bool isLoading = false;
+
   bool _showLoadingIndicator = false;
   bool get showLoadingIndicator => _showLoadingIndicator;
 
@@ -45,6 +47,7 @@ class PantauPaketmuDetailController extends BaseController {
   }
 
   Future<void> _getRequestPickupByAwb() async {
+    isLoading = true;
     _showLoadingIndicator = true;
     update();
 
@@ -187,6 +190,9 @@ class PantauPaketmuDetailController extends BaseController {
     }
 
     _showLoadingIndicator = false;
+
+    await Future.delayed(const Duration(seconds: 2));
+    isLoading = false;
     update();
   }
 }
