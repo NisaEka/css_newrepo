@@ -482,7 +482,8 @@ class DashboardController extends BaseController {
       UserModel shipper =
           UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
       state.userName = shipper.name ?? '';
-      // state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+      state.allow =
+          MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
       update();
     } catch (e, i) {
       e.printError();
