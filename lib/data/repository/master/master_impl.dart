@@ -30,11 +30,7 @@ class MasterRepositoryImpl extends MasterRepository {
   @override
   Future<BaseResponse<List<OriginModel>>> getOrigins(
       QueryParamModel param) async {
-    var token = await storageSecure.read(key: "token");
-
-    if (token != null) {
-      network.base.options.headers['Authorization'] = 'Bearer $token';
-    }
+    AppLogger.i("origin param : ${param.toJson()}");
     try {
       Response response = await network.base.get(
         '/master/origins',

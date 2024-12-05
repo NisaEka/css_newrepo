@@ -64,10 +64,11 @@ class _OriginDropdownState extends State<OriginDropdown> {
         ? '[{"branchCode" : "${widget.branch}"}]'
         : '[]';
     var response = await master.getOrigins(QueryParamModel(
-        search: keyword.toUpperCase(),
-        where: branchCode,
-        table: widget.branch?.isNotEmpty,
-        relation: true));
+      search: keyword.toUpperCase(),
+      where: branchCode,
+      table: widget.branch?.isNotEmpty,
+      relation: true,
+    ));
     var models = response.data?.toList();
 
     return models ?? [];
