@@ -572,20 +572,20 @@ class TransactionForm extends StatelessWidget {
                                 onPressed: () => c.onSaved(),
                               )
                             : const SizedBox(),
-                        // c.state.goods == null && !c.state.isOnline ||
-                        //         c.state.draft != null
-                        //     ?
-                        CustomFilledButton(
-                          color: whiteColor,
-                          borderColor:
-                              c.state.formValidate ? blueJNE : greyColor,
-                          fontColor: c.state.formValidate ? blueJNE : greyColor,
-                          title: 'Simpan ke Draft'.tr,
-                          onPressed: () {
-                            c.state.formValidate ? c.saveDraft() : null;
-                          },
-                        )
-                        // : const SizedBox(),
+                        c.state.goods == null && !c.state.isOnline ||
+                                c.state.draft != null
+                            ? CustomFilledButton(
+                                color: whiteColor,
+                                borderColor:
+                                    c.state.formValidate ? blueJNE : greyColor,
+                                fontColor:
+                                    c.state.formValidate ? blueJNE : greyColor,
+                                title: 'Simpan ke Draft'.tr,
+                                onPressed: () {
+                                  c.state.formValidate ? c.saveDraft() : null;
+                                },
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   ),
