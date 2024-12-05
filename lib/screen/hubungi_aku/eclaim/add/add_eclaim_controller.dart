@@ -5,9 +5,9 @@ import 'package:css_mobile/data/model/eclaim/eclaim_model.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AddEclaimController extends BaseController {
   final String? awb = Get.arguments?['awb'];
@@ -54,6 +54,56 @@ class AddEclaimController extends BaseController {
     update();
   }
 
+  // Kirim file
+  Future<void> sendReport() async {
+    isLoading = true;
+    update();
+    try {
+      await eclaims
+          .postEclaimImage(selectedImage ?? File(''))
+          .then((response) async {
+        if (response.code == 201) {
+          await eclaims
+              .postEclaim(EclaimModel(
+            awb: awb,
+            kategori: category.text,
+            isipesan: description.text,
+            valueclaim: nominalPengajuan.text,
+            fileClaim: response.data?.first.fileUrl,
+          ))
+              .then((value) {
+            switch (value.code) {
+              case 201:
+                Get.to(SuccessScreen(
+                  message:
+                      'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'
+                          .tr,
+                  buttonTitle: 'OK'.tr,
+                  nextAction: () => Get.close(2),
+                ));
+                break;
+              case 404:
+                AppSnackBar.warning('Nomor Resi Tidak Terdaftar'.tr);
+                break;
+              case 409:
+                AppSnackBar.warning('Tiket Sudah Terdaftar'.tr);
+                break;
+              default:
+                AppSnackBar.error('Bad Request'.tr);
+                break;
+            }
+          });
+        }
+      });
+    } catch (e, i) {
+      AppLogger.e('error sendReport $e');
+      AppLogger.e('error sendReport $i');
+    }
+    isLoading = false;
+    update();
+  }
+
+  // List kategori
   void showManualCategoryList() {
     Get.bottomSheet(
       enableDrag: true,
@@ -104,115 +154,39 @@ class AddEclaimController extends BaseController {
     );
   }
 
-  Future<void> sendReport() async {
-    isLoading = true;
-    update();
-    try {
-      await eclaims
-          .postEclaimImage(selectedImage ?? File(''))
-          .then((response) async {
-        if (response.code == 201) {
-          await eclaims
-              .postEclaim(EclaimModel(
-            awb: awb,
-            kategori: category.text,
-            isipesan: description.text,
-            valueclaim: nominalPengajuan.text,
-            fileClaim: response.data?.first.fileUrl,
-          ))
-              .then((value) {
-            switch (value.code) {
-              case 201:
-                Get.to(SuccessScreen(
-                  message:
-                      'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'
-                          .tr,
-                  buttonTitle: 'OK'.tr,
-                  nextAction: () => Get.close(2),
-                ));
-                break;
-              case 404:
-                AppSnackBar.warning('Nomor Resi Tidak Terdaftar'.tr);
-                break;
-              case 409:
-                AppSnackBar.warning('Tiket Sudah Terdaftar'.tr);
-                break;
-              default:
-                AppSnackBar.error('Bad Request'.tr);
-                break;
-            }
-          });
-        }
-      });
-    } catch (e, i) {
-      AppLogger.e('error sendReport $e');
-      AppLogger.e('error sendReport $i');
-    }
-    isLoading = false;
-    update();
-  }
-
-  Future<void> addImage(ImageSource source) async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: source);
-
-    if (image != null) {
-      selectedImage = File(image.path);
-      imageFile.text = selectedImage?.path ?? '';
-      AppLogger.i(selectedImage?.lengthSync().toString() ?? '');
-      update(); // Update UI setelah gambar dipilih
-    }
-  }
-
-  void removeImage() {
-    selectedImage = null;
-    update(); // Update UI setelah gambar dihapus
-  }
-
-  // Mengunduh gambar
-  // Future<void> downloadImage() async {
-  //   if (selectedImage != null) {
-  //     try {
-  //       // Gunakan Dio untuk mengunduh gambar
-  //       setLoading(true);
+  // Future<void> addImage(ImageSource source) async {
+  //   final ImagePicker picker = ImagePicker();
+  //   final XFile? image = await picker.pickImage(source: source);
   //
-  //       // Tentukan direktori tempat file disimpan
-  //       String savePath =
-  //           '/storage/emulated/0/Download/${selectedImage!.path.split('/').last}';
-  //       await Dio().download(selectedImage!.path, savePath);
-  //
-  //       // Setelah gambar berhasil diunduh, beri notifikasi atau feedback
-  //       setLoading(false);
-  //       Get.snackbar('Berhasil', 'Gambar berhasil diunduh!',
-  //           snackPosition: SnackPosition.BOTTOM);
-  //     } catch (e) {
-  //       setLoading(false);
-  //       Get.snackbar('Gagal', 'Terjadi kesalahan saat mengunduh gambar.',
-  //           snackPosition: SnackPosition.BOTTOM);
-  //     }
-  //   } else {
-  //     Get.snackbar('Gagal', 'Tidak ada gambar untuk diunduh.',
-  //         snackPosition: SnackPosition.BOTTOM);
+  //   if (image != null) {
+  //     selectedImage = File(image.path);
+  //     imageFile.text = selectedImage?.path ?? '';
+  //     AppLogger.i(selectedImage?.lengthSync().toString() ?? '');
+  //     update(); // Update UI setelah gambar dipilih
   //   }
   // }
 
-  // Fungsi untuk mengatur status loading
+  // Tambah berkas lampiran
+  Future<void> addFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      selectedImage = File(result.files.single.path!);
+      imageFile.text = selectedImage?.path ?? '';
+      AppLogger.i(selectedImage?.lengthSync().toString() ?? '');
+      update();
+    }
+  }
+
+  // Hapus berkas lampiran
+  void removeFile() {
+    selectedImage = null;
+    imageFile.text = '';
+    update(); // Update UI setelah gambar dihapus
+  }
+
   void setLoading(bool value) {
     isLoading = value;
     update();
-  }
-
-  // Menambahkan file gambar atau file lain
-  Future<void> addFile(ImageSource source) async {
-    final ImagePicker picker = ImagePicker();
-
-    // Memilih file (gambar atau video)
-    final XFile? file = await picker.pickImage(source: source);
-
-    if (file != null) {
-      selectedFile = File(file.path);
-      fileSize = selectedFile!.lengthSync();
-      update();
-    }
   }
 }
