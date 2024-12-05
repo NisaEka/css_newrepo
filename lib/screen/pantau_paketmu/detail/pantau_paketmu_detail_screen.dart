@@ -234,7 +234,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     _textRow(
                       context,
                       "Alamat Penerima",
-                      '${controller.pantauPaketmu.cnoteReceiverAddr1}${controller.pantauPaketmu.cnoteReceiverAddr2}${controller.pantauPaketmu.cnoteReceiverAddr3}',
+                      '${controller.pantauPaketmu.cnoteReceiverAddr1 ?? ''}${controller.pantauPaketmu.cnoteReceiverAddr2 ?? ''}${controller.pantauPaketmu.cnoteReceiverAddr3 ?? ''}',
                       controller.isLoading,
                     ),
                     const SizedBox(height: 6),
