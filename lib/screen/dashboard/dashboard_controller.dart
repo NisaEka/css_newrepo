@@ -55,6 +55,7 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadBanner() async {
+    state.bannerList.clear();
     try {
       jlc.postDashboardBanner().then((value) {
         state.bannerList.addAll(value.data ?? []);
