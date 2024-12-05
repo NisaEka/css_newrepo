@@ -93,6 +93,12 @@ class ShipperController extends BaseController {
     state.selectedAccount = null;
     state.isLoading = true;
     connection.isOnline().then((value) => state.isOnline = value);
+    state.shipper =
+        ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
+    state.userBasic =
+        UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    state.userCcrf = CcrfProfileModel.fromJson(
+        await storage.readData(StorageCore.ccrfProfile));
 
     try {
       await master
@@ -202,12 +208,6 @@ class ShipperController extends BaseController {
       AppLogger.i('accounts : ${accounts.toJson()}');
       state.accountList.addAll(accounts.data ?? []);
       // state.accountList.addAll(GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts)) );
-      state.shipper =
-          ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
-      state.userBasic =
-          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
-      state.userCcrf = CcrfProfileModel.fromJson(
-          await storage.readData(StorageCore.ccrfProfile));
       state.shipperName.text = state.userBasic?.brand ?? '';
       state.shipperPhone.text = state.shipper?.phone ?? '';
       state.shipperOrigin.text = state.shipper?.origin?.originName ?? '';

@@ -14,10 +14,12 @@ import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
@@ -67,6 +69,7 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadNews() async {
+    state.newsList.clear();
     try {
       jlc.postDashboardNews().then((value) {
         state.newsList.addAll(value.data ?? []);
@@ -77,6 +80,15 @@ class DashboardController extends BaseController {
     }
 
     update();
+  }
+
+  void onAddTransaction(BuildContext context) {
+    state.isLogin
+        ? Get.to(const InformasiPengirimScreen(), arguments: {})
+        : showDialog(
+            context: context,
+            builder: (context) => const LoginAlertDialog(),
+          );
   }
 
   Future<void> cekFavoritMenu() async {

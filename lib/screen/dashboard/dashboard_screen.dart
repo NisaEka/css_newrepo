@@ -4,9 +4,7 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_body.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/onboarding/splash_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/widgets/bar/custombottombar5.dart';
-import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/menu_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,7 +36,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.miniStartDocked,
-              floatingActionButton: (controller.state.allow.paketmuInput == "Y")
+              floatingActionButton: (controller.state.allow.paketmuInput ==
+                          "Y" &&
+                      MediaQuery.of(context).viewInsets.bottom == 0)
                   ? MenuIcon(
                       icon: IconsConstant.add,
                       margin:
@@ -48,13 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ? redJNE
                           : warningColor,
                       showContainer: false,
-                      onTap: () => controller.state.isLogin
-                          ? Get.to(const InformasiPengirimScreen(),
-                              arguments: {})
-                          : showDialog(
-                              context: context,
-                              builder: (context) => const LoginAlertDialog(),
-                            ),
+                      onTap: () => controller.onAddTransaction(context),
                     )
                   : const SizedBox(),
             ),
