@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,10 +18,16 @@ class DeleteAlertDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: Theme.of(context).brightness == Brightness.light
           ? whiteColor
-          : greyColor,
-      title: Text('Data akan dihapus'.tr),
+          : bgDarkColor,
+      title: Text('Data akan dihapus'.tr,
+          style: TextStyle(
+              color: AppConst.isLightTheme(context)
+                  ? greyDarkColor2
+                  : greyLightColor2)),
       content: Text(
         'Anda yakin menghapus data ini ?'.tr,
+        style: TextStyle(
+            color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyColor),
       ),
       actions: <Widget>[
         TextButton(
@@ -28,13 +35,19 @@ class DeleteAlertDialog extends StatelessWidget {
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
             onPressed: onBack,
-            child: Text('Tidak'.tr)),
+            child: Text(
+              'Tidak'.tr,
+              style: TextStyle(
+                  color: AppConst.isLightTheme(context) ? blueJNE : infoColor),
+            )),
         TextButton(
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelLarge,
           ),
           onPressed: onDelete,
-          child: Text('Hapus'.tr),
+          child: Text('Hapus'.tr,
+              style: TextStyle(
+                  color: AppConst.isLightTheme(context) ? blueJNE : infoColor)),
         ),
       ],
     );

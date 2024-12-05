@@ -47,7 +47,7 @@ class LoginController extends BaseController {
             const Duration(seconds: 2)) {
       state.currentBackPressTime = now;
       AppSnackBar.custom(
-        message: 'Double click back button to exit',
+        message: 'Double click back button to exit'.tr,
         backgroundColor: greyColor.withOpacity(0.8),
         icon: const Icon(
           Icons.info,

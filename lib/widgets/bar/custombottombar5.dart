@@ -4,6 +4,7 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_card_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item2.dart';
@@ -51,12 +52,13 @@ class BottomBar5 extends StatelessWidget {
                       icon: SvgPicture.asset(
                         IconsConstant.home,
                         height: 35,
-                        color: menu == 0 ? redJNE : whiteColor,
+                        color: menu == 0
+                            ? AppConst.isLightTheme(context)
+                                ? redJNE
+                                : warningColor
+                            : whiteColor,
                       ),
                       isSelected: menu == 0,
-                      color: AppConst.isLightTheme(context)
-                          ? Colors.red
-                          : warningColor,
                       onTap: () => Get.offAll(const DashboardScreen(),
                           transition: Transition.leftToRight),
                     ),
@@ -76,11 +78,9 @@ class BottomBar5 extends StatelessWidget {
                                   : infoColor,
                             ),
                             isSelected: menu == 1,
-                            color: AppConst.isLightTheme(context)
-                                ? redJNE
-                                : warningColor,
-                            onTap: () =>
-                                Get.toNamed('/pantauPaketmu', arguments: {}),
+                            onTap: () => Get.to(const PantauCardScreen(),
+                                transition: Transition.rightToLeft,
+                                arguments: {}),
                           )
                         : const SizedBox(),
                     BottomMenuItem2(

@@ -29,7 +29,7 @@ class OngkirListItem extends StatelessWidget {
               children: [
                 Text(
                   serviceTitle,
-                  style: listTitleTextStyle,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
                   serviceSubtitle,

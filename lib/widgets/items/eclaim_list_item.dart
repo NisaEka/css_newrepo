@@ -1,4 +1,4 @@
-import 'package:css_mobile/const/color_const.dart'; // Warna khusus aplikasi Anda
+import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 
 class EclaimListItem extends StatelessWidget {
@@ -46,7 +46,7 @@ class EclaimListItem extends StatelessWidget {
                 ),
                 child: Text(
                   claimType ?? '',
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                  style: const TextStyle(color: whiteColor, fontSize: 12),
                 ),
               ),
               const Spacer(),
@@ -71,15 +71,15 @@ class EclaimListItem extends StatelessWidget {
                     isSuccess
                         ? Icons.check_circle_outline
                         : Icons.cancel_outlined,
-                    color: isSuccess ? Colors.green : Colors.red,
+                    color: isSuccess ? successColor : errorColor,
                     size: 18,
                   ),
                   Text(
-                    'Rp. ${amount?.toString() ?? '0'}',
+                    'Rp. ${amount ?? '0'}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                      color: isSuccess ? Colors.green : Colors.red,
+                      color: isSuccess ? successColor : errorColor,
                     ),
                   ),
                 ],
