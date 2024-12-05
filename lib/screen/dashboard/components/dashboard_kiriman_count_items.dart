@@ -13,10 +13,12 @@ import 'package:get/get.dart';
 
 class DashboardKirimanCountItem extends StatelessWidget {
   final TransactionSummaryModel? transSummary;
+  final bool isLoading;
 
   const DashboardKirimanCountItem({
     super.key,
     this.transSummary,
+    this.isLoading = false,
   });
 
   @override
@@ -38,7 +40,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
@@ -66,7 +68,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                 Column(
                   children: [
                     Shimmer(
-                      isLoading: transSummary == null,
+                      isLoading: isLoading,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +107,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                         ?.toInt() ??
                                     0,
                                 subtitle:
-                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Dalam Peninjauan").first.total?.toDouble() ?? 0)}% dari jumlah transaksi",
+                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Dalam Peninjauan").first.total?.toDouble() ?? 0)}% ${'dari jumlah transaksi'.tr}",
                                 notificationLabel: "Masih dikamu".tr,
                                 notificationCount: transSummary?.summary
                                         ?.where(
@@ -132,7 +134,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                         ?.toInt() ??
                                     0,
                                 subtitle:
-                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Sukses Diterima").first.total?.toDouble() ?? 0)}% dari jumlah transaksi",
+                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Sukses Diterima").first.total?.toDouble() ?? 0)}% ${'dari jumlah transaksi'.tr}",
                                 color: Colors.blue,
                                 statusColor: Colors.green,
                                 chart: SizedBox(
@@ -171,7 +173,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                               '',
                           description: "Transaksi COD",
                           lineColor: redJNE,
-                          isLoading: transSummary == null,
+                          isLoading: isLoading,
                         ),
                         TypeTransactionCard(
                           count: transSummary?.totalKirimanCod?.totalCodOngkir
@@ -183,7 +185,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                               .toString(),
                           description: "Transaksi COD Ongkir",
                           lineColor: warningColor,
-                          isLoading: transSummary == null,
+                          isLoading: isLoading,
                         ),
                         TypeTransactionCard(
                           count: transSummary?.totalKirimanCod?.totalNonCod
@@ -193,7 +195,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                               '',
                           description: "Transaksi NON COD",
                           lineColor: Colors.green,
-                          isLoading: transSummary == null,
+                          isLoading: isLoading,
                         ),
                       ],
                     )

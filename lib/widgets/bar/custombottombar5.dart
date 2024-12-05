@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 class BottomBar5 extends StatelessWidget {
   final int menu;
   final String? label;
+  final MenuModel? allow;
   final void Function(int)? onTap;
 
   const BottomBar5({
@@ -23,6 +25,7 @@ class BottomBar5 extends StatelessWidget {
     required this.menu,
     this.label,
     this.onTap,
+    required this.allow,
   });
 
   @override
@@ -30,126 +33,122 @@ class BottomBar5 extends StatelessWidget {
     return GetBuilder<DashboardController>(
         init: DashboardController(),
         builder: (controller) {
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: ClipPath(
-                  clipper: NavBarClipper(),
-                  child: Container(
-                    height: 50,
-                    margin: const EdgeInsets.only(bottom: 20),
-                    decoration: BoxDecoration(
-                      color:
-                          AppConst.isLightTheme(context) ? blueJNE : infoColor,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const SizedBox(width: 60), // Placeholder untuk FAB
-                        BottomMenuItem2(
-                          icon: SvgPicture.asset(IconsConstant.home,
-                              height: 35,
-                              color: menu == 0
-                                  ? AppConst.isLightTheme(context)
-                                      ? redJNE
-                                      : warningColor
-                                  : whiteColor),
-                          isSelected: menu == 0,
-                          color: AppConst.isLightTheme(context)
-                              ? redJNE
-                              : warningColor,
-                          onTap: () => Get.offAll(const DashboardScreen(),
-                              transition: Transition.leftToRight),
-                        ),
-                        BottomMenuItem2(
-                            icon: MenuIcon(
-                              icon: IconsConstant.pantau,
-                              size: 30,
-                              showContainer: false,
-                              iconColor: menu == 1
-                                  ? AppConst.isLightTheme(context)
-                                      ? redJNE
-                                      : warningColor
-                                  : whiteColor,
-                              background: AppConst.isLightTheme(context)
-                                  ? blueJNE
-                                  : infoColor,
-                            ),
-                            isSelected: menu == 1,
-                            color: AppConst.isLightTheme(context)
-                                ? redJNE
-                                : warningColor,
-                            onTap: () => Get.to(const PantauCardScreen(),
-                                transition: Transition.rightToLeft)
-                            // Get.toNamed('/pantauPaketmu', arguments: {}),
-                            ),
-                        BottomMenuItem2(
-                          icon: Icon(
-                            Icons.person,
-                            color: menu == 2
-                                ? AppConst.isLightTheme(context)
-                                    ? redJNE
-                                    : warningColor
-                                : whiteColor,
-                            size: 35,
-                          ),
-                          isSelected: menu == 2,
-                          color: AppConst.isLightTheme(context)
-                              ? redJNE
-                              : warningColor,
-                          // onTap: () => Get.offAll(const ProfileScreen()),
-                          onTap: () => controller.state.isLogin
-                              ? Get.offAll(const ProfileScreen(),
-                                  transition: Transition.rightToLeft)
-                              : showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      const LoginAlertDialog(),
-                                ),
-                        ),
-                      ],
-                    ),
+          return Stack(children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: ClipPath(
+                clipper: NavBarClipper(),
+                child: Container(
+                  height: 50,
+                  width: Get.width * 0.9,
+                  margin: const EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                    color: AppConst.isLightTheme(context) ? blueJNE : infoColor,
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                ),
-              ),
-              controller.state.menuItems
-                      .where((e) => e.title == "Input Kirimanmu")
-                      .isNotEmpty
-                  ? Positioned(
-                      bottom: 50,
-                      left: 55,
-                      child: FloatingActionButton(
-                        shape: const CircleBorder(),
-                        backgroundColor: AppConst.isLightTheme(context)
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const SizedBox(width: 60), // Placeholder untuk FAB
+                      BottomMenuItem2(
+                        icon: SvgPicture.asset(
+                          IconsConstant.home,
+                          height: 35,
+                          color: menu == 0 ? redJNE : whiteColor,
+                        ),
+                        isSelected: menu == 0,
+                        color: AppConst.isLightTheme(context)
+                            ? Colors.red
+                            : warningColor,
+                        onTap: () => Get.offAll(const DashboardScreen(),
+                            transition: Transition.leftToRight),
+                      ),
+                      allow?.pantauPaketmu == "Y"
+                          ? BottomMenuItem2(
+                              icon: MenuIcon(
+                                icon: IconsConstant.pantau,
+                                size: 30,
+                                showContainer: false,
+                                iconColor: menu == 1
+                                    ? AppConst.isLightTheme(context)
+                                        ? redJNE
+                                        : warningColor
+                                    : whiteColor,
+                                background: AppConst.isLightTheme(context)
+                                    ? blueJNE
+                                    : infoColor,
+                              ),
+                              isSelected: menu == 1,
+                              color: AppConst.isLightTheme(context)
+                                  ? redJNE
+                                  : warningColor,
+                              onTap: () => Get.to(const PantauCardScreen(),
+                                  arguments: {}),
+                            )
+                          : const SizedBox(),
+
+                      BottomMenuItem2(
+                        icon: Icon(
+                          Icons.person,
+                          color: menu == 2
+                              ? AppConst.isLightTheme(context)
+                                  ? redJNE
+                                  : warningColor
+                              : whiteColor,
+                          size: 35,
+                        ),
+                        isSelected: menu == 2,
+                        color: AppConst.isLightTheme(context)
                             ? redJNE
                             : warningColor,
-                        // onPressed: () => Get.to(const InputKirimanScreen()),
-                        onPressed: () => controller.state.isLogin
-                            ? Get.to(const InformasiPengirimScreen(),
-                                arguments: {})
+                        // onTap: () => Get.offAll(const ProfileScreen()),
+                        onTap: () => controller.state.isLogin
+                            ? Get.offAll(const ProfileScreen(),
+                                transition: Transition.rightToLeft)
                             : showDialog(
                                 context: context,
                                 builder: (context) => const LoginAlertDialog(),
                               ),
-                        child: MenuIcon(
-                          icon: IconsConstant.add,
-                          size: 40,
-                          iconColor: AppConst.isLightTheme(context)
-                              ? redJNE
-                              : warningColor,
-                          background: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : infoColor,
-                          showContainer: false,
-                          radius: 50,
-                        ),
-                      ))
-                  : const SizedBox(),
-            ],
-          );
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            controller.state.menuItems
+                    .where((e) => e.title == "Input Kirimanmu")
+                    .isNotEmpty
+                ? Positioned(
+                    bottom: 50,
+                    left: 55,
+                    child: FloatingActionButton(
+                      shape: const CircleBorder(),
+                      backgroundColor: AppConst.isLightTheme(context)
+                          ? redJNE
+                          : warningColor,
+                      // onPressed: () => Get.to(const InputKirimanScreen()),
+                      onPressed: () => controller.state.isLogin
+                          ? Get.to(const InformasiPengirimScreen(),
+                              arguments: {})
+                          : showDialog(
+                              context: context,
+                              builder: (context) => const LoginAlertDialog(),
+                            ),
+                      child: MenuIcon(
+                        icon: IconsConstant.add,
+                        size: 40,
+                        iconColor: AppConst.isLightTheme(context)
+                            ? redJNE
+                            : warningColor,
+                        background: AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : infoColor,
+                        showContainer: false,
+                        radius: 50,
+                      ),
+                    ))
+                : const SizedBox(),
+          ]);
         });
   }
 }

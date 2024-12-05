@@ -54,6 +54,8 @@ class ShipperForm extends StatelessWidget {
                                       ),
                                     )
                                   : Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: c.state.accountList
                                           .map(
                                             (e) => AccountListItem(

@@ -32,23 +32,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
             onPopInvokedWithResult: (didPop, result) => controller.onPop(),
             child: Scaffold(
               body: const DashboardBody(),
-              bottomNavigationBar: const BottomBar5(menu: 0),
+              bottomNavigationBar: BottomBar5(
+                menu: 0,
+                allow: controller.state.allow,
+              ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.miniStartDocked,
-              floatingActionButton: MenuIcon(
-                icon: IconsConstant.add,
-                margin: EdgeInsets.only(left: Get.width * 0.09, bottom: 29),
-                radius: 100,
-                background:
-                    AppConst.isLightTheme(context) ? redJNE : warningColor,
-                showContainer: false,
-                onTap: () => controller.state.isLogin
-                    ? Get.to(const InformasiPengirimScreen(), arguments: {})
-                    : showDialog(
-                        context: context,
-                        builder: (context) => const LoginAlertDialog(),
-                      ),
-              ),
+              floatingActionButton: (controller.state.allow.paketmuInput == "Y")
+                  ? MenuIcon(
+                      icon: IconsConstant.add,
+                      margin:
+                          EdgeInsets.only(left: Get.width * 0.09, bottom: 29),
+                      radius: 100,
+                      background: AppConst.isLightTheme(context)
+                          ? redJNE
+                          : warningColor,
+                      showContainer: false,
+                      onTap: () => controller.state.isLogin
+                          ? Get.to(const InformasiPengirimScreen(),
+                              arguments: {})
+                          : showDialog(
+                              context: context,
+                              builder: (context) => const LoginAlertDialog(),
+                            ),
+                    )
+                  : const SizedBox(),
             ),
           );
         }

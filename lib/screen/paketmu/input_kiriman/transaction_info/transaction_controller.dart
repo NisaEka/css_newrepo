@@ -184,11 +184,12 @@ class TransactionController extends BaseController {
 
   bool isValidate() {
     if (state.formValidate &&
-        state.selectedService != null &&
+        (state.selectedService?.serviceDisplay?.isNotEmpty ?? false) &&
         !state.isCalculate) {
       if ((state.totalOngkir > 1000000) && state.codOngkir) {
         return false;
       }
+
       return true;
     }
 
@@ -686,7 +687,7 @@ class TransactionController extends BaseController {
         }
         if (v.code == 400 || v.code == 500) {
           AppSnackBar.custom(
-            message: v.error?[0] ?? v.message,
+            message: v.error,
             backgroundColor: Colors.red,
             icon: const Icon(Icons.warning, color: warningColor),
             snackStyle: SnackStyle.FLOATING,
