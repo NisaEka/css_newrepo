@@ -1,7 +1,6 @@
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -39,7 +38,7 @@ class TransactionAppbar extends StatelessWidget implements PreferredSizeWidget {
             ? Get.back()
             : Get.delete<DashboardController>().then((_) {
                 StorageCore().deleteString(StorageCore.transactionTemp);
-                Get.offAll(const DashboardScreen());
+                Get.back();
               }),
       ),
       flexibleSpace: Column(

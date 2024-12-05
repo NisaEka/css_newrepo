@@ -1,5 +1,4 @@
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_controller.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/components/eclaim_items.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/components/eclaim_search_field.dart';
@@ -22,8 +21,8 @@ class EclaimScreen extends StatelessWidget {
             appBar: CustomTopBar(
               title: 'E-Claim'.tr,
               leading: CustomBackButton(
-                onPressed: () => Get.delete<DashboardController>()
-                    .then((_) => Get.offAll(const DashboardScreen())),
+                onPressed: () =>
+                    Get.delete<DashboardController>().then((_) => Get.back()),
               ),
               action: const [
                 EclaimFilterButton(),

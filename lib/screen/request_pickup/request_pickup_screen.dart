@@ -5,7 +5,6 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_screen.dart';
 import 'package:css_mobile/screen/request_pickup/components/request_pickup_filter_button.dart';
 import 'package:css_mobile/screen/request_pickup/components/request_pickup_status_button.dart';
@@ -42,8 +41,8 @@ class RequestPickupScreen extends StatelessWidget {
           appBar: CustomTopBar(
             title: 'Minta Dijemput'.tr,
             leading: CustomBackButton(
-              onPressed: () => Get.delete<DashboardController>()
-                  .then((_) => Get.offAll(const DashboardScreen())),
+              onPressed: () =>
+                  Get.delete<DashboardController>().then((_) => Get.back()),
             ),
             action: const [
               RequstPickupFilterButton(),
