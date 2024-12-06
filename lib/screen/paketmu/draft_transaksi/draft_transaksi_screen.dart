@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
@@ -36,7 +37,7 @@ class DraftTransaksiScreen extends StatelessWidget {
   }
 
   CustomTopBar _appBarContent(DraftTransaksiController c) {
-    final bool fromMenu = Get.arguments['fromMenu'] ?? true;
+    final bool fromMenu = Get.arguments?['fromMenu'] ?? true;
     return CustomTopBar(
       title: 'Draft Transaksi'.tr,
       leading: CustomBackButton(
