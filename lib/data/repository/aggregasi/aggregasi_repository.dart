@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/aggregasi/aggregation_chart_model.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
@@ -25,4 +26,6 @@ abstract class AggregasiRepository {
       String doc, QueryParamModel param);
 
   Future<ResponseModel<TransactionSummaryModel>> getAggSummary();
+
+  Future<ResponseModel<List<AggregationChartModel>>> getAggChart();
 }

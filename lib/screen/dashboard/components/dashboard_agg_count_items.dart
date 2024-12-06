@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/aggregasi/aggregation_chart_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -12,11 +13,13 @@ import 'package:get/get.dart';
 
 class DashboardAggCountItem extends StatelessWidget {
   final TransactionSummaryModel? transSummary;
+  final List<AggregationChartModel>? transChart;
   final bool isLoading;
 
   const DashboardAggCountItem({
     super.key,
     this.transSummary,
+    this.transChart,
     this.isLoading = false,
   });
 
@@ -36,6 +39,9 @@ class DashboardAggCountItem extends StatelessWidget {
       }
       return percent;
     }
+
+    List<double> chartData =
+        transChart?.map((e) => e.total?.toDouble() ?? 0).toList() ?? [];
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -78,10 +84,10 @@ class DashboardAggCountItem extends StatelessWidget {
                               color: Colors.blue,
                               icon: Icons.show_chart,
                               statusColor: whiteColor,
-                              chart: const SizedBox(
-                                  width: 20,
+                              chart: SizedBox(
+                                  width: 45,
                                   height: 20,
-                                  child: LineChartItem([10, 30, 20, 50]))),
+                                  child: LineChartItem(chartData))),
                           const SizedBox(height: 5),
                           // Dalam Perjalanan
                           Column(

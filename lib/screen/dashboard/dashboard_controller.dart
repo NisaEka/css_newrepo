@@ -326,6 +326,13 @@ class DashboardController extends BaseController {
             update();
           },
         );
+
+        aggregation.getAggChart().then(
+          (value) {
+            state.aggChart = value.data;
+            update();
+          },
+        );
       } catch (e) {
         e.printError();
       }
