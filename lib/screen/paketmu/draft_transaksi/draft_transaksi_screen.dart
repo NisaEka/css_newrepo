@@ -7,7 +7,6 @@ import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_contro
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
-import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
@@ -23,14 +22,15 @@ class DraftTransaksiScreen extends StatelessWidget {
     return GetBuilder<DraftTransaksiController>(
         init: DraftTransaksiController(),
         builder: (controller) {
-          return Stack(
-            children: [
-              Scaffold(
-                appBar: _appBarContent(controller),
-                body: _bodyContent(controller, context),
-              ),
-              controller.isLoading ? const LoadingDialog() : Container(),
-            ],
+          return PopScope(
+            canPop: controller.pop,
+            onPopInvokedWithResult: (bool didPop, Object? result) =>
+                Get.delete<DashboardController>()
+                    .then((_) => Get.offAll(const DashboardScreen())),
+            child: Scaffold(
+              appBar: _appBarContent(controller),
+              body: _bodyContent(controller, context),
+            ),
           );
         });
   }
@@ -55,7 +55,7 @@ class DraftTransaksiScreen extends StatelessWidget {
                 prefixIcon: Icons.sync,
                 width: 100,
                 title: 'Sync Data'.tr,
-                // onPressed: () => c.syncData(),
+                onPressed: () => c.syncData(),
               )
             : const SizedBox(),
         const SizedBox(width: 20)
@@ -68,15 +68,6 @@ class DraftTransaksiScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          // CustomFilledButton(
-          //   color: errorColor,
-          //   title: 'clear draft',
-          //   onPressed: () {
-          //     controller.storage.deleteString(StorageCore.draftTransaction);
-          //     controller.initData();
-          //     controller.update();
-          //   },
-          // ),
           CustomSearchField(
             controller: c.search,
             hintText: 'Cari transaksimu'.tr,

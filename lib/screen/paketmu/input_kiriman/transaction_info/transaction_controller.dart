@@ -384,6 +384,7 @@ class TransactionController extends BaseController {
     state.draftList = [];
     DraftTransactionModel temp = DraftTransactionModel.fromJson(
         await storage.readData(StorageCore.draftTransaction));
+
     state.draftList.addAll(temp.draft);
     state.draftList.add(DataTransactionModel(
       delivery: Delivery(
@@ -403,7 +404,9 @@ class TransactionController extends BaseController {
         insuranceFlag: state.insurance ? "Y" : "N",
         insuranceFee: state.isr,
         flatRate: state.flatRate,
-        codFee: state.codfee,
+        codFee: state.isCOD || state.codOngkir
+            ? state.codAmountText.text.digitOnly().toInt()
+            : null,
         flatRateWithInsurance: state.flatRateISR,
         freightCharge: state.freightCharge,
         freightChargeWithInsurance: state.freightChargeISR,
@@ -412,6 +415,8 @@ class TransactionController extends BaseController {
         accountNumber: state.account.accountNumber,
         accountService: state.account.accountService,
       ),
+      dataAccount: state.account,
+      dataDestination: state.destination,
       origin: state.origin,
       destination: state.destination,
       goods: Goods(

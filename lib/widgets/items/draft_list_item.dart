@@ -112,11 +112,15 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                     children: [
                       CustomLabelText(
                         title: 'Account Number'.tr,
-                        value: widget.data.dataAccount?.accountNumber ?? '',
+                        value: widget.data.dataAccount?.accountNumber ??
+                            widget.data.account?.accountNumber ??
+                            '',
                       ),
                       CustomLabelText(
                         title: 'Account Name'.tr,
-                        value: widget.data.dataAccount?.accountName ?? '',
+                        value: widget.data.dataAccount?.accountName ??
+                            widget.data.account?.accountName ??
+                            '',
                         alignment: 'end',
                       ),
                     ],
@@ -142,13 +146,14 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomLabelText(
-                          width: Get.width / 2,
+                          width: Get.width * 0.4,
                           title: 'Origin'.tr,
                           value: widget.data.origin?.originName ?? '',
                           valueMaxline: 3,
                         ),
                         CustomLabelText(
                           alignment: 'end',
+                          width: Get.width * 0.4,
                           title: 'Destination'.tr,
                           value: widget.data.dataDestination?.cityName ?? '',
                           valueMaxline: 3,
