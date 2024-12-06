@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class ContactRadioListItem extends StatelessWidget {
   final dynamic groupValue;
   final dynamic value;
-  final void Function(dynamic) onChanged;
+  final void Function(dynamic)? onChanged;
   final bool isSelected;
   final String? name;
   final String? phone;
@@ -16,12 +16,13 @@ class ContactRadioListItem extends StatelessWidget {
   final int index;
   final void Function(BuildContext)? onDelete;
   final bool isLoading;
+  final VoidCallback? onTap;
 
   const ContactRadioListItem({
     super.key,
     required this.groupValue,
     required this.value,
-    required this.onChanged,
+    this.onChanged,
     this.isSelected = false,
     this.name,
     this.phone,
@@ -30,6 +31,7 @@ class ContactRadioListItem extends StatelessWidget {
     required this.index,
     this.onDelete,
     this.isLoading = false,
+    this.onTap,
   });
 
   @override
@@ -53,24 +55,27 @@ class ContactRadioListItem extends StatelessWidget {
       ),
       child: Shimmer(
         isLoading: isLoading,
-        child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            color: isLoading ? greyColor : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: isSelected ? redJNE : greyColor),
-          ),
-          child: RadioListTile(
-            value: value,
-            groupValue: groupValue,
-            onChanged: onChanged,
-            // shape: Border.all(color: isSelected ? redJNE : greyColor),
-            selectedTileColor: redJNE,
-            title: Text(name ?? '',
-                style: Theme.of(context).textTheme.titleMedium),
-            subtitle: Text(
-              '$phone \n$city \n$address',
-              style: Theme.of(context).textTheme.titleSmall,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              color: isLoading ? greyColor : Colors.transparent,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: isSelected ? redJNE : greyColor),
+            ),
+            child: RadioListTile(
+              value: value,
+              groupValue: groupValue,
+              onChanged: onChanged,
+              // shape: Border.all(color: isSelected ? redJNE : greyColor),
+              selectedTileColor: redJNE,
+              title: Text(name ?? '',
+                  style: Theme.of(context).textTheme.titleMedium),
+              subtitle: Text(
+                '$phone \n$city \n$address',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
             ),
           ),
         ),

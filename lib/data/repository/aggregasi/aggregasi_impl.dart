@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/aggregasi/aggregation_chart_model.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
@@ -169,6 +170,51 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
         e.response?.data,
         (json) =>
             TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
+      );
+    }
+  }
+
+  @override
+  Future<ResponseModel<List<AggregationChartModel>>> getAggChart() async {
+    var token = await storageSecure.read(key: "token");
+    network.base.options.headers['Authorization'] = 'Bearer $token';
+    var now = DateTime.now().toLocal();
+    var startDate = DateTime(now.year, now.month, now.day)
+        .subtract(const Duration(days: 6))
+        .toIso8601String();
+    var endDate = DateTime(now.year, now.month, now.day, 23, 59, 59, 999)
+        .toIso8601String();
+
+    try {
+      Response response = await network.base.get(
+        "/aggregations/chart",
+        queryParameters: QueryParamModel(
+          between: '[{"mpayWdrGrpPayDate":["$startDate","$endDate"]}]',
+        ).toJson(),
+      );
+
+      return ResponseModel<List<AggregationChartModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<AggregationChartModel>(
+                  (i) =>
+                      AggregationChartModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      return ResponseModel<List<AggregationChartModel>>.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<AggregationChartModel>(
+                  (i) =>
+                      AggregationChartModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
       );
     }
   }

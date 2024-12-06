@@ -336,7 +336,7 @@ class TransactionController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-      // state.isOnline = false;
+      state.isOnline = false;
     }
     if (state.data != null) {
       state.goodType.text = state.data?.goods?.type ?? '';
@@ -721,6 +721,7 @@ class TransactionController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
+      AppLogger.e("anda telah offline, transaksi akan disimpan ke draft");
       saveDraft();
     }
     state.isLoading = false;

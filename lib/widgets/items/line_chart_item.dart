@@ -58,10 +58,13 @@ class LineChartItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final maxValue = data.reduce(
         (a, b) => a > b ? a : b); // Cari nilai maksimal untuk normalisasi
+    final double normalizedMaxValue = maxValue == 0
+        ? 1.0
+        : maxValue.toDouble(); // Handle kondisi jika maxValue == 0
 
     return CustomPaint(
       size: const Size(200, 100), // Ukuran canvas (lebar x tinggi)
-      painter: LineChart(data, maxValue),
+      painter: LineChart(data, normalizedMaxValue),
     );
   }
 }

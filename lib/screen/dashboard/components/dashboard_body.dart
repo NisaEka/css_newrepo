@@ -114,6 +114,7 @@ class DashboardBody extends StatelessWidget {
                                   c.state.allow.monitoringAgg == "Y")
                           ? DashboardAggCountItem(
                               transSummary: c.state.aggSummary,
+                              transChart: c.state.aggChart,
                               isLoading: c.state.isLoading,
                             )
                           : const SizedBox(),

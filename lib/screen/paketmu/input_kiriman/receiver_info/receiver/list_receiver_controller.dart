@@ -161,13 +161,14 @@ class ListPenerimaController extends BaseController {
       address: e.address,
       groupValue: selectedReceiver,
       isSelected: e == selectedReceiver ? true : false,
-      onChanged: (value) {
-        selectedReceiver = value as ReceiverModel?;
-        update();
-        Get.back(
-          result: selectedReceiver,
-        );
-      },
+      onTap: () => Get.back(result: e),
+      // onChanged: (value) {
+      //   selectedReceiver = value as ReceiverModel?;
+      //   update();
+      //   Get.back(
+      //     result: selectedReceiver,
+      //   );
+      // },
       onDelete: (value) => showDialog(
         context: context,
         builder: (context) => DeleteAlertDialog(

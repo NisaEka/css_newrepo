@@ -26,8 +26,9 @@ class DraftTransaksiScreen extends StatelessWidget {
           return PopScope(
             canPop: controller.pop,
             onPopInvokedWithResult: (bool didPop, Object? result) =>
-                Get.delete<DashboardController>()
-                    .then((_) => Get.offAll(const DashboardScreen())),
+                Get.delete<DashboardController>().then(
+              (_) => Get.offAll(const DashboardScreen()),
+            ),
             child: Scaffold(
               appBar: _appBarContent(controller),
               body: _bodyContent(controller, context),
