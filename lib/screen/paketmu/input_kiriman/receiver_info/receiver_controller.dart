@@ -56,46 +56,46 @@ class ReceiverController extends BaseController {
     state.receiverPhone.text = state.receiver?.phone ?? '';
     state.receiverDest.text = state.receiver?.idDestination ?? '';
     state.receiverAddress.text = state.receiver?.address?.toUpperCase() ?? '';
-    if (state.isOnline) {
-      getDestinationList(QueryParamModel(
-        table: true,
-        limit: 1,
-        where: jsonEncode([
-          {
-            "countryName": state.receiver?.country,
-          },
-          {
-            "provinceName": state.receiver?.region,
-          },
-          {
-            "cityName": state.receiver?.city,
-          },
-          {
-            "districtName": state.receiver?.district,
-          },
-          {
-            "subdistrictName": state.receiver?.subDistrict,
-          },
-          {
-            "zipCode": state.receiver?.zipCode,
-          },
-        ]),
-      )).then((value) {
-        AppLogger.i("getSelectedReceiver destination ${jsonEncode(value)}");
-        state.selectedDestination = value.first;
-      });
-    } else {
-      state.selectedDestination = Destination(
-        destinationCode: state.receiver?.destinationCode,
-        zipCode: state.receiver?.zipCode,
-        cityName: state.receiver?.city,
-        countryName: state.receiver?.country,
-        provinceName: state.receiver?.region,
-        districtName: state.receiver?.district,
-        subdistrictName: state.receiver?.subDistrict,
-        id: state.receiver?.idDestination?.toInt(),
-      );
-    }
+    // if (state.isOnline) {
+    //   getDestinationList(QueryParamModel(
+    //     table: true,
+    //     limit: 1,
+    //     where: jsonEncode([
+    //       {
+    //         "countryName": state.receiver?.country,
+    //       },
+    //       {
+    //         "provinceName": state.receiver?.region,
+    //       },
+    //       {
+    //         "cityName": state.receiver?.city,
+    //       },
+    //       {
+    //         "districtName": state.receiver?.district,
+    //       },
+    //       {
+    //         "subdistrictName": state.receiver?.subDistrict,
+    //       },
+    //       {
+    //         "zipCode": state.receiver?.zipCode,
+    //       },
+    //     ]),
+    //   )).then((value) {
+    //     AppLogger.i("getSelectedReceiver destination ${jsonEncode(value)}");
+    //     state.selectedDestination = value.first;
+    //   });
+    // } else {
+    state.selectedDestination = Destination(
+      destinationCode: state.receiver?.destinationCode,
+      zipCode: state.receiver?.zipCode,
+      cityName: state.receiver?.city,
+      countryName: state.receiver?.country,
+      provinceName: state.receiver?.region,
+      districtName: state.receiver?.district,
+      subdistrictName: state.receiver?.subDistrict,
+      id: state.receiver?.idDestination?.toInt(),
+    );
+    // }
     update();
     return state.receiver;
   }

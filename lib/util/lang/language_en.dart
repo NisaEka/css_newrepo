@@ -432,7 +432,8 @@ class LanguageEN {
       "Promo Terkini": "Latest Promo",
       "Buat Tiket Laporan": "Create Report Ticket",
       "Pengajuan Eclaim": "Create Claim Ticket",
-      "Aggregasi Pembayaran": "Aggregation Payment"
+      "Aggregasi Pembayaran": "Aggregation Payment",
+      "Coba lagi": "Try again"
     };
   }
 }

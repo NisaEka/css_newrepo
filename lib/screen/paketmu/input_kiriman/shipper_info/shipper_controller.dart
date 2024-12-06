@@ -221,8 +221,9 @@ class ShipperController extends BaseController {
     }
 
     state.isLoading = false;
-    update();
+    // state.isOnline = false;
 
+    update();
     if (state.data != null) {
       state.shipper = state.data?.shipper;
       state.selectedAccount = state.accountList

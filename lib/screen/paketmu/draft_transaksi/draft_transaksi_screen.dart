@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -26,8 +27,9 @@ class DraftTransaksiScreen extends StatelessWidget {
           return PopScope(
             canPop: controller.pop,
             onPopInvokedWithResult: (bool didPop, Object? result) =>
-                Get.delete<DashboardController>()
-                    .then((_) => Get.offAll(const DashboardScreen())),
+                Get.delete<DashboardController>().then(
+              (_) => Get.offAll(const DashboardScreen()),
+            ),
             child: Scaffold(
               appBar: _appBarContent(controller),
               body: _bodyContent(controller, context),

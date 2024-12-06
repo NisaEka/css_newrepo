@@ -27,12 +27,12 @@ class TransactionServicesList extends StatelessWidget {
                             color: greyLightColor3,
                           ),
                           width: Get.width / 2,
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.refresh),
-                              Text("Try again"),
+                              const Icon(Icons.refresh),
+                              Text("Coba lagi".tr),
                             ],
                           )),
                     ),

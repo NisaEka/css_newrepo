@@ -1,6 +1,6 @@
 class DeviceModel {
   DeviceModel({
-    num? id,
+    int? id,
     String? registrationId,
     String? fcmToken,
     String? deviceId,
@@ -24,7 +24,7 @@ class DeviceModel {
     _createdDate = json['createdDate'];
   }
 
-  num? _id;
+  int? _id;
   String? _registrationId;
   String? _fcmToken;
   String? _deviceId;
@@ -32,7 +32,7 @@ class DeviceModel {
   String? _createdDate;
 
   DeviceModel copyWith({
-    num? id,
+    int? id,
     String? registrationId,
     String? fcmToken,
     String? deviceId,
@@ -48,7 +48,7 @@ class DeviceModel {
         createdDate: createdDate ?? _createdDate,
       );
 
-  num? get id => _id;
+  int? get id => _id;
 
   String? get registrationId => _registrationId;
 
@@ -62,7 +62,9 @@ class DeviceModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['id'] = _id;
+    if (_id != null) {
+      map['id'] = _id;
+    }
     map['registrationId'] = _registrationId;
     map['fcmToken'] = _fcmToken;
     map['deviceId'] = _deviceId;
