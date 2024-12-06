@@ -445,8 +445,9 @@ class TransactionController extends BaseController {
                 const DashboardScreen(),
               ),
               secondButtonTitle: "Lihat Draft".tr,
-              secondAction: () => Get.delete<DraftTransaksiController>()
-                  .then((value) => Get.offAll(const DraftTransaksiScreen())),
+              secondAction: () => Get.delete<DraftTransaksiController>().then(
+                  (value) => Get.to(const DraftTransaksiScreen(),
+                      arguments: {'fromMenu': false})),
               thirdButtonTitle: "Buat Transaksi Lainnya".tr,
               thirdAction: () =>
                   Get.offAll(const InformasiPengirimScreen(), arguments: {}),

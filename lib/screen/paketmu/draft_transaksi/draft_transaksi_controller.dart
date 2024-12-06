@@ -5,6 +5,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/draft_list_item.dart';
@@ -162,6 +163,21 @@ class DraftTransaksiController extends BaseController {
         ),
       ),
       onValidate: () => validate(i),
+    );
+  }
+
+  void navigateToDraftTransaksi() {
+    Get.to(
+      const DraftTransaksiScreen(),
+      arguments: {'fromMenu': true},
+    );
+  }
+
+// Jika dari layar inputan transaksi
+  void navigateFromInputTransaksi() {
+    Get.to(
+      const DraftTransaksiScreen(),
+      arguments: {'fromMenu': false},
     );
   }
 }
