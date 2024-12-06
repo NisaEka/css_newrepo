@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RiwayatKirimanState {
-  bool? isLastScreen = Get.arguments['isLastScreen'];
+  bool? isLastScreen = Get.arguments?['isLastScreen'] ?? false;
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
   final searchField = TextEditingController();

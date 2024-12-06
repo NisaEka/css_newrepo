@@ -522,7 +522,7 @@ class DashboardController extends BaseController {
             Icons.info,
             color: whiteColor,
           ),
-          message: 'Double click back button to exit',
+          message: 'Double click back button to exit'.tr,
           isDismissible: true,
           duration: const Duration(seconds: 3),
           backgroundColor: greyColor.withOpacity(0.8),

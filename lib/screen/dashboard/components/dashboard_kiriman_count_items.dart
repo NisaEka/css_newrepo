@@ -76,7 +76,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           TransactionCard(
                               title: "Jumlah Transaksi".tr,
                               count: total,
-                              subtitle: "7 Hari Terakhir",
+                              subtitle: "7 Hari Terakhir".tr,
                               color: Colors.blue,
                               icon: Icons.show_chart,
                               statusColor: whiteColor,
@@ -108,7 +108,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                     0,
                                 subtitle:
                                     "${percentage(transSummary?.summary?.where((e) => e.status == "Dalam Peninjauan").first.total?.toDouble() ?? 0)}% ${'dari jumlah transaksi'.tr}",
-                                notificationLabel: "Masih dikamu",
+                                notificationLabel: "Masih dikamu".tr,
                                 notificationCount: transSummary?.summary
                                         ?.where(
                                             (e) => e.status == "Masih di Kamu")
@@ -213,7 +213,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                 const Icon(CupertinoIcons.clock),
                 const SizedBox(width: 8),
                 Text(
-                  "Real Time\nSentuh untuk sinkronisasi manual",
+                  "Real Time\n${'Sentuh untuk sinkronisasi manual'.tr}",
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall

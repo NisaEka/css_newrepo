@@ -25,19 +25,22 @@ class _Ob1ScreenState extends State<Ob1Screen> {
 
   final List<Map<String, String>> bannerTexts = [
     {
-      "title": "Permintaan Pickup",
+      "title": "Permintaan Pickup".tr,
       "desc":
-          "Kamu dapat melakukan permintaan pickup dan akan kami jemput ke tempat kamu.",
+          "Kamu dapat melakukan permintaan pickup dan akan kami jemput ke tempat kamu."
+              .tr,
     },
     {
-      "title": "Pencairan COD Cepat dan Detail",
+      "title": "Pencairan COD Cepat dan Detail".tr,
       "desc":
-          "Kamu dapat memilih skema pencairan otomatis ke rekening setiap hari atau withdraw dengan penarikan dana suka-suka kapanpun dan dimanapun.",
+          "Kamu dapat memilih skema pencairan otomatis ke rekening setiap hari atau withdraw dengan penarikan dana suka-suka kapanpun dan dimanapun."
+              .tr,
     },
     {
-      "title": "Pantau Progres Pengiriman Realtime",
+      "title": "Pantau Progres Pengiriman Realtime".tr,
       "desc":
-          "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.",
+          "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime."
+              .tr,
     },
   ];
 

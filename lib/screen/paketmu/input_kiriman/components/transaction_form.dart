@@ -248,7 +248,9 @@ class TransactionForm extends StatelessWidget {
                                 c.update();
                               },
                             ),
-                            Text('Dimensi Kiriman'.tr),
+                            const Spacer(),
+                            Text('Dimensi Kiriman'.tr,
+                                style: Theme.of(context).textTheme.titleSmall),
                             Switch(
                               value: c.state.dimension,
                               activeColor: AppConst.isLightTheme(context)

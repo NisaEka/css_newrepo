@@ -93,34 +93,36 @@ class TransactionDetail extends StatelessWidget {
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                c.state.transactionModel?.accountNumber ?? ''),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: c.state.transactionModel?.shipperName ?? ''),
+                                c.state.transactionModel?.accountNumber ?? '-'),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                c.state.transactionModel?.petugasEntry ?? ''),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: c.state.transactionModel?.shipperCity ?? ''),
+                                c.state.transactionModel?.shipperName ?? '-'),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                c.state.transactionModel?.receiverName ?? ''),
+                                c.state.transactionModel?.petugasEntry ?? '-'),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                c.state.transactionModel?.receiverCity ?? ''),
+                                c.state.transactionModel?.shipperCity ?? '-'),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
-                            label: c.state.transactionModel?.goodsDesc ?? '',
+                            label:
+                                c.state.transactionModel?.receiverName ?? '-'),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label:
+                                c.state.transactionModel?.receiverCity ?? '-'),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: c.state.transactionModel?.goodsDesc ?? '-',
                             width: Get.width / 3),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
                                 c.state.transactionModel?.weight.toString() ??
-                                    ''),
+                                    '-'),
                       ],
                     ),
                   ],
@@ -156,11 +158,12 @@ class TransactionDetail extends StatelessWidget {
                       children: [
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
-                            label: c.state.transactionModel?.statusAwb ?? ''),
+                            label:
+                                c.state.transactionModel?.statusAwb?.tr ?? '-'),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                c.state.transactionModel?.pickupStatus ?? ''),
+                                c.state.transactionModel?.pickupStatus ?? '-'),
                       ],
                     ),
                   ],
@@ -205,23 +208,24 @@ class TransactionDetail extends StatelessWidget {
                       children: [
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
-                            label: c.state.transactionModel?.serviceCode ?? ''),
+                            label:
+                                c.state.transactionModel?.serviceCode ?? '-'),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? ' '}'),
+                                'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? '0'}'),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                'Rp. ${c.state.transactionModel?.codAmount?.toInt().toCurrency().toString() ?? ' '}'),
+                                'Rp. ${c.state.transactionModel?.codAmount?.toInt().toCurrency().toString() ?? '0'}'),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                'Rp. ${c.state.transactionModel?.insuranceAmount?.toCurrency().toString() ?? ' '}'),
+                                'Rp. ${c.state.transactionModel?.insuranceAmount?.toCurrency().toString() ?? '0'}'),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? ' '}'),
+                                'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}'),
                       ],
                     ),
                   ],
@@ -254,12 +258,12 @@ class TransactionDetail extends StatelessWidget {
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? ' '}',
+                                'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}',
                             isBold: true),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? ' '}',
+                                'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? '0'}',
                             isBold: true),
                       ],
                     ),

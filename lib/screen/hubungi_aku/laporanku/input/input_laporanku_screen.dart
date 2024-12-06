@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/input/input_laporanku_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -91,9 +92,15 @@ class InputLaporankuScreen extends StatelessWidget {
               },
               onTap: () => Get.dialog(StatefulBuilder(
                 builder: (context, setState) => AlertDialog(
+                  backgroundColor:
+                      AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
                   scrollable: false,
                   title: Text(
                     "Upload Gambar".tr,
+                    style: TextStyle(
+                        color: AppConst.isLightTheme(context)
+                            ? greyDarkColor2
+                            : greyLightColor2),
                     textAlign: TextAlign.center,
                   ),
                   alignment: Alignment.center,
@@ -102,7 +109,9 @@ class InputLaporankuScreen extends StatelessWidget {
                     children: [
                       // Text("Upload Gambar".tr),
                       CustomFilledButton(
-                        color: blueJNE,
+                        color: AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : whiteColor,
                         title: "Ambil Gambar".tr,
                         isTransparent: true,
                         onPressed: () => c.getSinglePhoto(ImageSource.camera),

@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ShipperState {
-  final DataTransactionModel? data = Get.arguments['data'];
-  final bool? isEdit = Get.arguments['isEdit'];
+  final DataTransactionModel? data = Get.arguments?['data'];
+  final bool? isEdit = Get.arguments?['isEdit'] ?? false;
 
   final formKey = GlobalKey<FormState>();
   final accountNumber = TextEditingController();

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/add/add_eclaim_controller.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/add/image_preview_screen.dart';
@@ -9,7 +11,6 @@ import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AddEclaimScreen extends StatelessWidget {
   const AddEclaimScreen({super.key});
@@ -70,6 +71,11 @@ class AddEclaimScreen extends StatelessWidget {
 }
 
 Widget _bodyContent(AddEclaimController c, BuildContext context) {
+  bool isImageFile(File file) {
+    String extension = file.path.split('.').last.toLowerCase();
+    return ['jpg', 'jpeg', 'png', 'gif'].contains(extension);
+  }
+
   return Padding(
     padding: const EdgeInsets.only(right: 30, left: 30, top: 20),
     child: Form(
@@ -149,72 +155,49 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
           ),
           CustomTextFormField(
             controller: c.imageFile,
-            // isRequired: true,
             hintText: "Pilih berkas lampiran".tr,
             readOnly: true,
-            suffixIcon: GestureDetector(
-              onTap: c.selectedImage != null
-                  ? () {
-                      c.selectedImage = null;
-                      c.imageFile.clear();
-                      c.update();
-                    }
-                  : null,
-              child: const SatuanFieldIcon(
-                title: 'Pilih',
-                width: 100,
-                isSuffix: true,
-              ),
+            suffixIcon: SatuanFieldIcon(
+              title: 'Pilih'.tr,
+              width: 100,
+              isSuffix: true,
             ),
+            // suffixIcon: GestureDetector(
+            //   onTap: c.selectedImage != null
+            //       ? () {
+            //     c.selectedImage = null;
+            //     c.imageFile.clear();
+            //     c.update();
+            //   }
+            //       : null,
+            //   child: SatuanFieldIcon(
+            //     title: 'Pilih'.tr,
+            //     width: 100,
+            //     isSuffix: true,
+            //   ),
+            // ),
             validator: (value) {
-              if ((c.imageSize ?? 0) >= c.maxImageSize) {
+              if ((c.selectedImage?.lengthSync() ?? 0) >= c.maxImageSize) {
                 return "Ukuran file terlalu besar".tr;
               }
               return null;
             },
-            onTap: () => Get.dialog(StatefulBuilder(
-              builder: (context, setState) => AlertDialog(
-                scrollable: false,
-                title: Text(
-                  "Upload Gambar".tr,
-                  textAlign: TextAlign.center,
-                ),
-                alignment: Alignment.center,
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Text("Upload Gambar".tr),
-                    CustomFilledButton(
-                      color: blueJNE,
-                      title: "Ambil Gambar".tr,
-                      isTransparent: true,
-                      onPressed: () => c
-                          .addImage(ImageSource.camera)
-                          .then((_) => Get.back()),
-                    ),
-                    CustomFilledButton(
-                      color: blueJNE,
-                      title: "Pilih dari galeri".tr,
-                      onPressed: () => c
-                          .addImage(ImageSource.gallery)
-                          .then((_) => Get.back()),
-                    )
-                  ],
-                ),
-              ),
-            )),
+            onTap: () => c.addFile(),
           ),
           const SizedBox(height: 10),
-          // Preview Image
+          // Preview lampiran
           Wrap(
             spacing: 10,
             runSpacing: 10,
             children: [
               if (c.selectedImage != null)
                 GestureDetector(
-                  onTap: () {
-                    Get.to(() => ImagePreviewScreen(image: c.selectedImage!));
-                  },
+                  onTap: isImageFile(c.selectedImage!)
+                      ? () {
+                          Get.to(() =>
+                              ImagePreviewScreen(image: c.selectedImage!));
+                        }
+                      : null,
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
@@ -224,18 +207,15 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
                           borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                            image: FileImage(c.selectedImage!),
-                            fit: BoxFit.cover,
-                          ),
                         ),
+                        child: fileIcon(c.selectedImage!),
                       ),
                       Positioned(
                         top: -10,
                         right: -10,
                         child: IconButton(
                           icon: const Icon(Icons.close, color: Colors.red),
-                          onPressed: () => c.removeImage(),
+                          onPressed: () => c.removeFile(),
                         ),
                       ),
                     ],
@@ -247,4 +227,26 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
       ),
     ),
   );
+}
+
+Widget fileIcon(File file) {
+  String extension = file.path.split('.').last.toLowerCase();
+
+  switch (extension) {
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+    case 'gif':
+      return Image.file(file, width: 100, height: 100, fit: BoxFit.cover);
+    case 'pdf':
+      return const Icon(Icons.picture_as_pdf, size: 100, color: Colors.red);
+    case 'doc':
+    case 'docx':
+      return const Icon(Icons.description, size: 100, color: Colors.blue);
+    case 'xls':
+    case 'xlsx':
+      return const Icon(Icons.table_chart, size: 100, color: Colors.green);
+    default:
+      return const Icon(Icons.insert_drive_file, size: 100, color: Colors.grey);
+  }
 }
