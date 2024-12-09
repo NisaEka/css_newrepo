@@ -8,31 +8,28 @@ import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
-import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 
 abstract class MasterRepository {
-  Future<BaseResponse<List<OriginModel>>> getOrigins(QueryParamModel param);
+  Future<BaseResponse<List<OriginModel>>> getOrigins(QueryModel param);
 
-  Future<BaseResponse<List<Destination>>> getDestinations(
-      QueryParamModel param);
+  Future<BaseResponse<List<Destination>>> getDestinations(QueryModel param);
 
-  Future<BaseResponse<List<BranchModel>>> getBranches(QueryParamModel param);
+  Future<BaseResponse<List<BranchModel>>> getBranches(QueryModel param);
 
   Future<BaseResponse<List<GroupOwnerModel>>> getReferals(String keyword);
 
   Future<BaseResponse<List<AgentModel>>> getAgents(String branch);
 
   Future<BaseResponse<List<DropshipperModel>>> getDropshippers(
-      QueryParamModel param);
+      QueryModel param);
 
   Future<BaseResponse> deleteDropshipper(String id);
 
   Future<BaseResponse> postDropshipper(DropshipperModel data);
 
-  Future<BaseResponse<List<ReceiverModel>>> getReceivers(QueryParamModel param);
+  Future<BaseResponse<List<ReceiverModel>>> getReceivers(QueryModel param);
 
   Future<BaseResponse> deleteReceiver(String id);
 
@@ -40,7 +37,7 @@ abstract class MasterRepository {
 
   Future<BaseResponse<List<Account>>> getAccounts(QueryModel param);
 
-  Future<BaseResponse<int>> getAccountCount(CountQueryModel countQuery);
+  Future<BaseResponse<int>> getAccountCount(QueryModel countQuery);
 
   Future<BaseResponse<GetServiceModel>> getServices(DataServiceModel param);
 }

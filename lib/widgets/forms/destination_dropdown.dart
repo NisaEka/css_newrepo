@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/repository/master/master_repository.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
@@ -53,7 +53,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
 
   Future<List<Destination>> getDestinationList(String keyword) async {
     final master = Get.find<MasterRepository>();
-    var response = await master.getDestinations(QueryParamModel(
+    var response = await master.getDestinations(QueryModel(
       table: true,
       limit: 50,
       search: keyword.toUpperCase(),

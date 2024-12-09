@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_request_model.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_state.dart';
 import 'package:css_mobile/util/constant.dart';
@@ -225,7 +225,7 @@ class RequestPickupController extends BaseController {
       AppLogger.i("selectedorigin: ${state.selectedOrigin}");
       setSelectedFilterCityTwo(state.selectedOrigin);
       final response = await requestPickupRepository.getRequestPickups(
-          QueryParamModel(
+          QueryModel(
             limit: state.queryParam.limit,
             page: pageKey,
             sort: state.queryParam.sort,
@@ -263,8 +263,8 @@ class RequestPickupController extends BaseController {
 
   Future<void> getAddresses(int page) async {
     try {
-      final response = await requestPickupRepository
-          .getRequestPickupAddresses(QueryParamModel(
+      final response =
+          await requestPickupRepository.getRequestPickupAddresses(QueryModel(
               // limit: 0,
               page: page,
               sort: [

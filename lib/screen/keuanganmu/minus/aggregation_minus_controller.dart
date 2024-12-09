@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -37,8 +37,7 @@ class AggregasiMinusController extends BaseController {
   Future<void> getAggregationMinuses(int page) async {
     showLoadingIndicator = true;
     try {
-      final aggregations =
-          await aggregation.getAggregationMinus(QueryParamModel(
+      final aggregations = await aggregation.getAggregationMinus(QueryModel(
         page: page,
         limit: pageSize,
         search: searchField.text,

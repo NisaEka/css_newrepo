@@ -4,7 +4,6 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
@@ -62,11 +61,11 @@ class PembayaranAggergasiController extends BaseController {
         between.add({"mpayWdrGrpPayDate": transDate});
       }
 
-      final agg = await aggregation.getAggregationReport(QueryParamModel(
+      final agg = await aggregation.getAggregationReport(QueryModel(
         page: page,
         limit: pageSize,
         search: searchField.text,
-        isIn: isIn,
+        inValues: isIn,
         between: between,
       ));
 
@@ -104,10 +103,10 @@ class PembayaranAggergasiController extends BaseController {
         between.add({"mpayWdrGrpPayDate": transDate});
       }
 
-      final total = await aggregation.getAggregationTotal(QueryParamModel(
+      final total = await aggregation.getAggregationTotal(QueryModel(
         search: searchField.text,
         between: between,
-        isIn: isIn,
+        inValues: isIn,
       ));
 
       aggTotal = total.data?.total?.toInt() ?? 0;

@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/invoice/invoice_cnote_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:get/get.dart';
@@ -11,7 +11,7 @@ class InvoiceCnoteController extends BaseController {
 
   // final DefaultPageFilterModel _defaultPageFilterModel =
   //     DefaultPageFilterModel();
-  final QueryParamModel _queryParamModel = QueryParamModel();
+  final QueryModel _queryParamModel = QueryModel();
 
   final PagingController<int, InvoiceCnoteModel> pagingController =
       PagingController(firstPageKey: Constant.defaultPage);

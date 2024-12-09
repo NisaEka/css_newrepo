@@ -6,7 +6,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
@@ -51,7 +51,7 @@ class InputLaporankuController extends BaseController {
     }
     try {
       await laporanku
-          .getTicketCategory(QueryParamModel(table: true, limit: 0))
+          .getTicketCategory(QueryModel(table: true, limit: 0))
           .then((value) {
         listCategory.addAll(value.data ?? []);
         update();

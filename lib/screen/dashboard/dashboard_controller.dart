@@ -10,7 +10,6 @@ import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
@@ -312,7 +311,7 @@ class DashboardController extends BaseController {
     update();
     if (state.isLogin) {
       try {
-        transaction.postTransactionDashboard(QueryParamModel()).then(
+        transaction.postTransactionDashboard(QueryModel()).then(
           (value) {
             state.transSummary = value.data;
             state.transCountList.addAll(value.data?.summary ?? []);
@@ -334,7 +333,7 @@ class DashboardController extends BaseController {
           },
         );
 
-        var trans = await transaction.getPantauCount(QueryParamModel(between: [
+        var trans = await transaction.getPantauCount(QueryModel(between: [
           {
             "awbDate": [
               DateTime.now().subtract(const Duration(days: 6)),
@@ -502,7 +501,7 @@ class DashboardController extends BaseController {
 
       if (dropshipper && state.isLogin) {
         await master
-            .getDropshippers(QueryParamModel())
+            .getDropshippers(QueryModel())
             .then((value) async => await storage.saveData(
                   StorageCore.dropshipper,
                   value,
@@ -511,7 +510,7 @@ class DashboardController extends BaseController {
 
       if (receiver && state.isLogin) {
         await master
-            .getReceivers(QueryParamModel())
+            .getReceivers(QueryModel())
             .then((value) async => await storage.saveData(
                   StorageCore.receiver,
                   value,

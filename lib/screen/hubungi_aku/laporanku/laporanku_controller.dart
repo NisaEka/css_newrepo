@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -39,7 +39,7 @@ class LaporankuController extends BaseController {
       }
 
       await laporanku
-          .getTicketSummary(QueryParamModel(
+          .getTicketSummary(QueryModel(
         where: where,
         between: between,
         search: state.searchField.text,
@@ -73,7 +73,7 @@ class LaporankuController extends BaseController {
         between.add({"createdDate": state.date});
       }
 
-      final tickets = await laporanku.getTickets(QueryParamModel(
+      final tickets = await laporanku.getTickets(QueryModel(
         table: true,
         relation: true,
         page: page,

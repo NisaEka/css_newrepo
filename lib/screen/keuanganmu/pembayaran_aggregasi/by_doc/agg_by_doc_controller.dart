@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -30,10 +30,8 @@ class AggByDocController extends BaseController {
   Future<void> getAggregation(int page) async {
     isLoading = true;
     try {
-      final agg = await aggregation.getAggregationByDoc(
-          aggregationID,
-          QueryParamModel(
-              page: page, limit: pageSize, search: searchField.text));
+      final agg = await aggregation.getAggregationByDoc(aggregationID,
+          QueryModel(page: page, limit: pageSize, search: searchField.text));
       data = agg.data;
       update();
       final isLastPage = (agg.data?.length ?? 0) < pageSize;

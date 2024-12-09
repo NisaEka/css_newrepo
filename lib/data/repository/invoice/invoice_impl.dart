@@ -3,7 +3,7 @@ import 'package:css_mobile/data/model/invoice/invoice_cnote_detail_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_cnote_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_detail_model.dart';
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/invoice/invoice_repository.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -16,7 +16,7 @@ class InvoiceImpl extends InvoiceRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<num>> getInvoiceCount(QueryParamModel queryParam) async {
+  Future<BaseResponse<num>> getInvoiceCount(QueryModel queryParam) async {
     var token = await storageSecure.read(key: "token");
     // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
     network.base.options.headers['Authorization'] = 'Bearer $token';
@@ -40,7 +40,7 @@ class InvoiceImpl extends InvoiceRepository {
 
   @override
   Future<BaseResponse<List<InvoiceModel>>> getInvoices(
-      QueryParamModel queryParam) async {
+      QueryModel queryParam) async {
     var token = await storageSecure.read(key: "token");
     // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
     network.base.options.headers['Authorization'] = 'Bearer $token';
@@ -122,7 +122,7 @@ class InvoiceImpl extends InvoiceRepository {
 
   @override
   Future<BaseResponse<List<InvoiceCnoteModel>>> getInvoiceCnotes(
-      String invoiceNumber, QueryParamModel queryParam) async {
+      String invoiceNumber, QueryModel queryParam) async {
     AppLogger.i("param toJson ${queryParam.toJson()}");
     try {
       var encodedInvoiceNumber = Uri.encodeComponent(invoiceNumber);

@@ -3,7 +3,6 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 
@@ -56,7 +55,7 @@ class NoAkunController extends BaseController {
     try {
       await profil
           .getCcrfActivity(
-        QueryParamModel(
+        QueryModel(
           limit: 0,
           sort: [
             {'activityCreateDate': 'desc'}

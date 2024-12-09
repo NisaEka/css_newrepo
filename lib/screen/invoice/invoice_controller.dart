@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/date_ext.dart';
@@ -11,7 +11,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class InvoiceController extends BaseController {
   // final AdvanceFilterModel _advanceFilterModel = AdvanceFilterModel();
-  final QueryParamModel _queryParamModel = QueryParamModel();
+  final QueryModel _queryParamModel = QueryModel();
 
   final PagingController<int, InvoiceModel> pagingController =
       PagingController(firstPageKey: Constant.defaultPage);

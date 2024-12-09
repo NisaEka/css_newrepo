@@ -5,7 +5,7 @@ import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
 import 'package:css_mobile/screen/auth/signup/signup_state.dart';
@@ -130,7 +130,7 @@ class SignUpController extends BaseController {
 
   Future<OriginModel> getOrigin(String keyword) async {
     var response =
-        await master.getOrigins(QueryParamModel(search: keyword.toUpperCase()));
+        await master.getOrigins(QueryModel(search: keyword.toUpperCase()));
     var models = response.data?.toList();
     AppLogger.d(models as String);
     return models?.first ?? OriginModel();

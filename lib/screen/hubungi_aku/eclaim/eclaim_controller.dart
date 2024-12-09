@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -26,7 +26,7 @@ class EclaimController extends BaseController {
   Future<void> eclaimCount() async {
     try {
       await eclaims
-          .getEclaimCount(QueryParamModel(
+          .getEclaimCount(QueryModel(
         search: state.searchField.text,
         between: state.transDate,
       ))
@@ -50,8 +50,8 @@ class EclaimController extends BaseController {
   Future<void> getEclaim(int page) async {
     state.isLoading = true;
     try {
-      final trans = await eclaims.getEclaim(QueryParamModel(
-          search: state.searchField.text, between: state.transDate));
+      final trans = await eclaims.getEclaim(
+          QueryModel(search: state.searchField.text, between: state.transDate));
 
       final isLastPage =
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);

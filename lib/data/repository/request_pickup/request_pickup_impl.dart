@@ -1,7 +1,7 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_create_request_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_request_model.dart';
@@ -20,7 +20,7 @@ class RequestPickupImpl extends RequestPickupRepository {
 
   @override
   Future<BaseResponse<List<RequestPickupModel>>> getRequestPickups(
-      QueryParamModel param, String status) async {
+      QueryModel param, String status) async {
     AppLogger.i("getRequestPickups param: ${param.toJson()}");
     try {
       var response = await network.base.get("/transaction/pickups",
@@ -105,7 +105,7 @@ class RequestPickupImpl extends RequestPickupRepository {
 
   @override
   Future<BaseResponse<List<RequestPickupAddressModel>>>
-      getRequestPickupAddresses(QueryParamModel param) async {
+      getRequestPickupAddresses(QueryModel param) async {
     try {
       var response = await network.base
           .get('/transaction/pickup-datas', queryParameters: param.toJson());
@@ -128,7 +128,7 @@ class RequestPickupImpl extends RequestPickupRepository {
 
   @override
   Future<BaseResponse<List<Destination>>> getRequestPickupDestinations(
-      QueryParamModel param) async {
+      QueryModel param) async {
     try {
       var response = await network.base.get('/transaction/pickups/destination',
           queryParameters: param.toJson());
@@ -170,7 +170,7 @@ class RequestPickupImpl extends RequestPickupRepository {
 
   @override
   Future<BaseResponse<List<OriginModel>>> getRequestPickupOrigins(
-      QueryParamModel param) async {
+      QueryModel param) async {
     try {
       var response = await network.base
           .get('/transaction/pickups/origin', queryParameters: param.toJson());

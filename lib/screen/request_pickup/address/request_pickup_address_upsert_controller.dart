@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_create_request_model.dart';
 import 'package:css_mobile/util/ext/placement_ext.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -60,8 +60,8 @@ class RequestPickupAddressUpsertController extends BaseController {
     soundex.add({"subdistrictName": placemark.subLocality});
 
     requestPickupRepository
-        .getRequestPickupDestinations(QueryParamModel(
-            table: true, limit: 50, where: where, soundex: soundex))
+        .getRequestPickupDestinations(
+            QueryModel(table: true, limit: 50, where: where, soundex: soundex))
         .then((value) => _setSelectedDestination(value.data?.first))
         .onError((error, stackTrace) => null);
   }
@@ -78,7 +78,7 @@ class RequestPickupAddressUpsertController extends BaseController {
     destinationList.clear();
 
     var response = await requestPickupRepository.getRequestPickupDestinations(
-        QueryParamModel(
+        QueryModel(
             table: true,
             limit: 50,
             search: keyword.toUpperCase(),

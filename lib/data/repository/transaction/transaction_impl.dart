@@ -1,6 +1,6 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
@@ -82,7 +82,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     // UserModel user = UserModel.fromJson(
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
-    QueryParamModel params = QueryParamModel(
+    QueryModel params = QueryModel(
       table: true,
       limit: limit,
       page: page,
@@ -166,7 +166,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     // UserModel user = UserModel.fromJson(
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
-    QueryParamModel params = QueryParamModel(
+    QueryModel params = QueryModel(
       table: true,
       search: keyword,
       between: transDate,
@@ -301,7 +301,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
 
-    QueryParamModel params = QueryParamModel(table: true, limit: 0);
+    QueryModel params = QueryModel(table: true, limit: 0);
     try {
       Response response = await network.base.get(
         "/transaction/officers",
@@ -360,7 +360,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(
-      QueryParamModel param) async {
+      QueryModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     var now = DateTime.now().toLocal();
@@ -401,7 +401,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<BaseResponse<List<PantauCountModel>>> getPantauCount(
-      QueryParamModel param) async {
+      QueryModel param) async {
     try {
       Response response = await network.base.get(
         '/transaction/tracks/count/dashboard',

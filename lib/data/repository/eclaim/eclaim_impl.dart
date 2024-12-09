@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/eclaim/eclaim_count_model.dart';
 import 'package:css_mobile/data/model/eclaim/eclaim_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/storage/ccrf_file_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/eclaim/eclaim_repository.dart';
@@ -17,8 +17,7 @@ class EclaimRepositoryImpl extends EclaimRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<EclaimModel>>> getEclaim(
-      QueryParamModel param) async {
+  Future<BaseResponse<List<EclaimModel>>> getEclaim(QueryModel param) async {
     var token = await storageSecure.read(key: "token");
 
     if (token != null) {
@@ -56,7 +55,7 @@ class EclaimRepositoryImpl extends EclaimRepository {
 
   @override
   Future<BaseResponse<EclaimCountModel>> getEclaimCount(
-      QueryParamModel param) async {
+      QueryModel param) async {
     var token = await storageSecure.read(key: "token");
     // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
     network.base.options.headers['Authorization'] = 'Bearer $token';
