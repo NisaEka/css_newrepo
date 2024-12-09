@@ -90,16 +90,38 @@ class DashboardBody extends StatelessWidget {
                                                   .tr,
                                           hintStyle: hintTextStyle,
                                           suffixIcon: GestureDetector(
-                                            onTap: () =>
-                                                c.onLacakKiriman(true, ''),
+                                            onTap: () {
+                                              if (c.state.nomorResi.text
+                                                  .isNotEmpty) {
+                                                c.onLacakKiriman(true,
+                                                    c.state.nomorResi.text);
+                                              } else {
+                                                Get.snackbar(
+                                                  "Error",
+                                                  "Nomor resi tidak boleh kosong!",
+                                                  backgroundColor: Colors.red,
+                                                  colorText: Colors.white,
+                                                );
+                                              }
+                                            },
                                             child: const Icon(
                                               Icons.qr_code,
                                               color: redJNE,
                                             ),
                                           ),
                                         ),
-                                        onSubmitted: (value) =>
-                                            c.onLacakKiriman(false, value),
+                                        onSubmitted: (value) {
+                                          if (value.isNotEmpty) {
+                                            c.onLacakKiriman(false, value);
+                                          } else {
+                                            Get.snackbar(
+                                              "Error",
+                                              "Nomor resi tidak boleh kosong!",
+                                              backgroundColor: Colors.red,
+                                              colorText: Colors.white,
+                                            );
+                                          }
+                                        },
                                       )
                                     : const SizedBox(),
                               ],
