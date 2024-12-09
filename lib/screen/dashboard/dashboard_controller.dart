@@ -10,6 +10,7 @@ import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
+import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
@@ -307,7 +308,10 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadTransCountList() async {
+    state.isLoadingAgg = true;
+    state.isLoadingKiriman = true;
     state.transCountList.clear();
+    state.kirimanKamu = DashboardKirimanKamuModel();
     update();
     if (state.isLogin) {
       try {
@@ -329,6 +333,7 @@ class DashboardController extends BaseController {
         aggregation.getAggChart().then(
           (value) {
             state.aggChart = value.data;
+            state.isLoadingAgg = false;
             update();
           },
         );
@@ -395,6 +400,7 @@ class DashboardController extends BaseController {
     update();
     cekTheme();
     state.isLoading = true;
+    state.isLoadingAgg = true;
     state.isLoadingKiriman = true;
 
     storage.deleteString(StorageCore.transactionTemp);

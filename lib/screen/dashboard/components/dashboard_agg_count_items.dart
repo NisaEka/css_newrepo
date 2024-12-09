@@ -15,13 +15,13 @@ import 'package:get/get.dart';
 class DashboardAggCountItem extends StatelessWidget {
   final TransactionSummaryModel? transSummary;
   final List<AggregationChartModel>? transChart;
-  final bool isLoading;
+  final bool isLoadingAgg;
 
   const DashboardAggCountItem({
     super.key,
     this.transSummary,
     this.transChart,
-    this.isLoading = false,
+    this.isLoadingAgg = false,
   });
 
   @override
@@ -73,7 +73,7 @@ class DashboardAggCountItem extends StatelessWidget {
                 Column(
                   children: [
                     Shimmer(
-                      isLoading: isLoading,
+                      isLoading: isLoadingAgg,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +189,7 @@ class DashboardAggCountItem extends StatelessWidget {
                               '',
                           description: "Transaksi COD",
                           lineColor: redJNE,
-                          isLoading: isLoading,
+                          isLoading: isLoadingAgg,
                         ),
                         // TypeTransactionCard(
                         //   count: transSummary?.totalKirimanCod?.totalCodOngkir.toString() ?? '',
