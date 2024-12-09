@@ -3,6 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_chart_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/widgets/dialog/circular_loading.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/items/line_chart_item.dart';
 import 'package:css_mobile/widgets/items/transaction_card.dart';
@@ -87,7 +88,9 @@ class DashboardAggCountItem extends StatelessWidget {
                               chart: SizedBox(
                                   width: 45,
                                   height: 20,
-                                  child: LineChartItem(chartData))),
+                                  child: chartData.isNotEmpty
+                                      ? LineChartItem(chartData)
+                                      : const CircularLoading())),
                           const SizedBox(height: 5),
                           // Dalam Perjalanan
                           Column(

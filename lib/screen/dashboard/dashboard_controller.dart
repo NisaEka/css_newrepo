@@ -5,12 +5,16 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
+import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/transaction/pantau_count_model.dart';
+import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
@@ -20,12 +24,14 @@ import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.d
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 
 class DashboardController extends BaseController {
   final state = DashboardState();
+  final network = Get.find<NetworkCore>();
 
   @override
   void onInit() {
@@ -333,8 +339,64 @@ class DashboardController extends BaseController {
             update();
           },
         );
+
+        var param = CountQueryModel(
+          between: [
+            {
+              "awbDate": [
+                DateTime.now().subtract(const Duration(days: 6)),
+                DateTime.now()
+              ]
+            }
+          ],
+        );
+
+        Response response = await network.base.get(
+          '/transaction/tracks/count/dashboard',
+          queryParameters: param.toJson(),
+        );
+
+        var trans = BaseResponse<List<PantauCountModel>>.fromJson(
+          response.data,
+          (json) => json is List<dynamic>
+              ? json
+                  .map<PantauCountModel>(
+                    (i) => PantauCountModel.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+              : List.empty(),
+        );
+
+        trans.data?.forEach((item) {
+          if (item.status == 'Total Kiriman') {
+            state.kirimanKamu.totalPantau =
+                item.totalCod + item.totalCodOngkir + item.totalNonCod;
+            for (var chart in item.chart) {
+              state.kirimanKamu.pantauChart.add(chart.y);
+            }
+            state.kirimanKamu.totalCod = item.totalCod;
+            state.kirimanKamu.codAmount = item.codAmount;
+            state.kirimanKamu.totalCodOngkir = item.totalCodOngkir;
+            state.kirimanKamu.codOngkirAmount = item.codOngkirAmount;
+            state.kirimanKamu.totalNonCod = item.totalNonCod;
+            state.kirimanKamu.ongkirNonCodAmount = item.ongkirNonCodAmount;
+          }
+
+          if (item.status == 'Dalam Peninjauan') {
+            state.kirimanKamu.dalamPeninjauan =
+                item.totalCod + item.totalCodOngkir + item.totalNonCod;
+          }
+
+          if (item.status == 'Sukses Diterima') {
+            state.kirimanKamu.suksesDiterima =
+                item.totalCod + item.totalCodOngkir + item.totalNonCod;
+          }
+        });
+        state.kirimanKamu.calculatePercentages();
+
+        update();
       } catch (e) {
-        e.printError();
+        AppLogger.e('error loadTransCountList $e');
       }
     }
 
@@ -508,11 +570,11 @@ class DashboardController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
+    } finally {
+      cekAllowance();
+      state.isLoading = false;
+      update();
     }
-
-    cekAllowance();
-    state.isLoading = false;
-    update();
   }
 
   bool pop = false;

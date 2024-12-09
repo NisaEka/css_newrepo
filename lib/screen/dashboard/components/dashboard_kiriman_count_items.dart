@@ -1,7 +1,9 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/widgets/dialog/circular_loading.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/items/line_chart_item.dart';
 import 'package:css_mobile/widgets/items/ongoing_card.dart';
@@ -13,32 +15,18 @@ import 'package:get/get.dart';
 
 class DashboardKirimanCountItem extends StatelessWidget {
   final TransactionSummaryModel? transSummary;
+  final DashboardKirimanKamuModel kirimanKamu;
   final bool isLoading;
 
   const DashboardKirimanCountItem({
     super.key,
     this.transSummary,
+    required this.kirimanKamu,
     this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    int total = transSummary?.summary
-            ?.where((e) => e.status == "Jumlah Transaksi")
-            .first
-            .total
-            ?.toInt() ??
-        0;
-
-    double percentage(double part) {
-      double percent = ((part / total) * (100)) / 100;
-
-      if (percent.isInfinite || percent.isNaN) {
-        return 0;
-      }
-      return percent;
-    }
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
@@ -75,16 +63,19 @@ class DashboardKirimanCountItem extends StatelessWidget {
                         children: [
                           TransactionCard(
                               title: "Jumlah Transaksi".tr,
-                              count: total,
+                              count: kirimanKamu.totalPantau,
                               subtitle: "7 Hari Terakhir".tr,
                               color: Colors.blue,
                               icon: Icons.show_chart,
                               statusColor: whiteColor,
-                              chart: const SizedBox(
+                              chart: SizedBox(
                                   width: 45,
                                   height: 20,
-                                  child: LineChartItem(
-                                      [100, 30, 20, 50, 60, 80, 100]))),
+                                  child: kirimanKamu.pantauChart.isNotEmpty
+                                      ? LineChartItem(kirimanKamu.pantauChart
+                                          .map((e) => e.toDouble())
+                                          .toList())
+                                      : const CircularLoading())),
                           const SizedBox(height: 5),
                           // Dalam Perjalanan
                           Column(
@@ -92,22 +83,12 @@ class DashboardKirimanCountItem extends StatelessWidget {
                             children: [
                               OngoingTransactionCard(
                                 title: "Dalam Peninjauan".tr,
-                                percentage: transSummary?.summary
-                                        ?.where((e) =>
-                                            e.status == "Dalam Peninjauan")
-                                        .first
-                                        .total
-                                        ?.toDouble() ??
-                                    0,
-                                count: transSummary?.summary
-                                        ?.where((e) =>
-                                            e.status == "Dalam Peninjauan")
-                                        .first
-                                        .total
-                                        ?.toInt() ??
-                                    0,
+                                percentage: kirimanKamu
+                                    .dalamPeninjauanPercentage
+                                    .toDouble(),
+                                count: kirimanKamu.dalamPeninjauan,
                                 subtitle:
-                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Dalam Peninjauan").first.total?.toDouble() ?? 0)}% ${'dari jumlah transaksi'.tr}",
+                                    "${double.parse((kirimanKamu.dalamPeninjauanPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
                                 notificationLabel: "Masih dikamu".tr,
                                 notificationCount: transSummary?.summary
                                         ?.where(
@@ -126,28 +107,17 @@ class DashboardKirimanCountItem extends StatelessWidget {
                             children: [
                               TransactionCard(
                                 title: "Transaksi Terkirim".tr,
-                                count: transSummary?.summary
-                                        ?.where((e) =>
-                                            e.status == "Sukses Diterima")
-                                        .first
-                                        .total
-                                        ?.toInt() ??
-                                    0,
+                                count: kirimanKamu.suksesDiterima,
                                 subtitle:
-                                    "${percentage(transSummary?.summary?.where((e) => e.status == "Sukses Diterima").first.total?.toDouble() ?? 0)}% ${'dari jumlah transaksi'.tr}",
+                                    "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
                                 color: Colors.blue,
                                 statusColor: Colors.green,
                                 chart: SizedBox(
                                   width: 25,
                                   height: 25,
                                   child: CircularProgressIndicator(
-                                    value: percentage(transSummary?.summary
-                                            ?.where((e) =>
-                                                e.status == "Sukses Diterima")
-                                            .first
-                                            .total
-                                            ?.toDouble() ??
-                                        0),
+                                    value: kirimanKamu.suksesDiterimaPercentage
+                                        .toDouble(),
                                     backgroundColor: Colors.grey[300],
                                     color: Colors.green,
                                     strokeWidth: 4,
@@ -163,36 +133,22 @@ class DashboardKirimanCountItem extends StatelessWidget {
                     Row(
                       children: [
                         TypeTransactionCard(
-                          count: transSummary?.totalKirimanCod?.totalCod
-                                  .toString() ??
-                              '',
-                          amount: transSummary?.totalKirimanCod?.codAmount
-                                  ?.toInt()
-                                  .toCurrency()
-                                  .toString() ??
-                              '',
+                          count: kirimanKamu.totalCod.toString(),
+                          amount: kirimanKamu.codAmount.toInt().toCurrency(),
                           description: "Transaksi COD",
                           lineColor: redJNE,
                           isLoading: isLoading,
                         ),
                         TypeTransactionCard(
-                          count: transSummary?.totalKirimanCod?.totalCodOngkir
-                                  .toString() ??
-                              '',
-                          amount: transSummary?.totalKirimanCod?.codOngkirAmount
-                              ?.toInt()
-                              .toCurrency()
-                              .toString(),
+                          count: kirimanKamu.totalCodOngkir.toString(),
+                          amount:
+                              kirimanKamu.codOngkirAmount.toInt().toCurrency(),
                           description: "Transaksi COD Ongkir",
                           lineColor: warningColor,
                           isLoading: isLoading,
                         ),
                         TypeTransactionCard(
-                          count: transSummary?.totalKirimanCod?.totalNonCod
-                                  ?.toInt()
-                                  .toCurrency()
-                                  .toString() ??
-                              '',
+                          count: kirimanKamu.totalNonCod.toString(),
                           description: "Transaksi NON COD",
                           lineColor: Colors.green,
                           isLoading: isLoading,
