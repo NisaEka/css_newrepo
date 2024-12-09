@@ -27,6 +27,10 @@ class DashboardKirimanCountItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> messages = [
+      "Real Time",
+      "Sentuh untuk sinkronisasi manual",
+    ];
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
@@ -166,16 +170,44 @@ class DashboardKirimanCountItem extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Icon(CupertinoIcons.clock),
                 const SizedBox(width: 8),
-                Text(
-                  "Real Time\n${'Sentuh untuk sinkronisasi manual'.tr}",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    StreamBuilder<int>(
+                      stream: Stream.periodic(
+                          const Duration(seconds: 3), (count) => count),
+                      builder: (context, snapshot) {
+                        int currentSecond = snapshot.data ?? 0;
+                        return AnimatedSwitcher(
+                          duration:
+                              const Duration(seconds: 1), // Durasi transisi
+                          transitionBuilder:
+                              (Widget child, Animation<double> animation) {
+                            var slide = Tween<Offset>(
+                              begin: const Offset(0, 1), // Mulai dari bawah
+                              end: const Offset(
+                                  0, 0), // Akhirnya di posisi normal
+                            ).animate(animation);
+                            return SlideTransition(
+                                position: slide, child: child);
+                          },
+                          child: Text(
+                            textAlign: TextAlign.left,
+                            key: ValueKey<int>(currentSecond),
+                            messages[currentSecond % messages.length],
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

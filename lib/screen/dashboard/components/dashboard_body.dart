@@ -1,7 +1,7 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/dashboard/components/dashboard_agg_count_items.dart';
+// import 'package:css_mobile/screen/dashboard/components/dashboard_agg_count_items.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_kiriman_count_items.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_promo.dart';
@@ -145,15 +145,15 @@ class DashboardBody extends StatelessWidget {
                         ],
                       ),
                       const DashboardMenu2(),
-                      c.state.isLogin &&
-                              (c.state.allow.keuanganAggregasi == "Y" ||
-                                  c.state.allow.monitoringAgg == "Y")
-                          ? DashboardAggCountItem(
-                              transSummary: c.state.aggSummary,
-                              transChart: c.state.aggChart,
-                              isLoadingAgg: c.state.isLoadingAgg,
-                            )
-                          : const SizedBox(),
+                      // c.state.isLogin &&
+                      //         (c.state.allow.keuanganAggregasi == "Y" ||
+                      //             c.state.allow.monitoringAgg == "Y")
+                      //     ? DashboardAggCountItem(
+                      //         transSummary: c.state.aggSummary,
+                      //         transChart: c.state.aggChart,
+                      //         isLoadingAgg: c.state.isLoadingAgg,
+                      //       )
+                      //     : const SizedBox(),
                       c.state.isLogin
                           ? DashboardKirimanCountItem(
                               transSummary: c.state.transSummary,
