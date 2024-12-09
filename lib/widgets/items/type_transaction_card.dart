@@ -49,15 +49,13 @@ class TypeTransactionCard extends StatelessWidget {
                       .bodySmall
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
-                (amount?.isNotEmpty ?? false)
-                    ? Text(
-                        "Rp. $amount",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(fontSize: 8),
-                      )
-                    : const SizedBox(),
+                Text(
+                  (amount?.isNotEmpty ?? false) ? "Rp. $amount" : "",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(fontSize: 8),
+                ),
                 Text(
                   description,
                   style: Theme.of(context)
