@@ -300,10 +300,11 @@ class AuthRepositoryImpl extends AuthRepository {
       Response response = await network.base.get(
         "/auth/device-infos",
         queryParameters: QueryParamModel(
-                table: true,
-                where:
-                    '[{"fcmToken" : "${await storageSecure.read(key: StorageCore.fcmToken)}"}]')
-            .toJson(),
+          table: true,
+          where: [
+            {"fcmToken": await storageSecure.read(key: StorageCore.fcmToken)}
+          ],
+        ).toJson(),
       );
       AppLogger.i("get fcm token : ${response.data}");
       return BaseResponse.fromJson(

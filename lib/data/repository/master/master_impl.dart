@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_agent_model.dart';
@@ -20,7 +19,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:css_mobile/util/logger.dart';
-
 import 'master_repository.dart';
 
 class MasterRepositoryImpl extends MasterRepository {
@@ -170,9 +168,13 @@ class MasterRepositoryImpl extends MasterRepository {
 
     UserModel user = UserModel.fromJson(
         await StorageCore().readData(StorageCore.basicProfile));
-    String registID = '[{"registrationId" : "${user.id?.split('-').first}"}]';
-    QueryParamModel params =
-        param.copyWith(where: registID, table: true, relation: true);
+    QueryParamModel params = param.copyWith(
+      where: [
+        {"registrationId": user.id?.split('-').first}
+      ],
+      table: true,
+      relation: true,
+    );
 
     try {
       Response response = await network.base.get(
@@ -246,13 +248,15 @@ class MasterRepositoryImpl extends MasterRepository {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
-    String registID = '[{"registrationId" : "${user.id?.split('-').first}"}]';
     QueryParamModel params = param.copyWith(
-        where: registID,
-        table: true,
-        sort: jsonEncode([
-          {"receiverName": "asc"}
-        ]));
+      where: [
+        {"registrationId": "${user.id?.split('-').first}"}
+      ],
+      table: true,
+      sort: [
+        {"receiverName": "asc"}
+      ],
+    );
 
     try {
       Response response = await network.base.get(

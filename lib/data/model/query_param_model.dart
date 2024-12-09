@@ -1,27 +1,30 @@
 class QueryParamModel {
-  QueryParamModel(
-      {bool? table,
-      bool? trash,
-      bool? includeDeleted,
-      bool? relation,
-      num? page,
-      num? limit,
-      String? search,
-      String? where,
-      String? notEqual,
-      String? greaterThan,
-      String? lessThan,
-      String? like,
-      String? sort,
-      String? between,
-      String? isIn,
-      String? notin,
-      String? isNull,
-      String? isNotNull,
-      String? select,
-      String? soundex,
-      String? status,
-      String? type}) {
+  QueryParamModel({
+    bool? table,
+    bool? trash,
+    bool? includeDeleted,
+    bool? relation,
+    num? page,
+    num? limit,
+    String? search,
+    List<Map<String, dynamic>>? where,
+    List<Map<String, dynamic>>? notEqual,
+    List<Map<String, dynamic>>? greaterThan,
+    List<Map<String, dynamic>>? lessThan,
+    List<Map<String, dynamic>>? like,
+    List<Map<String, dynamic>>? sort,
+    List<Map<String, dynamic>>? between,
+    List<Map<String, dynamic>>? isIn,
+    List<Map<String, dynamic>>? notin,
+    List<String>? isNull,
+    List<String>? isNotNull,
+    List<String>? select,
+    List<Map<String, dynamic>>? soundex,
+    String? status,
+    String? type,
+    String? entity,
+    String? petugasEntry,
+  }) {
     _table = table;
     _trash = trash;
     _includeDeleted = includeDeleted;
@@ -69,6 +72,8 @@ class QueryParamModel {
     _soundex = json['soundex'];
     _status = json['status'];
     _type = json['type'];
+    _entity = json['entity'];
+    _petugasEntry = json['petugasEntry'];
   }
 
   bool? _table;
@@ -78,21 +83,23 @@ class QueryParamModel {
   num? _page;
   num? _limit;
   String? _search;
-  String? _where;
-  String? _notEqual;
-  String? _greaterThan;
-  String? _lessThan;
-  String? _like;
-  String? _sort;
-  String? _between;
-  String? _in;
-  String? _notin;
-  String? _isNull;
-  String? _isNotNull;
-  String? _select;
-  String? _soundex;
+  List<Map<String, dynamic>>? _where;
+  List<Map<String, dynamic>>? _notEqual;
+  List<Map<String, dynamic>>? _greaterThan;
+  List<Map<String, dynamic>>? _lessThan;
+  List<Map<String, dynamic>>? _like;
+  List<Map<String, dynamic>>? _sort;
+  List<Map<String, dynamic>>? _between;
+  List<Map<String, dynamic>>? _in;
+  List<Map<String, dynamic>>? _notin;
+  List<String>? _isNull;
+  List<String>? _isNotNull;
+  List<String>? _select;
+  List<Map<String, dynamic>>? _soundex;
   String? _status;
   String? _type;
+  String? _entity;
+  String? _petugasEntry;
 
   // Getters
   bool? get table => _table;
@@ -123,61 +130,66 @@ class QueryParamModel {
 
   void setSearch(String? value) => _search = value;
 
-  String? get where => _where;
+  List<Map<String, dynamic>>? get where => _where;
 
-  void setWhere(String? value) => _where = value;
+  void setWhere(List<Map<String, dynamic>>? value) => _where = value;
 
-  String? get notEqual => _notEqual;
+  List<Map<String, dynamic>>? get notEqual => _notEqual;
 
-  void setNotEqual(String? value) => _notEqual = value;
+  void setNotEqual(List<Map<String, dynamic>>? value) => _notEqual = value;
 
-  String? get greaterThan => _greaterThan;
+  List<Map<String, dynamic>>? get greaterThan => _greaterThan;
 
-  void setGreaterThan(String? value) => _greaterThan = value;
+  void setGreaterThan(List<Map<String, dynamic>>? value) =>
+      _greaterThan = value;
 
-  String? get lessThan => _lessThan;
+  List<Map<String, dynamic>>? get lessThan => _lessThan;
 
-  void setLessThan(String? value) => _lessThan = value;
+  void setLessThan(List<Map<String, dynamic>>? value) => _lessThan = value;
 
-  String? get like => _like;
+  List<Map<String, dynamic>>? get like => _like;
 
-  void setLike(String? value) => _like = value;
+  void setLike(List<Map<String, dynamic>>? value) => _like = value;
 
-  String? get sort => _sort;
+  List<Map<String, dynamic>>? get sort => _sort;
 
-  void setSort(String? value) => _sort = value;
+  void setSort(List<Map<String, dynamic>>? value) => _sort = value;
 
-  String? get between => _between;
+  List<Map<String, dynamic>>? get between => _between;
 
-  void setBetween(String? value) => _between = value;
+  void setBetween(List<Map<String, dynamic>>? value) => _between = value;
 
-  String? get isIn => _in;
+  List<Map<String, dynamic>>? get isIn => _in;
 
-  void setIsIn(String? value) => _in = value;
+  void setIsIn(List<Map<String, dynamic>>? value) => _in = value;
 
-  String? get notin => _notin;
+  List<Map<String, dynamic>>? get notin => _notin;
 
-  void setNotin(String? value) => _notin = value;
+  void setNotin(List<Map<String, dynamic>>? value) => _notin = value;
 
-  String? get isNull => _isNull;
+  List<String>? get isNull => _isNull;
 
-  void setIsNull(String? value) => _isNull = value;
+  void setIsNull(List<String>? value) => _isNull = value;
 
-  String? get isNotNull => _isNotNull;
+  List<String>? get isNotNull => _isNotNull;
 
-  void setIsNotNull(String? value) => _isNotNull = value;
+  void setIsNotNull(List<String>? value) => _isNotNull = value;
 
-  String? get select => _select;
+  List<String>? get select => _select;
 
-  void setSelect(String? value) => _select = value;
+  void setSelect(List<String>? value) => _select = value;
 
-  String? get soundex => _soundex;
+  List<Map<String, dynamic>>? get soundex => _soundex;
 
-  void setSoundex(String? value) => _soundex = value;
+  void setSoundex(List<Map<String, dynamic>>? value) => _soundex = value;
 
   String? get status => _status;
 
   String? get type => _type;
+
+  String? get entity => _entity;
+
+  String? get petugasEntry => _petugasEntry;
 
   // CopyWith method
   QueryParamModel copyWith({
@@ -188,21 +200,23 @@ class QueryParamModel {
     num? page,
     num? limit,
     String? search,
-    String? where,
-    String? notEqual,
-    String? greaterThan,
-    String? lessThan,
-    String? like,
-    String? sort,
-    String? between,
-    String? isIn,
-    String? notin,
-    String? isNull,
-    String? isNotNull,
-    String? select,
-    String? soundex,
+    List<Map<String, dynamic>>? where,
+    List<Map<String, dynamic>>? notEqual,
+    List<Map<String, dynamic>>? greaterThan,
+    List<Map<String, dynamic>>? lessThan,
+    List<Map<String, dynamic>>? like,
+    List<Map<String, dynamic>>? sort,
+    List<Map<String, dynamic>>? between,
+    List<Map<String, dynamic>>? isIn,
+    List<Map<String, dynamic>>? notin,
+    List<String>? isNull,
+    List<String>? isNotNull,
+    List<String>? select,
+    List<Map<String, dynamic>>? soundex,
     String? status,
     String? type,
+    String? entity,
+    String? petugasEntry,
   }) =>
       QueryParamModel(
         table: table ?? _table,
@@ -229,33 +243,94 @@ class QueryParamModel {
         type: type ?? _type,
       );
 
+  // Helper function to handle DateTime conversion recursively
+  dynamic _toJsonStringIfNeeded(dynamic value) {
+    if (value is DateTime) {
+      return '"${value.toIso8601String()}"';
+    } else if (value is List) {
+      return value.map(_toJsonStringIfNeeded).toList().toString();
+    } else if (value is Map) {
+      return value.map((key, val) =>
+          MapEntry(_toJsonStringIfNeeded(key), _toJsonStringIfNeeded(val)));
+    }
+    return '"$value"';
+  }
+
   // toJson method
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (_table != null) map['table'] = _table;
-    if (_trash != null) map['trash'] = _trash;
-    if (_includeDeleted != null) map['includeDeleted'] = _includeDeleted;
-    if (_relation != null) map['relation'] = _relation;
-    if (_search != null) map['search'] = _search;
-    if (_where != null) map['where'] = _where;
-    if (_page != null) map['page'] = _page;
-    if (_limit != null) map['limit'] = _limit;
-    if (_notEqual != null) map['notEqual'] = _notEqual;
-    if (_greaterThan != null) map['greaterThan'] = _greaterThan;
-    if (_lessThan != null) map['lessThan'] = _lessThan;
-    if (_like != null) map['like'] = _like;
-    if (_sort != null) map['sort'] = _sort;
-    if (_between != null) map['between'] = _between;
-    if (_in != null) map['in'] = _in;
-    if (_notin != null) map['notin'] = _notin;
-    if (_isNull != null) map['isNull'] = _isNull;
-    if (_isNotNull != null) map['isNotNull'] = _isNotNull;
-    if (_select != null) map['select'] = _select;
-    if (_soundex != null) map['soundex'] = _soundex;
+    if (_table != null) {
+      map['table'] = _table;
+    }
+    if (_trash != null) {
+      map['trash'] = _trash;
+    }
+    if (_includeDeleted != null) {
+      map['includeDeleted'] = _includeDeleted;
+    }
+    if (_relation != null) {
+      map['relation'] = _relation;
+    }
+    if (_search != null) {
+      map['search'] = _search;
+    }
+    if (_where != null) {
+      map['where'] = _toJsonStringIfNeeded(_where);
+    }
+    if (_page != null) {
+      map['page'] = _page;
+    }
+    if (_limit != null) {
+      map['limit'] = _limit;
+    }
+    if (_notEqual != null) {
+      map['notEqual'] = _toJsonStringIfNeeded(_notEqual);
+    }
+    if (_greaterThan != null) {
+      map['greaterThan'] = _toJsonStringIfNeeded(_greaterThan);
+    }
+    if (_lessThan != null) {
+      map['lessThan'] = _toJsonStringIfNeeded(_lessThan);
+    }
+    if (_like != null) {
+      map['like'] = _toJsonStringIfNeeded(_like);
+    }
+    if (_sort != null) {
+      map['sort'] = _toJsonStringIfNeeded(_sort);
+    }
+    if (_between != null) {
+      map['between'] = _toJsonStringIfNeeded(_between);
+    }
+    if (_in != null) {
+      map['in'] = _toJsonStringIfNeeded(_in);
+    }
+    if (_notin != null) {
+      map['notin'] = _toJsonStringIfNeeded(_notin);
+    }
+    if (_isNull != null) {
+      map['isNull'] = _isNull;
+    }
+    if (_isNotNull != null) {
+      map['isNotNull'] = _isNotNull;
+    }
+    if (_select != null) {
+      map['select'] = _select;
+    }
+    if (_soundex != null) {
+      map['soundex'] = _soundex;
+    }
     if (_status != null || (_status?.isNotEmpty ?? false)) {
       map['status'] = _status;
     }
-    if (_type != null || (_type?.isNotEmpty ?? false)) map['type'] = _type;
+    if (_type != null || (_type?.isNotEmpty ?? false)) {
+      map['type'] = _type;
+    }
+    if (_entity != null || (_entity?.isNotEmpty ?? false)) {
+      map['entity'] = _entity;
+    }
+    if (_petugasEntry != null || (_petugasEntry?.isNotEmpty ?? false)) {
+      map['petugasEntry'] = _petugasEntry;
+    }
 
     return map;
   }

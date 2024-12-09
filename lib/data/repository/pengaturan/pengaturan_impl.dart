@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/sticker_label_model.dart';
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
@@ -23,13 +21,14 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     QueryParamModel params = QueryParamModel(
-        table: true,
-        search: keyword,
-        page: page,
-        limit: limit,
-        sort: jsonEncode([
-          {"createDate": "desc"}
-        ]));
+      table: true,
+      search: keyword,
+      page: page,
+      limit: limit,
+      sort: [
+        {"createDate": "desc"}
+      ],
+    );
     try {
       Response response = await network.base.get(
         "/officers",

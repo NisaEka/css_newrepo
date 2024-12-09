@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
-
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
@@ -51,8 +48,8 @@ class PembayaranAggergasiController extends BaseController {
     isLoading = true;
 
     try {
-      final isIn = [];
-      final between = [];
+      List<Map<String, dynamic>> isIn = [];
+      List<Map<String, dynamic>> between = [];
 
       if (selectedAccount.isNotEmpty) {
         isIn.add({
@@ -69,8 +66,8 @@ class PembayaranAggergasiController extends BaseController {
         page: page,
         limit: pageSize,
         search: searchField.text,
-        isIn: jsonEncode(isIn),
-        between: jsonEncode(between),
+        isIn: isIn,
+        between: between,
       ));
 
       final isLastPage = agg.meta!.currentPage == agg.meta!.lastPage;
@@ -93,8 +90,8 @@ class PembayaranAggergasiController extends BaseController {
 
   Future<void> fetchAggregationTotal() async {
     try {
-      final isIn = [];
-      final between = [];
+      List<Map<String, dynamic>> isIn = [];
+      List<Map<String, dynamic>> between = [];
 
       if (selectedAccount.isNotEmpty) {
         isIn.add({
@@ -109,8 +106,8 @@ class PembayaranAggergasiController extends BaseController {
 
       final total = await aggregation.getAggregationTotal(QueryParamModel(
         search: searchField.text,
-        between: jsonEncode(between),
-        isIn: jsonEncode(isIn),
+        between: between,
+        isIn: isIn,
       ));
 
       aggTotal = total.data?.total?.toInt() ?? 0;

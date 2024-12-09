@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
@@ -56,9 +55,10 @@ class _DestinationDropdownState extends State<PickupDestinationDropdown> {
     final requestPickupRepository = Get.find<RequestPickupRepository>();
     var response =
         await requestPickupRepository.getRequestPickupOrigins(QueryParamModel(
-            like: jsonEncode([
-      {"originName": keyword.toUpperCase()}
-    ])));
+      like: [
+        {"originName": keyword.toUpperCase()}
+      ],
+    ));
     var models = response.data?.toList();
 
     return models ?? [];

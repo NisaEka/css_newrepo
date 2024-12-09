@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
@@ -49,12 +48,12 @@ class ObrolanLaporankuController extends BaseController {
       await laporanku
           .getTickeMessage(QueryParamModel(
               table: true,
-              where: jsonEncode([
+              where: [
                 {"ticketId": id}
-              ]),
-              sort: jsonEncode([
+              ],
+              sort: [
                 {"createdDate": "desc"}
-              ]),
+              ],
               page: 1,
               limit: pageSize))
           .then((value) {
@@ -72,12 +71,12 @@ class ObrolanLaporankuController extends BaseController {
     try {
       final message = await laporanku.getTickeMessage(QueryParamModel(
           table: true,
-          where: jsonEncode([
+          where: [
             {"ticketId": id}
-          ]),
-          sort: jsonEncode([
+          ],
+          sort: [
             {"createdDate": "desc"}
-          ]),
+          ],
           page: page,
           limit: pageSize));
 

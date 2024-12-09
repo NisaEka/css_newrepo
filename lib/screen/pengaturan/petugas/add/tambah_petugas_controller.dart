@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:core';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
@@ -306,15 +305,15 @@ class TambahPetugasController extends BaseController {
           .getOrigins(QueryParamModel(
         table: true,
         limit: 0,
-        where: jsonEncode([
+        where: [
           {"originStatus": "Y"}
-        ]),
-        sort: jsonEncode([
+        ],
+        sort: [
           {"originCode": "asc"}
-        ]),
-        isIn: jsonEncode([
+        ],
+        isIn: [
           {"branchCode": branch.map((e) => e).toList()}
-        ]),
+        ],
       ))
           .then((value) {
         originList.addAll(value.data ?? []);

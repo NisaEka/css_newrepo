@@ -27,7 +27,9 @@ class EclaimController extends BaseController {
     try {
       await eclaims
           .getEclaimCount(QueryParamModel(
-              search: state.searchField.text, between: state.transDate))
+        search: state.searchField.text,
+        between: state.transDate,
+      ))
           .then((value) {
         state.countModel = value.data;
         state.total = value.data?.totalCount?.toInt() ?? 0;
@@ -78,7 +80,7 @@ class EclaimController extends BaseController {
       state.endDate = null;
       state.startDateField.clear();
       state.endDateField.clear();
-      state.transDate = '[]';
+      state.transDate = [];
     } else if (filter == 1) {
       state.startDate = DateTime.now()
           .copyWith(hour: 0, minute: 0)
@@ -153,7 +155,7 @@ class EclaimController extends BaseController {
     state.endDateField.clear();
     // state.isFiltered = false;
     state.searchField.clear();
-    state.transDate = '[]';
+    state.transDate = [];
     state.dateFilter = '0';
     state.pagingController.refresh();
     update();
@@ -173,8 +175,11 @@ class EclaimController extends BaseController {
     //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
-      state.transDate =
-          '[{"createDate":["${state.startDate}","${state.endDate}"]}]';
+      state.transDate = [
+        {
+          "createDate": ["${state.startDate}", "${state.endDate}"]
+        }
+      ];
       // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     }
     update();

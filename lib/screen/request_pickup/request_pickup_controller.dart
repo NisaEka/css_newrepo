@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
@@ -25,9 +23,9 @@ class RequestPickupController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    state.queryParam.setSort(jsonEncode([
+    state.queryParam.setSort([
       {"createdDateSearch": "desc"}
-    ]));
+    ]);
     selectDateFilter(3);
     applyFilter();
     Future.wait([
@@ -126,17 +124,17 @@ class RequestPickupController extends BaseController {
     //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
-      state.queryParam.setBetween(jsonEncode([
+      state.queryParam.setBetween([
         {
           "createdDateSearch": [
             state.startDate?.toIso8601String() ?? '',
             state.endDate?.toIso8601String() ?? ''
           ]
         }
-      ]));
+      ]);
       // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     } else {
-      state.queryParam.setBetween(jsonEncode([]));
+      state.queryParam.setBetween([]);
     }
 
     // state.pagingController.refresh();
@@ -159,8 +157,8 @@ class RequestPickupController extends BaseController {
   }
 
   void resetQueryParam() {
-    state.queryParam.setWhere(jsonEncode([]));
-    state.queryParam.setBetween(jsonEncode([]));
+    state.queryParam.setWhere([]);
+    state.queryParam.setBetween([]);
     update();
   }
 
@@ -176,8 +174,8 @@ class RequestPickupController extends BaseController {
     state.dateFilter = '0';
     state.filterStatus = Constant.allStatus;
     state.selectedDeliveryType = Constant.allDeliveryType;
-    state.queryParam.setWhere(jsonEncode([]));
-    state.queryParam.setBetween(jsonEncode([]));
+    state.queryParam.setWhere([]);
+    state.queryParam.setBetween([]);
     update();
     if (forceRefresh) {
       refreshPickups();
@@ -187,8 +185,7 @@ class RequestPickupController extends BaseController {
 
   void setSelectedDeliveryTypeTwo(String? deliveryType) {
     if (deliveryType != null) {
-      final where =
-          (jsonDecode(state.queryParam.where ?? '[]') ?? []) as List<dynamic>;
+      List<Map<String, dynamic>> where = (state.queryParam.where ?? []);
       where.removeWhere((element) => element["codFlag"] != null);
       if (deliveryType == "COD") {
         where.removeWhere((element) => element["codFlag"] != null);
@@ -197,7 +194,7 @@ class RequestPickupController extends BaseController {
         where.removeWhere((element) => element["codFlag"] != null);
         where.add({"codFlag": "NO"});
       }
-      state.queryParam.setWhere(jsonEncode(where));
+      state.queryParam.setWhere(where);
       state.queryParam.setPage(1);
       // refreshPickups();
       // state.filterDeliveryTypeText = deliveryType;
@@ -207,11 +204,10 @@ class RequestPickupController extends BaseController {
 
   void setSelectedFilterCityTwo(OriginModel? origin) {
     if (origin != null) {
-      final where =
-          (jsonDecode(state.queryParam.where ?? '[]') ?? []) as List<dynamic>;
+      List<Map<String, dynamic>> where = state.queryParam.where ?? [];
       where.removeWhere((element) => element["originCode"] != null);
       where.add({"originCode": origin.originCode});
-      state.queryParam.setWhere(jsonEncode(where));
+      state.queryParam.setWhere(where);
       // update();
     }
     // refreshPickups();
@@ -271,9 +267,9 @@ class RequestPickupController extends BaseController {
           .getRequestPickupAddresses(QueryParamModel(
               // limit: 0,
               page: page,
-              sort: jsonEncode([
-                {"createdDate": "desc"}
-              ])));
+              sort: [
+            {"createdDate": "desc"}
+          ]));
       AppLogger.i("addresses: ${response.data}");
       final payload = response.data ?? List.empty();
       state.addresses.clear();

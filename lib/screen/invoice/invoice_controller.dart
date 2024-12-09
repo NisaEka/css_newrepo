@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
@@ -21,6 +19,7 @@ class InvoiceController extends BaseController {
   final searchTextController = TextEditingController();
 
   num _invoiceCount = 0;
+
   num get invoiceCount => _invoiceCount;
 
   String filterDateText = Constant.allDate;
@@ -135,7 +134,7 @@ class InvoiceController extends BaseController {
         break;
     }
 
-    _queryParamModel.setBetween(jsonEncode(between));
+    _queryParamModel.setBetween(between);
 
     requireRetry();
     update();

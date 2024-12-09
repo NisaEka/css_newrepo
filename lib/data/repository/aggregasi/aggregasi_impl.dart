@@ -152,7 +152,11 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
       Response response = await network.base.get(
         "/aggregations/summary",
         queryParameters: QueryParamModel(
-          between: '[{"mpayWdrGrpPayDatePaid":["$startDate","$endDate"]}]',
+          between: [
+            {
+              "mpayWdrGrpPayDatePaid": [startDate, endDate]
+            }
+          ],
         ).toJson(),
       );
 
@@ -189,7 +193,11 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
       Response response = await network.base.get(
         "/aggregations/chart",
         queryParameters: QueryParamModel(
-          between: '[{"mpayWdrGrpPayDate":["$startDate","$endDate"]}]',
+          between: [
+            {
+              "mpayWdrGrpPayDate": [startDate, endDate]
+            }
+          ],
         ).toJson(),
       );
 

@@ -47,7 +47,7 @@ class RiwayatKirimanController extends BaseController {
       await transaction
           .getTransactionCount(
         state.transType ?? '',
-        state.transDate ?? '[]',
+        state.transDate ?? [],
         state.selectedStatusKiriman ?? '',
         state.searchField.text,
         state.selectedPetugasEntry?.name ?? '',
@@ -103,7 +103,7 @@ class RiwayatKirimanController extends BaseController {
         page,
         pageSize,
         state.transType ?? '',
-        state.transDate ?? '[]',
+        state.transDate ?? [],
         state.selectedStatusKiriman ?? '',
         state.searchField.text,
         state.selectedPetugasEntry?.name ?? '',
@@ -136,7 +136,7 @@ class RiwayatKirimanController extends BaseController {
       state.endDate = null;
       state.startDateField.clear();
       state.endDateField.clear();
-      state.transDate = '[]';
+      state.transDate = [];
     } else if (filter == 1) {
       state.startDate = DateTime.now()
           .copyWith(hour: 0, minute: 0)
@@ -216,7 +216,7 @@ class RiwayatKirimanController extends BaseController {
     state.selectedStatusKiriman = null;
     // state.isFiltered = false;
     state.searchField.clear();
-    state.transDate = '[]';
+    state.transDate = [];
     state.dateFilter = '0';
     update();
     state.pagingController.refresh();
@@ -292,8 +292,11 @@ class RiwayatKirimanController extends BaseController {
   applyFilter() {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
-      state.transDate =
-          '[{"createdDateSearch":["${state.startDate}","${state.endDate}"]}]';
+      state.transDate = [
+        {
+          "createdDateSearch": ["${state.startDate}", "${state.endDate}"]
+        }
+      ];
     }
     update();
     state.pagingController.refresh();

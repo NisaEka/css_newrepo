@@ -446,16 +446,18 @@ class TransactionController extends BaseController {
                 size: 150,
               ),
               buttonTitle: "Kembali ke Beranda".tr,
-              nextAction: () => Get.offAll(
-                const DashboardScreen(),
+              nextAction: () => Get.delete<TransactionController>().then(
+                (_) => Get.offAll(const DashboardScreen()),
               ),
               secondButtonTitle: "Lihat Draft".tr,
-              secondAction: () => Get.delete<DraftTransaksiController>().then(
-                  (value) => Get.to(const DraftTransaksiScreen(),
-                      arguments: {'fromMenu': false})),
+              secondAction: () => Get.delete<DraftTransaksiController>()
+                  .then((_) => Get.delete<TransactionController>())
+                  .then((_) => Get.offAll(const DraftTransaksiScreen())),
               thirdButtonTitle: "Buat Transaksi Lainnya".tr,
-              thirdAction: () =>
-                  Get.offAll(const InformasiPengirimScreen(), arguments: {}),
+              thirdAction: () => Get.delete<TransactionController>().then(
+                (_) =>
+                    Get.offAll(const InformasiPengirimScreen(), arguments: {}),
+              ),
             ),
             transition: Transition.rightToLeft,
             arguments: {
