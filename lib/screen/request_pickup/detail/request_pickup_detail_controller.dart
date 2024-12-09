@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 class RequestPickupDetailController extends BaseController {
   String awb = Get.arguments["awb"];
 
-  bool _showLoadingIndicator = false;
+  bool isLoading = false;
+
+  final bool _showLoadingIndicator = false;
   bool get showLoadingIndicator => _showLoadingIndicator;
 
   bool _showContent = false;
@@ -30,7 +32,8 @@ class RequestPickupDetailController extends BaseController {
   }
 
   Future<void> _getRequestPickupByAwb() async {
-    _showLoadingIndicator = true;
+    isLoading = true;
+    // _showLoadingIndicator = true;
     update();
 
     requestPickupRepository.getRequestPickupByAwb(awb).then(
@@ -53,7 +56,9 @@ class RequestPickupDetailController extends BaseController {
       },
     );
 
-    _showLoadingIndicator = false;
+    await Future.delayed(const Duration(seconds: 2));
+    isLoading = false;
+    // _showLoadingIndicator = false;
     update();
   }
 }
