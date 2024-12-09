@@ -368,14 +368,13 @@ class DashboardController extends BaseController {
           }
         });
         state.kirimanKamu.calculatePercentages();
-
-        update();
       } catch (e) {
         AppLogger.e('error loadTransCountList $e');
+      } finally {
+        state.isLoadingKiriman = false;
+        update();
       }
     }
-
-    update();
   }
 
   Future<void> isFirst() async {
@@ -396,6 +395,7 @@ class DashboardController extends BaseController {
     update();
     cekTheme();
     state.isLoading = true;
+    state.isLoadingKiriman = true;
 
     storage.deleteString(StorageCore.transactionTemp);
 
