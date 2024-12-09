@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
-import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_pakemu_state.dart';
@@ -90,7 +88,7 @@ class PantauPaketmuController extends BaseController {
   Future<void> getCountList() async {
     var token = await storageSecure.read(key: 'token');
     network.base.options.headers['Authorization'] = 'Bearer $token';
-    var param = CountQueryModel(
+    var param = QueryModel(
       between: [
         {
           "awbDate": [

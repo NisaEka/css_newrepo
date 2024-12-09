@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:core';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
@@ -10,9 +9,7 @@ import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
@@ -126,9 +123,7 @@ class TambahPetugasController extends BaseController {
 
       getCountAllAccountNA();
 
-      await master
-          .getBranches(QueryParamModel(table: true, limit: 0))
-          .then((value) {
+      await master.getBranches(QueryModel(table: true, limit: 0)).then((value) {
         branchList.addAll(value.data ?? []);
         update();
       });
@@ -245,7 +240,7 @@ class TambahPetugasController extends BaseController {
     update();
     try {
       await master
-          .getAccountCount(CountQueryModel(
+          .getAccountCount(QueryModel(
         where: [
           {"accountCategory": "NA"}
         ],
@@ -274,7 +269,7 @@ class TambahPetugasController extends BaseController {
     update();
     try {
       await master
-          .getAccountCount(CountQueryModel(
+          .getAccountCount(QueryModel(
         where: [
           {"accountCategory": "NA"}
         ],
@@ -303,18 +298,18 @@ class TambahPetugasController extends BaseController {
     }
     try {
       await master
-          .getOrigins(QueryParamModel(
+          .getOrigins(QueryModel(
         table: true,
         limit: 0,
-        where: jsonEncode([
+        where: [
           {"originStatus": "Y"}
-        ]),
-        sort: jsonEncode([
+        ],
+        sort: [
           {"originCode": "asc"}
-        ]),
-        isIn: jsonEncode([
+        ],
+        inValues: [
           {"branchCode": branch.map((e) => e).toList()}
-        ]),
+        ],
       ))
           .then((value) {
         originList.addAll(value.data ?? []);

@@ -1,18 +1,16 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/pantau_count_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 
 abstract class TransactionRepository {
-  // #TODO: delete after finish implemented
-  // Future<ResponseModel<TransactionFeeModel>> getTransactionFee(DataTransactionFeeModel params);
-
   Future<BaseResponse<TransactionModel>> postTransaction(TransactionModel data);
 
   Future<BaseResponse<CODFeeModel>> getCODFee(String accountID);
@@ -21,7 +19,7 @@ abstract class TransactionRepository {
     int page,
     int limit,
     String transType,
-    String transDate,
+    List<Map<String, dynamic>> transDate,
     String transStatus,
     String keyword,
     String officer,
@@ -31,7 +29,7 @@ abstract class TransactionRepository {
 
   Future<BaseResponse<TransactionCount>> getTransactionCount(
     String transType,
-    String transDate,
+    List<Map<String, dynamic>> transDate,
     String transStatus,
     String keyword,
     String officer,
@@ -50,5 +48,7 @@ abstract class TransactionRepository {
       DataTransactionOngkirModel data);
 
   Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(
-      QueryParamModel param);
+      QueryModel param);
+
+  Future<BaseResponse<List<PantauCountModel>>> getPantauCount(QueryModel param);
 }

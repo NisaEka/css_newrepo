@@ -1,13 +1,12 @@
-import 'dart:convert';
-
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/data/model/transaction/pantau_count_model.dart';
 import 'package:css_mobile/data/model/transaction/post_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -73,7 +72,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     int page,
     int limit,
     String transType,
-    String transDate,
+    List<Map<String, dynamic>> transDate,
     String transStatus,
     String keyword,
     String officer,
@@ -83,7 +82,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     // UserModel user = UserModel.fromJson(
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
-    QueryParamModel params = QueryParamModel(
+    QueryModel params = QueryModel(
       table: true,
       limit: limit,
       page: page,
@@ -92,12 +91,14 @@ class TransactionRepositoryImpl extends TransactionRepository {
       type: transType.isNotEmpty ? transType : null,
       status: transStatus.isNotEmpty ? transStatus : null,
       where: officer.isNotEmpty
-          ? jsonEncode([
+          ? [
               {"petugasEntry": officer}
-            ])
+            ]
           : null,
       // where: '[$registID $type $petugasEntry]',
-      sort: '[{"createdDateSearch":"desc"}]',
+      sort: [
+        {"createdDateSearch": "desc"}
+      ],
     );
     AppLogger.d("transaction data : ${params.toJson()}");
 
@@ -154,7 +155,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   @override
   Future<BaseResponse<TransactionCount>> getTransactionCount(
     String transType,
-    String transDate,
+    List<Map<String, dynamic>> transDate,
     String transStatus,
     String keyword,
     String officer,
@@ -165,7 +166,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     // UserModel user = UserModel.fromJson(
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
-    QueryParamModel params = QueryParamModel(
+    QueryModel params = QueryModel(
       table: true,
       search: keyword,
       between: transDate,
@@ -180,11 +181,13 @@ class TransactionRepositoryImpl extends TransactionRepository {
       //         {"petugasEntry": user.name}
       //       ]),
       where: officer.isNotEmpty
-          ? jsonEncode([
+          ? [
               {"petugasEntry": officer}
-            ])
+            ]
           : null,
-      sort: '[{"createdDateSearch":"desc"}]',
+      sort: [
+        {"createdDateSearch": "desc"}
+      ],
     );
 
     AppLogger.d("transaction count data : ${params.toJson()}");
@@ -298,7 +301,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
 
-    QueryParamModel params = QueryParamModel(table: true, limit: 0);
+    QueryModel params = QueryModel(table: true, limit: 0);
     try {
       Response response = await network.base.get(
         "/transaction/officers",
@@ -357,7 +360,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(
-      QueryParamModel param) async {
+      QueryModel param) async {
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
     var now = DateTime.now().toLocal();
@@ -370,11 +373,13 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.base.get(
         "/transaction/dashboards",
-        queryParameters: param
-            .copyWith(
-              between: '[{"createdDateSearch":["$startDate","$endDate"]}]',
-            )
-            .toJson(),
+        queryParameters: param.copyWith(
+          between: [
+            {
+              "createdDateSearch": [startDate, endDate]
+            }
+          ],
+        ).toJson(),
       );
 
       final test = ResponseModel<TransactionSummaryModel>.fromJson(
@@ -390,6 +395,41 @@ class TransactionRepositoryImpl extends TransactionRepository {
         e.response?.data,
         (json) =>
             TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
+      );
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<PantauCountModel>>> getPantauCount(
+      QueryModel param) async {
+    try {
+      Response response = await network.base.get(
+        '/transaction/tracks/count/dashboard',
+        queryParameters: param.toJson(),
+      );
+
+      var trans = BaseResponse<List<PantauCountModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<PantauCountModel>(
+                  (i) => PantauCountModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+
+      return trans;
+    } on DioException catch (e) {
+      return BaseResponse<List<PantauCountModel>>.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<PantauCountModel>(
+                  (i) => PantauCountModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
       );
     }
   }

@@ -8,7 +8,6 @@ import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
@@ -289,7 +288,7 @@ class ShipperController extends BaseController {
     state.isLoadOrigin = true;
     BaseResponse<List<OriginModel>>? response;
     try {
-      response = await master.getOrigins(QueryParamModel(
+      response = await master.getOrigins(QueryModel(
           search: keyword.toUpperCase(), relation: true, table: true));
     } catch (e) {
       AppLogger.e('error getOriginList $e');

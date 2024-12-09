@@ -5,17 +5,12 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
-import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
-import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
-import 'package:css_mobile/data/model/transaction/pantau_count_model.dart';
-import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
@@ -25,14 +20,12 @@ import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.d
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:get/get.dart';
 
 class DashboardController extends BaseController {
   final state = DashboardState();
-  final network = Get.find<NetworkCore>();
 
   @override
   void onInit() {
@@ -315,13 +308,14 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadTransCountList() async {
+    state.isLoadingAgg = true;
     state.isLoadingKiriman = true;
     state.transCountList.clear();
     state.kirimanKamu = DashboardKirimanKamuModel();
     update();
     if (state.isLogin) {
       try {
-        transaction.postTransactionDashboard(QueryParamModel()).then(
+        transaction.postTransactionDashboard(QueryModel()).then(
           (value) {
             state.transSummary = value.data;
             state.transCountList.addAll(value.data?.summary ?? []);
@@ -339,36 +333,19 @@ class DashboardController extends BaseController {
         aggregation.getAggChart().then(
           (value) {
             state.aggChart = value.data;
+            state.isLoadingAgg = false;
             update();
           },
         );
 
-        var param = CountQueryModel(
-          between: [
-            {
-              "awbDate": [
-                DateTime.now().subtract(const Duration(days: 6)),
-                DateTime.now()
-              ]
-            }
-          ],
-        );
-
-        Response response = await network.base.get(
-          '/transaction/tracks/count/dashboard',
-          queryParameters: param.toJson(),
-        );
-
-        var trans = BaseResponse<List<PantauCountModel>>.fromJson(
-          response.data,
-          (json) => json is List<dynamic>
-              ? json
-                  .map<PantauCountModel>(
-                    (i) => PantauCountModel.fromJson(i as Map<String, dynamic>),
-                  )
-                  .toList()
-              : List.empty(),
-        );
+        var trans = await transaction.getPantauCount(QueryModel(between: [
+          {
+            "awbDate": [
+              DateTime.now().subtract(const Duration(days: 6)),
+              DateTime.now()
+            ]
+          }
+        ]));
 
         trans.data?.forEach((item) {
           if (item.status == 'Total Kiriman') {
@@ -423,6 +400,7 @@ class DashboardController extends BaseController {
     update();
     cekTheme();
     state.isLoading = true;
+    state.isLoadingAgg = true;
     state.isLoadingKiriman = true;
 
     storage.deleteString(StorageCore.transactionTemp);
@@ -529,7 +507,7 @@ class DashboardController extends BaseController {
 
       if (dropshipper && state.isLogin) {
         await master
-            .getDropshippers(QueryParamModel())
+            .getDropshippers(QueryModel())
             .then((value) async => await storage.saveData(
                   StorageCore.dropshipper,
                   value,
@@ -538,7 +516,7 @@ class DashboardController extends BaseController {
 
       if (receiver && state.isLogin) {
         await master
-            .getReceivers(QueryParamModel())
+            .getReceivers(QueryModel())
             .then((value) async => await storage.saveData(
                   StorageCore.receiver,
                   value,

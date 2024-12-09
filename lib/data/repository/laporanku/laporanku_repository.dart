@@ -4,20 +4,20 @@ import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_summary_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 
 abstract class LaporankuRepository {
   Future<BaseResponse<List<TicketCategory>>> getTicketCategory(
-      QueryParamModel param);
+      QueryModel param);
 
-  Future<BaseResponse<TicketSummary>> getTicketSummary(QueryParamModel param);
+  Future<BaseResponse<TicketSummary>> getTicketSummary(QueryModel param);
 
-  Future<BaseResponse<List<TicketModel>>> getTickets(QueryParamModel param);
+  Future<BaseResponse<List<TicketModel>>> getTickets(QueryModel param);
 
   Future<BaseResponse<TicketModel>> postTicket(DataPostTicketModel data);
 
   Future<BaseResponse<List<TicketMessageModel>>> getTickeMessage(
-      QueryParamModel param);
+      QueryModel param);
 
   Future<BaseResponse<TicketModel>> postTicketMessage(DataPostTicketModel data);
 

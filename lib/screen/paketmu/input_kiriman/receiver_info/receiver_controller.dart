@@ -5,7 +5,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_state.dart';
@@ -107,7 +107,7 @@ class ReceiverController extends BaseController {
     return false;
   }
 
-  Future<List<Destination>> getDestinationList(QueryParamModel param) async {
+  Future<List<Destination>> getDestinationList(QueryModel param) async {
     state.isLoading = true;
     BaseResponse<List<Destination>>? response;
     try {

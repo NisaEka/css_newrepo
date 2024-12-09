@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_response_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
@@ -41,7 +41,7 @@ class RequestPickupState {
 
   List<RequestPickupAddressModel> addresses = [];
 
-  QueryParamModel queryParam = QueryParamModel();
+  QueryModel queryParam = QueryModel();
   String filterStatus = Constant.allStatus;
 
   List<String> selectedAwbs = [];

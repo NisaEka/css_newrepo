@@ -1,6 +1,6 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -26,8 +26,10 @@ class EclaimController extends BaseController {
   Future<void> eclaimCount() async {
     try {
       await eclaims
-          .getEclaimCount(QueryParamModel(
-              search: state.searchField.text, between: state.transDate))
+          .getEclaimCount(QueryModel(
+        search: state.searchField.text,
+        between: state.transDate,
+      ))
           .then((value) {
         state.countModel = value.data;
         state.total = value.data?.totalCount?.toInt() ?? 0;
@@ -48,8 +50,8 @@ class EclaimController extends BaseController {
   Future<void> getEclaim(int page) async {
     state.isLoading = true;
     try {
-      final trans = await eclaims.getEclaim(QueryParamModel(
-          search: state.searchField.text, between: state.transDate));
+      final trans = await eclaims.getEclaim(
+          QueryModel(search: state.searchField.text, between: state.transDate));
 
       final isLastPage =
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
@@ -78,7 +80,7 @@ class EclaimController extends BaseController {
       state.endDate = null;
       state.startDateField.clear();
       state.endDateField.clear();
-      state.transDate = '[]';
+      state.transDate = [];
     } else if (filter == 1) {
       state.startDate = DateTime.now()
           .copyWith(hour: 0, minute: 0)
@@ -153,7 +155,7 @@ class EclaimController extends BaseController {
     state.endDateField.clear();
     // state.isFiltered = false;
     state.searchField.clear();
-    state.transDate = '[]';
+    state.transDate = [];
     state.dateFilter = '0';
     state.pagingController.refresh();
     update();
@@ -173,8 +175,11 @@ class EclaimController extends BaseController {
     //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
-      state.transDate =
-          '[{"createDate":["${state.startDate}","${state.endDate}"]}]';
+      state.transDate = [
+        {
+          "createDate": ["${state.startDate}", "${state.endDate}"]
+        }
+      ];
       // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     }
     update();

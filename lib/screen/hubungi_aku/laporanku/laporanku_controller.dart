@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -29,8 +27,8 @@ class LaporankuController extends BaseController {
 
   Future<void> countReports() async {
     try {
-      final where = [];
-      final between = [];
+      List<Map<String, dynamic>> where = [];
+      List<Map<String, dynamic>> between = [];
 
       if (state.status != "") {
         where.add({"status": state.status});
@@ -41,9 +39,9 @@ class LaporankuController extends BaseController {
       }
 
       await laporanku
-          .getTicketSummary(QueryParamModel(
-        where: jsonEncode(where),
-        between: jsonEncode(between),
+          .getTicketSummary(QueryModel(
+        where: where,
+        between: between,
         search: state.searchField.text,
       ))
           .then((value) {
@@ -61,9 +59,9 @@ class LaporankuController extends BaseController {
   Future<void> getTicketList(int page) async {
     state.isLoading = true;
     try {
-      final where = [];
-      final between = [];
-      final sort = [
+      List<Map<String, dynamic>> where = [];
+      List<Map<String, dynamic>> between = [];
+      List<Map<String, dynamic>> sort = [
         {"createdDate": "desc"}
       ];
 
@@ -75,14 +73,14 @@ class LaporankuController extends BaseController {
         between.add({"createdDate": state.date});
       }
 
-      final tickets = await laporanku.getTickets(QueryParamModel(
+      final tickets = await laporanku.getTickets(QueryModel(
         table: true,
         relation: true,
         page: page,
         limit: LaporankuState.pageSize,
-        where: jsonEncode(where),
-        between: jsonEncode(between),
-        sort: jsonEncode(sort),
+        where: where,
+        between: between,
+        sort: sort,
         search: state.searchField.text,
       ));
 

@@ -3,7 +3,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/repository/master/master_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -60,10 +60,12 @@ class _OriginDropdownState extends State<OriginDropdown> {
   Future<List<OriginModel>> getOriginList(String keyword) async {
     final master = Get.find<MasterRepository>();
     AppLogger.i("branch code : ${widget.branch}");
-    var branchCode = (widget.branch?.isNotEmpty ?? false)
-        ? '[{"branchCode" : "${widget.branch}"}]'
-        : '[]';
-    var response = await master.getOrigins(QueryParamModel(
+    List<Map<String, dynamic>> branchCode = (widget.branch?.isNotEmpty ?? false)
+        ? [
+            {"branchCode": "${widget.branch}"}
+          ]
+        : [];
+    var response = await master.getOrigins(QueryModel(
       search: keyword.toUpperCase(),
       where: branchCode,
       table: widget.branch?.isNotEmpty,

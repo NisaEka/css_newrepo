@@ -2,7 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -52,7 +52,7 @@ class ListPenerimaController extends BaseController {
     isLoading = true;
     try {
       var response = await master
-          .getReceivers(QueryParamModel(search: search.text, page: page));
+          .getReceivers(QueryModel(search: search.text, page: page));
       final payload = response.data ?? List.empty();
       final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
       if (isLastPage) {

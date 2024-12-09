@@ -4,7 +4,7 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
@@ -47,7 +47,7 @@ class ListDropshipperController extends BaseController {
     update();
 
     try {
-      await master.getDropshippers(QueryParamModel(search: search.text)).then(
+      await master.getDropshippers(QueryModel(search: search.text)).then(
         (value) async {
           dropshipperList.addAll(value.data ?? []);
           await storage.saveData(StorageCore.dropshipper, value);

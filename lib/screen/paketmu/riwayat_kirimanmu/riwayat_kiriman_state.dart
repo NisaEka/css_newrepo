@@ -24,7 +24,7 @@ class RiwayatKirimanState {
   String? selectedStatusKiriman;
   PetugasModel? selectedPetugasEntry;
   String? transType;
-  String? transDate;
+  List<Map<String, dynamic>>? transDate;
   String dateFilter = '0';
 
   bool isFiltered = false;

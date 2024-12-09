@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 
@@ -56,11 +54,14 @@ class NoAkunController extends BaseController {
   Future<void> loadActivity() async {
     try {
       await profil
-          .getCcrfActivity(QueryParamModel(
-              limit: 0,
-              sort: jsonEncode([
-                {'activityCreateDate': 'desc'}
-              ])))
+          .getCcrfActivity(
+        QueryModel(
+          limit: 0,
+          sort: [
+            {'activityCreateDate': 'desc'}
+          ],
+        ),
+      )
           .then((value) {
         logActivityList.addAll(value.data ?? []);
         update();

@@ -6,7 +6,7 @@ import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/profile/get_ccrf_activity_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -112,7 +112,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
 
   @override
   Future<BaseResponse<List<CcrfActivityModel>>> getCcrfActivity(
-      QueryParamModel param) async {
+      QueryModel param) async {
     var token = await storageSecure.read(key: 'token');
     network.base.options.headers['Authorization'] = 'Bearer $token';
 

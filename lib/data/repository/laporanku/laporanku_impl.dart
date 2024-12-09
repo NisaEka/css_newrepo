@@ -6,7 +6,7 @@ import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_summary_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/laporanku/laporanku_repository.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -20,7 +20,7 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
 
   @override
   Future<BaseResponse<List<TicketCategory>>> getTicketCategory(
-      QueryParamModel param) async {
+      QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
@@ -48,8 +48,7 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   }
 
   @override
-  Future<BaseResponse<TicketSummary>> getTicketSummary(
-      QueryParamModel param) async {
+  Future<BaseResponse<TicketSummary>> getTicketSummary(QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
@@ -71,8 +70,7 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   }
 
   @override
-  Future<BaseResponse<List<TicketModel>>> getTickets(
-      QueryParamModel param) async {
+  Future<BaseResponse<List<TicketModel>>> getTickets(QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
@@ -123,7 +121,7 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
 
   @override
   Future<BaseResponse<List<TicketMessageModel>>> getTickeMessage(
-      QueryParamModel param) async {
+      QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';

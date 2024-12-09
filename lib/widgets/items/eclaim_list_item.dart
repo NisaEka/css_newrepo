@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -52,7 +53,7 @@ class EclaimListItem extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                date ?? '',
+                date?.toLongDateFormat() ?? '',
                 style: TextStyle(
                     fontSize: 12, color: Theme.of(context).primaryColor),
               ),

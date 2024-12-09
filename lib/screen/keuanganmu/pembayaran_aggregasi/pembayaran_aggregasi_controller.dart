@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
-
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +47,8 @@ class PembayaranAggergasiController extends BaseController {
     isLoading = true;
 
     try {
-      final isIn = [];
-      final between = [];
+      List<Map<String, dynamic>> isIn = [];
+      List<Map<String, dynamic>> between = [];
 
       if (selectedAccount.isNotEmpty) {
         isIn.add({
@@ -65,12 +61,12 @@ class PembayaranAggergasiController extends BaseController {
         between.add({"mpayWdrGrpPayDate": transDate});
       }
 
-      final agg = await aggregation.getAggregationReport(QueryParamModel(
+      final agg = await aggregation.getAggregationReport(QueryModel(
         page: page,
         limit: pageSize,
         search: searchField.text,
-        isIn: jsonEncode(isIn),
-        between: jsonEncode(between),
+        inValues: isIn,
+        between: between,
       ));
 
       final isLastPage = agg.meta!.currentPage == agg.meta!.lastPage;
@@ -93,8 +89,8 @@ class PembayaranAggergasiController extends BaseController {
 
   Future<void> fetchAggregationTotal() async {
     try {
-      final isIn = [];
-      final between = [];
+      List<Map<String, dynamic>> isIn = [];
+      List<Map<String, dynamic>> between = [];
 
       if (selectedAccount.isNotEmpty) {
         isIn.add({
@@ -107,10 +103,10 @@ class PembayaranAggergasiController extends BaseController {
         between.add({"mpayWdrGrpPayDate": transDate});
       }
 
-      final total = await aggregation.getAggregationTotal(QueryParamModel(
+      final total = await aggregation.getAggregationTotal(QueryModel(
         search: searchField.text,
-        between: jsonEncode(between),
-        isIn: jsonEncode(isIn),
+        between: between,
+        inValues: isIn,
       ));
 
       aggTotal = total.data?.total?.toInt() ?? 0;

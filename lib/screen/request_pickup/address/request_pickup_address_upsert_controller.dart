@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_create_request_model.dart';
 import 'package:css_mobile/util/ext/placement_ext.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -54,18 +53,15 @@ class RequestPickupAddressUpsertController extends BaseController {
   }
 
   _getDestinationByPostalCode(Placemark placemark) async {
-    final where = [];
+    List<Map<String, dynamic>> where = [];
     where.add({"zipCode": placemark.postalCode});
 
-    final soundex = [];
+    List<Map<String, dynamic>> soundex = [];
     soundex.add({"subdistrictName": placemark.subLocality});
 
     requestPickupRepository
-        .getRequestPickupDestinations(QueryParamModel(
-            table: true,
-            limit: 50,
-            where: jsonEncode(where),
-            soundex: jsonEncode(soundex)))
+        .getRequestPickupDestinations(
+            QueryModel(table: true, limit: 50, where: where, soundex: soundex))
         .then((value) => _setSelectedDestination(value.data?.first))
         .onError((error, stackTrace) => null);
   }
@@ -81,14 +77,14 @@ class RequestPickupAddressUpsertController extends BaseController {
     isLoadDestination = true;
     destinationList.clear();
 
-    var response = await requestPickupRepository
-        .getRequestPickupDestinations(QueryParamModel(
+    var response = await requestPickupRepository.getRequestPickupDestinations(
+        QueryModel(
             table: true,
             limit: 50,
             search: keyword.toUpperCase(),
-            sort: jsonEncode([
-              {"id": "asc"}
-            ])));
+            sort: [
+          {"id": "asc"}
+        ]));
     var models = response.data ?? List.empty();
 
     isLoadDestination = false;

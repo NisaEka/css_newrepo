@@ -8,7 +8,7 @@ import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/auth/pin_confirm_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -299,11 +299,12 @@ class AuthRepositoryImpl extends AuthRepository {
 
       Response response = await network.base.get(
         "/auth/device-infos",
-        queryParameters: QueryParamModel(
-                table: true,
-                where:
-                    '[{"fcmToken" : "${await storageSecure.read(key: StorageCore.fcmToken)}"}]')
-            .toJson(),
+        queryParameters: QueryModel(
+          table: true,
+          where: [
+            {"fcmToken": await storageSecure.read(key: StorageCore.fcmToken)}
+          ],
+        ).toJson(),
       );
       AppLogger.i("get fcm token : ${response.data}");
       return BaseResponse.fromJson(

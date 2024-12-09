@@ -37,8 +37,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.miniStartDocked,
               floatingActionButton: (controller.state.allow.paketmuInput ==
-                          "Y" &&
-                      MediaQuery.of(context).viewInsets.bottom == 0)
+                              "Y" &&
+                          MediaQuery.of(context).viewInsets.bottom == 0) ||
+                      !controller.state.isLogin
                   ? MenuIcon(
                       icon: IconsConstant.add,
                       margin:

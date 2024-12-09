@@ -6,7 +6,7 @@ import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dar
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_total_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -22,7 +22,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
 
   @override
   Future<BaseResponse<List<AggregationModel>>> getAggregationReport(
-      QueryParamModel param) async {
+      QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
@@ -50,7 +50,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
 
   @override
   Future<BaseResponse<List<AggregationMinusModel>>> getAggregationMinus(
-      QueryParamModel param) async {
+      QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     try {
       var response = await network.base
@@ -73,7 +73,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
 
   @override
   Future<BaseResponse<List<AggregationMinusDocModel>>> getAggregationMinusDoc(
-      String doc, QueryParamModel param) async {
+      String doc, QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     try {
       var response = await network.base
@@ -95,8 +95,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<GetAggregationTotalModel> getAggregationTotal(
-      QueryParamModel param) async {
+  Future<GetAggregationTotalModel> getAggregationTotal(QueryModel param) async {
     AppLogger.i("param toJson total ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
@@ -116,7 +115,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
 
   @override
   Future<BaseResponse<List<AggregationDetailModel>>> getAggregationByDoc(
-      String aggregationID, QueryParamModel param) async {
+      String aggregationID, QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     var token = await storageSecure.read(key: "token");
     network.base.options.headers['Authorization'] = 'Bearer $token';
@@ -151,8 +150,12 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     try {
       Response response = await network.base.get(
         "/aggregations/summary",
-        queryParameters: QueryParamModel(
-          between: '[{"mpayWdrGrpPayDatePaid":["$startDate","$endDate"]}]',
+        queryParameters: QueryModel(
+          between: [
+            {
+              "mpayWdrGrpPayDatePaid": [startDate, endDate]
+            }
+          ],
         ).toJson(),
       );
 
@@ -188,8 +191,12 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
     try {
       Response response = await network.base.get(
         "/aggregations/chart",
-        queryParameters: QueryParamModel(
-          between: '[{"mpayWdrGrpPayDate":["$startDate","$endDate"]}]',
+        queryParameters: QueryModel(
+          between: [
+            {
+              "mpayWdrGrpPayDate": [startDate, endDate]
+            }
+          ],
         ).toJson(),
       );
 

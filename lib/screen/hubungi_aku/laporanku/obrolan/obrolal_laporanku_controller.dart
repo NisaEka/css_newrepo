@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
-import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -47,14 +46,14 @@ class ObrolanLaporankuController extends BaseController {
     messages = [];
     try {
       await laporanku
-          .getTickeMessage(QueryParamModel(
+          .getTickeMessage(QueryModel(
               table: true,
-              where: jsonEncode([
+              where: [
                 {"ticketId": id}
-              ]),
-              sort: jsonEncode([
+              ],
+              sort: [
                 {"createdDate": "desc"}
-              ]),
+              ],
               page: 1,
               limit: pageSize))
           .then((value) {
@@ -70,14 +69,14 @@ class ObrolanLaporankuController extends BaseController {
   Future<void> getMessages(int page) async {
     isLoading = true;
     try {
-      final message = await laporanku.getTickeMessage(QueryParamModel(
+      final message = await laporanku.getTickeMessage(QueryModel(
           table: true,
-          where: jsonEncode([
+          where: [
             {"ticketId": id}
-          ]),
-          sort: jsonEncode([
+          ],
+          sort: [
             {"createdDate": "desc"}
-          ]),
+          ],
           page: page,
           limit: pageSize));
 
