@@ -137,7 +137,7 @@ class DashboardBody extends StatelessWidget {
                           ? DashboardAggCountItem(
                               transSummary: c.state.aggSummary,
                               transChart: c.state.aggChart,
-                              isLoading: c.state.isLoading,
+                              isLoadingAgg: c.state.isLoadingAgg,
                             )
                           : const SizedBox(),
                       c.state.isLogin

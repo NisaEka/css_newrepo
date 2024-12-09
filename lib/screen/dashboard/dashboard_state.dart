@@ -34,6 +34,7 @@ class DashboardState {
   String themeMode = '';
   UserModel? basic;
   TransactionSummaryModel? transSummary;
+  bool isLoadingAgg = false;
   TransactionSummaryModel? aggSummary;
   List<AggregationChartModel>? aggChart;
 

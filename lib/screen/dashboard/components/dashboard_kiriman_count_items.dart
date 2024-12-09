@@ -83,9 +83,10 @@ class DashboardKirimanCountItem extends StatelessWidget {
                             children: [
                               OngoingTransactionCard(
                                 title: "Dalam Peninjauan".tr,
-                                percentage: kirimanKamu
-                                    .dalamPeninjauanPercentage
-                                    .toDouble(),
+                                percentage: (kirimanKamu
+                                        .dalamPeninjauanPercentage
+                                        .toDouble() /
+                                    100),
                                 count: kirimanKamu.dalamPeninjauan,
                                 subtitle:
                                     "${double.parse((kirimanKamu.dalamPeninjauanPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
@@ -116,8 +117,9 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                   width: 25,
                                   height: 25,
                                   child: CircularProgressIndicator(
-                                    value: kirimanKamu.suksesDiterimaPercentage
-                                        .toDouble(),
+                                    value: (kirimanKamu.suksesDiterimaPercentage
+                                            .toDouble() /
+                                        100),
                                     backgroundColor: Colors.grey[300],
                                     color: Colors.green,
                                     strokeWidth: 4,
