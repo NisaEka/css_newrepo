@@ -61,13 +61,41 @@ class LacakKirimanScreen extends StatelessWidget {
             ),
             // onSubmit: (value) => c.cekResi(value),
             onSubmit: (value) {
-              Get.to(
-                PhoneNumberConfirmationScreen(
-                  awb: value,
-                  cekResi: c.cekResi,
-                  isLoading: c.isLoading,
-                ),
-              );
+              if (value.isEmpty) {
+                Get.showSnackbar(
+                  GetSnackBar(
+                    icon: const Icon(
+                      Icons.warning,
+                      color: whiteColor,
+                    ),
+                    message: 'Nomor resi tidak boleh kosong'.tr,
+                    isDismissible: true,
+                    duration: const Duration(seconds: 3),
+                    backgroundColor: errorColor,
+                  ),
+                );
+              } else if (value.length != 16) {
+                Get.showSnackbar(
+                  GetSnackBar(
+                    icon: const Icon(
+                      Icons.warning,
+                      color: whiteColor,
+                    ),
+                    message: 'Nomor resi harus terdiri dari 16 karakter'.tr,
+                    isDismissible: true,
+                    duration: const Duration(seconds: 3),
+                    backgroundColor: errorColor,
+                  ),
+                );
+              } else {
+                Get.to(
+                  PhoneNumberConfirmationScreen(
+                    awb: value,
+                    cekResi: c.cekResi,
+                    isLoading: c.isLoading,
+                  ),
+                );
+              }
             },
           ),
           Expanded(

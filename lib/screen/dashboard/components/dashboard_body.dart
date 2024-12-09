@@ -91,18 +91,7 @@ class DashboardBody extends StatelessWidget {
                                           hintStyle: hintTextStyle,
                                           suffixIcon: GestureDetector(
                                             onTap: () {
-                                              if (c.state.nomorResi.text
-                                                  .isNotEmpty) {
-                                                c.onLacakKiriman(true,
-                                                    c.state.nomorResi.text);
-                                              } else {
-                                                Get.snackbar(
-                                                  "Error",
-                                                  "Nomor resi tidak boleh kosong!",
-                                                  backgroundColor: Colors.red,
-                                                  colorText: Colors.white,
-                                                );
-                                              }
+                                              c.onLacakKiriman(true, '');
                                             },
                                             child: const Icon(
                                               Icons.qr_code,
@@ -111,15 +100,40 @@ class DashboardBody extends StatelessWidget {
                                           ),
                                         ),
                                         onSubmitted: (value) {
-                                          if (value.isNotEmpty) {
-                                            c.onLacakKiriman(false, value);
-                                          } else {
-                                            Get.snackbar(
-                                              "Error",
-                                              "Nomor resi tidak boleh kosong!",
-                                              backgroundColor: Colors.red,
-                                              colorText: Colors.white,
+                                          if (value.isEmpty) {
+                                            Get.showSnackbar(
+                                              GetSnackBar(
+                                                icon: const Icon(
+                                                  Icons.warning,
+                                                  color: whiteColor,
+                                                ),
+                                                message:
+                                                    'Nomor resi tidak boleh kosong'
+                                                        .tr,
+                                                isDismissible: true,
+                                                duration:
+                                                    const Duration(seconds: 3),
+                                                backgroundColor: errorColor,
+                                              ),
                                             );
+                                          } else if (value.length != 16) {
+                                            Get.showSnackbar(
+                                              GetSnackBar(
+                                                icon: const Icon(
+                                                  Icons.warning,
+                                                  color: whiteColor,
+                                                ),
+                                                message:
+                                                    'Nomor resi harus terdiri dari 16 karakter'
+                                                        .tr,
+                                                isDismissible: true,
+                                                duration:
+                                                    const Duration(seconds: 3),
+                                                backgroundColor: errorColor,
+                                              ),
+                                            );
+                                          } else {
+                                            c.onLacakKiriman(false, value);
                                           }
                                         },
                                       )

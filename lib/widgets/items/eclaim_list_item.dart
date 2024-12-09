@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EclaimListItem extends StatelessWidget {
   final String? claimType;
@@ -76,7 +77,7 @@ class EclaimListItem extends StatelessWidget {
                     size: 18,
                   ),
                   Text(
-                    'Rp. ${amount ?? '0'}',
+                    'Rp. ${amount != null ? NumberFormat('#,##0', 'id').format(int.parse(amount!)) : '0'}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,

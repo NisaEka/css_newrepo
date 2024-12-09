@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
@@ -59,10 +60,16 @@ class PasswordRecoveryScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Kode OTP akan dikirimkan ke alamat email berikut :'
-                          .tr),
+                      Text(
+                          'Kode OTP akan dikirimkan ke alamat email berikut :'
+                              .tr,
+                          style: Theme.of(context).textTheme.titleSmall),
                       Text(c.getMail(),
-                          textAlign: TextAlign.left, style: formLabelTextStyle),
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: AppConst.isLightTheme(context)
+                                  ? greyDarkColor1
+                                  : greyLightColor1)),
                     ],
                   ),
                 )
@@ -95,7 +102,8 @@ class PasswordRecoveryScreen extends StatelessWidget {
                 ),
                 SizedBox(
                     width: Get.width / 1.5,
-                    child: Text('Hubungi sales cabang kota anda'.tr))
+                    child: Text('Hubungi sales cabang kota anda'.tr,
+                        style: Theme.of(context).textTheme.titleSmall))
               ],
             ),
           ),

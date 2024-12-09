@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/detail/facility_detail_controller.dart';
@@ -130,20 +131,27 @@ class FacilityDetailScreen extends StatelessWidget {
         SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverToBoxAdapter(
-                child:
-                    _descriptionSection(controller.facilityArgs.description)))
+                child: _descriptionSection(
+                    controller.facilityArgs.description, context)))
       ],
     );
   }
 
-  Widget _descriptionSection(String facilityDescription) {
+  Widget _descriptionSection(String facilityDescription, BuildContext context) {
     return Html(
       data: facilityDescription,
       style: {
         'ul': Style(
             margin: Margins(left: Margin.zero()),
-            padding: HtmlPaddings(left: HtmlPadding(16))),
-        'h6': Style(fontSize: FontSize.large)
+            padding: HtmlPaddings(left: HtmlPadding(16)),
+            color: AppConst.isLightTheme(context)
+                ? greyDarkColor1
+                : greyLightColor1),
+        'h6': Style(
+            fontSize: FontSize.large,
+            color: AppConst.isLightTheme(context)
+                ? greyDarkColor1
+                : greyLightColor1)
       },
     );
   }

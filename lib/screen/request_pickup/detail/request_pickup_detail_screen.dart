@@ -1,4 +1,5 @@
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -6,6 +7,7 @@ import 'package:css_mobile/data/model/request_pickup/request_pickup_detail_model
 import 'package:css_mobile/screen/request_pickup/detail/request_pickup_detail_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,14 +30,14 @@ class RequestPickupDetailScreen extends StatelessWidget {
 
   Widget _detailBody(
       BuildContext context, RequestPickupDetailController controller) {
-    if (controller.showLoadingIndicator) {
-      return Container(
-        alignment: Alignment.center,
-        child: CircularProgressIndicator(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      );
-    }
+    // if (controller.showLoadingIndicator) {
+    //   return Container(
+    //     alignment: Alignment.center,
+    //     child: CircularProgressIndicator(
+    //       color: Theme.of(context).colorScheme.primary,
+    //     ),
+    //   );
+    // }
 
     if (controller.showEmptyContainer) {
       return const Center(child: Text("Not Found"));
@@ -60,7 +62,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _contentSection(context, controller.requestPickup),
+            _contentSection(context, controller.requestPickup, controller),
             const SizedBox(height: 32),
           ],
         ),
@@ -68,8 +70,8 @@ class RequestPickupDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _contentSection(
-      BuildContext context, RequestPickupDetailModel requestPickup) {
+  Widget _contentSection(BuildContext context,
+      RequestPickupDetailModel requestPickup, RequestPickupDetailController c) {
     return Card.filled(
       color: Theme.of(context).cardColor,
       shape: const RoundedRectangleBorder(
@@ -84,6 +86,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
                 useCode128A: true,
                 // escapes: true,
               ),
+              color: CustomTheme().textColor(context) ?? greyColor,
               data: requestPickup.awb,
               drawText: false,
               style: const TextStyle(fontSize: 20),
@@ -96,112 +99,132 @@ class RequestPickupDetailScreen extends StatelessWidget {
               alignment: MainAxisAlignment.center,
             ),
             const SizedBox(height: 16),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(
-                  right: 20), // Margin between the two text widgets
-              child: Text(
-                'Detail Permintaan Pickup'.tr,
-                style: listTitleTextStyle.copyWith(
-                  color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+            Shimmer(
+              isLoading: c.isLoading,
+              child: Container(
+                color: c.isLoading ? greyColor : Colors.transparent,
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(
+                    right: 20), // Margin between the two text widgets
+                child: Text(
+                  'Detail Permintaan Pickup'.tr,
+                  style: listTitleTextStyle.copyWith(
+                    color:
+                        AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 16),
-            _textRow("ID", requestPickup.awb),
+            _textRow(context, "ID", requestPickup.awb, c.isLoading),
             const SizedBox(height: 10),
-            _textRow("Tanggal dan Jam",
+            _textRow(
+                context,
+                "Tanggal dan Jam",
                 requestPickup.createdDateSearch.toDateTimeFormat(),
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Nama PIC", requestPickup.pickupName,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Telepon", requestPickup.pickupPicPhone,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Kota Penjemputan", requestPickup.pickupCity,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Kecamatan Penjemputan", requestPickup.pickupDistrict,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Alamat Penjemputan", requestPickup.pickupAddress,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Layanan Pickup", requestPickup.pickupService,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Kendaraan Pickup", requestPickup.pickupVehicle,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 16),
-            const Divider(
-              color: greyLightColor3,
-            ),
-            const SizedBox(height: 16),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(
-                  right: 20), // Margin between the two text widgets
-              child: Text(
-                'Status Permintaan Pickup'.tr,
-                style: listTitleTextStyle.copyWith(
-                  color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            _textRow("Tanggal Pickup",
-                '${requestPickup.pickupDate} ${requestPickup.pickupTime}'),
-            const SizedBox(height: 6),
-            _textRow("Status Pickup", requestPickup.pickupStatus),
-            const SizedBox(height: 6),
-            _textRow("Kendaraan Pickup", requestPickup.statusDesc ?? "-",
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 16),
-            const Divider(
-              color: greyLightColor3,
-            ),
-            const SizedBox(height: 16),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(
-                  right: 20), // Margin between the two text widgets
-              child: Text(
-                'Detail kiriman'.tr,
-                style: listTitleTextStyle.copyWith(
-                  color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            _textRow("Account", requestPickup.custId,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Pengirim", requestPickup.shipperName,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Petugas Entry", requestPickup.petugasEntry,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Kota Pengiriman", requestPickup.shipperCity,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Penerima", requestPickup.receiverName,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Kota Penerima", requestPickup.receiverCity,
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
-            const SizedBox(height: 6),
-            _textRow("Deskripsi Kiriman", requestPickup.goodDesc ?? "-",
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
+                c.isLoading),
             const SizedBox(height: 6),
             _textRow(
+                context, "Nama PIC", requestPickup.pickupName, c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(
+                context, "Telepon", requestPickup.pickupPicPhone, c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Kota Penjemputan", requestPickup.pickupCity,
+                c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Kecamatan Penjemputan",
+                requestPickup.pickupDistrict, c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Alamat Penjemputan", requestPickup.pickupAddress,
+                c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Layanan Pickup", requestPickup.pickupService,
+                c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Kendaraan Pickup", requestPickup.pickupVehicle,
+                c.isLoading),
+            const Divider(
+              color: greyLightColor3,
+            ),
+            const SizedBox(height: 16),
+            Shimmer(
+              isLoading: c.isLoading,
+              child: Container(
+                color: c.isLoading ? greyColor : Colors.transparent,
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(
+                    right: 20), // Margin between the two text widgets
+                child: Text(
+                  'Status Permintaan Pickup'.tr,
+                  style: listTitleTextStyle.copyWith(
+                    color:
+                        AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            _textRow(
+                context,
+                "Tanggal Pickup",
+                '${requestPickup.pickupDate ?? '-'} ${requestPickup.pickupTime ?? ''}',
+                c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Status Pickup",
+                requestPickup.pickupStatus ?? '-', c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Kendaraan Pickup",
+                requestPickup.statusDesc ?? "-", c.isLoading),
+            const SizedBox(height: 16),
+            const Divider(
+              color: greyLightColor3,
+            ),
+            const SizedBox(height: 16),
+            Shimmer(
+              isLoading: c.isLoading,
+              child: Container(
+                color: c.isLoading ? greyColor : Colors.transparent,
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(
+                    right: 20), // Margin between the two text widgets
+                child: Text(
+                  'Detail kiriman'.tr,
+                  style: listTitleTextStyle.copyWith(
+                    color:
+                        AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            _textRow(context, "Account", requestPickup.custId, c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(
+                context, "Pengirim", requestPickup.shipperName, c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Petugas Entry", requestPickup.petugasEntry,
+                c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Kota Pengiriman", requestPickup.shipperCity,
+                c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(
+                context, "Penerima", requestPickup.receiverName, c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Kota Penerima", requestPickup.receiverCity,
+                c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Deskripsi Kiriman",
+                requestPickup.goodDesc ?? "-", c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(
+                context,
                 "Berat Kiriman",
                 requestPickup.weight != null
                     ? '${requestPickup.weight?.toDouble().toString()} KG'
                     : "- KG",
-                style: listTitleTextStyle.copyWith(fontWeight: regular)),
+                c.isLoading),
             const SizedBox(height: 6),
           ],
         ),
@@ -209,7 +232,9 @@ class RequestPickupDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _textRow(String title, String? value, {TextStyle? style}) {
+  Widget _textRow(
+      BuildContext context, String title, String? value, bool isLoading,
+      {TextStyle? style}) {
     if (value == null) {
       return Container();
     }
@@ -220,17 +245,37 @@ class RequestPickupDetailScreen extends StatelessWidget {
       children: [
         Expanded(
           // Ensures that the title takes up only as much space as it needs
-          child: Text(
-            title.tr,
-            style: sublistTitleTextStyle,
+          child: Shimmer(
+            isLoading: isLoading,
+            child: Container(
+              color: isLoading ? greyColor : Colors.transparent,
+              child: Text(
+                title.tr,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: regular),
+              ),
+            ),
           ),
         ),
+        const SizedBox(width: 10),
         Expanded(
           // Makes the value take the rest of the space in the row
-          child: Text(
-            value,
-            style: style ?? listTitleTextStyle,
-            textAlign: TextAlign.start, // Align the value to the right
+          child: Shimmer(
+            isLoading: isLoading,
+            child: Container(
+              color: isLoading ? greyColor : Colors.transparent,
+              child: Text(
+                value,
+                style: style ??
+                    Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: regular),
+                textAlign: TextAlign.start, // Align the value to the right
+              ),
+            ),
           ),
         ),
       ],
