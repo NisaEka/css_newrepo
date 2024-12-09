@@ -34,12 +34,12 @@ class LineChart extends CustomPainter {
       canvas.drawPath(path, paint);
 
       // Tambahkan titik (data points)
-      final dotPaint = Paint()..color = Colors.green;
-      for (int i = 0; i < data.length; i++) {
-        double x = i * xStep;
-        double y = size.height - (data[i] * yScale);
-        canvas.drawCircle(Offset(x, y), 3, dotPaint);
-      }
+      // final dotPaint = Paint()..color = Colors.green;
+      // for (int i = 0; i < data.length; i++) {
+      //   double x = i * xStep;
+      //   double y = size.height - (data[i] * yScale);
+      //   canvas.drawCircle(Offset(x, y), 3, dotPaint);
+      // }
     }
   }
 
