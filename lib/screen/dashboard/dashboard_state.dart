@@ -72,5 +72,6 @@ class DashboardState {
   MenuModel allow = MenuModel();
 
   // Kiriman Kamu
+  bool isLoadingKiriman = false;
   DashboardKirimanKamuModel kirimanKamu = DashboardKirimanKamuModel();
 }

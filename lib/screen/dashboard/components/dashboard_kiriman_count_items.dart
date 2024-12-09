@@ -16,13 +16,13 @@ import 'package:get/get.dart';
 class DashboardKirimanCountItem extends StatelessWidget {
   final TransactionSummaryModel? transSummary;
   final DashboardKirimanKamuModel kirimanKamu;
-  final bool isLoading;
+  final bool isLoadingKiriman;
 
   const DashboardKirimanCountItem({
     super.key,
     this.transSummary,
     required this.kirimanKamu,
-    this.isLoading = false,
+    this.isLoadingKiriman = false,
   });
 
   @override
@@ -56,7 +56,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                 Column(
                   children: [
                     Shimmer(
-                      isLoading: isLoading,
+                      isLoading: isLoadingKiriman,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,7 +137,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           amount: kirimanKamu.codAmount.toInt().toCurrency(),
                           description: "Transaksi COD",
                           lineColor: redJNE,
-                          isLoading: isLoading,
+                          isLoading: isLoadingKiriman,
                         ),
                         TypeTransactionCard(
                           count: kirimanKamu.totalCodOngkir.toString(),
@@ -145,13 +145,13 @@ class DashboardKirimanCountItem extends StatelessWidget {
                               kirimanKamu.codOngkirAmount.toInt().toCurrency(),
                           description: "Transaksi COD Ongkir",
                           lineColor: warningColor,
-                          isLoading: isLoading,
+                          isLoading: isLoadingKiriman,
                         ),
                         TypeTransactionCard(
                           count: kirimanKamu.totalNonCod.toString(),
                           description: "Transaksi NON COD",
                           lineColor: Colors.green,
-                          isLoading: isLoading,
+                          isLoading: isLoadingKiriman,
                         ),
                       ],
                     )

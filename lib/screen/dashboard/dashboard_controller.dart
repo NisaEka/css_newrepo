@@ -13,6 +13,7 @@ import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_count_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
+import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/model/transaction/pantau_count_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -314,7 +315,9 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadTransCountList() async {
+    state.isLoadingKiriman = true;
     state.transCountList.clear();
+    state.kirimanKamu = DashboardKirimanKamuModel();
     update();
     if (state.isLogin) {
       try {
@@ -393,14 +396,13 @@ class DashboardController extends BaseController {
           }
         });
         state.kirimanKamu.calculatePercentages();
-
-        update();
       } catch (e) {
         AppLogger.e('error loadTransCountList $e');
+      } finally {
+        state.isLoadingKiriman = false;
+        update();
       }
     }
-
-    update();
   }
 
   Future<void> isFirst() async {
@@ -421,6 +423,7 @@ class DashboardController extends BaseController {
     update();
     cekTheme();
     state.isLoading = true;
+    state.isLoadingKiriman = true;
 
     storage.deleteString(StorageCore.transactionTemp);
 
