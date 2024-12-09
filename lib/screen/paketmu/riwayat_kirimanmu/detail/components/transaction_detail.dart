@@ -93,36 +93,44 @@ class TransactionDetail extends StatelessWidget {
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                c.state.transactionModel?.accountNumber ?? '-'),
+                                c.state.transactionModel?.accountNumber ?? '-',
+                            width: Get.width / 3),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: c.state.transactionModel?.shipperName ?? '-',
+                            width: Get.width / 3),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                c.state.transactionModel?.shipperName ?? '-'),
+                                c.state.transactionModel?.petugasEntry ?? '-',
+                            width: Get.width / 3),
+                        CustomFormLabel(
+                            isLoading: c.state.isLoading,
+                            label: c.state.transactionModel?.shipperCity ?? '-',
+                            width: Get.width / 3),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                c.state.transactionModel?.petugasEntry ?? '-'),
+                                c.state.transactionModel?.receiverName ?? '-',
+                            width: Get.width / 3),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
-                                c.state.transactionModel?.shipperCity ?? '-'),
+                                c.state.transactionModel?.receiverCity ?? '-',
+                            width: Get.width / 3),
+                        // CustomFormLabel(isLoading: c.state.isLoading, label: c.state.transactionModel?.goodsDesc ?? '-', width: Get.width / 3),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
-                            label:
-                                c.state.transactionModel?.receiverName ?? '-'),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                c.state.transactionModel?.receiverCity ?? '-'),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: c.state.transactionModel?.goodsDesc ?? '-',
+                            label: c.state.transactionData?.account
+                                    ?.accountNumber ??
+                                '-',
                             width: Get.width / 3),
                         CustomFormLabel(
                             isLoading: c.state.isLoading,
                             label:
                                 c.state.transactionModel?.weight.toString() ??
-                                    '-'),
+                                    '-',
+                            width: Get.width / 3),
                       ],
                     ),
                   ],

@@ -16,10 +16,7 @@ class DetailTransactionScreen extends StatelessWidget {
         return Scaffold(
           appBar: CustomTopBar(title: 'Detail Kiriman'.tr),
           body: const TransactionDetail(),
-          bottomNavigationBar: TransactionEditButton(
-            isLoading: controller.state.isLoading,
-            transactionData: controller.state.transactionData,
-          ),
+          bottomNavigationBar: const TransactionEditButton(),
         );
       },
     );
