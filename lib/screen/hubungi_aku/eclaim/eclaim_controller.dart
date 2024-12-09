@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/query_param_model.dart';
@@ -49,7 +51,11 @@ class EclaimController extends BaseController {
     state.isLoading = true;
     try {
       final trans = await eclaims.getEclaim(QueryParamModel(
-          search: state.searchField.text, between: state.transDate));
+          search: state.searchField.text,
+          between: state.transDate,
+          sort: jsonEncode([
+            {"createDate": "desc"}
+          ])));
 
       final isLastPage =
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
