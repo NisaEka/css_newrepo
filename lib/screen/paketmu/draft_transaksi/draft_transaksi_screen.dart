@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
@@ -13,8 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
-import '../../dashboard/dashboard_controller.dart';
 
 class DraftTransaksiScreen extends StatelessWidget {
   const DraftTransaksiScreen({super.key});
@@ -39,11 +38,17 @@ class DraftTransaksiScreen extends StatelessWidget {
   }
 
   CustomTopBar _appBarContent(DraftTransaksiController c) {
+    final bool fromMenu = Get.arguments?['fromMenu'] ?? true;
     return CustomTopBar(
       title: 'Draft Transaksi'.tr,
       leading: CustomBackButton(
-        onPressed: () =>
-            Get.delete<DashboardController>().then((_) => Get.back()),
+        onPressed: () {
+          if (fromMenu) {
+            Get.back();
+          } else {
+            Get.offAll(const DashboardScreen());
+          }
+        },
       ),
       action: [
         c.isOnline && c.isSync

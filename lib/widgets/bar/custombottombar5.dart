@@ -59,7 +59,7 @@ class BottomBar5 extends StatelessWidget {
                             : whiteColor,
                       ),
                       isSelected: menu == 0,
-                      onTap: () => Get.offAll(const DashboardScreen(),
+                      onTap: () => Get.to(() => const DashboardScreen(),
                           transition: Transition.leftToRight),
                     ),
                     allow?.pantauPaketmu == "Y"
@@ -78,7 +78,7 @@ class BottomBar5 extends StatelessWidget {
                                   : infoColor,
                             ),
                             isSelected: menu == 1,
-                            onTap: () => Get.to(const PantauCardScreen(),
+                            onTap: () => Get.to(() => const PantauCardScreen(),
                                 transition: Transition.rightToLeft,
                                 arguments: {}),
                           )
@@ -99,7 +99,7 @@ class BottomBar5 extends StatelessWidget {
                           : warningColor,
                       // onTap: () => Get.offAll(const ProfileScreen()),
                       onTap: () => controller.state.isLogin
-                          ? Get.offAll(const ProfileScreen(),
+                          ? Get.to(() => const ProfileScreen(),
                               transition: Transition.rightToLeft)
                           : showDialog(
                               context: context,
