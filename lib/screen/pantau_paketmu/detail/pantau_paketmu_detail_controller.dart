@@ -52,7 +52,7 @@ class PantauPaketmuDetailController extends BaseController {
   void onInit() async {
     super.onInit();
     Future.wait([_getRequestPickupByAwb()]);
-    allow = MenuModel.fromJson(storage.readData(StorageCore.userMenu));
+    allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
   }
 
   Future<void> _getRequestPickupByAwb() async {

@@ -31,7 +31,7 @@ class StatusLaporanku extends StatelessWidget {
                     c.state.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width / 6,
+                    width: Get.width / 4.5,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedStatus == 0

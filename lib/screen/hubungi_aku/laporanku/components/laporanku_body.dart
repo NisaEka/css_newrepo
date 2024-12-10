@@ -23,7 +23,7 @@ class LaporankuBody extends StatelessWidget {
         init: LaporankuController(),
         builder: (c) {
           return Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
             child: Column(
               children: [
                 CustomSearchField(
