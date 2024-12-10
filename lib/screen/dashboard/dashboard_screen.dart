@@ -45,9 +45,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       margin:
                           EdgeInsets.only(left: Get.width * 0.09, bottom: 29),
                       radius: 100,
-                      background: AppConst.isLightTheme(context)
-                          ? redJNE
-                          : warningColor,
+                      background: (AppConst.isLightTheme(context)
+                          ? (controller.state.isLogin
+                              ? redJNE
+                              : errorLightColor2)
+                          : (controller.state.isLogin
+                              ? warningColor
+                              : warningLightColor2)),
                       showContainer: false,
                       onTap: () => controller.onAddTransaction(context),
                     )

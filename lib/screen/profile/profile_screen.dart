@@ -56,9 +56,13 @@ class ProfileScreen extends StatelessWidget {
                       icon: IconsConstant.add,
                       margin: const EdgeInsets.only(left: 38, bottom: 29),
                       radius: 100,
-                      background: AppConst.isLightTheme(context)
-                          ? redJNE
-                          : warningColor,
+                      background: (AppConst.isLightTheme(context)
+                          ? (controller.state.isLogin
+                              ? redJNE
+                              : errorLightColor2)
+                          : (controller.state.isLogin
+                              ? warningColor
+                              : warningLightColor2)),
                       showContainer: false,
                       onTap: () => controller.state.isLogin
                           ? Get.to(const InformasiPengirimScreen(),
