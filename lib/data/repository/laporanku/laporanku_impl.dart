@@ -22,9 +22,6 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   Future<BaseResponse<List<TicketCategory>>> getTicketCategory(
       QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response = await network.base.get(
         "/master/ticket-categories",
@@ -50,9 +47,6 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<BaseResponse<TicketSummary>> getTicketSummary(QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response = await network.base
           .get("/transaction/tickets/summary", queryParameters: param.toJson());
@@ -72,9 +66,6 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<BaseResponse<List<TicketModel>>> getTickets(QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response = await network.base
           .get("/transaction/tickets", queryParameters: param.toJson());
@@ -100,9 +91,6 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   @override
   Future<BaseResponse<TicketModel>> postTicket(DataPostTicketModel data) async {
     AppLogger.i("param toJson ${data.toJson()}");
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response =
           await network.base.post("/transaction/tickets", data: data);
@@ -123,9 +111,6 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   Future<BaseResponse<List<TicketMessageModel>>> getTickeMessage(
       QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response = await network.base
           .get("/transaction/ticket-messages", queryParameters: param.toJson());
@@ -152,8 +137,6 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   Future<BaseResponse<TicketModel>> postTicketMessage(
       DataPostTicketModel data) async {
     AppLogger.i("param toJson ${jsonEncode(data)}");
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.post(
         "/transaction/ticket-messages",
@@ -174,8 +157,6 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
 
   @override
   Future<BaseResponse<TicketModel>> putTicket(String id, String status) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.patch(
         "/transaction/tickets/$id",

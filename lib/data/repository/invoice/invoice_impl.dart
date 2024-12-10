@@ -17,10 +17,6 @@ class InvoiceImpl extends InvoiceRepository {
 
   @override
   Future<BaseResponse<num>> getInvoiceCount(QueryModel queryParam) async {
-    var token = await storageSecure.read(key: "token");
-    // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     AppLogger.i("param toJson ${queryParam.toJson()}");
 
     try {
@@ -41,10 +37,6 @@ class InvoiceImpl extends InvoiceRepository {
   @override
   Future<BaseResponse<List<InvoiceModel>>> getInvoices(
       QueryModel queryParam) async {
-    var token = await storageSecure.read(key: "token");
-    // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     AppLogger.i("param toJson ${queryParam.toJson()}");
 
     try {

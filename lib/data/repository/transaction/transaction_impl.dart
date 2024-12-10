@@ -26,8 +26,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
   @override
   Future<BaseResponse<TransactionModel>> postTransaction(
       TransactionModel data) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo(info: "kiriman data");
     try {
       Response response = await network.base.post(
@@ -48,9 +46,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<BaseResponse<CODFeeModel>> getCODFee(String accountID) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response = await network.base.get(
         "/accounts/$accountID",
@@ -77,8 +72,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
     String keyword,
     String officer,
   ) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     // UserModel user = UserModel.fromJson(
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
@@ -134,8 +127,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<BaseResponse<TransactionModel>> getTransactionByAWB(String awb) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/transaction/transactions/$awb",
@@ -160,8 +151,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
     String keyword,
     String officer,
   ) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     AppLogger.w('transDate : $transDate');
     // UserModel user = UserModel.fromJson(
     //   await StorageCore().readData(StorageCore.basicProfile),
@@ -214,8 +203,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<BaseResponse<TransactionModel>> deleteTransaction(String awb) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.delete(
         "/transaction/transactions/$awb",
@@ -237,8 +224,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<BaseResponse<List<String>>> getTransactionStatus() async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/transaction/statuses",
@@ -273,8 +258,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
     TransactionModel data,
     String awb,
   ) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.patch(
         "/transaction/transactions/$awb",
@@ -295,8 +278,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<BaseResponse<List<PetugasModel>>> getTransOfficer() async {
-    var token = await storageSecure.read(key: 'token');
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     // UserModel user = UserModel.fromJson(
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
@@ -334,8 +315,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
   @override
   Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(
       DataTransactionOngkirModel data) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo();
     try {
       Response response = await network.base.post(
@@ -361,8 +340,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
   @override
   Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(
       QueryModel param) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     var now = DateTime.now().toLocal();
     var startDate = DateTime(now.year, now.month, now.day)
         .subtract(const Duration(days: 7))

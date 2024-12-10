@@ -12,9 +12,6 @@ class NotificationRepositoryImpl extends NotificationRepository {
   @override
   Future<GetNotificationModel> getNotificationsList() async {
     //todo: implement get list notification
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response = await network.base.get(
         "/apps-notification",

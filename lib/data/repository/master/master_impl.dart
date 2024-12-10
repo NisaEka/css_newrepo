@@ -83,8 +83,6 @@ class MasterRepositoryImpl extends MasterRepository {
 
   @override
   Future<BaseResponse<List<BranchModel>>> getBranches(QueryModel param) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/master/branches",
@@ -159,9 +157,6 @@ class MasterRepositoryImpl extends MasterRepository {
   @override
   Future<BaseResponse<List<DropshipperModel>>> getDropshippers(
       QueryModel param) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     UserModel user = UserModel.fromJson(
         await StorageCore().readData(StorageCore.basicProfile));
     QueryModel params = param.copyWith(
@@ -195,8 +190,6 @@ class MasterRepositoryImpl extends MasterRepository {
 
   @override
   Future<BaseResponse> deleteDropshipper(String id) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.delete(
         "/master/dropshippers/$id",
@@ -212,8 +205,6 @@ class MasterRepositoryImpl extends MasterRepository {
 
   @override
   Future<BaseResponse> postDropshipper(DropshipperModel data) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
@@ -238,9 +229,6 @@ class MasterRepositoryImpl extends MasterRepository {
   @override
   Future<BaseResponse<List<ReceiverModel>>> getReceivers(
       QueryModel param) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
@@ -276,8 +264,6 @@ class MasterRepositoryImpl extends MasterRepository {
 
   @override
   Future<BaseResponse> deleteReceiver(String id) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.delete(
         "/master/receivers/$id",
@@ -294,9 +280,6 @@ class MasterRepositoryImpl extends MasterRepository {
 
   @override
   Future<BaseResponse> postReceiver(ReceiverModel data) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
@@ -320,8 +303,6 @@ class MasterRepositoryImpl extends MasterRepository {
 
   @override
   Future<BaseResponse<List<Account>>> getAccounts(QueryModel param) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         '/accounts',
@@ -345,8 +326,6 @@ class MasterRepositoryImpl extends MasterRepository {
 
   @override
   Future<BaseResponse<int>> getAccountCount(QueryModel countQuery) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         '/accounts/count',
@@ -365,8 +344,6 @@ class MasterRepositoryImpl extends MasterRepository {
   @override
   Future<BaseResponse<GetServiceModel>> getServices(
       DataServiceModel param) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/transaction/fees",

@@ -47,6 +47,8 @@ class QueryModel {
     _soundex = soundex;
     _status = status;
     _type = type;
+    _entity = entity;
+    _petugasEntry = petugasEntry;
   }
 
   QueryModel.fromJson(dynamic json) {
@@ -242,6 +244,8 @@ class QueryModel {
         soundex: soundex ?? _soundex,
         status: status ?? _status,
         type: type ?? _type,
+        entity: entity ?? _entity,
+        petugasEntry: petugasEntry ?? _petugasEntry,
       );
 
   // Helper function to handle DateTime conversion recursively

@@ -18,11 +18,6 @@ class EclaimRepositoryImpl extends EclaimRepository {
 
   @override
   Future<BaseResponse<List<EclaimModel>>> getEclaim(QueryModel param) async {
-    var token = await storageSecure.read(key: "token");
-
-    if (token != null) {
-      network.base.options.headers['Authorization'] = 'Bearer $token';
-    }
     try {
       Response response = await network.base.get(
         '/contact-me/e-claims',
@@ -56,10 +51,6 @@ class EclaimRepositoryImpl extends EclaimRepository {
   @override
   Future<BaseResponse<EclaimCountModel>> getEclaimCount(
       QueryModel param) async {
-    var token = await storageSecure.read(key: "token");
-    // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyaWQiOiIyMzEyMjIxNjI1NTAxNTQ1OSIsImlhdCI6MTcwODU4MDg0Mn0.Yc5lrv4gxCeZjfNAmxv6PFehfW6HoZVUZ5IYwuqHK9M';
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       var response = await network.base
           .get("/contact-me/e-claims/count", queryParameters: param.toJson());
@@ -82,8 +73,6 @@ class EclaimRepositoryImpl extends EclaimRepository {
 
   @override
   Future<BaseResponse<List<String>>> getEclaimStatus() async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/contact-me/e-claims/category",
@@ -117,9 +106,6 @@ class EclaimRepositoryImpl extends EclaimRepository {
   @override
   Future<BaseResponse<EclaimModel>> postEclaim(EclaimModel data) async {
     AppLogger.i("param toJson ${data.toJson()}");
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response = await network.base.post(
         "/contact-me/e-claims",

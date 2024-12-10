@@ -426,8 +426,11 @@ class DashboardController extends BaseController {
         (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
         (await storage.readString(StorageCore.ccrfProfile)) == '{}');
     update();
-    state.basic =
-        UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    var basicProfile = await storage.readString(StorageCore.basicProfile);
+    if (basicProfile != 'null' && basicProfile.isNotEmpty) {
+      state.basic =
+          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    }
     saveFCMToken();
 
     try {
