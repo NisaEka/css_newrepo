@@ -34,7 +34,7 @@ class TransactionCard extends StatelessWidget {
       isLoading: isLoading,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        width: Get.width * 0.3,
+        width: Get.width * 0.28,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(

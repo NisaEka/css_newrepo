@@ -32,7 +32,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
       "Sentuh untuk sinkronisasi manual",
     ];
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
@@ -80,7 +80,6 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                           .map((e) => e.toDouble())
                                           .toList())
                                       : const CircularLoading())),
-                          const SizedBox(height: 5),
                           // Dalam Perjalanan
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,6 +136,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                       ),
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TypeTransactionCard(
                           count: kirimanKamu.totalCod.toString(),
@@ -168,46 +168,60 @@ class DashboardKirimanCountItem extends StatelessWidget {
           ),
           // Real Time
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Icon(CupertinoIcons.clock),
                 const SizedBox(width: 8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    StreamBuilder<int>(
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    alignment: Alignment.centerLeft,
+                    child: StreamBuilder<int>(
                       stream: Stream.periodic(
                           const Duration(seconds: 3), (count) => count),
                       builder: (context, snapshot) {
                         int currentSecond = snapshot.data ?? 0;
                         return AnimatedSwitcher(
-                          duration:
-                              const Duration(seconds: 1), // Durasi transisi
+                          duration: const Duration(
+                              milliseconds: 300), // Durasi transisi
                           transitionBuilder:
                               (Widget child, Animation<double> animation) {
-                            var slide = Tween<Offset>(
-                              begin: const Offset(0, 1), // Mulai dari bawah
-                              end: const Offset(
-                                  0, 0), // Akhirnya di posisi normal
+                            final slideAnimation = Tween<Offset>(
+                              begin: currentSecond % 2 == 0
+                                  ? const Offset(0, 1)
+                                  : const Offset(0, 1),
+                              end: Offset.zero,
+                            ).animate(animation);
+                            final fadeAnimation = Tween<double>(
+                              begin: 0.0,
+                              end: 1.0,
                             ).animate(animation);
                             return SlideTransition(
-                                position: slide, child: child);
+                              position: slideAnimation,
+                              child: FadeTransition(
+                                opacity: fadeAnimation,
+                                child: child,
+                              ),
+                            );
                           },
-                          child: Text(
-                            textAlign: TextAlign.left,
+                          child: SizedBox(
+                            width: double.infinity,
                             key: ValueKey<int>(currentSecond),
-                            messages[currentSecond % messages.length],
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(fontWeight: FontWeight.bold),
+                            child: Text(
+                              messages[currentSecond % messages.length],
+                              textAlign: TextAlign.left,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
                           ),
                         );
                       },
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),

@@ -17,7 +17,8 @@ class DashboardMenu2 extends StatelessWidget {
     return GetBuilder<DashboardController>(
         init: DashboardController(),
         builder: (controller) {
-          return SizedBox(
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 12),
             height: 120,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -41,6 +42,7 @@ class DashboardMenu2 extends StatelessWidget {
                         Row(
                           children: controller.state.menuItems
                               .map((e) => MenuItem(
+                                    iconSize: 45,
                                     menuTitle: e.title?.tr ?? '',
                                     menuImg: e.icon,
                                     data: e,
@@ -81,7 +83,7 @@ class DashboardMenu2 extends StatelessWidget {
                             color: AppConst.isLightTheme(context)
                                 ? whiteColor
                                 : infoColor,
-                            size: 46,
+                            size: 45,
                           ),
                         ),
                       ],

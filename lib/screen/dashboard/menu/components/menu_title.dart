@@ -15,7 +15,7 @@ class MenuTitle extends StatelessWidget {
         init: OtherMenuCotroller(),
         builder: (c) {
           return SliverPadding(
-            padding: const EdgeInsets.only(left: 20, right: 10, top: 20),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
             sliver: SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

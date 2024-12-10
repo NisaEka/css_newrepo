@@ -23,23 +23,26 @@ class LineChart extends CustomPainter {
       // Mulai menggambar dari titik pertama
       path.moveTo(0, size.height - (data[0] * yScale)); // Data pertama
 
-      // Iterasi setiap titik dan sambungkan garisnya
-      for (int i = 1; i < data.length; i++) {
-        double x = i * xStep;
-        double y = size.height - (data[i] * yScale);
-        path.lineTo(x, y);
+      // Iterasi setiap titik dan buat cubic bezier untuk menghubungkan titik
+      for (int i = 1; i < data.length - 1; i++) {
+        double x1 = i * xStep;
+        double y1 = size.height - (data[i] * yScale);
+        double x2 = (i + 1) * xStep;
+        double y2 = size.height - (data[i + 1] * yScale);
+
+        // Menambahkan cubic bezier curve
+        double controlX = (x1 + x2) / 2;
+        double controlY = (y1 + y2) / 2;
+        path.quadraticBezierTo(x1, y1, controlX, controlY);
       }
+
+      // Untuk titik terakhir, gunakan lineTo untuk menyambung
+      double lastX = (data.length - 1) * xStep;
+      double lastY = size.height - (data[data.length - 1] * yScale);
+      path.lineTo(lastX, lastY);
 
       // Gambar path garis
       canvas.drawPath(path, paint);
-
-      // Tambahkan titik (data points)
-      // final dotPaint = Paint()..color = Colors.green;
-      // for (int i = 0; i < data.length; i++) {
-      //   double x = i * xStep;
-      //   double y = size.height - (data[i] * yScale);
-      //   canvas.drawCircle(Offset(x, y), 3, dotPaint);
-      // }
     }
   }
 
