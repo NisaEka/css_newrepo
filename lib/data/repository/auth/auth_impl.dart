@@ -204,9 +204,6 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<BaseResponse> postFcmToken(DeviceModel data) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response = await network.base.post(
         '/auth/device-infos',
@@ -228,13 +225,10 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<BaseResponse> logout() async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     // var fcmToken = await StorageCore().readString(StorageCore.fcmToken);
 
     // var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
     // String id = deviceInfo?.deviceId ?? '';
-    AppLogger.w("refresh token : $token");
     try {
       Response response = await network.base.post(
         '/authentications/logout',
@@ -294,9 +288,6 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<BaseResponse<List<DeviceModel>>> getFcmToken() async {
     try {
-      var token = await storageSecure.read(key: "token");
-      network.base.options.headers['Authorization'] = 'Bearer $token';
-
       Response response = await network.base.get(
         "/auth/device-infos",
         queryParameters: QueryModel(

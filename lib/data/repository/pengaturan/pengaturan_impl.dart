@@ -18,8 +18,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   @override
   Future<BaseResponse<List<PetugasModel>>> getOfficers(
       int page, String keyword, int limit) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     QueryModel params = QueryModel(
       table: true,
       search: keyword,
@@ -52,8 +50,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   @override
   Future<PostTransactionModel> deleteOfficer(String id) async {
     //todo : implement delete officer
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.delete(
         "/officer/$id",
@@ -66,8 +62,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
 
   @override
   Future<BaseResponse<PetugasModel>> getOfficerByID(String id) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/officers/$id",
@@ -83,8 +77,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
 
   @override
   Future<BaseResponse> postOfficer(DataPetugasModel data) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.post(
         "/officers",
@@ -98,8 +90,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
 
   @override
   Future<BaseResponse> putOfficer(DataPetugasModel data) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     data.toJson().printInfo(info: "kiriman data");
     try {
       Response response = await network.base.patch(
@@ -114,8 +104,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
 
   @override
   Future<BaseResponse<List<StickerLabelModel>>> getSettingLabel() async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/settings/label",
@@ -146,8 +134,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
 
   @override
   Future<BaseResponse> updateSettingLabel(String label, int price) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.patch(
         "/settings/label",

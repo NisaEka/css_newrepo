@@ -48,9 +48,6 @@ class PantauPaketmuController extends BaseController {
     state.isLoading.value = true;
     AppLogger.i('initDataaaa');
     try {
-      var token = await storageSecure.read(key: 'token');
-      network.base.options.headers['Authorization'] = 'Bearer $token';
-
       BaseResponse<BasicProfileModel> profile = await profil.getBasicProfil();
       state.basic.value = profile.data?.user;
       state.listOfficerEntry.add('SEMUA');
@@ -86,8 +83,6 @@ class PantauPaketmuController extends BaseController {
   }
 
   Future<void> getCountList() async {
-    var token = await storageSecure.read(key: 'token');
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     var param = QueryModel(
       between: [
         {
@@ -119,8 +114,6 @@ class PantauPaketmuController extends BaseController {
   }
 
   Future<void> getPantauList(int page) async {
-    var token = await storageSecure.read(key: 'token');
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     var param = QueryModel(
       table: true,
       page: page,

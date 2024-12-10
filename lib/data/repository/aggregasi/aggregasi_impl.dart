@@ -24,9 +24,6 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   Future<BaseResponse<List<AggregationModel>>> getAggregationReport(
       QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       Response response = await network.base.get(
         "/aggregations",
@@ -97,8 +94,6 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   @override
   Future<GetAggregationTotalModel> getAggregationTotal(QueryModel param) async {
     AppLogger.i("param toJson total ${param.toJson()}");
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/aggregations/total",
@@ -117,8 +112,6 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   Future<BaseResponse<List<AggregationDetailModel>>> getAggregationByDoc(
       String aggregationID, QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/aggregations/$aggregationID",
@@ -142,8 +135,6 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
 
   @override
   Future<ResponseModel<TransactionSummaryModel>> getAggSummary() async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     var startDate = DateTime.now().subtract(const Duration(days: 7));
     var endDate = DateTime.now();
 
@@ -179,8 +170,6 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
 
   @override
   Future<ResponseModel<List<AggregationChartModel>>> getAggChart() async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     var now = DateTime.now().toLocal();
     var startDate = DateTime(now.year, now.month, now.day)
         .subtract(const Duration(days: 6))

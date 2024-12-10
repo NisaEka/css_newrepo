@@ -21,8 +21,6 @@ class ProfilRepositoryImpl extends ProfilRepository {
 
   @override
   Future<BaseResponse<BasicProfileModel>> getBasicProfil() async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/me",
@@ -42,8 +40,6 @@ class ProfilRepositoryImpl extends ProfilRepository {
 
   @override
   Future<BaseResponse<CcrfProfileModel>> getCcrfProfil() async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/me/ccrf",
@@ -63,8 +59,6 @@ class ProfilRepositoryImpl extends ProfilRepository {
 
   @override
   Future<BaseResponse> putProfileCCRF(GeneralInfo data) async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.put(
         "/me/ccrf",
@@ -83,8 +77,6 @@ class ProfilRepositoryImpl extends ProfilRepository {
   Future<DefaultResponseModel<String>> createProfileCcrf(
       FacilityCreateModel data) async {
     //todo:implement create profile ccrf
-    var token = await storageSecure.read(key: 'token');
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       var response =
           await network.base.post('/profile/ccrf', data: data.toJson());
@@ -98,9 +90,6 @@ class ProfilRepositoryImpl extends ProfilRepository {
   Future<DefaultResponseModel<String>> createProfileCcrfExisting(
       FacilityCreateExistingModel data) async {
     //todo: implement create profile ccrf existing
-    var token = await storageSecure.read(key: 'token');
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       var response = await network.base
           .post('/profile/ccrf/existing', data: data.toJson());
@@ -113,9 +102,6 @@ class ProfilRepositoryImpl extends ProfilRepository {
   @override
   Future<BaseResponse<List<CcrfActivityModel>>> getCcrfActivity(
       QueryModel param) async {
-    var token = await storageSecure.read(key: 'token');
-    network.base.options.headers['Authorization'] = 'Bearer $token';
-
     try {
       var response = await network.base.get(
         '/master/ccrf-activities',
@@ -139,11 +125,8 @@ class ProfilRepositoryImpl extends ProfilRepository {
 
   @override
   Future<BaseResponse> putProfileBasic(UserModel data) async {
-    var token = await storageSecure.read(key: "token");
     UserModel user = UserModel.fromJson(
         await StorageCore().readData(StorageCore.basicProfile));
-
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.patch(
         "/me",
@@ -167,8 +150,6 @@ class ProfilRepositoryImpl extends ProfilRepository {
 
   @override
   Future<BaseResponse<List<ShipperModel>>> getShipper() async {
-    var token = await storageSecure.read(key: "token");
-    network.base.options.headers['Authorization'] = 'Bearer $token';
     try {
       Response response = await network.base.get(
         "/me/shipper",
