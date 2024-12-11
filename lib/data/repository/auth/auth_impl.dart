@@ -255,7 +255,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<BaseResponse> postFcmTokenNonAuth(DeviceModel data) async {
     try {
       Response response = await network.base.post(
-        '/auth/device-infos/save',
+        '/auth/device-infos/public',
         data: data,
         options: Options(extra: {'skipAuth': true}),
       );
@@ -273,7 +273,7 @@ class AuthRepositoryImpl extends AuthRepository {
     AppLogger.i("device model : ${data.toJson()}");
     try {
       Response response = await network.base.patch(
-        '/auth/device-infos/update',
+        '/auth/device-infos/public',
         data: data,
         options: Options(extra: {'skipAuth': true}),
       );
