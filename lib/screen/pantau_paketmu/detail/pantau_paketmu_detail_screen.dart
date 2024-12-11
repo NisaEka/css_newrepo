@@ -32,15 +32,6 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
 
   Widget _detailBody(
       BuildContext context, PantauPaketmuDetailController controller) {
-    // if (controller.showLoadingIndicator) {
-    //   return Container(
-    //     alignment: Alignment.center,
-    //     child: CircularProgressIndicator(
-    //       color: Theme.of(context).colorScheme.primary,
-    //     ),
-    //   );
-    // }
-
     if (controller.showEmptyContainer) {
       return const Center(child: Text("Not Found"));
     }
