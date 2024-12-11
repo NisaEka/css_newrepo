@@ -11,7 +11,10 @@ import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'storage_core.dart';
 
 class NetworkCore {
-  static final noNeedToken = ['/login', '/auth/device-infos'];
+  static final noNeedToken = [
+    '/login',
+    '/auth/device-infos',
+  ];
 
   static bool isNeedToken(String route) => !noNeedToken.contains(route);
 
@@ -108,45 +111,50 @@ class NetworkCore {
           }
           final refreshToken = await StorageCore().readRefreshToken();
           AppLogger.i("refresh token local : $refreshToken");
-          if (dioError.response?.statusCode == 401) {
-            // Handle token refresh logic
-            if (refreshToken != null) {
-              try {
-                Response response = await base.post(
-                  '/authentications/refresh',
-                  data: {
-                    "refreshToken": refreshToken,
-                  },
-                  options: Options(extra: {'skipAuth': true}),
-                );
+          if ((dioError.requestOptions.path != '/auth/device-infos') ||
+              (dioError.requestOptions.path != '/authentications/refresh')) {
+            if (dioError.response?.statusCode == 401) {
+              // Handle token refresh logic
+              if (refreshToken != null) {
+                try {
+                  Response response = await base.post(
+                    '/authentications/refresh',
+                    data: {
+                      "refreshToken": refreshToken,
+                    },
+                    options: Options(extra: {'skipAuth': true}),
+                  );
 
-                final newToken = BaseResponse<PostLoginModel>.fromJson(
-                  response.data,
-                  (json) => PostLoginModel.fromJson(
-                    json as Map<String, dynamic>,
-                  ),
-                );
+                  final newToken = BaseResponse<PostLoginModel>.fromJson(
+                    response.data,
+                    (json) => PostLoginModel.fromJson(
+                      json as Map<String, dynamic>,
+                    ),
+                  );
 
-                await StorageCore().saveToken(
-                  newToken.data?.token?.accessToken,
-                  newToken.data?.menu ?? MenuModel(),
-                  newToken.data?.token?.refreshToken,
-                );
+                  await StorageCore().saveToken(
+                    newToken.data?.token?.accessToken,
+                    newToken.data?.menu ?? MenuModel(),
+                    newToken.data?.token?.refreshToken,
+                  );
 
-                dioError.requestOptions.headers['Authorization'] =
-                    'Bearer ${newToken.data?.token?.accessToken}';
+                  // Update the request header with the new access token
+                  dioError.requestOptions.headers['Authorization'] =
+                      'Bearer ${newToken.data?.token?.accessToken}';
 
-                AppLogger.i("new token : $newToken");
-                return handler
-                    .resolve(await base.fetch(dioError.requestOptions));
-              } on DioException catch (e) {
-                AppLogger.e(
-                    "refresh token error status code : ${e.response?.statusCode}");
-                if (e.response?.statusCode == 401) {
-                  StorageCore().deleteLogin();
-                  Get.offAll(const DashboardScreen());
+                  AppLogger.i("new token : $newToken");
+                  // Repeat the request with the updated header
+                  return handler
+                      .resolve(await base.fetch(dioError.requestOptions));
+                } on DioException catch (e) {
+                  AppLogger.e(
+                      "refresh token error status code : ${e.response?.statusCode}");
+                  if (e.response?.statusCode == 401) {
+                    StorageCore().deleteLogin();
+                    Get.offAll(const DashboardScreen());
+                  }
+                  return handler.reject(dioError);
                 }
-                return handler.reject(dioError);
               }
             }
           }

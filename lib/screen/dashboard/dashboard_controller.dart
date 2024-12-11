@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
@@ -96,7 +96,8 @@ class DashboardController extends BaseController {
     state.menuItems = [
       Items(
         title: "Input Kirimanmu",
-        icon: IconsConstant.add,
+        // icon: IconsConstant.add,
+        icon: ImageConstant.paketmuIcon,
         route: "/inputKiriman",
         isFavorite: true,
         isEdit: false,
@@ -104,7 +105,8 @@ class DashboardController extends BaseController {
       ),
       Items(
         title: "Cek Ongkir",
-        icon: IconsConstant.cekOngkir,
+        // icon: IconsConstant.cekOngkir,
+        icon: ImageConstant.cekOngkirIcon,
         route: "/cekOngkir",
         isFavorite: true,
         isEdit: false,
@@ -112,7 +114,8 @@ class DashboardController extends BaseController {
       ),
       Items(
         title: "Draft Transaksi",
-        icon: IconsConstant.bookmark,
+        // icon: IconsConstant.bookmark,
+        icon: ImageConstant.paketmuIcon,
         route: "/draftTransaksi",
         isFavorite: true,
         isEdit: false,
@@ -120,7 +123,8 @@ class DashboardController extends BaseController {
       ),
       Items(
         title: "Riwayat Kiriman",
-        icon: IconsConstant.history,
+        // icon: IconsConstant.history,
+        icon: ImageConstant.paketmuIcon,
         route: "/riwayatKiriman",
         isFavorite: true,
         isEdit: false,

@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_body.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/onboarding/splash_screen.dart';
@@ -41,7 +41,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           MediaQuery.of(context).viewInsets.bottom == 0) ||
                       !controller.state.isLogin
                   ? MenuIcon(
-                      icon: IconsConstant.add,
+                      // icon: IconsConstant.add,
+                      icon: ImageConstant.paketmuIcon,
                       margin:
                           EdgeInsets.only(left: Get.width * 0.09, bottom: 29),
                       radius: 100,
