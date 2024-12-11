@@ -46,7 +46,7 @@ class SignUpOTPController extends BaseController {
           Get.to(SuccessScreen(
             message: "Selamat, kamu sudah berhasil mendaftar".tr,
             buttonTitle: "Masuk".tr,
-            nextAction: () => Get.offAll(const LoginScreen()),
+            nextAction: () => Get.offAll(() => const LoginScreen()),
           ));
         } else {
           AppSnackBar.error('PIN tidak sesuai'.tr);

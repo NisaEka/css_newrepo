@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       const Duration(seconds: 2),
       () {
-        Get.offAll(const Ob1Screen());
+        Get.offAll(() => const Ob1Screen());
       },
     );
   }

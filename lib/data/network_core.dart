@@ -140,7 +140,7 @@ class NetworkCore {
                     "refresh token error status code : ${e.response?.statusCode}");
                 if (e.response?.statusCode == 401) {
                   StorageCore().deleteLogin();
-                  Get.offAll(const DashboardScreen());
+                  Get.offAll(() => const DashboardScreen());
                 }
                 return handler.reject(dioError);
               }

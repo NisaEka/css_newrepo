@@ -83,7 +83,7 @@ class LogoutButton extends StatelessWidget {
         DeviceModel(fcmToken: await storage.readString(StorageCore.fcmToken)),
       );
       storage.deleteLogin();
-      Get.offAll(const LoginScreen());
+      Get.offAll(() => const LoginScreen());
       // }
     });
   }

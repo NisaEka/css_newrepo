@@ -433,7 +433,10 @@ class LanguageEN {
       "Buat Tiket Laporan": "Create Report Ticket",
       "Pengajuan Eclaim": "Create Claim Ticket",
       "Aggregasi Pembayaran": "Aggregation Payment",
-      "Coba lagi": "Try again"
+      "Coba lagi": "Try again",
+      "Nomor resi tidak boleh kosong": "Airwaybill cannot be empty",
+      "Nomor resi harus terdiri dari 16 karakter":
+          "Airwaybill must be 16 characters"
     };
   }
 }
