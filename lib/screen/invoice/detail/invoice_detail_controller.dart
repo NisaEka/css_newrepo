@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 class InvoiceDetailController extends BaseController {
   String invoiceNumber = Get.arguments["invoice_number"];
 
-  bool _showLoadingIndicator = false;
+  bool isLoading = false;
+
+  final bool _showLoadingIndicator = false;
   bool get showLoadingIndicator => _showLoadingIndicator;
 
   bool _showMainContent = false;
@@ -27,7 +29,9 @@ class InvoiceDetailController extends BaseController {
   }
 
   Future<void> _getInvoiceDetail() async {
-    _showLoadingIndicator = true;
+    isLoading = true;
+
+    // _showLoadingIndicator = true;
     update();
 
     try {
@@ -49,7 +53,9 @@ class InvoiceDetailController extends BaseController {
       error.printError();
     }
 
-    _showLoadingIndicator = false;
+    await Future.delayed(const Duration(seconds: 2));
+    isLoading = false;
+    // _showLoadingIndicator = false;
     update();
   }
 

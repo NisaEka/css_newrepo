@@ -35,7 +35,7 @@ class LaporankuListItem extends StatelessWidget {
           children: [
             SlidableAction(
               onPressed: (context) =>
-                  Get.to(const LacakKirimanScreen(), arguments: {
+                  Get.to(() => const LacakKirimanScreen(), arguments: {
                 'nomor_resi': data?.cnote ?? '',
               }),
               foregroundColor:
