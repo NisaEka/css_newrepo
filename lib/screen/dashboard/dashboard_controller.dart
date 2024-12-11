@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
@@ -13,6 +13,7 @@ import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
@@ -33,7 +34,7 @@ class DashboardController extends BaseController {
     Future.wait([
       isFirst(),
       cekToken(),
-      initData().then((_) => loadTransCountList()),
+      initData(),
       cekLocalLanguage(),
       loadBanner(),
       loadNews(),
@@ -95,7 +96,8 @@ class DashboardController extends BaseController {
     state.menuItems = [
       Items(
         title: "Input Kirimanmu",
-        icon: IconsConstant.add,
+        // icon: IconsConstant.add,
+        icon: ImageConstant.paketmuIcon,
         route: "/inputKiriman",
         isFavorite: true,
         isEdit: false,
@@ -103,7 +105,8 @@ class DashboardController extends BaseController {
       ),
       Items(
         title: "Cek Ongkir",
-        icon: IconsConstant.cekOngkir,
+        // icon: IconsConstant.cekOngkir,
+        icon: ImageConstant.cekOngkirIcon,
         route: "/cekOngkir",
         isFavorite: true,
         isEdit: false,
@@ -111,7 +114,8 @@ class DashboardController extends BaseController {
       ),
       Items(
         title: "Draft Transaksi",
-        icon: IconsConstant.bookmark,
+        // icon: IconsConstant.bookmark,
+        icon: ImageConstant.paketmuIcon,
         route: "/draftTransaksi",
         isFavorite: true,
         isEdit: false,
@@ -119,7 +123,8 @@ class DashboardController extends BaseController {
       ),
       Items(
         title: "Riwayat Kiriman",
-        icon: IconsConstant.history,
+        // icon: IconsConstant.history,
+        icon: ImageConstant.paketmuIcon,
         route: "/riwayatKiriman",
         isFavorite: true,
         isEdit: false,
@@ -267,6 +272,7 @@ class DashboardController extends BaseController {
         update();
       }
     }
+    loadTransCountList();
   }
 
   Future<void> saveFCMToken() async {
@@ -323,20 +329,20 @@ class DashboardController extends BaseController {
           },
         );
 
-        aggregation.getAggSummary().then(
-          (value) {
-            state.aggSummary = value.data;
-            update();
-          },
-        );
-
-        aggregation.getAggChart().then(
-          (value) {
-            state.aggChart = value.data;
-            state.isLoadingAgg = false;
-            update();
-          },
-        );
+        // aggregation.getAggSummary().then(
+        //   (value) {
+        //     state.aggSummary = value.data;
+        //     update();
+        //   },
+        // );
+        //
+        // aggregation.getAggChart().then(
+        //   (value) {
+        //     state.aggChart = value.data;
+        //     state.isLoadingAgg = false;
+        //     update();
+        //   },
+        // );
 
         var trans = await transaction.getPantauCount(QueryModel(between: [
           {
@@ -432,6 +438,15 @@ class DashboardController extends BaseController {
           UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
     }
     saveFCMToken();
+
+    if (state.isLogin) {
+      final accessToken = await StorageCore().readAccessToken();
+      final refreshToken = await StorageCore().readRefreshToken();
+      if (accessToken == null && refreshToken == null) {
+        StorageCore().deleteLogin();
+        Get.offAll(const DashboardScreen());
+      }
+    }
 
     try {
       if (basic) {

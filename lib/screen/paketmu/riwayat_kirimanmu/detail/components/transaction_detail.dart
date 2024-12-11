@@ -4,6 +4,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
+import 'package:css_mobile/widgets/items/text_row_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
@@ -52,88 +53,40 @@ class TransactionDetail extends StatelessWidget {
                     isBold: true,
                     fontColor: blueJNE),
                 const SizedBox(height: 10),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: Get.width / 2.5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Account".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Pengirim".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Petugas Entry".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Kota Pengiriman".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Penerima".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Kota Penerima".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Nama Barang".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Berat Kiriman".tr),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                c.state.transactionModel?.accountNumber ?? '-',
-                            width: Get.width / 3),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: c.state.transactionModel?.shipperName ?? '-',
-                            width: Get.width / 3),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                c.state.transactionModel?.petugasEntry ?? '-',
-                            width: Get.width / 3),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: c.state.transactionModel?.shipperCity ?? '-',
-                            width: Get.width / 3),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                c.state.transactionModel?.receiverName ?? '-',
-                            width: Get.width / 3),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                c.state.transactionModel?.receiverCity ?? '-',
-                            width: Get.width / 3),
-                        // CustomFormLabel(isLoading: c.state.isLoading, label: c.state.transactionModel?.goodsDesc ?? '-', width: Get.width / 3),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label: c.state.transactionData?.account
-                                    ?.accountNumber ??
-                                '-',
-                            width: Get.width / 3),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                c.state.transactionModel?.weight.toString() ??
-                                    '-',
-                            width: Get.width / 3),
-                      ],
-                    ),
-                  ],
+                TextRowItem(
+                  title: "Account".tr,
+                  value: c.state.transactionModel?.account?.accountName ?? '-',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Petugas Entry".tr,
+                  value: c.state.transactionModel?.shipperName ?? '-',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Kota Pengiriman".tr,
+                  value: c.state.transactionModel?.petugasEntry ?? '-',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Penerima".tr,
+                  value: c.state.transactionModel?.shipperCity ?? '-',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Kota Penerima".tr,
+                  value: c.state.transactionModel?.receiverName ?? '-',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Nama Barang".tr,
+                  value: c.state.transactionModel?.receiverCity ?? '-',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Berat Kiriman".tr,
+                  value: c.state.transactionModel?.goodsDesc ?? '-',
+                  isLoading: c.state.isLoading,
                 ),
                 const SizedBox(height: 10),
                 const Divider(color: greyColor),
@@ -144,37 +97,15 @@ class TransactionDetail extends StatelessWidget {
                     isBold: true,
                     fontColor: blueJNE),
                 const SizedBox(height: 10),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: Get.width / 2.5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Status Kiriman".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Permintaan Pickup".tr),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                c.state.transactionModel?.statusAwb?.tr ?? '-'),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                c.state.transactionModel?.pickupStatus ?? '-'),
-                      ],
-                    ),
-                  ],
+                TextRowItem(
+                  title: "Status Kiriman".tr,
+                  value: c.state.transactionModel?.statusAwb?.tr ?? '-',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Permintaan Pickup".tr,
+                  value: c.state.transactionModel?.pickupStatus ?? '-',
+                  isLoading: c.state.isLoading,
                 ),
                 const SizedBox(height: 10),
                 const Divider(color: greyColor),
@@ -185,97 +116,53 @@ class TransactionDetail extends StatelessWidget {
                     isBold: true,
                     fontColor: blueJNE),
                 const SizedBox(height: 10),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: Get.width / 2.5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Service".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Ongkos Kirim".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Admin COD Ongkir".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Asuransi".tr),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Dana COD".tr),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                c.state.transactionModel?.serviceCode ?? '-'),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? '0'}'),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                'Rp. ${c.state.transactionModel?.codAmount?.toInt().toCurrency().toString() ?? '0'}'),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                'Rp. ${c.state.transactionModel?.insuranceAmount?.toCurrency().toString() ?? '0'}'),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}'),
-                      ],
-                    ),
-                  ],
+                TextRowItem(
+                  title: "Service".tr,
+                  value: c.state.transactionModel?.serviceCode ?? '-',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Ongkos Kirim".tr,
+                  value:
+                      'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? '0'}',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Admin COD Ongkir".tr,
+                  value:
+                      'Rp. ${c.state.transactionModel?.codAmount?.toInt().toCurrency().toString() ?? '0'}',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Asuransi".tr,
+                  value:
+                      'Rp. ${c.state.transactionModel?.insuranceAmount?.toCurrency().toString() ?? '0'}',
+                  isLoading: c.state.isLoading,
+                ),
+                TextRowItem(
+                  title: "Dana COD".tr,
+                  value:
+                      'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}',
+                  isLoading: c.state.isLoading,
                 ),
                 const SizedBox(height: 10),
                 const Divider(color: greyColor),
                 const SizedBox(height: 20),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: Get.width / 2.5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Grand Total COD Amount".tr,
-                              isBold: true),
-                          CustomFormLabel(
-                              isLoading: c.state.isLoading,
-                              label: "Grand Total Ongkos Kirim".tr,
-                              isBold: true),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}',
-                            isBold: true),
-                        CustomFormLabel(
-                            isLoading: c.state.isLoading,
-                            label:
-                                'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? '0'}',
-                            isBold: true),
-                      ],
-                    ),
-                  ],
+                TextRowItem(
+                  title: "Grand Total COD Amount".tr,
+                  value:
+                      'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}',
+                  isLoading: c.state.isLoading,
+                  isTitleBold: true,
+                  isValueBold: true,
+                ),
+                TextRowItem(
+                  title: "Grand Total Ongkos Kirim".tr,
+                  value:
+                      'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? '0'}',
+                  isLoading: c.state.isLoading,
+                  isTitleBold: true,
+                  isValueBold: true,
                 ),
               ],
             ),

@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -65,7 +66,8 @@ class BottomBar5 extends StatelessWidget {
                     allow?.pantauPaketmu == "Y" || (!controller.state.isLogin)
                         ? BottomMenuItem2(
                             icon: MenuIcon(
-                              icon: IconsConstant.pantau,
+                              // icon: IconsConstant.pantau,
+                              icon: ImageConstant.pantauPaketmuIcon,
                               size: 30,
                               showContainer: false,
                               iconColor: menu == 1

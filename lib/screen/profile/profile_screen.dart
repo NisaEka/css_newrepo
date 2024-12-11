@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
@@ -53,7 +53,8 @@ class ProfileScreen extends StatelessWidget {
               floatingActionButton: controller.state.menuModel.paketmuInput ==
                       "Y"
                   ? MenuIcon(
-                      icon: IconsConstant.add,
+                      // icon: IconsConstant.add,
+                      icon: ImageConstant.paketmuIcon,
                       margin: const EdgeInsets.only(left: 38, bottom: 29),
                       radius: 100,
                       background: (AppConst.isLightTheme(context)

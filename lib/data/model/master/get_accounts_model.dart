@@ -4,19 +4,19 @@ class Account {
     String? accountBranch,
     String? accountMain,
     String? accountName,
-    String? accountTypeId,
+    num? accountTypeId,
     String? accountType,
-    String? accountServiceId,
+    num? accountServiceId,
     String? accountService,
-    String? accountCategoryId,
+    num? accountCategoryId,
     String? accountCategory,
-    String? accountPaymentTypeId,
+    num? accountPaymentTypeId,
     String? accountPaymentType,
-    String? accountPayoutTypeId,
+    num? accountPayoutTypeId,
     String? accountPayoutType,
-    String? accountPrefixId,
-    String? accountPrefix,
-    String? accountCustTypeId,
+    num? accountPrefixId,
+    num? accountPrefix,
+    num? accountCustTypeId,
     String? accountCustType,
     String? accountCustTypeBfr,
     String? accountNumber,
@@ -30,12 +30,12 @@ class Account {
     String? accountJtr,
     String? accountIntl,
     String? accountDiscount,
-    String? accountDesreq1,
-    String? accountDesreq2,
-    String? accountDesreq3,
-    String? accountDiscIc,
-    String? accountDiscDm,
-    String? accountDiscIn,
+    num? accountDesreq1,
+    num? accountDesreq2,
+    num? accountDesreq3,
+    num? accountDiscIc,
+    num? accountDiscDm,
+    num? accountDiscIn,
     String? accountCodfee,
     String? accountTransaction,
     num? apiStatus,
@@ -148,19 +148,19 @@ class Account {
   String? _accountBranch;
   String? _accountMain;
   String? _accountName;
-  String? _accountTypeId;
+  num? _accountTypeId;
   String? _accountType;
-  String? _accountServiceId;
+  num? _accountServiceId;
   String? _accountService;
-  String? _accountCategoryId;
+  num? _accountCategoryId;
   String? _accountCategory;
-  String? _accountPaymentTypeId;
+  num? _accountPaymentTypeId;
   String? _accountPaymentType;
-  String? _accountPayoutTypeId;
+  num? _accountPayoutTypeId;
   String? _accountPayoutType;
-  String? _accountPrefixId;
-  String? _accountPrefix;
-  String? _accountCustTypeId;
+  num? _accountPrefixId;
+  num? _accountPrefix;
+  num? _accountCustTypeId;
   String? _accountCustType;
   String? _accountCustTypeBfr;
   String? _accountNumber;
@@ -174,12 +174,12 @@ class Account {
   String? _accountJtr;
   String? _accountIntl;
   String? _accountDiscount;
-  String? _accountDesreq1;
-  String? _accountDesreq2;
-  String? _accountDesreq3;
-  String? _accountDiscIc;
-  String? _accountDiscDm;
-  String? _accountDiscIn;
+  num? _accountDesreq1;
+  num? _accountDesreq2;
+  num? _accountDesreq3;
+  num? _accountDiscIc;
+  num? _accountDiscDm;
+  num? _accountDiscIn;
   String? _accountCodfee;
   String? _accountTransaction;
   num? _apiStatus;
@@ -196,19 +196,19 @@ class Account {
     String? accountBranch,
     String? accountMain,
     String? accountName,
-    String? accountTypeId,
+    num? accountTypeId,
     String? accountType,
-    String? accountServiceId,
+    num? accountServiceId,
     String? accountService,
-    String? accountCategoryId,
+    num? accountCategoryId,
     String? accountCategory,
-    String? accountPaymentTypeId,
+    num? accountPaymentTypeId,
     String? accountPaymentType,
-    String? accountPayoutTypeId,
+    num? accountPayoutTypeId,
     String? accountPayoutType,
-    String? accountPrefixId,
-    String? accountPrefix,
-    String? accountCustTypeId,
+    num? accountPrefixId,
+    num? accountPrefix,
+    num? accountCustTypeId,
     String? accountCustType,
     String? accountCustTypeBfr,
     String? accountNumber,
@@ -222,12 +222,12 @@ class Account {
     String? accountJtr,
     String? accountIntl,
     String? accountDiscount,
-    String? accountDesreq1,
-    String? accountDesreq2,
-    String? accountDesreq3,
-    String? accountDiscIc,
-    String? accountDiscDm,
-    String? accountDiscIn,
+    num? accountDesreq1,
+    num? accountDesreq2,
+    num? accountDesreq3,
+    num? accountDiscIc,
+    num? accountDiscDm,
+    num? accountDiscIn,
     String? accountCodfee,
     String? accountTransaction,
     num? apiStatus,
@@ -296,31 +296,31 @@ class Account {
 
   String? get accountName => _accountName;
 
-  String? get accountTypeId => _accountTypeId;
+  num? get accountTypeId => _accountTypeId;
 
   String? get accountType => _accountType;
 
-  String? get accountServiceId => _accountServiceId;
+  num? get accountServiceId => _accountServiceId;
 
   String? get accountService => _accountService;
 
-  String? get accountCategoryId => _accountCategoryId;
+  num? get accountCategoryId => _accountCategoryId;
 
   String? get accountCategory => _accountCategory;
 
-  String? get accountPaymentTypeId => _accountPaymentTypeId;
+  num? get accountPaymentTypeId => _accountPaymentTypeId;
 
   String? get accountPaymentType => _accountPaymentType;
 
-  String? get accountPayoutTypeId => _accountPayoutTypeId;
+  num? get accountPayoutTypeId => _accountPayoutTypeId;
 
   String? get accountPayoutType => _accountPayoutType;
 
-  String? get accountPrefixId => _accountPrefixId;
+  num? get accountPrefixId => _accountPrefixId;
 
-  String? get accountPrefix => _accountPrefix;
+  num? get accountPrefix => _accountPrefix;
 
-  String? get accountCustTypeId => _accountCustTypeId;
+  num? get accountCustTypeId => _accountCustTypeId;
 
   String? get accountCustType => _accountCustType;
 
@@ -348,17 +348,17 @@ class Account {
 
   String? get accountDiscount => _accountDiscount;
 
-  String? get accountDesreq1 => _accountDesreq1;
+  num? get accountDesreq1 => _accountDesreq1;
 
-  String? get accountDesreq2 => _accountDesreq2;
+  num? get accountDesreq2 => _accountDesreq2;
 
-  String? get accountDesreq3 => _accountDesreq3;
+  num? get accountDesreq3 => _accountDesreq3;
 
-  String? get accountDiscIc => _accountDiscIc;
+  num? get accountDiscIc => _accountDiscIc;
 
-  String? get accountDiscDm => _accountDiscDm;
+  num? get accountDiscDm => _accountDiscDm;
 
-  String? get accountDiscIn => _accountDiscIn;
+  num? get accountDiscIn => _accountDiscIn;
 
   String? get accountCodfee => _accountCodfee;
 

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -53,7 +53,8 @@ class OtherMenuCotroller extends BaseController {
     paketmuList = [
       Items(
         title: "Input Kirimanmu",
-        icon: IconsConstant.add,
+        // icon: IconsConstant.add,
+        icon: ImageConstant.paketmuIcon,
         isAuth: true,
         isFavorite:
             favoritList.where((e) => e.title == "Input Kirimanmu").isNotEmpty,
@@ -62,7 +63,8 @@ class OtherMenuCotroller extends BaseController {
       ),
       Items(
         title: "Riwayat Kiriman",
-        icon: IconsConstant.history,
+        // icon: IconsConstant.history,
+        icon: ImageConstant.paketmuIcon,
         isAuth: true,
         isFavorite:
             favoritList.where((e) => e.title == "Riwayat Kiriman").isNotEmpty,
@@ -71,7 +73,8 @@ class OtherMenuCotroller extends BaseController {
       ),
       Items(
         title: "Draft Transaksi",
-        icon: IconsConstant.bookmark,
+        // icon: IconsConstant.bookmark,
+        icon: ImageConstant.paketmuIcon,
         isAuth: true,
         isFavorite:
             favoritList.where((e) => e.title == "Draft Transaksi").isNotEmpty,
@@ -80,7 +83,8 @@ class OtherMenuCotroller extends BaseController {
       ),
       Items(
         title: "Lacak Kiriman",
-        icon: IconsConstant.search,
+        // icon: IconsConstant.search,
+        icon: ImageConstant.paketmuIcon,
         isAuth: false,
         isFavorite:
             favoritList.where((e) => e.title == "Lacak Kiriman").isNotEmpty,
@@ -89,7 +93,8 @@ class OtherMenuCotroller extends BaseController {
       ),
       Items(
           title: "Request Pickup",
-          icon: IconsConstant.requestPickup,
+          // icon: IconsConstant.requestPickup,
+          icon: ImageConstant.paketmuIcon,
           isAuth: true,
           isFavorite:
               favoritList.where((e) => e.title == "Request Pickup").isNotEmpty,
@@ -97,7 +102,8 @@ class OtherMenuCotroller extends BaseController {
           route: "/requestPickup"),
       Items(
         title: "Pantau Paketmu",
-        icon: IconsConstant.pantau,
+        // icon: IconsConstant.pantau,
+        icon: ImageConstant.paketmuIcon,
         isAuth: true,
         isFavorite:
             favoritList.where((e) => e.title == "Pantau Paketmu").isNotEmpty,
@@ -109,7 +115,8 @@ class OtherMenuCotroller extends BaseController {
     keuanganmuList = [
       Items(
         title: "Pembayaran Aggregasi",
-        icon: IconsConstant.agg,
+        // icon: IconsConstant.agg,
+        icon: ImageConstant.keuanganmuIcon,
         isAuth: true,
         isFavorite: favoritList
             .where((e) => e.title == "Pembayaran Aggregasi")
@@ -119,7 +126,8 @@ class OtherMenuCotroller extends BaseController {
       ),
       Items(
         title: "Aggregasi Minus",
-        icon: IconsConstant.aggMinus,
+        // icon: IconsConstant.aggMinus,
+        icon: ImageConstant.keuanganmuIcon,
         isAuth: true,
         isFavorite:
             favoritList.where((e) => e.title == "Aggregasi Minus").isNotEmpty,
@@ -136,7 +144,8 @@ class OtherMenuCotroller extends BaseController {
       // ),
       Items(
         title: "Invoice",
-        icon: IconsConstant.invoice,
+        // icon: IconsConstant.invoice,
+        icon: ImageConstant.keuanganmuIcon,
         isAuth: true,
         isFavorite: favoritList.where((e) => e.title == "Invoice").isNotEmpty,
         isEdit: isEdit,
@@ -147,7 +156,8 @@ class OtherMenuCotroller extends BaseController {
     otherList = [
       Items(
         title: "Cek Ongkir",
-        icon: IconsConstant.cekOngkir,
+        // icon: IconsConstant.cekOngkir,
+        icon: ImageConstant.cekOngkirIcon,
         isAuth: false,
         isFavorite:
             favoritList.where((e) => e.title == "Cek Ongkir").isNotEmpty,
@@ -159,7 +169,8 @@ class OtherMenuCotroller extends BaseController {
     hubungiAkuList = [
       Items(
           title: "Laporanku",
-          icon: IconsConstant.ticket,
+          // icon: IconsConstant.ticket,
+          icon: ImageConstant.hubungiAkuIcon,
           isAuth: true,
           isFavorite:
               favoritList.where((e) => e.title == "Laporanku").isNotEmpty,
@@ -167,7 +178,8 @@ class OtherMenuCotroller extends BaseController {
           route: "/laporanku"),
       Items(
           title: "E-Claim",
-          icon: IconsConstant.eclaim,
+          // icon: IconsConstant.eclaim,
+          icon: ImageConstant.hubungiAkuIcon,
           isAuth: true,
           isFavorite: favoritList.where((e) => e.title == "E-Claim").isNotEmpty,
           isEdit: isEdit,

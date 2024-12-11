@@ -17,12 +17,14 @@ class DashboardKirimanCountItem extends StatelessWidget {
   final TransactionSummaryModel? transSummary;
   final DashboardKirimanKamuModel kirimanKamu;
   final bool isLoadingKiriman;
+  final VoidCallback? onRefresh;
 
   const DashboardKirimanCountItem({
     super.key,
     this.transSummary,
     required this.kirimanKamu,
     this.isLoadingKiriman = false,
+    this.onRefresh,
   });
 
   @override
@@ -167,63 +169,66 @@ class DashboardKirimanCountItem extends StatelessWidget {
             ),
           ),
           // Real Time
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(CupertinoIcons.clock),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    alignment: Alignment.centerLeft,
-                    child: StreamBuilder<int>(
-                      stream: Stream.periodic(
-                          const Duration(seconds: 3), (count) => count),
-                      builder: (context, snapshot) {
-                        int currentSecond = snapshot.data ?? 0;
-                        return AnimatedSwitcher(
-                          duration: const Duration(
-                              milliseconds: 300), // Durasi transisi
-                          transitionBuilder:
-                              (Widget child, Animation<double> animation) {
-                            final slideAnimation = Tween<Offset>(
-                              begin: currentSecond % 2 == 0
-                                  ? const Offset(0, 1)
-                                  : const Offset(0, 1),
-                              end: Offset.zero,
-                            ).animate(animation);
-                            final fadeAnimation = Tween<double>(
-                              begin: 0.0,
-                              end: 1.0,
-                            ).animate(animation);
-                            return SlideTransition(
-                              position: slideAnimation,
-                              child: FadeTransition(
-                                opacity: fadeAnimation,
-                                child: child,
+          GestureDetector(
+            onTap: onRefresh,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Icon(CupertinoIcons.clock),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      alignment: Alignment.centerLeft,
+                      child: StreamBuilder<int>(
+                        stream: Stream.periodic(
+                            const Duration(seconds: 3), (count) => count),
+                        builder: (context, snapshot) {
+                          int currentSecond = snapshot.data ?? 0;
+                          return AnimatedSwitcher(
+                            duration: const Duration(
+                                milliseconds: 300), // Durasi transisi
+                            transitionBuilder:
+                                (Widget child, Animation<double> animation) {
+                              final slideAnimation = Tween<Offset>(
+                                begin: currentSecond % 2 == 0
+                                    ? const Offset(0, 1)
+                                    : const Offset(0, 1),
+                                end: Offset.zero,
+                              ).animate(animation);
+                              final fadeAnimation = Tween<double>(
+                                begin: 0.0,
+                                end: 1.0,
+                              ).animate(animation);
+                              return SlideTransition(
+                                position: slideAnimation,
+                                child: FadeTransition(
+                                  opacity: fadeAnimation,
+                                  child: child,
+                                ),
+                              );
+                            },
+                            child: SizedBox(
+                              width: double.infinity,
+                              key: ValueKey<int>(currentSecond),
+                              child: Text(
+                                messages[currentSecond % messages.length],
+                                textAlign: TextAlign.left,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(fontWeight: FontWeight.bold),
                               ),
-                            );
-                          },
-                          child: SizedBox(
-                            width: double.infinity,
-                            key: ValueKey<int>(currentSecond),
-                            child: Text(
-                              messages[currentSecond % messages.length],
-                              textAlign: TextAlign.left,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
