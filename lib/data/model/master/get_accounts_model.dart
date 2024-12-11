@@ -36,7 +36,7 @@ class Account {
     num? accountDiscIc,
     num? accountDiscDm,
     num? accountDiscIn,
-    num? accountCodfee,
+    String? accountCodfee,
     String? accountTransaction,
     num? apiStatus,
     String? apiDescription,
@@ -180,7 +180,7 @@ class Account {
   num? _accountDiscIc;
   num? _accountDiscDm;
   num? _accountDiscIn;
-  num? _accountCodfee;
+  String? _accountCodfee;
   String? _accountTransaction;
   num? _apiStatus;
   String? _apiDescription;
@@ -228,7 +228,7 @@ class Account {
     num? accountDiscIc,
     num? accountDiscDm,
     num? accountDiscIn,
-    num? accountCodfee,
+    String? accountCodfee,
     String? accountTransaction,
     num? apiStatus,
     String? apiDescription,
@@ -360,7 +360,7 @@ class Account {
 
   num? get accountDiscIn => _accountDiscIn;
 
-  num? get accountCodfee => _accountCodfee;
+  String? get accountCodfee => _accountCodfee;
 
   String? get accountTransaction => _accountTransaction;
 
