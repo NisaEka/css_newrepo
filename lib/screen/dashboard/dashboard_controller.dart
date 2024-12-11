@@ -434,11 +434,13 @@ class DashboardController extends BaseController {
     }
     saveFCMToken();
 
-    final accessToken = await StorageCore().readAccessToken();
-    final refreshToken = await StorageCore().readRefreshToken();
-    if (accessToken == null && refreshToken == null) {
-      StorageCore().deleteLogin();
-      Get.offAll(const DashboardScreen());
+    if (state.isLogin) {
+      final accessToken = await StorageCore().readAccessToken();
+      final refreshToken = await StorageCore().readRefreshToken();
+      if (accessToken == null && refreshToken == null) {
+        StorageCore().deleteLogin();
+        Get.offAll(const DashboardScreen());
+      }
     }
 
     try {
