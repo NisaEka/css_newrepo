@@ -32,7 +32,7 @@ class OngoingTransactionCard extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            width: Get.width * 0.3,
+            width: Get.width * 0.25,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
@@ -120,7 +120,7 @@ class OngoingTransactionCard extends StatelessWidget {
                           children: [
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 3),
+                                  horizontal: 10, vertical: 3),
                               // width: Get.width * 0.25,
                               child: Row(
                                 children: [
@@ -142,7 +142,7 @@ class OngoingTransactionCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 5),
                       Padding(
-                        padding: const EdgeInsets.only(right: 6),
+                        padding: const EdgeInsets.only(right: 8),
                         child: Text(
                           '$notificationCount',
                           style: const TextStyle(

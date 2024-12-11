@@ -1,5 +1,6 @@
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 
 class InvoiceItem extends StatelessWidget {
@@ -18,7 +19,7 @@ class InvoiceItem extends StatelessWidget {
       behavior: HitTestBehavior.translucent,
       onTap: (() => onTap(invoice?.invoiceNoEncoded ?? '')),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         margin: const EdgeInsets.only(left: 16, right: 16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -44,7 +45,7 @@ class InvoiceItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  invoice?.invoiceDate ?? '',
+                  (invoice?.invoiceDate ?? '').toLongDateTimeFormat(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 Text(

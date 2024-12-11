@@ -24,8 +24,8 @@ class TypeTransactionCard extends StatelessWidget {
     return Shimmer(
       isLoading: isLoading,
       child: Container(
-        padding: const EdgeInsets.all(3.0),
-        width: Get.width * 0.3,
+        padding: const EdgeInsets.all(2.0),
+        width: Get.width * 0.28,
         decoration: BoxDecoration(
           color: isLoading ? greyColor : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
@@ -37,7 +37,7 @@ class TypeTransactionCard extends StatelessWidget {
               height: 30,
               color: lineColor,
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 5),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,

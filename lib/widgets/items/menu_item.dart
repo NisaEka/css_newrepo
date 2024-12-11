@@ -17,21 +17,22 @@ class MenuItem extends StatelessWidget {
   final VoidCallback? onEdit;
   final Items? data;
   final bool isLoading;
+  final double iconSize;
 
-  const MenuItem({
-    super.key,
-    this.menuTitle,
-    this.menuImg,
-    this.onTap,
-    this.menuIcon,
-    this.isActive = true,
-    this.isFavorite,
-    this.isEdit = false,
-    this.onEdit,
-    this.data,
-    this.isLogin = false,
-    this.isLoading = false,
-  });
+  const MenuItem(
+      {super.key,
+      this.menuTitle,
+      this.menuImg,
+      this.onTap,
+      this.menuIcon,
+      this.isActive = true,
+      this.isFavorite,
+      this.isEdit = false,
+      this.onEdit,
+      this.data,
+      this.isLogin = false,
+      this.isLoading = false,
+      this.iconSize = 50});
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class MenuItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   MenuIcon(
+                    size: iconSize,
                     icon: data?.icon,
                     menuIcon: menuIcon,
                     isActive: isActive,

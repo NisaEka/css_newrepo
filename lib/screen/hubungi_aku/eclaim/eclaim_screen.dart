@@ -29,7 +29,7 @@ class EclaimScreen extends StatelessWidget {
               ],
             ),
             body: const Padding(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 30),
+              padding: EdgeInsets.only(top: 20, left: 20, right: 20),
               child: SingleChildScrollView(
                 child: Column(
                   children: [

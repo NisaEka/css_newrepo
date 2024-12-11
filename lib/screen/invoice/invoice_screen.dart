@@ -59,13 +59,13 @@ class InvoiceScreen extends StatelessWidget {
       onClear: () {
         controller.onKeywordChange("");
       },
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
     );
   }
 
   Widget _invoiceCountCard(BuildContext context, InvoiceController controller) {
     return Card.outlined(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -100,7 +100,7 @@ class InvoiceScreen extends StatelessWidget {
     InvoiceController controller,
   ) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -125,9 +125,9 @@ class InvoiceScreen extends StatelessWidget {
           pagingController: controller.pagingController,
           builderDelegate: PagedChildBuilderDelegate<InvoiceModel>(
             itemBuilder: (context, item, index) {
-              double paddingTop = index == 0 ? 16 : 0;
+              double paddingTop = index == 0 ? 5 : 0;
               return Padding(
-                padding: EdgeInsets.only(top: paddingTop),
+                padding: EdgeInsets.only(top: paddingTop, left: 5, right: 5),
                 child: InvoiceItem(
                   invoice: item,
                   onTap: (String invoiceNumber) {

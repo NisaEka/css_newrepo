@@ -32,7 +32,7 @@ class CekOngkirScreen extends StatelessWidget {
   Widget _bodyContent(CekOngkirController c, BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
             const CekOngkirForm(),

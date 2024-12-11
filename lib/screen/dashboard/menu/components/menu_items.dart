@@ -16,7 +16,7 @@ class MenuItems extends StatelessWidget {
         init: OtherMenuCotroller(),
         builder: (c) {
           return SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.only(left: 20, right: 5),
             sliver: SliverGrid(
               delegate: SliverChildBuilderDelegate(
                 (context, i) => MenuItem(
