@@ -76,14 +76,11 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Barcode Scan'),
-          centerTitle: true,
-        ),
+        backgroundColor: Colors.black,
         body: Center(
           child: Text(
             'Scan result: $_scanBarcode',
-            style: const TextStyle(fontSize: 20),
+            style: const TextStyle(fontSize: 20, color: Colors.black),
           ),
         ),
       ),

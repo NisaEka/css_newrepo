@@ -48,6 +48,7 @@ class DashboardBody extends StatelessWidget {
                               transSummary: c.state.transSummary,
                               kirimanKamu: c.state.kirimanKamu,
                               isLoadingKiriman: c.state.isLoadingKiriman,
+                              onRefresh: () => c.loadTransCountList(),
                             )
                           : const SizedBox(),
                       // const SizedBox(height: 50),
