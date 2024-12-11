@@ -11,6 +11,10 @@ import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'storage_core.dart';
 
 class NetworkCore {
+  static final noNeedToken = ['/login', '/auth/device-infos'];
+
+  static bool isNeedToken(String route) => !noNeedToken.contains(route);
+
   Dio city = Dio();
   Dio jne = Dio();
   Dio myJNE = Dio();
@@ -108,7 +112,7 @@ class NetworkCore {
             // Handle token refresh logic
             if (refreshToken != null) {
               try {
-                Response response = await refreshDio.post(
+                Response response = await base.post(
                   '/authentications/refresh',
                   data: {
                     "refreshToken": refreshToken,

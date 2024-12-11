@@ -33,7 +33,7 @@ class DashboardController extends BaseController {
     Future.wait([
       isFirst(),
       cekToken(),
-      initData().then((_) => loadTransCountList()),
+      initData(),
       cekLocalLanguage(),
       loadBanner(),
       loadNews(),
@@ -267,6 +267,7 @@ class DashboardController extends BaseController {
         update();
       }
     }
+    loadTransCountList();
   }
 
   Future<void> saveFCMToken() async {
@@ -323,20 +324,20 @@ class DashboardController extends BaseController {
           },
         );
 
-        aggregation.getAggSummary().then(
-          (value) {
-            state.aggSummary = value.data;
-            update();
-          },
-        );
-
-        aggregation.getAggChart().then(
-          (value) {
-            state.aggChart = value.data;
-            state.isLoadingAgg = false;
-            update();
-          },
-        );
+        // aggregation.getAggSummary().then(
+        //   (value) {
+        //     state.aggSummary = value.data;
+        //     update();
+        //   },
+        // );
+        //
+        // aggregation.getAggChart().then(
+        //   (value) {
+        //     state.aggChart = value.data;
+        //     state.isLoadingAgg = false;
+        //     update();
+        //   },
+        // );
 
         var trans = await transaction.getPantauCount(QueryModel(between: [
           {
