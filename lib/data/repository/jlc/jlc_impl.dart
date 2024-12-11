@@ -52,7 +52,8 @@ class JLCRepositoryImpl extends JLCRepository {
   @override
   Future<DashboardBannerModel> postDashboardBanner() async {
     try {
-      Response response = await network.base.get('/accounts/jlc/banner');
+      Response response = await network.base.get('/accounts/jlc/banner',
+          options: Options(extra: {'skipAuth': true}));
       return DashboardBannerModel.fromJson(response.data);
     } on DioException catch (e) {
       AppLogger.e('error: ${e.message}');
