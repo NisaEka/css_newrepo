@@ -80,7 +80,9 @@ class LogoutButton extends StatelessWidget {
     await auth.logout().then((value) async {
       AppLogger.d(value.toJson().toString());
       await auth.updateDeviceInfo(
-        DeviceModel(fcmToken: await storage.readString(StorageCore.fcmToken)),
+        DeviceModel(
+            fcmToken: await storage.readString(StorageCore.fcmToken),
+            registrationId: ""),
       );
       storage.deleteLogin();
       Get.offAll(const LoginScreen());

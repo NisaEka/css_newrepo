@@ -232,7 +232,6 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       Response response = await network.base.post(
         '/authentications/logout',
-        data: {},
         options: Options(extra: {'skipAuth': true}),
       );
       // .then((value) async => await network.base.patch(
