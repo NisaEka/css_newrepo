@@ -43,7 +43,7 @@ class NotificationListItem extends StatelessWidget {
                     color: infoColor,
                   )
                 : null,
-            leading: data.title?.split('-').first != "Laporanku "
+            leading: data.title?.split(' ').first != "Laporanku"
                 ? Icon(
                     Icons.info,
                     color: isRead

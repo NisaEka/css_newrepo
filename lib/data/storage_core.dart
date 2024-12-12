@@ -23,6 +23,7 @@ class StorageCore {
   static const String shippingCost = "shipping_const";
   static const String fcmToken = "fcm_token";
   static const String unreadMessage = "unread_message";
+  static const String readMessage = "read_message";
   static const String isFirst = "first_install";
   static const String transactionTemp = "transaction_temp";
   static const String themeMode = "theme";
