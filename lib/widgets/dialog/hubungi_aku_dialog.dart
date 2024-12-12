@@ -62,7 +62,7 @@ class HubungiAkuDialog extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   onTap: () => Get.to(
-                    const InputLaporankuScreen(),
+                    () => const InputLaporankuScreen(),
                     arguments: {'awb': awb},
                   ),
                 )
@@ -81,8 +81,8 @@ class HubungiAkuDialog extends StatelessWidget {
                     'Pengajuan Eclaim'.tr,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  onTap: () =>
-                      Get.to(const AddEclaimScreen(), arguments: {'awb': awb}),
+                  onTap: () => Get.to(() => const AddEclaimScreen(),
+                      arguments: {'awb': awb}),
                 )
               : const SizedBox(),
           const SizedBox(height: 20),

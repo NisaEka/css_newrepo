@@ -24,7 +24,7 @@ class LoginAlertDialog extends StatelessWidget {
           ),
           child: Text('Daftar'.tr),
           onPressed: () {
-            Get.off(const SignUpScreen());
+            Get.off(() => const SignUpScreen());
           },
         ),
         TextButton(
@@ -33,7 +33,7 @@ class LoginAlertDialog extends StatelessWidget {
           ),
           child: Text('Masuk'.tr),
           onPressed: () {
-            Get.off(const LoginScreen());
+            Get.off(() => const LoginScreen());
           },
         ),
       ],

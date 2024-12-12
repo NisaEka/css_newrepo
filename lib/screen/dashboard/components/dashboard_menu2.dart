@@ -68,7 +68,7 @@ class DashboardMenu2 extends StatelessWidget {
                           menuTitle: 'Lainnya'.tr,
                           isLoading: controller.state.isLoading,
                           onTap: () =>
-                              Get.to(const OtherMenuScreen(), arguments: {
+                              Get.to(() => const OtherMenuScreen(), arguments: {
                             'isLogin': controller.state.isLogin,
                             'allowance': controller.state.allow,
                           })?.then(

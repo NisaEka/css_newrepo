@@ -48,7 +48,7 @@ class LogoutButton extends StatelessWidget {
                     builder: (context) =>
                         LogoutAlertDialog(onLogout: () => doLogout()),
                   )
-                : Get.to(const LoginScreen()),
+                : Get.to(() => const LoginScreen()),
             leading: Icon(
               isLogin ? Icons.logout : Icons.login,
               color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
@@ -88,7 +88,7 @@ class LogoutButton extends StatelessWidget {
         ),
       );
       storage.deleteLogin();
-      Get.offAll(const LoginScreen());
+      Get.offAll(() => const LoginScreen());
       // }
     });
   }

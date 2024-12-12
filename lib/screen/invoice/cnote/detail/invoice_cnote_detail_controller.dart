@@ -6,8 +6,8 @@ class InvoiceCnoteDetailController extends BaseController {
   String invoiceNumber = Get.arguments["invoice_number"];
   String awb = Get.arguments["awb"];
 
-  bool _showLoadingIndicator = false;
-  bool get showLoadingIndicator => _showLoadingIndicator;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   bool _showMainContent = false;
   bool get showMainContent => _showMainContent;
@@ -29,7 +29,7 @@ class InvoiceCnoteDetailController extends BaseController {
   }
 
   Future<void> _getInvoiceCnoteDetail() async {
-    _showLoadingIndicator = true;
+    _isLoading = true;
     update();
 
     try {
@@ -52,7 +52,8 @@ class InvoiceCnoteDetailController extends BaseController {
       error.printError();
     }
 
-    _showLoadingIndicator = false;
+    await Future.delayed(const Duration(seconds: 2));
+    _isLoading = false;
     update();
   }
 

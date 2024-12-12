@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/add/add_eclaim_controller.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/add/image_preview_screen.dart';
+import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -10,6 +11,7 @@ import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class AddEclaimScreen extends StatelessWidget {
@@ -151,6 +153,10 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
               title: 'RP',
               isPrefix: true,
             ),
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              ThousandsSeparatorInputFormatter(),
+            ],
             inputType: TextInputType.number,
           ),
           CustomTextFormField(

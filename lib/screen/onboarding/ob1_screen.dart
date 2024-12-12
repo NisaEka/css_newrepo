@@ -108,7 +108,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                         ?.copyWith(color: redJNE),
                   ),
                   onTap: () => Get.delete<DashboardController>()
-                      .then((_) => Get.offAll(const DashboardScreen())),
+                      .then((_) => Get.offAll(() => const DashboardScreen())),
                 ),
               ),
               Container(

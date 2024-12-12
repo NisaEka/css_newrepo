@@ -1,8 +1,6 @@
-import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_controller.dart';
+import 'package:css_mobile/screen/invoice/invoice_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
-import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -10,13 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-class EclaimFilterButton extends HookWidget {
-  const EclaimFilterButton({super.key});
+class InvoiceFilterButton extends HookWidget {
+  const InvoiceFilterButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EclaimController>(
-        init: EclaimController(),
+    return GetBuilder<InvoiceController>(
+        init: InvoiceController(),
         builder: (c) {
           return FilterButton(
             filterContent: StatefulBuilder(
@@ -87,10 +85,10 @@ class EclaimFilterButton extends HookWidget {
                                   onTap: () =>
                                       c.selectDate(context).then((value) {
                                     setState(() {
-                                      c.state.startDate = value;
+                                      c.selectedDateStart = value;
                                       c.state.startDateField.text =
                                           value.toString().toDateTimeFormat();
-                                      c.state.endDate = DateTime.now();
+                                      c.selectedDateEnd = DateTime.now();
                                       c.state.endDateField.text = DateTime.now()
                                           .toString()
                                           .toDateTimeFormat();
@@ -107,7 +105,7 @@ class EclaimFilterButton extends HookWidget {
                                   onTap: () =>
                                       c.selectDate(context).then((value) {
                                     setState(() {
-                                      c.state.endDate = value;
+                                      c.selectedDateEnd = value;
                                       c.state.endDateField.text =
                                           value.toString().toDateTimeFormat();
                                       c.update();
@@ -119,47 +117,6 @@ class EclaimFilterButton extends HookWidget {
                             // CustomFormLabel(label: 'Status Kiriman'.tr),
                             // const SizedBox(height: 10),
                             // CustomFormLabel(label: 'Petugas Entry'),
-                          ],
-                        ),
-                      ),
-                      SliverToBoxAdapter(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 10),
-                            // const CustomFormLabel(label: 'Petugas Entry'),
-                            CustomDropDownField(
-                              label: 'Status Claim'.tr,
-                              value: c.state.selectedStatusClaim,
-                              hintText: 'Status Claim'.tr,
-                              items: [
-                                DropdownMenuItem(
-                                  value: 'Total',
-                                  child: Text(
-                                    'Total'.tr.toUpperCase(),
-                                    style: subTitleTextStyle,
-                                  ),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'Diterima',
-                                  child: Text(
-                                    'Diterima'.tr.toUpperCase(),
-                                    style: subTitleTextStyle,
-                                  ),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'Ditolak',
-                                  child: Text(
-                                    'Ditolak'.tr.toUpperCase(),
-                                    style: subTitleTextStyle,
-                                  ),
-                                ),
-                              ],
-                              onChanged: (value) {
-                                c.state.selectedStatusClaim = value ?? '';
-                                c.update();
-                              },
-                            ),
                           ],
                         ),
                       ),
@@ -177,6 +134,7 @@ class EclaimFilterButton extends HookWidget {
               Get.back();
             },
             onApplyFilter: () {
+              // c.applyFilter();
               c.applyFilter();
               Get.back();
             },
