@@ -3,6 +3,8 @@ import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_promo.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_user_info.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/onboarding/ob1_screen.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dashboard_appbar.dart';
@@ -67,10 +69,10 @@ class DashboardBody extends StatelessWidget {
                       const DashboardPromo(),
                       const DashboardNews(),
                       const SizedBox(height: 50),
-                      // CustomFilledButton(
-                      //   color: Colors.blue,
-                      //   onPressed: () => Get.to(const Ob1Screen()),
-                      // )
+                      CustomFilledButton(
+                        color: Colors.blue,
+                        onPressed: () => Get.to(const Ob1Screen()),
+                      )
                     ],
                   ),
                 ),

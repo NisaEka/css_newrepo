@@ -14,6 +14,8 @@ class NotificationController extends BaseController {
   void onInit() {
     super.onInit();
     Future.wait([initData()]);
+    notificationList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
+    unreadNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
   }
 
   Future<void> initData() async {
@@ -22,10 +24,10 @@ class NotificationController extends BaseController {
     unreadNotifList = [];
     notificationList = [];
     try {
-      await notification.getNotificationsList().then((value) {
-        notificationList.addAll(value.payload ?? []);
-        update();
-      });
+      // await notification.getNotificationsList().then((value) {
+      //   notificationList.addAll(value.payload ?? []);
+      //   update();
+      // });
 
       var unread = GetNotificationModel.fromJson(
           await storage.readData(StorageCore.unreadMessage));
@@ -51,12 +53,19 @@ class NotificationController extends BaseController {
     update();
   }
 
-  readMessage(String id) {
-    unreadNotifList.removeWhere((e) => e.id == id || id.isEmpty);
+  readMessage(NotificationModel value) {
+    // notificationList.add(value);
+    // unreadNotifList.removeWhere((e) => e.id == value.id || (value.id?.isEmpty ?? false));
+    unreadNotifList
+        .where((e) => e.id == value.id || (value.id?.isEmpty ?? false))
+        .first
+        .setisRead(false);
     // notificationList.removeWhere((e) => e.id == id || id.isEmpty);
     update();
-    storage.saveData(StorageCore.unreadMessage,
-        GetNotificationModel(payload: unreadNotifList));
+    storage.saveData(
+      StorageCore.unreadMessage,
+      GetNotificationModel(payload: unreadNotifList),
+    );
     notificationList.addAll(temp);
   }
 }
