@@ -61,6 +61,7 @@ class TambahPetugasScreen extends StatelessWidget {
                   controller: c.alamatEmail,
                   hintText: 'Alamat Email'.tr,
                   isRequired: true,
+                  readOnly: c.isEdit,
                   validator: ValidationBuilder(localeName: c.locale)
                       .email()
                       .minLength(10)
