@@ -8,6 +8,9 @@ class InvoiceDetailModel {
   String? _invoiceDate = "";
   String? get invoiceDate => _invoiceDate;
 
+  String? _invoiceType = "";
+  String? get invoiceType => _invoiceType;
+
   String? _top = "";
   String? get top => _top;
 
@@ -116,5 +119,6 @@ class InvoiceDetailModel {
     _insurance = json["insurance"] ?? 0;
     _stamp = json["stamp"] ?? 0;
     _totalPaid = json["totalPaid"] ?? 0;
+    _invoiceType = json["invoiceType"] ?? 0;
   }
 }

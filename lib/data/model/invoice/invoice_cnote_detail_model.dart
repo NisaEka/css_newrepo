@@ -1,4 +1,7 @@
 class InvoiceCnoteDetailModel {
+  String? _pickUpOrderId = "";
+  String? get picuUpOrderId => _pickUpOrderId;
+
   String? _awbNumber = "";
   String? get awbNumber => _awbNumber;
 
@@ -88,5 +91,6 @@ class InvoiceCnoteDetailModel {
     _persentaseCodFee = json["persentaseCodFee"];
     _codFeeAmount = json["codFeeAmount"];
     _codFeeZone = json["codFeeZone"];
+    _pickUpOrderId = json["pickUpOrderId"];
   }
 }

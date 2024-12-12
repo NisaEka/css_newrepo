@@ -49,6 +49,7 @@ class InvoiceDetailController extends BaseController {
       error.printError();
     }
 
+    await Future.delayed(const Duration(seconds: 2));
     _isLoading = false; // _showLoadingIndicator = false;
     update();
   }
