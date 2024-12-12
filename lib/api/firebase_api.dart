@@ -41,7 +41,7 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
       createDate: data.sentTime.toString(),
       isRead: true,
       title: data.notification?.title,
-      // img: data.
+      // img: data..
     ),
   );
   listUnread.add(Messages(
@@ -62,8 +62,10 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
   ));
 
   try {
-    await StorageCore().saveData(StorageCore.unreadMessage,
-        GetNotificationModel(payload: listUnreadMessage));
+    await StorageCore().saveData(
+      StorageCore.unreadMessage,
+      GetNotificationModel(payload: listUnreadMessage),
+    );
     AppLogger.i("Message saved successfully");
   } catch (e, stackTrace) {
     AppLogger.e("Failed to save message", e, stackTrace);

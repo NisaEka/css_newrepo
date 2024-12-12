@@ -48,7 +48,7 @@ class LogoutButton extends StatelessWidget {
                     builder: (context) =>
                         LogoutAlertDialog(onLogout: () => doLogout()),
                   )
-                : Get.to(const LoginScreen()),
+                : Get.to(() => const LoginScreen()),
             leading: Icon(
               isLogin ? Icons.logout : Icons.login,
               color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
@@ -82,10 +82,13 @@ class LogoutButton extends StatelessWidget {
     await auth.logout(refreshToken).then((value) async {
       AppLogger.d(value.toJson().toString());
       await auth.updateDeviceInfo(
-        DeviceModel(fcmToken: await storage.readString(StorageCore.fcmToken)),
+        DeviceModel(
+          fcmToken: await storage.readString(StorageCore.fcmToken),
+          registrationId: "",
+        ),
       );
       storage.deleteLogin();
-      Get.offAll(const LoginScreen());
+      Get.offAll(() => const LoginScreen());
       // }
     });
   }

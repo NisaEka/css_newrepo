@@ -6,9 +6,9 @@ import 'package:css_mobile/screen/invoice/detail/invoice_detail_controller.dart'
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
+import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class InvoiceDetailScreen extends StatelessWidget {
@@ -49,401 +49,427 @@ class InvoiceDetailScreen extends StatelessWidget {
 
   Widget _mainContent(
       BuildContext context, InvoiceDetailController controller) {
-    return Expanded(
-      child: ListView(
-        children: [
-          _viewAwbList(
-            context,
-            controller.invoiceDetailModel!.invoiceNumberEncoded!,
+    return Column(
+      children: [
+        GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            Get.to(const InvoiceCnoteScreen(), arguments: {
+              "invoice_number":
+                  controller.invoiceDetailModel!.invoiceNumberEncoded!
+            });
+          },
+          child: Container(
+            color: blueJNE,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 35),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Lihat Daftar Transaksi".tr,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: whiteColor, fontWeight: FontWeight.normal),
+                  ),
+                  const SizedBox(width: 5),
+                  const Icon(Icons.arrow_circle_right, color: whiteColor),
+                ],
+              ),
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+        ),
+        Expanded(
+          child: ListView(
+            children: [
+              // _viewAwbList(
+              //   context,
+              //   controller.invoiceDetailModel!.invoiceNumberEncoded!,
+              // ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 35, vertical: 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Shimmer(
-                          isLoading: controller.isLoading,
-                          child: Text(
-                            controller.invoiceDetailModel?.invoiceNumber ?? '',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                    fontWeight: bold,
-                                    color: AppConst.isLightTheme(context)
-                                        ? blueJNE
-                                        : redJNE),
-                          ),
+                    const SizedBox(height: 16),
+                    Shimmer(
+                      isLoading: controller.isLoading,
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        child: CustomCodeLabel(
+                          label: controller.invoiceDetailModel?.invoiceNumber ??
+                              '',
+                          isLoading: false,
+                          alignment: MainAxisAlignment.start,
                         ),
-                        Shimmer(
-                          isLoading: controller.isLoading,
-                          child: Text(
-                            '*CCNC Invoice - NA*',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(fontSize: 9),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                     Shimmer(
                       isLoading: controller.isLoading,
-                      child: IconButton(
-                        onPressed: () => Clipboard.setData(ClipboardData(
-                            text:
-                                controller.invoiceDetailModel?.invoiceNumber ??
-                                    '')),
-                        icon: const Icon(Icons.copy),
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        child: Text(
+                          controller.invoiceDetailModel?.invoiceType ?? '',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(fontSize: 9),
+                        ),
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                _textRow(
-                  context,
-                  "Invoice Date".tr,
-                  controller.invoiceDetailModel!.invoiceDate,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Term Of Payment".tr,
-                  controller.invoiceDetailModel!.top,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Due Date".tr,
-                  controller.invoiceDetailModel!.dueDate,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Period".tr,
-                  controller.invoiceDetailModel!.period,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                    context,
-                    "Invoice Status".tr,
-                    controller.invoiceDetailModel?.invoiceStatus ?? "-",
-                    controller.isLoading,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? successColor
-                              : successLightColor1,
-                        )),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Invoice Reference".tr,
-                  controller.invoiceDetailModel?.invoiceReference ?? '-',
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!,
-                ),
-                const SizedBox(height: 16),
-                const Divider(
-                  color: greyLightColor3,
-                ),
-                const SizedBox(height: 16),
-                Shimmer(
-                  isLoading: controller.isLoading,
-                  child: Container(
-                    color:
-                        controller.isLoading ? greyColor : Colors.transparent,
-                    alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.only(
-                        right: 20), // Margin between the two text widgets
-                    child: Text(
-                      'Deskripsi'.tr,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    const SizedBox(height: 16),
+                    _textRow(
+                      context,
+                      "Invoice Date".tr,
+                      controller.invoiceDetailModel!.invoiceDate,
+                      controller.isLoading,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Term Of Payment".tr,
+                      controller.invoiceDetailModel!.top,
+                      controller.isLoading,
+                      style: Theme.of(context).textTheme.titleMedium!,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Due Date".tr,
+                      controller.invoiceDetailModel!.dueDate,
+                      controller.isLoading,
+                      style: Theme.of(context).textTheme.titleMedium!,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Period".tr,
+                      controller.invoiceDetailModel!.period,
+                      controller.isLoading,
+                      style: Theme.of(context).textTheme.titleMedium!,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                        context,
+                        "Invoice Status".tr,
+                        controller.invoiceDetailModel?.invoiceStatus ?? "-",
+                        controller.isLoading,
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: AppConst.isLightTheme(context)
+                                      ? successColor
+                                      : successLightColor1,
+                                )),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Invoice Reference".tr,
+                      controller.invoiceDetailModel?.invoiceReference ?? '-',
+                      controller.isLoading,
+                      style: Theme.of(context).textTheme.titleMedium!,
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(
+                      color: greyLightColor3,
+                    ),
+                    const SizedBox(height: 16),
+                    Shimmer(
+                      isLoading: controller.isLoading,
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(
+                            right: 20), // Margin between the two text widgets
+                        child: Text(
+                          'Deskripsi'.tr,
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: AppConst.isLightTheme(context)
+                                        ? blueJNE
+                                        : redJNE,
+                                  ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Shimmer(
+                      isLoading: controller.isLoading,
+                      child: Text(
+                        controller.invoiceDetailModel?.description ?? '-',
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  fontWeight: regular,
+                                ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(
+                      color: greyLightColor3,
+                    ),
+                    const SizedBox(height: 16),
+                    Shimmer(
+                      isLoading: controller.isLoading,
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(
+                            right: 20), // Margin between the two text widgets
+                        child: Text(
+                          'Informasi Customer'.tr,
+                          style: listTitleTextStyle.copyWith(
                             color: AppConst.isLightTheme(context)
                                 ? blueJNE
                                 : redJNE,
                           ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Shimmer(
-                  isLoading: controller.isLoading,
-                  child: Text(
-                    controller.invoiceDetailModel?.description ?? '-',
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          fontWeight: regular,
                         ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const Divider(
-                  color: greyLightColor3,
-                ),
-                const SizedBox(height: 16),
-                Shimmer(
-                  isLoading: controller.isLoading,
-                  child: Container(
-                    color:
-                        controller.isLoading ? greyColor : Colors.transparent,
-                    alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.only(
-                        right: 20), // Margin between the two text widgets
-                    child: Text(
-                      'Informasi Customer'.tr,
-                      style: listTitleTextStyle.copyWith(
-                        color:
-                            AppConst.isLightTheme(context) ? blueJNE : redJNE,
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                _textRow(
-                    context,
-                    "Customer Id".tr,
-                    controller.invoiceDetailModel?.customerId ?? "-",
-                    controller.isLoading,
-                    style: listTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-                    )),
-                const SizedBox(height: 6),
-                _textRow(
-                    context,
-                    "Customer Name".tr,
-                    controller.invoiceDetailModel?.customerName ?? "-",
-                    controller.isLoading,
-                    style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Address".tr,
-                  controller.invoiceDetailModel?.address ?? "-",
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "ZIP Code".tr,
-                  controller.invoiceDetailModel?.zipCode ?? "-",
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Phone".tr,
-                  controller.invoiceDetailModel?.phone ?? "-",
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Email".tr,
-                  controller.invoiceDetailModel?.email ?? "-",
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 16),
-                const DottedLine(
-                  direction: Axis.horizontal,
-                  alignment: WrapAlignment.center,
-                  lineLength: double.infinity,
-                  lineThickness: 1.0,
-                  dashLength: 2.0,
-                  dashColor: greyLightColor3,
-                  dashGapLength: 2.0,
-                ),
-                const SizedBox(height: 16),
-                _textRow(
-                  context,
-                  "Tax Number".tr,
-                  controller.invoiceDetailModel?.taxNumber ?? "-",
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "NPWP ID".tr,
-                  controller.invoiceDetailModel?.npwpId ?? "-",
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "NPWP Name".tr,
-                  controller.invoiceDetailModel?.npwpName ?? "-",
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "NPWP Address".tr,
-                  controller.invoiceDetailModel?.npwpAddress ?? "-",
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 16),
-                const Divider(
-                  color: greyLightColor3,
-                ),
-                const SizedBox(height: 16),
-                Shimmer(
-                  isLoading: controller.isLoading,
-                  child: Container(
-                    color:
-                        controller.isLoading ? greyColor : Colors.transparent,
-                    alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.only(
-                        right: 20), // Margin between the two text widgets
-                    child: Text(
-                      'Informasi Tagihan'.tr,
-                      style: listTitleTextStyle.copyWith(
-                        color:
-                            AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                    const SizedBox(height: 16),
+                    _textRow(
+                        context,
+                        "Customer Id".tr,
+                        controller.invoiceDetailModel?.customerId ?? "-",
+                        controller.isLoading,
+                        style: listTitleTextStyle.copyWith(
+                          color:
+                              AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                        )),
+                    const SizedBox(height: 6),
+                    _textRow(
+                        context,
+                        "Customer Name".tr,
+                        controller.invoiceDetailModel?.customerName ?? "-",
+                        controller.isLoading,
+                        style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Address".tr,
+                      controller.invoiceDetailModel?.address ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "ZIP Code".tr,
+                      controller.invoiceDetailModel?.zipCode ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Phone".tr,
+                      controller.invoiceDetailModel?.phone ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Email".tr,
+                      controller.invoiceDetailModel?.email ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 16),
+                    const DottedLine(
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.center,
+                      lineLength: double.infinity,
+                      lineThickness: 1.0,
+                      dashLength: 2.0,
+                      dashColor: greyLightColor3,
+                      dashGapLength: 2.0,
+                    ),
+                    const SizedBox(height: 16),
+                    _textRow(
+                      context,
+                      "Tax Number".tr,
+                      controller.invoiceDetailModel?.taxNumber ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "NPWP ID".tr,
+                      controller.invoiceDetailModel?.npwpId ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "NPWP Name".tr,
+                      controller.invoiceDetailModel?.npwpName ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "NPWP Address".tr,
+                      controller.invoiceDetailModel?.npwpAddress ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(
+                      color: greyLightColor3,
+                    ),
+                    const SizedBox(height: 16),
+                    Shimmer(
+                      isLoading: controller.isLoading,
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(
+                            right: 20), // Margin between the two text widgets
+                        child: Text(
+                          'Informasi Tagihan'.tr,
+                          style: listTitleTextStyle.copyWith(
+                            color: AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : redJNE,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    const SizedBox(height: 16),
+                    _textRow(
+                      context,
+                      "Gross Total".tr,
+                      'Rp. ${controller.invoiceDetailModel?.grossTotal!.toCurrency() ?? "-"}',
+                      controller.isLoading,
+                      style: listTitleTextStyle.copyWith(
+                        color: AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : infoColor,
+                      ),
+                      titleFontWeight: bold,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Discount".tr,
+                      'Rp. ${controller.invoiceDetailModel?.discount!.toCurrency() ?? "-"}',
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Total After Discount".tr,
+                      'Rp. ${controller.invoiceDetailModel?.totalAfterDiscount!.toCurrency() ?? "-"}',
+                      controller.isLoading,
+                      style: listTitleTextStyle.copyWith(
+                        color: AppConst.isLightTheme(context)
+                            ? errorColor
+                            : errorLightColor1,
+                      ),
+                      titleFontWeight: bold,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                        context,
+                        "VAT".tr,
+                        'Rp. ${controller.invoiceDetailModel?.vat!.toCurrency() ?? "-"}',
+                        controller.isLoading),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Commission / Fee".tr,
+                      'Rp. ${controller.invoiceDetailModel?.commissionFee!.toCurrency() ?? "-"}',
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "VAT Commission / Fee".tr,
+                      'Rp. ${controller.invoiceDetailModel?.vatCommissionFee!.toCurrency() ?? "-"}',
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Insurance".tr,
+                      'Rp. ${controller.invoiceDetailModel?.insurance!.toCurrency() ?? "-"}',
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Stamp".tr,
+                      'Rp. ${controller.invoiceDetailModel?.stamp!.toCurrency() ?? "-"}',
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 16),
+                    const DottedLine(
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.center,
+                      lineLength: double.infinity,
+                      lineThickness: 1.0,
+                      dashLength: 2.0,
+                      dashColor: greyLightColor3,
+                      dashGapLength: 2.0,
+                    ),
+                    const SizedBox(height: 16),
+                    _textRow(
+                      context,
+                      "Total Paid".tr,
+                      'Rp. ${controller.invoiceDetailModel?.totalPaid!.toCurrency() ?? "-"}',
+                      controller.isLoading,
+                      style: listTitleTextStyle.copyWith(
+                        color: AppConst.isLightTheme(context)
+                            ? successColor
+                            : successLightColor1,
+                      ),
+                      titleFontWeight: bold,
+                    ),
+                    const SizedBox(height: 32),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                _textRow(
-                  context,
-                  "Gross Total".tr,
-                  'Rp. ${controller.invoiceDetailModel?.grossTotal!.toCurrency() ?? "-"}',
-                  controller.isLoading,
-                  style: listTitleTextStyle.copyWith(
-                    color: AppConst.isLightTheme(context) ? blueJNE : infoColor,
-                  ),
-                  titleFontWeight: bold,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Discount".tr,
-                  'Rp. ${controller.invoiceDetailModel?.discount!.toCurrency() ?? "-"}',
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Total After Discount".tr,
-                  'Rp. ${controller.invoiceDetailModel?.totalAfterDiscount!.toCurrency() ?? "-"}',
-                  controller.isLoading,
-                  style: listTitleTextStyle.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? errorColor
-                        : errorLightColor1,
-                  ),
-                  titleFontWeight: bold,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                    context,
-                    "VAT".tr,
-                    'Rp. ${controller.invoiceDetailModel?.vat!.toCurrency() ?? "-"}',
-                    controller.isLoading),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Commission / Fee".tr,
-                  'Rp. ${controller.invoiceDetailModel?.commissionFee!.toCurrency() ?? "-"}',
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "VAT Commission / Fee".tr,
-                  'Rp. ${controller.invoiceDetailModel?.vatCommissionFee!.toCurrency() ?? "-"}',
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Insurance".tr,
-                  'Rp. ${controller.invoiceDetailModel?.insurance!.toCurrency() ?? "-"}',
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Stamp".tr,
-                  'Rp. ${controller.invoiceDetailModel?.stamp!.toCurrency() ?? "-"}',
-                  controller.isLoading,
-                ),
-                const SizedBox(height: 16),
-                const DottedLine(
-                  direction: Axis.horizontal,
-                  alignment: WrapAlignment.center,
-                  lineLength: double.infinity,
-                  lineThickness: 1.0,
-                  dashLength: 2.0,
-                  dashColor: greyLightColor3,
-                  dashGapLength: 2.0,
-                ),
-                const SizedBox(height: 16),
-                _textRow(
-                  context,
-                  "Total Paid".tr,
-                  'Rp. ${controller.invoiceDetailModel?.totalPaid!.toCurrency() ?? "-"}',
-                  controller.isLoading,
-                  style: listTitleTextStyle.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? successColor
-                        : successLightColor1,
-                  ),
-                  titleFontWeight: bold,
-                ),
-                const SizedBox(height: 32),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _viewAwbList(BuildContext context, String encodedInvoiceNumber) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        Get.to(const InvoiceCnoteScreen(),
-            arguments: {"invoice_number": encodedInvoiceNumber});
-      },
-      child: Container(
-        color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "Lihat Daftar Transaksi ".tr,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(color: Colors.white),
               ),
-              const Icon(Icons.arrow_circle_right, color: Colors.white),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
+
+  // Widget _viewAwbList(BuildContext context, String encodedInvoiceNumber) {
+  //   return GestureDetector(
+  //     behavior: HitTestBehavior.translucent,
+  //     onTap: () {
+  //       Get.to(const InvoiceCnoteScreen(),
+  //           arguments: {"invoice_number": encodedInvoiceNumber});
+  //     },
+  //     child: Container(
+  //       color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+  //       child: Padding(
+  //         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.start,
+  //           children: [
+  //             Text(
+  //               "Lihat Daftar Transaksi ".tr,
+  //               style: Theme.of(context)
+  //                   .textTheme
+  //                   .titleMedium
+  //                   ?.copyWith(color: Colors.white),
+  //             ),
+  //             const Icon(Icons.arrow_circle_right, color: Colors.white),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _textRow(
       BuildContext context, String title, String? value, bool isLoading,

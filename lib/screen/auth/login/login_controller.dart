@@ -66,7 +66,7 @@ class LoginController extends BaseController {
     }
     state.pop = true;
     update();
-    Get.off(const DashboardScreen());
+    Get.off(() => const DashboardScreen());
     return true;
   }
 
@@ -107,12 +107,13 @@ class LoginController extends BaseController {
               //           )
               //         : null))
               .then((_) => Get.delete<DashboardController>())
-              .then((_) => Get.offAll(const DashboardScreen()));
+              .then((_) => Get.offAll(() => const DashboardScreen()));
         } else if (value.code == 403) {
           Get.dialog(
             InfoDialog(
               infoText: "Silahkan aktivasi akun terlebih dahulu".tr,
-              nextButton: () => Get.off(const SignUpOTPScreen(), arguments: {
+              nextButton: () =>
+                  Get.off(() => const SignUpOTPScreen(), arguments: {
                 'email': state.emailTextField.text,
                 'isActivation': true,
               }),
@@ -183,7 +184,7 @@ class LoginController extends BaseController {
     AppLogger.e('token : $token');
     if (token != null) {
       Get.delete<DashboardController>()
-          .then((_) => Get.offAll(const DashboardScreen()));
+          .then((_) => Get.offAll(() => const DashboardScreen()));
       // String all = await storage.readString(StorageCore.allowedMenu);
       // AllowedMenu menu = AllowedMenu.fromJson(jsonDecode(all));
       // print(menu.beranda);

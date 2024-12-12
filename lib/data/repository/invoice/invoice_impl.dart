@@ -92,10 +92,13 @@ class InvoiceImpl extends InvoiceRepository {
   @override
   Future<BaseResponse<InvoiceCnoteDetailModel>> getInvoiceCnoteByAwb(
       String invoiceNumber, String awb) async {
+    AppLogger.i("invoice number : $invoiceNumber");
+    AppLogger.i("invoice awb : $awb");
     try {
       var encodedInvoiceNumber = Uri.encodeComponent(invoiceNumber);
       var response =
           await network.base.get("/invoices/$encodedInvoiceNumber/cnotes/$awb");
+      AppLogger.d("invoice response : ${response.data}");
       return BaseResponse.fromJson(
         response.data,
         (json) => InvoiceCnoteDetailModel.fromJson(

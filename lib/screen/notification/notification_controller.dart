@@ -22,14 +22,21 @@ class NotificationController extends BaseController {
     unreadNotifList = [];
     notificationList = [];
     try {
-      await notification.getNotificationsList().then((value) {
-        notificationList.addAll(value.payload ?? []);
-        update();
-      });
+      // await notification.getNotificationsList().then((value) {
+      //   notificationList.addAll(value.payload ?? []);
+      //   update();
+      // });
 
       var unread = GetNotificationModel.fromJson(
           await storage.readData(StorageCore.unreadMessage));
       unreadNotifList.addAll(unread.payload ?? []);
+      unreadNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
+
+      var read = GetNotificationModel.fromJson(
+          await storage.readData(StorageCore.readMessage));
+      notificationList.addAll(read.payload ?? []);
+      notificationList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
+
       // notificationList.addAll(unread.payload ?? []);
       update();
     } catch (e, i) {
@@ -51,12 +58,29 @@ class NotificationController extends BaseController {
     update();
   }
 
-  readMessage(String id) {
-    unreadNotifList.removeWhere((e) => e.id == id || id.isEmpty);
-    // notificationList.removeWhere((e) => e.id == id || id.isEmpty);
+  readMessage(NotificationModel value, int index) {
+    // NotificationModel t = value.copyWith(isRead: false);
+    unreadNotifList.removeAt(index);
+    // unreadNotifList.add(t);
+    notificationList.add(value);
+    // unreadNotifList.removeWhere((e) => e.id == value.id || (value.id?.isEmpty ?? false));
+    // unreadNotifList
+    //     .where((e) => e.id == value.id || (value.id?.isEmpty ?? false))
+    //     .first
+    //     .setisRead(false);
     update();
-    storage.saveData(StorageCore.unreadMessage,
-        GetNotificationModel(payload: unreadNotifList));
+
+    storage.saveData(
+      StorageCore.unreadMessage,
+      GetNotificationModel(payload: unreadNotifList),
+    );
+    storage.saveData(
+      StorageCore.readMessage,
+      GetNotificationModel(payload: notificationList),
+    );
     notificationList.addAll(temp);
+    unreadNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
+
+    notificationList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
   }
 }

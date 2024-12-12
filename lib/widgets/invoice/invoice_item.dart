@@ -27,6 +27,7 @@ class InvoiceItem extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +46,7 @@ class InvoiceItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  (invoice?.invoiceDate ?? '').toLongDateTimeFormat(),
+                  (invoice?.invoiceDate ?? '').toLongDateFormat(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 Text(

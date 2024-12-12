@@ -21,14 +21,14 @@ class PengaturanScreen extends StatelessWidget {
           return PopScope(
             canPop: false,
             onPopInvokedWithResult: (bool didPop, Object? result) =>
-                Get.off(const DashboardScreen()),
+                Get.off(() => const DashboardScreen()),
             child: Stack(
               children: [
                 Scaffold(
                   appBar: CustomTopBar(
                     title: 'Pengaturan'.tr,
                     leading: CustomBackButton(
-                      onPressed: () => Get.off(const DashboardScreen()),
+                      onPressed: () => Get.off(() => const DashboardScreen()),
                     ),
                   ),
                   body: _bodyContent(controller, context),

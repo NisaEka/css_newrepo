@@ -1,10 +1,14 @@
+import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_box.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
 
 class AggregationMinusCnoteScreen extends StatelessWidget {
   final AggregationMinusDocModel data;
@@ -14,7 +18,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _aggregationMinusCnoteAppBar(), body: _bodyContent());
+        appBar: _aggregationMinusCnoteAppBar(), body: _bodyContent(context));
   }
 
   PreferredSizeWidget _aggregationMinusCnoteAppBar() {
@@ -23,145 +27,373 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
     );
   }
 
-  Widget _bodyContent() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-          child: AggregationMinusBox(
-            title: "Connote No".tr,
-            value: data.dCnoteNo ?? "",
+  Widget _bodyContent(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          Container(
+            width: Get.size.width,
+            height: 45,
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: whiteColor,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: greyDarkColor1),
+              boxShadow: [
+                BoxShadow(
+                  color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                  spreadRadius: 1,
+                  offset: const Offset(-3, 3),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                children: [
+                  Text(
+                    data.dCnoteNo ?? '',
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color:
+                            AppConst.isLightTheme(context) ? blueJNE : redJNE),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-        Expanded(
-          child: _aggregationMinusCnoteContent(),
-        )
-      ],
-    );
-  }
-
-  Widget _aggregationMinusCnoteContent() {
-    return CustomScrollView(
-      slivers: [
-        _contentSpacer(),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(child: _deliveryInfoContent()),
-        ),
-        _contentDivider(),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(child: _aggregationInfoContent()),
-        ),
-        _contentDivider(),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(child: _aggregationDetailContent()),
-        ),
-        _contentSpacer()
-      ],
-    );
-  }
-
-  Widget _contentSpacer() {
-    return const SliverPadding(
-      padding: EdgeInsets.only(bottom: 16),
-    );
-  }
-
-  Widget _contentDivider() {
-    return const SliverPadding(
-      padding: EdgeInsets.symmetric(vertical: 8),
-      sliver: SliverToBoxAdapter(
-        child: Divider(thickness: 4),
+          Expanded(
+            child: ListView(
+              children: [
+                const SizedBox(height: 16),
+                Container(
+                  color: Colors.transparent,
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(
+                      right: 20), // Margin between the two text widgets
+                  child: Text(
+                    'Informasi Kiriman'.tr,
+                    style: listTitleTextStyle.copyWith(
+                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "${data.dCustId} - ${data.dCustName}",
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: regular,
+                      ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Tanggal Cnote".tr,
+                  data.dCnoteDate?.toDateTimeFormat(),
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: regular,
+                      ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Order ID".tr,
+                  data.dOrderid ?? '-',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: regular,
+                      ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "POD Code".tr,
+                  data.dPodCode ?? '-',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: regular,
+                      ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Tanggal POD".tr,
+                  data.dPodDateSys?.toDateTimeFormat(),
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: regular,
+                      ),
+                ),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: greyLightColor3,
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  color: Colors.transparent,
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(
+                      right: 20), // Margin between the two text widgets
+                  child: Text(
+                    'Informasi Aggregasi'.tr,
+                    style: listTitleTextStyle.copyWith(
+                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                _textRow(
+                  context,
+                  "No Document".tr,
+                  data.dAggMinDoc ?? '-',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!,
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Pay Reff".tr,
+                  data.dAggPayRef ?? '-',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!,
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Tanggal Aggregasi".tr,
+                  data.dAggDate?.toShortDateFormat() ?? '-',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!,
+                ),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: greyLightColor3,
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  color: Colors.transparent,
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(
+                      right: 20), // Margin between the two text widgets
+                  child: Text(
+                    'Detail Aggregasi'.tr,
+                    style: listTitleTextStyle.copyWith(
+                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                _textRow(
+                  context,
+                  "COD Amount".tr,
+                  'Rp. ${data.dCodFee?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color:
+                          AppConst.isLightTheme(context) ? blueJNE : infoColor),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "COD Fee Include VAT".tr,
+                  'Rp. ${data.dCodfeeInclvat?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? errorColor
+                          : errorLightColor1),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Discount".tr,
+                  'Rp. ${data.dDiscount?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? warningColor
+                          : warningLightColor1),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Freight Charge After Discount".tr,
+                  'Rp. ${data.dFchargeAftDisc?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? errorColor
+                          : errorLightColor1),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Freight Charge VAT".tr,
+                  'Rp. ${data.dFchargeVat?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? errorColor
+                          : errorLightColor1),
+                ),
+                const SizedBox(height: 16),
+                const DottedLine(
+                  direction: Axis.horizontal,
+                  alignment: WrapAlignment.center,
+                  lineLength: double.infinity,
+                  lineThickness: 1.0,
+                  dashLength: 2.0,
+                  dashColor: greyLightColor3,
+                  dashGapLength: 2.0,
+                ),
+                const SizedBox(height: 16),
+                _textRow(
+                  context,
+                  "Insurance Charge".tr,
+                  'Rp. ${data.dInsCharge?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? errorColor
+                          : errorLightColor1),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Packing Fee".tr,
+                  'Rp. ${data.dPackingFee?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? errorColor
+                          : errorLightColor1),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Surcharge".tr,
+                  'Rp. ${data.dSurcharge?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? warningColor
+                          : warningLightColor1),
+                ),
+                const SizedBox(height: 16),
+                const DottedLine(
+                  direction: Axis.horizontal,
+                  alignment: WrapAlignment.center,
+                  lineLength: double.infinity,
+                  lineThickness: 1.0,
+                  dashLength: 2.0,
+                  dashColor: greyLightColor3,
+                  dashGapLength: 2.0,
+                ),
+                const SizedBox(height: 16),
+                _textRow(
+                  context,
+                  "Return Freight Charge After Discount".tr,
+                  'Rp. ${data.dRtFchargeAftDisc?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? errorColor
+                          : errorLightColor1),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Return Freight Charge VAT".tr,
+                  'Rp. ${data.dRtFchargeVat?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? errorColor
+                          : errorLightColor1),
+                ),
+                const SizedBox(height: 16),
+                const DottedLine(
+                  direction: Axis.horizontal,
+                  alignment: WrapAlignment.center,
+                  lineLength: double.infinity,
+                  lineThickness: 1.0,
+                  dashLength: 2.0,
+                  dashColor: greyLightColor3,
+                  dashGapLength: 2.0,
+                ),
+                const SizedBox(height: 16),
+                _textRow(
+                  context,
+                  "Netto AWB Amount".tr,
+                  'Rp. ${data.dNetAwbAmt?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? successColor
+                          : successLightColor1),
+                  titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE),
+                ),
+                const SizedBox(
+                  height: 50,
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
 
-  Widget _deliveryInfoContent() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _titleText("Informasi Kiriman".tr),
-        _rowText("${data.dCustId} - ${data.dCustName}", ""),
-        _rowText("Connote Date".tr, data.dCnoteDate?.toDateFormat() ?? ""),
-        _rowText("Order Id".tr, data.dOrderid ?? ""),
-        _rowText("POD Code".tr, data.dPodCode ?? ""),
-        _rowText("POD Date".tr, data.dPodDateSys?.toDateFormat() ?? "")
-      ],
-    );
-  }
+  Widget _textRow(
+      BuildContext context, String title, String? value, bool isLoading,
+      {TextStyle? style, TextStyle? titleStyle}) {
+    if (value == null) {
+      return Container();
+    }
 
-  Widget _aggregationInfoContent() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _titleText("Informasi Aggregasi".tr),
-        _rowText("Document No".tr, data.dAggMinDoc ?? ""),
-        _rowText("Document Date".tr, data.dDocDate?.toDateFormat() ?? ""),
-        _rowText("Pay Ref".tr, data.dAggPayRef ?? ""),
-        _rowText("Aggregation Date".tr, data.dAggDate?.toDateFormat() ?? ""),
-        _rowText("COD Type".tr, data.dCodType ?? ""),
-        _rowText("Pay Type".tr, data.dPayType ?? ""),
-        _rowText("Aggregation Period".tr, data.dAggPeriod ?? "")
-      ],
-    );
-  }
-
-  Widget _aggregationDetailContent() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _titleText("Detail Aggregasi".tr),
-        _rowText("Shipping Fee".tr, data.dShipFee?.toString() ?? ""),
-        _rowText("Insurance Charge".tr, data.dInsCharge?.toString() ?? ""),
-        _rowText("COD Fee".tr, data.dCodFee?.toString() ?? ""),
-        _rowText("Return Fee".tr, data.dReturnFee?.toString() ?? ""),
-        _rowText("COD Amount".tr, data.dCodAmt?.toString() ?? ""),
-        _rowText("Discount".tr, data.dDiscount?.toString() ?? ""),
-        _rowText("Freight Charge After Discount".tr,
-            data.dFchargeAftDisc?.toString() ?? ""),
-        _rowText("Freight Charge VAT".tr, data.dFchargeVat?.toString() ?? ""),
-        _rowText("Packing Fee".tr, data.dPackingFee?.toString() ?? ""),
-        _rowText("Surcharge".tr, data.dSurcharge?.toString() ?? ""),
-        const Divider(thickness: 0.5),
-        _rowText("Return Freight Charge After Discount".tr,
-            data.dRtFchargeAftDisc?.toString() ?? ""),
-        _rowText("Return Freight Charge VAT".tr,
-            data.dRtFchargeVat?.toString() ?? ""),
-        _rowText(
-            "COD Fee Include VAT".tr, data.dCodfeeInclvat?.toString() ?? ""),
-        const Divider(thickness: 0.5),
-        _rowText("Netto AWB Amount".tr, data.dNetAwbAmt?.toString() ?? "")
-      ],
-    );
-  }
-
-  Widget _titleText(String text) {
-    return Padding(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: Text(
-          text,
-          style: listTitleTextStyle,
-          textAlign: TextAlign.start,
-        ));
-  }
-
-  Widget _rowText(String title, String value) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start, // Spread the columns
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: sublistTitleTextStyle,
+        Expanded(
+          // Ensures that the title takes up only as much space as it needs
+          child: Shimmer(
+            isLoading: isLoading,
+            child: Container(
+              color: isLoading ? greyColor : Colors.transparent,
+              child: Text(
+                title.tr,
+                style: titleStyle ??
+                    Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: regular),
+              ),
+            ),
+          ),
         ),
-        Text(
-          value,
-          style: sublistTitleTextStyle,
-        )
+        const SizedBox(width: 10),
+        Expanded(
+          // Makes the value take the rest of the space in the row
+          child: Shimmer(
+            isLoading: isLoading,
+            child: Container(
+              color: isLoading ? greyColor : Colors.transparent,
+              child: Text(
+                value,
+                style: style ??
+                    Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: regular),
+                textAlign: TextAlign.start, // Align the value to the right
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

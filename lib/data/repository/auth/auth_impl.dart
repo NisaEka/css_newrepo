@@ -225,7 +225,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<BaseResponse> logout(String refreshToken) async {
-    // var fcmToken = await StorageCore().readString(StorageCore.fcmToken);
+    // var refreshToken = await StorageCore().readRefreshToken();
 
     // var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
     // String id = deviceInfo?.deviceId ?? '';

@@ -152,31 +152,59 @@ class NotificationModel {
 
   String? get id => _id;
 
+  void setid(String? value) => _id;
+
   String? get region => _region;
+
+  void setregion(String? value) => _region;
 
   String? get branch => _branch;
 
+  void setbranch(String? value) => _branch;
+
   String? get origin => _origin;
+
+  void setorigin(String? value) => _origin;
 
   String? get category => _category;
 
+  void setcategory(String? value) => _category;
+
   String? get text => _text;
+
+  void settext(String? value) => _text;
 
   String? get startDate => _startDate;
 
+  void setstartDate(String? value) => _startDate;
+
   String? get endDate => _endDate;
+
+  void setendDate(String? value) => _endDate;
 
   String? get status => _status;
 
+  void setstatus(String? value) => _status;
+
   String? get createBy => _createBy;
+
+  void setcreateBy(String? value) => _createBy;
 
   String? get createDate => _createDate;
 
+  void setcreateDate(String? value) => _createDate;
+
   String? get img => _img;
+
+  void setimg(String? value) => _img;
 
   String? get title => _title;
 
+  void settitle(String? value) => _title;
+
   bool? get isRead => _isRead;
+
+  void setisRead(bool? value) => _isRead;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
