@@ -33,7 +33,7 @@ class TransactionEditButton extends StatelessWidget {
                           c.state.allow?.cetakPesanan == 'Y'
                       ? CustomFilledButton(
                           color: blueJNE,
-                          title: "Lihar Resi".tr,
+                          title: "Lihat Resi".tr,
                           suffixIcon: Icons.receipt_outlined,
                           width: Get.width / 2,
                           height: 50,
