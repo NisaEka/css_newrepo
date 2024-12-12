@@ -55,82 +55,85 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                   )
                 : const SizedBox(),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            margin: const EdgeInsets.only(bottom: 16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? greyDarkColor1
-                      : greyLightColor1),
-            ),
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () => {widget.onTap()},
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3),
-                          border: Border.all(
-                              color: Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? blueJNE
-                                  : redJNE,
-                              width: 2),
-                        ),
-                        child: Icon(
-                          Icons.playlist_add_check_rounded,
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? blueJNE
-                                  : redJNE,
-                          size: 20,
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            color: widget.isLoading
-                                ? greyLightColor3
-                                : Colors.transparent,
-                            width: widget.isLoading ? Get.width / 3 : null,
-                            height: widget.isLoading ? 10 : null,
-                            child: Text(
-                              widget.data?.dDocDate?.toDateTimeFormat() ?? '',
-                              style: sublistTitleTextStyle,
-                            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? greyDarkColor1
+                        : greyLightColor1),
+              ),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () => {widget.onTap()},
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(right: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3),
+                            border: Border.all(
+                                color: Theme.of(context).brightness ==
+                                        Brightness.light
+                                    ? blueJNE
+                                    : redJNE,
+                                width: 2),
                           ),
-                          Container(
-                            color: widget.isLoading
-                                ? greyLightColor3
-                                : Colors.transparent,
-                            width: widget.isLoading ? Get.width / 3 : null,
-                            height: widget.isLoading ? 15 : null,
-                            margin: widget.isLoading
-                                ? const EdgeInsets.only(top: 2)
-                                : EdgeInsets.zero,
-                            child: Text(
-                              "# ${widget.data?.dCnoteNo ?? ''}",
-                              style: listTitleTextStyle.copyWith(
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? blueJNE
-                                      : redJNE),
-                            ),
+                          child: Icon(
+                            Icons.playlist_add_check_rounded,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? blueJNE
+                                    : redJNE,
+                            size: 20,
                           ),
-                        ],
-                      )
-                    ],
-                  ),
-                )
-              ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              color: widget.isLoading
+                                  ? greyLightColor3
+                                  : Colors.transparent,
+                              width: widget.isLoading ? Get.width / 3 : null,
+                              height: widget.isLoading ? 10 : null,
+                              child: Text(
+                                widget.data?.dDocDate?.toDateTimeFormat() ?? '',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ),
+                            Container(
+                              color: widget.isLoading
+                                  ? greyLightColor3
+                                  : Colors.transparent,
+                              width: widget.isLoading ? Get.width / 3 : null,
+                              height: widget.isLoading ? 15 : null,
+                              margin: widget.isLoading
+                                  ? const EdgeInsets.only(top: 2)
+                                  : EdgeInsets.zero,
+                              child: Text(
+                                "# ${widget.data?.dCnoteNo ?? ''}",
+                                style: listTitleTextStyle.copyWith(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? blueJNE
+                                        : redJNE),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
+          )
         ],
       ),
     );
