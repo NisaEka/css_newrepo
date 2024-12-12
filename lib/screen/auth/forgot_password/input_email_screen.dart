@@ -57,6 +57,7 @@ class InputEmailScreen extends StatelessWidget {
                               CustomTextFormField(
                                 controller: controller.email,
                                 hintText: "Email".tr,
+                                suffixIcon: const Icon(Icons.mail_rounded),
                                 isRequired: true,
                                 validator: ValidationBuilder(
                                         localeName: controller.locale)
@@ -86,6 +87,7 @@ class InputEmailScreen extends StatelessWidget {
                                     ? blueJNE
                                     : greyColor,
                                 title: "Berikutnya".tr,
+                                suffixIcon: Icons.arrow_circle_right_rounded,
                                 onPressed: () => controller.formKey.currentState
                                             ?.validate() ==
                                         true
@@ -97,6 +99,7 @@ class InputEmailScreen extends StatelessWidget {
                                         Brightness.light
                                     ? blueJNE
                                     : Colors.white,
+                                suffixIcon: Icons.cancel_rounded,
                                 isTransparent: true,
                                 title: "Batal".tr,
                                 onPressed: () => Get.back(),

@@ -30,7 +30,7 @@ class EmailTextformfield extends HookWidget {
 
     return CustomTextFormField(
       controller: controller,
-      prefixIcon: const Icon(Icons.mail_outline),
+      prefixIcon: const Icon(Icons.mail_rounded),
       hintText: 'Email'.tr,
       isRequired: true,
       validator: ValidationBuilder(localeName: locale)

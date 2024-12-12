@@ -98,14 +98,14 @@ class _Ob1ScreenState extends State<Ob1Screen> {
               // ),
               Container(
                 margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
                 child: GestureDetector(
                   child: Text(
                     'Lewati'.tr,
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
-                        ?.copyWith(color: redJNE),
+                        ?.copyWith(color: blueJNE),
                   ),
                   onTap: () => Get.delete<DashboardController>()
                       .then((_) => Get.offAll(const DashboardScreen())),
@@ -113,13 +113,13 @@ class _Ob1ScreenState extends State<Ob1Screen> {
               ),
               Container(
                 margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CustomFilledButton(
-                      color: lang == "id" ? redJNE : whiteColor,
+                      color: lang == "id" ? blueJNE : whiteColor,
                       fontColor: lang == "id" ? whiteColor : greyColor,
                       borderColor:
                           lang == "id" ? Colors.transparent : greyColor,
@@ -131,7 +131,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                     ),
                     const SizedBox(width: 10),
                     CustomFilledButton(
-                      color: lang == "en" ? redJNE : whiteColor,
+                      color: lang == "en" ? blueJNE : whiteColor,
                       fontColor: lang == "en" ? whiteColor : greyColor,
                       borderColor:
                           lang == "en" ? Colors.transparent : greyColor,
@@ -153,10 +153,11 @@ class _Ob1ScreenState extends State<Ob1Screen> {
         children: [
           const SizedBox(height: 20),
           CustomFilledButton(
-            color: redJNE,
+            color: blueJNE,
             margin: const EdgeInsets.symmetric(horizontal: 50),
             height: 51,
             title: 'Selanjutnya'.tr,
+            suffixIcon: Icons.arrow_circle_right_rounded,
             onPressed: () => currentIndex != 2
                 ? sliderController.nextPage(
                     duration: const Duration(milliseconds: 300),
@@ -231,7 +232,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
         _buildIndicator(),
         // const SizedBox(height: 40),
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -262,10 +263,10 @@ class _Ob1ScreenState extends State<Ob1Screen> {
         (index) => Container(
           width: 10,
           height: 10,
-          margin: const EdgeInsets.all(10),
+          margin: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: index == currentIndex ? warningColor : greyColor,
+            color: index == currentIndex ? redJNE : greyColor,
           ),
         ),
       ),

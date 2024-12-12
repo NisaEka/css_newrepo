@@ -54,7 +54,7 @@ class ReferalDropdown extends HookWidget {
       selectedItem: selectedItem,
       hintText: label ?? "Group Owner".tr,
       searchHintText: placeholder ?? 'Masukan minimal 3 karakter'.tr,
-      prefixIcon: const Icon(Icons.line_style),
+      prefixIcon: const Icon(Icons.code_rounded),
       textStyle: Theme.of(context).textTheme.titleSmall,
       readOnly: readonly,
       isRequired: isRequired,
