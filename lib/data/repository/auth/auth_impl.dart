@@ -224,7 +224,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse> logout() async {
+  Future<BaseResponse> logout(String refreshToken) async {
     // var fcmToken = await StorageCore().readString(StorageCore.fcmToken);
 
     // var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
@@ -232,7 +232,9 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       Response response = await network.base.post(
         '/authentications/logout',
-        data: {},
+        data: {
+          "refreshToken": refreshToken,
+        },
         options: Options(extra: {'skipAuth': true}),
       );
       // .then((value) async => await network.base.patch(

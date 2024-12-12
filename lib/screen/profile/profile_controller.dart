@@ -113,13 +113,8 @@ class ProfileController extends BaseController {
   void doLogout() async {
     state.isLoading = true;
     update();
-    await auth
-        .logout(
-            // Device(
-            //   fcmToken: await storage.readString(StorageCore.fcmToken),
-            // ),
-            )
-        .then((value) {
+    final refreshToken = await StorageCore().readRefreshToken() ?? '';
+    await auth.logout(refreshToken).then((value) {
       // if (value.code == 201) {
       storage.deleteLogin();
       storage.deleteString(StorageCore.favoriteMenu);
