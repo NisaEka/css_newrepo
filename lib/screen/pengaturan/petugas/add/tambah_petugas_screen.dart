@@ -60,6 +60,7 @@ class TambahPetugasScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: c.alamatEmail,
                   hintText: 'Alamat Email'.tr,
+                  readOnly: c.isEdit,
                   isRequired: true,
                   validator: ValidationBuilder(localeName: c.locale)
                       .email()
