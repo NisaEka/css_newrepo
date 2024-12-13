@@ -74,6 +74,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
             value: "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
           ),
           CustomSearchField(
+            margin: const EdgeInsets.only(top: 0),
             controller: c.searchField,
             hintText: 'Cari Data Agregasi'.tr,
             prefixIcon: SvgPicture.asset(

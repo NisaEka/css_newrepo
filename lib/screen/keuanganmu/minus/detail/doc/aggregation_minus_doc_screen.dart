@@ -47,7 +47,7 @@ class AggregationMinusDocScreen extends StatelessWidget {
 
   Widget _topBox(String docId) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
       child: AggregationMinusBox(
         title: "Document No".tr,
         value: docId,
@@ -60,6 +60,7 @@ class AggregationMinusDocScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
       child: CustomSearchField(
+        margin: const EdgeInsets.symmetric(vertical: 0),
         controller: controller.searchField,
         hintText: 'Cari berdasarkan no resi'.tr,
         prefixIcon: SvgPicture.asset(

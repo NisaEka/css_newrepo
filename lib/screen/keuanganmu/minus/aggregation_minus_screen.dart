@@ -38,11 +38,12 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
 
   Widget _bodyContent(AggregasiMinusController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
       child: Column(
         children: [
           const AggMinusBox(),
           CustomSearchField(
+            margin: const EdgeInsets.only(top: 0),
             controller: c.searchField,
             hintText: 'Cari Data Aggregasi Minus'.tr,
             prefixIcon: SvgPicture.asset(
