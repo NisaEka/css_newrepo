@@ -126,7 +126,10 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   "Receiver Name".tr,
                   controller.invoiceCnoteDetailModel?.consigneeName,
                   controller.isLoading,
-                  style: TextStyle(fontWeight: bold),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? Colors.black
+                          : greyLightColor1),
                 ),
                 _textRow(
                   context,
