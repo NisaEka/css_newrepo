@@ -154,7 +154,7 @@ class LanguageEN {
       "Pilih Jenis Label Anda": "Choose Label Type",
       "Paketmu": "Your Shipment",
       "Keuanganmu": "Your Income",
-      "Pantau Paketmu": "Shipments Tracking",
+      "Pantau Paketmu": "Package Tracking",
       "Hubungi Aku": "Help Center",
       "Cek Ongkir": "Check Tariff",
       "Cek Ongkos Kirim": "Check Tariff",

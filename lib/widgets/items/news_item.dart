@@ -46,8 +46,13 @@ class NewsItem extends StatelessWidget {
                   width: Get.width / 2,
                   height: promo != null ? Get.width / 2 : null,
                   placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor,
+                    child: Shimmer(
+                      isLoading: true,
+                      child: Container(
+                        height: Get.width / 2,
+                        width: Get.width / 3,
+                        color: greyColor,
+                      ),
                     ),
                   ),
                   errorWidget: (context, url, error) => const Center(

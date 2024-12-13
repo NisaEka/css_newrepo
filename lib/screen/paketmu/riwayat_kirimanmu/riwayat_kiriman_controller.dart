@@ -260,7 +260,7 @@ class RiwayatKirimanController extends BaseController {
       Get.to(const DetailTransactionScreen(), arguments: {
         'awb': item.awb,
         'data': item,
-      })?.then((_) => initData());
+      });
     }
   }
 

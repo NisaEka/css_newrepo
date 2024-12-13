@@ -85,7 +85,7 @@ class TransactionDetail extends StatelessWidget {
                 ),
                 TextRowItem(
                   title: "Berat Kiriman".tr,
-                  value: c.state.transactionModel?.goodsDesc ?? '-',
+                  value: c.state.transactionModel?.weight.toString() ?? '-',
                   isLoading: c.state.isLoading,
                 ),
                 const SizedBox(height: 10),
