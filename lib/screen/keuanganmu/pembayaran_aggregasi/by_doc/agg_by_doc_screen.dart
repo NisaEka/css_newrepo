@@ -33,7 +33,7 @@ class AggByDocScreen extends StatelessWidget {
 
   Widget _bodyContent(AggByDocController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           PaymentBox(
