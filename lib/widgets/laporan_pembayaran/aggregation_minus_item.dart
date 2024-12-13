@@ -169,7 +169,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                           ),
                           CustomFilledButton(
                               title: "Lihat Detail".tr,
-                              color: Colors.blue,
+                              color: blueJNE,
                               onPressed: () => {widget.onTap()})
                         ],
                       )
