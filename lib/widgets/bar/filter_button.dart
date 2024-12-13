@@ -107,7 +107,7 @@ class FilterButton extends StatelessWidget {
           );
         },
         icon: Icon(
-          Icons.filter_alt_outlined,
+          Icons.filter_list_rounded,
           color: isFiltered ? whiteColor : redJNE,
         ),
         color: isFiltered ? whiteColor : redJNE,

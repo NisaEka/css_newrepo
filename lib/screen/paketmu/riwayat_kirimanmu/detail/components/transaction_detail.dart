@@ -63,6 +63,29 @@ class TransactionDetail extends StatelessWidget {
                   value: c.state.transactionModel?.pickupStatus ?? '-',
                   isLoading: c.state.isLoading,
                 ),
+                c.state.transactionModel?.codOngkir == "YES" &&
+                    c.state.transactionModel?.codFlag == "YES"
+                    ?
+                TextRowItem(
+                  title: "Tipe Kiriman".tr,
+                  value: 'COD Ongkir',
+                  isLoading: c.state.isLoading,
+                  isValueBold: true,
+                ):c.state.transactionModel?.codOngkir == "NO" &&
+                    c.state.transactionModel?.codFlag == "YES"
+                    ?
+                TextRowItem(
+                  title: "Tipe Kiriman".tr,
+                  value: 'COD',
+                  isLoading: c.state.isLoading,
+                  isValueBold: true,
+                ):
+                TextRowItem(
+                  title: "Tipe Kiriman".tr,
+                  value: 'NON COD',
+                  isLoading: c.state.isLoading,
+                  isValueBold: true,
+                ),
                 const SizedBox(height: 10),
                 const Divider(color: greyColor),
                 const SizedBox(height: 10),
@@ -132,32 +155,6 @@ class TransactionDetail extends StatelessWidget {
                     isLoading: c.state.isLoading,
                     label: c.state.transactionModel?.goodsDesc ?? '-',
                     fontColor: greyDarkColor2),
-                CustomFormLabel(
-                    isLoading: c.state.isLoading,
-                    label: 'Tipe Kiriman :'.tr,
-                    fontColor: blueJNE),
-                c.state.transactionModel?.codOngkir == "YES" &&
-                    c.state.transactionModel?.codFlag == "YES"
-                    ?
-                CustomFormLabel(
-                    isLoading: c.state.isLoading,
-                    label: 'COD Ongkir',
-                    fontColor: redJNE,
-                    isBold: true)
-                :c.state.transactionModel?.codOngkir == "NO" &&
-                    c.state.transactionModel?.codFlag == "YES"
-                    ?
-                CustomFormLabel(
-                    isLoading: c.state.isLoading,
-                    label: 'COD',
-                    fontColor: redJNE,
-                    isBold: true
-                )
-                :CustomFormLabel(
-                    isLoading: c.state.isLoading,
-                    label: 'NON COD',
-                    fontColor: redJNE,
-                    isBold: true),
                 const SizedBox(height: 10),
                 const Divider(color: greyColor),
                 const SizedBox(height: 10),
