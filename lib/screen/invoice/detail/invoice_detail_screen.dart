@@ -203,12 +203,18 @@ class InvoiceDetailScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     Shimmer(
                       isLoading: controller.isLoading,
-                      child: Text(
-                        controller.invoiceDetailModel?.description ?? '-',
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  fontWeight: regular,
-                                ),
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          controller.invoiceDetailModel?.description ?? '-',
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    fontWeight: regular,
+                                  ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
