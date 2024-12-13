@@ -118,7 +118,8 @@ class InvoiceDetailScreen extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .titleSmall
-                              ?.copyWith(fontSize: 9),
+                              ?.copyWith(
+                                  fontSize: 9, fontStyle: FontStyle.italic),
                         ),
                       ),
                     ),

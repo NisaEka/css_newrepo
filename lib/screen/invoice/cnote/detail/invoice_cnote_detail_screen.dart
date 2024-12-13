@@ -3,6 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/invoice/cnote/detail/invoice_cnote_detail_controller.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcodelabel.dart';
@@ -85,7 +86,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
-                          ?.copyWith(fontSize: 10),
+                          ?.copyWith(fontSize: 10, fontStyle: FontStyle.italic),
                     ),
                   ),
                 )
@@ -101,7 +102,9 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                 _textRow(
                   context,
                   "AWB Date".tr,
-                  controller.invoiceCnoteDetailModel?.awbDate,
+                  controller.invoiceCnoteDetailModel?.awbDate
+                          ?.toLongDateFormat() ??
+                      '',
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: AppConst.isLightTheme(context)
@@ -120,7 +123,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                 ),
                 _textRow(
                   context,
-                  "Consignee Name".tr,
+                  "Receiver Name".tr,
                   controller.invoiceCnoteDetailModel?.consigneeName,
                   controller.isLoading,
                   style: TextStyle(fontWeight: bold),
@@ -157,7 +160,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                           ? greyDarkColor1
                           : greyLightColor1),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 12),
                 const DottedLine(
                   direction: Axis.horizontal,
                   alignment: WrapAlignment.center,
@@ -167,7 +170,17 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   dashColor: greyLightColor3,
                   dashGapLength: 2.0,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 16),
+                _textRow(
+                  context,
+                  "Origin Code".tr,
+                  controller.invoiceCnoteDetailModel?.originSysCode,
+                  controller.isLoading,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? greyDarkColor1
+                          : greyLightColor1),
+                ),
                 _textRow(
                   context,
                   "Origin Name".tr,
@@ -198,9 +211,11 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                           ? greyDarkColor1
                           : greyLightColor1),
                 ),
+                const SizedBox(height: 6),
                 const Divider(
                   color: greyLightColor3,
                 ),
+                const SizedBox(height: 12),
               ],
             ),
           ),
@@ -275,6 +290,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   "Rp. ${(((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)) - ((controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0) + (controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0))).abs().toCurrency()}",
                   controller.isLoading,
                   style: TextStyle(fontWeight: bold, color: successColor),
+                  titleFontWeight: bold,
                 ),
                 const SizedBox(height: 10),
                 const DottedLine(
@@ -286,7 +302,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   dashColor: greyLightColor3,
                   dashGapLength: 2.0,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 16),
                 _textRow(
                     context,
                     "Goods Value".tr,
@@ -315,6 +331,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 40),
         ],
       ),
     );
@@ -327,45 +344,50 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
       return Container();
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start, // Spread the columns
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        Expanded(
-          // Ensures that the title takes up only as much space as it needs
-          child: Shimmer(
-            isLoading: isLoading,
-            child: Container(
-              color: isLoading ? greyColor : Colors.transparent,
-              child: Text(
-                title.tr,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(fontWeight: titleFontWeight ?? regular),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          // Makes the value take the rest of the space in the row
-          child: Shimmer(
-            isLoading: isLoading,
-            child: Container(
-              color: isLoading ? greyColor : Colors.transparent,
-              child: Text(
-                value,
-                style: style ??
-                    Theme.of(context)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start, // Spread the columns
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              // Ensures that the title takes up only as much space as it needs
+              child: Shimmer(
+                isLoading: isLoading,
+                child: Container(
+                  color: isLoading ? greyColor : Colors.transparent,
+                  child: Text(
+                    title.tr,
+                    style: Theme.of(context)
                         .textTheme
                         .titleMedium
-                        ?.copyWith(fontWeight: regular),
-                textAlign: TextAlign.start, // Align the value to the right
+                        ?.copyWith(fontWeight: titleFontWeight ?? regular),
+                  ),
+                ),
               ),
             ),
-          ),
+            const SizedBox(width: 10),
+            Expanded(
+              // Makes the value take the rest of the space in the row
+              child: Shimmer(
+                isLoading: isLoading,
+                child: Container(
+                  color: isLoading ? greyColor : Colors.transparent,
+                  child: Text(
+                    value,
+                    style: style ??
+                        Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(fontWeight: regular),
+                    textAlign: TextAlign.start, // Align the value to the right
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+        const SizedBox(height: 6)
       ],
     );
   }
