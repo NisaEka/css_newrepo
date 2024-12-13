@@ -6,9 +6,9 @@ import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
-import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class InvoiceCnoteDetailScreen extends StatelessWidget {
@@ -57,48 +57,59 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
     return Expanded(
       child: ListView(
         children: [
-          // AWB
-          Padding(
-            padding: const EdgeInsets.only(left: 35, right: 30, top: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Shimmer(
-                  isLoading: controller.isLoading,
-                  child: Container(
-                    color:
-                        controller.isLoading ? greyColor : Colors.transparent,
-                    child: CustomCodeLabel(
-                      label:
-                          controller.invoiceCnoteDetailModel?.awbNumber ?? '',
-                      isLoading: false,
-                      alignment: MainAxisAlignment.start,
-                    ),
-                  ),
-                ),
-                Shimmer(
-                  isLoading: controller.isLoading,
-                  child: Container(
-                    color:
-                        controller.isLoading ? greyColor : Colors.transparent,
-                    child: Text(
-                      controller.invoiceCnoteDetailModel?.picuUpOrderId ?? '',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall
-                          ?.copyWith(fontSize: 10, fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(left: 35, right: 30, top: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // AWB
+                Shimmer(
+                  isLoading: controller.isLoading,
+                  child: Container(
+                    color:
+                        controller.isLoading ? greyColor : Colors.transparent,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              controller.invoiceCnoteDetailModel?.awbNumber ??
+                                  '',
+                              style: appTitleTextStyle.copyWith(
+                                  fontWeight: bold,
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : redJNE),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              controller
+                                      .invoiceCnoteDetailModel?.picuUpOrderId ??
+                                  '',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall
+                                  ?.copyWith(fontSize: 9),
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                          onPressed: () => Clipboard.setData(ClipboardData(
+                              text: controller
+                                      .invoiceCnoteDetailModel?.awbNumber ??
+                                  '')),
+                          icon: const Icon(Icons.copy_rounded),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
                 _textRow(
                   context,
                   "AWB Date".tr,
