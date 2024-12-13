@@ -62,7 +62,7 @@ class InvoiceDetailScreen extends StatelessWidget {
           child: Container(
             color: blueJNE,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 35),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
