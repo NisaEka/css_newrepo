@@ -33,6 +33,7 @@ class DashboardNews extends StatelessWidget {
                           (e) => NewsItem(
                             news: e,
                             lang: c.state.local,
+                            isLoading: c.state.isLoading,
                           ),
                         )
                         .toList(),

@@ -411,22 +411,20 @@ class TransactionController extends BaseController {
         freightCharge: state.freightCharge,
         freightChargeWithInsurance: state.freightChargeISR,
       ),
-      account: Account(
-        accountNumber: state.account.accountNumber,
-        accountService: state.account.accountService,
-      ),
+      account: state.account,
       dataAccount: state.account,
       dataDestination: state.destination,
       origin: state.origin,
       destination: state.destination,
       goods: Goods(
-          type: state.goodType.text,
-          desc: state.goodName.text,
-          amount: state.goodAmount.text.isNotEmpty
-              ? state.goodAmount.text.digitOnly().toInt()
-              : 0,
-          quantity: state.goodQty.text.toInt(),
-          weight: state.berat),
+        type: state.goodType.text,
+        desc: state.goodName.text,
+        amount: state.goodAmount.text.isNotEmpty
+            ? state.goodAmount.text.digitOnly().toInt()
+            : 0,
+        quantity: state.goodQty.text.toInt(),
+        weight: state.berat,
+      ),
       shipper: state.shipper,
       receiver: state.receiver,
     ));
@@ -506,7 +504,6 @@ class TransactionController extends BaseController {
           qty: state.goodQty.text.toInt(),
           weight: state.berat,
           orderId: state.noReference.text,
-          // apiStatus: 0,
           shipperName: state.shipper.name,
           shipperPhone: state.shipper.phone,
           shipperAddr: state.shipper.address,
@@ -535,7 +532,7 @@ class TransactionController extends BaseController {
       )
           .then((v) {
         if (v.code != 200) {
-          AppSnackBar.error(v.error);
+          AppSnackBar.error(v.message);
         } else {
           Get.to(
             SuccessScreen(
@@ -614,7 +611,6 @@ class TransactionController extends BaseController {
           .postTransaction(TransactionModel(
         orderId:
             state.noReference.text.isNotEmpty ? state.noReference.text : null,
-        // apiStatus: 0,
         apiType: trans.account?.accountService,
         custId: state.account.accountNumber,
         branch: trans.origin?.branchCode ?? trans.origin?.branch?.branchCode,
@@ -695,7 +691,7 @@ class TransactionController extends BaseController {
         }
         if (v.code == 400 || v.code == 500) {
           AppSnackBar.custom(
-            message: v.error,
+            message: v.message,
             backgroundColor: Colors.red,
             icon: const Icon(Icons.warning, color: warningColor),
             snackStyle: SnackStyle.FLOATING,
@@ -766,6 +762,39 @@ class TransactionController extends BaseController {
               ),
               Text(
                 "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              CustomFilledButton(
+                color: blueJNE,
+                width: Get.width / 3,
+                title: "OK".tr,
+                onPressed: () => Get.back(),
+              )
+            ],
+          ),
+        ),
+      ));
+    } else if ((state.codAmountText.text.digitOnly().toInt() > 10000000)) {
+      Get.dialog(StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          scrollable: false,
+          title: const Icon(
+            Icons.dangerous_outlined,
+            color: errorColor,
+            size: 100,
+          ),
+          alignment: Alignment.center,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Error".tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              Text(
+                "${'Harga COD tidak boleh Lebih dari'.tr} Rp.${1000000.toInt().toCurrency()}",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),

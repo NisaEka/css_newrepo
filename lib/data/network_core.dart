@@ -2,7 +2,6 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/util/logger.dart';
-import 'package:css_mobile/util/snackbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
@@ -104,9 +103,9 @@ class NetworkCore {
         },
         onError: (dioError, handler) async {
           AppLogger.e("dio error : $dioError");
-          if (dioError.response == null) {
-            AppSnackBar.error("Connection timeout");
-          }
+          // if (dioError.response == null) {
+          //   AppSnackBar.error("Connection timeout");
+          // }
           final refreshToken = await StorageCore().readRefreshToken();
           AppLogger.i("refresh token local : $refreshToken");
           if ((dioError.requestOptions.path != '/auth/device-infos') ||

@@ -6,9 +6,9 @@ import 'package:css_mobile/screen/invoice/detail/invoice_detail_controller.dart'
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
-import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class InvoiceDetailScreen extends StatelessWidget {
@@ -62,7 +62,7 @@ class InvoiceDetailScreen extends StatelessWidget {
           child: Container(
             color: blueJNE,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 35),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -81,10 +81,6 @@ class InvoiceDetailScreen extends StatelessWidget {
         Expanded(
           child: ListView(
             children: [
-              // _viewAwbList(
-              //   context,
-              //   controller.invoiceDetailModel!.invoiceNumberEncoded!,
-              // ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 35, vertical: 0),
@@ -99,26 +95,43 @@ class InvoiceDetailScreen extends StatelessWidget {
                         color: controller.isLoading
                             ? greyColor
                             : Colors.transparent,
-                        child: CustomCodeLabel(
-                          label: controller.invoiceDetailModel?.invoiceNumber ??
-                              '',
-                          isLoading: false,
-                          alignment: MainAxisAlignment.start,
-                        ),
-                      ),
-                    ),
-                    Shimmer(
-                      isLoading: controller.isLoading,
-                      child: Container(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
-                        child: Text(
-                          controller.invoiceDetailModel?.invoiceType ?? '',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(fontSize: 9),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  controller
+                                          .invoiceDetailModel?.invoiceNumber ??
+                                      '',
+                                  style: appTitleTextStyle.copyWith(
+                                      fontWeight: bold,
+                                      color: AppConst.isLightTheme(context)
+                                          ? blueJNE
+                                          : redJNE),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  controller.invoiceDetailModel?.invoiceType ??
+                                      '',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(fontSize: 9),
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                              onPressed: () => Clipboard.setData(ClipboardData(
+                                  text: controller
+                                          .invoiceDetailModel?.invoiceNumber ??
+                                      '')),
+                              icon: const Icon(Icons.copy_rounded),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -202,12 +215,18 @@ class InvoiceDetailScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     Shimmer(
                       isLoading: controller.isLoading,
-                      child: Text(
-                        controller.invoiceDetailModel?.description ?? '-',
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  fontWeight: regular,
-                                ),
+                      child: Container(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          controller.invoiceDetailModel?.description ?? '-',
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    fontWeight: regular,
+                                  ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),

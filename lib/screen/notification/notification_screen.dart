@@ -1,8 +1,6 @@
-import 'package:collection/collection.dart';
 import 'package:css_mobile/screen/notification/notification_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/items/notification_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,48 +30,36 @@ class NotificationScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverList.list(
-          children: c.unreadNotifList
-              .mapIndexed(
-                (i, e) => e.id == null
-                    ? const SizedBox()
-                    : NotificationListItem(
-                        data: e,
-                        isRead: true,
-                        onTap: () => c.readMessage(e, i),
-                      ),
-              )
-              .toList(),
-        ),
-        SliverList.list(
-          children: c.notificationList
-              .mapIndexed(
-                (i, e) => e.id == null
-                    ? const SizedBox()
-                    : NotificationListItem(
-                        data: e,
-                        isRead: false,
-                      ),
-              )
-              .toList(),
-        ),
-        // c.notificationList.isNotEmpty
-        //     ? SliverList.list(
-        //         children: c.notificationList
-        //             .map(
-        //               (e) => NotificationListItem(
+            children: c.notificationList
+                .map(
+                  (e) => e,
+                )
+                .toList()),
+        // SliverList.list(
+        //   children: c.unreadNotifList
+        //       .mapIndexed(
+        //         (i, e) => e.id == null
+        //             ? const SizedBox()
+        //             : NotificationListItem(
         //                 data: e,
-        //                 // onTap: () => c.readMessage(e.id ?? ''),
+        //                 isRead: true,
+        //                 onTap: () => c.readMessage(e),
         //               ),
-        //             )
-        //             .toList(),
         //       )
-        //     : SliverList.list(
-        //         children: [
-        //           DataEmpty(
-        //             text: "Belum ada notifikasi tersedia".tr,
-        //           ),
-        //         ],
-        //       ),
+        //       .toList(),
+        // ),
+        // SliverList.list(
+        //   children: c.readNotifList.reversed.toList()
+        //       .mapIndexed(
+        //         (i, e) => e.id == null
+        //             ? const SizedBox()
+        //             : NotificationListItem(
+        //                 data: e,
+        //                 isRead: false,
+        //               ),
+        //       )
+        //       .toList(),
+        // ),
       ],
     );
   }

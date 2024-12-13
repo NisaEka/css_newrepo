@@ -35,14 +35,13 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
   }
   listUnreadMessage.add(
     NotificationModel(
-      id: data.messageId,
-      category: data.notification?.title,
-      text: data.notification?.body,
-      createDate: data.sentTime.toString(),
-      isRead: true,
-      title: data.notification?.title,
-      // img: data..
-    ),
+        id: data.messageId,
+        category: data.notification?.title,
+        text: data.notification?.body,
+        createDate: data.sentTime.toString(),
+        isRead: true,
+        title: data.notification?.title,
+        img: data.notification?.android?.imageUrl),
   );
   listUnread.add(Messages(
     senderId: data.senderId,

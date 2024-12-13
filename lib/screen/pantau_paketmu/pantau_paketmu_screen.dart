@@ -223,7 +223,7 @@ class PantauPaketmuScreen extends StatelessWidget {
 
   Widget _bodyContent(PantauPaketmuController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30, right: 30, top: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           CustomSearchField(
