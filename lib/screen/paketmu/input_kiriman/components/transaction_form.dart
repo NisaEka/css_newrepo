@@ -21,6 +21,8 @@ import 'package:get/get.dart';
 class TransactionForm extends StatelessWidget {
   const TransactionForm({super.key});
 
+  get color => null;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<TransactionController>(
@@ -183,7 +185,10 @@ class TransactionForm extends StatelessWidget {
                               value: c.state.woodPacking,
                               activeColor: AppConst.isLightTheme(context)
                                   ? blueJNE
-                                  : redJNE,
+                                  : Colors.lightBlueAccent,
+                              inactiveThumbColor: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : Colors.lightBlueAccent,
                               onChanged: (bool? value) {
                                 c.state.woodPacking = value!;
                                 var temp = c.state.specialInstruction.text;
@@ -223,9 +228,9 @@ class TransactionForm extends StatelessWidget {
                               message:
                                   'Hanya sebagai instruksi penggunaan packing kayu'
                                       .tr,
-                              child: const Icon(
+                              child: Icon(
                                 Icons.info_outline,
-                                color: redJNE,
+                                color: color ?? (AppConst.isLightTheme(context) ? redJNE : warningColor),
                               ),
                             ),
                           ),
@@ -255,7 +260,10 @@ class TransactionForm extends StatelessWidget {
                               value: c.state.dimension,
                               activeColor: AppConst.isLightTheme(context)
                                   ? blueJNE
-                                  : redJNE,
+                                  : Colors.lightBlueAccent,
+                              inactiveThumbColor: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : Colors.lightBlueAccent,
                               onChanged: (value) {
                                 c.state.dimension = value;
                                 c.state.goodLength.clear();

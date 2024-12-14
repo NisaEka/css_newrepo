@@ -54,9 +54,9 @@ class LacakKirimanScreen extends StatelessWidget {
                 // c.cekResi(result);
               }),
               child: Icon(
-                Icons.qr_code_scanner,
-                color: AppConst.isLightTheme(context) ? whiteColor : redJNE,
-                size: 30,
+                Icons.qr_code_rounded,
+                color: AppConst.isLightTheme(context) ? whiteColor : whiteColor,
+                size: 25,
               ),
             ),
             // onSubmit: (value) => c.cekResi(value),

@@ -28,7 +28,7 @@ class AggByCnoteScreen extends StatelessWidget {
 
   Widget _bodyContent(AggByCnoteController controller, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
           Container(
@@ -42,9 +42,9 @@ class AggByCnoteScreen extends StatelessWidget {
               border: Border.all(color: greyDarkColor1),
               boxShadow: [
                 BoxShadow(
-                  color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                  color: AppConst.isLightTheme(context) ? blueJNE : infoColor,
                   spreadRadius: 1,
-                  offset: const Offset(-3, 3),
+                  offset: const Offset(-2, 2),
                 ),
               ],
             ),
@@ -84,82 +84,10 @@ class AggByCnoteScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(
                         right: 20), // Margin between the two text widgets
                     child: Text(
-                      'Informasi Kiriman'.tr,
-                      style: listTitleTextStyle.copyWith(
-                        color:
-                            AppConst.isLightTheme(context) ? blueJNE : redJNE,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Shimmer(
-                  isLoading: controller.isLoading,
-                  child: Text(
-                    controller.data.custName ?? '-',
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          fontWeight: regular,
-                        ),
-                  ),
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Tanggal Cnote".tr,
-                  controller.data.dpayDetWdrCnotedate?.toDateTimeFormat(),
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: regular,
-                      ),
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Order ID".tr,
-                  controller.data.orderIdTmp ?? '-',
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: regular,
-                      ),
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "POD Status".tr,
-                  '${controller.data.dpayDetWdrPod ?? ''} - ${controller.data.podGroupName ?? '-'}',
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: regular,
-                      ),
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Tanggal POD".tr,
-                  controller.data.dpayDUpdPodDate?.toDateTimeFormat(),
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: regular,
-                      ),
-                ),
-                const SizedBox(height: 16),
-                const Divider(
-                  color: greyLightColor3,
-                ),
-                const SizedBox(height: 16),
-                Shimmer(
-                  isLoading: controller.isLoading,
-                  child: Container(
-                    color:
-                        controller.isLoading ? greyColor : Colors.transparent,
-                    alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.only(
-                        right: 20), // Margin between the two text widgets
-                    child: Text(
                       'Informasi Aggregasi'.tr,
                       style: listTitleTextStyle.copyWith(
                         color:
-                            AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                            AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
                       ),
                     ),
                   ),
@@ -202,10 +130,82 @@ class AggByCnoteScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(
                         right: 20), // Margin between the two text widgets
                     child: Text(
+                      'Informasi Kiriman'.tr,
+                      style: listTitleTextStyle.copyWith(
+                        color:
+                            AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Shimmer(
+                  isLoading: controller.isLoading,
+                  child: Text(
+                    controller.data.custName ?? '-',
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      fontWeight: regular,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Tanggal Cnote".tr,
+                  controller.data.dpayDetWdrCnotedate?.toDateTimeFormat(),
+                  controller.isLoading,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: regular,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Order ID".tr,
+                  controller.data.orderIdTmp ?? '-',
+                  controller.isLoading,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: regular,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "POD Status".tr,
+                  '${controller.data.dpayDetWdrPod ?? ''} - ${controller.data.podGroupName ?? '-'}',
+                  controller.isLoading,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: regular,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Tanggal POD".tr,
+                  controller.data.dpayDUpdPodDate?.toDateTimeFormat(),
+                  controller.isLoading,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: regular,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: greyLightColor3,
+                ),
+                const SizedBox(height: 16),
+                Shimmer(
+                  isLoading: controller.isLoading,
+                  child: Container(
+                    color:
+                        controller.isLoading ? greyColor : Colors.transparent,
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(
+                        right: 20), // Margin between the two text widgets
+                    child: Text(
                       'Detail Aggregasi'.tr,
                       style: listTitleTextStyle.copyWith(
                         color:
-                            AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                            AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
                       ),
                     ),
                   ),
@@ -229,7 +229,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color:
-                          AppConst.isLightTheme(context) ? blueJNE : infoColor),
+                          AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent),
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -382,7 +382,7 @@ class AggByCnoteScreen extends StatelessWidget {
                           ? successColor
                           : successLightColor1),
                   titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE),
+                      color: AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent),
                 ),
                 const SizedBox(
                   height: 50,

@@ -127,7 +127,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                         'Informasi Transaksi'.tr,
                         style: listTitleTextStyle.copyWith(
                           color:
-                              AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
                         ),
                       ),
                     ),
@@ -195,7 +195,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                         'Detail Kiriman'.tr,
                         style: listTitleTextStyle.copyWith(
                           color:
-                              AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
                         ),
                       ),
                     ),
@@ -267,7 +267,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       style: listTitleTextStyle.copyWith(
                           color: AppConst.isLightTheme(context)
                               ? blueJNE
-                              : redJNE)),
+                              : Colors.lightBlueAccent)),
                   const SizedBox(height: 6),
                   _textRow(
                       context,
@@ -276,7 +276,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       controller.isLoading,
                       style: listTitleTextStyle.copyWith(
                         color:
-                            AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                            AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
                       )),
                   const SizedBox(height: 6),
                   _textRow(
@@ -287,7 +287,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       style: listTitleTextStyle.copyWith(
                           color: AppConst.isLightTheme(context)
                               ? blueJNE
-                              : redJNE)),
+                              : Colors.lightBlueAccent)),
                   const SizedBox(height: 16),
                   const Divider(
                     color: greyLightColor3,
@@ -305,7 +305,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                         'Informasi Pengantaran'.tr,
                         style: listTitleTextStyle.copyWith(
                           color:
-                              AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
                         ),
                       ),
                     ),
@@ -372,7 +372,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                           style: listTitleTextStyle.copyWith(
                             color: AppConst.isLightTheme(context)
                                 ? blueJNE
-                                : redJNE,
+                                : warningColor,
                           ),
                         ),
                       ),
@@ -411,7 +411,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                         'Informasi Tiket Laporan'.tr,
                         style: listTitleTextStyle.copyWith(
                           color:
-                              AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
                         ),
                       ),
                     ),

@@ -56,7 +56,7 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                 : const SizedBox(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               margin: const EdgeInsets.only(bottom: 16),
@@ -80,12 +80,12 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                             border: Border.all(
                                 color: Theme.of(context).brightness ==
                                         Brightness.light
-                                    ? blueJNE
+                                    ? redJNE
                                     : redJNE,
                                 width: 2),
                           ),
                           child: Icon(
-                            Icons.playlist_add_check_rounded,
+                            Icons.indeterminate_check_box_rounded,
                             color:
                                 Theme.of(context).brightness == Brightness.light
                                     ? blueJNE

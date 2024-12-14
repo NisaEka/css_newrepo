@@ -29,7 +29,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
 
   Widget _bodyContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
           Container(
@@ -40,12 +40,12 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: whiteColor,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: greyDarkColor1),
+              border: Border.all(color: blueJNE),
               boxShadow: [
                 BoxShadow(
                   color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
                   spreadRadius: 1,
-                  offset: const Offset(-3, 3),
+                  offset: const Offset(-2, 2),
                 ),
               ],
             ),
@@ -66,70 +66,6 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                const SizedBox(height: 16),
-                Container(
-                  color: Colors.transparent,
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(
-                      right: 20), // Margin between the two text widgets
-                  child: Text(
-                    'Informasi Kiriman'.tr,
-                    style: listTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  "${data.dCustId} - ${data.dCustName}",
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: regular,
-                      ),
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Tanggal Cnote".tr,
-                  data.dCnoteDate?.toDateTimeFormat(),
-                  false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: regular,
-                      ),
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Order ID".tr,
-                  data.dOrderid ?? '-',
-                  false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: regular,
-                      ),
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "POD Code".tr,
-                  data.dPodCode ?? '-',
-                  false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: regular,
-                      ),
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "Tanggal POD".tr,
-                  data.dPodDateSys?.toDateTimeFormat(),
-                  false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: regular,
-                      ),
-                ),
-                const SizedBox(height: 16),
-                const Divider(
-                  color: greyLightColor3,
-                ),
                 const SizedBox(height: 16),
                 Container(
                   color: Colors.transparent,
@@ -178,6 +114,68 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(
                       right: 20), // Margin between the two text widgets
                   child: Text(
+                    'Informasi Kiriman'.tr,
+                    style: listTitleTextStyle.copyWith(
+                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "${data.dCustId} - ${data.dCustName}",
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: regular,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Tanggal Cnote".tr,
+                  data.dCnoteDate?.toDateTimeFormat(),
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: regular,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Order ID".tr,
+                  data.dOrderid ?? '-',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!,
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "POD Code".tr,
+                  data.dPodCode ?? '-',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: regular,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "Tanggal POD".tr,
+                  data.dPodDateSys?.toDateTimeFormat(),
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: regular,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: greyLightColor3,
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  color: Colors.transparent,
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(
+                      right: 20), // Margin between the two text widgets
+                  child: Text(
                     'Detail Aggregasi'.tr,
                     style: listTitleTextStyle.copyWith(
                       color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
@@ -187,23 +185,12 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 _textRow(
                   context,
-                  "COD Amount".tr,
-                  'Rp. ${data.dCodFee?.toInt().toCurrency() ?? 0}',
+                  "Freight Charge".tr,
+                  'Rp. ${data.dShipFee?.toInt().toCurrency() ?? 0}',
                   false,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color:
                           AppConst.isLightTheme(context) ? blueJNE : infoColor),
-                ),
-                const SizedBox(height: 6),
-                _textRow(
-                  context,
-                  "COD Fee Include VAT".tr,
-                  'Rp. ${data.dCodfeeInclvat?.toInt().toCurrency() ?? 0}',
-                  false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -232,6 +219,37 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   context,
                   "Freight Charge VAT".tr,
                   'Rp. ${data.dFchargeVat?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? errorColor
+                          : errorLightColor1),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "COD Amount".tr,
+                  'Rp. ${data.dCodAmt?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color:
+                      AppConst.isLightTheme(context) ? blueJNE : infoColor),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "COD Fee".tr,
+                  'Rp. ${data.dCodFee?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color:
+                      AppConst.isLightTheme(context) ? blueJNE : infoColor),
+                ),
+                const SizedBox(height: 6),
+                _textRow(
+                  context,
+                  "COD Fee Include VAT".tr,
+                  'Rp. ${data.dCodfeeInclvat?.toInt().toCurrency() ?? 0}',
                   false,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: AppConst.isLightTheme(context)
@@ -292,6 +310,17 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   dashGapLength: 2.0,
                 ),
                 const SizedBox(height: 16),
+                _textRow(
+                  context,
+                  "Return Fee".tr,
+                  'Rp. ${data.dReturnFee?.toInt().toCurrency() ?? 0}',
+                  false,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppConst.isLightTheme(context)
+                          ? errorColor
+                          : errorLightColor1),
+                ),
+                const SizedBox(height: 6),
                 _textRow(
                   context,
                   "Return Freight Charge After Discount".tr,

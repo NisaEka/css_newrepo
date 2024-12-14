@@ -33,12 +33,12 @@ class AggByDocScreen extends StatelessWidget {
 
   Widget _bodyContent(AggByDocController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
           PaymentBox(
             title: "Document No".tr,
-            value: "# ${c.aggregationID}",
+            value: c.aggregationID,
           ),
           CustomSearchField(
             margin: const EdgeInsets.only(top: 0),
@@ -47,7 +47,7 @@ class AggByDocScreen extends StatelessWidget {
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
               color: Theme.of(context).brightness == Brightness.light
-                  ? whiteColor
+                  ? infoColor
                   : blueJNE,
             ),
             onChanged: (value) {

@@ -38,7 +38,7 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
 
   Widget _bodyContent(AggregasiMinusController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
       child: Column(
         children: [
           const AggMinusBox(),

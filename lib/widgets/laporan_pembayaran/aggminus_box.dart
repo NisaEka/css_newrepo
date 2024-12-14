@@ -16,12 +16,12 @@ class AggMinusBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: greyDarkColor1),
+        border: Border.all(color: blueJNE),
         boxShadow: const [
           BoxShadow(
             color: blueJNE,
             spreadRadius: 1,
-            offset: Offset(-3, 3),
+            offset: Offset(-2, 2),
           ),
         ],
       ),
@@ -29,12 +29,12 @@ class AggMinusBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(Icons.info_rounded, color: redJNE),
+          const Icon(Icons.info_rounded, color: redJNE, size: 20,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               "Data diperbaharui setiap jam 06.45 WIB".tr,
-              style: subformLabelTextStyle,
+              style: inputTextStyle,
             ),
           ),
         ],

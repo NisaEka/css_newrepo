@@ -82,7 +82,7 @@ class DashboardMenu2 extends StatelessWidget {
                             Icons.more_horiz,
                             color: AppConst.isLightTheme(context)
                                 ? whiteColor
-                                : infoColor,
+                                : warningColor,
                             size: 45,
                           ),
                         ),

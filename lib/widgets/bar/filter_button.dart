@@ -62,7 +62,7 @@ class FilterButton extends StatelessWidget {
                             color:
                                 Theme.of(context).brightness == Brightness.light
                                     ? blueJNE
-                                    : redJNE,
+                                    : warningColor,
                           ),
                         ),
                         IconButton(
@@ -88,7 +88,9 @@ class FilterButton extends StatelessWidget {
                               )
                             : const SizedBox(),
                         CustomFilledButton(
-                          color: blueJNE,
+                          color: Theme.of(context).brightness == Brightness.light
+                              ? blueJNE
+                              : warningColor,
                           width: isFiltered ? Get.width / 2.5 : Get.width - 40,
                           title: 'Terapkan'.tr,
                           onPressed: onApplyFilter,
@@ -108,9 +110,9 @@ class FilterButton extends StatelessWidget {
         },
         icon: Icon(
           Icons.filter_list_rounded,
-          color: isFiltered ? whiteColor : redJNE,
+          color: isFiltered ? whiteColor : Colors.lightBlueAccent,
         ),
-        color: isFiltered ? whiteColor : redJNE,
+        color: isFiltered ? whiteColor : Colors.lightBlueAccent,
         tooltip: 'filter',
       ),
     );

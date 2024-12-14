@@ -111,7 +111,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                                       fontWeight: bold,
                                       color: AppConst.isLightTheme(context)
                                           ? blueJNE
-                                          : redJNE),
+                                          : warningColor),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
@@ -207,7 +207,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                               Theme.of(context).textTheme.titleMedium!.copyWith(
                                     color: AppConst.isLightTheme(context)
                                         ? blueJNE
-                                        : redJNE,
+                                        : warningColor,
                                   ),
                         ),
                       ),
@@ -248,7 +248,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                           style: listTitleTextStyle.copyWith(
                             color: AppConst.isLightTheme(context)
                                 ? blueJNE
-                                : redJNE,
+                                : warningColor,
                           ),
                         ),
                       ),
@@ -261,7 +261,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                         controller.isLoading,
                         style: listTitleTextStyle.copyWith(
                           color:
-                              AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                              AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
                         )),
                     const SizedBox(height: 6),
                     _textRow(
@@ -355,7 +355,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                           style: listTitleTextStyle.copyWith(
                             color: AppConst.isLightTheme(context)
                                 ? blueJNE
-                                : redJNE,
+                                : warningColor,
                           ),
                         ),
                       ),
@@ -369,7 +369,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                       style: listTitleTextStyle.copyWith(
                         color: AppConst.isLightTheme(context)
                             ? blueJNE
-                            : infoColor,
+                            : Colors.lightBlueAccent,
                       ),
                       titleFontWeight: bold,
                     ),
@@ -389,7 +389,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                       style: listTitleTextStyle.copyWith(
                         color: AppConst.isLightTheme(context)
                             ? errorColor
-                            : errorLightColor1,
+                            : Colors.lightBlueAccent,
                       ),
                       titleFontWeight: bold,
                     ),

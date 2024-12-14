@@ -84,7 +84,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                                   fontWeight: bold,
                                   color: AppConst.isLightTheme(context)
                                       ? blueJNE
-                                      : redJNE),
+                                      : warningColor),
                             ),
                             const SizedBox(height: 2),
                             Text(
@@ -246,7 +246,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   "Informasi Tagihan",
                   style: listTitleTextStyle.copyWith(
                     color:
-                        AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                        AppConst.isLightTheme(context) ? blueJNE : warningColor,
                   ),
                 ),
               ),
@@ -266,7 +266,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: bold,
                     color:
-                        AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                        AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
                   ),
                 ),
                 _textRow(
@@ -290,8 +290,11 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   "Total Amount After Disc & Charges".tr,
                   "Rp. ${(((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)) - (controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0)).abs().toCurrency()}",
                   controller.isLoading,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: redJNE),
+                  style: TextStyle(
+                    fontWeight: bold,
+                    color:
+                    AppConst.isLightTheme(context) ? redJNE : Colors.lightBlueAccent,
+                  ),
                 ),
                 _textRow(
                     context,

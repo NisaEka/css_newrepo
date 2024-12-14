@@ -13,6 +13,8 @@ import 'package:get/get.dart';
 class ReceiverForm extends StatelessWidget {
   const ReceiverForm({super.key});
 
+  get color => null;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ReceiverController>(
@@ -67,9 +69,9 @@ class ReceiverForm extends StatelessWidget {
                                           .textTheme
                                           .titleMedium,
                                     ),
-                                    const Icon(
-                                      Icons.keyboard_arrow_right,
-                                      color: redJNE,
+                                    Icon(
+                                      Icons.arrow_circle_right_rounded,
+                                      color: color ?? (AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent),
                                     )
                                   ],
                                 ),

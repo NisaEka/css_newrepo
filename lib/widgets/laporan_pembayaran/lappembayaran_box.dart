@@ -4,6 +4,8 @@ import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../const/app_const.dart';
+
 class PaymentBox extends StatelessWidget {
   final String title;
   final String value;
@@ -15,6 +17,8 @@ class PaymentBox extends StatelessWidget {
     required this.value,
     this.isLoading = false,
   });
+
+  get color => null;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +32,12 @@ class PaymentBox extends StatelessWidget {
             ? whiteColor
             : greyColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: greyDarkColor1),
-        boxShadow: const [
+        border: Border.all(color: color ?? (AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent)),
+        boxShadow: [
           BoxShadow(
-            color: blueJNE,
+            color: color ?? (AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent),
             spreadRadius: 1,
-            offset: Offset(-3, 3),
+            offset: const Offset(-2, 2),
           ),
         ],
       ),
