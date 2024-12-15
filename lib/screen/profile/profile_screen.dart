@@ -81,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _bodyContent(ProfileController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       child: ListView(
         controller: c.state.bottom.controller,
         children: [
@@ -99,7 +99,7 @@ class ProfileScreen extends StatelessWidget {
                             c.state.basicProfile?.userType == "PEMILIK"
                         ? SettingListItem(
                             title: 'Edit Profil'.tr,
-                            leading: Icons.person,
+                            leading: Icons.person_2_rounded,
                             onTap: () => Get.to(const EditProfilScreen()),
                           )
                         : const SizedBox(),
@@ -121,7 +121,7 @@ class ProfileScreen extends StatelessWidget {
                     c.state.menuModel.profil == "Y"
                         ? SettingListItem(
                             title: 'Data Umum'.tr,
-                            leading: Icons.person_pin_outlined,
+                            leading: Icons.person_pin_rounded,
                             onTap: () => Get.to(const DataUmumScreen()),
                           )
                         : const SizedBox(),
@@ -153,7 +153,7 @@ class ProfileScreen extends StatelessWidget {
                             c.state.menuModel.pengaturanLabel == "Y"
                         ? SettingListItem(
                             title: 'Pengaturan Label'.tr,
-                            leading: Icons.label_outline,
+                            leading: Icons.label_rounded,
                             onTap: () => c.state.isLogin
                                 ? Get.to(const PengaturanLabelScreen())
                                 : showDialog(
@@ -167,7 +167,7 @@ class ProfileScreen extends StatelessWidget {
                             c.state.menuModel.pengaturanPetugas == "Y"
                         ? SettingListItem(
                             title: 'Pengaturan Petugas'.tr,
-                            leading: Icons.account_circle,
+                            leading: Icons.supervisor_account_rounded,
                             onTap: () => c.state.isLogin
                                 ? Get.to(const PengaturanPetugasScreen())
                                 : showDialog(
@@ -180,7 +180,7 @@ class ProfileScreen extends StatelessWidget {
                     c.state.isLogin && c.state.menuModel.katasandi == "Y"
                         ? SettingListItem(
                             title: 'Ubah Kata Sandi'.tr,
-                            leading: Icons.lock_open_outlined,
+                            leading: Icons.password_rounded,
                             onTap: () => c.sendEmail(),
                           )
                         : const SizedBox(),

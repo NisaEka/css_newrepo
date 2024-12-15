@@ -33,8 +33,8 @@ class TypeTransactionCard extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              width: 3,
-              height: 30,
+              width: 4,
+              height: 45,
               color: lineColor,
             ),
             const SizedBox(width: 5),
@@ -46,21 +46,21 @@ class TypeTransactionCard extends StatelessWidget {
                   count,
                   style: Theme.of(context)
                       .textTheme
-                      .bodySmall
+                      .bodyLarge
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   (amount?.isNotEmpty ?? false) ? "Rp. $amount" : "",
                   style: Theme.of(context)
                       .textTheme
-                      .bodySmall
+                      .bodyLarge
                       ?.copyWith(fontSize: 8),
                 ),
                 Text(
                   description,
                   style: Theme.of(context)
                       .textTheme
-                      .bodySmall
+                      .bodyLarge
                       ?.copyWith(fontSize: 8),
                 ),
               ],

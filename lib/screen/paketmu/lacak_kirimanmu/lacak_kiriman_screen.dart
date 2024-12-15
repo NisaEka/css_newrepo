@@ -74,19 +74,19 @@ class LacakKirimanScreen extends StatelessWidget {
                     backgroundColor: errorColor,
                   ),
                 );
-              } else if (value.length != 16) {
-                Get.showSnackbar(
-                  GetSnackBar(
-                    icon: const Icon(
-                      Icons.warning,
-                      color: whiteColor,
-                    ),
-                    message: 'Nomor resi harus terdiri dari 16 karakter'.tr,
-                    isDismissible: true,
-                    duration: const Duration(seconds: 3),
-                    backgroundColor: errorColor,
-                  ),
-                );
+              // } else if (value.length != 16) {
+              //   Get.showSnackbar(
+              //     GetSnackBar(
+              //       icon: const Icon(
+              //         Icons.warning,
+              //         color: whiteColor,
+              //       ),
+              //       message: 'Nomor resi harus terdiri dari 16 karakter'.tr,
+              //       isDismissible: true,
+              //       duration: const Duration(seconds: 3),
+              //       backgroundColor: errorColor,
+              //     ),
+              //   );
               } else {
                 Get.to(
                   PhoneNumberConfirmationScreen(
@@ -103,7 +103,7 @@ class LacakKirimanScreen extends StatelessWidget {
                     c.isLoading
                 ? ListView(
                     children: [
-                      const SizedBox(height: 22),
+                      const SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -117,12 +117,14 @@ class LacakKirimanScreen extends StatelessWidget {
                             value:
                                 c.trackModel?.data?.cnote?.cnoteServicesCode ??
                                     '',
-                            valueColor: redJNE,
+                            valueColor: AppConst.isLightTheme(context)
+                                ? redJNE
+                                : warningColor,
                             alignment: 'end',
                           )
                         ],
                       ),
-                      const Divider(),
+                      const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -138,12 +140,15 @@ class LacakKirimanScreen extends StatelessWidget {
                             isLoading: c.isLoading,
                             title: 'Status Kiriman'.tr,
                             value: c.trackModel?.data?.cnote?.podStatus ?? '',
-                            valueColor: redJNE,
+                            valueColor: AppConst.isLightTheme(context)
+                                ? redJNE
+                                : warningColor,
                             width: Get.width / 3,
                             alignment: 'end',
                           ),
                         ],
                       ),
+                      const SizedBox(height: 6),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,18 +165,22 @@ class LacakKirimanScreen extends StatelessWidget {
                             value:
                                 c.trackModel?.data?.cnote?.estimateDelivery ??
                                     '',
-                            valueColor: redJNE,
+                            valueColor: AppConst.isLightTheme(context)
+                                ? redJNE
+                                : warningColor,
                             // width: Get.width / 4,
                             alignment: 'end',
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 16),
                       CustomFormLabel(
                         isLoading: c.isLoading,
                         label: 'Detail Kiriman'.tr,
                       ),
+                      const SizedBox(height: 6),
                       const Divider(),
+                      const SizedBox(height: 6),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -189,17 +198,23 @@ class LacakKirimanScreen extends StatelessWidget {
                             value:
                                 '${c.trackModel?.data?.cnote?.cnoteWeight} KG',
                             width: Get.width / 3,
+                            valueColor: AppConst.isLightTheme(context)
+                                ? redJNE
+                                : warningColor,
                             alignment: 'end',
                           ),
                         ],
                       ),
+                      const SizedBox(height: 6),
                       CustomLabelText(
                         isLoading: c.isLoading,
                         title: 'Deskripsi'.tr,
                         value: c.trackModel?.data?.cnote?.cnoteGoodsDescr ?? '',
                         width: Get.width / 2,
                       ),
+                      const SizedBox(height: 6),
                       const Divider(),
+                      const SizedBox(height: 6),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -222,6 +237,7 @@ class LacakKirimanScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 6),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -244,9 +260,11 @@ class LacakKirimanScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 16),
                       CustomFormLabel(label: 'Riwayat Kiriman'.tr),
+                      const SizedBox(height: 6),
                       const Divider(),
+                      const SizedBox(height: 16),
                       Column(
                         children:
                             c.trackModel?.data?.history?.isNotEmpty ?? false

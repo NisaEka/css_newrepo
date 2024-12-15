@@ -47,11 +47,17 @@ class InputEmailScreen extends StatelessWidget {
                                           : whiteColor),
                                 ),
                               ),
+                              const SizedBox(height: 15),
                               Text(
                                 controller.isChange
                                     ? "change_password".tr
                                     : "forgot_password".tr,
                                 textAlign: TextAlign.center,
+                                  style: subTitleTextStyle.copyWith(
+                                      color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                          ? Colors.black
+                                          : whiteColor)
                               ),
                               const SizedBox(height: 25),
                               CustomTextFormField(

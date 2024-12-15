@@ -53,7 +53,7 @@ class OngoingTransactionCard extends StatelessWidget {
                           horizontal: 4, vertical: 2),
                       decoration: BoxDecoration(
                         color: redJNE,
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(3),
                       ),
                       child: Row(
                         children: [
@@ -64,20 +64,20 @@ class OngoingTransactionCard extends StatelessWidget {
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 6),
+                                fontSize: 7),
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 16),
                 // Circular Indicator
                 Row(
                   children: [
                     SizedBox(
-                      width: 20,
-                      height: 20,
+                      width: 25,
+                      height: 25,
                       child: CircularProgressIndicator(
                         value: percentage,
                         backgroundColor: Colors.grey[300],
@@ -87,33 +87,34 @@ class OngoingTransactionCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text('$count',
-                        style: Theme.of(context).textTheme.titleLarge),
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 22)),
                   ],
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 16),
                 Text(
                   subtitle,
-                  style: TextStyle(
-                      color: AppConst.isLightTheme(context)
-                          ? greyDarkColor1
-                          : greyLightColor1,
-                      fontSize: 6),
+                  style:
+                  Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 8),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           (notificationLabel?.isNotEmpty ?? false)
               ? Container(
                   decoration: BoxDecoration(
-                    color: greyLightColor3,
+                    color: AppConst.isLightTheme(context)
+                        ? blueJNE
+                        : warningColor,
                     borderRadius: BorderRadius.circular(3),
                   ),
                   child: Row(
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: blueJNE,
+                          color: AppConst.isLightTheme(context)
+                              ? greyLightColor3
+                              : greyDarkColor1,
                           borderRadius: BorderRadius.circular(3),
                         ),
                         child: Row(
@@ -129,10 +130,12 @@ class OngoingTransactionCard extends StatelessWidget {
                                   const SizedBox(width: 10),
                                   Text(
                                     notificationLabel ?? '',
-                                    style: const TextStyle(
-                                        color: Colors.white,
+                                    style: TextStyle(
+                                        color: AppConst.isLightTheme(context)
+                                            ? blueJNE
+                                            : warningColor,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 6),
+                                        fontSize: 7),
                                   ),
                                 ],
                               ),
@@ -140,15 +143,17 @@ class OngoingTransactionCard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 5),
+                      const SizedBox(width: 10),
                       Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: Text(
                           '$notificationCount',
-                          style: const TextStyle(
-                              color: redJNE,
+                          style: TextStyle(
+                              color: AppConst.isLightTheme(context)
+                                  ? whiteColor
+                                  : whiteColor,
                               fontWeight: FontWeight.bold,
-                              fontSize: 8),
+                              fontSize: 9),
                         ),
                       ),
                     ],

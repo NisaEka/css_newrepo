@@ -8,6 +8,8 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../const/app_const.dart';
+
 class CekOngkirScreen extends StatelessWidget {
   const CekOngkirScreen({super.key});
 
@@ -20,9 +22,9 @@ class CekOngkirScreen extends StatelessWidget {
             appBar: CustomTopBar(title: 'Cek Ongkos Kirim'.tr),
             body: _bodyContent(controller, context),
             bottomNavigationBar: CustomFilledButton(
-              color: blueJNE,
+              color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
               title: 'Cek Ongkos Kirim'.tr,
-              margin: const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+              margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
               onPressed: () => controller.loadOngkir(),
             ),
           );

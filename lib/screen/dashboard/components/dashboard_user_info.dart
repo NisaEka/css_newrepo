@@ -68,7 +68,7 @@ class DashboardUserInfo extends StatelessWidget {
                             },
                             child: Icon(
                               Icons.qr_code_rounded,
-                              color: color ?? (AppConst.isLightTheme(context) ? blueJNE : infoColor),
+                              color: color ?? (AppConst.isLightTheme(context) ? blueJNE : warningColor),
                             ),
                           ),
                         ),

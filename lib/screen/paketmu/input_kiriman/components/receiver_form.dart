@@ -71,7 +71,7 @@ class ReceiverForm extends StatelessWidget {
                                     ),
                                     Icon(
                                       Icons.arrow_circle_right_rounded,
-                                      color: color ?? (AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent),
+                                      color: color ?? (AppConst.isLightTheme(context) ? blueJNE : warningColor),
                                     )
                                   ],
                                 ),
@@ -80,7 +80,7 @@ class ReceiverForm extends StatelessWidget {
                             CustomTextFormField(
                               controller: c.state.receiverName,
                               hintText: "Nama Penerima".tr,
-                              prefixIcon: const Icon(Icons.person),
+                              prefixIcon: const Icon(Icons.person_2_rounded),
                               isRequired: true,
                               validator: ValidationBuilder().name().build(),
                             ),
@@ -88,7 +88,7 @@ class ReceiverForm extends StatelessWidget {
                               controller: c.state.receiverPhone,
                               hintText: "Nomor Telepon".tr,
                               inputType: TextInputType.number,
-                              prefixIcon: const Icon(Icons.phone),
+                              prefixIcon: const Icon(Icons.phone_rounded),
                               isRequired: true,
                               validator:
                                   ValidationBuilder().phoneNumber().build(),
@@ -105,7 +105,7 @@ class ReceiverForm extends StatelessWidget {
                               readOnly: false,
                               label: "Kota Tujuan".tr,
                               prefixIcon: Icon(
-                                Icons.location_city,
+                                Icons.trip_origin_rounded,
                                 color: AppConst.isLightTheme(context)
                                     ? greyDarkColor1
                                     : greyLightColor1,
@@ -114,7 +114,7 @@ class ReceiverForm extends StatelessWidget {
                             CustomTextFormField(
                               controller: c.state.receiverAddress,
                               hintText: "Alamat".tr,
-                              prefixIcon: const Icon(Icons.location_city),
+                              prefixIcon: const Icon(Icons.home_work_rounded),
                               multiLine: true,
                               isRequired: true,
                               validator: ValidationBuilder().address().build(),

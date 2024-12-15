@@ -92,7 +92,7 @@ class ShipperForm extends StatelessWidget {
                               hintText: "Nama Pengirim".tr,
                               readOnly: !c.state.isDropshipper,
                               isRequired: true,
-                              prefixIcon: const Icon(Icons.person),
+                              prefixIcon: const Icon(Icons.person_2_rounded),
                               validator: ValidationBuilder().name().build(),
                             ),
                             CustomTextFormField(
@@ -101,7 +101,7 @@ class ShipperForm extends StatelessWidget {
                               inputType: TextInputType.number,
                               readOnly: !c.state.isDropshipper,
                               isRequired: true,
-                              prefixIcon: const Icon(Icons.phone),
+                              prefixIcon: const Icon(Icons.phone_rounded),
                               validator:
                                   ValidationBuilder().phoneNumber().build(),
                             ),
@@ -124,7 +124,7 @@ class ShipperForm extends StatelessWidget {
                                       c.state.isOnline == false
                                   ? true
                                   : !c.state.isDropshipper,
-                              prefixIcon: const Icon(Icons.location_city),
+                              prefixIcon: const Icon(Icons.trip_origin_rounded),
                               onChanged: (value) {
                                 c.state.selectedOrigin = value;
                                 c.state.shipperOrigin.text =
@@ -138,7 +138,7 @@ class ShipperForm extends StatelessWidget {
                               hintText: "Kode Pos".tr,
                               readOnly: !c.state.isDropshipper,
                               isRequired: true,
-                              prefixIcon: const Icon(Icons.line_style),
+                              prefixIcon: const Icon(Icons.markunread_mailbox_rounded),
                               // validator: ValidationBuilder().zipCode().build(),
                               inputType: TextInputType.number,
                             ),
@@ -148,7 +148,7 @@ class ShipperForm extends StatelessWidget {
                               readOnly: !c.state.isDropshipper,
                               isRequired: true,
                               multiLine: true,
-                              prefixIcon: const Icon(Icons.location_city),
+                              prefixIcon: const Icon(Icons.home_work_rounded),
                               validator: ValidationBuilder().address().build(),
                             ),
                             c.state.isDropshipper &&

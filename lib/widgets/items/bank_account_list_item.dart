@@ -27,21 +27,24 @@ class BankAccountListItem extends StatelessWidget {
     return Shimmer(
       isLoading: isLoading,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 30),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: isLoading
               ? greyLightColor3
               : (AppConst.isLightTheme(context) ? whiteColor : greyColor),
-          border: Border.all(color: greyDarkColor1),
+          border: Border.all(color: Colors.transparent),
           borderRadius: BorderRadius.circular(12),
           boxShadow: isLoading
               ? []
-              : const [
+              : [
                   BoxShadow(
-                    color: blueJNE,
+                    color: Theme.of(context).brightness ==
+                        Brightness.light
+                        ? blueJNE
+                        : warningColor,
                     spreadRadius: 1,
-                    offset: Offset(-2, 2),
+                    offset: const Offset(-2, 2),
                   ),
                 ],
         ),

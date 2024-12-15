@@ -28,7 +28,7 @@ class CekOngkirData extends StatelessWidget {
                         right: 20), // Margin between the two text widgets
                     child: Text(
                       'Berat Express'.tr,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
                   Flexible(
@@ -37,6 +37,7 @@ class CekOngkirData extends StatelessWidget {
                       child: Text(
                         c.state.weightExpress.tr,
                         style: sublistTitleTextStyle.copyWith(
+                          fontWeight: bold,
                           color: AppConst.isLightTheme(context)
                               ? greyColor
                               : whiteColor,
@@ -55,7 +56,7 @@ class CekOngkirData extends StatelessWidget {
                         right: 20), // Margin between the two text widgets
                     child: Text(
                       'Berat JTR'.tr,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
                   Flexible(
@@ -64,6 +65,7 @@ class CekOngkirData extends StatelessWidget {
                       child: Text(
                         c.state.weightJtr.tr,
                         style: sublistTitleTextStyle.copyWith(
+                          fontWeight: bold,
                           color: AppConst.isLightTheme(context)
                               ? greyColor
                               : whiteColor,

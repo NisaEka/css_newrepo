@@ -32,7 +32,7 @@ class CustomBackButton<T> extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: SvgPicture.asset(
           IconsConstant.arrowCircle,
-          color: color ?? (AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent),
+          color: color ?? (AppConst.isLightTheme(context) ? blueJNE : warningColor),
         ),
       ),
     );

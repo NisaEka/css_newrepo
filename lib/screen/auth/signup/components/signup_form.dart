@@ -14,6 +14,8 @@ import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:form_validator/form_validator.dart';
 
+import '../../../../const/textstyle.dart';
+
 class SignupForm extends StatelessWidget {
   const SignupForm({super.key});
 
@@ -77,12 +79,21 @@ class SignupForm extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Sudah menggunakan JNE'.tr),
+                                  Text('Sudah menggunakan JNE'.tr,
+                                      style: subTitleTextStyle.copyWith(
+                                          color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                              ? blueJNE
+                                              : whiteColor)
+                                  ),
                                   Switch(
                                     value: c.state.pakaiJNE,
                                     activeColor: AppConst.isLightTheme(context)
                                         ? blueJNE
-                                        : redJNE,
+                                        : Colors.lightBlueAccent,
+                                    inactiveThumbColor: AppConst.isLightTheme(context)
+                                        ? blueJNE
+                                        : Colors.lightBlueAccent,
                                     onChanged: (value) {
                                       c.state.pakaiJNE = value;
                                       c.update();

@@ -80,6 +80,7 @@ class FilterButton extends StatelessWidget {
                         isFiltered
                             ? CustomFilledButton(
                                 color: whiteColor,
+                                isTransparent: true,
                                 fontColor: blueJNE,
                                 borderColor: blueJNE,
                                 width: Get.width / 2.5,

@@ -38,9 +38,12 @@ class AkunBankScreen extends StatelessWidget {
               children: [
                 BankAccountListItem(
                   isLoading: controller.isLoading,
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.credit_card_rounded,
-                    color: blueJNE,
+                    color: Theme.of(context).brightness ==
+                        Brightness.light
+                        ? redJNE
+                        : warningColor,
                   ),
                   title: controller.ccrfProfil?.bankAccount?.ccrfBankaccount ??
                       '-',
@@ -84,7 +87,11 @@ class AkunBankScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: const Icon(Icons.info_rounded, color: redJNE),
+            icon: Icon(Icons.info_rounded, color:
+            Theme.of(context).brightness ==
+              Brightness.light
+              ? redJNE
+              : warningColor),
             tooltip: 'informasi'.tr,
           ),
         )

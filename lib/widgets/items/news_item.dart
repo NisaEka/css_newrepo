@@ -58,13 +58,14 @@ class NewsItem extends StatelessWidget {
                   ),
                   errorWidget: (context, url, error) => const Center(
                     child: Icon(
-                      Icons.broken_image,
+                      Icons.broken_image_rounded,
                       color: redJNE,
                       size: 50,
                     ),
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
               Text(
                 lang == "id"
                     ? news?.detail?.where((e) => e.lang == "id").first.title ??

@@ -23,16 +23,19 @@ class AccountCard extends StatelessWidget {
       isLoading: isLoading,
       child: Container(
         padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         decoration: BoxDecoration(
           color: AppConst.isLightTheme(context) ? whiteColor : greyColor,
           border: Border.all(color: greyDarkColor1),
           borderRadius: BorderRadius.circular(12),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: blueJNE,
+              color: Theme.of(context).brightness ==
+                Brightness.light
+                ? blueJNE
+                : warningColor,
               spreadRadius: 1,
-              offset: Offset(-2, 2),
+              offset: const Offset(-2, 2),
             ),
           ],
         ),
@@ -45,26 +48,50 @@ class AccountCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(account.accountNumber ?? '',
-                    style: listTitleTextStyle.copyWith(color: blueJNE)),
+                    style: listTitleTextStyle.copyWith(color: AppConst.isLightTheme(context)
+                        ? blueJNE
+                        : whiteColor)
+                ),
                 SizedBox(
                     width: Get.width / 2,
                     child: Text(
                         "${account.accountName?.toUpperCase() ?? ''} / ${account.accountType?.toUpperCase() ?? account.accountService?.toUpperCase()}",
-                        style: listTitleTextStyle.copyWith(color: blueJNE))),
+                        style: listTitleTextStyle.copyWith(color:
+                        AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : warningColor))),
                 Row(
                   children: [
                     Text(account.accountSs == "Y" ? "SS " : '',
-                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                        style: sublistTitleTextStyle.copyWith(color:
+                        AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : whiteColor)),
                     Text(account.accountYes == "Y" ? "YES " : '',
-                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                        style: sublistTitleTextStyle.copyWith(color:
+                        AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : whiteColor)),
                     Text(account.accountReg == "Y" ? "REG " : '',
-                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                        style: sublistTitleTextStyle.copyWith(color:
+                        AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : whiteColor)),
                     Text(account.accountOke == "Y" ? "OKE " : '',
-                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                        style: sublistTitleTextStyle.copyWith(color:
+                        AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : whiteColor)),
                     Text(account.accountJtr == "Y" ? "JTR " : '',
-                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                        style: sublistTitleTextStyle.copyWith(color:
+                        AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : whiteColor)),
                     Text(account.accountIntl == "Y" ? "INTL " : '',
-                        style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                        style: sublistTitleTextStyle.copyWith(color:
+                        AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : whiteColor)),
                   ],
                 ),
               ],
@@ -73,9 +100,14 @@ class AccountCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(account.accountService ?? '',
-                    style: listTitleTextStyle.copyWith(color: redJNE)),
+                    style: listTitleTextStyle.copyWith(color:
+                    AppConst.isLightTheme(context)
+                        ? blueJNE
+                        : warningColor)),
                 Text(account.accountCategory ?? '',
-                    style: subTitleTextStyle.copyWith(color: greyDarkColor2)),
+                    style: subTitleTextStyle.copyWith(color: AppConst.isLightTheme(context)
+                        ? greyDarkColor2
+                        : whiteColor)),
                 // Text("CCNC", style: subTitleTextStyle.copyWith(color: greyDarkColor2)),
               ],
             )

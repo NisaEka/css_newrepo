@@ -43,7 +43,7 @@ class LogActivityStepper extends StatelessWidget {
                 height: 23,
                 decoration: BoxDecoration(
                     color: currentStep == 0
-                        ? (AppConst.isLightTheme(context) ? blueJNE : redJNE)
+                        ? (AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent)
                         : (AppConst.isLightTheme(context)
                             ? greyColor
                             : greyDarkColor1),
@@ -76,18 +76,20 @@ class LogActivityStepper extends StatelessWidget {
             SizedBox(
               width: Get.width / 1.5,
               child: Text(
-                "${data?.activityName ?? ''} (${data?.activityBy ?? ''})",
-                style: sublistTitleTextStyle.copyWith(
-                  color: blueJNE,
-                  fontWeight: bold,
-                ),
+                data?.activityDescription ?? '',
+                style: sublistTitleTextStyle,
               ),
             ),
             SizedBox(
               width: Get.width / 1.5,
               child: Text(
-                data?.activityDescription ?? '',
-                style: sublistTitleTextStyle,
+                "${data?.activityName ?? ''} (${data?.activityBy ?? ''})",
+                style: sublistTitleTextStyle.copyWith(
+                  color: AppConst.isLightTheme(context)
+                      ? blueJNE
+                      : warningColor,
+                  fontWeight: bold,
+                ),
               ),
             ),
             CustomFilledButton(

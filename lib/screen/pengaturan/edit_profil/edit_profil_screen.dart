@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
+import '../../../const/app_const.dart';
+
 class EditProfilScreen extends StatelessWidget {
   const EditProfilScreen({super.key});
 
@@ -123,7 +125,9 @@ class EditProfilScreen extends StatelessWidget {
               readOnly: true,
             ),
             CustomFilledButton(
-              color: blueJNE,
+              color: AppConst.isLightTheme(context)
+                  ? blueJNE
+                  : warningColor,
               title: "Edit Profil".tr,
               onPressed: () => c.editProfile(),
             )

@@ -23,6 +23,11 @@ class DashboardPromo extends StatelessWidget {
                     // const DateDropdownFilterButton(),
                   ],
                 ),
+                const SizedBox(height: 10),
+                const Divider(
+                  color: Colors.grey,
+                ),
+                const SizedBox(height: 10),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(

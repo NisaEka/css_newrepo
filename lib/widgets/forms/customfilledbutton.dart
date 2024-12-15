@@ -96,7 +96,7 @@ class CustomFilledButton extends StatelessWidget {
                                           ? color
                                           : whiteColor
                                       : fontColor,
-                                  fontWeight: FontWeight.w100,
+                                  fontWeight: FontWeight.w900,
                                   fontSize: fontSize),
                           textAlign: TextAlign.center,
                         ),
