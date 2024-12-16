@@ -19,6 +19,33 @@ class PantauItems extends StatelessWidget {
     return GetBuilder<PantauPaketmuController>(
       init: PantauPaketmuController(),
       builder: (c) {
+        IconData getStatusIcon(String status) {
+          switch (status) {
+            case 'Sudah Dijemput':
+              return Icons.directions_car;
+            case 'Sudah Di Gudang JNE':
+              return Icons.location_city;
+            case 'Sudah Di Kota Tujuan':
+              return Icons.location_on_outlined;
+            case 'Dalam Proses':
+              return Icons.hourglass_empty;
+            case 'Sukses Diterima':
+              return Icons.check_circle_outline;
+            case 'Butuh Dicek':
+              return Icons.warning;
+            case 'Proses Pengembalian Ke Kamu':
+              return Icons.reply;
+            case 'Sukses Dikembalikan Ke Kamu':
+              return Icons.done_all;
+            case 'Dalam Peninjauan':
+              return Icons.search;
+            case 'Dibatalkan Oleh Kamu':
+              return Icons.cancel_outlined;
+            default:
+              return Icons.error_outline;
+          }
+        }
+
         return InkWell(
           onTap: () {
             if (item != null && !c.state.isLoading) {
@@ -237,11 +264,11 @@ class PantauItems extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    const Column(
+                    Column(
                       children: [
-                        SizedBox(height: 10),
-                        Icon(Icons.location_on_outlined,
-                            color: greyLightColor2, size: 100)
+                        const SizedBox(height: 10),
+                        Icon(getStatusIcon(item?.status ?? ''),
+                            color: greyLightColor2, size: 100),
                       ],
                     ),
                   ],

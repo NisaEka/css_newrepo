@@ -46,6 +46,8 @@ class ImageConstant {
 
   static const String folderIcon = "assets/images/folder.png";
 
+  static const String dataEmpty = "assets/images/data_empty.png";
+
   static const List dashboardCountIcons = [
     jmlTransaksi,
     masihDikamu,
