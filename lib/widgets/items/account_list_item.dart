@@ -71,7 +71,7 @@ class _AccountListItemState extends State<AccountListItem> {
                       style: listTitleTextStyle.copyWith(
                           color: AppConst.isLightTheme(context)
                               ? blueJNE
-                              : redJNE),
+                              : greyLightColor2),
                     ),
                     widget.isSelected
                         ? const Icon(Icons.check, color: successColor)

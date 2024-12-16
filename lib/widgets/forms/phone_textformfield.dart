@@ -14,7 +14,7 @@ class PhoneTextFormField extends HookWidget {
   Widget build(BuildContext context) {
     return CustomTextFormField(
       controller: controller,
-      prefixIcon: const Icon(Icons.phone),
+      prefixIcon: const Icon(Icons.phone_rounded),
       hintText: 'No Handphone'.tr,
       isRequired: true,
       inputType: TextInputType.number,

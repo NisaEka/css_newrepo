@@ -57,7 +57,7 @@ class MenuIcon extends StatelessWidget {
               strokeAlign: BorderSide.strokeAlignInside,
               color: background ??
                   ((AppConst.isDarkTheme(context)
-                      ? infoColor
+                      ? warningColor
                       : (isTransparent ? blueJNE : Colors.transparent))),
             ),
           ),

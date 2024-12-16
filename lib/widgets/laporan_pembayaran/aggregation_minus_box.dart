@@ -25,7 +25,7 @@ class AggregationMinusBox extends StatelessWidget {
           BoxShadow(
             color: blueJNE,
             spreadRadius: 1,
-            offset: Offset(-3, 3),
+            offset: Offset(-2, 2),
           ),
         ],
       ),

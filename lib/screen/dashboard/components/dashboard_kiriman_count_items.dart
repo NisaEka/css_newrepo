@@ -30,8 +30,8 @@ class DashboardKirimanCountItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> messages = [
-      "Real Time",
-      "Sentuh untuk sinkronisasi manual",
+      "Realtime".tr,
+      "Sentuh untuk sinkronisasi manual".tr,
     ];
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -58,7 +58,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                 Text("Kiriman Kamu".tr,
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 3),
+                const SizedBox(height: 10),
                 Column(
                   children: [
                     Shimmer(
@@ -104,7 +104,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                         ?.toInt() ??
                                     0,
                               ),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 16),
                             ],
                           ),
                           // Transaksi Terkini
@@ -165,6 +165,8 @@ class DashboardKirimanCountItem extends StatelessWidget {
                     )
                   ],
                 ),
+
+                const SizedBox(height: 8),
               ],
             ),
           ),
@@ -176,7 +178,11 @@ class DashboardKirimanCountItem extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(CupertinoIcons.clock),
+                  Icon(CupertinoIcons.clock_solid,
+                      size: 15,
+                      color: AppConst.isLightTheme(context)
+                          ? redJNE
+                          : warningColor),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Container(
@@ -219,7 +225,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall
-                                    ?.copyWith(fontWeight: FontWeight.bold),
+                                    ?.copyWith(fontWeight: FontWeight.normal),
                               ),
                             ),
                           );

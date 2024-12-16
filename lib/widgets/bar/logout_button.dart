@@ -45,13 +45,14 @@ class LogoutButton extends StatelessWidget {
             onTap: () => isLogin
                 ? showDialog(
                     context: context,
-                    builder: (context) =>
-                        LogoutAlertDialog(onLogout: () => doLogout()),
+                    builder: (context) => LogoutAlertDialog(
+                      onLogout: () => doLogout(),
+                    ),
                   )
                 : Get.to(() => const LoginScreen()),
             leading: Icon(
-              isLogin ? Icons.logout : Icons.login,
-              color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+              isLogin ? Icons.logout_rounded : Icons.login_rounded,
+              color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
             ),
             title: Text(
               isLogin ? 'Keluar'.tr : 'Masuk'.tr,
@@ -77,14 +78,23 @@ class LogoutButton extends StatelessWidget {
     final auth = Get.find<AuthRepository>();
     final storage = Get.find<StorageCore>();
 
-    await auth.logout().then((value) async {
-      AppLogger.d(value.toJson().toString());
+    final refreshToken = await StorageCore().readRefreshToken() ?? '';
+    try {
+      await auth.logout(refreshToken).then((value) async {
+        AppLogger.d(value.toJson().toString());
+      });
       await auth.updateDeviceInfo(
-        DeviceModel(fcmToken: await storage.readString(StorageCore.fcmToken)),
+        DeviceModel(
+          fcmToken: await storage.readString(StorageCore.fcmToken),
+          registrationId: "",
+        ),
       );
-      storage.deleteLogin();
-      Get.offAll(() => const LoginScreen());
-      // }
-    });
+    } catch (e, i) {
+      AppLogger.e("error logout : $e");
+      AppLogger.e("error logout : $i");
+    }
+
+    storage.deleteLogin();
+    Get.offAll(() => const LoginScreen());
   }
 }

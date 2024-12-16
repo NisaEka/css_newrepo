@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,19 +47,25 @@ class NewsItem extends StatelessWidget {
                   width: Get.width / 2,
                   height: promo != null ? Get.width / 2 : null,
                   placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor,
+                    child: Shimmer(
+                      isLoading: true,
+                      child: Container(
+                        height: Get.width / 2,
+                        width: Get.width / 3,
+                        color: greyColor,
+                      ),
                     ),
                   ),
                   errorWidget: (context, url, error) => const Center(
                     child: Icon(
-                      Icons.broken_image,
+                      Icons.broken_image_rounded,
                       color: redJNE,
                       size: 50,
                     ),
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
               Text(
                 lang == "id"
                     ? news?.detail?.where((e) => e.lang == "id").first.title ??
@@ -78,13 +85,19 @@ class NewsItem extends StatelessWidget {
   }
 
   Future<void> _launchUrl() async {
-    if (await launchUrl(Uri.parse(lang == "id"
+    final url = lang == "id"
         ? news?.detail?.where((e) => e.lang == "id").first.externalLink ?? ''
-        : news?.detail?.where((e) => e.lang == "en").first.externalLink ??
-            ''))) {
-      throw Exception(
-          'Could not launch ${lang == "id" ? news?.detail?.where((e) => e.lang == "id").first.externalLink : news?.detail?.where((e) => e.lang == "en").first.externalLink}');
+        : news?.detail?.where((e) => e.lang == "en").first.externalLink ?? '';
+
+    try {
+      await launchUrl(Uri.parse(url));
+    } catch (e) {
+      AppSnackBar.error('Failed to launch news link');
+      throw Exception('Could not launch $url');
     }
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {}
   }
 
   void _showImagePreview(BuildContext context, String imageUrl) {

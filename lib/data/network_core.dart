@@ -1,19 +1,18 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/logger.dart';
-import 'package:css_mobile/util/snackbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
-import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'storage_core.dart';
 
 class NetworkCore {
   static final noNeedToken = [
     '/login',
     '/auth/device-infos',
+    '/authentications/refresh',
+    '/authentications/logout',
   ];
 
   static bool isNeedToken(String route) => !noNeedToken.contains(route);
@@ -106,18 +105,20 @@ class NetworkCore {
         },
         onError: (dioError, handler) async {
           AppLogger.e("dio error : $dioError");
-          if (dioError.response == null) {
-            AppSnackBar.error("Connection timeout");
-          }
+          // if (dioError.response == null) {
+          //   AppSnackBar.error("Connection timeout");
+          // }
           final refreshToken = await StorageCore().readRefreshToken();
           AppLogger.i("refresh token local : $refreshToken");
-          if ((dioError.requestOptions.path != '/auth/device-infos') ||
-              (dioError.requestOptions.path != '/authentications/refresh')) {
+          // if ((dioError.requestOptions.path != '/auth/device-infos') || (dioError.requestOptions.path != '/authentications/refresh')) {
+          if (noNeedToken
+              .where((e) => e != dioError.requestOptions.path)
+              .isNotEmpty) {
             if (dioError.response?.statusCode == 401) {
               // Handle token refresh logic
               if (refreshToken != null) {
                 try {
-                  Response response = await base.post(
+                  Response response = await refreshDio.post(
                     '/authentications/refresh',
                     data: {
                       "refreshToken": refreshToken,
@@ -141,7 +142,6 @@ class NetworkCore {
                   // Update the request header with the new access token
                   dioError.requestOptions.headers['Authorization'] =
                       'Bearer ${newToken.data?.token?.accessToken}';
-
                   AppLogger.i("new token : $newToken");
                   // Repeat the request with the updated header
                   return handler
@@ -149,10 +149,11 @@ class NetworkCore {
                 } on DioException catch (e) {
                   AppLogger.e(
                       "refresh token error status code : ${e.response?.statusCode}");
-                  if (e.response?.statusCode == 401) {
-                    StorageCore().deleteLogin();
-                    Get.offAll(const DashboardScreen());
-                  }
+                  AppLogger.e("refresh token error  : ${e.response?.data}");
+                  // if (e.response?.statusCode == 401) {
+                  //   StorageCore().deleteLogin();
+                  //   Get.offAll(const DashboardScreen());
+                  // }
                   return handler.reject(dioError);
                 }
               }

@@ -84,12 +84,12 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                           border: Border.all(
                               color: Theme.of(context).brightness ==
                                       Brightness.light
-                                  ? blueJNE
+                                  ? redJNE
                                   : redJNE,
                               width: 2),
                         ),
                         child: Icon(
-                          Icons.playlist_add_check_rounded,
+                          Icons.indeterminate_check_box_rounded,
                           color:
                               Theme.of(context).brightness == Brightness.light
                                   ? blueJNE
@@ -108,7 +108,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                             height: widget.isLoading ? 10 : null,
                             child: Text(
                               widget.data?.createddtm.toDateTimeFormat() ?? '',
-                              style: sublistTitleTextStyle,
+                              style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ),
                           Container(
@@ -139,37 +139,29 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                         children: [
                           const Divider(thickness: 0.5),
                           ValueItem(
-                            title: "CUST GROUP",
-                            value: widget.data?.custGroupId ?? '-',
-                          ),
-                          ValueItem(
-                            title: "CUST ID",
-                            value: widget.data?.custId ?? '-',
-                          ),
-                          ValueItem(
-                            title: "CUST NAME",
-                            value: widget.data?.custName ?? '-',
-                          ),
-                          const Divider(thickness: 0.5),
-                          ValueItem(
                             title: "COD AMOUNT",
+                            fontSize: 10,
                             value:
-                                "RP. ${widget.data?.codAmt.toCurrency() ?? '-'}",
+                                "RP. ${widget.data?.codAmt.toCurrency() ?? '0'}",
+                            valueFontColor: infoColor,
                           ),
                           ValueItem(
                             title: "COD FEE ( ONGKIR DLL )",
+                            fontSize: 10,
                             value:
-                                "RP. ${widget.data?.codFee.toCurrency() ?? '-'}",
-                            valueFontColor: errorColor,
+                                "RP. ${widget.data?.codFee.toCurrency() ?? '0'}",
+                            valueFontColor: successColor,
                           ),
                           ValueItem(
                             title: "NET AMOUNT",
+                            fontSize: 10,
                             value:
-                                "RP. ${widget.data?.netAmt.toCurrency() ?? '-'}",
+                                "RP. ${widget.data?.netAmt.toCurrency() ?? '0'}",
+                            valueFontColor: errorColor,
                           ),
                           CustomFilledButton(
                               title: "Lihat Detail".tr,
-                              color: Colors.blue,
+                              color: blueJNE,
                               onPressed: () => {widget.onTap()})
                         ],
                       )

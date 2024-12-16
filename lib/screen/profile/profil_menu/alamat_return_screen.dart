@@ -39,7 +39,7 @@ class AlamatReturnScreen extends StatelessWidget {
                 DataUmumListItem(
                   title: c.ccrfProfil?.returnAddress?.responsibleName ?? '-',
                   subtitle: c.ccrfProfil?.returnAddress?.npwpName ?? '-',
-                  icon: Icons.person_pin,
+                  icon: Icons.person_2_rounded,
                   tooltip: '${'Nama Penanggung Jawab'.tr}\n${'Nama NPWP'.tr}',
                 ),
                 DataUmumListItem(
@@ -71,7 +71,7 @@ class AlamatReturnScreen extends StatelessWidget {
                       ", ${c.ccrfProfil?.returnAddress?.province ?? '-'}"
                       ", ${c.ccrfProfil?.returnAddress?.zipCode ?? '-'}",
                   // subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
-                  icon: Icons.home,
+                  icon: Icons.home_work_rounded,
                   tooltip: 'Alamat Lengkap'.tr,
                 ),
                 // DataUmumListItem(
@@ -114,7 +114,11 @@ class AlamatReturnScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: const Icon(Icons.info_rounded, color: redJNE),
+            icon: Icon(Icons.info_rounded, color:
+            Theme.of(context).brightness ==
+              Brightness.light
+              ? redJNE
+                  : warningColor),
             tooltip: 'informasi'.tr,
           ),
         )

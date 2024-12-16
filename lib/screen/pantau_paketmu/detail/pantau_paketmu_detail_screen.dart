@@ -50,7 +50,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
   Widget _mainContent(
       BuildContext context, PantauPaketmuDetailController controller) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,242 +59,300 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
               color: Theme.of(context).cardColor,
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(16))),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomCodeLabel(
-                          label: controller.pantauPaketmu.awbNo,
-                          isLoading: false,
-                        ),
-                        Row(
-                          children: [
-                            CustomFilledButton(
-                              color: warningColor,
-                              isTransparent: true,
-                              prefixIcon: Icons.phone,
-                              width: 40,
-                              height: 40,
-                              fontSize: 19,
-                              isLoading: false,
-                              onPressed: () async {
-                                Get.bottomSheet(
-                                  enableDrag: true,
-                                  isDismissible: true,
-                                  // isScrollControlled: true,
-                                  StatefulBuilder(builder:
-                                      (BuildContext context,
-                                          StateSetter setState) {
-                                    return HubungiAkuDialog(
-                                      awb: controller.pantauPaketmu.awbNo,
-                                      allow: controller.allow ?? MenuModel(),
-                                    );
-                                  }),
-                                );
-                              },
-                            ),
-                            const SizedBox(width: 10),
-                            CustomFilledButton(
-                              color: errorColor,
-                              isTransparent: true,
-                              prefixIcon: Icons.print,
-                              width: 40,
-                              height: 40,
-                              fontSize: 19,
-                              isLoading: false,
-                              onPressed: () {
-                                Get.to(const LabelScreen(), arguments: {
-                                  'data': controller.transactionData,
-                                });
-                              },
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Shimmer(
-                      isLoading: controller.isLoading,
-                      child: Container(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(
-                            right: 20), // Margin between the two text widgets
-                        child: Text(
-                          'Informasi Transaksi'.tr,
-                          style: listTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : redJNE,
-                          ),
-                        ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomCodeLabel(
+                        label: controller.pantauPaketmu.awbNo,
+                        isLoading: false,
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    _textRow(
-                      context,
-                      "Nomor Akun",
-                      controller.pantauPaketmu.custNo ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Nama Akun",
-                      controller.pantauPaketmu.custName ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Order Id",
-                      controller.pantauPaketmu.transaction?.orderId ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Petugas Entry",
-                      controller.pantauPaketmu.transaction?.petugasEntry ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Tanggal Transaksi",
-                      controller.pantauPaketmu.createDate.toDateTimeFormat(),
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Tanggal Serah Terima / Pickup",
-                      controller.pantauPaketmu.hoCourierDate
-                              ?.toDateTimeFormat() ??
-                          controller.pantauPaketmu.puLastAttempStatusDate
-                              ?.toDateTimeFormat() ??
-                          "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 16),
-                    const Divider(
-                      color: greyLightColor3,
-                    ),
-                    const SizedBox(height: 16),
-                    Shimmer(
-                      isLoading: controller.isLoading,
-                      child: Container(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(
-                            right: 20), // Margin between the two text widgets
-                        child: Text(
-                          'Detail Kiriman'.tr,
-                          style: listTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : redJNE,
+                      Row(
+                        children: [
+                          CustomFilledButton(
+                            color: warningColor,
+                            isTransparent: true,
+                            prefixIcon: Icons.phone,
+                            width: 40,
+                            height: 40,
+                            fontSize: 19,
+                            isLoading: false,
+                            onPressed: () async {
+                              Get.bottomSheet(
+                                enableDrag: true,
+                                isDismissible: true,
+                                // isScrollControlled: true,
+                                StatefulBuilder(builder: (BuildContext context,
+                                    StateSetter setState) {
+                                  return HubungiAkuDialog(
+                                    awb: controller.pantauPaketmu.awbNo,
+                                    allow: controller.allow ?? MenuModel(),
+                                  );
+                                }),
+                              );
+                            },
                           ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    _textRow(
-                      context,
-                      "Nama Pengirim",
-                      controller.pantauPaketmu.cnoteShipperName ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Nama Penerima",
-                      controller.pantauPaketmu.cnoteReceiverName ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Alamat Penerima",
-                      '${controller.pantauPaketmu.cnoteReceiverAddr1 ?? ''}${controller.pantauPaketmu.cnoteReceiverAddr2 ?? ''}${controller.pantauPaketmu.cnoteReceiverAddr3 ?? ''}',
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Kota Tujuan Penerima",
-                      controller.pantauPaketmu.destinationName ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Isi Kiriman",
-                      controller.pantauPaketmu.awbGoodsDescr ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Special Instructions",
-                      controller.pantauPaketmu.awbSpecialIns ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Berat Kiriman",
-                      controller.pantauPaketmu.weightAwb != null
-                          ? '${controller.pantauPaketmu.weightAwb?.toDouble().toString()} KG'
-                          : "- KG",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Service",
-                      controller.pantauPaketmu.service,
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                        context,
-                        "Nominal COD",
-                        'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
-                        controller.isLoading,
-                        style: listTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : redJNE)),
-                    const SizedBox(height: 6),
-                    _textRow(
-                        context,
-                        "Nominal Asuransi",
-                        'Rp. ${controller.pantauPaketmu.awbInsuranceValue?.toCurrency().toString() ?? '0'}',
-                        controller.isLoading,
+                          const SizedBox(width: 10),
+                          CustomFilledButton(
+                            color: errorColor,
+                            isTransparent: true,
+                            prefixIcon: Icons.print,
+                            width: 40,
+                            height: 40,
+                            fontSize: 19,
+                            isLoading: false,
+                            onPressed: () {
+                              Get.to(const LabelScreen(), arguments: {
+                                'data': controller.transactionData,
+                              });
+                            },
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Shimmer(
+                    isLoading: controller.isLoading,
+                    child: Container(
+                      color:
+                          controller.isLoading ? greyColor : Colors.transparent,
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(
+                          right: 20), // Margin between the two text widgets
+                      child: Text(
+                        'Informasi Transaksi'.tr,
                         style: listTitleTextStyle.copyWith(
                           color:
-                              AppConst.isLightTheme(context) ? blueJNE : redJNE,
-                        )),
-                    const SizedBox(height: 6),
-                    _textRow(
-                        context,
-                        "Ongkos Kirim",
-                        'Rp. ${controller.pantauPaketmu.awbAmount?.toCurrency().toString() ?? '0'}',
-                        controller.isLoading,
+                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _textRow(
+                    context,
+                    "Nomor Akun",
+                    controller.pantauPaketmu.custNo ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Nama Akun",
+                    controller.pantauPaketmu.custName ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Order Id",
+                    controller.pantauPaketmu.transaction?.orderId ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Petugas Entry",
+                    controller.pantauPaketmu.transaction?.petugasEntry ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Tanggal Transaksi",
+                    controller.pantauPaketmu.createDate.toDateTimeFormat(),
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Tanggal Serah Terima / Pickup",
+                    controller.pantauPaketmu.hoCourierDate
+                            ?.toDateTimeFormat() ??
+                        controller.pantauPaketmu.puLastAttempStatusDate
+                            ?.toDateTimeFormat() ??
+                        "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 16),
+                  const Divider(
+                    color: greyLightColor3,
+                  ),
+                  const SizedBox(height: 16),
+                  Shimmer(
+                    isLoading: controller.isLoading,
+                    child: Container(
+                      color:
+                          controller.isLoading ? greyColor : Colors.transparent,
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(
+                          right: 20), // Margin between the two text widgets
+                      child: Text(
+                        'Detail Kiriman'.tr,
                         style: listTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : redJNE)),
+                          color:
+                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _textRow(
+                    context,
+                    "Nama Pengirim",
+                    controller.pantauPaketmu.cnoteShipperName ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Nama Penerima",
+                    controller.pantauPaketmu.cnoteReceiverName ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Alamat Penerima",
+                    '${controller.pantauPaketmu.cnoteReceiverAddr1 ?? ''}${controller.pantauPaketmu.cnoteReceiverAddr2 ?? ''}${controller.pantauPaketmu.cnoteReceiverAddr3 ?? ''}',
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Kota Tujuan Penerima",
+                    controller.pantauPaketmu.destinationName ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Isi Kiriman",
+                    controller.pantauPaketmu.awbGoodsDescr ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Special Instructions",
+                    controller.pantauPaketmu.awbSpecialIns ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Berat Kiriman",
+                    controller.pantauPaketmu.weightAwb != null
+                        ? '${controller.pantauPaketmu.weightAwb?.toDouble().toString()} KG'
+                        : "- KG",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Service",
+                    controller.pantauPaketmu.service,
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                      context,
+                      "Nominal COD",
+                      'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
+                      controller.isLoading,
+                      style: listTitleTextStyle.copyWith(
+                          color: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : Colors.lightBlueAccent)),
+                  const SizedBox(height: 6),
+                  _textRow(
+                      context,
+                      "Nominal Asuransi",
+                      'Rp. ${controller.pantauPaketmu.awbInsuranceValue?.toCurrency().toString() ?? '0'}',
+                      controller.isLoading,
+                      style: listTitleTextStyle.copyWith(
+                        color:
+                            AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
+                      )),
+                  const SizedBox(height: 6),
+                  _textRow(
+                      context,
+                      "Ongkos Kirim",
+                      'Rp. ${controller.pantauPaketmu.awbAmount?.toCurrency().toString() ?? '0'}',
+                      controller.isLoading,
+                      style: listTitleTextStyle.copyWith(
+                          color: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : Colors.lightBlueAccent)),
+                  const SizedBox(height: 16),
+                  const Divider(
+                    color: greyLightColor3,
+                  ),
+                  const SizedBox(height: 16),
+                  Shimmer(
+                    isLoading: controller.isLoading,
+                    child: Container(
+                      color:
+                          controller.isLoading ? greyColor : Colors.transparent,
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(
+                          right: 20), // Margin between the two text widgets
+                      child: Text(
+                        'Informasi Pengantaran'.tr,
+                        style: listTitleTextStyle.copyWith(
+                          color:
+                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _textRow(
+                    context,
+                    "Tanggal Status Pengantaran",
+                    controller.pantauPaketmu.tglReceived?.toDateTimeFormat(),
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Status Pengantaran",
+                    controller.pantauPaketmu.statusPod ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Deskripsi Status",
+                    controller.pantauPaketmu.codingPod ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Keterangan Status Penerima",
+                    controller.pantauPaketmu.receivedReason ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Bukti Foto Penerima",
+                    controller.pantauPaketmu.podlEpodUrlPic ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
+                    "Bukti Tanda Tangan Penerima",
+                    controller.pantauPaketmu.podlEpodUrl ?? "-",
+                    controller.isLoading,
+                  ),
+                  if (controller.pantauPaketmu.codFlag == 'Y') ...[
                     const SizedBox(height: 16),
                     const Divider(
                       color: greyLightColor3,
@@ -306,68 +364,6 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                         color: controller.isLoading
                             ? greyColor
                             : Colors.transparent,
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(
-                            right: 20), // Margin between the two text widgets
-                        child: Text(
-                          'Informasi Pengantaran'.tr,
-                          style: listTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : redJNE,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    _textRow(
-                      context,
-                      "Tanggal Status Pengantaran",
-                      controller.pantauPaketmu.tglReceived?.toDateTimeFormat(),
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Status Pengantaran",
-                      controller.pantauPaketmu.statusPod ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Deskripsi Status",
-                      controller.pantauPaketmu.codingPod ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Keterangan Status Penerima",
-                      controller.pantauPaketmu.receivedReason ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Bukti Foto Penerima",
-                      controller.pantauPaketmu.podlEpodUrlPic ?? "-",
-                      controller.isLoading,
-                    ),
-                    const SizedBox(height: 6),
-                    _textRow(
-                      context,
-                      "Bukti Tanda Tangan Penerima",
-                      controller.pantauPaketmu.podlEpodUrl ?? "-",
-                      controller.isLoading,
-                    ),
-                    if (controller.pantauPaketmu.codFlag == 'Y') ...[
-                      const SizedBox(height: 16),
-                      const Divider(
-                        color: greyLightColor3,
-                      ),
-                      const SizedBox(height: 16),
-                      Container(
                         alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.only(
                             right: 20), // Margin between the two text widgets
@@ -376,47 +372,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                           style: listTitleTextStyle.copyWith(
                             color: AppConst.isLightTheme(context)
                                 ? blueJNE
-                                : redJNE,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      _textRow(
-                        context,
-                        "Reff ID",
-                        controller.pantauPaketmu.repcssPaymentReffid ?? "-",
-                        controller.isLoading,
-                      ),
-                      const SizedBox(height: 6),
-                      _textRow(
-                        context,
-                        "Tanggal Pembayaran",
-                        controller.pantauPaketmu.repcssPaymentDate
-                                ?.toDateTimeFormat() ??
-                            "-",
-                        controller.isLoading,
-                      ),
-                    ],
-                    const SizedBox(height: 16),
-                    const Divider(
-                      color: greyLightColor3,
-                    ),
-                    const SizedBox(height: 16),
-                    Shimmer(
-                      isLoading: controller.isLoading,
-                      child: Container(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(
-                            right: 20), // Margin between the two text widgets
-                        child: Text(
-                          'Informasi Tiket Laporan'.tr,
-                          style: listTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : redJNE,
+                                : warningColor,
                           ),
                         ),
                       ),
@@ -424,12 +380,50 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     _textRow(
                       context,
-                      "No Tiket Laporan",
-                      controller.pantauPaketmu.ticket?.id ?? "-",
+                      "Reff ID",
+                      controller.pantauPaketmu.repcssPaymentReffid ?? "-",
+                      controller.isLoading,
+                    ),
+                    const SizedBox(height: 6),
+                    _textRow(
+                      context,
+                      "Tanggal Pembayaran",
+                      controller.pantauPaketmu.repcssPaymentDate
+                              ?.toDateTimeFormat() ??
+                          "-",
                       controller.isLoading,
                     ),
                   ],
-                ),
+                  const SizedBox(height: 16),
+                  const Divider(
+                    color: greyLightColor3,
+                  ),
+                  const SizedBox(height: 16),
+                  Shimmer(
+                    isLoading: controller.isLoading,
+                    child: Container(
+                      color:
+                          controller.isLoading ? greyColor : Colors.transparent,
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(
+                          right: 20), // Margin between the two text widgets
+                      child: Text(
+                        'Informasi Tiket Laporan'.tr,
+                        style: listTitleTextStyle.copyWith(
+                          color:
+                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _textRow(
+                    context,
+                    "No Tiket Laporan",
+                    controller.pantauPaketmu.ticket?.id ?? "-",
+                    controller.isLoading,
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 32),

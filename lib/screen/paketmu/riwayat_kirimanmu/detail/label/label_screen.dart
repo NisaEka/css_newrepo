@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_controller.dart';
+import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
@@ -18,6 +19,8 @@ class LabelScreen extends StatelessWidget {
           return Scaffold(
               appBar: AppBar(
                 title: Text("Lihat Resi".tr),
+                leading: const CustomBackButton(
+                ),
               ),
               body: Screenshot(
                 controller: controller.screenshotController,
@@ -33,10 +36,10 @@ class LabelScreen extends StatelessWidget {
               ),
               floatingActionButton: FloatingActionButton(
                 // shape: const CircleBorder(),
-                backgroundColor: redJNE,
+                backgroundColor: blueJNE,
                 onPressed: () => controller.capture(context),
                 child: const Icon(
-                  Icons.picture_as_pdf,
+                  Icons.picture_as_pdf_rounded,
                   color: whiteColor,
                 ),
                 // ),

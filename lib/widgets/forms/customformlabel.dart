@@ -34,7 +34,6 @@ class CustomFormLabel extends StatelessWidget {
         width: width ?? (isLoading ? Get.width / 3 : null),
         margin: const EdgeInsets.symmetric(vertical: 5),
         child: RichText(
-          overflow: TextOverflow.ellipsis,
           text: TextSpan(
             text: label,
             style: subformLabelTextStyle.copyWith(

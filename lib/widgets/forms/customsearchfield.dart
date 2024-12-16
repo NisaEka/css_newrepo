@@ -64,7 +64,7 @@ class CustomSearchField<T> extends StatelessWidget {
                       ? redJNE
                       : Theme.of(context).brightness == Brightness.light
                           ? blueJNE
-                          : whiteColor,
+                          : warningColor,
                   width: 2,
                 ),
               ),
@@ -75,7 +75,7 @@ class CustomSearchField<T> extends StatelessWidget {
                       ? redJNE
                       : Theme.of(context).brightness == Brightness.light
                           ? blueJNE
-                          : whiteColor,
+                          : warningColor,
                   width: 2,
                 ),
               ),
@@ -96,7 +96,7 @@ class CustomSearchField<T> extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Theme.of(context).brightness == Brightness.light
                             ? blueJNE
-                            : whiteColor,
+                            : warningColor,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(8),
                           bottomLeft: Radius.circular(8),
@@ -114,7 +114,7 @@ class CustomSearchField<T> extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Theme.of(context).brightness == Brightness.light
                             ? blueJNE
-                            : whiteColor,
+                            : warningColor,
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(8),
                           bottomRight: Radius.circular(8),

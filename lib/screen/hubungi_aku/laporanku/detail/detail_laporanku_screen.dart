@@ -7,10 +7,14 @@ import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/forms/detail_content.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../../const/textstyle.dart';
+import '../../../../widgets/dialog/shimer_loading_dialog.dart';
+import '../../../../widgets/items/text_row_item.dart';
 
 class DetailLaporankuScreen extends StatelessWidget {
   final TicketModel data;
@@ -43,49 +47,96 @@ class DetailLaporankuScreen extends StatelessWidget {
 
   Widget _bodyContent(DetailLaporankuController c, BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(30),
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: AppConst.isLightTheme(context) ? greyLightColor3 : greyColor,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          DetailContent(
-            title: "No Resi".tr,
-            value: data.cnote ?? '-',
-          ),
-          DetailContent(
-            title: "Status".tr,
-            value: data.status == "Closed"
-                ? "Selesai".tr
-                : data.status == "Reply CS"
-                    ? "Masih Diproses".tr
-                    : "Belum Diproses".tr,
-            valueColor: data.status == "Closed"
-                ? successLightColor3
-                : data.status == "Reply CS"
-                    ? warningLightColor3
-                    : greyDarkColor2,
-          ),
-          DetailContent(
-            title: "Kategori".tr,
-            value: data.category?.categoryDescription ?? '-',
-          ),
-          DetailContent(
-            title: "Prioritas".tr,
-            value: data.priority == "Y" ? 'Ya'.tr : 'Tidak'.tr,
-          ),
-          DetailContent(
-            title: "Tanggal Dibuat".tr,
-            value: data.createdDate?.toShortDateTimeFormat() ?? '-',
-          ),
-          DetailContent(
-            title: "Tanggal Diupdate".tr,
-            value: data.updatedDate?.toShortDateTimeFormat() ?? '-',
-          ),
-        ],
+      margin: const EdgeInsets.only(left: 30, top: 16, right: 30),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card.filled(
+              color: Theme.of(context).cardColor,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomCodeLabel(
+                          label: data.cnote ?? '-',
+                        isLoading: false,
+                      ),
+                      Row(
+                        children: [
+                          CustomFilledButton(
+                              color: successColor,
+                              isTransparent: true,
+                              prefixIcon: Icons.chat_bubble_rounded,
+                              width: 40,
+                              height: 40,
+                              fontSize: 19,
+                              isLoading: false,
+                              onPressed: () => Get.to(const ObrolanLaporankuScreen(),
+                                arguments: {
+                                  "id": data.id,
+                                  "ticket": data,
+                                }),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Shimmer(
+                    child: Container(
+                      color:
+                      Colors.transparent,
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(
+                          right: 20), // Margin between the two text widgets
+                      child: Text(
+                        'Informasi Tiket Laporan'.tr,
+                        style: listTitleTextStyle.copyWith(
+                          color:
+                          AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextRowItem(
+                    title: "Tanggal Laporan".tr,
+                    value: data.createdDate?.toShortDateTimeFormat() ?? '-',
+                  ),
+                  TextRowItem(
+                    title: "Update Terakhir".tr,
+                    value: data.updatedDate?.toShortDateTimeFormat() ?? '-',
+                  ),
+                  const SizedBox(height: 10),
+                  const Divider(color: greyColor),
+                  const SizedBox(height: 10),
+                  TextRowItem(
+                    title: "Status Laporan".tr,
+                    value: data.status == "Closed"
+                        ? "Selesai".tr
+                        : data.status == "Reply CS"
+                        ? "Masih Diproses".tr
+                        : "Belum Diproses".tr,
+                  ),
+                  TextRowItem(
+                    title: "Kategori".tr,
+                    value: data.category?.categoryDescription ?? '-',
+                  ),
+                  TextRowItem(
+                    title: "Prioritas".tr,
+                    value: data.priority == "Y" ? 'Ya'.tr : 'Tidak'.tr,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -94,24 +145,19 @@ class DetailLaporankuScreen extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        data.status != "Closed"
-            ? CustomFilledButton(
-                color: redJNE,
-                title: "Selesai".tr,
-                width: Get.width - 50,
-                onPressed: () => c.updateStatus(data.id ?? ''),
-              )
-            : const SizedBox(),
         CustomFilledButton(
-          color: blueJNE,
+          color: AppConst.isLightTheme(context) ? redJNE : warningColor,
           title:
-              data.status == "Closed" ? "Lapor Ulang".tr : "Lihat Obrolan".tr,
-          width: Get.width - 50,
-          onPressed: () => Get.to(const ObrolanLaporankuScreen(), arguments: {
-            "id": data.id,
-            "ticket": data,
-          }),
-        ),
+            data.status != "Closed" ? "Selesai".tr : "Lapor Ulang".tr,
+            width: Get.width - 50,
+            onPressed: () =>
+              data.status != "Closed" ?
+                c.updateStatus(data.id ?? '')
+                  : Get.to(const ObrolanLaporankuScreen(), arguments: {
+                    "id": data.id,
+                    "ticket": data,
+                  }),
+              ),
       ],
     );
   }

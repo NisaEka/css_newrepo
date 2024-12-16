@@ -9,7 +9,7 @@ class ToolTipCustomShape extends ShapeBorder {
 
   const ToolTipCustomShape({
     this.usePadding = true,
-    this.radius = 16.0,
+    this.radius = 6.0,
     this.arrowWidth = 20.0,
     this.arrowHeight = 10.0,
     this.arrowArc = 0,

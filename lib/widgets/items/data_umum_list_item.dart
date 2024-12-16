@@ -39,7 +39,7 @@ class DataUmumListItem extends StatelessWidget {
                   child: Icon(
                     icon,
                     size: 24,
-                    color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                    color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
                   ),
                 ),
                 title: Text(

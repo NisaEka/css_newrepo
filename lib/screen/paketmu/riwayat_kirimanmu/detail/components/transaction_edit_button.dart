@@ -32,9 +32,12 @@ class TransactionEditButton extends StatelessWidget {
                   c.state.allow?.paketmuPrint == 'Y' ||
                           c.state.allow?.cetakPesanan == 'Y'
                       ? CustomFilledButton(
-                          color: blueJNE,
+                          color:
+                            Theme.of(context).brightness == Brightness.light
+                              ? blueJNE
+                              : warningColor,
                           title: "Lihat Resi".tr,
-                          suffixIcon: Icons.receipt_outlined,
+                          suffixIcon: Icons.qr_code_rounded,
                           width: Get.width / 2,
                           height: 50,
                           fontSize: 15,
@@ -52,7 +55,7 @@ class TransactionEditButton extends StatelessWidget {
                               horizontal: 2, vertical: 10),
                           color: successColor,
                           isTransparent: true,
-                          prefixIcon: Icons.edit,
+                          prefixIcon: Icons.edit_rounded,
                           width: 50,
                           height: 50,
                           fontSize: 23,
@@ -77,7 +80,7 @@ class TransactionEditButton extends StatelessWidget {
                               horizontal: 2, vertical: 10),
                           color: errorColor,
                           isTransparent: true,
-                          prefixIcon: Icons.delete,
+                          prefixIcon: Icons.delete_rounded,
                           width: 50,
                           height: 50,
                           fontSize: 23,
@@ -106,7 +109,7 @@ class TransactionEditButton extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 3, vertical: 10),
                     color: warningColor,
                     isTransparent: true,
-                    prefixIcon: Icons.phone,
+                    prefixIcon: Icons.phone_rounded,
                     width: 50,
                     height: 50,
                     fontSize: 23,

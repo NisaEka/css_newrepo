@@ -14,6 +14,8 @@ import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:form_validator/form_validator.dart';
 
+import '../../../../const/textstyle.dart';
+
 class SignupForm extends StatelessWidget {
   const SignupForm({super.key});
 
@@ -45,14 +47,14 @@ class SignupForm extends StatelessWidget {
                         const SizedBox(height: 25),
                         CustomTextFormField(
                           controller: c.state.namaLengkap,
-                          prefixIcon: const Icon(Icons.person),
+                          prefixIcon: const Icon(Icons.person_2_rounded),
                           hintText: 'Nama Lengkap'.tr,
                           isRequired: true,
                           validator: ValidationBuilder().name().build(),
                         ),
                         CustomTextFormField(
                           controller: c.state.namaBrand,
-                          prefixIcon: const Icon(Icons.storefront_sharp),
+                          prefixIcon: const Icon(Icons.store_rounded),
                           hintText: 'Nama Brand / Bisnis'.tr,
                           isRequired: true,
                           validator: ValidationBuilder().name().build(),
@@ -70,19 +72,28 @@ class SignupForm extends StatelessWidget {
                           readOnly: c.state.isDefaultOrigin,
                           value: c.state.selectedOrigin,
                           selectedItem: c.state.kotaPengirim.text,
-                          prefixIcon: const Icon(Icons.location_city),
+                          prefixIcon: const Icon(Icons.trip_origin_rounded),
                         ),
                         c.state.isSelectCounter
                             ? Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Sudah menggunakan JNE'.tr),
+                                  Text('Sudah menggunakan JNE'.tr,
+                                      style: subTitleTextStyle.copyWith(
+                                          color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                              ? blueJNE
+                                              : whiteColor)
+                                  ),
                                   Switch(
                                     value: c.state.pakaiJNE,
                                     activeColor: AppConst.isLightTheme(context)
                                         ? blueJNE
-                                        : redJNE,
+                                        : Colors.lightBlueAccent,
+                                    inactiveThumbColor: AppConst.isLightTheme(context)
+                                        ? blueJNE
+                                        : Colors.lightBlueAccent,
                                     onChanged: (value) {
                                       c.state.pakaiJNE = value;
                                       c.update();
@@ -121,7 +132,8 @@ class SignupForm extends StatelessWidget {
                               ? blueJNE
                               : greyColor,
                           title: 'Daftar'.tr,
-                          radius: 50,
+                          suffixIcon: Icons.app_registration_rounded,
+                          radius: 10,
                           onPressed: () {
                             if (c.state.formKey.currentState?.validate() ==
                                     true &&

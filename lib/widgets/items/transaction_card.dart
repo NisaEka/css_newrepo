@@ -52,8 +52,10 @@ class TransactionCard extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   decoration: BoxDecoration(
-                    color: blueJNE,
-                    borderRadius: BorderRadius.circular(5),
+                    color: AppConst.isLightTheme(context)
+                        ? blueJNE
+                        : warningColor,
+                    borderRadius: BorderRadius.circular(3),
                   ),
                   child: Row(
                     children: [
@@ -64,29 +66,29 @@ class TransactionCard extends StatelessWidget {
                         style: const TextStyle(
                             color: whiteColor,
                             fontWeight: FontWeight.bold,
-                            fontSize: 6),
+                            fontSize: 7),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 13),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Text(
                   count.toString(),
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 22),
                 ),
                 const Spacer(),
                 chart ?? const SizedBox(),
               ],
             ),
-            const SizedBox(height: 13),
+            const SizedBox(height: 16),
             Text(
               subtitle,
               style:
-                  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 6),
+                  Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 8),
             ),
           ],
         ),

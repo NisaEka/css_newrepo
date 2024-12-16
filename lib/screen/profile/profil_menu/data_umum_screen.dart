@@ -39,13 +39,13 @@ class DataUmumScreen extends StatelessWidget {
                 DataUmumListItem(
                   title: c.ccrfProfil?.generalInfo?.brand ?? '-',
                   subtitle: c.ccrfProfil?.generalInfo?.email ?? '-',
-                  icon: Icons.store_mall_directory_rounded,
+                  icon: Icons.store_rounded,
                   tooltip: '${'Nama Brand / Bisnis'.tr}\n${'Alamat email'.tr}',
                 ),
                 DataUmumListItem(
                   title: c.ccrfProfil?.generalInfo?.name ?? '-',
                   subtitle: c.ccrfProfil?.generalInfo?.ktp ?? '-',
-                  icon: Icons.person,
+                  icon: Icons.person_2_rounded,
                   tooltip:
                       '${'Nama Lengkap'.tr}\n${'Nomor Identitas / KTP'.tr}',
                 ),
@@ -54,7 +54,7 @@ class DataUmumScreen extends StatelessWidget {
                       c.ccrfProfil?.generalInfo?.secondPhone ??
                       '-',
                   subtitle: c.ccrfProfil?.generalInfo?.secondPhone ?? '-',
-                  icon: Icons.phone,
+                  icon: Icons.phone_rounded,
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
                 DataUmumListItem(
@@ -74,7 +74,7 @@ class DataUmumScreen extends StatelessWidget {
                               ', ${c.basicProfil?.zipCode}'}" : ""
                           ", ${c.ccrfProfil?.generalInfo?.zipCode ?? '-'}"}",
                   // subtitle: c.ccrfProfil?.generalInfo?.zipCode ?? '-',
-                  icon: Icons.home,
+                  icon: Icons.home_work_rounded,
                   tooltip: 'Alamat Lengkap'.tr,
                 ),
               ],
@@ -106,7 +106,11 @@ class DataUmumScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: const Icon(Icons.info_rounded, color: redJNE),
+            icon: Icon(Icons.info_rounded, color:
+              Theme.of(context).brightness ==
+                Brightness.light
+                ? redJNE
+                : warningColor),
             tooltip: 'informasi'.tr,
           ),
         )

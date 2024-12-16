@@ -65,7 +65,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
 
   Widget _bodyContent(PembayaranAggergasiController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
           PaymentBox(
@@ -74,11 +74,12 @@ class PembayaranAggergasiScreen extends StatelessWidget {
             value: "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
           ),
           CustomSearchField(
+            margin: const EdgeInsets.only(top: 0),
             controller: c.searchField,
             hintText: 'Cari Data Agregasi'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
-              color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,
+              color: AppConst.isLightTheme(context) ? whiteColor : whiteColor,
             ),
             onChanged: (value) => c.onSearch(value),
             onClear: () => c.onSearchClear(),

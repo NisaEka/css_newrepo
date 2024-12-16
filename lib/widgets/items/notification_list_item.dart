@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -35,27 +35,45 @@ class NotificationListItem extends StatelessWidget {
                   : greyDarkColor1,
           height: isLoading ? 100 : null,
           child: ListTile(
-            dense: true,
-            horizontalTitleGap: 2,
-            // trailing: isRead || data.isRead == true
-            //     ? const Icon(
-            //         Icons.circle,
-            //         color: infoColor,
-            //       )
-            //     : const SizedBox(),
+            dense: false,
+            // horizontalTitleGap: 3,
+            trailing: isRead || data.isRead == true
+                ? const Icon(
+                    Icons.circle,
+                    color: infoColor,
+                  )
+                : null,
+            leading: data.title?.split(' ').first != "Laporanku"
+                ? Icon(
+                    Icons.info,
+                    color: isRead
+                        ? infoColor
+                        : (AppConst.isLightTheme(context) ? blueJNE : redJNE),
+                  )
+                : Image.asset(
+                    ImageConstant.hubungiAkuIcon,
+                    height: 30,
+                  ),
             selected: isRead || data.isRead == true,
             selectedColor: infoColor,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(data.title?.split('-').first ?? ''),
-                Text(data.createDate?.toDateTimeFormat() ?? ''),
+                Text(data.title ?? ''),
+                Text(data.createDate?.toDateTimeFormat().toString() ?? ''),
               ],
             ),
-            subtitle: Text(data.text ?? ''),
-            titleTextStyle: listTitleTextStyle.copyWith(
-              color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+            subtitle: SizedBox(
+              height: 20,
+              child: Text(
+                data.text ?? '',
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
+            titleTextStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                ),
+            subtitleTextStyle: Theme.of(context).textTheme.titleSmall,
           ),
         ),
       ),

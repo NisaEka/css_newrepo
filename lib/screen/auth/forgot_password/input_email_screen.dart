@@ -47,16 +47,23 @@ class InputEmailScreen extends StatelessWidget {
                                           : whiteColor),
                                 ),
                               ),
+                              const SizedBox(height: 15),
                               Text(
                                 controller.isChange
                                     ? "change_password".tr
                                     : "forgot_password".tr,
                                 textAlign: TextAlign.center,
+                                  style: subTitleTextStyle.copyWith(
+                                      color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                          ? Colors.black
+                                          : whiteColor)
                               ),
                               const SizedBox(height: 25),
                               CustomTextFormField(
                                 controller: controller.email,
                                 hintText: "Email".tr,
+                                suffixIcon: const Icon(Icons.mail_rounded),
                                 isRequired: true,
                                 validator: ValidationBuilder(
                                         localeName: controller.locale)
@@ -86,6 +93,7 @@ class InputEmailScreen extends StatelessWidget {
                                     ? blueJNE
                                     : greyColor,
                                 title: "Berikutnya".tr,
+                                suffixIcon: Icons.arrow_circle_right_rounded,
                                 onPressed: () => controller.formKey.currentState
                                             ?.validate() ==
                                         true
@@ -97,6 +105,7 @@ class InputEmailScreen extends StatelessWidget {
                                         Brightness.light
                                     ? blueJNE
                                     : Colors.white,
+                                suffixIcon: Icons.cancel_rounded,
                                 isTransparent: true,
                                 title: "Batal".tr,
                                 onPressed: () => Get.back(),

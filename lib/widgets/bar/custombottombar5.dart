@@ -42,7 +42,7 @@ class BottomBar5 extends StatelessWidget {
                 width: Get.width * 0.9,
                 margin: const EdgeInsets.only(bottom: 10),
                 decoration: BoxDecoration(
-                  color: AppConst.isLightTheme(context) ? blueJNE : infoColor,
+                  color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Row(
@@ -56,7 +56,7 @@ class BottomBar5 extends StatelessWidget {
                         color: menu == 0
                             ? AppConst.isLightTheme(context)
                                 ? redJNE
-                                : warningColor
+                                : whiteColor
                             : whiteColor,
                       ),
                       isSelected: menu == 0,
@@ -77,7 +77,7 @@ class BottomBar5 extends StatelessWidget {
                                   : whiteColor,
                               background: AppConst.isLightTheme(context)
                                   ? blueJNE
-                                  : infoColor,
+                                  : warningColor,
                             ),
                             isSelected: menu == 1,
                             onTap: () => controller.state.isLogin
@@ -93,7 +93,7 @@ class BottomBar5 extends StatelessWidget {
                         : const SizedBox(),
                     BottomMenuItem2(
                       icon: Icon(
-                        Icons.person,
+                        Icons.person_2_rounded,
                         color: menu == 2
                             ? AppConst.isLightTheme(context)
                                 ? redJNE

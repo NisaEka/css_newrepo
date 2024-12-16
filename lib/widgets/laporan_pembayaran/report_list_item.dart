@@ -87,22 +87,23 @@ class _ReportListItemState extends State<ReportListItem> {
                   Row(
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(right: 8),
+                        margin: const EdgeInsets.only(right: 18),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3),
+                          color: infoColor,
+                          borderRadius: BorderRadius.circular(50),
                           border: Border.all(
                               color: Theme.of(context).brightness ==
                                       Brightness.light
-                                  ? blueJNE
-                                  : redJNE,
+                                  ? successColor
+                                  : infoColor,
                               width: 2),
                         ),
                         child: Icon(
-                          Icons.playlist_add_check_rounded,
+                          Icons.arrow_downward_rounded,
                           color:
                               Theme.of(context).brightness == Brightness.light
-                                  ? blueJNE
-                                  : redJNE,
+                                  ? Colors.white
+                                  : Colors.white,
                           size: 20,
                         ),
                       ),
@@ -134,12 +135,12 @@ class _ReportListItemState extends State<ReportListItem> {
                                 ? const EdgeInsets.only(top: 2)
                                 : EdgeInsets.zero,
                             child: Text(
-                              "# ${widget.data?.mpayWdrGrpPayNo ?? widget.det?.dpayDetWdrCnoteno ?? ''}",
+                              widget.data?.mpayWdrGrpPayNo ?? widget.det?.dpayDetWdrCnoteno ?? '',
                               style: listTitleTextStyle.copyWith(
                                   color: Theme.of(context).brightness ==
                                           Brightness.light
                                       ? blueJNE
-                                      : redJNE),
+                                      : greyLightColor1),
                             ),
                           ),
                           !showDetail && widget.isShowDetail
@@ -170,39 +171,9 @@ class _ReportListItemState extends State<ReportListItem> {
                           children: [
                             const Divider(thickness: 0.5),
                             ValueItem(
-                              title: "CUST GROUP",
-                              value: widget.data?.mpayWdrGrpPayGroup ?? '-',
-                            ),
-                            ValueItem(
-                              title: "CUST ID",
-                              value: widget.data?.mpayWdrGrpPayCode ?? '-',
-                            ),
-                            ValueItem(
-                              title: "CUST NAME",
-                              value: widget.data?.mpayWdrGrpPayName ?? '-',
-                            ),
-                            const Divider(thickness: 0.5),
-                            ValueItem(
-                              title: "COD AMOUNT",
-                              value:
-                                  "RP. ${widget.data?.mpayWdrGrpPayCodAmt?.toInt().toCurrency() ?? '-'}",
-                            ),
-                            ValueItem(
-                              title: "COD FEE ( ONGKIR DLL )",
-                              value:
-                                  "RP. ${widget.data?.mpayWdrGrpPayCodFee?.toInt().toCurrency() ?? '-'}",
-                              valueFontColor: errorColor,
-                            ),
-                            ValueItem(
-                              title: "NET AMOUNT",
-                              value:
-                                  "RP. ${widget.data?.mpayWdrGrpPayNetAmt?.toInt().toCurrency() ?? '-'}",
-                            ),
-                            const Divider(thickness: 0.5),
-                            ValueItem(
                               title: "PAID AMOUNT",
                               value:
-                                  "RP. ${widget.data?.mpayWdrGrpPayPaidAmt?.toInt().toCurrency() ?? '-'}",
+                                  "RP. ${widget.data?.mpayWdrGrpPayPaidAmt?.toInt().toCurrency() ?? '0'}",
                               valueFontColor: successColor,
                             ),
                             ValueItem(
@@ -212,15 +183,14 @@ class _ReportListItemState extends State<ReportListItem> {
                                   '-',
                             ),
                             ValueItem(
-                              title: "PAID REFF NO",
-                              value: widget.data?.mpayWdrGrpPayReffPaid ?? '-',
-                            ),
-                            ValueItem(
                               title: "REMARKS",
                               value: widget.data?.remarks ?? '-',
                             ),
                             CustomFilledButton(
-                              color: blueJNE,
+                              color: Theme.of(context).brightness ==
+                                  Brightness.light
+                                  ? blueJNE
+                                  : infoColor,
                               title: "Lihat Detail".tr,
                               margin: const EdgeInsets.only(top: 20),
                               onPressed: widget.onTapButton,

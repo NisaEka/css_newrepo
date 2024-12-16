@@ -14,7 +14,7 @@ class RequestPickupStatusButton extends StatelessWidget {
         builder: (c) {
           if (c.state.listStatusKiriman.isEmpty) {
             return Container(
-              margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              margin: const EdgeInsets.only(left: 30, right: 30, bottom: 16),
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(8),
@@ -26,7 +26,7 @@ class RequestPickupStatusButton extends StatelessWidget {
           }
 
           return Container(
-            margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            margin: const EdgeInsets.only(left: 30, right: 30, bottom: 16),
             decoration: BoxDecoration(
               color: blueJNE,
               border: Border.all(),
@@ -46,7 +46,7 @@ class RequestPickupStatusButton extends StatelessWidget {
                     c.state.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width * 0.457,
+                    width: Get.width * 0.42,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     decoration: BoxDecoration(
                       color:
@@ -65,6 +65,7 @@ class RequestPickupStatusButton extends StatelessWidget {
                               ? c.state.listStatusKiriman[2].tr
                               : "SUDAH MINTA DIJEMPUT".tr,
                           style: sublistTitleTextStyle.copyWith(
+                            fontSize: 10,
                             color: c.state.filterStatus ==
                                     c.state.listStatusKiriman[2]
                                 ? whiteColor
@@ -86,7 +87,7 @@ class RequestPickupStatusButton extends StatelessWidget {
                     c.state.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width * 0.457,
+                    width: Get.width * 0.42,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     decoration: BoxDecoration(
                       color:
@@ -105,6 +106,7 @@ class RequestPickupStatusButton extends StatelessWidget {
                               ? c.state.listStatusKiriman[1].tr
                               : "SUDAH MINTA DIJEMPUT".tr,
                           style: sublistTitleTextStyle.copyWith(
+                            fontSize: 10,
                             color: c.state.filterStatus ==
                                     c.state.listStatusKiriman[1]
                                 ? whiteColor

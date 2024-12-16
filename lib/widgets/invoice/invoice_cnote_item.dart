@@ -45,7 +45,9 @@ class InvoiceCnoteItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  (invoice.awbDate ?? '').toLongDateTimeFormat(),
+
+                  invoice.awbDate?.toLongDateFormat() ?? '',
+
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 Text(

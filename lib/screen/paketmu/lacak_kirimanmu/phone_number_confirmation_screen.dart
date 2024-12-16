@@ -8,6 +8,8 @@ import 'package:pinput/pinput.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../../../const/app_const.dart';
+
 class PhoneNumberConfirmationScreen extends StatefulWidget {
   final String awb;
   final Function(String awb, String phoneNumber) cekResi;
@@ -82,7 +84,9 @@ class PhoneNumberConfirmationScreenState
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: CustomTheme().textColor(context),
+                color: AppConst.isLightTheme(context)
+                    ? blueJNE
+                    : warningColor,
               ),
             ),
             const SizedBox(height: 40),

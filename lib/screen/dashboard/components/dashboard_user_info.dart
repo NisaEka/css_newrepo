@@ -8,8 +8,12 @@ import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../const/app_const.dart';
+
 class DashboardUserInfo extends StatelessWidget {
   const DashboardUserInfo({super.key});
+
+  get color => null;
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +66,9 @@ class DashboardUserInfo extends StatelessWidget {
                             onTap: () {
                               c.onLacakKiriman(true, '');
                             },
-                            child: const Icon(
-                              Icons.qr_code,
-                              color: redJNE,
+                            child: Icon(
+                              Icons.qr_code_rounded,
+                              color: color ?? (AppConst.isLightTheme(context) ? blueJNE : warningColor),
                             ),
                           ),
                         ),

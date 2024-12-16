@@ -38,15 +38,16 @@ class AggByDocScreen extends StatelessWidget {
         children: [
           PaymentBox(
             title: "Document No".tr,
-            value: "# ${c.aggregationID}",
+            value: c.aggregationID,
           ),
           CustomSearchField(
+            margin: const EdgeInsets.only(top: 0),
             controller: c.searchField,
             hintText: 'Cari Data Agregasi'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
               color: Theme.of(context).brightness == Brightness.light
-                  ? whiteColor
+                  ? infoColor
                   : blueJNE,
             ),
             onChanged: (value) {

@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -84,26 +83,31 @@ class RiwayatKirimanListItem extends StatelessWidget {
           child: Shimmer(
             isLoading: isLoading,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    // Container(
+                    //   color: isLoading ? greyLightColor3 : Colors.transparent,
+                    //   width: isLoading ? Get.width / 3 : null,
+                    //   child: Text(
+                    //       'Order ID : ${data?.orderId ?? orderID ?? '-'}',
+                    //       style: Theme.of(context).textTheme.titleSmall),
+                    // ),
                     Container(
                       color: isLoading ? greyLightColor3 : Colors.transparent,
-                      width: isLoading ? Get.width / 3 : null,
+                      // width: isLoading ? Get.width / 5 : null,
                       child: Text(
-                          'Order ID : ${data?.orderId ?? orderID ?? '-'}',
-                          style: Theme.of(context).textTheme.titleSmall),
-                    ),
-                    Container(
-                      color: isLoading ? greyLightColor3 : Colors.transparent,
-                      width: isLoading ? Get.width / 5 : null,
-                      child: Text(
-                          data?.createdDateSearch?.toDateTimeFormat() ??
-                              tanggalEntry?.toDateTimeFormat() ??
+                          data?.createdDateSearch?.toDateFormat() ??
+                              tanggalEntry?.toDateFormat() ??
                               '-',
-                          style: Theme.of(context).textTheme.titleSmall),
+                          style: Theme.of(context).textTheme.labelMedium
+                              ?.copyWith(
+                            color: AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : warningColor,
+                          ),
+                      ),
                     ),
                   ],
                 ),
@@ -114,39 +118,40 @@ class RiwayatKirimanListItem extends StatelessWidget {
                     const SizedBox(width: 10),
                     Column(
                       children: [
-                        (data?.apiType?.isNotEmpty ?? false)
-                            ? Container(
-                                padding: const EdgeInsets.all(5),
-                                width: isLoading ? 50 : null,
-                                decoration: BoxDecoration(
-                                  color:
-                                      data?.apiType == "COD" || apiType == "COD"
-                                          ? successColor
-                                          : data?.apiType == "NON COD" ||
-                                                  apiType == "NON COD"
-                                              ? warningColor
-                                              : data?.apiType == "COD ONGKIR" ||
-                                                      apiType == "COD ONGKIR"
-                                                  ? infoColor
-                                                  : errorColor,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Text(
-                                  data?.apiType ?? apiType ?? '-',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.copyWith(
-                                        color: whiteColor,
-                                        fontSize: 8,
-                                      ),
-                                ),
-                              )
-                            : const SizedBox(),
+                        // (data?.apiType?.isNotEmpty ?? false)
+                        //     ? Container(
+                        //         padding: const EdgeInsets.all(5),
+                        //         width: isLoading ? 50 : null,
+                        //         decoration: BoxDecoration(
+                        //           color:
+                        //               data?.apiType == "COD" || apiType == "COD"
+                        //                   ? successColor
+                        //                   : data?.apiType == "NON COD" ||
+                        //                           apiType == "NON COD"
+                        //                       ? warningColor
+                        //                       : data?.apiType == "COD ONGKIR" ||
+                        //                               apiType == "COD ONGKIR"
+                        //                           ? infoColor
+                        //                           : errorColor,
+                        //           borderRadius: BorderRadius.circular(15),
+                        //         ),
+                        //         child: Text(
+                        //           data?.apiType ?? apiType ?? '-',
+                        //           style: Theme.of(context)
+                        //               .textTheme
+                        //               .titleSmall
+                        //               ?.copyWith(
+                        //                 color: whiteColor,
+                        //                 fontSize: 8,
+                        //               ),
+                        //         ),
+                        //       )
+                        //     : const SizedBox(),
                         // Text(ImageConstant.paket),
                         // Image.asset(IconsConstant.paket),
-                        CachedNetworkImage(
-                          imageUrl: IconsConstant.paket,
+                        Image.asset(
+                          ImageConstant.boxPackage,
+                          height: Get.width / 8,
                         ),
                       ],
                     ),
@@ -154,6 +159,35 @@ class RiwayatKirimanListItem extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        (data?.apiType?.isNotEmpty ?? false)
+                            ? Container(
+                          padding: const EdgeInsets.all(5),
+                          width: isLoading ? 50 : null,
+                          decoration: BoxDecoration(
+                            color:
+                            data?.apiType == "COD" || apiType == "COD"
+                                ? successDarkColor
+                                : data?.apiType == "NON COD" ||
+                                apiType == "NON COD"
+                                ? infoDarkColor
+                                : data?.apiType == "COD ONGKIR" ||
+                                apiType == "COD ONGKIR"
+                                ? warningDarkColor
+                                : errorDarkColor,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            data?.apiType ?? apiType ?? '-',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
+                              color: whiteColor,
+                              fontSize: 10,
+                            ),
+                          ),
+                        )
+                            : const SizedBox(),
                         Container(
                           color:
                               isLoading ? greyLightColor3 : Colors.transparent,
@@ -167,7 +201,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                 ?.copyWith(
                                   color: AppConst.isLightTheme(context)
                                       ? blueJNE
-                                      : redJNE,
+                                      : warningColor,
                                 ),
                           ),
                         ),
@@ -196,12 +230,22 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                     margin: const EdgeInsets.only(bottom: 10),
                                     width: isLoading ? Get.width / 5 : null,
                                     decoration: BoxDecoration(
+                                      //DIBATALKAN OLEH KAMU
+                                      //DALAM PENINJAUAN error
                                       color: data?.statusAwb ==
                                                   "MASIH DI KAMU" ||
                                               apiType == "MASIH DI KAMU" ||
                                               data?.statusAwb ==
-                                                  "DIBATALKAN OLEH KAMU" ||
-                                              apiType == "DIBATALKAN OLEH KAMU"
+                                                  "PROSES PENGEMBALIAN KEKAMU" ||
+                                              apiType == "PROSES PENGEMBALIAN KEKAMU" ||
+                                                data?.statusAwb ==
+                                                  "BELUM TERKUMPUL DARI PEMBELI" ||
+                                                apiType ==
+                                                  "BELUM TERKUMPUL DARI PEMBELI" ||
+                                                data?.statusAwb ==
+                                                  "BUTUH DICEK" ||
+                                                apiType ==
+                                                  "BUTUH DICEK"
                                           ? warningColor
                                           : data?.statusAwb ==
                                                       "SUDAH DIJEMPUT" ||
@@ -211,24 +255,36 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                                   apiType ==
                                                       "DALAM PERJALANAN" ||
                                                   data?.statusAwb ==
-                                                      "SUKSES DITERIMA" ||
+                                                      "SUDAH DI GUDANG JNE" ||
                                                   apiType ==
-                                                      "SUKSES DITERIMA" ||
+                                                      "SUDAH DI GUDANG JNE" ||
                                                   data?.statusAwb ==
-                                                      "SUDAH DI JNE" ||
-                                                  apiType == "SUDAH DI JNE"
-                                              ? warningColor
+                                                      "SUDAH DI KOTA TUJUAN" ||
+                                                  apiType == "SUDAH DI KOTA TUJUAN" ||
+                                                  data?.statusAwb ==
+                                                      "DALAM PROSES" ||
+                                                  apiType == "DALAM PROSES"
+                                              ? infoColor
                                               : data?.statusAwb == "Success" ||
-                                                      apiType == "Success"
+                                                      apiType == "Success" ||
+                                                data?.statusAwb == "SUKSES DIKEMBALIKAN KEKAMU" ||
+                                                      apiType == "SUKSES DIKEMBALIKAN KEKAMU" ||
+                                                data?.statusAwb == "SUKSES DITERIMA" ||
+                                                      apiType == "SUKSES DITERIMA"
                                                   ? successColor
-                                                  : errorLightColor2,
+                                              : data?.statusAwb == "DIBATALKAN OLEH KAMU" ||
+                                                      apiType == "DIBATALKAN OLEH KAMU" ||
+                                                data?.statusAwb == "DALAM PENINJAUAN" ||
+                                                      apiType == "DALAM PENINJAUAN"
+                                                  ? errorColor
+                                                  : errorDarkColor,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(
                                       data?.statusAwb?.tr ?? status?.tr ?? '',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .titleSmall
+                                          .labelMedium
                                           ?.copyWith(
                                             color: whiteColor,
                                             fontSize: 8,

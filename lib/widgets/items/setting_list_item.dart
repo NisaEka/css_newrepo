@@ -36,7 +36,7 @@ class SettingListItem extends StatelessWidget {
           leading: Icon(
             leading,
             size: 24,
-            color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+            color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
           ),
           title: Text(
             title?.tr ?? '',

@@ -4,4 +4,5 @@ import 'package:get/get.dart';
 
 class AggByCnoteController extends BaseController {
   AggregationDetailModel data = Get.arguments['cnote_data'];
+  bool isLoading = false;
 }

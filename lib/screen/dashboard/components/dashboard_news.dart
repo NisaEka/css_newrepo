@@ -12,7 +12,7 @@ class DashboardNews extends StatelessWidget {
         init: DashboardController(),
         builder: (c) {
           return Container(
-            margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+            margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
             child: Column(
               children: [
                 Row(
@@ -23,6 +23,11 @@ class DashboardNews extends StatelessWidget {
                     // const DateDropdownFilterButton(),
                   ],
                 ),
+                const SizedBox(height: 10),
+                const Divider(
+                  color: Colors.grey,
+                ),
+                const SizedBox(height: 10),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -33,6 +38,7 @@ class DashboardNews extends StatelessWidget {
                           (e) => NewsItem(
                             news: e,
                             lang: c.state.local,
+                            isLoading: c.state.isLoading,
                           ),
                         )
                         .toList(),

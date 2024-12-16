@@ -41,7 +41,7 @@ class LoginForm extends StatelessWidget {
                       CustomTextFormField(
                         controller: c.state.emailTextField,
                         hintText: "Alamat email".tr,
-                        prefixIcon: const Icon(Icons.person),
+                        prefixIcon: const Icon(Icons.person_2_rounded),
                         isRequired: true,
                         // focusNode: controller.emailFocus,
                         onSubmit: (_) {},
@@ -61,7 +61,7 @@ class LoginForm extends StatelessWidget {
                         controller: c.state.passwordTextField,
                         hintText: "Kata Sandi".tr,
                         // focusNode: controller.passwordField,
-                        prefixIcon: const Icon(Icons.lock),
+                        prefixIcon: const Icon(Icons.password_rounded),
                         isRequired: true,
                         // validator: ValidationBuilder().password().build(),
                         isObscure: c.state.isObscurePasswordLogin,
@@ -86,13 +86,14 @@ class LoginForm extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium
-                                ?.copyWith(color: infoColor),
+                                ?.copyWith(color: AppConst.isLightTheme(context) ? infoColor : Colors.lightBlueAccent),
                           ),
                         ),
                       ),
                       CustomFilledButton(
-                        color: blueJNE,
+                        color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
                         title: 'Masuk'.tr,
+                        suffixIcon: Icons.login_rounded,
                         onPressed: () async {
                           if (c.state.formKey.currentState?.validate() ==
                               true) {
@@ -122,6 +123,7 @@ class LoginForm extends StatelessWidget {
                             : whiteColor,
                         isTransparent: true,
                         title: "Daftar".tr,
+                        suffixIcon: Icons.app_registration_rounded,
                         onPressed: () => c.register(),
                       ),
                       const SizedBox(height: 10),

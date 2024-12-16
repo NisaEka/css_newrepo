@@ -44,6 +44,7 @@ class InputLaporankuScreen extends StatelessWidget {
               controller: c.noResi,
               hintText: "No Resi".tr,
               isRequired: true,
+              readOnly: true,
             ),
             CustomTextFormField(
               controller: c.category,

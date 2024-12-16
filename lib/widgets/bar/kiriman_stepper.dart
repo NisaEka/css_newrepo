@@ -45,7 +45,7 @@ class KirimanStepper extends StatelessWidget {
                 IconsConstant.box,
                 // height: 100,
                 color: currentStep == 0
-                    ? (AppConst.isLightTheme(context) ? blueJNE : redJNE)
+                    ? (AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent)
                     : null,
               ),
             ),
@@ -73,14 +73,20 @@ class KirimanStepper extends StatelessWidget {
           children: [
             Text(
               history?.date ?? '',
-              style: sublistTitleTextStyle.copyWith(color: redJNE),
+              style: sublistTitleTextStyle.copyWith(color:
+                AppConst.isLightTheme(context)
+                  ? redJNE
+                      : whiteColor
+              ),
             ),
             SizedBox(
               width: Get.width / 1.5,
               child: Text(
                 history?.desc ?? '',
                 style: sublistTitleTextStyle.copyWith(
-                  color: redJNE,
+                  color: AppConst.isLightTheme(context)
+                      ? redJNE
+                      : warningColor,
                   fontWeight: bold,
                 ),
               ),

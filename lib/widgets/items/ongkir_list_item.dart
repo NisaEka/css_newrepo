@@ -48,11 +48,13 @@ class OngkirListItem extends StatelessWidget {
                   style: listTitleTextStyle.copyWith(
                       color: Theme.of(context).brightness == Brightness.light
                           ? blueJNE
-                          : redJNE),
+                          : warningColor),
                 ),
                 Text(
                   serviceDuration,
-                  style: sublistTitleTextStyle.copyWith(color: redJNE),
+                  style: sublistTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light
+                      ? redJNE
+                      : Colors.lightBlueAccent),
                 )
               ],
             ),

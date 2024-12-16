@@ -1,14 +1,19 @@
+import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/screen/notification/notification_detail_screen.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/widgets/items/notification_list_item.dart';
+import 'package:get/get.dart';
 
 class NotificationController extends BaseController {
   // final message = Get.arguments['message'] as RemoteMessage;
   bool isLoading = false;
-  List<NotificationModel> notificationList = [];
+  List<NotificationModel> readNotifList = [];
   List<NotificationModel> unreadNotifList = [];
   List<NotificationModel> temp = [];
+  List<NotificationListItem> notificationList = [];
 
   @override
   void onInit() {
@@ -20,43 +25,63 @@ class NotificationController extends BaseController {
     isLoading = true;
     update();
     unreadNotifList = [];
+    readNotifList = [];
     notificationList = [];
     try {
-      await notification.getNotificationsList().then((value) {
-        notificationList.addAll(value.payload ?? []);
-        update();
-      });
-
       var unread = GetNotificationModel.fromJson(
           await storage.readData(StorageCore.unreadMessage));
       unreadNotifList.addAll(unread.payload ?? []);
-      // notificationList.addAll(unread.payload ?? []);
+      unreadNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
+      unreadNotifList.forEachIndexed(
+        (i, e) => notificationList.add(
+          NotificationListItem(
+            data: e,
+            isRead: true,
+            onTap: () => readMessage(e),
+          ),
+        ),
+      );
+
+      var read = GetNotificationModel.fromJson(
+          await storage.readData(StorageCore.readMessage));
+      readNotifList.addAll(read.payload ?? []);
+      readNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
+      readNotifList.forEachIndexed(
+        (i, e) => notificationList.add(NotificationListItem(
+          data: e,
+          isRead: false,
+          onTap: () => readMessage(e),
+        )),
+      );
       update();
+
+      notificationList
+          .sort((a, b) => b.data.createDate!.compareTo(a.data.createDate!));
     } catch (e, i) {
       AppLogger.e('error getNotification $e, $i');
     }
 
-    for (var local in unreadNotifList) {
-      if (notificationList
-          .where((e) => e.createDate == local.createDate)
-          .isNotEmpty) {
-        temp.add(notificationList
-            .where((e) => e.createDate == local.createDate)
-            .first);
-        notificationList.removeWhere((e) => e.createDate == local.createDate);
-      }
-      update();
-    }
     isLoading = false;
     update();
   }
 
-  readMessage(String id) {
-    unreadNotifList.removeWhere((e) => e.id == id || id.isEmpty);
-    // notificationList.removeWhere((e) => e.id == id || id.isEmpty);
+  readMessage(NotificationModel value) {
+    Get.to(NotificationDetailScreen(data: value));
+    unreadNotifList.removeWhere(
+      (unread) => unread.id == value.id,
+    );
+    readNotifList.add(value);
     update();
-    storage.saveData(StorageCore.unreadMessage,
-        GetNotificationModel(payload: unreadNotifList));
-    notificationList.addAll(temp);
+    storage.saveData(
+      StorageCore.unreadMessage,
+      GetNotificationModel(payload: unreadNotifList),
+    );
+    storage.saveData(
+      StorageCore.readMessage,
+      GetNotificationModel(payload: readNotifList),
+    );
+    unreadNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
+
+    readNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
   }
 }

@@ -181,7 +181,7 @@ class RequestPickupScreen extends StatelessWidget {
             controller.state.searchField.clear();
             controller.state.pagingController.refresh();
           },
-          margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
+          margin: const EdgeInsets.only(left: 30, right: 30, top: 16),
         ),
         const RequestPickupStatusButton(),
         Expanded(

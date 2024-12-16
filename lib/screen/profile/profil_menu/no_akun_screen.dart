@@ -52,16 +52,18 @@ class NoAkunScreen extends StatelessWidget {
             ),
           );
         },
-        icon: const Icon(
-          Icons.info,
-          color: redJNE,
+        icon: Icon(
+          Icons.info_rounded,
+          color: AppConst.isLightTheme(context)
+              ? redJNE
+              : warningColor,
         ));
   }
 
   Widget _modalContent(
       BuildContext context, StateSetter setState, NoAkunController c) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -72,7 +74,9 @@ class NoAkunScreen extends StatelessWidget {
               Text(
                 'Log Aktivitas'.tr,
                 style: appTitleTextStyle.copyWith(
-                  color: blueJNE,
+                  color: AppConst.isLightTheme(context)
+                      ? blueJNE
+                      : warningColor,
                 ),
               ),
               IconButton(
@@ -81,6 +85,7 @@ class NoAkunScreen extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 16),
           c.logActivityList.isNotEmpty
               ? Expanded(
                   child: CustomScrollView(

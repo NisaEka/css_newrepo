@@ -176,7 +176,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                   ),
                 )),
                 child: const Icon(
-                  Icons.camera_alt_outlined,
+                  Icons.camera_alt_rounded,
                   color: greyColor,
                 ),
               ),
@@ -193,7 +193,10 @@ class ObrolanLaporankuScreen extends StatelessWidget {
               height: 45,
               width: 45,
               decoration: BoxDecoration(
-                  color: greyColor, borderRadius: BorderRadius.circular(50)),
+                  color: AppConst.isLightTheme(context)
+                      ? successColor
+                      : warningColor,
+                  borderRadius: BorderRadius.circular(50)),
               padding: const EdgeInsets.only(left: 5),
               child: const Center(
                 child: Icon(
@@ -228,7 +231,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
               children: [
                 Bubble(
                   radius: const Radius.circular(8),
-                  color: msg.type == "R" ? blueJNE : redJNE,
+                  color: msg.type == "R" ? warningColor : infoColor,
                   elevation: 0.0,
                   showNip: true,
                   nip: msg.type == "R"

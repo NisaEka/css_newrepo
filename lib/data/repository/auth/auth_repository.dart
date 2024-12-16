@@ -35,7 +35,9 @@ abstract class AuthRepository {
 
   Future<BaseResponse<List<DeviceModel>>> getFcmToken();
 
-  Future<BaseResponse> logout();
+  Future<BaseResponse> logout(String refreshToken);
 
   Future<BaseResponse> updateDeviceInfo(DeviceModel data);
+
+  Future<BaseResponse<PostLoginModel>> updateToken();
 }
