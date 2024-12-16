@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -21,12 +20,14 @@ class PantauPaketmuController extends BaseController {
   final network = Get.find<NetworkCore>();
   final storageSecure = const FlutterSecureStorage();
   Timer? _debounceTimer;
+  int selectedStatus = 0;
 
   @override
   void onInit() {
     super.onInit();
     selectDateFilter(3);
     initData();
+    getCountList();
     state.pagingController.addPageRequestListener((pageKey) {
       getPantauList(pageKey);
     });
@@ -45,7 +46,8 @@ class PantauPaketmuController extends BaseController {
   }
 
   Future<void> initData() async {
-    state.isLoading.value = true;
+    state.isLoading = true;
+    update();
     AppLogger.i('initDataaaa');
     try {
       BaseResponse<BasicProfileModel> profile = await profil.getBasicProfil();
@@ -80,9 +82,12 @@ class PantauPaketmuController extends BaseController {
       state.selectedStatusKiriman.value = state.listStatusKiriman.first;
       applyFilter();
     }
+    state.isLoading = false;
+    update();
   }
 
   Future<void> getCountList() async {
+    state.countList = [];
     var param = QueryModel(
       between: [
         {
@@ -98,78 +103,102 @@ class PantauPaketmuController extends BaseController {
     );
 
     try {
-      Response responseCount = await network.base.get(
-        '/transaction/tracks/count',
-        queryParameters: param.toJson(),
-      );
-      AppLogger.d('Pantauuuuuu count ${responseCount.data}');
-
-      state.countList.value = responseCount.data['data'];
+      var responseCount = await pantau.getPantauCount(param);
+      state.countList.addAll(responseCount.data ?? []);
+      state.cod = responseCount.data?.first.totalCod?.toInt() ?? 0;
+      state.codOngkir = responseCount.data?.first.totalCodOngkir?.toInt() ?? 0;
+      state.noncod = responseCount.data?.first.totalNonCod?.toInt() ?? 0;
     } catch (e, i) {
       AppLogger.e('error pantau count', e, i);
       AppSnackBar.error('Gagal mengambil data pantau');
-    } finally {
-      state.isLoading.value = false;
     }
+    // await Future.delayed(const Duration(seconds: 2));
+    state.isLoading = false;
+    update();
   }
 
   Future<void> getPantauList(int page) async {
-    var param = QueryModel(
-      table: true,
-      page: page,
-      limit: pageSize,
-      between: [
-        {
-          "awbDate": [
-            state.startDate.value,
-            state.endDate.value,
-          ]
-        }
-      ],
-      entity: state.selectedStatusKiriman.value,
-      type: state.selectedTipeKiriman.value,
-      search: state.searchField.text,
-      petugasEntry: state.selectedPetugasEntry.value == "SEMUA"
-          ? null
-          : state.selectedPetugasEntry.value,
-    );
-
+    state.isLoading = true;
     try {
-      Response response = await network.base.get(
-        '/transaction/tracks/count/details',
-        queryParameters: param.toJson(),
-      );
-      AppLogger.d('Pantauuuuuu ${response.data}');
+      final trans = await pantau.getPantauList(
+          QueryModel(search: state.searchField.text, between: state.transDate));
 
-      var trans = BaseResponse<List<PantauPaketmuModel>>.fromJson(
-        response.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<PantauPaketmuModel>(
-                  (i) => PantauPaketmuModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
-      );
-      // return BaseResponse<List<PantauPaketmuModel>>
-
-      final isLastPage = trans.meta!.currentPage == trans.meta!.lastPage;
+      final isLastPage =
+          (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
-        return;
+        // transactionList.addAll(state.pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
         state.pagingController.appendPage(trans.data ?? [], nextPageKey);
-        return;
+        // transactionList.addAll(state.pagingController.itemList ?? []);
       }
-    } catch (e, i) {
-      AppLogger.e('error pantau list', e, i);
-      AppSnackBar.error('Gagal mengambil data pantau list');
+    } catch (e) {
+      AppLogger.e('error getPantauList $e');
       state.pagingController.error = e;
-    } finally {
-      state.isLoading.value = false;
     }
+
+    state.isLoading = false;
+    update();
   }
+
+  // Future<void> getPantauDetailList(int page) async {
+  //   var param = QueryModel(
+  //     table: true,
+  //     page: page,
+  //     limit: pageSize,
+  //     between: [
+  //       {
+  //         "awbDate": [
+  //           state.startDate.value,
+  //           state.endDate.value,
+  //         ]
+  //       }
+  //     ],
+  //     entity: state.selectedStatusKiriman.value,
+  //     type: state.selectedTipeKiriman.value,
+  //     search: state.searchField.text,
+  //     petugasEntry: state.selectedPetugasEntry.value == "SEMUA"
+  //         ? null
+  //         : state.selectedPetugasEntry.value,
+  //   );
+  //
+  //   try {
+  //     Response response = await network.base.get(
+  //       '/transaction/tracks/count/details',
+  //       queryParameters: param.toJson(),
+  //     );
+  //     AppLogger.d('Pantauuuuuu ${response.data}');
+  //
+  //     var trans = BaseResponse<List<PantauPaketmuModel>>.fromJson(
+  //       response.data,
+  //       (json) => json is List<dynamic>
+  //           ? json
+  //               .map<PantauPaketmuModel>(
+  //                 (i) => PantauPaketmuModel.fromJson(i as Map<String, dynamic>),
+  //               )
+  //               .toList()
+  //           : List.empty(),
+  //     );
+  //     // return BaseResponse<List<PantauPaketmuModel>>
+  //
+  //     final isLastPage = trans.meta!.currentPage == trans.meta!.lastPage;
+  //     if (isLastPage) {
+  //       state.pagingController.appendLastPage(trans.data ?? []);
+  //       return;
+  //     } else {
+  //       final nextPageKey = page + 1;
+  //       state.pagingController.appendPage(trans.data ?? [], nextPageKey);
+  //       return;
+  //     }
+  //   } catch (e, i) {
+  //     AppLogger.e('error pantau list', e, i);
+  //     AppSnackBar.error('Gagal mengambil data pantau list');
+  //     state.pagingController.error = e;
+  //   } finally {
+  //     state.isLoading = false;
+  //   }
+  // }
 
   void selectDateFilter(int filter) {
     final today = DateTime.now();
@@ -263,13 +292,18 @@ class PantauPaketmuController extends BaseController {
       state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
     }
 
-    state.isLoading.value = true;
+    state.isLoading = true;
+    // state.pagingController.refresh();
+    update();
 
     if (isDetail != null && !isDetail) {
       getCountList();
     } else {
       state.pagingController.refresh();
     }
+    await Future.delayed(const Duration(seconds: 20));
+    state.isLoading = false;
+    update();
   }
 
   void onSearchChanged(String value) {
@@ -284,5 +318,10 @@ class PantauPaketmuController extends BaseController {
       state.searchField.text = value;
       state.pagingController.refresh();
     });
+  }
+
+  void setSelectedStatus(int statusIndex) {
+    selectedStatus = statusIndex;
+    update(); // Untuk memberitahu UI agar diperbarui
   }
 }

@@ -99,6 +99,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   controller.data.mpayWdrGrpPayNo,
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium!,
+
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -190,8 +191,7 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 const Divider(
-                  color: greyLightColor3,
-                ),
+
                 const SizedBox(height: 16),
                 Shimmer(
                   isLoading: controller.isLoading,
@@ -383,6 +383,7 @@ class AggByCnoteScreen extends StatelessWidget {
                           : successLightColor1),
                   titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent),
+
                 ),
                 const SizedBox(
                   height: 50,

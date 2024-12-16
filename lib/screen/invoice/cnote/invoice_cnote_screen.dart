@@ -2,6 +2,7 @@ import 'package:css_mobile/data/model/invoice/invoice_cnote_model.dart';
 import 'package:css_mobile/screen/invoice/cnote/detail/invoice_cnote_detail_screen.dart';
 import 'package:css_mobile/screen/invoice/cnote/invoice_cnote_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/invoice/invoice_cnote_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -84,7 +85,7 @@ class InvoiceCnoteScreen extends StatelessWidget {
                 },
                 noItemsFoundIndicatorBuilder: (BuildContext context) {
                   return const Center(
-                    child: Text("Tidak ada data tersedia"),
+                    child: DataEmpty(),
                   );
                 },
                 noMoreItemsIndicatorBuilder: (BuildContext context) {

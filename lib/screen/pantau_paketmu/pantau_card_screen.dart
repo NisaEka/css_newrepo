@@ -1,11 +1,10 @@
-import 'package:css_mobile/screen/pantau_paketmu/components/pantau_count_cod.dart';
-import 'package:css_mobile/screen/pantau_paketmu/components/pantau_count_cod_ongkir.dart';
-import 'package:css_mobile/screen/pantau_paketmu/components/pantau_count_non_cod.dart';
+import 'package:css_mobile/screen/pantau_paketmu/components/pantau_list_item.dart';
+import 'package:css_mobile/screen/pantau_paketmu/components/pantau_status_button.dart';
+import 'package:css_mobile/screen/pantau_paketmu/components/pantau_total_kiriman.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
-import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -18,33 +17,64 @@ class PantauCardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(PantauPaketmuController());
-
-    return GetX<PantauPaketmuController>(builder: (controller) {
-      return Scaffold(
-        appBar: _appBarContent(controller),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await controller.resetFilter();
-          },
-          child: controller.state.isLoading.value
-              ? const LoadingDialog()
-              : Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: ListView(
-                    children: [
-                      PantauCountCod(title: 'COD'.tr),
-                      PantauCountCodOngkir(
-                        title: 'COD ONGKIR'.tr,
-                      ),
-                      PantauCountNonCod(
-                        title: 'NON COD'.tr,
-                      ),
-                    ],
-                  )),
-        ),
-      );
-    });
+    return GetBuilder<PantauPaketmuController>(
+        init: PantauPaketmuController(),
+        builder: (controller) {
+          return Scaffold(
+            appBar: _appBarContent(controller),
+            body: Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const PantauStatusButton(),
+                  const SizedBox(height: 5),
+                  // Total Kiriman
+                  const PantauTotalKiriman(),
+                  Divider(
+                    color: Theme.of(context).colorScheme.outline,
+                    thickness: 1.0,
+                  ),
+                  // Pantau List
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.state.isLoading
+                          ? controller.state.countList.length + 1
+                          : controller.state.countList.length,
+                      itemBuilder: (context, index) {
+                        if (controller.state.isLoading) {
+                          return const PantauItems(
+                            item: null,
+                            isLoading: true,
+                          );
+                        }
+                        var item = controller.state.countList[index];
+                        return index != 0
+                            ? PantauItems(
+                                item: item,
+                                isLoading:
+                                    false) // Jika index bukan 0, tampilkan PantauItems
+                            : const SizedBox();
+                      },
+                    ),
+                  )
+                  // Expanded(
+                  //     child: ListView(
+                  //   children: [
+                  //     PantauCountCod(title: 'COD'.tr),
+                  //     PantauCountCodOngkir(
+                  //       title: 'COD ONGKIR'.tr,
+                  //     ),
+                  //     PantauCountNonCod(
+                  //       title: 'NON COD'.tr,
+                  //     ),
+                  //   ],
+                  // )),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   CustomTopBar _appBarContent(PantauPaketmuController c) {

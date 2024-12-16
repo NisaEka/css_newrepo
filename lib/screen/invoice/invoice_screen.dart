@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/invoice/invoice_model.dart';
 import 'package:css_mobile/screen/invoice/components/invoice_filter_button.dart';
 import 'package:css_mobile/screen/invoice/detail/invoice_detail_screen.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/invoice/invoice_item.dart';
 import 'package:flutter/material.dart';
@@ -178,7 +179,7 @@ class InvoiceScreen extends StatelessWidget {
             },
             noItemsFoundIndicatorBuilder: (BuildContext context) {
               return const Center(
-                child: Text("Tidak ada data tersedia"),
+                child: DataEmpty(),
               );
             },
             noMoreItemsIndicatorBuilder: (BuildContext context) {

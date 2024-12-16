@@ -71,6 +71,7 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
                   itemBuilder: (context, item, index) => _aggregationItem(item),
                   firstPageErrorIndicatorBuilder: (context) =>
                       const DataEmpty(),
+                  noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
                 ),
               ),
             ),
