@@ -9,9 +9,16 @@ import 'package:css_mobile/widgets/jlcpoint/jlcpoint_box.dart';
 import 'package:css_mobile/widgets/jlcpoint/point_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BonusKamuScreen extends StatelessWidget {
+  final String url = 'https://jlc.jne.co.id';
+
   const BonusKamuScreen({super.key});
+
+  Future<void> _launchURL() async {
+    await launchUrl(Uri.parse(url));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +64,7 @@ class BonusKamuScreen extends StatelessWidget {
                       offset: Offset(2, 2),
                     ),
                   ],
+                  onPressed: () => _launchURL(),
                 ),
               )
             ],
