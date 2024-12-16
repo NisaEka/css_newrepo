@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
@@ -11,6 +10,7 @@ import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
+import 'package:css_mobile/data/model/pantau/pantauu_paketmu_detail_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -41,9 +41,9 @@ class PantauPaketmuDetailController extends BaseController {
 
   bool get showErrorContainer => _showErrorContainer;
 
-  late PantauPaketmuDetailModel _pantauPaketmu;
+  late PantauuPaketmuDetailModel _pantauPaketmu;
 
-  PantauPaketmuDetailModel get pantauPaketmu => _pantauPaketmu;
+  PantauuPaketmuDetailModel get pantauPaketmu => _pantauPaketmu;
 
   DataTransactionModel? transactionData;
   MenuModel? allow;
@@ -63,10 +63,10 @@ class PantauPaketmuDetailController extends BaseController {
     try {
       var response =
           await network.base.get('/transaction/tracks/count/details/$awbNo');
-      var result = BaseResponse<PantauPaketmuDetailModel>.fromJson(
+      var result = BaseResponse<PantauuPaketmuDetailModel>.fromJson(
         response.data,
         (json) =>
-            PantauPaketmuDetailModel.fromJson(json as Map<String, dynamic>),
+            PantauuPaketmuDetailModel.fromJson(json as Map<String, dynamic>),
       );
 
       if (result.code == HttpStatus.ok && result.data != null) {

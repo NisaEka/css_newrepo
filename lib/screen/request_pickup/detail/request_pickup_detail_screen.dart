@@ -121,7 +121,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
             _textRow(
                 context,
                 "Tanggal dan Jam",
-                requestPickup.createdDateSearch.toDateTimeFormat(),
+                requestPickup.createdDateSearch.toLongDateTimeFormat(),
                 c.isLoading),
             const SizedBox(height: 6),
             _textRow(

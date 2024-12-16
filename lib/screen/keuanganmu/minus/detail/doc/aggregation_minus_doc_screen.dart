@@ -97,7 +97,8 @@ class AggregationMinusDocScreen extends StatelessWidget {
                   onTap: () =>
                       {Get.to(AggregationMinusCnoteScreen(data: aggregation))},
                 ),
-            firstPageErrorIndicatorBuilder: (context) => const DataEmpty()),
+            firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
+            noItemsFoundIndicatorBuilder: (context) => const DataEmpty()),
       ),
     ));
   }
