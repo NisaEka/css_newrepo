@@ -6,7 +6,6 @@ import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/circular_loading.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/items/line_chart_item.dart';
-import 'package:css_mobile/widgets/items/ongoing_card.dart';
 import 'package:css_mobile/widgets/items/transaction_card.dart';
 import 'package:css_mobile/widgets/items/type_transaction_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,11 +69,11 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           TransactionCard(
                               title: "Jumlah Transaksi".tr,
                               count: kirimanKamu.totalPantau,
-                              subtitle: "7 Hari Terakhir".tr,
-                              color: Colors.blue,
+                              subtitle: '${"7 Hari Terakhir".tr}\n',
+                              color: blueJNE,
                               icon: Icons.show_chart,
                               statusColor: whiteColor,
-                              chart: SizedBox(
+                              suffixChart: SizedBox(
                                   width: 45,
                                   height: 20,
                                   child: kirimanKamu.pantauChart.isNotEmpty
@@ -86,15 +85,14 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              OngoingTransactionCard(
+                              TransactionCard(
                                 title: "Dalam Peninjauan".tr,
-                                percentage: (kirimanKamu
-                                        .dalamPeninjauanPercentage
-                                        .toDouble() /
-                                    100),
                                 count: kirimanKamu.dalamPeninjauan,
                                 subtitle:
                                     "${double.parse((kirimanKamu.dalamPeninjauanPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
+                                color: redJNE,
+                                innerPadding: 2,
+                                isLoading: isLoadingKiriman,
                                 notificationLabel: "Masih dikamu".tr,
                                 notificationCount: transSummary?.summary
                                         ?.where(
@@ -103,7 +101,29 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                         .total
                                         ?.toInt() ??
                                     0,
+                                prefixChart: SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    value: (kirimanKamu
+                                            .dalamPeninjauanPercentage
+                                            .toDouble() /
+                                        100),
+                                    backgroundColor: Colors.grey[300],
+                                    color: redJNE,
+                                    strokeWidth: 4,
+                                  ),
+                                ),
                               ),
+                              // OngoingTransactionCard(
+                              //   title: "Dalam Peninjauan".tr,
+                              //   percentage: (kirimanKamu.dalamPeninjauanPercentage.toDouble() / 100),
+                              //   count: kirimanKamu.dalamPeninjauan,
+                              //   subtitle:
+                              //       "${double.parse((kirimanKamu.dalamPeninjauanPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
+                              //   notificationLabel: "Masih dikamu".tr,
+                              //   notificationCount: transSummary?.summary?.where((e) => e.status == "Masih di Kamu").first.total?.toInt() ?? 0,
+                              // ),
                               const SizedBox(height: 16),
                             ],
                           ),
@@ -116,9 +136,9 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                 count: kirimanKamu.suksesDiterima,
                                 subtitle:
                                     "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
-                                color: Colors.blue,
+                                color: blueJNE,
                                 statusColor: Colors.green,
-                                chart: SizedBox(
+                                suffixChart: SizedBox(
                                   width: 25,
                                   height: 25,
                                   child: CircularProgressIndicator(
@@ -165,7 +185,6 @@ class DashboardKirimanCountItem extends StatelessWidget {
                     )
                   ],
                 ),
-
                 const SizedBox(height: 8),
               ],
             ),

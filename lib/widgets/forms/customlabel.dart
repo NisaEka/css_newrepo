@@ -22,6 +22,7 @@ class CustomLabelText extends StatelessWidget {
   final bool isLoading;
   final bool isHasSpace;
   final Color? color;
+  final Widget? prefixIcon;
 
   const CustomLabelText({
     super.key,
@@ -42,6 +43,7 @@ class CustomLabelText extends StatelessWidget {
     this.maxline,
     this.isHasSpace = false,
     this.color,
+    this.prefixIcon,
   });
 
   @override
@@ -64,6 +66,7 @@ class CustomLabelText extends StatelessWidget {
                   ? MainAxisAlignment.spaceBetween
                   : MainAxisAlignment.start,
               children: [
+                prefixIcon ?? const SizedBox(),
                 Shimmer(
                   isLoading: isLoading,
                   child: Container(
