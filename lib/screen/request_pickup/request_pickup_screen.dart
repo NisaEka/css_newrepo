@@ -16,6 +16,7 @@ import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/input_formatter/custom_formatter.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -106,7 +107,7 @@ class RequestPickupScreen extends StatelessWidget {
     }
 
     if (controller.state.showEmptyContent) {
-      return const Center(child: Text("Tidak ada data tersedia"));
+      return const Center(child: DataEmpty());
     }
 
     if (controller.state.showErrorContent) {
@@ -214,6 +215,8 @@ class RequestPickupScreen extends StatelessWidget {
                   checked: controller.isItemChecked(item.awb),
                 );
               },
+              noMoreItemsIndicatorBuilder: (context) => const DataEmpty(),
+              noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
               firstPageErrorIndicatorBuilder: (context) {
                 return Center(
                     child: Column(

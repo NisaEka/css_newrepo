@@ -6,6 +6,7 @@ import 'package:css_mobile/data/model/laporanku/get_ticket_message_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolal_laporanku_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/image_popup_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -88,7 +89,8 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                       height: 50,
                       size: 30,
                     ),
-                    noItemsFoundIndicatorBuilder: (context) => Container(),
+                    noItemsFoundIndicatorBuilder: (context) =>
+                        const DataEmpty(),
                   ),
                 ),
           // child: ListView(

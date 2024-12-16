@@ -17,7 +17,6 @@ class RequestPickupStatusButton extends StatelessWidget {
               margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               decoration: BoxDecoration(
                 color: Colors.transparent,
-                border: Border.all(),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: const Center(
