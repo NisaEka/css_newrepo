@@ -66,7 +66,7 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 ValueItem(
                   title: "Tanggal POD".tr,
-                  value: c.data.dpayDUpdPodDate?.toDateTimeFormat(),
+                  value: c.data.dpayDUpdPodDate?.toLongDateTimeFormat(),
                   fontSize: 12,
                 ),
                 const Divider(
@@ -184,8 +184,8 @@ class AggByCnoteScreen extends StatelessWidget {
                 ),
                 ValueItem(
                   title: 'Paid Date',
-                  value:
-                      c.data.mpayWdrGrpPayDatePaid?.toDateTimeFormat() ?? '-',
+                  value: c.data.mpayWdrGrpPayDatePaid?.toLongDateTimeFormat() ??
+                      '-',
                   fontSize: 12,
                   valueTextStyle: TextStyle(fontWeight: regular, fontSize: 12),
                 ),

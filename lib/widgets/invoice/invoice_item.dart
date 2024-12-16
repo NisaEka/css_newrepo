@@ -34,7 +34,10 @@ class InvoiceItem extends StatelessWidget {
               children: [
                 Text(
                   invoice?.invoiceNo ?? '',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "Rp ${invoice?.invoiceTotalAmount.toCurrency() ?? ''}",
@@ -46,7 +49,7 @@ class InvoiceItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  (invoice?.invoiceDate ?? '').toLongDateFormat(),
+                  (invoice?.invoiceDate ?? '').toLongDateTimeFormat(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 Text(

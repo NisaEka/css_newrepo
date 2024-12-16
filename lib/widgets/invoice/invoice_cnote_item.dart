@@ -1,5 +1,6 @@
 import 'package:css_mobile/data/model/invoice/invoice_cnote_model.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
 
 class InvoiceCnoteItem extends StatelessWidget {
@@ -44,7 +45,7 @@ class InvoiceCnoteItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  invoice.awbDate ?? '',
+                  (invoice.awbDate ?? '').toLongDateTimeFormat(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 Text(
