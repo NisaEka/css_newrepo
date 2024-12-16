@@ -1,3 +1,4 @@
+import 'package:css_mobile/routes/route_page.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/screen/cek_ongkir/congkir_screen.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_screen.dart';
@@ -20,24 +21,29 @@ class AppPages {
   AppPages._();
 
   static final routes = [
-    GetPage(name: "/login", page: () => const LoginScreen()),
-    GetPage(name: "/inputKiriman", page: () => const InformasiPengirimScreen()),
-    GetPage(name: "/cekOngkir", page: () => const CekOngkirScreen()),
-    GetPage(name: "/draftTransaksi", page: () => const DraftTransaksiScreen()),
-    GetPage(name: "/riwayatKiriman", page: () => const RiwayatKirimanScreen()),
-    GetPage(name: "/lacakKiriman", page: () => const LacakKirimanScreen()),
+    GetPage(name: Routes.login, page: () => const LoginScreen()),
     GetPage(
-        name: "/pembayaranAggregasi",
+        name: Routes.inputKiriman, page: () => const InformasiPengirimScreen()),
+    GetPage(name: Routes.cekOngkir, page: () => const CekOngkirScreen()),
+    GetPage(
+        name: Routes.draftTransaksi, page: () => const DraftTransaksiScreen()),
+    GetPage(
+        name: Routes.riwayatKiriman, page: () => const RiwayatKirimanScreen()),
+    GetPage(name: Routes.lacakKiriman, page: () => const LacakKirimanScreen()),
+    GetPage(
+        name: Routes.pembayaranAggregasi,
         page: () => const PembayaranAggergasiScreen()),
     GetPage(
-        name: "/aggregasiMinus", page: () => const AggregationMinusScreen()),
-    GetPage(name: "/uangCODKamu", page: () => const UangCODScreen()),
-    GetPage(name: "/profileGeneral", page: () => const DataUmumScreen()),
-    GetPage(name: "/requestPickup", page: () => const RequestPickupScreen()),
-    GetPage(name: "/notification", page: () => const NotificationScreen()),
-    GetPage(name: "/pantauPaketmu", page: () => const PantauCardScreen()),
-    GetPage(name: "/laporanku", page: () => const LaporankuScreen()),
-    GetPage(name: "/eclaim", page: () => const EclaimScreen()),
-    GetPage(name: "/invoice", page: () => const InvoiceScreen())
+        name: Routes.aggregasiMinus,
+        page: () => const AggregationMinusScreen()),
+    GetPage(name: Routes.uangCODKamu, page: () => const UangCODScreen()),
+    GetPage(name: Routes.profileGeneral, page: () => const DataUmumScreen()),
+    GetPage(
+        name: Routes.requestPickup, page: () => const RequestPickupScreen()),
+    GetPage(name: Routes.notification, page: () => const NotificationScreen()),
+    GetPage(name: Routes.pantauPaketmu, page: () => const PantauCardScreen()),
+    GetPage(name: Routes.laporanku, page: () => const LaporankuScreen()),
+    GetPage(name: Routes.eclaim, page: () => const EclaimScreen()),
+    GetPage(name: Routes.invoice, page: () => const InvoiceScreen())
   ];
 }

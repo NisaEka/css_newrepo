@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_screen.dart';
 import 'package:css_mobile/screen/notification/notification_detail_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/items/notification_list_item.dart';
@@ -66,7 +67,12 @@ class NotificationController extends BaseController {
   }
 
   readMessage(NotificationModel value) {
-    Get.to(NotificationDetailScreen(data: value));
+    if (value.title?.split(' ').first != "Laporanku") {
+      Get.to(const LaporankuScreen());
+    } else {
+      Get.to(NotificationDetailScreen(data: value));
+    }
+
     unreadNotifList.removeWhere(
       (unread) => unread.id == value.id,
     );

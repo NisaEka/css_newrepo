@@ -45,7 +45,7 @@ class AkunTransaksiScreen extends StatelessWidget {
             .map(
               (e) => AccountListItem(
                 data: e,
-                isSelected: true,
+                isSelected: e.accountNumber == c.currentAccount?.accountNumber,
                 width: Get.width,
                 onTap: () => Get.back(result: e),
               ),
