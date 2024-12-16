@@ -230,7 +230,7 @@ class AuthRepositoryImpl extends AuthRepository {
     // var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
     // String id = deviceInfo?.deviceId ?? '';
     try {
-      Response response = await network.base.post(
+      Response response = await network.refreshDio.post(
         '/authentications/logout',
         data: {
           "refreshToken": refreshToken,
@@ -320,6 +320,35 @@ class AuthRepositoryImpl extends AuthRepository {
                 )
                 .toList()
             : List.empty(),
+      );
+    }
+  }
+
+  @override
+  Future<BaseResponse<PostLoginModel>> updateToken() async {
+    final refreshToken = await StorageCore().readRefreshToken();
+    AppLogger.i("refresh token local : $refreshToken");
+
+    try {
+      Response response = await network.refreshDio.post(
+        '/authentications/refresh',
+        data: {
+          "refreshToken": refreshToken,
+        },
+        options: Options(extra: {'skipAuth': true}),
+      );
+      return BaseResponse<PostLoginModel>.fromJson(
+        response.data,
+        (json) => PostLoginModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
+    } on DioException catch (e) {
+      return BaseResponse<PostLoginModel>.fromJson(
+        e.response?.data,
+        (json) => PostLoginModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
       );
     }
   }

@@ -38,4 +38,6 @@ abstract class AuthRepository {
   Future<BaseResponse> logout(String refreshToken);
 
   Future<BaseResponse> updateDeviceInfo(DeviceModel data);
+
+  Future<BaseResponse<PostLoginModel>> updateToken();
 }

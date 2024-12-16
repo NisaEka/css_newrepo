@@ -45,8 +45,9 @@ class LogoutButton extends StatelessWidget {
             onTap: () => isLogin
                 ? showDialog(
                     context: context,
-                    builder: (context) =>
-                        LogoutAlertDialog(onLogout: () => doLogout()),
+                    builder: (context) => LogoutAlertDialog(
+                      onLogout: () => doLogout(),
+                    ),
                   )
                 : Get.to(() => const LoginScreen()),
             leading: Icon(
@@ -78,18 +79,22 @@ class LogoutButton extends StatelessWidget {
     final storage = Get.find<StorageCore>();
 
     final refreshToken = await StorageCore().readRefreshToken() ?? '';
-
-    await auth.logout(refreshToken).then((value) async {
-      AppLogger.d(value.toJson().toString());
+    try {
+      await auth.logout(refreshToken).then((value) async {
+        AppLogger.d(value.toJson().toString());
+      });
       await auth.updateDeviceInfo(
         DeviceModel(
           fcmToken: await storage.readString(StorageCore.fcmToken),
           registrationId: "",
         ),
       );
-      storage.deleteLogin();
-      Get.offAll(() => const LoginScreen());
-      // }
-    });
+    } catch (e, i) {
+      AppLogger.e("error logout : $e");
+      AppLogger.e("error logout : $i");
+    }
+
+    storage.deleteLogin();
+    Get.offAll(() => const LoginScreen());
   }
 }

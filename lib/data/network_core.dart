@@ -11,6 +11,8 @@ class NetworkCore {
   static final noNeedToken = [
     '/login',
     '/auth/device-infos',
+    '/authentications/refresh',
+    '/authentications/logout',
   ];
 
   static bool isNeedToken(String route) => !noNeedToken.contains(route);
@@ -108,13 +110,15 @@ class NetworkCore {
           // }
           final refreshToken = await StorageCore().readRefreshToken();
           AppLogger.i("refresh token local : $refreshToken");
-          if ((dioError.requestOptions.path != '/auth/device-infos') ||
-              (dioError.requestOptions.path != '/authentications/refresh')) {
+          // if ((dioError.requestOptions.path != '/auth/device-infos') || (dioError.requestOptions.path != '/authentications/refresh')) {
+          if (noNeedToken
+              .where((e) => e != dioError.requestOptions.path)
+              .isNotEmpty) {
             if (dioError.response?.statusCode == 401) {
               // Handle token refresh logic
               if (refreshToken != null) {
                 try {
-                  Response response = await base.post(
+                  Response response = await refreshDio.post(
                     '/authentications/refresh',
                     data: {
                       "refreshToken": refreshToken,
@@ -138,7 +142,6 @@ class NetworkCore {
                   // Update the request header with the new access token
                   dioError.requestOptions.headers['Authorization'] =
                       'Bearer ${newToken.data?.token?.accessToken}';
-
                   AppLogger.i("new token : $newToken");
                   // Repeat the request with the updated header
                   return handler
