@@ -60,7 +60,7 @@ class BottomBar5 extends StatelessWidget {
                             : whiteColor,
                       ),
                       isSelected: menu == 0,
-                      onTap: () => Get.to(() => const DashboardScreen(),
+                      onTap: () => Get.offAll(() => const DashboardScreen(),
                           transition: Transition.leftToRight),
                     ),
                     allow?.pantauPaketmu == "Y" || (!controller.state.isLogin)
