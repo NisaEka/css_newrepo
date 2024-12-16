@@ -22,6 +22,8 @@ import 'package:css_mobile/data/repository/master/master_impl.dart';
 import 'package:css_mobile/data/repository/master/master_repository.dart';
 import 'package:css_mobile/data/repository/notification/notification_impl.dart';
 import 'package:css_mobile/data/repository/notification/notification_repository.dart';
+import 'package:css_mobile/data/repository/pantau_paketmu/pantau_paketmu_impl.dart';
+import 'package:css_mobile/data/repository/pantau_paketmu/pantau_paketmu_repository.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_impl.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/data/repository/profil/profil_impl.dart';
@@ -60,5 +62,7 @@ class GlobalBinding extends Bindings {
     Get.put<InvoiceRepository>(InvoiceImpl(), permanent: true);
     Get.put<MasterRepository>(MasterRepositoryImpl(), permanent: true);
     Get.put<EclaimRepository>(EclaimRepositoryImpl(), permanent: true);
+    Get.put<PantauPaketmuRepository>(PantauPaketmuRepositoryImpl(),
+        permanent: true);
   }
 }

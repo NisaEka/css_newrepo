@@ -12,6 +12,7 @@ import 'package:css_mobile/data/repository/lacak_kiriman/lacak_kiriman_repositor
 import 'package:css_mobile/data/repository/laporanku/laporanku_repository.dart';
 import 'package:css_mobile/data/repository/master/master_repository.dart';
 import 'package:css_mobile/data/repository/notification/notification_repository.dart';
+import 'package:css_mobile/data/repository/pantau_paketmu/pantau_paketmu_repository.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/data/repository/profil/profil_repository.dart';
 import 'package:css_mobile/data/repository/request_pickup/request_pickup_repository.dart';
@@ -40,4 +41,5 @@ abstract class BaseController extends GetxController {
   final invoiceRepository = Get.find<InvoiceRepository>();
   final master = Get.find<MasterRepository>();
   final eclaims = Get.find<EclaimRepository>();
+  final pantau = Get.find<PantauPaketmuRepository>();
 }

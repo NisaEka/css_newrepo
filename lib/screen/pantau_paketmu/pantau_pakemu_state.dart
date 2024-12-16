@@ -1,4 +1,5 @@
-import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
+import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
+import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,16 +7,20 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class PantauPaketmuState extends GetxController {
   // Reactive List for countList
-  final countList = RxList<dynamic>([]);
+  // final countList = RxList<dynamic>([]);
+  List<PantauPaketmuCountModel> countList = [];
 
   // Reactive TextEditingControllers
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
   final searchField = TextEditingController();
 
-  // Paging Controller
-  final PagingController<int, PantauPaketmuModel> pagingController =
+  final PagingController<int, PantauPaketmuDetailModel> pagingController =
       PagingController(firstPageKey: 1);
+
+  // Paging Controller
+  // final PagingController<int, PantauPaketmuModel> pagingController =
+  //     PagingController(firstPageKey: 1);
 
   // Reactive DateTime variables
   final startDate = Rxn<DateTime>(
@@ -39,14 +44,14 @@ class PantauPaketmuState extends GetxController {
   // Reactive Integer variables
   final dateFilter = Rx<String>('3');
   final tipeKiriman = Rx<int>(0);
-  final total = Rx<int>(0);
-  final cod = Rx<int>(0);
+  // final total = Rx<int>(0);
+  // final cod = Rx<int>(0);
   final ongkir = Rx<int>(0);
-  final codOngkir = Rx<int>(0);
+  // final codOngkir = Rx<int>(0);
 
   // Reactive Booleans
   final isFiltered = Rx<bool>(false);
-  final isLoading = Rx<bool>(false);
+  // final issLoading = Rx<bool>(false);
   final isLoadCount = Rx<bool>(false);
   final isSelect = Rx<bool>(false);
   final isSelectAll = Rx<bool>(false);
@@ -59,8 +64,19 @@ class PantauPaketmuState extends GetxController {
       RxList<String>(["SEMUA", "SUDAH DIPRINT", "BELUM DIPRINT"]);
 
   // Reactive list for selected transactions
-  final selectedTransaction = RxList<PantauPaketmuModel>([]);
+  // final selectedTransaction = RxList<PantauPaketmuModel>([]);
 
   // Reactive user profile
   final basic = Rx<UserModel?>(null); // Using Rx for UserModel
+
+  int selectedKiriman = 0;
+  String transType = '';
+  // String? noncod;
+  int cod = 0;
+  int noncod = 0;
+  int codOngkir = 0;
+  bool isLoading = false;
+  List<Map<String, dynamic>>? transDate;
+  List<PantauPaketmuCountModel> selectedPantauPaketmu = [];
+  List<PantauPaketmuDetailModel> selectedTransaction = [];
 }

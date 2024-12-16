@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/data/model/pantau/get_pantau_paketmu_model.dart';
+import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/pantau_paketmu/detail/pantau_paketmu_detail_screen.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
@@ -256,15 +256,16 @@ class PantauPaketmuScreen extends StatelessWidget {
                   c.applyFilter(isDetail: true);
                 },
               ),
-              child: PagedListView<int, PantauPaketmuModel>(
+              child: PagedListView<int, PantauPaketmuDetailModel>(
                 pagingController: c.state.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<PantauPaketmuModel>(
+                builderDelegate:
+                    PagedChildBuilderDelegate<PantauPaketmuDetailModel>(
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => RiwayatKirimanListItem(
                     data: TransactionModel(
                       awb: item.awbNo,
                       orderId: item.orderId,
-                      statusAwb: item.statusPod ?? item.statusAwb,
+                      statusAwb: item.statusPod,
                       serviceCode: item.service,
                       type: item.awbType,
                       receiverName: item.receiverName,
