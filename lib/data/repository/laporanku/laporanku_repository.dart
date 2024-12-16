@@ -16,10 +16,13 @@ abstract class LaporankuRepository {
 
   Future<BaseResponse<TicketModel>> postTicket(DataPostTicketModel data);
 
-  Future<BaseResponse<List<TicketMessageModel>>> getTickeMessage(
+  Future<BaseResponse<List<TicketMessageModel>>> getTicketMessage(
       QueryModel param);
 
   Future<BaseResponse<TicketModel>> postTicketMessage(DataPostTicketModel data);
 
   Future<BaseResponse<TicketModel>> putTicket(String id, String status);
+
+  Future<BaseResponse> patchTicketMessageRead(
+      String id, TicketMessageModel data);
 }

@@ -46,7 +46,7 @@ class ObrolanLaporankuController extends BaseController {
     messages = [];
     try {
       await laporanku
-          .getTickeMessage(QueryModel(
+          .getTicketMessage(QueryModel(
               table: true,
               where: [
                 {"ticketId": id}
@@ -61,6 +61,7 @@ class ObrolanLaporankuController extends BaseController {
         subject = value.data?.first.subject;
         update();
       });
+      await laporanku.patchTicketMessageRead(id, TicketMessageModel(read: 'Y'));
     } catch (e) {
       AppLogger.e('error initData obrolan laporanku $e');
     }
@@ -69,7 +70,7 @@ class ObrolanLaporankuController extends BaseController {
   Future<void> getMessages(int page) async {
     isLoading = true;
     try {
-      final message = await laporanku.getTickeMessage(QueryModel(
+      final message = await laporanku.getTicketMessage(QueryModel(
           table: true,
           where: [
             {"ticketId": id}

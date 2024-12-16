@@ -1,57 +1,3 @@
-class GetTicketModel {
-  GetTicketModel({
-    num? statusCode,
-    String? message,
-    List<TicketModel>? data,
-  }) {
-    _statusCode = statusCode;
-    _message = message;
-    _data = data;
-  }
-
-  GetTicketModel.fromJson(dynamic json) {
-    _statusCode = json['statusCode'];
-    _message = json['message'];
-    if (json['data'] != null) {
-      _data = [];
-      json['data'].forEach((v) {
-        _data?.add(TicketModel.fromJson(v));
-      });
-    }
-  }
-
-  num? _statusCode;
-  String? _message;
-  List<TicketModel>? _data;
-
-  GetTicketModel copyWith({
-    num? statusCode,
-    String? message,
-    List<TicketModel>? data,
-  }) =>
-      GetTicketModel(
-        statusCode: statusCode ?? _statusCode,
-        message: message ?? _message,
-        data: data ?? _data,
-      );
-
-  num? get statusCode => _statusCode;
-
-  String? get message => _message;
-
-  List<TicketModel>? get data => _data;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['statusCode'] = _statusCode;
-    map['message'] = _message;
-    if (_data != null) {
-      map['data'] = _data?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
 class TicketModel {
   TicketModel({
     String? id,
@@ -62,6 +8,7 @@ class TicketModel {
     String? createdDate,
     String? updatedDate,
     Category? category,
+    bool? isUnread,
   }) {
     _id = id;
     _cnote = cnote;
@@ -71,6 +18,7 @@ class TicketModel {
     _createdDate = createdDate;
     _updatedDate = updatedDate;
     _category = category;
+    _isUnread = isUnread;
   }
 
   TicketModel.fromJson(dynamic json) {
@@ -83,6 +31,7 @@ class TicketModel {
     _updatedDate = json['updatedDate'];
     _category =
         json['category'] != null ? Category.fromJson(json['category']) : null;
+    _isUnread = json['isUnread'];
   }
 
   String? _id;
@@ -93,6 +42,7 @@ class TicketModel {
   String? _createdDate;
   String? _updatedDate;
   Category? _category;
+  bool? _isUnread;
 
   TicketModel copyWith({
     String? id,
@@ -103,6 +53,7 @@ class TicketModel {
     String? createdDate,
     String? updatedDate,
     Category? category,
+    bool? isUnread,
   }) =>
       TicketModel(
         id: id ?? _id,
@@ -113,6 +64,7 @@ class TicketModel {
         createdDate: createdDate ?? _createdDate,
         updatedDate: updatedDate ?? _updatedDate,
         category: category ?? _category,
+        isUnread: isUnread ?? _isUnread,
       );
 
   String? get id => _id;
@@ -131,6 +83,8 @@ class TicketModel {
 
   Category? get category => _category;
 
+  bool? get isUnread => _isUnread;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
@@ -143,6 +97,7 @@ class TicketModel {
     if (_category != null) {
       map['category'] = _category?.toJson();
     }
+    map['isUnread'] = _isUnread;
     return map;
   }
 }

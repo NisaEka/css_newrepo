@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/detail/detail_laporanku_controller.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolan_laporanku_screen.dart';
@@ -7,14 +8,12 @@ import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/items/text_row_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../const/textstyle.dart';
-import '../../../../widgets/dialog/shimer_loading_dialog.dart';
-import '../../../../widgets/items/text_row_item.dart';
 
 class DetailLaporankuScreen extends StatelessWidget {
   final TicketModel data;
@@ -55,7 +54,7 @@ class DetailLaporankuScreen extends StatelessWidget {
             Card.filled(
               color: Theme.of(context).cardColor,
               shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16))),
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -64,20 +63,21 @@ class DetailLaporankuScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomCodeLabel(
-                          label: data.cnote ?? '-',
+                        label: data.cnote ?? '-',
                         isLoading: false,
                       ),
                       Row(
                         children: [
                           CustomFilledButton(
-                              color: successColor,
-                              isTransparent: true,
-                              prefixIcon: Icons.chat_bubble_rounded,
-                              width: 40,
-                              height: 40,
-                              fontSize: 19,
-                              isLoading: false,
-                              onPressed: () => Get.to(const ObrolanLaporankuScreen(),
+                            color: successColor,
+                            isTransparent: true,
+                            prefixIcon: Icons.message,
+                            width: 40,
+                            height: 40,
+                            fontSize: 19,
+                            isLoading: false,
+                            onPressed: () => Get.to(
+                                const ObrolanLaporankuScreen(),
                                 arguments: {
                                   "id": data.id,
                                   "ticket": data,
@@ -90,16 +90,16 @@ class DetailLaporankuScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Shimmer(
                     child: Container(
-                      color:
-                      Colors.transparent,
+                      color: Colors.transparent,
                       alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(
                           right: 20), // Margin between the two text widgets
                       child: Text(
                         'Informasi Tiket Laporan'.tr,
                         style: listTitleTextStyle.copyWith(
-                          color:
-                          AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                          color: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : warningColor,
                         ),
                       ),
                     ),
@@ -121,8 +121,8 @@ class DetailLaporankuScreen extends StatelessWidget {
                     value: data.status == "Closed"
                         ? "Selesai".tr
                         : data.status == "Reply CS"
-                        ? "Masih Diproses".tr
-                        : "Belum Diproses".tr,
+                            ? "Masih Diproses".tr
+                            : "Belum Diproses".tr,
                   ),
                   TextRowItem(
                     title: "Kategori".tr,
@@ -147,17 +147,15 @@ class DetailLaporankuScreen extends StatelessWidget {
       children: [
         CustomFilledButton(
           color: AppConst.isLightTheme(context) ? redJNE : warningColor,
-          title:
-            data.status != "Closed" ? "Selesai".tr : "Lapor Ulang".tr,
-            width: Get.width - 50,
-            onPressed: () =>
-              data.status != "Closed" ?
-                c.updateStatus(data.id ?? '')
-                  : Get.to(const ObrolanLaporankuScreen(), arguments: {
-                    "id": data.id,
-                    "ticket": data,
-                  }),
-              ),
+          title: data.status != "Closed" ? "Selesai".tr : "Lapor Ulang".tr,
+          width: Get.width - 50,
+          onPressed: () => data.status != "Closed"
+              ? c.updateStatus(data.id ?? '')
+              : Get.to(const ObrolanLaporankuScreen(), arguments: {
+                  "id": data.id,
+                  "ticket": data,
+                }),
+        ),
       ],
     );
   }
