@@ -12,9 +12,9 @@ class LaporankuScreen extends StatelessWidget {
     return GetBuilder<LaporankuController>(
         init: LaporankuController(),
         builder: (controller) {
-          return Scaffold(
-            appBar: const LaporankuAppbar(),
-            body: const LaporankuBody(),
+          return const Scaffold(
+            appBar: LaporankuAppbar(),
+            body: LaporankuBody(),
           );
         });
   }
