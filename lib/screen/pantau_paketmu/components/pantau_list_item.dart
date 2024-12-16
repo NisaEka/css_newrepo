@@ -11,8 +11,9 @@ import 'package:intl/intl.dart';
 class PantauItems extends StatelessWidget {
   final PantauPaketmuCountModel? item;
   final bool? isLoading;
+  final int? index;
 
-  const PantauItems({super.key, this.item, this.isLoading});
+  const PantauItems({super.key, this.item, this.isLoading, this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +51,7 @@ class PantauItems extends StatelessWidget {
           onTap: () {
             if (item != null && !c.state.isLoading) {
               AppLogger.i('Card tapped.');
+              c.setSelectedStatus(index ?? 0);
               Get.to(() => const PantauPaketmuScreen());
             }
           },

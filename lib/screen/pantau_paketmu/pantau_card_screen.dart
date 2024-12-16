@@ -52,6 +52,7 @@ class PantauCardScreen extends StatelessWidget {
                         return index != 0
                             ? PantauItems(
                                 item: item,
+                                index: index,
                                 isLoading:
                                     false) // Jika index bukan 0, tampilkan PantauItems
                             : const SizedBox();

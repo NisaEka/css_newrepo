@@ -44,13 +44,16 @@ class PantauPaketmuState extends GetxController {
   // Reactive Integer variables
   final dateFilter = Rx<String>('3');
   final tipeKiriman = Rx<int>(0);
+
   // final total = Rx<int>(0);
   // final cod = Rx<int>(0);
   final ongkir = Rx<int>(0);
+
   // final codOngkir = Rx<int>(0);
 
   // Reactive Booleans
   final isFiltered = Rx<bool>(false);
+
   // final issLoading = Rx<bool>(false);
   final isLoadCount = Rx<bool>(false);
   final isSelect = Rx<bool>(false);
@@ -71,6 +74,7 @@ class PantauPaketmuState extends GetxController {
 
   int selectedKiriman = 0;
   String transType = '';
+
   // String? noncod;
   int cod = 0;
   int noncod = 0;
