@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class PantauPaketmuState extends GetxController {
+class PantauPaketmuCountState extends GetxController {
   // Reactive List for countList
   // final countList = RxList<dynamic>([]);
   List<PantauPaketmuCountModel> countList = [];
@@ -80,6 +80,8 @@ class PantauPaketmuState extends GetxController {
   int noncod = 0;
   int codOngkir = 0;
   bool isLoading = false;
+  bool isLoadingPantauItems = false;
+  bool isLoadingPantauTotalKiriman = false;
   List<Map<String, dynamic>>? transDate;
   List<PantauPaketmuCountModel> selectedPantauPaketmu = [];
   List<PantauPaketmuListModel> selectedTransaction = [];

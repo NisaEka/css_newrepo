@@ -6,6 +6,6 @@ import 'package:css_mobile/data/model/query_model.dart';
 abstract class PantauPaketmuRepository {
   Future<BaseResponse<List<PantauPaketmuCountModel>>> getPantauCount(
       QueryModel param);
-  Future<BaseResponse<List<PantauPaketmuDetailModel>>> getPantauList(
+  Future<BaseResponse<List<PantauPaketmuListModel>>> getPantauList(
       QueryModel param);
 }

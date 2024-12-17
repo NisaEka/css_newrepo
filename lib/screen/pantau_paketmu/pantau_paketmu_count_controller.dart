@@ -5,7 +5,7 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
-import 'package:css_mobile/screen/pantau_paketmu/pantau_pakemu_state.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_count_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
@@ -14,8 +14,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:dio/dio.dart';
 
-class PantauPaketmuController extends BaseController {
-  final PantauPaketmuState state = PantauPaketmuState();
+class PantauPaketmuCountController extends BaseController {
+  final PantauPaketmuCountState state = PantauPaketmuCountState();
   static const pageSize = 10;
   final network = Get.find<NetworkCore>();
   final storageSecure = const FlutterSecureStorage();
@@ -26,10 +26,10 @@ class PantauPaketmuController extends BaseController {
   void onInit() {
     super.onInit();
     initData();
-    getCountList();
-    state.pagingController.addPageRequestListener((pageKey) {
-      getPantauList(pageKey);
-    });
+    // getCountList();
+    // state.pagingController.addPageRequestListener((pageKey) {
+    //   getPantauList(pageKey);
+    // });
     resetFilter();
     selectDateFilter(3);
   }
@@ -84,14 +84,14 @@ class PantauPaketmuController extends BaseController {
       state.selectedStatusKiriman.value = state.listStatusKiriman.first;
       applyFilter();
     }
+
+    getCountList();
     state.isLoading = false;
     update();
   }
 
   Future<void> getCountList() async {
-    state.isLoading = true;
     state.countList = [];
-    update();
     var param = QueryModel(
       between: [
         {
@@ -116,8 +116,7 @@ class PantauPaketmuController extends BaseController {
       AppLogger.e('error pantau count', e, i);
       AppSnackBar.error('Gagal mengambil data pantau');
     }
-    // await Future.delayed(const Duration(seconds: 2));
-    state.isLoading = false;
+    await Future.delayed(const Duration(seconds: 3));
     update();
   }
 

@@ -2,7 +2,9 @@ import 'package:css_mobile/screen/pantau_paketmu/components/pantau_list_item.dar
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_paketmu_filter.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_status_button.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_total_kiriman.dart';
-import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
+// import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_count_controller.dart';
+// import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_count_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:flutter/material.dart';
@@ -13,65 +15,73 @@ class PantauCardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PantauPaketmuController>(
-        init: PantauPaketmuController(),
+    return GetBuilder<PantauPaketmuCountController>(
+        init: PantauPaketmuCountController(),
         builder: (controller) {
           return Scaffold(
             appBar: _appBarContent(controller),
-            body: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const PantauStatusButton(),
-                  const SizedBox(height: 5),
-                  // Total Kiriman
-                  const PantauTotalKiriman(),
-                  Divider(
-                    color: Theme.of(context).colorScheme.outline,
-                    thickness: 1.0,
-                  ),
-                  // Pantau List
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: controller.state.isLoading
-                          ? 1
-                          : controller.state.countList.length,
-                      itemBuilder: (context, index) {
-                        if (controller.state.isLoading) {
+            body: RefreshIndicator(
+              onRefresh: () => controller.initData(),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const PantauStatusButton(),
+                    const SizedBox(height: 5),
+                    // Total Kiriman
+                    const PantauTotalKiriman(),
+                    Divider(
+                      color: Theme.of(context).colorScheme.outline,
+                      thickness: 1.0,
+                    ),
+                    // Pantau List
+                    Expanded(
+                      child: ListView.builder(
+                        // itemCount: controller.state.isLoading ||
+                        //         controller.state.countList.isEmpty
+                        //     ? 1
+                        //     : controller.state.countList.length,
+                        itemBuilder: (context, index) {
+                          // if (controller.state.isLoading) {
                           return const PantauItems(
                             item: null,
                             isLoading: true,
                           );
-                        }
-                        var item = controller.state.countList[index];
-                        return index != 0
-                            ? PantauItems(
-                                item: item, index: index, isLoading: false)
-                            : const SizedBox();
-                      },
+                          // } else if (controller.state.countList.isEmpty) {
+                          //   return const Center(
+                          //       child: CircularProgressIndicator());
+                          // }
+
+                          // var item = controller.state.countList[index];
+                          // return index != 0
+                          //     ? PantauItems(
+                          //         item: item, index: index, isLoading: false)
+                          //     : const SizedBox();
+                        },
+                      ),
                     ),
-                  )
-                  // Expanded(
-                  //     child: ListView(
-                  //   children: [
-                  //     PantauCountCod(title: 'COD'.tr),
-                  //     PantauCountCodOngkir(
-                  //       title: 'COD ONGKIR'.tr,
-                  //     ),
-                  //     PantauCountNonCod(
-                  //       title: 'NON COD'.tr,
-                  //     ),
-                  //   ],
-                  // )),
-                ],
+                    // Expanded(
+                    //     child: ListView(
+                    //   children: [
+                    //     PantauCountCod(title: 'COD'.tr),
+                    //     PantauCountCodOngkir(
+                    //       title: 'COD ONGKIR'.tr,
+                    //     ),
+                    //     PantauCountNonCod(
+                    //       title: 'NON COD'.tr,
+                    //     ),
+                    //   ],
+                    // )),
+                  ],
+                ),
               ),
             ),
           );
         });
   }
 
-  CustomTopBar _appBarContent(PantauPaketmuController c) {
+  CustomTopBar _appBarContent(PantauPaketmuCountController c) {
     return CustomTopBar(
       title: "Pantau Paketmu".tr,
       action: [

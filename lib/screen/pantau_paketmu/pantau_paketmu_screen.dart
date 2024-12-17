@@ -252,10 +252,10 @@ class PantauPaketmuScreen extends StatelessWidget {
                   c.applyFilter(isDetail: true);
                 },
               ),
-              child: PagedListView<int, PantauPaketmuDetailModel>(
+              child: PagedListView<int, PantauPaketmuListModel>(
                 pagingController: c.state.pagingController,
                 builderDelegate:
-                    PagedChildBuilderDelegate<PantauPaketmuDetailModel>(
+                    PagedChildBuilderDelegate<PantauPaketmuListModel>(
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => RiwayatKirimanListItem(
                     data: TransactionModel(

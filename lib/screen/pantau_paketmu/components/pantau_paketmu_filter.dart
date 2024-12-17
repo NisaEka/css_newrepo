@@ -5,10 +5,10 @@ import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
+// import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 
 class PantauPaketmuFilter extends StatelessWidget {
-  final PantauPaketmuController controller;
+  final dynamic controller;
 
   const PantauPaketmuFilter({super.key, required this.controller});
 
