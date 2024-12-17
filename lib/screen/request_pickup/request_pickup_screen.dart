@@ -215,7 +215,6 @@ class RequestPickupScreen extends StatelessWidget {
                   checked: controller.isItemChecked(item.awb),
                 );
               },
-              noMoreItemsIndicatorBuilder: (context) => const DataEmpty(),
               noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
               firstPageErrorIndicatorBuilder: (context) {
                 return Center(
