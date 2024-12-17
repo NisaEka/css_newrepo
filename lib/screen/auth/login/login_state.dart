@@ -12,6 +12,7 @@ class LoginState {
   bool isObscurePasswordLogin = true;
   bool isLoading = false;
   bool pop = false;
+  bool rememberMe = false;
   String? lang;
   String? fcmToken;
 

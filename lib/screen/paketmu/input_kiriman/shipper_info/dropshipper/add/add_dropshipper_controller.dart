@@ -3,6 +3,7 @@ import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 class AddDropshipperController extends BaseController {
   Account account = Get.arguments['account'];
   bool isOfficer = Get.arguments['isOfficer'];
+  UserModel? userBasic = Get.arguments['userBasic'];
 
   final formKey = GlobalKey<FormState>();
   final dropshipperName = TextEditingController();

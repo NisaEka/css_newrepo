@@ -174,7 +174,7 @@
 //                   borderRadius: const BorderRadius.only(
 //                     bottomLeft: Radius.circular(12),
 //                     bottomRight: Radius.circular(12),
-//                   ), // Rounded corners
+//                   ),  Rounded corners
 //                 ),
 //                 padding:
 //                     const EdgeInsets.symmetric(horizontal: 10, vertical: 6),

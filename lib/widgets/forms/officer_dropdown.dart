@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-class OriginDropdown extends StatefulHookWidget {
+class OfficerDropdown extends StatefulHookWidget {
   final String? label;
   final bool isRequired;
   final bool readOnly;
@@ -27,12 +27,11 @@ class OriginDropdown extends StatefulHookWidget {
   final bool showfromBottom;
   final TextEditingController? controller;
   final void Function(dynamic)? onSelect;
-  final String? branchCode;
-  final String? originCode;
+  final String? branch;
   final bool showDialog;
   final bool isOfficer;
 
-  const OriginDropdown({
+  const OfficerDropdown({
     super.key,
     this.label,
     this.isRequired = true,
@@ -45,36 +44,31 @@ class OriginDropdown extends StatefulHookWidget {
     this.showfromBottom = false,
     this.controller,
     this.onSelect,
-    this.branchCode,
-    this.originCode,
+    this.branch,
     this.showDialog = false,
     this.isOfficer = false,
   });
 
   @override
-  State<OriginDropdown> createState() => _OriginDropdownState();
+  State<OfficerDropdown> createState() => _OriginDropdownState();
 }
 
-class _OriginDropdownState extends State<OriginDropdown> {
+class _OriginDropdownState extends State<OfficerDropdown> {
   final searchTextfield = TextEditingController();
   PetugasModel? officer;
 
   Future<List<OriginModel>> getOriginList(String keyword) async {
     final master = Get.find<MasterRepository>();
-    AppLogger.i("branch code : ${widget.branchCode}");
-    List<Map<String, dynamic>> whereList = [];
-    if (widget.branchCode?.isNotEmpty ?? false) {
-      whereList.add({"branchCode": "${widget.branchCode}"});
-    }
-    if (widget.originCode?.isNotEmpty ?? false) {
-      whereList.add({"originCode": "${widget.originCode}"});
-    }
-
+    AppLogger.i("branch code : ${widget.branch}");
+    List<Map<String, dynamic>> branchCode = (widget.branch?.isNotEmpty ?? false)
+        ? [
+            {"branchCode": "${widget.branch}"}
+          ]
+        : [];
     var response = await master.getOrigins(QueryModel(
       search: keyword.toUpperCase(),
-      where: whereList,
-      table: (widget.branchCode?.isNotEmpty ?? false) ||
-          (widget.originCode?.isNotEmpty ?? false),
+      where: branchCode,
+      table: widget.branch?.isNotEmpty,
       relation: true,
     ));
     var models = response.data?.toList();

@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -48,8 +49,10 @@ class JLCPointWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
-                              color:
-                              color ?? (AppConst.isLightTheme(context) ? redJNE : warningColor),
+                              color: color ??
+                                  (AppConst.isLightTheme(context)
+                                      ? redJNE
+                                      : warningColor),
                               spreadRadius: 1,
                               offset: const Offset(-2, 2),
                             ),
@@ -60,9 +63,10 @@ class JLCPointWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(ImageConstant.logoJLC, height: 14),
+                            Image.asset(ImageConstant.logoJLC2, height: 12),
                             Text(
-                                ' ${point != '0' ? point.toDouble().toInt() : 0} Point'),
+                                ' ${point != '0' ? point.toDouble().toInt() : 0} Point',
+                                style: sublistTitleTextStyle),
                           ],
                         ),
                       ),

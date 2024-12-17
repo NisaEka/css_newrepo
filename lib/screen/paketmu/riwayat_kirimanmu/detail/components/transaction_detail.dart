@@ -4,6 +4,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
+import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:css_mobile/widgets/items/text_row_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -64,28 +65,27 @@ class TransactionDetail extends StatelessWidget {
                   isLoading: c.state.isLoading,
                 ),
                 c.state.transactionModel?.codOngkir == "YES" &&
-                    c.state.transactionModel?.codFlag == "YES"
-                    ?
-                TextRowItem(
-                  title: "Tipe Kiriman".tr,
-                  value: 'COD Ongkir',
-                  isLoading: c.state.isLoading,
-                  isValueBold: true,
-                ):c.state.transactionModel?.codOngkir == "NO" &&
-                    c.state.transactionModel?.codFlag == "YES"
-                    ?
-                TextRowItem(
-                  title: "Tipe Kiriman".tr,
-                  value: 'COD',
-                  isLoading: c.state.isLoading,
-                  isValueBold: true,
-                ):
-                TextRowItem(
-                  title: "Tipe Kiriman".tr,
-                  value: 'NON COD',
-                  isLoading: c.state.isLoading,
-                  isValueBold: true,
-                ),
+                        c.state.transactionModel?.codFlag == "YES"
+                    ? TextRowItem(
+                        title: "Tipe Kiriman".tr,
+                        value: 'COD Ongkir',
+                        isLoading: c.state.isLoading,
+                        isValueBold: true,
+                      )
+                    : c.state.transactionModel?.codOngkir == "NO" &&
+                            c.state.transactionModel?.codFlag == "YES"
+                        ? TextRowItem(
+                            title: "Tipe Kiriman".tr,
+                            value: 'COD',
+                            isLoading: c.state.isLoading,
+                            isValueBold: true,
+                          )
+                        : TextRowItem(
+                            title: "Tipe Kiriman".tr,
+                            value: 'NON COD',
+                            isLoading: c.state.isLoading,
+                            isValueBold: true,
+                          ),
                 const SizedBox(height: 10),
                 const Divider(color: greyColor),
                 const SizedBox(height: 10),
@@ -96,12 +96,19 @@ class TransactionDetail extends StatelessWidget {
                     fontColor: blueJNE),
                 const SizedBox(height: 15),
                 CustomFormLabel(
-                    isLoading: c.state.isLoading,
-                    label: 'Account :'.tr,
-                    fontColor: blueJNE),
+                  isLoading: c.state.isLoading,
+                  label: 'Account :'.tr,
+                  fontColor: blueJNE,
+                ),
+                CustomLabelText(
+                    title: "account",
+                    value:
+                        '${c.state.transactionModel?.account?.accountNumber ?? '-'} - '
+                        '${c.state.transactionModel?.account?.accountName ?? '-'}'),
                 CustomFormLabel(
                     isLoading: c.state.isLoading,
-                    label: '${c.state.transactionModel?.account?.accountNumber ?? '-'} - '
+                    label:
+                        '${c.state.transactionModel?.account?.accountNumber ?? '-'} - '
                         '${c.state.transactionModel?.account?.accountName ?? '-'}',
                     fontColor: greyDarkColor2),
                 CustomFormLabel(
@@ -166,7 +173,8 @@ class TransactionDetail extends StatelessWidget {
                 const SizedBox(height: 10),
                 TextRowItem(
                   title: "Berat Kiriman".tr,
-                  value: '${c.state.transactionModel?.weight?.toString() ?? '-'} KG',
+                  value:
+                      '${c.state.transactionModel?.weight?.toString() ?? '-'} KG',
                   isLoading: c.state.isLoading,
                 ),
                 TextRowItem(
@@ -181,19 +189,17 @@ class TransactionDetail extends StatelessWidget {
                   isLoading: c.state.isLoading,
                 ),
                 c.state.transactionModel?.codOngkir == "YES" &&
-                    c.state.transactionModel?.codFlag == "YES"
-                    ?
-                TextRowItem(
-                  title: "Admin COD Ongkir".tr,
-                  value:
-                      'Rp. 1.000',
-                  isLoading: c.state.isLoading,
-                ):TextRowItem(
-                  title: "Admin COD Ongkir".tr,
-                  value:
-                  'Rp. 0',
-                  isLoading: c.state.isLoading,
-                ),
+                        c.state.transactionModel?.codFlag == "YES"
+                    ? TextRowItem(
+                        title: "Admin COD Ongkir".tr,
+                        value: 'Rp. 1.000',
+                        isLoading: c.state.isLoading,
+                      )
+                    : TextRowItem(
+                        title: "Admin COD Ongkir".tr,
+                        value: 'Rp. 0',
+                        isLoading: c.state.isLoading,
+                      ),
                 TextRowItem(
                   title: "Asuransi".tr,
                   value:

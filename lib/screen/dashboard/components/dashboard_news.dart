@@ -16,7 +16,8 @@ class DashboardNews extends StatelessWidget {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Jnews'.tr,
                         style: Theme.of(context).textTheme.titleLarge),

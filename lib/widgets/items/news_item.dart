@@ -37,10 +37,12 @@ class NewsItem extends StatelessWidget {
           child: Column(
             children: [
               GestureDetector(
-                onTap: () => _showImagePreview(
-                  context,
-                  news?.thumbnail ?? promo?.picture ?? '',
-                ),
+                onTap: () => news == null
+                    ? _showImagePreview(
+                        context,
+                        news?.thumbnail ?? promo?.picture ?? '',
+                      )
+                    : _launchUrl(),
                 child: CachedNetworkImage(
                   fit: BoxFit.contain,
                   imageUrl: news?.thumbnail ?? promo?.picture ?? '',

@@ -77,21 +77,38 @@ class LoginForm extends StatelessWidget {
                                 ? c.doLogin(context)
                                 : null,
                       ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () => c.forgotPassword(),
-                          child: Text(
-                            "Lupa kata sandi?".tr,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(color: AppConst.isLightTheme(context) ? infoColor : Colors.lightBlueAccent),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(),
+                          // CustomCheckbox(
+                          //   value: c.state.rememberMe,
+                          //   label: "Ingat saya",
+                          //   onChanged: (p0) {
+                          //     c.state.rememberMe = p0 ?? false;
+                          //     c.update();
+                          //   },
+                          //   width: Get.width / 3,
+                          // ),
+                          TextButton(
+                            onPressed: () => c.forgotPassword(),
+                            child: Text(
+                              "Lupa kata sandi?".tr,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                      color: AppConst.isLightTheme(context)
+                                          ? infoColor
+                                          : Colors.lightBlueAccent),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                       CustomFilledButton(
-                        color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                        color: AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : warningColor,
                         title: 'Masuk'.tr,
                         suffixIcon: Icons.login_rounded,
                         onPressed: () async {

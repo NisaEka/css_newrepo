@@ -1,10 +1,13 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
+import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'storage_core.dart';
 
 class NetworkCore {
@@ -151,8 +154,9 @@ class NetworkCore {
                       "refresh token error status code : ${e.response?.statusCode}");
                   AppLogger.e("refresh token error  : ${e.response?.data}");
                   // if (e.response?.statusCode == 401) {
-                  //   StorageCore().deleteLogin();
-                  //   Get.offAll(const DashboardScreen());
+                  StorageCore().deleteLogin();
+                  Get.delete<DashboardController>()
+                      .then((_) => Get.offAll(const DashboardScreen()));
                   // }
                   return handler.reject(dioError);
                 }

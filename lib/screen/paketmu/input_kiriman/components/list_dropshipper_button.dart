@@ -19,6 +19,7 @@ class ListDropshipperButton extends StatelessWidget {
                   ? Get.to(const ListDropshipperScreen(), arguments: {
                       'account': c.state.selectedAccount,
                       'isOfficer': c.state.userBasic?.userType != 'PEMILIK',
+                      'userBasic': c.state.userBasic,
                     })?.then(
                       (result) {
                         c.state.dropshipper = result;

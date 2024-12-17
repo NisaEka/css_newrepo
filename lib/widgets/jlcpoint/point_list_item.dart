@@ -70,7 +70,9 @@ class PointListItem extends StatelessWidget {
                       height: isLoading ? 20 : null,
                       width: isLoading ? Get.width / 2 : null,
                       color: isLoading ? greyColor : null,
-                      child: Text(dateTime ?? ''),
+                      child: Text(
+                          style: Theme.of(context).textTheme.titleSmall,
+                          dateTime ?? ''),
                     ),
                   ],
                 ),
@@ -114,7 +116,7 @@ class PointListItem extends StatelessWidget {
                                 style: listTitleTextStyle.copyWith(
                                   color: AppConst.isLightTheme(context)
                                       ? blueJNE
-                                      : redJNE,
+                                      : Colors.white,
                                 ),
                               ),
                             ],

@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class VersionApp extends StatefulWidget {
@@ -30,17 +31,23 @@ class _VersionAppState extends State<VersionApp> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: Get.width,
+      alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 50),
       height: 50,
       color: Colors.transparent,
-      child: Column(
+      child: Stack(
         children: [
           Image.asset(
             ImageConstant.logoJNE,
             height: 30,
             color: CustomTheme().logoColor(context),
           ),
-          Text('v $version')
+          // SizedBox(width: 10),
+          Positioned(
+            right: 0,
+            child: Text('v $version'),
+          )
         ],
       ),
     );

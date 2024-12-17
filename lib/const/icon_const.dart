@@ -12,8 +12,7 @@ class IconsConstant {
   static const String qrcode = "assets/icons/qrcode-scan.svg";
   static const String search = "assets/icons/search.svg";
   static const String transaction = "assets/icons/transaction.svg";
-  static const String paket =
-      "https://github.com/NisaEka/assets/blob/css/icons/paket.png?raw=true";
+  static const String paket = "assets/icon/paket.png";
   static const String add = "assets/icons/add.svg";
   static const String agg = "assets/icons/aggregasi-pembayaran.svg";
   static const String aggMinus = "assets/icons/aggregasi-minus.svg";
@@ -26,4 +25,13 @@ class IconsConstant {
   static const String requestPickup = "assets/icons/request-pickup.svg";
   static const String history = "assets/icons/history.svg";
   static const String home = "assets/icons/home.svg";
+  static const String sync = "assets/icons/sync.svg";
+  static const String location = "assets/icons/location.svg";
+  static const String building = "assets/icons/building.svg";
+  static const String docSuccess = "assets/icons/doc-success.svg";
+  static const String butuhDicek = "assets/icons/butuh-dicek.svg";
+  static const String retur = "assets/icons/retur.svg";
+  static const String error = "assets/icons/error.svg";
+  static const String deliveryReturn = "assets/icons/delivery-return.svg";
+  static const String deliveryView = "assets/icons/delivery-view.svg";
 }
