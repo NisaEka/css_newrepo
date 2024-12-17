@@ -77,8 +77,11 @@ class LogoutButton extends StatelessWidget {
   void doLogout() async {
     final auth = Get.find<AuthRepository>();
     final storage = Get.find<StorageCore>();
-
     final refreshToken = await StorageCore().readRefreshToken() ?? '';
+
+    storage.deleteLogin();
+    Get.offAll(() => const LoginScreen());
+
     try {
       await auth.logout(refreshToken).then((value) async {
         AppLogger.d(value.toJson().toString());
