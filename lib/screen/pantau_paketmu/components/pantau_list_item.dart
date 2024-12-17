@@ -1,10 +1,13 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -20,30 +23,46 @@ class PantauItems extends StatelessWidget {
     return GetBuilder<PantauPaketmuController>(
       init: PantauPaketmuController(),
       builder: (c) {
-        IconData getStatusIcon(String status) {
+        Widget getStatusIcon(String status) {
           switch (status) {
             case 'Sudah Dijemput':
-              return Icons.directions_car;
+              return SvgPicture.asset(
+                IconsConstant.requestPickup,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
             case 'Sudah Di Gudang JNE':
-              return Icons.location_city;
+              return SvgPicture.asset(IconsConstant.requestPickup,
+                  color: greyColor);
             case 'Sudah Di Kota Tujuan':
-              return Icons.location_on_outlined;
+              return SvgPicture.asset(IconsConstant.requestPickup,
+                  color: greyColor);
             case 'Dalam Proses':
-              return Icons.hourglass_empty;
+              return SvgPicture.asset(IconsConstant.requestPickup,
+                  color: greyColor);
             case 'Sukses Diterima':
-              return Icons.check_circle_outline;
+              return SvgPicture.asset(IconsConstant.requestPickup,
+                  color: greyColor);
             case 'Butuh Dicek':
-              return Icons.warning;
+              return SvgPicture.asset(IconsConstant.requestPickup,
+                  color: greyColor);
             case 'Proses Pengembalian Ke Kamu':
-              return Icons.reply;
+              return SvgPicture.asset(IconsConstant.requestPickup,
+                  color: greyColor);
             case 'Sukses Dikembalikan Ke Kamu':
-              return Icons.done_all;
+              return SvgPicture.asset(IconsConstant.requestPickup,
+                  color: greyColor);
             case 'Dalam Peninjauan':
-              return Icons.search;
+              return SvgPicture.asset(IconsConstant.requestPickup,
+                  color: greyColor);
             case 'Dibatalkan Oleh Kamu':
-              return Icons.cancel_outlined;
+              return SvgPicture.asset(IconsConstant.requestPickup,
+                  color: greyColor);
             default:
-              return Icons.error_outline;
+              return SvgPicture.asset(IconsConstant.requestPickup,
+                  color: greyColor);
           }
         }
 
@@ -111,6 +130,7 @@ class PantauItems extends StatelessWidget {
                           color: c.state.isLoading
                               ? greyColor
                               : Colors.transparent,
+                          width: 210,
                           child: Row(
                             children: [
                               Container(
@@ -124,18 +144,21 @@ class PantauItems extends StatelessWidget {
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
+                                          horizontal: 8),
                                       child: Row(
                                         children: [
-                                          const SizedBox(width: 3),
-                                          const Text(
-                                            'COD',
-                                            style: TextStyle(
-                                                color: whiteColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10),
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 5, right: 5),
+                                            child: Text(
+                                              'COD',
+                                              style: TextStyle(
+                                                  color: whiteColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 10),
+                                            ),
                                           ),
-                                          const SizedBox(width: 13),
+                                          const SizedBox(width: 8),
                                           Container(
                                             decoration: const BoxDecoration(
                                               color: whiteColor,
@@ -144,6 +167,7 @@ class PantauItems extends StatelessWidget {
                                                 bottomRight: Radius.circular(5),
                                               ),
                                             ),
+                                            width: 105,
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -159,21 +183,28 @@ class PantauItems extends StatelessWidget {
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelMedium
-                                                    ?.copyWith(fontSize: 10),
+                                                    ?.copyWith(
+                                                        fontSize: 10,
+                                                        color: greyDarkColor1),
+                                                textAlign: TextAlign.center,
                                               ),
                                             ),
                                           ),
                                           const SizedBox(width: 8),
-                                          Text(
-                                            c.state.selectedKiriman == 0
-                                                ? '${item?.codAmountPercentage}%'
-                                                : c.state.selectedKiriman == 1
-                                                    ? '${item?.ongkirCodAmountPercentage}%'
-                                                    : "0%",
-                                            style: const TextStyle(
-                                                color: whiteColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10),
+                                          SizedBox(
+                                            width: 27,
+                                            child: Text(
+                                              c.state.selectedKiriman == 0
+                                                  ? '${item?.codAmountPercentage}%'
+                                                  : c.state.selectedKiriman == 1
+                                                      ? '${item?.ongkirCodAmountPercentage}%'
+                                                      : "0%",
+                                              style: const TextStyle(
+                                                  color: whiteColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 10),
+                                              textAlign: TextAlign.center,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -191,6 +222,7 @@ class PantauItems extends StatelessWidget {
                           color: c.state.isLoading
                               ? greyColor
                               : Colors.transparent,
+                          width: 210,
                           child: Row(
                             children: [
                               Container(
@@ -223,6 +255,7 @@ class PantauItems extends StatelessWidget {
                                                 bottomRight: Radius.circular(5),
                                               ),
                                             ),
+                                            width: 105,
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -238,21 +271,28 @@ class PantauItems extends StatelessWidget {
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelMedium
-                                                    ?.copyWith(fontSize: 10),
+                                                    ?.copyWith(
+                                                        fontSize: 10,
+                                                        color: greyDarkColor1),
+                                                textAlign: TextAlign.center,
                                               ),
                                             ),
                                           ),
                                           const SizedBox(width: 8),
-                                          Text(
-                                            c.state.selectedKiriman == 0
-                                                ? '${item?.ongkirCodAmountPercentage}%'
-                                                : c.state.selectedKiriman == 1
-                                                    ? '0%'
-                                                    : '${item?.ongkirNonCodAmountPercentage}%',
-                                            style: const TextStyle(
-                                                color: whiteColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10),
+                                          SizedBox(
+                                            width: 27,
+                                            child: Text(
+                                              c.state.selectedKiriman == 0
+                                                  ? '${item?.ongkirCodAmountPercentage}%'
+                                                  : c.state.selectedKiriman == 1
+                                                      ? '0%'
+                                                      : '${item?.ongkirNonCodAmountPercentage}%',
+                                              style: const TextStyle(
+                                                  color: whiteColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 10),
+                                              textAlign: TextAlign.center,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -269,8 +309,9 @@ class PantauItems extends StatelessWidget {
                     Column(
                       children: [
                         const SizedBox(height: 10),
-                        Icon(getStatusIcon(item?.status ?? ''),
-                            color: greyLightColor2, size: 100),
+                        getStatusIcon(item?.status ?? ''),
+                        // Icon(getStatusIcon(item?.status ?? ''),
+                        //     color: greyLightColor2, size: 100),
                       ],
                     ),
                   ],

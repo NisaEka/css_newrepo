@@ -9,7 +9,7 @@ import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
-import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
+import 'package:css_mobile/data/model/pantau/pantau_paketmu_list_model.dart';
 import 'package:css_mobile/data/model/pantau/pantauu_paketmu_detail_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';

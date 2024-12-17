@@ -1,6 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
+import 'package:css_mobile/data/model/pantau/pantau_paketmu_list_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_paketmu_filter.dart';
 import 'package:css_mobile/screen/pantau_paketmu/detail/pantau_paketmu_detail_screen.dart';

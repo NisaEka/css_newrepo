@@ -1,5 +1,5 @@
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
-import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
+import 'package:css_mobile/data/model/pantau/pantau_paketmu_list_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
