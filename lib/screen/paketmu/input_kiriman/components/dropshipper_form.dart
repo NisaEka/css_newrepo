@@ -51,8 +51,9 @@ class DropshipperForm extends StatelessWidget {
                         c.update();
                       },
                       isOfficer: c.isOfficer,
-                      branch: c.account.accountCategory == "LOKAL"
-                          ? c.account.accountBranch
+                      // branchCode: c.account.accountCategory == "LOKAL" ? c.account.accountBranch : null,
+                      originCode: (c.account.accountCategory == "LOKAL")
+                          ? c.userBasic?.origin?.originCode
                           : null,
                       value: c.selectedOrigin,
                       selectedItem: c.dropshipperOrigin.text,

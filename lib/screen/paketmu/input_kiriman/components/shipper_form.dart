@@ -112,10 +112,11 @@ class ShipperForm extends StatelessWidget {
                                   c.state.userBasic?.userType != "PEMILIK",
                               value: c.state.selectedOrigin,
                               selectedItem: c.state.shipperOrigin.text,
-                              branch:
+                              // branch: (c.state.selectedAccount?.accountCategory == "LOKAL") ? c.state.selectedAccount?.accountBranch : null,
+                              originCode:
                                   (c.state.selectedAccount?.accountCategory ==
                                           "LOKAL")
-                                      ? c.state.selectedAccount?.accountBranch
+                                      ? c.state.userBasic?.origin?.originCode
                                       : null,
                               readOnly: c.state.selectedAccount == null ||
                                       c.state.isOnline == false

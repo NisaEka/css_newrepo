@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 class ListDropshipperController extends BaseController {
   Account account = Get.arguments['account'];
   bool isOfficer = Get.arguments['isOfficer'];
+  UserModel? userBasic = Get.arguments['userBasic'];
 
   final search = TextEditingController();
   bool isLoading = false;
