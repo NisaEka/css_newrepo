@@ -20,7 +20,7 @@ class ConsigneeForm extends StatelessWidget {
           return SingleChildScrollView(
             child: Container(
               // padding: const EdgeInsets.all(30),
-              margin: const EdgeInsets.all(30),
+              margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               child: Form(
                 key: c.formKey,
                 onChanged: () {

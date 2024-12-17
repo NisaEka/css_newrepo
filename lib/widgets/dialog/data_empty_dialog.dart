@@ -6,28 +6,37 @@ import 'package:get/get.dart';
 
 class DataEmpty extends StatelessWidget {
   final String text;
+  final EdgeInsets? padding;
 
-  const DataEmpty({super.key, this.text = "Data Kosong"});
+  const DataEmpty({
+    super.key,
+    this.text = "Data Kosong",
+    this.padding,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            ImageConstant.dataEmpty,
-            width: Get.width / 2,
-          ),
-          Text(
-            text.tr,
-            style: appTitleTextStyle.copyWith(
-                fontSize: 30,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? blueJNE
-                    : whiteColor),
-          ),
-        ],
+    return Padding(
+      padding: padding ?? EdgeInsets.zero,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              ImageConstant.dataEmpty,
+              width: Get.width / 2,
+            ),
+            Text(
+              text.tr,
+              textAlign: TextAlign.center,
+              style: appTitleTextStyle.copyWith(
+                  fontSize: 30,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? blueJNE
+                      : whiteColor),
+            ),
+          ],
+        ),
       ),
     );
   }

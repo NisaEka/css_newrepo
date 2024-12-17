@@ -3,6 +3,7 @@ import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
+import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/count_card_model.dart';
@@ -49,6 +50,7 @@ class DashboardState {
   List<NewsModel> newsList = [];
   List<CountCardModel> transCountList = [];
   List<CountCardModel> transCountCodList = [];
+  List<NotificationModel> unreadNotifList = [];
   List<String> transType = [
     'Jumlah Transaksi',
     'Masih Dikamu',

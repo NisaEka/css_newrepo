@@ -30,8 +30,7 @@ class TransactionForm extends StatelessWidget {
         builder: (c) {
           return SliverToBoxAdapter(
             child: Container(
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               width: Get.width,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +50,7 @@ class TransactionForm extends StatelessWidget {
                           children: [
                             CustomDropDownFormField(
                               hintText: 'Jenis Barang'.tr,
-                              width: Get.width / 2.3,
+                              width: Get.width / 2.4,
                               isRequired: true,
                               value: c.state.goodType.text,
                               readOnly: c.state.isSelectGoodsType,
@@ -86,7 +85,7 @@ class TransactionForm extends StatelessWidget {
                             CustomTextFormField(
                               controller: c.state.noReference,
                               hintText: 'No Referensi (opsional)'.tr,
-                              width: Get.width / 2.3,
+                              width: Get.width / 2.4,
                               // height: 46,
                               validator: (value) => value?.isNotEmpty ?? false
                                   ? value!.length < 8
@@ -109,29 +108,25 @@ class TransactionForm extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomTextFormField(
-                              key: c.state.codKey,
-                              controller: c.state.goodAmount,
-                              hintText: 'Harga Barang'.tr,
-                              prefixIcon: const SatuanFieldIcon(
-                                title: 'Rp',
-                                isPrefix: true,
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                ThousandsSeparatorInputFormatter(),
-                              ],
+                              controller: c.state.weight,
+                              hintText: "Berat Kiriman".tr,
                               inputType: TextInputType.number,
-                              contentPadding: const EdgeInsets.only(
-                                  top: 0, bottom: 0, left: 40, right: 10),
-                              width: Get.width / 2,
-                              isRequired: c.state.insurance,
-                              onChanged: (value) => c.getOngkir(),
+                              width: Get.width / 2.4,
+                              isRequired: true,
+                              validator: ValidationBuilder().min(1).build(),
+                              suffixIcon: const SatuanFieldIcon(
+                                  title: 'KG', isSuffix: true),
+                              onChanged: (value) {
+                                c.state.berat = value.toDouble();
+                                c.getOngkir();
+                                c.update();
+                              },
                             ),
                             CustomTextFormField(
                               controller: c.state.goodQty,
                               hintText: 'Jumlah Packing'.tr,
                               inputType: TextInputType.number,
-                              width: Get.width / 2.8,
+                              width: Get.width / 2.4,
                               isRequired: true,
                             ),
                           ],
@@ -176,82 +171,27 @@ class TransactionForm extends StatelessWidget {
                                   : null
                               : null,
                         ),
-                        Container(
-                          decoration: const BoxDecoration(),
-                          child: ListTile(
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 5),
-                            leading: Switch(
-                              value: c.state.woodPacking,
-                              activeColor: AppConst.isLightTheme(context)
-                                  ? blueJNE
-                                  : Colors.lightBlueAccent,
-                              inactiveThumbColor: AppConst.isLightTheme(context)
-                                  ? blueJNE
-                                  : Colors.lightBlueAccent,
-                              onChanged: (bool? value) {
-                                c.state.woodPacking = value!;
-                                var temp = c.state.specialInstruction.text;
-                                c.state.specialIns =
-                                    c.state.specialInstruction.text;
-                                c.state.specialInstruction.text = value == true
-                                    ? "MOHON DIPACKING KAYU $temp"
-                                    : temp.substring(21, temp.length);
-                                c.update();
-                              },
-                            ),
-                            title: Text(
-                              "Packing Kayu".tr,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(fontWeight: regular),
-                            ),
-                            // trailing: IconButton(
-                            //   onPressed: () {},
-                            //   icon: const Icon(
-                            //     Icons.info_outline,
-                            //     color: redJNE,
-                            //   ),
-                            //   tooltip: 'Hanya sebagai instruksi penggunaan packing kayu',
-                            // ),
-                            trailing: Tooltip(
-                              key: c.state.tooltipkey,
-                              triggerMode: TooltipTriggerMode.tap,
-                              showDuration: const Duration(seconds: 3),
-                              decoration: const ShapeDecoration(
-                                color: greyColor,
-                                shape: ToolTipCustomShape(usePadding: false),
-                              ),
-                              textStyle: listTitleTextStyle.copyWith(
-                                  color: whiteColor),
-                              message:
-                                  'Hanya sebagai instruksi penggunaan packing kayu'
-                                      .tr,
-                              child: Icon(
-                                Icons.info_outline,
-                                color: color ?? (AppConst.isLightTheme(context) ? redJNE : warningColor),
-                              ),
-                            ),
-                          ),
-                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             CustomTextFormField(
-                              controller: c.state.weight,
-                              hintText: "Berat Kiriman".tr,
+                              key: c.state.codKey,
+                              controller: c.state.goodAmount,
+                              hintText: 'Harga Barang'.tr,
+                              prefixIcon: const SatuanFieldIcon(
+                                title: 'Rp',
+                                isPrefix: true,
+                              ),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                ThousandsSeparatorInputFormatter(),
+                              ],
                               inputType: TextInputType.number,
-                              width: Get.width / 3,
-                              isRequired: true,
-                              validator: ValidationBuilder().min(1).build(),
-                              suffixIcon: const SatuanFieldIcon(
-                                  title: 'KG', isSuffix: true),
-                              onChanged: (value) {
-                                c.state.berat = value.toDouble();
-                                c.getOngkir();
-                                c.update();
-                              },
+                              contentPadding: const EdgeInsets.only(
+                                  top: 0, bottom: 0, left: 40, right: 10),
+                              width: Get.width / 2.4,
+                              isRequired: c.state.insurance,
+                              onChanged: (value) => c.getOngkir(),
                             ),
                             const Spacer(),
                             Text('Dimensi Kiriman'.tr,
@@ -341,6 +281,68 @@ class TransactionForm extends StatelessWidget {
                                 ],
                               )
                             : const SizedBox(),
+                        Container(
+                          decoration: const BoxDecoration(),
+                          child: ListTile(
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 5),
+                            leading: Switch(
+                              value: c.state.woodPacking,
+                              activeColor: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : Colors.lightBlueAccent,
+                              inactiveThumbColor: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : Colors.lightBlueAccent,
+                              onChanged: (bool? value) {
+                                c.state.woodPacking = value!;
+                                var temp = c.state.specialInstruction.text;
+                                c.state.specialIns =
+                                    c.state.specialInstruction.text;
+                                c.state.specialInstruction.text = value == true
+                                    ? "MOHON DIPACKING KAYU $temp"
+                                    : temp.substring(21, temp.length);
+                                c.update();
+                              },
+                            ),
+                            title: Text(
+                              "Packing Kayu".tr,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(fontWeight: regular),
+                            ),
+                            // trailing: IconButton(
+                            //   onPressed: () {},
+                            //   icon: const Icon(
+                            //     Icons.info_outline,
+                            //     color: redJNE,
+                            //   ),
+                            //   tooltip: 'Hanya sebagai instruksi penggunaan packing kayu',
+                            // ),
+                            trailing: Tooltip(
+                              key: c.state.tooltipkey,
+                              triggerMode: TooltipTriggerMode.tap,
+                              showDuration: const Duration(seconds: 3),
+                              decoration: const ShapeDecoration(
+                                color: greyColor,
+                                shape: ToolTipCustomShape(usePadding: false),
+                              ),
+                              textStyle: listTitleTextStyle.copyWith(
+                                  color: whiteColor),
+                              message:
+                                  'Hanya sebagai instruksi penggunaan packing kayu'
+                                      .tr,
+                              child: Icon(
+                                Icons.info_outline,
+                                color: color ??
+                                    (AppConst.isLightTheme(context)
+                                        ? redJNE
+                                        : warningColor),
+                              ),
+                            ),
+                          ),
+                        ),
                         c.state.isOnline && c.state.selectedService != null
                             ? /*controller..state.isCalculate
                                               ? Container(

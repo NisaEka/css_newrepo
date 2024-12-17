@@ -115,6 +115,7 @@ class BonusKamuScreen extends StatelessWidget {
             child: c.tabIndex == 0
                 ? ListView(
                     shrinkWrap: c.totalTransaksiList.isEmpty || c.isLoading,
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
                     children: c.isLoading
                         ? List.generate(
                             5,
@@ -144,6 +145,7 @@ class BonusKamuScreen extends StatelessWidget {
                   )
                 : ListView(
                     shrinkWrap: c.reedemPointList.isEmpty,
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
                     children: c.isLoading
                         ? List.generate(
                             5,

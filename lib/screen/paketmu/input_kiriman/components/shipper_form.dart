@@ -24,8 +24,9 @@ class ShipperForm extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.all(10),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  // padding: const EdgeInsets.all(10),
                   width: Get.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

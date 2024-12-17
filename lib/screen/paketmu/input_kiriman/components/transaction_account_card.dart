@@ -35,7 +35,7 @@ class TransactionAccountCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: AccountListItem(
               data: account,
               isSelected: true,
