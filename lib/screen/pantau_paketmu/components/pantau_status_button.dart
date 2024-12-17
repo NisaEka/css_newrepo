@@ -121,6 +121,10 @@ class PantauStatusButton extends StatelessWidget {
                     decoration: BoxDecoration(
                       color:
                           c.state.selectedKiriman == 2 ? blueJNE : whiteColor,
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(8),
+                        bottomRight: Radius.circular(8),
+                      ),
                       // border: const Border(
                       //   right: BorderSide(color: greyDarkColor1),
                       // ),

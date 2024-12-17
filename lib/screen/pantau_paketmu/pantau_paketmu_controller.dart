@@ -25,12 +25,13 @@ class PantauPaketmuController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    selectDateFilter(3);
     initData();
     getCountList();
     state.pagingController.addPageRequestListener((pageKey) {
       getPantauList(pageKey);
     });
+    resetFilter();
+    selectDateFilter(3);
   }
 
   @override
@@ -46,6 +47,7 @@ class PantauPaketmuController extends BaseController {
   }
 
   Future<void> initData() async {
+    // if (state.isLoading) return;
     state.isLoading = true;
     update();
     AppLogger.i('initDataaaa');
@@ -87,7 +89,9 @@ class PantauPaketmuController extends BaseController {
   }
 
   Future<void> getCountList() async {
+    state.isLoading = true;
     state.countList = [];
+    update();
     var param = QueryModel(
       between: [
         {
@@ -285,6 +289,9 @@ class PantauPaketmuController extends BaseController {
   }
 
   applyFilter({bool? isDetail = false}) async {
+    if (state.isLoading) return;
+    state.isLoading = true;
+    update();
     if (state.dateFilter.value != '3') {
       state.isFiltered.value = true;
     }
