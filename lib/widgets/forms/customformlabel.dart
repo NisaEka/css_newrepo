@@ -1,4 +1,4 @@
-import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -15,6 +15,7 @@ class CustomFormLabel extends StatelessWidget {
     this.value,
     this.fontColor,
     this.width,
+    this.prefixIcon,
   });
 
   final String label;
@@ -24,6 +25,7 @@ class CustomFormLabel extends StatelessWidget {
   final bool isBold;
   final Color? fontColor;
   final double? width;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -33,22 +35,27 @@ class CustomFormLabel extends StatelessWidget {
         color: isLoading ? greyLightColor3 : Colors.transparent,
         width: width ?? (isLoading ? Get.width / 3 : null),
         margin: const EdgeInsets.symmetric(vertical: 5),
-        child: RichText(
-          text: TextSpan(
-            text: label,
-            style: subformLabelTextStyle.copyWith(
-              fontWeight: isBold ? FontWeight.bold : regular,
-              color: AppConst.isLightTheme(context)
-                  ? (fontColor ?? greyDarkColor2)
-                  : greyLightColor2,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            prefixIcon ?? const SizedBox(),
+            SizedBox(width: prefixIcon != null ? 5 : null),
+            RichText(
+              text: TextSpan(
+                text: label,
+                style: subformLabelTextStyle.copyWith(
+                  fontWeight: isBold ? FontWeight.bold : regular,
+                  color: fontColor ?? CustomTheme().textColor(context),
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: showRequired ? "*" : "",
+                      style: const TextStyle(color: Colors.red)),
+                  // TextSpan(text: value),
+                ],
+              ),
             ),
-            children: <TextSpan>[
-              TextSpan(
-                  text: showRequired ? "*" : "",
-                  style: const TextStyle(color: Colors.red)),
-              // TextSpan(text: value),
-            ],
-          ),
+          ],
         ),
       ),
     );

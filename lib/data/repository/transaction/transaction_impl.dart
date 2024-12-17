@@ -346,7 +346,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         .toIso8601String();
     var endDate = DateTime(now.year, now.month, now.day, 23, 59, 59, 999)
         .toIso8601String();
-
+    network.base.options.connectTimeout = const Duration(seconds: 20);
     try {
       Response response = await network.base.get(
         "/transaction/dashboards",

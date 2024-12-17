@@ -1,5 +1,8 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,36 +22,84 @@ class DeleteAlertDialog extends StatelessWidget {
       backgroundColor: Theme.of(context).brightness == Brightness.light
           ? whiteColor
           : bgDarkColor,
-      title: Text('Data akan dihapus'.tr,
-          style: TextStyle(
-              color: AppConst.isLightTheme(context)
-                  ? greyDarkColor2
-                  : greyLightColor2)),
-      content: Text(
-        'Anda yakin menghapus data ini ?'.tr,
-        style: TextStyle(
-            color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyColor),
+      title: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Image.asset(
+            ImageConstant.logoCSS,
+            height: 30,
+            width: Get.width,
+            color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+          ),
+          const SizedBox(height: 5),
+          Text(
+            'Data akan dihapus'.tr,
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontWeight: regular),
+            // style: TextStyle(
+            //     color: AppConst.isLightTheme(context)
+            //         ? greyDarkColor2
+            //         : greyLightColor2)),
+          )
+        ],
+      ),
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        child: Text(
+          textAlign: TextAlign.center,
+          'Anda yakin menghapus data ini ?'.tr,
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(fontWeight: regular),
+        ),
       ),
       actions: <Widget>[
-        TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CustomFilledButton(
+              radius: 50,
+              margin: EdgeInsets.zero,
+              isTransparent: true,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? blueJNE
+                  : warningColor,
+              title: 'Tidak'.tr,
+              onPressed: onBack,
             ),
-            onPressed: onBack,
-            child: Text(
-              'Tidak'.tr,
-              style: TextStyle(
-                  color: AppConst.isLightTheme(context) ? blueJNE : infoColor),
-            )),
-        TextButton(
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          onPressed: onDelete,
-          child: Text('Hapus'.tr,
-              style: TextStyle(
-                  color: AppConst.isLightTheme(context) ? blueJNE : infoColor)),
+            CustomFilledButton(
+                radius: 50,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? blueJNE
+                    : warningColor,
+                title: 'Hapus'.tr,
+                onPressed: onDelete),
+          ],
         ),
+        // TextButton(
+        //     style: TextButton.styleFrom(
+        //       textStyle: Theme.of(context).textTheme.labelLarge,
+        //     ),
+        //     onPressed: onBack ?? () => Get.back(),
+        //     child: Text(
+        //       'Tidak'.tr,
+        //       style: TextStyle(
+        //           color: AppConst.isLightTheme(context) ? blueJNE : infoColor),
+        //     )),
+        // TextButton(
+        //   style: TextButton.styleFrom(
+        //     textStyle: Theme.of(context).textTheme.labelLarge,
+        //   ),
+        //   onPressed: onLogout,
+        //   child: Text(
+        //     'Keluar'.tr,
+        //     style: TextStyle(
+        //         color: AppConst.isLightTheme(context) ? blueJNE : infoColor),
+        //   ),
+        // ),
       ],
     );
   }

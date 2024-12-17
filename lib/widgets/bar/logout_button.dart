@@ -6,7 +6,7 @@ import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_screen.dart';
 import 'package:css_mobile/util/logger.dart';
-import 'package:css_mobile/widgets/dialog/logout_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,8 +45,15 @@ class LogoutButton extends StatelessWidget {
             onTap: () => isLogin
                 ? showDialog(
                     context: context,
-                    builder: (context) => LogoutAlertDialog(
-                      onLogout: () => doLogout(),
+                    builder: (context) => DefaultAlertDialog(
+                      title: "Anda akan keluar".tr,
+                      subtitle:
+                          "Pastikan semua aktvitas sudah selesai. Terima kasihs sudah menggunakan CSS Mobile"
+                              .tr,
+                      backButtonTitle: "Tidak",
+                      confirmButtonTitle: "Keluar",
+                      onBack: Get.back,
+                      onConfirm: () => doLogout(),
                     ),
                   )
                 : Get.to(() => const LoginScreen()),
@@ -77,8 +84,11 @@ class LogoutButton extends StatelessWidget {
   void doLogout() async {
     final auth = Get.find<AuthRepository>();
     final storage = Get.find<StorageCore>();
-
     final refreshToken = await StorageCore().readRefreshToken() ?? '';
+
+    storage.deleteLogin();
+    Get.offAll(() => const LoginScreen());
+
     try {
       await auth.logout(refreshToken).then((value) async {
         AppLogger.d(value.toJson().toString());

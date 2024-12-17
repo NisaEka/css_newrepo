@@ -120,9 +120,12 @@ class PantauPaketmuController extends BaseController {
   Future<void> getPantauList(int page) async {
     state.isLoading = true;
     try {
-      final trans = await pantau.getPantauList(
-          QueryModel(search: state.searchField.text, between: state.transDate));
-
+      final trans = await pantau.getPantauList(QueryModel(
+          search: state.searchField.text,
+          between: state.transDate,
+          entity: state.listStatusKiriman[selectedStatus],
+          type: state.selectedTipeKiriman.value,
+          petugasEntry: state.selectedPetugasEntry.value));
       final isLastPage =
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
@@ -288,6 +291,11 @@ class PantauPaketmuController extends BaseController {
 
     if (state.startDate.value != null && state.endDate.value != null) {
       state.date.value = "${state.startDate}-${state.endDate}";
+      state.transDate = [
+        {
+          "awbDate": [state.startDate.value, state.endDate.value],
+        }
+      ];
       state.date.printInfo(info: "state.date filter");
       state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
     }
@@ -322,6 +330,8 @@ class PantauPaketmuController extends BaseController {
 
   void setSelectedStatus(int statusIndex) {
     selectedStatus = statusIndex;
+    state.selectedStatusKiriman.value = state.listStatusKiriman[statusIndex];
+    applyFilter(isDetail: true);
     update(); // Untuk memberitahu UI agar diperbarui
   }
 }

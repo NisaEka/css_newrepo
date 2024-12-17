@@ -85,7 +85,7 @@ class DashboardAggCountItem extends StatelessWidget {
                               color: Colors.blue,
                               icon: Icons.show_chart,
                               statusColor: whiteColor,
-                              chart: SizedBox(
+                              suffixChart: SizedBox(
                                   width: 45,
                                   height: 20,
                                   child: chartData.isNotEmpty
@@ -109,7 +109,7 @@ class DashboardAggCountItem extends StatelessWidget {
                                     "${percentage(transSummary?.summary?.where((e) => e.status == "Belum di Transfer").first.totalCod?.toDouble() ?? 0)}% dari jumlah transaksi",
                                 color: Colors.blue,
                                 statusColor: Colors.red,
-                                chart: SizedBox(
+                                suffixChart: SizedBox(
                                   width: 25,
                                   height: 25,
                                   child: CircularProgressIndicator(
@@ -153,7 +153,7 @@ class DashboardAggCountItem extends StatelessWidget {
                                     "${percentage(transSummary?.summary?.where((e) => e.status == "Sudah di Transfer").first.totalCod?.toDouble() ?? 0)}% dari jumlah transaksi",
                                 color: Colors.blue,
                                 statusColor: Colors.green,
-                                chart: SizedBox(
+                                suffixChart: SizedBox(
                                   width: 25,
                                   height: 25,
                                   child: CircularProgressIndicator(
