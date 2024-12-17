@@ -3,6 +3,8 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../const/app_const.dart';
+
 class OfflineBar extends StatelessWidget {
   const OfflineBar({super.key});
 
@@ -14,10 +16,12 @@ class OfflineBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 2),
       // margin: const EdgeInsets.only(bottom: 5),
       decoration: BoxDecoration(
-        color: redJNE.withOpacity(0.5),
+        color: AppConst.isLightTheme(context)
+            ? redJNE.withOpacity(0.5)
+            : warningColor,
       ),
       child: Text(
-        'Mode offline'.tr,
+        'You are offline'.tr,
         style: listTitleTextStyle.copyWith(color: whiteColor),
       ),
     );

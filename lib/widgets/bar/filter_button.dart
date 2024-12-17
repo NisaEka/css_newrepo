@@ -79,8 +79,7 @@ class FilterButton extends StatelessWidget {
                       children: [
                         isFiltered
                             ? CustomFilledButton(
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
+                                color: Theme.of(context).brightness == Brightness.light
                                     ? blueJNE
                                     : warningColor,
                                 isTransparent: true,
@@ -92,10 +91,9 @@ class FilterButton extends StatelessWidget {
                               )
                             : const SizedBox(),
                         CustomFilledButton(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? blueJNE
-                                  : warningColor,
+                          color: Theme.of(context).brightness == Brightness.light
+                              ? blueJNE
+                              : warningColor,
                           width: isFiltered ? Get.width / 2.5 : Get.width - 40,
                           title: 'Terapkan'.tr,
                           onPressed: onApplyFilter,

@@ -2,6 +2,7 @@ class ImageConstant {
   static const String logoCSS = "assets/images/css_blue.png";
   static const String logoJNE = "assets/images/logoJNE.png";
   static const String logoJLC = "assets/images/logoJLC.png";
+  static const String logoJLC2 = "assets/images/jlc_jne.jpg";
   static const String userPic = "assets/images/user.png";
   static const String labelSample = "assets/images/label_sample.png";
   static const String mascotPic = "assets/images/joni nunjuk.png";
