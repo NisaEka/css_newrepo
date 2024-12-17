@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
@@ -7,25 +10,91 @@ import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
-import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:get/get.dart' hide Response;
 import 'storage_core.dart';
 
 class NetworkCore {
-  static final noNeedToken = [
-    '/login',
-    '/auth/device-infos',
-    '/authentications/refresh',
-    '/authentications/logout',
-  ];
-
-  static bool isNeedToken(String route) => !noNeedToken.contains(route);
-
   Dio city = Dio();
   Dio jne = Dio();
   Dio myJNE = Dio();
   Dio local = Dio();
   Dio base = Dio();
   Dio refreshDio = Dio();
+
+  List<Map<dynamic, dynamic>> failedRequests = [];
+  bool isRefreshing = false;
+
+  Future retryRequests(token) async {
+    for (var i = 0; i < failedRequests.length; i++) {
+      RequestOptions requestOptions =
+          failedRequests[i]['err'].requestOptions as RequestOptions;
+
+      requestOptions.headers = {
+        'Authorization': 'Bearer $token',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      };
+
+      await refreshDio.fetch(requestOptions).then(
+        failedRequests[i]['handler'].resolve,
+        onError: (error) async {
+          failedRequests[i]['handler'].reject(error as DioException);
+        },
+      );
+    }
+
+    isRefreshing = false;
+    failedRequests = [];
+  }
+
+  FutureOr postRefreshToken(
+      DioException err, ErrorInterceptorHandler handler) async {
+    final refreshToken = await StorageCore().readRefreshToken();
+    AppLogger.i("refresh token local : $refreshToken");
+
+    try {
+      Response response = await refreshDio.post(
+        '/authentications/refresh',
+        data: {
+          "refreshToken": refreshToken,
+        },
+      );
+
+      final refreshTokenResponse = BaseResponse<PostLoginModel>.fromJson(
+        response.data,
+        (json) => PostLoginModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
+
+      await StorageCore().saveToken(
+        refreshTokenResponse.data?.token?.accessToken,
+        refreshTokenResponse.data?.menu ?? MenuModel(),
+        refreshTokenResponse.data?.token?.refreshToken,
+      );
+
+      failedRequests.add({'err': err, 'handler': handler});
+
+      await retryRequests(refreshTokenResponse.data?.token?.accessToken);
+
+      return refreshTokenResponse;
+    } on DioException catch (e) {
+      AppLogger.i("masuk sini catch atas");
+
+      StorageCore().deleteLogin();
+      Get.delete<DashboardController>()
+          .then((_) => Get.offAll(const DashboardScreen()));
+
+      return BaseResponse<PostLoginModel>.fromJson(
+        e.response?.data,
+        (json) => PostLoginModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
+    } finally {
+      isRefreshing = false;
+    }
+  }
 
   NetworkCore() {
     base.options = BaseOptions(
@@ -85,7 +154,10 @@ class NetworkCore {
           .add(LogInterceptor(responseBody: true, requestBody: true));
       jne.interceptors
           .add(LogInterceptor(responseBody: true, requestBody: true));
+      refreshDio.interceptors
+          .add(LogInterceptor(responseBody: true, requestBody: true));
     }
+
     base.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -108,63 +180,32 @@ class NetworkCore {
         },
         onError: (dioError, handler) async {
           AppLogger.e("dio error : $dioError");
-          // if (dioError.response == null) {
-          //   AppSnackBar.error("Connection timeout");
-          // }
+
           final refreshToken = await StorageCore().readRefreshToken();
           AppLogger.i("refresh token local : $refreshToken");
-          // if ((dioError.requestOptions.path != '/auth/device-infos') || (dioError.requestOptions.path != '/authentications/refresh')) {
-          if (noNeedToken
-              .where((e) => e != dioError.requestOptions.path)
-              .isNotEmpty) {
-            if (dioError.response?.statusCode == 401) {
-              // Handle token refresh logic
-              if (refreshToken != null) {
-                try {
-                  Response response = await refreshDio.post(
-                    '/authentications/refresh',
-                    data: {
-                      "refreshToken": refreshToken,
-                    },
-                    options: Options(extra: {'skipAuth': true}),
-                  );
 
-                  final newToken = BaseResponse<PostLoginModel>.fromJson(
-                    response.data,
-                    (json) => PostLoginModel.fromJson(
-                      json as Map<String, dynamic>,
-                    ),
-                  );
-
-                  await StorageCore().saveToken(
-                    newToken.data?.token?.accessToken,
-                    newToken.data?.menu ?? MenuModel(),
-                    newToken.data?.token?.refreshToken,
-                  );
-
-                  // Update the request header with the new access token
-                  dioError.requestOptions.headers['Authorization'] =
-                      'Bearer ${newToken.data?.token?.accessToken}';
-                  AppLogger.i("new token : $newToken");
-                  // Repeat the request with the updated header
-                  return handler
-                      .resolve(await base.fetch(dioError.requestOptions));
-                } on DioException catch (e) {
-                  AppLogger.e(
-                      "refresh token error status code : ${e.response?.statusCode}");
-                  AppLogger.e("refresh token error  : ${e.response?.data}");
-                  // if (e.response?.statusCode == 401) {
-                  StorageCore().deleteLogin();
-                  Get.delete<DashboardController>()
-                      .then((_) => Get.offAll(const DashboardScreen()));
-                  // }
-                  return handler.reject(dioError);
-                }
-              }
+          if (dioError.response?.statusCode == 401) {
+            if (refreshToken == null) {
+              return handler.reject(dioError);
             }
-          }
+            if (!isRefreshing) {
+              isRefreshing = true;
 
-          return handler.next(dioError);
+              final refreshTokenResponse =
+                  await postRefreshToken(dioError, handler);
+
+              AppLogger.i(
+                  "refresh token response : ${jsonEncode(refreshTokenResponse)}");
+
+              if (refreshTokenResponse.code == 401) {
+                return handler.reject(dioError);
+              }
+            } else {
+              failedRequests.add({'err': dioError, 'handler': handler});
+            }
+          } else {
+            return handler.next(dioError);
+          }
         },
       ),
     );

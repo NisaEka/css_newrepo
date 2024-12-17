@@ -9,7 +9,6 @@ import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
-import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
 import 'package:css_mobile/data/model/pantau/pantauu_paketmu_detail_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -187,10 +186,10 @@ class PantauPaketmuDetailController extends BaseController {
 
       update();
     } on DioException catch (e) {
-      var result = BaseResponse<PantauPaketmuDetailModel>.fromJson(
+      var result = BaseResponse<PantauuPaketmuDetailModel>.fromJson(
         e.response?.data,
         (json) =>
-            PantauPaketmuDetailModel.fromJson(json as Map<String, dynamic>),
+            PantauuPaketmuDetailModel.fromJson(json as Map<String, dynamic>),
       );
       AppLogger.e('error fetching data: $e');
       AppSnackBar.error('error fetching data: ${result.message}');

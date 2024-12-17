@@ -1,5 +1,4 @@
 import 'package:css_mobile/const/color_const.dart';
-// import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +6,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class PantauTotalKiriman extends StatelessWidget {
+  final bool isLoading;
   const PantauTotalKiriman({
     super.key,
+    this.isLoading = true,
   });
 
   @override
@@ -16,14 +17,14 @@ class PantauTotalKiriman extends StatelessWidget {
     return GetBuilder<PantauPaketmuController>(
       init: PantauPaketmuController(),
       builder: (c) {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Shimmer(
-              isLoading: c.state.isLoading,
-              child: Container(
+        return Shimmer(
+          isLoading: isLoading,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
                 decoration: BoxDecoration(
-                  color: c.state.isLoading ? greyColor : Colors.transparent,
+                  color: isLoading ? greyColor : Colors.transparent,
                 ),
                 child: Text(
                   c.state.selectedKiriman == 0
@@ -37,16 +38,13 @@ class PantauTotalKiriman extends StatelessWidget {
                       ?.copyWith(fontSize: 50),
                 ),
               ),
-            ),
-            const SizedBox(width: 5),
-            Column(
-              children: [
-                const SizedBox(height: 34),
-                Shimmer(
-                  isLoading: c.state.isLoading,
-                  child: Container(
+              const SizedBox(width: 5),
+              Column(
+                children: [
+                  const SizedBox(height: 34),
+                  Container(
                     decoration: BoxDecoration(
-                      color: c.state.isLoading ? greyColor : Colors.transparent,
+                      color: isLoading ? greyColor : Colors.transparent,
                     ),
                     child: Text(
                       "Total Kiriman",
@@ -56,21 +54,19 @@ class PantauTotalKiriman extends StatelessWidget {
                           ?.copyWith(fontSize: 15),
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            const Spacer(),
-            Column(
-              children: [
-                Shimmer(
-                  isLoading: c.state.isLoading,
-                  child: Container(
+                ],
+              ),
+              const SizedBox(height: 10),
+              const Spacer(),
+              Column(
+                children: [
+                  Container(
                     decoration: BoxDecoration(
-                      color: c.state.isLoading ? greyColor : Colors.transparent,
+                      color: c.state.isLoading ? greyColor : whiteColor,
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: blueJNE),
                     ),
+                    width: 160,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -78,13 +74,13 @@ class PantauTotalKiriman extends StatelessWidget {
                           decoration: const BoxDecoration(
                             color: blueJNE,
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5),
+                              topLeft: Radius.circular(4),
+                              bottomLeft: Radius.circular(4),
                             ),
                           ),
                           child: const Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 3),
+                                horizontal: 15, vertical: 3),
                             child: Text(
                               'COD',
                               style: TextStyle(
@@ -94,8 +90,8 @@ class PantauTotalKiriman extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                        Expanded(
+                          // padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
                             c.state.selectedKiriman == 0
                                 ? (c.state.countList.isNotEmpty &&
@@ -111,25 +107,27 @@ class PantauTotalKiriman extends StatelessWidget {
                                         ? 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirCodAmount.toString()))}'
                                         : 'Rp. 0')
                                     : 'Rp. 0',
+                            textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium
-                                ?.copyWith(fontSize: 10),
+                                ?.copyWith(
+                                    fontSize: 10,
+                                    color: blueJNE,
+                                    fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Shimmer(
-                  isLoading: c.state.isLoading,
-                  child: Container(
+                  const SizedBox(height: 5),
+                  Container(
                     decoration: BoxDecoration(
-                      color: c.state.isLoading ? greyColor : Colors.transparent,
+                      color: c.state.isLoading ? greyColor : whiteColor,
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: blueJNE),
                     ),
+                    width: 160,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -137,8 +135,8 @@ class PantauTotalKiriman extends StatelessWidget {
                           decoration: const BoxDecoration(
                             color: blueJNE,
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5),
+                              topLeft: Radius.circular(4),
+                              bottomLeft: Radius.circular(4),
                             ),
                           ),
                           child: const Padding(
@@ -153,8 +151,7 @@ class PantauTotalKiriman extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                        Expanded(
                           child: Text(
                             c.state.selectedKiriman == 0
                                 ? (c.state.countList.isNotEmpty &&
@@ -171,19 +168,23 @@ class PantauTotalKiriman extends StatelessWidget {
                                         ? 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirCodAmount.toString()))}'
                                         : 'Rp. 0')
                                     : 'Rp. 0',
+                            textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium
-                                ?.copyWith(fontSize: 10),
+                                ?.copyWith(
+                                    fontSize: 10,
+                                    color: blueJNE,
+                                    fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         );
       },
     );

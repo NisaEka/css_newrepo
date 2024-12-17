@@ -48,7 +48,7 @@ class LogoutButton extends StatelessWidget {
                     builder: (context) => DefaultAlertDialog(
                       title: "Anda akan keluar".tr,
                       subtitle:
-                          "Pastikan semua aktvitas sudah selesai. Terima kasihs sudah menggunakan CSS Mobile"
+                          "Pastikan semua aktvitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile"
                               .tr,
                       backButtonTitle: "Tidak",
                       confirmButtonTitle: "Keluar",
@@ -86,13 +86,8 @@ class LogoutButton extends StatelessWidget {
     final storage = Get.find<StorageCore>();
     final refreshToken = await StorageCore().readRefreshToken() ?? '';
 
-    storage.deleteLogin();
-    Get.offAll(() => const LoginScreen());
-
     try {
-      await auth.logout(refreshToken).then((value) async {
-        AppLogger.d(value.toJson().toString());
-      });
+      await auth.logout(refreshToken);
       await auth.updateDeviceInfo(
         DeviceModel(
           fcmToken: await storage.readString(StorageCore.fcmToken),
@@ -102,9 +97,9 @@ class LogoutButton extends StatelessWidget {
     } catch (e, i) {
       AppLogger.e("error logout : $e");
       AppLogger.e("error logout : $i");
+    } finally {
+      storage.deleteLogin();
+      Get.offAll(() => const LoginScreen());
     }
-
-    storage.deleteLogin();
-    Get.offAll(() => const LoginScreen());
   }
 }

@@ -1,8 +1,6 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
-// import 'package:css_mobile/data/model/eclaim/eclaim_count_model.dart';
-// import 'package:css_mobile/data/model/eclaim/eclaim_model.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
-import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
+import 'package:css_mobile/data/model/pantau/pantau_paketmu_list_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/pantau_paketmu/pantau_paketmu_repository.dart';
@@ -51,19 +49,19 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
   }
 
   @override
-  Future<BaseResponse<List<PantauPaketmuDetailModel>>> getPantauList(
+  Future<BaseResponse<List<PantauPaketmuListModel>>> getPantauList(
       QueryModel param) async {
     try {
       Response response = await network.base.get(
         '/transaction/tracks/count/details',
         queryParameters: param.toJson(),
       );
-      return BaseResponse<List<PantauPaketmuDetailModel>>.fromJson(
+      return BaseResponse<List<PantauPaketmuListModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<PantauPaketmuDetailModel>(
-                  (i) => PantauPaketmuDetailModel.fromJson(
+                .map<PantauPaketmuListModel>(
+                  (i) => PantauPaketmuListModel.fromJson(
                       i as Map<String, dynamic>),
                 )
                 .toList()
@@ -71,12 +69,12 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
       );
     } on DioException catch (e) {
       AppLogger.e('error get origin : ${e.response?.data}');
-      return BaseResponse<List<PantauPaketmuDetailModel>>.fromJson(
+      return BaseResponse<List<PantauPaketmuListModel>>.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>
             ? json
-                .map<PantauPaketmuDetailModel>(
-                  (i) => PantauPaketmuDetailModel.fromJson(
+                .map<PantauPaketmuListModel>(
+                  (i) => PantauPaketmuListModel.fromJson(
                       i as Map<String, dynamic>),
                 )
                 .toList()

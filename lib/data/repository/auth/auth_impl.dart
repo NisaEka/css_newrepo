@@ -230,12 +230,11 @@ class AuthRepositoryImpl extends AuthRepository {
     // var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
     // String id = deviceInfo?.deviceId ?? '';
     try {
-      Response response = await network.refreshDio.post(
+      Response response = await network.base.post(
         '/authentications/logout',
         data: {
           "refreshToken": refreshToken,
         },
-        options: Options(extra: {'skipAuth': true}),
       );
       // .then((value) async => await network.base.patch(
       //       '/auth/device-infos/update',

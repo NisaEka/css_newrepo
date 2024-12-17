@@ -70,6 +70,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
             child: Column(
               children: [
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: () => setState(() {
                     if (widget.isLoading == false) {
                       showDetail = showDetail ? false : true;

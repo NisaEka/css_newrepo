@@ -71,9 +71,8 @@ class PointListItem extends StatelessWidget {
                       width: isLoading ? Get.width / 2 : null,
                       color: isLoading ? greyColor : null,
                       child: Text(
-                        style: Theme.of(context).textTheme.titleSmall,
-                          dateTime ?? ''
-                      ),
+                          style: Theme.of(context).textTheme.titleSmall,
+                          dateTime ?? ''),
                     ),
                   ],
                 ),

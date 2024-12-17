@@ -49,8 +49,10 @@ class JLCPointWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
-                              color:
-                              color ?? (AppConst.isLightTheme(context) ? redJNE : warningColor),
+                              color: color ??
+                                  (AppConst.isLightTheme(context)
+                                      ? redJNE
+                                      : warningColor),
                               spreadRadius: 1,
                               offset: const Offset(-2, 2),
                             ),
@@ -64,8 +66,7 @@ class JLCPointWidget extends StatelessWidget {
                             Image.asset(ImageConstant.logoJLC2, height: 12),
                             Text(
                                 ' ${point != '0' ? point.toDouble().toInt() : 0} Point',
-                                style: sublistTitleTextStyle
-                            ),
+                                style: sublistTitleTextStyle),
                           ],
                         ),
                       ),
