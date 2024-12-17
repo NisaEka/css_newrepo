@@ -316,7 +316,7 @@ class PantauItems extends StatelessWidget {
                                                     ? 'Rp. ${item?.ongkirCodAmount != null ? NumberFormat('#,##0', 'id').format(int.parse(item!.ongkirCodAmount.toString())) : '0'}'
                                                     : c.state.selectedKiriman ==
                                                             1
-                                                        ? 'Rp 0'
+                                                        ? 'Rp. 0'
                                                         : 'Rp. ${item?.ongkirNonCodAmount != null ? NumberFormat('#,##0', 'id').format(int.parse(item!.ongkirNonCodAmount.toString())) : '0'}',
                                                 style: Theme.of(context)
                                                     .textTheme

@@ -120,33 +120,33 @@ class PantauPaketmuCountController extends BaseController {
     update();
   }
 
-  Future<void> getPantauList(int page) async {
-    state.isLoading = true;
-    try {
-      final trans = await pantau.getPantauList(QueryModel(
-          search: state.searchField.text,
-          between: state.transDate,
-          entity: state.listStatusKiriman[selectedStatus],
-          type: state.selectedTipeKiriman.value,
-          petugasEntry: state.selectedPetugasEntry.value));
-      final isLastPage =
-          (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
-      if (isLastPage) {
-        state.pagingController.appendLastPage(trans.data ?? []);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
-      } else {
-        final nextPageKey = page + 1;
-        state.pagingController.appendPage(trans.data ?? [], nextPageKey);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
-      }
-    } catch (e) {
-      AppLogger.e('error getPantauList $e');
-      state.pagingController.error = e;
-    }
-
-    state.isLoading = false;
-    update();
-  }
+  // Future<void> getPantauList(int page) async {
+  //   state.isLoading = true;
+  //   try {
+  //     final trans = await pantau.getPantauList(QueryModel(
+  //         search: state.searchField.text,
+  //         between: state.transDate,
+  //         entity: state.listStatusKiriman[selectedStatus],
+  //         type: state.selectedTipeKiriman.value,
+  //         petugasEntry: state.selectedPetugasEntry.value));
+  //     final isLastPage =
+  //         (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
+  //     if (isLastPage) {
+  //       state.pagingController.appendLastPage(trans.data ?? []);
+  //       // transactionList.addAll(state.pagingController.itemList ?? []);
+  //     } else {
+  //       final nextPageKey = page + 1;
+  //       state.pagingController.appendPage(trans.data ?? [], nextPageKey);
+  //       // transactionList.addAll(state.pagingController.itemList ?? []);
+  //     }
+  //   } catch (e) {
+  //     AppLogger.e('error getPantauList $e');
+  //     state.pagingController.error = e;
+  //   }
+  //
+  //   state.isLoading = false;
+  //   update();
+  // }
 
   // Future<void> getPantauDetailList(int page) async {
   //   var param = QueryModel(
