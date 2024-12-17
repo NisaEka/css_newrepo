@@ -79,7 +79,9 @@ class FilterButton extends StatelessWidget {
                       children: [
                         isFiltered
                             ? CustomFilledButton(
-                                color: whiteColor,
+                                color: Theme.of(context).brightness == Brightness.light
+                                    ? blueJNE
+                                    : warningColor,
                                 isTransparent: true,
                                 fontColor: blueJNE,
                                 borderColor: blueJNE,
