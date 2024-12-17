@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardAppbar extends StatelessWidget {
-  const DashboardAppbar({super.key});
+  final int notifCount;
+
+  const DashboardAppbar({super.key, required this.notifCount});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,15 @@ class DashboardAppbar extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () => Get.to(const NotificationScreen()),
-          icon: const Icon(
-            Icons.notifications,
-            color: whiteColor,
+          icon: Badge(
+            isLabelVisible: true,
+            label: Text(notifCount.toString()),
+            offset: const Offset(8, 8),
+            backgroundColor: redJNE,
+            child: const Icon(
+              Icons.notifications,
+              color: whiteColor,
+            ),
           ),
         ),
         IconButton(

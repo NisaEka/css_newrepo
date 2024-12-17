@@ -7,6 +7,7 @@ import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
+import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
@@ -39,6 +40,15 @@ class DashboardController extends BaseController {
       loadBanner(),
       loadNews(),
     ]);
+  }
+
+  Future<void> cekMessages() async {
+    state.unreadNotifList = [];
+
+    var unread = GetNotificationModel.fromJson(
+        await storage.readData(StorageCore.unreadMessage));
+    state.unreadNotifList.addAll(unread.payload ?? []);
+    update();
   }
 
   Future<bool> cekToken() async {
@@ -401,6 +411,7 @@ class DashboardController extends BaseController {
   Future<void> initData() async {
     connection.isOnline().then((value) => state.isOnline = value);
 
+    cekMessages();
     cekFavoritMenu();
 
     update();

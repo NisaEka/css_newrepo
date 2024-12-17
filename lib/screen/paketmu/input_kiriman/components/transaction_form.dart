@@ -109,23 +109,19 @@ class TransactionForm extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomTextFormField(
-                              key: c.state.codKey,
-                              controller: c.state.goodAmount,
-                              hintText: 'Harga Barang'.tr,
-                              prefixIcon: const SatuanFieldIcon(
-                                title: 'Rp',
-                                isPrefix: true,
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                ThousandsSeparatorInputFormatter(),
-                              ],
+                              controller: c.state.weight,
+                              hintText: "Berat Kiriman".tr,
                               inputType: TextInputType.number,
-                              contentPadding: const EdgeInsets.only(
-                                  top: 0, bottom: 0, left: 40, right: 10),
                               width: Get.width / 2,
-                              isRequired: c.state.insurance,
-                              onChanged: (value) => c.getOngkir(),
+                              isRequired: true,
+                              validator: ValidationBuilder().min(1).build(),
+                              suffixIcon: const SatuanFieldIcon(
+                                  title: 'KG', isSuffix: true),
+                              onChanged: (value) {
+                                c.state.berat = value.toDouble();
+                                c.getOngkir();
+                                c.update();
+                              },
                             ),
                             CustomTextFormField(
                               controller: c.state.goodQty,
@@ -230,7 +226,10 @@ class TransactionForm extends StatelessWidget {
                                       .tr,
                               child: Icon(
                                 Icons.info_outline,
-                                color: color ?? (AppConst.isLightTheme(context) ? redJNE : warningColor),
+                                color: color ??
+                                    (AppConst.isLightTheme(context)
+                                        ? redJNE
+                                        : warningColor),
                               ),
                             ),
                           ),
@@ -239,19 +238,23 @@ class TransactionForm extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             CustomTextFormField(
-                              controller: c.state.weight,
-                              hintText: "Berat Kiriman".tr,
+                              key: c.state.codKey,
+                              controller: c.state.goodAmount,
+                              hintText: 'Harga Barang'.tr,
+                              prefixIcon: const SatuanFieldIcon(
+                                title: 'Rp',
+                                isPrefix: true,
+                              ),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                ThousandsSeparatorInputFormatter(),
+                              ],
                               inputType: TextInputType.number,
-                              width: Get.width / 3,
-                              isRequired: true,
-                              validator: ValidationBuilder().min(1).build(),
-                              suffixIcon: const SatuanFieldIcon(
-                                  title: 'KG', isSuffix: true),
-                              onChanged: (value) {
-                                c.state.berat = value.toDouble();
-                                c.getOngkir();
-                                c.update();
-                              },
+                              contentPadding: const EdgeInsets.only(
+                                  top: 0, bottom: 0, left: 40, right: 10),
+                              width: Get.width / 2,
+                              isRequired: c.state.insurance,
+                              onChanged: (value) => c.getOngkir(),
                             ),
                             const Spacer(),
                             Text('Dimensi Kiriman'.tr,

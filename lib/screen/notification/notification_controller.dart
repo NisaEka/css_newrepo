@@ -67,17 +67,20 @@ class NotificationController extends BaseController {
   }
 
   readMessage(NotificationModel value) {
-    if (value.title?.split(' ').first != "Laporanku") {
-      Get.to(const LaporankuScreen());
+    if (value.title?.split(' ').first == "Laporanku") {
+      Get.to(const LaporankuScreen())?.then((_) => initData());
     } else {
-      Get.to(NotificationDetailScreen(data: value));
+      Get.to(NotificationDetailScreen(data: value))?.then((_) => initData());
     }
 
     unreadNotifList.removeWhere(
       (unread) => unread.id == value.id,
     );
-    readNotifList.add(value);
-    update();
+    if (readNotifList.where((read) => read.id != value.id).isNotEmpty) {
+      readNotifList.add(value);
+      update();
+    }
+
     storage.saveData(
       StorageCore.unreadMessage,
       GetNotificationModel(payload: unreadNotifList),
