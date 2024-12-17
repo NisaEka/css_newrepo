@@ -126,7 +126,6 @@ class PantauPaketmuController extends BaseController {
           entity: state.listStatusKiriman[selectedStatus],
           type: state.selectedTipeKiriman.value,
           petugasEntry: state.selectedPetugasEntry.value));
-
       final isLastPage =
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
