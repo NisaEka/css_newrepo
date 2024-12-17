@@ -13,10 +13,15 @@ import 'package:intl/intl.dart';
 
 class PantauItems extends StatelessWidget {
   final PantauPaketmuCountModel? item;
-  final bool? isLoading;
+  final bool isLoading;
   final int? index;
 
-  const PantauItems({super.key, this.item, this.isLoading, this.index});
+  const PantauItems({
+    super.key,
+    this.item,
+    this.isLoading = true,
+    this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -118,14 +123,14 @@ class PantauItems extends StatelessWidget {
 
         return InkWell(
           onTap: () {
-            if (item != null && !c.state.isLoading) {
+            if (item != null && !isLoading) {
               AppLogger.i('Card tapped.');
               c.setSelectedStatus(index ?? 0);
               Get.to(() => const PantauPaketmuScreen());
             }
           },
           child: Shimmer(
-            isLoading: c.state.isLoading,
+            isLoading: isLoading,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -135,51 +140,41 @@ class PantauItems extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
+                        Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 3),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: c.state.isLoading
-                                  ? greyColor
-                                  : Colors.transparent,
-                            ),
-                            child: Text(
-                              item?.status ?? '',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ),
+                          decoration: BoxDecoration(
+                            color: isLoading ? greyColor : Colors.transparent,
+                          ),
+                          child: Text(
+                            item?.status ?? '',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Padding(
+                        Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 3),
-                          child: Container(
-                            color: c.state.isLoading
-                                ? greyColor
-                                : Colors.transparent,
-                            child: Text(
-                              c.state.selectedKiriman == 0
-                                  ? item?.totalCod.toString() ?? ''
-                                  : c.state.selectedKiriman == 1
-                                      ? item?.totalCodOngkir.toString() ?? ''
-                                      : item?.totalNonCod.toString() ?? '',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ),
+                          color: isLoading ? greyColor : Colors.transparent,
+                          child: Text(
+                            c.state.selectedKiriman == 0
+                                ? item?.totalCod.toString() ?? ''
+                                : c.state.selectedKiriman == 1
+                                    ? item?.totalCodOngkir.toString() ?? ''
+                                    : item?.totalNonCod.toString() ?? '',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         // COD
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 3),
-                          color: c.state.isLoading
-                              ? greyColor
-                              : Colors.transparent,
+                          color: isLoading ? greyColor : Colors.transparent,
                           width: 210,
                           child: Row(
                             children: [
@@ -269,9 +264,7 @@ class PantauItems extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 3),
-                          color: c.state.isLoading
-                              ? greyColor
-                              : Colors.transparent,
+                          color: isLoading ? greyColor : Colors.transparent,
                           width: 210,
                           child: Row(
                             children: [
@@ -356,20 +349,13 @@ class PantauItems extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    Shimmer(
-                      isLoading: c.state.isLoading,
-                      child: Container(
-                        color:
-                            c.state.isLoading ? greyColor : Colors.transparent,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            getStatusIcon(item?.status ?? ''),
-                            // Icon(getStatusIcon(item?.status ?? ''),
-                            //     color: greyLightColor2, size: 100),
-                          ],
-                        ),
-                      ),
+                    Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        getStatusIcon(item?.status ?? ''),
+                        // Icon(getStatusIcon(item?.status ?? ''),
+                        //     color: greyLightColor2, size: 100),
+                      ],
                     ),
                   ],
                 ),

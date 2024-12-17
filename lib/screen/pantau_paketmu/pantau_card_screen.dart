@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_list_item.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_paketmu_filter.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_status_button.dart';
@@ -28,49 +29,57 @@ class PantauCardScreen extends StatelessWidget {
                     const PantauStatusButton(),
                     const SizedBox(height: 5),
                     // Total Kiriman
-                    const PantauTotalKiriman(),
+                    PantauTotalKiriman(
+                        isLoading: controller.state.isLoading ||
+                            controller.state.countList.isEmpty),
                     Divider(
                       color: Theme.of(context).colorScheme.outline,
                       thickness: 1.0,
                     ),
                     // Pantau List
+                    // Expanded(
+                    //   child: ListView.builder(
+                    //     itemCount: 8,
+                    //     itemBuilder: (context, index) {
+                    //       if (controller.state.isLoading) {
+                    //         return const PantauItems(
+                    //           item: null,
+                    //           isLoading: true,
+                    //         );
+                    //       }
+                    //       // else if (controller.state.countList.isEmpty) {
+                    //       //   return const Center(
+                    //       //       child: CircularProgressIndicator());
+                    //       // }
+                    //
+                    //       var item = controller.state.countList[index];
+                    //       return index != 0
+                    //           ? PantauItems(
+                    //               item: item, index: index, isLoading: false)
+                    //           : const SizedBox();
+                    //     },
+                    //   ),
+                    // ),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: controller.state.isLoading ||
-                                controller.state.countList.isEmpty
-                            ? 1
-                            : controller.state.countList.length,
-                        itemBuilder: (context, index) {
-                          if (controller.state.isLoading) {
-                            return const PantauItems(
-                              item: null,
-                              isLoading: true,
-                            );
-                          } else if (controller.state.countList.isEmpty) {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-
-                          var item = controller.state.countList[index];
-                          return index != 0
-                              ? PantauItems(
-                                  item: item, index: index, isLoading: false)
-                              : const SizedBox();
-                        },
+                      child: ListView(
+                        children: controller.state.countList.isEmpty ||
+                                controller.state.isLoading
+                            ? List.generate(
+                                8,
+                                (index) => const PantauItems(
+                                  isLoading: true,
+                                ),
+                              )
+                            : controller.state.countList
+                                .mapIndexed((index, item) => index != 0
+                                    ? PantauItems(
+                                        item: item,
+                                        index: index,
+                                        isLoading: false)
+                                    : const SizedBox())
+                                .toList(),
                       ),
                     ),
-                    // Expanded(
-                    //     child: ListView(
-                    //   children: [
-                    //     PantauCountCod(title: 'COD'.tr),
-                    //     PantauCountCodOngkir(
-                    //       title: 'COD ONGKIR'.tr,
-                    //     ),
-                    //     PantauCountNonCod(
-                    //       title: 'NON COD'.tr,
-                    //     ),
-                    //   ],
-                    // )),
                   ],
                 ),
               ),

@@ -6,8 +6,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class PantauTotalKiriman extends StatelessWidget {
+  final bool isLoading;
   const PantauTotalKiriman({
     super.key,
+    this.isLoading = true,
   });
 
   @override
@@ -15,14 +17,14 @@ class PantauTotalKiriman extends StatelessWidget {
     return GetBuilder<PantauPaketmuController>(
       init: PantauPaketmuController(),
       builder: (c) {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Shimmer(
-              isLoading: c.state.isLoading,
-              child: Container(
+        return Shimmer(
+          isLoading: isLoading,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
                 decoration: BoxDecoration(
-                  color: c.state.isLoading ? greyColor : Colors.transparent,
+                  color: isLoading ? greyColor : Colors.transparent,
                 ),
                 child: Text(
                   c.state.selectedKiriman == 0
@@ -36,16 +38,13 @@ class PantauTotalKiriman extends StatelessWidget {
                       ?.copyWith(fontSize: 50),
                 ),
               ),
-            ),
-            const SizedBox(width: 5),
-            Column(
-              children: [
-                const SizedBox(height: 34),
-                Shimmer(
-                  isLoading: c.state.isLoading,
-                  child: Container(
+              const SizedBox(width: 5),
+              Column(
+                children: [
+                  const SizedBox(height: 34),
+                  Container(
                     decoration: BoxDecoration(
-                      color: c.state.isLoading ? greyColor : Colors.transparent,
+                      color: isLoading ? greyColor : Colors.transparent,
                     ),
                     child: Text(
                       "Total Kiriman",
@@ -55,16 +54,13 @@ class PantauTotalKiriman extends StatelessWidget {
                           ?.copyWith(fontSize: 15),
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            const Spacer(),
-            Column(
-              children: [
-                Shimmer(
-                  isLoading: c.state.isLoading,
-                  child: Container(
+                ],
+              ),
+              const SizedBox(height: 10),
+              const Spacer(),
+              Column(
+                children: [
+                  Container(
                     decoration: BoxDecoration(
                       color: c.state.isLoading ? greyColor : whiteColor,
                       borderRadius: BorderRadius.circular(5),
@@ -124,11 +120,8 @@ class PantauTotalKiriman extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Shimmer(
-                  isLoading: c.state.isLoading,
-                  child: Container(
+                  const SizedBox(height: 5),
+                  Container(
                     decoration: BoxDecoration(
                       color: c.state.isLoading ? greyColor : whiteColor,
                       borderRadius: BorderRadius.circular(5),
@@ -188,10 +181,10 @@ class PantauTotalKiriman extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         );
       },
     );
