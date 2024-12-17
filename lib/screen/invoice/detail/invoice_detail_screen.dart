@@ -120,7 +120,9 @@ class InvoiceDetailScreen extends StatelessWidget {
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleSmall
-                                      ?.copyWith(fontSize: 9),
+                                      ?.copyWith(
+                                          fontSize: 9,
+                                          fontStyle: FontStyle.italic),
                                 ),
                               ],
                             ),
@@ -260,8 +262,9 @@ class InvoiceDetailScreen extends StatelessWidget {
                         controller.invoiceDetailModel?.customerId ?? "-",
                         controller.isLoading,
                         style: listTitleTextStyle.copyWith(
-                          color:
-                              AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
+                          color: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : Colors.lightBlueAccent,
                         )),
                     const SizedBox(height: 6),
                     _textRow(

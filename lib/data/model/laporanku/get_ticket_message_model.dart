@@ -1,57 +1,3 @@
-class GetTicketMessageModel {
-  GetTicketMessageModel({
-    num? statusCode,
-    String? message,
-    List<TicketMessageModel>? data,
-  }) {
-    _statusCode = statusCode;
-    _message = message;
-    _data = data;
-  }
-
-  GetTicketMessageModel.fromJson(dynamic json) {
-    _statusCode = json['statusCode'];
-    _message = json['message'];
-    if (json['data'] != null) {
-      _data = [];
-      json['data'].forEach((v) {
-        _data?.add(TicketMessageModel.fromJson(v));
-      });
-    }
-  }
-
-  num? _statusCode;
-  String? _message;
-  List<TicketMessageModel>? _data;
-
-  GetTicketMessageModel copyWith({
-    num? statusCode,
-    String? message,
-    List<TicketMessageModel>? data,
-  }) =>
-      GetTicketMessageModel(
-        statusCode: statusCode ?? _statusCode,
-        message: message ?? _message,
-        data: data ?? _data,
-      );
-
-  num? get statusCode => _statusCode;
-
-  String? get message => _message;
-
-  List<TicketMessageModel>? get data => _data;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['statusCode'] = _statusCode;
-    map['message'] = _message;
-    if (_data != null) {
-      map['data'] = _data?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
 class TicketMessageModel {
   TicketMessageModel({
     num? id,
@@ -63,6 +9,7 @@ class TicketMessageModel {
     String? type,
     String? user,
     String? branchCode,
+    String? read,
   }) {
     _id = id;
     _ticketId = ticketId;
@@ -73,6 +20,7 @@ class TicketMessageModel {
     _type = type;
     _user = user;
     _branchCode = branchCode;
+    _read = read;
   }
 
   TicketMessageModel.fromJson(dynamic json) {
@@ -85,6 +33,7 @@ class TicketMessageModel {
     _type = json['type'];
     _user = json['user'];
     _branchCode = json['branchCode'];
+    _read = json['read'];
   }
 
   num? _id;
@@ -96,6 +45,7 @@ class TicketMessageModel {
   String? _type;
   String? _user;
   String? _branchCode;
+  String? _read;
 
   TicketMessageModel copyWith({
     num? id,
@@ -107,6 +57,7 @@ class TicketMessageModel {
     String? type,
     String? user,
     String? branchCode,
+    String? read,
   }) =>
       TicketMessageModel(
         id: id ?? _id,
@@ -118,6 +69,7 @@ class TicketMessageModel {
         type: type ?? _type,
         user: user ?? _user,
         branchCode: branchCode ?? _branchCode,
+        read: read ?? _read,
       );
 
   num? get id => _id;
@@ -138,6 +90,8 @@ class TicketMessageModel {
 
   String? get branchCode => _branchCode;
 
+  String? get read => _read;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
@@ -149,6 +103,7 @@ class TicketMessageModel {
     map['type'] = _type;
     map['user'] = _user;
     map['branchCode'] = _branchCode;
+    map['read'] = _read;
     return map;
   }
 }

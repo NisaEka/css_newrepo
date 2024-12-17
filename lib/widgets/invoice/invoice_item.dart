@@ -1,66 +1,85 @@
+import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 
 class InvoiceItem extends StatelessWidget {
-  final InvoiceModel? invoice;
-  final Function(String) onTap;
+  final bool isLoading;
+  final Function(String)? onTap;
+  final InvoiceModel? data;
 
   const InvoiceItem({
     super.key,
-    required this.invoice,
-    required this.onTap,
+    this.isLoading = false,
+    this.onTap,
+    this.data,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: (() => onTap(invoice?.invoiceNoEncoded ?? '')),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        margin: const EdgeInsets.only(left: 16, right: 16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Theme.of(context).colorScheme.outline),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Shimmer(
+      isLoading: isLoading,
+      child: GestureDetector(
+          onTap: (() => onTap?.call(data?.invoiceNoEncoded ?? '')),
+          child: Card(
+            elevation: 0,
+            child: Column(
               children: [
-                Text(
-                  invoice?.invoiceNo ?? '',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      width: 160,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: data?.invoiceStatus == "Posted"
+                            ? successColor
+                            : greyColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        data?.invoiceStatus ?? '',
+                        style: sublistTitleTextStyle.copyWith(
+                          color: whiteColor,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      data?.invoiceDate?.toShortDateFormat() ?? '-',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : warningColor),
+                    ),
+                  ],
                 ),
-                Text(
-                  "Rp ${invoice?.invoiceTotalAmount.toCurrency() ?? ''}",
-                  style: Theme.of(context).textTheme.bodySmall,
-                )
+                const SizedBox(height: 8),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        data?.invoiceNo ?? '-',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Rp ${data?.invoiceTotalAmount.toCurrency() ?? ''}",
+                        style: Theme.of(context).textTheme.titleMedium,
+                        textAlign: TextAlign.end,
+                      ),
+                    ]),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  (invoice?.invoiceDate ?? '').toLongDateTimeFormat(),
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                Text(
-                  invoice?.invoiceStatus ?? '',
-                  style: Theme.of(context).textTheme.bodySmall,
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
+          )),
     );
   }
 }

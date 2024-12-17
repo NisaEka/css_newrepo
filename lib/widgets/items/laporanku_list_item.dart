@@ -5,7 +5,6 @@ import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -46,44 +45,18 @@ class LaporankuListItem extends StatelessWidget {
           ],
         ),
         child: GestureDetector(
-          onTap: onTap,
-          child: Card(
-            elevation: 3,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(8),
-                    child: const Icon(
-                      CupertinoIcons.chat_bubble_text,
-                      color: redJNE,
-                      size: 35,
-                    ),
-                  ),
-                  SizedBox(
-                    width: Get.width / 1.45,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            onTap: onTap,
+            child: Card(
+                elevation: 0,
+                child: Column(
+                  children: [
+                    // const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              data?.cnote ?? '',
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            Text(
-                              data?.createdDate?.toShortDateTimeFormat() ?? '-',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ],
-                        ),
-                        Text(
-                          data?.category?.categoryDescription ?? '-',
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
                         Container(
+                          alignment: Alignment.center,
+                          width: 160,
                           padding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 10),
                           decoration: BoxDecoration(
@@ -102,17 +75,61 @@ class LaporankuListItem extends StatelessWidget {
                                     ? "Masih Diproses".tr
                                     : "Belum Diproses".tr,
                             style: sublistTitleTextStyle.copyWith(
-                                color: whiteColor, fontSize: 10),
+                              color: whiteColor,
+                              fontSize: 10,
+                            ),
                           ),
-                        )
+                        ),
+                        Text(
+                          data?.createdDate?.toShortDateTimeFormat() ?? '-',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : warningColor),
+                        ),
                       ],
                     ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
+                    Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                      Text(
+                        data?.cnote ?? '',
+                        style: Theme.of(context).textTheme.titleMedium,
+                        textAlign: TextAlign.end,
+                      ),
+                    ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          data?.category?.categoryDescription ?? '-',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Terakhir Update: ${data?.updatedDate?.toLongDateTimeFormat() ?? '-'}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                  fontSize: 9, fontStyle: FontStyle.italic),
+                        ),
+                        if (data?.isUnread == true)
+                          const Icon(
+                            Icons.message,
+                            color: redJNE,
+                            size: 20,
+                          ),
+                      ],
+                    )
+                  ],
+                ))),
       ),
     );
   }
