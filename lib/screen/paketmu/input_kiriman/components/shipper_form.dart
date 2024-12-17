@@ -112,14 +112,11 @@ class ShipperForm extends StatelessWidget {
                                   c.state.userBasic?.userType != "PEMILIK",
                               value: c.state.selectedOrigin,
                               selectedItem: c.state.shipperOrigin.text,
-                              branch: (c.state.selectedAccount?.accountNumber
-                                              ?.substring(0, 1) ==
-                                          "3" ||
-                                      c.state.selectedAccount
-                                              ?.accountCategory !=
+                              branch:
+                                  (c.state.selectedAccount?.accountCategory ==
                                           "LOKAL")
-                                  ? c.state.selectedAccount?.accountBranch
-                                  : null,
+                                      ? c.state.selectedAccount?.accountBranch
+                                      : null,
                               readOnly: c.state.selectedAccount == null ||
                                       c.state.isOnline == false
                                   ? true
@@ -138,7 +135,8 @@ class ShipperForm extends StatelessWidget {
                               hintText: "Kode Pos".tr,
                               readOnly: !c.state.isDropshipper,
                               isRequired: true,
-                              prefixIcon: const Icon(Icons.markunread_mailbox_rounded),
+                              prefixIcon:
+                                  const Icon(Icons.markunread_mailbox_rounded),
                               // validator: ValidationBuilder().zipCode().build(),
                               inputType: TextInputType.number,
                             ),
