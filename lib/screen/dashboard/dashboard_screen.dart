@@ -46,6 +46,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       margin:
                           EdgeInsets.only(left: Get.width * 0.09, bottom: 29),
                       radius: 100,
+                      height: 65, width: 65,
                       background: (AppConst.isLightTheme(context)
                           ? (controller.state.isLogin
                               ? redJNE

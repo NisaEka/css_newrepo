@@ -15,6 +15,8 @@ class MenuIcon extends StatelessWidget {
   final VoidCallback? onTap;
   final Color? iconColor;
   final EdgeInsets? margin;
+  final double? height;
+  final double? width;
 
   const MenuIcon({
     super.key,
@@ -30,6 +32,8 @@ class MenuIcon extends StatelessWidget {
     this.onTap,
     this.iconColor,
     this.margin,
+    this.height,
+    this.width,
   });
 
   @override
@@ -39,6 +43,8 @@ class MenuIcon extends StatelessWidget {
       child: Container(
           padding: padding ?? const EdgeInsets.all(5),
           margin: margin ?? EdgeInsets.zero,
+          height: height,
+          width: width,
           decoration: BoxDecoration(
             color: (showContainer
                 ? (isTransparent
@@ -61,11 +67,7 @@ class MenuIcon extends StatelessWidget {
                       : (isTransparent ? blueJNE : Colors.transparent))),
             ),
           ),
-          child: menuIcon ??
-              Image.asset(
-                icon ?? '',
-                height: size ?? 50,
-              )
+          child: menuIcon ?? Image.asset(icon ?? '', height: size ?? 50)
           // Stack(
           //   children: [
           //     Icon(
