@@ -108,7 +108,7 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   }
 
   @override
-  Future<BaseResponse<List<TicketMessageModel>>> getTickeMessage(
+  Future<BaseResponse<List<TicketMessageModel>>> getTicketMessage(
       QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     try {
@@ -174,6 +174,19 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
         e.response?.data,
         (json) => TicketModel.fromJson(json as Map<String, dynamic>),
       );
+    }
+  }
+
+  @override
+  Future<BaseResponse> patchTicketMessageRead(
+      String id, TicketMessageModel data) async {
+    try {
+      Response response =
+          await network.base.patch("/transaction/tickets/$id/read", data: data);
+
+      return BaseResponse.fromJson(response.data, (json) => null);
+    } on DioException catch (e) {
+      return BaseResponse.fromJson(e.response?.data, (json) => null);
     }
   }
 }

@@ -21,7 +21,7 @@ import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -744,68 +744,74 @@ class TransactionController extends BaseController {
     if ((state.codAmountText.text.digitOnly().toInt() <
         state.getCodAmountMinimum)) {
       Get.dialog(StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          scrollable: false,
-          title: const Icon(
+        builder: (context, setState) => DefaultAlertDialog(
+          icon: const Icon(
             Icons.dangerous_outlined,
             color: errorColor,
             size: 100,
           ),
-          alignment: Alignment.center,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Error".tr,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              Text(
-                "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              CustomFilledButton(
-                color: blueJNE,
-                width: Get.width / 3,
-                title: "OK".tr,
-                onPressed: () => Get.back(),
-              )
-            ],
-          ),
+          // title: "Error".tr,
+          subtitle:
+              "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
+          confirmButtonTitle: "OK",
+          onConfirm: Get.back,
+          // content: Column(
+          //   mainAxisSize: MainAxisSize.min,
+          //   children: [
+          //     Text(
+          //       "Error".tr,
+          //       textAlign: TextAlign.center,
+          //       style: Theme.of(context).textTheme.titleLarge,
+          //     ),
+          //     Text(
+          //       "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
+          //       textAlign: TextAlign.center,
+          //       style: Theme.of(context).textTheme.bodyLarge,
+          //     ),
+          //     CustomFilledButton(
+          //       color: blueJNE,
+          //       width: Get.width / 3,
+          //       title: "OK".tr,
+          //       onPressed: () => Get.back(),
+          //     )
+          //   ],
+          // ),
         ),
       ));
     } else if ((state.codAmountText.text.digitOnly().toInt() > 10000000)) {
       Get.dialog(StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          scrollable: false,
-          title: const Icon(
+        builder: (context, setState) => DefaultAlertDialog(
+          icon: const Icon(
             Icons.dangerous_outlined,
             color: errorColor,
             size: 100,
           ),
-          alignment: Alignment.center,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Error".tr,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              Text(
-                "${'Harga COD tidak boleh Lebih dari'.tr} Rp.${1000000.toInt().toCurrency()}",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              CustomFilledButton(
-                color: blueJNE,
-                width: Get.width / 3,
-                title: "OK".tr,
-                onPressed: () => Get.back(),
-              )
-            ],
-          ),
+          // title: "Error".tr,
+          subtitle:
+              "${'Harga COD tidak boleh Lebih dari'.tr} Rp.${10000000.toInt().toCurrency()}",
+          confirmButtonTitle: "OK",
+          onConfirm: Get.back,
+          // content: Column(
+          //   mainAxisSize: MainAxisSize.min,
+          //   children: [
+          //     Text(
+          //       "Error".tr,
+          //       textAlign: TextAlign.center,
+          //       style: Theme.of(context).textTheme.titleLarge,
+          //     ),
+          //     Text(
+          //       "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
+          //       textAlign: TextAlign.center,
+          //       style: Theme.of(context).textTheme.bodyLarge,
+          //     ),
+          //     CustomFilledButton(
+          //       color: blueJNE,
+          //       width: Get.width / 3,
+          //       title: "OK".tr,
+          //       onPressed: () => Get.back(),
+          //     )
+          //   ],
+          // ),
         ),
       ));
     } else {

@@ -46,7 +46,7 @@ class LaporankuBody extends StatelessWidget {
                         c.state.pagingController.refresh();
                       },
                     ),
-                    child: PagedListView<int, TicketModel>(
+                    child: PagedListView.separated(
                       pagingController: c.state.pagingController,
                       builderDelegate: PagedChildBuilderDelegate<TicketModel>(
                         transitionDuration: const Duration(milliseconds: 500),
@@ -91,6 +91,9 @@ class LaporankuBody extends StatelessWidget {
                           size: 30,
                         ),
                       ),
+                      separatorBuilder: (context, index) {
+                        return const Divider(color: greyLightColor3);
+                      },
                     ),
                   ),
                 ),

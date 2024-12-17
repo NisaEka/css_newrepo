@@ -94,7 +94,8 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall
-                                  ?.copyWith(fontSize: 9),
+                                  ?.copyWith(
+                                      fontSize: 9, fontStyle: FontStyle.italic),
                             ),
                           ],
                         ),
@@ -265,8 +266,9 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   controller.isLoading,
                   style: TextStyle(
                     fontWeight: bold,
-                    color:
-                        AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
+                    color: AppConst.isLightTheme(context)
+                        ? blueJNE
+                        : Colors.lightBlueAccent,
                   ),
                 ),
                 _textRow(
@@ -292,8 +294,9 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   controller.isLoading,
                   style: TextStyle(
                     fontWeight: bold,
-                    color:
-                    AppConst.isLightTheme(context) ? redJNE : Colors.lightBlueAccent,
+                    color: AppConst.isLightTheme(context)
+                        ? redJNE
+                        : Colors.lightBlueAccent,
                   ),
                 ),
                 _textRow(

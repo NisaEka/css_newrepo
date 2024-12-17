@@ -26,6 +26,7 @@ class PantauStatusButton extends StatelessWidget {
                   onTap: () {
                     c.state.selectedKiriman = 0;
                     c.state.transType = '';
+                    c.state.selectedTipeKiriman.value = 'cod';
                     c.update();
                     c.state.pagingController.refresh();
                   },
@@ -68,7 +69,8 @@ class PantauStatusButton extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     c.state.selectedKiriman = 1;
-                    c.state.transType = 'COD';
+                    c.state.transType = 'cod ongkir';
+                    c.state.selectedTipeKiriman.value = 'cod ongkir';
                     c.update();
                     c.state.pagingController.refresh();
                   },
@@ -109,6 +111,7 @@ class PantauStatusButton extends StatelessWidget {
                   onTap: () {
                     c.state.selectedKiriman = 2;
                     c.state.transType = 'NON COD';
+                    c.state.selectedTipeKiriman.value = 'non cod';
                     c.update();
                     c.state.pagingController.refresh();
                   },

@@ -40,7 +40,6 @@ class InvoiceController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([_getInvoiceCount()]);
     pagingController.addPageRequestListener((pageKey) {
       _getInvoices(pageKey);
     });
@@ -163,6 +162,7 @@ class InvoiceController extends BaseController {
 
   void _getInvoices(int page) async {
     try {
+      state.isLoading = true;
       _queryParamModel.setPage(page);
       final response = await invoiceRepository.getInvoices(_queryParamModel);
 
@@ -179,6 +179,9 @@ class InvoiceController extends BaseController {
       }
     } catch (e, i) {
       AppLogger.e('error getInvoices $e, $i');
+    } finally {
+      state.isLoading = false;
+      update();
     }
   }
 

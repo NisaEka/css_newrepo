@@ -11,18 +11,47 @@ import 'package:intl/intl.dart';
 class PantauItems extends StatelessWidget {
   final PantauPaketmuCountModel? item;
   final bool? isLoading;
+  final int? index;
 
-  const PantauItems({super.key, this.item, this.isLoading});
+  const PantauItems({super.key, this.item, this.isLoading, this.index});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PantauPaketmuController>(
       init: PantauPaketmuController(),
       builder: (c) {
+        IconData getStatusIcon(String status) {
+          switch (status) {
+            case 'Sudah Dijemput':
+              return Icons.directions_car;
+            case 'Sudah Di Gudang JNE':
+              return Icons.location_city;
+            case 'Sudah Di Kota Tujuan':
+              return Icons.location_on_outlined;
+            case 'Dalam Proses':
+              return Icons.hourglass_empty;
+            case 'Sukses Diterima':
+              return Icons.check_circle_outline;
+            case 'Butuh Dicek':
+              return Icons.warning;
+            case 'Proses Pengembalian Ke Kamu':
+              return Icons.reply;
+            case 'Sukses Dikembalikan Ke Kamu':
+              return Icons.done_all;
+            case 'Dalam Peninjauan':
+              return Icons.search;
+            case 'Dibatalkan Oleh Kamu':
+              return Icons.cancel_outlined;
+            default:
+              return Icons.error_outline;
+          }
+        }
+
         return InkWell(
           onTap: () {
             if (item != null && !c.state.isLoading) {
               AppLogger.i('Card tapped.');
+              c.setSelectedStatus(index ?? 0);
               Get.to(() => const PantauPaketmuScreen());
             }
           },
@@ -237,11 +266,11 @@ class PantauItems extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    const Column(
+                    Column(
                       children: [
-                        SizedBox(height: 10),
-                        Icon(Icons.location_on_outlined,
-                            color: greyLightColor2, size: 100)
+                        const SizedBox(height: 10),
+                        Icon(getStatusIcon(item?.status ?? ''),
+                            color: greyLightColor2, size: 100),
                       ],
                     ),
                   ],
