@@ -104,6 +104,7 @@ class PantauPaketmuDetailModel {
     _awbType = json['awbType'];
     _statusawb = json['statusawb'];
   }
+
   String? _awbNo;
   String? _awbDate;
   String? _awbRefno;
@@ -137,6 +138,7 @@ class PantauPaketmuDetailModel {
   String? _orderId;
   String? _awbType;
   String? _statusawb;
+
   PantauPaketmuDetailModel copyWith({
     String? awbNo,
     String? awbDate,
@@ -208,38 +210,71 @@ class PantauPaketmuDetailModel {
         awbType: awbType ?? _awbType,
         statusawb: statusawb ?? _statusawb,
       );
+
   String? get awbNo => _awbNo;
+
   String? get awbDate => _awbDate;
+
   String? get awbRefno => _awbRefno;
+
   String? get custNo => _custNo;
+
   String? get custName => _custName;
+
   String? get cnoteReceiverPhone => _cnoteReceiverPhone;
+
   dynamic get hoCourierDate => _hoCourierDate;
+
   dynamic get puLastAttempStatusDate => _puLastAttempStatusDate;
+
   String? get cnoteShipperName => _cnoteShipperName;
+
   String? get receiverName => _receiverName;
+
   String? get cnoteReceiverAddr1 => _cnoteReceiverAddr1;
+
   dynamic get cnoteReceiverAddr2 => _cnoteReceiverAddr2;
+
   dynamic get cnoteReceiverAddr3 => _cnoteReceiverAddr3;
+
   String? get destinationName => _destinationName;
+
   String? get service => _service;
+
   num? get weightAwb => _weightAwb;
+
   String? get awbGoodsDescr => _awbGoodsDescr;
+
   String? get awbSpecialIns => _awbSpecialIns;
+
   num? get awbAmount => _awbAmount;
+
   num? get awbInsuranceValue => _awbInsuranceValue;
+
   num? get codAmount => _codAmount;
+
   dynamic get statusPod => _statusPod;
+
   dynamic get tglReceived => _tglReceived;
+
   dynamic get codingPod => _codingPod;
+
   dynamic get receivedReason => _receivedReason;
+
   dynamic get repcssPaymentDate => _repcssPaymentDate;
+
   dynamic get repcssPaymentReffid => _repcssPaymentReffid;
+
   dynamic get podlEpodUrlPic => _podlEpodUrlPic;
+
   dynamic get podlEpodUrl => _podlEpodUrl;
+
   String? get petugasEntry => _petugasEntry;
+
   String? get orderId => _orderId;
+
   String? get awbType => _awbType;
+
   String? get statusawb => _statusawb;
 
   Map<String, dynamic> toJson() {
