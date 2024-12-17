@@ -36,7 +36,7 @@ class ListPenerimaScreen extends StatelessWidget {
 
   Widget _bodyContent(ListPenerimaController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
       child: Column(
         children: [
           CustomSearchField(

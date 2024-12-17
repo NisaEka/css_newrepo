@@ -15,7 +15,7 @@ class TransactionServicesList extends StatelessWidget {
         init: TransactionController(),
         builder: (c) {
           return SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             sliver: c.state.serviceList.isEmpty &&
                     c.state.isOnline &&
                     !c.state.isServiceLoad
@@ -40,8 +40,8 @@ class TransactionServicesList extends StatelessWidget {
                 : SliverGrid(
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 170,
-                      mainAxisSpacing: 20,
+                      maxCrossAxisExtent: 150,
+                      mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       childAspectRatio: 4.0,
                       // mainAxisExtent: 10

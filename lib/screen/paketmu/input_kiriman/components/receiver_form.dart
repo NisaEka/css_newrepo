@@ -24,8 +24,8 @@ class ReceiverForm extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.all(10),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   width: Get.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +71,10 @@ class ReceiverForm extends StatelessWidget {
                                     ),
                                     Icon(
                                       Icons.arrow_circle_right_rounded,
-                                      color: color ?? (AppConst.isLightTheme(context) ? blueJNE : warningColor),
+                                      color: color ??
+                                          (AppConst.isLightTheme(context)
+                                              ? blueJNE
+                                              : warningColor),
                                     )
                                   ],
                                 ),

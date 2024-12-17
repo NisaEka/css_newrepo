@@ -18,7 +18,7 @@ class DropshipperForm extends StatelessWidget {
         builder: (c) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(30),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               child: Form(
                 key: c.formKey,
                 onChanged: () {

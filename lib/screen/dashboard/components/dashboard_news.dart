@@ -20,8 +20,7 @@ class DashboardNews extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Jnews'.tr,
-                        style: Theme.of(context).textTheme.titleLarge
-                    ),
+                        style: Theme.of(context).textTheme.titleLarge),
                     // const DateDropdownFilterButton(),
                   ],
                 ),
@@ -35,15 +34,20 @@ class DashboardNews extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: c.state.newsList
-                        .map(
-                          (e) => NewsItem(
-                            news: e,
-                            lang: c.state.local,
-                            isLoading: c.state.isLoading,
-                          ),
-                        )
-                        .toList(),
+                    children: c.state.isLoading || c.state.newsList.isEmpty
+                        ? List.generate(
+                            3,
+                            (index) =>
+                                const NewsItem(isLoading: true, lang: ''))
+                        : c.state.newsList
+                            .map(
+                              (e) => NewsItem(
+                                news: e,
+                                lang: c.state.local,
+                                isLoading: c.state.isLoading,
+                              ),
+                            )
+                            .toList(),
                   ),
                 )
               ],

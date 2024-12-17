@@ -39,7 +39,7 @@ class ListDropshipperScreen extends StatelessWidget {
 
   Widget _bodyContent(ListDropshipperController c, BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
           // !controller.isOnline ? const OfflineBar() : const SizedBox(),

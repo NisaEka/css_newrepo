@@ -30,8 +30,7 @@ class TransactionForm extends StatelessWidget {
         builder: (c) {
           return SliverToBoxAdapter(
             child: Container(
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               width: Get.width,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +50,7 @@ class TransactionForm extends StatelessWidget {
                           children: [
                             CustomDropDownFormField(
                               hintText: 'Jenis Barang'.tr,
-                              width: Get.width / 2.3,
+                              width: Get.width / 2.4,
                               isRequired: true,
                               value: c.state.goodType.text,
                               readOnly: c.state.isSelectGoodsType,
@@ -86,7 +85,7 @@ class TransactionForm extends StatelessWidget {
                             CustomTextFormField(
                               controller: c.state.noReference,
                               hintText: 'No Referensi (opsional)'.tr,
-                              width: Get.width / 2.3,
+                              width: Get.width / 2.4,
                               // height: 46,
                               validator: (value) => value?.isNotEmpty ?? false
                                   ? value!.length < 8
@@ -112,7 +111,7 @@ class TransactionForm extends StatelessWidget {
                               controller: c.state.weight,
                               hintText: "Berat Kiriman".tr,
                               inputType: TextInputType.number,
-                              width: Get.width / 2.3,
+                              width: Get.width / 2.4,
                               isRequired: true,
                               validator: ValidationBuilder().min(1).build(),
                               suffixIcon: const SatuanFieldIcon(
@@ -127,7 +126,7 @@ class TransactionForm extends StatelessWidget {
                               controller: c.state.goodQty,
                               hintText: 'Jumlah Packing'.tr,
                               inputType: TextInputType.number,
-                              width: Get.width / 2.3,
+                              width: Get.width / 2.4,
                               isRequired: true,
                             ),
                           ],
@@ -190,7 +189,7 @@ class TransactionForm extends StatelessWidget {
                               inputType: TextInputType.number,
                               contentPadding: const EdgeInsets.only(
                                   top: 0, bottom: 0, left: 40, right: 10),
-                              width: Get.width / 2.3,
+                              width: Get.width / 2.4,
                               isRequired: c.state.insurance,
                               onChanged: (value) => c.getOngkir(),
                             ),
