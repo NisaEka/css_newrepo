@@ -2,14 +2,29 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/auth/login/login_screen.dart';
-import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginAlertDialog extends StatelessWidget {
-  const LoginAlertDialog({super.key});
+class DefaultAlertDialog extends StatelessWidget {
+  final VoidCallback? onConfirm;
+  final VoidCallback? onBack;
+  final String? title;
+  final String? subtitle;
+  final String? backButtonTitle;
+  final String? confirmButtonTitle;
+  final Widget? icon;
+
+  const DefaultAlertDialog({
+    super.key,
+    required this.onConfirm,
+    this.onBack,
+    this.title,
+    this.subtitle,
+    this.backButtonTitle,
+    this.confirmButtonTitle,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +33,7 @@ class LoginAlertDialog extends StatelessWidget {
           ? whiteColor
           : bgDarkColor,
       title: Column(
-        mainAxisSize: MainAxisSize.max,
+        // mainAxisSize: MainAxisSize.max,
         children: [
           Image.asset(
             ImageConstant.logoCSS,
@@ -28,7 +43,7 @@ class LoginAlertDialog extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            'Akses Terbatas'.tr,
+            title ?? '',
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
@@ -37,46 +52,41 @@ class LoginAlertDialog extends StatelessWidget {
             //     color: AppConst.isLightTheme(context)
             //         ? greyDarkColor2
             //         : greyLightColor2)),
-          )
+          ),
+          icon ?? const SizedBox(),
         ],
       ),
-      content: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Text(
-          textAlign: TextAlign.center,
-          'access_denied'.tr,
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge
-              ?.copyWith(fontWeight: regular),
-        ),
+      content: Text(
+        textAlign: TextAlign.center,
+        subtitle ?? '',
+        style: Theme.of(context)
+            .textTheme
+            .titleLarge
+            ?.copyWith(fontWeight: regular),
       ),
       actions: <Widget>[
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            onBack != null
+                ? CustomFilledButton(
+                    radius: 50,
+                    margin: EdgeInsets.zero,
+                    isTransparent: true,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? blueJNE
+                        : warningColor,
+                    title: backButtonTitle ?? '',
+                    onPressed: onBack ?? () => Get.back(),
+                  )
+                : const SizedBox(),
             CustomFilledButton(
-              radius: 50,
-              margin: EdgeInsets.zero,
-              isTransparent: true,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? blueJNE
-                  : warningColor,
-              title: 'Daftar'.tr,
-              onPressed: () {
-                Get.off(() => const SignUpScreen());
-              },
-            ),
-            CustomFilledButton(
-              radius: 50,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? blueJNE
-                  : warningColor,
-              title: 'Masuk'.tr,
-              onPressed: () {
-                Get.off(() => const LoginScreen());
-              },
-            ),
+                radius: 50,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? blueJNE
+                    : warningColor,
+                title: confirmButtonTitle ?? '',
+                onPressed: onConfirm),
           ],
         ),
         // TextButton(
