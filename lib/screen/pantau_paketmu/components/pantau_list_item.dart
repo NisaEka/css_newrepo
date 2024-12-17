@@ -34,35 +34,85 @@ class PantauItems extends StatelessWidget {
                 height: 100,
               );
             case 'Sudah Di Gudang JNE':
-              return SvgPicture.asset(IconsConstant.requestPickup,
-                  color: greyColor);
+              return SvgPicture.asset(
+                IconsConstant.building,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
             case 'Sudah Di Kota Tujuan':
-              return SvgPicture.asset(IconsConstant.requestPickup,
-                  color: greyColor);
+              return SvgPicture.asset(
+                IconsConstant.location,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
             case 'Dalam Proses':
-              return SvgPicture.asset(IconsConstant.requestPickup,
-                  color: greyColor);
+              return SvgPicture.asset(
+                IconsConstant.sync,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
             case 'Sukses Diterima':
-              return SvgPicture.asset(IconsConstant.requestPickup,
-                  color: greyColor);
+              return SvgPicture.asset(
+                IconsConstant.docSuccess,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
             case 'Butuh Dicek':
-              return SvgPicture.asset(IconsConstant.requestPickup,
-                  color: greyColor);
+              return SvgPicture.asset(
+                IconsConstant.location,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
             case 'Proses Pengembalian Ke Kamu':
-              return SvgPicture.asset(IconsConstant.requestPickup,
-                  color: greyColor);
+              return SvgPicture.asset(
+                IconsConstant.location,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
             case 'Sukses Dikembalikan Ke Kamu':
-              return SvgPicture.asset(IconsConstant.requestPickup,
-                  color: greyColor);
+              return SvgPicture.asset(
+                IconsConstant.retur,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
             case 'Dalam Peninjauan':
-              return SvgPicture.asset(IconsConstant.requestPickup,
-                  color: greyColor);
+              return SvgPicture.asset(
+                IconsConstant.building,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
             case 'Dibatalkan Oleh Kamu':
-              return SvgPicture.asset(IconsConstant.requestPickup,
-                  color: greyColor);
+              return SvgPicture.asset(
+                IconsConstant.error,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
             default:
-              return SvgPicture.asset(IconsConstant.requestPickup,
-                  color: greyColor);
+              return SvgPicture.asset(
+                IconsConstant.error,
+                color: AppConst.isLightTheme(context)
+                    ? greyLightColor1
+                    : greyDarkColor1,
+                height: 100,
+              );
           }
         }
 
@@ -306,13 +356,20 @@ class PantauItems extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        getStatusIcon(item?.status ?? ''),
-                        // Icon(getStatusIcon(item?.status ?? ''),
-                        //     color: greyLightColor2, size: 100),
-                      ],
+                    Shimmer(
+                      isLoading: c.state.isLoading,
+                      child: Container(
+                        color:
+                            c.state.isLoading ? greyColor : Colors.transparent,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            getStatusIcon(item?.status ?? ''),
+                            // Icon(getStatusIcon(item?.status ?? ''),
+                            //     color: greyLightColor2, size: 100),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
