@@ -61,9 +61,12 @@ class SuccessScreen extends StatelessWidget {
                   ? CustomFilledButton(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
-                      color: whiteColor,
-                      fontColor: blueJNE,
-                      borderColor: blueJNE,
+                      // color: whiteColor,
+                      //
+                      // fontColor: blueJNE,
+                      // borderColor: blueJNE,
+                      color: blueJNE,
+                      isTransparent: true,
                       title: secondButtonTitle,
                       radius: 10,
                       onPressed: secondAction,
@@ -85,12 +88,11 @@ class SuccessScreen extends StatelessWidget {
                   ? CustomFilledButton(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
-                      color: Colors.white,
+                      // color: Colors.white,
                       isTransparent: true,
-                      borderColor: blueJNE,
-                      fontColor: AppConst.isLightTheme(context)
-                          ? blueJNE
-                          : warningColor,
+                      // borderColor: blueJNE,
+                      // fontColor: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                      color: blueJNE,
                       radius: 10,
                       title: buttonTitle?.tr,
                       onPressed: nextAction,

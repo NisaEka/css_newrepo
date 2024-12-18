@@ -1,4 +1,5 @@
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/components/transaction_items.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/components/transaction_search_field.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/components/transaction_status_button.dart';
@@ -21,8 +22,8 @@ class RiwayatKirimanScreen extends StatelessWidget {
             appBar: CustomTopBar(
               title: 'Riwayat Kiriman'.tr,
               leading: CustomBackButton(
-                onPressed: () =>
-                    Get.delete<DashboardController>().then((_) => Get.back()),
+                onPressed: () => Get.delete<DashboardController>()
+                    .then((_) => Get.offAll(const DashboardScreen())),
               ),
               action: const [
                 TransactionFilterButton(),

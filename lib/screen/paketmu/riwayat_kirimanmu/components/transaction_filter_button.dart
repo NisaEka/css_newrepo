@@ -177,8 +177,7 @@ class TransactionFilterButton extends HookWidget {
                       SliverToBoxAdapter(
                         child: OfficerDropdown(
                           label: 'Petugas Entry'.tr,
-                          readOnly: c.state.basic?.userType != "PEMILIK" &&
-                              c.state.listOfficerEntry.length == 1,
+                          readOnly: c.state.basic?.userType != "PEMILIK",
                           selectedItem: c.state.selectedPetugasEntry?.name,
                           value: c.state.selectedPetugasEntry,
                           onChanged: (value) {
@@ -197,13 +196,13 @@ class TransactionFilterButton extends HookWidget {
             isFiltered: c.state.isFiltered,
             // isApplyFilter: c.state.startDate != null || c.state.endDate != null,
             onResetFilter: () {
-              // c.resetFilter();
-              if (c.state.listOfficerEntry.length > 1) {
-                c.state.selectedPetugasEntry = null;
-                c.update();
-              }
-              c.selectDateFilter(3);
-              c.applyFilter();
+              c.resetFilter();
+              // if (c.state.listOfficerEntry.length > 1) {
+              //   c.state.selectedPetugasEntry = null;
+              //   c.update();
+              // }
+              // c.selectDateFilter(3);
+              // c.applyFilter();
               Get.back();
             },
             onApplyFilter: () {
