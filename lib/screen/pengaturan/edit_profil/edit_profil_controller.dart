@@ -142,7 +142,7 @@ class EditProfileController extends BaseController {
           address: address.text,
           origin: selectedOrigin,
           zipCode: selectedCity?.zipCode,
-          language: language == 'id' ? 'INDONESEIA' : 'ENGLISH',
+          language: language == 'id' ? 'INDONESIA' : 'ENGLISH',
         ),
       )
           .then((_) async {
