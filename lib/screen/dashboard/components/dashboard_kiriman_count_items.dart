@@ -86,12 +86,12 @@ class DashboardKirimanCountItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TransactionCard(
-                                title: "Dalam Peninjauan".tr,
-                                count: kirimanKamu.dalamPeninjauan,
+                                title: "Dalam Proses".tr,
+                                count: kirimanKamu.onProcess,
                                 subtitle:
-                                    "${double.parse((kirimanKamu.dalamPeninjauanPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
+                                    "${double.parse((kirimanKamu.onProcessPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
                                 color: redJNE,
-                                innerPadding: 2,
+                                // innerPadding: 2,
                                 isLoading: isLoadingKiriman,
                                 notificationLabel: "Masih dikamu".tr,
                                 notificationCount: transSummary?.summary
@@ -105,8 +105,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                   height: 20,
                                   width: 20,
                                   child: CircularProgressIndicator(
-                                    value: (kirimanKamu
-                                            .dalamPeninjauanPercentage
+                                    value: (kirimanKamu.onProcessPercentage
                                             .toDouble() /
                                         100),
                                     backgroundColor: Colors.grey[300],

@@ -98,7 +98,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                       color: isLoading ? greyLightColor3 : Colors.transparent,
                       // width: isLoading ? Get.width / 5 : null,
                       child: Text(
-                        data?.createdDateSearch?.toDateFormat() ??
+                        data?.createdDateSearch?.toLongDateTimeFormat() ??
                             tanggalEntry?.toDateFormat() ??
                             '-',
                         style:

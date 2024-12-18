@@ -50,6 +50,7 @@ class PantauPaketmuCountModel {
     _totalNonCodPercentage = json['totalNonCodPercentage'];
     _ongkirNonCodAmountPercentage = json['ongkirNonCodAmountPercentage'];
   }
+
   String? _status;
   num? _totalCod;
   num? _codAmount;
@@ -65,6 +66,7 @@ class PantauPaketmuCountModel {
   num? _codOngkirAmountPercentage;
   num? _totalNonCodPercentage;
   num? _ongkirNonCodAmountPercentage;
+
   PantauPaketmuCountModel copyWith({
     String? status,
     num? totalCod,
@@ -103,20 +105,35 @@ class PantauPaketmuCountModel {
         ongkirNonCodAmountPercentage:
             ongkirNonCodAmountPercentage ?? _ongkirNonCodAmountPercentage,
       );
+
   String? get status => _status;
+
   num? get totalCod => _totalCod;
+
   num? get codAmount => _codAmount;
+
   num? get ongkirCodAmount => _ongkirCodAmount;
+
   num? get totalCodOngkir => _totalCodOngkir;
+
   num? get codOngkirAmount => _codOngkirAmount;
+
   num? get totalNonCod => _totalNonCod;
+
   num? get ongkirNonCodAmount => _ongkirNonCodAmount;
+
   num? get totalCodPercentage => _totalCodPercentage;
+
   num? get codAmountPercentage => _codAmountPercentage;
+
   num? get ongkirCodAmountPercentage => _ongkirCodAmountPercentage;
+
   num? get totalCodOngkirPercentage => _totalCodOngkirPercentage;
+
   num? get codOngkirAmountPercentage => _codOngkirAmountPercentage;
+
   num? get totalNonCodPercentage => _totalNonCodPercentage;
+
   num? get ongkirNonCodAmountPercentage => _ongkirNonCodAmountPercentage;
 
   Map<String, dynamic> toJson() {

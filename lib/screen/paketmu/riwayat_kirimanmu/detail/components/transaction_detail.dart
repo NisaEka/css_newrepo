@@ -95,13 +95,10 @@ class TransactionDetail extends StatelessWidget {
                     isBold: true,
                     fontColor: blueJNE),
                 const SizedBox(height: 15),
-                CustomFormLabel(
-                  isLoading: c.state.isLoading,
-                  label: 'Account :'.tr,
-                  fontColor: blueJNE,
-                ),
                 CustomLabelText(
                     title: "account",
+                    fontColor: blueJNE,
+                    valueColor: CustomTheme().textColor(context),
                     value:
                         '${c.state.transactionModel?.account?.accountNumber ?? '-'} - '
                         '${c.state.transactionModel?.account?.accountName ?? '-'}'),

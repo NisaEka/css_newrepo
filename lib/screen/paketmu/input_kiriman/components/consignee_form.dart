@@ -75,7 +75,6 @@ class AddReceiverForm extends StatelessWidget {
                                 : AppSnackBar.error(
                                     "nomor telepon sudah tersedia".tr),
                           ),
-                      // onPressed: () => c.formKey.currentState?.validate() == true ? c.saveReceiver() : null,
                     ),
                   ],
                 ),
