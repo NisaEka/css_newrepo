@@ -107,4 +107,36 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
       );
     }
   }
+
+  @override
+  Future<BaseResponse<List<String>>> getPantauStatus() async {
+    try {
+      Response response = await network.base.get(
+        "/transaction/tracks/status",
+      );
+      AppLogger.d("status pantau : ${response.data}");
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<String>(
+                  (i) => i as String,
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      AppLogger.e("status pantau : ${e.response?.data}");
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<String>(
+                  (i) => i as String,
+                )
+                .toList()
+            : List.empty(),
+      );
+    }
+  }
 }

@@ -121,8 +121,7 @@ class PantauPaketmuFilter extends StatelessWidget {
                   hintText: 'Status Kiriman'.tr,
                   value: controller.state.selectedStatusKiriman.value,
                   onChanged: (value) {
-                    controller.state.selectedStatusKiriman.value =
-                        value as String;
+                    controller.state.selectedStatusKiriman.value = value ?? '';
                   },
                 ),
                 CustomDropDownField(

@@ -12,4 +12,6 @@ abstract class PantauPaketmuRepository {
       QueryModel param);
 
   Future<BaseResponse<PantauPaketmuDetailModel>> getPantauDetail(String awb);
+
+  Future<BaseResponse<List<String>>> getPantauStatus();
 }

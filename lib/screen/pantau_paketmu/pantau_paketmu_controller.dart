@@ -67,16 +67,21 @@ class PantauPaketmuController extends BaseController {
         });
       }
 
-      Response response = await network.base.get(
-        '/transaction/tracks/status',
-      );
+      // Response response = await network.base.get(
+      //   '/transaction/tracks/status',
+      // );
 
-      List<dynamic> statusList = response.data['data'];
-      if (statusList.every((element) => element is String)) {
-        state.listStatusKiriman.addAll(statusList.cast<String>());
-      } else {
-        AppLogger.w('Response contains non-string items.');
-      }
+      // List<dynamic> statusList = response.data['data'];
+      // if (statusList.every((element) => element is String)) {
+      //   state.listStatusKiriman.addAll(statusList.cast<String>());
+      // } else {
+      //   AppLogger.w('Response contains non-string items.');
+      // }
+
+      await pantau.getPantauStatus().then((value) {
+        state.listStatusKiriman.addAll(value.data ?? []);
+        update();
+      });
     } catch (e, i) {
       AppLogger.e('error pantau', e, i);
       AppSnackBar.error('Gagal mengambil data'.tr);
