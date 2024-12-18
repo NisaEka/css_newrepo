@@ -9,6 +9,7 @@ class PantauPaketmuState extends GetxController {
   // Reactive List for countList
   // final countList = RxList<dynamic>([]);
   List<PantauPaketmuCountModel> countList = [];
+  List<PantauPaketmuCountModel> filteredCountList = [];
 
   // Reactive TextEditingControllers
   final startDateField = TextEditingController();
@@ -32,11 +33,15 @@ class PantauPaketmuState extends GetxController {
       DateTime.now().year, DateTime.now().month, DateTime.now().day, 0);
 
   // Reactive String variables
-  final selectedStatusKiriman = Rx<String>('Total Kiriman');
-  final selectedPetugasEntry = Rxn<String>('SEMUA');
-  final selectedStatusPrint = Rx<String>('SEMUA');
-  final selectedTipeKiriman = Rx<String>('cod');
+  // final selectedStatusKiriman = Rx<String>('Total Kiriman');
+  // final selectedPetugasEntry = Rxn<String>('SEMUA');
+  // final selectedStatusPrint = Rx<String>('SEMUA');
+  // final selectedTipeKiriman = Rx<String>('cod');
 
+  String? selectedStatusKiriman;
+  String? selectedPetugasEntry;
+  String? selectedStatusPrint;
+  String? selectedTipeKiriman;
   // Reactive DateFilter
   final date = Rxn<String>(
       "${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).millisecondsSinceEpoch}-${DateTime.now().millisecondsSinceEpoch}");

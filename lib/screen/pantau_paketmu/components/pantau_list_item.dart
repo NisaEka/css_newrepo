@@ -125,7 +125,7 @@ class PantauItems extends StatelessWidget {
           onTap: () {
             if (item != null && !isLoading) {
               AppLogger.i('Card tapped.');
-              c.setSelectedStatus(index ?? 0);
+              c.setSelectedStatus(item!);
               Get.to(() => const PantauPaketmuScreen());
             }
           },

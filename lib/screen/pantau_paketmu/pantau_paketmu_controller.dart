@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -86,7 +87,7 @@ class PantauPaketmuController extends BaseController {
       AppLogger.e('error pantau', e, i);
       AppSnackBar.error('Gagal mengambil data'.tr);
     } finally {
-      state.selectedStatusKiriman.value = state.listStatusKiriman.first;
+      state.selectedStatusKiriman = state.listStatusKiriman.first;
       applyFilter();
     }
     state.isLoading = false;
@@ -98,18 +99,18 @@ class PantauPaketmuController extends BaseController {
     state.countList = [];
     update();
     var param = QueryModel(
-      between: [
-        {
-          "awbDate": [
-            state.startDate.value,
-            state.endDate.value,
-          ]
-        }
-      ],
-      petugasEntry: state.selectedPetugasEntry.value == "SEMUA"
-          ? null
-          : state.selectedPetugasEntry.value,
-    );
+        between: [
+          {
+            "awbDate": [
+              state.startDate.value,
+              state.endDate.value,
+            ]
+          }
+        ],
+        petugasEntry: state.selectedPetugasEntry == "SEMUA"
+            ? null
+            : state.selectedPetugasEntry,
+        status: state.selectedStatusKiriman);
 
     try {
       var responseCount = await pantau.getPantauCount(param);
@@ -132,9 +133,9 @@ class PantauPaketmuController extends BaseController {
       final trans = await pantau.getPantauList(QueryModel(
           search: state.searchField.text,
           between: state.transDate,
-          entity: state.listStatusKiriman[selectedStatus],
-          type: state.selectedTipeKiriman.value,
-          petugasEntry: state.selectedPetugasEntry.value));
+          entity: state.selectedStatusKiriman,
+          type: state.selectedTipeKiriman,
+          petugasEntry: state.selectedPetugasEntry));
       final isLastPage =
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
@@ -195,11 +196,11 @@ class PantauPaketmuController extends BaseController {
 
   Future<void> resetFilter({bool? isDetail = false}) async {
     state.countList.clear();
-    state.selectedPetugasEntry.value = state.basic.value?.userType == "PEMILIK"
+    state.selectedPetugasEntry = state.basic.value?.userType == "PEMILIK"
         ? null
         : state.basic.value?.name;
-    state.selectedStatusKiriman.value = "Total Kiriman";
-    state.selectedTipeKiriman.value = "cod";
+    state.selectedStatusKiriman = "Total Kiriman";
+    state.selectedTipeKiriman = "cod";
     state.tipeKiriman.value = 0;
     state.isFiltered.value = false;
     state.searchField.clear();
@@ -236,6 +237,7 @@ class PantauPaketmuController extends BaseController {
   }
 
   applyFilter({bool? isDetail = false}) async {
+    state.filteredCountList = [];
     if (state.isLoading) return;
     state.isLoading = true;
     update();
@@ -253,6 +255,14 @@ class PantauPaketmuController extends BaseController {
       state.date.printInfo(info: "state.date filter");
       state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
     }
+    state.filteredCountList.add(state.countList
+        .where(
+          (e) => e.status == state.selectedStatusKiriman,
+        )
+        .first);
+    update();
+
+    AppLogger.i("filtered status : ${state.filteredCountList.length}");
 
     state.isLoading = true;
     // state.pagingController.refresh();
@@ -263,6 +273,7 @@ class PantauPaketmuController extends BaseController {
     } else {
       state.pagingController.refresh();
     }
+
     await Future.delayed(const Duration(seconds: 20));
     state.isLoading = false;
     update();
@@ -282,9 +293,13 @@ class PantauPaketmuController extends BaseController {
     });
   }
 
-  void setSelectedStatus(int statusIndex) {
-    selectedStatus = statusIndex;
-    state.selectedStatusKiriman.value = state.listStatusKiriman[statusIndex];
+  void setSelectedStatus(PantauPaketmuCountModel item) {
+    // selectedStatus = statusIndex;
+    state.selectedStatusKiriman = state.listStatusKiriman
+        .where(
+          (status) => status == item.status,
+        )
+        .first;
     applyFilter(isDetail: true);
     update();
   }
