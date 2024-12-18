@@ -124,7 +124,9 @@ class PantauTotalKiriman extends StatelessWidget {
                           ),
                         )
                       : const SizedBox(),
-                  const SizedBox(height: 5),
+                  c.state.selectedKiriman == 0 || c.state.selectedKiriman == 1
+                      ? const SizedBox(height: 5)
+                      : const SizedBox(),
                   // ONGKIR
                   c.state.selectedKiriman == 0 || c.state.selectedKiriman == 2
                       ? Container(

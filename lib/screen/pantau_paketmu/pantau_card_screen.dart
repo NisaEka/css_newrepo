@@ -22,7 +22,8 @@ class PantauCardScreen extends StatelessWidget {
             body: RefreshIndicator(
               onRefresh: () => controller.initData(),
               child: Padding(
-                padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

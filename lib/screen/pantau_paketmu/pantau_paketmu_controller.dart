@@ -149,64 +149,6 @@ class PantauPaketmuController extends BaseController {
     update();
   }
 
-  // Future<void> getPantauDetailList(int page) async {
-  //   var param = QueryModel(
-  //     table: true,
-  //     page: page,
-  //     limit: pageSize,
-  //     between: [
-  //       {
-  //         "awbDate": [
-  //           state.startDate.value,
-  //           state.endDate.value,
-  //         ]
-  //       }
-  //     ],
-  //     entity: state.selectedStatusKiriman.value,
-  //     type: state.selectedTipeKiriman.value,
-  //     search: state.searchField.text,
-  //     petugasEntry: state.selectedPetugasEntry.value == "SEMUA"
-  //         ? null
-  //         : state.selectedPetugasEntry.value,
-  //   );
-  //
-  //   try {
-  //     Response response = await network.base.get(
-  //       '/transaction/tracks/count/details',
-  //       queryParameters: param.toJson(),
-  //     );
-  //     AppLogger.d('Pantauuuuuu ${response.data}');
-  //
-  //     var trans = BaseResponse<List<PantauPaketmuModel>>.fromJson(
-  //       response.data,
-  //       (json) => json is List<dynamic>
-  //           ? json
-  //               .map<PantauPaketmuModel>(
-  //                 (i) => PantauPaketmuModel.fromJson(i as Map<String, dynamic>),
-  //               )
-  //               .toList()
-  //           : List.empty(),
-  //     );
-  //     // return BaseResponse<List<PantauPaketmuModel>>
-  //
-  //     final isLastPage = trans.meta!.currentPage == trans.meta!.lastPage;
-  //     if (isLastPage) {
-  //       state.pagingController.appendLastPage(trans.data ?? []);
-  //       return;
-  //     } else {
-  //       final nextPageKey = page + 1;
-  //       state.pagingController.appendPage(trans.data ?? [], nextPageKey);
-  //       return;
-  //     }
-  //   } catch (e, i) {
-  //     AppLogger.e('error pantau list', e, i);
-  //     AppSnackBar.error('Gagal mengambil data pantau list');
-  //     state.pagingController.error = e;
-  //   } finally {
-  //     state.isLoading = false;
-  //   }
-  // }
-
   void selectDateFilter(int filter) {
     final today = DateTime.now();
     state.dateFilter.value = filter.toString();
@@ -339,6 +281,6 @@ class PantauPaketmuController extends BaseController {
     selectedStatus = statusIndex;
     state.selectedStatusKiriman.value = state.listStatusKiriman[statusIndex];
     applyFilter(isDetail: true);
-    update(); // Untuk memberitahu UI agar diperbarui
+    update();
   }
 }

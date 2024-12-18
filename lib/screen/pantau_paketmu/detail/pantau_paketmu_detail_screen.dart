@@ -50,7 +50,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
   Widget _mainContent(
       BuildContext context, PantauPaketmuDetailController controller) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +67,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomCodeLabel(
-                        label: controller.pantauPaketmu.awbNo,
+                        label: controller.pantauPaketmu.awbNo ?? '',
                         isLoading: false,
                       ),
                       Row(
@@ -88,7 +88,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                                 StatefulBuilder(builder: (BuildContext context,
                                     StateSetter setState) {
                                   return HubungiAkuDialog(
-                                    awb: controller.pantauPaketmu.awbNo,
+                                    awb: controller.pantauPaketmu.awbNo ?? '',
                                     allow: controller.allow ?? MenuModel(),
                                   );
                                 }),
@@ -126,8 +126,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       child: Text(
                         'Informasi Transaksi'.tr,
                         style: listTitleTextStyle.copyWith(
-                          color:
-                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                          color: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : warningColor,
                         ),
                       ),
                     ),
@@ -164,7 +165,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Tanggal Transaksi",
-                    controller.pantauPaketmu.createDate.toDateTimeFormat(),
+                    controller.pantauPaketmu.createDate?.toDateTimeFormat(),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
@@ -194,8 +195,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       child: Text(
                         'Detail Kiriman'.tr,
                         style: listTitleTextStyle.copyWith(
-                          color:
-                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                          color: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : warningColor,
                         ),
                       ),
                     ),
@@ -262,7 +264,8 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                       context,
                       "Nominal COD",
-                      'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
+                      'Rp. ${controller.pantauPaketmu.codAmount?.toString() ?? '0'}',
+                      // 'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
                       controller.isLoading,
                       style: listTitleTextStyle.copyWith(
                           color: AppConst.isLightTheme(context)
@@ -275,8 +278,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       'Rp. ${controller.pantauPaketmu.awbInsuranceValue?.toCurrency().toString() ?? '0'}',
                       controller.isLoading,
                       style: listTitleTextStyle.copyWith(
-                        color:
-                            AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
+                        color: AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : Colors.lightBlueAccent,
                       )),
                   const SizedBox(height: 6),
                   _textRow(
@@ -304,8 +308,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       child: Text(
                         'Informasi Pengantaran'.tr,
                         style: listTitleTextStyle.copyWith(
-                          color:
-                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                          color: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : warningColor,
                         ),
                       ),
                     ),
@@ -410,8 +415,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       child: Text(
                         'Informasi Tiket Laporan'.tr,
                         style: listTitleTextStyle.copyWith(
-                          color:
-                              AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                          color: AppConst.isLightTheme(context)
+                              ? blueJNE
+                              : warningColor,
                         ),
                       ),
                     ),
