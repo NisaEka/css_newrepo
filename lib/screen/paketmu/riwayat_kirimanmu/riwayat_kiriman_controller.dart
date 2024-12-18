@@ -80,13 +80,6 @@ class RiwayatKirimanController extends BaseController {
         update();
       });
 
-      // if (state.basic?.userType == "PEMILIK") {
-      await transaction.getTransOfficer().then((value) {
-        state.listOfficerEntry.addAll(value.data ?? []);
-        update();
-      });
-      // }
-
       update();
     } catch (e) {
       AppLogger.e('error initData riwayat kiriman $e');

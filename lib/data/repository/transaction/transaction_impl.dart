@@ -277,12 +277,13 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<BaseResponse<List<PetugasModel>>> getTransOfficer() async {
+  Future<BaseResponse<List<PetugasModel>>> getTransOfficer(
+      QueryModel param) async {
     // UserModel user = UserModel.fromJson(
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
 
-    QueryModel params = QueryModel(table: true, limit: 0);
+    QueryModel params = param.copyWith(table: true, limit: 0);
     try {
       Response response = await network.base.get(
         "/transaction/officers",
