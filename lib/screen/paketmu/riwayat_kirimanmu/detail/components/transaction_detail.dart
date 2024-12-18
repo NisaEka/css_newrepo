@@ -4,7 +4,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
-import 'package:css_mobile/widgets/forms/customlabel.dart';
+// import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:css_mobile/widgets/items/text_row_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -100,17 +100,18 @@ class TransactionDetail extends StatelessWidget {
                   label: 'Account :'.tr,
                   fontColor: blueJNE,
                 ),
-                CustomLabelText(
-                    title: "account",
-                    value:
-                        '${c.state.transactionModel?.account?.accountNumber ?? '-'} - '
-                        '${c.state.transactionModel?.account?.accountName ?? '-'}'),
+                // CustomLabelText(
+                //     title: "Account".tr,
+                //     value:
+                //         '${c.state.transactionModel?.account?.accountNumber ?? '-'} - '
+                //         '${c.state.transactionModel?.account?.accountName ?? '-'}'),
                 CustomFormLabel(
                     isLoading: c.state.isLoading,
                     label:
                         '${c.state.transactionModel?.account?.accountNumber ?? '-'} - '
                         '${c.state.transactionModel?.account?.accountName ?? '-'}',
                     fontColor: greyDarkColor2),
+                const SizedBox(height: 10),
                 CustomFormLabel(
                     isLoading: c.state.isLoading,
                     label: 'Petugas Entry :'.tr,
@@ -128,6 +129,7 @@ class TransactionDetail extends StatelessWidget {
                     isLoading: c.state.isLoading,
                     label: c.state.transactionModel?.shipperName ?? '-',
                     fontColor: greyDarkColor2),
+                const SizedBox(height: 10),
                 CustomFormLabel(
                     isLoading: c.state.isLoading,
                     label: 'Kota Pengiriman :'.tr,
