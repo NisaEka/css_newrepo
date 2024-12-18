@@ -19,6 +19,7 @@ class TransactionCard extends StatelessWidget {
   final double? countFontSize;
   final String? notificationLabel;
   final int? notificationCount;
+  final Color? notificationColor;
 
   const TransactionCard({
     Key? key,
@@ -36,6 +37,7 @@ class TransactionCard extends StatelessWidget {
     this.countFontSize,
     this.notificationLabel,
     this.notificationCount,
+    this.notificationColor,
   }) : super(key: key);
 
   @override
@@ -120,6 +122,7 @@ class TransactionCard extends StatelessWidget {
             ? Shimmer(
                 isLoading: isLoading,
                 child: Container(
+                  width: Get.width * 0.28,
                   margin: const EdgeInsets.only(top: 5),
                   decoration: BoxDecoration(
                     color:
@@ -140,11 +143,14 @@ class TransactionCard extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 3),
-                              // width: Get.width * 0.25,
+                              width: Get.width * 0.21,
                               child: Row(
                                 children: [
-                                  const Icon(Icons.circle,
-                                      size: 8, color: Colors.orange),
+                                  Icon(
+                                    Icons.circle,
+                                    size: 8,
+                                    color: notificationColor,
+                                  ),
                                   const SizedBox(width: 10),
                                   Text(
                                     notificationLabel ?? '',

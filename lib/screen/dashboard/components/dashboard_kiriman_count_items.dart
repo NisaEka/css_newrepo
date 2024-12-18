@@ -67,21 +67,30 @@ class DashboardKirimanCountItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TransactionCard(
-                              title: "Jumlah Transaksi".tr,
-                              count: kirimanKamu.totalPantau,
-                              subtitle: '${"7 Hari Terakhir".tr}\n',
-                              color: blueJNE,
-                              icon: Icons.show_chart,
-                              statusColor: whiteColor,
-                              suffixChart: SizedBox(
-                                  width: 45,
-                                  height: 20,
-                                  child: kirimanKamu.pantauChart.isNotEmpty
-                                      ? LineChartItem(kirimanKamu.pantauChart
-                                          .map((e) => e.toDouble())
-                                          .toList())
-                                      : const CircularLoading())),
-                          // Dalam Perjalanan
+                            title: "Jumlah Transaksi".tr,
+                            count: kirimanKamu.totalPantau,
+                            subtitle: '${"7 Hari Terakhir".tr}\n',
+                            color: blueJNE,
+                            icon: Icons.show_chart,
+                            statusColor: whiteColor,
+                            suffixChart: SizedBox(
+                              width: 45,
+                              height: 20,
+                              child: kirimanKamu.pantauChart.isNotEmpty
+                                  ? LineChartItem(kirimanKamu.pantauChart
+                                      .map((e) => e.toDouble())
+                                      .toList())
+                                  : const CircularLoading(),
+                            ),
+                            notificationLabel: "Masih dikamu".tr,
+                            notificationCount: transSummary?.summary
+                                    ?.where((e) => e.status == "Masih di Kamu")
+                                    .first
+                                    .total
+                                    ?.toInt() ??
+                                0,
+                            notificationColor: warningColor,
+                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -91,16 +100,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                 subtitle:
                                     "${double.parse((kirimanKamu.onProcessPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
                                 color: redJNE,
-                                // innerPadding: 2,
                                 isLoading: isLoadingKiriman,
-                                notificationLabel: "Masih dikamu".tr,
-                                notificationCount: transSummary?.summary
-                                        ?.where(
-                                            (e) => e.status == "Masih di Kamu")
-                                        .first
-                                        .total
-                                        ?.toInt() ??
-                                    0,
                                 prefixChart: SizedBox(
                                   height: 20,
                                   width: 20,
@@ -113,20 +113,18 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                     strokeWidth: 4,
                                   ),
                                 ),
+                                notificationLabel: "Dibatalkan".tr,
+                                notificationCount: transSummary?.summary
+                                        ?.where((e) => e.status == "Dibatalkan")
+                                        .first
+                                        .total
+                                        ?.toInt() ??
+                                    0,
+                                notificationColor: errorColor,
                               ),
-                              // OngoingTransactionCard(
-                              //   title: "Dalam Peninjauan".tr,
-                              //   percentage: (kirimanKamu.dalamPeninjauanPercentage.toDouble() / 100),
-                              //   count: kirimanKamu.dalamPeninjauan,
-                              //   subtitle:
-                              //       "${double.parse((kirimanKamu.dalamPeninjauanPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
-                              //   notificationLabel: "Masih dikamu".tr,
-                              //   notificationCount: transSummary?.summary?.where((e) => e.status == "Masih di Kamu").first.total?.toInt() ?? 0,
-                              // ),
                               const SizedBox(height: 16),
                             ],
                           ),
-                          // Transaksi Terkini
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -188,7 +186,6 @@ class DashboardKirimanCountItem extends StatelessWidget {
               ],
             ),
           ),
-          // Real Time
           GestureDetector(
             onTap: onRefresh,
             child: Container(
@@ -212,8 +209,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                         builder: (context, snapshot) {
                           int currentSecond = snapshot.data ?? 0;
                           return AnimatedSwitcher(
-                            duration: const Duration(
-                                milliseconds: 300), // Durasi transisi
+                            duration: const Duration(milliseconds: 300),
                             transitionBuilder:
                                 (Widget child, Animation<double> animation) {
                               final slideAnimation = Tween<Offset>(
