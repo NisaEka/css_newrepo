@@ -378,8 +378,8 @@ class DashboardController extends BaseController {
             state.kirimanKamu.ongkirNonCodAmount = item.ongkirNonCodAmount;
           }
 
-          if (item.status == 'Dalam Peninjauan') {
-            state.kirimanKamu.dalamPeninjauan =
+          if (item.status == 'Dalam Proses') {
+            state.kirimanKamu.onProcess =
                 item.totalCod + item.totalCodOngkir + item.totalNonCod;
           }
 

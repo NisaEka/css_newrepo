@@ -521,7 +521,7 @@ class TransactionController extends BaseController {
           receiverAddr: state.receiver.address,
           receiverZip: state.receiver.zipCode,
           receiverRegion: state.receiver.region,
-          receiverCity: state.receiver.country,
+          receiverCity: state.receiver.city,
           receiverDistrict: state.receiver.district,
           receiverSubdistrict: state.receiver.subDistrict,
           receiverCountry: state.receiver.country,

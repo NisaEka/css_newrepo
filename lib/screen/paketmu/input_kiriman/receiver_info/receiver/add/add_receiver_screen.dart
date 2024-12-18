@@ -18,7 +18,7 @@ class AddReceiverScreen extends StatelessWidget {
             children: [
               Scaffold(
                 appBar: ContactAppbar(title: 'Tambah Data Penerima'.tr),
-                body: const ConsigneeForm(),
+                body: const AddReceiverForm(),
               ),
               controller.isLoading ? const LoadingDialog() : const SizedBox()
             ],

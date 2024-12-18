@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,20 @@ class AddReceiverController extends BaseController {
   List<Destination> destinationList = [];
 
   Destination? selectedDestination;
+
+  Future<bool> isSaveReceiver() async {
+    var receivers = await master.getReceivers(QueryModel(where: [
+      {"receiverPhone": receiverPhone}
+    ]));
+
+    var receiver = receivers.data;
+    if ((receiver?.isEmpty ?? false) &&
+        (formKey.currentState?.validate() == true)) {
+      return true;
+    }
+
+    return false;
+  }
 
   Future<void> saveReceiver() async {
     isLoading = true;
