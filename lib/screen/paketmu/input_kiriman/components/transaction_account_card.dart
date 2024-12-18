@@ -6,6 +6,8 @@ import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../const/app_const.dart';
+
 class TransactionAccountCard extends StatelessWidget {
   final Account account;
   final VoidCallback onTap;
@@ -25,9 +27,11 @@ class TransactionAccountCard extends StatelessWidget {
           Container(
             // alignment: Alignment.topRight,
             padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(
-              color: redJNE,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12)),
+            decoration: BoxDecoration(
+              color: AppConst.isLightTheme(context)
+                  ? redJNE
+                  : warningColor,
+              borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(12)),
             ),
             child: Text(
               account.accountService ?? '',

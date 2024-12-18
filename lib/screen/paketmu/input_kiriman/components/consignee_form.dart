@@ -68,6 +68,7 @@ class ConsigneeForm extends StatelessWidget {
                           ? blueJNE
                           : greyColor,
                       title: 'Simpan Data Penerima'.tr,
+                      suffixIcon: Icons.save_alt_rounded,
                       onPressed: () =>
                           c.formKey.currentState?.validate() == true
                               ? c.saveReceiver()

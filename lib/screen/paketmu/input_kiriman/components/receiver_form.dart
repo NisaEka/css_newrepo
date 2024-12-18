@@ -126,6 +126,7 @@ class ReceiverForm extends StatelessWidget {
                                 ? CustomFilledButton(
                                     color: whiteColor,
                                     title: 'Simpan Data Penerima'.tr,
+                                    suffixIcon: Icons.save_alt_rounded,
                                     borderColor: (c.state.formKey.currentState
                                                     ?.validate() ==
                                                 true ||
@@ -154,6 +155,7 @@ class ReceiverForm extends StatelessWidget {
                                   ? blueJNE
                                   : greyColor,
                               title: "Selanjutnya".tr,
+                              suffixIcon: Icons.arrow_circle_right_rounded,
                               onPressed: () =>
                                   c.state.formKey.currentState?.validate() ==
                                               true ||
