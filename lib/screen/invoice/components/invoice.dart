@@ -943,7 +943,7 @@ class Invoice {
         2: const pw.FlexColumnWidth(80),
       },
       headerStyle: const pw.TextStyle(
-        color: PdfColors.black,
+        color: PdfColors.white,
         fontSize: 9,
       ),
       cellStyle: const pw.TextStyle(
