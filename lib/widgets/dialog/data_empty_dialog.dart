@@ -24,13 +24,13 @@ class DataEmpty extends StatelessWidget {
           children: [
             Image.asset(
               ImageConstant.dataEmpty,
-              width: Get.width / 2,
+              width: Get.width / 4,
             ),
             Text(
               text.tr,
               textAlign: TextAlign.center,
-              style: appTitleTextStyle.copyWith(
-                  fontSize: 30,
+              style: subTitleTextStyle.copyWith(
+                  fontSize: 15,
                   color: Theme.of(context).brightness == Brightness.light
                       ? blueJNE
                       : whiteColor),

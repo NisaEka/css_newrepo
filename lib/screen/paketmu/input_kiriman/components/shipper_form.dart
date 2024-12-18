@@ -160,6 +160,7 @@ class ShipperForm extends StatelessWidget {
                                         ? blueJNE
                                         : greyColor,
                                     title: 'Simpan Data Dropshipper'.tr,
+                                    suffixIcon: Icons.save_alt_rounded,
                                     fontColor: c.state.isValidate
                                         ? blueJNE
                                         : greyColor,
@@ -171,6 +172,7 @@ class ShipperForm extends StatelessWidget {
                             CustomFilledButton(
                               color: c.state.isValidate ? blueJNE : greyColor,
                               title: "Selanjutnya".tr,
+                              suffixIcon: Icons.arrow_circle_right_rounded,
                               // radius: 20,
                               onPressed: () {
                                 c.state.isValidate ? c.nextStep() : null;
