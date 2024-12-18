@@ -49,6 +49,10 @@ class ImageConstant {
 
   static const String dataEmpty = "assets/images/data_empty.png";
 
+  static const String logoJNESvg = "assets/images/logo-jne.svg";
+  static const String redRectangle = "assets/images/red-rectangle.svg";
+  static const String footerInvoice = "assets/images/footer-invoice.svg";
+
   static const List dashboardCountIcons = [
     jmlTransaksi,
     masihDikamu,

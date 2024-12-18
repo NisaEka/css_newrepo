@@ -2,14 +2,18 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/invoice/cnote/invoice_cnote_screen.dart';
+import 'package:css_mobile/screen/invoice/components/invoice.dart';
 import 'package:css_mobile/screen/invoice/detail/invoice_detail_controller.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
 
 class InvoiceDetailScreen extends StatelessWidget {
   const InvoiceDetailScreen({super.key});
@@ -25,6 +29,56 @@ class InvoiceDetailScreen extends StatelessWidget {
             color: Theme.of(context).colorScheme.outline,
             onRefresh: () => Future.sync(() => controller.refreshInvoice()),
             child: _detailBody(context, controller),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              AppLogger.i('Print button clicked!');
+              // Generate the invoice PDF
+              final pdf = await generateInvoice(
+                  PdfPageFormat.a4,
+                  Invoice(
+                      invoiceNumber:
+                          controller.invoiceDetailModel?.invoiceNumber ?? '-',
+                      invoiceDate:
+                          controller.invoiceDetailModel?.invoiceDate ?? '-',
+                      top: controller.invoiceDetailModel?.top ?? '-',
+                      dueDate: controller.invoiceDetailModel?.dueDate ?? '-',
+                      period: controller.invoiceDetailModel?.period ?? '-',
+                      customerId:
+                          controller.invoiceDetailModel?.customerId ?? '-',
+                      customerName:
+                          controller.invoiceDetailModel?.customerName ?? '-',
+                      address: controller.invoiceDetailModel?.address ?? '-',
+                      phone: controller.invoiceDetailModel?.phone ?? '-',
+                      email: controller.invoiceDetailModel?.email ?? '-',
+                      zipCode: controller.invoiceDetailModel?.zipCode ?? '-',
+                      taxNumber:
+                          controller.invoiceDetailModel?.taxNumber ?? '-',
+                      npwpId: controller.invoiceDetailModel?.npwpId ?? '-',
+                      npwpName: controller.invoiceDetailModel?.npwpName ?? '-',
+                      npwpAddress:
+                          controller.invoiceDetailModel?.npwpAddress ?? '-',
+                      description:
+                          controller.invoiceDetailModel?.description ?? '-',
+                      grossTotal:
+                          controller.invoiceDetailModel?.grossTotal ?? 0,
+                      discount: controller.invoiceDetailModel?.discount ?? 0,
+                      totalAfterDiscount:
+                          controller.invoiceDetailModel?.totalAfterDiscount ??
+                              0,
+                      vat: controller.invoiceDetailModel?.vat ?? 0,
+                      insurance: controller.invoiceDetailModel?.insurance ?? 0,
+                      stamp: controller.invoiceDetailModel?.stamp ?? 0,
+                      totalPaid:
+                          controller.invoiceDetailModel?.totalPaid ?? 0));
+
+              // Preview or share the PDF using the Printing package
+              await Printing.layoutPdf(
+                  onLayout: (PdfPageFormat format) async => pdf);
+            },
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            child:
+                const Icon(Icons.picture_as_pdf_rounded, color: Colors.white),
           ),
         );
       },

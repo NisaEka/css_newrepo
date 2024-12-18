@@ -60,7 +60,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
   @override
   Future<BaseResponse> putProfileCCRF(GeneralInfo data) async {
     try {
-      Response response = await network.base.put(
+      Response response = await network.base.patch(
         "/me/ccrf",
         data: data,
       );

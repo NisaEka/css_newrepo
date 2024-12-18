@@ -235,6 +235,7 @@ class AuthRepositoryImpl extends AuthRepository {
         data: {
           "refreshToken": refreshToken,
         },
+        options: Options(extra: {'skipAuth': true}),
       );
       // .then((value) async => await network.base.patch(
       //       '/auth/device-infos/update',
