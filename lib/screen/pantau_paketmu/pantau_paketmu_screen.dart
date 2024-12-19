@@ -3,7 +3,7 @@ import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_list_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/pantau_paketmu/components/pantau_paketmu_filter.dart';
+import 'package:css_mobile/screen/pantau_paketmu/components/pantau_paketmu_list_filter.dart';
 import 'package:css_mobile/screen/pantau_paketmu/detail/pantau_paketmu_detail_screen.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/util/input_formatter/custom_formatter.dart';
@@ -38,7 +38,7 @@ class PantauPaketmuScreen extends StatelessWidget {
                   Get.delete<DashboardController>().then((_) => Get.back()),
             ),
             action: const [
-              PantauPaketmuFilter(),
+              PantauPaketmuListFilter(),
             ],
           ),
           body: _bodyContent(controller, context),

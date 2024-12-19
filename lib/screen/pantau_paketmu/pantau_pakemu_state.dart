@@ -1,5 +1,6 @@
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_list_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,7 +40,7 @@ class PantauPaketmuState extends GetxController {
   // final selectedTipeKiriman = Rx<String>('cod');
 
   String? selectedStatusKiriman;
-  String? selectedPetugasEntry;
+  PetugasModel? selectedPetugasEntry;
   String? selectedStatusPrint;
   String? selectedTipeKiriman;
   // Reactive DateFilter
