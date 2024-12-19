@@ -443,16 +443,16 @@ class TransactionController extends BaseController {
                 color: warningColor,
                 size: 150,
               ),
-              buttonTitle: "Kembali ke Beranda".tr,
-              nextAction: () => Get.delete<TransactionController>().then(
+              thirdButtonTitle: "Kembali ke Beranda".tr,
+              onThirdAction: () => Get.delete<TransactionController>().then(
                 (_) => Get.offAll(const DashboardScreen()),
               ),
-              secondButtonTitle: "Lihat Draft".tr,
-              secondAction: () => Get.delete<DraftTransaksiController>()
+              firstButtonTitle: "Lihat Draft".tr,
+              onFirstAction: () => Get.delete<DraftTransaksiController>()
                   .then((_) => Get.delete<TransactionController>())
                   .then((_) => Get.offAll(const DraftTransaksiScreen())),
-              thirdButtonTitle: "Buat Transaksi Lainnya".tr,
-              thirdAction: () => Get.delete<TransactionController>().then(
+              secondButtonTitle: "Buat Transaksi Lainnya".tr,
+              onSecondAction: () => Get.delete<TransactionController>().then(
                 (_) =>
                     Get.offAll(const InformasiPengirimScreen(), arguments: {}),
               ),
@@ -537,16 +537,16 @@ class TransactionController extends BaseController {
           Get.to(
             SuccessScreen(
               message: 'Update Berhasil'.tr,
-              buttonTitle: "Kembali ke Beranda".tr,
-              nextAction: () => Get.offAll(
+              thirdButtonTitle: "Kembali ke Beranda".tr,
+              onThirdAction: () => Get.offAll(
                 const DashboardScreen(),
                 transition: Transition.rightToLeft,
                 arguments: {
                   'awb': v.data?.awb,
                 },
               ),
-              thirdButtonTitle: "Lihat Transaksi",
-              thirdAction: () => Get.offAll(const RiwayatKirimanScreen(),
+              secondButtonTitle: "Lihat Transaksi",
+              onSecondAction: () => Get.offAll(const RiwayatKirimanScreen(),
                   arguments: {"isLastScreen": true}),
             ),
           );
@@ -701,16 +701,16 @@ class TransactionController extends BaseController {
           Get.to(
             SuccessScreen(
               message: "${'Transaksi Berhasil'.tr}\n${v.data?.awb}",
-              buttonTitle: "Kembali ke Beranda".tr,
-              nextAction: () => Get.offAll(
+              thirdButtonTitle: "Kembali ke Beranda".tr,
+              onThirdAction: () => Get.offAll(
                 const DashboardScreen(),
                 transition: Transition.rightToLeft,
                 arguments: {
                   'awb': v.data?.awb,
                 },
               ),
-              thirdButtonTitle: "Buat Transaksi Lainnya".tr,
-              thirdAction: () =>
+              secondButtonTitle: "Buat Transaksi Lainnya".tr,
+              onSecondAction: () =>
                   Get.offAll(const InformasiPengirimScreen(), arguments: {}),
             ),
           );

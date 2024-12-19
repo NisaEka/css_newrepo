@@ -42,7 +42,7 @@ abstract class TransactionRepository {
   Future<BaseResponse<TransactionModel>> putTransaction(
       TransactionModel data, String awb);
 
-  Future<BaseResponse<List<PetugasModel>>> getTransOfficer();
+  Future<BaseResponse<List<PetugasModel>>> getTransOfficer(QueryModel param);
 
   Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(
       DataTransactionOngkirModel data);

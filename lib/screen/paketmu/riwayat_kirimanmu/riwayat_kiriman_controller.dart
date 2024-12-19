@@ -30,9 +30,8 @@ class RiwayatKirimanController extends BaseController {
 
   void cekAllowance() {
     if (state.basic?.userType != "PEMILIK") {
-      final petugasEntry = state.listOfficerEntry
-          .firstWhere((element) => element.id == state.basic?.id);
-      state.selectedPetugasEntry = petugasEntry;
+      // final petugasEntry = state.listOfficerEntry.firstWhere((element) => element.id == state.basic?.id);
+      // state.selectedPetugasEntry = petugasEntry;
       // state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
     }
     update();
@@ -79,13 +78,6 @@ class RiwayatKirimanController extends BaseController {
         state.listStatusKiriman.addAll(value.data ?? []);
         update();
       });
-
-      // if (state.basic?.userType == "PEMILIK") {
-      await transaction.getTransOfficer().then((value) {
-        state.listOfficerEntry.addAll(value.data ?? []);
-        update();
-      });
-      // }
 
       update();
     } catch (e) {
@@ -143,22 +135,25 @@ class RiwayatKirimanController extends BaseController {
           .subtract(const Duration(days: 30));
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       state.startDateField.text =
-          state.startDate.toString().toLongDateTimeFormat();
-      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
+          state.startDate.toString().toShortDateTimeFormat();
+      state.endDateField.text =
+          state.endDate.toString().toShortDateTimeFormat();
     } else if (filter == 2) {
       state.startDate = DateTime.now()
           .copyWith(hour: 0, minute: 0)
           .subtract(const Duration(days: 7));
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       state.startDateField.text =
-          state.startDate.toString().toLongDateTimeFormat();
-      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
+          state.startDate.toString().toShortDateTimeFormat();
+      state.endDateField.text =
+          state.endDate.toString().toShortDateTimeFormat();
     } else if (filter == 3) {
       state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       state.startDateField.text =
-          state.startDate.toString().toLongDateTimeFormat();
-      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
+          state.startDate.toString().toShortDateTimeFormat();
+      state.endDateField.text =
+          state.endDate.toString().toShortDateTimeFormat();
     }
 
     update();
@@ -206,21 +201,23 @@ class RiwayatKirimanController extends BaseController {
   }
 
   void resetFilter() {
-    state.startDate = null;
-    state.endDate = null;
-    state.startDateField.clear();
-    state.endDateField.clear();
-    // if (state.basic?.userType == "PEMILIK") {
+    // state.startDate = DateTime.now().subtract(Duration(days: 7));
+    // state.endDate = DateTime.now();
+    // state.startDateField.clear();
+    // state.endDateField.clear();
+    // // if (state.basic?.userType == "PEMILIK") {
+    selectDateFilter(3);
     state.selectedPetugasEntry = null;
-    // }
     state.selectedStatusKiriman = null;
     // state.isFiltered = false;
     state.searchField.clear();
-    state.transDate = [];
-    state.dateFilter = '0';
+    // state.transDate = [];
+    // state.dateFilter = '0';
     update();
-    state.pagingController.refresh();
-    transactionCount();
+    applyFilter();
+
+    // state.pagingController.refresh();
+    // transactionCount();
   }
 
   void selectAll(bool value) {

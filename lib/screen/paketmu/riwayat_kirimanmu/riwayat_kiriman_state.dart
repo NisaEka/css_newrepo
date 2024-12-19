@@ -33,7 +33,6 @@ class RiwayatKirimanState {
   bool isSelectAll = false;
 
   List<String> listStatusKiriman = [];
-  List<PetugasModel> listOfficerEntry = [];
   List<TransactionModel> selectedTransaction = [];
 
   UserModel? basic;
