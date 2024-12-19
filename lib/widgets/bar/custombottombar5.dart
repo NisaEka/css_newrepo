@@ -58,7 +58,9 @@ class BottomBar5 extends StatelessWidget {
                             ? AppConst.isLightTheme(context)
                                 ? redJNE
                                 : whiteColor
-                            : whiteColor,
+                            : AppConst.isLightTheme(context)
+                                ? whiteColor
+                                : warningLightColor2,
                       ),
                       isSelected: menu == 0,
                       onTap: () {
@@ -103,7 +105,9 @@ class BottomBar5 extends StatelessWidget {
                             ? AppConst.isLightTheme(context)
                                 ? redJNE
                                 : whiteColor
-                            : whiteColor,
+                            : AppConst.isLightTheme(context)
+                                ? whiteColor
+                                : warningLightColor2,
                         size: 35,
                       ),
                       isSelected: menu == 2,
