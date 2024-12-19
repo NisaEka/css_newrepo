@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -31,7 +32,7 @@ class RiwayatKirimanController extends BaseController {
   void cekAllowance() {
     if (state.basic?.userType != "PEMILIK") {
       // final petugasEntry = state.listOfficerEntry.firstWhere((element) => element.id == state.basic?.id);
-      // state.selectedPetugasEntry = petugasEntry;
+      state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
       // state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
     }
     update();
