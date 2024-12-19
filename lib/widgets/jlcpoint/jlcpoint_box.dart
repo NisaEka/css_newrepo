@@ -26,17 +26,17 @@ class JlcPointBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).brightness == Brightness.light
             ? whiteColor
-            : greyColor,
+            : greyDarkColor1,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
             color: Theme.of(context).brightness == Brightness.light
                 ? greyDarkColor1
                 : greyLightColor1),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: blueJNE,
+            color: primaryColor(context),
             spreadRadius: 1,
-            offset: Offset(3, 3),
+            offset: const Offset(3, 3),
           ),
         ],
       ),
@@ -47,10 +47,14 @@ class JlcPointBox extends StatelessWidget {
           Image.asset(ImageConstant.logoJLC, height: 28, width: 60),
           Column(
             children: [
-              Text("Total Transaksi".tr, style: subformLabelTextStyle),
+              Text("Total Transaksi".tr,
+                  style: subformLabelTextStyle.copyWith(
+                    color: textColor(context),
+                  )),
               Text(
                 "Rp. ${totalTransaksi.toInt().toCurrency()}",
-                style: formLabelTextStyle.copyWith(color: blueJNE),
+                style:
+                    formLabelTextStyle.copyWith(color: primaryColor(context)),
               ),
             ],
           ),
@@ -58,7 +62,10 @@ class JlcPointBox extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Poin JLC".tr, style: subformLabelTextStyle),
+              Text("Poin JLC".tr,
+                  style: subformLabelTextStyle.copyWith(
+                    color: textColor(context),
+                  )),
               Text(
                 jlcPoint,
                 style: formLabelTextStyle.copyWith(color: Colors.green),
