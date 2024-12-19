@@ -26,6 +26,12 @@ class RequestPickupModel {
   String _status = "";
   String get status => _status;
 
+  num _qty = 0;
+  num get qty => _qty;
+
+  num _weight = 0;
+  num get weight => _weight;
+
   RequestPickupModel.fromJson(dynamic json) {
     _awb = json["awb"];
     _petugasEntry = json["petugasEntry"] ?? "";
@@ -36,5 +42,7 @@ class RequestPickupModel {
     _apiType = json["apiType"];
     _serviceCode = json["serviceCode"];
     _status = json["status"];
+    _qty = json["qty"];
+    _weight = json["weight"];
   }
 }

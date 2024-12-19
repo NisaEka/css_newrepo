@@ -60,7 +60,7 @@ class RequestPickupScreen extends StatelessWidget {
       BuildContext context, RequestPickupController controller) {
     if (controller.state.checkMode) {
       return Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -102,9 +102,9 @@ class RequestPickupScreen extends StatelessWidget {
 
   Widget _requestPickupBody(
       BuildContext context, RequestPickupController controller) {
-    if (controller.state.showLoadingIndicator) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    // if (controller.state.showLoadingIndicator) {
+    //   return const Center(child: CircularProgressIndicator());
+    // }
 
     if (controller.state.showEmptyContent) {
       return const Center(child: DataEmpty());
@@ -158,104 +158,138 @@ class RequestPickupScreen extends StatelessWidget {
 
   Widget _mainContent(
       BuildContext context, RequestPickupController controller) {
-    return Column(
-      children: [
-        // _buttonFilters(context, controller),
-        _checkAllItemBox(context, controller),
-        CustomSearchField(
-          controller: controller.state.searchField,
-          hintText: 'Cari'.tr,
-          inputFormatters: [
-            UpperCaseTextFormatter(),
-          ],
-          prefixIcon: SvgPicture.asset(
-            IconsConstant.search,
-            color: Theme.of(context).brightness == Brightness.light
-                ? whiteColor
-                : blueJNE,
-          ),
-          onChanged: (value) {
-            controller.onSearchChanged(value);
-          },
-          onClear: () {
-            controller.state.searchField.clear();
-            controller.state.pagingController.refresh();
-          },
-          margin: const EdgeInsets.only(left: 30, right: 30, top: 16),
-        ),
-        const RequestPickupStatusButton(),
-        Expanded(
-            child: RefreshIndicator(
-          onRefresh: () =>
-              Future.sync(() => controller.state.pagingController.refresh()),
-          child: PagedListView<int, RequestPickupModel>(
-            pagingController: controller.state.pagingController,
-            builderDelegate: PagedChildBuilderDelegate<RequestPickupModel>(
-              transitionDuration: const Duration(milliseconds: 500),
-              itemBuilder: (context, item, index) {
-                return RequestPickupItem(
-                  data: item,
-                  onTap: (String awb) {
-                    if (controller.state.checkMode) {
-                      if (item.status !=
-                          Constant.statusAlreadyRequestPickedUp) {
-                        controller.selectItem(awb);
-                      }
-                    } else {
-                      Get.to(
-                        const RequestPickupDetailScreen(),
-                        arguments: {"awb": item.awb},
-                      );
-                    }
-                  },
-                  onLongTap: () {
-                    controller.setCheckMode(true);
-                  },
-                  checkMode: controller.state.checkMode,
-                  checked: controller.isItemChecked(item.awb),
-                );
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
+            CustomSearchField(
+              controller: controller.state.searchField,
+              hintText: 'Cari'.tr,
+              inputFormatters: [
+                UpperCaseTextFormatter(),
+              ],
+              prefixIcon: SvgPicture.asset(
+                IconsConstant.search,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? whiteColor
+                    : blueJNE,
+              ),
+              onChanged: (value) {
+                controller.onSearchChanged(value);
               },
-              noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
-              firstPageErrorIndicatorBuilder: (context) {
-                return Center(
-                    child: Column(
-                  children: [
-                    Text("Terjadi kesalahan ketika mengambil data".tr),
-                    const Padding(padding: EdgeInsets.only(top: 16)),
-                    FilledButton(
-                      onPressed: () => controller.requireRetry(),
-                      child: const Text("Muat ulang"),
-                    )
-                  ],
-                ));
+              onClear: () {
+                controller.state.searchField.clear();
+                controller.state.pagingController.refresh();
               },
+              margin: const EdgeInsets.only(top: 30, bottom: 0),
             ),
-          ),
-        ))
-      ],
-    );
+            const RequestPickupStatusButton(),
+            _checkAllItemBox(context, controller),
+            if (!controller.state.checkMode)
+              const SizedBox(
+                height: 20,
+              ),
+            Expanded(
+                child: RefreshIndicator(
+              onRefresh: () => Future.sync(
+                  () => controller.state.pagingController.refresh()),
+              child: PagedListView.separated(
+                pagingController: controller.state.pagingController,
+                builderDelegate: PagedChildBuilderDelegate<RequestPickupModel>(
+                  transitionDuration: const Duration(milliseconds: 500),
+                  itemBuilder: (context, item, index) {
+                    return RequestPickupItem(
+                      data: item,
+                      onTap: (String awb) {
+                        if (controller.state.checkMode) {
+                          if (item.status !=
+                              Constant.statusAlreadyRequestPickedUp) {
+                            controller.selectItem(awb);
+                          }
+                        } else {
+                          Get.to(
+                            const RequestPickupDetailScreen(),
+                            arguments: {"awb": item.awb},
+                          );
+                        }
+                      },
+                      onLongTap: () {
+                        controller.setCheckMode(true);
+                      },
+                      checkMode: controller.state.checkMode,
+                      checked: controller.isItemChecked(item.awb),
+                    );
+                  },
+                  firstPageProgressIndicatorBuilder: (context) => Column(
+                    children: List.generate(
+                      10,
+                      (index) => RequestPickupItem(
+                        isLoading: true,
+                        checked: false,
+                        data: null,
+                        onLongTap: () {},
+                        checkMode: false,
+                        onTap: (awb) => {},
+                        // onTap: () => Get.to(const DetailLaporankuScreen()),
+                      ),
+                    ),
+                  ),
+                  noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
+                  firstPageErrorIndicatorBuilder: (context) {
+                    return Center(
+                        child: Column(
+                      children: [
+                        Text("Terjadi kesalahan ketika mengambil data".tr),
+                        const Padding(padding: EdgeInsets.only(top: 16)),
+                        FilledButton(
+                          onPressed: () => controller.requireRetry(),
+                          child: const Text("Muat ulang"),
+                        )
+                      ],
+                    ));
+                  },
+                  noMoreItemsIndicatorBuilder: (context) => const Center(
+                    child: Divider(
+                      indent: 100,
+                      endIndent: 100,
+                      thickness: 2,
+                      color: blueJNE,
+                    ),
+                  ),
+                  newPageProgressIndicatorBuilder: (context) =>
+                      const LoadingDialog(
+                    background: Colors.transparent,
+                    height: 50,
+                    size: 30,
+                  ),
+                ),
+                separatorBuilder: (context, index) {
+                  return const Divider(color: greyLightColor3);
+                },
+              ),
+            ))
+          ],
+        ));
   }
 
   Widget _checkAllItemBox(
       BuildContext context, RequestPickupController controller) {
     if (controller.state.checkMode) {
-      return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  controller.setCheckMode(false);
-                  controller.onCancel();
-                },
-                child: Text(
-                  "Batal".tr,
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-              )
-            ],
-          ));
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            onPressed: () {
+              controller.setCheckMode(false);
+              controller.onCancel();
+            },
+            child: Text(
+              "Batal".tr,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          )
+        ],
+      );
     } else {
       return Container();
     }
