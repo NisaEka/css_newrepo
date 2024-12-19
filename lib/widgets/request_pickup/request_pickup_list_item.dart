@@ -1,15 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RequestPickupItem extends StatefulWidget {
+  final bool isLoading;
   final RequestPickupModel? data;
   final Function(String) onTap;
   final Function onLongTap;
@@ -18,6 +18,7 @@ class RequestPickupItem extends StatefulWidget {
 
   const RequestPickupItem(
       {super.key,
+      this.isLoading = false,
       required this.data,
       required this.onTap,
       required this.onLongTap,
@@ -31,28 +32,31 @@ class RequestPickupItem extends StatefulWidget {
 class _RequestPickupItemState extends State<RequestPickupItem> {
   @override
   Widget build(BuildContext context) {
-    final requestPickup = widget.data!;
+    final requestPickup = widget.data;
 
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () => {widget.onTap(requestPickup.awb)},
-      onLongPress: () => {widget.onLongTap()},
-      child: Container(
-        width: Get.size.width,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        margin: const EdgeInsets.only(bottom: 16),
-        child: Row(
-          children: [
-            _requestPickupCheckbox(),
-            _requestPickupImage(),
-            const SizedBox(width: 16),
-            _requestPickupContent(requestPickup),
-            const SizedBox(width: 16),
-            _requestPickupExtraInfo(requestPickup)
-          ],
-        ),
-      ),
-    );
+    return Shimmer(
+        isLoading: widget.isLoading,
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () =>
+              {if (requestPickup != null) widget.onTap(requestPickup.awb)},
+          onLongPress: () => {widget.onLongTap()},
+          child: Card(
+              elevation: 0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 0),
+                child: SizedBox(
+                  width: Get.size.width,
+                  child: Row(
+                    children: [
+                      _requestPickupCheckbox(),
+                      if (widget.checkMode) const SizedBox(width: 8),
+                      _requestPickupContent(requestPickup),
+                    ],
+                  ),
+                ),
+              )),
+        ));
   }
 
   Widget _requestPickupCheckbox() {
@@ -69,105 +73,93 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
               widget.onTap(widget.data!.awb);
             },
           ),
-          const SizedBox(width: 16),
         ],
       );
     } else if (widget.checkMode) {
       return const SizedBox(
-        width: 64,
+        width: 48,
       );
     } else {
       return Container();
     }
   }
 
-  Widget _requestPickupImage() {
-    return CachedNetworkImage(
-      imageUrl: IconsConstant.paket,
-      width: 48,
-      height: 48,
-    );
-  }
-
-  Widget _requestPickupContent(RequestPickupModel requestPickup) {
+  Widget _requestPickupContent(RequestPickupModel? requestPickup) {
     return Expanded(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          requestPickup.awb,
-          style: Theme.of(context)
-              .textTheme
-              .labelSmall
-              ?.copyWith(fontWeight: FontWeight.bold),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              width: 160,
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              decoration: BoxDecoration(
+                color: _chipColor(requestPickup),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                requestPickup?.status ?? '',
+                style: sublistTitleTextStyle.copyWith(
+                  color: whiteColor,
+                  fontSize: 10,
+                ),
+              ),
+            ),
+            Text(
+              (requestPickup?.createdDateSearch ?? '').toShortDateFormat(),
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color:
+                      AppConst.isLightTheme(context) ? blueJNE : warningColor),
+            ),
+          ],
         ),
-        Text(
-          requestPickup.receiverName,
-          style: Theme.of(context).textTheme.labelSmall,
-        ),
-        _requestPickupServiceAndType(requestPickup)
+        const SizedBox(height: 4),
+        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          Text(
+            requestPickup?.awb ?? "",
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ]),
+        const SizedBox(height: 4),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text((requestPickup?.qty ?? 0).toString(),
+                  style: Theme.of(context).textTheme.titleSmall),
+              Text(
+                " KOLI / ",
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              Text((requestPickup?.weight ?? 0).toString(),
+                  style: Theme.of(context).textTheme.titleSmall),
+              Text(
+                " KG",
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ],
+          ),
+          Text(
+            requestPickup?.shipperCity ?? "",
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ]),
       ],
     ));
   }
 
-  Widget _requestPickupServiceAndType(RequestPickupModel requestPickup) {
-    return Row(
-      children: [
-        Text(
-          requestPickup.apiType,
-          style: Theme.of(context).textTheme.labelSmall,
-        ),
-        Text(
-          " - ",
-          style: Theme.of(context).textTheme.labelSmall,
-        ),
-        Text(
-          requestPickup.serviceCode,
-          style: Theme.of(context).textTheme.labelSmall,
-        )
-      ],
-    );
-  }
-
-  Widget _requestPickupExtraInfo(RequestPickupModel requestPickup) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(
-          requestPickup.createdDateSearch.toLongDateTimeFormat(),
-          style: TextStyle(
-              color: AppConst.isLightTheme(context)
-                  ? greyDarkColor1
-                  : greyLightColor1,
-              fontSize: 8),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Container(
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-              color: _chipColor(requestPickup),
-              border: Border.all(color: _chipColor(requestPickup)),
-              borderRadius: const BorderRadius.all(Radius.circular(8))),
-          child: Text(
-            requestPickup.status,
-            style: labelTextStyle.copyWith(
-              color: whiteColor,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Color _chipColor(RequestPickupModel requestPickup) {
-    if (requestPickup.status == Constant.statusNotRequestPickedUpYet) {
+  Color _chipColor(RequestPickupModel? requestPickup) {
+    if (requestPickup?.status == Constant.statusNotRequestPickedUpYet) {
       return warningDarkColor;
-    } else if (requestPickup.status == Constant.statusAlreadyRequestPickedUp) {
+    } else if (requestPickup?.status == Constant.statusAlreadyRequestPickedUp) {
       return successColor;
-    } else if (requestPickup.status == Constant.statusFailedRequestForPickUp) {
+    } else if (requestPickup?.status == Constant.statusFailedRequestForPickUp) {
       return errorColor;
     } else {
       return whiteColor;
