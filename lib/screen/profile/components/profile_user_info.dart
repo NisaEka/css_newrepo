@@ -25,7 +25,7 @@ class ProfileUserInfo extends StatelessWidget {
           margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
-              border: Border.all(color: blueJNE)),
+              border: Border.all(color: primaryColor(context))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
