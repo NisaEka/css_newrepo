@@ -33,6 +33,7 @@ class PantauPaketmuController extends BaseController {
     });
     resetFilter();
     selectDateFilter(3);
+    applyFilter();
   }
 
   @override
@@ -49,6 +50,7 @@ class PantauPaketmuController extends BaseController {
 
   Future<void> initData() async {
     // if (state.isLoading) return;
+    state.listStatusKiriman = [];
     state.isLoading = true;
     update();
     AppLogger.i('initDataaaa');
@@ -68,21 +70,11 @@ class PantauPaketmuController extends BaseController {
         });
       }
 
-      // Response response = await network.base.get(
-      //   '/transaction/tracks/status',
-      // );
-
-      // List<dynamic> statusList = response.data['data'];
-      // if (statusList.every((element) => element is String)) {
-      //   state.listStatusKiriman.addAll(statusList.cast<String>());
-      // } else {
-      //   AppLogger.w('Response contains non-string items.');
-      // }
-
       await pantau.getPantauStatus().then((value) {
         state.listStatusKiriman.addAll(value.data ?? []);
         update();
       });
+      update();
     } catch (e, i) {
       AppLogger.e('error pantau', e, i);
       AppSnackBar.error('Gagal mengambil data'.tr);
@@ -115,12 +107,25 @@ class PantauPaketmuController extends BaseController {
     try {
       var responseCount = await pantau.getPantauCount(param);
       state.countList.addAll(responseCount.data ?? []);
+      AppLogger.i("Count List after API call: ${state.countList.length}");
       state.cod = responseCount.data?.first.totalCod?.toInt() ?? 0;
       state.codOngkir = responseCount.data?.first.totalCodOngkir?.toInt() ?? 0;
       state.noncod = responseCount.data?.first.totalNonCod?.toInt() ?? 0;
+      update();
     } catch (e, i) {
       AppLogger.e('error pantau count', e, i);
       AppSnackBar.error('Gagal mengambil data pantau');
+    }
+
+    if (state.selectedStatusKiriman != null &&
+        state.selectedStatusKiriman != "") {
+      state.filteredCountList = state.countList
+          .where((e) => e.status == state.selectedStatusKiriman)
+          .toList();
+      update();
+    } else {
+      state.filteredCountList = List.from(state.countList);
+      update();
     }
     // await Future.delayed(const Duration(seconds: 2));
     state.isLoading = false;
@@ -158,6 +163,7 @@ class PantauPaketmuController extends BaseController {
   void selectDateFilter(int filter) {
     final today = DateTime.now();
     state.dateFilter.value = filter.toString();
+    update();
 
     switch (filter) {
       case 1:
@@ -255,18 +261,24 @@ class PantauPaketmuController extends BaseController {
       state.date.printInfo(info: "state.date filter");
       state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
     }
-    state.filteredCountList.add(state.countList
-        .where(
-          (e) => e.status == state.selectedStatusKiriman,
-        )
-        .first);
     update();
 
-    AppLogger.i("filtered status : ${state.filteredCountList.length}");
+    // state.filteredCountList.add(state.countList
+    //     .where(
+    //       (e) => e.status == state.selectedStatusKiriman,
+    //     )
+    //     .first);
+    // update();
 
-    state.isLoading = true;
-    // state.pagingController.refresh();
-    update();
+    // state.filteredCountList = state.countList
+    //     .where((e) => e.status == state.selectedStatusKiriman)
+    //     .toList();
+    //
+    // update();
+
+    // state.isLoading = true;
+    // // state.pagingController.refresh();
+    // update();
 
     if (isDetail != null && !isDetail) {
       getCountList();
@@ -274,10 +286,77 @@ class PantauPaketmuController extends BaseController {
       state.pagingController.refresh();
     }
 
+    AppLogger.i("filtered status : ${state.filteredCountList.length}");
+    update();
+
     await Future.delayed(const Duration(seconds: 20));
     state.isLoading = false;
     update();
   }
+
+//   applyFilter({bool? isDetail = false}) async {
+//     state.filteredCountList = [];
+//
+//     if (state.isLoading) return;
+//
+//     state.isLoading = true;
+//     update(); // Update UI untuk menunjukkan loading
+//
+//     // Log untuk memastikan data sebelum filter
+//     AppLogger.i("Count list before filter: ${state.countList.length}");
+//
+//     // Apply Date Filter jika ada
+//     if (state.dateFilter.value != '3') {
+//       state.isFiltered.value = true;
+//       if (state.startDate.value != null && state.endDate.value != null) {
+//         state.date.value = "${state.startDate}-${state.endDate}";
+//         state.transDate = [
+//           {
+//             "awbDate": [state.startDate.value, state.endDate.value],
+//           }
+//         ];
+//         AppLogger.i("Applying Date Filter: ${state.startDate} - ${state.endDate}");
+//       }
+//     }
+//
+//     update();  // Update UI setelah filter tanggal diterapkan
+//
+//     // Filter berdasarkan status kiriman
+//     if (state.selectedStatusKiriman != null && state.selectedStatusKiriman != "") {
+//       // Debugging filter status kiriman
+//       AppLogger.i("Filtering by status: ${state.selectedStatusKiriman}");
+//
+//       state.filteredCountList = state.countList
+//           .where((e) => e.status == state.selectedStatusKiriman)
+//           .toList();
+//       AppLogger.i("Filtered by status: ${state.selectedStatusKiriman}, count: ${state.filteredCountList.length}");
+//     } else {
+//       // Jika tidak ada status, semua data dimasukkan
+//       state.filteredCountList = List.from(state.countList);
+//       AppLogger.i("No status filter applied, count: ${state.filteredCountList.length}");
+//
+// // Jika menggunakan GetX, pastikan memanggil update() setelah perubahan
+//       update();
+//     }
+//
+//     // Debugging filtered count
+//     AppLogger.i("Filtered count after status filter: ${state.filteredCountList.length}");
+//
+//     update();  // Pastikan UI di-update setelah filter diterapkan
+//
+//     // Jika filter dilakukan di mode detail
+//     if (isDetail != null && !isDetail) {
+//       getCountList();  // Ambil data lagi setelah filter
+//     } else {
+//       state.pagingController.refresh();  // Refresh paging
+//     }
+//
+//     // Tunggu sejenak untuk memperbarui UI
+//     await Future.delayed(const Duration(seconds: 2));
+//
+//     state.isLoading = false;  // Matikan status loading setelah filter selesai
+//     update();  // Pastikan UI di-update untuk menampilkan hasil filter
+//   }
 
   void onSearchChanged(String value) {
     // Cancel the previous timer if it exists
@@ -295,11 +374,12 @@ class PantauPaketmuController extends BaseController {
 
   void setSelectedStatus(PantauPaketmuCountModel item) {
     // selectedStatus = statusIndex;
-    state.selectedStatusKiriman = state.listStatusKiriman
-        .where(
-          (status) => status == item.status,
-        )
-        .first;
+    // state.selectedStatusKiriman = state.listStatusKiriman
+    //     .where(
+    //       (status) => status == item.status,
+    //     )
+    //     .first;
+    state.selectedStatusKiriman = item.status;
     applyFilter(isDetail: true);
     update();
   }

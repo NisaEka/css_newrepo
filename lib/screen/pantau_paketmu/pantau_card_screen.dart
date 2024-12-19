@@ -81,14 +81,34 @@ class PantauCardScreen extends StatelessWidget {
                                   isLoading: true,
                                 ),
                               )
-                            : controller.state.countList
-                                .mapIndexed((index, item) => (index != 0
-                                    ? PantauItems(
-                                        item: item,
-                                        index: index,
-                                        isLoading: false)
-                                    : const SizedBox()))
-                                .toList(),
+                            : controller.state.selectedStatusKiriman == null ||
+                                    controller.state.selectedStatusKiriman ==
+                                        "Total Kiriman"
+                                ? controller.state.countList
+                                    .mapIndexed((index, item) => (index != 0
+                                        ? PantauItems(
+                                            item: item,
+                                            index: index,
+                                            isLoading: false)
+                                        : const SizedBox()))
+                                    .toList()
+                                : controller.state.filteredCountList
+                                    .mapIndexed((index, item) {
+                                    return PantauItems(
+                                      item: item,
+                                      index: index,
+                                      isLoading: false,
+                                    );
+                                  }).toList(),
+
+                        // : controller.state.countList
+                        //     .mapIndexed((index, item) => (index != 0
+                        //         ? PantauItems(
+                        //             item: item,
+                        //             index: index,
+                        //             isLoading: false)
+                        //         : const SizedBox()))
+                        //     .toList(),
                       ),
                     ),
                   ],

@@ -379,13 +379,16 @@ class PantauItems extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        getStatusIcon(item?.status ?? ''),
-                        // Icon(getStatusIcon(item?.status ?? ''),
-                        //     color: greyLightColor2, size: 100),
-                      ],
+                    Container(
+                      color: isLoading ? greyColor : Colors.transparent,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          getStatusIcon(item?.status ?? ''),
+                          // Icon(getStatusIcon(item?.status ?? ''),
+                          //     color: greyLightColor2, size: 100),
+                        ],
+                      ),
                     ),
                   ],
                 ),

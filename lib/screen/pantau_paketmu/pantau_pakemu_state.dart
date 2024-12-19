@@ -65,9 +65,9 @@ class PantauPaketmuState extends GetxController {
   final isSelectAll = Rx<bool>(false);
 
   // Reactive Lists for Status and Officer
-  final listStatusKiriman = RxList<String>([]);
+  // final listStatusKiriman = RxList<String>([]);
   final listOfficerEntry = RxList<String>([]);
-  final listTipeKiriman = RxList<String>(["cod", "non cod", "cod ongkir"]);
+  final listTipeKiriman = RxList<String>(["cod", "cod ongkir", "non cod"]);
   final listStatusPrint =
       RxList<String>(["SEMUA", "SUDAH DIPRINT", "BELUM DIPRINT"]);
 
@@ -88,4 +88,5 @@ class PantauPaketmuState extends GetxController {
   List<Map<String, dynamic>>? transDate;
   List<PantauPaketmuCountModel> selectedPantauPaketmu = [];
   List<PantauPaketmuListModel> selectedTransaction = [];
+  List<String> listStatusKiriman = [];
 }

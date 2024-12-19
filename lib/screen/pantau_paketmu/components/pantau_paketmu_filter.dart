@@ -129,40 +129,6 @@ class PantauPaketmuFilter extends HookWidget {
                                 ),
                               ],
                             ),
-                            CustomDropDownField(
-                              items: controller.state.listTipeKiriman
-                                  .map(
-                                    (e) => DropdownMenuItem(
-                                      value: e,
-                                      child: Text(e.toUpperCase()),
-                                    ),
-                                  )
-                                  .toList(),
-                              label: 'Tipe Kiriman'.tr,
-                              hintText: 'Tipe Kiriman'.tr,
-                              value: controller.state.selectedTipeKiriman,
-                              onChanged: (value) {
-                                controller.state.selectedTipeKiriman =
-                                    value as String;
-                              },
-                            ),
-                            CustomDropDownField(
-                              items: controller.state.listOfficerEntry
-                                  .map(
-                                    (e) => DropdownMenuItem(
-                                      value: e,
-                                      child: Text(e),
-                                    ),
-                                  )
-                                  .toList(),
-                              label: 'Petugas Entry'.tr,
-                              hintText: 'Petugas Entry'.tr,
-                              value: controller.state.selectedPetugasEntry,
-                              onChanged: (value) {
-                                controller.state.selectedPetugasEntry =
-                                    value as String;
-                              },
-                            ),
                             CustomFormLabel(label: 'Status Kiriman'.tr),
                             const SizedBox(height: 10),
                             // CustomDropDownField<String>(
@@ -184,64 +150,133 @@ class PantauPaketmuFilter extends HookWidget {
                           ],
                         ),
                       ),
+                      // Status kiriman
                       SliverPadding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         sliver: SliverGrid(
                           delegate: SliverChildBuilderDelegate(
-                            (context, index) => GestureDetector(
+                              (context, index) {
+                            // Skipping the first index by starting from index 1
+                            int adjustedIndex = index;
+
+                            return GestureDetector(
                               onTap: () => setState(() {
                                 if (controller.state.selectedStatusKiriman !=
-                                    controller.state.listStatusKiriman[index]) {
+                                    controller.state
+                                        .listStatusKiriman[adjustedIndex]) {
                                   controller.state.selectedStatusKiriman =
-                                      controller.state.listStatusKiriman[index];
+                                      controller.state
+                                          .listStatusKiriman[adjustedIndex];
                                 } else {
-                                  controller.state.selectedStatusKiriman = null;
+                                  controller.state.selectedStatusKiriman =
+                                      "Total Kiriman";
                                 }
                                 controller.update();
                               }),
                               child: Container(
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color:
-                                      controller.state.selectedStatusKiriman ==
-                                              controller.state
-                                                  .listStatusKiriman[index]
-                                          ? blueJNE
-                                          : whiteColor,
+                                  color: controller
+                                              .state.selectedStatusKiriman ==
+                                          controller.state
+                                              .listStatusKiriman[adjustedIndex]
+                                      ? blueJNE
+                                      : whiteColor,
                                   border: Border.all(
                                     color: controller
                                                 .state.selectedStatusKiriman !=
-                                            controller
-                                                .state.listStatusKiriman[index]
+                                            controller.state.listStatusKiriman[
+                                                adjustedIndex]
                                         ? blueJNE
                                         : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: Text(
-                                  controller.state.listStatusKiriman[index].tr,
+                                  controller.state
+                                      .listStatusKiriman[adjustedIndex].tr,
                                   textAlign: TextAlign.center,
                                   style: listTitleTextStyle.copyWith(
                                       color: controller.state
                                                   .selectedStatusKiriman ==
-                                              controller.state
-                                                  .listStatusKiriman[index]
+                                              controller
+                                                      .state.listStatusKiriman[
+                                                  adjustedIndex]
                                           ? whiteColor
                                           : blueJNE),
                                 ),
                               ),
-                            ),
-                            childCount:
-                                controller.state.listStatusKiriman.length,
-                          ),
+                            );
+                          },
+                              childCount:
+                                  controller.state.listStatusKiriman.length),
                           gridDelegate:
                               const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 140,
                             mainAxisSpacing: 5,
                             crossAxisSpacing: 16,
-                            childAspectRatio: 2,
-                            // mainAxisExtent: 100
+                            childAspectRatio: 2.5,
                           ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 10),
+                            // Tipe Kiriman
+                            CustomDropDownField(
+                              items: controller.state.listTipeKiriman
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      value: e,
+                                      child: Text(e.toUpperCase()),
+                                    ),
+                                  )
+                                  .toList(),
+                              label: 'Tipe Kiriman'.tr,
+                              hintText: 'Tipe Kiriman'.tr,
+                              value: controller.state.selectedTipeKiriman,
+                              onChanged: (value) {
+                                controller.state.selectedTipeKiriman =
+                                    value as String;
+                                if (value == 'cod') {
+                                  controller.state.selectedKiriman = 0;
+                                } else if (value == 'cod ongkir') {
+                                  controller.state.selectedKiriman = 1;
+                                } else {
+                                  controller.state.selectedKiriman = 2;
+                                }
+                                controller.update();
+                              },
+                            ),
+                            // OfficerDropdown(
+                            //   label: 'Petugas Entry'.tr,
+                            //   value: controller.state.selectedPetugasEntry,
+                            //   onChanged: (value) {
+                            //     controller.state.selectedPetugasEntry =
+                            //     value as String;
+                            //   },
+                            // ),
+
+                            CustomDropDownField(
+                              items: controller.state.listOfficerEntry
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      value: e,
+                                      child: Text(e),
+                                    ),
+                                  )
+                                  .toList(),
+                              label: 'Petugas Entry'.tr,
+                              hintText: 'Petugas Entry'.tr,
+                              value: controller.state.selectedPetugasEntry,
+                              onChanged: (value) {
+                                controller.state.selectedPetugasEntry =
+                                    value as String;
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -257,7 +292,7 @@ class PantauPaketmuFilter extends HookWidget {
               Get.back();
             },
             onApplyFilter: () {
-              controller.applyFilter();
+              controller.applyFilter(isDetail: true);
               Get.back();
             },
             onCloseFilter: () {

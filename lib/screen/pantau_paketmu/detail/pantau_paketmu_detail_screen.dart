@@ -13,6 +13,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:intl/intl.dart';
 
 class PantauPaketmuDetailScreen extends StatelessWidget {
   const PantauPaketmuDetailScreen({super.key});
@@ -264,7 +265,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                       context,
                       "Nominal COD",
-                      'Rp. ${controller.pantauPaketmu.codAmount?.toString() ?? '0'}',
+                      'Rp. ${NumberFormat('#,##0.00', 'id').format(controller.pantauPaketmu.codAmount ?? 0)}',
                       // 'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
                       controller.isLoading,
                       style: listTitleTextStyle.copyWith(
