@@ -437,7 +437,8 @@ class LanguageEN {
       "Coba lagi": "Try again",
       "Nomor resi tidak boleh kosong": "Airwaybill cannot be empty",
       "Nomor resi harus terdiri dari 16 karakter":
-          "Airwaybill must be 16 characters"
+          "Airwaybill must be 16 characters",
+      "Koli": "Packages",
     };
   }
 }

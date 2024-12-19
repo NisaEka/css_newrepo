@@ -134,7 +134,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
               Text((requestPickup?.qty ?? 0).toString(),
                   style: Theme.of(context).textTheme.titleSmall),
               Text(
-                " KOLI / ",
+                ' ${"Koli".tr.toUpperCase()} / ',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text((requestPickup?.weight ?? 0).toString(),
