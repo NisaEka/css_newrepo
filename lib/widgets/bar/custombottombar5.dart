@@ -42,7 +42,8 @@ class BottomBar5 extends StatelessWidget {
                 width: Get.width * 0.9,
                 margin: const EdgeInsets.only(bottom: 10),
                 decoration: BoxDecoration(
-                  color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                  color:
+                      AppConst.isLightTheme(context) ? blueJNE : warningColor,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Row(
@@ -57,11 +58,17 @@ class BottomBar5 extends StatelessWidget {
                             ? AppConst.isLightTheme(context)
                                 ? redJNE
                                 : whiteColor
-                            : whiteColor,
+                            : AppConst.isLightTheme(context)
+                                ? whiteColor
+                                : warningLightColor2,
                       ),
                       isSelected: menu == 0,
-                      onTap: () => Get.offAll(() => const DashboardScreen(),
-                          transition: Transition.leftToRight),
+                      onTap: () {
+                        if (menu != 0) {
+                          Get.offAll(() => const DashboardScreen(),
+                              transition: Transition.leftToRight);
+                        }
+                      },
                     ),
                     allow?.pantauPaketmu == "Y" || (!controller.state.isLogin)
                         ? BottomMenuItem2(
@@ -97,8 +104,10 @@ class BottomBar5 extends StatelessWidget {
                         color: menu == 2
                             ? AppConst.isLightTheme(context)
                                 ? redJNE
-                                : warningColor
-                            : whiteColor,
+                                : whiteColor
+                            : AppConst.isLightTheme(context)
+                                ? whiteColor
+                                : warningLightColor2,
                         size: 35,
                       ),
                       isSelected: menu == 2,

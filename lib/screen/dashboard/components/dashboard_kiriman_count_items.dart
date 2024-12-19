@@ -70,7 +70,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                             title: "Jumlah Transaksi".tr,
                             count: kirimanKamu.totalPantau,
                             subtitle: '${"7 Hari Terakhir".tr}\n',
-                            color: blueJNE,
+                            color: primaryColor(context),
                             icon: Icons.show_chart,
                             statusColor: whiteColor,
                             suffixChart: SizedBox(
@@ -133,7 +133,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                 count: kirimanKamu.suksesDiterima,
                                 subtitle:
                                     "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
-                                color: blueJNE,
+                                color: primaryColor(context),
                                 statusColor: Colors.green,
                                 suffixChart: SizedBox(
                                   width: 25,

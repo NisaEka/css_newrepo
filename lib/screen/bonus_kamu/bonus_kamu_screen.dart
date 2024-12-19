@@ -49,7 +49,7 @@ class BonusKamuScreen extends StatelessWidget {
                 bottom: 0,
                 right: 25,
                 child: CustomFilledButton(
-                  color: blueJNE,
+                  color: primaryColor(context),
                   title: "Tukarkan Poinmu".tr.toUpperCase(),
                   width: 128,
                   height: 24,
@@ -57,11 +57,11 @@ class BonusKamuScreen extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   fontColor: whiteColor,
                   fontSize: 9,
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
-                      color: redJNE,
+                      color: secondaryColor(context),
                       spreadRadius: 0.3,
-                      offset: Offset(2, 2),
+                      offset: const Offset(2, 2),
                     ),
                   ],
                   onPressed: () => _launchURL(),
@@ -73,14 +73,18 @@ class BonusKamuScreen extends StatelessWidget {
         Row(
           children: [
             CustomFilledButton(
-              color: c.tabIndex == 0 ? blueJNE : blueJNE.withOpacity(0.5),
+              color: c.tabIndex == 0
+                  ? primaryColor(context)
+                  : primaryColor(context).withOpacity(0.5),
               title: "Total Transaksi".tr,
               radius: 0,
               width: Get.width / 2,
               fontStyle: subTitleTextStyle.copyWith(color: whiteColor),
               boxShadow: [
                 BoxShadow(
-                  color: c.tabIndex == 0 ? redJNE : blueJNE.withOpacity(0.8),
+                  color: c.tabIndex == 0
+                      ? secondaryColor(context)
+                      : primaryColor(context).withOpacity(0.8),
                   spreadRadius: 2,
                   offset: const Offset(-2, 2),
                 )
@@ -91,14 +95,18 @@ class BonusKamuScreen extends StatelessWidget {
               },
             ),
             CustomFilledButton(
-              color: c.tabIndex == 1 ? blueJNE : blueJNE.withOpacity(0.5),
+              color: c.tabIndex == 1
+                  ? primaryColor(context)
+                  : primaryColor(context).withOpacity(0.5),
               title: "Penukaran Poin Terakhir".tr,
               radius: 0,
               width: Get.width / 2,
               fontStyle: subTitleTextStyle.copyWith(color: whiteColor),
               boxShadow: [
                 BoxShadow(
-                  color: c.tabIndex == 1 ? redJNE : blueJNE.withOpacity(0.8),
+                  color: c.tabIndex == 1
+                      ? secondaryColor(context)
+                      : primaryColor(context).withOpacity(0.8),
                   spreadRadius: 2,
                   offset: const Offset(2, 2),
                 )

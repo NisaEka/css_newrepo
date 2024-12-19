@@ -18,11 +18,13 @@ class OtherMenuScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: blueJNE,
+            backgroundColor: primaryColor(context),
             title: Text('Lihat Semua Layanan'.tr),
             centerTitle: true,
             titleTextStyle: appTitleTextStyle.copyWith(color: whiteColor),
-            leading: const CustomBackButton(color: whiteColor),
+            leading: const CustomBackButton(
+              color: whiteColor,
+            ),
           ),
           body: _bodyContent(controller, context),
         );

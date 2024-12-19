@@ -54,16 +54,12 @@ class PointListItem extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3),
-                        border: Border.all(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : redJNE,
-                            width: 2),
+                        border:
+                            Border.all(color: primaryColor(context), width: 2),
                       ),
                       child: Icon(
                         Icons.playlist_add_check_rounded,
-                        color:
-                            AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                        color: primaryColor(context),
                       ),
                     ),
                     Container(
@@ -110,7 +106,12 @@ class PointListItem extends StatelessWidget {
                           color: isLoading ? greyColor : null,
                           child: Row(
                             children: [
-                              Text("$title   ".toUpperCase()),
+                              Text(
+                                "$title   ".toUpperCase(),
+                                style: TextStyle(
+                                  color: textColor(context),
+                                ),
+                              ),
                               Text(
                                 subtitle ?? '',
                                 style: listTitleTextStyle.copyWith(
@@ -128,7 +129,9 @@ class PointListItem extends StatelessWidget {
                           color: isLoading ? greyColor : null,
                           child: Text(
                             amount?.toInt().toCurrency() ?? '',
-                            style: listTitleTextStyle,
+                            style: listTitleTextStyle.copyWith(
+                              color: textColor(context),
+                            ),
                           ),
                         )
                       ],
