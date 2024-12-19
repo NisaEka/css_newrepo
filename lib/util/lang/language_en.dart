@@ -438,6 +438,8 @@ class LanguageEN {
       "Nomor resi tidak boleh kosong": "Airwaybill cannot be empty",
       "Nomor resi maksimal 16 karakter": "Airwaybill maximum 16 characters",
       "Koli": "Packages",
+      "Pastikan semua aktvitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile":
+          "Make sure all activities are completed. Thank you for using CSS Mobile"
     };
   }
 }
