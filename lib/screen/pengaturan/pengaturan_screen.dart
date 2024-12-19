@@ -57,7 +57,8 @@ class PengaturanScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomFilledButton(
-                      color: c.lang == "id" ? blueJNE : whiteColor,
+                      color:
+                          c.lang == "id" ? primaryColor(context) : whiteColor,
                       fontColor: c.lang == "id" ? whiteColor : greyColor,
                       borderColor:
                           c.lang == "id" ? Colors.transparent : greyColor,
@@ -69,7 +70,8 @@ class PengaturanScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     CustomFilledButton(
-                      color: c.lang == "en" ? blueJNE : whiteColor,
+                      color:
+                          c.lang == "en" ? primaryColor(context) : whiteColor,
                       fontColor: c.lang == "en" ? whiteColor : greyColor,
                       borderColor:
                           c.lang == "en" ? Colors.transparent : greyColor,
@@ -125,7 +127,8 @@ class PengaturanScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomFilledButton(
-                      color: c.mode == "dark" ? blueJNE : whiteColor,
+                      color:
+                          c.mode == "dark" ? primaryColor(context) : whiteColor,
                       fontColor: c.mode == "dark" ? whiteColor : greyColor,
                       borderColor:
                           c.mode == "dark" ? Colors.transparent : greyColor,
@@ -137,7 +140,9 @@ class PengaturanScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     CustomFilledButton(
-                      color: c.mode == "light" ? blueJNE : whiteColor,
+                      color: c.mode == "light"
+                          ? primaryColor(context)
+                          : whiteColor,
                       fontColor: c.mode == "light" ? whiteColor : greyColor,
                       borderColor:
                           c.mode == "light" ? Colors.transparent : greyColor,
