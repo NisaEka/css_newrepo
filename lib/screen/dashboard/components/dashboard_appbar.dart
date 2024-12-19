@@ -24,7 +24,7 @@ class DashboardAppbar extends StatelessWidget {
         IconButton(
           onPressed: () => Get.to(const NotificationScreen()),
           icon: Badge(
-            isLabelVisible: true,
+            isLabelVisible: notifCount != 0,
             label: Text(notifCount.toString()),
             offset: const Offset(8, 8),
             backgroundColor: redJNE,

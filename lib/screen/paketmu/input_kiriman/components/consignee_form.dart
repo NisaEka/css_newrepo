@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -9,8 +10,8 @@ import 'package:get/get.dart';
 
 import '../receiver_info/receiver/add/add_receiver_controller.dart';
 
-class ConsigneeForm extends StatelessWidget {
-  const ConsigneeForm({super.key});
+class AddReceiverForm extends StatelessWidget {
+  const AddReceiverForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +69,12 @@ class ConsigneeForm extends StatelessWidget {
                           ? blueJNE
                           : greyColor,
                       title: 'Simpan Data Penerima'.tr,
-                      onPressed: () =>
-                          c.formKey.currentState?.validate() == true
-                              ? c.saveReceiver()
-                              : null,
+                      onPressed: () => c.isSaveReceiver().then(
+                            (value) => value == true
+                                ? c.saveReceiver()
+                                : AppSnackBar.error(
+                                    "nomor telepon sudah tersedia".tr),
+                          ),
                     ),
                   ],
                 ),

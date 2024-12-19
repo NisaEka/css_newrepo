@@ -73,6 +73,7 @@ class LanguageEN {
       "Masih di Kamu": "Not Received",
       "Sudah di Jemput": "Alrady Picked Up",
       "Dalam Peninjauan": "Under Review",
+      "Dalam Proses": "On Process",
       "Dalam Perjalanan": "On Delivery",
       "Sukses Diterima": "Successfully Received",
       "Dibatalkan": "Canceled",

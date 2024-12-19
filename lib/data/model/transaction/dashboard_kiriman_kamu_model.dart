@@ -7,8 +7,8 @@ class DashboardKirimanKamuModel {
   num codOngkirAmount;
   int totalNonCod;
   num ongkirNonCodAmount;
-  int dalamPeninjauan;
-  num dalamPeninjauanPercentage;
+  int onProcess;
+  num onProcessPercentage;
   int suksesDiterima;
   num suksesDiterimaPercentage;
 
@@ -21,16 +21,15 @@ class DashboardKirimanKamuModel {
     this.codOngkirAmount = 0,
     this.totalNonCod = 0,
     this.ongkirNonCodAmount = 0,
-    this.dalamPeninjauan = 0,
-    this.dalamPeninjauanPercentage = 0,
+    this.onProcess = 0,
+    this.onProcessPercentage = 0,
     this.suksesDiterima = 0,
     this.suksesDiterimaPercentage = 0,
   }) : pantauChart = pantauChart ?? [];
 
   // Example: Method to update percentages safely
   void calculatePercentages() {
-    dalamPeninjauanPercentage =
-        totalPantau > 0 ? dalamPeninjauan / totalPantau * 100 : 0;
+    onProcessPercentage = totalPantau > 0 ? onProcess / totalPantau * 100 : 0;
     suksesDiterimaPercentage =
         totalPantau > 0 ? suksesDiterima / totalPantau * 100 : 0;
   }

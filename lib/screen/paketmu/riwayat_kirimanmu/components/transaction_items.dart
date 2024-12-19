@@ -33,10 +33,7 @@ class TransactionItems extends StatelessWidget {
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () => Future.sync(
-                      () {
-                        c.state.pagingController.refresh();
-                        // c.transactionCount();
-                      },
+                      () => c.state.pagingController.refresh(),
                     ),
                     child: PagedListView<int, TransactionModel>(
                       pagingController: c.state.pagingController,
@@ -80,7 +77,7 @@ class TransactionItems extends StatelessWidget {
                             const DataEmpty(),
                         firstPageProgressIndicatorBuilder: (context) => Column(
                           children: List.generate(
-                            3,
+                            10,
                             (index) =>
                                 const RiwayatKirimanListItem(isLoading: true),
                           ),

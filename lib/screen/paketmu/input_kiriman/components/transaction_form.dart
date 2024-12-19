@@ -134,14 +134,19 @@ class TransactionForm extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: greyDarkColor2),
+                            border: Border.all(
+                                color: AppConst.isLightTheme(context)
+                                    ? greyDarkColor2
+                                    : warningColor),
                           ),
                           child: ListTile(
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 5),
-                            leading: const Icon(
+                            leading: Icon(
                               Icons.verified_user_outlined,
-                              color: redJNE,
+                              color: AppConst.isLightTheme(context)
+                                  ? redJNE
+                                  : warningColor,
                             ),
                             title: Text(
                               '${'Gunakan Asuransi Pengiriman'.tr} ( Rp. ${c.state.isr.toInt().toCurrency()} )',
@@ -578,9 +583,12 @@ class TransactionForm extends StatelessWidget {
                         c.state.isOnline
                             ? CustomFilledButton(
                                 color: c.isValidate() ? blueJNE : greyColor,
+                                suffixIcon: (c.state.isEdit ?? false)
+                                    ? Icons.edit_note_rounded
+                                    : Icons.qr_code_rounded,
                                 title: (c.state.isEdit ?? false)
-                                    ? 'Edit Resi'.tr
-                                    : 'Buat Resi'.tr,
+                                    ? 'Edit Transaksi'.tr
+                                    : 'Buat Transaksi'.tr,
                                 onPressed: () => c.onSaved(),
                               )
                             : const SizedBox(),
