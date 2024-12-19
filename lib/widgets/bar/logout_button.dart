@@ -59,7 +59,7 @@ class LogoutButton extends StatelessWidget {
                 : Get.to(() => const LoginScreen()),
             leading: Icon(
               isLogin ? Icons.logout_rounded : Icons.login_rounded,
-              color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+              color: primaryColor(context),
             ),
             title: Text(
               isLogin ? 'Keluar'.tr : 'Masuk'.tr,
