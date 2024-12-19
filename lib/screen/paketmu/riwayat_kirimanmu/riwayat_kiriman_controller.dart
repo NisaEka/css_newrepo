@@ -135,22 +135,25 @@ class RiwayatKirimanController extends BaseController {
           .subtract(const Duration(days: 30));
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       state.startDateField.text =
-          state.startDate.toString().toLongDateTimeFormat();
-      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
+          state.startDate.toString().toShortDateTimeFormat();
+      state.endDateField.text =
+          state.endDate.toString().toShortDateTimeFormat();
     } else if (filter == 2) {
       state.startDate = DateTime.now()
           .copyWith(hour: 0, minute: 0)
           .subtract(const Duration(days: 7));
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       state.startDateField.text =
-          state.startDate.toString().toLongDateTimeFormat();
-      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
+          state.startDate.toString().toShortDateTimeFormat();
+      state.endDateField.text =
+          state.endDate.toString().toShortDateTimeFormat();
     } else if (filter == 3) {
       state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
       state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       state.startDateField.text =
-          state.startDate.toString().toLongDateTimeFormat();
-      state.endDateField.text = state.endDate.toString().toLongDateTimeFormat();
+          state.startDate.toString().toShortDateTimeFormat();
+      state.endDateField.text =
+          state.endDate.toString().toShortDateTimeFormat();
     }
 
     update();

@@ -351,6 +351,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.base.get(
         "/transaction/dashboards",
+        options: Options(receiveTimeout: const Duration(seconds: 15)),
         queryParameters: param.copyWith(
           between: [
             {
@@ -383,6 +384,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.base.get(
         '/transaction/tracks/count/dashboard',
+        options: Options(receiveTimeout: const Duration(seconds: 15)),
         queryParameters: param.toJson(),
       );
 

@@ -324,7 +324,6 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadTransCountList() async {
-    state.isLoadingAgg = true;
     state.isLoadingKiriman = true;
     state.transCountList.clear();
     state.kirimanKamu = DashboardKirimanKamuModel();
@@ -417,7 +416,6 @@ class DashboardController extends BaseController {
     update();
     cekTheme();
     state.isLoading = true;
-    state.isLoadingAgg = true;
     state.isLoadingKiriman = true;
 
     storage.deleteString(StorageCore.transactionTemp);
@@ -580,11 +578,10 @@ class DashboardController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-    } finally {
-      cekAllowance();
-      state.isLoading = false;
-      update();
     }
+    cekAllowance();
+    state.isLoading = false;
+    update();
   }
 
   bool pop = false;

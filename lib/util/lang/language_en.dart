@@ -58,7 +58,7 @@ class LanguageEN {
       "Tinggi": "Height",
       "Menghitung...": "Calculate...",
       "Harga COD": "COD Price",
-      "Ongkos Kirim": "Shipment Cost",
+      "Ongkos Kirim": "Delivery Price",
       "Total Ongkos Kirim": "Total Shipment Cost",
       "Asuransi Pengiriman": "Shipment Insurance",
       "Lihat Draft": "View Draft",

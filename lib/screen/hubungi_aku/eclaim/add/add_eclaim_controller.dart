@@ -78,8 +78,8 @@ class AddEclaimController extends BaseController {
                   message:
                       'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'
                           .tr,
-                  buttonTitle: 'OK'.tr,
-                  nextAction: () => Get.close(2),
+                  thirdButtonTitle: 'OK'.tr,
+                  onThirdAction: () => Get.close(2),
                 ));
                 break;
               case 404:
