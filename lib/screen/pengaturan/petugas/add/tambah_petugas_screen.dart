@@ -379,10 +379,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                       .keyboard_arrow_down),
                                                   // buttonText: Text('Branch'.tr),
                                                   buttonText: Text(
-                                                    c.selectedBranchList.isNotEmpty
-                                                        ? '${c.selectedBranchList.length} ${'Branch'.tr}...'
-                                                            .tr
-                                                        : 'Branch'.tr,
+                                                    '${c.selectedBranchList.isNotEmpty ? '${c.selectedBranchList.length} ' : ''} ${'Branch'.tr}',
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style: TextStyle(
@@ -458,11 +455,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                         ? const Text(
                                                             'Loading...')
                                                         : Text(
-                                                            c.selectedOrigin
-                                                                    .isNotEmpty
-                                                                ? '${c.selectedOrigin.length} ${'Origin'.tr}...'
-                                                                    .tr
-                                                                : 'Origin'.tr,
+                                                            '${c.selectedOrigin.isNotEmpty ? '${c.selectedOrigin.length} ' : ''} ${'Origin'.tr}',
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
