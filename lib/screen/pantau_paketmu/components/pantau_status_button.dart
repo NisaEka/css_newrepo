@@ -48,7 +48,13 @@ class PantauStatusButton extends StatelessWidget {
                       children: [
                         Text(
                           c.state.cod.toString(),
-                          style: listTitleTextStyle.copyWith(
+                          // style: listTitleTextStyle.copyWith(
+                          //   color: c.state.selectedKiriman == 0
+                          //       ? whiteColor
+                          //       : blueJNE,
+                          // ),
+                          style: sublistTitleTextStyle.copyWith(
+                            fontSize: 10,
                             color: c.state.selectedKiriman == 0
                                 ? whiteColor
                                 : blueJNE,
@@ -56,10 +62,15 @@ class PantauStatusButton extends StatelessWidget {
                         ),
                         Text(
                           'COD'.tr,
-                          style: listTitleTextStyle.copyWith(
+                          style: sublistTitleTextStyle.copyWith(
+                            fontSize: 10,
                             color: c.state.selectedKiriman == 0
                                 ? whiteColor
                                 : greyColor,
+                            // style: listTitleTextStyle.copyWith(
+                            //   color: c.state.selectedKiriman == 0
+                            //       ? whiteColor
+                            //       : greyColor,
                           ),
                         )
                       ],
@@ -89,7 +100,13 @@ class PantauStatusButton extends StatelessWidget {
                       children: [
                         Text(
                           c.state.codOngkir.toString(),
-                          style: listTitleTextStyle.copyWith(
+                          // style: listTitleTextStyle.copyWith(
+                          //   color: c.state.selectedKiriman == 1
+                          //       ? whiteColor
+                          //       : blueJNE,
+                          // ),
+                          style: sublistTitleTextStyle.copyWith(
+                            fontSize: 10,
                             color: c.state.selectedKiriman == 1
                                 ? whiteColor
                                 : blueJNE,
@@ -97,7 +114,13 @@ class PantauStatusButton extends StatelessWidget {
                         ),
                         Text(
                           'COD ONGKIR'.tr,
-                          style: listTitleTextStyle.copyWith(
+                          // style: listTitleTextStyle.copyWith(
+                          //   color: c.state.selectedKiriman == 1
+                          //       ? whiteColor
+                          //       : greyColor,
+                          // ),
+                          style: sublistTitleTextStyle.copyWith(
+                            fontSize: 10,
                             color: c.state.selectedKiriman == 1
                                 ? whiteColor
                                 : greyColor,
@@ -133,7 +156,13 @@ class PantauStatusButton extends StatelessWidget {
                       children: [
                         Text(
                           c.state.noncod.toString(),
-                          style: listTitleTextStyle.copyWith(
+                          // style: listTitleTextStyle.copyWith(
+                          //   color: c.state.selectedKiriman == 2
+                          //       ? whiteColor
+                          //       : blueJNE,
+                          // ),
+                          style: sublistTitleTextStyle.copyWith(
+                            fontSize: 10,
                             color: c.state.selectedKiriman == 2
                                 ? whiteColor
                                 : blueJNE,
@@ -141,7 +170,13 @@ class PantauStatusButton extends StatelessWidget {
                         ),
                         Text(
                           'NON COD'.tr,
-                          style: listTitleTextStyle.copyWith(
+                          // style: listTitleTextStyle.copyWith(
+                          //   color: c.state.selectedKiriman == 2
+                          //       ? whiteColor
+                          //       : greyColor,
+                          // ),
+                          style: sublistTitleTextStyle.copyWith(
+                            fontSize: 10,
                             color: c.state.selectedKiriman == 2
                                 ? whiteColor
                                 : greyColor,
