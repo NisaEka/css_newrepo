@@ -103,9 +103,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                             '-',
                         style:
                             Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  color: AppConst.isLightTheme(context)
-                                      ? blueJNE
-                                      : warningColor,
+                                  color: primaryColor(context),
                                 ),
                       ),
                     ),
@@ -152,6 +150,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                         Image.asset(
                           ImageConstant.boxPackage,
                           height: Get.width / 8,
+                          color: textColor(context),
                         ),
                       ],
                     ),
