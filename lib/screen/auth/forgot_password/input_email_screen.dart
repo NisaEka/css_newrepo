@@ -53,11 +53,9 @@ class InputEmailScreen extends StatelessWidget {
                                     ? "change_password".tr
                                     : "forgot_password".tr,
                                 textAlign: TextAlign.center,
-                                  style: subTitleTextStyle.copyWith(
-                                      color: Theme.of(context).brightness ==
-                                          Brightness.light
-                                          ? Colors.black
-                                          : whiteColor)
+                                style: subTitleTextStyle.copyWith(
+                                  color: textColor(context),
+                                ),
                               ),
                               const SizedBox(height: 25),
                               CustomTextFormField(
@@ -90,7 +88,7 @@ class InputEmailScreen extends StatelessWidget {
                                 color: controller.formKey.currentState
                                             ?.validate() ==
                                         true
-                                    ? blueJNE
+                                    ? primaryColor(context)
                                     : greyColor,
                                 title: "Berikutnya".tr,
                                 suffixIcon: Icons.arrow_circle_right_rounded,

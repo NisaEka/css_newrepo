@@ -79,7 +79,7 @@ class DropshipperForm extends StatelessWidget {
                     ),
                     CustomFilledButton(
                         color: c.formKey.currentState?.validate() ?? false
-                            ? blueJNE
+                            ? primaryColor(context)
                             : greyColor,
                         title: "Simpan Data Dropshipper".tr,
                         // radius: 20,

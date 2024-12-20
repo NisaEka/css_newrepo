@@ -88,16 +88,21 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
               return Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                child: Text('${e.zipCode == null || e.zipCode == '00000' ? '' : '${e.zipCode}; '}'
-                        '${e.provinceName == null ? '' : '${e.provinceName}; '}'
-                        '${e.cityName == null ? '' : '${e.cityName}; '}'
-                        '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
-                        '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
-                        '${e.destinationCode == null ? '' : '${e.destinationCode}'}'
-                    .splitMapJoin(
-                  ';',
-                  onMatch: (p0) => '; ',
-                )),
+                child: Text(
+                  '${e.zipCode == null || e.zipCode == '00000' ? '' : '${e.zipCode}; '}'
+                          '${e.provinceName == null ? '' : '${e.provinceName}; '}'
+                          '${e.cityName == null ? '' : '${e.cityName}; '}'
+                          '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
+                          '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
+                          '${e.destinationCode == null ? '' : '${e.destinationCode}'}'
+                      .splitMapJoin(
+                    ';',
+                    onMatch: (p0) => '; ',
+                  ),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: textColor(context),
+                      ),
+                ),
               );
             },
             itemAsString: widget.itemAsString ??
@@ -115,7 +120,11 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             hintText: widget.label ?? "Kota Pengiriman".tr,
             searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
             prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.titleMedium,
+            textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: AppConst.isLightTheme(context)
+                      ? Colors.black
+                      : warningColor,
+                ),
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,
           );

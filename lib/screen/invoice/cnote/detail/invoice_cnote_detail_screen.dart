@@ -246,8 +246,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                 child: Text(
                   "Informasi Tagihan",
                   style: listTitleTextStyle.copyWith(
-                    color:
-                        AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                    color: primaryColor(context),
                   ),
                 ),
               ),

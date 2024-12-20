@@ -25,7 +25,7 @@ class SatuanFieldIcon extends StatelessWidget {
       margin:
           EdgeInsets.only(right: isPrefix! ? 10 : 0, left: isSuffix! ? 5 : 0),
       decoration: BoxDecoration(
-        color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+        color: primaryColor(context),
         borderRadius: BorderRadius.only(
           topRight: isSuffix! ? const Radius.circular(8) : Radius.zero,
           bottomRight: isSuffix! ? const Radius.circular(8) : Radius.zero,

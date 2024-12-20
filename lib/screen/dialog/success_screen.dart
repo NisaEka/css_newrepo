@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
@@ -103,7 +102,7 @@ class SuccessScreen extends StatelessWidget {
                   //
                   // fontColor: blueJNE,
                   // borderColor: blueJNE,
-                  color: blueJNE,
+                  color: primaryColor(context),
                   isTransparent: true,
                   title: firstButtonTitle,
                   radius: 10,
@@ -114,8 +113,7 @@ class SuccessScreen extends StatelessWidget {
               ? CustomFilledButton(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  color:
-                      AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                  color: primaryColor(context),
                   radius: 10,
                   title: secondButtonTitle,
                   onPressed: onSecondAction,
@@ -128,8 +126,8 @@ class SuccessScreen extends StatelessWidget {
                   // color: Colors.white,
                   isTransparent: true,
                   // borderColor: blueJNE,
-                  // fontColor: AppConst.isLightTheme(context) ? blueJNE : warningColor,
-                  color: blueJNE,
+                  // fontColor: primaryColor(context),
+                  color: primaryColor(context),
                   radius: 10,
                   title: thirdButtonTitle?.tr,
                   onPressed: onThirdAction,

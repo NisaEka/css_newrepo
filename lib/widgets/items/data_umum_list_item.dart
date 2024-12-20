@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +38,7 @@ class DataUmumListItem extends StatelessWidget {
                   child: Icon(
                     icon,
                     size: 24,
-                    color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                    color: primaryColor(context),
                   ),
                 ),
                 title: Text(

@@ -128,7 +128,6 @@ class ShipperForm extends StatelessWidget {
                                 c.state.selectedOrigin = value;
                                 c.state.shipperOrigin.text =
                                     c.state.selectedOrigin?.originName ?? '';
-                                // controller.kodePos.text = controller.selectedOrigin?.
                                 c.update();
                               },
                             ),
@@ -157,12 +156,12 @@ class ShipperForm extends StatelessWidget {
                                 ? CustomFilledButton(
                                     color: whiteColor,
                                     borderColor: c.state.isValidate
-                                        ? blueJNE
+                                        ? primaryColor(context)
                                         : greyColor,
                                     title: 'Simpan Data Dropshipper'.tr,
                                     suffixIcon: Icons.save_alt_rounded,
                                     fontColor: c.state.isValidate
-                                        ? blueJNE
+                                        ? primaryColor(context)
                                         : greyColor,
                                     onPressed: () => c.state.isValidate
                                         ? c.saveDropshipper()
@@ -170,7 +169,9 @@ class ShipperForm extends StatelessWidget {
                                   )
                                 : const SizedBox(),
                             CustomFilledButton(
-                              color: c.state.isValidate ? blueJNE : greyColor,
+                              color: c.state.isValidate
+                                  ? primaryColor(context)
+                                  : greyColor,
                               title: "Selanjutnya".tr,
                               suffixIcon: Icons.arrow_circle_right_rounded,
                               // radius: 20,

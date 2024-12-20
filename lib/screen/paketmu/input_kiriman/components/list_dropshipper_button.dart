@@ -44,9 +44,9 @@ class ListDropshipperButton extends StatelessWidget {
                       'Lihat Data Dropshipper'.tr,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    const Icon(
+                    Icon(
                       Icons.keyboard_arrow_right,
-                      color: redJNE,
+                      color: secondaryColor(context),
                     )
                   ],
                 ),

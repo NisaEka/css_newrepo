@@ -66,7 +66,7 @@ class AddReceiverForm extends StatelessWidget {
                     ),
                     CustomFilledButton(
                       color: c.formKey.currentState?.validate() == true
-                          ? blueJNE
+                          ? primaryColor(context)
                           : greyColor,
                       title: 'Simpan Data Penerima'.tr,
                       onPressed: () => c.isSaveReceiver().then(

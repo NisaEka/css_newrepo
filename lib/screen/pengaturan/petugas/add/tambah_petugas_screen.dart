@@ -284,6 +284,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
+                                              selectAll: true,
                                               searchable: true,
                                               buttonIcon: const Icon(
                                                   Icons.keyboard_arrow_down),
@@ -373,14 +374,12 @@ class TambahPetugasScreen extends StatelessWidget {
                                                             8),
                                                   ),
                                                   searchable: true,
+                                                  selectAll: true,
                                                   buttonIcon: const Icon(Icons
                                                       .keyboard_arrow_down),
                                                   // buttonText: Text('Branch'.tr),
                                                   buttonText: Text(
-                                                    c.selectedBranchList.isNotEmpty
-                                                        ? '${c.selectedBranchList.length} ${'Branch'.tr}...'
-                                                            .tr
-                                                        : 'Branch'.tr,
+                                                    '${c.selectedBranchList.isNotEmpty ? '${c.selectedBranchList.length} ' : ''} ${'Branch'.tr}',
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style: TextStyle(
@@ -449,17 +448,14 @@ class TambahPetugasScreen extends StatelessWidget {
                                                               8),
                                                     ),
                                                     searchable: true,
+                                                    selectAll: true,
                                                     buttonIcon: const Icon(Icons
                                                         .keyboard_arrow_down),
                                                     buttonText: c.isLoadOrigin
                                                         ? const Text(
                                                             'Loading...')
                                                         : Text(
-                                                            c.selectedOrigin
-                                                                    .isNotEmpty
-                                                                ? '${c.selectedOrigin.length} ${'Origin'.tr}...'
-                                                                    .tr
-                                                                : 'Origin'.tr,
+                                                            '${c.selectedOrigin.isNotEmpty ? '${c.selectedOrigin.length} ' : ''} ${'Origin'.tr}',
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,

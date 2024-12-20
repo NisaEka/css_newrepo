@@ -56,7 +56,7 @@ class _AccountListItemState extends State<AccountListItem> {
               color: widget.isLoading ? greyColor : Colors.transparent,
               borderRadius: BorderRadius.circular(4),
               border: Border.all(
-                color: widget.isSelected ? redJNE : greyColor,
+                color: widget.isSelected ? secondaryColor(context) : greyColor,
                 width: widget.isSelected ? 2 : 1,
               ),
             ),

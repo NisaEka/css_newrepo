@@ -125,8 +125,7 @@ class TransactionCard extends StatelessWidget {
                   width: Get.width * 0.28,
                   margin: const EdgeInsets.only(top: 5),
                   decoration: BoxDecoration(
-                    color:
-                        AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                    color: primaryColor(context),
                     borderRadius: BorderRadius.circular(3),
                   ),
                   child: Row(

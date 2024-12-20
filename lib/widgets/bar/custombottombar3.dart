@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/get_login_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
@@ -78,7 +77,7 @@ class BottomBar3 extends StatelessWidget {
           ),
         ],
         currentIndex: menu,
-        selectedItemColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+        selectedItemColor: primaryColor(context),
         unselectedItemColor: greyColor,
         showSelectedLabels: true,
         showUnselectedLabels: false,
