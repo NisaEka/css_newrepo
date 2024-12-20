@@ -127,9 +127,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       child: Text(
                         'Informasi Transaksi'.tr,
                         style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : warningColor,
+                          color: primaryColor(context),
                         ),
                       ),
                     ),
@@ -196,9 +194,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       child: Text(
                         'Detail Kiriman'.tr,
                         style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : warningColor,
+                          color: primaryColor(context),
                         ),
                       ),
                     ),
@@ -309,9 +305,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       child: Text(
                         'Informasi Pengantaran'.tr,
                         style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : warningColor,
+                          color: primaryColor(context),
                         ),
                       ),
                     ),
@@ -416,9 +410,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       child: Text(
                         'Informasi Tiket Laporan'.tr,
                         style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : warningColor,
+                          color: primaryColor(context),
                         ),
                       ),
                     ),

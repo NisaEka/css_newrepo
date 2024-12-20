@@ -63,7 +63,9 @@ class DashboardBody extends StatelessWidget {
                       //         isLoadingAgg: c.state.isLoadingAgg,
                       //       )
                       //     : const SizedBox(),
-                      c.state.isLogin
+                      c.state.isLogin &&
+                              (c.state.allow.riwayatPesanan == "Y" ||
+                                  c.state.allow.paketmuRiwayat == 'Y')
                           ? DashboardKirimanCountItem(
                               transSummary: c.state.transSummary,
                               kirimanKamu: c.state.kirimanKamu,
