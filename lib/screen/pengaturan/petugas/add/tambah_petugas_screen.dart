@@ -284,6 +284,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
+                                              selectAll: true,
                                               searchable: true,
                                               buttonIcon: const Icon(
                                                   Icons.keyboard_arrow_down),
@@ -373,6 +374,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                             8),
                                                   ),
                                                   searchable: true,
+                                                  selectAll: true,
                                                   buttonIcon: const Icon(Icons
                                                       .keyboard_arrow_down),
                                                   // buttonText: Text('Branch'.tr),
@@ -449,6 +451,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                               8),
                                                     ),
                                                     searchable: true,
+                                                    selectAll: true,
                                                     buttonIcon: const Icon(Icons
                                                         .keyboard_arrow_down),
                                                     buttonText: c.isLoadOrigin
