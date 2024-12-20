@@ -82,18 +82,18 @@ class SignupForm extends StatelessWidget {
                                   Text('Sudah menggunakan JNE'.tr,
                                       style: subTitleTextStyle.copyWith(
                                           color: Theme.of(context).brightness ==
-                                              Brightness.light
+                                                  Brightness.light
                                               ? blueJNE
-                                              : whiteColor)
-                                  ),
+                                              : whiteColor)),
                                   Switch(
                                     value: c.state.pakaiJNE,
                                     activeColor: AppConst.isLightTheme(context)
                                         ? blueJNE
                                         : Colors.lightBlueAccent,
-                                    inactiveThumbColor: AppConst.isLightTheme(context)
-                                        ? blueJNE
-                                        : Colors.lightBlueAccent,
+                                    inactiveThumbColor:
+                                        AppConst.isLightTheme(context)
+                                            ? blueJNE
+                                            : Colors.lightBlueAccent,
                                     onChanged: (value) {
                                       c.state.pakaiJNE = value;
                                       c.update();
@@ -129,7 +129,7 @@ class SignupForm extends StatelessWidget {
                           color: c.state.formKey.currentState?.validate() ==
                                       true &&
                                   c.state.selectedOrigin != null
-                              ? blueJNE
+                              ? primaryColor(context)
                               : greyColor,
                           title: 'Daftar'.tr,
                           suffixIcon: Icons.app_registration_rounded,

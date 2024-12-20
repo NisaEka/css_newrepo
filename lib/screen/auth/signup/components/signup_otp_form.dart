@@ -59,7 +59,7 @@ class SignupOtpForm extends StatelessWidget {
                   ),
                   const SizedBox(height: 60),
                   CustomFilledButton(
-                    color: blueJNE,
+                    color: primaryColor(context),
                     title: 'Selanjutnya'.tr,
                     // radius: 50,
                     onPressed: () => c.pinConfirmation(),
