@@ -35,13 +35,13 @@ class PantauTotalKiriman extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge
-                      ?.copyWith(fontSize: 50),
+                      ?.copyWith(fontSize: 40),
                 ),
               ),
               const SizedBox(width: 5),
               Column(
                 children: [
-                  const SizedBox(height: 34),
+                  const SizedBox(height: 25),
                   Container(
                     decoration: BoxDecoration(
                       color: isLoading ? greyColor : Colors.transparent,
@@ -105,9 +105,9 @@ class PantauTotalKiriman extends StatelessWidget {
                                       : c.state.selectedKiriman == 1
                                           ? (c.state.countList.isNotEmpty &&
                                                   c.state.countList.first
-                                                          .ongkirCodAmount !=
+                                                          .codOngkirAmount !=
                                                       null
-                                              ? 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirCodAmount.toString()))}'
+                                              ? 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.codOngkirAmount.toString()))}'
                                               : 'Rp. 0')
                                           : 'Rp. 0',
                                   textAlign: TextAlign.center,
@@ -173,9 +173,9 @@ class PantauTotalKiriman extends StatelessWidget {
                                                   c.state.countList.first
                                                           .ongkirCodAmount !=
                                                       null
-                                              ? 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirCodAmount.toString()))}'
+                                              ? 'Rp. 0'
                                               : 'Rp. 0')
-                                          : 'Rp. 0',
+                                          : 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirNonCodAmount.toString()))}',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .textTheme

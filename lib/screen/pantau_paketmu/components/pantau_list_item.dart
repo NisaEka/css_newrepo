@@ -184,7 +184,7 @@ class PantauItems extends StatelessWidget {
                                     horizontal: 5, vertical: 3),
                                 color:
                                     isLoading ? greyColor : Colors.transparent,
-                                width: 210,
+                                width: 230,
                                 child: Row(
                                   children: [
                                     Container(
@@ -256,13 +256,13 @@ class PantauItems extends StatelessWidget {
                                                 ),
                                                 const SizedBox(width: 8),
                                                 SizedBox(
-                                                  width: 27,
+                                                  width: 40,
                                                   child: Text(
                                                     c.state.selectedKiriman == 0
                                                         ? '${item?.codAmountPercentage}%'
                                                         : c.state.selectedKiriman ==
                                                                 1
-                                                            ? '${item?.ongkirCodAmountPercentage}%'
+                                                            ? '${item?.codOngkirAmountPercentage}%'
                                                             : "0%",
                                                     style: const TextStyle(
                                                         color: whiteColor,
@@ -290,7 +290,7 @@ class PantauItems extends StatelessWidget {
                                     horizontal: 5, vertical: 3),
                                 color:
                                     isLoading ? greyColor : Colors.transparent,
-                                width: 210,
+                                width: 230,
                                 child: Row(
                                   children: [
                                     Container(
@@ -356,7 +356,7 @@ class PantauItems extends StatelessWidget {
                                                 ),
                                                 const SizedBox(width: 8),
                                                 SizedBox(
-                                                  width: 27,
+                                                  width: 40,
                                                   child: Text(
                                                     c.state.selectedKiriman == 0
                                                         ? '${item?.ongkirCodAmountPercentage}%'
