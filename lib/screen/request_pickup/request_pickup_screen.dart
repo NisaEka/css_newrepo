@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_screen.dart';
@@ -70,14 +69,12 @@ class RequestPickupScreen extends StatelessWidget {
                 children: [
                   Text(
                     "Total kiriman dipilih",
-                    style: sublistTitleTextStyle.copyWith(
-                        fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     controller.state.selectedAwbs.length.toString(),
-                    style: sublistTitleTextStyle.copyWith(
-                        fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleMedium,
                   )
                 ],
               ),
@@ -86,7 +83,9 @@ class RequestPickupScreen extends StatelessWidget {
               onPressed: () {
                 _pickupAddressBottomSheet(controller);
               },
-              style: FilledButtonTheme.of(context).style,
+              style: FilledButtonTheme.of(context).style?.copyWith(
+                  backgroundColor:
+                      WidgetStateProperty.all(primaryColor(context))),
               child: Text(
                 "Minta Dijemput".tr,
                 style: const TextStyle(color: whiteColor),
@@ -248,12 +247,12 @@ class RequestPickupScreen extends StatelessWidget {
                       ],
                     ));
                   },
-                  noMoreItemsIndicatorBuilder: (context) => const Center(
+                  noMoreItemsIndicatorBuilder: (context) => Center(
                     child: Divider(
                       indent: 100,
                       endIndent: 100,
                       thickness: 2,
-                      color: blueJNE,
+                      color: primaryColor(context),
                     ),
                   ),
                   newPageProgressIndicatorBuilder: (context) =>

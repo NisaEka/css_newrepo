@@ -37,11 +37,13 @@ class RequestPickupConfirmationDialog extends StatelessWidget {
                 child: OutlinedButton(
                     onPressed: () => onCancelAction(),
                     style: OutlinedButton.styleFrom(
-                        side: const BorderSide(width: 1, color: blueJNE),
+                        side:
+                            BorderSide(width: 1, color: primaryColor(context)),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
                     child: Text(
                       "Batal".tr,
+                      style: Theme.of(context).textTheme.titleMedium,
                     )),
               ),
               const SizedBox(width: 16),
