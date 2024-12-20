@@ -1,10 +1,13 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/info/facility_form_info_controller.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/profile/image_picker_container.dart';
 import 'package:flutter/material.dart';
@@ -98,28 +101,42 @@ class FacilityFormInfoScreen extends StatelessWidget {
                   inputType: TextInputType.streetAddress,
                   validator: ValidationBuilder().maxLength(128).build(),
                 ),
-                // CustomSearchDropdownField<Destination>(
-                //   asyncItems: (String filter) => c.getDestinationList(filter),
-                //   itemBuilder: (context, e, b) {
-                //     return GestureDetector(
-                //       onTap: () => c.update(),
-                //       child: Container(
-                //         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                //         child: Text(e.asFacilityFormFormat()),
-                //       ),
-                //     );
-                //   },
-                //   itemAsString: (Destination e) => e.asFacilityFormFormat(),
-                //   onChanged: (value) {
-                //     c.selectedDestination = value;
-                //     c.update();
-                //   },
-                //   value: c.selectedDestination,
-                //   isRequired: c.selectedDestination == null ? true : false,
-                //   readOnly: false,
-                //   hintText: c.isLoadDestination ? "Loading..." : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
-                //   textStyle: c.selectedDestination != null ? subTitleTextStyle : hintTextStyle,
-                // ),
+                CustomSearchDropdownField<Destination>(
+                  asyncItems: (String filter) => c.getDestinationList(filter),
+                  itemBuilder: (context, e, b) {
+                    return GestureDetector(
+                      onTap: () => c.update(),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
+                        child: Text(e.asFacilityFormFormat(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: textColor(context),
+                                )),
+                      ),
+                    );
+                  },
+                  itemAsString: (Destination e) => e.asFacilityFormFormat(),
+                  onChanged: (value) {
+                    c.selectedDestination = value;
+                    c.update();
+                  },
+                  value: c.selectedDestination,
+                  isRequired: c.selectedDestination == null ? true : false,
+                  readOnly: false,
+                  hintText: c.isLoadDestination
+                      ? "Loading..."
+                      : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
+                  textStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: AppConst.isLightTheme(context)
+                            ? Colors.black
+                            : warningColor,
+                      ),
+                ),
+                // textStyle: Theme.of(context).textTheme.titleSmall),
                 CustomTextFormField(
                   controller: c.phone,
                   hintText: 'No. Telp'.tr,
