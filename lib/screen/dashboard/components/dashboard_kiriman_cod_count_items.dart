@@ -11,13 +11,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DashboardKirimanCountItem extends StatelessWidget {
+class DashboardKirimanCODCountItem extends StatelessWidget {
   final TransactionSummaryModel? transSummary;
   final DashboardKirimanKamuModel kirimanKamu;
   final bool isLoadingKiriman;
   final VoidCallback? onRefresh;
 
-  const DashboardKirimanCountItem({
+  const DashboardKirimanCODCountItem({
     super.key,
     this.transSummary,
     required this.kirimanKamu,

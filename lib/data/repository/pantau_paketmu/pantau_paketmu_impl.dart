@@ -1,6 +1,5 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
-import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_list_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
@@ -77,62 +76,6 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
                 .map<PantauPaketmuListModel>(
                   (i) => PantauPaketmuListModel.fromJson(
                       i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
-      );
-    }
-  }
-
-  @override
-  Future<BaseResponse<PantauPaketmuDetailModel>> getPantauDetail(
-      String awb) async {
-    try {
-      var response = await network.base.get(
-        '/transaction/tracks/count/details/$awb',
-      );
-      return BaseResponse<PantauPaketmuDetailModel>.fromJson(
-        response.data,
-        (json) => PantauPaketmuDetailModel.fromJson(
-          json as Map<String, dynamic>,
-        ),
-      );
-    } on DioException catch (e) {
-      AppLogger.e('Error getPantau detail :  ${e.response?.data}');
-      return BaseResponse<PantauPaketmuDetailModel>.fromJson(
-        e.response?.data,
-        (json) => PantauPaketmuDetailModel.fromJson(
-          json as Map<String, dynamic>,
-        ),
-      );
-    }
-  }
-
-  @override
-  Future<BaseResponse<List<String>>> getPantauStatus() async {
-    try {
-      Response response = await network.base.get(
-        "/transaction/tracks/status",
-      );
-      AppLogger.d("status pantau : ${response.data}");
-      return BaseResponse.fromJson(
-        response.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<String>(
-                  (i) => i as String,
-                )
-                .toList()
-            : List.empty(),
-      );
-    } on DioException catch (e) {
-      AppLogger.e("status pantau : ${e.response?.data}");
-      return BaseResponse.fromJson(
-        e.response?.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<String>(
-                  (i) => i as String,
                 )
                 .toList()
             : List.empty(),

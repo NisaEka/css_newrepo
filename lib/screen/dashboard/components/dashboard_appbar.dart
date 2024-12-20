@@ -22,7 +22,7 @@ class DashboardAppbar extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () => Get.to(() => const NotificationScreen()),
+          onPressed: () => Get.to(const NotificationScreen()),
           icon: Badge(
             isLabelVisible: notifCount != 0,
             label: Text(notifCount.toString()),

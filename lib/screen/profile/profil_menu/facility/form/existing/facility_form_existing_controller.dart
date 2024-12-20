@@ -40,7 +40,7 @@ class FacilityFormExistingController extends BaseController {
                       .tr,
               thirdButtonTitle: 'Selesai'.tr,
               onThirdAction: () => Get.delete<DashboardController>()
-                  .then((_) => Get.offAll(() => const DashboardScreen())),
+                  .then((_) => Get.offAll(const DashboardScreen())),
             ),
           );
         } else {

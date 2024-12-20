@@ -141,12 +141,12 @@ class TransactionFilterButton extends HookWidget {
                                 decoration: BoxDecoration(
                                   color: c.state.selectedStatusKiriman ==
                                           c.state.listStatusKiriman[index]
-                                      ? blueJNE
+                                      ? primaryColor(context)
                                       : whiteColor,
                                   border: Border.all(
                                     color: c.state.selectedStatusKiriman !=
                                             c.state.listStatusKiriman[index]
-                                        ? blueJNE
+                                        ? primaryColor(context)
                                         : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
@@ -158,7 +158,7 @@ class TransactionFilterButton extends HookWidget {
                                       color: c.state.selectedStatusKiriman ==
                                               c.state.listStatusKiriman[index]
                                           ? whiteColor
-                                          : blueJNE),
+                                          : primaryColor(context)),
                                 ),
                               ),
                             ),

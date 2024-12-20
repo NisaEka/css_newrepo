@@ -40,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
               appBar: CustomTopBar(
                   leading: CustomBackButton(
                     onPressed: () => Get.delete<DashboardController>()
-                        .then((_) => Get.offAll(() => const DashboardScreen())),
+                        .then((_) => Get.offAll(const DashboardScreen())),
                   ),
                   title: 'Profil'.tr),
               body: _bodyContent(controller, context),

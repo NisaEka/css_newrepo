@@ -16,7 +16,7 @@ class ListDropshipperButton extends StatelessWidget {
           if (c.state.isDropshipper) {
             return GestureDetector(
               onTap: () => c.state.selectedAccount != null
-                  ? Get.to(() => const ListDropshipperScreen(), arguments: {
+                  ? Get.to(const ListDropshipperScreen(), arguments: {
                       'account': c.state.selectedAccount,
                       'isOfficer': c.state.userBasic?.userType != 'PEMILIK',
                       'userBasic': c.state.userBasic,
@@ -27,7 +27,7 @@ class ListDropshipperButton extends StatelessWidget {
                         c.getSelectedDropshipper();
                       },
                     )
-                  : AppSnackBar.error('Pilih Akun Terlebih dahulu'.tr),
+                  : AppSnackBar.error('Pilih Account Terlebih dahulu'.tr),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 5),

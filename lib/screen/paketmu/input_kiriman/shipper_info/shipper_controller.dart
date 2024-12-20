@@ -342,7 +342,7 @@ class ShipperController extends BaseController {
       dropshipper: state.dropshipper,
     );
 
-    Get.to(() => const ReceiverScreen(),
+    Get.to(const ReceiverScreen(),
         arguments: {
           "isEdit": state.isEdit,
           "cod_ongkir": state.codOgkir,

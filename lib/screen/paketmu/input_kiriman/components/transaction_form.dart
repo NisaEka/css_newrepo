@@ -604,12 +604,10 @@ class TransactionForm extends StatelessWidget {
                                 c.state.draft != null
                             ? CustomFilledButton(
                                 color: whiteColor,
-                                borderColor: c.state.formValidate
-                                    ? primaryColor(context)
-                                    : greyColor,
-                                fontColor: c.state.formValidate
-                                    ? primaryColor(context)
-                                    : greyColor,
+                                borderColor:
+                                    c.state.formValidate ? blueJNE : greyColor,
+                                fontColor:
+                                    c.state.formValidate ? blueJNE : greyColor,
                                 title: 'Simpan ke Draft'.tr,
                                 onPressed: () {
                                   c.state.formValidate ? c.saveDraft() : null;

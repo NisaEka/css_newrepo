@@ -23,7 +23,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
               title: 'Riwayat Kiriman'.tr,
               leading: CustomBackButton(
                 onPressed: () => Get.delete<DashboardController>()
-                    .then((_) => Get.offAll(() => const DashboardScreen())),
+                    .then((_) => Get.offAll(const DashboardScreen())),
               ),
               action: const [
                 TransactionFilterButton(),

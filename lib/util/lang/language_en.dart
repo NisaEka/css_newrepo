@@ -39,7 +39,7 @@ class LanguageEN {
       "Selanjutnya": "Next",
       "Kirim sebagai dropshipper": "Transaction as dropshipper",
       "Lihat Data Dropshipper": "List Dropshippers",
-      "Pilih Akun Terlebih dahulu": "You have to choose an account",
+      "Pilih Account Terlebih dahulu": "You have to choose an account",
       "Nama Penerima": "Consignee Name",
       "Kota Penerima": "Consignee City",
       "Kiriman": "Shipments",
@@ -438,8 +438,6 @@ class LanguageEN {
       "Nomor resi tidak boleh kosong": "Airwaybill cannot be empty",
       "Nomor resi maksimal 16 karakter": "Airwaybill maximum 16 characters",
       "Koli": "Packages",
-      "Pastikan semua aktvitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile":
-          "Make sure all activities are completed. Thank you for using CSS Mobile"
     };
   }
 }

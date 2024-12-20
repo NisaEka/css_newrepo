@@ -15,7 +15,7 @@ class TransactionStatusButton extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-              color: blueJNE,
+              color: primaryColor(context),
               border: Border.all(),
               borderRadius: BorderRadius.circular(8),
             ),
@@ -30,11 +30,12 @@ class TransactionStatusButton extends StatelessWidget {
                     c.state.pagingController.refresh();
                   },
                   child: Container(
-                    width: Get.width / 4.5,
+                    width: Get.width / 5,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color:
-                          c.state.selectedKiriman == 0 ? blueJNE : whiteColor,
+                      color: c.state.selectedKiriman == 0
+                          ? primaryColor(context)
+                          : whiteColor,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(8),
                         bottomLeft: Radius.circular(8),
@@ -76,8 +77,9 @@ class TransactionStatusButton extends StatelessWidget {
                     width: Get.width / 5,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color:
-                          c.state.selectedKiriman == 1 ? blueJNE : whiteColor,
+                      color: c.state.selectedKiriman == 1
+                          ? primaryColor(context)
+                          : whiteColor,
                       // border: const Border(
                       //   right: BorderSide(color: greyDarkColor1),
                       //   left: BorderSide(color: greyDarkColor1),
@@ -116,8 +118,9 @@ class TransactionStatusButton extends StatelessWidget {
                     width: Get.width / 5,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color:
-                          c.state.selectedKiriman == 2 ? blueJNE : whiteColor,
+                      color: c.state.selectedKiriman == 2
+                          ? primaryColor(context)
+                          : whiteColor,
                       // border: const Border(
                       //   right: BorderSide(color: greyDarkColor1),
                       // ),
@@ -155,8 +158,9 @@ class TransactionStatusButton extends StatelessWidget {
                     width: Get.width / 4.5,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color:
-                          c.state.selectedKiriman == 3 ? blueJNE : whiteColor,
+                      color: c.state.selectedKiriman == 3
+                          ? primaryColor(context)
+                          : whiteColor,
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(8),
                         bottomRight: Radius.circular(8),

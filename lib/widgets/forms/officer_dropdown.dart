@@ -89,6 +89,9 @@ class _OriginDropdownState extends State<OfficerDropdown> {
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   e.name.toString(),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: textColor(context),
+                      ),
                 ),
               );
             },
@@ -99,7 +102,9 @@ class _OriginDropdownState extends State<OfficerDropdown> {
             hintText: widget.label ?? "Petugas".tr,
             searchHintText: widget.label ?? 'Masukan Nama Petugas'.tr,
             prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.titleMedium,
+            textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: formTextColor(context),
+                ),
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,
           );

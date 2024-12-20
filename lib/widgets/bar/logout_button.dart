@@ -50,8 +50,8 @@ class LogoutButton extends StatelessWidget {
                       subtitle:
                           "Pastikan semua aktvitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile"
                               .tr,
-                      backButtonTitle: "Tidak".tr,
-                      confirmButtonTitle: "Keluar".tr,
+                      backButtonTitle: "Tidak",
+                      confirmButtonTitle: "Keluar",
                       onBack: Get.back,
                       onConfirm: () => doLogout(),
                     ),

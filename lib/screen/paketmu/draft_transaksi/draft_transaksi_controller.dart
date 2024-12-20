@@ -73,7 +73,7 @@ class DraftTransaksiController extends BaseController {
 
   void validate(int index) {
     var data = draftList.elementAt(index);
-    Get.to(() => const TransactionScreen(), arguments: {
+    Get.to(const TransactionScreen(), arguments: {
       "cod_ongkir": data.delivery?.codOngkir == "Y" ? true : false,
       "account": data.dataAccount,
       "origin": data.origin,

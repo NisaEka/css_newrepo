@@ -29,7 +29,7 @@ class ProfileController extends BaseController {
     state.pop = true;
     update();
     Get.delete<DashboardController>().then(
-      (_) => Get.offAll(() => const DashboardScreen()),
+      (_) => Get.offAll(const DashboardScreen()),
     );
     return true;
   }

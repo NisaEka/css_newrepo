@@ -24,7 +24,7 @@ class ListPenerimaScreen extends StatelessWidget {
             appBar: ContactAppbar(
               isDropshipper: false,
               isOnline: controller.isOnline,
-              onAdd: () => Get.to(() => const AddReceiverScreen()),
+              onAdd: () => Get.to(const AddReceiverScreen()),
             ),
             body: RefreshIndicator(
               onRefresh: () => controller.initData(),

@@ -23,8 +23,7 @@ class ListDropshipperScreen extends StatelessWidget {
             appBar: ContactAppbar(
               isDropshipper: true,
               isOnline: controller.isOnline,
-              onAdd: () =>
-                  Get.to(() => const AddDropshipperScreen(), arguments: {
+              onAdd: () => Get.to(const AddDropshipperScreen(), arguments: {
                 'account': controller.account,
                 'isOfficer': controller.isOfficer,
                 'userBasic': controller.userBasic,
