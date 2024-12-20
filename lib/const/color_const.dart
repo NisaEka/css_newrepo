@@ -46,3 +46,7 @@ Color secondaryColor(BuildContext context) {
 Color textColor(BuildContext context) {
   return AppConst.isLightTheme(context) ? Colors.black : whiteColor;
 }
+
+Color formTextColor(BuildContext context) {
+  return AppConst.isLightTheme(context) ? greyDarkColor2 : warningColor;
+}

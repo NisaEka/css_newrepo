@@ -131,13 +131,13 @@ class ReceiverForm extends StatelessWidget {
                                                     ?.validate() ==
                                                 true ||
                                             c.state.isValidate)
-                                        ? blueJNE
+                                        ? primaryColor(context)
                                         : greyColor,
                                     fontColor: c.state.formKey.currentState
                                                     ?.validate() ==
                                                 true ||
                                             c.state.isValidate
-                                        ? blueJNE
+                                        ? primaryColor(context)
                                         : greyColor,
                                     onPressed: () => c
                                                     .state.formKey.currentState
@@ -152,7 +152,7 @@ class ReceiverForm extends StatelessWidget {
                               color: c.state.formKey.currentState?.validate() ==
                                           true ||
                                       c.state.isValidate
-                                  ? blueJNE
+                                  ? primaryColor(context)
                                   : greyColor,
                               title: "Selanjutnya".tr,
                               suffixIcon: Icons.arrow_circle_right_rounded,

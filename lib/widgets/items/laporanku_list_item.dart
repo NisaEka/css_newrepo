@@ -37,8 +37,7 @@ class LaporankuListItem extends StatelessWidget {
                   Get.to(() => const LacakKirimanScreen(), arguments: {
                 'nomor_resi': data?.cnote ?? '',
               }),
-              foregroundColor:
-                  AppConst.isLightTheme(context) ? blueJNE : redJNE,
+              foregroundColor: primaryColor(context),
               icon: Icons.search,
               label: 'Lacak'.tr,
             )

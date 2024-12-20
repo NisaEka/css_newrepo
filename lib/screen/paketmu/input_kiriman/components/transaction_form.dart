@@ -53,6 +53,10 @@ class TransactionForm extends StatelessWidget {
                               width: Get.width / 2.4,
                               isRequired: true,
                               value: c.state.goodType.text,
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(color: formTextColor(context)),
                               readOnly: c.state.isSelectGoodsType,
                               selectedItem: c.state.goodType.text,
                               items: [
@@ -62,8 +66,9 @@ class TransactionForm extends StatelessWidget {
                                     'Paket'.tr,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .titleMedium
-                                        ?.copyWith(fontWeight: regular),
+                                        .bodyLarge
+                                        ?.copyWith(
+                                            color: formTextColor(context)),
                                   ),
                                 ),
                                 DropdownMenuItem(
@@ -72,8 +77,9 @@ class TransactionForm extends StatelessWidget {
                                     'Dokumen'.tr,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .titleMedium
-                                        ?.copyWith(fontWeight: regular),
+                                        .bodyLarge
+                                        ?.copyWith(
+                                            color: formTextColor(context)),
                                   ),
                                 ),
                               ],
@@ -134,9 +140,10 @@ class TransactionForm extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: AppConst.isLightTheme(context)
-                                ? greyDarkColor2
-                                : warningColor),
+                            border: Border.all(
+                                color: AppConst.isLightTheme(context)
+                                    ? greyDarkColor2
+                                    : warningColor),
                           ),
                           child: ListTile(
                             contentPadding:
@@ -581,10 +588,12 @@ class TransactionForm extends StatelessWidget {
                             : const SizedBox(),
                         c.state.isOnline
                             ? CustomFilledButton(
-                                color: c.isValidate() ? blueJNE : greyColor,
+                                color: c.isValidate()
+                                    ? primaryColor(context)
+                                    : greyColor,
                                 suffixIcon: (c.state.isEdit ?? false)
-                                            ? Icons.edit_note_rounded
-                                            : Icons.qr_code_rounded,
+                                    ? Icons.edit_note_rounded
+                                    : Icons.qr_code_rounded,
                                 title: (c.state.isEdit ?? false)
                                     ? 'Edit Transaksi'.tr
                                     : 'Buat Transaksi'.tr,

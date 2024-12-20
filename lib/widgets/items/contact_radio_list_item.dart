@@ -62,14 +62,20 @@ class ContactRadioListItem extends StatelessWidget {
             decoration: BoxDecoration(
               color: isLoading ? greyColor : Colors.transparent,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: isSelected ? redJNE : greyColor),
+              border: Border.all(
+                  color: isSelected ? secondaryColor(context) : greyColor),
             ),
             child: RadioListTile(
               value: value,
               groupValue: groupValue,
               onChanged: onChanged,
+              fillColor: WidgetStateProperty.resolveWith<Color>(
+                (states) => groupValue == value
+                    ? primaryColor(context)
+                    : secondaryColor(context),
+              ),
               // shape: Border.all(color: isSelected ? redJNE : greyColor),
-              selectedTileColor: redJNE,
+              selectedTileColor: primaryColor(context),
               title: Text(name ?? '',
                   style: Theme.of(context).textTheme.titleMedium),
               subtitle: Text(
