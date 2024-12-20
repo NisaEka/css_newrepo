@@ -54,12 +54,12 @@ class EclaimItems extends StatelessWidget {
                     ),
                     noItemsFoundIndicatorBuilder: (context) =>
                         const DataEmpty(),
-                    noMoreItemsIndicatorBuilder: (context) => const Center(
+                    noMoreItemsIndicatorBuilder: (context) => Center(
                       child: Divider(
                         indent: 100,
                         endIndent: 100,
                         thickness: 2,
-                        color: blueJNE,
+                        color: primaryColor(context),
                       ),
                     ),
                     newPageProgressIndicatorBuilder: (context) =>
