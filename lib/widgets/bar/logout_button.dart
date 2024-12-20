@@ -48,10 +48,10 @@ class LogoutButton extends StatelessWidget {
                     builder: (context) => DefaultAlertDialog(
                       title: "Anda akan keluar".tr,
                       subtitle:
-                          "Pastikan semua aktvitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile."
+                          "Pastikan semua aktvitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile"
                               .tr,
-                      backButtonTitle: "Tidak",
-                      confirmButtonTitle: "Keluar",
+                      backButtonTitle: "Tidak".tr,
+                      confirmButtonTitle: "Keluar".tr,
                       onBack: Get.back,
                       onConfirm: () => doLogout(),
                     ),

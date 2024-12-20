@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
+import 'package:css_mobile/screen/pengaturan/tentang/tentang_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/logout_button.dart';
@@ -154,7 +155,11 @@ class PengaturanScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              ))
+              )),
+          SettingListItem(
+              title: 'Tentang'.tr,
+              leading: Icons.info_rounded,
+              onTap: () => Get.to(() => const Tentangscreen()))
         ],
       ),
     );

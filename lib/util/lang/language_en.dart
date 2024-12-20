@@ -39,7 +39,7 @@ class LanguageEN {
       "Selanjutnya": "Next",
       "Kirim sebagai dropshipper": "Transaction as dropshipper",
       "Lihat Data Dropshipper": "List Dropshippers",
-      "Pilih Account Terlebih dahulu": "You have to choose an account",
+      "Pilih Akun Terlebih dahulu": "You have to choose an account",
       "Nama Penerima": "Consignee Name",
       "Kota Penerima": "Consignee City",
       "Kiriman": "Shipments",

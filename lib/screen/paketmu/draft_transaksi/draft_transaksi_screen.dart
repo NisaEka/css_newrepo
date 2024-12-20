@@ -27,7 +27,7 @@ class DraftTransaksiScreen extends StatelessWidget {
             canPop: controller.pop,
             onPopInvokedWithResult: (bool didPop, Object? result) =>
                 Get.delete<DashboardController>().then(
-              (_) => Get.offAll(const DashboardScreen()),
+              (_) => Get.offAll(() => const DashboardScreen()),
             ),
             child: Scaffold(
               appBar: _appBarContent(controller),
@@ -46,7 +46,7 @@ class DraftTransaksiScreen extends StatelessWidget {
           if (fromMenu) {
             Get.back();
           } else {
-            Get.offAll(const DashboardScreen());
+            Get.offAll(() => const DashboardScreen());
           }
         },
       ),
@@ -72,7 +72,7 @@ class DraftTransaksiScreen extends StatelessWidget {
         children: [
           CustomSearchField(
             controller: c.search,
-            hintText: 'Cari transaksimu'.tr,
+            hintText: 'Cari Transaksimu'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
               color: AppConst.isLightTheme(context) ? whiteColor : blueJNE,

@@ -453,7 +453,7 @@ class DashboardController extends BaseController {
       final refreshToken = await StorageCore().readRefreshToken();
       if (accessToken == null && refreshToken == null) {
         StorageCore().deleteLogin();
-        Get.offAll(const DashboardScreen());
+        Get.offAll(() => const DashboardScreen());
       }
     }
 
