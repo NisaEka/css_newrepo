@@ -24,7 +24,14 @@ class NetworkCore {
   List<Map<dynamic, dynamic>> failedRequests = [];
   bool isRefreshing = false;
 
+  Future<String> _getLocale() async {
+    final storage = Get.find<StorageCore>();
+    return await storage.readString(StorageCore.localeApp);
+  }
+
   Future retryRequests(token) async {
+    final locale = await _getLocale();
+
     for (var i = 0; i < failedRequests.length; i++) {
       RequestOptions requestOptions =
           failedRequests[i]['err'].requestOptions as RequestOptions;
@@ -33,6 +40,7 @@ class NetworkCore {
         'Authorization': 'Bearer $token',
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        "Accept-Language": locale,
       };
 
       await refreshDio.fetch(requestOptions).then(
@@ -161,7 +169,10 @@ class NetworkCore {
     base.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
+          final locale = await _getLocale();
+
           AppLogger.i('Option path ${options.path}');
+
           // Skip attaching token if `useAuth` is false
           if (options.extra['skipAuth'] == false ||
               options.extra['skipAuth'] == null) {
@@ -170,6 +181,9 @@ class NetworkCore {
               options.headers['Authorization'] = 'Bearer $accessToken';
             }
           }
+
+          options.headers['Accept-Language'] = locale;
+
           return handler.next(options);
         },
         onResponse: (response, handler) {
