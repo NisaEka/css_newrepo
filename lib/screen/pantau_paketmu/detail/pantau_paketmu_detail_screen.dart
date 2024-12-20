@@ -13,6 +13,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:intl/intl.dart';
 
 class PantauPaketmuDetailScreen extends StatelessWidget {
   const PantauPaketmuDetailScreen({super.key});
@@ -50,7 +51,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
   Widget _mainContent(
       BuildContext context, PantauPaketmuDetailController controller) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +68,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomCodeLabel(
-                        label: controller.pantauPaketmu.awbNo,
+                        label: controller.pantauPaketmu.awbNo ?? '',
                         isLoading: false,
                       ),
                       Row(
@@ -88,7 +89,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                                 StatefulBuilder(builder: (BuildContext context,
                                     StateSetter setState) {
                                   return HubungiAkuDialog(
-                                    awb: controller.pantauPaketmu.awbNo,
+                                    awb: controller.pantauPaketmu.awbNo ?? '',
                                     allow: controller.allow ?? MenuModel(),
                                   );
                                 }),
@@ -163,7 +164,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Tanggal Transaksi",
-                    controller.pantauPaketmu.createDate.toDateTimeFormat(),
+                    controller.pantauPaketmu.createDate?.toDateTimeFormat(),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
@@ -260,7 +261,8 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                       context,
                       "Nominal COD",
-                      'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
+                      'Rp. ${NumberFormat('#,##0.00', 'id').format(controller.pantauPaketmu.codAmount ?? 0)}',
+                      // 'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
                       controller.isLoading,
                       style: listTitleTextStyle.copyWith(
                           color: AppConst.isLightTheme(context)

@@ -26,7 +26,7 @@ class PantauStatusButton extends StatelessWidget {
                   onTap: () {
                     c.state.selectedKiriman = 0;
                     c.state.transType = '';
-                    c.state.selectedTipeKiriman.value = 'cod';
+                    c.state.selectedTipeKiriman = 'cod';
                     c.update();
                     c.state.pagingController.refresh();
                   },
@@ -70,7 +70,7 @@ class PantauStatusButton extends StatelessWidget {
                   onTap: () {
                     c.state.selectedKiriman = 1;
                     c.state.transType = 'cod ongkir';
-                    c.state.selectedTipeKiriman.value = 'cod ongkir';
+                    c.state.selectedTipeKiriman = 'cod ongkir';
                     c.update();
                     c.state.pagingController.refresh();
                   },
@@ -111,7 +111,7 @@ class PantauStatusButton extends StatelessWidget {
                   onTap: () {
                     c.state.selectedKiriman = 2;
                     c.state.transType = 'NON COD';
-                    c.state.selectedTipeKiriman.value = 'non cod';
+                    c.state.selectedTipeKiriman = 'non cod';
                     c.update();
                     c.state.pagingController.refresh();
                   },

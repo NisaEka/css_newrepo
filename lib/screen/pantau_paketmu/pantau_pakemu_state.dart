@@ -1,5 +1,6 @@
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_list_model.dart';
+import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ class PantauPaketmuState extends GetxController {
   // Reactive List for countList
   // final countList = RxList<dynamic>([]);
   List<PantauPaketmuCountModel> countList = [];
+  List<PantauPaketmuCountModel> filteredCountList = [];
 
   // Reactive TextEditingControllers
   final startDateField = TextEditingController();
@@ -32,11 +34,15 @@ class PantauPaketmuState extends GetxController {
       DateTime.now().year, DateTime.now().month, DateTime.now().day, 0);
 
   // Reactive String variables
-  final selectedStatusKiriman = Rx<String>('Total Kiriman');
-  final selectedPetugasEntry = Rxn<String>('SEMUA');
-  final selectedStatusPrint = Rx<String>('SEMUA');
-  final selectedTipeKiriman = Rx<String>('cod');
+  // final selectedStatusKiriman = Rx<String>('Total Kiriman');
+  // final selectedPetugasEntry = Rxn<String>('SEMUA');
+  // final selectedStatusPrint = Rx<String>('SEMUA');
+  // final selectedTipeKiriman = Rx<String>('cod');
 
+  String? selectedStatusKiriman;
+  PetugasModel? selectedPetugasEntry;
+  String? selectedStatusPrint;
+  String? selectedTipeKiriman;
   // Reactive DateFilter
   final date = Rxn<String>(
       "${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).millisecondsSinceEpoch}-${DateTime.now().millisecondsSinceEpoch}");
@@ -60,9 +66,9 @@ class PantauPaketmuState extends GetxController {
   final isSelectAll = Rx<bool>(false);
 
   // Reactive Lists for Status and Officer
-  final listStatusKiriman = RxList<String>([]);
+  // final listStatusKiriman = RxList<String>([]);
   final listOfficerEntry = RxList<String>([]);
-  final listTipeKiriman = RxList<String>(["cod", "non cod", "cod ongkir"]);
+  final listTipeKiriman = RxList<String>(["cod", "cod ongkir", "non cod"]);
   final listStatusPrint =
       RxList<String>(["SEMUA", "SUDAH DIPRINT", "BELUM DIPRINT"]);
 
@@ -83,4 +89,5 @@ class PantauPaketmuState extends GetxController {
   List<Map<String, dynamic>>? transDate;
   List<PantauPaketmuCountModel> selectedPantauPaketmu = [];
   List<PantauPaketmuListModel> selectedTransaction = [];
+  List<String> listStatusKiriman = [];
 }

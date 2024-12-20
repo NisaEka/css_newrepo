@@ -28,10 +28,9 @@ class TransactionAccountCard extends StatelessWidget {
             // alignment: Alignment.topRight,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: AppConst.isLightTheme(context)
-                  ? redJNE
-                  : warningColor,
-              borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(12)),
+              color: AppConst.isLightTheme(context) ? redJNE : warningColor,
+              borderRadius:
+                  const BorderRadius.only(bottomLeft: Radius.circular(12)),
             ),
             child: Text(
               account.accountService ?? '',

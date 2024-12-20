@@ -40,7 +40,8 @@ class ReceiverForm extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () =>
-                                  Get.to(const ListPenerimaScreen())?.then(
+                                  Get.to(() => const ListPenerimaScreen())
+                                      ?.then(
                                 (result) {
                                   c.state.receiver = result;
                                   c.update();

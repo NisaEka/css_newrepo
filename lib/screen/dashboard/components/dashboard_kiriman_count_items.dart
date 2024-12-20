@@ -3,7 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
-import 'package:css_mobile/widgets/dialog/circular_loading.dart';
+// import 'package:css_mobile/widgets/dialog/circular_loading.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/items/line_chart_item.dart';
 import 'package:css_mobile/widgets/items/transaction_card.dart';
@@ -80,7 +80,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                   ? LineChartItem(kirimanKamu.pantauChart
                                       .map((e) => e.toDouble())
                                       .toList())
-                                  : const CircularLoading(),
+                                  : const SizedBox(),
                             ),
                             notificationLabel: "Masih dikamu".tr,
                             notificationCount: transSummary?.summary

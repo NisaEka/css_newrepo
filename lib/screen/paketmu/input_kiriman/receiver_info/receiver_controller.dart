@@ -152,7 +152,7 @@ class ReceiverController extends BaseController {
       trans.toString(),
     );
     Get.to(
-      const TransactionScreen(),
+      () => const TransactionScreen(),
       transition: Transition.rightToLeft,
       arguments: {
         'isEdit': state.isEdit,

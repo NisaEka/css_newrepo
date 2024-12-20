@@ -255,7 +255,7 @@ class RiwayatKirimanController extends BaseController {
           ? state.isSelectAll = true
           : state.isSelectAll = false;
     } else {
-      Get.to(const DetailTransactionScreen(), arguments: {
+      Get.to(() => const DetailTransactionScreen(), arguments: {
         'awb': item.awb,
         'data': item,
       });

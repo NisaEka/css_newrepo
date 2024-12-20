@@ -68,9 +68,10 @@ class NotificationController extends BaseController {
 
   readMessage(NotificationModel value) {
     if (value.title?.split(' ').first == "Laporanku") {
-      Get.to(const LaporankuScreen())?.then((_) => initData());
+      Get.to(() => const LaporankuScreen())?.then((_) => initData());
     } else {
-      Get.to(NotificationDetailScreen(data: value))?.then((_) => initData());
+      Get.to(() => NotificationDetailScreen(data: value))
+          ?.then((_) => initData());
     }
 
     unreadNotifList.removeWhere(

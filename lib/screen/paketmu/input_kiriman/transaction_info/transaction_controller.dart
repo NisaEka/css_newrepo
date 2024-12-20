@@ -445,7 +445,7 @@ class TransactionController extends BaseController {
               ),
               thirdButtonTitle: "Kembali ke Beranda".tr,
               onThirdAction: () => Get.delete<TransactionController>().then(
-                (_) => Get.offAll(const DashboardScreen()),
+                (_) => Get.offAll(() => const DashboardScreen()),
               ),
               firstButtonTitle: "Lihat Draft".tr,
               onFirstAction: () => Get.delete<DraftTransaksiController>()
@@ -539,7 +539,7 @@ class TransactionController extends BaseController {
               message: 'Update Berhasil'.tr,
               thirdButtonTitle: "Kembali ke Beranda".tr,
               onThirdAction: () => Get.offAll(
-                const DashboardScreen(),
+                () => const DashboardScreen(),
                 transition: Transition.rightToLeft,
                 arguments: {
                   'awb': v.data?.awb,
@@ -703,7 +703,7 @@ class TransactionController extends BaseController {
               message: "${'Transaksi Berhasil'.tr}\n${v.data?.awb}",
               thirdButtonTitle: "Kembali ke Beranda".tr,
               onThirdAction: () => Get.offAll(
-                const DashboardScreen(),
+                () => const DashboardScreen(),
                 transition: Transition.rightToLeft,
                 arguments: {
                   'awb': v.data?.awb,

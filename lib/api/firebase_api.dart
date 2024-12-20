@@ -183,6 +183,6 @@ class FirebaseApi {
 
   static void _handleTapOnNotification(RemoteMessage data) {
     AppLogger.i("Navigating to notification screen");
-    Get.to(const NotificationScreen());
+    Get.to(() => const NotificationScreen());
   }
 }
