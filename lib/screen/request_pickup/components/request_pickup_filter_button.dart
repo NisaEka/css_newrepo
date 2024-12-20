@@ -148,12 +148,12 @@ class RequstPickupFilterButton extends HookWidget {
                                 decoration: BoxDecoration(
                                   color: c.state.filterStatus ==
                                           c.state.listStatusKiriman[index]
-                                      ? blueJNE
+                                      ? primaryColor(context)
                                       : whiteColor,
                                   border: Border.all(
                                     color: c.state.filterStatus !=
                                             c.state.listStatusKiriman[index]
-                                        ? blueJNE
+                                        ? primaryColor(context)
                                         : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
@@ -165,7 +165,7 @@ class RequstPickupFilterButton extends HookWidget {
                                       color: c.state.filterStatus ==
                                               c.state.listStatusKiriman[index]
                                           ? whiteColor
-                                          : blueJNE),
+                                          : primaryColor(context)),
                                 ),
                               ),
                             ),
@@ -210,12 +210,12 @@ class RequstPickupFilterButton extends HookWidget {
                                 decoration: BoxDecoration(
                                   color: c.state.selectedDeliveryType ==
                                           c.state.listDeliveryType[index]
-                                      ? blueJNE
+                                      ? primaryColor(context)
                                       : whiteColor,
                                   border: Border.all(
                                     color: c.state.selectedDeliveryType !=
                                             c.state.listDeliveryType[index]
-                                        ? blueJNE
+                                        ? primaryColor(context)
                                         : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
@@ -227,7 +227,7 @@ class RequstPickupFilterButton extends HookWidget {
                                       color: c.state.selectedDeliveryType ==
                                               c.state.listDeliveryType[index]
                                           ? whiteColor
-                                          : blueJNE),
+                                          : primaryColor(context)),
                                 ),
                               ),
                             ),

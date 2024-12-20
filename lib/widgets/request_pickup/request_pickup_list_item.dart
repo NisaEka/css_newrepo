@@ -71,6 +71,10 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
             onChanged: (newValue) {
               widget.onTap(widget.data!.awb);
             },
+            fillColor: widget.checked
+                ? WidgetStateColor.resolveWith(
+                    (states) => primaryColor(context))
+                : WidgetStateColor.resolveWith((states) => whiteColor),
           ),
         ],
       );

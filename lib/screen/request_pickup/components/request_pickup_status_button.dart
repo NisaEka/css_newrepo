@@ -59,7 +59,7 @@ class RequestPickupStatusButton extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     decoration: BoxDecoration(
                       color: c.state.filterStatus == thirdStatus
-                          ? blueJNE
+                          ? primaryColor(context)
                           : whiteColor,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(8),
@@ -102,7 +102,7 @@ class RequestPickupStatusButton extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     decoration: BoxDecoration(
                       color: c.state.filterStatus == secondStatus
-                          ? blueJNE
+                          ? primaryColor(context)
                           : whiteColor,
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(8),

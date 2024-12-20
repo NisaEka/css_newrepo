@@ -51,6 +51,7 @@ class CustomTheme {
           color: greyDarkColor1,
         ),
         bodySmall: itemTextStyle.copyWith(color: greyDarkColor1, fontSize: 12),
+        bodyMedium: itemTextStyle.copyWith(color: greyDarkColor1, fontSize: 14),
         bodyLarge: const TextStyle(
           fontSize: 16,
           color: greyDarkColor1,
@@ -201,6 +202,11 @@ class CustomTheme {
         ),
         titleLarge: appTitleTextStyle.copyWith(color: greyLightColor1),
         bodySmall: itemTextStyle.copyWith(
+          fontSize: 12,
+          color: greyLightColor1,
+        ),
+        bodyMedium: itemTextStyle.copyWith(
+          fontSize: 14,
           color: greyLightColor1,
         ),
         bodyLarge: const TextStyle(
@@ -340,7 +346,7 @@ class CustomTheme {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(blueJNE),
+        backgroundColor: WidgetStateProperty.all(warningColor),
       ),
     ),
     radioTheme: RadioThemeData(
