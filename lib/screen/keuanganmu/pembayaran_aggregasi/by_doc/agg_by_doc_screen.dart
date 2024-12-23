@@ -47,16 +47,14 @@ class AggByDocScreen extends StatelessWidget {
           Text(
             c.aggregationID,
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-            color: AppConst.isLightTheme(context)
-                ? blueJNE
-                : warningColor,
-            fontWeight: bold),
+                color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                fontWeight: bold),
           ),
           Text(
             "Document No".tr,
             style: Theme.of(context).textTheme.labelSmall,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           CustomSearchField(
             margin: const EdgeInsets.only(top: 0),
             controller: c.searchField,
