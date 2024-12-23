@@ -96,7 +96,12 @@ class _ImagePopupDialogState extends State<ImagePopupDialog> {
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelLarge,
           ),
-          child: Text('Tutup'.tr),
+          child: Text(
+            'Tutup'.tr,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color:
+                    AppConst.isLightTheme(context) ? Colors.black : whiteColor),
+          ),
           onPressed: () => Get.back(),
         ),
       ],

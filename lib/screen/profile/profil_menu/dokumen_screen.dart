@@ -93,7 +93,8 @@ class DokumenScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: const Icon(Icons.info_rounded, color: redJNE),
+            icon: Icon(Icons.info_rounded,
+                color: AppConst.isLightTheme(context) ? redJNE : warningColor),
             tooltip: 'informasi'.tr,
           ),
         )
