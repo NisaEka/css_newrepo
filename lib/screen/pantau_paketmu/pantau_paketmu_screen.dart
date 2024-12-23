@@ -6,6 +6,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_paketmu_list_filter.dart';
 import 'package:css_mobile/screen/pantau_paketmu/detail/pantau_paketmu_detail_screen.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/custom_formatter.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
@@ -90,11 +91,12 @@ class PantauPaketmuScreen extends StatelessWidget {
                     data: TransactionModel(
                       awb: item.awbNo,
                       orderId: item.orderId,
-                      statusAwb: item.statusPod,
+                      statusAwb: item.statusawb,
                       serviceCode: item.service,
                       type: item.awbType,
                       receiverName: item.receiverName,
-                      createdDate: item.awbDate,
+                      createdDate:
+                          item.awbDate?.toString().toLongDateTimeFormat(),
                     ),
                     isLoading: false,
                     index: index,

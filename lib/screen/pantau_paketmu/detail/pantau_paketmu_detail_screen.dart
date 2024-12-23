@@ -172,9 +172,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     context,
                     "Tanggal Serah Terima / Pickup",
                     controller.pantauPaketmu.hoCourierDate
-                            ?.toDateTimeFormat() ??
+                            ?.toLongDateTimeFormat() ??
                         controller.pantauPaketmu.puLastAttempStatusDate
-                            ?.toDateTimeFormat() ??
+                            ?.toLongDateTimeFormat() ??
                         "-",
                     controller.isLoading,
                   ),
@@ -314,7 +314,8 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Tanggal Status Pengantaran",
-                    controller.pantauPaketmu.tglReceived?.toDateTimeFormat(),
+                    controller.pantauPaketmu.tglReceived
+                        ?.toLongDateTimeFormat(),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
@@ -389,7 +390,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       context,
                       "Tanggal Pembayaran",
                       controller.pantauPaketmu.repcssPaymentDate
-                              ?.toDateTimeFormat() ??
+                              ?.toLongDateTimeFormat() ??
                           "-",
                       controller.isLoading,
                     ),
