@@ -160,6 +160,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             (data?.apiType?.isNotEmpty ?? false)
                                 ? Container(
@@ -190,7 +191,6 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                     ),
                                   )
                                 : const SizedBox(),
-                            const SizedBox(width: 5),
                             Column(
                               children: [
                                 (data?.statusAwb?.isNotEmpty ?? false)
