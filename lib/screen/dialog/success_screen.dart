@@ -1,7 +1,5 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
@@ -9,95 +7,133 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 class SuccessScreen extends StatelessWidget {
-  final String message;
-  final VoidCallback? nextAction;
-  final VoidCallback? secondAction;
-  final VoidCallback? thirdAction;
-  final String? buttonTitle;
+  final String? message;
+  final VoidCallback? onThirdAction;
+  final VoidCallback? onFirstAction;
+  final VoidCallback? onSecondAction;
   final String? thirdButtonTitle;
   final String? secondButtonTitle;
+  final String? firstButtonTitle;
   final Widget? icon;
   final Color? fontColor;
+  final String? lottie;
+  final Widget? customAction;
+  final Widget? customInfo;
+  final double? iconHeight;
+  final double? iconMargin;
 
   const SuccessScreen({
     super.key,
-    required this.message,
-    this.nextAction,
-    this.buttonTitle,
+    this.message,
+    this.onThirdAction,
+    this.thirdButtonTitle,
     this.icon,
     this.fontColor,
-    this.secondAction,
-    this.thirdAction,
+    this.onFirstAction,
+    this.onSecondAction,
+    this.firstButtonTitle,
     this.secondButtonTitle,
-    this.thirdButtonTitle,
+    this.lottie,
+    this.customAction,
+    this.customInfo,
+    this.iconHeight,
+    this.iconMargin,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Stack(
         children: [
           const LogoHeader(),
+          Positioned(
+            top: iconMargin ?? 150,
+            left: 0,
+            right: 0,
+            child: icon ??
+                Lottie.asset(
+                  lottie ?? ImageConstant.successLottie,
+                  height: iconHeight ?? Get.width / 1.2,
+                  fit: BoxFit.cover,
+                ),
+          ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              icon ??
-                  Lottie.asset(ImageConstant.successLottie,
-                      height: Get.width / 1.2),
-              Text(
-                message.tr,
-                style: appTitleTextStyle.copyWith(
-                    color: fontColor ??
-                        (AppConst.isLightTheme(context)
-                            ? greyDarkColor1
-                            : greyLightColor1)),
-                textAlign: TextAlign.center,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Container(
+                  //   color: Colors.grey,
+                  //   child: icon ??
+                  //       Lottie.asset(
+                  //         lottie ?? ImageConstant.successLottie,
+                  //         // height: iconHeight ?? Get.width / 1.2,
+                  //         fit: BoxFit.cover,
+                  //       ),
+                  // ),
+                  (message?.isNotEmpty ?? false)
+                      ? SizedBox(
+                          height: Get.width * 0.5,
+                          width: Get.width,
+                          child: Text(
+                            message?.tr ?? '',
+                            style: Theme.of(context).textTheme.titleLarge,
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      : const SizedBox(),
+                  customInfo ?? const SizedBox()
+                ],
               ),
             ],
           ),
-          Column(
-            children: [
-              secondAction != null
-                  ? CustomFilledButton(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      color: whiteColor,
-                      fontColor: blueJNE,
-                      borderColor: blueJNE,
-                      title: secondButtonTitle,
-                      radius: 10,
-                      onPressed: secondAction,
-                    )
-                  : const SizedBox(),
-              thirdAction != null
-                  ? CustomFilledButton(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      color: AppConst.isLightTheme(context)
-                          ? blueJNE
-                          : warningColor,
-                      radius: 10,
-                      title: thirdButtonTitle,
-                      onPressed: thirdAction,
-                    )
-                  : const SizedBox(),
-              buttonTitle != null
-                  ? CustomFilledButton(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      color: Colors.white,
-                      isTransparent: true,
-                      borderColor: blueJNE,
-                      fontColor: AppConst.isLightTheme(context)
-                          ? blueJNE
-                          : warningColor,
-                      radius: 10,
-                      title: buttonTitle?.tr,
-                      onPressed: nextAction,
-                    )
-                  : const SizedBox(),
-            ],
-          ),
+        ],
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          onFirstAction != null
+              ? CustomFilledButton(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  // color: whiteColor,
+                  //
+                  // fontColor: blueJNE,
+                  // borderColor: blueJNE,
+                  color: primaryColor(context),
+                  isTransparent: true,
+                  title: firstButtonTitle,
+                  radius: 10,
+                  onPressed: onFirstAction,
+                )
+              : const SizedBox(),
+          onSecondAction != null
+              ? CustomFilledButton(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  color: primaryColor(context),
+                  radius: 10,
+                  title: secondButtonTitle,
+                  onPressed: onSecondAction,
+                )
+              : const SizedBox(),
+          thirdButtonTitle != null
+              ? CustomFilledButton(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  // color: Colors.white,
+                  isTransparent: true,
+                  // borderColor: blueJNE,
+                  // fontColor: primaryColor(context),
+                  color: primaryColor(context),
+                  radius: 10,
+                  title: thirdButtonTitle?.tr,
+                  onPressed: onThirdAction,
+                )
+              : const SizedBox(),
+          customAction ?? const SizedBox()
         ],
       ),
     );

@@ -70,6 +70,7 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
               child: Column(
                 children: [
                   GestureDetector(
+                    behavior: HitTestBehavior.translucent,
                     onTap: () => {widget.onTap()},
                     child: Row(
                       children: [

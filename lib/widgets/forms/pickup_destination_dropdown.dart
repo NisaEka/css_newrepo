@@ -86,7 +86,12 @@ class _DestinationDropdownState extends State<PickupDestinationDropdown> {
               return Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                child: Text(e.originName ?? ''),
+                child: Text(
+                  e.originName ?? '',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: textColor(context),
+                      ),
+                ),
                 // child: Text('${e.zipCode == null || e.zipCode == '00000' ? '' : '${e.zipCode}; '}'
                 //         '${e.provinceName == null ? '' : '${e.provinceName}; '}'
                 //         '${e.cityName == null ? '' : '${e.cityName}; '}'
@@ -115,7 +120,9 @@ class _DestinationDropdownState extends State<PickupDestinationDropdown> {
             hintText: widget.label ?? "Kota Pengiriman".tr,
             searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
             prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.titleMedium,
+            textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: formTextColor(context),
+                ),
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,
           );

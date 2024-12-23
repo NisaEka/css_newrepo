@@ -41,7 +41,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _addNewAddressWidget(),
+        _addNewAddressWidget(context),
         _addressesWidget(context),
         _pickupTime(context),
         _pickupButton()
@@ -49,7 +49,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
     );
   }
 
-  Widget _addNewAddressWidget() {
+  Widget _addNewAddressWidget(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -60,7 +60,10 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Tambah alamat penjemputan'.tr),
+            Text(
+              'Tambah alamat penjemputan'.tr,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             const Icon(Icons.keyboard_arrow_right)
           ],
         ),
@@ -91,7 +94,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
             },
             noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
             newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-              background: Colors.transparent,
+              background: Colors.blue,
               height: 50,
               size: 30,
             ),
@@ -150,7 +153,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Jam Pickup".tr, style: Theme.of(context).textTheme.bodyLarge),
+          Text("Jam Pickup".tr, style: Theme.of(context).textTheme.bodyMedium),
           OutlinedButton(
             onPressed: () {
               _selectedTime(context).then((value) {

@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +12,8 @@ class AddButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       onPressed: onPressed,
       icon: Icon(
-        Icons.add_circle_outline_rounded,
-        color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+        Icons.add,
+        color: primaryColor(context),
       ),
     );
   }

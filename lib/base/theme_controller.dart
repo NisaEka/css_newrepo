@@ -51,6 +51,7 @@ class CustomTheme {
           color: greyDarkColor1,
         ),
         bodySmall: itemTextStyle.copyWith(color: greyDarkColor1, fontSize: 12),
+        bodyMedium: itemTextStyle.copyWith(color: greyDarkColor1, fontSize: 14),
         bodyLarge: const TextStyle(
           fontSize: 16,
           color: greyDarkColor1,
@@ -201,6 +202,11 @@ class CustomTheme {
         ),
         titleLarge: appTitleTextStyle.copyWith(color: greyLightColor1),
         bodySmall: itemTextStyle.copyWith(
+          fontSize: 12,
+          color: greyLightColor1,
+        ),
+        bodyMedium: itemTextStyle.copyWith(
+          fontSize: 14,
           color: greyLightColor1,
         ),
         bodyLarge: const TextStyle(
@@ -225,10 +231,10 @@ class CustomTheme {
         )),
     datePickerTheme: DatePickerThemeData(
       cancelButtonStyle: TextButton.styleFrom(
-        foregroundColor: redJNE, // button text color
+        foregroundColor: warningColor, // button text color
       ),
       confirmButtonStyle: TextButton.styleFrom(
-        foregroundColor: redJNE, // button text color
+        foregroundColor: warningColor, // button text color
       ),
     ),
     iconButtonTheme: IconButtonThemeData(
@@ -253,7 +259,7 @@ class CustomTheme {
       iconTheme: const IconThemeData(color: whiteColor),
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: WidgetStateColor.resolveWith((states) => redJNE),
+      thumbColor: WidgetStateColor.resolveWith((states) => warningColor),
     ),
     inputDecorationTheme: InputDecorationTheme(
       // filled: true,
@@ -273,7 +279,7 @@ class CustomTheme {
           // style: BorderStyle.solid,
         ),
       ),
-      activeIndicatorBorder: const BorderSide(color: redJNE),
+      activeIndicatorBorder: const BorderSide(color: warningColor),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(
@@ -302,7 +308,7 @@ class CustomTheme {
           8,
         ),
         borderSide: const BorderSide(
-          color: Colors.red,
+          color: whiteColor,
           width: 1,
           style: BorderStyle.solid,
         ),
@@ -340,11 +346,11 @@ class CustomTheme {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(blueJNE),
+        backgroundColor: WidgetStateProperty.all(warningColor),
       ),
     ),
     radioTheme: RadioThemeData(
-      fillColor: WidgetStateColor.resolveWith((states) => redJNE),
+      fillColor: WidgetStateColor.resolveWith((states) => warningColor),
     ),
   );
 
@@ -376,10 +382,10 @@ class CustomTheme {
     return Theme.of(context).copyWith(
       colorScheme: AppConst.isLightTheme(context)
           ? const ColorScheme.light().copyWith(primary: blueJNE)
-          : const ColorScheme.dark().copyWith(primary: redJNE),
+          : const ColorScheme.dark().copyWith(primary: warningColor),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: redJNE, // button text color
+          foregroundColor: secondaryColor(context), // button text color
         ),
       ),
     );

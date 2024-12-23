@@ -1,4 +1,4 @@
-import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
@@ -137,21 +137,33 @@ class EclaimFilterButton extends HookWidget {
                                   value: 'Total',
                                   child: Text(
                                     'Total'.tr.toUpperCase(),
-                                    style: subTitleTextStyle,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                            color: formTextColor(context)),
                                   ),
                                 ),
                                 DropdownMenuItem(
                                   value: 'Diterima',
                                   child: Text(
                                     'Diterima'.tr.toUpperCase(),
-                                    style: subTitleTextStyle,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                            color: formTextColor(context)),
                                   ),
                                 ),
                                 DropdownMenuItem(
                                   value: 'Ditolak',
                                   child: Text(
                                     'Ditolak'.tr.toUpperCase(),
-                                    style: subTitleTextStyle,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                            color: formTextColor(context)),
                                   ),
                                 ),
                               ],

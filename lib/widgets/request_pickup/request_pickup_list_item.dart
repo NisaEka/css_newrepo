@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
@@ -72,6 +71,10 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
             onChanged: (newValue) {
               widget.onTap(widget.data!.awb);
             },
+            fillColor: widget.checked
+                ? WidgetStateColor.resolveWith(
+                    (states) => primaryColor(context))
+                : WidgetStateColor.resolveWith((states) => whiteColor),
           ),
         ],
       );
@@ -110,9 +113,10 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
             ),
             Text(
               (requestPickup?.createdDateSearch ?? '').toShortDateFormat(),
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color:
-                      AppConst.isLightTheme(context) ? blueJNE : warningColor),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(color: primaryColor(context)),
             ),
           ],
         ),

@@ -41,16 +41,18 @@ class CustomStepper extends StatelessWidget {
                           height: 30,
                           width: 30,
                           decoration: BoxDecoration(
-                            color: currentStep >= index ? blueJNE : greyColor,
+                            color: currentStep >= index
+                                ? primaryColor(context)
+                                : greyColor,
                             borderRadius: BorderRadius.circular(50),
                             // border: Border.all(
                             //   color: currentStep >= index ? Colors.transparent : whiteColor,
                             // ),
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(
-                                color: redJNE,
+                                color: secondaryColor(context),
                                 spreadRadius: 1,
-                                offset: Offset(2, 0),
+                                offset: const Offset(2, 0),
                               )
                             ],
                           ),
@@ -78,7 +80,7 @@ class CustomStepper extends StatelessWidget {
                                   boxShadow: [
                                     BoxShadow(
                                       color: currentStep > index
-                                          ? redJNE
+                                          ? secondaryColor(context)
                                           : Colors.transparent,
                                       spreadRadius: 1,
                                       offset: const Offset(1, -1),

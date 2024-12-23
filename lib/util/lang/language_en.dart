@@ -58,7 +58,7 @@ class LanguageEN {
       "Tinggi": "Height",
       "Menghitung...": "Calculate...",
       "Harga COD": "COD Price",
-      "Ongkos Kirim": "Shipment Cost",
+      "Ongkos Kirim": "Delivery Price",
       "Total Ongkos Kirim": "Total Shipment Cost",
       "Asuransi Pengiriman": "Shipment Insurance",
       "Lihat Draft": "View Draft",
@@ -436,8 +436,7 @@ class LanguageEN {
       "Aggregasi Pembayaran": "Aggregation Payment",
       "Coba lagi": "Try again",
       "Nomor resi tidak boleh kosong": "Airwaybill cannot be empty",
-      "Nomor resi harus terdiri dari 16 karakter":
-          "Airwaybill must be 16 characters",
+      "Nomor resi maksimal 16 karakter": "Airwaybill maximum 16 characters",
       "Koli": "Packages",
     };
   }

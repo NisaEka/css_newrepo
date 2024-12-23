@@ -74,7 +74,7 @@ class ForgotPasswordOTPForm extends StatelessWidget {
                   const SizedBox(height: 60),
                   CustomFilledButton(
                     color: c.otpPin.text.isNotEmpty && c.otpPin.length >= 6
-                        ? blueJNE
+                        ? primaryColor(context)
                         : greyColor,
                     title: 'Selanjutnya'.tr,
                     // radius: 50,

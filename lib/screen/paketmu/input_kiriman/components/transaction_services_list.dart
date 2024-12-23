@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_controller.dart';
@@ -59,9 +58,7 @@ class TransactionServicesList extends StatelessWidget {
                                     ? greyColor
                                     : c.state.selectedService ==
                                             c.state.serviceList[index]
-                                        ? AppConst.isLightTheme(context)
-                                            ? blueJNE
-                                            : redJNE
+                                        ? primaryColor(context)
                                         : greyLightColor3,
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -79,7 +76,7 @@ class TransactionServicesList extends StatelessWidget {
                                         color: c.state.selectedService ==
                                                 c.state.serviceList[index]
                                             ? whiteColor
-                                            : blueJNE,
+                                            : primaryColor(context),
                                       ),
                                     ),
                             ),

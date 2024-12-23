@@ -58,7 +58,7 @@ class PembayaranAggergasiController extends BaseController {
       }
 
       if (transDate.isNotEmpty) {
-        between.add({"mpayWdrGrpPayDate": transDate});
+        between.add({"mpayWdrGrpPayDatePaid": transDate});
       }
 
       final agg = await aggregation.getAggregationReport(QueryModel(
@@ -100,7 +100,7 @@ class PembayaranAggergasiController extends BaseController {
       }
 
       if (transDate.isNotEmpty) {
-        between.add({"mpayWdrGrpPayDate": transDate});
+        between.add({"mpayWdrGrpPayDatePaid": transDate});
       }
 
       final total = await aggregation.getAggregationTotal(QueryModel(

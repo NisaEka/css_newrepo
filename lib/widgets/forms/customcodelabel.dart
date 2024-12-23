@@ -31,7 +31,7 @@ class CustomCodeLabel extends StatelessWidget {
             child: Text(
               label,
               style: appTitleTextStyle.copyWith(
-                color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                color: primaryColor(context),
               ),
             ),
           ),
@@ -40,10 +40,7 @@ class CustomCodeLabel extends StatelessWidget {
           onPressed: () => Clipboard.setData(ClipboardData(text: label)),
           icon: Icon(
             Icons.copy_rounded,
-            color: Theme.of(context).brightness == Brightness.light
-                ? blueJNE
-                : whiteColor,
-            size: 20,
+            color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
           ),
         ),
       ],

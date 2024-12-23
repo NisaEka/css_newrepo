@@ -183,7 +183,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
         queryParameters: QueryModel(
           between: [
             {
-              "mpayWdrGrpPayDate": [startDate, endDate]
+              "mpayWdrGrpPayDatePaid": [startDate, endDate]
             }
           ],
         ).toJson(),

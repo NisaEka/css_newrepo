@@ -3,10 +3,10 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
-import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/forms/officer_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -118,7 +118,6 @@ class TransactionFilterButton extends HookWidget {
                             ),
                             CustomFormLabel(label: 'Status Kiriman'.tr),
                             const SizedBox(height: 10),
-                            // CustomFormLabel(label: 'Petugas Entry'),
                           ],
                         ),
                       ),
@@ -142,12 +141,12 @@ class TransactionFilterButton extends HookWidget {
                                 decoration: BoxDecoration(
                                   color: c.state.selectedStatusKiriman ==
                                           c.state.listStatusKiriman[index]
-                                      ? blueJNE
+                                      ? primaryColor(context)
                                       : whiteColor,
                                   border: Border.all(
                                     color: c.state.selectedStatusKiriman !=
                                             c.state.listStatusKiriman[index]
-                                        ? blueJNE
+                                        ? primaryColor(context)
                                         : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
@@ -159,7 +158,7 @@ class TransactionFilterButton extends HookWidget {
                                       color: c.state.selectedStatusKiriman ==
                                               c.state.listStatusKiriman[index]
                                           ? whiteColor
-                                          : blueJNE),
+                                          : primaryColor(context)),
                                 ),
                               ),
                             ),
@@ -176,34 +175,17 @@ class TransactionFilterButton extends HookWidget {
                         ),
                       ),
                       SliverToBoxAdapter(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 10),
-                            // const CustomFormLabel(label: 'Petugas Entry'),
-                            CustomDropDownField(
-                              items: c.state.listOfficerEntry
-                                  .map(
-                                    (e) => DropdownMenuItem(
-                                      value: e,
-                                      child: Text(e.name ?? ''),
-                                    ),
-                                  )
-                                  .toList(),
-                              label: 'Petugas Entry'.tr,
-                              hintText: 'Petugas Entry'.tr,
-                              readOnly: c.state.basic?.userType != "PEMILIK" &&
-                                  c.state.listOfficerEntry.length == 1,
-                              selectedItem: c.state.selectedPetugasEntry?.name,
-                              value: c.state.selectedPetugasEntry,
-                              onChanged: (value) {
-                                setState(() {
-                                  c.state.selectedPetugasEntry = value;
-                                  c.update();
-                                });
-                              },
-                            )
-                          ],
+                        child: OfficerDropdown(
+                          label: 'Petugas Entry'.tr,
+                          readOnly: c.state.basic?.userType != "PEMILIK",
+                          selectedItem: c.state.selectedPetugasEntry?.name,
+                          value: c.state.selectedPetugasEntry,
+                          onChanged: (value) {
+                            setState(() {
+                              c.state.selectedPetugasEntry = value;
+                              c.update();
+                            });
+                          },
                         ),
                       ),
                     ],
@@ -214,13 +196,13 @@ class TransactionFilterButton extends HookWidget {
             isFiltered: c.state.isFiltered,
             // isApplyFilter: c.state.startDate != null || c.state.endDate != null,
             onResetFilter: () {
-              // c.resetFilter();
-              if (c.state.listOfficerEntry.length > 1) {
-                c.state.selectedPetugasEntry = null;
-                c.update();
-              }
-              c.selectDateFilter(3);
-              c.applyFilter();
+              c.resetFilter();
+              // if (c.state.listOfficerEntry.length > 1) {
+              //   c.state.selectedPetugasEntry = null;
+              //   c.update();
+              // }
+              // c.selectDateFilter(3);
+              // c.applyFilter();
               Get.back();
             },
             onApplyFilter: () {

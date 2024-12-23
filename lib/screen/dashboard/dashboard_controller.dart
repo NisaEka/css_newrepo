@@ -323,37 +323,12 @@ class DashboardController extends BaseController {
     }
   }
 
-  Future<void> loadTransCountList() async {
-    state.isLoadingAgg = true;
+  Future<void> loadPantauCountList() async {
     state.isLoadingKiriman = true;
-    state.transCountList.clear();
     state.kirimanKamu = DashboardKirimanKamuModel();
     update();
     if (state.isLogin) {
       try {
-        transaction.postTransactionDashboard(QueryModel()).then(
-          (value) {
-            state.transSummary = value.data;
-            state.transCountList.addAll(value.data?.summary ?? []);
-            update();
-          },
-        );
-
-        // aggregation.getAggSummary().then(
-        //   (value) {
-        //     state.aggSummary = value.data;
-        //     update();
-        //   },
-        // );
-        //
-        // aggregation.getAggChart().then(
-        //   (value) {
-        //     state.aggChart = value.data;
-        //     state.isLoadingAgg = false;
-        //     update();
-        //   },
-        // );
-
         var trans = await transaction.getPantauCount(QueryModel(between: [
           {
             "awbDate": [
@@ -389,6 +364,43 @@ class DashboardController extends BaseController {
           }
         });
         state.kirimanKamu.calculatePercentages();
+        loadTransCountList();
+      } catch (e) {
+        AppLogger.e('error pantau count :$e');
+      } finally {
+        state.isLoadingKiriman = false;
+      }
+    }
+  }
+
+  Future<void> loadTransCountList({bool? isKirimanCOD}) async {
+    state.isLoadingKirimanCOD = true;
+    state.transCountList.clear();
+    update();
+    if (state.isLogin) {
+      try {
+        transaction.postTransactionDashboard(QueryModel()).then(
+          (value) {
+            state.transSummary = value.data;
+            state.transCountList.addAll(value.data?.summary ?? []);
+            update();
+          },
+        );
+
+        // aggregation.getAggSummary().then(
+        //   (value) {
+        //     state.aggSummary = value.data;
+        //     update();
+        //   },
+        // );
+        //
+        // aggregation.getAggChart().then(
+        //   (value) {
+        //     state.aggChart = value.data;
+        //     state.isLoadingAgg = false;
+        //     update();
+        //   },
+        // );
       } catch (e) {
         AppLogger.e('error loadTransCountList $e');
       } finally {
@@ -417,7 +429,6 @@ class DashboardController extends BaseController {
     update();
     cekTheme();
     state.isLoading = true;
-    state.isLoadingAgg = true;
     state.isLoadingKiriman = true;
 
     storage.deleteString(StorageCore.transactionTemp);
@@ -580,11 +591,10 @@ class DashboardController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-    } finally {
-      cekAllowance();
-      state.isLoading = false;
-      update();
     }
+    cekAllowance();
+    state.isLoading = false;
+    update();
   }
 
   bool pop = false;

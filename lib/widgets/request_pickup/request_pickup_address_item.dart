@@ -28,7 +28,7 @@ class RequestPickupAddressItem extends StatelessWidget {
             ? const EdgeInsets.only(left: 16, right: 16)
             : const EdgeInsets.only(left: 16),
         shape: RoundedRectangleBorder(
-            side: BorderSide(color: _borderColor(), width: 1)),
+            side: BorderSide(color: _borderColor(context), width: 1)),
         child: SizedBox(
           width: 136,
           height: 136,
@@ -63,9 +63,9 @@ class RequestPickupAddressItem extends StatelessWidget {
     );
   }
 
-  Color _borderColor() {
+  Color _borderColor(BuildContext context) {
     if (selected) {
-      return redJNE;
+      return secondaryColor(context);
     } else {
       return greyColor;
     }

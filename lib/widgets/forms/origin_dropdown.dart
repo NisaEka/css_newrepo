@@ -116,6 +116,9 @@ class _OriginDropdownState extends State<OriginDropdown> {
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   e.originName.toString(),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: textColor(context),
+                      ),
                 ),
               );
             },
@@ -126,7 +129,11 @@ class _OriginDropdownState extends State<OriginDropdown> {
             hintText: widget.label ?? "Kota Pengiriman".tr,
             searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
             prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.titleMedium,
+            textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: AppConst.isLightTheme(context)
+                      ? Colors.black
+                      : warningColor,
+                ),
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,
           );

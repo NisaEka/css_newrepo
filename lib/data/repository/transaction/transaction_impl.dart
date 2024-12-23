@@ -277,12 +277,13 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<BaseResponse<List<PetugasModel>>> getTransOfficer() async {
+  Future<BaseResponse<List<PetugasModel>>> getTransOfficer(
+      QueryModel param) async {
     // UserModel user = UserModel.fromJson(
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
 
-    QueryModel params = QueryModel(table: true, limit: 0);
+    QueryModel params = param.copyWith(table: true, limit: 0);
     try {
       Response response = await network.base.get(
         "/transaction/officers",
@@ -350,6 +351,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.base.get(
         "/transaction/dashboards",
+        options: Options(receiveTimeout: const Duration(seconds: 15)),
         queryParameters: param.copyWith(
           between: [
             {
@@ -382,6 +384,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.base.get(
         '/transaction/tracks/count/dashboard',
+        options: Options(receiveTimeout: const Duration(seconds: 15)),
         queryParameters: param.toJson(),
       );
 

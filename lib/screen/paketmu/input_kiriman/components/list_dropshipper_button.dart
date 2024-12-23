@@ -5,8 +5,6 @@ import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../const/app_const.dart';
-
 class ListDropshipperButton extends StatelessWidget {
   const ListDropshipperButton({super.key});
 
@@ -48,7 +46,7 @@ class ListDropshipperButton extends StatelessWidget {
                     ),
                     Icon(
                       Icons.keyboard_arrow_right,
-                      color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                      color: secondaryColor(context),
                     )
                   ],
                 ),

@@ -1,4 +1,3 @@
-import 'package:css_mobile/data/model/aggregasi/aggregation_chart_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
@@ -35,9 +34,6 @@ class DashboardState {
   String themeMode = '';
   UserModel? basic;
   TransactionSummaryModel? transSummary;
-  bool isLoadingAgg = false;
-  TransactionSummaryModel? aggSummary;
-  List<AggregationChartModel>? aggChart;
 
   List<Widget> widgetOptions = <Widget>[
     const DashboardScreen(),
@@ -76,5 +72,6 @@ class DashboardState {
 
   // Kiriman Kamu
   bool isLoadingKiriman = false;
+  bool isLoadingKirimanCOD = false;
   DashboardKirimanKamuModel kirimanKamu = DashboardKirimanKamuModel();
 }

@@ -40,10 +40,10 @@ class NewPasswordController extends BaseController {
               ? Get.to(
                   SuccessScreen(
                     message: "Password berhasil diperbaharui".tr,
-                    buttonTitle: isChange ?? false
+                    thirdButtonTitle: isChange ?? false
                         ? "Kembali ke Beranda".tr
                         : "Masuk".tr,
-                    nextAction: () => Get.delete<LoginController>().then(
+                    onThirdAction: () => Get.delete<LoginController>().then(
                       (value) => Get.offAll(isChange ?? false
                           ? const DashboardScreen()
                           : const LoginScreen()),

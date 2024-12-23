@@ -96,16 +96,14 @@ class RiwayatKirimanListItem extends StatelessWidget {
                     // ),
                     Container(
                       color: isLoading ? greyLightColor3 : Colors.transparent,
-                      // width: isLoading ? Get.width / 5 : null,
+                      width: isLoading ? Get.width / 5 : null,
                       child: Text(
                         data?.createdDateSearch?.toLongDateTimeFormat() ??
                             tanggalEntry?.toDateFormat() ??
                             '-',
                         style:
                             Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  color: AppConst.isLightTheme(context)
-                                      ? blueJNE
-                                      : warningColor,
+                                  color: primaryColor(context),
                                 ),
                       ),
                     ),
@@ -152,6 +150,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                         Image.asset(
                           ImageConstant.boxPackage,
                           height: Get.width / 8,
+                          color: textColor(context),
                         ),
                       ],
                     ),

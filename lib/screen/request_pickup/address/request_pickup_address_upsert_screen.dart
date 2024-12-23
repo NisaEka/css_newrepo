@@ -25,12 +25,13 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
             appBar: CustomTopBar(
               title: "Tambah Alamat Penjemputan".tr,
             ),
-            body: _bodyContent(controller),
+            body: _bodyContent(context, controller),
           );
         });
   }
 
-  Widget _bodyContent(RequestPickupAddressUpsertController controller) {
+  Widget _bodyContent(
+      BuildContext context, RequestPickupAddressUpsertController controller) {
     return Stack(
       children: [
         CustomScrollView(
@@ -39,7 +40,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: _bodyForm(controller),
+                child: _bodyForm(context, controller),
               ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 16))
@@ -56,7 +57,8 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
     );
   }
 
-  Widget _bodyForm(RequestPickupAddressUpsertController controller) {
+  Widget _bodyForm(
+      BuildContext context, RequestPickupAddressUpsertController controller) {
     return Column(
       children: [
         // GestureDetector(
@@ -120,7 +122,9 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
               ? "Loading..."
               : "Kota Penjemputan".tr,
           textStyle: controller.selectedDestination != null
-              ? subTitleTextStyle
+              ? Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: formTextColor(context),
+                  )
               : hintTextStyle,
         ),
         CustomTextFormField(
@@ -132,7 +136,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         CustomFilledButton(
-          color: redJNE,
+          color: primaryColor(context),
           title: 'Simpan Alamat'.tr,
           onPressed: () => controller.onSubmitAction(),
         )

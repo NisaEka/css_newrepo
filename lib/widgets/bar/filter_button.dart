@@ -29,7 +29,7 @@ class FilterButton extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
-        color: isFiltered ? redJNE : Colors.transparent,
+        color: isFiltered ? thirdColor(context) : Colors.transparent,
         borderRadius: BorderRadius.circular(50),
       ),
       child: IconButton(
@@ -59,10 +59,7 @@ class FilterButton extends StatelessWidget {
                         Text(
                           'Filter',
                           style: appTitleTextStyle.copyWith(
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? blueJNE
-                                    : warningColor,
+                            color: primaryColor(context),
                           ),
                         ),
                         IconButton(
@@ -79,23 +76,17 @@ class FilterButton extends StatelessWidget {
                       children: [
                         isFiltered
                             ? CustomFilledButton(
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? blueJNE
-                                    : warningColor,
+                                color: primaryColor(context),
                                 isTransparent: true,
-                                fontColor: blueJNE,
-                                borderColor: blueJNE,
+                                fontColor: primaryColor(context),
+                                borderColor: primaryColor(context),
                                 width: Get.width / 2.5,
                                 title: 'Reset Filter'.tr,
                                 onPressed: onResetFilter,
                               )
                             : const SizedBox(),
                         CustomFilledButton(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? blueJNE
-                                  : warningColor,
+                          color: primaryColor(context),
                           width: isFiltered ? Get.width / 2.5 : Get.width - 40,
                           title: 'Terapkan'.tr,
                           onPressed: onApplyFilter,

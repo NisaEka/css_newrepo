@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +29,7 @@ class CustomCheckbox extends StatelessWidget {
           child: Checkbox(
             value: value,
             onChanged: onChanged,
-            activeColor: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+            activeColor: primaryColor(context),
           ),
         ),
         title: Text(label, style: Theme.of(context).textTheme.titleSmall),
