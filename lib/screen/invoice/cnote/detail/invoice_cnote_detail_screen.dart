@@ -268,7 +268,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                     fontWeight: bold,
                     color: AppConst.isLightTheme(context)
                         ? blueJNE
-                        : Colors.lightBlueAccent,
+                        : warningColor,
                   ),
                 ),
                 _textRow(
@@ -296,7 +296,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                     fontWeight: bold,
                     color: AppConst.isLightTheme(context)
                         ? redJNE
-                        : Colors.lightBlueAccent,
+                        : warningColor,
                   ),
                 ),
                 _textRow(
@@ -309,7 +309,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   "Total Paid".tr,
                   "Rp. ${(((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)) - ((controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0) + (controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0))).abs().toCurrency()}",
                   controller.isLoading,
-                  style: TextStyle(fontWeight: bold, color: successColor),
+                  style: TextStyle(fontWeight: bold, color: successLightColor1),
                   titleFontWeight: bold,
                 ),
                 const SizedBox(height: 10),

@@ -4,6 +4,9 @@ import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 
+import '../../const/app_const.dart';
+import '../../const/color_const.dart';
+
 class InvoiceCnoteItem extends StatelessWidget {
   final bool isLoading;
   final InvoiceCnoteModel? invoice;
@@ -31,7 +34,9 @@ class InvoiceCnoteItem extends StatelessWidget {
                 children: [
                   Text(
                     invoice?.awbNumber ?? '',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.titleMedium!
+                        .copyWith(color:
+                        AppConst.isLightTheme(context) ? blueJNE : warningColor)
                   ),
                   Text(
                     invoice?.awbDate?.toLongDateFormat() ?? '',

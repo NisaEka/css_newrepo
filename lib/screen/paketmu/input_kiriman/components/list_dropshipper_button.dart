@@ -5,6 +5,8 @@ import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../const/app_const.dart';
+
 class ListDropshipperButton extends StatelessWidget {
   const ListDropshipperButton({super.key});
 
@@ -44,9 +46,9 @@ class ListDropshipperButton extends StatelessWidget {
                       'Lihat Data Dropshipper'.tr,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    const Icon(
+                    Icon(
                       Icons.keyboard_arrow_right,
-                      color: redJNE,
+                      color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
                     )
                   ],
                 ),

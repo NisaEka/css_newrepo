@@ -9,6 +9,8 @@ import 'package:css_mobile/widgets/laporan_pembayaran/value_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../const/app_const.dart';
+
 class AggregationMinusItem extends StatefulWidget {
   final String? status;
   final bool isLoading;
@@ -94,7 +96,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                           color:
                               Theme.of(context).brightness == Brightness.light
                                   ? blueJNE
-                                  : redJNE,
+                                  : warningColor,
                           size: 20,
                         ),
                       ),
@@ -122,12 +124,12 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                                 ? const EdgeInsets.only(top: 2)
                                 : EdgeInsets.zero,
                             child: Text(
-                              "# ${widget.data?.aggMinDoc ?? ''}",
+                              widget.data?.aggMinDoc ?? '',
                               style: listTitleTextStyle.copyWith(
                                   color: Theme.of(context).brightness ==
                                           Brightness.light
                                       ? blueJNE
-                                      : redJNE),
+                                      : warningColor),
                             ),
                           ),
                         ],
@@ -144,25 +146,23 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                             fontSize: 10,
                             value:
                                 "RP. ${widget.data?.codAmt.toCurrency() ?? '0'}",
-                            valueFontColor: infoColor,
                           ),
                           ValueItem(
                             title: "COD FEE ( ONGKIR DLL )",
                             fontSize: 10,
                             value:
-                                "RP. ${widget.data?.codFee.toCurrency() ?? '0'}",
-                            valueFontColor: successColor,
+                                "RP. ${widget.data?.codFee.toCurrency() ?? '0'}"
                           ),
                           ValueItem(
                             title: "NET AMOUNT",
                             fontSize: 10,
                             value:
                                 "RP. ${widget.data?.netAmt.toCurrency() ?? '0'}",
-                            valueFontColor: errorColor,
+                            valueFontColor: successColor,
                           ),
                           CustomFilledButton(
                               title: "Lihat Detail".tr,
-                              color: blueJNE,
+                              color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
                               onPressed: () => {widget.onTap()})
                         ],
                       )

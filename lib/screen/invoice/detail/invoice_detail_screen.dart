@@ -76,7 +76,7 @@ class InvoiceDetailScreen extends StatelessWidget {
               await Printing.layoutPdf(
                   onLayout: (PdfPageFormat format) async => pdf);
             },
-            backgroundColor: Theme.of(context).colorScheme.primary,
+            backgroundColor: AppConst.isLightTheme(context) ? blueJNE : warningColor,
             child:
                 const Icon(Icons.picture_as_pdf_rounded, color: Colors.white),
           ),
@@ -123,7 +123,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                   Text(
                     "Lihat Daftar Transaksi".tr,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: whiteColor, fontWeight: FontWeight.normal),
+                        color: whiteColor, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(width: 5),
                   const Icon(Icons.arrow_circle_right, color: whiteColor),
@@ -318,7 +318,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                         style: listTitleTextStyle.copyWith(
                           color: AppConst.isLightTheme(context)
                               ? blueJNE
-                              : Colors.lightBlueAccent,
+                              : warningColor,
                         )),
                     const SizedBox(height: 6),
                     _textRow(
@@ -426,7 +426,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                       style: listTitleTextStyle.copyWith(
                         color: AppConst.isLightTheme(context)
                             ? blueJNE
-                            : Colors.lightBlueAccent,
+                            : warningColor,
                       ),
                       titleFontWeight: bold,
                     ),
@@ -446,7 +446,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                       style: listTitleTextStyle.copyWith(
                         color: AppConst.isLightTheme(context)
                             ? errorColor
-                            : Colors.lightBlueAccent,
+                            : warningColor,
                       ),
                       titleFontWeight: bold,
                     ),
@@ -588,7 +588,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                         .textTheme
                         .titleMedium
                         ?.copyWith(fontWeight: regular),
-                textAlign: TextAlign.start, // Align the value to the right
+                textAlign: TextAlign.end, // Align the value to the right
               ),
             ),
           ),

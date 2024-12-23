@@ -29,39 +29,25 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
 
   Widget _bodyContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: Get.size.width,
             height: 45,
-            margin: const EdgeInsets.symmetric(vertical: 20),
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: whiteColor,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: blueJNE),
-              boxShadow: [
-                BoxShadow(
-                  color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-                  spreadRadius: 1,
-                  offset: const Offset(-2, 2),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
+            padding: const EdgeInsets.all(0),
               child: Column(
                 children: [
                   Text(
                     data.dCnoteNo ?? '',
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color:
-                            AppConst.isLightTheme(context) ? blueJNE : redJNE),
+                            AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                        fontWeight: bold),
                   ),
                 ],
               ),
-            ),
           ),
           Expanded(
             child: ListView(
@@ -75,7 +61,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   child: Text(
                     'Informasi Aggregasi'.tr,
                     style: listTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                      color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
                     ),
                   ),
                 ),
@@ -116,7 +102,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   child: Text(
                     'Informasi Kiriman'.tr,
                     style: listTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                      color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
                     ),
                   ),
                 ),
@@ -178,7 +164,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   child: Text(
                     'Detail Aggregasi'.tr,
                     style: listTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                      color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
                     ),
                   ),
                 ),
@@ -188,9 +174,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "Freight Charge".tr,
                   'Rp. ${data.dShipFee?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color:
-                          AppConst.isLightTheme(context) ? blueJNE : infoColor),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -198,10 +182,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "Discount".tr,
                   'Rp. ${data.dDiscount?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? warningColor
-                          : warningLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -209,10 +190,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "Freight Charge After Discount".tr,
                   'Rp. ${data.dFchargeAftDisc?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -220,10 +198,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "Freight Charge VAT".tr,
                   'Rp. ${data.dFchargeVat?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -231,9 +206,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "COD Amount".tr,
                   'Rp. ${data.dCodAmt?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color:
-                      AppConst.isLightTheme(context) ? blueJNE : infoColor),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -241,9 +214,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "COD Fee".tr,
                   'Rp. ${data.dCodFee?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color:
-                      AppConst.isLightTheme(context) ? blueJNE : infoColor),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -251,10 +222,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "COD Fee Include VAT".tr,
                   'Rp. ${data.dCodfeeInclvat?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 16),
                 const DottedLine(
@@ -272,10 +240,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "Insurance Charge".tr,
                   'Rp. ${data.dInsCharge?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -283,10 +248,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "Packing Fee".tr,
                   'Rp. ${data.dPackingFee?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -294,10 +256,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "Surcharge".tr,
                   'Rp. ${data.dSurcharge?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? warningColor
-                          : warningLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 16),
                 const DottedLine(
@@ -315,10 +274,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "Return Fee".tr,
                   'Rp. ${data.dReturnFee?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -326,10 +282,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "Return Freight Charge After Discount".tr,
                   'Rp. ${data.dRtFchargeAftDisc?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -337,10 +290,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   "Return Freight Charge VAT".tr,
                   'Rp. ${data.dRtFchargeVat?.toInt().toCurrency() ?? 0}',
                   false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 16),
                 const DottedLine(
@@ -362,8 +312,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                       color: AppConst.isLightTheme(context)
                           ? successColor
                           : successLightColor1),
-                  titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : redJNE),
+                  titleStyle: Theme.of(context).textTheme.titleMedium
                 ),
                 const SizedBox(
                   height: 50,
@@ -418,7 +367,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                         .textTheme
                         .titleMedium
                         ?.copyWith(fontWeight: regular),
-                textAlign: TextAlign.start, // Align the value to the right
+                textAlign: TextAlign.end, // Align the value to the right
               ),
             ),
           ),
