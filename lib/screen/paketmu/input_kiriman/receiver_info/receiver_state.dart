@@ -12,7 +12,7 @@ class ReceiverState {
   DataTransactionModel? data = Get.arguments['data'];
   bool? isEdit = Get.arguments['isEdit'];
   DataTransactionModel? dataEdit = Get.arguments['dataEdit'];
-  ShipperModel shipper = Get.arguments['shipper'];
+  ShipperModel shipper = Get.arguments?['shipper'];
   bool dropship = Get.arguments['dropship'];
   DropshipperModel? dropshipper = Get.arguments['dropshipper'];
   bool codOngkir = Get.arguments['cod_ongkir'];
