@@ -35,7 +35,7 @@ class StatusLaporanku extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedStatus == 0
-                          ? blueJNE
+                          ? primaryColor(context)
                           : AppConst.isLightTheme(context)
                               ? whiteColor
                               : bgDarkColor,
@@ -85,7 +85,7 @@ class StatusLaporanku extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedStatus == 3
-                          ? blueJNE
+                          ? primaryColor(context)
                           : AppConst.isLightTheme(context)
                               ? whiteColor
                               : bgDarkColor,
@@ -132,7 +132,7 @@ class StatusLaporanku extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedStatus == 1
-                          ? blueJNE
+                          ? primaryColor(context)
                           : AppConst.isLightTheme(context)
                               ? whiteColor
                               : bgDarkColor,
@@ -179,7 +179,7 @@ class StatusLaporanku extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedStatus == 2
-                          ? blueJNE
+                          ? primaryColor(context)
                           : AppConst.isLightTheme(context)
                               ? whiteColor
                               : bgDarkColor,
