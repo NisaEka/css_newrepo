@@ -247,6 +247,16 @@ class CustomTheme {
       checkColor: WidgetStateColor.resolveWith((states) => whiteColor),
     ),
     dialogBackgroundColor: greyColor,
+    dialogTheme: const DialogTheme(
+      titleTextStyle: TextStyle(
+        color: whiteColor,
+        fontSize: 24,
+      ),
+      contentTextStyle: TextStyle(
+        color: whiteColor,
+        fontSize: 16,
+      ),
+    ),
     fontFamily: 'Ubuntu',
     // backgroundColor: greyColor,
     appBarTheme: AppBarTheme(

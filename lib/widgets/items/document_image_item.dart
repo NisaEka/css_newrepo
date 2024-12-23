@@ -44,16 +44,11 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2,
-          border: Border.all(
-              color: Theme.of(context).brightness == Brightness.light
-                  ? greyDarkColor1
-                  : greyLightColor1),
+          border: Border.all(color: greyDarkColor1),
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).brightness == Brightness.light
-                  ? blueJNE
-                  : redJNE,
+              color: primaryColor(context),
               spreadRadius: 1,
               offset: const Offset(-2, 2),
             ),
