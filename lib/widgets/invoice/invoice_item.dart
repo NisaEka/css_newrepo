@@ -34,14 +34,14 @@ class InvoiceItem extends StatelessWidget {
                   children: [
                     Container(
                       alignment: Alignment.center,
-                      width: 160,
+                      width: 60,
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 10),
                       decoration: BoxDecoration(
                         color: data?.invoiceStatus == "Posted"
                             ? successColor
                             : greyColor,
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
                         data?.invoiceStatus ?? '',

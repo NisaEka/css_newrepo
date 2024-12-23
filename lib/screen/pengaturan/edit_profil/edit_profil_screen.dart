@@ -128,7 +128,8 @@ class EditProfilScreen extends StatelessWidget {
               color: AppConst.isLightTheme(context)
                   ? blueJNE
                   : warningColor,
-              title: "Edit Profil".tr,
+              title: "Simpan Perubahan".tr,
+              suffixIcon: Icons.edit_rounded,
               onPressed: () => c.editProfile(),
             )
           ],

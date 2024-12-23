@@ -38,7 +38,7 @@ class ValueItem extends StatelessWidget {
                 Theme.of(context)
                     .textTheme
                     .labelLarge
-                    ?.copyWith(fontSize: fontSize ?? 8),
+                    ?.copyWith(fontSize: fontSize ?? 11),
           ),
         ),
         Container(
@@ -48,7 +48,7 @@ class ValueItem extends StatelessWidget {
             value ?? '',
             style: valueTextStyle ??
                 listTitleTextStyle.copyWith(
-                  fontSize: fontSize ?? 8,
+                  fontSize: fontSize ?? 11,
                   color: valueFontColor ??
                       (Theme.of(context).brightness == Brightness.light
                           ? greyDarkColor1

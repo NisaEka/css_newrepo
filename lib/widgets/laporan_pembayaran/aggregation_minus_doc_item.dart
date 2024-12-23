@@ -90,7 +90,7 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                             color:
                                 Theme.of(context).brightness == Brightness.light
                                     ? blueJNE
-                                    : redJNE,
+                                    : warningColor,
                             size: 20,
                           ),
                         ),
@@ -118,12 +118,12 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                                   ? const EdgeInsets.only(top: 2)
                                   : EdgeInsets.zero,
                               child: Text(
-                                "# ${widget.data?.dCnoteNo ?? ''}",
+                                widget.data?.dCnoteNo ?? '',
                                 style: listTitleTextStyle.copyWith(
                                     color: Theme.of(context).brightness ==
                                             Brightness.light
                                         ? blueJNE
-                                        : redJNE),
+                                        : warningColor),
                               ),
                             ),
                           ],

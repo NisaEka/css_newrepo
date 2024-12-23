@@ -182,15 +182,11 @@ class _ReportListItemState extends State<ReportListItem> {
                                       ?.toShortDateFormat() ??
                                   '-',
                             ),
-                            ValueItem(
-                              title: "REMARKS",
-                              value: widget.data?.remarks ?? '-',
-                            ),
                             CustomFilledButton(
                               color: Theme.of(context).brightness ==
                                   Brightness.light
                                   ? blueJNE
-                                  : infoColor,
+                                  : warningColor,
                               title: "Lihat Detail".tr,
                               margin: const EdgeInsets.only(top: 20),
                               onPressed: widget.onTapButton,
