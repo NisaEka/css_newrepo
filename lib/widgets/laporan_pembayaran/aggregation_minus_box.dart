@@ -16,23 +16,30 @@ class AggregationMinusBox extends StatelessWidget {
       width: Get.size.width,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.light
-            ? whiteColor
-            : greyColor,
+        color: whiteColor,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: greyDarkColor1),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: blueJNE,
+            color: primaryColor(context),
             spreadRadius: 1,
-            offset: Offset(-2, 2),
+            offset: const Offset(-2, 2),
           ),
         ],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [Text(title.tr, style: subformLabelTextStyle), Text(value)],
+        children: [
+          Text(title.tr, style: subformLabelTextStyle),
+          Text(
+            value,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: primaryColor(context)),
+          )
+        ],
       ),
     );
   }

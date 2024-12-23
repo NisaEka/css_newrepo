@@ -9,8 +9,6 @@ import 'package:css_mobile/widgets/laporan_pembayaran/value_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../const/app_const.dart';
-
 class AggregationMinusItem extends StatefulWidget {
   final String? status;
   final bool isLoading;
@@ -85,18 +83,11 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
                           border: Border.all(
-                              color: Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? redJNE
-                                  : redJNE,
-                              width: 2),
+                              color: primaryColor(context), width: 2),
                         ),
                         child: Icon(
                           Icons.indeterminate_check_box_rounded,
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? blueJNE
-                                  : warningColor,
+                          color: primaryColor(context),
                           size: 20,
                         ),
                       ),
@@ -126,10 +117,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                             child: Text(
                               widget.data?.aggMinDoc ?? '',
                               style: listTitleTextStyle.copyWith(
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? blueJNE
-                                      : warningColor),
+                                  color: primaryColor(context)),
                             ),
                           ),
                         ],
@@ -148,11 +136,10 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                                 "RP. ${widget.data?.codAmt.toCurrency() ?? '0'}",
                           ),
                           ValueItem(
-                            title: "COD FEE ( ONGKIR DLL )",
-                            fontSize: 10,
-                            value:
-                                "RP. ${widget.data?.codFee.toCurrency() ?? '0'}"
-                          ),
+                              title: "COD FEE ( ONGKIR DLL )",
+                              fontSize: 10,
+                              value:
+                                  "RP. ${widget.data?.codFee.toCurrency() ?? '0'}"),
                           ValueItem(
                             title: "NET AMOUNT",
                             fontSize: 10,
@@ -162,7 +149,7 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                           ),
                           CustomFilledButton(
                               title: "Lihat Detail".tr,
-                              color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                              color: primaryColor(context),
                               onPressed: () => {widget.onTap()})
                         ],
                       )

@@ -3,8 +3,6 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../const/app_const.dart';
-
 class AggMinusBox extends StatelessWidget {
   const AggMinusBox({super.key});
 
@@ -18,10 +16,10 @@ class AggMinusBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppConst.isLightTheme(context) ? blueJNE : warningColor),
+        border: Border.all(color: primaryColor(context)),
         boxShadow: [
           BoxShadow(
-            color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+            color: primaryColor(context),
             spreadRadius: 1,
             offset: const Offset(-2, 2),
           ),

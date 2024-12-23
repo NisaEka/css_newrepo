@@ -37,17 +37,17 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
           Container(
             height: 45,
             padding: const EdgeInsets.all(0),
-              child: Column(
-                children: [
-                  Text(
-                    data.dCnoteNo ?? '',
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color:
-                            AppConst.isLightTheme(context) ? blueJNE : warningColor,
-                        fontWeight: bold),
-                  ),
-                ],
-              ),
+            child: Column(
+              children: [
+                Text(
+                  data.dCnoteNo ?? '',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: primaryColor(context)),
+                ),
+              ],
+            ),
           ),
           Expanded(
             child: ListView(
@@ -61,7 +61,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   child: Text(
                     'Informasi Aggregasi'.tr,
                     style: listTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                      color: primaryColor(context),
                     ),
                   ),
                 ),
@@ -102,7 +102,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   child: Text(
                     'Informasi Kiriman'.tr,
                     style: listTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                      color: primaryColor(context),
                     ),
                   ),
                 ),
@@ -110,8 +110,8 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                 Text(
                   "${data.dCustId} - ${data.dCustName}",
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontWeight: regular,
-                  ),
+                        fontWeight: regular,
+                      ),
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -120,8 +120,8 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   data.dCnoteDate?.toDateTimeFormat(),
                   false,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontWeight: regular,
-                  ),
+                        fontWeight: regular,
+                      ),
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -138,8 +138,8 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   data.dPodCode ?? '-',
                   false,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontWeight: regular,
-                  ),
+                        fontWeight: regular,
+                      ),
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -148,8 +148,8 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   data.dPodDateSys?.toDateTimeFormat(),
                   false,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontWeight: regular,
-                  ),
+                        fontWeight: regular,
+                      ),
                 ),
                 const SizedBox(height: 16),
                 const Divider(
@@ -164,7 +164,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   child: Text(
                     'Detail Aggregasi'.tr,
                     style: listTitleTextStyle.copyWith(
-                      color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                      color: primaryColor(context),
                     ),
                   ),
                 ),
@@ -303,17 +303,13 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   dashGapLength: 2.0,
                 ),
                 const SizedBox(height: 16),
-                _textRow(
-                  context,
-                  "Netto AWB Amount".tr,
-                  'Rp. ${data.dNetAwbAmt?.toInt().toCurrency() ?? 0}',
-                  false,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? successColor
-                          : successLightColor1),
-                  titleStyle: Theme.of(context).textTheme.titleMedium
-                ),
+                _textRow(context, "Netto AWB Amount".tr,
+                    'Rp. ${data.dNetAwbAmt?.toInt().toCurrency() ?? 0}', false,
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: AppConst.isLightTheme(context)
+                            ? successColor
+                            : successLightColor1),
+                    titleStyle: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(
                   height: 50,
                 )
