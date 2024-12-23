@@ -32,10 +32,17 @@ class PaymentBox extends StatelessWidget {
             ? whiteColor
             : greyColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color ?? (AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent)),
+        border: Border.all(
+            color: color ??
+                (AppConst.isLightTheme(context)
+                    ? blueJNE
+                    : Colors.lightBlueAccent)),
         boxShadow: [
           BoxShadow(
-            color: color ?? (AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent),
+            color: color ??
+                (AppConst.isLightTheme(context)
+                    ? blueJNE
+                    : Colors.lightBlueAccent),
             spreadRadius: 1,
             offset: const Offset(-2, 2),
           ),
@@ -45,7 +52,8 @@ class PaymentBox extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: Column(
           children: [
-            Text(title.capitalize ?? '', style: subformLabelTextStyle),
+            Text(title.capitalize ?? '',
+                style: Theme.of(context).textTheme.bodySmall),
             Shimmer(
               isLoading: isLoading,
               child: Container(
@@ -54,7 +62,8 @@ class PaymentBox extends StatelessWidget {
                 color: isLoading ? greyColor : null,
                 child: Text(
                   value,
-                  style: appTitleTextStyle.copyWith(color: blueJNE),
+                  style:
+                      appTitleTextStyle.copyWith(color: primaryColor(context)),
                 ),
               ),
             ),

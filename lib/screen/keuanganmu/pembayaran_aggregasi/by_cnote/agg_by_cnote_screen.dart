@@ -36,26 +36,26 @@ class AggByCnoteScreen extends StatelessWidget {
           Container(
             height: 45,
             padding: const EdgeInsets.all(0),
-              child: Column(
-                children: [
-                  Shimmer(
-                    isLoading: controller.isLoading,
-                    child: Container(
-                      height: controller.isLoading ? 20 : null,
-                      width: controller.isLoading ? Get.width / 2 : null,
-                      color: controller.isLoading ? greyColor : null,
-                      child: Text(
-                        controller.data.dpayDetWdrCnoteno ?? '',
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : warningColor),
-                      ),
+            child: Column(
+              children: [
+                Shimmer(
+                  isLoading: controller.isLoading,
+                  child: Container(
+                    height: controller.isLoading ? 20 : null,
+                    width: controller.isLoading ? Get.width / 2 : null,
+                    color: controller.isLoading ? greyColor : null,
+                    child: Text(
+                      controller.data.dpayDetWdrCnoteno ?? '',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(color: primaryColor(context)),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
           Expanded(
             child: ListView(
               children: [
@@ -71,9 +71,7 @@ class AggByCnoteScreen extends StatelessWidget {
                     child: Text(
                       'Informasi Aggregasi'.tr,
                       style: listTitleTextStyle.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : warningColor,
+                        color: primaryColor(context),
                       ),
                     ),
                   ),
@@ -118,9 +116,7 @@ class AggByCnoteScreen extends StatelessWidget {
                     child: Text(
                       'Informasi Kiriman'.tr,
                       style: listTitleTextStyle.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : warningColor,
+                        color: primaryColor(context),
                       ),
                     ),
                   ),
@@ -189,9 +185,7 @@ class AggByCnoteScreen extends StatelessWidget {
                     child: Text(
                       'Detail Aggregasi'.tr,
                       style: listTitleTextStyle.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : warningColor,
+                        color: primaryColor(context),
                       ),
                     ),
                   ),
@@ -335,10 +329,10 @@ class AggByCnoteScreen extends StatelessWidget {
                       color: AppConst.isLightTheme(context)
                           ? successColor
                           : successLightColor1),
-                  titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? blueJNE
-                          : warningColor),
+                  titleStyle: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(color: primaryColor(context)),
                 ),
                 const SizedBox(
                   height: 50,
