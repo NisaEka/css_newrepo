@@ -266,7 +266,7 @@ class PantauPaketmuFilter extends HookWidget {
                 );
               },
             ),
-            isFiltered: controller.state.isFiltered.value,
+            isFiltered: controller.state.isFiltered,
             isApplyFilter:
                 (controller.state.selectedStatusKiriman != "Total Kiriman"),
             onResetFilter: () {

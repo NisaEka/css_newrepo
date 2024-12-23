@@ -125,8 +125,14 @@ class PantauItems extends StatelessWidget {
           onTap: () {
             if (item != null && !isLoading) {
               AppLogger.i('Card tapped.');
-              c.setSelectedStatus(index ?? 0);
-              Get.to(() => const PantauPaketmuScreen());
+              c.setSelectedStatus(item!);
+              Get.to(() => const PantauPaketmuScreen())?.then(
+                (_) {
+                  c.selectedStatus = 0;
+                  c.state.selectedStatusKiriman = 'Total Kiriman';
+                  c.update();
+                },
+              );
             }
           },
           child: Shimmer(
