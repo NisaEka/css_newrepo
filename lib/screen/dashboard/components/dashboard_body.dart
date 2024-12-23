@@ -40,6 +40,10 @@ class DashboardBody extends StatelessWidget {
                       const DashboardMenu2(),
                       // CustomFilledButton(
                       //   color: Colors.blue,
+                      //   onPressed: () => Get.to(const Ob1Screen()),
+                      // ),
+                      // CustomFilledButton(
+                      //   color: Colors.blue,
                       //   onPressed: () => Get.to(
                       //     SuccessScreen(
                       //       // lottie: ImageConstant.packedLottie,
@@ -74,7 +78,7 @@ class DashboardBody extends StatelessWidget {
                               transSummary: c.state.transSummary,
                               kirimanKamu: c.state.kirimanKamu,
                               isLoadingKiriman: c.state.isLoadingKiriman,
-                              onRefresh: () => c.loadTransCountList(),
+                              onRefresh: () => c.loadPantauCountList(),
                             )
                           : const SizedBox(),
                       // const SizedBox(height: 50),
@@ -93,10 +97,6 @@ class DashboardBody extends StatelessWidget {
                       const DashboardPromo(),
                       const DashboardNews(),
                       const SizedBox(height: 50),
-                      // CustomFilledButton(
-                      //   color: Colors.blue,
-                      //   onPressed: () => Get.to(const Ob1Screen()),
-                      // )
                     ],
                   ),
                 ),

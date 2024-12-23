@@ -56,6 +56,7 @@ class OtherMenuScreen extends StatelessWidget {
                   ? MenuTitle("Lainnya".tr)
                   : const SliverPadding(padding: EdgeInsets.zero),
               MenuItems(c.otherList),
+              const SliverPadding(padding: EdgeInsets.only(bottom: 30)),
             ],
           ),
         )

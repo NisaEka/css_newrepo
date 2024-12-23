@@ -295,7 +295,7 @@ class DashboardController extends BaseController {
         update();
       }
     }
-    loadTransCountList();
+    loadPantauCountList();
   }
 
   Future<void> saveFCMToken() async {
@@ -345,7 +345,9 @@ class DashboardController extends BaseController {
         var trans = await transaction.getPantauCount(QueryModel(between: [
           {
             "awbDate": [
-              DateTime.now().subtract(const Duration(days: 6)),
+              DateTime.now()
+                  .subtract(const Duration(days: 6))
+                  .copyWith(hour: 0, minute: 0, second: 0),
               DateTime.now()
             ]
           }
@@ -373,6 +375,11 @@ class DashboardController extends BaseController {
 
           if (item.status == 'Sukses Diterima') {
             state.kirimanKamu.suksesDiterima =
+                item.totalCod + item.totalCodOngkir + item.totalNonCod;
+          }
+
+          if (item.status == 'Dibatalkan Oleh Kamu') {
+            state.kirimanKamu.totalCancel =
                 item.totalCod + item.totalCodOngkir + item.totalNonCod;
           }
         });

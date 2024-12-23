@@ -113,12 +113,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                   ),
                                 ),
                                 notificationLabel: "Dibatalkan".tr,
-                                notificationCount: transSummary?.summary
-                                        ?.where((e) => e.status == "Dibatalkan")
-                                        .first
-                                        .total
-                                        ?.toInt() ??
-                                    0,
+                                notificationCount: kirimanKamu.totalCancel,
                                 notificationColor: errorColor,
                               ),
                               const SizedBox(height: 16),

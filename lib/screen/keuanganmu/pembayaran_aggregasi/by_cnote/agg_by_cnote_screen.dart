@@ -28,47 +28,32 @@ class AggByCnoteScreen extends StatelessWidget {
 
   Widget _bodyContent(AggByCnoteController controller, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: Get.size.width,
             height: 45,
-            margin: const EdgeInsets.symmetric(vertical: 20),
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: whiteColor,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: greyDarkColor1),
-              boxShadow: [
-                BoxShadow(
-                  color: AppConst.isLightTheme(context) ? blueJNE : infoColor,
-                  spreadRadius: 1,
-                  offset: const Offset(-2, 2),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                children: [
-                  Shimmer(
-                    isLoading: controller.isLoading,
-                    child: Container(
-                      height: controller.isLoading ? 20 : null,
-                      width: controller.isLoading ? Get.width / 2 : null,
-                      color: controller.isLoading ? greyColor : null,
-                      child: Text(
-                        controller.data.dpayDetWdrCnoteno ?? '',
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : redJNE),
-                      ),
+            padding: const EdgeInsets.all(0),
+            child: Column(
+              children: [
+                Shimmer(
+                  isLoading: controller.isLoading,
+                  child: Container(
+                    height: controller.isLoading ? 20 : null,
+                    width: controller.isLoading ? Get.width / 2 : null,
+                    color: controller.isLoading ? greyColor : null,
+                    child: Text(
+                      controller.data.dpayDetWdrCnoteno ?? '',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(color: primaryColor(context)),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -86,9 +71,7 @@ class AggByCnoteScreen extends StatelessWidget {
                     child: Text(
                       'Informasi Aggregasi'.tr,
                       style: listTitleTextStyle.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : Colors.lightBlueAccent,
+                        color: primaryColor(context),
                       ),
                     ),
                   ),
@@ -133,9 +116,7 @@ class AggByCnoteScreen extends StatelessWidget {
                     child: Text(
                       'Informasi Kiriman'.tr,
                       style: listTitleTextStyle.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : Colors.lightBlueAccent,
+                        color: primaryColor(context),
                       ),
                     ),
                   ),
@@ -204,9 +185,7 @@ class AggByCnoteScreen extends StatelessWidget {
                     child: Text(
                       'Detail Aggregasi'.tr,
                       style: listTitleTextStyle.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : Colors.lightBlueAccent,
+                        color: primaryColor(context),
                       ),
                     ),
                   ),
@@ -228,10 +207,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "COD Amount".tr,
                   'Rp. ${controller.data.dpayDetWdrCodamount?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? blueJNE
-                          : Colors.lightBlueAccent),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -239,10 +215,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "COD Fee Include VAT".tr,
                   'Rp. ${controller.data.dpayDWdrRtFchargeVat?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -250,10 +223,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "Freight Charge".tr,
                   'Rp. ${controller.data.dpayDFreightCharge?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -261,10 +231,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "Discount".tr,
                   'Rp. ${controller.data.dpayDWdrDisc?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? warningColor
-                          : warningLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -272,10 +239,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "Freight Charge After Discount".tr,
                   'Rp. ${controller.data.dpayDWdrFchargeAftDisc?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -283,10 +247,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "Freight Charge VAT".tr,
                   'Rp. ${controller.data.dpayDWdrFchargeVat?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 16),
                 const DottedLine(
@@ -304,10 +265,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "Insurance Charge".tr,
                   'Rp. ${controller.data.dpayDInsCharge?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -315,10 +273,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "Packing Fee".tr,
                   'Rp. ${controller.data.dpayDPackingFee?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -326,10 +281,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "Surcharge".tr,
                   'Rp. ${controller.data.dpayDSurcharge?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? warningColor
-                          : warningLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 16),
                 const DottedLine(
@@ -347,10 +299,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "Return Freight Charge After Discount".tr,
                   'Rp. ${controller.data.dpayDWdrRtFchargeAftDisc?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 _textRow(
@@ -358,10 +307,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   "Return Freight Charge VAT".tr,
                   'Rp. ${controller.data.dpayDWdrCodFeeInclVat?.toInt().toCurrency() ?? 0}',
                   controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? errorColor
-                          : errorLightColor1),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 16),
                 const DottedLine(
@@ -383,10 +329,10 @@ class AggByCnoteScreen extends StatelessWidget {
                       color: AppConst.isLightTheme(context)
                           ? successColor
                           : successLightColor1),
-                  titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? blueJNE
-                          : Colors.lightBlueAccent),
+                  titleStyle: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(color: primaryColor(context)),
                 ),
                 const SizedBox(
                   height: 50,
@@ -441,7 +387,7 @@ class AggByCnoteScreen extends StatelessWidget {
                         .textTheme
                         .titleMedium
                         ?.copyWith(fontWeight: regular),
-                textAlign: TextAlign.start, // Align the value to the right
+                textAlign: TextAlign.end, // Align the value to the right
               ),
             ),
           ),

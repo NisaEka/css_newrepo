@@ -34,33 +34,43 @@ class FacilityFormBankController extends BaseController {
   bool buttonEnabled = false;
 
   final List<BankModel> _banks = [];
+
   List<BankModel> get banks => _banks;
 
   BankModel? _selectedBank;
+
   BankModel? get selectedBank => _selectedBank;
 
   String? _pickedImagePath;
+
   String? get pickedImagePath => _pickedImagePath;
 
   String _termsAndConditions = '';
+
   String get termsAndConditions => _termsAndConditions;
 
   bool _showLoadingIndicator = false;
+
   bool get showLoadingIndicator => _showLoadingIndicator;
 
   bool _pickImageFailed = false;
+
   bool get pickImageFailed => _pickImageFailed;
 
   bool _postDataFailed = false;
+
   bool get postDataFailed => _postDataFailed;
 
   bool _postFileFailed = false;
+
   bool get postFileFailed => _postFileFailed;
 
   bool _showTermsAndConditions = false;
+
   bool get showTermsAndConditions => _showTermsAndConditions;
 
   bool _isOnline = true;
+
   bool get isOnline => _isOnline;
 
   @override

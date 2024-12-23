@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_doc/agg_by_doc_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_controller.dart';
@@ -14,7 +15,6 @@ import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
-import 'package:css_mobile/widgets/laporan_pembayaran/lappembayaran_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -65,14 +65,28 @@ class PembayaranAggergasiScreen extends StatelessWidget {
 
   Widget _bodyContent(PembayaranAggergasiController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PaymentBox(
-            isLoading: c.aggTotal == null,
-            title: "Total nilai yang sudah dibayarkan".tr,
-            value: "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
+          // PaymentBox(
+          //   isLoading: c.aggTotal == null,
+          //   title: "Total nilai yang sudah dibayarkan".tr,
+          //   value: "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
+          // ),
+          Text(
+            "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge!
+                .copyWith(color: primaryColor(context), fontWeight: bold),
           ),
+          Text(
+            "Total nilai yang sudah dibayarkan".tr,
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+          const SizedBox(height: 16),
           CustomSearchField(
             margin: const EdgeInsets.only(top: 0),
             controller: c.searchField,
@@ -114,12 +128,12 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                     ),
                   ),
                   noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
-                  noMoreItemsIndicatorBuilder: (context) => const Center(
+                  noMoreItemsIndicatorBuilder: (context) => Center(
                     child: Divider(
                       indent: 100,
                       endIndent: 100,
                       thickness: 2,
-                      color: blueJNE,
+                      color: primaryColor(context),
                     ),
                   ),
                   newPageProgressIndicatorBuilder: (context) =>

@@ -1,6 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/bonus_kamu/bonus_kamu_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -66,8 +65,10 @@ class JLCPointWidget extends StatelessWidget {
                             Image.asset(ImageConstant.logoJLC2, height: 12),
                             Text(
                                 ' ${point != '0' ? point.toDouble().toInt() : 0} Point',
-                                style: sublistTitleTextStyle.copyWith(
-                                    color: greyDarkColor1)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: greyDarkColor1)),
                           ],
                         ),
                       ),

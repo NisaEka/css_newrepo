@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,10 @@ class EclaimListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onSurface,
+        color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(

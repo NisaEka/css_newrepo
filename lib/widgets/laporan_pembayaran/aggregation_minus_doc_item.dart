@@ -79,18 +79,11 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(3),
                             border: Border.all(
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? redJNE
-                                    : redJNE,
-                                width: 2),
+                                color: primaryColor(context), width: 2),
                           ),
                           child: Icon(
                             Icons.indeterminate_check_box_rounded,
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? blueJNE
-                                    : redJNE,
+                            color: primaryColor(context),
                             size: 20,
                           ),
                         ),
@@ -118,12 +111,9 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                                   ? const EdgeInsets.only(top: 2)
                                   : EdgeInsets.zero,
                               child: Text(
-                                "# ${widget.data?.dCnoteNo ?? ''}",
+                                widget.data?.dCnoteNo ?? '',
                                 style: listTitleTextStyle.copyWith(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? blueJNE
-                                        : redJNE),
+                                    color: primaryColor(context)),
                               ),
                             ),
                           ],

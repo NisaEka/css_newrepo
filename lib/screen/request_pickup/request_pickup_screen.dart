@@ -16,8 +16,8 @@ import 'package:css_mobile/util/input_formatter/custom_formatter.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
@@ -139,12 +139,16 @@ class RequestPickupScreen extends StatelessWidget {
         if (controller.state.createDataLoading) const LoadingDialog(),
         if (controller.state.createDataFailed ||
             controller.state.createDataSuccess)
-          MessageInfoDialog(
-            message:
-                'Success: ${controller.state.data?.successCount}. Error: ${controller.state.data?.errorCount}\n'
-                'Error Details:\n'
+          DefaultAlertDialog(
+            title:
+                "Success: ${controller.state.data?.successCount}. Error: ${controller.state.data?.errorCount}\n"
+                    .tr,
+            subtitle: 'Error Details:\n'
                 '${controller.state.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
-            onClickAction: () => controller.refreshState(),
+            backButtonTitle: "Kembali",
+            confirmButtonTitle: "Ok",
+            onBack: Get.back,
+            onConfirm: () => controller.refreshState(),
           ),
         // if (controller.createDataSuccess)
         //   MessageInfoDialog(

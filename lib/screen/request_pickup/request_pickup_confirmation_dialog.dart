@@ -1,5 +1,4 @@
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,50 +15,15 @@ class RequestPickupConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      contentPadding: const EdgeInsets.all(16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            "Apakah kamu sudah yakin untuk melakukan penjemputan di jam $pickupTime"
-                .tr,
-            style: sublistTitleTextStyle.copyWith(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                    onPressed: () => onCancelAction(),
-                    style: OutlinedButton.styleFrom(
-                        side:
-                            BorderSide(width: 1, color: primaryColor(context)),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    child: Text(
-                      "Batal".tr,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    )),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: FilledButton(
-                  onPressed: () => onConfirmAction(),
-                  child: Text(
-                    "Ya".tr,
-                    style: const TextStyle(color: whiteColor),
-                  ),
-                ),
-              )
-            ],
-          )
-        ],
-      ),
+    return DefaultAlertDialog(
+      title: "Konfirmasi".tr,
+      subtitle:
+          "Apakah kamu sudah yakin untuk melakukan penjemputan di jam $pickupTime"
+              .tr,
+      backButtonTitle: "Batal".tr,
+      confirmButtonTitle: "Ya".tr,
+      onBack: Get.back,
+      onConfirm: () => onConfirmAction(),
     );
   }
 }
