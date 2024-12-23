@@ -180,25 +180,16 @@ class PantauItems extends StatelessWidget {
                                     isLoading ? greyColor : Colors.transparent,
                                 width: 230,
                                 child: Row(
-                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
+                                      decoration: BoxDecoration(
+                                        color: blueJNE,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(color: blueJNE),
+                                      ),
                                       child: Row(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          const Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 5, right: 5),
-                                            child: Text(
-                                              'COD',
-                                              style: TextStyle(
-                                                  color: whiteColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 10),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
                                           Container(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8),
@@ -286,8 +277,7 @@ class PantauItems extends StatelessWidget {
                               )
                             : const SizedBox(),
                         // Ongkir
-                        // ignore: unrelated_type_equality_checks
-                        c.state.selectedStatusKiriman == 0 ||
+                        c.state.selectedKiriman == 0 ||
                                 c.state.selectedKiriman == 2
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
@@ -298,19 +288,13 @@ class PantauItems extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
+                                      decoration: BoxDecoration(
+                                        color: warningColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(color: warningColor),
+                                      ),
                                       child: Row(
-                                        mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          const Text(
-                                            'Ongkir',
-                                            style: TextStyle(
-                                                color: whiteColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10),
-                                          ),
-                                          const SizedBox(width: 8),
                                           Container(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8),
@@ -395,13 +379,16 @@ class PantauItems extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        getStatusIcon(item?.status ?? ''),
-                        // Icon(getStatusIcon(item?.status ?? ''),
-                        //     color: greyLightColor2, size: 100),
-                      ],
+                    Container(
+                      color: isLoading ? greyColor : Colors.transparent,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          getStatusIcon(item?.status ?? ''),
+                          // Icon(getStatusIcon(item?.status ?? ''),
+                          //     color: greyLightColor2, size: 100),
+                        ],
+                      ),
                     ),
                   ],
                 ),

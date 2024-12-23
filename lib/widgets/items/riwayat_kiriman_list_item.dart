@@ -158,13 +158,16 @@ class RiwayatKirimanListItem extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        (data?.apiType?.isNotEmpty ?? false)
-                            ? Container(
-                                padding: const EdgeInsets.all(5),
-                                width: isLoading ? 50 : null,
-                                decoration: BoxDecoration(
-                                  color:
-                                      data?.apiType == "COD" || apiType == "COD"
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            (data?.apiType?.isNotEmpty ?? false)
+                                ? Container(
+                                    padding: const EdgeInsets.all(5),
+                                    width: isLoading ? 50 : null,
+                                    decoration: BoxDecoration(
+                                      color: data?.apiType == "COD" ||
+                                              apiType == "COD"
                                           ? successDarkColor
                                           : data?.apiType == "NON COD" ||
                                                   apiType == "NON COD"
@@ -173,20 +176,111 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                                       apiType == "COD ONGKIR"
                                                   ? warningDarkColor
                                                   : errorDarkColor,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Text(
-                                  data?.apiType ?? apiType ?? '-',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.copyWith(
-                                        color: whiteColor,
-                                        fontSize: 10,
-                                      ),
-                                ),
-                              )
-                            : const SizedBox(),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Text(
+                                      data?.apiType ?? apiType ?? '-',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall
+                                          ?.copyWith(
+                                            color: whiteColor,
+                                            fontSize: 10,
+                                          ),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            const SizedBox(width: 5),
+                            Column(
+                              children: [
+                                (data?.statusAwb?.isNotEmpty ?? false)
+                                    ? Container(
+                                        padding: const EdgeInsets.all(6),
+                                        // padding: const EdgeInsets.symmetric(
+                                        //     horizontal: 10, vertical: 4),
+                                        // margin: const EdgeInsets.only(bottom: 10),
+                                        width: isLoading ? Get.width / 5 : null,
+                                        decoration: BoxDecoration(
+                                          //DIBATALKAN OLEH KAMU
+                                          //DALAM PENINJAUAN error
+                                          color: data?.statusAwb ==
+                                                      "MASIH DI KAMU" ||
+                                                  apiType == "MASIH DI KAMU" ||
+                                                  data?.statusAwb ==
+                                                      "PROSES PENGEMBALIAN KEKAMU" ||
+                                                  apiType ==
+                                                      "PROSES PENGEMBALIAN KEKAMU" ||
+                                                  data?.statusAwb ==
+                                                      "BELUM TERKUMPUL DARI PEMBELI" ||
+                                                  apiType ==
+                                                      "BELUM TERKUMPUL DARI PEMBELI" ||
+                                                  data?.statusAwb ==
+                                                      "BUTUH DICEK" ||
+                                                  apiType == "BUTUH DICEK"
+                                              ? warningColor
+                                              : data?.statusAwb ==
+                                                          "SUDAH DIJEMPUT" ||
+                                                      apiType ==
+                                                          "SUDAH DIJEMPUT" ||
+                                                      data?.statusAwb ==
+                                                          "DALAM PERJALANAN" ||
+                                                      apiType ==
+                                                          "DALAM PERJALANAN" ||
+                                                      data?.statusAwb ==
+                                                          "SUDAH DI GUDANG JNE" ||
+                                                      apiType ==
+                                                          "SUDAH DI GUDANG JNE" ||
+                                                      data?.statusAwb ==
+                                                          "SUDAH DI KOTA TUJUAN" ||
+                                                      apiType ==
+                                                          "SUDAH DI KOTA TUJUAN" ||
+                                                      data?.statusAwb ==
+                                                          "DALAM PROSES" ||
+                                                      apiType == "DALAM PROSES"
+                                                  ? infoColor
+                                                  : data?.statusAwb == "Success" ||
+                                                          apiType ==
+                                                              "Success" ||
+                                                          data?.statusAwb ==
+                                                              "SUKSES DIKEMBALIKAN KEKAMU" ||
+                                                          apiType ==
+                                                              "SUKSES DIKEMBALIKAN KEKAMU" ||
+                                                          data?.statusAwb ==
+                                                              "SUKSES DITERIMA" ||
+                                                          apiType ==
+                                                              "SUKSES DITERIMA"
+                                                      ? successColor
+                                                      : data?.statusAwb ==
+                                                                  "DIBATALKAN OLEH KAMU" ||
+                                                              apiType ==
+                                                                  "DIBATALKAN OLEH KAMU" ||
+                                                              data?.statusAwb ==
+                                                                  "DALAM PENINJAUAN" ||
+                                                              apiType ==
+                                                                  "DALAM PENINJAUAN"
+                                                          ? errorColor
+                                                          : errorDarkColor,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Text(
+                                          data?.statusAwb?.tr ??
+                                              status?.tr ??
+                                              '',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium
+                                              ?.copyWith(
+                                                color: whiteColor,
+                                                fontSize: 8,
+                                              ),
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
+                          ],
+                        ),
                         Container(
                           color:
                               isLoading ? greyLightColor3 : Colors.transparent,
@@ -219,88 +313,6 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           margin: const EdgeInsets.only(bottom: 2),
                           child: Text(data?.serviceCode ?? service ?? '-',
                               style: Theme.of(context).textTheme.titleSmall),
-                        ),
-                        Column(
-                          children: [
-                            (data?.statusAwb?.isNotEmpty ?? false)
-                                ? Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 4),
-                                    margin: const EdgeInsets.only(bottom: 10),
-                                    width: isLoading ? Get.width / 5 : null,
-                                    decoration: BoxDecoration(
-                                      //DIBATALKAN OLEH KAMU
-                                      //DALAM PENINJAUAN error
-                                      color: data?.statusAwb ==
-                                                  "MASIH DI KAMU" ||
-                                              apiType == "MASIH DI KAMU" ||
-                                              data?.statusAwb ==
-                                                  "PROSES PENGEMBALIAN KEKAMU" ||
-                                              apiType ==
-                                                  "PROSES PENGEMBALIAN KEKAMU" ||
-                                              data?.statusAwb ==
-                                                  "BELUM TERKUMPUL DARI PEMBELI" ||
-                                              apiType ==
-                                                  "BELUM TERKUMPUL DARI PEMBELI" ||
-                                              data?.statusAwb ==
-                                                  "BUTUH DICEK" ||
-                                              apiType == "BUTUH DICEK"
-                                          ? warningColor
-                                          : data?.statusAwb ==
-                                                      "SUDAH DIJEMPUT" ||
-                                                  apiType == "SUDAH DIJEMPUT" ||
-                                                  data?.statusAwb ==
-                                                      "DALAM PERJALANAN" ||
-                                                  apiType ==
-                                                      "DALAM PERJALANAN" ||
-                                                  data?.statusAwb ==
-                                                      "SUDAH DI GUDANG JNE" ||
-                                                  apiType ==
-                                                      "SUDAH DI GUDANG JNE" ||
-                                                  data?.statusAwb ==
-                                                      "SUDAH DI KOTA TUJUAN" ||
-                                                  apiType ==
-                                                      "SUDAH DI KOTA TUJUAN" ||
-                                                  data?.statusAwb ==
-                                                      "DALAM PROSES" ||
-                                                  apiType == "DALAM PROSES"
-                                              ? infoColor
-                                              : data?.statusAwb == "Success" ||
-                                                      apiType == "Success" ||
-                                                      data?.statusAwb ==
-                                                          "SUKSES DIKEMBALIKAN KEKAMU" ||
-                                                      apiType ==
-                                                          "SUKSES DIKEMBALIKAN KEKAMU" ||
-                                                      data?.statusAwb ==
-                                                          "SUKSES DITERIMA" ||
-                                                      apiType ==
-                                                          "SUKSES DITERIMA"
-                                                  ? successColor
-                                                  : data?.statusAwb ==
-                                                              "DIBATALKAN OLEH KAMU" ||
-                                                          apiType ==
-                                                              "DIBATALKAN OLEH KAMU" ||
-                                                          data?.statusAwb ==
-                                                              "DALAM PENINJAUAN" ||
-                                                          apiType ==
-                                                              "DALAM PENINJAUAN"
-                                                      ? errorColor
-                                                      : errorDarkColor,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Text(
-                                      data?.statusAwb?.tr ?? status?.tr ?? '',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium
-                                          ?.copyWith(
-                                            color: whiteColor,
-                                            fontSize: 8,
-                                          ),
-                                    ),
-                                  )
-                                : const SizedBox(),
-                          ],
                         ),
                       ],
                     ),
