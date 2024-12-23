@@ -77,11 +77,10 @@ class PembayaranAggergasiScreen extends StatelessWidget {
           // ),
           Text(
             "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
-            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                color: AppConst.isLightTheme(context)
-                    ? blueJNE
-                    : warningColor,
-                fontWeight: bold),
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge!
+                .copyWith(color: primaryColor(context), fontWeight: bold),
           ),
           Text(
             "Total nilai yang sudah dibayarkan".tr,
@@ -129,12 +128,12 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                     ),
                   ),
                   noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
-                  noMoreItemsIndicatorBuilder: (context) => const Center(
+                  noMoreItemsIndicatorBuilder: (context) => Center(
                     child: Divider(
                       indent: 100,
                       endIndent: 100,
                       thickness: 2,
-                      color: blueJNE,
+                      color: primaryColor(context),
                     ),
                   ),
                   newPageProgressIndicatorBuilder: (context) =>
