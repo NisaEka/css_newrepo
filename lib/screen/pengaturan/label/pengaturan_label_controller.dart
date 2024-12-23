@@ -25,7 +25,7 @@ class PengaturanLabelController extends BaseController {
       await setting.getSettingLabel().then((value) {
         labelList.addAll(value.data ?? []);
         selectedSticker = labelList.where((e) => e.enable == true).first;
-        shipcost = (selectedSticker?.showPrice ?? false) ? "PUBLISH" : "HIDE";
+        shipcost = (selectedSticker?.showPrice ?? false) ? "HIDE" : "PUBLISH";
       });
     } catch (e) {
       AppLogger.e('error initData pengaturan label', e);
@@ -44,7 +44,7 @@ class PengaturanLabelController extends BaseController {
       setting
           .updateSettingLabel(
         selectedSticker?.index?.toString() ?? '',
-        shipcost == "HIDE" ? 1 : 0,
+        shipcost == "HIDE" ? 0 : 1,
       )
           .then((value) async {
         if (value.code == 200) {
