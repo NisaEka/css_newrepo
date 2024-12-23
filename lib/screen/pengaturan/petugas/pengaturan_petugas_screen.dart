@@ -7,7 +7,7 @@ import 'package:css_mobile/screen/pengaturan/petugas/pengaturan_petugas_controll
 import 'package:css_mobile/widgets/bar/add_button.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
-import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/items/petugas_list_item.dart';
@@ -83,8 +83,12 @@ class PengaturanPetugasScreen extends StatelessWidget {
                     })?.then((value) => c.pagingController.refresh()),
                     onDelete: (context) => showDialog(
                       context: context,
-                      builder: (context) => DeleteAlertDialog(
-                        onDelete: () {
+                      builder: (context) => DefaultAlertDialog(
+                        title: 'Data akan dihapus'.tr,
+                        subtitle: 'Anda yakin menghapus data ini ?'.tr,
+                        confirmButtonTitle: 'Hapus'.tr,
+                        backButtonTitle: 'Tidak'.tr,
+                        onConfirm: () {
                           c.delete(item);
                           Get.back();
                         },
@@ -93,6 +97,16 @@ class PengaturanPetugasScreen extends StatelessWidget {
                           c.pagingController.refresh();
                         },
                       ),
+                      //     DeleteAlertDialog(
+                      //   onDelete: () {
+                      //     c.delete(item);
+                      //     Get.back();
+                      //   },
+                      //   onBack: () {
+                      //     Get.back();
+                      //     c.pagingController.refresh();
+                      //   },
+                      // ),
                     ),
                   ),
                   firstPageErrorIndicatorBuilder: (context) =>

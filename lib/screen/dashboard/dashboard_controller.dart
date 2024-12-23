@@ -14,6 +14,8 @@ import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
+import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
@@ -21,7 +23,7 @@ import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.da
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
@@ -98,7 +100,18 @@ class DashboardController extends BaseController {
         ? Get.to(const InformasiPengirimScreen(), arguments: {})
         : showDialog(
             context: context,
-            builder: (context) => const LoginAlertDialog(),
+            builder: (context) => DefaultAlertDialog(
+              title: 'Akses Terbatas'.tr,
+              subtitle: 'access_denied'.tr,
+              confirmButtonTitle: 'Masuk'.tr,
+              backButtonTitle: 'Daftar'.tr,
+              onConfirm: () {
+                Get.off(() => const LoginScreen());
+              },
+              onBack: () {
+                Get.off(() => const SignUpScreen());
+              },
+            ),
           );
   }
 
