@@ -465,11 +465,10 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start, // Spread the columns
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          // Ensures that the title takes up only as much space as it needs
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
@@ -486,23 +485,55 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Expanded(
-          // Makes the value take the rest of the space in the row
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
               color: isLoading ? greyColor : Colors.transparent,
-              child: Text(
-                value,
-                style: style ??
-                    Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: regular),
-                textAlign: TextAlign.start, // Align the value to the right
-              ),
+              child: value.startsWith("http")
+                  ? GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: SingleChildScrollView(
+                                child: Image.network(
+                                  value,
+                                  fit: BoxFit.contain,
+                                  width: MediaQuery.of(context).size.width,
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text("Tutup"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Image.network(
+                        value,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Text(
+                      value,
+                      style: style ??
+                          Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(fontWeight: regular),
+                      textAlign: TextAlign.start,
+                    ),
             ),
           ),
-        )
+        ),
       ],
     );
   }
