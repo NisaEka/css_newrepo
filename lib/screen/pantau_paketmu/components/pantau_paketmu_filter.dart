@@ -21,34 +21,34 @@ class PantauPaketmuFilter extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Customradiobutton(
-                  title: "1 Bulan Terakhir".tr,
-                  value: '1',
-                  groupValue: controller.state.dateFilter.value,
-                  onChanged: (value) => controller.selectDateFilter(1),
-                  onTap: () => controller.selectDateFilter(1),
-                ),
-                Customradiobutton(
-                  title: "1 Minggu Terakhir".tr,
-                  value: '2',
-                  groupValue: controller.state.dateFilter.value,
-                  onChanged: (value) => controller.selectDateFilter(2),
-                  onTap: () => controller.selectDateFilter(2),
-                ),
-                Customradiobutton(
-                  title: "Hari Ini".tr,
-                  value: '3',
-                  groupValue: controller.state.dateFilter.value,
-                  onChanged: (value) => controller.selectDateFilter(3),
-                  onTap: () => controller.selectDateFilter(3),
-                ),
-                Customradiobutton(
-                  title: "Pilih Tanggal Sendiri".tr,
-                  value: '4',
-                  groupValue: controller.state.dateFilter.value,
-                  onChanged: (value) => controller.selectDateFilter(4),
-                  onTap: () => controller.selectDateFilter(4),
-                ),
+                Obx(() => Customradiobutton(
+                      title: "1 Bulan Terakhir".tr,
+                      value: '1',
+                      groupValue: controller.state.dateFilter.value,
+                      onChanged: (value) => controller.selectDateFilter(1),
+                      onTap: () => controller.selectDateFilter(1),
+                    )),
+                Obx(() => Customradiobutton(
+                      title: "1 Minggu Terakhir".tr,
+                      value: '2',
+                      groupValue: controller.state.dateFilter.value,
+                      onChanged: (value) => controller.selectDateFilter(2),
+                      onTap: () => controller.selectDateFilter(2),
+                    )),
+                Obx(() => Customradiobutton(
+                      title: "Hari Ini".tr,
+                      value: '3',
+                      groupValue: controller.state.dateFilter.value,
+                      onChanged: (value) => controller.selectDateFilter(3),
+                      onTap: () => controller.selectDateFilter(3),
+                    )),
+                Obx(() => Customradiobutton(
+                      title: "Pilih Tanggal Sendiri".tr,
+                      value: '4',
+                      groupValue: controller.state.dateFilter.value,
+                      onChanged: (value) => controller.selectDateFilter(4),
+                      onTap: () => controller.selectDateFilter(4),
+                    )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
