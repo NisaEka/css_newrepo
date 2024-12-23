@@ -41,13 +41,13 @@ class DefaultAlertDialog extends StatelessWidget {
             width: Get.width,
             color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 12),
           Text(
             title ?? '',
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
-                ?.copyWith(fontWeight: regular),
+                ?.copyWith(fontWeight: regular, fontSize: 16),
             // style: TextStyle(
             //     color: AppConst.isLightTheme(context)
             //         ? greyDarkColor2
@@ -62,7 +62,7 @@ class DefaultAlertDialog extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .titleLarge
-            ?.copyWith(fontWeight: regular),
+            ?.copyWith(fontWeight: regular, fontSize: 12),
       ),
       actions: <Widget>[
         Column(

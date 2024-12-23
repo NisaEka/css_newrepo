@@ -3,7 +3,7 @@ import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/label_screen.dart';
-import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/hubungi_aku_dialog.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -33,9 +33,9 @@ class TransactionEditButton extends StatelessWidget {
                           c.state.allow?.cetakPesanan == 'Y'
                       ? CustomFilledButton(
                           color:
-                            Theme.of(context).brightness == Brightness.light
-                              ? blueJNE
-                              : warningColor,
+                              Theme.of(context).brightness == Brightness.light
+                                  ? blueJNE
+                                  : warningColor,
                           title: "Lihat Resi".tr,
                           suffixIcon: Icons.qr_code_rounded,
                           width: Get.width / 2,
@@ -90,8 +90,13 @@ class TransactionEditButton extends StatelessWidget {
                                 "MASIH DI KAMU") {
                               showDialog(
                                 context: context,
-                                builder: (context) => DeleteAlertDialog(
-                                  onDelete: () {
+                                builder: (context) => DefaultAlertDialog(
+                                  title: 'Data akan dihapus'.tr,
+                                  subtitle:
+                                      'Anda yakin menghapus data ini ?'.tr,
+                                  confirmButtonTitle: 'Hapus'.tr,
+                                  backButtonTitle: 'Tidak'.tr,
+                                  onConfirm: () {
                                     c.deleteTransaction();
                                     Get.close(2);
                                   },
@@ -99,6 +104,15 @@ class TransactionEditButton extends StatelessWidget {
                                     Get.back();
                                   },
                                 ),
+                                //     DeleteAlertDialog(
+                                //   onDelete: () {
+                                //     c.deleteTransaction();
+                                //     Get.close(2);
+                                //   },
+                                //   onBack: () {
+                                //     Get.back();
+                                //   },
+                                // ),
                               );
                             }
                           },
