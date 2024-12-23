@@ -159,7 +159,7 @@ class PengaturanScreen extends StatelessWidget {
           SettingListItem(
               title: 'Tentang'.tr,
               leading: Icons.info_rounded,
-              onTap: () => Get.to(() => const Tentangscreen()))
+              onTap: () => Get.to(() => const TentangScreen()))
         ],
       ),
     );

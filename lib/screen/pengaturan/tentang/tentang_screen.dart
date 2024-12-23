@@ -10,8 +10,8 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Tentangscreen extends StatelessWidget {
-  const Tentangscreen({super.key});
+class TentangScreen extends StatelessWidget {
+  const TentangScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
