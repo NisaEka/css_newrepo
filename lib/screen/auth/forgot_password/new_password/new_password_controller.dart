@@ -45,8 +45,8 @@ class NewPasswordController extends BaseController {
                         : "Masuk".tr,
                     onThirdAction: () => Get.delete<LoginController>().then(
                       (value) => Get.offAll(isChange ?? false
-                          ? const DashboardScreen()
-                          : const LoginScreen()),
+                          ? () => const DashboardScreen()
+                          : () => const LoginScreen()),
                     ),
                   ),
                 )

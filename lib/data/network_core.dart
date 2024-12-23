@@ -91,7 +91,7 @@ class NetworkCore {
 
       StorageCore().deleteLogin();
       Get.delete<DashboardController>()
-          .then((_) => Get.offAll(const DashboardScreen()));
+          .then((_) => Get.offAll(() => const DashboardScreen()));
 
       return BaseResponse<PostLoginModel>.fromJson(
         e.response?.data,

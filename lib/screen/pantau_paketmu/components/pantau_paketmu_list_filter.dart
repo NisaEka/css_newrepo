@@ -13,8 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-class PantauPaketmuFilter extends HookWidget {
-  const PantauPaketmuFilter({super.key});
+class PantauPaketmuListFilter extends HookWidget {
+  const PantauPaketmuListFilter({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -274,7 +274,7 @@ class PantauPaketmuFilter extends HookWidget {
               Get.back();
             },
             onApplyFilter: () {
-              controller.applyFilter();
+              controller.applyFilter(isDetail: true);
               Get.back();
             },
             onCloseFilter: () {

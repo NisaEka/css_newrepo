@@ -55,9 +55,8 @@ class TransactionDetail extends StatelessWidget {
                     label: 'Status Kiriman'.tr,
                     isBold: true,
                     fontColor: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : warningColor
-                ),
+                        ? blueJNE
+                        : warningColor),
                 const SizedBox(height: 16),
                 TextRowItem(
                   title: "Status Kiriman".tr,
@@ -100,8 +99,7 @@ class TransactionDetail extends StatelessWidget {
                     isBold: true,
                     fontColor: AppConst.isLightTheme(context)
                         ? blueJNE
-                        : warningColor
-                ),
+                        : warningColor),
                 const SizedBox(height: 16),
                 CustomLabelText(
                     isLoading: c.state.isLoading,
@@ -113,32 +111,27 @@ class TransactionDetail extends StatelessWidget {
                 CustomLabelText(
                     isLoading: c.state.isLoading,
                     title: "Petugas Entry".tr,
-                    value:
-                    c.state.transactionModel?.petugasEntry ?? '-'),
+                    value: c.state.transactionModel?.petugasEntry ?? '-'),
                 const SizedBox(height: 6),
                 CustomLabelText(
                     isLoading: c.state.isLoading,
                     title: "Pengirim".tr,
-                    value:
-                    c.state.transactionModel?.shipperName ?? '-'),
+                    value: c.state.transactionModel?.shipperName ?? '-'),
                 const SizedBox(height: 6),
                 CustomLabelText(
                     isLoading: c.state.isLoading,
                     title: "Kota Pengiriman".tr,
-                    value:
-                    c.state.transactionModel?.shipperCity ?? '-'),
+                    value: c.state.transactionModel?.shipperCity ?? '-'),
                 const SizedBox(height: 6),
                 CustomLabelText(
                     isLoading: c.state.isLoading,
                     title: "Penerima".tr,
-                    value:
-                    c.state.transactionModel?.receiverName ?? '-'),
+                    value: c.state.transactionModel?.receiverName ?? '-'),
                 const SizedBox(height: 6),
                 CustomLabelText(
                     isLoading: c.state.isLoading,
                     title: "Nama Barang".tr,
-                    value:
-                    c.state.transactionModel?.goodsDesc ?? '-'),
+                    value: c.state.transactionModel?.goodsDesc ?? '-'),
                 const SizedBox(height: 10),
                 const Divider(color: greyColor),
                 const SizedBox(height: 10),
@@ -178,7 +171,7 @@ class TransactionDetail extends StatelessWidget {
                 TextRowItem(
                   title: "Harga Barang".tr,
                   value:
-                  'Rp. ${c.state.transactionModel?.goodsAmount?.toCurrency().toString() ?? '0'}',
+                      'Rp. ${c.state.transactionModel?.goodsAmount?.toCurrency().toString() ?? '0'}',
                   isLoading: c.state.isLoading,
                 ),
                 TextRowItem(

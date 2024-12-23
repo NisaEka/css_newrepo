@@ -1,3 +1,4 @@
+import 'package:css_mobile/screen/dashboard/components/dashboard_info.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_kiriman_count_items.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_promo.dart';
@@ -33,6 +34,9 @@ class DashboardBody extends StatelessWidget {
                   child: Column(
                     children: [
                       const DashboardUserInfo(),
+                      c.state.isLogin
+                          ? const DashboardInfo()
+                          : const SizedBox(),
                       const DashboardMenu2(),
                       // CustomFilledButton(
                       //   color: Colors.blue,

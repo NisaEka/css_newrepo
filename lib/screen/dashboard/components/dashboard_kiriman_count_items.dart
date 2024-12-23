@@ -130,8 +130,8 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                 color: primaryColor(context),
                                 statusColor: Colors.green,
                                 suffixChart: SizedBox(
-                                  width: 25,
-                                  height: 25,
+                                  width: 20,
+                                  height: 20,
                                   child: CircularProgressIndicator(
                                     value: (kirimanKamu.suksesDiterimaPercentage
                                             .toDouble() /

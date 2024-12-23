@@ -89,7 +89,10 @@ class TransactionCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: innerPadding ?? 13),
+                // SizedBox(height: innerPadding ?? 13),
+                count.toString().length >= 5
+                    ? SizedBox(height: innerPadding ?? 17)
+                    : SizedBox(height: innerPadding ?? 13),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -97,16 +100,20 @@ class TransactionCard extends StatelessWidget {
                     prefixChart != null ? const Spacer() : const SizedBox(),
                     Text(
                       count.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontSize: countFontSize ?? 22),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontSize: count.toString().length >= 5
+                                ? 16 - (count.toString().length - 5)
+                                : (countFontSize ?? 22),
+                          ),
                     ),
                     suffixChart != null ? const Spacer() : const SizedBox(),
                     suffixChart ?? const SizedBox(),
                   ],
                 ),
-                SizedBox(height: innerPadding ?? 13),
+                count.toString().length >= 5
+                    ? SizedBox(height: innerPadding ?? 17)
+                    : SizedBox(height: innerPadding ?? 13),
+                // SizedBox(height: innerPadding ?? 13),
                 Text(
                   subtitle,
                   style: Theme.of(context)

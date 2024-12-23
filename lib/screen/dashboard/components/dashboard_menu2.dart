@@ -1,8 +1,10 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/screen/auth/login/login_screen.dart';
+import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/menu/other_menu_screen.dart';
-import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -55,7 +57,20 @@ class DashboardMenu2 extends StatelessWidget {
                                         ? showDialog(
                                             context: context,
                                             builder: (context) =>
-                                                const LoginAlertDialog(),
+                                                DefaultAlertDialog(
+                                              title: 'Akses Terbatas'.tr,
+                                              subtitle: 'access_denied'.tr,
+                                              confirmButtonTitle: 'Masuk'.tr,
+                                              backButtonTitle: 'Daftar'.tr,
+                                              onConfirm: () {
+                                                Get.off(
+                                                    () => const LoginScreen());
+                                              },
+                                              onBack: () {
+                                                Get.off(
+                                                    () => const SignUpScreen());
+                                              },
+                                            ),
                                           )
                                         : !controller.state.isLoading
                                             ? Get.toNamed(e.route.toString(),

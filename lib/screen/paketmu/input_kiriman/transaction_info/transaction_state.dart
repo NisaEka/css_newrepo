@@ -15,7 +15,7 @@ class TransactionState {
   DataTransactionModel? data = Get.arguments['data'];
   bool? isEdit = Get.arguments['isEdit'];
   DataTransactionModel? dataEdit = Get.arguments['dataEdit'];
-  ShipperModel shipper = Get.arguments['shipper'];
+  ShipperModel shipper = Get.arguments?['shipper'];
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
   OriginModel origin = Get.arguments['origin'];

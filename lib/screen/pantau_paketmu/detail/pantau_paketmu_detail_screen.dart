@@ -13,6 +13,7 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:intl/intl.dart';
 
 class PantauPaketmuDetailScreen extends StatelessWidget {
   const PantauPaketmuDetailScreen({super.key});
@@ -50,7 +51,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
   Widget _mainContent(
       BuildContext context, PantauPaketmuDetailController controller) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +68,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomCodeLabel(
-                        label: controller.pantauPaketmu.awbNo,
+                        label: controller.pantauPaketmu.awbNo ?? '',
                         isLoading: false,
                       ),
                       Row(
@@ -88,7 +89,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                                 StatefulBuilder(builder: (BuildContext context,
                                     StateSetter setState) {
                                   return HubungiAkuDialog(
-                                    awb: controller.pantauPaketmu.awbNo,
+                                    awb: controller.pantauPaketmu.awbNo ?? '',
                                     allow: controller.allow ?? MenuModel(),
                                   );
                                 }),
@@ -163,7 +164,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Tanggal Transaksi",
-                    controller.pantauPaketmu.createDate.toLongDateTimeFormat(),
+                    controller.pantauPaketmu.createDate
+                        .toString()
+                        .toLongDateTimeFormat(),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
@@ -171,10 +174,27 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     context,
                     "Tanggal Serah Terima / Pickup",
                     controller.pantauPaketmu.hoCourierDate
-                            ?.toDateTimeFormat() ??
+                            ?.toString()
+                            .toLongDateTimeFormat() ??
                         controller.pantauPaketmu.puLastAttempStatusDate
-                            ?.toDateTimeFormat() ??
+                            ?.toString()
+                            .toLongDateTimeFormat() ??
                         "-",
+                    // controller.pantauPaketmu.hoCourierDate != null
+                    //     ? (controller.pantauPaketmu.hoCourierDate is String
+                    //         ? DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
+                    //             controller.pantauPaketmu.hoCourierDate ?? '-'))
+                    //         : DateFormat('dd MMMM yyyy HH:mmzzz').format(
+                    //             controller.pantauPaketmu.hoCourierDate!))
+                    //     : (controller.pantauPaketmu.puLastAttempStatusDate != null
+                    //         ? (controller.pantauPaketmu.puLastAttempStatusDate
+                    //                 is String
+                    //             ? DateFormat('dd MMMM yyyy HH:mmzzz').format(
+                    //                 DateTime.parse(controller
+                    //                     .pantauPaketmu.puLastAttempStatusDate!))
+                    //             : DateFormat('dd MMMM yyyy HH:mmzzz').format(
+                    //                 controller.pantauPaketmu.puLastAttempStatusDate!))
+                    //         : "-"),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 16),
@@ -260,7 +280,8 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                       context,
                       "Nominal COD",
-                      'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
+                      'Rp. ${NumberFormat('#,##0.00', 'id').format(controller.pantauPaketmu.codAmount ?? 0)}',
+                      // 'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
                       controller.isLoading,
                       style: listTitleTextStyle.copyWith(
                           color: AppConst.isLightTheme(context)
@@ -312,7 +333,11 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Tanggal Status Pengantaran",
-                    controller.pantauPaketmu.tglReceived?.toDateTimeFormat(),
+                    controller.pantauPaketmu.tglReceived
+                        .toString()
+                        .toLongDateTimeFormat(),
+                    // DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
+                    //     controller.pantauPaketmu.tglReceived ?? '')),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
@@ -387,8 +412,10 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       context,
                       "Tanggal Pembayaran",
                       controller.pantauPaketmu.repcssPaymentDate
-                              ?.toDateTimeFormat() ??
-                          "-",
+                          .toString()
+                          .toLongDateTimeFormat(),
+                      // DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
+                      //     controller.pantauPaketmu.repcssPaymentDate ?? '-')),
                       controller.isLoading,
                     ),
                   ],
@@ -438,11 +465,10 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start, // Spread the columns
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          // Ensures that the title takes up only as much space as it needs
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
@@ -459,23 +485,55 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Expanded(
-          // Makes the value take the rest of the space in the row
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
               color: isLoading ? greyColor : Colors.transparent,
-              child: Text(
-                value,
-                style: style ??
-                    Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: regular),
-                textAlign: TextAlign.start, // Align the value to the right
-              ),
+              child: value.startsWith("http")
+                  ? GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: SingleChildScrollView(
+                                child: Image.network(
+                                  value,
+                                  fit: BoxFit.contain,
+                                  width: MediaQuery.of(context).size.width,
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text("Tutup"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Image.network(
+                        value,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Text(
+                      value,
+                      style: style ??
+                          Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(fontWeight: regular),
+                      textAlign: TextAlign.start,
+                    ),
             ),
           ),
-        )
+        ),
       ],
     );
   }
