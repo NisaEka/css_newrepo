@@ -254,7 +254,7 @@ class PantauPaketmuController extends BaseController {
     state.selectedStatusKiriman.value = "Total Kiriman";
     state.selectedTipeKiriman.value = "cod";
     state.tipeKiriman.value = 0;
-    state.isFiltered.value = false;
+    state.isFiltered = false;
     state.searchField.clear();
     state.dateFilter.value = "3";
     selectDateFilter(3);
@@ -293,7 +293,7 @@ class PantauPaketmuController extends BaseController {
     state.isLoading = true;
     update();
     if (state.dateFilter.value != '3') {
-      state.isFiltered.value = true;
+      state.isFiltered = true;
     }
 
     if (state.startDate.value != null && state.endDate.value != null) {

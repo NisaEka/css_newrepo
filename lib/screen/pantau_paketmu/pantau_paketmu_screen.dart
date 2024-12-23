@@ -39,7 +39,7 @@ class PantauPaketmuScreen extends StatelessWidget {
       action: [
         FilterButton(
           filterContent: PantauPaketmuFilter(controller: c),
-          isFiltered: c.state.isFiltered.value,
+          isFiltered: c.state.isFiltered,
           isApplyFilter:
               (c.state.selectedStatusKiriman.value != "Total Kiriman"),
           onResetFilter: () {

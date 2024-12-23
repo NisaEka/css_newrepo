@@ -52,7 +52,7 @@ class PantauPaketmuState extends GetxController {
   // final codOngkir = Rx<int>(0);
 
   // Reactive Booleans
-  final isFiltered = Rx<bool>(false);
+  // final isFiltered = Rx<bool>(false);
 
   // final issLoading = Rx<bool>(false);
   final isLoadCount = Rx<bool>(false);
@@ -80,6 +80,7 @@ class PantauPaketmuState extends GetxController {
   int noncod = 0;
   int codOngkir = 0;
   bool isLoading = false;
+  bool isFiltered = false;
   List<Map<String, dynamic>>? transDate;
   List<PantauPaketmuCountModel> selectedPantauPaketmu = [];
   List<PantauPaketmuListModel> selectedTransaction = [];
