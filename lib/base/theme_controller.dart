@@ -11,9 +11,7 @@ class CustomTheme {
     colorScheme: const ColorScheme.light(
       primary: blueJNE,
       secondary: greyLightColor2,
-      surface: whiteColor,
       onPrimary: blueJNE,
-      onSurface: whiteColor,
       outline: greyColor,
     ),
     bottomSheetTheme: const BottomSheetThemeData(
@@ -99,6 +97,7 @@ class CustomTheme {
       side: const BorderSide(color: blueJNE),
       checkColor: WidgetStateColor.resolveWith((states) => whiteColor),
     ),
+
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: whiteColor,
@@ -176,10 +175,8 @@ class CustomTheme {
     colorScheme: const ColorScheme.dark(
       primary: primaryDarkColor,
       secondary: greyDarkColor2,
-      surface: bgDarkColor,
       brightness: Brightness.dark,
       onPrimary: infoColor,
-      onSurface: Colors.transparent,
       outline: whiteColor,
     ),
     useMaterial3: true,

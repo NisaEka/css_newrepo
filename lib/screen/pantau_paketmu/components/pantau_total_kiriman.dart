@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 class PantauTotalKiriman extends StatelessWidget {
   final bool isLoading;
+
   const PantauTotalKiriman({
     super.key,
     this.isLoading = true,
@@ -78,7 +79,6 @@ class PantauTotalKiriman extends StatelessWidget {
                               bottomLeft: Radius.circular(4),
                             ),
                           ),
-
                           width: 160,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -132,73 +132,6 @@ class PantauTotalKiriman extends StatelessWidget {
                                 ),
                               ),
                             ],
-
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 3),
-                            child: Text(
-                              'Ongkir',
-                              style: TextStyle(
-                                  color: whiteColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10),
-                            ),
-                          ),
-
-                          width: 160,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                decoration: const BoxDecoration(
-                                  color: blueJNE,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(4),
-                                    bottomLeft: Radius.circular(4),
-                                  ),
-                                ),
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 3),
-                                  child: Text(
-                                    'Ongkir',
-                                    style: TextStyle(
-                                        color: whiteColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  c.state.selectedKiriman == 0
-                                      ? (c.state.countList.isNotEmpty &&
-                                              c.state.countList.first
-                                                      .ongkirCodAmount !=
-                                                  null
-                                          ? 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirCodAmount.toString()))}'
-                                          : 'Rp. 0')
-                                      : c.state.selectedKiriman == 1
-                                          ? (c.state.countList.isNotEmpty &&
-                                                  c.state.countList.first
-                                                          .ongkirCodAmount !=
-                                                      null
-                                              ? 'Rp. 0'
-                                              : 'Rp. 0')
-                                          : 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirNonCodAmount.toString()))}',
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium
-                                      ?.copyWith(
-                                          fontSize: 10,
-                                          color: blueJNE,
-                                          fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-
                           ),
                         ),
                       ],
