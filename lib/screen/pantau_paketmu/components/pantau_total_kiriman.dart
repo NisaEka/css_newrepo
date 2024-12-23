@@ -60,25 +60,14 @@ class PantauTotalKiriman extends StatelessWidget {
               const Spacer(),
               Column(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: c.state.isLoading ? greyColor : whiteColor,
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: blueJNE),
-                    ),
-                    width: 160,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          decoration: const BoxDecoration(
-                            color: blueJNE,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(4),
-                              bottomLeft: Radius.circular(4),
-                            ),
+                  //COD
+                  c.state.selectedKiriman == 0 || c.state.selectedKiriman == 1
+                      ? Container(
+                          decoration: BoxDecoration(
+                            color: c.state.isLoading ? greyColor : whiteColor,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: blueJNE),
                           ),
-
                           width: 160,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -116,7 +105,7 @@ class PantauTotalKiriman extends StatelessWidget {
                                       : c.state.selectedKiriman == 1
                                           ? (c.state.countList.isNotEmpty &&
                                                   c.state.countList.first
-                                                          .codOngkirAmount !=
+                                                          .ongkirCodAmount !=
                                                       null
                                               ? 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.codOngkirAmount.toString()))}'
                                               : 'Rp. 0')
@@ -132,20 +121,20 @@ class PantauTotalKiriman extends StatelessWidget {
                                 ),
                               ),
                             ],
-
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 3),
-                            child: Text(
-                              'Ongkir',
-                              style: TextStyle(
-                                  color: whiteColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10),
-                            ),
+                        )
+                      : const SizedBox(),
+                  c.state.selectedKiriman == 0 || c.state.selectedKiriman == 1
+                      ? const SizedBox(height: 5)
+                      : const SizedBox(),
+                  // ONGKIR
+                  c.state.selectedKiriman == 0 || c.state.selectedKiriman == 2
+                      ? Container(
+                          decoration: BoxDecoration(
+                            color: c.state.isLoading ? greyColor : whiteColor,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: blueJNE),
                           ),
-
                           width: 160,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -186,7 +175,7 @@ class PantauTotalKiriman extends StatelessWidget {
                                                       null
                                               ? 'Rp. 0'
                                               : 'Rp. 0')
-                                          : 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirNonCodAmount.toString()))}',
+                                          : 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirCodAmount.toString()))}',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .textTheme
@@ -198,12 +187,9 @@ class PantauTotalKiriman extends StatelessWidget {
                                 ),
                               ),
                             ],
-
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
+                        )
+                      : const SizedBox(),
                 ],
               )
             ],

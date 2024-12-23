@@ -179,7 +179,6 @@ class PantauItems extends StatelessWidget {
                                 color:
                                     isLoading ? greyColor : Colors.transparent,
                                 width: 230,
-
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -201,7 +200,6 @@ class PantauItems extends StatelessWidget {
                                           ),
                                           const SizedBox(width: 8),
                                           Container(
-
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8),
                                             child: Row(
@@ -278,7 +276,6 @@ class PantauItems extends StatelessWidget {
                                                   ),
                                                 ),
                                               ],
-
                                             ),
                                           ),
                                         ],
@@ -286,13 +283,11 @@ class PantauItems extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
+                              )
+                            : const SizedBox(),
                         // Ongkir
-
-                        c.state.selectedKiriman == 0 ||
+                        // ignore: unrelated_type_equality_checks
+                        c.state.selectedStatusKiriman == 0 ||
                                 c.state.selectedKiriman == 2
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
@@ -300,7 +295,6 @@ class PantauItems extends StatelessWidget {
                                 color:
                                     isLoading ? greyColor : Colors.transparent,
                                 width: 230,
-
                                 child: Row(
                                   children: [
                                     Container(
@@ -318,7 +312,6 @@ class PantauItems extends StatelessWidget {
                                           ),
                                           const SizedBox(width: 8),
                                           Container(
-
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8),
                                             child: Row(
@@ -390,7 +383,6 @@ class PantauItems extends StatelessWidget {
                                                   ),
                                                 ),
                                               ],
-
                                             ),
                                           ),
                                         ],
@@ -398,10 +390,8 @@ class PantauItems extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                     const Spacer(),

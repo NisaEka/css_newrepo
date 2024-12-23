@@ -163,7 +163,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Tanggal Transaksi",
-                    controller.pantauPaketmu.createDate?.toLongDateTimeFormat(),
+                    controller.pantauPaketmu.createDate.toLongDateTimeFormat(),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
