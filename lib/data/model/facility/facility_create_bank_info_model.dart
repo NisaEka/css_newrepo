@@ -30,10 +30,10 @@ class FacilityCreateBankInfoModel {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
 
-    json['bank_id'] = _bankId;
-    json['account_number'] = _accountNumber;
-    json['account_name'] = _accountName;
-    json['account_image_url'] = _accountImageUrl;
+    json['bankId'] = _bankId;
+    json['accountNumber'] = _accountNumber;
+    json['accountName'] = _accountName;
+    json['accountImageUrl'] = _accountImageUrl;
 
     return json;
   }

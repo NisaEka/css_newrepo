@@ -12,6 +12,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/constant.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,18 +77,21 @@ class FacilityFormBankController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([getBanks(), getTermsAndConditions()]);
+    Future.wait([
+      // getBanks(),
+      getTermsAndConditions()
+    ]);
     _checkConnectivity();
   }
 
-  Future<void> getBanks() async {
-    bank.getBanks().then((response) {
-      if (response.statusCode == HttpStatus.ok && response.data!.isNotEmpty) {
-        _banks.addAll(response.data!);
-        update();
-      }
-    });
-  }
+  // Future<void> getBanks() async {
+  //   bank.getBanks().then((response) {
+  //     if (response.statusCode == HttpStatus.ok && response.data!.isNotEmpty) {
+  //       _banks.addAll(response.data!);
+  //       update();
+  //     }
+  //   });
+  // }
 
   Future<void> getTermsAndConditions() async {
     facility
@@ -184,7 +188,7 @@ class FacilityFormBankController extends BaseController {
 
   void _composeBankData() {
     final bankInfo = FacilityCreateBankInfoModel();
-    bankInfo.setBankId(selectedBank!.id);
+    bankInfo.setBankId(selectedBank?.bankId ?? "");
     bankInfo.setAccountNumber(accountNumber.text);
     bankInfo.setAccountName(accountName.text);
     bankInfo.setAccountImageUrl(pickedImagePath ?? "-");
@@ -202,8 +206,18 @@ class FacilityFormBankController extends BaseController {
       Constant.keyImageRekening: _pickedImagePath ?? ''
     };
 
+    AppLogger.i(
+        'facilityCreateArgs.getIdCardPath() ${facilityCreateArgs.getIdCardPath()}');
+    AppLogger.i(
+        'facilityCreateArgs.getTaxInfoPath() ${facilityCreateArgs.getTaxInfoPath()}');
+    AppLogger.i('_pickedImagePath $_pickedImagePath');
+
+    // if (fileMap.values.any((element) => element.isEmpty)) {
+    //   return false;
+    // }
+
     return await storageRepository.postCcrfFile(fileMap).then((response) {
-      if (response.statusCode == HttpStatus.ok) {
+      if (response.code == HttpStatus.created) {
         ktpUrl = response.data
             ?.firstWhere((element) => element.fileType == Constant.keyImageKtp);
         npwpUrl = response.data?.firstWhere(
@@ -233,7 +247,7 @@ class FacilityFormBankController extends BaseController {
 
     if (fileUploaded) {
       profil.createProfileCcrf(facilityCreateArgs).then((response) {
-        if (response.statusCode == HttpStatus.created) {
+        if (response.code == HttpStatus.created) {
           Get.to(
             () => SuccessScreen(
               message:

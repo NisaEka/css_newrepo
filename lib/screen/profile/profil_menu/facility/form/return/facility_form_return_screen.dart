@@ -4,7 +4,7 @@ import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facil
 import 'package:css_mobile/util/input_formatter/npwp_separator_input_formater.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -30,11 +30,13 @@ class FacilityFormReturnScreen extends StatelessWidget {
               bottomNavigationBar: _nextButton(controller),
             ),
             controller.pickImageFailed
-                ? MessageInfoDialog(
-                    message:
-                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                ? DefaultAlertDialog(
+                    title: 'Gagal mengambil gambar.'.tr,
+                    subtitle:
+                        'Periksa kembali ukuran file gambar NPWP. File tidak boleh kosong atau lebih dari 2MB'
                             .tr,
-                    onClickAction: () => controller.onRefreshPickImageState(),
+                    confirmButtonTitle: 'OK'.tr,
+                    onConfirm: () => controller.onRefreshPickImageState(),
                   )
                 : Container()
           ],
@@ -50,6 +52,10 @@ class FacilityFormReturnScreen extends StatelessWidget {
         color: redJNE,
         title: 'Selanjutnya'.tr,
         onPressed: () {
+          if (c.pickedImageUrl == null) {
+            c.pickImageFailed = true;
+            return;
+          }
           Get.to(const FacilityFormBankScreen(),
               arguments: {'data': c.submitData()});
         },

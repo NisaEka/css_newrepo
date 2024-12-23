@@ -8,6 +8,7 @@ class FacilityCreateModel {
   String _brand = '';
   String _name = '';
   String _email = '';
+  String _jlcNumber = '';
   String _facilityType = '';
   String _termsAndConditions = '';
   FacilityCreateIdCardModel? _idCard;
@@ -27,6 +28,10 @@ class FacilityCreateModel {
 
   setEmail(String email) {
     _email = email;
+  }
+
+  setJlcNumber(String jlcNumber) {
+    _jlcNumber = jlcNumber;
   }
 
   setFacilityType(String facilityType) {
@@ -87,13 +92,14 @@ class FacilityCreateModel {
     json['brand'] = _brand;
     json['name'] = _name;
     json['email'] = _email;
-    json['facility_type'] = _facilityType;
-    json['terms_and_conditions'] = _termsAndConditions;
-    json['id_card'] = _idCard?.toJson();
+    json['jlcNumber'] = _jlcNumber;
+    json['facilityType'] = _facilityType;
+    json['termsAndConditions'] = _termsAndConditions;
+    json['idCard'] = _idCard?.toJson();
     json['address'] = _address?.toJson();
-    json['return_address'] = _returnAddress?.toJson();
-    json['tax_info'] = _taxInfo?.toJson();
-    json['bank_info'] = _bankInfo?.toJson();
+    json['returnAddress'] = _returnAddress?.toJson();
+    json['taxInfo'] = _taxInfo?.toJson();
+    json['bankInfo'] = _bankInfo?.toJson();
 
     return json;
   }

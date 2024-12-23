@@ -16,8 +16,8 @@ class FacilityCreateIdCardModel {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
 
-    json['id_card_number'] = _number;
-    json['id_card_image_url'] = _imageUrl;
+    json['idCardNumber'] = _number;
+    json['idCardImageUrl'] = _imageUrl;
 
     return json;
   }

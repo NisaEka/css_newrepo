@@ -69,11 +69,11 @@ class FacilityCreateReturnAddress {
     json['province'] = _province;
     json['city'] = _city;
     json['district'] = _district;
-    json['sub_district'] = _subDistrict;
-    json['zip_code'] = _zipCode;
+    json['subDistrict'] = _subDistrict;
+    json['zipCode'] = _zipCode;
     json['phone'] = _phone;
     json['handphone'] = _handphone;
-    json['responsible_name'] = _responsibleName;
+    json['responsibleName'] = _responsibleName;
 
     return json;
   }

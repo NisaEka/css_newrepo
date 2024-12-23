@@ -1,5 +1,4 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_existing_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
@@ -74,28 +73,42 @@ class ProfilRepositoryImpl extends ProfilRepository {
   }
 
   @override
-  Future<DefaultResponseModel<String>> createProfileCcrf(
-      FacilityCreateModel data) async {
+  Future<BaseResponse> createProfileCcrf(FacilityCreateModel data) async {
     //todo:implement create profile ccrf
     try {
       var response =
           await network.base.post('/profile/ccrf', data: data.toJson());
-      return DefaultResponseModel.fromJson(response.data, '');
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => null,
+      );
     } on DioException catch (e) {
-      return DefaultResponseModel.fromJson(e.response?.data, '');
+      AppLogger.i('error createProfileCcrf ${e.response?.data.toString()}');
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => null,
+      );
     }
   }
 
   @override
-  Future<DefaultResponseModel<String>> createProfileCcrfExisting(
+  Future<BaseResponse> createProfileCcrfExisting(
       FacilityCreateExistingModel data) async {
     //todo: implement create profile ccrf existing
     try {
       var response = await network.base
           .post('/profile/ccrf/existing', data: data.toJson());
-      return DefaultResponseModel.fromJson(response.data, '');
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => null,
+      );
     } on DioException catch (e) {
-      return DefaultResponseModel.fromJson(e.response?.data, '');
+      AppLogger.i(
+          'error createProfileCcrfExisting ${e.response?.data.toString()}');
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => null,
+      );
     }
   }
 

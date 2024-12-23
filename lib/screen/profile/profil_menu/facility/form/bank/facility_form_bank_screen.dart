@@ -1,12 +1,11 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/bank/bank_model.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facility_terms_and_conditions_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
-import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
+import 'package:css_mobile/widgets/forms/bank_dropdown.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/profile/image_picker_container.dart';
@@ -33,23 +32,29 @@ class FacilityFormBankScreen extends StatelessWidget {
                 ? const LoadingDialog()
                 : Container(),
             controller.pickImageFailed
-                ? MessageInfoDialog(
-                    message:
-                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                ? DefaultAlertDialog(
+                    title: 'Gagal mengambil gambar'.tr,
+                    subtitle:
+                        'Periksa kembali ukuran file gambar rekening. File tidak boleh kosong atau lebih dari 2MB'
                             .tr,
-                    onClickAction: () => controller.onRefreshPickImageState(),
+                    confirmButtonTitle: 'OK'.tr,
+                    onConfirm: () => controller.onRefreshPickImageState(),
                   )
                 : Container(),
             controller.postDataFailed
-                ? MessageInfoDialog(
-                    message: 'Gagal menyimpan data.',
-                    onClickAction: () => controller.onRefreshPostDataState(),
+                ? DefaultAlertDialog(
+                    title: "Gagal menyimpan data.".tr,
+                    subtitle: "Pastikan input data sudah benar.".tr,
+                    confirmButtonTitle: "OK".tr,
+                    onConfirm: () => controller.onRefreshPostDataState(),
                   )
                 : Container(),
             controller.postFileFailed
-                ? MessageInfoDialog(
-                    message: 'Gagal menyimpan file.',
-                    onClickAction: () => controller.onRefreshPostDataState(),
+                ? DefaultAlertDialog(
+                    title: "Gagal menyimpan file.".tr,
+                    subtitle: "Pastikan file yang diupload sudah benar.".tr,
+                    confirmButtonTitle: "OK".tr,
+                    onConfirm: () => controller.onRefreshPostDataState(),
                   )
                 : Container(),
           ],
@@ -97,19 +102,25 @@ class FacilityFormBankScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomDropDownFormField<BankModel>(
-                  hintText: 'Pilih Nama Bank'.tr,
-                  width: Get.width,
+                // CustomDropDownFormField<BankModel>(
+                //   hintText: 'Pilih Nama Bank'.tr,
+                //   width: Get.width,
+                //   value: controller.selectedBank,
+                //   items: controller.banks.map((bank) {
+                //     return DropdownMenuItem(
+                //       value: bank,
+                //       child: Text(bank.bankName),
+                //     );
+                //   }).toList(),
+                //   onChanged: (value) {
+                //     controller.setSelectedBank(value!);
+                //   },
+                // ),
+                BankDropdown(
+                  onChanged: (value) => controller.setSelectedBank(value),
                   value: controller.selectedBank,
-                  items: controller.banks.map((bank) {
-                    return DropdownMenuItem(
-                      value: bank,
-                      child: Text(bank.name),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    controller.setSelectedBank(value!);
-                  },
+                  // selectedItem: c.state.kotaPengirim.text,
+                  // prefixIcon: const Icon(Icons.trip_origin_rounded),
                 ),
                 CustomTextFormField(
                   controller: controller.accountNumber,

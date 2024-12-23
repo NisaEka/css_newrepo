@@ -31,7 +31,7 @@ class FacilityFormExistingController extends BaseController {
     if (_dataIsValid()) {
       final data = _composeData();
       profil.createProfileCcrfExisting(data).then((response) {
-        if (response.statusCode == HttpStatus.created) {
+        if (response.code == HttpStatus.created) {
           _createDataSuccess = true;
           Get.to(
             SuccessScreen(

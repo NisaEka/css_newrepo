@@ -1,8 +1,9 @@
-import 'package:css_mobile/data/model/default_response_model.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/facility/facility_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/facility/facility_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +16,7 @@ class FacilityImpl extends FacilityRepository {
   }
 
   @override
-  Future<DefaultResponseModel<List<FacilityModel>>> getFacilities() async {
+  Future<BaseResponse<List<FacilityModel>>> getFacilities() async {
     try {
       final locale = await _getLocale();
       var response = await network.base.get(
@@ -24,18 +25,32 @@ class FacilityImpl extends FacilityRepository {
           headers: {"Accept-Language": locale},
         ),
       );
-      List<FacilityModel> facilities = [];
-      response.data["data"].forEach((facility) {
-        facilities.add(FacilityModel.fromJson(facility));
-      });
-      return DefaultResponseModel.fromJson(response.data, facilities);
+      return BaseResponse<List<FacilityModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<FacilityModel>(
+                  (i) => FacilityModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      return DefaultResponseModel.fromJson(e.response?.data, List.empty());
+      return BaseResponse<List<FacilityModel>>.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<FacilityModel>(
+                  (i) => FacilityModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     }
   }
 
   @override
-  Future<DefaultResponseModel<String>> getFacilityTermsAndConditions(
+  Future<BaseResponse<String>> getFacilityTermsAndConditions(
       String type) async {
     try {
       final locale = await _getLocale();
@@ -46,10 +61,14 @@ class FacilityImpl extends FacilityRepository {
           headers: {"Accept-Language": locale},
         ),
       );
-      return DefaultResponseModel.fromJson(
-          response.data, response.data['data']);
+      return BaseResponse<String>.fromJson(
+        response.data,
+        (json) => response.data['data'],
+      );
     } on DioException catch (e) {
-      return DefaultResponseModel.fromJson(e.response?.data, '');
+      AppLogger.d("getFacilityTermsAndConditions error: ${e.response?.data}");
+      return BaseResponse<String>.fromJson(
+          e.response?.data, (json) => e.response?.data['data']);
     }
   }
 }

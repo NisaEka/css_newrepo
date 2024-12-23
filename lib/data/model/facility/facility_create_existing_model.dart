@@ -36,7 +36,7 @@ class FacilityCreateExistingModel {
     json['name'] = _name;
     json['email'] = _email;
     json['phone'] = _phone;
-    json['facility_type'] = _facilityType;
+    json['facilityType'] = _facilityType;
     return json;
   }
 }

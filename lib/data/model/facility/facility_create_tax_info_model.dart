@@ -41,7 +41,7 @@ class FacilityCreateTaxInfoModel {
     json['name'] = _name;
     json['number'] = _number;
     json['address'] = _address;
-    json['tax_image_url'] = _imageUrl;
+    json['imageUrl'] = _imageUrl;
 
     return json;
   }

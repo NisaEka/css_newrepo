@@ -5,7 +5,6 @@ import 'package:css_mobile/screen/profile/profil_menu/facility/form/info/facilit
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -14,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 
 class FacilityFormInfoScreen extends StatelessWidget {
   const FacilityFormInfoScreen({super.key});
@@ -31,11 +31,13 @@ class FacilityFormInfoScreen extends StatelessWidget {
               bottomNavigationBar: _nextButton(controller),
             ),
             controller.pickImageFailed
-                ? MessageInfoDialog(
-                    message:
-                        'Gagal mengambil gambar. Periksa kembali ukuran file gambar. File tidak bisa lebih dari 2MB'
+                ? DefaultAlertDialog(
+                    title: 'Gagal mengambil gambar.'.tr,
+                    subtitle:
+                        'Periksa kembali ukuran file gambar KTP. File tidak boleh kosong atau lebih dari 2MB'
                             .tr,
-                    onClickAction: () => controller.onRefreshUploadState(),
+                    confirmButtonTitle: 'OK'.tr,
+                    onConfirm: () => controller.onRefreshUploadState(),
                   )
                 : Container(),
           ],
@@ -50,9 +52,14 @@ class FacilityFormInfoScreen extends StatelessWidget {
         child: CustomFilledButton(
           color: redJNE,
           title: 'Selanjutnya'.tr,
-          onPressed: () {
+          onPressed: () async {
+            if (c.pickedImageUrl == null) {
+              c.pickImageFailed = true;
+              return;
+            }
+
             Get.to(const FacilityFormReturnScreen(), arguments: {
-              'data': c.submitData(),
+              'data': await c.submitData(),
               'destination': c.selectedDestination
             });
           },
@@ -71,11 +78,13 @@ class FacilityFormInfoScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: c.brand,
                   hintText: 'Nama Toko / Perusahaan',
+                  isRequired: true,
                   validator: ValidationBuilder().maxLength(32).build(),
                 ),
                 CustomTextFormField(
                   controller: c.idCardNumber,
                   hintText: 'No Identitas / KTP',
+                  isRequired: true,
                   inputType: TextInputType.number,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
@@ -92,12 +101,14 @@ class FacilityFormInfoScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: c.fullName,
                   hintText: 'Nama Lengkap',
+                  isRequired: true,
                   inputType: TextInputType.name,
                   validator: ValidationBuilder().maxLength(32).build(),
                 ),
                 CustomTextFormField(
                   controller: c.fullAddress,
                   hintText: 'Alamat Lengkap',
+                  isRequired: true,
                   inputType: TextInputType.streetAddress,
                   validator: ValidationBuilder().maxLength(128).build(),
                 ),
@@ -141,18 +152,21 @@ class FacilityFormInfoScreen extends StatelessWidget {
                   controller: c.phone,
                   hintText: 'No. Telp'.tr,
                   inputType: TextInputType.phone,
+                  isRequired: true,
                   validator: ValidationBuilder().maxLength(15).phone().build(),
                 ),
                 CustomTextFormField(
                   controller: c.whatsAppPhone,
                   hintText: 'No. WhatsApp'.tr,
                   inputType: TextInputType.phone,
+                  isRequired: true,
                   validator: ValidationBuilder().maxLength(15).phone().build(),
                 ),
                 CustomTextFormField(
                   controller: c.email,
                   hintText: 'Email'.tr,
                   inputType: TextInputType.emailAddress,
+                  isRequired: true,
                   inputFormatters: const [],
                   validator: ValidationBuilder().maxLength(64).email().build(),
                 )

@@ -1,5 +1,4 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_existing_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
@@ -15,10 +14,9 @@ abstract class ProfilRepository {
 
   Future<BaseResponse> putProfileCCRF(GeneralInfo data);
 
-  Future<DefaultResponseModel<String>> createProfileCcrf(
-      FacilityCreateModel data);
+  Future<BaseResponse> createProfileCcrf(FacilityCreateModel data);
 
-  Future<DefaultResponseModel<String>> createProfileCcrfExisting(
+  Future<BaseResponse> createProfileCcrfExisting(
       FacilityCreateExistingModel data);
 
   Future<BaseResponse<List<CcrfActivityModel>>> getCcrfActivity(

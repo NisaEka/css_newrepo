@@ -2,6 +2,9 @@ class FacilityCreateAddressModel {
   String _address = '';
   String get address => _address;
 
+  String _country = '';
+  String get country => _country;
+
   String _province = '';
   String get province => _province;
 
@@ -25,6 +28,10 @@ class FacilityCreateAddressModel {
 
   setAddress(String address) {
     _address = address;
+  }
+
+  setCountry(String country) {
+    _country = country;
   }
 
   setProvince(String province) {
@@ -59,11 +66,12 @@ class FacilityCreateAddressModel {
     final json = <String, dynamic>{};
 
     json['address'] = _address;
+    json['country'] = _country;
     json['province'] = _province;
     json['city'] = _city;
     json['district'] = _district;
-    json['sub_district'] = _subDistrict;
-    json['zip_code'] = _zipCode;
+    json['subDistrict'] = _subDistrict;
+    json['zipCode'] = _zipCode;
     json['phone'] = _phone;
     json['handphone'] = _handphone;
 

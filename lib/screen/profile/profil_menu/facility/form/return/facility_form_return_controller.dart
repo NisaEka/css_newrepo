@@ -48,6 +48,11 @@ class FacilityFormReturnController extends BaseController {
   bool _pickImageFailed = false;
   bool get pickImageFailed => _pickImageFailed;
 
+  set pickImageFailed(bool value) {
+    _pickImageFailed = value;
+    update();
+  }
+
   bool _addressSectionReadOnly = false;
   bool get addressSectionReadOnly => _addressSectionReadOnly;
 

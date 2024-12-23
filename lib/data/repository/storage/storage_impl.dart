@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/default_response_model.dart';
 import 'package:css_mobile/data/model/storage/ccrf_file_model.dart';
 import 'package:css_mobile/data/model/storage/storage_model.dart';
@@ -34,29 +35,61 @@ class StorageImpl extends StorageRepository {
   }
 
   @override
-  Future<DefaultResponseModel<List<FileModel>?>> postCcrfFile(
+  Future<BaseResponse<List<FileModel>?>> postCcrfFile(
       Map<String, String> files) async {
     // todo : implement post ccrf file
     try {
       var formData = FormData.fromMap({});
+
       files.forEach((key, value) {
-        formData.files.add(MapEntry(key, MultipartFile.fromFileSync(value)));
+        String fileExtension = value.split('.').last.toLowerCase();
+        String mimeType = _getMimeType(fileExtension);
+        formData.files.add(MapEntry(
+            key,
+            MultipartFile.fromFileSync(value,
+                filename: value.split('/').last,
+                contentType: DioMediaType.parse(mimeType))));
       });
+
       var response = await network.base.post("/storage/ccrf",
           data: formData,
-          options: Options(headers: {
-            "Accept": "application/json",
-            "Content-Type": "multipart/form-data"
-          }));
-      var payload = response.data["payload"];
-      List<FileModel> fileModels = [];
-      payload.forEach((fileModel) {
-        fileModels.add(FileModel.fromJson(fileModel));
-      });
-      return DefaultResponseModel.fromJson(response.data, fileModels);
+          options: Options(headers: {"Content-Type": "multipart/form-data"}));
+      return BaseResponse<List<FileModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<FileModel>(
+                  (i) => FileModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      AppLogger.e('error postCcrfFile $e');
-      return DefaultResponseModel.fromJson(e.response?.data, null);
+      AppLogger.e('error post eclaim file ${e.response?.data}');
+      return BaseResponse<List<FileModel>>.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<FileModel>(
+                  (i) => FileModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    }
+  }
+
+  String _getMimeType(String fileExtension) {
+    switch (fileExtension) {
+      case 'jpg':
+      case 'jpeg':
+        return 'image/jpeg';
+      case 'png':
+        return 'image/png';
+      case 'pdf':
+        return 'application/pdf';
+      default:
+        return 'application/octet-stream';
     }
   }
 }

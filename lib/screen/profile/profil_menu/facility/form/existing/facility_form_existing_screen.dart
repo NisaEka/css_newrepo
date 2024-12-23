@@ -1,8 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/existing/facility_form_existing_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/dialog/message_info_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +27,11 @@ class FacilityFormExistingScreen extends StatelessWidget {
                   ? const LoadingDialog()
                   : Container(),
               controller.showInvalidInputMessage
-                  ? MessageInfoDialog(
-                      message:
-                          'Terdapat input yang tidak valid, periksa kembali data yang telah anda masukkan.',
-                      onClickAction: () =>
-                          controller.onRestartValidationState())
+                  ? DefaultAlertDialog(
+                      title: 'Terdapat input yang tidak valid'.tr,
+                      subtitle:
+                          'Periksa kembali data yang telah anda masukkan.',
+                      onConfirm: () => controller.onRestartValidationState())
                   : Container()
             ],
           );

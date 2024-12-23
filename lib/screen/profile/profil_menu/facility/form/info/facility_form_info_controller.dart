@@ -8,6 +8,7 @@ import 'package:css_mobile/data/model/facility/facility_create_address_model.dar
 import 'package:css_mobile/data/model/facility/facility_create_id_card_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -46,6 +47,11 @@ class FacilityFormInfoController extends BaseController {
 
   bool _pickImageFailed = false;
   bool get pickImageFailed => _pickImageFailed;
+
+  set pickImageFailed(bool value) {
+    _pickImageFailed = value;
+    update();
+  }
 
   bool _isOnline = true;
   bool get isOnline => _isOnline;
@@ -141,29 +147,39 @@ class FacilityFormInfoController extends BaseController {
     isLoading = true;
     destinationList.clear();
 
-    // var response = await transaction.getDestination(keyword);
-    // var models = response.payload?.toList();
+    var response =
+        await master.getDestinations(QueryModel(search: keyword.toUpperCase()));
+    var models = response.data?.toList();
 
     isLoading = false;
     update();
 
-    // return models ?? List.empty();
-    return [];
+    return models ?? List.empty();
+    // return [];
   }
 
-  FacilityCreateModel submitData() {
+  Future<String> getJlcAccount() async {
+    var response = await master.getAccounts(QueryModel(where: [
+      {'accountService': 'JLC'},
+    ], limit: 1));
+    return response.data?.first.accountNumber ?? '';
+  }
+
+  Future<FacilityCreateModel> submitData() async {
     requestData.setBrand(brand.text);
     requestData.setName(fullName.text);
+    requestData.setJlcNumber(await getJlcAccount());
     requestData.setEmail(email.text);
     requestData.setFacilityType(_facilityType);
 
     final FacilityCreateIdCardModel idCard = FacilityCreateIdCardModel();
     idCard.setNumber(idCardNumber.text);
-    idCard.setImageUrl(pickedImageUrl ?? "-");
+    idCard.setImageUrl(pickedImageUrl ?? "");
     requestData.setIdCard(idCard);
 
     final FacilityCreateAddressModel address = FacilityCreateAddressModel();
     address.setAddress(fullAddress.text);
+    address.setCountry(selectedDestination!.countryName!);
     address.setProvince(selectedDestination!.provinceName!);
     address.setCity(selectedDestination!.cityName!);
     address.setDistrict(selectedDestination!.districtName!);
