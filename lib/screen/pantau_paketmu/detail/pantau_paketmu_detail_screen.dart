@@ -173,26 +173,28 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Tanggal Serah Terima / Pickup",
-                    // controller.pantauPaketmu.hoCourierDate
-                    //     ?.toLongDateTimeFormat() ??
-                    //     controller.pantauPaketmu.puLastAttempStatusDate
-                    //         ?.toLongDateTimeFormat() ??
-                    //     "-",
-                    controller.pantauPaketmu.hoCourierDate != null
-                        ? (controller.pantauPaketmu.hoCourierDate is String
-                            ? DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
-                                controller.pantauPaketmu.hoCourierDate ?? '-'))
-                            : DateFormat('dd MMMM yyyy HH:mmzzz').format(
-                                controller.pantauPaketmu.hoCourierDate!))
-                        : (controller.pantauPaketmu.puLastAttempStatusDate != null
-                            ? (controller.pantauPaketmu.puLastAttempStatusDate
-                                    is String
-                                ? DateFormat('dd MMMM yyyy HH:mmzzz').format(
-                                    DateTime.parse(controller
-                                        .pantauPaketmu.puLastAttempStatusDate!))
-                                : DateFormat('dd MMMM yyyy HH:mmzzz').format(
-                                    controller.pantauPaketmu.puLastAttempStatusDate!))
-                            : "-"),
+                    controller.pantauPaketmu.hoCourierDate
+                            ?.toString()
+                            .toLongDateTimeFormat() ??
+                        controller.pantauPaketmu.puLastAttempStatusDate
+                            ?.toString()
+                            .toLongDateTimeFormat() ??
+                        "-",
+                    // controller.pantauPaketmu.hoCourierDate != null
+                    //     ? (controller.pantauPaketmu.hoCourierDate is String
+                    //         ? DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
+                    //             controller.pantauPaketmu.hoCourierDate ?? '-'))
+                    //         : DateFormat('dd MMMM yyyy HH:mmzzz').format(
+                    //             controller.pantauPaketmu.hoCourierDate!))
+                    //     : (controller.pantauPaketmu.puLastAttempStatusDate != null
+                    //         ? (controller.pantauPaketmu.puLastAttempStatusDate
+                    //                 is String
+                    //             ? DateFormat('dd MMMM yyyy HH:mmzzz').format(
+                    //                 DateTime.parse(controller
+                    //                     .pantauPaketmu.puLastAttempStatusDate!))
+                    //             : DateFormat('dd MMMM yyyy HH:mmzzz').format(
+                    //                 controller.pantauPaketmu.puLastAttempStatusDate!))
+                    //         : "-"),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 16),
@@ -331,8 +333,11 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Tanggal Status Pengantaran",
-                    DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
-                        controller.pantauPaketmu.tglReceived ?? '')),
+                    controller.pantauPaketmu.tglReceived
+                        .toString()
+                        .toLongDateTimeFormat(),
+                    // DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
+                    //     controller.pantauPaketmu.tglReceived ?? '')),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
@@ -406,8 +411,11 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     _textRow(
                       context,
                       "Tanggal Pembayaran",
-                      DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
-                          controller.pantauPaketmu.repcssPaymentDate ?? '-')),
+                      controller.pantauPaketmu.repcssPaymentDate
+                          .toString()
+                          .toLongDateTimeFormat(),
+                      // DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
+                      //     controller.pantauPaketmu.repcssPaymentDate ?? '-')),
                       controller.isLoading,
                     ),
                   ],
