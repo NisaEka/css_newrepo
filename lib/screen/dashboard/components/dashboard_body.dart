@@ -3,8 +3,6 @@ import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_promo.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_user_info.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/onboarding/ob1_screen.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dashboard_appbar.dart';
@@ -36,10 +34,10 @@ class DashboardBody extends StatelessWidget {
                     children: [
                       const DashboardUserInfo(),
                       const DashboardMenu2(),
-                      CustomFilledButton(
-                        color: Colors.blue,
-                        onPressed: () => Get.to(const Ob1Screen()),
-                      ),
+                      // CustomFilledButton(
+                      //   color: Colors.blue,
+                      //   onPressed: () => Get.to(const Ob1Screen()),
+                      // ),
                       // CustomFilledButton(
                       //   color: Colors.blue,
                       //   onPressed: () => Get.to(
@@ -76,7 +74,7 @@ class DashboardBody extends StatelessWidget {
                               transSummary: c.state.transSummary,
                               kirimanKamu: c.state.kirimanKamu,
                               isLoadingKiriman: c.state.isLoadingKiriman,
-                              onRefresh: () => c.loadTransCountList(),
+                              onRefresh: () => c.loadPantauCountList(),
                             )
                           : const SizedBox(),
                       // const SizedBox(height: 50),

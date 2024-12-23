@@ -11,6 +11,7 @@ class DashboardKirimanKamuModel {
   num onProcessPercentage;
   int suksesDiterima;
   num suksesDiterimaPercentage;
+  int totalCancel;
 
   DashboardKirimanKamuModel({
     this.totalPantau = 0,
@@ -25,6 +26,7 @@ class DashboardKirimanKamuModel {
     this.onProcessPercentage = 0,
     this.suksesDiterima = 0,
     this.suksesDiterimaPercentage = 0,
+    this.totalCancel = 0,
   }) : pantauChart = pantauChart ?? [];
 
   // Example: Method to update percentages safely
