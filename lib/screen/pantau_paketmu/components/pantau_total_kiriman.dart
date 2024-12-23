@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 class PantauTotalKiriman extends StatelessWidget {
   final bool isLoading;
+
   const PantauTotalKiriman({
     super.key,
     this.isLoading = true,

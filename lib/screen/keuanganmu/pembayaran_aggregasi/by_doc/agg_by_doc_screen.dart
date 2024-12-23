@@ -7,12 +7,14 @@ import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
-import 'package:css_mobile/widgets/laporan_pembayaran/lappembayaran_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+import '../../../../const/app_const.dart';
+import '../../../../const/textstyle.dart';
 
 class AggByDocScreen extends StatelessWidget {
   const AggByDocScreen({super.key});
@@ -33,13 +35,26 @@ class AggByDocScreen extends StatelessWidget {
 
   Widget _bodyContent(AggByDocController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PaymentBox(
-            title: "Document No".tr,
-            value: c.aggregationID,
+          // PaymentBox(
+          //   title: "Document No".tr,
+          //   value: c.aggregationID,
+          // ),
+          Text(
+            c.aggregationID,
+            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                fontWeight: bold),
           ),
+          Text(
+            "Document No".tr,
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+          const SizedBox(height: 16),
           CustomSearchField(
             margin: const EdgeInsets.only(top: 0),
             controller: c.searchField,
@@ -91,12 +106,12 @@ class AggByDocScreen extends StatelessWidget {
                     ),
                   ),
                   noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
-                  noMoreItemsIndicatorBuilder: (context) => const Center(
+                  noMoreItemsIndicatorBuilder: (context) => Center(
                     child: Divider(
                       indent: 100,
                       endIndent: 100,
                       thickness: 2,
-                      color: blueJNE,
+                      color: primaryColor(context),
                     ),
                   ),
                   newPageProgressIndicatorBuilder: (context) =>

@@ -375,8 +375,24 @@ class PantauItems extends StatelessWidget {
                                               ],
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        SizedBox(
+                                          width: 40,
+                                          child: Text(
+                                            c.state.selectedKiriman == 0
+                                                ? '${item?.ongkirCodAmountPercentage}%'
+                                                : c.state.selectedKiriman == 1
+                                                    ? '0%'
+                                                    : '${item?.ongkirNonCodAmountPercentage}%',
+                                            style: const TextStyle(
+                                                color: whiteColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 10),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

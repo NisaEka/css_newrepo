@@ -31,7 +31,7 @@ class LoginAlertDialog extends StatelessWidget {
             'Akses Terbatas'.tr,
             style: Theme.of(context)
                 .textTheme
-                .titleLarge
+                .titleMedium
                 ?.copyWith(fontWeight: regular),
             // style: TextStyle(
             //     color: AppConst.isLightTheme(context)
@@ -47,7 +47,7 @@ class LoginAlertDialog extends StatelessWidget {
           'access_denied'.tr,
           style: Theme.of(context)
               .textTheme
-              .titleLarge
+              .titleSmall
               ?.copyWith(fontWeight: regular),
         ),
       ),

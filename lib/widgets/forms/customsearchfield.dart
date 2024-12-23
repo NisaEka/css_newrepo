@@ -41,7 +41,6 @@ class CustomSearchField<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.onSurface,
       padding: margin ?? const EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [

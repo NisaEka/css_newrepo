@@ -23,7 +23,7 @@ class SecretDataDialog extends StatelessWidget {
               Text(
                 'Kerahasiaan Data'.tr,
                 style: appTitleTextStyle.copyWith(
-                  color: blueJNE,
+                  color: primaryColor(context),
                 ),
               ),
               IconButton(
