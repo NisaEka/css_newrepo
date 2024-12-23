@@ -47,7 +47,7 @@ class SuccessScreen extends StatelessWidget {
         children: [
           const LogoHeader(),
           Positioned(
-            top: iconMargin ?? 150,
+            top: iconMargin ?? 300,
             left: 0,
             right: 0,
             child: icon ??
