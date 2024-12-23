@@ -1,7 +1,6 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/dashboard/components/dashboard_info.dart';
 import 'package:css_mobile/screen/dashboard/components/jlcpoint_widget.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
@@ -22,11 +21,10 @@ class DashboardUserInfo extends StatelessWidget {
         builder: (c) {
           return Container(
             // height: c.state.isLogin && c.state.allow.lacakPesanan == "Y" ? 160 : 120,
-            height: !c.state.isLogin
-                ? 120
-                : !c.state.isCcrf
-                    ? 200
-                    : 180,
+            height: !c.state.isLogin ? 120 : 150,
+            // : !c.state.isCcrf
+            //     ? 150
+            //     : 150,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
@@ -36,6 +34,7 @@ class DashboardUserInfo extends StatelessWidget {
               ),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 c.state.isLogin
                     ? Row(
@@ -51,8 +50,8 @@ class DashboardUserInfo extends StatelessWidget {
                         ],
                       )
                     : const SizedBox(),
-                SizedBox(height: c.state.isCcrf ? 15 : 0),
-                c.state.isLogin ? const DashboardInfo() : const SizedBox(),
+                // SizedBox(height: c.state.isCcrf ? 15 : 0),
+                // c.state.isLogin ? const DashboardInfo() : const SizedBox(),
                 !c.state.isLogin ||
                         (c.state.allow.lacakPesanan == "Y" ||
                             c.state.allow.keuanganBonus == "Y")

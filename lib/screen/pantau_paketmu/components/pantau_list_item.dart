@@ -125,14 +125,8 @@ class PantauItems extends StatelessWidget {
           onTap: () {
             if (item != null && !isLoading) {
               AppLogger.i('Card tapped.');
-              c.setSelectedStatus(item!);
-              Get.to(() => const PantauPaketmuScreen())?.then(
-                (_) {
-                  c.selectedStatus = 0;
-                  c.state.selectedStatusKiriman = 'Total Kiriman';
-                  c.update();
-                },
-              );
+              c.setSelectedStatus(index ?? 0);
+              Get.to(() => const PantauPaketmuScreen());
             }
           },
           child: Shimmer(
@@ -186,16 +180,25 @@ class PantauItems extends StatelessWidget {
                                     isLoading ? greyColor : Colors.transparent,
                                 width: 230,
                                 child: Row(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Container(
-                                      decoration: BoxDecoration(
-                                        color: blueJNE,
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(color: blueJNE),
-                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
                                       child: Row(
-                                        mainAxisSize: MainAxisSize.min,
                                         children: [
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 5, right: 5),
+                                            child: Text(
+                                              'COD',
+                                              style: TextStyle(
+                                                  color: whiteColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 10),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
                                           Container(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8),
@@ -283,7 +286,8 @@ class PantauItems extends StatelessWidget {
                               )
                             : const SizedBox(),
                         // Ongkir
-                        c.state.selectedKiriman == 0 ||
+                        // ignore: unrelated_type_equality_checks
+                        c.state.selectedStatusKiriman == 0 ||
                                 c.state.selectedKiriman == 2
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
@@ -294,13 +298,19 @@ class PantauItems extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Container(
-                                      decoration: BoxDecoration(
-                                        color: warningColor,
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(color: warningColor),
-                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
                                       child: Row(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
+                                          const Text(
+                                            'Ongkir',
+                                            style: TextStyle(
+                                                color: whiteColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 10),
+                                          ),
+                                          const SizedBox(width: 8),
                                           Container(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8),
@@ -385,16 +395,13 @@ class PantauItems extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    Container(
-                      color: isLoading ? greyColor : Colors.transparent,
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          getStatusIcon(item?.status ?? ''),
-                          // Icon(getStatusIcon(item?.status ?? ''),
-                          //     color: greyLightColor2, size: 100),
-                        ],
-                      ),
+                    Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        getStatusIcon(item?.status ?? ''),
+                        // Icon(getStatusIcon(item?.status ?? ''),
+                        //     color: greyLightColor2, size: 100),
+                      ],
                     ),
                   ],
                 ),

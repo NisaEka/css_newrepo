@@ -105,7 +105,7 @@ class PantauTotalKiriman extends StatelessWidget {
                                       : c.state.selectedKiriman == 1
                                           ? (c.state.countList.isNotEmpty &&
                                                   c.state.countList.first
-                                                          .codOngkirAmount !=
+                                                          .ongkirCodAmount !=
                                                       null
                                               ? 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.codOngkirAmount.toString()))}'
                                               : 'Rp. 0')
@@ -175,7 +175,7 @@ class PantauTotalKiriman extends StatelessWidget {
                                                       null
                                               ? 'Rp. 0'
                                               : 'Rp. 0')
-                                          : 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirNonCodAmount.toString()))}',
+                                          : 'Rp. ${NumberFormat('#,##0', 'id').format(int.parse(c.state.countList.first.ongkirCodAmount.toString()))}',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .textTheme

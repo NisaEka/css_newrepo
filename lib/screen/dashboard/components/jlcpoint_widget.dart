@@ -66,7 +66,8 @@ class JLCPointWidget extends StatelessWidget {
                             Image.asset(ImageConstant.logoJLC2, height: 12),
                             Text(
                                 ' ${point != '0' ? point.toDouble().toInt() : 0} Point',
-                                style: sublistTitleTextStyle),
+                                style: sublistTitleTextStyle.copyWith(
+                                    color: greyDarkColor1)),
                           ],
                         ),
                       ),
