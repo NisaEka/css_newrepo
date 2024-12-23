@@ -76,7 +76,7 @@ class InvoiceDetailScreen extends StatelessWidget {
               await Printing.layoutPdf(
                   onLayout: (PdfPageFormat format) async => pdf);
             },
-            backgroundColor: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+            backgroundColor: primaryColor(context),
             child:
                 const Icon(Icons.picture_as_pdf_rounded, color: Colors.white),
           ),
@@ -114,7 +114,7 @@ class InvoiceDetailScreen extends StatelessWidget {
             });
           },
           child: Container(
-            color: blueJNE,
+            color: primaryColor(context),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
               child: Row(
@@ -163,9 +163,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                                       '',
                                   style: appTitleTextStyle.copyWith(
                                       fontWeight: bold,
-                                      color: AppConst.isLightTheme(context)
-                                          ? blueJNE
-                                          : warningColor),
+                                      color: primaryColor(context)),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
@@ -261,9 +259,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                           'Deskripsi'.tr,
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: AppConst.isLightTheme(context)
-                                        ? blueJNE
-                                        : warningColor,
+                                    color: primaryColor(context),
                                   ),
                         ),
                       ),
@@ -302,9 +298,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                         child: Text(
                           'Informasi Customer'.tr,
                           style: listTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : warningColor,
+                            color: primaryColor(context),
                           ),
                         ),
                       ),
@@ -316,9 +310,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                         controller.invoiceDetailModel?.customerId ?? "-",
                         controller.isLoading,
                         style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : warningColor,
+                          color: primaryColor(context),
                         )),
                     const SizedBox(height: 6),
                     _textRow(
@@ -410,9 +402,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                         child: Text(
                           'Informasi Tagihan'.tr,
                           style: listTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : warningColor,
+                            color: primaryColor(context),
                           ),
                         ),
                       ),
@@ -424,9 +414,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                       'Rp. ${controller.invoiceDetailModel?.grossTotal!.toCurrency() ?? "-"}',
                       controller.isLoading,
                       style: listTitleTextStyle.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : warningColor,
+                        color: primaryColor(context),
                       ),
                       titleFontWeight: bold,
                     ),
