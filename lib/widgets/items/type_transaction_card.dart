@@ -1,22 +1,31 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class TypeTransactionCard extends StatelessWidget {
-  final String count;
-  final String? amount;
+  final String value1;
+  final String? value2;
   final String description;
   final Color lineColor;
   final bool isLoading;
+  final String? prefixVal1;
+  final String? prefixVal2;
+  final String? suffixVal1;
+  final String? suffixVal2;
+  final double? width;
 
   const TypeTransactionCard({
     Key? key,
-    required this.count,
-    this.amount,
+    required this.value1,
+    this.value2,
     required this.description,
     required this.lineColor,
     this.isLoading = false,
+    this.prefixVal1,
+    this.prefixVal2,
+    this.suffixVal1,
+    this.suffixVal2,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -25,7 +34,7 @@ class TypeTransactionCard extends StatelessWidget {
       isLoading: isLoading,
       child: Container(
         padding: const EdgeInsets.all(2.0),
-        width: Get.width * 0.28,
+        width: width,
         decoration: BoxDecoration(
           color: isLoading ? greyColor : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
@@ -43,18 +52,20 @@ class TypeTransactionCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  count,
+                  "${prefixVal1 ?? ''}$value1 ${suffixVal1 ?? ''} ",
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  (amount?.isNotEmpty ?? false) ? "Rp. $amount" : "",
+                  (value2?.isNotEmpty ?? false)
+                      ? "${prefixVal2 ?? ''}$value2 ${suffixVal2 ?? ''} "
+                      : "",
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
-                      ?.copyWith(fontSize: 8),
+                      ?.copyWith(fontSize: 8, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   description,

@@ -369,7 +369,7 @@ class DashboardController extends BaseController {
             state.kirimanKamu.totalCodOngkir = item.totalCodOngkir;
             state.kirimanKamu.codOngkirAmount = item.codOngkirAmount;
             state.kirimanKamu.totalNonCod = item.totalNonCod;
-            state.kirimanKamu.ongkirNonCodAmount = item.ongkirNonCodAmount;
+            state.kirimanKamu.nonCodAmount = item.ongkirNonCodAmount;
           }
 
           if (item.status == 'Dalam Proses') {
@@ -409,32 +409,48 @@ class DashboardController extends BaseController {
             update();
 
             value.data?.summary?.forEach((item) {
-              if (item.status == 'Total Kiriman') {
+              if (item.status == 'Jumlah Transaksi') {
                 state.kirimanKamuCOD.totalKiriman =
-                    value.data?.totalKirimanCod?.totalCodOngkir?.toInt() ?? 0;
+                    (value.data?.totalKirimanCod?.codAmount?.toInt() ?? 0) +
+                        (value.data?.totalKirimanCod?.codOngkirAmount
+                                ?.toInt() ??
+                            0);
                 for (var chart in (item.chart ?? [])) {
-                  state.kirimanKamu.lineChart.add(chart.y);
+                  state.kirimanKamuCOD.lineChart.add(chart.y);
                 }
-                // state.kirimanKamu.totalCod = item.totalCod;
-                // state.kirimanKamu.codAmount = item.codAmount;
-                // state.kirimanKamu.totalCodOngkir = item.totalCodOngkir;
-                // state.kirimanKamu.codOngkirAmount = item.codOngkirAmount;
-                // state.kirimanKamu.totalNonCod = item.totalNonCod;
-                // state.kirimanKamu.ongkirNonCodAmount = item.ongkirNonCodAmount;
               }
 
-              if (item.status == 'Dalam Proses') {
-                // state.kirimanKamu.onProcess = item.totalCod + item.totalCodOngkir + item.totalNonCod;
+              if (item.status == 'Belum Terkumpul') {
+                state.kirimanKamuCOD.onProcess =
+                    ((item.totalCod?.toInt() ?? 0));
               }
 
               if (item.status == 'Sukses Diterima') {
-                // state.kirimanKamu.suksesDiterima = item.totalCod + item.totalCodOngkir + item.totalNonCod;
+                state.kirimanKamuCOD.suksesDiterima =
+                    ((item.totalCod?.toInt() ?? 0));
               }
 
-              if (item.status == 'Dibatalkan Oleh Kamu') {
-                // state.kirimanKamu.totalCancel = item.totalCod + item.totalCodOngkir + item.totalNonCod;
+              if (item.status == 'Dibatalkan') {
+                state.kirimanKamuCOD.totalCancel =
+                    ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.totalNonCod =
+                    ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.nonCodAmount =
+                    item.codAmount?.toInt() ?? 0;
+              }
+
+              if (item.status == 'Butuh di Cek') {
+                state.kirimanKamuCOD.totalCod = ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.codAmount = item.codAmount?.toInt() ?? 0;
+              }
+
+              if (item.status == 'Dalam Peninjauan') {
+                state.kirimanKamuCOD.totalCodOngkir =
+                    ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.codAmount = item.codAmount?.toInt() ?? 0;
               }
             });
+            state.kirimanKamuCOD.calculatePercentages();
           },
         );
 

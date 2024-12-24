@@ -6,7 +6,7 @@ class DashboardKirimanKamuModel {
   int totalCodOngkir;
   num codOngkirAmount;
   int totalNonCod;
-  num ongkirNonCodAmount;
+  num nonCodAmount;
   int onProcess;
   num onProcessPercentage;
   int suksesDiterima;
@@ -21,7 +21,7 @@ class DashboardKirimanKamuModel {
     this.totalCodOngkir = 0,
     this.codOngkirAmount = 0,
     this.totalNonCod = 0,
-    this.ongkirNonCodAmount = 0,
+    this.nonCodAmount = 0,
     this.onProcess = 0,
     this.onProcessPercentage = 0,
     this.suksesDiterima = 0,

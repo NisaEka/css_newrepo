@@ -7,12 +7,13 @@ import 'package:get/get.dart';
 class DashboardMiniCount extends StatelessWidget {
   final Color? color;
   final String? label;
-  final int? value;
+  final String? value;
   final bool isLoading;
   final double? width;
   final Color? labelBgColor;
   final Color? valueBgColor;
   final double? fontSize;
+  final EdgeInsets? margin;
 
   const DashboardMiniCount({
     super.key,
@@ -24,6 +25,7 @@ class DashboardMiniCount extends StatelessWidget {
     this.labelBgColor,
     this.valueBgColor,
     this.fontSize,
+    this.margin,
   });
 
   @override
@@ -32,7 +34,7 @@ class DashboardMiniCount extends StatelessWidget {
       isLoading: isLoading,
       child: Container(
         width: width != null ? null : Get.width * 0.28,
-        margin: const EdgeInsets.only(top: 5),
+        margin: margin ?? const EdgeInsets.only(top: 5),
         decoration: BoxDecoration(
           color: valueBgColor ?? primaryColor(context),
           borderRadius: BorderRadius.circular(3),
@@ -63,16 +65,19 @@ class DashboardMiniCount extends StatelessWidget {
                           color: labelBgColor != null ? whiteColor : (color),
                         ),
                         const SizedBox(width: 5),
-                        Text(
-                          label ?? '',
-                          style: TextStyle(
-                            color: labelBgColor != null
-                                ? whiteColor
-                                : (AppConst.isLightTheme(context)
-                                    ? blueJNE
-                                    : warningColor),
-                            fontWeight: FontWeight.bold,
-                            fontSize: fontSize ?? 7,
+                        SizedBox(
+                          width: width != null ? width! - 16 : null,
+                          child: Text(
+                            label ?? '',
+                            style: TextStyle(
+                              color: labelBgColor != null
+                                  ? whiteColor
+                                  : (AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : warningColor),
+                              fontWeight: FontWeight.bold,
+                              fontSize: fontSize ?? 7,
+                            ),
                           ),
                         ),
                       ],
@@ -89,7 +94,7 @@ class DashboardMiniCount extends StatelessWidget {
                   color:
                       AppConst.isLightTheme(context) ? whiteColor : whiteColor,
                   fontWeight: FontWeight.bold,
-                  fontSize: fontSize ?? 9,
+                  fontSize: 9,
                 ),
               ),
             ),

@@ -93,7 +93,9 @@ class DashboardBody extends StatelessWidget {
                           ? DashboardKirimanCODCountItem(
                               transSummary: c.state.transSummary,
                               kirimanKamu: c.state.kirimanKamuCOD,
-                              isLoadingKiriman: c.state.isLoadingKirimanCOD,
+                              isLoadingKiriman: c.state.isLoadingKirimanCOD ||
+                                  (c.state.transSummary?.summary?.isEmpty ??
+                                      false),
                               onRefresh: () {
                                 c.loadTransCountList(true);
                               },

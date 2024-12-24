@@ -343,7 +343,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
       QueryModel param) async {
     var now = DateTime.now().toLocal();
     var startDate = DateTime(now.year, now.month, now.day)
-        .subtract(const Duration(days: 30))
+        .subtract(const Duration(days: 6))
         .toIso8601String();
     var endDate = DateTime(now.year, now.month, now.day, 23, 59, 59, 999)
         .toIso8601String();

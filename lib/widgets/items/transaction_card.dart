@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class TransactionCard extends StatelessWidget {
   final String? title;
   final double? percentage;
-  final int count;
+  final String count;
   final String? countValue;
   final String subtitle;
   final Color? color;
@@ -23,6 +23,8 @@ class TransactionCard extends StatelessWidget {
   final int? notificationCount;
   final Color? notificationColor;
   final Widget? customTitle;
+  final double? titleWidth;
+  final double? height;
 
   const TransactionCard({
     Key? key,
@@ -43,6 +45,8 @@ class TransactionCard extends StatelessWidget {
     this.notificationColor,
     this.customTitle,
     this.countValue,
+    this.titleWidth,
+    this.height,
   }) : super(key: key);
 
   @override
@@ -54,6 +58,7 @@ class TransactionCard extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
             width: Get.width * 0.28,
+            height: height,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
@@ -82,13 +87,16 @@ class TransactionCard extends StatelessWidget {
                             children: [
                               Icon(Icons.circle,
                                   color: statusColor ?? whiteColor, size: 6),
-                              // const SizedBox(width: 5),
-                              Text(
-                                title ?? '',
-                                style: const TextStyle(
-                                    color: whiteColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 7),
+                              const SizedBox(width: 5),
+                              SizedBox(
+                                width: titleWidth,
+                                child: Text(
+                                  title ?? '',
+                                  style: const TextStyle(
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 7),
+                                ),
                               ),
                             ],
                           ),
@@ -147,7 +155,7 @@ class TransactionCard extends StatelessWidget {
             ? DashboardMiniCount(
                 color: notificationColor,
                 label: notificationLabel,
-                value: notificationCount,
+                value: notificationCount.toString(),
                 isLoading: isLoading,
               )
             : const SizedBox(),
