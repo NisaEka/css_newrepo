@@ -51,14 +51,14 @@ class TransactionScreen extends StatelessWidget {
               ),
               controller.state.isLoading ? const LoadingDialog() : Container(),
               controller.state.isShowDialog
-                  ? _warningDialog(controller)
+                  ? _warningDialog(context, controller)
                   : const SizedBox()
             ],
           );
         });
   }
 
-  Widget _warningDialog(TransactionController c) {
+  Widget _warningDialog(BuildContext context, TransactionController c) {
     return Container(
       height: Get.height,
       width: Get.width,
@@ -90,7 +90,7 @@ class TransactionScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               CustomFilledButton(
-                color: blueJNE,
+                color: primaryColor(context),
                 isTransparent: true,
                 title: 'OK',
                 onPressed: () {

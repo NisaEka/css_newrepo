@@ -97,9 +97,7 @@ class DetailLaporankuScreen extends StatelessWidget {
                       child: Text(
                         'Informasi Tiket Laporan'.tr,
                         style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : warningColor,
+                          color: primaryColor(context),
                         ),
                       ),
                     ),

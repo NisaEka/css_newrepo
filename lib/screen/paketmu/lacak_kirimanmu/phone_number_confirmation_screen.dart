@@ -8,8 +8,6 @@ import 'package:pinput/pinput.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import '../../../const/app_const.dart';
-
 class PhoneNumberConfirmationScreen extends StatefulWidget {
   final String awb;
   final Function(String awb, String phoneNumber) cekResi;
@@ -53,7 +51,7 @@ class PhoneNumberConfirmationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: blueJNE,
+        backgroundColor: primaryColor(context),
         title: Text('Verifikasi Nomor Telepon'.tr),
         centerTitle: true,
         titleTextStyle: appTitleTextStyle.copyWith(color: whiteColor),
@@ -84,9 +82,7 @@ class PhoneNumberConfirmationScreenState
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppConst.isLightTheme(context)
-                    ? blueJNE
-                    : warningColor,
+                color: primaryColor(context),
               ),
             ),
             const SizedBox(height: 40),

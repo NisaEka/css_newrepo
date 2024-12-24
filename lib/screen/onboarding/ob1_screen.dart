@@ -102,7 +102,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
-                        ?.copyWith(color: blueJNE),
+                        ?.copyWith(color: primaryColor(context)),
                   ),
                   onTap: () => Get.delete<DashboardController>()
                       .then((_) => Get.offAll(() => const DashboardScreen())),
@@ -150,7 +150,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
         children: [
           const SizedBox(height: 20),
           CustomFilledButton(
-            color: blueJNE,
+            color: primaryColor(context),
             margin: const EdgeInsets.symmetric(horizontal: 50),
             height: 51,
             title: 'Selanjutnya'.tr,

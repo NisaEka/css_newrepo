@@ -43,7 +43,7 @@ class AddEclaimScreen extends StatelessWidget {
                   child: CustomFilledButton(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 15),
-                    color: redJNE,
+                    color: secondaryColor(context),
                     title: 'Batal'.tr,
                     onPressed: () {
                       Get.back();
@@ -55,7 +55,7 @@ class AddEclaimScreen extends StatelessWidget {
                   child: CustomFilledButton(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 15),
-                    color: blueJNE,
+                    color: primaryColor(context),
                     title: 'Ajukan'.tr,
                     onPressed: () =>
                         controller.formKey.currentState?.validate() == true

@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
@@ -53,10 +52,10 @@ class InvoiceItem extends StatelessWidget {
                     ),
                     Text(
                       data?.invoiceDate?.toShortDateFormat() ?? '-',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : warningColor),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(color: primaryColor(context)),
                     ),
                   ],
                 ),

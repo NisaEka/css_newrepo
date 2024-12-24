@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_model.dart';
@@ -84,10 +83,7 @@ class LaporankuListItem extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .titleSmall
-                              ?.copyWith(
-                                  color: AppConst.isLightTheme(context)
-                                      ? blueJNE
-                                      : warningColor),
+                              ?.copyWith(color: primaryColor(context)),
                         ),
                       ],
                     ),

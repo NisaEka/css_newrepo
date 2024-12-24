@@ -37,7 +37,7 @@ class FailedScreen extends StatelessWidget {
             ),
             CustomFilledButton(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-              color: blueJNE,
+              color: primaryColor(context),
               radius: 50,
               title: buttonTitle.tr,
               onPressed: nextAction,

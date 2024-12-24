@@ -59,22 +59,14 @@ class CustomSearchField<T> extends StatelessWidget {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: validate
-                      ? redJNE
-                      : Theme.of(context).brightness == Brightness.light
-                          ? blueJNE
-                          : warningColor,
+                  color: validate ? redJNE : primaryColor(context),
                   width: 2,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: validate
-                      ? redJNE
-                      : Theme.of(context).brightness == Brightness.light
-                          ? blueJNE
-                          : warningColor,
+                  color: validate ? redJNE : primaryColor(context),
                   width: 2,
                 ),
               ),
@@ -93,9 +85,7 @@ class CustomSearchField<T> extends StatelessWidget {
                       height: 39,
                       margin: const EdgeInsets.only(right: 10),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? blueJNE
-                            : warningColor,
+                        color: primaryColor(context),
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(8),
                           bottomLeft: Radius.circular(8),
@@ -111,9 +101,7 @@ class CustomSearchField<T> extends StatelessWidget {
                       height: 39,
                       margin: const EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? blueJNE
-                            : warningColor,
+                        color: primaryColor(context),
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(8),
                           bottomRight: Radius.circular(8),

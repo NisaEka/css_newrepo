@@ -10,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../../const/app_const.dart';
-
 class TransactionDetail extends StatelessWidget {
   const TransactionDetail({super.key});
 
@@ -54,9 +52,7 @@ class TransactionDetail extends StatelessWidget {
                     isLoading: c.state.isLoading,
                     label: 'Status Kiriman'.tr,
                     isBold: true,
-                    fontColor: AppConst.isLightTheme(context)
-                        ? blueJNE
-                        : warningColor),
+                    fontColor: primaryColor(context)),
                 const SizedBox(height: 16),
                 TextRowItem(
                   title: "Status Kiriman".tr,
@@ -97,9 +93,7 @@ class TransactionDetail extends StatelessWidget {
                     isLoading: c.state.isLoading,
                     label: 'Detail Kiriman'.tr,
                     isBold: true,
-                    fontColor: AppConst.isLightTheme(context)
-                        ? blueJNE
-                        : warningColor),
+                    fontColor: primaryColor(context)),
                 const SizedBox(height: 16),
                 CustomLabelText(
                     isLoading: c.state.isLoading,
@@ -139,9 +133,7 @@ class TransactionDetail extends StatelessWidget {
                     isLoading: c.state.isLoading,
                     label: 'Rincian Biaya Pengiriman'.tr,
                     isBold: true,
-                    fontColor: AppConst.isLightTheme(context)
-                        ? blueJNE
-                        : warningColor),
+                    fontColor: primaryColor(context)),
                 const SizedBox(height: 16),
                 TextRowItem(
                   title: "Berat Kiriman".tr,

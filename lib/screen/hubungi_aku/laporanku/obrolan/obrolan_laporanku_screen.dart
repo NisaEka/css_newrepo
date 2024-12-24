@@ -166,7 +166,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                           onPressed: () => c.getSinglePhoto(ImageSource.camera),
                         ),
                         CustomFilledButton(
-                          color: blueJNE,
+                          color: primaryColor(context),
                           title: "Pilih dari galeri".tr,
                           onPressed: () =>
                               c.getSinglePhoto(ImageSource.gallery),

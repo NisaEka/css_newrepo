@@ -43,7 +43,17 @@ class ForgotPasswordOTPForm extends StatelessWidget {
                     controller: c.otpPin,
                     length: 6,
                     focusNode: c.focusNode,
-                    defaultPinTheme: c.defaultPinTheme,
+                    defaultPinTheme: PinTheme(
+                      width: 56,
+                      height: 56,
+                      textStyle: titleTextStyle.copyWith(
+                          color: secondaryColor(context)),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(width: 1.5, color: greyColor),
+                        ),
+                      ),
+                    ),
                     showCursor: true,
                     cursor: c.cursor,
                     preFilledWidget: c.preFilledWidget,
@@ -67,7 +77,7 @@ class ForgotPasswordOTPForm extends StatelessWidget {
                       style: formLabelTextStyle.copyWith(
                         color: c.remainingSeconds != 0
                             ? greyColor
-                            : Theme.of(context).colorScheme.onPrimary,
+                            : primaryColor(context),
                       ),
                     ),
                   ),
