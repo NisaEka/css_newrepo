@@ -11,18 +11,21 @@ import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/routes/route_page.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_state.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/items/package_info_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -703,13 +706,53 @@ class TransactionController extends BaseController {
           Get.to(
             SuccessScreen(
               lottie: ImageConstant.packedLottie,
-              iconMargin: 100,
+              iconMargin: 80,
               customInfo: PackageInfoItem(
                 data: v.data ?? TransactionModel(),
               ),
               iconHeight: Get.width * 0.6,
-              customAction: const Row(
-                children: [],
+              customAction: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomFilledButton(
+                    color: blueJNE,
+                    title: "Lihat Detail".tr,
+                    suffixIcon: Icons.qr_code_rounded,
+                    width: Get.width / 2,
+                    height: 50,
+                    fontSize: 15,
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+                    onPressed: () => Get.offAll(
+                        () => const DetailTransactionScreen(),
+                        arguments: {
+                          'awb': v.data?.awb,
+                          'data': v.data,
+                        }),
+                  ),
+                  CustomFilledButton(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    color: successColor,
+                    isTransparent: true,
+                    prefixIcon: Icons.add_circle,
+                    width: 50,
+                    height: 50,
+                    fontSize: 23,
+                    onPressed: () => Get.offAllNamed(Routes.inputKiriman),
+                  ),
+                  CustomFilledButton(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    color: infoColor,
+                    isTransparent: true,
+                    prefixIcon: Icons.home,
+                    width: 50,
+                    height: 50,
+                    fontSize: 23,
+                    onPressed: () => Get.offAll(const DashboardScreen()),
+                  ),
+                ],
               ),
             ),
             // SuccessScreen(
