@@ -393,6 +393,7 @@ class DashboardController extends BaseController {
         AppLogger.e('error pantau count :$i');
       } finally {
         state.isLoadingKiriman = false;
+        update();
       }
     }
   }

@@ -64,15 +64,6 @@ class DashboardBody extends StatelessWidget {
                       //     ),
                       //   ),
                       // ),
-                      // c.state.isLogin &&
-                      //         (c.state.allow.keuanganAggregasi == "Y" ||
-                      //             c.state.allow.monitoringAgg == "Y")
-                      //     ? DashboardAggCountItem(
-                      //         transSummary: c.state.aggSummary,
-                      //         transChart: c.state.aggChart,
-                      //         isLoadingAgg: c.state.isLoadingAgg,
-                      //       )
-                      //     : const SizedBox(),
                       c.state.isLogin &&
                               (c.state.allow.riwayatPesanan == "Y" ||
                                   c.state.allow.paketmuRiwayat == 'Y')

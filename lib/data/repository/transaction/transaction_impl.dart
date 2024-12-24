@@ -385,7 +385,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.base.get(
         '/transaction/tracks/count/dashboard',
-        options: Options(receiveTimeout: const Duration(seconds: 20)),
+        options: Options(receiveTimeout: const Duration(seconds: 25)),
         queryParameters: param.toJson(),
       );
 

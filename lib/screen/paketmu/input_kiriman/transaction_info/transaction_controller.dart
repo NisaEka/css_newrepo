@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
@@ -22,6 +23,7 @@ import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:css_mobile/widgets/items/package_info_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -700,19 +702,31 @@ class TransactionController extends BaseController {
         } else {
           Get.to(
             SuccessScreen(
-              message: "${'Transaksi Berhasil'.tr}\n${v.data?.awb}",
-              thirdButtonTitle: "Kembali ke Beranda".tr,
-              onThirdAction: () => Get.offAll(
-                () => const DashboardScreen(),
-                transition: Transition.rightToLeft,
-                arguments: {
-                  'awb': v.data?.awb,
-                },
+              lottie: ImageConstant.packedLottie,
+              iconMargin: 100,
+              customInfo: PackageInfoItem(
+                data: v.data ?? TransactionModel(),
               ),
-              secondButtonTitle: "Buat Transaksi Lainnya".tr,
-              onSecondAction: () =>
-                  Get.offAll(const InformasiPengirimScreen(), arguments: {}),
+              iconHeight: Get.width * 0.6,
+              customAction: const Row(
+                children: [],
+              ),
             ),
+            // SuccessScreen(
+            //   iconMargin: 200,
+            //   message: "${'Transaksi Berhasil'.tr}\n${v.data?.awb}",
+            //   thirdButtonTitle: "Kembali ke Beranda".tr,
+            //   onThirdAction: () => Get.offAll(
+            //     () => const DashboardScreen(),
+            //     transition: Transition.rightToLeft,
+            //     arguments: {
+            //       'awb': v.data?.awb,
+            //     },
+            //   ),
+            //   secondButtonTitle: "Buat Transaksi Lainnya".tr,
+            //   onSecondAction: () =>
+            //       Get.offAll(const InformasiPengirimScreen(), arguments: {}),
+            // ),
           );
         }
       });
@@ -837,19 +851,19 @@ class TransactionController extends BaseController {
     update();
   }
 
-  // Widget _successScreen() {
-  //   return SuccessScreen(
-  //     // lottie: ImageConstant.packedLottie,
-  //     // iconMargin: 100,
-  //     // customInfo: PackageInfoItem(),
-  //     // iconHeight: Get.width * 0.6,
-  //     message: 'message',
-  //     secondButtonTitle: 'second button',
-  //     onSecondAction: () {},
-  //     firstButtonTitle: 'firstbutton',
-  //     onFirstAction: () {},
-  //     thirdButtonTitle: 'third button',
-  //     onThirdAction: () {},
-  //   );
-  // }
+// Widget _successScreen() {
+//   return SuccessScreen(
+//     // lottie: ImageConstant.packedLottie,
+//     // iconMargin: 100,
+//     // customInfo: PackageInfoItem(),
+//     // iconHeight: Get.width * 0.6,
+//     message: 'message',
+//     secondButtonTitle: 'second button',
+//     onSecondAction: () {},
+//     firstButtonTitle: 'firstbutton',
+//     onFirstAction: () {},
+//     thirdButtonTitle: 'third button',
+//     onThirdAction: () {},
+//   );
+// }
 }

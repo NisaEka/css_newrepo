@@ -21,6 +21,7 @@ class SuccessScreen extends StatelessWidget {
   final Widget? customInfo;
   final double? iconHeight;
   final double? iconMargin;
+  final EdgeInsets? custompadding;
 
   const SuccessScreen({
     super.key,
@@ -38,6 +39,7 @@ class SuccessScreen extends StatelessWidget {
     this.customInfo,
     this.iconHeight,
     this.iconMargin,
+    this.custompadding,
   });
 
   @override
