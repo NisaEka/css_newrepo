@@ -21,11 +21,11 @@ class DashboardMarquee extends StatelessWidget {
         color: Theme.of(context).colorScheme.onSurface,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: greyDarkColor1),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: blueJNE,
+            color: primaryColor(context),
             spreadRadius: 1,
-            offset: Offset(-3, 3),
+            offset: const Offset(-3, 3),
           ),
         ],
       ),
