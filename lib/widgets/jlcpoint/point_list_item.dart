@@ -64,7 +64,7 @@ class PointListItem extends StatelessWidget {
                     ),
                     Container(
                       height: isLoading ? 20 : null,
-                      width: isLoading ? Get.width / 2 : null,
+                      width: isLoading ? Get.width / 4 : null,
                       color: isLoading ? greyColor : null,
                       child: Text(
                           style: Theme.of(context).textTheme.titleSmall,
@@ -102,7 +102,7 @@ class PointListItem extends StatelessWidget {
                       children: [
                         Container(
                           height: isLoading ? 20 : null,
-                          width: isLoading ? Get.width / 2 : null,
+                          width: isLoading ? Get.width / 4 : null,
                           color: isLoading ? greyColor : null,
                           child: Row(
                             children: [
