@@ -115,7 +115,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                 SizedBox(
                   width: (Get.width - 51) / 1.5,
                   child: Text(
-                      'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zipCode ?? ''}, Telp.${data.receiver?.phone ?? ''}\n',
+                      'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zipCode ?? ''}, Telp.${_maskPhoneNumber(data.receiver?.phone ?? '')}\n',
                       style: labelTextStyle),
                 ),
                 const SolidBorder(width: 1, height: 50),
@@ -177,7 +177,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                    'Tanggal: ${data.createdDate?.toShortDateFormat() ?? '-'}',
+                                    'Tanggal: ${data.createdDate?.toLongDateTimeFormat() ?? '-'}',
                                     style: labelTextStyle),
                                 Text(
                                     'No. Pelanggan: ${data.account?.accountNumber ?? '-'}',
@@ -189,6 +189,9 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                                     style: labelTextStyle),
                                 Text(
                                     'Jumlah Kiriman: ${data.goods?.quantity ?? '0'}',
+                                    style: labelTextStyle),
+                                Text(
+                                    'Jenis Kiriman: ${data.goods?.type ?? '0'}',
                                     style: labelTextStyle),
                                 Text('Pembayaran: ${data.type ?? '-'}',
                                     style: labelTextStyle),
@@ -219,5 +222,13 @@ class StickerMegahubHybrid2 extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _maskPhoneNumber(String phoneNumber) {
+    if (phoneNumber.length > 6) {
+      return phoneNumber.substring(0, phoneNumber.length - 6) + '*' * 6;
+    } else {
+      return phoneNumber;
+    }
   }
 }
