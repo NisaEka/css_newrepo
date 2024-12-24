@@ -29,7 +29,7 @@ class PengaturanLabelScreen extends StatelessWidget {
                       LabelTypeField(c.selectedSticker),
                       const StickersList(),
                       CustomFilledButton(
-                        color: blueJNE,
+                        color: primaryColor(context),
                         title: 'Simpan Perubahan'.tr,
                         onPressed: () => c.saveLabel(),
                       ),

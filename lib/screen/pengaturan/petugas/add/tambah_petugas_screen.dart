@@ -722,7 +722,7 @@ class TambahPetugasScreen extends StatelessWidget {
                   ),
                 ),
                 CustomFilledButton(
-                  color: blueJNE,
+                  color: primaryColor(context),
                   title: c.isEdit ? "Edit Petugas".tr : "Simpan Petugas".tr,
                   suffixIcon: Icons.file_download_outlined,
                   onPressed: () => c.formKey.currentState?.validate() == true
