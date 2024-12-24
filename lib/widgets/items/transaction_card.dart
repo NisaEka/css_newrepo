@@ -1,13 +1,15 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/screen/dashboard/components/dashboard_mini_count.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TransactionCard extends StatelessWidget {
-  final String title;
+  final String? title;
   final double? percentage;
   final int count;
+  final String? countValue;
   final String subtitle;
   final Color? color;
   final IconData? icon;
@@ -20,10 +22,11 @@ class TransactionCard extends StatelessWidget {
   final String? notificationLabel;
   final int? notificationCount;
   final Color? notificationColor;
+  final Widget? customTitle;
 
   const TransactionCard({
     Key? key,
-    required this.title,
+    this.title,
     required this.count,
     required this.subtitle,
     this.color,
@@ -38,6 +41,8 @@ class TransactionCard extends StatelessWidget {
     this.notificationLabel,
     this.notificationCount,
     this.notificationColor,
+    this.customTitle,
+    this.countValue,
   }) : super(key: key);
 
   @override
@@ -47,7 +52,7 @@ class TransactionCard extends StatelessWidget {
         Shimmer(
           isLoading: isLoading,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
             width: Get.width * 0.28,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
@@ -62,31 +67,32 @@ class TransactionCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 4, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: color ??
-                            (AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : warningColor),
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.circle,
-                              color: statusColor ?? whiteColor, size: 6),
-                          const SizedBox(width: 5),
-                          Text(
-                            title,
-                            style: const TextStyle(
-                                color: whiteColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 7),
+                    customTitle ??
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 4, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: color ??
+                                (AppConst.isLightTheme(context)
+                                    ? blueJNE
+                                    : warningColor),
+                            borderRadius: BorderRadius.circular(3),
                           ),
-                        ],
-                      ),
-                    ),
+                          child: Row(
+                            children: [
+                              Icon(Icons.circle,
+                                  color: statusColor ?? whiteColor, size: 6),
+                              // const SizedBox(width: 5),
+                              Text(
+                                title ?? '',
+                                style: const TextStyle(
+                                    color: whiteColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 7),
+                              ),
+                            ],
+                          ),
+                        ),
                   ],
                 ),
                 // SizedBox(height: innerPadding ?? 13),
@@ -98,13 +104,25 @@ class TransactionCard extends StatelessWidget {
                   children: [
                     prefixChart ?? const SizedBox(),
                     prefixChart != null ? const Spacer() : const SizedBox(),
-                    Text(
-                      count.toString(),
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontSize: count.toString().length >= 5
-                                ? 16 - (count.toString().length - 5)
-                                : (countFontSize ?? 22),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: countValue,
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
+                          TextSpan(
+                            text: count.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                    fontSize: count.toString().length >= 5
+                                        ? 16 - (count.toString().length - 5)
+                                        : (countFontSize ?? 22)),
+                          ),
+                        ],
+                      ),
                     ),
                     suffixChart != null ? const Spacer() : const SizedBox(),
                     suffixChart ?? const SizedBox(),
@@ -126,69 +144,11 @@ class TransactionCard extends StatelessWidget {
           ),
         ),
         (notificationLabel?.isNotEmpty ?? false)
-            ? Shimmer(
+            ? DashboardMiniCount(
+                color: notificationColor,
+                label: notificationLabel,
+                value: notificationCount,
                 isLoading: isLoading,
-                child: Container(
-                  width: Get.width * 0.28,
-                  margin: const EdgeInsets.only(top: 5),
-                  decoration: BoxDecoration(
-                    color: primaryColor(context),
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppConst.isLightTheme(context)
-                              ? greyLightColor3
-                              : greyDarkColor1,
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 3),
-                              width: Get.width * 0.21,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.circle,
-                                    size: 8,
-                                    color: notificationColor,
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    notificationLabel ?? '',
-                                    style: TextStyle(
-                                        color: AppConst.isLightTheme(context)
-                                            ? blueJNE
-                                            : warningColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 7),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: Text(
-                          '$notificationCount',
-                          style: TextStyle(
-                              color: AppConst.isLightTheme(context)
-                                  ? whiteColor
-                                  : whiteColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 9),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               )
             : const SizedBox(),
       ],

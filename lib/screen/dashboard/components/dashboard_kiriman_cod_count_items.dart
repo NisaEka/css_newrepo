@@ -2,6 +2,8 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
+import 'package:css_mobile/screen/dashboard/components/dashboard_mini_count.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/items/line_chart_item.dart';
@@ -27,10 +29,6 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> messages = [
-      "Realtime".tr,
-      "Sentuh untuk sinkronisasi manual".tr,
-    ];
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
@@ -53,7 +51,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Kiriman Kamu".tr,
+                Text("Kiriman COD Kamu".tr,
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 10),
@@ -66,8 +64,17 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TransactionCard(
-                            title: "Jumlah Transaksi".tr,
-                            count: kirimanKamu.totalPantau,
+                            // title: "Jumlah Transaksi".tr,
+                            customTitle: DashboardMiniCount(
+                              width: Get.width * 0.18,
+                              label: 'Jumlah Transaksi COD'.tr,
+                              value: kirimanKamu.totalKiriman,
+                              labelBgColor: blueJNE,
+                              valueBgColor: warningColor,
+                              fontSize: 5,
+                            ),
+                            countValue: "Rp.\n",
+                            count: kirimanKamu.totalKiriman,
                             subtitle: '${"7 Hari Terakhir".tr}\n',
                             color: primaryColor(context),
                             icon: Icons.show_chart,
@@ -75,8 +82,8 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             suffixChart: SizedBox(
                               width: 45,
                               height: 20,
-                              child: kirimanKamu.pantauChart.isNotEmpty
-                                  ? LineChartItem(kirimanKamu.pantauChart
+                              child: kirimanKamu.lineChart.isNotEmpty
+                                  ? LineChartItem(kirimanKamu.lineChart
                                       .map((e) => e.toDouble())
                                       .toList())
                                   : const SizedBox(),
@@ -113,12 +120,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                   ),
                                 ),
                                 notificationLabel: "Dibatalkan".tr,
-                                notificationCount: transSummary?.summary
-                                        ?.where((e) => e.status == "Dibatalkan")
-                                        .first
-                                        .total
-                                        ?.toInt() ??
-                                    0,
+                                notificationCount: kirimanKamu.totalCancel,
                                 notificationColor: errorColor,
                               ),
                               const SizedBox(height: 16),
@@ -233,7 +235,8 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                               width: double.infinity,
                               key: ValueKey<int>(currentSecond),
                               child: Text(
-                                messages[currentSecond % messages.length],
+                                Constant.dashboardRefreshText[currentSecond %
+                                    Constant.dashboardRefreshText.length],
                                 textAlign: TextAlign.left,
                                 style: Theme.of(context)
                                     .textTheme

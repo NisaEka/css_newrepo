@@ -17,7 +17,9 @@ class TransactionSummaryModel {
       });
     }
     _totalKirimanCod = json['totalKirimanCod'] != null
-        ? TotalKirimanCod.fromJson(json['totalKirimanCod'])
+        ? TotalKirimanCod.fromJson(
+            json['totalKirimanCod'],
+          )
         : null;
   }
 

@@ -91,8 +91,8 @@ class ChartData {
 
   factory ChartData.fromJson(Map<String, dynamic> json) {
     return ChartData(
-      x: json['x'],
-      y: json['y'],
+      x: json['x'] ?? json['date'],
+      y: json['y'] ?? json['total'],
     );
   }
 
@@ -100,6 +100,8 @@ class ChartData {
     return {
       'x': x,
       'y': y,
+      'date': x,
+      'total': y,
     };
   }
 }

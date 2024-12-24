@@ -1,6 +1,6 @@
 class DashboardKirimanKamuModel {
-  int totalPantau;
-  List<num> pantauChart;
+  int totalKiriman;
+  List<num> lineChart;
   int totalCod;
   num codAmount;
   int totalCodOngkir;
@@ -14,7 +14,7 @@ class DashboardKirimanKamuModel {
   int totalCancel;
 
   DashboardKirimanKamuModel({
-    this.totalPantau = 0,
+    this.totalKiriman = 0,
     List<num>? pantauChart,
     this.totalCod = 0,
     this.codAmount = 0,
@@ -27,12 +27,12 @@ class DashboardKirimanKamuModel {
     this.suksesDiterima = 0,
     this.suksesDiterimaPercentage = 0,
     this.totalCancel = 0,
-  }) : pantauChart = pantauChart ?? [];
+  }) : lineChart = pantauChart ?? [];
 
   // Example: Method to update percentages safely
   void calculatePercentages() {
-    onProcessPercentage = totalPantau > 0 ? onProcess / totalPantau * 100 : 0;
+    onProcessPercentage = totalKiriman > 0 ? onProcess / totalKiriman * 100 : 0;
     suksesDiterimaPercentage =
-        totalPantau > 0 ? suksesDiterima / totalPantau * 100 : 0;
+        totalKiriman > 0 ? suksesDiterima / totalKiriman * 100 : 0;
   }
 }

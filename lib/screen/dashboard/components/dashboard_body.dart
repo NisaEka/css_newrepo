@@ -7,6 +7,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dashboard_appbar.dart';
+import 'dashboard_kiriman_cod_count_items.dart';
 import 'dashboard_menu2.dart';
 
 class DashboardBody extends StatelessWidget {
@@ -25,7 +26,8 @@ class DashboardBody extends StatelessWidget {
                 )
                 .then((_) => c.loadNews())
                 .then((_) {
-              c.loadTransCountList();
+              c.loadPantauCountList();
+              c.loadTransCountList(true);
             }),
             child: CustomScrollView(
               slivers: [
@@ -78,22 +80,26 @@ class DashboardBody extends StatelessWidget {
                               transSummary: c.state.transSummary,
                               kirimanKamu: c.state.kirimanKamu,
                               isLoadingKiriman: c.state.isLoadingKiriman,
-                              onRefresh: () => c.loadPantauCountList(),
+                              onRefresh: () {
+                                c.loadPantauCountList();
+                                c.loadTransCountList(false);
+                              },
                             )
                           : const SizedBox(),
-                      // const SizedBox(height: 50),
-                      // c.state.isLogin
-                      //     ? DashboardCountItems(
-                      //         title: 'Kiriman Kamu'.tr,
-                      //         total: c.state.transSummary?.summary?.where((e) => e.status == 'Jumlah Transaksi').first.total?.toInt() ?? 0,
-                      //       )
-                      //     : const SizedBox(),
-                      // c.state.isLogin,
-                      //     ? const DashboardKirimanCounts()
-                      //     : const SizedBox(),
-                      // c.state.isLogin
-                      //     ? const DashboardKirimanCod()
-                      //     : const SizedBox(),
+
+                      c.state.isLogin &&
+                              (c.state.allow.riwayatPesanan == "Y" ||
+                                  c.state.allow.paketmuRiwayat == 'Y')
+                          ? DashboardKirimanCODCountItem(
+                              transSummary: c.state.transSummary,
+                              kirimanKamu: c.state.kirimanKamuCOD,
+                              isLoadingKiriman: c.state.isLoadingKirimanCOD,
+                              onRefresh: () {
+                                c.loadTransCountList(true);
+                              },
+                            )
+                          : const SizedBox(),
+
                       const DashboardPromo(),
                       const DashboardNews(),
                       const SizedBox(height: 50),

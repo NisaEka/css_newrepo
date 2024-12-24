@@ -2,6 +2,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/items/line_chart_item.dart';
@@ -27,10 +28,6 @@ class DashboardKirimanCountItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> messages = [
-      "Realtime".tr,
-      "Sentuh untuk sinkronisasi manual".tr,
-    ];
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
@@ -67,7 +64,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                         children: [
                           TransactionCard(
                             title: "Jumlah Transaksi".tr,
-                            count: kirimanKamu.totalPantau,
+                            count: kirimanKamu.totalKiriman,
                             subtitle: '${"7 Hari Terakhir".tr}\n',
                             color: primaryColor(context),
                             icon: Icons.show_chart,
@@ -75,8 +72,8 @@ class DashboardKirimanCountItem extends StatelessWidget {
                             suffixChart: SizedBox(
                               width: 45,
                               height: 20,
-                              child: kirimanKamu.pantauChart.isNotEmpty
-                                  ? LineChartItem(kirimanKamu.pantauChart
+                              child: kirimanKamu.lineChart.isNotEmpty
+                                  ? LineChartItem(kirimanKamu.lineChart
                                       .map((e) => e.toDouble())
                                       .toList())
                                   : const SizedBox(),
@@ -228,7 +225,8 @@ class DashboardKirimanCountItem extends StatelessWidget {
                               width: double.infinity,
                               key: ValueKey<int>(currentSecond),
                               child: Text(
-                                messages[currentSecond % messages.length],
+                                Constant.dashboardRefreshText[currentSecond %
+                                    Constant.dashboardRefreshText.length],
                                 textAlign: TextAlign.left,
                                 style: Theme.of(context)
                                     .textTheme

@@ -29,4 +29,9 @@ class Constant {
   static const String bannerStatusHide = 'HIDE';
   static const String bannerStatusIdle = 'IDLE';
   static const String bannerStatusOnProcess = 'ON PROCESS';
+
+  static const List<String> dashboardRefreshText = [
+    "Realtime",
+    "Sentuh untuk sinkronisasi manual",
+  ];
 }

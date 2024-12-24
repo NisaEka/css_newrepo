@@ -296,6 +296,7 @@ class DashboardController extends BaseController {
       }
     }
     loadPantauCountList();
+    loadTransCountList(true);
   }
 
   Future<void> saveFCMToken() async {
@@ -342,23 +343,26 @@ class DashboardController extends BaseController {
     update();
     if (state.isLogin) {
       try {
-        var trans = await transaction.getPantauCount(QueryModel(between: [
-          {
-            "awbDate": [
-              DateTime.now()
-                  .subtract(const Duration(days: 6))
-                  .copyWith(hour: 0, minute: 0, second: 0),
-              DateTime.now()
-            ]
-          }
-        ]));
+        var pantau = await transaction.getPantauCount(QueryModel(
+          table: true,
+          between: [
+            {
+              "awbDate": [
+                DateTime.now()
+                    .subtract(const Duration(days: 6))
+                    .copyWith(hour: 0, minute: 0, second: 0),
+                DateTime.now()
+              ]
+            }
+          ],
+        ));
 
-        trans.data?.forEach((item) {
+        pantau.data?.forEach((item) {
           if (item.status == 'Total Kiriman') {
-            state.kirimanKamu.totalPantau =
+            state.kirimanKamu.totalKiriman =
                 item.totalCod + item.totalCodOngkir + item.totalNonCod;
             for (var chart in item.chart) {
-              state.kirimanKamu.pantauChart.add(chart.y);
+              state.kirimanKamu.lineChart.add(chart.y);
             }
             state.kirimanKamu.totalCod = item.totalCod;
             state.kirimanKamu.codAmount = item.codAmount;
@@ -384,47 +388,62 @@ class DashboardController extends BaseController {
           }
         });
         state.kirimanKamu.calculatePercentages();
-        loadTransCountList();
-      } catch (e) {
+      } catch (e, i) {
         AppLogger.e('error pantau count :$e');
+        AppLogger.e('error pantau count :$i');
       } finally {
         state.isLoadingKiriman = false;
       }
     }
   }
 
-  Future<void> loadTransCountList({bool? isKirimanCOD}) async {
-    state.isLoadingKirimanCOD = true;
-    state.transCountList.clear();
+  Future<void> loadTransCountList(bool isKirimanCOD) async {
+    state.isLoadingKirimanCOD = isKirimanCOD;
+    state.kirimanKamuCOD = DashboardKirimanKamuModel();
     update();
     if (state.isLogin) {
       try {
         transaction.postTransactionDashboard(QueryModel()).then(
           (value) {
             state.transSummary = value.data;
-            state.transCountList.addAll(value.data?.summary ?? []);
             update();
+
+            value.data?.summary?.forEach((item) {
+              if (item.status == 'Total Kiriman') {
+                state.kirimanKamuCOD.totalKiriman =
+                    value.data?.totalKirimanCod?.totalCodOngkir?.toInt() ?? 0;
+                for (var chart in (item.chart ?? [])) {
+                  state.kirimanKamu.lineChart.add(chart.y);
+                }
+                // state.kirimanKamu.totalCod = item.totalCod;
+                // state.kirimanKamu.codAmount = item.codAmount;
+                // state.kirimanKamu.totalCodOngkir = item.totalCodOngkir;
+                // state.kirimanKamu.codOngkirAmount = item.codOngkirAmount;
+                // state.kirimanKamu.totalNonCod = item.totalNonCod;
+                // state.kirimanKamu.ongkirNonCodAmount = item.ongkirNonCodAmount;
+              }
+
+              if (item.status == 'Dalam Proses') {
+                // state.kirimanKamu.onProcess = item.totalCod + item.totalCodOngkir + item.totalNonCod;
+              }
+
+              if (item.status == 'Sukses Diterima') {
+                // state.kirimanKamu.suksesDiterima = item.totalCod + item.totalCodOngkir + item.totalNonCod;
+              }
+
+              if (item.status == 'Dibatalkan Oleh Kamu') {
+                // state.kirimanKamu.totalCancel = item.totalCod + item.totalCodOngkir + item.totalNonCod;
+              }
+            });
           },
         );
 
-        // aggregation.getAggSummary().then(
-        //   (value) {
-        //     state.aggSummary = value.data;
-        //     update();
-        //   },
-        // );
-        //
-        // aggregation.getAggChart().then(
-        //   (value) {
-        //     state.aggChart = value.data;
-        //     state.isLoadingAgg = false;
-        //     update();
-        //   },
-        // );
+        update();
       } catch (e) {
         AppLogger.e('error loadTransCountList $e');
       } finally {
-        state.isLoadingKiriman = false;
+        await Future.delayed(const Duration(seconds: 2));
+        state.isLoadingKirimanCOD = false;
         update();
       }
     }
