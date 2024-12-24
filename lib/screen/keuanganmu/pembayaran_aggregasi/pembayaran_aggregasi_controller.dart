@@ -20,7 +20,7 @@ class PembayaranAggergasiController extends BaseController {
 
   DateTime? startDate;
   DateTime? endDate;
-  bool isFiltered = false;
+  bool isFiltered = true;
   bool isLoading = false;
   bool isSelect = false;
   bool isSelectAll = false;
