@@ -8,6 +8,7 @@ import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_return_address_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_tax_info_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,14 +71,15 @@ class FacilityFormReturnController extends BaseController {
     isLoading = true;
     destinationList.clear();
 
-    // var response = await transaction.getDestination(keyword);
-    // var models = response.payload?.toList();
+    var response =
+        await master.getDestinations(QueryModel(search: keyword.toUpperCase()));
+    var models = response.data?.toList();
 
     isLoading = false;
     update();
 
-    // return models ?? List.empty();
-    return [];
+    return models ?? List.empty();
+    // return [];
   }
 
   void _checkConnectivity() {

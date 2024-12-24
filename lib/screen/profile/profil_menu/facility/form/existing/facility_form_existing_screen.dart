@@ -30,7 +30,8 @@ class FacilityFormExistingScreen extends StatelessWidget {
                   ? DefaultAlertDialog(
                       title: 'Terdapat input yang tidak valid'.tr,
                       subtitle:
-                          'Periksa kembali data yang telah anda masukkan.',
+                          'Periksa kembali data yang telah anda masukkan.'.tr,
+                      confirmButtonTitle: 'OK'.tr,
                       onConfirm: () => controller.onRestartValidationState())
                   : Container()
             ],
@@ -75,15 +76,15 @@ class FacilityFormExistingScreen extends StatelessWidget {
                     ),
                     CustomTextFormField(
                       controller: controller.email,
-                      hintText: 'Email'.tr,
-                      helperText: 'Email terdaftar saat kerjasama'.tr,
+                      hintText: 'Alamat email'.tr,
+                      helperText: 'Alamat email terdaftar saat kerjasama'.tr,
                       inputType: TextInputType.emailAddress,
                       inputFormatters: const [],
                       validator: ValidationBuilder().email().build(),
                     ),
                     CustomTextFormField(
                       controller: controller.phone,
-                      hintText: 'No Telp'.tr,
+                      hintText: 'Nomor Telepon'.tr,
                       helperText: 'Nomor telepon yang terdaftar di akun JNE'.tr,
                       inputType: TextInputType.phone,
                       validator: ValidationBuilder().phone().build(),
