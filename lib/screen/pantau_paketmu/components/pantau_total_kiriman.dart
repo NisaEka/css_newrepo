@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -67,16 +68,21 @@ class PantauTotalKiriman extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: c.state.isLoading ? greyColor : whiteColor,
                             borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: blueJNE),
+                            border: Border.all(
+                                color: AppConst.isLightTheme(context)
+                                    ? blueJNE
+                                    : warningColor),
                           ),
                           width: 160,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Container(
-                                decoration: const BoxDecoration(
-                                  color: blueJNE,
-                                  borderRadius: BorderRadius.only(
+                                decoration: BoxDecoration(
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : warningColor,
+                                  borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(4),
                                     bottomLeft: Radius.circular(4),
                                   ),
@@ -117,7 +123,9 @@ class PantauTotalKiriman extends StatelessWidget {
                                       .labelMedium
                                       ?.copyWith(
                                           fontSize: 10,
-                                          color: blueJNE,
+                                          color: AppConst.isLightTheme(context)
+                                              ? blueJNE
+                                              : warningColor,
                                           fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -134,16 +142,21 @@ class PantauTotalKiriman extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: c.state.isLoading ? greyColor : whiteColor,
                             borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: blueJNE),
+                            border: Border.all(
+                                color: AppConst.isLightTheme(context)
+                                    ? blueJNE
+                                    : warningColor),
                           ),
                           width: 160,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Container(
-                                decoration: const BoxDecoration(
-                                  color: blueJNE,
-                                  borderRadius: BorderRadius.only(
+                                decoration: BoxDecoration(
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : warningColor,
+                                  borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(4),
                                     bottomLeft: Radius.circular(4),
                                   ),
@@ -183,7 +196,9 @@ class PantauTotalKiriman extends StatelessWidget {
                                       .labelMedium
                                       ?.copyWith(
                                           fontSize: 10,
-                                          color: blueJNE,
+                                          color: AppConst.isLightTheme(context)
+                                              ? blueJNE
+                                              : warningColor,
                                           fontWeight: FontWeight.bold),
                                 ),
                               ),

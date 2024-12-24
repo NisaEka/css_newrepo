@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
@@ -181,14 +182,18 @@ class PantauPaketmuFilter extends HookWidget {
                                               .state.selectedStatusKiriman ==
                                           controller.state
                                               .listStatusKiriman[adjustedIndex]
-                                      ? blueJNE
+                                      ? AppConst.isLightTheme(context)
+                                          ? blueJNE
+                                          : warningColor
                                       : whiteColor,
                                   border: Border.all(
                                     color: controller
                                                 .state.selectedStatusKiriman !=
                                             controller.state.listStatusKiriman[
                                                 adjustedIndex]
-                                        ? blueJNE
+                                        ? AppConst.isLightTheme(context)
+                                            ? blueJNE
+                                            : warningColor
                                         : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
@@ -204,7 +209,9 @@ class PantauPaketmuFilter extends HookWidget {
                                                       .state.listStatusKiriman[
                                                   adjustedIndex]
                                           ? whiteColor
-                                          : blueJNE),
+                                          : AppConst.isLightTheme(context)
+                                              ? blueJNE
+                                              : warningColor),
                                 ),
                               ),
                             );
