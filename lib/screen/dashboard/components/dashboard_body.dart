@@ -42,27 +42,8 @@ class DashboardBody extends StatelessWidget {
                       const DashboardMenu2(),
                       // CustomFilledButton(
                       //   color: Colors.blue,
-                      //   onPressed: () => Get.to(const Ob1Screen()),
-                      // ),
-                      // CustomFilledButton(
-                      //   color: Colors.blue,
                       //   onPressed: () => Get.to(
-                      //     SuccessScreen(
-                      //       // lottie: ImageConstant.packedLottie,
-                      //       // iconMargin: 100,
-                      //       // customInfo: PackageInfoItem(),
-                      //       // iconHeight: Get.width * 0.6,
-                      //       message: 'message',
-                      //       secondButtonTitle: 'second button',
-                      //       onSecondAction: () {},
-                      //       firstButtonTitle: 'firstbutton',
-                      //       onFirstAction: () {},
-                      //       thirdButtonTitle: 'third button',
-                      //       onThirdAction: () {
                       //
-                      //       },
-                      //     ),
-                      //   ),
                       // ),
                       c.state.isLogin &&
                               (c.state.allow.riwayatPesanan == "Y" ||
@@ -77,7 +58,6 @@ class DashboardBody extends StatelessWidget {
                               },
                             )
                           : const SizedBox(),
-
                       c.state.isLogin &&
                               (c.state.allow.riwayatPesanan == "Y" ||
                                   c.state.allow.paketmuRiwayat == 'Y')
@@ -92,7 +72,6 @@ class DashboardBody extends StatelessWidget {
                               },
                             )
                           : const SizedBox(),
-
                       const DashboardPromo(),
                       const DashboardNews(),
                       const SizedBox(height: 50),

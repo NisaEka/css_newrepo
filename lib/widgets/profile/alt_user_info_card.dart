@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AltUserInfoCard extends StatelessWidget {
-  final String name;
-  final String brand;
-  final String mail;
-  final String type;
+  final String? name;
+  final String? brand;
+  final String? mail;
+  final String? type;
   final bool isLoading;
 
   const AltUserInfoCard({
     super.key,
-    required this.name,
-    required this.brand,
-    required this.mail,
-    required this.type,
+    this.name,
+    this.brand,
+    this.mail,
+    this.type,
     this.isLoading = true,
   });
 
@@ -34,7 +34,7 @@ class AltUserInfoCard extends StatelessWidget {
                 color: isLoading ? greyColor : Colors.transparent,
                 borderRadius: BorderRadius.circular(5)),
             child: Text(
-              name,
+              name ?? '',
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
@@ -48,8 +48,8 @@ class AltUserInfoCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: isLoading ? greyColor : Colors.transparent,
                   borderRadius: BorderRadius.circular(5)),
-              child:
-                  Text(brand, style: Theme.of(context).textTheme.titleSmall)),
+              child: Text(brand ?? '',
+                  style: Theme.of(context).textTheme.titleSmall)),
           Container(
               margin: isLoading ? const EdgeInsets.all(2) : null,
               height: isLoading ? 15 : null,
@@ -57,7 +57,8 @@ class AltUserInfoCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: isLoading ? greyColor : Colors.transparent,
                   borderRadius: BorderRadius.circular(5)),
-              child: Text(mail, style: Theme.of(context).textTheme.titleSmall)),
+              child: Text(mail ?? '',
+                  style: Theme.of(context).textTheme.titleSmall)),
           Container(
             margin: isLoading ? const EdgeInsets.all(2) : null,
             height: isLoading ? 10 : null,
@@ -66,7 +67,7 @@ class AltUserInfoCard extends StatelessWidget {
                 color: isLoading ? greyColor : Colors.transparent,
                 borderRadius: BorderRadius.circular(5)),
             child: Text(
-              type.tr,
+              type?.tr ?? "",
               style: Theme.of(context).textTheme.titleMedium,
             ),
           )

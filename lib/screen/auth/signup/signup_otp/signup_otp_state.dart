@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
@@ -9,6 +10,7 @@ import 'package:pinput/pinput.dart';
 class SignupOtpState {
   String email = Get.arguments['email'];
   bool? isActivation = Get.arguments['isActivation'];
+  UserModel userData = Get.arguments['userData'];
   String mail = '';
   bool isLoading = false;
 

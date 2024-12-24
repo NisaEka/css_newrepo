@@ -46,32 +46,32 @@ class SignupForm extends StatelessWidget {
                         )),
                         const SizedBox(height: 25),
                         CustomTextFormField(
-                          controller: c.state.namaLengkap,
+                          controller: c.state.fullName,
                           prefixIcon: const Icon(Icons.person_2_rounded),
                           hintText: 'Nama Lengkap'.tr,
                           isRequired: true,
                           validator: ValidationBuilder().name().build(),
                         ),
                         CustomTextFormField(
-                          controller: c.state.namaBrand,
+                          controller: c.state.brandName,
                           prefixIcon: const Icon(Icons.store_rounded),
                           hintText: 'Nama Brand / Bisnis'.tr,
                           isRequired: true,
                           validator: ValidationBuilder().name().build(),
                         ),
-                        PhoneTextFormField(controller: c.state.noHp),
+                        PhoneTextFormField(controller: c.state.phone),
                         EmailTextformfield(controller: c.state.email),
                         ReferalDropdown(
                           label: "Kode Referal".tr,
                           onChanged: (value) => c.onSelectReferal(value),
                           onClear: () => c.unSelectReferal(),
-                          value: c.state.selectedReferal,
+                          value: c.state.selectedReferral,
                         ),
                         OriginDropdown(
                           onChanged: (value) => c.selectOrigin(value),
                           readOnly: c.state.isDefaultOrigin,
                           value: c.state.selectedOrigin,
-                          selectedItem: c.state.kotaPengirim.text,
+                          selectedItem: c.state.origin.text,
                           prefixIcon: const Icon(Icons.trip_origin_rounded),
                         ),
                         c.state.isSelectCounter
@@ -86,7 +86,7 @@ class SignupForm extends StatelessWidget {
                                               ? blueJNE
                                               : whiteColor)),
                                   Switch(
-                                    value: c.state.pakaiJNE,
+                                    value: c.state.useJNE,
                                     activeColor: AppConst.isLightTheme(context)
                                         ? blueJNE
                                         : Colors.lightBlueAccent,
@@ -95,17 +95,17 @@ class SignupForm extends StatelessWidget {
                                             ? blueJNE
                                             : Colors.lightBlueAccent,
                                     onChanged: (value) {
-                                      c.state.pakaiJNE = value;
+                                      c.state.useJNE = value;
                                       c.update();
                                     },
                                   )
                                 ],
                               )
                             : const SizedBox(),
-                        c.state.pakaiJNE && c.state.isSelectCounter
+                        c.state.useJNE && c.state.isSelectCounter
                             ? CustomDropDownFormField(
-                                isRequired: c.state.pakaiJNE,
-                                items: c.state.agenList
+                                isRequired: c.state.useJNE,
+                                items: c.state.agentList
                                     .map(
                                       (e) => DropdownMenuItem(
                                         value: e,

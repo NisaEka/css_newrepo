@@ -604,7 +604,7 @@ class DashboardController extends BaseController {
 
       if (dropshipper && state.isLogin) {
         await master
-            .getDropshippers(QueryModel())
+            .getDropshippers(QueryModel(limit: 0))
             .then((value) async => await storage.saveData(
                   StorageCore.dropshipper,
                   value,
@@ -613,7 +613,7 @@ class DashboardController extends BaseController {
 
       if (receiver && state.isLogin) {
         await master
-            .getReceivers(QueryModel())
+            .getReceivers(QueryModel(limit: 0))
             .then((value) async => await storage.saveData(
                   StorageCore.receiver,
                   value,

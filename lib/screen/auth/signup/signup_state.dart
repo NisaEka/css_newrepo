@@ -5,27 +5,27 @@ import 'package:flutter/material.dart';
 
 class SignupState {
   final formKey = GlobalKey<FormState>();
-  final namaLengkap = TextEditingController();
-  final namaBrand = TextEditingController();
-  final noHp = TextEditingController();
+  final fullName = TextEditingController();
+  final brandName = TextEditingController();
+  final phone = TextEditingController();
   final email = TextEditingController();
-  final kodeReferal = TextEditingController();
-  final kotaPengirim = TextEditingController();
-  final agenSales = TextEditingController();
+  final referralCode = TextEditingController();
+  final origin = TextEditingController();
+  final salesAgent = TextEditingController();
 
-  List<AgentModel> agenList = [];
+  List<AgentModel> agentList = [];
 
   String? version;
   String? branchCode;
-  bool pakaiJNE = false;
+  bool useJNE = false;
   bool isLoadOrigin = false;
-  bool isLoadReferal = false;
+  bool isLoadReferral = false;
   bool isLoadAgent = false;
   bool isLoading = false;
   bool isDefaultOrigin = false;
   bool isSelectCounter = true;
   OriginModel? selectedOrigin;
   AgentModel? selectedAgent;
-  GroupOwnerModel? selectedReferal;
+  GroupOwnerModel? selectedReferral;
   String? locale;
 }

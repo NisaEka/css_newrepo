@@ -445,9 +445,6 @@ class TransactionForm extends StatelessWidget {
                                                   c.state.account.accountService
                                                               ?.toUpperCase() ==
                                                           'COD'
-                                                      // &&
-                                                      //     (controller.state.account.state.accountCustType?.toUpperCase() == "990" ||
-                                                      //         controller.state.account.state.accountCustType?.toUpperCase() == "992")
                                                       ? Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -613,6 +610,19 @@ class TransactionForm extends StatelessWidget {
                                 },
                               )
                             : const SizedBox(),
+                        CustomFilledButton(
+                          color: whiteColor,
+                          borderColor: c.state.formValidate
+                              ? primaryColor(context)
+                              : greyColor,
+                          fontColor: c.state.formValidate
+                              ? primaryColor(context)
+                              : greyColor,
+                          title: 'Simpan ke Draft'.tr,
+                          onPressed: () {
+                            c.state.formValidate ? c.saveDraft() : null;
+                          },
+                        ),
                       ],
                     ),
                   ),
