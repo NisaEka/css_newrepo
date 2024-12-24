@@ -24,7 +24,9 @@ class StickerListItem extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          border: isSelected ? Border.all(color: redJNE, width: 5) : null,
+          border: isSelected
+              ? Border.all(color: secondaryColor(context), width: 5)
+              : null,
         ),
         child: CachedNetworkImage(
           imageUrl: img,
