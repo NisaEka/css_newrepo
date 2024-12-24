@@ -74,7 +74,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
             border: Border.all(
-              color: isSelected ? redJNE : greyDarkColor1,
+              color: isSelected ? secondaryColor(context) : greyDarkColor1,
               width: isSelected ? 2 : 1,
             ),
             borderRadius: BorderRadius.circular(8),
