@@ -101,14 +101,14 @@ class RiwayatKirimanListItem extends StatelessWidget {
                             tanggalEntry?.toDateFormat() ??
                             '-',
                         style:
-                            Theme.of(context).textTheme.labelMedium?.copyWith(
+                            Theme.of(context).textTheme.labelSmall?.copyWith(
                                   color: primaryColor(context),
                                 ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 10),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -147,9 +147,37 @@ class RiwayatKirimanListItem extends StatelessWidget {
                         // Text(ImageConstant.paket),
                         // Image.asset(IconsConstant.paket),
                         Image.asset(
-                          ImageConstant.boxPackage,
+                          data?.statusAwb
+                              == "MASIH DI KAMU" ||
+                              apiType == "MASIH DI KAMU"
+                          ? ImageConstant.boxPackage
+                          : data?.statusAwb ==
+                              "SUDAH DI JEMPUT" ||
+                              apiType ==
+                                  "SUDAH DI JEMPUT"
+                          ? ImageConstant.boxSudahDiJemput
+                          : data?.statusAwb ==
+                              "DALAM PERJALANAN" ||
+                              apiType ==
+                                  "DALAM PERJALANAN" ||
+                              data?.statusAwb ==
+                              "SUDAH DI GUDANG JNE" ||
+                              apiType ==
+                                  "SUDAH DI GUDANG JNE"
+                          ? ImageConstant.boxSudahDiKotaTujuan
+                              : data?.statusAwb ==
+                              "SUKSES DITERIMA" ||
+                              apiType ==
+                                  "SUKSES DITERIMA"
+                              ? ImageConstant.boxSuksesDiterima
+                              : data?.statusAwb ==
+                              "DIBATALKAN OLEH KAMU" ||
+                              apiType ==
+                                  "DIBATALKAN OLEH KAMU"
+                              ? ImageConstant.boxDibatalkan
+                          : ImageConstant.boxPackage,
                           height: Get.width / 8,
-                          color: textColor(context),
+                          color: iconColor(context),
                         ),
                       ],
                     ),
@@ -171,14 +199,17 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                           : data?.apiType == "NON COD" ||
                                                   apiType == "NON COD"
                                               ? infoDarkColor
-                                              : data?.apiType == "COD ONGKIR" ||
+                                              : data?.codFlag == "COD ONGKIR" ||
                                                       apiType == "COD ONGKIR"
                                                   ? warningDarkColor
                                                   : errorDarkColor,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(
-                                      data?.apiType ?? apiType ?? '-',
+                                      data?.codFlag == 'YES'
+                                          && data?.codOngkir == 'YES' ?
+                                      'COD ONGKIR'
+                                      : data?.apiType ?? apiType ?? '-',
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleSmall
@@ -220,9 +251,9 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                                   apiType == "BUTUH DICEK"
                                               ? warningColor
                                               : data?.statusAwb ==
-                                                          "SUDAH DIJEMPUT" ||
+                                                          "SUDAH DI JEMPUT" ||
                                                       apiType ==
-                                                          "SUDAH DIJEMPUT" ||
+                                                          "SUDAH DI JEMPUT" ||
                                                       data?.statusAwb ==
                                                           "DALAM PERJALANAN" ||
                                                       apiType ==

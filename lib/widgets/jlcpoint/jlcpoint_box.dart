@@ -22,7 +22,7 @@ class JlcPointBox extends StatelessWidget {
       width: Get.size.width,
       height: 62,
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      padding: const EdgeInsets.only(right: 15, top: 10, bottom: 10, left: 10),
+      padding: const EdgeInsets.only(right: 35, top: 10, bottom: 10, left: 10),
       decoration: BoxDecoration(
         color: Theme.of(context).brightness == Brightness.light
             ? whiteColor
@@ -36,7 +36,7 @@ class JlcPointBox extends StatelessWidget {
           BoxShadow(
             color: primaryColor(context),
             spreadRadius: 1,
-            offset: const Offset(3, 3),
+            offset: const Offset(2, 2),
           ),
         ],
       ),
@@ -44,7 +44,7 @@ class JlcPointBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(ImageConstant.logoJLC, height: 28, width: 60),
+          Image.asset(ImageConstant.logoJLC2, height: 28, width: 60),
           Column(
             children: [
               Text("Total Transaksi".tr,
