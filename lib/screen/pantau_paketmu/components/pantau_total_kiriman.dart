@@ -68,10 +68,7 @@ class PantauTotalKiriman extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: c.state.isLoading ? greyColor : whiteColor,
                             borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                                color: AppConst.isLightTheme(context)
-                                    ? blueJNE
-                                    : warningColor),
+                            border: Border.all(color: primaryColor(context)),
                           ),
                           width: 160,
                           child: Row(

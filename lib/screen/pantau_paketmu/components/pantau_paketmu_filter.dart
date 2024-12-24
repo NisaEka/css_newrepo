@@ -182,18 +182,14 @@ class PantauPaketmuFilter extends HookWidget {
                                               .state.selectedStatusKiriman ==
                                           controller.state
                                               .listStatusKiriman[adjustedIndex]
-                                      ? AppConst.isLightTheme(context)
-                                          ? blueJNE
-                                          : warningColor
+                                      ? primaryColor(context)
                                       : whiteColor,
                                   border: Border.all(
                                     color: controller
                                                 .state.selectedStatusKiriman !=
                                             controller.state.listStatusKiriman[
                                                 adjustedIndex]
-                                        ? AppConst.isLightTheme(context)
-                                            ? blueJNE
-                                            : warningColor
+                                        ? primaryColor(context)
                                         : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),

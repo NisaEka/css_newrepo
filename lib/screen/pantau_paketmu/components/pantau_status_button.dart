@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
@@ -16,7 +15,7 @@ class PantauStatusButton extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-              color: blueJNE,
+              color: primaryColor(context),
               border: Border.all(),
               borderRadius: BorderRadius.circular(8),
             ),
@@ -36,9 +35,7 @@ class PantauStatusButton extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedKiriman == 0
-                          ? AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : warningColor
+                          ? primaryColor(context)
                           : whiteColor,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(8),
@@ -94,9 +91,7 @@ class PantauStatusButton extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedKiriman == 1
-                          ? AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : warningColor
+                          ? primaryColor(context)
                           : whiteColor,
                       // border: const Border(
                       //   right: BorderSide(color: greyDarkColor1),
@@ -150,9 +145,7 @@ class PantauStatusButton extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.selectedKiriman == 2
-                          ? AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : warningColor
+                          ? primaryColor(context)
                           : whiteColor,
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(8),
