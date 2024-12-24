@@ -20,7 +20,7 @@ class TentangScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              backgroundColor: whiteColor,
+              backgroundColor: Colors.transparent,
               leading: CustomBackButton(
                 onPressed: () => Get.back(),
               ),
@@ -53,12 +53,15 @@ class TentangScreen extends StatelessWidget {
                       ),
                     ),
                     CustomFilledButton(
-                      color:
-                          AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                      color: AppConst.isLightTheme(context)
+                          ? blueJNE
+                          : warningColor,
                       onPressed: () {
                         Get.to(() => const LisensiScreen());
                       },
                       title: "Lisensi",
+                      fontStyle: const TextStyle(
+                          fontWeight: FontWeight.bold, color: whiteColor),
                       width: 100,
                     ),
                     const SizedBox(height: 100)
