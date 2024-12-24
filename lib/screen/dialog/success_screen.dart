@@ -77,7 +77,7 @@ class SuccessScreen extends StatelessWidget {
                   // ),
                   (message?.isNotEmpty ?? false)
                       ? SizedBox(
-                          height: Get.width * 0.5,
+                          height: customInfo != null ? null : Get.width * 0.5,
                           width: Get.width,
                           child: Text(
                             message?.tr ?? '',

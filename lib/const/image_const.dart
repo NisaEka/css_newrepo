@@ -45,6 +45,7 @@ class ImageConstant {
   static const String successLottie = "assets/lottie/success_lottie.json";
   static const String failedLottie = "assets/lottie/failed_lottie.json";
   static const String packedLottie = "assets/lottie/packed_lottie.json";
+  static const String warningLottie = "assets/lottie/warning_lottie.json";
 
   static const String folderIcon = "assets/images/folder.png";
 

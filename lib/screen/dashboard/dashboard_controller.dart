@@ -401,6 +401,7 @@ class DashboardController extends BaseController {
   Future<void> loadTransCountList(bool isKirimanCOD) async {
     state.isLoadingKirimanCOD = isKirimanCOD;
     state.kirimanKamuCOD = DashboardKirimanKamuModel();
+    state.transSummary = null;
     update();
     if (state.isLogin) {
       try {

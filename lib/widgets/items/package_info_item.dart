@@ -65,14 +65,16 @@ class PackageInfoItem extends StatelessWidget {
           ),
           CustomLabelText(
             title: 'Berat Kiriman'.tr,
-            value: data.weight?.toString() ?? '',
+            value: '${data.weight?.toInt()} Kg',
             fontColor: whiteColor,
           ),
-          CustomLabelText(
-            title: 'Ongkos Kirim'.tr,
-            value: "Rp. ${data.deliveryPrice?.toInt().toCurrency()}",
-            fontColor: whiteColor,
-          ),
+          data.deliveryPrice != null
+              ? CustomLabelText(
+                  title: 'Ongkos Kirim'.tr,
+                  value: "Rp. ${data.deliveryPrice?.toInt().toCurrency()}",
+                  fontColor: whiteColor,
+                )
+              : const SizedBox(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
