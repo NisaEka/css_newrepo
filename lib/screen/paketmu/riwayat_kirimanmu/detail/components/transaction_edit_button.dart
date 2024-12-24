@@ -32,10 +32,7 @@ class TransactionEditButton extends StatelessWidget {
                   c.state.allow?.paketmuPrint == 'Y' ||
                           c.state.allow?.cetakPesanan == 'Y'
                       ? CustomFilledButton(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? blueJNE
-                                  : warningColor,
+                          color: primaryColor(context),
                           title: "Lihat Resi".tr,
                           suffixIcon: Icons.qr_code_rounded,
                           width: Get.width / 2,

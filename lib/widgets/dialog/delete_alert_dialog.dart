@@ -64,17 +64,13 @@ class DeleteAlertDialog extends StatelessWidget {
               radius: 50,
               margin: EdgeInsets.zero,
               isTransparent: true,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? blueJNE
-                  : warningColor,
+              color: primaryColor(context),
               title: 'Tidak'.tr,
               onPressed: onBack,
             ),
             CustomFilledButton(
                 radius: 50,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? blueJNE
-                    : warningColor,
+                color: primaryColor(context),
                 title: 'Hapus'.tr,
                 onPressed: onDelete),
           ],

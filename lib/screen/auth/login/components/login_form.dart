@@ -106,9 +106,7 @@ class LoginForm extends StatelessWidget {
                         ],
                       ),
                       CustomFilledButton(
-                        color: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : warningColor,
+                        color: primaryColor(context),
                         title: 'Masuk'.tr,
                         suffixIcon: Icons.login_rounded,
                         onPressed: () async {

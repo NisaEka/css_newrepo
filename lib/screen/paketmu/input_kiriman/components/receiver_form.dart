@@ -72,10 +72,7 @@ class ReceiverForm extends StatelessWidget {
                                     ),
                                     Icon(
                                       Icons.arrow_circle_right_rounded,
-                                      color: color ??
-                                          (AppConst.isLightTheme(context)
-                                              ? blueJNE
-                                              : warningColor),
+                                      color: color ?? (primaryColor(context)),
                                     )
                                   ],
                                 ),

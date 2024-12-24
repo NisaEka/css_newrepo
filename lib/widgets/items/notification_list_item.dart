@@ -46,9 +46,7 @@ class NotificationListItem extends StatelessWidget {
             leading: data.title?.split(' ').first != "Laporanku"
                 ? Icon(
                     Icons.info,
-                    color: isRead
-                        ? infoColor
-                        : (AppConst.isLightTheme(context) ? blueJNE : redJNE),
+                    color: isRead ? infoColor : (primaryColor(context)),
                   )
                 : Image.asset(
                     ImageConstant.hubungiAkuIcon,
@@ -71,7 +69,7 @@ class NotificationListItem extends StatelessWidget {
               ),
             ),
             titleTextStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
+                  color: primaryColor(context),
                 ),
             subtitleTextStyle: Theme.of(context).textTheme.titleSmall,
           ),

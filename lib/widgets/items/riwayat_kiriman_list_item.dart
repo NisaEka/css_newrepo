@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
@@ -294,9 +293,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                 .textTheme
                                 .titleMedium
                                 ?.copyWith(
-                                  color: AppConst.isLightTheme(context)
-                                      ? blueJNE
-                                      : warningColor,
+                                  color: primaryColor(context),
                                 ),
                           ),
                         ),

@@ -13,8 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
-import '../../../const/app_const.dart';
-
 class EditProfilScreen extends StatelessWidget {
   const EditProfilScreen({super.key});
 
@@ -125,9 +123,7 @@ class EditProfilScreen extends StatelessWidget {
               readOnly: true,
             ),
             CustomFilledButton(
-              color: AppConst.isLightTheme(context)
-                  ? blueJNE
-                  : warningColor,
+              color: primaryColor(context),
               title: "Simpan Perubahan".tr,
               suffixIcon: Icons.edit_rounded,
               onPressed: () => c.editProfile(),

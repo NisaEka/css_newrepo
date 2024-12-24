@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/facility_screen.dart';
@@ -30,9 +29,7 @@ class _DashboardInfoState extends State<DashboardInfo> {
                         horizontal: 20, vertical: 10),
                     width: Get.width,
                     decoration: BoxDecoration(
-                      color: AppConst.isLightTheme(context)
-                          ? blueJNE
-                          : warningColor,
+                      color: primaryColor(context),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(

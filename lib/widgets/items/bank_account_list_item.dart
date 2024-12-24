@@ -39,10 +39,7 @@ class BankAccountListItem extends StatelessWidget {
               ? []
               : [
                   BoxShadow(
-                    color: Theme.of(context).brightness ==
-                        Brightness.light
-                        ? blueJNE
-                        : warningColor,
+                    color: primaryColor(context),
                     spreadRadius: 1,
                     offset: const Offset(-2, 2),
                   ),
