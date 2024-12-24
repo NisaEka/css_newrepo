@@ -17,11 +17,11 @@ class UangCODBox extends StatelessWidget {
         color: whiteColor,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: greyDarkColor1),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: blueJNE,
+            color: primaryColor(context),
             spreadRadius: 1,
-            offset: Offset(-3, 3),
+            offset: const Offset(-3, 3),
           ),
         ],
       ),
@@ -37,7 +37,8 @@ class UangCODBox extends StatelessWidget {
                     style: subformLabelTextStyle),
                 Text(
                   "Rp. 3.910.000",
-                  style: appTitleTextStyle.copyWith(color: blueJNE),
+                  style:
+                      appTitleTextStyle.copyWith(color: primaryColor(context)),
                 ),
               ],
             ),

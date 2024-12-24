@@ -43,7 +43,9 @@ class LogActivityStepper extends StatelessWidget {
                 height: 23,
                 decoration: BoxDecoration(
                     color: currentStep == 0
-                        ? (AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent)
+                        ? (AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : Colors.lightBlueAccent)
                         : (AppConst.isLightTheme(context)
                             ? greyColor
                             : greyDarkColor1),
@@ -85,9 +87,7 @@ class LogActivityStepper extends StatelessWidget {
               child: Text(
                 "${data?.activityName ?? ''} (${data?.activityBy ?? ''})",
                 style: sublistTitleTextStyle.copyWith(
-                  color: AppConst.isLightTheme(context)
-                      ? blueJNE
-                      : warningColor,
+                  color: primaryColor(context),
                   fontWeight: bold,
                 ),
               ),

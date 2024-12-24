@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
@@ -75,7 +74,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
             border: Border.all(
-              color: isSelected ? redJNE : greyDarkColor1,
+              color: isSelected ? secondaryColor(context) : greyDarkColor1,
               width: isSelected ? 2 : 1,
             ),
             borderRadius: BorderRadius.circular(8),
@@ -198,9 +197,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                 .textTheme
                                 .titleMedium
                                 ?.copyWith(
-                                  color: AppConst.isLightTheme(context)
-                                      ? blueJNE
-                                      : warningColor,
+                                  color: primaryColor(context),
                                 ),
                           ),
                         ),

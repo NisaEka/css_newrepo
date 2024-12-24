@@ -73,18 +73,14 @@ class DefaultAlertDialog extends StatelessWidget {
                     radius: 50,
                     margin: EdgeInsets.zero,
                     isTransparent: true,
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? blueJNE
-                        : warningColor,
+                    color: primaryColor(context),
                     title: backButtonTitle ?? '',
                     onPressed: onBack ?? () => Get.back(),
                   )
                 : const SizedBox(),
             CustomFilledButton(
                 radius: 50,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? blueJNE
-                    : warningColor,
+                color: primaryColor(context),
                 title: confirmButtonTitle ?? '',
                 onPressed: onConfirm),
           ],

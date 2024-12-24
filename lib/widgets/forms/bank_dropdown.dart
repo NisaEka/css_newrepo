@@ -102,7 +102,7 @@ class _BankDropdownState extends State<BankDropdown> {
             value: widget.value,
             selectedItem: widget.selectedItem,
             hintText: widget.label ?? "Pilih Nama Bank".tr,
-            searchHintText: widget.label ?? 'Masukan Nama Bank'.tr,
+            searchHintText: widget.label ?? 'Masukkan Nama Bank'.tr,
             prefixIcon: widget.prefixIcon,
             textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: AppConst.isLightTheme(context)

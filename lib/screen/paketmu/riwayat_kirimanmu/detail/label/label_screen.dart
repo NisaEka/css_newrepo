@@ -19,8 +19,7 @@ class LabelScreen extends StatelessWidget {
           return Scaffold(
               appBar: AppBar(
                 title: Text("Lihat Resi".tr),
-                leading: const CustomBackButton(
-                ),
+                leading: const CustomBackButton(),
               ),
               body: Screenshot(
                 controller: controller.screenshotController,
@@ -36,7 +35,7 @@ class LabelScreen extends StatelessWidget {
               ),
               floatingActionButton: FloatingActionButton(
                 // shape: const CircleBorder(),
-                backgroundColor: blueJNE,
+                backgroundColor: primaryColor(context),
                 onPressed: () => controller.capture(context),
                 child: const Icon(
                   Icons.picture_as_pdf_rounded,

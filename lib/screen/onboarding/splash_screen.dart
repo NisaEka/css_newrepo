@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Image.asset(
               ImageConstant.logoCSS,
               width: Get.width - 100,
-              color: AppConst.isDarkTheme(context) ? redJNE : blueJNE,
+              color: primaryColor(context),
             ),
             Row(
               mainAxisSize: MainAxisSize.min,

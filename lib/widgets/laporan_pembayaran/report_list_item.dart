@@ -135,7 +135,9 @@ class _ReportListItemState extends State<ReportListItem> {
                                 ? const EdgeInsets.only(top: 2)
                                 : EdgeInsets.zero,
                             child: Text(
-                              widget.data?.mpayWdrGrpPayNo ?? widget.det?.dpayDetWdrCnoteno ?? '',
+                              widget.data?.mpayWdrGrpPayNo ??
+                                  widget.det?.dpayDetWdrCnoteno ??
+                                  '',
                               style: listTitleTextStyle.copyWith(
                                   color: Theme.of(context).brightness ==
                                           Brightness.light
@@ -183,10 +185,7 @@ class _ReportListItemState extends State<ReportListItem> {
                                   '-',
                             ),
                             CustomFilledButton(
-                              color: Theme.of(context).brightness ==
-                                  Brightness.light
-                                  ? blueJNE
-                                  : warningColor,
+                              color: primaryColor(context),
                               title: "Lihat Detail".tr,
                               margin: const EdgeInsets.only(top: 20),
                               onPressed: widget.onTapButton,

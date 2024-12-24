@@ -43,7 +43,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               border: Border.all(
-                color: c.recovery == 1 ? blueJNE : greyColor,
+                color: c.recovery == 1 ? primaryColor(context) : greyColor,
                 width: 2,
               ),
             ),
@@ -88,7 +88,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               border: Border.all(
-                color: c.recovery == 2 ? blueJNE : greyColor,
+                color: c.recovery == 2 ? primaryColor(context) : greyColor,
                 width: 2,
               ),
             ),

@@ -28,25 +28,34 @@ class AccountCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(account.accountNumber ?? '',
-                  style: listTitleTextStyle.copyWith(color: blueJNE)),
+                  style: listTitleTextStyle.copyWith(
+                      color: primaryColor(context))),
               Text(account.accountName ?? '',
-                  style: listTitleTextStyle.copyWith(color: blueJNE)),
+                  style: listTitleTextStyle.copyWith(
+                      color: primaryColor(context))),
               Text(account.accountService ?? '',
-                  style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                  style: sublistTitleTextStyle.copyWith(
+                      color: primaryColor(context))),
               Row(
                 children: [
                   Text(account.accountSs == "Y" ? "SS " : '',
-                      style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                      style: sublistTitleTextStyle.copyWith(
+                          color: primaryColor(context))),
                   Text(account.accountYes == "Y" ? "YES " : '',
-                      style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                      style: sublistTitleTextStyle.copyWith(
+                          color: primaryColor(context))),
                   Text(account.accountReg == "Y" ? "REG " : '',
-                      style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                      style: sublistTitleTextStyle.copyWith(
+                          color: primaryColor(context))),
                   Text(account.accountOke == "Y" ? "OKE " : '',
-                      style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                      style: sublistTitleTextStyle.copyWith(
+                          color: primaryColor(context))),
                   Text(account.accountJtr == "Y" ? "JTR " : '',
-                      style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                      style: sublistTitleTextStyle.copyWith(
+                          color: primaryColor(context))),
                   Text(account.accountIntl == "Y" ? "INTL " : '',
-                      style: sublistTitleTextStyle.copyWith(color: blueJNE)),
+                      style: sublistTitleTextStyle.copyWith(
+                          color: primaryColor(context))),
                 ],
               ),
             ],
@@ -55,7 +64,8 @@ class AccountCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(account.accountService ?? '',
-                  style: listTitleTextStyle.copyWith(color: redJNE)),
+                  style: listTitleTextStyle.copyWith(
+                      color: secondaryColor(context))),
               Text(account.accountCategory ?? '',
                   style: subTitleTextStyle.copyWith(color: greyDarkColor2)),
               // Text("CCNC", style: subTitleTextStyle.copyWith(color: greyDarkColor2)),

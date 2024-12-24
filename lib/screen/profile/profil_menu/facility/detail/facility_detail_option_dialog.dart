@@ -13,12 +13,12 @@ class FacilityDetailOptionDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultAlertDialog(
       title: 'Sudah punya akun kerjasama dengan JNE?'.tr,
-      backButtonTitle: 'Belum'.tr,
+      backButtonTitle: 'Belum Punya'.tr,
       onBack: () {
         Get.off(const FacilityFormInfoScreen(),
             arguments: {'facility_type': facilityType});
       },
-      confirmButtonTitle: 'Sudah'.tr,
+      confirmButtonTitle: 'Sudah Punya'.tr,
       onConfirm: () {
         Get.off(const FacilityFormExistingScreen(),
             arguments: {'facility_type': facilityType});

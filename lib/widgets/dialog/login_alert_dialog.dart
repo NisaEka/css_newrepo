@@ -59,9 +59,7 @@ class LoginAlertDialog extends StatelessWidget {
               radius: 50,
               margin: EdgeInsets.zero,
               isTransparent: true,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? blueJNE
-                  : warningColor,
+              color: primaryColor(context),
               title: 'Daftar'.tr,
               onPressed: () {
                 Get.off(() => const SignUpScreen());
@@ -69,9 +67,7 @@ class LoginAlertDialog extends StatelessWidget {
             ),
             CustomFilledButton(
               radius: 50,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? blueJNE
-                  : warningColor,
+              color: primaryColor(context),
               title: 'Masuk'.tr,
               onPressed: () {
                 Get.off(() => const LoginScreen());

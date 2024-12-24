@@ -30,9 +30,31 @@ class SignupOtpForm extends StatelessWidget {
                     controller: c.state.otpPin,
                     length: 6,
                     focusNode: c.state.focusNode,
-                    defaultPinTheme: c.state.defaultPinTheme,
+                    defaultPinTheme: PinTheme(
+                      width: 56,
+                      height: 56,
+                      textStyle: titleTextStyle.copyWith(
+                          color: secondaryColor(context)),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(width: 1.5, color: greyColor),
+                        ),
+                      ),
+                    ),
                     showCursor: true,
-                    cursor: c.state.cursor,
+                    cursor: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          width: 56,
+                          height: 3,
+                          decoration: BoxDecoration(
+                            color: primaryColor(context),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ],
+                    ),
                     preFilledWidget: c.state.preFilledWidget,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -52,8 +74,9 @@ class SignupOtpForm extends StatelessWidget {
                     child: Text(
                       'Kirim ulang kode'.tr,
                       style: formLabelTextStyle.copyWith(
-                        color:
-                            c.state.remainingSeconds != 0 ? greyColor : blueJNE,
+                        color: c.state.remainingSeconds != 0
+                            ? greyColor
+                            : primaryColor(context),
                       ),
                     ),
                   ),

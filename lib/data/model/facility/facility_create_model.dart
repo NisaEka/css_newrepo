@@ -86,6 +86,10 @@ class FacilityCreateModel {
     _bankInfo?.setAccountImageUrl(path);
   }
 
+  String getBankInfoPath() {
+    return _bankInfo?.accountImageUrl ?? '';
+  }
+
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
 

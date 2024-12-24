@@ -66,10 +66,7 @@ class TransactionCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 4, vertical: 2),
                       decoration: BoxDecoration(
-                        color: color ??
-                            (AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : warningColor),
+                        color: color ?? (primaryColor(context)),
                         borderRadius: BorderRadius.circular(3),
                       ),
                       child: Row(
@@ -161,9 +158,7 @@ class TransactionCard extends StatelessWidget {
                                   Text(
                                     notificationLabel ?? '',
                                     style: TextStyle(
-                                        color: AppConst.isLightTheme(context)
-                                            ? blueJNE
-                                            : warningColor,
+                                        color: primaryColor(context),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 7),
                                   ),
