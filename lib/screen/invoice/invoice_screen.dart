@@ -75,11 +75,7 @@ class InvoiceScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
-                ImageConstant.boxInvoice,
-                height: Get.width / 7,
-                color: iconColor(context)
-            ),
+            Image.asset(ImageConstant.folderIcon),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(

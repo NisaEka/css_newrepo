@@ -40,9 +40,7 @@ class ImageConstant {
   static const String diterima = "assets/icons/sukses diterima.png";
   static const String codIcon = "assets/icons/cod.png";
   static const String boxIcon = "assets/icons/Box.png";
-
-  static const String boxMasihdikamu = "assets/images/noun-packaging-package.png";
-  static const String boxInvoice = "assets/images/noun-shipping-cost-invoice.png";
+  static const String boxPackage = "assets/images/noun-packaging-package.png";
 
   static const String successLottie = "assets/lottie/success_lottie.json";
   static const String failedLottie = "assets/lottie/failed_lottie.json";

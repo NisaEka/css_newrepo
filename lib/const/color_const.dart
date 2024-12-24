@@ -51,10 +51,6 @@ Color textColor(BuildContext context) {
   return AppConst.isLightTheme(context) ? Colors.black : whiteColor;
 }
 
-Color iconColor(BuildContext context) {
-  return AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent;
-}
-
 Color formTextColor(BuildContext context) {
   return AppConst.isLightTheme(context) ? greyDarkColor2 : warningColor;
 }
