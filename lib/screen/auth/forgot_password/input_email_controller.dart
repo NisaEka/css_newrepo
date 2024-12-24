@@ -27,7 +27,7 @@ class InputEmailController extends BaseController {
       await auth.postEmailForgotPassword(email.text).then(
             (value) => value.code == 201
                 ? Get.to(
-                    const ForgotPasswordOTPScreen(),
+                    () => const ForgotPasswordOTPScreen(),
                     arguments: {
                       'email': email.text,
                     },

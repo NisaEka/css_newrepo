@@ -77,7 +77,7 @@ class DetailLaporankuScreen extends StatelessWidget {
                             fontSize: 19,
                             isLoading: false,
                             onPressed: () => Get.to(
-                                const ObrolanLaporankuScreen(),
+                                () => const ObrolanLaporankuScreen(),
                                 arguments: {
                                   "id": data.id,
                                   "ticket": data,
@@ -151,7 +151,7 @@ class DetailLaporankuScreen extends StatelessWidget {
           width: Get.width - 50,
           onPressed: () => data.status != "Closed"
               ? c.updateStatus(data.id ?? '')
-              : Get.to(const ObrolanLaporankuScreen(), arguments: {
+              : Get.to(() => const ObrolanLaporankuScreen(), arguments: {
                   "id": data.id,
                   "ticket": data,
                 }),

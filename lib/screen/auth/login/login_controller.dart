@@ -129,7 +129,7 @@ class LoginController extends BaseController {
                 .then((value) {
               if (value.code == 201) {
                 AppSnackBar.success('Silahkan cek email anda'.tr);
-                Get.to(const SignUpOTPScreen(), arguments: {
+                Get.to(() => const SignUpOTPScreen(), arguments: {
                   'email': state.emailTextField.text,
                   'isActivation': true,
                 });
@@ -239,7 +239,7 @@ class LoginController extends BaseController {
     state.emailTextField.clear();
     state.passwordTextField.clear();
     Get.to(
-      const InputEmailScreen(),
+      () => const InputEmailScreen(),
       arguments: {'isChange': false},
     );
   }
@@ -247,7 +247,7 @@ class LoginController extends BaseController {
   register() {
     state.emailTextField.clear();
     state.passwordTextField.clear();
-    Get.to(const SignUpScreen())?.then(
+    Get.to(() => const SignUpScreen())?.then(
       (_) => state.formKey.currentState?.reset(),
     );
   }

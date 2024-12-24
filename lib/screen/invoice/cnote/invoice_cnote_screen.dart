@@ -46,7 +46,7 @@ class InvoiceCnoteScreen extends StatelessWidget {
                           invoice: item,
                           onTap: (String invoiceNumber) {
                             Get.to(
-                              const InvoiceCnoteDetailScreen(),
+                              () => const InvoiceCnoteDetailScreen(),
                               arguments: {
                                 "invoice_number": controller.invoiceNumber,
                                 "awb": item.awbNumber

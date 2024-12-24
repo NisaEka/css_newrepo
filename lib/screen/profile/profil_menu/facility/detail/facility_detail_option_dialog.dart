@@ -15,12 +15,12 @@ class FacilityDetailOptionDialog extends StatelessWidget {
       title: 'Sudah punya akun kerjasama dengan JNE?'.tr,
       backButtonTitle: 'Belum'.tr,
       onBack: () {
-        Get.off(const FacilityFormInfoScreen(),
+        Get.off(() => const FacilityFormInfoScreen(),
             arguments: {'facility_type': facilityType});
       },
       confirmButtonTitle: 'Sudah'.tr,
       onConfirm: () {
-        Get.off(const FacilityFormExistingScreen(),
+        Get.off(() => const FacilityFormExistingScreen(),
             arguments: {'facility_type': facilityType});
       },
     );

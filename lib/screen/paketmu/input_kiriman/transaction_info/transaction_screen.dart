@@ -35,9 +35,10 @@ class TransactionScreen extends StatelessWidget {
                       TransactionAccountCard(
                         account: controller.state.account,
                         onTap: () => controller.state.dropship == false
-                            ? Get.to(const AkunTransaksiScreen(), arguments: {
-                                "account": controller.state.account,
-                              })?.then(
+                            ? Get.to(() => const AkunTransaksiScreen(),
+                                arguments: {
+                                    "account": controller.state.account,
+                                  })?.then(
                                 (result) => controller.onChangeAccount(result),
                               )
                             : null,

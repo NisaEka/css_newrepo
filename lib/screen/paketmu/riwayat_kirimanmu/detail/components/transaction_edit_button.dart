@@ -43,7 +43,7 @@ class TransactionEditButton extends StatelessWidget {
                           fontSize: 15,
                           isLoading: c.state.isLoading,
                           onPressed: () => c.state.transactionData != null
-                              ? Get.to(const LabelScreen(), arguments: {
+                              ? Get.to(() => const LabelScreen(), arguments: {
                                   'data': c.state.transactionData,
                                 })
                               : null,
@@ -63,7 +63,7 @@ class TransactionEditButton extends StatelessWidget {
                           onPressed: () {
                             if (c.isEdit()) {
                               Get.to(
-                                const InformasiPengirimScreen(),
+                                () => const InformasiPengirimScreen(),
                                 arguments: {
                                   'isEdit': true,
                                   'data': c.state.transactionData,

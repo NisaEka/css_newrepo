@@ -111,7 +111,7 @@ class SignUpController extends BaseController {
         .then((value) {
       if (value.code == 201) {
         AppSnackBar.success('Silahkan cek email anda'.tr);
-        Get.to(const SignUpOTPScreen(), arguments: {
+        Get.to(() => const SignUpOTPScreen(), arguments: {
           'email': state.email.text,
           'isActivation': false,
         });

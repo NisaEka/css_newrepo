@@ -125,7 +125,7 @@ class InvoiceScreen extends StatelessWidget {
               return InvoiceItem(
                 data: item,
                 onTap: (String invoiceNumber) {
-                  Get.to(const InvoiceDetailScreen(),
+                  Get.to(() => const InvoiceDetailScreen(),
                       arguments: {"invoice_number": item.invoiceNoEncoded});
                 },
               );

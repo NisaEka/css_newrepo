@@ -85,7 +85,7 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
     return AggregationMinusItem(
         data: aggregation,
         onTap: () => {
-              Get.to(const AggregationMinusDocScreen(),
+              Get.to(() => const AggregationMinusDocScreen(),
                   arguments: {"doc": aggregation.aggMinDoc})
             });
   }

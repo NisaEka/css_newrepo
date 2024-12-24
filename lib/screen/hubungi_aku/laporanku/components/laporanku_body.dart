@@ -55,7 +55,8 @@ class LaporankuBody extends StatelessWidget {
                           data: item,
                           index: index,
                           onTap: () =>
-                              Get.to(DetailLaporankuScreen(data: item))?.then(
+                              Get.to(() => DetailLaporankuScreen(data: item))
+                                  ?.then(
                             (_) => c.state.pagingController.refresh(),
                           ),
                         ),
