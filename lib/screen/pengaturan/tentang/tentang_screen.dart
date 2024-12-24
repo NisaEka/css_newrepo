@@ -1,5 +1,4 @@
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
@@ -53,9 +52,7 @@ class TentangScreen extends StatelessWidget {
                       ),
                     ),
                     CustomFilledButton(
-                      color: AppConst.isLightTheme(context)
-                          ? blueJNE
-                          : warningColor,
+                      color: primaryColor(context),
                       onPressed: () {
                         Get.to(() => const LisensiScreen());
                       },
