@@ -45,7 +45,7 @@ class LogActivityStepper extends StatelessWidget {
                     color: currentStep == 0
                         ? (AppConst.isLightTheme(context)
                             ? blueJNE
-                            : Colors.lightBlueAccent)
+                            : warningColor)
                         : (AppConst.isLightTheme(context)
                             ? greyColor
                             : greyDarkColor1),
