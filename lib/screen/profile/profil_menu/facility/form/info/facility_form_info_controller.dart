@@ -32,7 +32,6 @@ class FacilityFormInfoController extends BaseController {
 
   final requestData = FacilityCreateModel();
 
-  File? pickedImage;
   String? pickedImageUrl;
 
   bool isLoading = false;
@@ -94,12 +93,11 @@ class FacilityFormInfoController extends BaseController {
 
       if (imageSizeApproved) {
         pickedImageUrl = image.path;
-        pickedImage = File(pickedImageUrl!);
-        update();
       } else {
         _pickImageFailed = true;
-        update();
       }
+
+      update();
     }
   }
 

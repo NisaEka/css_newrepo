@@ -56,7 +56,7 @@ class FacilityImpl extends FacilityRepository {
       final locale = await _getLocale();
       var response = await network.base.get(
         "/facilities/terms",
-        queryParameters: {type: type},
+        queryParameters: {'type': type},
         options: Options(
           headers: {"Accept-Language": locale},
         ),

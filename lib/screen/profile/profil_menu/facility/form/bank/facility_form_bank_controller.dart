@@ -162,10 +162,6 @@ class FacilityFormBankController extends BaseController {
     facilityCreateArgs.setBankInfo(bankInfo);
   }
 
-  FileModel? ktpUrl;
-  FileModel? npwpUrl;
-  FileModel? rekeningUrl;
-
   Future<bool> _uploadFiles() async {
     var fileMap = {
       Constant.keyImageKtp: facilityCreateArgs.getIdCardPath(),
@@ -187,16 +183,24 @@ class FacilityFormBankController extends BaseController {
 
     return await storageRepository.postCcrfFile(fileMap).then((response) {
       if (response.code == HttpStatus.created) {
-        ktpUrl = response.data
-            ?.firstWhere((element) => element.fileType == Constant.keyImageKtp);
-        npwpUrl = response.data?.firstWhere(
+        FileModel? ktpUrl = response.data?.firstWhereOrNull(
+            (element) => element.fileType == Constant.keyImageKtp);
+        FileModel? npwpUrl = response.data?.firstWhereOrNull(
             (element) => element.fileType == Constant.keyImageNpwp);
-        rekeningUrl = response.data?.firstWhere(
+        FileModel? rekeningUrl = response.data?.firstWhereOrNull(
             (element) => element.fileType == Constant.keyImageRekening);
 
-        facilityCreateArgs.setIdCardPath(ktpUrl?.fileUrl ?? '');
-        facilityCreateArgs.setTaxInfoPath(npwpUrl?.fileUrl ?? '');
-        facilityCreateArgs.setBankInfoPath(rekeningUrl?.fileUrl ?? '');
+        if (ktpUrl?.fileUrl != null) {
+          facilityCreateArgs.setIdCardPath(ktpUrl?.fileUrl ?? '');
+        }
+
+        if (npwpUrl?.fileUrl != null) {
+          facilityCreateArgs.setTaxInfoPath(npwpUrl?.fileUrl ?? '');
+        }
+
+        if (rekeningUrl?.fileUrl != null) {
+          facilityCreateArgs.setBankInfoPath(rekeningUrl?.fileUrl ?? '');
+        }
 
         return true;
       } else {
