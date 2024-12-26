@@ -115,7 +115,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                 SizedBox(
                   width: (Get.width - 51) / 1.5,
                   child: Text(
-                      'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zipCode ?? ''}, Telp.${_maskPhoneNumber(data.receiver?.phone ?? '')}\n',
+                      'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zipCode ?? ''}, Telp.${(data.receiver?.phone ?? '').maskPhoneNumber()}\n',
                       style: labelTextStyle),
                 ),
                 const SolidBorder(width: 1, height: 50),
@@ -224,11 +224,11 @@ class StickerMegahubHybrid2 extends StatelessWidget {
     );
   }
 
-  String _maskPhoneNumber(String phoneNumber) {
-    if (phoneNumber.length > 6) {
-      return phoneNumber.substring(0, phoneNumber.length - 6) + '*' * 6;
-    } else {
-      return phoneNumber;
-    }
-  }
+  // String _maskPhoneNumber(String phoneNumber) {
+  //   if (phoneNumber.length > 6) {
+  //     return phoneNumber.substring(0, phoneNumber.length - 6) + '*' * 6;
+  //   } else {
+  //     return phoneNumber;
+  //   }
+  // }
 }

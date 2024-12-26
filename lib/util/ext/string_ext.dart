@@ -142,4 +142,12 @@ extension StringExt on String {
           .take(2)
           .join()
       : '';
+
+  String maskPhoneNumber() {
+    if (length > 6) {
+      return substring(0, length - 6) + '*' * 6;
+    } else {
+      return this;
+    }
+  }
 }

@@ -50,6 +50,7 @@ class TransactionEditButton extends StatelessWidget {
                       ? CustomFilledButton(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 2, vertical: 10),
+                          padding: const EdgeInsets.only(left: 5),
                           color: successColor,
                           isTransparent: true,
                           prefixIcon: Icons.edit_rounded,
@@ -75,6 +76,7 @@ class TransactionEditButton extends StatelessWidget {
                       ? CustomFilledButton(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 2, vertical: 10),
+                          padding: const EdgeInsets.only(left: 5),
                           color: errorColor,
                           isTransparent: true,
                           prefixIcon: Icons.delete_rounded,
@@ -118,6 +120,7 @@ class TransactionEditButton extends StatelessWidget {
                   CustomFilledButton(
                     margin:
                         const EdgeInsets.symmetric(horizontal: 3, vertical: 10),
+                    padding: const EdgeInsets.only(left: 5),
                     color: warningColor,
                     isTransparent: true,
                     prefixIcon: Icons.phone_rounded,

@@ -7,9 +7,7 @@ import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/dashed_border.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class StickerDefault extends StatelessWidget {
@@ -61,6 +59,14 @@ class StickerDefault extends StatelessWidget {
                           height: 80,
                           width: Get.width / 1.7,
                         ),
+                        Text(data.orderId ?? '',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  color: greyDarkColor1,
+                                  fontWeight: regular,
+                                )),
                       ],
                     )
                   ],
@@ -99,7 +105,7 @@ class StickerDefault extends StatelessWidget {
                           Text(data.receiver?.address ?? ''),
                           Text(
                               "\n\nKode Pos : ${data.receiver?.zipCode ?? ''}"),
-                          Text(data.receiver?.phone ?? ''),
+                          Text(data.receiver?.phone?.maskPhoneNumber() ?? ''),
                           Text(
                             data.destination?.destinationCode
                                     ?.substring(0, 3) ??
@@ -158,7 +164,7 @@ class StickerDefault extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             CustomLabelText(
-                              title: "Goods Type:   ",
+                              title: "Goods Type:",
                               value: data.goods?.type ?? '-',
                               titleTextStyle: TextStyle(fontWeight: bold),
                               valueTextStyle: const TextStyle(),
@@ -183,13 +189,49 @@ class StickerDefault extends StatelessWidget {
                       valueTextStyle: const TextStyle(),
                       isHorizontal: true,
                     ),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(width: 10),
-                        Text(data.account?.accountService ?? '',
-                            style: TextStyle(fontSize: 38, fontWeight: bold)),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CustomLabelText(
+                              title: "Packing Kayu:",
+                              value: data.delivery?.woodPackaging == "Y"
+                                  ? "YES"
+                                  : "NO",
+                              titleTextStyle: TextStyle(fontWeight: bold),
+                              valueTextStyle: const TextStyle(),
+                            ),
+                            data.account?.accountService != 'NON COD'
+                                ? const SizedBox(width: 10)
+                                : const SizedBox(width: 85),
+                            Text(
+                                data.account?.accountService == 'COD'
+                                    ? data.account?.accountService ?? ''
+                                    : data.account?.accountService == 'JLC'
+                                        ? 'COD'
+                                        : '',
+                                style:
+                                    TextStyle(fontSize: 38, fontWeight: bold)),
+                          ],
+                        ),
                       ],
                     ),
+                    // CustomLabelText(
+                    //   title: "Packing Kayu:   ",
+                    //   value: data.delivery?.woodPackaging == "Y" ? "YES" : "NO",
+                    //   titleTextStyle: TextStyle(fontWeight: bold),
+                    //   valueTextStyle: const TextStyle(),
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     const SizedBox(width: 10),
+                    //     Text(data.account?.accountService ?? '',
+                    //         style: TextStyle(fontSize: 38, fontWeight: bold)),
+                    //   ],
+                    // ),
                   ],
                 ),
                 Row(
