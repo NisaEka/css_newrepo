@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
@@ -33,7 +32,6 @@ class FacilityFormReturnController extends BaseController {
 
   bool sameWithOwner = false;
 
-  File? pickedImage;
   String? pickedImageUrl;
 
   bool isLoading = false;
@@ -58,6 +56,14 @@ class FacilityFormReturnController extends BaseController {
   bool _isOnline = true;
 
   bool get isOnline => _isOnline;
+
+  bool _npwpNumberFailed = false;
+  bool get npwpNumberFailed => _npwpNumberFailed;
+
+  set npwpNumberFailed(bool value) {
+    _npwpNumberFailed = value;
+    update();
+  }
 
   @override
   void onInit() {
@@ -121,17 +127,21 @@ class FacilityFormReturnController extends BaseController {
 
       if (imageSizeApproved) {
         pickedImageUrl = image.path;
-        pickedImage = File(pickedImageUrl!);
-        update();
       } else {
         _pickImageFailed = true;
-        update();
       }
+
+      update();
     }
   }
 
   void onRefreshPickImageState() {
     _pickImageFailed = false;
+    update();
+  }
+
+  void onRefreshNpwpNumberState() {
+    _npwpNumberFailed = false;
     update();
   }
 

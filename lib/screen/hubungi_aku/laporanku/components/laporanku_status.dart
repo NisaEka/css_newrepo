@@ -11,212 +11,158 @@ class StatusLaporanku extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LaporankuController>(
-        init: LaporankuController(),
-        builder: (c) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 15),
-            decoration: BoxDecoration(
-              color: AppConst.isLightTheme(context) ? blueJNE : greyColor,
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(10),
+      init: LaporankuController(),
+      builder: (c) {
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: iconColor(context),
+              width: 0.5,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    c.state.status = '';
-                    c.state.selectedStatus = 0;
-                    c.update();
-                    c.state.pagingController.refresh();
-                  },
-                  child: Container(
-                    width: Get.width / 4.5,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: c.state.selectedStatus == 0
-                          ? primaryColor(context)
-                          : AppConst.isLightTheme(context)
-                              ? whiteColor
-                              : bgDarkColor,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        bottomLeft: Radius.circular(8),
-                      ),
-                      // border: const Border(
-                      //   right: BorderSide(color: greyDarkColor1),
-                      // ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          c.state.total.toString(),
-                          style: listTitleTextStyle.copyWith(
-                            color: c.state.selectedStatus == 0
-                                ? whiteColor
-                                : AppConst.isLightTheme(context)
-                                    ? blueJNE
-                                    : whiteColor,
-                          ),
-                        ),
-                        Text(
-                          'Semua'.tr,
-                          style: sublistTitleTextStyle.copyWith(
-                            color: c.state.selectedStatus == 0
-                                ? whiteColor
-                                : AppConst.isLightTheme(context)
-                                    ? greyColor
-                                    : Colors.white,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    c.state.selectedStatus = 3;
-                    c.state.status = 'On Process';
-                    c.update();
-                    c.state.pagingController.refresh();
-                  },
-                  child: Container(
-                    width: Get.width / 4,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: c.state.selectedStatus == 3
-                          ? primaryColor(context)
-                          : AppConst.isLightTheme(context)
-                              ? whiteColor
-                              : bgDarkColor,
-                      // border: const Border(
-                      //   right: BorderSide(color: greyDarkColor1),
-                      //   left: BorderSide(color: greyDarkColor1),
-                      // ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          c.state.waiting.toString(),
-                          style: listTitleTextStyle.copyWith(
-                            color: c.state.selectedStatus == 3
-                                ? whiteColor
-                                : AppConst.isLightTheme(context)
-                                    ? blueJNE
-                                    : whiteColor,
-                          ),
-                        ),
-                        Text(
-                          'Belum Diproses'.tr,
-                          style: sublistTitleTextStyle.copyWith(
-                            color: c.state.selectedStatus == 3
-                                ? whiteColor
-                                : AppConst.isLightTheme(context)
-                                    ? greyColor
-                                    : whiteColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    c.state.selectedStatus = 1;
-                    c.state.status = 'Reply CS';
-                    c.update();
-                    c.state.pagingController.refresh();
-                  },
-                  child: Container(
-                    width: Get.width / 4,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: c.state.selectedStatus == 1
-                          ? primaryColor(context)
-                          : AppConst.isLightTheme(context)
-                              ? whiteColor
-                              : bgDarkColor,
-                      // border: const Border(
-                      //   right: BorderSide(color: greyDarkColor1),
-                      //   left: BorderSide(color: greyDarkColor1),
-                      // ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          c.state.onProcess.toString(),
-                          style: listTitleTextStyle.copyWith(
-                            color: c.state.selectedStatus == 1
-                                ? whiteColor
-                                : AppConst.isLightTheme(context)
-                                    ? blueJNE
-                                    : whiteColor,
-                          ),
-                        ),
-                        Text(
-                          'Masih Diproses'.tr,
-                          style: sublistTitleTextStyle.copyWith(
-                            color: c.state.selectedStatus == 1
-                                ? whiteColor
-                                : AppConst.isLightTheme(context)
-                                    ? greyColor
-                                    : whiteColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    c.state.selectedStatus = 2;
-                    c.state.status = 'Closed';
-                    c.update();
-                    c.state.pagingController.refresh();
-                  },
-                  child: Container(
-                    width: Get.width / 6,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: c.state.selectedStatus == 2
-                          ? primaryColor(context)
-                          : AppConst.isLightTheme(context)
-                              ? whiteColor
-                              : bgDarkColor,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          c.state.closed.toString(),
-                          style: listTitleTextStyle.copyWith(
-                            color: c.state.selectedStatus == 2
-                                ? whiteColor
-                                : AppConst.isLightTheme(context)
-                                    ? blueJNE
-                                    : whiteColor,
-                          ),
-                        ),
-                        Text(
-                          'Selesai'.tr,
-                          style: sublistTitleTextStyle.copyWith(
-                            color: c.state.selectedStatus == 2
-                                ? whiteColor
-                                : AppConst.isLightTheme(context)
-                                    ? greyColor
-                                    : whiteColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            borderRadius: const BorderRadius.horizontal(
+              left: Radius.circular(8),
+              right: Radius.circular(8),
             ),
-          );
-        });
+          ),
+          margin:
+              EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.04),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _statusCard(
+                context: context,
+                controller: c,
+                label: 'Semua'.tr,
+                count: c.state.total,
+                selected: c.state.selectedStatus == 0,
+                onTap: () {
+                  c.state.status = '';
+                  c.state.selectedStatus = 0;
+                  c.update();
+                  c.state.pagingController.refresh();
+                },
+                isFirst: true,
+                isLast: false,
+              ),
+              _statusCard(
+                context: context,
+                controller: c,
+                label: 'Belum Diproses'.tr,
+                count: c.state.waiting,
+                selected: c.state.selectedStatus == 3,
+                onTap: () {
+                  c.state.selectedStatus = 3;
+                  c.state.status = 'On Process';
+                  c.update();
+                  c.state.pagingController.refresh();
+                },
+                isFirst: false,
+                isLast: false,
+              ),
+              _statusCard(
+                context: context,
+                controller: c,
+                label: 'Masih Diproses'.tr,
+                count: c.state.onProcess,
+                selected: c.state.selectedStatus == 1,
+                onTap: () {
+                  c.state.selectedStatus = 1;
+                  c.state.status = 'Reply CS';
+                  c.update();
+                  c.state.pagingController.refresh();
+                },
+                isFirst: false,
+                isLast: false,
+              ),
+              _statusCard(
+                context: context,
+                controller: c,
+                label: 'Selesai'.tr,
+                count: c.state.closed,
+                selected: c.state.selectedStatus == 2,
+                onTap: () {
+                  c.state.selectedStatus = 2;
+                  c.state.status = 'Closed';
+                  c.update();
+                  c.state.pagingController.refresh();
+                },
+                isFirst: false,
+                isLast: true,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _statusCard({
+    required BuildContext context,
+    required LaporankuController controller,
+    required String label,
+    required int count,
+    required bool selected,
+    required VoidCallback onTap,
+    required bool isFirst,
+    required bool isLast,
+  }) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 70,
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(
+            vertical: MediaQuery.of(context).size.height * 0.01,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: iconColor(context),
+              width: 0.5,
+            ),
+            color: selected
+                ? primaryColor(context)
+                : AppConst.isLightTheme(context)
+                    ? whiteColor
+                    : bgDarkColor,
+            borderRadius: BorderRadius.horizontal(
+              left: isFirst ? const Radius.circular(8) : Radius.zero,
+              right: isLast ? const Radius.circular(8) : Radius.zero,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                count.toString(),
+                style: listTitleTextStyle.copyWith(
+                  color: selected
+                      ? whiteColor
+                      : AppConst.isLightTheme(context)
+                          ? blueJNE
+                          : whiteColor,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 1),
+                child: Text(
+                  label,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: sublistTitleTextStyle.copyWith(
+                    color: selected
+                        ? whiteColor
+                        : AppConst.isLightTheme(context)
+                            ? greyColor
+                            : whiteColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

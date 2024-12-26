@@ -11,7 +11,7 @@ import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/items/text_row_item.dart';
+import 'package:css_mobile/widgets/items/text_row_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -106,26 +106,30 @@ class DetailLaporankuScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  TextRowItem(
+                  TextRowWidget(
                     title: "Tanggal Laporan".tr,
                     value: data.createdDate?.toShortDateTimeFormat() ?? '-',
+                    isLoading: false,
                   ),
-                  TextRowItem(
+                  TextRowWidget(
                     title: "Update Terakhir".tr,
                     value: data.updatedDate?.toShortDateTimeFormat() ?? '-',
+                    isLoading: false,
                   ),
-                  TextRowItem(
+                  TextRowWidget(
                     title: "Prioritas".tr,
                     value: data.priority == "Y" ? 'Ya'.tr : 'Tidak'.tr,
+                    isLoading: false,
                   ),
-                  TextRowItem(
+                  TextRowWidget(
                     title: "Status Laporan".tr,
                     value: data.status == "Closed"
                         ? "Selesai".tr
                         : data.status == "Reply CS"
                             ? "Masih Diproses".tr
                             : "Belum Diproses".tr,
-                    isValueBold: true,
+                    isLoading: false,
+                    valueStyle: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 10),
                   const Divider(color: greyColor),
