@@ -15,7 +15,7 @@ class PantauStatusButton extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-              color: blueJNE,
+              color: primaryColor(context),
               border: Border.all(),
               borderRadius: BorderRadius.circular(8),
             ),
@@ -34,8 +34,9 @@ class PantauStatusButton extends StatelessWidget {
                     width: Get.width * 0.28,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color:
-                          c.state.selectedKiriman == 0 ? blueJNE : whiteColor,
+                      color: c.state.selectedKiriman == 0
+                          ? primaryColor(context)
+                          : whiteColor,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(8),
                         bottomLeft: Radius.circular(8),
@@ -57,7 +58,7 @@ class PantauStatusButton extends StatelessWidget {
                             fontSize: 10,
                             color: c.state.selectedKiriman == 0
                                 ? whiteColor
-                                : blueJNE,
+                                : primaryColor(context),
                           ),
                         ),
                         Text(
@@ -89,8 +90,9 @@ class PantauStatusButton extends StatelessWidget {
                     width: Get.width * 0.28,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color:
-                          c.state.selectedKiriman == 1 ? blueJNE : whiteColor,
+                      color: c.state.selectedKiriman == 1
+                          ? primaryColor(context)
+                          : whiteColor,
                       // border: const Border(
                       //   right: BorderSide(color: greyDarkColor1),
                       //   left: BorderSide(color: greyDarkColor1),
@@ -109,7 +111,7 @@ class PantauStatusButton extends StatelessWidget {
                             fontSize: 10,
                             color: c.state.selectedKiriman == 1
                                 ? whiteColor
-                                : blueJNE,
+                                : primaryColor(context),
                           ),
                         ),
                         Text(
@@ -142,8 +144,9 @@ class PantauStatusButton extends StatelessWidget {
                     width: Get.width * 0.28,
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color:
-                          c.state.selectedKiriman == 2 ? blueJNE : whiteColor,
+                      color: c.state.selectedKiriman == 2
+                          ? primaryColor(context)
+                          : whiteColor,
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(8),
                         bottomRight: Radius.circular(8),
@@ -165,7 +168,7 @@ class PantauStatusButton extends StatelessWidget {
                             fontSize: 10,
                             color: c.state.selectedKiriman == 2
                                 ? whiteColor
-                                : blueJNE,
+                                : primaryColor(context),
                           ),
                         ),
                         Text(

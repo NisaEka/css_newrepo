@@ -1,5 +1,4 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/snackbar.dart';
@@ -181,14 +180,14 @@ class PantauPaketmuFilter extends HookWidget {
                                               .state.selectedStatusKiriman ==
                                           controller.state
                                               .listStatusKiriman[adjustedIndex]
-                                      ? blueJNE
+                                      ? primaryColor(context)
                                       : whiteColor,
                                   border: Border.all(
                                     color: controller
                                                 .state.selectedStatusKiriman !=
                                             controller.state.listStatusKiriman[
                                                 adjustedIndex]
-                                        ? blueJNE
+                                        ? primaryColor(context)
                                         : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
@@ -197,14 +196,17 @@ class PantauPaketmuFilter extends HookWidget {
                                   controller.state
                                       .listStatusKiriman[adjustedIndex].tr,
                                   textAlign: TextAlign.center,
-                                  style: listTitleTextStyle.copyWith(
-                                      color: controller.state
-                                                  .selectedStatusKiriman ==
-                                              controller
-                                                      .state.listStatusKiriman[
-                                                  adjustedIndex]
-                                          ? whiteColor
-                                          : blueJNE),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                          color: controller.state
+                                                      .selectedStatusKiriman ==
+                                                  controller.state
+                                                          .listStatusKiriman[
+                                                      adjustedIndex]
+                                              ? whiteColor
+                                              : primaryColor(context)),
                                 ),
                               ),
                             );
@@ -231,7 +233,14 @@ class PantauPaketmuFilter extends HookWidget {
                                   .map(
                                     (e) => DropdownMenuItem(
                                       value: e,
-                                      child: Text(e.toUpperCase()),
+                                      child: Text(
+                                        e.toUpperCase(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                color: formTextColor(context)),
+                                      ),
                                     ),
                                   )
                                   .toList(),
