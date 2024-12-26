@@ -209,7 +209,7 @@ class PantauPaketmuController extends BaseController {
     state.selectedStatusKiriman = "Total Kiriman";
     state.selectedTipeKiriman = "cod";
     state.tipeKiriman.value = 0;
-    state.isFiltered = false;
+    state.isFiltered = true;
     state.searchField.clear();
     state.dateFilter.value = "3";
     selectDateFilter(3);

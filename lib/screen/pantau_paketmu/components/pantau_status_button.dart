@@ -58,7 +58,7 @@ class PantauStatusButton extends StatelessWidget {
                             fontSize: 10,
                             color: c.state.selectedKiriman == 0
                                 ? whiteColor
-                                : blueJNE,
+                                : primaryColor(context),
                           ),
                         ),
                         Text(
@@ -111,7 +111,7 @@ class PantauStatusButton extends StatelessWidget {
                             fontSize: 10,
                             color: c.state.selectedKiriman == 1
                                 ? whiteColor
-                                : blueJNE,
+                                : primaryColor(context),
                           ),
                         ),
                         Text(
@@ -168,7 +168,7 @@ class PantauStatusButton extends StatelessWidget {
                             fontSize: 10,
                             color: c.state.selectedKiriman == 2
                                 ? whiteColor
-                                : blueJNE,
+                                : primaryColor(context),
                           ),
                         ),
                         Text(
