@@ -11,7 +11,7 @@ class LaporankuState {
       PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
-  bool isFiltered = false;
+  bool isFiltered = true;
   bool isLoading = false;
   DateTime? startDate;
   DateTime? endDate;

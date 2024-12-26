@@ -76,8 +76,7 @@ class ProfilRepositoryImpl extends ProfilRepository {
   Future<BaseResponse> createProfileCcrf(FacilityCreateModel data) async {
     //todo:implement create profile ccrf
     try {
-      var response =
-          await network.base.post('/profile/ccrf', data: data.toJson());
+      var response = await network.base.post('/me/ccrf', data: data.toJson());
       return BaseResponse.fromJson(
         response.data,
         (json) => null,
@@ -96,8 +95,8 @@ class ProfilRepositoryImpl extends ProfilRepository {
       FacilityCreateExistingModel data) async {
     //todo: implement create profile ccrf existing
     try {
-      var response = await network.base
-          .post('/profile/ccrf/existing', data: data.toJson());
+      var response =
+          await network.base.post('/me/ccrf/existing', data: data.toJson());
       return BaseResponse.fromJson(
         response.data,
         (json) => null,

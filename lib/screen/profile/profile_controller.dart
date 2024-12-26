@@ -40,7 +40,7 @@ class ProfileController extends BaseController {
           .postEmailForgotPassword(state.basicProfile?.email ?? '')
           .then((value) => value.code == 201
               ? Get.to(
-                  const ForgotPasswordOTPScreen(),
+                  () => const ForgotPasswordOTPScreen(),
                   arguments: {
                     'email': state.basicProfile?.email ?? '',
                     'isChange': true,
@@ -117,7 +117,7 @@ class ProfileController extends BaseController {
               infoText:
                   "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas"
                       .tr,
-              nextButton: () => Get.off(const FacilityScreen()),
+              nextButton: () => Get.off(() => const FacilityScreen()),
             ),
           );
   }

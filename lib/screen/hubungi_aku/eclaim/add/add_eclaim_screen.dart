@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/add/add_eclaim_controller.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/add/image_preview_screen.dart';
@@ -34,8 +35,8 @@ class AddEclaimScreen extends StatelessWidget {
             ],
           ),
           bottomNavigationBar: Container(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-            color: Theme.of(context).colorScheme.onSurface,
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+            color: AppConst.isLightTheme(context) ? whiteColor : Colors.black,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -43,7 +44,7 @@ class AddEclaimScreen extends StatelessWidget {
                   child: CustomFilledButton(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 15),
-                    color: redJNE,
+                    color: errorColor,
                     title: 'Batal'.tr,
                     onPressed: () {
                       Get.back();
@@ -55,7 +56,7 @@ class AddEclaimScreen extends StatelessWidget {
                   child: CustomFilledButton(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 15),
-                    color: blueJNE,
+                    color: primaryColor(context),
                     title: 'Ajukan'.tr,
                     onPressed: () =>
                         controller.formKey.currentState?.validate() == true
@@ -112,7 +113,7 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
                     decoration: BoxDecoration(
-                      color: Colors.orange,
+                      color: primaryColor(context),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -220,7 +221,8 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
                         top: -10,
                         right: -10,
                         child: IconButton(
-                          icon: const Icon(Icons.close, color: Colors.red),
+                          icon:
+                              Icon(Icons.close, color: secondaryColor(context)),
                           onPressed: () => c.removeFile(),
                         ),
                       ),
@@ -229,6 +231,7 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
                 ),
             ],
           ),
+          const SizedBox(height: 20),
         ],
       ),
     ),

@@ -4,9 +4,10 @@ import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
+import 'package:css_mobile/widgets/items/show_image_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:photo_view/photo_view.dart';
+// import 'package:photo_view/photo_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsItem extends StatelessWidget {
@@ -38,7 +39,7 @@ class NewsItem extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () => news == null
-                    ? _showImagePreview(
+                    ? showImagePreview(
                         context,
                         news?.thumbnail ?? promo?.picture ?? '',
                       )
@@ -102,37 +103,37 @@ class NewsItem extends StatelessWidget {
     } else {}
   }
 
-  void _showImagePreview(BuildContext context, String imageUrl) {
-    if (imageUrl.isNotEmpty) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => Scaffold(
-            backgroundColor: Colors.black,
-            appBar: AppBar(
-              backgroundColor: Colors.black,
-              elevation: 0,
-              automaticallyImplyLeading: false,
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.close, color: whiteColor),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            ),
-            body: Center(
-              child: PhotoView(
-                imageProvider: CachedNetworkImageProvider(imageUrl),
-                backgroundDecoration: const BoxDecoration(
-                  color: Colors.black,
-                ),
-                minScale: PhotoViewComputedScale.contained,
-                maxScale: PhotoViewComputedScale.covered * 3.0,
-                initialScale: PhotoViewComputedScale.contained,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-  }
+  // void _showImagePreview(BuildContext context, String imageUrl) {
+  //   if (imageUrl.isNotEmpty) {
+  //     Navigator.of(context).push(
+  //       MaterialPageRoute(
+  //         builder: (_) => Scaffold(
+  //           backgroundColor: Colors.black,
+  //           appBar: AppBar(
+  //             backgroundColor: Colors.black,
+  //             elevation: 0,
+  //             automaticallyImplyLeading: false,
+  //             actions: [
+  //               IconButton(
+  //                 icon: const Icon(Icons.close, color: whiteColor),
+  //                 onPressed: () => Navigator.of(context).pop(),
+  //               ),
+  //             ],
+  //           ),
+  //           body: Center(
+  //             child: PhotoView(
+  //               imageProvider: CachedNetworkImageProvider(imageUrl),
+  //               backgroundDecoration: const BoxDecoration(
+  //                 color: Colors.black,
+  //               ),
+  //               minScale: PhotoViewComputedScale.contained,
+  //               maxScale: PhotoViewComputedScale.covered * 3.0,
+  //               initialScale: PhotoViewComputedScale.contained,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   }
+  // }
 }

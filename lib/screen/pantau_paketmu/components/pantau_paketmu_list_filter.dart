@@ -181,14 +181,14 @@ class PantauPaketmuListFilter extends HookWidget {
                                               .state.selectedStatusKiriman ==
                                           controller.state
                                               .listStatusKiriman[adjustedIndex]
-                                      ? blueJNE
+                                      ? primaryColor(context)
                                       : whiteColor,
                                   border: Border.all(
                                     color: controller
                                                 .state.selectedStatusKiriman !=
                                             controller.state.listStatusKiriman[
                                                 adjustedIndex]
-                                        ? blueJNE
+                                        ? primaryColor(context)
                                         : whiteColor,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
@@ -204,7 +204,7 @@ class PantauPaketmuListFilter extends HookWidget {
                                                       .state.listStatusKiriman[
                                                   adjustedIndex]
                                           ? whiteColor
-                                          : blueJNE),
+                                          : primaryColor(context)),
                                 ),
                               ),
                             );
@@ -231,7 +231,14 @@ class PantauPaketmuListFilter extends HookWidget {
                                   .map(
                                     (e) => DropdownMenuItem(
                                       value: e,
-                                      child: Text(e.toUpperCase()),
+                                      child: Text(
+                                        e.toUpperCase(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                color: formTextColor(context)),
+                                      ),
                                     ),
                                   )
                                   .toList(),

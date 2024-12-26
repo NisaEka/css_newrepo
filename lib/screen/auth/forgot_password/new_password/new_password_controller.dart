@@ -38,7 +38,7 @@ class NewPasswordController extends BaseController {
               InputNewPasswordModel(password: newPW.text, token: token))
           .then((value) => value.code == 201
               ? Get.to(
-                  SuccessScreen(
+                  () => SuccessScreen(
                     message: "Password berhasil diperbaharui".tr,
                     thirdButtonTitle: isChange ?? false
                         ? "Kembali ke Beranda".tr

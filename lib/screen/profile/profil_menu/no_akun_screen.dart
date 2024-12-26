@@ -54,9 +54,7 @@ class NoAkunScreen extends StatelessWidget {
         },
         icon: Icon(
           Icons.info_rounded,
-          color: AppConst.isLightTheme(context)
-              ? redJNE
-              : warningColor,
+          color: AppConst.isLightTheme(context) ? redJNE : warningColor,
         ));
   }
 
@@ -74,9 +72,7 @@ class NoAkunScreen extends StatelessWidget {
               Text(
                 'Log Aktivitas'.tr,
                 style: appTitleTextStyle.copyWith(
-                  color: AppConst.isLightTheme(context)
-                      ? blueJNE
-                      : warningColor,
+                  color: primaryColor(context),
                 ),
               ),
               IconButton(

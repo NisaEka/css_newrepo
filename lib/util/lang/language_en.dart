@@ -189,6 +189,8 @@ class LanguageEN {
       "Jenis NPWP": "TaxID Type",
       "Nama NPWP": "TaxID Name",
       "Nomor NPWP": "TaxID Number",
+      "Alamat NPWP": "TaxID Address",
+      "Pilih Gambar NPWP": "Select TaxID Image",
       "Lampiran Dokumen KTP": "ID Card Document",
       "Lampiran Dokumen NPWP": "Tax Document",
       "Lampiran Dokumen Rekening": "Bank Account Document",
@@ -445,7 +447,61 @@ class LanguageEN {
       "Nomor resi maksimal 16 karakter": "Airwaybill maximum 16 characters",
       "Koli": "Packages",
       "Pastikan semua aktvitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile":
-          "Make sure all activities are completed. Thank you for using CSS Mobile"
+          "Make sure all activities are completed. Thank you for using CSS Mobile",
+      "Periksa kembali file gambar KTP. File gambar tidak boleh kosong atau lebih dari 2MB":
+          "Check back the ID card image file. Image files must not be empty or more than 2MB",
+      "Periksa kembali file gambar NPWP. File gambar tidak boleh kosong atau lebih dari 2MB":
+          "Check back the NPWP image file. Image files must not be empty or more than 2MB",
+      "Periksa kembali file gambar rekening. File gambar tidak boleh kosong atau lebih dari 2MB":
+          "Check back the account image file. Image files must not be empty or more than 2MB",
+      "Upgrade akunmu untuk menggunakan fasilitas lebih banyak":
+          "Upgrade your account to use more facilities",
+      "Permintaan upgrade akunmu sedang dalam proses":
+          "Your account upgrade request is in progress",
+      "Gunakan": "Use",
+      "Mingguan": "Weekly",
+      "Bulanan": "Monthly",
+      "Sudah punya akun kerjasama dengan JNE?":
+          "Already have a JNE partnership account?",
+      "Belum Punya": "Don't have",
+      "Sudah Punya": "Already have",
+      "Upgrade Profil Kamu": "Upgrade Your Profile",
+      "Nama": "Name",
+      "Nama customer yang terdaftar": "Registered customer name",
+      "Alamat email terdaftar saat kerjasama":
+          "Email address registered during partnership",
+      "Nomor telepon yang terdaftar di akun JNE":
+          "Phone number registered in JNE account",
+      "Simpan": "Save",
+      "Terdapat input yang tidak valid": "There is invalid input",
+      "Periksa kembali data yang telah anda masukkan.":
+          "Check again the data you entered.",
+      "Gagal mengambil gambar.": "Failed to select image",
+      "Data Pemohon": "Applicant Data",
+      "No Identitas / KTP": "ID Card Number",
+      "Pilih Gambar Identitas / KTP": "Select ID Card Image",
+      "Kota / Kecamatan / Kelurahan / Kode Pos":
+          "City / District / Sub District / Zip Code",
+      "No. Telepon": "Phone Number",
+      "No. WhatsApp": "WhatsApp Number",
+      "Masukan minimal 3 karakter": "Enter at least 3 characters",
+      "Ceklis bila informasi pengembalian barang sama dengan data pemohon":
+          "Check if the return information is the same as the applicant's data",
+      "Gagal menyimpan data": "Failed to save data",
+      "Pastikan input data sudah benar": "Make sure the input data is correct",
+      "Gagal menyimpan file": "Failed to save file",
+      "Pastikan file yang diupload sudah benar":
+          "Make sure the uploaded file is correct",
+      "Pilih Nama Bank": "Select Bank Name",
+      "Masukkan Nama Bank": "Enter Bank Name",
+      "Nomor Rekening": "Account Number",
+      "Pilih Gambar Buku Rekening": "Select Bank Book Image",
+      "Saya Setuju dengan ": "I Agree with ",
+      "Syarat & Ketentuan": "Terms & Conditions",
+      "Syarat dan Ketentuan": "Terms and Conditions",
+      " Pengiriman JNE": " JNE Shipping",
+      "Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!":
+          "Your profile upgrade has been submitted\n Please wait for approval from the JNE Team!",
     };
   }
 }

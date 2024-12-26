@@ -67,7 +67,7 @@ class DraftTransaksiScreen extends StatelessWidget {
 
   Widget _bodyContent(DraftTransaksiController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Column(
         children: [
           CustomSearchField(

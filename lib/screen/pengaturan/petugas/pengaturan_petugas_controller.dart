@@ -65,7 +65,7 @@ class PengaturanPetugasController extends BaseController {
   }
 
   void onAdd() {
-    Get.to(const TambahPetugasScreen(), arguments: {
+    Get.to(() => const TambahPetugasScreen(), arguments: {
       'isEdit': false,
     })?.then((value) => pagingController.refresh());
   }

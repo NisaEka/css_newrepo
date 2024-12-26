@@ -77,6 +77,7 @@ class CustomLabelText extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Text(
                       title,
+                      overflow: TextOverflow.clip,
                       style: titleTextStyle ??
                           subTitleTextStyle.copyWith(
                             color: fontColor ??

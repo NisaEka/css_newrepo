@@ -86,7 +86,7 @@ class PantauPaketmuState extends GetxController {
   int noncod = 0;
   int codOngkir = 0;
   bool isLoading = false;
-  bool isFiltered = false;
+  bool isFiltered = true;
   List<Map<String, dynamic>>? transDate;
   List<PantauPaketmuCountModel> selectedPantauPaketmu = [];
   List<PantauPaketmuListModel> selectedTransaction = [];

@@ -44,14 +44,16 @@ class StorageImpl extends StorageRepository {
       files.forEach((key, value) {
         String fileExtension = value.split('.').last.toLowerCase();
         String mimeType = _getMimeType(fileExtension);
-        formData.files.add(MapEntry(
-            key,
-            MultipartFile.fromFileSync(value,
-                filename: value.split('/').last,
-                contentType: DioMediaType.parse(mimeType))));
+        if (!value.contains("http")) {
+          formData.files.add(MapEntry(
+              key,
+              MultipartFile.fromFileSync(value,
+                  filename: value.split('/').last,
+                  contentType: DioMediaType.parse(mimeType))));
+        }
       });
 
-      var response = await network.base.post("/storage/ccrf",
+      var response = await network.base.post("/uploads/ccrf",
           data: formData,
           options: Options(headers: {"Content-Type": "multipart/form-data"}));
       return BaseResponse<List<FileModel>>.fromJson(

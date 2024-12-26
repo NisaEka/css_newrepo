@@ -29,7 +29,7 @@ class LoadingDialog extends StatelessWidget {
           width: size ?? 100,
           child: CircularProgressIndicator.adaptive(
             strokeWidth: size != null ? 8 : 20,
-            backgroundColor: secondaryColor(context),
+            backgroundColor: redJNE,
           ),
         ),
       ),

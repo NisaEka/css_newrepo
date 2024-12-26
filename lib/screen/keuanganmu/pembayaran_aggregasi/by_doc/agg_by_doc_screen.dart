@@ -12,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
-import '../../../../const/app_const.dart';
 import '../../../../const/textstyle.dart';
 
 class AggByDocScreen extends StatelessWidget {
@@ -46,9 +44,10 @@ class AggByDocScreen extends StatelessWidget {
           // ),
           Text(
             c.aggregationID,
-            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
-                fontWeight: bold),
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge!
+                .copyWith(color: primaryColor(context), fontWeight: bold),
           ),
           Text(
             "Document No".tr,
@@ -61,9 +60,7 @@ class AggByDocScreen extends StatelessWidget {
             hintText: 'Cari Data Agregasi'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? infoColor
-                  : blueJNE,
+              color: fifthColor(context),
             ),
             onChanged: (value) {
               c.searchField.text = value;
@@ -89,7 +86,7 @@ class AggByDocScreen extends StatelessWidget {
                     det: item,
                     isShowDetail: false,
                     onTap: () => Get.to(
-                      const AggByCnoteScreen(),
+                      () => const AggByCnoteScreen(),
                       arguments: {
                         "cnote_data": item,
                       },

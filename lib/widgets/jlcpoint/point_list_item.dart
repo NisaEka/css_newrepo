@@ -37,7 +37,7 @@ class PointListItem extends StatelessWidget {
     return Shimmer(
       isLoading: isLoading,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -52,19 +52,14 @@ class PointListItem extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        border:
-                            Border.all(color: primaryColor(context), width: 2),
-                      ),
                       child: Icon(
-                        Icons.playlist_add_check_rounded,
+                        Icons.check_rounded,
                         color: primaryColor(context),
                       ),
                     ),
                     Container(
                       height: isLoading ? 20 : null,
-                      width: isLoading ? Get.width / 2 : null,
+                      width: isLoading ? Get.width / 4 : null,
                       color: isLoading ? greyColor : null,
                       child: Text(
                           style: Theme.of(context).textTheme.titleSmall,
@@ -102,7 +97,7 @@ class PointListItem extends StatelessWidget {
                       children: [
                         Container(
                           height: isLoading ? 20 : null,
-                          width: isLoading ? Get.width / 2 : null,
+                          width: isLoading ? Get.width / 4 : null,
                           color: isLoading ? greyColor : null,
                           child: Row(
                             children: [

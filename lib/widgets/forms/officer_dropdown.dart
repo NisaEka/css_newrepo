@@ -88,7 +88,7 @@ class _OriginDropdownState extends State<OfficerDropdown> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
-                  e.name.toString(),
+                  e.name ?? ''.toString(),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: textColor(context),
                       ),

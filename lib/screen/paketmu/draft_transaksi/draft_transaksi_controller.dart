@@ -260,7 +260,7 @@ class DraftTransaksiController extends BaseController {
 
   void navigateToDraftTransaksi() {
     Get.to(
-      const DraftTransaksiScreen(),
+      () => const DraftTransaksiScreen(),
       arguments: {'fromMenu': true},
     );
   }
@@ -268,7 +268,7 @@ class DraftTransaksiController extends BaseController {
 // Jika dari layar inputan transaksi
   void navigateFromInputTransaksi() {
     Get.to(
-      const DraftTransaksiScreen(),
+      () => const DraftTransaksiScreen(),
       arguments: {'fromMenu': false},
     );
   }

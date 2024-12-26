@@ -58,7 +58,7 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
     });
 
     if (cekResi) {
-      Get.off(const LacakKirimanScreen(), arguments: {});
+      Get.off(() => const LacakKirimanScreen(), arguments: {});
     } else {
       Get.back();
     }
@@ -66,7 +66,8 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
 
   void _handleScanResult(String barcode) {
     if (cekResi) {
-      Get.off(const LacakKirimanScreen(), arguments: {'nomor_resi': barcode});
+      Get.off(() => const LacakKirimanScreen(),
+          arguments: {'nomor_resi': barcode});
     } else {
       Get.back(result: barcode);
     }

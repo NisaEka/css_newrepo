@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';

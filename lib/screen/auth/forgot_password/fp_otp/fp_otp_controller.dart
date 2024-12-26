@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/screen/auth/forgot_password/new_password/new_password_screen.dart';
 import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_screen.dart';
@@ -10,7 +8,6 @@ import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinput/pinput.dart';
 
 class ForgotPasswordOTPController extends BaseController {
   String email = Get.arguments['email'];
@@ -20,16 +17,6 @@ class ForgotPasswordOTPController extends BaseController {
   final formKey = GlobalKey<FormState>();
   final otpPin = TextEditingController();
   final focusNode = FocusNode();
-  final defaultPinTheme = PinTheme(
-    width: 56,
-    height: 56,
-    textStyle: titleTextStyle.copyWith(color: redJNE),
-    decoration: const BoxDecoration(
-      border: Border(
-        bottom: BorderSide(width: 1.5, color: greyColor),
-      ),
-    ),
-  );
 
   final cursor = Column(
     mainAxisAlignment: MainAxisAlignment.end,
@@ -118,7 +105,7 @@ class ForgotPasswordOTPController extends BaseController {
           .then((value) {
         if (value.code == 201) {
           Get.to(
-            const NewPasswordScreen(),
+            () => const NewPasswordScreen(),
             arguments: {
               'token': value.data?.token ?? '',
               'isChange': isChange,
@@ -172,7 +159,7 @@ class ForgotPasswordOTPController extends BaseController {
       var basic = await profil.getBasicProfil();
 
       if ((basic.data?.user?.emailRecovery?.isNotEmpty ?? false)) {
-        Get.off(const PasswordRecoveryScreen(), arguments: {
+        Get.off(() => const PasswordRecoveryScreen(), arguments: {
           'email': basic.data?.user?.emailRecovery,
           'isChange': isChange,
         });

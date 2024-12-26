@@ -811,8 +811,8 @@ class TransactionController extends BaseController {
     String? message,
   }) {
     return SuccessScreen(
-      lottie: lottie ?? ImageConstant.packedLottie,
-      iconMargin: iconMargin ?? 60,
+      lottie: lottie ?? ImageConstant.successLottie,
+      iconMargin: iconMargin ?? 100,
       customInfo: PackageInfoItem(
         data: data ?? TransactionModel(),
       ),

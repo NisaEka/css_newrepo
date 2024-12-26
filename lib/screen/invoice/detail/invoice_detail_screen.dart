@@ -108,7 +108,7 @@ class InvoiceDetailScreen extends StatelessWidget {
         GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
-            Get.to(const InvoiceCnoteScreen(), arguments: {
+            Get.to(() => const InvoiceCnoteScreen(), arguments: {
               "invoice_number":
                   controller.invoiceDetailModel!.invoiceNumberEncoded!
             });

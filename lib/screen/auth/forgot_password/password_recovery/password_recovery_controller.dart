@@ -43,7 +43,7 @@ class PasswordRecoveryController extends BaseController {
             (value) => value.code == 200
                 ? Get.delete<ForgotPasswordOTPController>().then(
                     (value) => Get.to(
-                      const ForgotPasswordOTPScreen(),
+                      () => const ForgotPasswordOTPScreen(),
                       arguments: {
                         'email': email,
                       },

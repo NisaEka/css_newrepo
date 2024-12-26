@@ -77,7 +77,7 @@ class PengaturanPetugasScreen extends StatelessWidget {
                     subtitle:
                         '${item.email ?? '-'}\n${item.phone ?? '-'}\n${item.branch ?? ''} - ${item.origin ?? ''}',
                     onTap: () =>
-                        Get.to(const TambahPetugasScreen(), arguments: {
+                        Get.to(() => const TambahPetugasScreen(), arguments: {
                       'isEdit': true,
                       'data': item,
                     })?.then((value) => c.pagingController.refresh()),
@@ -123,12 +123,12 @@ class PengaturanPetugasScreen extends StatelessWidget {
                     ),
                   ),
                   noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
-                  noMoreItemsIndicatorBuilder: (context) => const Center(
+                  noMoreItemsIndicatorBuilder: (context) => Center(
                     child: Divider(
                       indent: 100,
                       endIndent: 100,
                       thickness: 2,
-                      color: blueJNE,
+                      color: primaryColor(context),
                     ),
                   ),
                   newPageProgressIndicatorBuilder: (context) =>

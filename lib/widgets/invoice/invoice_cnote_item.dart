@@ -4,7 +4,6 @@ import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 
-import '../../const/app_const.dart';
 import '../../const/color_const.dart';
 
 class InvoiceCnoteItem extends StatelessWidget {
@@ -32,18 +31,17 @@ class InvoiceCnoteItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    invoice?.awbNumber ?? '',
-                    style: Theme.of(context).textTheme.titleMedium!
-                        .copyWith(color:
-                        AppConst.isLightTheme(context) ? blueJNE : warningColor)
-                  ),
+                  Text(invoice?.awbNumber ?? '',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(color: primaryColor(context))),
                   Text(
                     invoice?.awbDate?.toLongDateFormat() ?? '',
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                        ?.copyWith(fontWeight: FontWeight.normal),
                   ),
                 ],
               ),
@@ -51,7 +49,10 @@ class InvoiceCnoteItem extends StatelessWidget {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text(
                   "Rp ${invoice?.originalAmountNumber?.toCurrency() ?? ''}",
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: fourthColor(context)),
                 ),
                 Text(
                   invoice?.consigneeName ?? '',

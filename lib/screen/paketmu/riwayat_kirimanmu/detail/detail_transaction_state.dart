@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailTransactionState {
-  String awb = Get.arguments['awb'];
+  String awb = Get.arguments?['awb'];
   TransactionModel? data = Get.arguments['data'];
   String? locale;
 

@@ -97,7 +97,7 @@ class DashboardController extends BaseController {
 
   void onAddTransaction(BuildContext context) {
     state.isLogin
-        ? Get.to(const InformasiPengirimScreen(), arguments: {})
+        ? Get.to(() => const InformasiPengirimScreen(), arguments: {})
         : showDialog(
             context: context,
             builder: (context) => DefaultAlertDialog(
@@ -687,7 +687,9 @@ class DashboardController extends BaseController {
 
   onLacakKiriman(bool useBarcode, String value) {
     Get.to(
-      useBarcode ? const BarcodeScanScreen() : const LacakKirimanScreen(),
+      useBarcode
+          ? () => const BarcodeScanScreen()
+          : () => const LacakKirimanScreen(),
       arguments: {
         'nomor_resi': value,
         "cek_resi": true,

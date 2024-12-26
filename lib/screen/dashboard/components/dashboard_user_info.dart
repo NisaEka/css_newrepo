@@ -7,8 +7,6 @@ import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../const/app_const.dart';
-
 class DashboardUserInfo extends StatelessWidget {
   const DashboardUserInfo({super.key});
 
@@ -67,10 +65,7 @@ class DashboardUserInfo extends StatelessWidget {
                             },
                             child: Icon(
                               Icons.qr_code_rounded,
-                              color: color ??
-                                  (AppConst.isLightTheme(context)
-                                      ? blueJNE
-                                      : warningColor),
+                              color: color ?? (primaryColor(context)),
                             ),
                           ),
                         ),

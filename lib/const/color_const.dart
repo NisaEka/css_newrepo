@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/app_const.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 const Color neutralColor = Color(0xffE0E0E0);
@@ -47,8 +48,26 @@ Color thirdColor(BuildContext context) {
   return AppConst.isLightTheme(context) ? redJNE : warningColor;
 }
 
+Color fourthColor(BuildContext context) {
+  return AppConst.isLightTheme(context) ? warningColor : warningColor;
+}
+
+Color fifthColor(BuildContext context) {
+  return AppConst.isLightTheme(context) ? whiteColor : whiteColor;
+}
+
 Color textColor(BuildContext context) {
   return AppConst.isLightTheme(context) ? Colors.black : whiteColor;
+}
+
+Color iconColor(BuildContext context) {
+  return AppConst.isLightTheme(context) ? greyDarkColor1 : whiteColor;
+}
+
+Color iconShadowColor(BuildContext context) {
+  return AppConst.isLightTheme(context)
+      ? CupertinoColors.systemGrey2
+      : greyLightColor2;
 }
 
 Color formTextColor(BuildContext context) {

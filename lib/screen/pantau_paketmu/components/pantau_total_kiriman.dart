@@ -67,16 +67,16 @@ class PantauTotalKiriman extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: c.state.isLoading ? greyColor : whiteColor,
                             borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: blueJNE),
+                            border: Border.all(color: primaryColor(context)),
                           ),
                           width: 160,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Container(
-                                decoration: const BoxDecoration(
-                                  color: blueJNE,
-                                  borderRadius: BorderRadius.only(
+                                decoration: BoxDecoration(
+                                  color: primaryColor(context),
+                                  borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(4),
                                     bottomLeft: Radius.circular(4),
                                   ),
@@ -117,7 +117,7 @@ class PantauTotalKiriman extends StatelessWidget {
                                       .labelMedium
                                       ?.copyWith(
                                           fontSize: 10,
-                                          color: blueJNE,
+                                          color: primaryColor(context),
                                           fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -134,16 +134,16 @@ class PantauTotalKiriman extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: c.state.isLoading ? greyColor : whiteColor,
                             borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: blueJNE),
+                            border: Border.all(color: primaryColor(context)),
                           ),
                           width: 160,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Container(
-                                decoration: const BoxDecoration(
-                                  color: blueJNE,
-                                  borderRadius: BorderRadius.only(
+                                decoration: BoxDecoration(
+                                  color: primaryColor(context),
+                                  borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(4),
                                     bottomLeft: Radius.circular(4),
                                   ),
@@ -183,7 +183,7 @@ class PantauTotalKiriman extends StatelessWidget {
                                       .labelMedium
                                       ?.copyWith(
                                           fontSize: 10,
-                                          color: blueJNE,
+                                          color: primaryColor(context),
                                           fontWeight: FontWeight.bold),
                                 ),
                               ),
