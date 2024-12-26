@@ -37,6 +37,9 @@ class DraftTransaksiController extends BaseController {
       connection.isOnline().then((value) {
         isOnline = value && (result != ConnectivityResult.none);
         update();
+        if (isSync) {
+          syncData();
+        }
       });
       initData();
       update();
@@ -90,13 +93,13 @@ class DraftTransaksiController extends BaseController {
   }
 
   Future<void> syncData() async {
+    isLoading = true;
+    update();
     draftList
         .where((e) => e.delivery?.freightCharge != 0)
         .forEach((upload) async {
       update();
       try {
-        isLoading = true;
-        update();
         await transaction
             .postTransaction(TransactionModel(
           // orderId: upload.noReference.text.isNotEmpty ? upload.noReference.text : null,
@@ -120,7 +123,9 @@ class DraftTransaksiController extends BaseController {
               ? upload.goods?.type
               : "PAKET",
           qty: upload.goods?.quantity,
-          insuranceAmount: upload.delivery?.insuranceFee,
+          insuranceAmount: upload.delivery?.insuranceFlag == "Y"
+              ? upload.delivery?.insuranceFee
+              : null,
           insuranceFlag: upload.delivery?.insuranceFlag,
           originCode: upload.origin?.originCode,
           originDesc: upload.origin?.originName,
@@ -178,7 +183,6 @@ class DraftTransaksiController extends BaseController {
                 .saveData(StorageCore.draftTransaction, draftData)
                 .then((_) {
               initData();
-              isLoading = false;
             });
           }
 
