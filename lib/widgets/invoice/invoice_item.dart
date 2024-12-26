@@ -73,9 +73,10 @@ class InvoiceItem extends StatelessWidget {
                       ),
                       Text(
                         "Rp ${data?.invoiceTotalAmount.toCurrency() ?? ''}",
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: primaryColor(context)
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: primaryColor(context)),
                         textAlign: TextAlign.end,
                       ),
                     ]),

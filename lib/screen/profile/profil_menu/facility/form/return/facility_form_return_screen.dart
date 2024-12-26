@@ -59,7 +59,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
             c.pickImageFailed = true;
             return;
           }
-          Get.to(const FacilityFormBankScreen(),
+          Get.to(() => const FacilityFormBankScreen(),
               arguments: {'data': c.submitData()});
         },
       ),

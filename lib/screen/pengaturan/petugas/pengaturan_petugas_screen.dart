@@ -77,7 +77,7 @@ class PengaturanPetugasScreen extends StatelessWidget {
                     subtitle:
                         '${item.email ?? '-'}\n${item.phone ?? '-'}\n${item.branch ?? ''} - ${item.origin ?? ''}',
                     onTap: () =>
-                        Get.to(const TambahPetugasScreen(), arguments: {
+                        Get.to(() => const TambahPetugasScreen(), arguments: {
                       'isEdit': true,
                       'data': item,
                     })?.then((value) => c.pagingController.refresh()),

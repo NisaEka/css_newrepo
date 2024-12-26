@@ -80,7 +80,7 @@ class DetailLaporankuScreen extends StatelessWidget {
                             fontSize: 19,
                             isLoading: false,
                             onPressed: () => Get.to(
-                                const ObrolanLaporankuScreen(),
+                                () => const ObrolanLaporankuScreen(),
                                 arguments: {
                                   "id": data.id,
                                   "ticket": data,
@@ -123,17 +123,17 @@ class DetailLaporankuScreen extends StatelessWidget {
                     value: data.status == "Closed"
                         ? "Selesai".tr
                         : data.status == "Reply CS"
-                        ? "Masih Diproses".tr
-                        : "Belum Diproses".tr,
+                            ? "Masih Diproses".tr
+                            : "Belum Diproses".tr,
                     isValueBold: true,
                   ),
                   const SizedBox(height: 10),
                   const Divider(color: greyColor),
                   const SizedBox(height: 10),
                   CustomLabelText(
-                      title: "Kategori".tr,
-                      value: data.category?.categoryDescription ?? '-',
-                      valueColor: primaryColor(context),
+                    title: "Kategori".tr,
+                    value: data.category?.categoryDescription ?? '-',
+                    valueColor: primaryColor(context),
                   ),
                 ],
               ),
@@ -154,7 +154,7 @@ class DetailLaporankuScreen extends StatelessWidget {
           width: Get.width - 60,
           onPressed: () => data.status != "Closed"
               ? c.updateStatus(data.id ?? '')
-              : Get.to(const ObrolanLaporankuScreen(), arguments: {
+              : Get.to(() => const ObrolanLaporankuScreen(), arguments: {
                   "id": data.id,
                   "ticket": data,
                 }),

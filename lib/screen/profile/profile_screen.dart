@@ -68,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                                   : warningLightColor2)),
                           showContainer: false,
                           onTap: () => controller.state.isLogin
-                              ? Get.to(const InformasiPengirimScreen(),
+                              ? Get.to(() => const InformasiPengirimScreen(),
                                   arguments: {})
                               : showDialog(
                                   context: context,
@@ -113,7 +113,7 @@ class ProfileScreen extends StatelessWidget {
                         ? SettingListItem(
                             title: 'Edit Profil'.tr,
                             leading: Icons.person_2_rounded,
-                            onTap: () => Get.to(const EditProfilScreen()),
+                            onTap: () => Get.to(() => const EditProfilScreen()),
                           )
                         : const SizedBox(),
                     c.state.menuModel.fasilitas == 'Y' &&
@@ -121,21 +121,21 @@ class ProfileScreen extends StatelessWidget {
                         ? SettingListItem(
                             title: 'Fasilitasku'.tr,
                             leading: Icons.format_list_numbered_rounded,
-                            onTap: () => Get.to(const FacilityScreen()),
+                            onTap: () => Get.to(() => const FacilityScreen()),
                           )
                         : const SizedBox(),
                     c.state.menuModel.profil == "Y"
                         ? SettingListItem(
                             title: 'Lihat Akun'.tr,
                             leading: Icons.account_tree_rounded,
-                            onTap: () => Get.to(const NoAkunScreen()),
+                            onTap: () => Get.to(() => const NoAkunScreen()),
                           )
                         : const SizedBox(),
                     c.state.menuModel.profil == "Y"
                         ? SettingListItem(
                             title: 'Data Umum'.tr,
                             leading: Icons.person_pin_rounded,
-                            onTap: () => Get.to(const DataUmumScreen()),
+                            onTap: () => Get.to(() => const DataUmumScreen()),
                           )
                         : const SizedBox(),
                     c.state.menuModel.profil == "Y"
@@ -168,7 +168,7 @@ class ProfileScreen extends StatelessWidget {
                             title: 'Pengaturan Label'.tr,
                             leading: Icons.label_rounded,
                             onTap: () => c.state.isLogin
-                                ? Get.to(const PengaturanLabelScreen())
+                                ? Get.to(() => const PengaturanLabelScreen())
                                 : showDialog(
                                     context: context,
                                     builder: (context) => DefaultAlertDialog(

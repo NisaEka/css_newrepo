@@ -19,7 +19,7 @@ class TentangScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
-              backgroundColor: whiteColor,
+              backgroundColor: Colors.transparent,
               leading: CustomBackButton(
                 onPressed: () => Get.back(),
               ),
@@ -45,7 +45,8 @@ class TentangScreen extends StatelessWidget {
                         Image.asset(
                           ImageConstant.logoJNE,
                           width: 50,
-                          color: AppConst.isDarkTheme(context) ? whiteColor : null,
+                          color:
+                              AppConst.isDarkTheme(context) ? whiteColor : null,
                         ),
                       ],
                     ),
@@ -53,9 +54,7 @@ class TentangScreen extends StatelessWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
-                            Icons.copyright_rounded
-                        ),
+                        const Icon(Icons.copyright_rounded),
                         Text(
                           '2024',
                           style: Theme.of(context).textTheme.titleMedium,
@@ -70,8 +69,7 @@ class TentangScreen extends StatelessWidget {
                     const SizedBox(height: 30),
                     CustomFilledButton(
                       isTransparent: true,
-                      color:
-                          primaryColor(context),
+                      color: primaryColor(context),
                       onPressed: () {
                         Get.to(() => const LisensiScreen());
                       },

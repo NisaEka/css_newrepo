@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -10,10 +11,12 @@ import 'package:css_mobile/widgets/dialog/hubungi_aku_dialog.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/items/show_image_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:intl/intl.dart';
+// import 'package:photo_view/photo_view.dart';
 
 class PantauPaketmuDetailScreen extends StatelessWidget {
   const PantauPaketmuDetailScreen({super.key});
@@ -492,34 +495,27 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
               child: value.startsWith("http")
                   ? GestureDetector(
                       onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: SingleChildScrollView(
-                                child: Image.network(
-                                  value,
-                                  fit: BoxFit.contain,
-                                  width: MediaQuery.of(context).size.width,
-                                ),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: const Text("Tutup"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                        showImagePreview(context, value);
                       },
-                      child: Image.network(
-                        value,
+                      child: CachedNetworkImage(
+                        imageUrl: value,
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
+                        placeholder: (context, url) => const SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => const Center(
+                          child: Icon(
+                            Icons.broken_image_rounded,
+                            color: redJNE,
+                            size: 50,
+                          ),
+                        ),
                       ),
                     )
                   : Text(
@@ -537,4 +533,38 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
       ],
     );
   }
+
+  // void _showImagePreview(BuildContext context, String imageUrl) {
+  //   if (imageUrl.isNotEmpty) {
+  //     Navigator.of(context).push(
+  //       MaterialPageRoute(
+  //         builder: (_) => Scaffold(
+  //           backgroundColor: Colors.black,
+  //           appBar: AppBar(
+  //             backgroundColor: Colors.black,
+  //             elevation: 0,
+  //             automaticallyImplyLeading: false,
+  //             actions: [
+  //               IconButton(
+  //                 icon: const Icon(Icons.close, color: whiteColor),
+  //                 onPressed: () => Navigator.of(context).pop(),
+  //               ),
+  //             ],
+  //           ),
+  //           body: Center(
+  //             child: PhotoView(
+  //               imageProvider: CachedNetworkImageProvider(imageUrl),
+  //               backgroundDecoration: const BoxDecoration(
+  //                 color: Colors.black,
+  //               ),
+  //               minScale: PhotoViewComputedScale.contained,
+  //               maxScale: PhotoViewComputedScale.covered * 3.0,
+  //               initialScale: PhotoViewComputedScale.contained,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   }
+  // }
 }

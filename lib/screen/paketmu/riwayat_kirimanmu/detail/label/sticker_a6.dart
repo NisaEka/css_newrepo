@@ -84,13 +84,20 @@ class StickerA6 extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          data.account?.accountService ?? '-',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: bold),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            data.delivery?.serviceCode ?? '-',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: bold),
+                          ),
                         ),
                         const Divider(height: 1),
-                        Text(data.createdDate?.toShortDateFormat() ?? ''),
+                        Column(
+                          children: [
+                            Text(data.createdDate?.toLongDateFormat() ?? ''),
+                          ],
+                        ),
                       ],
                     ),
                     CustomLabelText(

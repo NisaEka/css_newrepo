@@ -58,7 +58,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
               return;
             }
 
-            Get.to(const FacilityFormReturnScreen(), arguments: {
+            Get.to(() => const FacilityFormReturnScreen(), arguments: {
               'data': await c.submitData(),
               'destination': c.selectedDestination
             });

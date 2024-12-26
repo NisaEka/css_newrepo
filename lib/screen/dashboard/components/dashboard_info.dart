@@ -22,7 +22,7 @@ class _DashboardInfoState extends State<DashboardInfo> {
           return c.state.isCcrf == true || c.state.isLoading
               ? const SizedBox()
               : GestureDetector(
-                  onTap: () => Get.to(const FacilityScreen()),
+                  onTap: () => Get.to(() => const FacilityScreen()),
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     margin: const EdgeInsets.symmetric(

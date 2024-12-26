@@ -86,7 +86,7 @@ class AggByDocScreen extends StatelessWidget {
                     det: item,
                     isShowDetail: false,
                     onTap: () => Get.to(
-                      const AggByCnoteScreen(),
+                      () => const AggByCnoteScreen(),
                       arguments: {
                         "cnote_data": item,
                       },

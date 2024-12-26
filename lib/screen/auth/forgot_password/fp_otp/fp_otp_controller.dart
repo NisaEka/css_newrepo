@@ -105,7 +105,7 @@ class ForgotPasswordOTPController extends BaseController {
           .then((value) {
         if (value.code == 201) {
           Get.to(
-            const NewPasswordScreen(),
+            () => const NewPasswordScreen(),
             arguments: {
               'token': value.data?.token ?? '',
               'isChange': isChange,
@@ -159,7 +159,7 @@ class ForgotPasswordOTPController extends BaseController {
       var basic = await profil.getBasicProfil();
 
       if ((basic.data?.user?.emailRecovery?.isNotEmpty ?? false)) {
-        Get.off(const PasswordRecoveryScreen(), arguments: {
+        Get.off(() => const PasswordRecoveryScreen(), arguments: {
           'email': basic.data?.user?.emailRecovery,
           'isChange': isChange,
         });

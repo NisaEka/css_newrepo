@@ -106,13 +106,9 @@ class FilterButton extends StatelessWidget {
         },
         icon: Icon(
           Icons.filter_list_rounded,
-          color: isFiltered
-              ? whiteColor
-              : redJNE,
+          color: isFiltered ? whiteColor : redJNE,
         ),
-        color: isFiltered
-            ? whiteColor
-            : redJNE,
+        color: isFiltered ? whiteColor : redJNE,
         tooltip: 'filter',
       ),
     );

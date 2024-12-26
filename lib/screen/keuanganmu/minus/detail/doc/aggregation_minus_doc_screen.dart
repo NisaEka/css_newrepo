@@ -48,8 +48,7 @@ class AggregationMinusDocScreen extends StatelessWidget {
   Widget _topBox(String docId) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
-      child:
-      AggregationMinusBox(
+      child: AggregationMinusBox(
         title: "Document No".tr,
         value: docId,
       ),
@@ -94,8 +93,9 @@ class AggregationMinusDocScreen extends StatelessWidget {
             itemBuilder: (context, aggregation, index) =>
                 AggregationMinusDocItem(
                   data: aggregation,
-                  onTap: () =>
-                      {Get.to(AggregationMinusCnoteScreen(data: aggregation))},
+                  onTap: () => {
+                    Get.to(() => AggregationMinusCnoteScreen(data: aggregation))
+                  },
                 ),
             firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
             noItemsFoundIndicatorBuilder: (context) => const DataEmpty()),

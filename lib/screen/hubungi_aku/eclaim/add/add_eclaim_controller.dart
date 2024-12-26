@@ -74,13 +74,13 @@ class AddEclaimController extends BaseController {
               .then((value) {
             switch (value.code) {
               case 201:
-                Get.to(SuccessScreen(
-                  message:
-                      'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'
-                          .tr,
-                  thirdButtonTitle: 'OK'.tr,
-                  onThirdAction: () => Get.close(2),
-                ));
+                Get.to(() => SuccessScreen(
+                      message:
+                          'Laporanmu berhasil dibuat dan akan diproses lebih lanjut'
+                              .tr,
+                      thirdButtonTitle: 'OK'.tr,
+                      onThirdAction: () => Get.close(2),
+                    ));
                 break;
               case 404:
                 AppSnackBar.warning('Nomor Resi Tidak Terdaftar'.tr);

@@ -40,12 +40,13 @@ class LacakKirimanScreen extends StatelessWidget {
             controller: c.searchField,
             hintText: 'Masukan Nomor Resimu'.tr,
             suffixIcon: GestureDetector(
-              onTap: () => Get.to(const BarcodeScanScreen(), arguments: {})
-                  ?.then((result) {
+              onTap: () =>
+                  Get.to(() => const BarcodeScanScreen(), arguments: {})
+                      ?.then((result) {
                 c.searchField.text = result;
                 c.update();
                 Get.to(
-                  PhoneNumberConfirmationScreen(
+                  () => PhoneNumberConfirmationScreen(
                     awb: result,
                     cekResi: c.cekResi,
                     isLoading: c.isLoading,
@@ -89,7 +90,7 @@ class LacakKirimanScreen extends StatelessWidget {
                 );
               } else {
                 Get.to(
-                  PhoneNumberConfirmationScreen(
+                  () => PhoneNumberConfirmationScreen(
                     awb: value,
                     cekResi: c.cekResi,
                     isLoading: c.isLoading,

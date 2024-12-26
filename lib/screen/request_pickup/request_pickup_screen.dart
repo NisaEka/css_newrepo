@@ -211,7 +211,7 @@ class RequestPickupScreen extends StatelessWidget {
                           }
                         } else {
                           Get.to(
-                            const RequestPickupDetailScreen(),
+                            () => const RequestPickupDetailScreen(),
                             arguments: {"awb": item.awb},
                           );
                         }

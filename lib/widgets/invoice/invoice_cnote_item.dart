@@ -41,9 +41,7 @@ class InvoiceCnoteItem extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall
-                        ?.copyWith(
-                        fontWeight: FontWeight.normal
-                    ),
+                        ?.copyWith(fontWeight: FontWeight.normal),
                   ),
                 ],
               ),
@@ -51,9 +49,10 @@ class InvoiceCnoteItem extends StatelessWidget {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text(
                   "Rp ${invoice?.originalAmountNumber?.toCurrency() ?? ''}",
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: fourthColor(context)
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: fourthColor(context)),
                 ),
                 Text(
                   invoice?.consigneeName ?? '',

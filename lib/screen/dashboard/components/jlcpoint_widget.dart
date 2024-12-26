@@ -25,7 +25,7 @@ class JLCPointWidget extends StatelessWidget {
                   (controller.state.allow.keuanganBonus == "Y" ||
                       controller.state.allow.bonus == "Y")
               ? GestureDetector(
-                  onTap: () => Get.to(const BonusKamuScreen()),
+                  onTap: () => Get.to(() => const BonusKamuScreen()),
                   child: Shimmer(
                     isLoading: controller.state.isLoading,
                     child: Container(

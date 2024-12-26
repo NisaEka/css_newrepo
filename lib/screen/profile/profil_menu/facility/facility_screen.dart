@@ -108,7 +108,7 @@ class FacilityScreen extends StatelessWidget {
         (context, index) => FacilityItem(
           facility: facilities[index],
           onTap: () => Get.to(
-            const FacilityDetailScreen(),
+            () => const FacilityDetailScreen(),
             arguments: {'facility': facilities[index]},
           ),
         ),

@@ -40,7 +40,7 @@ class TransactionEditButton extends StatelessWidget {
                           fontSize: 15,
                           isLoading: c.state.isLoading,
                           onPressed: () => c.state.transactionData != null
-                              ? Get.to(const LabelScreen(), arguments: {
+                              ? Get.to(() => const LabelScreen(), arguments: {
                                   'data': c.state.transactionData,
                                 })
                               : null,
@@ -50,6 +50,7 @@ class TransactionEditButton extends StatelessWidget {
                       ? CustomFilledButton(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 2, vertical: 10),
+                          padding: const EdgeInsets.only(left: 5),
                           color: successColor,
                           isTransparent: true,
                           prefixIcon: Icons.edit_rounded,
@@ -60,7 +61,7 @@ class TransactionEditButton extends StatelessWidget {
                           onPressed: () {
                             if (c.isEdit()) {
                               Get.to(
-                                const InformasiPengirimScreen(),
+                                () => const InformasiPengirimScreen(),
                                 arguments: {
                                   'isEdit': true,
                                   'data': c.state.transactionData,
@@ -75,6 +76,7 @@ class TransactionEditButton extends StatelessWidget {
                       ? CustomFilledButton(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 2, vertical: 10),
+                          padding: const EdgeInsets.only(left: 5),
                           color: errorColor,
                           isTransparent: true,
                           prefixIcon: Icons.delete_rounded,
@@ -118,6 +120,7 @@ class TransactionEditButton extends StatelessWidget {
                   CustomFilledButton(
                     margin:
                         const EdgeInsets.symmetric(horizontal: 3, vertical: 10),
+                    padding: const EdgeInsets.only(left: 5),
                     color: warningColor,
                     isTransparent: true,
                     prefixIcon: Icons.phone_rounded,

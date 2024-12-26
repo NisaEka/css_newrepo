@@ -75,11 +75,8 @@ class InvoiceScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
-                ImageConstant.boxInvoice,
-                height: Get.width / 7,
-                color: iconColor(context)
-            ),
+            Image.asset(ImageConstant.boxInvoice,
+                height: Get.width / 7, color: iconColor(context)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
@@ -129,7 +126,7 @@ class InvoiceScreen extends StatelessWidget {
               return InvoiceItem(
                 data: item,
                 onTap: (String invoiceNumber) {
-                  Get.to(const InvoiceDetailScreen(),
+                  Get.to(() => const InvoiceDetailScreen(),
                       arguments: {"invoice_number": item.invoiceNoEncoded});
                 },
               );

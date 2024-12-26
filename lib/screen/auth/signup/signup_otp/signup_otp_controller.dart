@@ -43,11 +43,11 @@ class SignUpOTPController extends BaseController {
               InputPinconfirmModel(email: state.email, pin: state.otpPin.text))
           .then((value) {
         if (value.code == 201) {
-          Get.to(SuccessScreen(
-            message: "Selamat, kamu sudah berhasil mendaftar".tr,
-            thirdButtonTitle: "Masuk".tr,
-            onThirdAction: () => Get.offAll(() => const LoginScreen()),
-          ));
+          Get.to(() => SuccessScreen(
+                message: "Selamat, kamu sudah berhasil mendaftar".tr,
+                thirdButtonTitle: "Masuk".tr,
+                onThirdAction: () => Get.offAll(() => const LoginScreen()),
+              ));
         } else {
           AppSnackBar.error('PIN tidak sesuai'.tr);
         }
