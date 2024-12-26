@@ -95,7 +95,8 @@ class _OriginDropdownState extends State<OfficerDropdown> {
                 ),
               );
             },
-            itemAsString: (PetugasModel e) => e.name.toString(),
+            itemAsString: (PetugasModel e) =>
+                e.name?.toString() ?? widget.label ?? "Petugas".tr,
             onChanged: widget.onChanged,
             value: widget.value,
             selectedItem: widget.selectedItem,
@@ -103,7 +104,9 @@ class _OriginDropdownState extends State<OfficerDropdown> {
             searchHintText: widget.label ?? 'Masukan Nama Petugas'.tr,
             prefixIcon: widget.prefixIcon,
             textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: formTextColor(context),
+                  color: (widget.value == null)
+                      ? greyColor
+                      : formTextColor(context),
                 ),
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,

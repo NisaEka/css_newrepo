@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_pakemu_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -14,7 +14,6 @@ import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
-import 'package:dio/dio.dart';
 
 class PantauPaketmuController extends BaseController {
   final PantauPaketmuState state = PantauPaketmuState();
@@ -56,19 +55,15 @@ class PantauPaketmuController extends BaseController {
     update();
     AppLogger.i('initDataaaa');
     try {
-      BaseResponse<BasicProfileModel> profile = await profil.getBasicProfil();
-      state.basic.value = profile.data?.user;
+      state.basic =
+          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+      update();
+
       state.listOfficerEntry.add('SEMUA');
-      state.listOfficerEntry.add(state.basic.value?.name ?? '');
+      state.listOfficerEntry.add(state.basic?.name ?? '');
 
-      if (state.basic.value?.userType == "PEMILIK") {
-        Response officers = await network.base.get(
-          '/officers?select=["name"]',
-        );
-
-        officers.data['data'].map((e) => e['name']).forEach((element) {
-          state.listOfficerEntry.add(element);
-        });
+      if (state.basic?.userType != "PEMILIK") {
+        state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
       }
 
       await pantau.getPantauStatus().then((value) {
@@ -203,9 +198,15 @@ class PantauPaketmuController extends BaseController {
 
   Future<void> resetFilter({bool? isDetail = false}) async {
     state.countList.clear();
-    state.selectedPetugasEntry = state.basic.value?.userType == "PEMILIK"
-        ? PetugasModel(name: "")
-        : PetugasModel(name: state.basic.value?.name);
+    if (state.basic?.userType != "PEMILIK") {
+      // final petugasEntry = state.listOfficerEntry.firstWhere((element) => element.id == state.basic?.id);
+      state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
+      // state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
+    } else {
+      state.selectedPetugasEntry = null;
+    }
+    update();
+
     state.selectedStatusKiriman = "Total Kiriman";
     state.selectedTipeKiriman = "cod";
     state.tipeKiriman.value = 0;

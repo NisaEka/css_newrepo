@@ -41,8 +41,11 @@ class PantauPaketmuState extends GetxController {
 
   String? selectedStatusKiriman;
   PetugasModel? selectedPetugasEntry;
+  UserModel? basic;
+
   String? selectedStatusPrint;
   String? selectedTipeKiriman;
+
   // Reactive DateFilter
   final date = Rxn<String>(
       "${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).millisecondsSinceEpoch}-${DateTime.now().millisecondsSinceEpoch}");
@@ -74,9 +77,6 @@ class PantauPaketmuState extends GetxController {
 
   // Reactive list for selected transactions
   // final selectedTransaction = RxList<PantauPaketmuModel>([]);
-
-  // Reactive user profile
-  final basic = Rx<UserModel?>(null); // Using Rx for UserModel
 
   int selectedKiriman = 0;
   String transType = '';
