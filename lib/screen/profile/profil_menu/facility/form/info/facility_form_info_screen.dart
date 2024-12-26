@@ -34,7 +34,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
                 ? DefaultAlertDialog(
                     title: 'Gagal mengambil gambar.'.tr,
                     subtitle:
-                        'Periksa kembali ukuran file gambar KTP. File tidak boleh kosong atau lebih dari 2MB'
+                        'Periksa kembali file gambar KTP. File gambar tidak boleh kosong atau lebih dari 2MB'
                             .tr,
                     confirmButtonTitle: 'OK'.tr,
                     onConfirm: () => controller.onRefreshUploadState(),
@@ -77,13 +77,13 @@ class FacilityFormInfoScreen extends StatelessWidget {
               children: [
                 CustomTextFormField(
                   controller: c.brand,
-                  hintText: 'Nama Toko / Perusahaan',
+                  hintText: 'Nama Toko / Perusahaan'.tr,
                   isRequired: true,
                   validator: ValidationBuilder().maxLength(32).build(),
                 ),
                 CustomTextFormField(
                   controller: c.idCardNumber,
-                  hintText: 'No Identitas / KTP',
+                  hintText: 'No Identitas / KTP'.tr,
                   isRequired: true,
                   inputType: TextInputType.number,
                   inputFormatters: [
@@ -94,20 +94,20 @@ class FacilityFormInfoScreen extends StatelessWidget {
                       ValidationBuilder().maxLength(16).minLength(16).build(),
                 ),
                 ImagePickerContainer(
-                  containerTitle: 'Pilih Gambar Identitas / KTP',
+                  containerTitle: 'Pilih Gambar Identitas / KTP'.tr,
                   pickedImagePath: c.pickedImageUrl,
                   onPickImage: () => c.pickImage(),
                 ),
                 CustomTextFormField(
                   controller: c.fullName,
-                  hintText: 'Nama Lengkap',
+                  hintText: 'Nama Lengkap'.tr,
                   isRequired: true,
                   inputType: TextInputType.name,
                   validator: ValidationBuilder().maxLength(32).build(),
                 ),
                 CustomTextFormField(
                   controller: c.fullAddress,
-                  hintText: 'Alamat Lengkap',
+                  hintText: 'Alamat Lengkap'.tr,
                   isRequired: true,
                   inputType: TextInputType.streetAddress,
                   validator: ValidationBuilder().maxLength(128).build(),
@@ -120,13 +120,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 12, horizontal: 16),
-                        child: Text(e.asFacilityFormFormat(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  color: textColor(context),
-                                )),
+                        child: Text(e.asFacilityFormFormat()),
                       ),
                     );
                   },
@@ -150,7 +144,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
                 // textStyle: Theme.of(context).textTheme.titleSmall),
                 CustomTextFormField(
                   controller: c.phone,
-                  hintText: 'No. Telp'.tr,
+                  hintText: 'No. Telepon'.tr,
                   inputType: TextInputType.phone,
                   isRequired: true,
                   validator: ValidationBuilder().maxLength(15).phone().build(),

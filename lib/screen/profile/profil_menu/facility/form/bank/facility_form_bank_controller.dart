@@ -62,6 +62,10 @@ class FacilityFormBankController extends BaseController {
 
   bool get postDataFailed => _postDataFailed;
 
+  String? _postDataErrors = "";
+
+  String? get postDataErrors => _postDataErrors;
+
   bool _postFileFailed = false;
 
   bool get postFileFailed => _postFileFailed;
@@ -203,7 +207,7 @@ class FacilityFormBankController extends BaseController {
     var fileMap = {
       Constant.keyImageKtp: facilityCreateArgs.getIdCardPath(),
       Constant.keyImageNpwp: facilityCreateArgs.getTaxInfoPath(),
-      Constant.keyImageRekening: _pickedImagePath ?? ''
+      Constant.keyImageRekening: facilityCreateArgs.getBankInfoPath()
     };
 
     AppLogger.i(
@@ -211,6 +215,8 @@ class FacilityFormBankController extends BaseController {
     AppLogger.i(
         'facilityCreateArgs.getTaxInfoPath() ${facilityCreateArgs.getTaxInfoPath()}');
     AppLogger.i('_pickedImagePath $_pickedImagePath');
+    AppLogger.i(
+        'facilityCreateArgs.getBankInfoPath() ${facilityCreateArgs.getBankInfoPath()}');
 
     // if (fileMap.values.any((element) => element.isEmpty)) {
     //   return false;
@@ -234,6 +240,7 @@ class FacilityFormBankController extends BaseController {
         return false;
       }
     }).onError((error, stackTrace) {
+      AppLogger.i("Error upload file: ${error.toString()}");
       return false;
     });
   }
@@ -253,7 +260,7 @@ class FacilityFormBankController extends BaseController {
               message:
                   'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'
                       .tr,
-              thirdButtonTitle: 'Selesai'.tr,
+              thirdButtonTitle: 'Tutup'.tr,
               onThirdAction: () => Get.delete<DashboardController>().then(
                 (_) => Get.offAll(() => const DashboardScreen()),
               ),
@@ -261,10 +268,12 @@ class FacilityFormBankController extends BaseController {
           );
         } else {
           _postDataFailed = true;
+          _postDataErrors = response.error ?? "";
           update();
         }
       }).onError((error, stackTrace) {
         _postDataFailed = true;
+        _postDataErrors = error.toString();
         update();
       });
     } else {

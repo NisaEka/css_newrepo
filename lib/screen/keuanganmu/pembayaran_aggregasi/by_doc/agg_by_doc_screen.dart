@@ -60,9 +60,7 @@ class AggByDocScreen extends StatelessWidget {
             hintText: 'Cari Data Agregasi'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? infoColor
-                  : blueJNE,
+              color: fifthColor(context),
             ),
             onChanged: (value) {
               c.searchField.text = value;

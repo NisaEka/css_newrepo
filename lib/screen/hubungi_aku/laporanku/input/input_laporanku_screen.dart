@@ -118,7 +118,7 @@ class InputLaporankuScreen extends StatelessWidget {
                         onPressed: () => c.getSinglePhoto(ImageSource.camera),
                       ),
                       CustomFilledButton(
-                        color: blueJNE,
+                        color: primaryColor(context),
                         title: "Pilih dari galeri".tr,
                         onPressed: () => c.getSinglePhoto(ImageSource.gallery),
                       )
@@ -151,7 +151,7 @@ class InputLaporankuScreen extends StatelessWidget {
             CustomFilledButton(
               color: c.formKey.currentState?.validate() == true &&
                       c.selectedCategory != null
-                  ? blueJNE
+                  ? primaryColor(context)
                   : greyColor,
               title: "Kirim".tr,
               onPressed: () => c.formKey.currentState?.validate() == true &&

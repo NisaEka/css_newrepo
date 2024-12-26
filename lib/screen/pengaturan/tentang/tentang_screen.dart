@@ -1,4 +1,4 @@
-import 'package:css_mobile/base/theme_controller.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
@@ -25,43 +25,59 @@ class TentangScreen extends StatelessWidget {
               ),
             ),
             body: Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(50),
               child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text('CSS Mobile',
-                          style: Theme.of(context).textTheme.titleLarge),
+                    Image.asset(
+                      ImageConstant.logoCSS,
+                      width: Get.width - 100,
+                      color: primaryColor(context),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Powered By ',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Image.asset(
+                          ImageConstant.logoJNE,
+                          width: 50,
+                          color:
+                              AppConst.isDarkTheme(context) ? whiteColor : null,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.copyright_rounded),
+                        Text(
+                          '2024',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        controller.version ?? '',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
+                      child: Text(controller.version ?? '',
+                          style: Theme.of(context).textTheme.titleMedium),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Image.asset(
-                        ImageConstant.logoCSS,
-                        height: 67,
-                        color: CustomTheme().logoColor(context),
-                      ),
-                    ),
+                    const SizedBox(height: 30),
                     CustomFilledButton(
+                      isTransparent: true,
                       color: primaryColor(context),
                       onPressed: () {
                         Get.to(() => const LisensiScreen());
                       },
-                      title: "Lisensi",
-                      fontStyle: const TextStyle(
-                          fontWeight: FontWeight.bold, color: whiteColor),
-                      width: 100,
+                      title: "Attribution License".tr,
+                      suffixIcon: Icons.info_rounded,
+                      width: Get.width / 1,
                     ),
-                    const SizedBox(height: 100)
+                    // const SizedBox(height: 100)
                   ],
                 ),
               ),

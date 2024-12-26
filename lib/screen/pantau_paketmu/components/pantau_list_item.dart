@@ -1,13 +1,11 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -31,92 +29,70 @@ class PantauItems extends StatelessWidget {
         Widget getStatusIcon(String status) {
           switch (status) {
             case 'Sudah Dijemput':
-              return SvgPicture.asset(
-                IconsConstant.requestPickup,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxSudahDiJemput,
+                height: 85,
+                color: iconShadowColor(context),
               );
             case 'Sudah Di Gudang JNE':
-              return SvgPicture.asset(
-                IconsConstant.building,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxSudahDiGudang,
+                height: 85,
+                color: iconShadowColor(context),
               );
             case 'Sudah Di Kota Tujuan':
-              return SvgPicture.asset(
-                IconsConstant.location,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxSudahDiKotaTujuan,
+                height: 85,
+                color: iconShadowColor(context),
               );
             case 'Dalam Proses':
-              return SvgPicture.asset(
-                IconsConstant.sync,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxDalamProses,
+                height: 85,
+                color: iconShadowColor(context),
               );
             case 'Sukses Diterima':
-              return SvgPicture.asset(
-                IconsConstant.docSuccess,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxSuksesDiterima,
+                height: 85,
+                color: iconShadowColor(context),
               );
             case 'Butuh Dicek':
-              return SvgPicture.asset(
-                IconsConstant.location,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxButuhDicek,
+                height: 85,
+                color: iconShadowColor(context),
               );
             case 'Proses Pengembalian Ke Kamu':
-              return SvgPicture.asset(
-                IconsConstant.location,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxProsesReturn,
+                height: 85,
+                color: iconShadowColor(context),
               );
             case 'Sukses Dikembalikan Ke Kamu':
-              return SvgPicture.asset(
-                IconsConstant.retur,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxSuksesReturn,
+                height: 85,
+                color: iconShadowColor(context),
               );
             case 'Dalam Peninjauan':
-              return SvgPicture.asset(
-                IconsConstant.building,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxDalamPeninjauan,
+                height: 85,
+                color: iconShadowColor(context),
               );
             case 'Dibatalkan Oleh Kamu':
-              return SvgPicture.asset(
-                IconsConstant.error,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxDibatalkan,
+                height: 85,
+                color: iconShadowColor(context),
               );
             default:
-              return SvgPicture.asset(
-                IconsConstant.error,
-                color: AppConst.isLightTheme(context)
-                    ? greyLightColor1
-                    : greyDarkColor1,
-                height: 100,
+              return Image.asset(
+                ImageConstant.boxPackage,
+                height: 85,
+                color: iconShadowColor(context),
               );
           }
         }

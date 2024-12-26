@@ -35,7 +35,7 @@ class FacilityFormBankScreen extends StatelessWidget {
                 ? DefaultAlertDialog(
                     title: 'Gagal mengambil gambar'.tr,
                     subtitle:
-                        'Periksa kembali ukuran file gambar rekening. File tidak boleh kosong atau lebih dari 2MB'
+                        'Periksa kembali file gambar rekening. File gambar tidak boleh kosong atau lebih dari 2MB'
                             .tr,
                     confirmButtonTitle: 'OK'.tr,
                     onConfirm: () => controller.onRefreshPickImageState(),
@@ -43,16 +43,17 @@ class FacilityFormBankScreen extends StatelessWidget {
                 : Container(),
             controller.postDataFailed
                 ? DefaultAlertDialog(
-                    title: "Gagal menyimpan data.".tr,
-                    subtitle: "Pastikan input data sudah benar.".tr,
+                    title: "Gagal menyimpan data".tr,
+                    subtitle: controller.postDataErrors ??
+                        "Pastikan input data sudah benar".tr,
                     confirmButtonTitle: "OK".tr,
                     onConfirm: () => controller.onRefreshPostDataState(),
                   )
                 : Container(),
             controller.postFileFailed
                 ? DefaultAlertDialog(
-                    title: "Gagal menyimpan file.".tr,
-                    subtitle: "Pastikan file yang diupload sudah benar.".tr,
+                    title: "Gagal menyimpan file".tr,
+                    subtitle: "Pastikan file yang diupload sudah benar".tr,
                     confirmButtonTitle: "OK".tr,
                     onConfirm: () => controller.onRefreshPostDataState(),
                   )
@@ -134,7 +135,7 @@ class FacilityFormBankScreen extends StatelessWidget {
                   validator: ValidationBuilder().maxLength(32).build(),
                 ),
                 ImagePickerContainer(
-                  containerTitle: 'Pilih Gambar Buku Rekening',
+                  containerTitle: 'Pilih Gambar Buku Rekening'.tr,
                   pickedImagePath: controller.pickedImagePath,
                   onPickImage: () => controller.pickImage(),
                 ),
@@ -146,18 +147,18 @@ class FacilityFormBankScreen extends StatelessWidget {
                   ),
                   title: RichText(
                     text: TextSpan(
-                      text: 'Saya Setuju dengan ',
+                      text: 'Saya Setuju dengan '.tr,
                       style: Theme.of(context).textTheme.bodyMedium,
                       children: [
                         TextSpan(
-                          text: 'Syarat & Ketentuan',
+                          text: 'Syarat & Ketentuan'.tr,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
                               ?.copyWith(color: redJNE),
                         ),
                         TextSpan(
-                          text: ' Pengiriman JNE',
+                          text: ' Pengiriman JNE'.tr,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],

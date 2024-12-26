@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
@@ -93,7 +92,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
             hintText: 'Cari Data Agregasi'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
-              color: AppConst.isLightTheme(context) ? whiteColor : whiteColor,
+              color: fifthColor(context),
             ),
             onChanged: (value) => c.onSearch(value),
             onClear: () => c.onSearchClear(),

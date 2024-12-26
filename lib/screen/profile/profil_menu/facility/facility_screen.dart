@@ -125,14 +125,15 @@ class FacilityScreen extends StatelessWidget {
 
   Widget _facilityBanner(String status) {
     if (status == Constant.bannerStatusIdle) {
-      return const FacilityBanner(
+      return FacilityBanner(
         bannerColor: warningDarkColor,
-        bannerText: 'Upgrade akunmu untuk menggunakan fasilitas lebih banyak',
+        bannerText:
+            'Upgrade akunmu untuk menggunakan fasilitas lebih banyak'.tr,
       );
     } else if (status == Constant.bannerStatusOnProcess) {
-      return const FacilityBanner(
+      return FacilityBanner(
         bannerColor: infoDarkColor,
-        bannerText: 'Permintaan upgrade akunmu sedang dalam proses',
+        bannerText: 'Permintaan upgrade akunmu sedang dalam proses'.tr,
       );
     } else {
       return Container();

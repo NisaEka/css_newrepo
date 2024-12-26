@@ -33,6 +33,25 @@ class ObrolanLaporankuScreen extends StatelessWidget {
   Widget _bodyContent(ObrolanLaporankuController c, BuildContext context) {
     return Column(
       children: [
+        Container(
+          color: primaryColor(context),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Icon(Icons.headphones_rounded, color: whiteColor),
+                const SizedBox(width: 15),
+                Text(
+                  "Customer Care".tr,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: whiteColor, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
         // IconButton(
         //   onPressed: () {
         //     // c.pagingController.refresh();
@@ -201,7 +220,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
               child: const Center(
                 child: Icon(
                   Icons.send_rounded,
-                  size: 30.0,
+                  size: 25.0,
                   color: whiteColor,
                 ),
               ),

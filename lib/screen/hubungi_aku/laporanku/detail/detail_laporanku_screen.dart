@@ -15,6 +15,8 @@ import 'package:css_mobile/widgets/items/text_row_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../widgets/forms/customlabel.dart';
+
 class DetailLaporankuScreen extends StatelessWidget {
   final TicketModel data;
 
@@ -57,6 +59,7 @@ class DetailLaporankuScreen extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(16))),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,9 +114,10 @@ class DetailLaporankuScreen extends StatelessWidget {
                     title: "Update Terakhir".tr,
                     value: data.updatedDate?.toShortDateTimeFormat() ?? '-',
                   ),
-                  const SizedBox(height: 10),
-                  const Divider(color: greyColor),
-                  const SizedBox(height: 10),
+                  TextRowItem(
+                    title: "Prioritas".tr,
+                    value: data.priority == "Y" ? 'Ya'.tr : 'Tidak'.tr,
+                  ),
                   TextRowItem(
                     title: "Status Laporan".tr,
                     value: data.status == "Closed"
@@ -121,14 +125,15 @@ class DetailLaporankuScreen extends StatelessWidget {
                         : data.status == "Reply CS"
                             ? "Masih Diproses".tr
                             : "Belum Diproses".tr,
+                    isValueBold: true,
                   ),
-                  TextRowItem(
+                  const SizedBox(height: 10),
+                  const Divider(color: greyColor),
+                  const SizedBox(height: 10),
+                  CustomLabelText(
                     title: "Kategori".tr,
                     value: data.category?.categoryDescription ?? '-',
-                  ),
-                  TextRowItem(
-                    title: "Prioritas".tr,
-                    value: data.priority == "Y" ? 'Ya'.tr : 'Tidak'.tr,
+                    valueColor: primaryColor(context),
                   ),
                 ],
               ),
@@ -146,7 +151,7 @@ class DetailLaporankuScreen extends StatelessWidget {
         CustomFilledButton(
           color: AppConst.isLightTheme(context) ? redJNE : warningColor,
           title: data.status != "Closed" ? "Selesai".tr : "Lapor Ulang".tr,
-          width: Get.width - 50,
+          width: Get.width - 60,
           onPressed: () => data.status != "Closed"
               ? c.updateStatus(data.id ?? '')
               : Get.to(() => const ObrolanLaporankuScreen(), arguments: {

@@ -74,7 +74,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
             border: Border.all(
-              color: isSelected ? redJNE : greyDarkColor1,
+              color: isSelected ? secondaryColor(context) : greyDarkColor1,
               width: isSelected ? 2 : 1,
             ),
             borderRadius: BorderRadius.circular(8),
@@ -100,15 +100,14 @@ class RiwayatKirimanListItem extends StatelessWidget {
                         data?.createdDateSearch?.toLongDateTimeFormat() ??
                             tanggalEntry?.toDateFormat() ??
                             '-',
-                        style:
-                            Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  color: primaryColor(context),
-                                ),
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: primaryColor(context),
+                            ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 10),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -147,9 +146,29 @@ class RiwayatKirimanListItem extends StatelessWidget {
                         // Text(ImageConstant.paket),
                         // Image.asset(IconsConstant.paket),
                         Image.asset(
-                          ImageConstant.boxPackage,
+                          data?.statusAwb == "MASIH DI KAMU" ||
+                                  apiType == "MASIH DI KAMU"
+                              ? ImageConstant.boxPackage
+                              : data?.statusAwb == "SUDAH DI JEMPUT" ||
+                                      apiType == "SUDAH DI JEMPUT"
+                                  ? ImageConstant.boxSudahDiJemput
+                                  : data?.statusAwb == "DALAM PERJALANAN" ||
+                                          apiType == "DALAM PERJALANAN" ||
+                                          data?.statusAwb ==
+                                              "SUDAH DI GUDANG JNE" ||
+                                          apiType == "SUDAH DI GUDANG JNE"
+                                      ? ImageConstant.boxSudahDiKotaTujuan
+                                      : data?.statusAwb == "SUKSES DITERIMA" ||
+                                              apiType == "SUKSES DITERIMA"
+                                          ? ImageConstant.boxSuksesDiterima
+                                          : data?.statusAwb ==
+                                                      "DIBATALKAN OLEH KAMU" ||
+                                                  apiType ==
+                                                      "DIBATALKAN OLEH KAMU"
+                                              ? ImageConstant.boxDibatalkan
+                                              : ImageConstant.boxPackage,
                           height: Get.width / 8,
-                          color: textColor(context),
+                          color: iconColor(context),
                         ),
                       ],
                     ),
@@ -171,14 +190,17 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                           : data?.apiType == "NON COD" ||
                                                   apiType == "NON COD"
                                               ? infoDarkColor
-                                              : data?.apiType == "COD ONGKIR" ||
+                                              : data?.codFlag == "COD ONGKIR" ||
                                                       apiType == "COD ONGKIR"
                                                   ? warningDarkColor
                                                   : errorDarkColor,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(
-                                      data?.apiType ?? apiType ?? '-',
+                                      data?.codFlag == 'YES' &&
+                                              data?.codOngkir == 'YES'
+                                          ? 'COD ONGKIR'
+                                          : data?.apiType ?? apiType ?? '-',
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleSmall
@@ -204,54 +226,68 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           //DIBATALKAN OLEH KAMU
                                           //DALAM PENINJAUAN error
-                                          color: data?.statusAwb ==
+                                          color: data
+                                                          ?.statusAwb ==
                                                       "MASIH DI KAMU" ||
                                                   apiType == "MASIH DI KAMU" ||
-                                                  data?.statusAwb ==
+                                                  data
+                                                          ?.statusAwb ==
                                                       "PROSES PENGEMBALIAN KEKAMU" ||
                                                   apiType ==
                                                       "PROSES PENGEMBALIAN KEKAMU" ||
-                                                  data?.statusAwb ==
+                                                  data
+                                                          ?.statusAwb ==
                                                       "BELUM TERKUMPUL DARI PEMBELI" ||
                                                   apiType ==
                                                       "BELUM TERKUMPUL DARI PEMBELI" ||
-                                                  data?.statusAwb ==
+                                                  data
+                                                          ?.statusAwb ==
                                                       "BUTUH DICEK" ||
                                                   apiType == "BUTUH DICEK"
                                               ? warningColor
-                                              : data?.statusAwb ==
-                                                          "SUDAH DIJEMPUT" ||
+                                              : data
+                                                              ?.statusAwb ==
+                                                          "SUDAH DI JEMPUT" ||
                                                       apiType ==
-                                                          "SUDAH DIJEMPUT" ||
-                                                      data?.statusAwb ==
+                                                          "SUDAH DI JEMPUT" ||
+                                                      data
+                                                              ?.statusAwb ==
                                                           "DALAM PERJALANAN" ||
                                                       apiType ==
                                                           "DALAM PERJALANAN" ||
-                                                      data?.statusAwb ==
+                                                      data
+                                                              ?.statusAwb ==
                                                           "SUDAH DI GUDANG JNE" ||
                                                       apiType ==
                                                           "SUDAH DI GUDANG JNE" ||
-                                                      data?.statusAwb ==
+                                                      data
+                                                              ?.statusAwb ==
                                                           "SUDAH DI KOTA TUJUAN" ||
                                                       apiType ==
                                                           "SUDAH DI KOTA TUJUAN" ||
-                                                      data?.statusAwb ==
+                                                      data
+                                                              ?.statusAwb ==
                                                           "DALAM PROSES" ||
                                                       apiType == "DALAM PROSES"
                                                   ? infoColor
-                                                  : data?.statusAwb == "Success" ||
+                                                  : data
+                                                                  ?.statusAwb ==
+                                                              "Success" ||
                                                           apiType ==
                                                               "Success" ||
-                                                          data?.statusAwb ==
+                                                          data
+                                                                  ?.statusAwb ==
                                                               "SUKSES DIKEMBALIKAN KEKAMU" ||
                                                           apiType ==
                                                               "SUKSES DIKEMBALIKAN KEKAMU" ||
-                                                          data?.statusAwb ==
+                                                          data
+                                                                  ?.statusAwb ==
                                                               "SUKSES DITERIMA" ||
                                                           apiType ==
                                                               "SUKSES DITERIMA"
                                                       ? successColor
-                                                      : data?.statusAwb ==
+                                                      : data
+                                                                      ?.statusAwb ==
                                                                   "DIBATALKAN OLEH KAMU" ||
                                                               apiType ==
                                                                   "DIBATALKAN OLEH KAMU" ||
