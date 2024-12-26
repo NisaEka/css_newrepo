@@ -204,13 +204,17 @@ class StickerDefault extends StatelessWidget {
                               titleTextStyle: TextStyle(fontWeight: bold),
                               valueTextStyle: const TextStyle(),
                             ),
-                            data.account?.accountService != 'NON COD'
+                            data.account?.accountService == 'COD'
                                 ? const SizedBox(width: 10)
-                                : const SizedBox(width: 85),
+                                : data.account?.accountService == 'COD ONGKIR'
+                                    ? const SizedBox(width: 10)
+                                    : const SizedBox(width: 85),
                             Text(
+                                // data.account?.accountService??'',
                                 data.account?.accountService == 'COD'
                                     ? data.account?.accountService ?? ''
-                                    : data.account?.accountService == 'JLC'
+                                    : data.account?.accountService ==
+                                            'COD ONGKIR'
                                         ? 'COD'
                                         : '',
                                 style:

@@ -92,7 +92,7 @@ class PantauPaketmuScreen extends StatelessWidget {
                       orderId: item.orderId,
                       statusAwb: item.statusawb,
                       serviceCode: item.service,
-                      apiType: item.awbType,
+                      apiType: c.state.selectedTipeKiriman?.toUpperCase(),
                       receiverName: item.receiverName,
                       createdDateSearch: item.awbDate,
                     ),

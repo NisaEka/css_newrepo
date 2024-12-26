@@ -13,7 +13,6 @@ class PantauStatusButton extends StatelessWidget {
         init: PantauPaketmuController(),
         builder: (c) {
           return Container(
-            margin: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
               color: primaryColor(context),
               border: Border.all(),

@@ -38,7 +38,7 @@ class PantauCardScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const PantauStatusButton(),
-                    const SizedBox(height: 5),
+                    // const SizedBox(height: 5),
                     // Total Kiriman
                     PantauTotalKiriman(
                         isLoading: controller.state.isLoading ||

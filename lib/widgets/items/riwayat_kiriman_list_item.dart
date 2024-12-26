@@ -94,7 +94,10 @@ class RiwayatKirimanListItem extends StatelessWidget {
                     //       style: Theme.of(context).textTheme.titleSmall),
                     // ),
                     Container(
-                      color: isLoading ? greyLightColor3 : Colors.transparent,
+                      decoration: BoxDecoration(
+                          color:
+                              isLoading ? greyLightColor3 : Colors.transparent,
+                          borderRadius: BorderRadius.circular(5)),
                       width: isLoading ? Get.width / 5 : null,
                       child: Text(
                         data?.createdDateSearch?.toLongDateTimeFormat() ??
@@ -145,30 +148,38 @@ class RiwayatKirimanListItem extends StatelessWidget {
                         //     : const SizedBox(),
                         // Text(ImageConstant.paket),
                         // Image.asset(IconsConstant.paket),
-                        Image.asset(
-                          data?.statusAwb == "MASIH DI KAMU" ||
-                                  apiType == "MASIH DI KAMU"
-                              ? ImageConstant.boxPackage
-                              : data?.statusAwb == "SUDAH DI JEMPUT" ||
-                                      apiType == "SUDAH DI JEMPUT"
-                                  ? ImageConstant.boxSudahDiJemput
-                                  : data?.statusAwb == "DALAM PERJALANAN" ||
-                                          apiType == "DALAM PERJALANAN" ||
-                                          data?.statusAwb ==
-                                              "SUDAH DI GUDANG JNE" ||
-                                          apiType == "SUDAH DI GUDANG JNE"
-                                      ? ImageConstant.boxSudahDiKotaTujuan
-                                      : data?.statusAwb == "SUKSES DITERIMA" ||
-                                              apiType == "SUKSES DITERIMA"
-                                          ? ImageConstant.boxSuksesDiterima
-                                          : data?.statusAwb ==
-                                                      "DIBATALKAN OLEH KAMU" ||
-                                                  apiType ==
-                                                      "DIBATALKAN OLEH KAMU"
-                                              ? ImageConstant.boxDibatalkan
-                                              : ImageConstant.boxPackage,
-                          height: Get.width / 8,
-                          color: iconColor(context),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: isLoading
+                                  ? greyLightColor3
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Image.asset(
+                            data?.statusAwb == "MASIH DI KAMU" ||
+                                    apiType == "MASIH DI KAMU"
+                                ? ImageConstant.boxPackage
+                                : data?.statusAwb == "SUDAH DI JEMPUT" ||
+                                        apiType == "SUDAH DI JEMPUT"
+                                    ? ImageConstant.boxSudahDiJemput
+                                    : data?.statusAwb == "DALAM PERJALANAN" ||
+                                            apiType == "DALAM PERJALANAN" ||
+                                            data?.statusAwb ==
+                                                "SUDAH DI GUDANG JNE" ||
+                                            apiType == "SUDAH DI GUDANG JNE"
+                                        ? ImageConstant.boxSudahDiKotaTujuan
+                                        : data?.statusAwb ==
+                                                    "SUKSES DITERIMA" ||
+                                                apiType == "SUKSES DITERIMA"
+                                            ? ImageConstant.boxSuksesDiterima
+                                            : data?.statusAwb ==
+                                                        "DIBATALKAN OLEH KAMU" ||
+                                                    apiType ==
+                                                        "DIBATALKAN OLEH KAMU"
+                                                ? ImageConstant.boxDibatalkan
+                                                : ImageConstant.boxPackage,
+                            height: Get.width / 8,
+                            color: iconColor(context),
+                          ),
                         ),
                       ],
                     ),
@@ -319,8 +330,11 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           ],
                         ),
                         Container(
-                          color:
-                              isLoading ? greyLightColor3 : Colors.transparent,
+                          decoration: BoxDecoration(
+                              color: isLoading
+                                  ? greyLightColor3
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(5)),
                           width: isLoading ? Get.width / 3 : null,
                           margin: const EdgeInsets.only(bottom: 2),
                           child: Text(
@@ -334,16 +348,22 @@ class RiwayatKirimanListItem extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          color:
-                              isLoading ? greyLightColor3 : Colors.transparent,
+                          decoration: BoxDecoration(
+                              color: isLoading
+                                  ? greyLightColor3
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(5)),
                           width: isLoading ? Get.width / 5 : null,
                           margin: const EdgeInsets.only(bottom: 2),
                           child: Text(data?.receiverName ?? penerima ?? '-',
                               style: Theme.of(context).textTheme.titleSmall),
                         ),
                         Container(
-                          color:
-                              isLoading ? greyLightColor3 : Colors.transparent,
+                          decoration: BoxDecoration(
+                              color: isLoading
+                                  ? greyLightColor3
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(5)),
                           width: isLoading ? Get.width / 10 : null,
                           margin: const EdgeInsets.only(bottom: 2),
                           child: Text(data?.serviceCode ?? service ?? '-',
