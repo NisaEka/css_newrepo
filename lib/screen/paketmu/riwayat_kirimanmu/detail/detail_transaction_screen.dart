@@ -1,8 +1,6 @@
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/components/transaction_detail.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/components/transaction_edit_button.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_controller.dart';
-import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,9 +16,9 @@ class DetailTransactionScreen extends StatelessWidget {
         return Scaffold(
           appBar: CustomTopBar(
             title: 'Detail Kiriman'.tr,
-            leading: CustomBackButton(
-              onPressed: () => Get.offAll(const DashboardScreen()),
-            ),
+            // leading: CustomBackButton(
+            //   onPressed: () => Get.offAll(const DashboardScreen()),
+            // ),
           ),
           body: RefreshIndicator(
             onRefresh: () => controller.initData(),

@@ -15,6 +15,7 @@ import 'package:css_mobile/routes/route_page.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_controller.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_state.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
@@ -822,23 +823,24 @@ class TransactionController extends BaseController {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomFilledButton(
-            color: blueJNE,
-            title: (isDraft ?? false) ? "Lihat Draft".tr : "Lihat Detail".tr,
-            suffixIcon: Icons.qr_code_rounded,
-            width: Get.width / 2,
-            height: 50,
-            fontSize: 15,
-            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-            onPressed: () => Get.offAll(
-                () => (isDraft ?? false)
-                    ? const DraftTransaksiScreen()
-                    : const DetailTransactionScreen(),
-                arguments: {
-                  'awb': data?.awb,
-                  'data': data,
-                  'fromMenu': false,
-                }),
-          ),
+              color: blueJNE,
+              title: (isDraft ?? false) ? "Lihat Draft".tr : "Lihat Detail".tr,
+              suffixIcon: Icons.qr_code_rounded,
+              width: Get.width / 2,
+              height: 50,
+              fontSize: 15,
+              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+              onPressed: () {
+                Get.to(
+                    () => (isDraft ?? false)
+                        ? const DraftTransaksiScreen()
+                        : const DetailTransactionScreen(),
+                    arguments: {
+                      'awb': data?.awb,
+                      'data': data,
+                      'fromMenu': false,
+                    })?.then((_) => Get.offAll(const DashboardScreen()));
+              }),
           CustomFilledButton(
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             color: successColor,
@@ -847,7 +849,8 @@ class TransactionController extends BaseController {
             width: 50,
             height: 50,
             fontSize: 23,
-            onPressed: () => Get.offAllNamed(Routes.inputKiriman),
+            onPressed: () => Get.delete<ShipperController>()
+                .then((_) => Get.offAllNamed(Routes.inputKiriman)),
           ),
           CustomFilledButton(
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
