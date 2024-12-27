@@ -14,7 +14,12 @@ class DetailTransactionScreen extends StatelessWidget {
       init: DetailTransactionController(),
       builder: (controller) {
         return Scaffold(
-          appBar: CustomTopBar(title: 'Detail Kiriman'.tr),
+          appBar: CustomTopBar(
+            title: 'Detail Kiriman'.tr,
+            // leading: CustomBackButton(
+            //   onPressed: () => Get.offAll(const DashboardScreen()),
+            // ),
+          ),
           body: RefreshIndicator(
             onRefresh: () => controller.initData(),
             child: const TransactionDetail(),

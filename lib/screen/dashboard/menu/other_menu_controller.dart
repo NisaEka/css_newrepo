@@ -94,7 +94,7 @@ class OtherMenuCotroller extends BaseController {
         route: "/lacakKiriman",
       ),
       Items(
-          title: "Request Pickup",
+          title: "Minta Dijemput",
           // icon: IconsConstant.requestPickup,
           icon: ImageConstant.paketmuIcon,
           isAuth: true,

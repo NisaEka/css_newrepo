@@ -122,6 +122,7 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                             widget.data.account?.accountName ??
                             '',
                         alignment: 'end',
+                        width: Get.width * 0.5,
                       ),
                     ],
                   ),

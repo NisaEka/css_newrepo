@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/shipper_form.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_appbar.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_controller.dart';
@@ -14,23 +15,28 @@ class InformasiPengirimScreen extends StatelessWidget {
     return GetBuilder<ShipperController>(
         init: ShipperController(),
         builder: (controller) {
-          return Stack(
-            children: [
-              Scaffold(
-                appBar: TransactionAppbar(
-                  data: controller.state.data,
-                  isOnline: controller.state.isOnline,
+          return PopScope(
+            canPop: false,
+            onPopInvokedWithResult: (bool didPop, Object? result) =>
+                Get.offAll(() => const DashboardScreen()),
+            child: Stack(
+              children: [
+                Scaffold(
+                  appBar: TransactionAppbar(
+                    data: controller.state.data,
+                    isOnline: controller.state.isOnline,
+                  ),
+                  body: RefreshIndicator(
+                    color: greyColor,
+                    onRefresh: () => controller.initData(),
+                    child: const ShipperForm(),
+                  ),
                 ),
-                body: RefreshIndicator(
-                  color: greyColor,
-                  onRefresh: () => controller.initData(),
-                  child: const ShipperForm(),
-                ),
-              ),
-              controller.state.isLoadSave
-                  ? const LoadingDialog()
-                  : const SizedBox()
-            ],
+                controller.state.isLoadSave
+                    ? const LoadingDialog()
+                    : const SizedBox()
+              ],
+            ),
           );
         });
   }

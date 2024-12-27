@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
@@ -10,18 +11,20 @@ import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.
 import 'package:css_mobile/data/model/transaction/draft_transaction_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/routes/route_page.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
-import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_controller.dart';
 import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen.dart';
-import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
+import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_controller.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_state.dart';
-import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_screen.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/items/package_info_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -384,9 +387,8 @@ class TransactionController extends BaseController {
     state.draftList = [];
     DraftTransactionModel temp = DraftTransactionModel.fromJson(
         await storage.readData(StorageCore.draftTransaction));
-
     state.draftList.addAll(temp.draft);
-    state.draftList.add(DataTransactionModel(
+    var draftItem = DataTransactionModel(
       delivery: Delivery(
         serviceCode: state.selectedService?.serviceDisplay,
         woodPackaging: state.woodPacking ? "Y" : "N",
@@ -427,7 +429,8 @@ class TransactionController extends BaseController {
       ),
       shipper: state.shipper,
       receiver: state.receiver,
-    ));
+    );
+    state.draftList.add(draftItem);
 
     var data = '{"draft" : ${jsonEncode(state.draftList)}}';
     state.draftData = DraftTransactionModel.fromJson(jsonDecode(data));
@@ -436,31 +439,20 @@ class TransactionController extends BaseController {
 
     await storage.saveData(StorageCore.draftTransaction, state.draftData).then(
           (_) => Get.to(
-            () => SuccessScreen(
-              message: "Transaksi di simpan ke draft".tr,
-              icon: const Icon(
-                Icons.warning,
-                color: warningColor,
-                size: 150,
-              ),
-              thirdButtonTitle: "Kembali ke Beranda".tr,
-              onThirdAction: () => Get.delete<TransactionController>().then(
-                (_) => Get.offAll(() => const DashboardScreen()),
-              ),
-              firstButtonTitle: "Lihat Draft".tr,
-              onFirstAction: () => Get.delete<DraftTransaksiController>()
-                  .then((_) => Get.delete<TransactionController>())
-                  .then((_) => Get.offAll(() => const DraftTransaksiScreen())),
-              secondButtonTitle: "Buat Transaksi Lainnya".tr,
-              onSecondAction: () => Get.delete<TransactionController>().then(
-                (_) => Get.offAll(() => const InformasiPengirimScreen(),
-                    arguments: {}),
+            _successScreen(
+              isDraft: true,
+              lottie: ImageConstant.warningLottie,
+              message: 'Transaksi di simpan ke draft'.tr,
+              iconMargin: 150,
+              iconHeight: 400,
+              data: TransactionModel(
+                awb: draftItem.awb,
+                goodsDesc: draftItem.goods?.desc,
+                weight: draftItem.goods?.weight,
+                originDesc: draftItem.origin?.originName,
+                destinationDesc: draftItem.destination?.cityName,
               ),
             ),
-            transition: Transition.rightToLeft,
-            arguments: {
-              'transaction': true,
-            },
           ),
         );
 
@@ -534,23 +526,10 @@ class TransactionController extends BaseController {
         if (v.code != 200) {
           AppSnackBar.error(v.message);
         } else {
-          Get.to(
-            () => SuccessScreen(
-              message: 'Update Berhasil'.tr,
-              thirdButtonTitle: "Kembali ke Beranda".tr,
-              onThirdAction: () => Get.offAll(
-                () => const DashboardScreen(),
-                transition: Transition.rightToLeft,
-                arguments: {
-                  'awb': v.data?.awb,
-                },
-              ),
-              secondButtonTitle: "Lihat Transaksi",
-              onSecondAction: () => Get.offAll(
-                  () => const RiwayatKirimanScreen(),
-                  arguments: {"isLastScreen": true}),
-            ),
-          );
+          Get.to(_successScreen(
+            data: v.data,
+            message: 'Update Berhasil'.tr,
+          ));
         }
       });
     } catch (e, i) {
@@ -699,23 +678,9 @@ class TransactionController extends BaseController {
             margin: const EdgeInsets.only(bottom: 0),
           );
         } else {
-          Get.to(
-            () => SuccessScreen(
-              message: "${'Transaksi Berhasil'.tr}\n${v.data?.awb}",
-              thirdButtonTitle: "Kembali ke Beranda".tr,
-              onThirdAction: () => Get.offAll(
-                () => const DashboardScreen(),
-                transition: Transition.rightToLeft,
-                arguments: {
-                  'awb': v.data?.awb,
-                },
-              ),
-              secondButtonTitle: "Buat Transaksi Lainnya".tr,
-              onSecondAction: () => Get.offAll(
-                  () => const InformasiPengirimScreen(),
-                  arguments: {}),
-            ),
-          );
+          Get.to(_successScreen(
+              data: v.data ?? TransactionModel(),
+              message: 'Transaksi Berhasil'.tr));
         }
       });
     } catch (e, i) {
@@ -789,8 +754,7 @@ class TransactionController extends BaseController {
             size: 100,
           ),
           // title: "Error".tr,
-          subtitle:
-              "${'Harga COD tidak boleh Lebih dari'.tr} Rp.${10000000.toInt().toCurrency()}",
+          subtitle: "${'Harga COD tidak boleh Lebih dari'.tr} Rp.10.000.000",
           confirmButtonTitle: "OK",
           onConfirm: Get.back,
           // content: Column(
@@ -839,19 +803,67 @@ class TransactionController extends BaseController {
     update();
   }
 
-  // Widget _successScreen() {
-  //   return SuccessScreen(
-  //     // lottie: ImageConstant.packedLottie,
-  //     // iconMargin: 100,
-  //     // customInfo: PackageInfoItem(),
-  //     // iconHeight: Get.width * 0.6,
-  //     message: 'message',
-  //     secondButtonTitle: 'second button',
-  //     onSecondAction: () {},
-  //     firstButtonTitle: 'firstbutton',
-  //     onFirstAction: () {},
-  //     thirdButtonTitle: 'third button',
-  //     onThirdAction: () {},
-  //   );
-  // }
+  Widget _successScreen({
+    TransactionModel? data,
+    bool? isDraft,
+    String? lottie,
+    double? iconMargin,
+    double? iconHeight,
+    String? message,
+  }) {
+    return SuccessScreen(
+      lottie: lottie ?? ImageConstant.successLottie,
+      iconMargin: iconMargin ?? 100,
+      customInfo: PackageInfoItem(
+        data: data ?? TransactionModel(),
+      ),
+      message: message ?? "Transaksi Berhasil".tr,
+      iconHeight: iconHeight ?? Get.width * 0.3,
+      customAction: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CustomFilledButton(
+              color: blueJNE,
+              title: (isDraft ?? false) ? "Lihat Draft".tr : "Lihat Detail".tr,
+              suffixIcon: Icons.qr_code_rounded,
+              width: Get.width / 2,
+              height: 50,
+              fontSize: 15,
+              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+              onPressed: () {
+                Get.to(
+                    () => (isDraft ?? false)
+                        ? const DraftTransaksiScreen()
+                        : const DetailTransactionScreen(),
+                    arguments: {
+                      'awb': data?.awb,
+                      'data': data,
+                      'fromMenu': false,
+                    })?.then((_) => Get.offAll(const DashboardScreen()));
+              }),
+          CustomFilledButton(
+            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            color: successColor,
+            isTransparent: true,
+            prefixIcon: Icons.add_circle,
+            width: 50,
+            height: 50,
+            fontSize: 23,
+            onPressed: () => Get.delete<ShipperController>()
+                .then((_) => Get.offAllNamed(Routes.inputKiriman)),
+          ),
+          CustomFilledButton(
+            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            color: infoColor,
+            isTransparent: true,
+            prefixIcon: Icons.home,
+            width: 50,
+            height: 50,
+            fontSize: 23,
+            onPressed: () => Get.offAll(const DashboardScreen()),
+          ),
+        ],
+      ),
+    );
+  }
 }

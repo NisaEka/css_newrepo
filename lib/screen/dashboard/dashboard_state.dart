@@ -74,4 +74,5 @@ class DashboardState {
   bool isLoadingKiriman = false;
   bool isLoadingKirimanCOD = false;
   DashboardKirimanKamuModel kirimanKamu = DashboardKirimanKamuModel();
+  DashboardKirimanKamuModel kirimanKamuCOD = DashboardKirimanKamuModel();
 }

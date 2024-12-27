@@ -22,9 +22,12 @@ class AddReceiverController extends BaseController {
   Destination? selectedDestination;
 
   Future<bool> isSaveReceiver() async {
-    var receivers = await master.getReceivers(QueryModel(where: [
-      {"receiverPhone": receiverPhone.text}
-    ]));
+    var receivers = await master.getReceivers(QueryModel(
+      where: [
+        {"receiverPhone": receiverPhone.text}
+      ],
+      table: true,
+    ));
 
     var receiver = receivers.data;
     if ((receiver?.isEmpty ?? false) &&

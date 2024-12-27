@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
+import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart';
@@ -28,7 +29,7 @@ class SignUpController extends BaseController {
   void selectOrigin(OriginModel value) {
     {
       state.selectedOrigin = value;
-      state.kotaPengirim.text = state.selectedOrigin?.originName ?? '';
+      state.origin.text = state.selectedOrigin?.originName ?? '';
       state.branchCode = state.selectedOrigin?.branchCode;
       update();
       AppLogger.d(state.selectedOrigin as String);
@@ -43,7 +44,7 @@ class SignUpController extends BaseController {
   }
 
   Future<void> getAgentList() async {
-    state.agenList = [
+    state.agentList = [
       AgentModel(custName: 'BELUM KIRIM KE JNE'),
       AgentModel(custName: 'TIDAK TENTU'),
     ];
@@ -52,7 +53,7 @@ class SignUpController extends BaseController {
     await master
         .getAgents(state.selectedOrigin?.branchCode ?? '')
         .then((value) {
-      state.agenList.addAll(value.data ?? []);
+      state.agentList.addAll(value.data ?? []);
       update();
     });
 
@@ -97,13 +98,13 @@ class SignUpController extends BaseController {
     await auth
         .postRegister(
       InputRegisterModel(
-        fullName: state.namaLengkap.text,
-        brandName: state.namaBrand.text,
-        phone: state.noHp.text,
+        fullName: state.fullName.text,
+        brandName: state.brandName.text,
+        phone: state.phone.text,
         email: state.email.text,
-        referralCode: state.kodeReferal.text,
+        referralCode: state.referralCode.text,
         originCode: state.selectedOrigin?.originCode ?? '',
-        alreadyUseJne: state.pakaiJNE ? "YES" : null,
+        alreadyUseJne: state.useJNE ? "YES" : null,
         salesCounter:
             state.selectedAgent?.custNo ?? state.selectedAgent?.custName,
       ),
@@ -114,6 +115,10 @@ class SignUpController extends BaseController {
         Get.to(() => const SignUpOTPScreen(), arguments: {
           'email': state.email.text,
           'isActivation': false,
+          'userData': UserModel(
+            email: state.email.text,
+            phone: state.phone.text,
+          ),
         });
       } else if (value.code == 409 || value.message == "Conflict") {
         AppSnackBar.error('email atau nomor telepon sudah terdaftar'.tr);
@@ -137,20 +142,20 @@ class SignUpController extends BaseController {
   }
 
   Future<void> onSelectReferal(GroupOwnerModel value) async {
-    state.kodeReferal.text = value.groupownerName ?? '';
-    state.selectedReferal = value;
+    state.referralCode.text = value.groupownerName ?? '';
+    state.selectedReferral = value;
     state.selectedOrigin = await getOrigin(value.groupownerOrigin ?? '');
     state.isDefaultOrigin =
         value.groupownerDefaultorigin == "FIXED" ? true : false;
     state.isSelectCounter = value.groupownerCounter == null ? true : false;
     update();
-    state.kotaPengirim.text = state.selectedOrigin?.originName ?? '';
+    state.origin.text = state.selectedOrigin?.originName ?? '';
     state.branchCode = state.selectedOrigin?.branchCode;
-    state.pakaiJNE = value.groupownerCounter != null;
+    state.useJNE = value.groupownerCounter != null;
     update();
     getAgentList();
     if (value.groupownerCounter != null) {
-      state.selectedAgent = state.agenList
+      state.selectedAgent = state.agentList
           .where((e) => e.custName == value.groupownerCounter)
           .first;
       update();
@@ -162,8 +167,8 @@ class SignUpController extends BaseController {
   }
 
   void unSelectReferal() {
-    state.kodeReferal.clear();
-    state.selectedReferal = null;
+    state.referralCode.clear();
+    state.selectedReferral = null;
     state.selectedOrigin = null;
     state.isDefaultOrigin = false;
     // state.isSelectCounter = false;

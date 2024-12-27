@@ -1,16 +1,12 @@
 import 'dart:io';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/facility/facility_create_address_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_id_card_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/util/constant.dart';
-import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,7 +32,6 @@ class FacilityFormInfoController extends BaseController {
 
   final requestData = FacilityCreateModel();
 
-  File? pickedImage;
   String? pickedImageUrl;
 
   bool isLoading = false;
@@ -46,6 +41,7 @@ class FacilityFormInfoController extends BaseController {
   Destination? selectedDestination;
 
   bool _pickImageFailed = false;
+
   bool get pickImageFailed => _pickImageFailed;
 
   set pickImageFailed(bool value) {
@@ -54,6 +50,7 @@ class FacilityFormInfoController extends BaseController {
   }
 
   bool _isOnline = true;
+
   bool get isOnline => _isOnline;
 
   @override
@@ -81,39 +78,6 @@ class FacilityFormInfoController extends BaseController {
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       connection.isOnline().then((value) {
         _isOnline = value && (result != ConnectivityResult.none);
-        if (_isOnline) {
-          AppSnackBar.custom(
-            message: '',
-            snackPosition: SnackPosition.TOP,
-            margin: const EdgeInsets.only(top: 195),
-            padding: const EdgeInsets.symmetric(vertical: 1.5),
-            messageText: Container(
-              color: successColor, // Set your desired background color here
-              child: Center(
-                child: Text(
-                  'Online Mode'.tr,
-                  style: listTitleTextStyle.copyWith(color: whiteColor),
-                ),
-              ),
-            ),
-          );
-        } else {
-          AppSnackBar.custom(
-            message: '',
-            snackPosition: SnackPosition.TOP,
-            margin: const EdgeInsets.only(top: 195),
-            padding: const EdgeInsets.symmetric(vertical: 1.5),
-            messageText: Container(
-              color: greyDarkColor1, // Set your desired background color here
-              child: Center(
-                child: Text(
-                  'Offline Mode'.tr,
-                  style: listTitleTextStyle.copyWith(color: whiteColor),
-                ),
-              ),
-            ),
-          );
-        }
         update();
       });
     }));
@@ -129,12 +93,11 @@ class FacilityFormInfoController extends BaseController {
 
       if (imageSizeApproved) {
         pickedImageUrl = image.path;
-        pickedImage = File(pickedImageUrl!);
-        update();
       } else {
         _pickImageFailed = true;
-        update();
       }
+
+      update();
     }
   }
 

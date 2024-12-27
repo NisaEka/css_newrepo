@@ -67,7 +67,7 @@ Color iconColor(BuildContext context) {
 Color iconShadowColor(BuildContext context) {
   return AppConst.isLightTheme(context)
       ? CupertinoColors.systemGrey2
-      : greyDarkColor1;
+      : greyLightColor2;
 }
 
 Color formTextColor(BuildContext context) {

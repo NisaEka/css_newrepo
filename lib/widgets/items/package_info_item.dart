@@ -1,4 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:css_mobile/widgets/items/menu_icon.dart';
@@ -8,7 +10,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class PackageInfoItem extends StatelessWidget {
-  const PackageInfoItem({super.key});
+  final TransactionModel data;
+
+  const PackageInfoItem({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,7 @@ class PackageInfoItem extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: warningColor.withOpacity(0.7),
+        color: warningDarkColor.withOpacity(0.7),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -26,9 +30,9 @@ class PackageInfoItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            title: const CustomLabelText(
+            title: CustomLabelText(
               title: 'awb number',
-              value: '1234',
+              value: data.awb ?? '',
               fontColor: whiteColor,
             ),
             leading: const MenuIcon(
@@ -43,7 +47,7 @@ class PackageInfoItem extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             trailing: IconButton(
               onPressed: () => Clipboard.setData(
-                const ClipboardData(text: 'awb'),
+                ClipboardData(text: data.awb ?? ''),
               ),
               padding: EdgeInsets.zero,
               icon: const Icon(Icons.copy),
@@ -56,25 +60,27 @@ class PackageInfoItem extends StatelessWidget {
           ),
           CustomLabelText(
             title: 'Nama Barang'.tr,
-            value: "test",
+            value: data.goodsDesc ?? '',
             fontColor: whiteColor,
           ),
           CustomLabelText(
             title: 'Berat Kiriman'.tr,
-            value: "test",
+            value: '${data.weight?.toInt()} Kg',
             fontColor: whiteColor,
           ),
-          CustomLabelText(
-            title: 'Ongkos Kirim'.tr,
-            value: "test",
-            fontColor: whiteColor,
-          ),
+          data.deliveryPrice != null
+              ? CustomLabelText(
+                  title: 'Ongkos Kirim'.tr,
+                  value: "Rp. ${data.deliveryPrice?.toInt().toCurrency()}",
+                  fontColor: whiteColor,
+                )
+              : const SizedBox(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomLabelText(
                 title: 'Dari'.tr,
-                value: "Bandung",
+                value: data.originDesc ?? '',
                 fontColor: whiteColor,
               ),
               Transform.flip(
@@ -82,7 +88,7 @@ class PackageInfoItem extends StatelessWidget {
                   child: const Icon(Icons.arrow_back, color: whiteColor)),
               CustomLabelText(
                 title: 'Menuju'.tr,
-                value: "Jakarta",
+                value: data.destinationDesc ?? '',
                 fontColor: whiteColor,
               )
             ],

@@ -10,7 +10,6 @@ import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_state.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:get/get.dart';
@@ -56,46 +55,50 @@ class ReceiverController extends BaseController {
     state.receiverPhone.text = state.receiver?.phone ?? '';
     state.receiverDest.text = state.receiver?.idDestination ?? '';
     state.receiverAddress.text = state.receiver?.address?.toUpperCase() ?? '';
-    // if (state.isOnline) {
-    //   getDestinationList(QueryParamModel(
-    //     table: true,
-    //     limit: 1,
-    //     where: jsonEncode([
-    //       {
-    //         "countryName": state.receiver?.country,
-    //       },
-    //       {
-    //         "provinceName": state.receiver?.region,
-    //       },
-    //       {
-    //         "cityName": state.receiver?.city,
-    //       },
-    //       {
-    //         "districtName": state.receiver?.district,
-    //       },
-    //       {
-    //         "subdistrictName": state.receiver?.subDistrict,
-    //       },
-    //       {
-    //         "zipCode": state.receiver?.zipCode,
-    //       },
-    //     ]),
-    //   )).then((value) {
-    //     AppLogger.i("getSelectedReceiver destination ${jsonEncode(value)}");
-    //     state.selectedDestination = value.first;
-    //   });
-    // } else {
-    state.selectedDestination = Destination(
-      destinationCode: state.receiver?.destinationCode,
-      zipCode: state.receiver?.zipCode,
-      cityName: state.receiver?.city,
-      countryName: state.receiver?.country,
-      provinceName: state.receiver?.region,
-      districtName: state.receiver?.district,
-      subdistrictName: state.receiver?.subDistrict,
-      id: state.receiver?.idDestination?.toInt(),
-    );
-    // }
+    try {
+      getDestinationList(QueryModel(
+        table: true,
+        limit: 0,
+        where: [
+          {
+            "countryName": state.receiver?.country,
+          },
+          {
+            "provinceName": state.receiver?.region,
+          },
+          {
+            "cityName": state.receiver?.city,
+          },
+          {
+            "districtName": state.receiver?.district,
+          },
+          {
+            "subdistrictName": state.receiver?.subDistrict,
+          },
+          {
+            "zipCode": state.receiver?.zipCode,
+          },
+        ],
+      )).then((value) {
+        AppLogger.i("getSelectedReceiver destination ${jsonEncode(value)}");
+        if (value.isEmpty) {}
+        state.selectedDestination = value.first;
+      });
+    } catch (e) {
+      AppLogger.e("error get selected receiver $e");
+      state.selectedDestination = Destination(
+        destinationCode: state.receiver?.destinationCode,
+        zipCode: state.receiver?.zipCode,
+        cityName: state.receiver?.city,
+        countryName: state.receiver?.country,
+        provinceName: state.receiver?.region,
+        districtName: state.receiver?.district,
+        subdistrictName: state.receiver?.subDistrict,
+        id: state.receiver?.idDestination,
+      );
+      update();
+    }
+
     update();
     return state.receiver;
   }
@@ -114,6 +117,17 @@ class ReceiverController extends BaseController {
       response = await master.getDestinations(param);
     } catch (e, i) {
       AppLogger.e('error getDestinationList $e, $i');
+      state.selectedDestination = Destination(
+        destinationCode: state.receiver?.destinationCode?.toUpperCase(),
+        zipCode: state.receiver?.zipCode,
+        cityName: state.receiver?.city?.toUpperCase(),
+        countryName: state.receiver?.country?.toUpperCase(),
+        provinceName: state.receiver?.region?.toUpperCase(),
+        districtName: state.receiver?.district?.toUpperCase(),
+        subdistrictName: state.receiver?.subDistrict?.toUpperCase(),
+        id: state.receiver?.idDestination,
+      );
+      update();
     }
 
     state.isLoading = false;

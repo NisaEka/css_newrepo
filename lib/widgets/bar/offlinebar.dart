@@ -21,7 +21,7 @@ class OfflineBar extends StatelessWidget {
             : warningColor,
       ),
       child: Text(
-        'You are offline'.tr,
+        'Anda sedang offline'.tr,
         style: listTitleTextStyle.copyWith(color: whiteColor),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_state.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/widgets/items/registration_info_item.dart';
 import 'package:get/get.dart';
 
 class SignUpOTPController extends BaseController {
@@ -43,11 +44,16 @@ class SignUpOTPController extends BaseController {
               InputPinconfirmModel(email: state.email, pin: state.otpPin.text))
           .then((value) {
         if (value.code == 201) {
-          Get.to(() => SuccessScreen(
-                message: "Selamat, kamu sudah berhasil mendaftar".tr,
-                thirdButtonTitle: "Masuk".tr,
-                onThirdAction: () => Get.offAll(() => const LoginScreen()),
-              ));
+          Get.to(
+            SuccessScreen(
+              message: "Selamat, kamu sudah berhasil mendaftar".tr,
+              customInfo: RegistrationInfoItem(
+                data: state.userData,
+              ),
+              thirdButtonTitle: "Masuk".tr,
+              onThirdAction: () => Get.offAll(() => const LoginScreen()),
+            ),
+          );
         } else {
           AppSnackBar.error('PIN tidak sesuai'.tr);
         }

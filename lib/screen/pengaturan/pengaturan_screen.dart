@@ -136,7 +136,7 @@ class PengaturanScreen extends StatelessWidget {
                       prefixIcon: Icons.dark_mode_rounded,
                       width: 40,
                       margin: EdgeInsets.zero,
-                      padding: EdgeInsets.zero,
+                      // padding: const EdgeInsets.only(left: 6),
                       onPressed: () => c.changeTheme("dark"),
                     ),
                     const SizedBox(width: 10),
@@ -148,7 +148,7 @@ class PengaturanScreen extends StatelessWidget {
                       borderColor:
                           c.mode == "light" ? Colors.transparent : greyColor,
                       margin: EdgeInsets.zero,
-                      padding: EdgeInsets.zero,
+                      // padding: const EdgeInsets.only(left: 6),
                       prefixIcon: Icons.light_mode_rounded,
                       width: 40,
                       onPressed: () => c.changeTheme("light"),

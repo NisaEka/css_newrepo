@@ -80,7 +80,7 @@ class DashboardAggCountItem extends StatelessWidget {
                         children: [
                           TransactionCard(
                               title: "Jumlah Transaksi".tr,
-                              count: total,
+                              count: total.toString(),
                               subtitle: "7 Hari Terakhir",
                               color: Colors.blue,
                               icon: Icons.show_chart,
@@ -103,8 +103,8 @@ class DashboardAggCountItem extends StatelessWidget {
                                             e.status == "Belum di Transfer")
                                         .first
                                         .totalCod
-                                        ?.toInt() ??
-                                    0,
+                                        .toString() ??
+                                    '',
                                 subtitle:
                                     "${percentage(transSummary?.summary?.where((e) => e.status == "Belum di Transfer").first.totalCod?.toDouble() ?? 0)}% dari jumlah transaksi",
                                 color: Colors.blue,
@@ -147,8 +147,8 @@ class DashboardAggCountItem extends StatelessWidget {
                                             e.status == "Sudah di Transfer")
                                         .first
                                         .totalCod
-                                        ?.toInt() ??
-                                    0,
+                                        ?.toString() ??
+                                    '',
                                 subtitle:
                                     "${percentage(transSummary?.summary?.where((e) => e.status == "Sudah di Transfer").first.totalCod?.toDouble() ?? 0)}% dari jumlah transaksi",
                                 color: Colors.blue,
@@ -179,10 +179,10 @@ class DashboardAggCountItem extends StatelessWidget {
                     Row(
                       children: [
                         TypeTransactionCard(
-                          count: transSummary?.totalKirimanCod?.totalCod
+                          value1: transSummary?.totalKirimanCod?.totalCod
                                   .toString() ??
                               '',
-                          amount: transSummary?.totalKirimanCod?.codAmount
+                          value2: transSummary?.totalKirimanCod?.codAmount
                                   ?.toInt()
                                   .toCurrency()
                                   .toString() ??

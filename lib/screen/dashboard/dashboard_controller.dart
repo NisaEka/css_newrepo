@@ -296,6 +296,7 @@ class DashboardController extends BaseController {
       }
     }
     loadPantauCountList();
+    loadTransCountList(true);
   }
 
   Future<void> saveFCMToken() async {
@@ -342,30 +343,33 @@ class DashboardController extends BaseController {
     update();
     if (state.isLogin) {
       try {
-        var trans = await transaction.getPantauCount(QueryModel(between: [
-          {
-            "awbDate": [
-              DateTime.now()
-                  .subtract(const Duration(days: 6))
-                  .copyWith(hour: 0, minute: 0, second: 0),
-              DateTime.now()
-            ]
-          }
-        ]));
+        var pantau = await transaction.getPantauCount(QueryModel(
+          table: true,
+          between: [
+            {
+              "awbDate": [
+                DateTime.now()
+                    .subtract(const Duration(days: 6))
+                    .copyWith(hour: 0, minute: 0, second: 0),
+                DateTime.now()
+              ]
+            }
+          ],
+        ));
 
-        trans.data?.forEach((item) {
+        pantau.data?.forEach((item) {
           if (item.status == 'Total Kiriman') {
-            state.kirimanKamu.totalPantau =
+            state.kirimanKamu.totalKiriman =
                 item.totalCod + item.totalCodOngkir + item.totalNonCod;
             for (var chart in item.chart) {
-              state.kirimanKamu.pantauChart.add(chart.y);
+              state.kirimanKamu.lineChart.add(chart.y);
             }
             state.kirimanKamu.totalCod = item.totalCod;
             state.kirimanKamu.codAmount = item.codAmount;
             state.kirimanKamu.totalCodOngkir = item.totalCodOngkir;
             state.kirimanKamu.codOngkirAmount = item.codOngkirAmount;
             state.kirimanKamu.totalNonCod = item.totalNonCod;
-            state.kirimanKamu.ongkirNonCodAmount = item.ongkirNonCodAmount;
+            state.kirimanKamu.nonCodAmount = item.ongkirNonCodAmount;
           }
 
           if (item.status == 'Dalam Proses') {
@@ -384,47 +388,80 @@ class DashboardController extends BaseController {
           }
         });
         state.kirimanKamu.calculatePercentages();
-        loadTransCountList();
-      } catch (e) {
+      } catch (e, i) {
         AppLogger.e('error pantau count :$e');
+        AppLogger.e('error pantau count :$i');
       } finally {
         state.isLoadingKiriman = false;
+        update();
       }
     }
   }
 
-  Future<void> loadTransCountList({bool? isKirimanCOD}) async {
-    state.isLoadingKirimanCOD = true;
-    state.transCountList.clear();
+  Future<void> loadTransCountList(bool isKirimanCOD) async {
+    state.isLoadingKirimanCOD = isKirimanCOD;
+    state.kirimanKamuCOD = DashboardKirimanKamuModel();
+    state.transSummary = null;
     update();
     if (state.isLogin) {
       try {
         transaction.postTransactionDashboard(QueryModel()).then(
           (value) {
             state.transSummary = value.data;
-            state.transCountList.addAll(value.data?.summary ?? []);
             update();
+
+            value.data?.summary?.forEach((item) {
+              if (item.status == 'Jumlah Transaksi') {
+                state.kirimanKamuCOD.totalKiriman =
+                    (value.data?.totalKirimanCod?.codAmount?.toInt() ?? 0) +
+                        (value.data?.totalKirimanCod?.codOngkirAmount
+                                ?.toInt() ??
+                            0);
+                for (var chart in (item.chart ?? [])) {
+                  state.kirimanKamuCOD.lineChart.add(chart.y);
+                }
+              }
+
+              if (item.status == 'Belum Terkumpul') {
+                state.kirimanKamuCOD.onProcess =
+                    ((item.totalCod?.toInt() ?? 0));
+              }
+
+              if (item.status == 'Sukses Diterima') {
+                state.kirimanKamuCOD.suksesDiterima =
+                    ((item.totalCod?.toInt() ?? 0));
+              }
+
+              if (item.status == 'Dibatalkan') {
+                state.kirimanKamuCOD.totalCancel =
+                    ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.totalNonCod =
+                    ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.nonCodAmount =
+                    item.codAmount?.toInt() ?? 0;
+              }
+
+              if (item.status == 'Butuh di Cek') {
+                state.kirimanKamuCOD.totalCod = ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.codAmount = item.codAmount?.toInt() ?? 0;
+              }
+
+              if (item.status == 'Dalam Peninjauan') {
+                state.kirimanKamuCOD.totalCodOngkir =
+                    ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.codAmount = item.codAmount?.toInt() ?? 0;
+              }
+            });
+            state.kirimanKamuCOD.calculatePercentages();
           },
         );
 
-        // aggregation.getAggSummary().then(
-        //   (value) {
-        //     state.aggSummary = value.data;
-        //     update();
-        //   },
-        // );
-        //
-        // aggregation.getAggChart().then(
-        //   (value) {
-        //     state.aggChart = value.data;
-        //     state.isLoadingAgg = false;
-        //     update();
-        //   },
-        // );
+        update();
       } catch (e) {
         AppLogger.e('error loadTransCountList $e');
       } finally {
-        state.isLoadingKiriman = false;
+        await Future.delayed(const Duration(seconds: 2));
+        state.isLoadingKirimanCOD = false;
         update();
       }
     }
@@ -567,7 +604,7 @@ class DashboardController extends BaseController {
 
       if (dropshipper && state.isLogin) {
         await master
-            .getDropshippers(QueryModel())
+            .getDropshippers(QueryModel(limit: 0))
             .then((value) async => await storage.saveData(
                   StorageCore.dropshipper,
                   value,
@@ -576,7 +613,7 @@ class DashboardController extends BaseController {
 
       if (receiver && state.isLogin) {
         await master
-            .getReceivers(QueryModel())
+            .getReceivers(QueryModel(limit: 0))
             .then((value) async => await storage.saveData(
                   StorageCore.receiver,
                   value,

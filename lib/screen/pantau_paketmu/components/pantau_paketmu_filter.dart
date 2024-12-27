@@ -262,9 +262,16 @@ class PantauPaketmuFilter extends HookWidget {
                             ),
                             OfficerDropdown(
                               label: 'Petugas Entry'.tr,
+                              readOnly:
+                                  controller.state.basic?.userType != "PEMILIK",
+                              selectedItem:
+                                  controller.state.selectedPetugasEntry?.name,
                               value: controller.state.selectedPetugasEntry,
                               onChanged: (value) {
-                                controller.state.selectedPetugasEntry = value;
+                                setState(() {
+                                  controller.state.selectedPetugasEntry = value;
+                                  controller.update();
+                                });
                               },
                             ),
                           ],

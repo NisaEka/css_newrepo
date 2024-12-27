@@ -41,6 +41,15 @@ class FacilityFormReturnScreen extends StatelessWidget {
                     confirmButtonTitle: 'OK'.tr,
                     onConfirm: () => controller.onRefreshPickImageState(),
                   )
+                : Container(),
+            controller.npwpNumberFailed
+                ? DefaultAlertDialog(
+                    title: 'Format nomor NPWP tidak sesuai.'.tr,
+                    subtitle:
+                        'Periksa kembali format nomor NPWP yang diinputkan.'.tr,
+                    confirmButtonTitle: 'OK'.tr,
+                    onConfirm: () => controller.onRefreshNpwpNumberState(),
+                  )
                 : Container()
           ],
         );
@@ -57,6 +66,10 @@ class FacilityFormReturnScreen extends StatelessWidget {
         onPressed: () {
           if (c.pickedImageUrl == null) {
             c.pickImageFailed = true;
+            return;
+          }
+          if (c.npwpNumber.text.length < 20) {
+            c.npwpNumberFailed = true;
             return;
           }
           Get.to(() => const FacilityFormBankScreen(),
@@ -170,7 +183,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 controller: c.npwpNumber,
                 hintText: 'Nomor NPWP'.tr,
                 inputType: TextInputType.number,
-                validator: ValidationBuilder().minLength(15).build(),
+                validator: ValidationBuilder().minLength(20).build(),
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                   LengthLimitingTextInputFormatter(16),

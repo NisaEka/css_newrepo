@@ -2,7 +2,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_controller.dart';
-import 'package:css_mobile/util/ext/num_ext.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
@@ -137,6 +137,25 @@ class TransactionForm extends StatelessWidget {
                             ),
                           ],
                         ),
+                        CustomTextFormField(
+                          key: c.state.codKey,
+                          controller: c.state.goodAmount,
+                          hintText: 'Harga Barang'.tr,
+                          prefixIcon: const SatuanFieldIcon(
+                            title: 'Rp',
+                            isPrefix: true,
+                          ),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            ThousandsSeparatorInputFormatter(),
+                          ],
+                          inputType: TextInputType.number,
+                          contentPadding: const EdgeInsets.only(
+                              top: 0, bottom: 0, left: 40, right: 10),
+                          // width: Get.width / 2.4,
+                          isRequired: c.state.insurance,
+                          onChanged: (value) => c.getOngkir(),
+                        ),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
@@ -172,37 +191,19 @@ class TransactionForm extends StatelessWidget {
                             ),
                           ),
                         ),
-                        CustomTextFormField(
-                          controller: c.state.specialInstruction,
-                          hintText: 'Instruksi Khusus (Opsional)'.tr,
-                          validator: (value) => value!.isNotEmpty
-                              ? value.length < 8
-                                  ? 'Masukan ini harus terdiri dari minimal 8 karakter'
-                                      .tr
-                                  : null
-                              : null,
-                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             CustomTextFormField(
-                              key: c.state.codKey,
-                              controller: c.state.goodAmount,
-                              hintText: 'Harga Barang'.tr,
-                              prefixIcon: const SatuanFieldIcon(
-                                title: 'Rp',
-                                isPrefix: true,
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                ThousandsSeparatorInputFormatter(),
-                              ],
-                              inputType: TextInputType.number,
-                              contentPadding: const EdgeInsets.only(
-                                  top: 0, bottom: 0, left: 40, right: 10),
                               width: Get.width / 2.4,
-                              isRequired: c.state.insurance,
-                              onChanged: (value) => c.getOngkir(),
+                              controller: c.state.specialInstruction,
+                              hintText: 'Instruksi Khusus (Opsional)'.tr,
+                              validator: (value) => value!.isNotEmpty
+                                  ? value.length < 8
+                                      ? 'Masukan ini harus terdiri dari minimal 8 karakter'
+                                          .tr
+                                      : null
+                                  : null,
                             ),
                             const Spacer(),
                             Text('Dimensi Kiriman'.tr,
@@ -307,50 +308,46 @@ class TransactionForm extends StatelessWidget {
                                   : Colors.lightBlueAccent,
                               onChanged: (bool? value) {
                                 c.state.woodPacking = value!;
-                                var temp = c.state.specialInstruction.text;
+                                // var temp = c.state.specialInstruction.text;
                                 c.state.specialIns =
                                     c.state.specialInstruction.text;
-                                c.state.specialInstruction.text = value == true
-                                    ? "MOHON DIPACKING KAYU $temp"
-                                    : temp.substring(21, temp.length);
+                                // c.state.specialInstruction.text = value == true ? "MOHON DIPACKING KAYU $temp" : temp.substring(21, temp.length);
                                 c.update();
                               },
                             ),
-                            title: Text(
-                              "Packing Kayu".tr,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(fontWeight: regular),
-                            ),
-                            // trailing: IconButton(
-                            //   onPressed: () {},
-                            //   icon: const Icon(
-                            //     Icons.info_outline,
-                            //     color: redJNE,
-                            //   ),
-                            //   tooltip: 'Hanya sebagai instruksi penggunaan packing kayu',
-                            // ),
-                            trailing: Tooltip(
-                              key: c.state.tooltipkey,
-                              triggerMode: TooltipTriggerMode.tap,
-                              showDuration: const Duration(seconds: 3),
-                              decoration: const ShapeDecoration(
-                                color: greyColor,
-                                shape: ToolTipCustomShape(usePadding: false),
-                              ),
-                              textStyle: listTitleTextStyle.copyWith(
-                                  color: whiteColor),
-                              message:
-                                  'Hanya sebagai instruksi penggunaan packing kayu'
-                                      .tr,
-                              child: Icon(
-                                Icons.info_outline,
-                                color: color ??
-                                    (AppConst.isLightTheme(context)
-                                        ? redJNE
-                                        : warningColor),
-                              ),
+                            title: Row(
+                              children: [
+                                Text(
+                                  "Packing Kayu".tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(fontWeight: regular),
+                                ),
+                                const SizedBox(width: 10),
+                                Tooltip(
+                                  key: c.state.tooltipkey,
+                                  triggerMode: TooltipTriggerMode.tap,
+                                  showDuration: const Duration(seconds: 3),
+                                  decoration: const ShapeDecoration(
+                                    color: greyColor,
+                                    shape:
+                                        ToolTipCustomShape(usePadding: false),
+                                  ),
+                                  textStyle: listTitleTextStyle.copyWith(
+                                      color: whiteColor),
+                                  message:
+                                      'Hanya sebagai instruksi penggunaan packing kayu'
+                                          .tr,
+                                  child: Icon(
+                                    Icons.info_outline,
+                                    color: color ??
+                                        (AppConst.isLightTheme(context)
+                                            ? redJNE
+                                            : warningColor),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -448,9 +445,6 @@ class TransactionForm extends StatelessWidget {
                                                   c.state.account.accountService
                                                               ?.toUpperCase() ==
                                                           'COD'
-                                                      // &&
-                                                      //     (controller.state.account.state.accountCustType?.toUpperCase() == "990" ||
-                                                      //         controller.state.account.state.accountCustType?.toUpperCase() == "992")
                                                       ? Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -616,6 +610,19 @@ class TransactionForm extends StatelessWidget {
                                 },
                               )
                             : const SizedBox(),
+                        // CustomFilledButton(
+                        //   color: whiteColor,
+                        //   borderColor: c.state.formValidate
+                        //       ? primaryColor(context)
+                        //       : greyColor,
+                        //   fontColor: c.state.formValidate
+                        //       ? primaryColor(context)
+                        //       : greyColor,
+                        //   title: 'Simpan ke Draft'.tr,
+                        //   onPressed: () {
+                        //     c.state.formValidate ? c.saveDraft() : null;
+                        //   },
+                        // ),
                       ],
                     ),
                   ),

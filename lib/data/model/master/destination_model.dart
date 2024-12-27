@@ -1,6 +1,6 @@
 class Destination {
   Destination({
-    num? id,
+    dynamic id,
     String? countryName,
     String? provinceName,
     String? cityName,
@@ -38,7 +38,7 @@ class Destination {
     _facilityCode = json['facilityCode'];
     _cityZone = json['cityZone'];
   }
-  num? _id;
+  dynamic _id;
   String? _countryName;
   String? _provinceName;
   String? _cityName;
@@ -50,7 +50,7 @@ class Destination {
   String? _facilityCode;
   String? _cityZone;
   Destination copyWith({
-    num? id,
+    dynamic id,
     String? countryName,
     String? provinceName,
     String? cityName,
@@ -75,7 +75,7 @@ class Destination {
         facilityCode: facilityCode ?? _facilityCode,
         cityZone: cityZone ?? _cityZone,
       );
-  num? get id => _id;
+  dynamic get id => _id;
   String? get countryName => _countryName;
   String? get provinceName => _provinceName;
   String? get cityName => _cityName;

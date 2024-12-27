@@ -2,6 +2,8 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
+import 'package:css_mobile/screen/dashboard/components/dashboard_mini_count.dart';
+import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/items/line_chart_item.dart';
@@ -27,10 +29,6 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> messages = [
-      "Realtime".tr,
-      "Sentuh untuk sinkronisasi manual".tr,
-    ];
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
@@ -53,11 +51,12 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Kiriman Kamu".tr,
+                Text("Kiriman COD Kamu".tr,
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 10),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Shimmer(
                       isLoading: isLoadingKiriman,
@@ -66,8 +65,21 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TransactionCard(
-                            title: "Jumlah Transaksi".tr,
-                            count: kirimanKamu.totalPantau,
+                            // title: "Jumlah Transaksi".tr,
+                            height: 140,
+                            customTitle: DashboardMiniCount(
+                              width: Get.width * 0.18,
+                              margin: EdgeInsets.zero,
+                              label: 'Jumlah Transaksi COD'.tr,
+                              value:
+                                  (transSummary?.totalKirimanCod?.totalCod ?? 0)
+                                      .toString(),
+                              labelBgColor: blueJNE,
+                              valueBgColor: warningColor,
+                              fontSize: 5,
+                            ),
+                            countValue: "Rp.\n",
+                            count: kirimanKamu.totalKiriman.toCurrency(),
                             subtitle: '${"7 Hari Terakhir".tr}\n',
                             color: primaryColor(context),
                             icon: Icons.show_chart,
@@ -75,61 +87,81 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             suffixChart: SizedBox(
                               width: 45,
                               height: 20,
-                              child: kirimanKamu.pantauChart.isNotEmpty
-                                  ? LineChartItem(kirimanKamu.pantauChart
+                              child: kirimanKamu.lineChart.isNotEmpty
+                                  ? LineChartItem(kirimanKamu.lineChart
                                       .map((e) => e.toDouble())
                                       .toList())
                                   : const SizedBox(),
                             ),
-                            notificationLabel: "Masih dikamu".tr,
-                            notificationCount: transSummary?.summary
-                                    ?.where((e) => e.status == "Masih di Kamu")
+                          ),
+                          TransactionCard(
+                            height: 140,
+                            customTitle: DashboardMiniCount(
+                              width: Get.width * 0.19,
+                              margin: EdgeInsets.zero,
+                              label: 'Belum Terkumpul dari pembeli'.tr,
+                              value: kirimanKamu.onProcess.toString(),
+                              labelBgColor: blueJNE,
+                              valueBgColor: errorColor,
+                              fontSize: 5,
+                            ),
+                            countValue: "Rp.\n",
+                            count: transSummary?.summary
+                                    ?.where(
+                                      (e) => e.status == 'Belum Terkumpul',
+                                    )
                                     .first
-                                    .total
-                                    ?.toInt() ??
-                                0,
-                            notificationColor: warningColor,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TransactionCard(
-                                title: "Dalam Proses".tr,
-                                count: kirimanKamu.onProcess,
-                                subtitle:
-                                    "${double.parse((kirimanKamu.onProcessPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
-                                color: redJNE,
-                                isLoading: isLoadingKiriman,
-                                prefixChart: SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    value: (kirimanKamu.onProcessPercentage
-                                            .toDouble() /
-                                        100),
-                                    backgroundColor: Colors.grey[300],
-                                    color: redJNE,
-                                    strokeWidth: 4,
-                                  ),
-                                ),
-                                notificationLabel: "Dibatalkan".tr,
-                                notificationCount: transSummary?.summary
-                                        ?.where((e) => e.status == "Dibatalkan")
-                                        .first
-                                        .total
-                                        ?.toInt() ??
-                                    0,
-                                notificationColor: errorColor,
+                                    .codAmount
+                                    ?.toInt()
+                                    .toCurrency() ??
+                                '',
+                            subtitle:
+                                "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
+                            color: primaryColor(context),
+                            statusColor: Colors.green,
+                            prefixChart: SizedBox(
+                              width: 25,
+                              height: 25,
+                              child: CircularProgressIndicator(
+                                value: (kirimanKamu.suksesDiterimaPercentage
+                                        .toDouble() /
+                                    100),
+                                backgroundColor: Colors.grey[300],
+                                color: Colors.green,
+                                strokeWidth: 4,
                               ),
-                              const SizedBox(height: 16),
-                            ],
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TransactionCard(
-                                title: "Transaksi Terkirim".tr,
-                                count: kirimanKamu.suksesDiterima,
+                                height: 140,
+                                customTitle: Column(
+                                  children: [
+                                    DashboardMiniCount(
+                                      width: Get.width * 0.19,
+                                      margin: EdgeInsets.zero,
+                                      label: 'Terkumpul dari pembeli'.tr,
+                                      value:
+                                          kirimanKamu.suksesDiterima.toString(),
+                                      labelBgColor: blueJNE,
+                                      valueBgColor: successColor,
+                                      fontSize: 5,
+                                    ),
+                                    const SizedBox(height: 7.5)
+                                  ],
+                                ),
+                                countValue: "Rp.\n",
+                                count: transSummary?.summary
+                                        ?.where(
+                                          (e) => e.status == 'Sukses Diterima',
+                                        )
+                                        .first
+                                        .codAmount
+                                        ?.toInt()
+                                        .toCurrency() ??
+                                    '',
                                 subtitle:
                                     "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
                                 color: primaryColor(context),
@@ -153,31 +185,73 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TypeTransactionCard(
-                          count: kirimanKamu.totalCod.toString(),
-                          amount: kirimanKamu.codAmount.toInt().toCurrency(),
-                          description: "Transaksi COD",
-                          lineColor: redJNE,
-                          isLoading: isLoadingKiriman,
-                        ),
-                        TypeTransactionCard(
-                          count: kirimanKamu.totalCodOngkir.toString(),
-                          amount:
-                              kirimanKamu.codOngkirAmount.toInt().toCurrency(),
-                          description: "Transaksi COD Ongkir",
-                          lineColor: warningColor,
-                          isLoading: isLoadingKiriman,
-                        ),
-                        TypeTransactionCard(
-                          count: kirimanKamu.totalNonCod.toString(),
-                          description: "Transaksi NON COD",
-                          lineColor: Colors.green,
-                          isLoading: isLoadingKiriman,
-                        ),
-                      ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TypeTransactionCard(
+                            prefixVal1: "Rp.",
+                            value1: kirimanKamu.codAmount.toInt().toCurrency(),
+                            suffixVal2: "Kiriman".tr,
+                            value2: kirimanKamu.totalCod.toInt().toCurrency(),
+                            description: "Butuh di Cek".tr,
+                            lineColor: infoColor,
+                            isLoading: isLoadingKiriman,
+                          ),
+                          const SizedBox(width: 10),
+                          TypeTransactionCard(
+                            prefixVal1: "Rp.",
+                            value1: kirimanKamu.codOngkirAmount
+                                .toInt()
+                                .toCurrency(),
+                            suffixVal2: "Kiriman".tr,
+                            value2:
+                                kirimanKamu.totalCodOngkir.toInt().toCurrency(),
+                            description: "Dalam Peninjauan".tr,
+                            lineColor: warningColor,
+                            isLoading: isLoadingKiriman,
+                          ),
+                          const SizedBox(width: 10),
+                          TypeTransactionCard(
+                            prefixVal1: "Rp.",
+                            value1: transSummary?.summary
+                                    ?.where(
+                                      (e) => e.status == "Sudah Kembali",
+                                    )
+                                    .first
+                                    .codAmount
+                                    ?.toInt()
+                                    .toCurrency() ??
+                                '',
+                            suffixVal2: "Kiriman".tr,
+                            value2: transSummary?.summary
+                                    ?.where(
+                                      (e) => e.status == "Sudah Kembali",
+                                    )
+                                    .first
+                                    .totalCod
+                                    ?.toInt()
+                                    .toCurrency() ??
+                                '',
+                            description: "Sudah Kembali".tr,
+                            lineColor: successColor,
+                            isLoading: isLoadingKiriman,
+                          ),
+                          const SizedBox(width: 10),
+                          TypeTransactionCard(
+                            prefixVal1: "Rp.",
+                            value1:
+                                kirimanKamu.nonCodAmount.toInt().toCurrency(),
+                            suffixVal2: "Kiriman".tr,
+                            value2:
+                                kirimanKamu.totalNonCod.toInt().toCurrency(),
+                            description: "Dibatalkan Oleh Kamu".tr,
+                            lineColor: errorColor,
+                            isLoading: isLoadingKiriman,
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -233,7 +307,8 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                               width: double.infinity,
                               key: ValueKey<int>(currentSecond),
                               child: Text(
-                                messages[currentSecond % messages.length],
+                                Constant.dashboardRefreshText[currentSecond %
+                                    Constant.dashboardRefreshText.length],
                                 textAlign: TextAlign.left,
                                 style: Theme.of(context)
                                     .textTheme

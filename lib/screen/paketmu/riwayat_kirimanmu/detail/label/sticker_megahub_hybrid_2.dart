@@ -195,6 +195,8 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                                     style: labelTextStyle),
                                 Text('Pembayaran: ${data.type ?? '-'}',
                                     style: labelTextStyle),
+                                Text('Order ID: ${data.orderId ?? '-'}',
+                                    style: labelTextStyle),
                                 // Text('Order ID: ${data.orderId}', style: labelTextStyle),
                               ],
                             ),
@@ -210,7 +212,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   alignment: Alignment.center,
                   // color: Colors.grey,
                   child: Text(
-                    "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.receiver?.destinationCode?.substring(0, 3) ?? '-'}\n${data.receiver?.zipCode}",
+                    "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.destination?.facilityCode?.substring(0, 3) ?? data.destination?.cityZone ?? ''}\n${data.receiver?.zipCode}",
                     style: TextStyle(fontSize: 15, fontWeight: bold),
                     textAlign: TextAlign.center,
                   ),
@@ -224,11 +226,11 @@ class StickerMegahubHybrid2 extends StatelessWidget {
     );
   }
 
-  // String _maskPhoneNumber(String phoneNumber) {
-  //   if (phoneNumber.length > 6) {
-  //     return phoneNumber.substring(0, phoneNumber.length - 6) + '*' * 6;
-  //   } else {
-  //     return phoneNumber;
-  //   }
-  // }
+// String _maskPhoneNumber(String phoneNumber) {
+//   if (phoneNumber.length > 6) {
+//     return phoneNumber.substring(0, phoneNumber.length - 6) + '*' * 6;
+//   } else {
+//     return phoneNumber;
+//   }
+// }
 }

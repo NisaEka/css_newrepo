@@ -71,14 +71,17 @@ class CustomFilledButton extends StatelessWidget {
               children: [
                 // const SizedBox(width: 5),
                 prefixIcon != null
-                    ? Icon(
-                        prefixIcon,
-                        color: isTransparent
-                            ? AppConst.isLightTheme(context)
-                                ? color
-                                : whiteColor
-                            : fontColor,
-                        size: fontSize! + 2,
+                    ? Container(
+                        margin: const EdgeInsets.only(left: 5),
+                        child: Icon(
+                          prefixIcon,
+                          color: isTransparent
+                              ? AppConst.isLightTheme(context)
+                                  ? color
+                                  : whiteColor
+                              : fontColor,
+                          size: fontSize! + 2,
+                        ),
                       )
                     : const SizedBox(),
                 title != null

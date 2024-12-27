@@ -1,3 +1,5 @@
+import 'pantau_count_model.dart';
+
 class CountCardModel {
   CountCardModel({
     String? status,
@@ -10,6 +12,7 @@ class CountCardModel {
     num? codOngkirAmount,
     num? percentageCod,
     num? percentageCodOngkir,
+    List<ChartData>? chart,
   }) {
     _status = status;
     _image = image;
@@ -21,6 +24,7 @@ class CountCardModel {
     _codOngkirAmount = codOngkirAmount;
     _percentageCod = percentageCod;
     _percentageCodOngkir = percentageCodOngkir;
+    _chart = chart;
   }
 
   CountCardModel.fromJson(dynamic json) {
@@ -34,7 +38,14 @@ class CountCardModel {
     _codOngkirAmount = json['codOngkirAmount'];
     _percentageCod = json['percentageCod'];
     _percentageCodOngkir = json['percentageCodOngkir'];
+    if (json['chart'] != null) {
+      _chart = [];
+      json['chart'].forEach((v) {
+        _chart?.add(ChartData.fromJson(v));
+      });
+    }
   }
+
   String? _status;
   String? _image;
   num? _total;
@@ -45,6 +56,8 @@ class CountCardModel {
   num? _codOngkirAmount;
   num? _percentageCod;
   num? _percentageCodOngkir;
+  List<ChartData>? _chart;
+
   CountCardModel copyWith({
     String? status,
     String? image,
@@ -56,6 +69,7 @@ class CountCardModel {
     num? codOngkirAmount,
     num? percentageCod,
     num? percentageCodOngkir,
+    List<ChartData>? chart,
   }) =>
       CountCardModel(
         status: status ?? _status,
@@ -68,17 +82,30 @@ class CountCardModel {
         codOngkirAmount: codOngkirAmount ?? _codOngkirAmount,
         percentageCod: percentageCod ?? _percentageCod,
         percentageCodOngkir: percentageCodOngkir ?? _percentageCodOngkir,
+        chart: chart ?? _chart,
       );
+
   String? get status => _status;
+
   String? get image => _image;
+
   num? get total => _total;
+
   num? get totalCod => _totalCod;
+
   num? get totalNonCod => _totalNonCod;
+
   num? get totalCodOngkir => _totalCodOngkir;
+
   num? get codAmount => _codAmount;
+
   num? get codOngkirAmount => _codOngkirAmount;
+
   num? get percentageCod => _percentageCod;
+
   num? get percentageCodOngkir => _percentageCodOngkir;
+
+  List<ChartData>? get chart => _chart;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -92,6 +119,10 @@ class CountCardModel {
     map['codOngkirAmount'] = _codOngkirAmount;
     map['percentageCod'] = _percentageCod;
     map['percentageCodOngkir'] = _percentageCodOngkir;
+    if (_chart != null) {
+      map['chart'] = _chart?.map((v) => v.toJson()).toList();
+    }
+
     return map;
   }
 }

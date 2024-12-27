@@ -31,9 +31,7 @@ class LaporankuBody extends StatelessWidget {
                   controller: c.state.searchField,
                   prefixIcon: SvgPicture.asset(
                     IconsConstant.search,
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? whiteColor
-                        : blueJNE,
+                    color: fifthColor(context),
                   ),
                   margin: EdgeInsets.zero,
                   onChanged: (p0) => c.state.pagingController.refresh(),

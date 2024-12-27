@@ -343,7 +343,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
       QueryModel param) async {
     var now = DateTime.now().toLocal();
     var startDate = DateTime(now.year, now.month, now.day)
-        .subtract(const Duration(days: 7))
+        .subtract(const Duration(days: 6))
         .toIso8601String();
     var endDate = DateTime(now.year, now.month, now.day, 23, 59, 59, 999)
         .toIso8601String();
@@ -351,7 +351,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try {
       Response response = await network.base.get(
         "/transaction/dashboards",
-        options: Options(receiveTimeout: const Duration(seconds: 15)),
+        // options: Options(receiveTimeout: const Duration(seconds: 20)),
         queryParameters: param.copyWith(
           between: [
             {
@@ -381,10 +381,11 @@ class TransactionRepositoryImpl extends TransactionRepository {
   @override
   Future<BaseResponse<List<PantauCountModel>>> getPantauCount(
       QueryModel param) async {
+    network.base.options.connectTimeout = const Duration(seconds: 20);
     try {
       Response response = await network.base.get(
         '/transaction/tracks/count/dashboard',
-        options: Options(receiveTimeout: const Duration(seconds: 15)),
+        options: Options(receiveTimeout: const Duration(seconds: 25)),
         queryParameters: param.toJson(),
       );
 

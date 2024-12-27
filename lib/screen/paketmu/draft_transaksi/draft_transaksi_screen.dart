@@ -24,7 +24,7 @@ class DraftTransaksiScreen extends StatelessWidget {
         init: DraftTransaksiController(),
         builder: (controller) {
           return PopScope(
-            canPop: controller.pop,
+            canPop: false,
             onPopInvokedWithResult: (bool didPop, Object? result) =>
                 Get.delete<DashboardController>().then(
               (_) => Get.offAll(() => const DashboardScreen()),
@@ -38,7 +38,7 @@ class DraftTransaksiScreen extends StatelessWidget {
   }
 
   CustomTopBar _appBarContent(DraftTransaksiController c) {
-    final bool fromMenu = Get.arguments?['fromMenu'] ?? true;
+    final bool fromMenu = Get.arguments?['fromMenu'] ?? false;
     return CustomTopBar(
       title: 'Draft Transaksi'.tr,
       leading: CustomBackButton(
@@ -67,7 +67,7 @@ class DraftTransaksiScreen extends StatelessWidget {
 
   Widget _bodyContent(DraftTransaksiController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Column(
         children: [
           CustomSearchField(

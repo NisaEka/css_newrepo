@@ -21,6 +21,7 @@ class SuccessScreen extends StatelessWidget {
   final Widget? customInfo;
   final double? iconHeight;
   final double? iconMargin;
+  final EdgeInsets? custompadding;
 
   const SuccessScreen({
     super.key,
@@ -38,6 +39,7 @@ class SuccessScreen extends StatelessWidget {
     this.customInfo,
     this.iconHeight,
     this.iconMargin,
+    this.custompadding,
   });
 
   @override
@@ -47,7 +49,7 @@ class SuccessScreen extends StatelessWidget {
         children: [
           const LogoHeader(),
           Positioned(
-            top: iconMargin ?? 300,
+            top: iconMargin ?? 200,
             left: 0,
             right: 0,
             child: icon ??
@@ -75,7 +77,7 @@ class SuccessScreen extends StatelessWidget {
                   // ),
                   (message?.isNotEmpty ?? false)
                       ? SizedBox(
-                          height: Get.width * 0.5,
+                          height: customInfo != null ? null : Get.width * 0.5,
                           width: Get.width,
                           child: Text(
                             message?.tr ?? '',

@@ -7,6 +7,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dashboard_appbar.dart';
+import 'dashboard_kiriman_cod_count_items.dart';
 import 'dashboard_menu2.dart';
 
 class DashboardBody extends StatelessWidget {
@@ -25,7 +26,8 @@ class DashboardBody extends StatelessWidget {
                 )
                 .then((_) => c.loadNews())
                 .then((_) {
-              c.loadTransCountList();
+              c.loadPantauCountList();
+              c.loadTransCountList(true);
             }),
             child: CustomScrollView(
               slivers: [
@@ -40,37 +42,9 @@ class DashboardBody extends StatelessWidget {
                       const DashboardMenu2(),
                       // CustomFilledButton(
                       //   color: Colors.blue,
-                      //   onPressed: () => Get.to(const Ob1Screen()),
-                      // ),
-                      // CustomFilledButton(
-                      //   color: Colors.blue,
                       //   onPressed: () => Get.to(
-                      //     SuccessScreen(
-                      //       // lottie: ImageConstant.packedLottie,
-                      //       // iconMargin: 100,
-                      //       // customInfo: PackageInfoItem(),
-                      //       // iconHeight: Get.width * 0.6,
-                      //       message: 'message',
-                      //       secondButtonTitle: 'second button',
-                      //       onSecondAction: () {},
-                      //       firstButtonTitle: 'firstbutton',
-                      //       onFirstAction: () {},
-                      //       thirdButtonTitle: 'third button',
-                      //       onThirdAction: () {
                       //
-                      //       },
-                      //     ),
-                      //   ),
                       // ),
-                      // c.state.isLogin &&
-                      //         (c.state.allow.keuanganAggregasi == "Y" ||
-                      //             c.state.allow.monitoringAgg == "Y")
-                      //     ? DashboardAggCountItem(
-                      //         transSummary: c.state.aggSummary,
-                      //         transChart: c.state.aggChart,
-                      //         isLoadingAgg: c.state.isLoadingAgg,
-                      //       )
-                      //     : const SizedBox(),
                       c.state.isLogin &&
                               (c.state.allow.riwayatPesanan == "Y" ||
                                   c.state.allow.paketmuRiwayat == 'Y')
@@ -78,22 +52,27 @@ class DashboardBody extends StatelessWidget {
                               transSummary: c.state.transSummary,
                               kirimanKamu: c.state.kirimanKamu,
                               isLoadingKiriman: c.state.isLoadingKiriman,
-                              onRefresh: () => c.loadPantauCountList(),
+                              onRefresh: () {
+                                c.loadPantauCountList();
+                                c.loadTransCountList(false);
+                              },
                             )
                           : const SizedBox(),
-                      // const SizedBox(height: 50),
-                      // c.state.isLogin
-                      //     ? DashboardCountItems(
-                      //         title: 'Kiriman Kamu'.tr,
-                      //         total: c.state.transSummary?.summary?.where((e) => e.status == 'Jumlah Transaksi').first.total?.toInt() ?? 0,
-                      //       )
-                      //     : const SizedBox(),
-                      // c.state.isLogin,
-                      //     ? const DashboardKirimanCounts()
-                      //     : const SizedBox(),
-                      // c.state.isLogin
-                      //     ? const DashboardKirimanCod()
-                      //     : const SizedBox(),
+                      c.state.isLogin &&
+                              (c.state.allow.riwayatPesanan == "Y" ||
+                                  c.state.allow.paketmuRiwayat == 'Y') &&
+                              (c.state.allow.accountCod == "Y")
+                          ? DashboardKirimanCODCountItem(
+                              transSummary: c.state.transSummary,
+                              kirimanKamu: c.state.kirimanKamuCOD,
+                              isLoadingKiriman: c.state.isLoadingKirimanCOD ||
+                                  (c.state.transSummary?.summary?.isEmpty ??
+                                      false),
+                              onRefresh: () {
+                                c.loadTransCountList(true);
+                              },
+                            )
+                          : const SizedBox(),
                       const DashboardPromo(),
                       const DashboardNews(),
                       const SizedBox(height: 50),

@@ -1,9 +1,6 @@
 import 'dart:io';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/bank/bank_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_bank_info_model.dart';
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
@@ -13,7 +10,6 @@ import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/logger.dart';
-import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
@@ -111,39 +107,6 @@ class FacilityFormBankController extends BaseController {
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       connection.isOnline().then((value) {
         _isOnline = value && (result != ConnectivityResult.none);
-        if (_isOnline) {
-          AppSnackBar.custom(
-            message: '',
-            snackPosition: SnackPosition.TOP,
-            margin: const EdgeInsets.only(top: 195),
-            padding: const EdgeInsets.symmetric(vertical: 1.5),
-            messageText: Container(
-              color: successColor, // Set your desired background color here
-              child: Center(
-                child: Text(
-                  'Online Mode'.tr,
-                  style: listTitleTextStyle.copyWith(color: whiteColor),
-                ),
-              ),
-            ),
-          );
-        } else {
-          AppSnackBar.custom(
-            message: '',
-            snackPosition: SnackPosition.TOP,
-            margin: const EdgeInsets.only(top: 195),
-            padding: const EdgeInsets.symmetric(vertical: 1.5),
-            messageText: Container(
-              color: greyDarkColor1, // Set your desired background color here
-              child: Center(
-                child: Text(
-                  'Offline Mode'.tr,
-                  style: listTitleTextStyle.copyWith(color: whiteColor),
-                ),
-              ),
-            ),
-          );
-        }
         update();
       });
     }));
@@ -199,10 +162,6 @@ class FacilityFormBankController extends BaseController {
     facilityCreateArgs.setBankInfo(bankInfo);
   }
 
-  FileModel? ktpUrl;
-  FileModel? npwpUrl;
-  FileModel? rekeningUrl;
-
   Future<bool> _uploadFiles() async {
     var fileMap = {
       Constant.keyImageKtp: facilityCreateArgs.getIdCardPath(),
@@ -224,16 +183,24 @@ class FacilityFormBankController extends BaseController {
 
     return await storageRepository.postCcrfFile(fileMap).then((response) {
       if (response.code == HttpStatus.created) {
-        ktpUrl = response.data
-            ?.firstWhere((element) => element.fileType == Constant.keyImageKtp);
-        npwpUrl = response.data?.firstWhere(
+        FileModel? ktpUrl = response.data?.firstWhereOrNull(
+            (element) => element.fileType == Constant.keyImageKtp);
+        FileModel? npwpUrl = response.data?.firstWhereOrNull(
             (element) => element.fileType == Constant.keyImageNpwp);
-        rekeningUrl = response.data?.firstWhere(
+        FileModel? rekeningUrl = response.data?.firstWhereOrNull(
             (element) => element.fileType == Constant.keyImageRekening);
 
-        facilityCreateArgs.setIdCardPath(ktpUrl?.fileUrl ?? '');
-        facilityCreateArgs.setTaxInfoPath(npwpUrl?.fileUrl ?? '');
-        facilityCreateArgs.setBankInfoPath(rekeningUrl?.fileUrl ?? '');
+        if (ktpUrl?.fileUrl != null) {
+          facilityCreateArgs.setIdCardPath(ktpUrl?.fileUrl ?? '');
+        }
+
+        if (npwpUrl?.fileUrl != null) {
+          facilityCreateArgs.setTaxInfoPath(npwpUrl?.fileUrl ?? '');
+        }
+
+        if (rekeningUrl?.fileUrl != null) {
+          facilityCreateArgs.setBankInfoPath(rekeningUrl?.fileUrl ?? '');
+        }
 
         return true;
       } else {
