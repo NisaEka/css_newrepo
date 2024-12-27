@@ -10,11 +10,9 @@ import 'customtextformfield.dart';
 
 class DateFilterField extends StatefulHookWidget {
   final ValueChanged<List<DateTime?>> onChanged;
+  final String? label;
 
-  const DateFilterField({
-    super.key,
-    required this.onChanged,
-  });
+  const DateFilterField({super.key, required this.onChanged, this.label});
 
   @override
   State<DateFilterField> createState() => _DatesFilterContentState();
@@ -46,7 +44,7 @@ class _DatesFilterContentState extends State<DateFilterField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomFormLabel(label: 'Tanggal Entry'.tr),
+          CustomFormLabel(label: widget.label ?? 'Tanggal Entry'.tr),
           const SizedBox(height: 10),
           // Customradiobutton(
           //   title: "Semua Tanggal".tr,
