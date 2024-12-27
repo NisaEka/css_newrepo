@@ -21,12 +21,16 @@ class LacakKirimanController extends BaseController {
     cekToken();
     if (resi != null) {
       searchField.text = resi ?? '';
-      Future.delayed(Duration.zero, () {
-        Get.to(() => PhoneNumberConfirmationScreen(
-              awb: resi ?? '',
-              cekResi: cekResi,
-              isLoading: isLoading,
-            ));
+      Future.delayed(Duration.zero, () async {
+        if (await cekToken()) {
+          cekResi(resi ?? '', '');
+        } else {
+          Get.to(() => PhoneNumberConfirmationScreen(
+                awb: resi ?? '',
+                cekResi: cekResi,
+                isLoading: isLoading,
+              ));
+        }
       });
     }
   }
