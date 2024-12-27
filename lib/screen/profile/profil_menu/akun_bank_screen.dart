@@ -13,18 +13,19 @@ class AkunBankScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AkunBankController>(
-        init: AkunBankController(),
-        builder: (controller) {
-          return Scaffold(
-            appBar: _appBarContent(context),
-            body: Stack(
-              children: [
-                _bodyContent(controller, context),
-                // controller.isLoading ? const LoadingDialog() : Container(),
-              ],
-            ),
-          );
-        });
+      init: AkunBankController(),
+      builder: (controller) {
+        return Scaffold(
+          appBar: _appBarContent(context),
+          body: Stack(
+            children: [
+              _bodyContent(controller, context),
+              // controller.isLoading ? const LoadingDialog() : Container(),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Widget _bodyContent(AkunBankController controller, BuildContext context) {
@@ -32,16 +33,15 @@ class AkunBankScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          const SizedBox(height: 21),
           Expanded(
             child: ListView(
               children: [
+                const SizedBox(height: 15),
                 BankAccountListItem(
                   isLoading: controller.isLoading,
                   icon: Icon(
                     Icons.credit_card_rounded,
-                    color: Theme.of(context).brightness ==
-                        Brightness.light
+                    color: Theme.of(context).brightness == Brightness.light
                         ? redJNE
                         : warningColor,
                   ),
@@ -54,6 +54,7 @@ class AkunBankScreen extends StatelessWidget {
                       controller.ccrfProfil?.bankAccount?.ccrfAccountname ??
                           '-',
                 ),
+                const SizedBox(height: 30),
               ],
             ),
           ),
@@ -87,11 +88,10 @@ class AkunBankScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(Icons.info_rounded, color:
-            Theme.of(context).brightness ==
-              Brightness.light
-              ? redJNE
-              : warningColor),
+            icon: Icon(Icons.info_rounded,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? redJNE
+                    : warningColor),
             tooltip: 'informasi'.tr,
           ),
         )

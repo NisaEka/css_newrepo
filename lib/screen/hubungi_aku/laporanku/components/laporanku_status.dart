@@ -118,11 +118,8 @@ class StatusLaporanku extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          height: 70,
+          height: 45,
           alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height * 0.01,
-          ),
           decoration: BoxDecoration(
             border: Border.all(
               color: iconColor(context),
@@ -143,7 +140,8 @@ class StatusLaporanku extends StatelessWidget {
             children: [
               Text(
                 count.toString(),
-                style: listTitleTextStyle.copyWith(
+                style: sublistTitleTextStyle.copyWith(
+                  fontWeight: bold,
                   color: selected
                       ? whiteColor
                       : AppConst.isLightTheme(context)
@@ -155,10 +153,11 @@ class StatusLaporanku extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 1),
                 child: Text(
                   label,
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   style: sublistTitleTextStyle.copyWith(
+                    fontSize: 10,
                     color: selected
                         ? whiteColor
                         : AppConst.isLightTheme(context)

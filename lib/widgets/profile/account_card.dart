@@ -22,92 +22,88 @@ class AccountCard extends StatelessWidget {
     return Shimmer(
       isLoading: isLoading,
       child: Container(
-        padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: BoxDecoration(
-          color: AppConst.isLightTheme(context) ? whiteColor : greyColor,
-          border: Border.all(color: greyDarkColor1),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: primaryColor(context),
-              spreadRadius: 1,
-              offset: const Offset(-2, 2),
-            ),
-          ],
-        ),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(account.accountNumber ?? '',
-                    style: listTitleTextStyle.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : whiteColor)),
-                SizedBox(
-                    width: Get.width / 2,
-                    child: Text(
-                        "${account.accountName?.toUpperCase() ?? ''} / ${account.accountType?.toUpperCase() ?? account.accountService?.toUpperCase()}",
-                        style: listTitleTextStyle.copyWith(
-                            color: primaryColor(context)))),
-                Row(
-                  children: [
-                    Text(account.accountSs == "Y" ? "SS " : '',
-                        style: sublistTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : whiteColor)),
-                    Text(account.accountYes == "Y" ? "YES " : '',
-                        style: sublistTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : whiteColor)),
-                    Text(account.accountReg == "Y" ? "REG " : '',
-                        style: sublistTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : whiteColor)),
-                    Text(account.accountOke == "Y" ? "OKE " : '',
-                        style: sublistTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : whiteColor)),
-                    Text(account.accountJtr == "Y" ? "JTR " : '',
-                        style: sublistTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : whiteColor)),
-                    Text(account.accountIntl == "Y" ? "INTL " : '',
-                        style: sublistTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : whiteColor)),
-                  ],
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(account.accountService ?? '',
-                    style: listTitleTextStyle.copyWith(
-                        color: primaryColor(context))),
-                Text(account.accountCategory ?? '',
-                    style: subTitleTextStyle.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? greyDarkColor2
-                            : whiteColor)),
-                // Text("CCNC", style: subTitleTextStyle.copyWith(color: greyDarkColor2)),
-              ],
-            )
-          ],
-        ),
-      ),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          margin: EdgeInsets.symmetric(
+              horizontal: 20, vertical: isLoading ? 10 : 0),
+          color: isLoading ? greyColor : Colors.transparent,
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(account.accountNumber ?? '',
+                          style: listTitleTextStyle.copyWith(
+                              color: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : whiteColor)),
+                      SizedBox(
+                          width: Get.width / 2,
+                          child: Text(
+                              "${account.accountName?.toUpperCase() ?? ''} / ${account.accountType?.toUpperCase() ?? account.accountService?.toUpperCase()}",
+                              style: listTitleTextStyle.copyWith(
+                                  color: primaryColor(context)))),
+                      Row(
+                        children: [
+                          Text(account.accountSs == "Y" ? "SS " : '',
+                              style: sublistTitleTextStyle.copyWith(
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : whiteColor)),
+                          Text(account.accountYes == "Y" ? "YES " : '',
+                              style: sublistTitleTextStyle.copyWith(
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : whiteColor)),
+                          Text(account.accountReg == "Y" ? "REG " : '',
+                              style: sublistTitleTextStyle.copyWith(
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : whiteColor)),
+                          Text(account.accountOke == "Y" ? "OKE " : '',
+                              style: sublistTitleTextStyle.copyWith(
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : whiteColor)),
+                          Text(account.accountJtr == "Y" ? "JTR " : '',
+                              style: sublistTitleTextStyle.copyWith(
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : whiteColor)),
+                          Text(account.accountIntl == "Y" ? "INTL " : '',
+                              style: sublistTitleTextStyle.copyWith(
+                                  color: AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : whiteColor)),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(account.accountService ?? '',
+                          style: listTitleTextStyle.copyWith(
+                              color: primaryColor(context))),
+                      Text(account.accountCategory ?? '',
+                          style: subTitleTextStyle.copyWith(
+                              color: AppConst.isLightTheme(context)
+                                  ? greyDarkColor2
+                                  : whiteColor)),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              const Divider(
+                color: greyColor,
+              ),
+            ],
+          )),
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -8,10 +7,8 @@ import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_pakemu_state.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 
@@ -32,7 +29,10 @@ class PantauPaketmuController extends BaseController {
       getPantauList(pageKey);
     });
     resetFilter();
-    selectDateFilter(3);
+    state.startDate.value = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate.value =
+        DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
     applyFilter();
   }
 
@@ -156,46 +156,6 @@ class PantauPaketmuController extends BaseController {
     update();
   }
 
-  void selectDateFilter(int filter) {
-    final today = DateTime.now();
-    state.dateFilter.value = filter.toString();
-    update();
-
-    switch (filter) {
-      case 1:
-        _setDateRange(today.subtract(const Duration(days: 30)), today);
-        break;
-      case 2:
-        _setDateRange(today.subtract(const Duration(days: 7)), today);
-        break;
-      case 3:
-        _setDateRange(today, today);
-        break;
-      case 4:
-        _clearDateRange();
-        break;
-      default:
-        _clearDateRange();
-    }
-  }
-
-  void _setDateRange(DateTime start, DateTime end) {
-    // Set start date time to 00:00:00
-    final startOfDay = DateTime(start.year, start.month, start.day);
-
-    state.startDate.value = startOfDay;
-    state.endDate.value = end;
-    state.startDateField.text = startOfDay.toString().toShortDateFormat();
-    state.endDateField.text = end.toString().toShortDateFormat();
-  }
-
-  void _clearDateRange() {
-    state.startDate.value = null;
-    state.endDate.value = null;
-    state.startDateField.text = '-';
-    state.endDateField.text = '-';
-  }
-
   Future<void> resetFilter({bool? isDetail = false}) async {
     state.countList.clear();
     if (state.basic?.userType != "PEMILIK") {
@@ -213,35 +173,11 @@ class PantauPaketmuController extends BaseController {
     state.isFiltered = true;
     state.searchField.clear();
     state.dateFilter.value = "3";
-    selectDateFilter(3);
+    state.startDate.value = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate.value =
+        DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
     applyFilter(isDetail: isDetail);
-  }
-
-  Future<DateTime?> selectDate() async {
-    final selectedDate = await showDatePicker(
-      context: Get.context!,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-      builder: (context, child) {
-        return Theme(
-          data: CustomTheme().dateTimePickerTheme(context),
-          child: child!,
-        );
-      },
-    );
-
-    // Check if selectedDate is null before creating a new DateTime instance
-    if (selectedDate != null) {
-      return DateTime(
-        selectedDate.year,
-        selectedDate.month,
-        selectedDate.day,
-        1,
-        0,
-      );
-    }
-    return null;
   }
 
   applyFilter({bool? isDetail = false}) async {

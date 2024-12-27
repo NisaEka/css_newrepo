@@ -1,5 +1,4 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -7,10 +6,8 @@ import 'package:css_mobile/data/model/transaction/get_transaction_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transaction_screen.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_state.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RiwayatKirimanController extends BaseController {
@@ -25,7 +22,9 @@ class RiwayatKirimanController extends BaseController {
       getTransaction(pageKey);
     });
     // categoryList();
-    selectDateFilter(3);
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
     applyFilter();
   }
 
@@ -121,104 +120,17 @@ class RiwayatKirimanController extends BaseController {
     update();
   }
 
-  void selectDateFilter(int filter) {
-    state.dateFilter = filter.toString();
-    update();
-    if (filter == 0 || filter == 4) {
-      state.startDate = null;
-      state.endDate = null;
-      state.startDateField.clear();
-      state.endDateField.clear();
-      state.transDate = [];
-    } else if (filter == 1) {
-      state.startDate = DateTime.now()
-          .copyWith(hour: 0, minute: 0)
-          .subtract(const Duration(days: 30));
-      state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text =
-          state.startDate.toString().toShortDateTimeFormat();
-      state.endDateField.text =
-          state.endDate.toString().toShortDateTimeFormat();
-    } else if (filter == 2) {
-      state.startDate = DateTime.now()
-          .copyWith(hour: 0, minute: 0)
-          .subtract(const Duration(days: 7));
-      state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text =
-          state.startDate.toString().toShortDateTimeFormat();
-      state.endDateField.text =
-          state.endDate.toString().toShortDateTimeFormat();
-    } else if (filter == 3) {
-      state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
-      state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text =
-          state.startDate.toString().toShortDateTimeFormat();
-      state.endDateField.text =
-          state.endDate.toString().toShortDateTimeFormat();
-    }
-
-    update();
-  }
-
-  Future<DateTime?> selectDate(BuildContext context) async {
-    // Show date picker
-    final DateTime? selectedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-      builder: (context, child) {
-        return Theme(
-          data: CustomTheme().dateTimePickerTheme(context),
-          child: child!,
-        );
-      },
-    );
-
-    if (selectedDate == null || !context.mounted) return null;
-
-    // Show time picker
-    final TimeOfDay? selectedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      builder: (context, child) {
-        return Theme(
-          data: CustomTheme().dateTimePickerTheme(context),
-          child: child!,
-        );
-      },
-    );
-
-    if (selectedTime == null || !context.mounted) return null;
-
-    // Combine date and time
-    return DateTime(
-      selectedDate.year,
-      selectedDate.month,
-      selectedDate.day,
-      selectedTime.hour,
-      selectedTime.minute,
-    );
-  }
-
   void resetFilter() {
-    // state.startDate = DateTime.now().subtract(Duration(days: 7));
-    // state.endDate = DateTime.now();
-    // state.startDateField.clear();
-    // state.endDateField.clear();
     // // if (state.basic?.userType == "PEMILIK") {
-    selectDateFilter(3);
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
     state.selectedPetugasEntry = null;
     state.selectedStatusKiriman = null;
     // state.isFiltered = false;
     state.searchField.clear();
-    // state.transDate = [];
-    // state.dateFilter = '0';
     update();
     applyFilter();
-
-    // state.pagingController.refresh();
-    // transactionCount();
   }
 
   void selectAll(bool value) {

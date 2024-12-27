@@ -1,18 +1,14 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class PembayaranAggergasiController extends BaseController {
-  final startDateField = TextEditingController();
-  final endDateField = TextEditingController();
   final searchField = TextEditingController();
   final PagingController<int, AggregationModel> pagingController =
       PagingController(firstPageKey: 1);
@@ -136,49 +132,6 @@ class PembayaranAggergasiController extends BaseController {
     update();
   }
 
-  void selectDateFilter(int filter) {
-    dateFilter = filter.toString();
-    update();
-    if (filter == 0 || filter == 4) {
-      startDate = null;
-      endDate = null;
-      startDateField.text = '-';
-      endDateField.text = '-';
-    } else if (filter == 1) {
-      startDate = DateTime.now().subtract(const Duration(days: 30));
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
-    } else if (filter == 2) {
-      startDate = DateTime.now().subtract(const Duration(days: 7));
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
-    } else if (filter == 3) {
-      startDate = DateTime.now();
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
-    }
-
-    update();
-  }
-
-  Future<DateTime?> selectDate(BuildContext context) {
-    return showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-      builder: (context, child) {
-        return Theme(
-          data: CustomTheme().dateTimePickerTheme(context),
-          child: child!,
-        );
-      },
-    );
-  }
-
   void onSearch(String value) {
     searchField.text = value;
     update();
@@ -212,10 +165,9 @@ class PembayaranAggergasiController extends BaseController {
 
   void resetFilter() {
     // if (!isFiltered) {
-    startDate = null;
-    endDate = null;
-    startDateField.clear();
-    endDateField.clear();
+    startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
     isFiltered = false;
     selectedAccount = [];
     selectedAccount.addAll(accountList);
@@ -236,21 +188,6 @@ class PembayaranAggergasiController extends BaseController {
     } else {
       selectedAccount.add(e);
     }
-    update();
-  }
-
-  void onSelectStartDate(DateTime value) {
-    startDate = value;
-    startDateField.text = value.toString().toShortDateFormat();
-    endDate = DateTime.now();
-    endDateField.text = endDate.toString().toShortDateFormat();
-
-    update();
-  }
-
-  void onSelectEndDate(DateTime value) {
-    endDate = value;
-    endDateField.text = value.toString().toShortDateFormat();
     update();
   }
 

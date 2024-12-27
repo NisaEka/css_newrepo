@@ -1,10 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
-import 'package:flutter/material.dart';
 
 class LaporankuController extends BaseController {
   final state = LaporankuState();
@@ -20,8 +18,10 @@ class LaporankuController extends BaseController {
   }
 
   Future<void> initData() async {
-    // selectDateFilter(3);
-    // applyFilter();
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+    update();
+    applyFilter();
     countReports();
   }
 
@@ -102,52 +102,6 @@ class LaporankuController extends BaseController {
     update();
   }
 
-  Future<DateTime?> selectDate(BuildContext context) {
-    return showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-      builder: (context, child) {
-        return Theme(
-          data: CustomTheme().dateTimePickerTheme(context),
-          child: child!,
-        );
-      },
-    );
-  }
-
-  void selectDateFilter(int filter) {
-    state.dateFilter = filter.toString();
-    update();
-    if (filter == 0 || filter == 4) {
-      state.startDate = null;
-      state.endDate = null;
-      state.startDateField.text = '-';
-      state.endDateField.text = '-';
-    } else if (filter == 1) {
-      state.startDate = DateTime.now().subtract(const Duration(days: 30));
-      state.endDate = DateTime.now();
-      state.startDateField.text =
-          state.startDate.toString().toShortDateFormat();
-      state.endDateField.text = state.endDate.toString().toShortDateFormat();
-    } else if (filter == 2) {
-      state.startDate = DateTime.now().subtract(const Duration(days: 7));
-      state.endDate = DateTime.now();
-      state.startDateField.text =
-          state.startDate.toString().toShortDateFormat();
-      state.endDateField.text = state.endDate.toString().toShortDateFormat();
-    } else if (filter == 3) {
-      state.startDate = DateTime.now();
-      state.endDate = DateTime.now();
-      state.startDateField.text =
-          state.startDate.toString().toShortDateFormat();
-      state.endDateField.text = state.endDate.toString().toShortDateFormat();
-    }
-
-    update();
-  }
-
   applyFilter() {
     if (state.startDate != null ||
         state.endDate != null ||
@@ -174,10 +128,13 @@ class LaporankuController extends BaseController {
   }
 
   void resetFilter() {
-    state.startDate = null;
-    state.endDate = null;
-    state.startDateField.clear();
-    state.endDateField.clear();
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+    state.startDateField.text =
+        state.startDate.toString().toShortDateTimeFormat();
+    state.endDateField.text = state.endDate.toString().toShortDateTimeFormat();
+    // state.startDateField.clear();
+    // state.endDateField.clear();
     state.isFiltered = false;
     state.searchField.clear();
     state.date = [];

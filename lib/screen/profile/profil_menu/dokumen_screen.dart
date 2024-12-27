@@ -28,9 +28,10 @@ class DokumenScreen extends StatelessWidget {
 
   Widget _bodyContent(DokumenController c, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: ListView(
         children: [
+          const SizedBox(height: 15),
           DocumentImageItem(
             isLoading: c.isLoading,
             title: 'Lampiran Dokumen KTP'.tr,
@@ -61,6 +62,7 @@ class DokumenScreen extends StatelessWidget {
               c.ccrfProfil?.document?.ccrfAccountattached ?? '',
             ),
           ),
+          const SizedBox(height: 30),
         ],
       ),
     );

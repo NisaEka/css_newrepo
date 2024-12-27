@@ -1,93 +1,17 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UangCODController extends BaseController {
-  final startDateField = TextEditingController();
-  final endDateField = TextEditingController();
-
   DateTime? startDate;
   DateTime? endDate;
   bool isFiltered = false;
   String dateFilter = '0';
   String? date;
 
-  void selectDateFilter(int filter) {
-    dateFilter = filter.toString();
-    update();
-    if (filter == 0 || filter == 4) {
-      startDate = null;
-      endDate = null;
-      startDateField.text = '-';
-      endDateField.text = '-';
-    } else if (filter == 1) {
-      startDate = DateTime.now().subtract(const Duration(days: 30));
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
-    } else if (filter == 2) {
-      startDate = DateTime.now().subtract(const Duration(days: 7));
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
-    } else if (filter == 3) {
-      startDate = DateTime.now();
-      endDate = DateTime.now();
-      startDateField.text = startDate.toString().toShortDateFormat();
-      endDateField.text = endDate.toString().toShortDateFormat();
-    }
-
-    update();
-  }
-
-  Future<DateTime?> selectDate(BuildContext context) async {
-    // Show date picker
-    final DateTime? selectedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-      builder: (context, child) {
-        return Theme(
-          data: CustomTheme().dateTimePickerTheme(context),
-          child: child!,
-        );
-      },
-    );
-
-    if (selectedDate == null || !context.mounted) return null;
-
-    // Show time picker
-    final TimeOfDay? selectedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      builder: (context, child) {
-        return Theme(
-          data: CustomTheme().dateTimePickerTheme(context),
-          child: child!,
-        );
-      },
-    );
-
-    if (selectedTime == null || !context.mounted) return null;
-
-    // Combine date and time
-    return DateTime(
-      selectedDate.year,
-      selectedDate.month,
-      selectedDate.day,
-      selectedTime.hour,
-      selectedTime.minute,
-    );
-  }
-
   void resetFilter() {
-    startDate = null;
-    endDate = null;
-    startDateField.clear();
-    endDateField.clear();
+    startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
     isFiltered = false;
     dateFilter = '0';
 

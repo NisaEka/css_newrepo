@@ -10,9 +10,31 @@ class LacakKirimanRepositoryImpl extends LacakKirimanRepository {
 
   @override
   Future<BaseResponse<PostLacakKirimanModel>> postTracingByCnote(
+      String cnote) async {
+    try {
+      Response response = await network.base.post(
+        '/transaction/traces',
+        data: {'awb': cnote},
+      );
+      return BaseResponse.fromJson(
+          response.data,
+          (json) => PostLacakKirimanModel.fromJson(
+                json as Map<String, dynamic>,
+              ));
+    } on DioException catch (e) {
+      return BaseResponse.fromJson(
+          e.response?.data,
+          (json) => PostLacakKirimanModel.fromJson(
+                json as Map<String, dynamic>,
+              ));
+    }
+  }
+
+  @override
+  Future<BaseResponse<PostLacakKirimanModel>> postTracingByCnotePublic(
       String cnote, String phoneNumber) async {
     try {
-      Response response = await network.base.post('/transaction/traces',
+      Response response = await network.base.post('/transaction/traces/public',
           data: {'awb': cnote, 'phoneNumber': phoneNumber},
           options: Options(extra: {'skipAuth': true}));
       return BaseResponse.fromJson(
