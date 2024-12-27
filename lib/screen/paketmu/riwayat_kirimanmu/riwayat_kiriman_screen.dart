@@ -30,7 +30,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
               ],
             ),
             body: const Padding(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 30),
+              padding: EdgeInsets.only(left: 30, right: 30, top: 15),
               child: Column(
                 children: [
                   TransactionSearchField(),

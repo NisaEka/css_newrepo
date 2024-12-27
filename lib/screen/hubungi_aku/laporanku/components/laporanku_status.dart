@@ -36,10 +36,12 @@ class StatusLaporanku extends StatelessWidget {
                 count: c.state.total,
                 selected: c.state.selectedStatus == 0,
                 onTap: () {
-                  c.state.status = '';
-                  c.state.selectedStatus = 0;
-                  c.update();
-                  c.state.pagingController.refresh();
+                  if (c.state.selectedStatus != 0) {
+                    c.state.status = '';
+                    c.state.selectedStatus = 0;
+                    c.update();
+                    c.state.pagingController.refresh();
+                  }
                 },
                 isFirst: true,
                 isLast: false,
@@ -51,10 +53,12 @@ class StatusLaporanku extends StatelessWidget {
                 count: c.state.waiting,
                 selected: c.state.selectedStatus == 3,
                 onTap: () {
-                  c.state.selectedStatus = 3;
-                  c.state.status = 'On Process';
-                  c.update();
-                  c.state.pagingController.refresh();
+                  if (c.state.selectedStatus != 3) {
+                    c.state.selectedStatus = 3;
+                    c.state.status = 'On Process';
+                    c.update();
+                    c.state.pagingController.refresh();
+                  }
                 },
                 isFirst: false,
                 isLast: false,
@@ -66,10 +70,12 @@ class StatusLaporanku extends StatelessWidget {
                 count: c.state.onProcess,
                 selected: c.state.selectedStatus == 1,
                 onTap: () {
-                  c.state.selectedStatus = 1;
-                  c.state.status = 'Reply CS';
-                  c.update();
-                  c.state.pagingController.refresh();
+                  if (c.state.selectedStatus != 1) {
+                    c.state.selectedStatus = 1;
+                    c.state.status = 'Reply CS';
+                    c.update();
+                    c.state.pagingController.refresh();
+                  }
                 },
                 isFirst: false,
                 isLast: false,
@@ -81,10 +87,12 @@ class StatusLaporanku extends StatelessWidget {
                 count: c.state.closed,
                 selected: c.state.selectedStatus == 2,
                 onTap: () {
-                  c.state.selectedStatus = 2;
-                  c.state.status = 'Closed';
-                  c.update();
-                  c.state.pagingController.refresh();
+                  if (c.state.selectedStatus != 2) {
+                    c.state.selectedStatus = 2;
+                    c.state.status = 'Closed';
+                    c.update();
+                    c.state.pagingController.refresh();
+                  }
                 },
                 isFirst: false,
                 isLast: true,
