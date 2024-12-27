@@ -503,6 +503,7 @@ class LanguageEN {
       " Pengiriman JNE": " JNE Shipping",
       "Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!":
           "Your profile upgrade has been submitted\n Please wait for approval from the JNE Team!",
+      "Tentang": "About",
     };
   }
 }

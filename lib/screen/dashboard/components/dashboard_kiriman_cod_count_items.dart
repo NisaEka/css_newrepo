@@ -307,8 +307,10 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                               width: double.infinity,
                               key: ValueKey<int>(currentSecond),
                               child: Text(
-                                Constant.dashboardRefreshText[currentSecond %
-                                    Constant.dashboardRefreshText.length],
+                                Constant
+                                    .dashboardRefreshText[currentSecond %
+                                        Constant.dashboardRefreshText.length]
+                                    .tr,
                                 textAlign: TextAlign.left,
                                 style: Theme.of(context)
                                     .textTheme

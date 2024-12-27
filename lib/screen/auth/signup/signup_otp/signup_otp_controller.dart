@@ -45,7 +45,7 @@ class SignUpOTPController extends BaseController {
           .then((value) {
         if (value.code == 201) {
           Get.to(
-            SuccessScreen(
+            () => SuccessScreen(
               message: "Selamat, kamu sudah berhasil mendaftar".tr,
               customInfo: RegistrationInfoItem(
                 data: state.userData,
