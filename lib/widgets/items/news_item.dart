@@ -31,9 +31,11 @@ class NewsItem extends StatelessWidget {
       child: Shimmer(
         isLoading: isLoading,
         child: Container(
+          decoration: BoxDecoration(
+              color: isLoading ? greyColor : Colors.transparent,
+              borderRadius: BorderRadius.circular(5)),
           margin: const EdgeInsets.all(10),
           width: Get.width / 2,
-          color: isLoading ? greyColor : Colors.transparent,
           // height: promo != null ? Get.width / 2 : null,
           child: Column(
             children: [
