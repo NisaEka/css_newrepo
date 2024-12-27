@@ -8,6 +8,7 @@ import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_contro
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
@@ -90,26 +91,38 @@ class DraftTransaksiScreen extends StatelessWidget {
               c.initData();
             },
           ),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              children: c.search.text.isNotEmpty
-                  ? c.searchList.isNotEmpty
-                      ? c.searchList
-                          .mapIndexed(
-                            (i, e) => c.draftItem(e, i, context),
-                          )
-                          .toList()
-                      : [Center(child: DataEmpty(text: "Draft Kosong".tr))]
-                  : c.draftList.isNotEmpty
-                      ? c.draftList
-                          .mapIndexed(
-                            (i, e) => c.draftItem(e, i, context),
-                          )
-                          .toList()
-                      : [Center(child: DataEmpty(text: "Draft Kosong".tr))],
-            ),
-          ),
+          c.isLoading
+              ? LoadingDialog(
+                  background: Colors.transparent,
+                  width: Get.height / 2,
+                  height: Get.height / 2,
+                )
+              : Expanded(
+                  child: ListView(
+                    shrinkWrap: false,
+                    children: (c.search.text.isNotEmpty
+                        ? c.searchList.isNotEmpty
+                            ? c.searchList
+                                .mapIndexed(
+                                  (i, e) => c.draftItem(e, i, context),
+                                )
+                                .toList()
+                            : [
+                                Center(
+                                    child: DataEmpty(text: "Draft Kosong".tr))
+                              ]
+                        : c.draftList.isNotEmpty
+                            ? c.draftList
+                                .mapIndexed(
+                                  (i, e) => c.draftItem(e, i, context),
+                                )
+                                .toList()
+                            : [
+                                Center(
+                                    child: DataEmpty(text: "Draft Kosong".tr))
+                              ]),
+                  ),
+                ),
         ],
       ),
     );

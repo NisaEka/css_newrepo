@@ -159,10 +159,12 @@ class MasterRepositoryImpl extends MasterRepository {
       QueryModel param) async {
     UserModel user = UserModel.fromJson(
         await StorageCore().readData(StorageCore.basicProfile));
+    List<Map<String, dynamic>> where = [
+      {"registrationId": "${user.id?.split('-').first}"}
+    ];
+    where.addAll(param.where ?? []);
     QueryModel params = param.copyWith(
-      where: [
-        {"registrationId": user.id?.split('-').first}
-      ],
+      where: where,
       table: true,
       relation: true,
     );
@@ -232,8 +234,10 @@ class MasterRepositoryImpl extends MasterRepository {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
-    var where = param.where;
-    where?.add({"registrationId": "${user.id?.split('-').first}"});
+    List<Map<String, dynamic>> where = [
+      {"registrationId": "${user.id?.split('-').first}"}
+    ];
+    where.addAll(param.where ?? []);
     QueryModel params = param.copyWith(
       where: where,
       table: true,
@@ -287,7 +291,9 @@ class MasterRepositoryImpl extends MasterRepository {
     try {
       Response response = await network.base.post(
         "/master/receivers",
-        data: data.copyWith(registrationId: user.id?.split('-').first),
+        data: data.copyWith(
+          registrationId: user.id?.split('-').first,
+        ),
       );
       return BaseResponse.fromJson(
         response.data,
