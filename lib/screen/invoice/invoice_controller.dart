@@ -1,50 +1,31 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/base/theme_controller.dart';
-import 'package:css_mobile/data/model/invoice/invoice_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/screen/invoice/invoice_state.dart';
-import 'package:css_mobile/util/constant.dart';
-import 'package:css_mobile/util/ext/date_ext.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class InvoiceController extends BaseController {
   final state = InvoiceState();
-
-  // final AdvanceFilterModel _advanceFilterModel = AdvanceFilterModel();
-  final QueryModel _queryParamModel = QueryModel();
-
-  final PagingController<int, InvoiceModel> pagingController =
-      PagingController(firstPageKey: Constant.defaultPage);
-
-  final searchTextController = TextEditingController();
-
   num _invoiceCount = 0;
 
   num get invoiceCount => _invoiceCount;
 
-  String filterDateText = Constant.allDate;
+  // final AdvanceFilterModel _advanceFilterModel = AdvanceFilterModel();
+  final QueryModel _queryParamModel = QueryModel();
 
-  RequestPickupDateEnum selectedFilterDate = RequestPickupDateEnum.all;
-
-  DateTime? selectedDateStart;
-  DateTime? selectedDateEnd;
-  String selectedDateStartText = "Pilih Tanggal Awal";
-  String selectedDateEndText = "Pilih Tanggal Akhir";
   static const pageSize = 10;
 
   @override
   void onInit() {
     super.onInit();
-    pagingController.addPageRequestListener((pageKey) {
+    state.pagingController.addPageRequestListener((pageKey) {
       _getInvoices(pageKey);
     });
 
-    selectDateFilter(3);
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
     applyFilter();
     requireRetry();
     // applyFilter();
@@ -172,10 +153,10 @@ class InvoiceController extends BaseController {
       // AppLogger.d(jsonEncode(response.toJson()));
 
       if (isLastPage) {
-        pagingController.appendLastPage(payload);
+        state.pagingController.appendLastPage(payload);
       } else {
         final nextPageKey = page + 1;
-        pagingController.appendPage(payload, nextPageKey);
+        state.pagingController.appendPage(payload, nextPageKey);
       }
     } catch (e, i) {
       AppLogger.e('error getInvoices $e, $i');
@@ -192,7 +173,7 @@ class InvoiceController extends BaseController {
   }
 
   void refreshInvoices() {
-    pagingController.refresh();
+    state.pagingController.refresh();
   }
 
   void onKeywordChange(String newKeyword) {
@@ -200,119 +181,23 @@ class InvoiceController extends BaseController {
     requireRetry();
 
     if (newKeyword.isEmpty) {
-      searchTextController.clear();
+      state.searchTextController.clear();
     }
   }
 
   void setSelectedFilterDate(RequestPickupDateEnum? date) {
     if (date != null) {
-      selectedFilterDate = date;
-      filterDateText = date.asName();
+      state.selectedFilterDate = date;
+      state.filterDateText = date.asName();
     }
-  }
-
-  void setSelectedDateStart(DateTime? dateTime) {
-    if (dateTime != null) {
-      selectedDateStart = dateTime;
-      selectedDateStartText =
-          dateTime.toStringWithFormat(format: "dd MMM yyyy");
-    }
-  }
-
-  void setSelectedDateEnd(DateTime? dateTime) {
-    if (dateTime != null) {
-      selectedDateEnd = dateTime;
-      selectedDateEndText = dateTime.toStringWithFormat(format: "dd MMM yyyy");
-    }
-  }
-
-  void selectDateFilter(int filter) {
-    state.dateFilter = filter.toString();
-    update();
-    if (filter == 0 || filter == 4) {
-      selectedDateStart = null;
-      selectedDateEnd = null;
-      state.startDateField.clear();
-      state.endDateField.clear();
-      // state.transDate = [];
-    } else if (filter == 1) {
-      selectedDateStart = DateTime.now()
-          .copyWith(hour: 0, minute: 0)
-          .subtract(const Duration(days: 30));
-      selectedDateEnd =
-          DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text =
-          selectedDateStart.toString().toLongDateTimeFormat();
-      state.endDateField.text =
-          selectedDateEnd.toString().toLongDateTimeFormat();
-    } else if (filter == 2) {
-      selectedDateStart = DateTime.now()
-          .copyWith(hour: 0, minute: 0)
-          .subtract(const Duration(days: 7));
-      selectedDateEnd =
-          DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text =
-          selectedDateStart.toString().toLongDateTimeFormat();
-      state.endDateField.text =
-          selectedDateEnd.toString().toLongDateTimeFormat();
-    } else if (filter == 3) {
-      selectedDateStart = DateTime.now().copyWith(hour: 0, minute: 0);
-      selectedDateEnd =
-          DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-      state.startDateField.text =
-          selectedDateStart.toString().toLongDateTimeFormat();
-      state.endDateField.text =
-          selectedDateEnd.toString().toLongDateTimeFormat();
-    }
-    update();
-  }
-
-  Future<DateTime?> selectDate(BuildContext context) async {
-    // Show date picker
-    final DateTime? selectedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-      builder: (context, child) {
-        return Theme(
-          data: CustomTheme().dateTimePickerTheme(context),
-          child: child!,
-        );
-      },
-    );
-
-    if (selectedDate == null || !context.mounted) return null;
-
-    // Show time picker
-    final TimeOfDay? selectedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      builder: (context, child) {
-        return Theme(
-          data: CustomTheme().dateTimePickerTheme(context),
-          child: child!,
-        );
-      },
-    );
-
-    if (selectedTime == null || !context.mounted) return null;
-
-    // Combine date and time
-    return DateTime(
-      selectedDate.year,
-      selectedDate.month,
-      selectedDate.day,
-      selectedTime.hour,
-      selectedTime.minute,
-    );
   }
 
   void resetFilter() {
-    selectedDateStart = null;
-    selectedDateEnd = null;
-    state.startDateField.clear();
-    state.endDateField.clear();
+    // selectedDateStart = null;
+    // selectedDateEnd = null;
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
     // state.isFiltered = false;
     state.searchField.clear();
     state.transDate = [];
@@ -333,10 +218,10 @@ class InvoiceController extends BaseController {
     //     state.selectedPetugasEntry != null ||
     //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
-    if (selectedDateStart != null && selectedDateEnd != null) {
+    if (state.startDate != null && state.endDate != null) {
       state.transDate = [
         {
-          "invoiceDate": ["$selectedDateStart", "$selectedDateEnd"]
+          "invoiceDate": ["$state.startDate", "$state.endDate"]
         }
       ];
       // "${selectedDateStart?.millisecondsSinceEpoch ?? ''}-${selectedDateEnd?.millisecondsSinceEpoch ?? ''}";

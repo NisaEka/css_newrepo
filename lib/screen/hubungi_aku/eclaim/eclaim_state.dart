@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class EclaimState {
-  final startDateField = TextEditingController();
-  final endDateField = TextEditingController();
   final searchField = TextEditingController();
   final PagingController<int, EclaimModel> pagingController =
       PagingController(firstPageKey: 1);

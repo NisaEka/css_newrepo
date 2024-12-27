@@ -72,10 +72,10 @@ class EclaimController extends BaseController {
   }
 
   void resetFilter() {
-    state.startDate = null;
-    state.endDate = null;
-    state.startDateField.clear();
-    state.endDateField.clear();
+    // state.startDate = null;
+    // state.endDate = null;
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
     // state.isFiltered = false;
     state.searchField.clear();
     state.transDate = [];

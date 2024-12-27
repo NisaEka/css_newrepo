@@ -48,7 +48,7 @@ class InvoiceScreen extends StatelessWidget {
 
   Widget _invoiceSearchBar(BuildContext context, InvoiceController controller) {
     return CustomSearchField(
-      controller: controller.searchTextController,
+      controller: controller.state.searchTextController,
       hintText: 'Cari'.tr,
       prefixIcon: SvgPicture.asset(
         IconsConstant.search,
@@ -120,7 +120,7 @@ class InvoiceScreen extends StatelessWidget {
         color: Theme.of(context).colorScheme.outline,
         onRefresh: () => Future.sync(() => controller.refreshInvoices()),
         child: PagedListView.separated(
-          pagingController: controller.pagingController,
+          pagingController: controller.state.pagingController,
           builderDelegate: PagedChildBuilderDelegate<InvoiceModel>(
             itemBuilder: (context, item, index) {
               return InvoiceItem(

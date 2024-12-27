@@ -121,10 +121,6 @@ class RiwayatKirimanController extends BaseController {
   }
 
   void resetFilter() {
-    // state.startDate = DateTime.now().subtract(Duration(days: 7));
-    // state.endDate = DateTime.now();
-    // state.startDateField.clear();
-    // state.endDateField.clear();
     // // if (state.basic?.userType == "PEMILIK") {
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
@@ -133,13 +129,8 @@ class RiwayatKirimanController extends BaseController {
     state.selectedStatusKiriman = null;
     // state.isFiltered = false;
     state.searchField.clear();
-    // state.transDate = [];
-    // state.dateFilter = '0';
     update();
     applyFilter();
-
-    // state.pagingController.refresh();
-    // transactionCount();
   }
 
   void selectAll(bool value) {
