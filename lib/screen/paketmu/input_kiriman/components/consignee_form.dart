@@ -73,7 +73,7 @@ class AddReceiverForm extends StatelessWidget {
                             (value) => value == true
                                 ? c.saveReceiver()
                                 : AppSnackBar.error(
-                                    "nomor telepon sudah tersedia".tr),
+                                    "Nomor telepon sudah terdaftar".tr),
                           ),
                     ),
                   ],

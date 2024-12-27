@@ -26,7 +26,6 @@ class AddReceiverController extends BaseController {
       where: [
         {"receiverPhone": receiverPhone.text}
       ],
-      table: true,
     ));
 
     var receiver = receivers.data;
