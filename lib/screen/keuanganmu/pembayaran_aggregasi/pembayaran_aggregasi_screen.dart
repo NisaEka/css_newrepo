@@ -10,9 +10,8 @@ import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
-import 'package:css_mobile/widgets/forms/customradiobutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
-import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:css_mobile/widgets/forms/dates_filter_content.dart';
 import 'package:css_mobile/widgets/items/account_list_item.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/report_list_item.dart';
 import 'package:flutter/material.dart';
@@ -177,74 +176,15 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                CustomFormLabel(label: 'Tanggal Pembayaran'.tr),
-                Customradiobutton(
-                  title: "Semua Tanggal".tr,
-                  value: '0',
-                  groupValue: c.dateFilter,
-                  onChanged: (value) => setState(() => c.selectDateFilter(0)),
-                  onTap: () => setState(() => c.selectDateFilter(0)),
-                ),
-                Customradiobutton(
-                  title: "1 Bulan Terakhir".tr,
-                  value: '1',
-                  groupValue: c.dateFilter,
-                  onChanged: (value) => setState(() => c.selectDateFilter(1)),
-                  onTap: () => setState(() => c.selectDateFilter(1)),
-                ),
-                Customradiobutton(
-                  title: "1 Minggu Terakhir".tr,
-                  value: '2',
-                  groupValue: c.dateFilter,
-                  onChanged: (value) => setState(() => c.selectDateFilter(2)),
-                  onTap: () => setState(() => c.selectDateFilter(2)),
-                ),
-                Customradiobutton(
-                  title: "Hari Ini".tr,
-                  value: '3',
-                  groupValue: c.dateFilter,
-                  onChanged: (value) => setState(() => c.selectDateFilter(3)),
-                  onTap: () => setState(() => c.selectDateFilter(3)),
-                ),
-                Customradiobutton(
-                  title: "Pilih Tanggal Sendiri".tr,
-                  value: '4',
-                  groupValue: c.dateFilter,
-                  onChanged: (value) => setState(() => c.selectDateFilter(4)),
-                  onTap: () => setState(() => c.selectDateFilter(4)),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomTextFormField(
-                      controller: c.startDateField,
-                      readOnly: true,
-                      width: Get.width / 2.3,
-                      hintText: 'Tanggal Awal'.tr,
-                      // label: ,
-                      onTap: () => c.dateFilter == '4'
-                          ? c.selectDate(context).then((value) {
-                              setState(() => c.onSelectStartDate(value!));
-                            })
-                          : null,
-                      // hintText: 'Dari Tanggal',
-                    ),
-                    CustomTextFormField(
-                      controller: c.endDateField,
-                      readOnly: true,
-                      width: Get.width / 2.3,
-                      hintText: 'Tanggal Akhir'.tr,
-                      onTap: () => c.dateFilter == '4'
-                          ? c.selectDate(context).then(
-                                (value) =>
-                                    setState(() => c.onSelectEndDate(value!)),
-                              )
-                          : null,
-                    ),
-                  ],
-                ),
               ],
             ),
+          ),
+          DateFilterField(
+            onChanged: (value) {
+              c.startDate = value.first;
+              c.endDate = value.last;
+              c.update();
+            },
           ),
         ],
       ),
