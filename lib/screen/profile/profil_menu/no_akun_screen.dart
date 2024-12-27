@@ -119,17 +119,20 @@ class NoAkunScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
-                const SizedBox(height: 21),
                 Expanded(
                   child: ListView(
-                    children: c.accountList
-                        .map(
-                          (e) => AccountCard(
-                            account: e,
-                            isLoading: c.isLoading,
-                          ),
-                        )
-                        .toList(),
+                    children: [
+                      const SizedBox(height: 15),
+                      ...c.accountList
+                          .map(
+                            (e) => AccountCard(
+                              account: e,
+                              isLoading: c.isLoading,
+                            ),
+                          )
+                          .toList(),
+                      const SizedBox(height: 30),
+                    ],
                   ),
                 ),
               ],

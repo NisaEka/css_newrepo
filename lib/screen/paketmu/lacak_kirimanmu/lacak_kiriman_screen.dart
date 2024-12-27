@@ -45,13 +45,17 @@ class LacakKirimanScreen extends StatelessWidget {
                       ?.then((result) {
                 c.searchField.text = result;
                 c.update();
-                Get.to(
-                  () => PhoneNumberConfirmationScreen(
-                    awb: result,
-                    cekResi: c.cekResi,
-                    isLoading: c.isLoading,
-                  ),
-                );
+                if (c.isLogin) {
+                  c.cekResi(result, '');
+                } else {
+                  Get.to(
+                    () => PhoneNumberConfirmationScreen(
+                      awb: result,
+                      cekResi: c.cekResi,
+                      isLoading: c.isLoading,
+                    ),
+                  );
+                }
                 // c.cekResi(result);
               }),
               child: Icon(
@@ -89,13 +93,17 @@ class LacakKirimanScreen extends StatelessWidget {
                   ),
                 );
               } else {
-                Get.to(
-                  () => PhoneNumberConfirmationScreen(
-                    awb: value,
-                    cekResi: c.cekResi,
-                    isLoading: c.isLoading,
-                  ),
-                );
+                if (c.isLogin) {
+                  c.cekResi(value, '');
+                } else {
+                  Get.to(
+                    () => PhoneNumberConfirmationScreen(
+                      awb: value,
+                      cekResi: c.cekResi,
+                      isLoading: c.isLoading,
+                    ),
+                  );
+                }
               }
             },
           ),

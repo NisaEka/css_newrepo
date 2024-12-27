@@ -45,7 +45,9 @@ class LacakKirimanController extends BaseController {
     isLoading = true;
     update();
     try {
-      final response = await trace.postTracingByCnote(nomorResi, phoneNumber);
+      final response = await cekToken()
+          ? await trace.postTracingByCnote(nomorResi)
+          : await trace.postTracingByCnotePublic(nomorResi, phoneNumber);
       trackModel = response;
     } catch (e, i) {
       AppLogger.e('error cekResi $e, $i');

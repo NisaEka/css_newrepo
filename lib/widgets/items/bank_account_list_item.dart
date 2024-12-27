@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -27,41 +26,37 @@ class BankAccountListItem extends StatelessWidget {
     return Shimmer(
       isLoading: isLoading,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 30),
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: isLoading
-              ? greyLightColor3
-              : (AppConst.isLightTheme(context) ? whiteColor : greyColor),
-          border: Border.all(color: Colors.transparent),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: isLoading
-              ? []
-              : [
-                  BoxShadow(
-                    color: primaryColor(context),
-                    spreadRadius: 1,
-                    offset: const Offset(-2, 2),
-                  ),
-                ],
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        margin:
+            EdgeInsets.symmetric(horizontal: 20, vertical: isLoading ? 10 : 0),
+        color: isLoading ? greyColor : Colors.transparent,
         alignment: Alignment.center,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: icon,
-            ),
-            Column(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(title, style: listTitleTextStyle),
-                Text(subtitle ?? '', style: sublistTitleTextStyle),
-                Text(subtitle2 ?? '', style: sublistTitleTextStyle),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(
+                      left: 0, bottom: 10, right: 20, top: 10),
+                  child: icon,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: listTitleTextStyle),
+                    Text(subtitle ?? '', style: sublistTitleTextStyle),
+                    Text(subtitle2 ?? '', style: sublistTitleTextStyle),
+                  ],
+                )
               ],
-            )
+            ),
+            const SizedBox(height: 8),
+            const Divider(
+              color: greyColor,
+            ),
           ],
         ),
       ),
