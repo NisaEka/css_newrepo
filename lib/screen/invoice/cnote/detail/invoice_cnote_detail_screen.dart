@@ -369,7 +369,9 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
               child: Shimmer(
                 isLoading: isLoading,
                 child: Container(
-                  color: isLoading ? greyColor : Colors.transparent,
+                  decoration: BoxDecoration(
+                      color: isLoading ? greyColor : Colors.transparent,
+                      borderRadius: BorderRadius.circular(5)),
                   child: Text(
                     title.tr,
                     style: Theme.of(context)
@@ -386,7 +388,9 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
               child: Shimmer(
                 isLoading: isLoading,
                 child: Container(
-                  color: isLoading ? greyColor : Colors.transparent,
+                  decoration: BoxDecoration(
+                      color: isLoading ? greyColor : Colors.transparent,
+                      borderRadius: BorderRadius.circular(5)),
                   child: Text(
                     value,
                     style: style ??
