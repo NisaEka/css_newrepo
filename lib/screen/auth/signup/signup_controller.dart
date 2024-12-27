@@ -32,7 +32,6 @@ class SignUpController extends BaseController {
       state.origin.text = state.selectedOrigin?.originName ?? '';
       state.branchCode = state.selectedOrigin?.branchCode;
       update();
-      AppLogger.d(state.selectedOrigin as String);
 
       getAgentList();
     }
