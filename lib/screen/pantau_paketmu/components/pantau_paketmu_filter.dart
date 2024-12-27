@@ -23,16 +23,16 @@ class PantauPaketmuFilter extends HookWidget {
                 return Expanded(
                   child: CustomScrollView(
                     slivers: [
-                      Obx(() {
-                        return DateFilterField(
-                          label: "Tanggal AWB".tr,
-                          onChanged: (value) {
-                            controller.state.startDate.value = value.first;
-                            controller.state.endDate.value = value.last;
-                            controller.update();
-                          },
-                        );
-                      }),
+                      // Obx(() {
+                      DateFilterField(
+                        label: "Tanggal AWB".tr,
+                        onChanged: (value) {
+                          controller.state.startDate = value.first;
+                          controller.state.endDate = value.last;
+                          controller.update();
+                        },
+                      ),
+                      // }),
                       SliverToBoxAdapter(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

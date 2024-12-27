@@ -25,13 +25,8 @@ class PantauPaketmuState extends GetxController {
   //     PagingController(firstPageKey: 1);
 
   // Reactive DateTime variables
-  final startDate = Rxn<DateTime>(
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
-  final endDate = Rxn<DateTime>(DateTime.now());
-
-  // Constant for current day (not reactive)
-  final DateTime nowDay = DateTime(
-      DateTime.now().year, DateTime.now().month, DateTime.now().day, 0);
+  DateTime? startDate;
+  DateTime? endDate;
 
   // Reactive String variables
   // final selectedStatusKiriman = Rx<String>('Total Kiriman');

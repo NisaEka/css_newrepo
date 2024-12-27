@@ -28,8 +28,8 @@ class PantauPaketmuListFilter extends HookWidget {
                         () => DateFilterField(
                           label: "Tanggal AWB".tr,
                           onChanged: (value) {
-                            controller.state.startDate.value = value.first;
-                            controller.state.endDate.value = value.last;
+                            controller.state.startDate = value.first;
+                            controller.state.endDate = value.last;
                             controller.update();
                           },
                         ),

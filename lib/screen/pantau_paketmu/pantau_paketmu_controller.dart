@@ -29,9 +29,8 @@ class PantauPaketmuController extends BaseController {
       getPantauList(pageKey);
     });
     resetFilter();
-    state.startDate.value = DateTime.now().copyWith(hour: 0, minute: 0);
-    state.endDate.value =
-        DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
     applyFilter();
   }
@@ -90,8 +89,8 @@ class PantauPaketmuController extends BaseController {
         between: [
           {
             "awbDate": [
-              state.startDate.value,
-              state.endDate.value,
+              state.startDate,
+              state.endDate,
             ]
           }
         ],
@@ -173,9 +172,8 @@ class PantauPaketmuController extends BaseController {
     state.isFiltered = true;
     state.searchField.clear();
     state.dateFilter.value = "3";
-    state.startDate.value = DateTime.now().copyWith(hour: 0, minute: 0);
-    state.endDate.value =
-        DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
     applyFilter(isDetail: isDetail);
   }
@@ -189,11 +187,11 @@ class PantauPaketmuController extends BaseController {
       state.isFiltered = true;
     }
 
-    if (state.startDate.value != null && state.endDate.value != null) {
+    if (state.startDate != null && state.endDate != null) {
       state.date.value = "${state.startDate}-${state.endDate}";
       state.transDate = [
         {
-          "awbDate": [state.startDate.value, state.endDate.value],
+          "awbDate": [state.startDate, state.endDate],
         }
       ];
       state.date.printInfo(info: "state.date filter");
