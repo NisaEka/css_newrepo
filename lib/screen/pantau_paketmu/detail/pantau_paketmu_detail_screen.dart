@@ -122,8 +122,11 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   Shimmer(
                     isLoading: controller.isLoading,
                     child: Container(
-                      color:
-                          controller.isLoading ? greyColor : Colors.transparent,
+                      decoration: BoxDecoration(
+                          color: controller.isLoading
+                              ? greyColor
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(5)),
                       alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(
                           right: 20), // Margin between the two text widgets
@@ -208,8 +211,11 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   Shimmer(
                     isLoading: controller.isLoading,
                     child: Container(
-                      color:
-                          controller.isLoading ? greyColor : Colors.transparent,
+                      decoration: BoxDecoration(
+                          color: controller.isLoading
+                              ? greyColor
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(5)),
                       alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(
                           right: 20), // Margin between the two text widgets
@@ -319,8 +325,11 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   Shimmer(
                     isLoading: controller.isLoading,
                     child: Container(
-                      color:
-                          controller.isLoading ? greyColor : Colors.transparent,
+                      decoration: BoxDecoration(
+                          color: controller.isLoading
+                              ? greyColor
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(5)),
                       alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(
                           right: 20), // Margin between the two text widgets
@@ -387,9 +396,11 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
+                        decoration: BoxDecoration(
+                            color: controller.isLoading
+                                ? greyColor
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(5)),
                         alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.only(
                             right: 20), // Margin between the two text widgets
@@ -430,8 +441,11 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   Shimmer(
                     isLoading: controller.isLoading,
                     child: Container(
-                      color:
-                          controller.isLoading ? greyColor : Colors.transparent,
+                      decoration: BoxDecoration(
+                          color: controller.isLoading
+                              ? greyColor
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(5)),
                       alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(
                           right: 20), // Margin between the two text widgets
@@ -475,7 +489,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
-              color: isLoading ? greyColor : Colors.transparent,
+              decoration: BoxDecoration(
+                  color: isLoading ? greyColor : Colors.transparent,
+                  borderRadius: BorderRadius.circular(5)),
               child: Text(
                 title.tr,
                 style: Theme.of(context)
@@ -491,7 +507,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
-              color: isLoading ? greyColor : Colors.transparent,
+              decoration: BoxDecoration(
+                  color: isLoading ? greyColor : Colors.transparent,
+                  borderRadius: BorderRadius.circular(5)),
               child: value.startsWith("http")
                   ? GestureDetector(
                       onTap: () {

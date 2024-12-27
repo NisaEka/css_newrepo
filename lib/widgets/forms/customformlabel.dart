@@ -32,9 +32,11 @@ class CustomFormLabel extends StatelessWidget {
     return Shimmer(
       isLoading: isLoading,
       child: Container(
-        color: isLoading ? greyLightColor3 : Colors.transparent,
         width: width ?? (isLoading ? Get.width / 3 : null),
         margin: const EdgeInsets.symmetric(vertical: 5),
+        decoration: BoxDecoration(
+            color: isLoading ? greyLightColor3 : Colors.transparent,
+            borderRadius: BorderRadius.circular(5)),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

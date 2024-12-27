@@ -80,9 +80,12 @@ class StickerMegahub1 extends StatelessWidget {
                     drawText: false,
                     height: 60,
                   ),
-                  Text(
-                    'Nomor Connote : ${data.awb}',
-                    style: itemTextStyle,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      'Nomor Connote : ${data.awb}',
+                      style: sublistTitleTextStyle,
+                    ),
                   )
                 ],
               ),
@@ -146,7 +149,7 @@ class StickerMegahub1 extends StatelessWidget {
                   SizedBox(
                     width: Get.width / 3.6,
                     child: Text(
-                      '${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.receiver?.destinationCode ?? '-'} \n${data.receiver?.zipCode ?? ''}',
+                      '${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.destination?.facilityCode ?? data.destination?.cityZone ?? data.destination?.destinationCode?.substring(0, 3)} \n${data.receiver?.zipCode ?? ''}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),

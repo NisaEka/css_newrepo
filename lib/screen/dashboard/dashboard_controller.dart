@@ -170,24 +170,24 @@ class DashboardController extends BaseController {
     }
 
     update();
+    //
+    // bool label =
+    //     (await storage.readString(StorageCore.transactionLabel)).isEmpty;
 
-    bool label =
-        (await storage.readString(StorageCore.transactionLabel)).isEmpty;
-
-    if (label && state.isLogin) {
-      await setting.getSettingLabel().then(
-        (value) async {
-          await storage.writeString(
-            StorageCore.transactionLabel,
-            value.data?.where((e) => e.enable ?? false).first.name,
-          );
-          await storage.writeString(
-            StorageCore.shippingCost,
-            value.data?.first.showPrice ?? false ? "PUBLISH" : "HIDE",
-          );
-        },
-      );
-    }
+    // if (label && state.isLogin) {
+    await setting.getSettingLabel().then(
+      (value) async {
+        await storage.writeString(
+          StorageCore.transactionLabel,
+          value.data?.where((e) => e.enable ?? false).first.name,
+        );
+        await storage.writeString(
+          StorageCore.shippingCost,
+          value.data?.first.showPrice ?? false ? "HIDE" : "PUBLISH",
+        );
+      },
+    );
+    // }
 
     update();
   }

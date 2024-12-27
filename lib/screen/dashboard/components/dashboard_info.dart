@@ -12,7 +12,7 @@ class DashboardInfo extends StatefulWidget {
 }
 
 class _DashboardInfoState extends State<DashboardInfo> {
-  bool isShow = true;
+  // bool isShow = true;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _DashboardInfoState extends State<DashboardInfo> {
                         horizontal: 20, vertical: 10),
                     width: Get.width,
                     decoration: BoxDecoration(
-                      color: primaryColor(context),
+                      color: warningColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(

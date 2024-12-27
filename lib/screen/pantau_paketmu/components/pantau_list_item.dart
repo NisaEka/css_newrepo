@@ -126,8 +126,9 @@ class PantauItems extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 3),
                           decoration: BoxDecoration(
-                            color: isLoading ? greyColor : Colors.transparent,
-                          ),
+                              color: isLoading ? greyColor : Colors.transparent,
+                              borderRadius: BorderRadius.circular(5)),
+                          width: isLoading ? Get.width / 3 : null,
                           child: Text(
                             item?.status ?? '',
                             style: Theme.of(context)
@@ -139,7 +140,10 @@ class PantauItems extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 3),
-                          color: isLoading ? greyColor : Colors.transparent,
+                          decoration: BoxDecoration(
+                              color: isLoading ? greyColor : Colors.transparent,
+                              borderRadius: BorderRadius.circular(5)),
+                          width: isLoading ? Get.width / 5 : null,
                           child: Text(
                             c.state.selectedKiriman == 0
                                 ? item?.totalCod.toString() ?? ''
@@ -158,8 +162,11 @@ class PantauItems extends StatelessWidget {
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 5, vertical: 3),
-                                color:
-                                    isLoading ? greyColor : Colors.transparent,
+                                decoration: BoxDecoration(
+                                    color: isLoading
+                                        ? greyColor
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(5)),
                                 width: 230,
                                 child: Row(
                                   children: [
@@ -264,8 +271,11 @@ class PantauItems extends StatelessWidget {
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 5, vertical: 3),
-                                color:
-                                    isLoading ? greyColor : Colors.transparent,
+                                decoration: BoxDecoration(
+                                    color: isLoading
+                                        ? greyColor
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(5)),
                                 width: 230,
                                 child: Row(
                                   children: [
@@ -362,7 +372,9 @@ class PantauItems extends StatelessWidget {
                     ),
                     const Spacer(),
                     Container(
-                      color: isLoading ? greyColor : Colors.transparent,
+                      decoration: BoxDecoration(
+                          color: isLoading ? greyColor : Colors.transparent,
+                          borderRadius: BorderRadius.circular(5)),
                       child: Column(
                         children: [
                           const SizedBox(height: 10),

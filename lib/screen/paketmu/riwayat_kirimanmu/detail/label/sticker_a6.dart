@@ -95,7 +95,8 @@ class StickerA6 extends StatelessWidget {
                         const Divider(height: 1),
                         Column(
                           children: [
-                            Text(data.createdDate?.toLongDateFormat() ?? ''),
+                            Text(
+                                data.createdDate?.toLongDateTimeFormat() ?? ''),
                           ],
                         ),
                       ],
@@ -231,6 +232,11 @@ class StickerA6 extends StatelessWidget {
                     children: [
                       Text(data.delivery?.serviceCode ?? '-',
                           style: TextStyle(fontSize: 30, fontWeight: bold)),
+                      Text(
+                          data.account?.accountService != 'COD ONGKIR'
+                              ? data.account?.accountService ?? '-'
+                              : 'COD',
+                          style: TextStyle(fontSize: 30, fontWeight: bold)),
                       // Text(data.type ?? '-', style: TextStyle(fontSize: 20, fontWeight: bold)),
                     ],
                   )
@@ -265,7 +271,7 @@ class StickerA6 extends StatelessWidget {
                             style: const TextStyle(color: greyDarkColor1),
                             children: [
                               TextSpan(
-                                text: 'City : ',
+                                text: ' City : ',
                                 style: sublistTitleTextStyle.copyWith(
                                     fontWeight: bold),
                               ),
@@ -286,13 +292,21 @@ class StickerA6 extends StatelessWidget {
                                 text: data.receiver?.region ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
+                            ],
+                          ),
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            style: const TextStyle(color: greyDarkColor1),
+                            children: [
                               TextSpan(
                                 text: ' Phone : ',
                                 style: sublistTitleTextStyle.copyWith(
                                     fontWeight: bold),
                               ),
                               TextSpan(
-                                text: data.receiver?.phone ?? '',
+                                text: data.receiver?.phone?.maskPhoneNumber() ??
+                                    '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
                               TextSpan(
@@ -304,6 +318,13 @@ class StickerA6 extends StatelessWidget {
                                 text: data.receiver?.zipCode ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
+                            ],
+                          ),
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            style: const TextStyle(color: greyDarkColor1),
+                            children: [
                               TextSpan(
                                 text: ' Contact Person : ',
                                 style: sublistTitleTextStyle.copyWith(
@@ -330,11 +351,13 @@ class StickerA6 extends StatelessWidget {
                     ),
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.receiver?.destinationCode ?? ''}",
+                          // "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.receiver?.destinationCode ?? ''}",
+                          data.receiver?.destinationCode ?? '',
                           style: TextStyle(fontSize: 15, fontWeight: bold)),
-                      Text(data.account?.accountType ?? '-',
+                      Text(data.account?.accountType ?? '',
                           style: TextStyle(fontSize: 12.5, fontWeight: bold)),
                     ],
                   )
@@ -383,7 +406,7 @@ class StickerA6 extends StatelessWidget {
                 ),
                 const SizedBox(width: 5),
                 CustomLabelText(
-                  title: 'Goods Amount',
+                  title: 'Goods Value: ',
                   value:
                       "Rp ${data.goods?.amount?.toInt().toCurrency() ?? '0'}",
                   titleTextStyle:
@@ -402,7 +425,7 @@ class StickerA6 extends StatelessWidget {
               value: data.delivery?.specialInstruction ?? '-',
               titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
               valueTextStyle: sublistTitleTextStyle.copyWith(),
-              // isHorizontal: true,
+              isHorizontal: true,
               margin: const EdgeInsets.all(5),
               valueMaxline: 5,
               // width: 50,,
@@ -419,7 +442,7 @@ class StickerA6 extends StatelessWidget {
                       const BoxDecoration(border: Border(bottom: BorderSide())),
                   children: <Widget>[
                     CustomLabelText(
-                      title: 'Insurance ',
+                      title: 'Insurance : ',
                       value: data.delivery?.insuranceFlag == "Y" ? "YES" : "NO",
                       titleTextStyle:
                           sublistTitleTextStyle.copyWith(fontWeight: bold),
@@ -427,7 +450,7 @@ class StickerA6 extends StatelessWidget {
                       margin: const EdgeInsets.all(5),
                     ),
                     CustomLabelText(
-                      title: 'Insurance Amount',
+                      title: 'Insurance Amount : ',
                       value: "Rp ${data.delivery?.insuranceFee ?? '0'}",
                       titleTextStyle:
                           sublistTitleTextStyle.copyWith(fontWeight: bold),
@@ -435,7 +458,7 @@ class StickerA6 extends StatelessWidget {
                       margin: const EdgeInsets.all(5),
                     ),
                     CustomLabelText(
-                      title: 'Packing Kayu  ',
+                      title: 'Packing Kayu : ',
                       value: data.delivery?.woodPackaging == "Y" ? "YES" : "NO",
                       titleTextStyle:
                           sublistTitleTextStyle.copyWith(fontWeight: bold),
@@ -449,7 +472,7 @@ class StickerA6 extends StatelessWidget {
             Row(
               children: [
                 CustomLabelText(
-                  title: 'Est.Ongkir',
+                  title: 'Est.Ongkir: ',
                   value:
                       "Rp ${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}",
                   titleTextStyle:
@@ -459,7 +482,7 @@ class StickerA6 extends StatelessWidget {
                   isHorizontal: true,
                 ),
                 CustomLabelText(
-                  title: 'COD Amountr',
+                  title: 'COD Amount: '.tr,
                   value:
                       "Rp ${data.delivery?.codFee?.toInt().toCurrency() ?? '0'},00",
                   titleTextStyle:
