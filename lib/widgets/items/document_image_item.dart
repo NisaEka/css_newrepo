@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,93 +39,92 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-        margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor2,
-          border: Border.all(color: greyDarkColor1),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: primaryColor(context),
-              spreadRadius: 1,
-              offset: const Offset(-2, 2),
-            ),
-          ],
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
         alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
           children: [
-            Text(
-              widget.title.tr,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            SizedBox(
-              height: 62,
-              width: 120,
-              child: widget.img != null
-                  ? Image.network(
-                      widget.img ?? '',
-                      fit: BoxFit.fill,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        height: 62,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          color: greyLightColor3,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Center(
-                          child: widget.isLoading
-                              ? const CircularProgressIndicator.adaptive()
-                              : const Icon(Icons.image_not_supported_outlined),
-                        ),
-                      ),
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        } else {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.title.tr,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                SizedBox(
+                  height: 62,
+                  width: 120,
+                  child: widget.img != null
+                      ? Image.network(
+                          widget.img ?? '',
+                          fit: BoxFit.fill,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                            height: 62,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              color: greyLightColor3,
+                              borderRadius: BorderRadius.circular(5),
                             ),
-                          );
-                        }
-                      },
-                    )
-                  : widget.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        )
-                      : GoogleMap(
-                          // onMapCreated: _onMapCreated,
-                          onMapCreated: (controller) =>
-                              googleMapController?.complete(controller),
-                          zoomControlsEnabled: false,
-                          myLocationButtonEnabled: false,
-                          mapType: MapType.none,
-                          markers: <Marker>{
-                            Marker(
-                              draggable: false,
-                              markerId: const MarkerId('SomeId'),
-                              position: LatLng(
-                                widget.lat!,
-                                widget.lng!,
-                              ),
-                            )
-                          },
-                          initialCameraPosition: CameraPosition(
-                            target: LatLng(
-                              widget.lat!,
-                              widget.lng!,
+                            child: Center(
+                              child: widget.isLoading
+                                  ? const CircularProgressIndicator.adaptive()
+                                  : const Icon(
+                                      Icons.image_not_supported_outlined),
                             ),
-                            zoom: 16.0,
                           ),
-                        ),
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              );
+                            }
+                          },
+                        )
+                      : widget.isLoading
+                          ? const Center(
+                              child: CircularProgressIndicator.adaptive(),
+                            )
+                          : GoogleMap(
+                              // onMapCreated: _onMapCreated,
+                              onMapCreated: (controller) =>
+                                  googleMapController?.complete(controller),
+                              zoomControlsEnabled: false,
+                              myLocationButtonEnabled: false,
+                              mapType: MapType.none,
+                              markers: <Marker>{
+                                Marker(
+                                  draggable: false,
+                                  markerId: const MarkerId('SomeId'),
+                                  position: LatLng(
+                                    widget.lat!,
+                                    widget.lng!,
+                                  ),
+                                )
+                              },
+                              initialCameraPosition: CameraPosition(
+                                target: LatLng(
+                                  widget.lat!,
+                                  widget.lng!,
+                                ),
+                                zoom: 16.0,
+                              ),
+                            ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            const Divider(
+              color: greyColor,
             ),
           ],
         ),
