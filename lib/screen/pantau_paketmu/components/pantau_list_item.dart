@@ -137,6 +137,9 @@ class PantauItems extends StatelessWidget {
                                 ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
+                        isLoading
+                            ? const SizedBox(height: 5)
+                            : const SizedBox(),
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 3),
@@ -156,6 +159,9 @@ class PantauItems extends StatelessWidget {
                                 ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
+                        isLoading
+                            ? const SizedBox(height: 5)
+                            : const SizedBox(),
                         // COD
                         c.state.selectedKiriman == 0 ||
                                 c.state.selectedKiriman == 1
@@ -264,6 +270,9 @@ class PantauItems extends StatelessWidget {
                                   ],
                                 ),
                               )
+                            : const SizedBox(),
+                        isLoading
+                            ? const SizedBox(height: 5)
                             : const SizedBox(),
                         // Ongkir
                         c.state.selectedKiriman == 0 ||

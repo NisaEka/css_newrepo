@@ -35,6 +35,7 @@ class PantauTotalKiriman extends StatelessWidget {
                           color: isLoading ? greyColor : Colors.transparent,
                           borderRadius: BorderRadius.circular(5)),
                       width: isLoading ? Get.width / 5 : null,
+                      // height: isLoading ? 40 : null,
                       child: Text(
                         c.state.selectedKiriman == 0
                             ? c.state.cod.toString()
@@ -47,11 +48,13 @@ class PantauTotalKiriman extends StatelessWidget {
                             ?.copyWith(fontSize: 40),
                       ),
                     ),
+                    isLoading ? const SizedBox(height: 5) : const SizedBox(),
                     Container(
                       decoration: BoxDecoration(
                           color: isLoading ? greyColor : Colors.transparent,
                           borderRadius: BorderRadius.circular(5)),
                       width: isLoading ? Get.width / 3 : null,
+                      // height: isLoading ? 20 : null,
                       child: Text("Total Kiriman",
                           style: Theme.of(context).textTheme.titleSmall),
                     ),
