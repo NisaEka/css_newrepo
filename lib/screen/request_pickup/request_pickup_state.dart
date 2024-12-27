@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_count_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_response_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/util/constant.dart';
@@ -19,6 +20,7 @@ class RequestPickupState {
   final PagingController<int, RequestPickupAddressModel>
       pagingControllerPickupDataAddress =
       PagingController(firstPageKey: Constant.defaultPage);
+  List<RequestPickupCountModel> requestPickupCount = [];
 
   DateTime? startDate;
   DateTime? endDate;
@@ -42,7 +44,7 @@ class RequestPickupState {
   List<RequestPickupAddressModel> addresses = [];
 
   QueryModel queryParam = QueryModel();
-  String filterStatus = Constant.allStatus;
+  String filterStatus = "BELUM MINTA DIJEMPUT";
 
   List<String> selectedAwbs = [];
   String selectedPickupTime = Constant.defaultPickupTime;

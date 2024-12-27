@@ -56,7 +56,7 @@ class RequestPickupStatusButton extends StatelessWidget {
                   },
                   child: Container(
                     width: Get.width * 0.427,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.filterStatus == thirdStatus
                           ? primaryColor(context)
@@ -68,6 +68,19 @@ class RequestPickupStatusButton extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
+                        Text(
+                          c.state.requestPickupCount
+                                  .firstWhereOrNull((element) =>
+                                      element.status == thirdStatus)
+                                  ?.count
+                                  .toString() ??
+                              "",
+                          style: listTitleTextStyle.copyWith(
+                            color: c.state.filterStatus == thirdStatus
+                                ? whiteColor
+                                : blueJNE,
+                          ),
+                        ),
                         Text(
                           thirdStatus.isNotEmpty
                               ? thirdStatus.tr
@@ -99,7 +112,7 @@ class RequestPickupStatusButton extends StatelessWidget {
                   },
                   child: Container(
                     width: Get.width * 0.42,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
                       color: c.state.filterStatus == secondStatus
                           ? primaryColor(context)
@@ -111,6 +124,19 @@ class RequestPickupStatusButton extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
+                        Text(
+                          c.state.requestPickupCount
+                                  .firstWhereOrNull((element) =>
+                                      element.status == secondStatus)
+                                  ?.count
+                                  .toString() ??
+                              "",
+                          style: listTitleTextStyle.copyWith(
+                            color: c.state.filterStatus == secondStatus
+                                ? whiteColor
+                                : blueJNE,
+                          ),
+                        ),
                         Text(
                           secondStatus.isNotEmpty
                               ? secondStatus.tr

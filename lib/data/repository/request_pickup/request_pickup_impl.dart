@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_create_request_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
+import 'package:css_mobile/data/model/request_pickup/request_pickup_count_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_request_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_response_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_detail_model.dart';
@@ -17,6 +18,34 @@ import 'package:get/get.dart';
 
 class RequestPickupImpl extends RequestPickupRepository {
   final network = Get.find<NetworkCore>();
+
+  @override
+  Future<BaseResponse<List<RequestPickupCountModel>>> getRequestPickupCount(
+      QueryModel param) async {
+    AppLogger.i("getRequestPickupCount param: ${param.toJson()}");
+    try {
+      var response = await network.base
+          .get("/transaction/pickups/count", queryParameters: param.toJson());
+
+      AppLogger.i("getRequestPickupCount response: ${response.data}");
+
+      return BaseResponse<List<RequestPickupCountModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<RequestPickupCountModel>(
+                  (i) => RequestPickupCountModel.fromJson(
+                      i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      AppLogger.i("getRequestPickupCount error: ${e.response?.data}");
+      return BaseResponse<List<RequestPickupCountModel>>.fromJson(
+          e.response?.data, (json) => List.empty());
+    }
+  }
 
   @override
   Future<BaseResponse<List<RequestPickupModel>>> getRequestPickups(
