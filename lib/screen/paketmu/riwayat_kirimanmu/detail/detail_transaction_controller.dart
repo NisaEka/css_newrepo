@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
-import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
@@ -42,39 +41,24 @@ class DetailTransactionController extends BaseController {
         var data = value.data;
 
         state.transactionData = DataTransactionModel(
-          destination: Destination(
-            destinationCode: data?.destinationCode,
-            zipCode: data?.receiverZip,
-            cityName: data?.receiverCity,
-            countryName: data?.receiverCountry,
-            districtName: data?.receiverDistrict,
-            provinceName: data?.receiverRegion,
-            subdistrictName: data?.receiverSubdistrict,
-          ),
-          account: value.data?.account,
-          dataAccount: value.data?.account,
-          dataDestination: Destination(
-            destinationCode: data?.destinationCode,
-            zipCode: data?.receiverZip,
-            cityName: data?.receiverCity,
-            countryName: data?.receiverCountry,
-            districtName: data?.receiverDistrict,
-            provinceName: data?.receiverRegion,
-            subdistrictName: data?.receiverSubdistrict,
-          ),
+          destination: data?.destination,
+          account: data?.account,
+          dataAccount: data?.account,
+          dataDestination: data?.destination,
           receiver: ReceiverModel(
-              name: data?.receiverName,
-              zipCode: data?.receiverZip,
-              destinationCode: data?.destinationCode,
-              destinationDescription: data?.destinationDesc,
-              city: data?.receiverCity,
-              country: data?.receiverCountry,
-              contact: data?.receiverContact,
-              phone: data?.receiverPhone,
-              address: data?.receiverAddr,
-              region: data?.receiverRegion,
-              district: data?.receiverDistrict,
-              subDistrict: data?.receiverSubdistrict),
+            name: data?.receiverName,
+            zipCode: data?.receiverZip,
+            destinationCode: data?.destinationCode,
+            destinationDescription: data?.destinationDesc,
+            city: data?.receiverCity,
+            country: data?.receiverCountry,
+            contact: data?.receiverContact,
+            phone: data?.receiverPhone,
+            address: data?.receiverAddr,
+            region: data?.receiverRegion,
+            district: data?.receiverDistrict,
+            subDistrict: data?.receiverSubdistrict,
+          ),
           shipper: ShipperModel(
             name: data?.shipperName,
             address: data?.shipperAddr,
@@ -104,9 +88,10 @@ class DetailTransactionController extends BaseController {
             originName: data?.originDesc,
             branchCode: data?.branch,
             branch: BranchModel(
-                region: RegionModel(
-              name: data?.shipperRegion,
-            )),
+              region: RegionModel(
+                name: data?.shipperRegion,
+              ),
+            ),
           ),
           registrationId: data?.registrationId,
           status: data?.statusAwb,
