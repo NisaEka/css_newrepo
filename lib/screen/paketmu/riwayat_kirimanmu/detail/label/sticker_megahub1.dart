@@ -111,7 +111,7 @@ class StickerMegahub1 extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     Text(
-                      'Rp ${shippingCost ? 1 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
+                      'Rp ${shippingCost ? 1 : data.type == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
                       style: itemTextStyle.copyWith(fontWeight: bold),
                       textAlign: TextAlign.center,
                     ),
@@ -141,7 +141,7 @@ class StickerMegahub1 extends StatelessWidget {
                             style: labelTextStyle),
                         const Divider(height: 1),
                         Text(
-                            'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zipCode ?? ''}. Telp.${data.receiver?.phone ?? ''}\n\n',
+                            'Penerima: ${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}, ${data.receiver?.city ?? ''}, ${data.receiver?.zipCode ?? ''}. Telp.${data.receiver?.phone?.maskPhoneNumber() ?? ''}\n\n',
                             style: labelTextStyle),
                       ],
                     ),
@@ -200,7 +200,7 @@ class StickerMegahub1 extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              'Tanggal: ${data.createdDate?.toShortDateFormat() ?? ''}',
+                              'Tanggal: ${data.createdDate?.toLongDateTimeFormat() ?? ''}',
                               style: labelTextStyle),
                           Text(
                               'No. Pelanggan: ${data.account?.accountNumber ?? ''}',
@@ -322,7 +322,7 @@ class StickerMegahub1 extends StatelessWidget {
                               'Pengirim: ${data.shipper?.name}\n${data.shipper?.address}\nTelp.${data.shipper?.phone}',
                               style: const pw.TextStyle(fontSize: 8)),
                           pw.Text(
-                              'Penerima: ${data.receiver?.name}\n${data.receiver?.address}\nTelp.${data.receiver?.phone}\n',
+                              'Penerima: ${data.receiver?.name}\n${data.receiver?.address}\nTelp.${data.receiver?.phone?.maskPhoneNumber()}\n',
                               style: const pw.TextStyle(fontSize: 8)),
                         ],
                       ),
@@ -330,7 +330,8 @@ class StickerMegahub1 extends StatelessWidget {
                     pw.SizedBox(
                       width: Get.width / 3.6,
                       child: pw.Text(
-                        '${data.shipper?.origin} - ${data.receiver?.destinationCode}\n${data.receiver?.zipCode}',
+                        '${data.shipper?.origin}-${data.destination?.facilityCode ?? data.destination?.cityZone ?? data.destination?.destinationCode?.substring(0, 3)} \n${data.receiver?.zipCode ?? ''}',
+                        // '${data.shipper?.origin} - ${data.receiver?.destinationCode}\n${data.receiver?.zipCode}',
                         textAlign: pw.TextAlign.center,
                         style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                       ),
@@ -506,6 +507,9 @@ class StickerMegahub1 extends StatelessWidget {
                         pw.Text('Deskripsi: ${data.receiver?.registrationId}',
                             style: const pw.TextStyle(fontSize: 8)),
                         pw.Text('Berat: ${data.receiver?.registrationId}',
+                            style: const pw.TextStyle(fontSize: 8)),
+                        pw.Text(
+                            'Jumlah Kiriman: ${data.receiver?.registrationId}',
                             style: const pw.TextStyle(fontSize: 8)),
                         pw.Text('Biaya Kirim: ${data.receiver?.registrationId}',
                             style: const pw.TextStyle(fontSize: 8)),

@@ -112,7 +112,9 @@ class DetailTransactionController extends BaseController {
           status: data?.statusAwb,
           createdDate: data?.createdDateSearch,
           awb: data?.awb,
-          type: data?.apiType,
+          type: data?.codOngkir == "YES" || data?.codFlag == "YES"
+              ? "COD"
+              : "NON COD",
           awbType: data?.apiType,
           createAt: data?.createdDate,
           delivery: Delivery(

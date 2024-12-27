@@ -204,22 +204,17 @@ class StickerDefault extends StatelessWidget {
                               titleTextStyle: TextStyle(fontWeight: bold),
                               valueTextStyle: const TextStyle(),
                             ),
-                            data.account?.accountService == 'COD'
+                            data.type == 'COD'
                                 ? const SizedBox(width: 10)
-                                : data.account?.accountService == 'COD ONGKIR'
-                                    ? const SizedBox(width: 10)
-                                    : data.account?.accountService == 'JLC'
-                                        ? const SizedBox(width: 20)
-                                        : const SizedBox(width: 85),
-                            Text(
-                                // data.account?.accountService??'',
-                                data.account?.accountService == 'COD' ||
-                                        data.account?.accountService == 'JLC'
-                                    ? data.account?.accountService ?? ''
-                                    : data.account?.accountService ==
-                                            'COD ONGKIR'
-                                        ? 'COD'
-                                        : '',
+                                : const SizedBox(width: 85),
+                            Text(data.type == 'COD' ? data.type ?? '' : '',
+                                // data.account?.accountService == 'COD' ||
+                                //         data.account?.accountService == 'JLC'
+                                //     ? data.account?.accountService ?? ''
+                                //     : data.account?.accountService ==
+                                //             'COD ONGKIR'
+                                //         ? 'COD'
+                                //         : '',
                                 style:
                                     TextStyle(fontSize: 38, fontWeight: bold)),
                           ],
