@@ -103,10 +103,24 @@ class ReceiverController extends BaseController {
     return state.receiver;
   }
 
-  bool isSaveReceiver() {
-    if (state.receiver?.phone != state.receiverPhone.text) {
+  Future<bool> isSaveReceiver() async {
+    var receivers = await master.getReceivers(QueryModel(
+      where: [
+        {"receiverPhone": state.receiverPhone.text}
+      ],
+    ));
+
+    var receiver = receivers.data;
+    if ((receiver?.isEmpty ?? false) &&
+        (state.formKey.currentState?.validate() == true) &&
+        state.isOnline) {
+      state.isSaveReceiver = true;
+      update();
       return true;
     }
+
+    state.isSaveReceiver = false;
+    update();
     return false;
   }
 

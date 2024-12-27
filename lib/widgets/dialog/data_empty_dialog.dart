@@ -16,8 +16,11 @@ class DataEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: padding ?? EdgeInsets.zero,
+      constraints: BoxConstraints(
+        minHeight: context.height / 2,
+      ),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

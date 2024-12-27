@@ -120,7 +120,7 @@ class ReceiverForm extends StatelessWidget {
                               isRequired: true,
                               validator: ValidationBuilder().address().build(),
                             ),
-                            c.state.isOnline && c.isSaveReceiver()
+                            c.state.isSaveReceiver
                                 ? CustomFilledButton(
                                     color: whiteColor,
                                     title: 'Simpan Data Penerima'.tr,
@@ -137,13 +137,10 @@ class ReceiverForm extends StatelessWidget {
                                             c.state.isValidate
                                         ? primaryColor(context)
                                         : greyColor,
-                                    onPressed: () => c
-                                                    .state.formKey.currentState
-                                                    ?.validate() ==
-                                                true ||
-                                            c.state.isValidate
-                                        ? c.saveReceiver()
-                                        : null,
+                                    onPressed: () => c.isSaveReceiver().then(
+                                          (value) =>
+                                              value ? c.saveReceiver() : null,
+                                        ),
                                   )
                                 : const SizedBox(),
                             CustomFilledButton(
