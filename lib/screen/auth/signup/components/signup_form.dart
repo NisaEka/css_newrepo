@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/auth/signup/signup_controller.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/email_textformfield.dart';
@@ -13,8 +14,6 @@ import 'package:css_mobile/widgets/bar/versionsection.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:form_validator/form_validator.dart';
-
-import '../../../../const/textstyle.dart';
 
 class SignupForm extends StatelessWidget {
   const SignupForm({super.key});
