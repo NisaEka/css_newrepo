@@ -33,6 +33,7 @@ class LanguageEN {
       "Cari data Petugas": "Search Officer Data",
       "Input Transaksi": "Input Transaction",
       "Nomor Akun": "Account Number",
+      "Nama Akun": "Account Name",
       "Nama Pengirim": "Shipper Name",
       "Kota Pengirim": "Shipper City",
       "Alamat": "Address",
