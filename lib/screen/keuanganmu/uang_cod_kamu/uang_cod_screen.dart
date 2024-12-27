@@ -27,6 +27,7 @@ class UangCODScreen extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           DateFilterField(
+            label: "Tanggal Pencarian".tr,
             onChanged: (value) {
               c.startDate = value.first;
               c.endDate = value.last;

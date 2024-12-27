@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RequestPickupState {
-  final startDateField = TextEditingController();
-  final endDateField = TextEditingController();
   final searchField = TextEditingController();
   static const pageSize = Constant.defaultLimit;
   final PagingController<int, RequestPickupModel> pagingController =
