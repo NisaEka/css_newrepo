@@ -80,9 +80,12 @@ class StickerMegahub1 extends StatelessWidget {
                     drawText: false,
                     height: 60,
                   ),
-                  Text(
-                    'Nomor Connote : ${data.awb}',
-                    style: itemTextStyle,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      'Nomor Connote : ${data.awb}',
+                      style: sublistTitleTextStyle,
+                    ),
                   )
                 ],
               ),

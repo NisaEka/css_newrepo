@@ -183,7 +183,7 @@ class DashboardController extends BaseController {
         );
         await storage.writeString(
           StorageCore.shippingCost,
-          value.data?.first.showPrice ?? false ? "PUBLISH" : "HIDE",
+          value.data?.first.showPrice ?? false ? "HIDE" : "PUBLISH",
         );
       },
     );

@@ -208,10 +208,13 @@ class StickerDefault extends StatelessWidget {
                                 ? const SizedBox(width: 10)
                                 : data.account?.accountService == 'COD ONGKIR'
                                     ? const SizedBox(width: 10)
-                                    : const SizedBox(width: 85),
+                                    : data.account?.accountService == 'JLC'
+                                        ? const SizedBox(width: 20)
+                                        : const SizedBox(width: 85),
                             Text(
                                 // data.account?.accountService??'',
-                                data.account?.accountService == 'COD'
+                                data.account?.accountService == 'COD' ||
+                                        data.account?.accountService == 'JLC'
                                     ? data.account?.accountService ?? ''
                                     : data.account?.accountService ==
                                             'COD ONGKIR'
@@ -276,7 +279,8 @@ class StickerDefault extends StatelessWidget {
                 ),
                 Center(
                   child: Text(
-                    "${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.receiver?.destinationCode ?? ''}",
+                    // "${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.receiver?.destinationCode ?? ''}",
+                    data.receiver?.destinationCode ?? '',
                     style: TextStyle(
                       fontWeight: bold,
                       fontSize: 21,
