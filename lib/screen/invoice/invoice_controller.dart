@@ -1,6 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/screen/invoice/invoice_state.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:get/get.dart';
@@ -182,13 +181,6 @@ class InvoiceController extends BaseController {
 
     if (newKeyword.isEmpty) {
       state.searchTextController.clear();
-    }
-  }
-
-  void setSelectedFilterDate(RequestPickupDateEnum? date) {
-    if (date != null) {
-      state.selectedFilterDate = date;
-      state.filterDateText = date.asName();
     }
   }
 

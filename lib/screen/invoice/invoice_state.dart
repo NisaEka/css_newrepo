@@ -1,5 +1,4 @@
 import 'package:css_mobile/data/model/invoice/invoice_model.dart';
-import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -17,11 +16,6 @@ class InvoiceState {
       PagingController(firstPageKey: Constant.defaultPage);
 
   final searchTextController = TextEditingController();
-
-  String filterDateText = Constant.allDate;
-
-  RequestPickupDateEnum selectedFilterDate = RequestPickupDateEnum.all;
-
   DateTime? startDate;
   DateTime? endDate;
 }
