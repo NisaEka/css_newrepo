@@ -237,7 +237,7 @@ class TransactionForm extends StatelessWidget {
                                     controller: c.state.goodLength,
                                     hintText: 'Panjang'.tr,
                                     // hintText: 'Cm',
-                                    width: Get.width / 3.5,
+                                    width: Get.width / 3.7,
                                     inputType: TextInputType.number,
                                     suffixIcon: const SatuanFieldIcon(
                                       title: 'CM',
@@ -256,7 +256,7 @@ class TransactionForm extends StatelessWidget {
                                     controller: c.state.goodWidth,
                                     hintText: 'Lebar'.tr,
                                     // hintText: 'Cm',
-                                    width: Get.width / 3.5,
+                                    width: Get.width / 3.7,
                                     inputType: TextInputType.number,
                                     suffixIcon: const SatuanFieldIcon(
                                       title: 'CM',
@@ -275,7 +275,7 @@ class TransactionForm extends StatelessWidget {
                                     controller: c.state.goodHeight,
                                     hintText: 'Tinggi'.tr,
                                     // hintText: 'Cm',
-                                    width: Get.width / 3.5,
+                                    width: Get.width / 3.7,
                                     inputType: TextInputType.number,
                                     suffixIcon: const SatuanFieldIcon(
                                       title: 'CM',

@@ -24,7 +24,7 @@ class EclaimItems extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(2),
-              child: Text('Daftar Klaim',
+              child: Text('Daftar Klaim'.tr,
                   style: Theme.of(context).textTheme.titleMedium),
             ),
             SizedBox(

@@ -48,7 +48,7 @@ class EclaimStatusButton extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Total Pengajuan',
+                            Text('Total Pengajuan'.tr,
                                 textAlign: TextAlign.left,
                                 style: Theme.of(context).textTheme.titleMedium),
                             const SizedBox(height: 7),
@@ -131,7 +131,7 @@ class EclaimStatusButton extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 5),
                                     child: Text(
-                                      'Diterima',
+                                      'Diterima'.tr,
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleSmall
@@ -211,7 +211,7 @@ class EclaimStatusButton extends StatelessWidget {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(right: 5.0),
-                                    child: Text('Ditolak',
+                                    child: Text('Ditolak'.tr,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall

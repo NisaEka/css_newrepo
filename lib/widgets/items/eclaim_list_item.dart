@@ -55,7 +55,7 @@ class EclaimListItem extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                date?.toLongDateFormat() ?? '',
+                date?.toLongDateTimeFormat() ?? '',
                 style: TextStyle(
                     fontSize: 12, color: Theme.of(context).primaryColor),
               ),

@@ -37,7 +37,7 @@ class InvoiceCnoteItem extends StatelessWidget {
                           .titleMedium!
                           .copyWith(color: primaryColor(context))),
                   Text(
-                    invoice?.awbDate?.toLongDateFormat() ?? '',
+                    invoice?.awbDate?.toLongDateTimeFormat() ?? '',
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall

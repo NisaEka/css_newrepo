@@ -25,7 +25,7 @@ class CekOngkirForm extends StatelessWidget {
                 OriginExternalDropdown(
                   controller: c.state.kotaPengirim,
                   isRequired: true,
-                  label: 'Kota Pengirim',
+                  label: 'Kota Pengirim'.tr,
                   showfromBottom: true,
                   value: c.state.selectedOrigin,
                   onChanged: (selected) => c.state.selectedOrigin = selected,
@@ -33,7 +33,7 @@ class CekOngkirForm extends StatelessWidget {
                 DestinationExternalDropdown(
                   controller: c.state.kotaTujuan,
                   isRequired: true,
-                  label: 'Kota Tujuan',
+                  label: 'Kota Tujuan'.tr,
                   showfromBottom: true,
                   value: c.state.selectedDestination,
                   onChanged: (selected) =>

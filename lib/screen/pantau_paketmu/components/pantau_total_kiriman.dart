@@ -55,7 +55,7 @@ class PantauTotalKiriman extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5)),
                       width: isLoading ? Get.width / 3 : null,
                       // height: isLoading ? 20 : null,
-                      child: Text("Total Kiriman",
+                      child: Text("Total Kiriman".tr,
                           style: Theme.of(context).textTheme.titleSmall),
                     ),
                   ],

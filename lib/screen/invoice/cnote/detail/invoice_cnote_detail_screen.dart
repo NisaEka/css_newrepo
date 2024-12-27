@@ -67,8 +67,11 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                 Shimmer(
                   isLoading: controller.isLoading,
                   child: Container(
-                    color:
-                        controller.isLoading ? greyColor : Colors.transparent,
+                    decoration: BoxDecoration(
+                        color: controller.isLoading
+                            ? greyColor
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(5)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -113,7 +116,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   context,
                   "AWB Date".tr,
                   controller.invoiceCnoteDetailModel?.awbDate
-                          ?.toLongDateFormat() ??
+                          ?.toLongDateTimeFormat() ??
                       '',
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -240,7 +243,10 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
             child: Shimmer(
               isLoading: controller.isLoading,
               child: Container(
-                color: controller.isLoading ? greyColor : Colors.transparent,
+                decoration: BoxDecoration(
+                    color:
+                        controller.isLoading ? greyColor : Colors.transparent,
+                    borderRadius: BorderRadius.circular(5)),
                 child: Text(
                   "Informasi Tagihan",
                   style: listTitleTextStyle.copyWith(

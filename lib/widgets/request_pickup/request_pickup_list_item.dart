@@ -112,7 +112,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
               ),
             ),
             Text(
-              (requestPickup?.createdDateSearch ?? '').toShortDateFormat(),
+              (requestPickup?.createdDateSearch ?? '').toLongDateTimeFormat(),
               style: Theme.of(context)
                   .textTheme
                   .titleSmall

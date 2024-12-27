@@ -189,7 +189,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(
                     right: 20), // Margin between the two text widgets
                 child: Text(
-                  'Detail kiriman'.tr,
+                  'Detail Kiriman'.tr,
                   style: listTitleTextStyle.copyWith(
                     color:
                         AppConst.isLightTheme(context) ? blueJNE : whiteColor,
