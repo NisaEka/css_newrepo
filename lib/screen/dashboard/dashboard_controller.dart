@@ -295,8 +295,6 @@ class DashboardController extends BaseController {
         update();
       }
     }
-    loadPantauCountList();
-    loadTransCountList(true);
   }
 
   Future<void> saveFCMToken() async {
@@ -652,6 +650,9 @@ class DashboardController extends BaseController {
     cekAllowance();
     state.isLoading = false;
     update();
+
+    loadPantauCountList();
+    loadTransCountList(true);
   }
 
   bool pop = false;
