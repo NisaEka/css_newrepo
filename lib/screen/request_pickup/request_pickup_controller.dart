@@ -36,6 +36,7 @@ class RequestPickupController extends BaseController {
     state.pagingController.addPageRequestListener((pageKey) {
       getRequestPickups(pageKey);
     });
+    Future.wait([getRequestPickupCount()]);
     state.pagingControllerPickupDataAddress.addPageRequestListener((pageKey) {
       getAddresses(pageKey);
     });
@@ -214,6 +215,51 @@ class RequestPickupController extends BaseController {
     // state.filterDeliveryCityText = city['label'];
   }
 
+  Future<void> getRequestPickupCount() async {
+    // state.showLoadingIndicator = true;
+
+    try {
+      // AppLogger.i("pageKey: $pageKey");
+      // state.queryParam.setPage(pageKey);
+      // state.queryParam.setSearch(state.searchField.text);
+      // setSelectedDeliveryTypeTwo(state.selectedDeliveryType);
+      // AppLogger.i("selectedorigin: ${state.selectedOrigin}");
+      // setSelectedFilterCityTwo(state.selectedOrigin);
+      final response =
+          await requestPickupRepository.getRequestPickupCount(QueryModel(
+        where: state.queryParam.where,
+        between: state.queryParam.between,
+        search: state.queryParam.search,
+      ));
+      // setSelectedDeliveryType(state.filterDeliveryTypeText);
+
+      AppLogger.d("getRequestPickupCount response: ${response.data}");
+
+      state.requestPickupCount = response.data ?? List.empty();
+
+      // final payload = response.data ?? List.empty();
+      // final isLastPage = payload.length <= pageSize;
+      // final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
+
+      // if (isLastPage) {
+      //   state.pagingController.appendLastPage(payload);
+      // } else {
+      //   final nextPageKey = pageKey + 1;
+      //   state.pagingController.appendPage(payload, nextPageKey);
+      // }
+
+      // state.showMainContent = true;
+      // update();
+    } catch (e) {
+      AppLogger.e("getRequestPickupCount error: $e");
+      // state.showErrorContent = true;
+      // update();
+    }
+
+    // state.showLoadingIndicator = false;
+    update();
+  }
+
   Future<void> getRequestPickups(int pageKey) async {
     state.showLoadingIndicator = true;
 
@@ -352,6 +398,7 @@ class RequestPickupController extends BaseController {
 
   void refreshPickups() {
     state.pagingController.refresh();
+    getRequestPickupCount();
     // pagingControllerPickupDataAddress.refresh();
   }
 
@@ -416,6 +463,7 @@ class RequestPickupController extends BaseController {
       // Trigger the search or refresh when the user stops typing
       state.searchField.text = value;
       state.pagingController.refresh();
+      getRequestPickupCount();
     });
   }
 

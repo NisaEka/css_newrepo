@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 
 class TransactionModel {
@@ -102,6 +103,8 @@ class TransactionModel {
     String? statusAwb,
     String? pickupStatus,
     Account? account,
+    String? transactionDetail,
+    Destination? destination,
   }) {
     _awb = awb;
     _taxValue = taxValue;
@@ -203,6 +206,8 @@ class TransactionModel {
     _statusAwb = statusAwb;
     _pickupStatus = pickupStatus;
     _account = account;
+    _transactionDetail = transactionDetail;
+    _destination = destination;
   }
 
   TransactionModel.fromJson(dynamic json) {
@@ -307,6 +312,10 @@ class TransactionModel {
     _pickupStatus = json['pickupStatus'];
     _account =
         json['account'] != null ? Account.fromJson(json['account']) : null;
+    _transactionDetail = json['transactionDetail'];
+    _destination = json['destination'] != null
+        ? Destination.fromJson(json['destination'])
+        : null;
   }
 
   String? _awb;
@@ -409,6 +418,8 @@ class TransactionModel {
   String? _statusAwb;
   String? _pickupStatus;
   Account? _account;
+  String? _transactionDetail;
+  Destination? _destination;
 
   TransactionModel copyWith({
     String? awb,
@@ -511,6 +522,8 @@ class TransactionModel {
     String? statusAwb,
     String? pickupStatus,
     Account? account,
+    String? transactionDetail,
+    Destination? destination,
   }) =>
       TransactionModel(
         awb: awb ?? _awb,
@@ -613,6 +626,8 @@ class TransactionModel {
         statusAwb: statusAwb ?? _statusAwb,
         pickupStatus: pickupStatus ?? _pickupStatus,
         account: account ?? _account,
+        destination: destination ?? _destination,
+        transactionDetail: transactionDetail ?? _transactionDetail,
       );
 
   String? get awb => _awb;
@@ -815,6 +830,10 @@ class TransactionModel {
 
   Account? get account => _account;
 
+  String? get transactionDetail => _transactionDetail;
+
+  Destination? get destination => _destination;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['awb'] = _awb;
@@ -925,6 +944,10 @@ class TransactionModel {
     if (_account != null) {
       map['account'] = _account?.toJson();
     }
+    if (_destination != null) {
+      map['destination'] = _destination.toString();
+    }
+    map['transactionDetail'] = _transactionDetail;
     return map;
   }
 }
