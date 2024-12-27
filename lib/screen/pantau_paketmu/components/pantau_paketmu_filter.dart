@@ -142,7 +142,7 @@ class PantauPaketmuFilter extends HookWidget {
                                     (e) => DropdownMenuItem(
                                       value: e,
                                       child: Text(
-                                        e.toUpperCase(),
+                                        e.toUpperCase().tr,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium

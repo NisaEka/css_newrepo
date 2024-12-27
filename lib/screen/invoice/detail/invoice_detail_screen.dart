@@ -146,9 +146,11 @@ class InvoiceDetailScreen extends StatelessWidget {
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
+                        decoration: BoxDecoration(
+                            color: controller.isLoading
+                                ? greyColor
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(5)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -249,9 +251,11 @@ class InvoiceDetailScreen extends StatelessWidget {
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
+                        decoration: BoxDecoration(
+                            color: controller.isLoading
+                                ? greyColor
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(5)),
                         alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.only(
                             right: 20), // Margin between the two text widgets
@@ -268,9 +272,11 @@ class InvoiceDetailScreen extends StatelessWidget {
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
+                        decoration: BoxDecoration(
+                            color: controller.isLoading
+                                ? greyColor
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(5)),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           controller.invoiceDetailModel?.description ?? '-',
@@ -289,9 +295,11 @@ class InvoiceDetailScreen extends StatelessWidget {
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
+                        decoration: BoxDecoration(
+                            color: controller.isLoading
+                                ? greyColor
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(5)),
                         alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.only(
                             right: 20), // Margin between the two text widgets
@@ -393,9 +401,11 @@ class InvoiceDetailScreen extends StatelessWidget {
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
+                        decoration: BoxDecoration(
+                            color: controller.isLoading
+                                ? greyColor
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(5)),
                         alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.only(
                             right: 20), // Margin between the two text widgets

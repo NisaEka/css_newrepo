@@ -94,7 +94,7 @@ class RequstPickupFilterButton extends HookWidget {
                             maxCrossAxisExtent: 140,
                             mainAxisSpacing: 5,
                             crossAxisSpacing: 16,
-                            childAspectRatio: 2,
+                            childAspectRatio: 1.8,
                             // mainAxisExtent: 100
                           ),
                         ),

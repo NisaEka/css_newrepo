@@ -52,7 +52,7 @@ class InvoiceItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      data?.invoiceDate?.toShortDateFormat() ?? '-',
+                      data?.invoiceDate?.toLongDateTimeFormat() ?? '-',
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall

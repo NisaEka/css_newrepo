@@ -4,6 +4,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/add/add_eclaim_controller.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/add/image_preview_screen.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
@@ -101,7 +102,7 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
                   top: 10,
                   right: 10,
                   child: Text(
-                    DateTime.now().toString(),
+                    DateTime.now().toString().toLongDateTimeFormat(),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),

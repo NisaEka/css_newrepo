@@ -130,7 +130,7 @@ class PantauItems extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5)),
                           width: isLoading ? Get.width / 3 : null,
                           child: Text(
-                            item?.status ?? '',
+                            (item?.status ?? '').tr,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyLarge

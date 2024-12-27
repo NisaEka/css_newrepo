@@ -108,12 +108,12 @@ class DetailLaporankuScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   TextRowWidget(
                     title: "Tanggal Laporan".tr,
-                    value: data.createdDate?.toShortDateTimeFormat() ?? '-',
+                    value: data.createdDate?.toLongDateTimeFormat() ?? '-',
                     isLoading: false,
                   ),
                   TextRowWidget(
                     title: "Update Terakhir".tr,
-                    value: data.updatedDate?.toShortDateTimeFormat() ?? '-',
+                    value: data.updatedDate?.toLongDateTimeFormat() ?? '-',
                     isLoading: false,
                   ),
                   TextRowWidget(
