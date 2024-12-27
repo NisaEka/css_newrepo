@@ -24,16 +24,15 @@ class PantauPaketmuListFilter extends HookWidget {
                 return Expanded(
                   child: CustomScrollView(
                     slivers: [
-                      Obx(
-                        () => DateFilterField(
-                          label: "Tanggal AWB".tr,
-                          onChanged: (value) {
-                            controller.state.startDate = value.first;
-                            controller.state.endDate = value.last;
-                            controller.update();
-                          },
-                        ),
+                      DateFilterField(
+                        label: "Tanggal AWB".tr,
+                        onChanged: (value) {
+                          controller.state.startDate = value.first;
+                          controller.state.endDate = value.last;
+                          controller.update();
+                        },
                       ),
+
                       SliverToBoxAdapter(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
