@@ -232,10 +232,10 @@ class MasterRepositoryImpl extends MasterRepository {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
+    var where = param.where;
+    where?.add({"registrationId": "${user.id?.split('-').first}"});
     QueryModel params = param.copyWith(
-      where: [
-        {"registrationId": "${user.id?.split('-').first}"}
-      ],
+      where: where,
       table: true,
       sort: [
         {"receiverName": "asc"}
