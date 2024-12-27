@@ -112,11 +112,8 @@ class TransactionStatusButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          height: 57,
+          height: 45,
           alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height * 0.01,
-          ),
           decoration: BoxDecoration(
             border: Border.all(
               color: iconColor(context),
@@ -137,7 +134,8 @@ class TransactionStatusButton extends StatelessWidget {
             children: [
               Text(
                 count.toString(),
-                style: listTitleTextStyle.copyWith(
+                style: subTitleTextStyle.copyWith(
+                  fontWeight: bold,
                   color: selected
                       ? whiteColor
                       : AppConst.isLightTheme(context)
@@ -153,6 +151,7 @@ class TransactionStatusButton extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   style: sublistTitleTextStyle.copyWith(
+                    fontSize: 10,
                     color: selected
                         ? whiteColor
                         : AppConst.isLightTheme(context)
