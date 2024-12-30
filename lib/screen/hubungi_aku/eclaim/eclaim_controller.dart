@@ -18,8 +18,8 @@ class EclaimController extends BaseController {
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
-    applyFilter();
     state.selectedStatusClaim = "Total";
+    applyFilter();
   }
 
   Future<void> eclaimCount() async {
@@ -41,9 +41,21 @@ class EclaimController extends BaseController {
     }
   }
 
+  // Future<void> initData() async {
+  //   // transactionList = [];
+  //   state.selectedStatusClaim = '';
+  // }
+
   Future<void> initData() async {
-    // transactionList = [];
-    state.selectedStatusClaim = '';
+    state.selectedStatusClaim = "Total";
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+    state.transDate = [
+      {
+        "createDate": ["${state.startDate}", "${state.endDate}"]
+      }
+    ];
+    await eclaimCount();
   }
 
   Future<void> getEclaim(int page) async {
