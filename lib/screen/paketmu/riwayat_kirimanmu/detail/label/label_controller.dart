@@ -41,6 +41,21 @@ class LabelController extends BaseController {
 
   Future<void> initData() async {
     try {
+      await setting.getSettingLabel().then(
+        (value) async {
+          await storage.writeString(
+            StorageCore.transactionLabel,
+            value.data?.where((e) => e.enable ?? false).first.name,
+          );
+          await storage.writeString(
+            StorageCore.shippingCost,
+            value.data?.first.showPrice ?? false ? "HIDE" : "PUBLISH",
+          );
+        },
+      );
+
+      update();
+
       stickerLabel = await storage.readString(StorageCore.transactionLabel);
       var shipcost = await storage.readString(StorageCore.shippingCost);
       shippingCost = shipcost == "HIDE";

@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -24,73 +25,77 @@ class EclaimListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Divider(
-            color: Theme.of(context).colorScheme.outline,
-            thickness: 1.0,
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  color: primaryColor(context),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  claimType ?? '',
-                  style: const TextStyle(color: whiteColor, fontSize: 12),
-                ),
-              ),
-              const Spacer(),
-              Text(
-                date?.toLongDateTimeFormat() ?? '',
-                style: TextStyle(
-                    fontSize: 12, color: Theme.of(context).primaryColor),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Text(
-                awb ?? '',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(),
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  Icon(
-                    isSuccess
-                        ? Icons.check_circle_outline
-                        : Icons.cancel_outlined,
-                    color: isSuccess ? successColor : errorColor,
-                    size: 18,
+    return Shimmer(
+      isLoading: isLoading,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Divider(
+              color: Theme.of(context).colorScheme.outline,
+              thickness: 1.0,
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: primaryColor(context),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  Text(
-                    'Rp. ${amount != null ? NumberFormat('#,##0', 'id').format(int.parse(amount!)) : '0'}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                  child: Text(
+                    claimType ?? '',
+                    style: const TextStyle(color: whiteColor, fontSize: 12),
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  date?.toLongDateTimeFormat() ?? '',
+                  style: TextStyle(
+                      fontSize: 12, color: Theme.of(context).primaryColor),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Text(
+                  awb ?? '',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(),
+                ),
+                const Spacer(),
+                Row(
+                  children: [
+                    Icon(
+                      isSuccess
+                          ? Icons.check_circle_outline
+                          : Icons.cancel_outlined,
                       color: isSuccess ? successColor : errorColor,
+                      size: 18,
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                    Text(
+                      // 'Rp. ${amount != null ? NumberFormat('#,##0', 'id').format(int.parse(amount!)) : '0'}',
+                      'Rp. ${amount != null ? NumberFormat('#,##0', 'id').format(int.parse(amount!.replaceAll('.', ''))) : '0'}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: isSuccess ? successColor : errorColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

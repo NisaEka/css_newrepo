@@ -42,6 +42,10 @@ class EclaimItems extends StatelessWidget {
                       awb: item.awb ?? '',
                       date: item.createDate ?? '',
                       amount: item.valueclaim ?? '',
+                      // amount: double.tryParse(
+                      //             item.valueclaim?.replaceAll('.', '') ?? '0')
+                      //         ?.toString() ??
+                      //     '',
                       isSuccess: true,
                     ),
                     firstPageErrorIndicatorBuilder: (context) =>

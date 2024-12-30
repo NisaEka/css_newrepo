@@ -112,7 +112,7 @@ class ForgotPasswordOTPController extends BaseController {
             },
           );
         } else {
-          AppSnackBar.error('PIN tidak sesuai');
+          AppSnackBar.error('PIN tidak sesuai'.tr);
         }
       });
     } catch (e) {

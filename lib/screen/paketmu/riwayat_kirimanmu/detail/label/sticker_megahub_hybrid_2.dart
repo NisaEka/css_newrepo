@@ -12,9 +12,13 @@ import 'package:get/get.dart';
 class StickerMegahubHybrid2 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
+  final String? stickerLabel;
 
   const StickerMegahubHybrid2(
-      {super.key, required this.data, this.shippingCost = false});
+      {super.key,
+      required this.data,
+      this.shippingCost = false,
+      this.stickerLabel});
 
   @override
   Widget build(BuildContext context) {
@@ -197,8 +201,11 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                                     style: labelTextStyle),
                                 Text('Pembayaran: ${data.type ?? '-'}',
                                     style: labelTextStyle),
-                                Text('Order ID: ${data.orderId ?? '-'}',
-                                    style: labelTextStyle),
+                                stickerLabel ==
+                                        "Sticker Label Vertikal (Mega HUB 1)"
+                                    ? Text('Order ID: ${data.orderId ?? '-'}',
+                                        style: labelTextStyle)
+                                    : const SizedBox(),
                                 // Text('Order ID: ${data.orderId}', style: labelTextStyle),
                               ],
                             ),

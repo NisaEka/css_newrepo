@@ -21,27 +21,29 @@ class LabelScreen extends StatelessWidget {
                 title: Text("Lihat Resi".tr),
                 leading: const CustomBackButton(),
               ),
-              body: Screenshot(
-                controller: controller.screenshotController,
-                child: SingleChildScrollView(
-                  child: Container(
-                    margin: const EdgeInsets.all(25),
-                    padding: const EdgeInsets.only(top: 50),
-                    alignment: Alignment.center,
-                    color: Colors.white,
-                    child: controller.myLongWidget(data),
+              body: RefreshIndicator(
+                onRefresh: () => controller.initData(),
+                child: Screenshot(
+                  controller: controller.screenshotController,
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Container(
+                      margin: const EdgeInsets.all(25),
+                      padding: const EdgeInsets.only(top: 50),
+                      alignment: Alignment.center,
+                      color: Colors.white,
+                      child: controller.myLongWidget(data),
+                    ),
                   ),
                 ),
               ),
               floatingActionButton: FloatingActionButton(
-                // shape: const CircleBorder(),
                 backgroundColor: primaryColor(context),
                 onPressed: () => controller.capture(context),
                 child: const Icon(
                   Icons.picture_as_pdf_rounded,
                   color: whiteColor,
                 ),
-                // ),
               ));
         });
   }
