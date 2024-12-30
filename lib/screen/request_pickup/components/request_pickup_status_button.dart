@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_controller.dart';
@@ -33,7 +34,7 @@ class RequestPickupStatusButton extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.only(bottom: 0),
             decoration: BoxDecoration(
-              color: blueJNE,
+              color: iconColor(context),
               border: Border.all(),
               borderRadius: BorderRadius.circular(8),
             ),
@@ -41,7 +42,18 @@ class RequestPickupStatusButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // First button (Safe Access)
-                GestureDetector(
+                _statusCard(
+                  context: context,
+                  controller: c,
+                  label: thirdStatus.isNotEmpty
+                      ? thirdStatus.tr
+                      : "SUDAH MINTA DIJEMPUT".tr,
+                  count: c.state.requestPickupCount
+                          .firstWhereOrNull(
+                              (element) => element.status == thirdStatus)
+                          ?.count ??
+                      0,
+                  selected: c.state.filterStatus == thirdStatus,
                   onTap: () {
                     if (c.state.listStatusKiriman.length > 2) {
                       // Safe index access
@@ -54,50 +66,22 @@ class RequestPickupStatusButton extends StatelessWidget {
                       c.state.pagingController.refresh();
                     }
                   },
-                  child: Container(
-                    width: Get.width * 0.427,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: c.state.filterStatus == thirdStatus
-                          ? primaryColor(context)
-                          : whiteColor,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        bottomLeft: Radius.circular(8),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          c.state.requestPickupCount
-                                  .firstWhereOrNull((element) =>
-                                      element.status == thirdStatus)
-                                  ?.count
-                                  .toString() ??
-                              "",
-                          style: listTitleTextStyle.copyWith(
-                            color: c.state.filterStatus == thirdStatus
-                                ? whiteColor
-                                : blueJNE,
-                          ),
-                        ),
-                        Text(
-                          thirdStatus.isNotEmpty
-                              ? thirdStatus.tr
-                              : "SUDAH MINTA DIJEMPUT".tr,
-                          style: sublistTitleTextStyle.copyWith(
-                            fontSize: 10,
-                            color: c.state.filterStatus == thirdStatus
-                                ? whiteColor
-                                : greyColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  isFirst: true,
+                  isLast: false,
                 ),
                 // Second button (Safe Access)
-                GestureDetector(
+                _statusCard(
+                  context: context,
+                  controller: c,
+                  label: secondStatus.isNotEmpty
+                      ? secondStatus.tr
+                      : "BELUM MINTA DIJEMPUT".tr,
+                  count: c.state.requestPickupCount
+                          .firstWhereOrNull(
+                              (element) => element.status == secondStatus)
+                          ?.count ??
+                      0,
+                  selected: c.state.filterStatus == secondStatus,
                   onTap: () {
                     if (c.state.listStatusKiriman.length > 1) {
                       // Safe index access
@@ -110,53 +94,83 @@ class RequestPickupStatusButton extends StatelessWidget {
                       c.state.pagingController.refresh();
                     }
                   },
-                  child: Container(
-                    width: Get.width * 0.42,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: c.state.filterStatus == secondStatus
-                          ? primaryColor(context)
-                          : whiteColor,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          c.state.requestPickupCount
-                                  .firstWhereOrNull((element) =>
-                                      element.status == secondStatus)
-                                  ?.count
-                                  .toString() ??
-                              "",
-                          style: listTitleTextStyle.copyWith(
-                            color: c.state.filterStatus == secondStatus
-                                ? whiteColor
-                                : blueJNE,
-                          ),
-                        ),
-                        Text(
-                          secondStatus.isNotEmpty
-                              ? secondStatus.tr
-                              : "BELUM MINTA DIJEMPUT".tr,
-                          style: sublistTitleTextStyle.copyWith(
-                            fontSize: 10,
-                            color: c.state.filterStatus == secondStatus
-                                ? whiteColor
-                                : greyColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  isFirst: false,
+                  isLast: true,
                 ),
               ],
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _statusCard({
+    required BuildContext context,
+    required RequestPickupController controller,
+    required String label,
+    required num count,
+    required bool selected,
+    required VoidCallback onTap,
+    required bool isFirst,
+    required bool isLast,
+  }) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 45,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: iconColor(context),
+              width: 0.5,
+            ),
+            color: selected
+                ? primaryColor(context)
+                : AppConst.isLightTheme(context)
+                    ? whiteColor
+                    : bgDarkColor,
+            borderRadius: BorderRadius.horizontal(
+              left: isFirst ? const Radius.circular(8) : Radius.zero,
+              right: isLast ? const Radius.circular(8) : Radius.zero,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                count.toString(),
+                style: subTitleTextStyle.copyWith(
+                  fontWeight: bold,
+                  color: selected
+                      ? whiteColor
+                      : AppConst.isLightTheme(context)
+                          ? blueJNE
+                          : whiteColor,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 1),
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: sublistTitleTextStyle.copyWith(
+                    fontSize: 10,
+                    color: selected
+                        ? whiteColor
+                        : AppConst.isLightTheme(context)
+                            ? greyColor
+                            : whiteColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
