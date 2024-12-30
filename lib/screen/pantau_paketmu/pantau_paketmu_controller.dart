@@ -184,7 +184,7 @@ class PantauPaketmuController extends BaseController {
     state.tipeKiriman.value = 0;
     state.isFiltered = true;
     state.searchField.clear();
-    state.dateFilter.value = "3";
+    state.dateFilter = "3";
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
@@ -196,7 +196,7 @@ class PantauPaketmuController extends BaseController {
     if (state.isLoading) return;
     state.isLoading = true;
     update();
-    if (state.dateFilter.value != '3') {
+    if (state.dateFilter != '3') {
       state.isFiltered = true;
     }
 

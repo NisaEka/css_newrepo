@@ -71,9 +71,8 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                               width: Get.width * 0.18,
                               margin: EdgeInsets.zero,
                               label: 'Jumlah Transaksi COD'.tr,
-                              value:
-                                  (transSummary?.totalKirimanCod?.totalCod ?? 0)
-                                      .toString(),
+                              value: (transSummary?.totalKirimanCod?.totalCod)
+                                  .toString(),
                               labelBgColor: blueJNE,
                               valueBgColor: warningColor,
                               fontSize: 5,

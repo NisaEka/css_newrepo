@@ -27,6 +27,7 @@ class PantauPaketmuState extends GetxController {
   // Reactive DateTime variables
   DateTime? startDate;
   DateTime? endDate;
+  String? dateFilter = '3';
 
   // Reactive String variables
   // final selectedStatusKiriman = Rx<String>('Total Kiriman');
@@ -46,7 +47,6 @@ class PantauPaketmuState extends GetxController {
       "${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).millisecondsSinceEpoch}-${DateTime.now().millisecondsSinceEpoch}");
 
   // Reactive Integer variables
-  final dateFilter = Rx<String>('3');
   final tipeKiriman = Rx<int>(0);
 
   // final total = Rx<int>(0);

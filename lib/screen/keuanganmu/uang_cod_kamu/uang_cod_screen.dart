@@ -28,9 +28,11 @@ class UangCODScreen extends StatelessWidget {
         slivers: [
           DateFilterField(
             label: "Tanggal Pencarian".tr,
+            selectedDateFilter: c.dateFilter,
             onChanged: (value) {
-              c.startDate = value.first;
-              c.endDate = value.last;
+              c.startDate = value.startDate;
+              c.endDate = value.endDate;
+              c.dateFilter = value.dateFilter;
               c.update();
             },
           ),

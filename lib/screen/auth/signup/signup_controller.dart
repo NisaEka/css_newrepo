@@ -122,7 +122,7 @@ class SignUpController extends BaseController {
       } else if (value.code == 409 || value.message == "Conflict") {
         AppSnackBar.error('email atau nomor telepon sudah terdaftar'.tr);
       } else {
-        AppSnackBar.error(value.error.toString());
+        AppSnackBar.error(value.message.toString().tr);
       }
     }).catchError((error) {
       AppLogger.e('error signup $error');

@@ -34,6 +34,7 @@ class _StatusFilterFieldState extends State<StatusFilterField> {
               } else {
                 selectedStatusKiriman = null;
               }
+              widget.onChanged(selectedStatusKiriman ?? '');
             }),
             child: Container(
               alignment: Alignment.center,

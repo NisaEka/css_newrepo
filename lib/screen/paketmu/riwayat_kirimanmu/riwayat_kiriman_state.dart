@@ -23,7 +23,7 @@ class RiwayatKirimanState {
   PetugasModel? selectedPetugasEntry;
   String? transType;
   List<Map<String, dynamic>>? transDate;
-  String dateFilter = '0';
+  String dateFilter = '3';
 
   bool isFiltered = false;
   bool isLoading = false;

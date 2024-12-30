@@ -9,19 +9,24 @@ import 'customradiobutton.dart';
 import 'customtextformfield.dart';
 
 class DateFilterField extends StatefulHookWidget {
-  final ValueChanged<List<DateTime?>> onChanged;
+  final ValueChanged<DateFilter> onChanged;
   final String? label;
+  final String? selectedDateFilter;
 
-  const DateFilterField({super.key, required this.onChanged, this.label});
+  const DateFilterField({
+    super.key,
+    required this.onChanged,
+    this.label,
+    this.selectedDateFilter = '3',
+  });
 
   @override
   State<DateFilterField> createState() => _DatesFilterContentState();
 }
 
 class _DatesFilterContentState extends State<DateFilterField> {
-  String dateFilter = '3';
+  String? dateFilter;
   DateTime? startDate;
-
   DateTime? endDate;
 
   final startDateField = TextEditingController();
@@ -35,6 +40,7 @@ class _DatesFilterContentState extends State<DateFilterField> {
       endDate = DateTime.now();
       startDateField.text = startDate.toString().toShortDateTimeFormat();
       endDateField.text = endDate.toString().toShortDateTimeFormat();
+      dateFilter = widget.selectedDateFilter.toString();
     });
   }
 
@@ -169,7 +175,12 @@ class _DatesFilterContentState extends State<DateFilterField> {
     }
 
     setState(() {
-      widget.onChanged([startDate, endDate]);
+      widget.onChanged(DateFilter(
+        dateFilter: dateFilter ?? '3',
+        startDate:
+            startDate ?? DateTime.now().copyWith(hour: 0, minute: 0, second: 0),
+        endDate: endDate ?? DateTime.now(),
+      ));
     });
   }
 
@@ -213,4 +224,16 @@ class _DatesFilterContentState extends State<DateFilterField> {
       selectedTime.minute,
     );
   }
+}
+
+class DateFilter {
+  final String dateFilter;
+  final DateTime startDate;
+  final DateTime endDate;
+
+  const DateFilter({
+    required this.dateFilter,
+    required this.startDate,
+    required this.endDate,
+  });
 }
