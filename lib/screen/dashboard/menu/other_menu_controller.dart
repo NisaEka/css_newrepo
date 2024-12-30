@@ -259,7 +259,7 @@ class OtherMenuCotroller extends BaseController {
 
     if (isLogin &&
         (allow?.mintaDijemput != "Y" && allow?.paketmuMintadijemput != "Y")) {
-      hubungiAkuList.removeWhere((e) => e.title == "Minta Dijemput");
+      paketmuList.removeWhere((e) => e.title == "Minta Dijemput");
       favoritList.removeWhere((e) => e.title == "Minta Dijemput");
     }
 

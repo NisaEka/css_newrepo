@@ -6,6 +6,8 @@ import 'package:css_mobile/data/model/facility/facility_create_id_card_model.dar
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_controller.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -58,6 +60,14 @@ class FacilityFormInfoController extends BaseController {
     super.onInit();
     Future.wait([_getUserProfile()]);
     _checkConnectivity();
+  }
+
+  @override
+  void onClose() {
+    Get.delete<FacilityFormInfoController>();
+    Get.delete<FacilityFormReturnController>(force: true);
+    Get.delete<FacilityFormBankController>(force: true);
+    super.onClose();
   }
 
   Future<void> _getUserProfile() async {

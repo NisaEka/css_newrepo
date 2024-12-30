@@ -426,7 +426,7 @@ class TambahPetugasController extends BaseController {
                 else
                   {
                     AppSnackBar.error(
-                        value.message ?? value.error ?? 'Bad Request'.tr),
+                        value.error ?? value.message ?? 'Bad Request'.tr),
                   }
               });
     } catch (e, i) {
@@ -515,7 +515,7 @@ class TambahPetugasController extends BaseController {
                 else
                   {
                     AppSnackBar.error(
-                        value.message ?? value.error ?? 'Bad Request'.tr),
+                        value.error ?? value.message ?? 'Bad Request'.tr),
                   }
               });
     } catch (e, i) {

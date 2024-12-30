@@ -18,8 +18,11 @@ class FacilityFormBankScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      init: FacilityFormBankController(),
+    final FacilityFormBankController controller =
+        Get.put(FacilityFormBankController(), permanent: true);
+
+    return GetBuilder<FacilityFormBankController>(
+      init: controller,
       builder: (controller) {
         return Stack(
           children: [

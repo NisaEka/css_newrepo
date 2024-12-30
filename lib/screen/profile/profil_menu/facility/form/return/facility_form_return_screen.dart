@@ -22,8 +22,11 @@ class FacilityFormReturnScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      init: FacilityFormReturnController(),
+    final FacilityFormReturnController controller =
+        Get.put(FacilityFormReturnController(), permanent: true);
+
+    return GetBuilder<FacilityFormReturnController>(
+      init: controller,
       builder: (controller) {
         return Stack(
           children: [
