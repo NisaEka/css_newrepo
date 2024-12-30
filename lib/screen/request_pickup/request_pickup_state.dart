@@ -24,7 +24,7 @@ class RequestPickupState {
   DateTime? endDate;
   String? selectedDeliveryType = Constant.allDeliveryType;
   OriginModel? selectedOrigin;
-  String dateFilter = '0';
+  String dateFilter = '3';
 
   bool isFiltered = false;
 
