@@ -5,7 +5,7 @@ class UangCODController extends BaseController {
   DateTime? startDate;
   DateTime? endDate;
   bool isFiltered = false;
-  String dateFilter = '0';
+  String dateFilter = '3';
   String? date;
 
   void resetFilter() {

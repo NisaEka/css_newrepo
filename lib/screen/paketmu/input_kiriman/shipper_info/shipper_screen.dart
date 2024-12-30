@@ -1,4 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/shipper_form.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_appbar.dart';
@@ -18,7 +20,12 @@ class InformasiPengirimScreen extends StatelessWidget {
           return PopScope(
             canPop: false,
             onPopInvokedWithResult: (bool didPop, Object? result) =>
-                Get.offAll(() => const DashboardScreen()),
+                Get.delete<DashboardController>().then(
+              (_) {
+                controller.storage.deleteString(StorageCore.transactionTemp);
+                Get.offAll(const DashboardScreen());
+              },
+            ),
             child: Stack(
               children: [
                 Scaffold(

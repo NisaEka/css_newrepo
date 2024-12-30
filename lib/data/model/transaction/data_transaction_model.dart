@@ -118,6 +118,7 @@ class DataTransactionModel {
   Destination? _dataDestination;
   String? _createAt;
   String? _updateAt;
+  DropshipperModel? _dropshipper;
 
   DataTransactionModel copyWith({
     String? awb,
@@ -140,6 +141,7 @@ class DataTransactionModel {
     Destination? dataDestination,
     String? createAt,
     String? updateAt,
+    DropshipperModel? dropshipper,
   }) =>
       DataTransactionModel(
         awb: awb ?? _awb,
@@ -162,6 +164,7 @@ class DataTransactionModel {
         dataDestination: dataDestination ?? _dataDestination,
         createAt: createAt ?? _createAt,
         updateAt: updateAt ?? _updateAt,
+        dropshipper: dropshipper ?? _dropshipper,
       );
 
   String? get awb => _awb;
@@ -206,7 +209,9 @@ class DataTransactionModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['awb'] = _awb;
+    if (_awb != null) {
+      map['awb'] = _awb;
+    }
     map['awb_type'] = _awbType;
     map['registration_id'] = _registrationId;
     map['type'] = _type;

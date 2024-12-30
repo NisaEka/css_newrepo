@@ -22,7 +22,7 @@ class LaporankuState {
   int onProcess = 0;
   int closed = 0;
   int waiting = 0;
-  String dateFilter = '0';
+  String dateFilter = '3';
 
   List<Map<String, String>> statusList = [
     {

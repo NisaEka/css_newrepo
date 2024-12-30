@@ -30,6 +30,8 @@ class RequstPickupFilterButton extends HookWidget {
                     slivers: [
                       DateFilterField(
                         selectedDateFilter: c.state.dateFilter,
+                        startDate: c.state.startDate,
+                        endDate: c.state.endDate,
                         onChanged: (value) {
                           c.state.startDate = value.startDate;
                           c.state.endDate = value.endDate;

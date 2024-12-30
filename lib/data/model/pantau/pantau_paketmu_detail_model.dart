@@ -1,3 +1,5 @@
+import 'package:css_mobile/data/model/master/destination_model.dart';
+
 class PantauPaketmuDetailModel {
   PantauPaketmuDetailModel({
     String? awbNo,
@@ -114,7 +116,7 @@ class PantauPaketmuDetailModel {
     String? paymentType,
     dynamic repcssDailyPayAggDatethru,
     String? cnoteShipperContact,
-    String? destination,
+    Destination? destination,
     dynamic hoCourierDate,
     dynamic repcssDiscRevType,
     String? cnoteShipperZip,
@@ -424,7 +426,6 @@ class PantauPaketmuDetailModel {
     _paymentType = json['paymentType'];
     _repcssDailyPayAggDatethru = json['repcssDailyPayAggDatethru'];
     _cnoteShipperContact = json['cnoteShipperContact'];
-    _destination = json['destination'];
     _hoCourierDate = json['hoCourierDate'];
     _repcssDiscRevType = json['repcssDiscRevType'];
     _cnoteShipperZip = json['cnoteShipperZip'];
@@ -465,7 +466,11 @@ class PantauPaketmuDetailModel {
         ? Transaction.fromJson(json['transaction'])
         : null;
     _ticket = json['ticket'] != null ? Ticket.fromJson(json['ticket']) : null;
+    _destination = json['destination'] != null
+        ? Destination.fromJson(json['destination'])
+        : null;
   }
+
   String? _awbNo;
   dynamic _manifestInbNo;
   dynamic _repcssDailyPayAggDatefrom;
@@ -580,7 +585,7 @@ class PantauPaketmuDetailModel {
   String? _paymentType;
   dynamic _repcssDailyPayAggDatethru;
   String? _cnoteShipperContact;
-  String? _destination;
+  Destination? _destination;
   dynamic _hoCourierDate;
   dynamic _repcssDiscRevType;
   String? _cnoteShipperZip;
@@ -619,6 +624,7 @@ class PantauPaketmuDetailModel {
   num? _weightAwb;
   Transaction? _transaction;
   Ticket? _ticket;
+
   PantauPaketmuDetailModel copyWith({
     String? awbNo,
     dynamic manifestInbNo,
@@ -734,7 +740,7 @@ class PantauPaketmuDetailModel {
     String? paymentType,
     dynamic repcssDailyPayAggDatethru,
     String? cnoteShipperContact,
-    String? destination,
+    Destination? destination,
     dynamic hoCourierDate,
     dynamic repcssDiscRevType,
     String? cnoteShipperZip,
@@ -940,158 +946,311 @@ class PantauPaketmuDetailModel {
         transaction: transaction ?? _transaction,
         ticket: ticket ?? _ticket,
       );
+
   String? get awbNo => _awbNo;
+
   dynamic get manifestInbNo => _manifestInbNo;
+
   dynamic get repcssDailyPayAggDatefrom => _repcssDailyPayAggDatefrom;
+
   num? get awbInsuranceValue => _awbInsuranceValue;
+
   dynamic get repcssRtFchargeAftDiscAmt => _repcssRtFchargeAftDiscAmt;
+
   dynamic get receivingCourier => _receivingCourier;
+
   dynamic get receivingUserId => _receivingUserId;
+
   dynamic get statusPod => _statusPod;
+
   dynamic get repcssPaymentAmt => _repcssPaymentAmt;
+
   dynamic get puLastAttempStatusDesc => _puLastAttempStatusDesc;
+
   String? get cnoteReceiverAddr1 => _cnoteReceiverAddr1;
+
   dynamic get repcssRtSurcharge => _repcssRtSurcharge;
+
   dynamic get tglReceived => _tglReceived;
+
   String? get origin => _origin;
+
   dynamic get hvoNo => _hvoNo;
+
   num? get repcssVatFchargeAftDisc => _repcssVatFchargeAftDisc;
+
   String? get cnoteCancel => _cnoteCancel;
+
   dynamic get rdoDate => _rdoDate;
+
   dynamic get awbUserName => _awbUserName;
+
   dynamic get costWeightManifest => _costWeightManifest;
+
   dynamic get doDate => _doDate;
+
   dynamic get repcssInvoiceDate => _repcssInvoiceDate;
+
   dynamic get repcssCodFee => _repcssCodFee;
+
   String? get cnoteReceiverName => _cnoteReceiverName;
+
   dynamic get hoCourierName => _hoCourierName;
+
   dynamic get repcssPaymentReffid => _repcssPaymentReffid;
+
   String? get pushFlag => _pushFlag;
+
   dynamic get manifestTransitAgen => _manifestTransitAgen;
+
   dynamic get hviNo => _hviNo;
+
   String? get custName => _custName;
+
   String? get cnoteReceiverPhone => _cnoteReceiverPhone;
+
   String? get cnoteReceiverContact => _cnoteReceiverContact;
+
   dynamic get runsheetUid => _runsheetUid;
+
   dynamic get codingPod => _codingPod;
+
   dynamic get manifestApproved => _manifestApproved;
+
   dynamic get repcssRtDiscAmt => _repcssRtDiscAmt;
+
   dynamic get userZoneCode => _userZoneCode;
+
   String? get repcssPaytype => _repcssPaytype;
+
   dynamic get repcssPaymentDate => _repcssPaymentDate;
+
   dynamic get manifestTransitInbound => _manifestTransitInbound;
+
   dynamic get receivingNo => _receivingNo;
+
   String? get cnoteShipperAddr1 => _cnoteShipperAddr1;
+
   dynamic get repcssSurcharge => _repcssSurcharge;
+
   dynamic get hvoDate => _hvoDate;
+
   String? get originName => _originName;
+
   dynamic get hvoHubName => _hvoHubName;
+
   dynamic get runsheetDate => _runsheetDate;
+
   dynamic get actWeightManifest => _actWeightManifest;
+
   dynamic get manifestDate => _manifestDate;
+
   dynamic get masterBagSmuNtu => _masterBagSmuNtu;
+
   dynamic get cnoteReceiverAddr3 => _cnoteReceiverAddr3;
+
   dynamic get smuBagBux => _smuBagBux;
+
   dynamic get repcssPaymentSdate => _repcssPaymentSdate;
+
   dynamic get cnoteShipperAddr2 => _cnoteShipperAddr2;
+
   dynamic get repcssPaymentCustid => _repcssPaymentCustid;
+
   dynamic get smuDate => _smuDate;
+
   dynamic get podlEpodUrl => _podlEpodUrl;
+
   num? get qtyAwb => _qtyAwb;
+
   dynamic get manBagNo => _manBagNo;
+
   String? get awbGoodsDescr => _awbGoodsDescr;
+
   String? get createDate => _createDate;
+
   dynamic get cnoteShipperAddr3 => _cnoteShipperAddr3;
+
   dynamic get hvoHubDestinationName => _hvoHubDestinationName;
+
   dynamic get repcssInvoiceNo => _repcssInvoiceNo;
+
   dynamic get manifestOutb => _manifestOutb;
+
   String? get awbDate => _awbDate;
+
   dynamic get repcssNetCodAmt => _repcssNetCodAmt;
+
   dynamic get awbInsuranceId => _awbInsuranceId;
+
   dynamic get repcssVatRtFchargeAftDisc => _repcssVatRtFchargeAftDisc;
+
   dynamic get manifestInbDate => _manifestInbDate;
+
   dynamic get receivedReason => _receivedReason;
+
   num? get repcssInsuranceValue => _repcssInsuranceValue;
+
   dynamic get commissionProcessDate => _commissionProcessDate;
+
   dynamic get hoCourier => _hoCourier;
+
   dynamic get repcssTxinvNo => _repcssTxinvNo;
+
   dynamic get rdoNo => _rdoNo;
+
   String? get service => _service;
+
   String? get branchId => _branchId;
+
   String? get codFlag => _codFlag;
+
   String? get cnoteShipperPhone => _cnoteShipperPhone;
+
   dynamic get dateTransitInb => _dateTransitInb;
+
   dynamic get tglTransit => _tglTransit;
+
   String? get receiverName => _receiverName;
+
   dynamic get manifestDestinationSmu => _manifestDestinationSmu;
+
   dynamic get repcssVatCodFee => _repcssVatCodFee;
+
   dynamic get cnoteCardNo => _cnoteCardNo;
+
   dynamic get repcssRtPackingFee => _repcssRtPackingFee;
+
   String? get custNo => _custNo;
+
   dynamic get hviDate => _hviDate;
+
   dynamic get puLastAttempStatusCode => _puLastAttempStatusCode;
+
   dynamic get smuEta => _smuEta;
+
   dynamic get repcssPackingFee => _repcssPackingFee;
+
   dynamic get podlEpodUrlPic => _podlEpodUrlPic;
+
   num? get repcssFreightCharge => _repcssFreightCharge;
+
   num? get awbGoodsValue => _awbGoodsValue;
+
   dynamic get tglUpdatePod => _tglUpdatePod;
+
   dynamic get smSchdNo => _smSchdNo;
+
   String? get awbRefno => _awbRefno;
+
   dynamic get dateTransitAgen => _dateTransitAgen;
+
   dynamic get smuWeight => _smuWeight;
+
   num? get repcssDiscountAmt => _repcssDiscountAmt;
+
   dynamic get puLastAttempStatusDate => _puLastAttempStatusDate;
+
   dynamic get smSchDate => _smSchDate;
+
   dynamic get userMasterBagSmu => _userMasterBagSmu;
+
   dynamic get repcssEpayTrxid => _repcssEpayTrxid;
+
   dynamic get repcssEpayVend => _repcssEpayVend;
+
   dynamic get smuFlagApprove => _smuFlagApprove;
+
   num? get awbAmount => _awbAmount;
+
   dynamic get hvoHub => _hvoHub;
+
   num? get repcssCustDiscDm => _repcssCustDiscDm;
+
   dynamic get manifestUserId => _manifestUserId;
+
   String? get paymentType => _paymentType;
+
   dynamic get repcssDailyPayAggDatethru => _repcssDailyPayAggDatethru;
+
   String? get cnoteShipperContact => _cnoteShipperContact;
-  String? get destination => _destination;
+
+  Destination? get destination => _destination;
+
   dynamic get hoCourierDate => _hoCourierDate;
+
   dynamic get repcssDiscRevType => _repcssDiscRevType;
+
   String? get cnoteShipperZip => _cnoteShipperZip;
+
   dynamic get cnoteReceiverAddr2 => _cnoteReceiverAddr2;
+
   dynamic get runsheetNo => _runsheetNo;
+
   String? get destinationName => _destinationName;
+
   dynamic get smuDestination => _smuDestination;
+
   dynamic get tglMasterBag => _tglMasterBag;
+
   dynamic get smuRemarks => _smuRemarks;
+
   String? get cnoteShipperName => _cnoteShipperName;
+
   dynamic get awbSpecialIns => _awbSpecialIns;
+
   dynamic get doNo => _doNo;
+
   dynamic get repcssRtRsheetInsSys => _repcssRtRsheetInsSys;
+
   String? get awbUserId => _awbUserId;
+
   dynamic get smuQty => _smuQty;
+
   dynamic get smuFlagCancel => _smuFlagCancel;
+
   dynamic get smuRemarksDate => _smuRemarksDate;
+
   num? get repcssCustDiscIc => _repcssCustDiscIc;
+
   dynamic get groupOwner => _groupOwner;
+
   String? get cnoteDestination => _cnoteDestination;
+
   String? get cnoteReceiverZip => _cnoteReceiverZip;
+
   dynamic get noTransit => _noTransit;
+
   dynamic get commissionAmt => _commissionAmt;
+
   dynamic get smNo => _smNo;
+
   num? get awbAdditionalFee => _awbAdditionalFee;
+
   num? get repcssFchargeAftDiscAmt => _repcssFchargeAftDiscAmt;
+
   dynamic get receivingDate => _receivingDate;
+
   dynamic get codAmount => _codAmount;
+
   String? get cnotePaymentType => _cnotePaymentType;
+
   dynamic get repcssPaymentNo => _repcssPaymentNo;
+
   dynamic get runsheetCourierId => _runsheetCourierId;
+
   dynamic get repcssRtFreightCharge => _repcssRtFreightCharge;
+
   dynamic get smuEtd => _smuEtd;
+
   dynamic get registrationId => _registrationId;
+
   dynamic get hvoHubDestination => _hvoHubDestination;
+
   num? get weightAwb => _weightAwb;
+
   Transaction? get transaction => _transaction;
+
   Ticket? get ticket => _ticket;
 
   Map<String, dynamic> toJson() {
@@ -1210,7 +1369,6 @@ class PantauPaketmuDetailModel {
     map['paymentType'] = _paymentType;
     map['repcssDailyPayAggDatethru'] = _repcssDailyPayAggDatethru;
     map['cnoteShipperContact'] = _cnoteShipperContact;
-    map['destination'] = _destination;
     map['hoCourierDate'] = _hoCourierDate;
     map['repcssDiscRevType'] = _repcssDiscRevType;
     map['cnoteShipperZip'] = _cnoteShipperZip;
@@ -1253,6 +1411,9 @@ class PantauPaketmuDetailModel {
     if (_ticket != null) {
       map['ticket'] = _ticket?.toJson();
     }
+    if (_destination != null) {
+      map['destination'] = _destination?.toJson();
+    }
     return map;
   }
 }
@@ -1291,6 +1452,7 @@ class Ticket {
     _createdBy = json['createdBy'];
     _categoryId = json['categoryId'];
   }
+
   String? _id;
   String? _cnote;
   String? _createdDate;
@@ -1300,6 +1462,7 @@ class Ticket {
   dynamic _milesStatus;
   String? _createdBy;
   String? _categoryId;
+
   Ticket copyWith({
     String? id,
     String? cnote,
@@ -1322,14 +1485,23 @@ class Ticket {
         createdBy: createdBy ?? _createdBy,
         categoryId: categoryId ?? _categoryId,
       );
+
   String? get id => _id;
+
   String? get cnote => _cnote;
+
   String? get createdDate => _createdDate;
+
   String? get status => _status;
+
   String? get priority => _priority;
+
   String? get updatedDate => _updatedDate;
+
   dynamic get milesStatus => _milesStatus;
+
   String? get createdBy => _createdBy;
+
   String? get categoryId => _categoryId;
 
   Map<String, dynamic> toJson() {
@@ -1633,6 +1805,7 @@ class Transaction {
     _receiverRegion = json['receiverRegion'];
     _inputType = json['inputType'];
   }
+
   String? _awb;
   dynamic _taxValue;
   dynamic _itemType;
@@ -1726,6 +1899,7 @@ class Transaction {
   String? _createdDate;
   String? _receiverRegion;
   String? _inputType;
+
   Transaction copyWith({
     String? awb,
     dynamic taxValue,
@@ -1916,98 +2090,191 @@ class Transaction {
         receiverRegion: receiverRegion ?? _receiverRegion,
         inputType: inputType ?? _inputType,
       );
+
   String? get awb => _awb;
+
   dynamic get taxValue => _taxValue;
+
   dynamic get itemType => _itemType;
+
   dynamic get hsCode => _hsCode;
+
   dynamic get npwp => _npwp;
+
   dynamic get lastUpdate => _lastUpdate;
+
   String? get awbType => _awbType;
+
   String? get registrationId => _registrationId;
+
   num? get deliveryPrice => _deliveryPrice;
+
   num? get insuranceAmount => _insuranceAmount;
+
   String? get destinationDesc => _destinationDesc;
+
   String? get originDesc => _originDesc;
+
   String? get packingkayuFlag => _packingkayuFlag;
+
   String? get goodsType => _goodsType;
+
   String? get shipperAddr => _shipperAddr;
+
   String? get receiverAddr => _receiverAddr;
+
   String? get transactionId => _transactionId;
+
   dynamic get tempId => _tempId;
+
   dynamic get dateMintaDijemput => _dateMintaDijemput;
+
   dynamic get pickupCity => _pickupCity;
+
   String? get serviceCode => _serviceCode;
+
   String? get shipperCity => _shipperCity;
+
   dynamic get pickupDate => _pickupDate;
+
   dynamic get pickupPicPhone => _pickupPicPhone;
+
   String? get shipperZip => _shipperZip;
+
   String? get orderId => _orderId;
+
   String? get courierId => _courierId;
+
   String? get destinationCode => _destinationCode;
+
   num? get deliveryAmountPublish => _deliveryAmountPublish;
+
   dynamic get statusName => _statusName;
+
   dynamic get specialIns => _specialIns;
+
   String? get courierName => _courierName;
+
   dynamic get pickupVehicle => _pickupVehicle;
+
   String? get shipperContact => _shipperContact;
+
   dynamic get statusDesc => _statusDesc;
+
   dynamic get responseJob => _responseJob;
+
   String? get receiverContact => _receiverContact;
+
   dynamic get pickupName => _pickupName;
+
   dynamic get receiverAddr2 => _receiverAddr2;
+
   num? get isRetail => _isRetail;
+
   String? get responseLive => _responseLive;
+
   String? get dateSerahTerima => _dateSerahTerima;
+
   num? get apiStatus => _apiStatus;
+
   String? get codFlag => _codFlag;
+
   num? get goodsAmount => _goodsAmount;
+
   String? get receiverCity => _receiverCity;
+
   String? get branch => _branch;
+
   String? get responsePickup => _responsePickup;
+
   dynamic get pickupDistrict => _pickupDistrict;
+
   dynamic get printFlag => _printFlag;
+
   String? get receiverCountry => _receiverCountry;
+
   dynamic get shipperAddr3 => _shipperAddr3;
+
   String? get receiverName => _receiverName;
+
   dynamic get shipperAddr2 => _shipperAddr2;
+
   String? get lon => _lon;
+
   num? get deliveryPricePublish => _deliveryPricePublish;
+
   String? get codOngkir => _codOngkir;
+
   String? get shipperAddr1 => _shipperAddr1;
+
   String? get receiverDistrict => _receiverDistrict;
+
   dynamic get pickupAddress => _pickupAddress;
+
   dynamic get pickupTime => _pickupTime;
+
   String? get shipperCountry => _shipperCountry;
+
   num? get insuranceAdm => _insuranceAdm;
+
   String? get shipperName => _shipperName;
+
   String? get petugasEntry => _petugasEntry;
+
   num? get codAmount => _codAmount;
+
   String? get receiverSubdistrict => _receiverSubdistrict;
+
   dynamic get receiverAddr3 => _receiverAddr3;
+
   String? get receiverAddr1 => _receiverAddr1;
+
   String? get shipperPhone => _shipperPhone;
+
   dynamic get merchantId => _merchantId;
+
   String? get apiType => _apiType;
+
   String? get receiverZip => _receiverZip;
+
   dynamic get pickupService => _pickupService;
+
   num? get qty => _qty;
+
   String? get idSerahTerima => _idSerahTerima;
+
   num? get weight => _weight;
+
   dynamic get noSerahTerima => _noSerahTerima;
+
   String? get receiverPhone => _receiverPhone;
+
   String? get timeSerahTerima => _timeSerahTerima;
+
   String? get custId => _custId;
+
   String? get insuranceFlag => _insuranceFlag;
+
   String? get goodsDesc => _goodsDesc;
+
   num? get ammountDelivery => _ammountDelivery;
+
   String? get type => _type;
+
   String? get createdDateSearch => _createdDateSearch;
+
   String? get originCode => _originCode;
+
   String? get lat => _lat;
+
   String? get shipperRegion => _shipperRegion;
+
   dynamic get pickupPic => _pickupPic;
+
   String? get createdDate => _createdDate;
+
   String? get receiverRegion => _receiverRegion;
+
   String? get inputType => _inputType;
 
   Map<String, dynamic> toJson() {

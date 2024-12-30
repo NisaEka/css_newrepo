@@ -47,10 +47,44 @@ class ReceiverController extends BaseController {
       state.isValidate = state.isEdit ?? false;
       update();
     }
+    var temp = DataTransactionModel.fromJson(
+        await storage.readData(StorageCore.transactionTemp));
+    if (temp.receiver != null) {
+      state.receiverName.text = temp.receiver?.name ?? '';
+      state.receiverPhone.text = temp.receiver?.phone ?? '';
+      state.receiverAddress.text = temp.receiver?.address ?? '';
+      state.receiverDest.text = temp.destination?.cityName ?? '';
+      state.selectedDestination = temp.destination;
+      state.isValidate = state.isEdit ?? false;
+      update();
+    }
+  }
+
+  Future<void> saveTemp() async {
+    state.formKey.currentState?.validate();
+    update();
+    var receiver = ReceiverModel(
+      name: state.receiverName.text.toUpperCase(),
+      address: state.receiverAddress.text.toUpperCase(),
+      phone: state.receiverPhone.text,
+      city: state.selectedDestination?.cityName,
+      zipCode: state.selectedDestination?.zipCode,
+      region: state.selectedDestination?.provinceName,
+      country: state.selectedDestination?.countryName,
+      contact: state.receiverName.text.toUpperCase(),
+      district: state.selectedDestination?.districtName,
+      subDistrict: state.selectedDestination?.subdistrictName,
+      destinationCode: state.selectedDestination?.destinationCode,
+    );
+    var temp = state.data?.copyWith(
+      receiver: receiver,
+      destination: state.selectedDestination,
+    );
+    await storage.saveData(StorageCore.transactionTemp, temp);
   }
 
   FutureOr<ReceiverModel?> getSelectedReceiver() async {
-    AppLogger.i("state.receiver ${jsonEncode(state.receiver)}");
+    AppLogger.i("receiver ${jsonEncode(state.receiver)}");
     state.receiverName.text = state.receiver?.name?.toUpperCase() ?? '';
     state.receiverPhone.text = state.receiver?.phone ?? '';
     state.receiverDest.text = state.receiver?.idDestination ?? '';

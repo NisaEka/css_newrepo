@@ -22,7 +22,7 @@ class PembayaranAggergasiController extends BaseController {
   bool isSelectAll = false;
 
   List<String> transDate = [];
-  String dateFilter = '0';
+  String dateFilter = '3';
   int? aggTotal;
 
   List<Account> accountList = [];

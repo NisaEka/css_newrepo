@@ -284,6 +284,53 @@ class ShipperController extends BaseController {
     }
   }
 
+  Future<void> saveTemp() async {
+    var shipper = ShipperModel(
+      name: state.shipperName.text.toUpperCase(),
+      address: state.shipperAddress.text.toUpperCase(),
+      address1: state.shipperAddress.text.substring(
+          0,
+          (state.shipperAddress.text.length) > 30
+              ? 29
+              : (state.shipperAddress.text.length)),
+      address2: (state.shipperAddress.text.length) > 30
+          ? state.shipperAddress.text.substring(
+              30,
+              (state.shipperAddress.text.length) > 60
+                  ? 59
+                  : (state.shipperAddress.text.length))
+          : '',
+      address3: (state.shipperAddress.text.length) >= 60
+          ? state.shipperAddress.text
+              .substring(60, (state.shipperAddress.text.length))
+          : '',
+      city: state.shipperOrigin.text.toUpperCase(),
+      zipCode: state.shipperZipCode.text,
+      region: state.isDropshipper
+          ? state.selectedOrigin?.branch?.regional
+          : (state.shipper?.region ?? state.data?.shipper?.region),
+      // region: state.selectedOrigin?.branch?.regional,
+      //province
+      country: "ID",
+      contact: state.shipperName.text.toUpperCase(),
+      phone: state.shipperPhone.text,
+      dropship: state.isDropshipper,
+      origin: state.selectedOrigin ?? state.shipper?.origin,
+    );
+
+    var temp = DataTransactionModel.fromJson(
+            await storage.readData(StorageCore.transactionTemp))
+        .copyWith(
+      shipper: shipper,
+      origin: state.selectedOrigin,
+      account: state.selectedAccount,
+      dataAccount: state.selectedAccount,
+      dropshipper: state.dropshipper,
+    );
+
+    await storage.saveData(StorageCore.transactionTemp, temp);
+  }
+
   Future<List<OriginModel>> getOriginList(String keyword) async {
     state.isLoadOrigin = true;
     BaseResponse<List<OriginModel>>? response;
@@ -300,7 +347,7 @@ class ShipperController extends BaseController {
     // return [];
   }
 
-  void nextStep() {
+  Future<void> nextStep() async {
     var shipper = ShipperModel(
       name: state.shipperName.text.toUpperCase(),
       address: state.shipperAddress.text.toUpperCase(),
@@ -342,18 +389,23 @@ class ShipperController extends BaseController {
       dropshipper: state.dropshipper,
     );
 
+    saveTemp();
+
     Get.to(() => const ReceiverScreen(),
-        arguments: {
-          "isEdit": state.isEdit,
-          "cod_ongkir": state.codOgkir,
-          "account": state.selectedAccount,
-          "origin": state.selectedOrigin ?? state.shipper?.origin,
-          "dropship": state.isDropshipper,
-          "dropshipper": state.dropshipper,
-          "shipper": shipper,
-          "data": state.data ?? trans,
-        },
-        transition: Transition.rightToLeft);
+            arguments: {
+              "isEdit": state.isEdit,
+              "cod_ongkir": state.codOgkir,
+              "account": state.selectedAccount,
+              "origin": state.selectedOrigin ?? state.shipper?.origin,
+              "dropship": state.isDropshipper,
+              "dropshipper": state.dropshipper,
+              "shipper": shipper,
+              "data": state.data ?? trans,
+            },
+            transition: Transition.rightToLeft)
+        ?.then(
+      (value) {},
+    );
   }
 
   Future<void> saveDropshipper() async {

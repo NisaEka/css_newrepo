@@ -15,7 +15,7 @@ class EclaimState {
   DateTime? startDate;
   DateTime? endDate;
   List<Map<String, dynamic>>? transDate;
-  String dateFilter = '0';
+  String dateFilter = '3';
   String? selectedStatusClaim;
 
   bool isFiltered = false;

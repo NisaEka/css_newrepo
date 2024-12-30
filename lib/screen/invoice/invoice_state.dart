@@ -7,7 +7,7 @@ class InvoiceState {
   final searchField = TextEditingController();
 
   List<Map<String, dynamic>>? transDate;
-  String dateFilter = '0';
+  String dateFilter = '3';
 
   bool isFiltered = false;
   bool isLoading = false;

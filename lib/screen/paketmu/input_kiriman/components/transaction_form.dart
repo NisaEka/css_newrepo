@@ -38,9 +38,7 @@ class TransactionForm extends StatelessWidget {
                   Form(
                     key: c.state.formKey,
                     onChanged: () {
-                      c.state.formValidate =
-                          c.state.formKey.currentState?.validate() ?? false;
-                      c.update();
+                      c.saveTemp();
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

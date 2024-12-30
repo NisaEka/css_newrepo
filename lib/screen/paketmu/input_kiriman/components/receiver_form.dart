@@ -33,8 +33,7 @@ class ReceiverForm extends StatelessWidget {
                       Form(
                         key: c.state.formKey,
                         onChanged: () {
-                          c.state.formKey.currentState?.validate();
-                          c.update();
+                          c.saveTemp();
                         },
                         child: Column(
                           children: [

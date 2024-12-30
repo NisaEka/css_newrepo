@@ -188,7 +188,7 @@ class TransactionDetail extends StatelessWidget {
                 TextRowItem(
                   title: "Total Ongkos Kirim".tr,
                   value:
-                      'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? '0'}',
+                      'Rp. ${((c.state.transactionModel?.deliveryPrice?.toInt() ?? 0) + (c.state.transactionModel?.insuranceAmount?.toInt() ?? 0)).toInt().toCurrency().toString()}',
                   isLoading: c.state.isLoading || c.state.data == null,
                   isTitleBold: true,
                   isValueBold: true,

@@ -22,6 +22,8 @@ class TransactionFilterButton extends HookWidget {
                   child: CustomScrollView(
                     slivers: [
                       DateFilterField(
+                        startDate: c.state.startDate,
+                        endDate: c.state.endDate,
                         selectedDateFilter: c.state.dateFilter,
                         onChanged: (value) {
                           c.state.startDate = value.startDate;

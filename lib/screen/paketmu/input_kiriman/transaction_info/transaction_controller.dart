@@ -179,7 +179,7 @@ class TransactionController extends BaseController {
       update();
 
       isValidate();
-
+      saveTemp();
       state.isCalculate = false;
       update();
     }
@@ -369,6 +369,7 @@ class TransactionController extends BaseController {
       update();
       getOngkir();
     }
+
     if (state.draft != null) {
       state.weight.text =
           state.draft?.goods?.weight.toString().split('.').first ?? '';
@@ -379,6 +380,8 @@ class TransactionController extends BaseController {
     state.goods != null ? loadDraft() : null;
     state.isServiceLoad = false;
     update();
+
+    // var temp = DataTransactionModel.fromJson(await storage.readData(StorageCore.transactionTemp));
   }
 
   Future<void> saveDraft() async {
@@ -458,6 +461,50 @@ class TransactionController extends BaseController {
 
     state.isLoading = false;
     update();
+  }
+
+  Future<void> saveTemp() async {
+    state.formKey.currentState?.validate();
+    update();
+
+    var delivery = Delivery(
+      serviceCode: state.selectedService?.serviceDisplay,
+      woodPackaging: state.woodPacking ? "Y" : "N",
+      specialInstruction: state.specialInstruction.text,
+      codFlag: state.account.accountService == "COD"
+          ? "YES"
+          : state.codOngkir
+              ? "YES"
+              : "NO",
+      codOngkir: state.selectedService?.serviceDisplay == 'INTL'
+          ? 'NO'
+          : state.codOngkir
+              ? "YES"
+              : "NO",
+      insuranceFlag: state.insurance ? "Y" : "N",
+      insuranceFee: state.isr,
+      flatRate: state.flatRate,
+      codFee: state.codfee,
+      flatRateWithInsurance: state.flatRateISR,
+      freightCharge: state.freightCharge,
+      freightChargeWithInsurance: state.freightChargeISR,
+    );
+
+    var goods = Goods(
+        type: state.goodType.text,
+        desc: state.goodName.text,
+        amount: state.goodAmount.text.isNotEmpty
+            ? state.goodAmount.text.digitOnly().toInt()
+            : null,
+        quantity:
+            state.goodQty.text.isNotEmpty ? state.goodQty.text.toInt() : null,
+        weight: state.berat);
+
+    var temp = state.data?.copyWith(
+      delivery: delivery,
+      goods: goods,
+    );
+    await storage.saveData(StorageCore.transactionTemp, temp);
   }
 
   Future<void> updateTransaction() async {
@@ -568,10 +615,7 @@ class TransactionController extends BaseController {
         freightCharge: state.freightCharge,
         freightChargeWithInsurance: state.freightChargeISR,
       ),
-      account: Account(
-        accountNumber: state.account.accountNumber,
-        accountService: state.account.accountService,
-      ),
+      account: state.account,
       origin: state.origin,
       destination: state.destination,
       // destination: Destination(code: state.destination.destinationCode, desc: state.destination.cityName),
@@ -707,7 +751,7 @@ class TransactionController extends BaseController {
     if (value.toInt() <= state.getCodAmountMinimum) {}
   }
 
-  void onSaved() {
+  Future<void> onSaved() async {
     if ((state.codAmountText.text.digitOnly().toInt() <
         state.getCodAmountMinimum)) {
       Get.dialog(StatefulBuilder(
@@ -781,11 +825,10 @@ class TransactionController extends BaseController {
         ),
       ));
     } else {
-      isValidate()
-          ? (state.isEdit ?? false)
-              ? updateTransaction()
-              : saveTransaction()
-          : null;
+      if (isValidate()) {
+        storage.deleteString(StorageCore.transactionTemp);
+        (state.isEdit ?? false) ? updateTransaction() : saveTransaction();
+      }
     }
   }
 

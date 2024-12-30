@@ -12,12 +12,16 @@ class DateFilterField extends StatefulHookWidget {
   final ValueChanged<DateFilter> onChanged;
   final String? label;
   final String? selectedDateFilter;
+  final DateTime? startDate;
+  final DateTime? endDate;
 
   const DateFilterField({
     super.key,
     required this.onChanged,
     this.label,
     this.selectedDateFilter = '3',
+    this.startDate,
+    this.endDate,
   });
 
   @override
@@ -28,7 +32,6 @@ class _DatesFilterContentState extends State<DateFilterField> {
   String? dateFilter;
   DateTime? startDate;
   DateTime? endDate;
-
   final startDateField = TextEditingController();
   final endDateField = TextEditingController();
 
@@ -36,8 +39,8 @@ class _DatesFilterContentState extends State<DateFilterField> {
   void initState() {
     super.initState();
     setState(() {
-      startDate = DateTime.now().copyWith(hour: 0, minute: 0, second: 0);
-      endDate = DateTime.now();
+      startDate = widget.startDate;
+      endDate = widget.endDate;
       startDateField.text = startDate.toString().toShortDateTimeFormat();
       endDateField.text = endDate.toString().toShortDateTimeFormat();
       dateFilter = widget.selectedDateFilter.toString();
@@ -105,10 +108,17 @@ class _DatesFilterContentState extends State<DateFilterField> {
                 onTap: () => selectDate(context).then((value) {
                   setState(() {
                     startDate = value;
-                    startDateField.text = value.toString().toDateTimeFormat();
+                    startDateField.text =
+                        value.toString().toShortDateTimeFormat();
                     endDate = DateTime.now();
                     endDateField.text =
-                        DateTime.now().toString().toDateTimeFormat();
+                        DateTime.now().toString().toShortDateTimeFormat();
+
+                    widget.onChanged(DateFilter(
+                      dateFilter: dateFilter ?? '3',
+                      startDate: startDate!,
+                      endDate: endDate!,
+                    ));
                   });
                 }),
                 // hintText: 'Dari Tanggal',
@@ -121,7 +131,14 @@ class _DatesFilterContentState extends State<DateFilterField> {
                 onTap: () => selectDate(context).then((value) {
                   setState(() {
                     endDate = value;
-                    endDateField.text = value.toString().toDateTimeFormat();
+                    endDateField.text =
+                        value.toString().toShortDateTimeFormat();
+
+                    widget.onChanged(DateFilter(
+                      dateFilter: dateFilter ?? '3',
+                      startDate: startDate!,
+                      endDate: endDate!,
+                    ));
                   });
                 }),
               ),
@@ -177,9 +194,8 @@ class _DatesFilterContentState extends State<DateFilterField> {
     setState(() {
       widget.onChanged(DateFilter(
         dateFilter: dateFilter ?? '3',
-        startDate:
-            startDate ?? DateTime.now().copyWith(hour: 0, minute: 0, second: 0),
-        endDate: endDate ?? DateTime.now(),
+        startDate: startDate!,
+        endDate: endDate!,
       ));
     });
   }
