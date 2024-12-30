@@ -3,6 +3,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/solid_border.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +101,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     data.type ?? '',
+                    // data.delivery?.codFlag == 'Y' ? 'COD' : 'NON COD',
                     style: TextStyle(fontWeight: bold),
                     textAlign: TextAlign.center,
                   ),
@@ -125,7 +127,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   width: (Get.width - 51) / 3.2,
                   alignment: Alignment.center,
                   child: Text(
-                    "Rp ${shippingCost ? 0 : data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() ?? '0' : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}",
+                    "Rp ${shippingCost ? 0 : data.type == 'COD' ? data.delivery?.codFee?.toCurrency() : (data.account?.accountService == "COD" ? data.delivery?.codFee?.toInt().toCurrency() ?? '0' : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0')}",
                     style: TextStyle(fontSize: 15, fontWeight: bold),
                   ),
                 ),
