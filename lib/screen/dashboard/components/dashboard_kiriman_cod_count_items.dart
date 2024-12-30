@@ -113,7 +113,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                     .codAmount
                                     ?.toInt()
                                     .toCurrency() ??
-                                '',
+                                '0',
                             subtitle:
                                 "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
                             color: primaryColor(context),
@@ -160,7 +160,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                         .codAmount
                                         ?.toInt()
                                         .toCurrency() ??
-                                    '',
+                                    '0',
                                 subtitle:
                                     "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
                                 color: primaryColor(context),
@@ -222,7 +222,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                     .codAmount
                                     ?.toInt()
                                     .toCurrency() ??
-                                '',
+                                '0',
                             suffixVal2: "Kiriman".tr,
                             value2: transSummary?.summary
                                     ?.where(
@@ -232,7 +232,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                     .totalCod
                                     ?.toInt()
                                     .toCurrency() ??
-                                '',
+                                '0',
                             description: "Sudah Kembali".tr,
                             lineColor: successColor,
                             isLoading: isLoadingKiriman,

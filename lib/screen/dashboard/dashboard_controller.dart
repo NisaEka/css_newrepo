@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
@@ -400,6 +401,7 @@ class DashboardController extends BaseController {
     state.isLoadingKirimanCOD = isKirimanCOD;
     state.kirimanKamuCOD = DashboardKirimanKamuModel();
     state.transSummary = null;
+    List<num> charts = [0, 0, 0, 0, 0, 0, 0];
     update();
     if (state.isLogin) {
       try {
@@ -415,19 +417,37 @@ class DashboardController extends BaseController {
                         (value.data?.totalKirimanCod?.codOngkirAmount
                                 ?.toInt() ??
                             0);
-                for (var chart in (item.chart ?? [])) {
-                  state.kirimanKamuCOD.lineChart.add(chart.y);
-                }
+                // for (var chart in (item.chart ?? [])) {
+                //   state.kirimanKamuCOD.lineChart.add(chart.y);
+                // }
               }
 
               if (item.status == 'Belum Terkumpul') {
                 state.kirimanKamuCOD.onProcess =
                     ((item.totalCod?.toInt() ?? 0));
+                item.chart?.forEachIndexed(
+                  (index, element) {
+                    charts[index] += element.y;
+                  },
+                );
               }
 
               if (item.status == 'Sukses Diterima') {
                 state.kirimanKamuCOD.suksesDiterima =
                     ((item.totalCod?.toInt() ?? 0));
+                item.chart?.forEachIndexed(
+                  (index, element) {
+                    charts[index] += element.y;
+                  },
+                );
+              }
+
+              if (item.status == 'Sudah Kembali') {
+                item.chart?.forEachIndexed(
+                  (index, element) {
+                    charts[index] += element.y;
+                  },
+                );
               }
 
               if (item.status == 'Dibatalkan') {
@@ -437,23 +457,38 @@ class DashboardController extends BaseController {
                     ((item.totalCod?.toInt() ?? 0));
                 state.kirimanKamuCOD.nonCodAmount =
                     item.codAmount?.toInt() ?? 0;
+                item.chart?.forEachIndexed(
+                  (index, element) {
+                    charts[index] += element.y;
+                  },
+                );
               }
 
               if (item.status == 'Butuh di Cek') {
                 state.kirimanKamuCOD.totalCod = ((item.totalCod?.toInt() ?? 0));
                 state.kirimanKamuCOD.codAmount = item.codAmount?.toInt() ?? 0;
+                item.chart?.forEachIndexed(
+                  (index, element) {
+                    charts[index] += element.y;
+                  },
+                );
               }
 
               if (item.status == 'Dalam Peninjauan') {
                 state.kirimanKamuCOD.totalCodOngkir =
                     ((item.totalCod?.toInt() ?? 0));
                 state.kirimanKamuCOD.codAmount = item.codAmount?.toInt() ?? 0;
+                item.chart?.forEachIndexed(
+                  (index, element) {
+                    charts[index] += element.y;
+                  },
+                );
               }
             });
+            state.kirimanKamuCOD.lineChart = charts;
             state.kirimanKamuCOD.calculatePercentages();
           },
         );
-
         update();
       } catch (e) {
         AppLogger.e('error loadTransCountList $e');
