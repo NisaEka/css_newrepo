@@ -1,5 +1,6 @@
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
+import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
 
 class TransactionModel {
   TransactionModel({
@@ -103,7 +104,7 @@ class TransactionModel {
     String? statusAwb,
     String? pickupStatus,
     Account? account,
-    String? transactionDetail,
+    PantauPaketmuDetailModel? transactionDetail,
     Destination? destination,
   }) {
     _awb = awb;
@@ -312,7 +313,9 @@ class TransactionModel {
     _pickupStatus = json['pickupStatus'];
     _account =
         json['account'] != null ? Account.fromJson(json['account']) : null;
-    _transactionDetail = json['transactionDetail'];
+    _transactionDetail != null
+        ? PantauPaketmuDetailModel.fromJson(json['transactionDetail'])
+        : null;
     _destination = json['destination'] != null
         ? Destination.fromJson(json['destination'])
         : null;
@@ -418,7 +421,7 @@ class TransactionModel {
   String? _statusAwb;
   String? _pickupStatus;
   Account? _account;
-  String? _transactionDetail;
+  PantauPaketmuDetailModel? _transactionDetail;
   Destination? _destination;
 
   TransactionModel copyWith({
@@ -522,7 +525,7 @@ class TransactionModel {
     String? statusAwb,
     String? pickupStatus,
     Account? account,
-    String? transactionDetail,
+    PantauPaketmuDetailModel? transactionDetail,
     Destination? destination,
   }) =>
       TransactionModel(
@@ -830,7 +833,7 @@ class TransactionModel {
 
   Account? get account => _account;
 
-  String? get transactionDetail => _transactionDetail;
+  PantauPaketmuDetailModel? get transactionDetail => _transactionDetail;
 
   Destination? get destination => _destination;
 
@@ -947,7 +950,9 @@ class TransactionModel {
     if (_destination != null) {
       map['destination'] = _destination.toString();
     }
-    map['transactionDetail'] = _transactionDetail;
+    if (_transactionDetail != null) {
+      map['transactionDetail'] = _transactionDetail?.toJson();
+    }
     return map;
   }
 }
