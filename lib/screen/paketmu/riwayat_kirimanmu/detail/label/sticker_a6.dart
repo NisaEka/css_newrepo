@@ -255,7 +255,7 @@ class StickerA6 extends StatelessWidget {
                         CustomLabelText(
                           title: 'Consignee : ',
                           value:
-                              "${data.receiver?.name ?? ''}\n${data.shipper?.address ?? ''}\n\n",
+                              "${data.receiver?.name ?? ''}\n${data.receiver?.address ?? ''}\n\n",
                           titleTextStyle:
                               sublistTitleTextStyle.copyWith(fontWeight: bold),
                           valueTextStyle: sublistTitleTextStyle.copyWith(),

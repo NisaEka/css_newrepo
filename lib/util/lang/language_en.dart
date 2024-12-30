@@ -566,7 +566,10 @@ class LanguageEN {
       "Berat Express": "Express Weight",
       "Berat JTR": "JTR Weight",
       "Tanggal AWB": "AWB Date",
-      "Kemarin": "Yesterday"
+      "Kemarin": "Yesterday",
+      "Gagal mengambil data pantau": "Failed to load tracking data",
+      "Data dropshipper berhasil di simpan":
+          "Dropshipper data successfully saved"
     };
   }
 }

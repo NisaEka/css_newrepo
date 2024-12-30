@@ -130,6 +130,19 @@ class DetailTransactionController extends BaseController {
         // state.pickupStatus.text = state.transactionModel?.state.pickupStatus ?? '';
         update();
       });
+      await setting.getSettingLabel().then(
+        (value) async {
+          await storage.writeString(
+            StorageCore.transactionLabel,
+            value.data?.where((e) => e.enable ?? false).first.name,
+          );
+          await storage.writeString(
+            StorageCore.shippingCost,
+            value.data?.first.showPrice ?? false ? "HIDE" : "PUBLISH",
+          );
+          update();
+        },
+      );
     } catch (e, i) {
       AppLogger.e('error initData detail riwayat kiriman $e, $i');
     }

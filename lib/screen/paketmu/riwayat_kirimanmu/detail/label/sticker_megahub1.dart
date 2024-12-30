@@ -212,6 +212,8 @@ class StickerMegahub1 extends StatelessWidget {
                               style: labelTextStyle),
                           Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}',
                               style: labelTextStyle),
+                          Text('Jenis Kiriman: ${data.goods?.type ?? '0'}',
+                              style: labelTextStyle),
                           Text('Pembayaran: ${data.type ?? ''}',
                               style: labelTextStyle),
                           Text('Order ID: ${data.orderId ?? ''}',

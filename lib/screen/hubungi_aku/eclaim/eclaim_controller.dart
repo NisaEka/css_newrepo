@@ -83,6 +83,7 @@ class EclaimController extends BaseController {
     state.pagingController.refresh();
     update();
     eclaimCount();
+    applyFilter();
   }
 
   @override
@@ -106,12 +107,12 @@ class EclaimController extends BaseController {
       // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     }
     update();
-    eclaimCount();
     state.pagingController.refresh();
-    update();
-    if (state.dateFilter == '0') {
-      resetFilter();
-    }
+    eclaimCount();
+    // update();
+    // if (state.dateFilter == '0') {
+    //   resetFilter();
+    // }
     // } else {
     //   resetFilter();
     // }
