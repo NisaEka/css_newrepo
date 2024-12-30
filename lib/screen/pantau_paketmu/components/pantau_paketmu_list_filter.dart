@@ -3,7 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
-import 'package:css_mobile/widgets/forms/customformlabel.dart';
+// import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/dates_filter_content.dart';
 import 'package:css_mobile/widgets/forms/officer_dropdown.dart';
 import 'package:flutter/material.dart';
@@ -24,41 +24,40 @@ class PantauPaketmuListFilter extends HookWidget {
                 return Expanded(
                   child: CustomScrollView(
                     slivers: [
-                      Obx(
-                        () => DateFilterField(
-                          label: "Tanggal AWB".tr,
-                          onChanged: (value) {
-                            controller.state.startDate = value.first;
-                            controller.state.endDate = value.last;
-                            controller.update();
-                          },
-                        ),
+                      DateFilterField(
+                        label: "Tanggal AWB".tr,
+                        onChanged: (value) {
+                          controller.state.startDate = value.first;
+                          controller.state.endDate = value.last;
+                          controller.update();
+                        },
                       ),
-                      SliverToBoxAdapter(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomFormLabel(label: 'Status Kiriman'.tr),
-                            const SizedBox(height: 10),
-                            // CustomDropDownField<String>(
-                            //   items: controller.state.listStatusKiriman
-                            //       .map(
-                            //         (e) => DropdownMenuItem(
-                            //       value: e,
-                            //       child: Text(e.toUpperCase()),
-                            //     ),
-                            //   )
-                            //       .toList(),
-                            //   label: 'Status Kiriman'.tr,
-                            //   hintText: 'Status Kiriman'.tr,
-                            //   value: controller.state.selectedStatusKiriman,
-                            //   onChanged: (value) {
-                            //     controller.state.selectedStatusKiriman = value ?? '';
-                            //   },
-                            // ),
-                          ],
-                        ),
-                      ),
+
+                      // SliverToBoxAdapter(
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       CustomFormLabel(label: 'Status Kiriman'.tr),
+                      //       const SizedBox(height: 10),
+                      //       // CustomDropDownField<String>(
+                      //       //   items: controller.state.listStatusKiriman
+                      //       //       .map(
+                      //       //         (e) => DropdownMenuItem(
+                      //       //       value: e,
+                      //       //       child: Text(e.toUpperCase()),
+                      //       //     ),
+                      //       //   )
+                      //       //       .toList(),
+                      //       //   label: 'Status Kiriman'.tr,
+                      //       //   hintText: 'Status Kiriman'.tr,
+                      //       //   value: controller.state.selectedStatusKiriman,
+                      //       //   onChanged: (value) {
+                      //       //     controller.state.selectedStatusKiriman = value ?? '';
+                      //       //   },
+                      //       // ),
+                      //     ],
+                      //   ),
+                      // ),
                       // Status kiriman
                       SliverPadding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),

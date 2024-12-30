@@ -564,7 +564,9 @@ class LanguageEN {
       "Ditolak": "Rejected",
       "Daftar Klaim": "Claim List",
       "Berat Express": "Express Weight",
-      "Berat JTR": "JTR Weight"
+      "Berat JTR": "JTR Weight",
+      "Tanggal AWB": "AWB Date",
+      "Kemarin": "Yesterday"
     };
   }
 }

@@ -1,8 +1,9 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
-import 'package:css_mobile/widgets/forms/customformlabel.dart';
+// import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/dates_filter_content.dart';
 import 'package:css_mobile/widgets/forms/officer_dropdown.dart';
 import 'package:flutter/material.dart';
@@ -33,31 +34,31 @@ class PantauPaketmuFilter extends HookWidget {
                         },
                       ),
                       // }),
-                      SliverToBoxAdapter(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomFormLabel(label: 'Status Kiriman'.tr),
-                            const SizedBox(height: 10),
-                            // CustomDropDownField<String>(
-                            //   items: controller.state.listStatusKiriman
-                            //       .map(
-                            //         (e) => DropdownMenuItem(
-                            //       value: e,
-                            //       child: Text(e.toUpperCase()),
-                            //     ),
-                            //   )
-                            //       .toList(),
-                            //   label: 'Status Kiriman'.tr,
-                            //   hintText: 'Status Kiriman'.tr,
-                            //   value: controller.state.selectedStatusKiriman,
-                            //   onChanged: (value) {
-                            //     controller.state.selectedStatusKiriman = value ?? '';
-                            //   },
-                            // ),
-                          ],
-                        ),
-                      ),
+                      // SliverToBoxAdapter(
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       // CustomFormLabel(label: 'Status Kiriman'.tr),
+                      //       const SizedBox(height: 10),
+                      //       // CustomDropDownField<String>(
+                      //       //   items: controller.state.listStatusKiriman
+                      //       //       .map(
+                      //       //         (e) => DropdownMenuItem(
+                      //       //       value: e,
+                      //       //       child: Text(e.toUpperCase()),
+                      //       //     ),
+                      //       //   )
+                      //       //       .toList(),
+                      //       //   label: 'Status Kiriman'.tr,
+                      //       //   hintText: 'Status Kiriman'.tr,
+                      //       //   value: controller.state.selectedStatusKiriman,
+                      //       //   onChanged: (value) {
+                      //       //     controller.state.selectedStatusKiriman = value ?? '';
+                      //       //   },
+                      //       // ),
+                      //     ],
+                      //   ),
+                      // ),
                       // Status kiriman
                       SliverPadding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -104,17 +105,14 @@ class PantauPaketmuFilter extends HookWidget {
                                   controller.state
                                       .listStatusKiriman[adjustedIndex].tr,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                          color: controller.state
-                                                      .selectedStatusKiriman ==
-                                                  controller.state
-                                                          .listStatusKiriman[
-                                                      adjustedIndex]
-                                              ? whiteColor
-                                              : primaryColor(context)),
+                                  style: listTitleTextStyle.copyWith(
+                                      color: controller.state
+                                                  .selectedStatusKiriman ==
+                                              controller
+                                                      .state.listStatusKiriman[
+                                                  adjustedIndex]
+                                          ? whiteColor
+                                          : primaryColor(context)),
                                 ),
                               ),
                             );

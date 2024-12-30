@@ -33,7 +33,7 @@ class PantauCardScreen extends StatelessWidget {
               onRefresh: () => controller.initData(),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -43,10 +43,6 @@ class PantauCardScreen extends StatelessWidget {
                     PantauTotalKiriman(
                         isLoading: controller.state.isLoading ||
                             controller.state.countList.isEmpty),
-                    Divider(
-                      color: Theme.of(context).colorScheme.outline,
-                      thickness: 1.0,
-                    ),
                     // Pantau List
                     // Expanded(
                     //   child: ListView.builder(
