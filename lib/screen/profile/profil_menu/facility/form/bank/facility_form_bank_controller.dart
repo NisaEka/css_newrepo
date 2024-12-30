@@ -8,6 +8,8 @@ import 'package:css_mobile/data/model/storage/ccrf_file_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/form/info/facility_form_info_controller.dart';
+import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_controller.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/cupertino.dart';
@@ -228,9 +230,13 @@ class FacilityFormBankController extends BaseController {
                   'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'
                       .tr,
               thirdButtonTitle: 'Tutup'.tr,
-              onThirdAction: () => Get.delete<DashboardController>().then(
-                (_) => Get.offAll(() => const DashboardScreen()),
-              ),
+              onThirdAction: () async {
+                await Get.delete<DashboardController>();
+                await Get.delete<FacilityFormInfoController>();
+                await Get.delete<FacilityFormReturnController>(force: true);
+                await Get.delete<FacilityFormBankController>(force: true);
+                Get.offAll(() => const DashboardScreen());
+              },
             ),
           );
         } else {
