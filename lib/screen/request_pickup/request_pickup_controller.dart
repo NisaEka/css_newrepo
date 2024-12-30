@@ -95,7 +95,7 @@ class RequestPickupController extends BaseController {
     state.selectedOrigin = null;
     // state.isFiltered = false;
     state.searchField.clear();
-    state.dateFilter = '0';
+    state.dateFilter = '3';
     state.filterStatus = Constant.allStatus;
     state.selectedDeliveryType = Constant.allDeliveryType;
     state.queryParam.setWhere([]);
