@@ -6,7 +6,6 @@ import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class LoginForm extends StatelessWidget {
@@ -45,11 +44,7 @@ class LoginForm extends StatelessWidget {
                         isRequired: true,
                         // focusNode: controller.emailFocus,
                         onSubmit: (_) {},
-                        validator: ValidationBuilder(localeName: c.state.lang)
-                            .email()
-                            .minLength(10)
-                            .maxLength(50)
-                            .build(),
+                        // validator: ValidationBuilder().email().minLength(10).maxLength(50).build(),
                         inputFormatters: [
                           TextInputFormatter.withFunction((oldValue, newValue) {
                             return newValue.copyWith(

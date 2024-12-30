@@ -137,7 +137,7 @@ class SignupForm extends StatelessWidget {
                             if (c.state.formKey.currentState?.validate() ==
                                     true &&
                                 c.state.selectedOrigin != null) {
-                              c.mailValidation();
+                              c.saveRegistration();
                             }
                           },
                         ),

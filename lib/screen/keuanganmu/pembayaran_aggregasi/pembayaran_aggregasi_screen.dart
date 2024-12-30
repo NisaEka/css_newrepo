@@ -180,9 +180,11 @@ class PembayaranAggergasiScreen extends StatelessWidget {
             ),
           ),
           DateFilterField(
+            selectedDateFilter: c.dateFilter,
             onChanged: (value) {
-              c.startDate = value.first;
-              c.endDate = value.last;
+              c.startDate = value.startDate;
+              c.endDate = value.endDate;
+              c.dateFilter = value.dateFilter;
               c.update();
             },
           ),

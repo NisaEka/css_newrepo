@@ -18,9 +18,11 @@ class FilterComponent extends StatelessWidget {
             child: CustomScrollView(
               slivers: [
                 DateFilterField(
+                  selectedDateFilter: c.state.dateFilter,
                   onChanged: (value) {
-                    c.state.startDate = value.first;
-                    c.state.endDate = value.last;
+                    c.state.startDate = value.startDate;
+                    c.state.endDate = value.endDate;
+                    c.state.dateFilter = value.dateFilter;
                     c.update();
                   },
                 ),
