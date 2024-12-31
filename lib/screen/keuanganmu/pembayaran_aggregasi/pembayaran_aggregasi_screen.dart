@@ -47,8 +47,14 @@ class PembayaranAggergasiScreen extends StatelessWidget {
           ),
           isFiltered: c.isFiltered,
           isApplyFilter: c.startDate != null || c.endDate != null,
-          onResetFilter: () => c.resetFilter(),
-          onApplyFilter: () => c.applyFilter(),
+          onResetFilter: () {
+            c.resetFilter();
+            Get.back();
+          },
+          onApplyFilter: () {
+            c.applyFilter();
+            Get.back();
+          },
           onCloseFilter: () {
             if (!c.isFiltered) {
               c.resetFilter();
