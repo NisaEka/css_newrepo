@@ -55,16 +55,15 @@ class LoginController extends BaseController {
               ? Image.asset(ImageConstant.tipsKeamanan)
               : Image.asset(ImageConstant.safetyTips),
           actions: [
-            TextButton(
-                onPressed: () {
-                  markFirstLoginComplete();
-                  Navigator.of(context).pop();
-                },
-                child: CustomFilledButton(
-                  radius: 50,
-                  color: primaryColor(context),
-                  title: 'Saya telah membaca & memahami'.tr,
-                )),
+            CustomFilledButton(
+              radius: 50,
+              color: primaryColor(context),
+              title: 'Saya telah membaca & memahami'.tr,
+              onPressed: () {
+                markFirstLoginComplete();
+                Navigator.of(context).pop();
+              },
+            ),
           ],
         ),
       );
