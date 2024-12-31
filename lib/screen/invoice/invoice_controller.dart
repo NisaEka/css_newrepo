@@ -193,7 +193,7 @@ class InvoiceController extends BaseController {
     // state.isFiltered = false;
     state.searchField.clear();
     state.transDate = [];
-    state.dateFilter = '0';
+    state.dateFilter = '3';
     state.pagingController.refresh();
     update();
   }
@@ -213,7 +213,7 @@ class InvoiceController extends BaseController {
     if (state.startDate != null && state.endDate != null) {
       state.transDate = [
         {
-          "invoiceDate": ["$state.startDate", "$state.endDate"]
+          "invoiceDate": ["${state.startDate}", "${state.endDate}"]
         }
       ];
       // "${selectedDateStart?.millisecondsSinceEpoch ?? ''}-${selectedDateEnd?.millisecondsSinceEpoch ?? ''}";
