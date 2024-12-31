@@ -5,7 +5,7 @@ import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transa
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
-import 'package:css_mobile/widgets/items/text_row_item.dart';
+import 'package:css_mobile/widgets/items/text_row_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
@@ -54,39 +54,39 @@ class TransactionDetail extends StatelessWidget {
                     isBold: true,
                     fontColor: primaryColor(context)),
                 const SizedBox(height: 16),
-                TextRowItem(
+                TextRowWidget(
                   title: "Status Kiriman".tr,
                   value: c.state.transactionModel?.statusAwb?.tr ?? '-',
                   isLoading: c.state.isLoading || c.state.data == null,
                 ),
-                TextRowItem(
+                TextRowWidget(
                   title: "Permintaan Pickup".tr,
                   value: c.state.transactionModel?.pickupStatus ?? '-',
                   isLoading: c.state.isLoading || c.state.data == null,
                 ),
                 c.state.transactionModel?.codOngkir == "YES" &&
                         c.state.transactionModel?.codFlag == "YES"
-                    ? TextRowItem(
+                    ? TextRowWidget(
                         title: "Tipe Kiriman".tr,
                         value: 'COD Ongkir',
                         isLoading: c.state.isLoading || c.state.data == null,
-                        isValueBold: true,
+                        valueStyle: Theme.of(context).textTheme.titleMedium,
                       )
                     : c.state.transactionModel?.codOngkir == "NO" &&
                             c.state.transactionModel?.codFlag == "YES"
-                        ? TextRowItem(
+                        ? TextRowWidget(
                             title: "Tipe Kiriman".tr,
                             value: 'COD',
                             isLoading:
                                 c.state.isLoading || c.state.data == null,
-                            isValueBold: true,
+                            valueStyle: Theme.of(context).textTheme.titleMedium,
                           )
-                        : TextRowItem(
+                        : TextRowWidget(
                             title: "Tipe Kiriman".tr,
                             value: 'NON COD',
                             isLoading:
                                 c.state.isLoading || c.state.data == null,
-                            isValueBold: true,
+                            valueStyle: Theme.of(context).textTheme.titleMedium,
                           ),
                 const SizedBox(height: 10),
                 const Divider(color: greyColor),
@@ -137,18 +137,18 @@ class TransactionDetail extends StatelessWidget {
                     isBold: true,
                     fontColor: primaryColor(context)),
                 const SizedBox(height: 16),
-                TextRowItem(
+                TextRowWidget(
                   title: "Berat Kiriman".tr,
                   value:
                       '${c.state.transactionModel?.weight?.toString() ?? '-'} KG',
                   isLoading: c.state.isLoading || c.state.data == null,
                 ),
-                TextRowItem(
+                TextRowWidget(
                   title: "Service".tr,
                   value: c.state.transactionModel?.serviceCode ?? '-',
                   isLoading: c.state.isLoading || c.state.data == null,
                 ),
-                TextRowItem(
+                TextRowWidget(
                   title: "Ongkos Kirim".tr,
                   value:
                       'Rp. ${c.state.transactionModel?.deliveryPrice?.toCurrency().toString() ?? '0'}',
@@ -156,42 +156,42 @@ class TransactionDetail extends StatelessWidget {
                 ),
                 c.state.transactionModel?.codOngkir == "YES" &&
                         c.state.transactionModel?.codFlag == "YES"
-                    ? TextRowItem(
+                    ? TextRowWidget(
                         title: "Admin COD Ongkir".tr,
                         value: 'Rp. 1.000',
                         isLoading: c.state.isLoading || c.state.data == null,
                       )
                     : const SizedBox(),
-                TextRowItem(
+                TextRowWidget(
                   title: "Harga Barang".tr,
                   value:
                       'Rp. ${c.state.transactionModel?.goodsAmount?.toCurrency().toString() ?? '0'}',
                   isLoading: c.state.isLoading || c.state.data == null,
                 ),
-                TextRowItem(
+                TextRowWidget(
                   title: "Asuransi".tr,
                   value:
                       'Rp. ${c.state.transactionModel?.insuranceAmount?.toCurrency().toString() ?? '0'}',
                   isLoading: c.state.isLoading || c.state.data == null,
                 ),
-                TextRowItem(
+                TextRowWidget(
                   title: "COD Amount".tr,
                   value:
                       'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}',
                   isLoading: c.state.isLoading || c.state.data == null,
-                  isTitleBold: true,
-                  isValueBold: true,
+                  titleStyle: Theme.of(context).textTheme.titleMedium,
+                  valueStyle: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 10),
                 const Divider(color: greyColor),
                 const SizedBox(height: 10),
-                TextRowItem(
+                TextRowWidget(
                   title: "Total Ongkos Kirim".tr,
                   value:
                       'Rp. ${((c.state.transactionModel?.deliveryPrice?.toInt() ?? 0) + (c.state.transactionModel?.insuranceAmount?.toInt() ?? 0)).toInt().toCurrency().toString()}',
                   isLoading: c.state.isLoading || c.state.data == null,
-                  isTitleBold: true,
-                  isValueBold: true,
+                  titleStyle: Theme.of(context).textTheme.titleMedium,
+                  valueStyle: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
