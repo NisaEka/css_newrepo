@@ -5,7 +5,6 @@ import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class PembayaranAggergasiController extends BaseController {
@@ -31,6 +30,12 @@ class PembayaranAggergasiController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+
+    startDate = DateTime.now().copyWith(hour: 0, minute: 0, second: 0);
+    endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
+    applyFilter();
+
     Future.wait([initData()]);
     pagingController.addPageRequestListener((pageKey) {
       getAggregation(pageKey);
@@ -159,7 +164,7 @@ class PembayaranAggergasiController extends BaseController {
       update();
       pagingController.refresh();
       fetchAggregationTotal();
-      Get.back();
+      // Get.back();
     }
   }
 
@@ -171,14 +176,19 @@ class PembayaranAggergasiController extends BaseController {
     isFiltered = false;
     selectedAccount = [];
     selectedAccount.addAll(accountList);
-    transDate = [];
-    dateFilter = '0';
+    transDate = [
+      DateTime(startDate!.year, startDate!.month, startDate!.day)
+          .toIso8601String(),
+      DateTime(endDate!.year, endDate!.month, endDate!.day, 23, 59, 59, 999)
+          .toIso8601String()
+    ];
+    dateFilter = '3';
 
     update();
 
     pagingController.refresh();
     fetchAggregationTotal();
-    Get.back();
+    // Get.back();
     // }
   }
 

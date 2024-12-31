@@ -52,6 +52,7 @@ class InvoiceFilterButton extends HookWidget {
               c.state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
               c.state.endDate =
                   DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+              c.state.dateFilter = '3';
 
               c.applyFilter();
               Get.back();

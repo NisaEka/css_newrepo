@@ -65,6 +65,7 @@ class PantauPaketmuDetailController extends BaseController {
         _pantauPaketmu = result.data!;
         _showContent = true;
         transactionData = DataTransactionModel(
+          // destination: _pantauPaketmu.destination,
           destination: Destination(
             destinationCode: _pantauPaketmu.destination ??
                 _pantauPaketmu.transaction?.destinationCode,

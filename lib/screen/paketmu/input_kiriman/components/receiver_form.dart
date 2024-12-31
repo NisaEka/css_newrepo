@@ -102,12 +102,17 @@ class ReceiverForm extends StatelessWidget {
                               isRequired: c.state.selectedDestination == null
                                   ? true
                                   : false,
-                              readOnly: false,
-                              label: "Kota Tujuan".tr,
+                              readOnly: c.state.isLoading,
+                              label: c.state.isLoading
+                                  ? "Loading destination"
+                                  : "Kota Tujuan".tr,
+                              selectedItem: c.state.isLoading
+                                  ? "Loading destination"
+                                  : "Kota Tujuan".tr,
                               prefixIcon: Icon(
                                 Icons.trip_origin_rounded,
                                 color: AppConst.isLightTheme(context)
-                                    ? greyDarkColor1
+                                    ? greyColor
                                     : greyLightColor1,
                               ),
                             ),
