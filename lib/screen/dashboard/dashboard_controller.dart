@@ -401,7 +401,7 @@ class DashboardController extends BaseController {
     state.isLoadingKirimanCOD = isKirimanCOD;
     state.kirimanKamuCOD = DashboardKirimanKamuModel();
     state.transSummary = null;
-    List<num> charts = [0, 0, 0, 0, 0, 0, 0];
+    List<num> charts = [0, 0, 0, 0, 0, 0, 0, 0];
     update();
     if (state.isLogin) {
       try {

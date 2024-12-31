@@ -65,18 +65,18 @@ class PantauPaketmuDetailController extends BaseController {
         _pantauPaketmu = result.data!;
         _showContent = true;
         transactionData = DataTransactionModel(
-          destination: _pantauPaketmu.destination,
-          // destination: Destination(
-          //   destinationCode: _pantauPaketmu.destination ??
-          //       _pantauPaketmu.transaction?.destinationCode,
-          //   cityZone: _pantauPaketmu.destination?.split('-').last,
-          //   zipCode: _pantauPaketmu.cnoteReceiverZip,
-          //   cityName: _pantauPaketmu.transaction?.receiverCity,
-          //   countryName: _pantauPaketmu.transaction?.receiverCountry,
-          //   districtName: _pantauPaketmu.transaction?.receiverDistrict,
-          //   provinceName: _pantauPaketmu.transaction?.receiverRegion,
-          //   subdistrictName: _pantauPaketmu.transaction?.receiverSubdistrict,
-          // ),
+          // destination: _pantauPaketmu.destination,
+          destination: Destination(
+            destinationCode: _pantauPaketmu.destination ??
+                _pantauPaketmu.transaction?.destinationCode,
+            cityZone: _pantauPaketmu.destination?.split('-').last,
+            zipCode: _pantauPaketmu.cnoteReceiverZip,
+            cityName: _pantauPaketmu.transaction?.receiverCity,
+            countryName: _pantauPaketmu.transaction?.receiverCountry,
+            districtName: _pantauPaketmu.transaction?.receiverDistrict,
+            provinceName: _pantauPaketmu.transaction?.receiverRegion,
+            subdistrictName: _pantauPaketmu.transaction?.receiverSubdistrict,
+          ),
           account: Account(
             accountNumber: _pantauPaketmu.custNo,
             // accountService: _pantauPaketmu.transaction?.accountService,
