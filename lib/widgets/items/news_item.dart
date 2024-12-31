@@ -36,13 +36,13 @@ class NewsItem extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+          color: greyLightColor1,
           child: Container(
             decoration: BoxDecoration(
                 color: isLoading ? greyColor : Colors.transparent,
                 borderRadius: BorderRadius.circular(5)),
             margin: const EdgeInsets.all(10),
             width: Get.width / 2,
-            // height: promo != null ? Get.width / 2 : null,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -88,7 +88,10 @@ class NewsItem extends StatelessWidget {
                           promo?.namaBanner ??
                           '',
                   textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(color: greyDarkColor1),
                 ),
                 Text(
                   news?.date?.toString().toLongDateFormat() ?? '',
