@@ -47,14 +47,14 @@ class ReceiverController extends BaseController {
       state.isValidate = state.isEdit ?? false;
       update();
     }
-    var temp = DataTransactionModel.fromJson(
+    state.tempData = DataTransactionModel.fromJson(
         await storage.readData(StorageCore.transactionTemp));
-    if (temp.receiver != null) {
-      state.receiverName.text = temp.receiver?.name ?? '';
-      state.receiverPhone.text = temp.receiver?.phone ?? '';
-      state.receiverAddress.text = temp.receiver?.address ?? '';
-      state.receiverDest.text = temp.destination?.cityName ?? '';
-      state.selectedDestination = temp.destination;
+    if (state.tempData?.receiver != null) {
+      state.receiverName.text = state.tempData?.receiver?.name ?? '';
+      state.receiverPhone.text = state.tempData?.receiver?.phone ?? '';
+      state.receiverAddress.text = state.tempData?.receiver?.address ?? '';
+      state.receiverDest.text = state.tempData?.destination?.cityName ?? '';
+      state.selectedDestination = state.tempData?.destination;
       state.isValidate = state.isEdit ?? false;
       update();
     }
@@ -76,11 +76,14 @@ class ReceiverController extends BaseController {
       subDistrict: state.selectedDestination?.subdistrictName,
       destinationCode: state.selectedDestination?.destinationCode,
     );
-    var temp = state.data?.copyWith(
+    var temp = state.tempData?.copyWith(
       receiver: receiver,
       destination: state.selectedDestination,
     );
     await storage.saveData(StorageCore.transactionTemp, temp);
+    update();
+    state.tempData = DataTransactionModel.fromJson(
+        await storage.readData(StorageCore.transactionTemp));
   }
 
   FutureOr<ReceiverModel?> getSelectedReceiver() async {
@@ -213,6 +216,8 @@ class ReceiverController extends BaseController {
       StorageCore.transactionTemp,
       trans.toString(),
     );
+
+    saveTemp();
     Get.to(
       () => const TransactionScreen(),
       transition: Transition.rightToLeft,
@@ -228,7 +233,11 @@ class ReceiverController extends BaseController {
         "receiver": receiver,
         "destination": state.selectedDestination,
       },
-    );
+    )?.then((v) async {
+      state.tempData = DataTransactionModel.fromJson(
+          await storage.readData(StorageCore.transactionTemp));
+      update();
+    });
   }
 
   Future<void> saveReceiver() async {

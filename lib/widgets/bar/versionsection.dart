@@ -31,12 +31,11 @@ class _VersionAppState extends State<VersionApp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Get.width,
-      alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: 50),
-      height: 50,
-      color: Colors.transparent,
+      width: Get.width / 2,
+      padding: const EdgeInsets.all(10),
+      // color: Colors.green,
       child: Stack(
+        fit: StackFit.passthrough,
         children: [
           Image.asset(
             ImageConstant.logoJNE,
@@ -45,7 +44,9 @@ class _VersionAppState extends State<VersionApp> {
           ),
           // SizedBox(width: 10),
           Positioned(
-            right: 0,
+            left: Get.width / 5,
+            bottom: 0,
+            top: 0,
             child: Text('v $version'),
           )
         ],

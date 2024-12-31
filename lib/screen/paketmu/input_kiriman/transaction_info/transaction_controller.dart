@@ -36,7 +36,6 @@ class TransactionController extends BaseController {
     super.onInit();
     Future.wait([
       initData(),
-      loadTemp(),
     ]);
     connection.checkConnection();
 
@@ -317,7 +316,7 @@ class TransactionController extends BaseController {
     connection.isOnline().then((value) => state.isOnline = value);
     state.goodType.text = "PAKET";
     update();
-    saveTemp();
+
     try {
       await master
           .getServices(DataServiceModel(
@@ -384,25 +383,28 @@ class TransactionController extends BaseController {
     state.goods != null ? loadDraft() : null;
     state.isServiceLoad = false;
     update();
+
+    loadTemp();
   }
 
   Future<void> loadTemp() async {
-    var transTemp = DataTransactionModel.fromJson(
+    state.tempData = DataTransactionModel.fromJson(
         await storage.readData(StorageCore.transactionTemp));
-    if (transTemp.goods != null) {
-      state.goodName.text = transTemp.goods?.desc ?? '';
-      state.goodType.text = transTemp.goods?.type ?? 'PAKET';
+    if (state.tempData?.goods != null) {
+      state.goodName.text = state.tempData?.goods?.desc ?? '';
+      state.goodType.text = state.tempData?.goods?.type ?? 'PAKET';
       state.goodAmount.text =
-          transTemp.goods?.amount?.toInt().toCurrency().toString() ?? '';
-      state.goodQty.text = transTemp.goods?.quantity.toString() ?? '';
-      state.insurance = transTemp.delivery?.insuranceFlag == "Y" ? true : false;
+          state.tempData?.goods?.amount?.toInt().toCurrency().toString() ?? '';
+      state.goodQty.text = state.tempData?.goods?.quantity?.toString() ?? '';
+      state.insurance =
+          state.tempData?.delivery?.insuranceFlag == "Y" ? true : false;
       state.specialInstruction.text =
-          transTemp.delivery?.specialInstruction ?? '';
+          state.tempData?.delivery?.specialInstruction ?? '';
       state.woodPacking =
-          transTemp.delivery?.woodPackaging == "Y" ? true : false;
+          state.tempData?.delivery?.woodPackaging == "Y" ? true : false;
       state.weight.text =
-          transTemp.goods?.weight.toString().split('.').first ?? '1';
-      // state.selectedService = transTemp.serviceList.where((e) => e.serviceCode == state.delivery?.serviceCode).first;
+          state.tempData?.goods?.weight?.toString().split('.').first ?? '1';
+      // state.selectedService = state.serviceList.where((e) => e.serviceCode == state.delivery?.serviceCode).first;
       update();
     }
   }
@@ -491,7 +493,7 @@ class TransactionController extends BaseController {
     update();
 
     var delivery = Delivery(
-      serviceCode: state.selectedService?.serviceDisplay,
+      serviceCode: state.selectedService?.serviceCode,
       woodPackaging: state.woodPacking ? "Y" : "N",
       specialInstruction: state.specialInstruction.text,
       codFlag: state.account.accountService == "COD"
@@ -519,17 +521,16 @@ class TransactionController extends BaseController {
       amount: state.goodAmount.text.isNotEmpty
           ? state.goodAmount.text.digitOnly().toInt()
           : null,
-      quantity:
-          state.goodQty.text.isNotEmpty ? state.goodQty.text.toInt() : null,
-      weight: state.berat,
+      quantity: state.goodQty.text.isNotEmpty ? state.goodQty.text.toInt() : 0,
+      weight: state.weight.text.toInt(),
     );
 
-    var temp = state.data?.copyWith(
+    var temp = state.tempData?.copyWith(
       delivery: delivery,
       goods: goods,
     );
     await storage.saveData(StorageCore.transactionTemp, temp);
-    // print("temp data: ${temp?.goods?.desc}");
+    loadTemp();
   }
 
   Future<void> updateTransaction() async {

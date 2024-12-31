@@ -34,4 +34,5 @@ class ReceiverState {
 
   Destination? selectedDestination;
   ReceiverModel? receiver;
+  DataTransactionModel? tempData;
 }
