@@ -5,6 +5,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transac
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/input_formatter/thousand_separator_input_formater.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
@@ -38,7 +39,10 @@ class TransactionForm extends StatelessWidget {
                   Form(
                     key: c.state.formKey,
                     onChanged: () {
+                      c.state.formKey.currentState?.validate();
+                      c.update();
                       c.saveTemp();
+                      AppLogger.i('isValidate : ${c.isValidate()}');
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
