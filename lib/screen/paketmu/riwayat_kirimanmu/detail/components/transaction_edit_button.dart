@@ -18,24 +18,27 @@ class TransactionEditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DetailTransactionController>(
-        init: DetailTransactionController(),
-        builder: (c) {
-          return Shimmer(
-            isLoading: c.state.isLoading,
-            child: Container(
-              color: c.state.isLoading ? greyColor : null,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  c.state.allow?.paketmuPrint == 'Y' ||
-                          c.state.allow?.cetakPesanan == 'Y'
-                      ? CustomFilledButton(
+      init: DetailTransactionController(),
+      builder: (c) {
+        return Shimmer(
+          isLoading: c.state.isLoading,
+          child: Container(
+            color: c.state.isLoading ? greyColor : null,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                c.state.allow?.paketmuPrint == 'Y' ||
+                        c.state.allow?.cetakPesanan == 'Y'
+                    ? Expanded(
+                        flex: 3,
+                        child: CustomFilledButton(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 10),
                           color: primaryColor(context),
                           title: "Lihat Resi".tr,
                           suffixIcon: Icons.qr_code_rounded,
-                          width: Get.width / 2,
                           height: 50,
                           fontSize: 15,
                           isLoading: c.state.isLoading,
@@ -44,16 +47,18 @@ class TransactionEditButton extends StatelessWidget {
                                   'data': c.state.transactionData,
                                 })
                               : null,
-                        )
-                      : const SizedBox(),
-                  c.isEdit()
-                      ? CustomFilledButton(
+                        ),
+                      )
+                    : const SizedBox(),
+                c.isEdit()
+                    ? Expanded(
+                        flex: 1,
+                        child: CustomFilledButton(
                           margin: const EdgeInsets.symmetric(
-                              horizontal: 2, vertical: 10),
+                              horizontal: 5, vertical: 10),
                           color: successColor,
                           isTransparent: true,
                           prefixIcon: Icons.edit_rounded,
-                          width: 50,
                           height: 50,
                           fontSize: 23,
                           isLoading: c.state.isLoading,
@@ -68,17 +73,19 @@ class TransactionEditButton extends StatelessWidget {
                               );
                             }
                           },
-                        )
-                      : const SizedBox(),
-                  c.state.transactionModel?.statusAwb == "MASIH DI KAMU" &&
-                          (c.state.allow?.hapusPesanan == 'Y')
-                      ? CustomFilledButton(
+                        ),
+                      )
+                    : const SizedBox(),
+                c.state.transactionModel?.statusAwb == "MASIH DI KAMU" &&
+                        (c.state.allow?.hapusPesanan == 'Y')
+                    ? Expanded(
+                        flex: 1,
+                        child: CustomFilledButton(
                           margin: const EdgeInsets.symmetric(
-                              horizontal: 2, vertical: 10),
+                              horizontal: 5, vertical: 10),
                           color: errorColor,
                           isTransparent: true,
                           prefixIcon: Icons.delete_rounded,
-                          width: 50,
                           height: 50,
                           fontSize: 23,
                           isLoading: c.state.isLoading,
@@ -113,15 +120,17 @@ class TransactionEditButton extends StatelessWidget {
                               );
                             }
                           },
-                        )
-                      : const SizedBox(),
-                  CustomFilledButton(
+                        ),
+                      )
+                    : const SizedBox(),
+                Expanded(
+                  flex: 1,
+                  child: CustomFilledButton(
                     margin:
-                        const EdgeInsets.symmetric(horizontal: 3, vertical: 10),
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                     color: warningColor,
                     isTransparent: true,
                     prefixIcon: Icons.phone_rounded,
-                    width: 50,
                     height: 50,
                     fontSize: 23,
                     isLoading: c.state.isLoading,
@@ -140,10 +149,12 @@ class TransactionEditButton extends StatelessWidget {
                       );
                     },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
