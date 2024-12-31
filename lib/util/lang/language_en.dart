@@ -569,7 +569,8 @@ class LanguageEN {
       "Kemarin": "Yesterday",
       "Gagal mengambil data pantau": "Failed to load tracking data",
       "Data dropshipper berhasil di simpan":
-          "Dropshipper data successfully saved"
+          "Dropshipper data successfully saved",
+      "Saya telah membaca & memahami": "I have read & understood"
     };
   }
 }

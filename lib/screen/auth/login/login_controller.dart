@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
@@ -15,6 +16,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
@@ -23,6 +25,7 @@ import 'package:get/get.dart';
 
 class LoginController extends BaseController {
   final state = LoginState();
+  var isFirst = true.obs;
 
   @override
   void onInit() async {
@@ -38,6 +41,34 @@ class LoginController extends BaseController {
     update();
     storage.deleteLogin();
     ValidationBuilder.setLocale(state.lang!);
+  }
+
+  void markFirstLoginComplete() {
+    isFirst.value = false;
+  }
+
+  void showFirstLoginDialog(BuildContext context) {
+    if (isFirst.value) {
+      Get.dialog(
+        AlertDialog(
+          content: state.lang == "id"
+              ? Image.asset(ImageConstant.tipsKeamanan)
+              : Image.asset(ImageConstant.safetyTips),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  markFirstLoginComplete();
+                  Navigator.of(context).pop();
+                },
+                child: CustomFilledButton(
+                  radius: 50,
+                  color: primaryColor(context),
+                  title: 'Saya telah membaca & memahami'.tr,
+                )),
+          ],
+        ),
+      );
+    }
   }
 
   bool onPop() {
