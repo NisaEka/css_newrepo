@@ -51,6 +51,9 @@ class LoginController extends BaseController {
     if (isFirst.value) {
       Get.dialog(
         AlertDialog(
+          backgroundColor: Theme.of(context).brightness == Brightness.light
+              ? whiteColor
+              : bgDarkColor,
           content: state.lang == "id"
               ? Image.asset(ImageConstant.tipsKeamanan)
               : Image.asset(ImageConstant.safetyTips),
