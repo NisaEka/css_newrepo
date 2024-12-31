@@ -29,6 +29,7 @@ class MenuItems extends StatelessWidget {
                   onTap: () => c.isEdit
                       ? c.addFavorit(i, items[i])
                       : c.routeToMenu(items[i], context),
+                  iconSize: MediaQuery.of(context).size.width * 0.1,
                 ),
                 childCount: items.length,
               ),

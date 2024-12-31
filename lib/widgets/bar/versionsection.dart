@@ -31,11 +31,17 @@ class _VersionAppState extends State<VersionApp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Get.width / 2,
-      padding: const EdgeInsets.all(10),
-      // color: Colors.green,
-      child: Stack(
-        fit: StackFit.passthrough,
+      // width: Get.width / 2,
+      // padding: const EdgeInsets.all(10),
+      // // color: Colors.green,
+      // child: Stack(
+      //   fit: StackFit.passthrough,
+      width: Get.width,
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(top: 50, bottom: 10),
+      height: 50,
+      color: Colors.transparent,
+      child: Column(
         children: [
           Image.asset(
             ImageConstant.logoJNE,

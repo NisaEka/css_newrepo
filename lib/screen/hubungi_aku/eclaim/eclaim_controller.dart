@@ -41,22 +41,22 @@ class EclaimController extends BaseController {
     }
   }
 
-  // Future<void> initData() async {
-  //   // transactionList = [];
-  //   state.selectedStatusClaim = '';
-  // }
-
   Future<void> initData() async {
-    state.selectedStatusClaim = "Total";
-    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
-    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-    state.transDate = [
-      {
-        "createDate": ["${state.startDate}", "${state.endDate}"]
-      }
-    ];
-    await eclaimCount();
+    // transactionList = [];
+    state.selectedStatusClaim = '';
   }
+
+  // Future<void> initData() async {
+  //   state.selectedStatusClaim = "Total";
+  //   state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+  //   state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+  //   state.transDate = [
+  //     {
+  //       "createDate": ["${state.startDate}", "${state.endDate}"]
+  //     }
+  //   ];
+  //   await eclaimCount();
+  // }
 
   Future<void> getEclaim(int page) async {
     state.isLoading = true;

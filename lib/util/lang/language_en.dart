@@ -569,7 +569,8 @@ class LanguageEN {
       "Kemarin": "Yesterday",
       "Gagal mengambil data pantau": "Failed to load tracking data",
       "Data dropshipper berhasil di simpan":
-          "Dropshipper data successfully saved"
+          "Dropshipper data successfully saved",
+      "Pilih minimal satu hak akses": "Select at least one authority",
     };
   }
 }
