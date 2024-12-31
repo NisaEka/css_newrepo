@@ -67,7 +67,7 @@ class JlcPointBox extends StatelessWidget {
                     color: textColor(context),
                   )),
               Text(
-                jlcPoint,
+                jlcPoint.toDouble().round().toCurrency(),
                 style: formLabelTextStyle.copyWith(color: Colors.green),
               ),
             ],
