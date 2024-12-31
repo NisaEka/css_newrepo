@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -25,37 +24,50 @@ class NotificationController extends BaseController {
   Future<void> initData() async {
     isLoading = true;
     update();
-    unreadNotifList = [];
-    readNotifList = [];
-    notificationList = [];
+
     try {
+      // unread meesage
       var unread = GetNotificationModel.fromJson(
           await storage.readData(StorageCore.unreadMessage));
-      unreadNotifList.addAll(unread.payload ?? []);
+      unreadNotifList
+        ..clear()
+        ..addAll(unread.payload ?? []);
       unreadNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
-      unreadNotifList.forEachIndexed(
-        (i, e) => notificationList.add(
-          NotificationListItem(
-            data: e,
-            isRead: true,
-            onTap: () => readMessage(e),
-          ),
-        ),
-      );
 
+      // add item to notificationList
+      for (var e in unreadNotifList) {
+        if (notificationList.indexWhere((item) => item.data.id == e.id) == -1) {
+          notificationList.add(
+            NotificationListItem(
+              data: e,
+              isRead: true,
+              onTap: () => readMessage(e),
+            ),
+          );
+        }
+      }
+
+      // read meessage
       var read = GetNotificationModel.fromJson(
           await storage.readData(StorageCore.readMessage));
-      readNotifList.addAll(read.payload ?? []);
+      readNotifList
+        ..clear()
+        ..addAll(read.payload ?? []);
       readNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
-      readNotifList.forEachIndexed(
-        (i, e) => notificationList.add(NotificationListItem(
-          data: e,
-          isRead: false,
-          onTap: () => readMessage(e),
-        )),
-      );
-      update();
 
+      for (var e in readNotifList) {
+        if (notificationList.indexWhere((item) => item.data.id == e.id) == -1) {
+          notificationList.add(
+            NotificationListItem(
+              data: e,
+              isRead: false,
+              onTap: () => readMessage(e),
+            ),
+          );
+        }
+      }
+
+      // Sort notificationList
       notificationList
           .sort((a, b) => b.data.createDate!.compareTo(a.data.createDate!));
     } catch (e, i) {
@@ -66,20 +78,23 @@ class NotificationController extends BaseController {
     update();
   }
 
-  readMessage(NotificationModel value) {
+  void readMessage(NotificationModel value) {
     if (value.title?.split(' ').first == "Laporanku") {
-      Get.to(() => const LaporankuScreen())?.then((_) => initData());
+      Get.to(() => const LaporankuScreen())
+          ?.then((_) => updateNotificationStatus(value));
     } else {
       Get.to(() => NotificationDetailScreen(data: value))
-          ?.then((_) => initData());
+          ?.then((_) => updateNotificationStatus(value));
     }
+  }
 
-    unreadNotifList.removeWhere(
-      (unread) => unread.id == value.id,
-    );
-    if (readNotifList.where((read) => read.id != value.id).isNotEmpty) {
+  void updateNotificationStatus(NotificationModel value) {
+    bool wasUnread = unreadNotifList.any((unread) => unread.id == value.id);
+    unreadNotifList.removeWhere((unread) => unread.id == value.id);
+
+    if (wasUnread &&
+        readNotifList.indexWhere((read) => read.id == value.id) == -1) {
       readNotifList.add(value);
-      update();
     }
 
     storage.saveData(
@@ -90,8 +105,23 @@ class NotificationController extends BaseController {
       StorageCore.readMessage,
       GetNotificationModel(payload: readNotifList),
     );
-    unreadNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
 
-    readNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
+    notificationList = [
+      ...unreadNotifList.map((e) => NotificationListItem(
+            data: e,
+            isRead: true,
+            onTap: () => readMessage(e),
+          )),
+      ...readNotifList.map((e) => NotificationListItem(
+            data: e,
+            isRead: false,
+            onTap: () => readMessage(e),
+          )),
+    ];
+
+    notificationList
+        .sort((a, b) => b.data.createDate!.compareTo(a.data.createDate!));
+
+    update();
   }
 }

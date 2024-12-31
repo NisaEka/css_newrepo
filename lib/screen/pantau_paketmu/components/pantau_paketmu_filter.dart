@@ -3,6 +3,7 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
+import 'package:css_mobile/widgets/forms/customformlabel.dart';
 // import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/dates_filter_content.dart';
 import 'package:css_mobile/widgets/forms/officer_dropdown.dart';
@@ -64,6 +65,9 @@ class PantauPaketmuFilter extends HookWidget {
                       //   ),
                       // ),
                       // Status kiriman
+                      SliverToBoxAdapter(
+                        child: CustomFormLabel(label: 'Status Kiriman'.tr),
+                      ),
                       SliverPadding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         sliver: SliverGrid(
@@ -155,7 +159,7 @@ class PantauPaketmuFilter extends HookWidget {
                                   )
                                   .toList(),
                               label: 'Tipe Kiriman'.tr,
-                              hintText: 'Tipe Kiriman'.tr,
+                              // hintText: 'Tipe Kiriman'.tr,
                               value: controller.state.selectedTipeKiriman,
                               onChanged: (value) {
                                 controller.state.selectedTipeKiriman =

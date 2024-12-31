@@ -1,5 +1,6 @@
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_controller.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
+import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/dates_filter_content.dart';
 import 'package:css_mobile/widgets/forms/officer_dropdown.dart';
 import 'package:css_mobile/widgets/forms/status_filter_field.dart';
@@ -32,6 +33,9 @@ class TransactionFilterButton extends HookWidget {
                           c.update();
                         },
                       ),
+                      SliverToBoxAdapter(
+                        child: CustomFormLabel(label: 'Status Kiriman'.tr),
+                      ),
                       StatusFilterField(
                         statuses: c.state.listStatusKiriman,
                         onChanged: (value) {
@@ -39,7 +43,6 @@ class TransactionFilterButton extends HookWidget {
                           c.update();
                         },
                       ),
-
                       // SliverPadding(
                       //   padding: const EdgeInsets.symmetric(horizontal: 10),
                       //   sliver: SliverGrid(
