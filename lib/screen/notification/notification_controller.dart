@@ -84,7 +84,7 @@ class NotificationController extends BaseController {
           ?.then((_) => updateNotificationStatus(value));
     } else {
       Get.to(() => NotificationDetailScreen(data: value))
-          ?.then((_) => initData());
+          ?.then((_) => updateNotificationStatus(value));
     }
   }
 
@@ -95,7 +95,6 @@ class NotificationController extends BaseController {
     if (wasUnread &&
         readNotifList.indexWhere((read) => read.id == value.id) == -1) {
       readNotifList.add(value);
-      update();
     }
 
     storage.saveData(
@@ -120,6 +119,9 @@ class NotificationController extends BaseController {
           )),
     ];
 
-    readNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
+    notificationList
+        .sort((a, b) => b.data.createDate!.compareTo(a.data.createDate!));
+
+    update();
   }
 }
