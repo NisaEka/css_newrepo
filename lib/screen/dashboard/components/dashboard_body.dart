@@ -31,7 +31,10 @@ class DashboardBody extends StatelessWidget {
             }),
             child: CustomScrollView(
               slivers: [
-                DashboardAppbar(notifCount: c.state.unreadNotifList.length),
+                DashboardAppbar(
+                  notifCount: c.state.unreadNotifList.length,
+                  onRefresh: (p0) => c.cekMessages(),
+                ),
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
