@@ -1,5 +1,5 @@
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/widgets/items/news_item.dart';
+import 'package:css_mobile/widgets/items/promo_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,10 +37,10 @@ class DashboardPromo extends StatelessWidget {
                         ? List.generate(
                             3,
                             (index) =>
-                                const NewsItem(isLoading: true, lang: ''))
+                                const PromoItem(isLoading: true, lang: ''))
                         : c.state.bannerList
                             .map(
-                              (e) => NewsItem(
+                              (e) => PromoItem(
                                 promo: e,
                                 lang: c.state.local,
                                 isLoading: c.state.isLoading,

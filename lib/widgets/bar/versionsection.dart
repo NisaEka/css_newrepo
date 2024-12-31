@@ -33,10 +33,10 @@ class _VersionAppState extends State<VersionApp> {
     return Container(
       width: Get.width,
       alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: 50),
+      margin: const EdgeInsets.only(top: 50, bottom: 10),
       height: 50,
       color: Colors.transparent,
-      child: Stack(
+      child: Column(
         children: [
           Image.asset(
             ImageConstant.logoJNE,
