@@ -144,7 +144,7 @@ class _DatesFilterContentState extends State<DateFilterField> {
               ),
             ],
           ),
-          CustomFormLabel(label: 'Status Kiriman'.tr),
+          // CustomFormLabel(label: 'Status Kiriman'.tr),
           // const SizedBox(height: 10),
         ],
       ),
