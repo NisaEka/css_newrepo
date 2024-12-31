@@ -40,4 +40,5 @@ class ShipperState {
   CcrfProfileModel? userCcrf;
   DropshipperModel? dropshipper;
   String? locale;
+  DataTransactionModel? tempData;
 }

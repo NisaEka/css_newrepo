@@ -98,7 +98,8 @@ class ShipperController extends BaseController {
         UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
     state.userCcrf = CcrfProfileModel.fromJson(
         await storage.readData(StorageCore.ccrfProfile));
-
+    state.tempData = DataTransactionModel.fromJson(
+        await storage.readData(StorageCore.transactionTemp));
     try {
       await master
           .getAccounts(QueryModel(limit: 0, sort: [
@@ -318,9 +319,7 @@ class ShipperController extends BaseController {
       origin: state.selectedOrigin ?? state.shipper?.origin,
     );
 
-    var temp = DataTransactionModel.fromJson(
-            await storage.readData(StorageCore.transactionTemp))
-        .copyWith(
+    var temp = state.tempData?.copyWith(
       shipper: shipper,
       origin: state.selectedOrigin,
       account: state.selectedAccount,
@@ -404,7 +403,11 @@ class ShipperController extends BaseController {
             },
             transition: Transition.rightToLeft)
         ?.then(
-      (value) {},
+      (value) async {
+        state.tempData = DataTransactionModel.fromJson(
+            await storage.readData(StorageCore.transactionTemp));
+        update();
+      },
     );
   }
 

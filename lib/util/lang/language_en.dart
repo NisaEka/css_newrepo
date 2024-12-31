@@ -570,6 +570,7 @@ class LanguageEN {
       "Gagal mengambil data pantau": "Failed to load tracking data",
       "Data dropshipper berhasil di simpan":
           "Dropshipper data successfully saved",
+      "Pilih minimal satu hak akses": "Select at least one authority",
       "Saya telah membaca & memahami": "I have read & understood"
     };
   }

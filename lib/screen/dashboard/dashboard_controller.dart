@@ -27,6 +27,7 @@ import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class DashboardController extends BaseController {
@@ -512,7 +513,7 @@ class DashboardController extends BaseController {
 
   Future<void> initData() async {
     connection.isOnline().then((value) => state.isOnline = value);
-
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     cekMessages();
     cekFavoritMenu();
 

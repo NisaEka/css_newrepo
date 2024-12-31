@@ -73,6 +73,7 @@ class TransactionState {
 
   ServiceModel? selectedService;
   DraftTransactionModel? draftData;
+  DataTransactionModel? tempData;
 
   num totalOngkir = 0;
   num flatRate = 0;
