@@ -41,6 +41,7 @@ class TransactionController extends BaseController {
 
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       connection.isOnline().then((value) {
+        AppLogger.i('isOnline : $value $result');
         state.isOnline = value && (result != ConnectivityResult.none);
         if (state.isOnline) {
           // AppSnackBar.success('Online Mode'.tr);
@@ -181,10 +182,12 @@ class TransactionController extends BaseController {
       update();
 
       isValidate();
-      saveTemp();
       state.isCalculate = false;
       update();
     }
+
+    state.formValidate = state.formKey.currentState?.validate() ?? false;
+    update();
   }
 
   bool isValidate() {
@@ -192,11 +195,15 @@ class TransactionController extends BaseController {
         (state.selectedService?.serviceDisplay?.isNotEmpty ?? false) &&
         !state.isCalculate) {
       if ((state.totalOngkir > 1000000) && state.codOngkir) {
+        AppLogger.w('total ongkir : ${state.totalOngkir}');
         return false;
       }
 
       return true;
     }
+    AppLogger.w('form validate : ${state.formValidate}');
+    AppLogger.w(
+        'selected service : ${state.selectedService?.serviceDisplay?.isNotEmpty ?? false}');
 
     return false;
   }
@@ -313,7 +320,7 @@ class TransactionController extends BaseController {
   Future<void> initData() async {
     state.isServiceLoad = true;
     state.serviceList = [];
-    connection.isOnline().then((value) => state.isOnline = value);
+    // connection.isOnline().then((value) => state.isOnline = value);
     state.goodType.text = "PAKET";
     update();
 
@@ -342,7 +349,6 @@ class TransactionController extends BaseController {
     } catch (e, i) {
       e.printError();
       i.printError();
-      state.isOnline = false;
     }
     if (state.data != null) {
       state.goodType.text = state.data?.goods?.type ?? '';
@@ -403,7 +409,7 @@ class TransactionController extends BaseController {
       state.woodPacking =
           state.tempData?.delivery?.woodPackaging == "Y" ? true : false;
       state.weight.text =
-          state.tempData?.goods?.weight?.toString().split('.').first ?? '1';
+          state.tempData?.goods?.weight?.toString().split('.').first ?? '';
       // state.selectedService = state.serviceList.where((e) => e.serviceCode == state.delivery?.serviceCode).first;
       update();
     }
@@ -466,7 +472,7 @@ class TransactionController extends BaseController {
     state.goods != null ? deleteDraft(state.draftIndex!) : null;
 
     await storage.saveData(StorageCore.draftTransaction, state.draftData).then(
-          (_) => Get.to(
+          (_) => Get.offAll(
             _successScreen(
               isDraft: true,
               lottie: ImageConstant.warningLottie,
@@ -490,8 +496,9 @@ class TransactionController extends BaseController {
 
   Future<void> saveTemp() async {
     state.formKey.currentState?.validate();
-    update();
+    state.formValidate = state.formKey.currentState?.validate() ?? false;
 
+    update();
     var delivery = Delivery(
       serviceCode: state.selectedService?.serviceCode,
       woodPackaging: state.woodPacking ? "Y" : "N",
@@ -521,8 +528,9 @@ class TransactionController extends BaseController {
       amount: state.goodAmount.text.isNotEmpty
           ? state.goodAmount.text.digitOnly().toInt()
           : null,
-      quantity: state.goodQty.text.isNotEmpty ? state.goodQty.text.toInt() : 0,
-      weight: state.weight.text.toInt(),
+      quantity:
+          state.goodQty.text.isNotEmpty ? state.goodQty.text.toInt() : null,
+      weight: state.weight.text.isNotEmpty ? state.weight.text.toInt() : null,
     );
 
     var temp = state.tempData?.copyWith(
@@ -530,7 +538,6 @@ class TransactionController extends BaseController {
       goods: goods,
     );
     await storage.saveData(StorageCore.transactionTemp, temp);
-    loadTemp();
   }
 
   Future<void> updateTransaction() async {
@@ -599,7 +606,7 @@ class TransactionController extends BaseController {
         if (v.code != 200) {
           AppSnackBar.error(v.message);
         } else {
-          Get.to(_successScreen(
+          Get.offAll(_successScreen(
             data: v.data,
             message: 'Update Berhasil'.tr,
           ));
@@ -748,7 +755,7 @@ class TransactionController extends BaseController {
             margin: const EdgeInsets.only(bottom: 0),
           );
         } else {
-          Get.to(_successScreen(
+          Get.offAll(_successScreen(
               data: v.data ?? TransactionModel(),
               message: 'Transaksi Berhasil'.tr));
         }
@@ -868,7 +875,6 @@ class TransactionController extends BaseController {
 
     getOngkir();
     state.formValidate = state.formKey.currentState?.validate() ?? false;
-
     update();
   }
 

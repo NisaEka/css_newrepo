@@ -1,5 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
@@ -45,53 +47,62 @@ class SuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          const LogoHeader(),
-          Positioned(
-            top: iconMargin ?? 200,
-            left: 0,
-            right: 0,
-            child: icon ??
-                Lottie.asset(
-                  lottie ?? ImageConstant.successLottie,
-                  height: iconHeight ?? Get.width / 1.2,
-                  fit: BoxFit.cover,
+      body: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, Object? result) =>
+            Get.delete<DashboardController>().then(
+          (_) {
+            Get.offAll(const DashboardScreen());
+          },
+        ),
+        child: Stack(
+          children: [
+            const LogoHeader(),
+            Positioned(
+              top: iconMargin ?? 200,
+              left: 0,
+              right: 0,
+              child: icon ??
+                  Lottie.asset(
+                    lottie ?? ImageConstant.successLottie,
+                    height: iconHeight ?? Get.width / 1.2,
+                    fit: BoxFit.cover,
+                  ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Container(
+                    //   color: Colors.grey,
+                    //   child: icon ??
+                    //       Lottie.asset(
+                    //         lottie ?? ImageConstant.successLottie,
+                    //         // height: iconHeight ?? Get.width / 1.2,
+                    //         fit: BoxFit.cover,
+                    //       ),
+                    // ),
+                    (message?.isNotEmpty ?? false)
+                        ? SizedBox(
+                            height: customInfo != null ? null : Get.width * 0.5,
+                            width: Get.width,
+                            child: Text(
+                              message?.tr ?? '',
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        : const SizedBox(),
+                    customInfo ?? const SizedBox()
+                  ],
                 ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Container(
-                  //   color: Colors.grey,
-                  //   child: icon ??
-                  //       Lottie.asset(
-                  //         lottie ?? ImageConstant.successLottie,
-                  //         // height: iconHeight ?? Get.width / 1.2,
-                  //         fit: BoxFit.cover,
-                  //       ),
-                  // ),
-                  (message?.isNotEmpty ?? false)
-                      ? SizedBox(
-                          height: customInfo != null ? null : Get.width * 0.5,
-                          width: Get.width,
-                          child: Text(
-                            message?.tr ?? '',
-                            style: Theme.of(context).textTheme.titleLarge,
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : const SizedBox(),
-                  customInfo ?? const SizedBox()
-                ],
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
