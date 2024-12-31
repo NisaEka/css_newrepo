@@ -166,18 +166,18 @@ class LacakKirimanScreen extends StatelessWidget {
                             isLoading: c.isLoading,
                             title: 'Menuju'.tr,
                             value: c.trackModel?.data?.cnote?.cityName ?? '',
-                            // width: Get.width / 1.5,
+                            width: Get.width / 2,
                           ),
                           CustomLabelText(
                             isLoading: c.isLoading,
-                            title: 'Perkiraan sampai tujuan'.tr,
+                            title: 'Perkiraan Sampai'.tr,
                             value:
                                 c.trackModel?.data?.cnote?.estimateDelivery ??
                                     '',
                             valueColor: AppConst.isLightTheme(context)
                                 ? redJNE
                                 : warningColor,
-                            // width: Get.width / 4,
+                            width: Get.width / 3,
                             alignment: 'end',
                           ),
                         ],
@@ -256,7 +256,7 @@ class LacakKirimanScreen extends StatelessWidget {
                             value: c.trackModel?.data?.detail?.first
                                     .cnoteShipperCity ??
                                 '',
-                            // width: Get.width / 2,
+                            width: Get.width / 3,
                           ),
                           CustomLabelText(
                             isLoading: c.isLoading,
@@ -264,7 +264,7 @@ class LacakKirimanScreen extends StatelessWidget {
                             value: c.trackModel?.data?.detail?.first
                                     .cnoteReceiverCity ??
                                 '',
-                            // width: Get.width / 3,
+                            width: Get.width / 2,
                             alignment: 'end',
                           ),
                         ],

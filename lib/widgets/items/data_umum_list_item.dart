@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,11 @@ class DataUmumListItem extends StatelessWidget {
               width: Get.width,
               height: 60,
               margin: const EdgeInsets.symmetric(vertical: 5),
-              color: greyLightColor3,
+              decoration: BoxDecoration(
+                color:
+                    AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
             )
           : Tooltip(
               message: tooltip ?? '',

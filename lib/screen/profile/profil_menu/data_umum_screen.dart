@@ -106,11 +106,10 @@ class DataUmumScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(Icons.info_rounded, color:
-              Theme.of(context).brightness ==
-                Brightness.light
-                ? redJNE
-                : warningColor),
+            icon: Icon(Icons.info_rounded,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? redJNE
+                    : warningColor),
             tooltip: 'informasi'.tr,
           ),
         )
