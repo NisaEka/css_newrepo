@@ -1,5 +1,3 @@
-import 'package:css_mobile/data/model/master/destination_model.dart';
-
 class PantauPaketmuDetailModel {
   PantauPaketmuDetailModel({
     String? awbNo,
@@ -116,7 +114,7 @@ class PantauPaketmuDetailModel {
     String? paymentType,
     dynamic repcssDailyPayAggDatethru,
     String? cnoteShipperContact,
-    Destination? destination,
+    String? destination,
     dynamic hoCourierDate,
     dynamic repcssDiscRevType,
     String? cnoteShipperZip,
@@ -466,9 +464,7 @@ class PantauPaketmuDetailModel {
         ? Transaction.fromJson(json['transaction'])
         : null;
     _ticket = json['ticket'] != null ? Ticket.fromJson(json['ticket']) : null;
-    _destination = json['destination'] != null
-        ? Destination.fromJson(json['destination'])
-        : null;
+    _destination = json['destination'];
   }
 
   String? _awbNo;
@@ -585,7 +581,7 @@ class PantauPaketmuDetailModel {
   String? _paymentType;
   dynamic _repcssDailyPayAggDatethru;
   String? _cnoteShipperContact;
-  Destination? _destination;
+  String? _destination;
   dynamic _hoCourierDate;
   dynamic _repcssDiscRevType;
   String? _cnoteShipperZip;
@@ -740,7 +736,7 @@ class PantauPaketmuDetailModel {
     String? paymentType,
     dynamic repcssDailyPayAggDatethru,
     String? cnoteShipperContact,
-    Destination? destination,
+    String? destination,
     dynamic hoCourierDate,
     dynamic repcssDiscRevType,
     String? cnoteShipperZip,
@@ -1175,7 +1171,7 @@ class PantauPaketmuDetailModel {
 
   String? get cnoteShipperContact => _cnoteShipperContact;
 
-  Destination? get destination => _destination;
+  String? get destination => _destination;
 
   dynamic get hoCourierDate => _hoCourierDate;
 
@@ -1412,7 +1408,7 @@ class PantauPaketmuDetailModel {
       map['ticket'] = _ticket?.toJson();
     }
     if (_destination != null) {
-      map['destination'] = _destination?.toJson();
+      map['destination'] = _destination;
     }
     return map;
   }
