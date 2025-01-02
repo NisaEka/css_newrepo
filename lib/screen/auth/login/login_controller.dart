@@ -73,35 +73,35 @@ class LoginController extends BaseController {
     }
   }
 
-  bool onPop() {
-    DateTime now = DateTime.now();
-    if (state.currentBackPressTime == null ||
-        now.difference(state.currentBackPressTime!) >
-            const Duration(seconds: 2)) {
-      state.currentBackPressTime = now;
-      AppSnackBar.custom(
-        message: 'Double click back button to exit'.tr,
-        backgroundColor: greyColor.withOpacity(0.8),
-        icon: const Icon(
-          Icons.info,
-          color: whiteColor,
-        ),
-        durationInSeconds: 3,
-        snackPosition: SnackPosition.BOTTOM,
-        snackStyle: SnackStyle.GROUNDED,
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
-        padding: const EdgeInsets.all(10),
-        messageText: null,
-      );
-      state.pop = false;
-      update();
-      return false;
-    }
-    state.pop = true;
-    update();
-    Get.off(() => const DashboardScreen());
-    return true;
-  }
+  // bool onPop() {
+  //   DateTime now = DateTime.now();
+  //   if (state.currentBackPressTime == null ||
+  //       now.difference(state.currentBackPressTime!) >
+  //           const Duration(seconds: 2)) {
+  //     state.currentBackPressTime = now;
+  //     AppSnackBar.custom(
+  //       message: 'Double click back button to exit'.tr,
+  //       backgroundColor: greyColor.withOpacity(0.8),
+  //       icon: const Icon(
+  //         Icons.info,
+  //         color: whiteColor,
+  //       ),
+  //       durationInSeconds: 3,
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       snackStyle: SnackStyle.GROUNDED,
+  //       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+  //       padding: const EdgeInsets.all(10),
+  //       messageText: null,
+  //     );
+  //     state.pop = false;
+  //     update();
+  //     return false;
+  //   }
+  //   state.pop = true;
+  //   update();
+  //   Get.off(() => const DashboardScreen());
+  //   return true;
+  // }
 
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
@@ -210,21 +210,21 @@ class LoginController extends BaseController {
     return null;
   }
 
-  Future cekToken() async {
-    state.isLoading = true;
-    update();
-    String? token = await storage.readAccessToken();
-    AppLogger.e('token : $token');
-    if (token != null) {
-      Get.delete<DashboardController>()
-          .then((_) => Get.offAll(() => const DashboardScreen()));
-      // String all = await storage.readString(StorageCore.allowedMenu);
-      // AllowedMenu menu = AllowedMenu.fromJson(jsonDecode(all));
-      // print(menu.beranda);
-    }
-    state.isLoading = false;
-    update();
-  }
+  // Future cekToken() async {
+  //   state.isLoading = true;
+  //   update();
+  //   String? token = await storage.readAccessToken();
+  //   AppLogger.e('token : $token');
+  //   if (token != null) {
+  //     Get.delete<DashboardController>()
+  //         .then((_) => Get.offAll(() => const DashboardScreen()));
+  //     // String all = await storage.readString(StorageCore.allowedMenu);
+  //     // AllowedMenu menu = AllowedMenu.fromJson(jsonDecode(all));
+  //     // print(menu.beranda);
+  //   }
+  //   state.isLoading = false;
+  //   update();
+  // }
 
   Future<Coordinate> getCurrentLocation() async {
     bool serviceEnabled;

@@ -13,10 +13,37 @@ class FacilityCreateModel {
   String _termsAndConditions = '';
   FacilityCreateIdCardModel? _idCard;
   FacilityCreateAddressModel? _address;
+
   FacilityCreateAddressModel? get address => _address;
   FacilityCreateReturnAddress? _returnAddress;
   FacilityCreateTaxInfoModel? _taxInfo;
   FacilityCreateBankInfoModel? _bankInfo;
+
+  FacilityCreateModel({
+    String? brand,
+    String? name,
+    String? email,
+    String? jlcNumber,
+    String? facilityType,
+    String? termsAndConditions,
+    FacilityCreateIdCardModel? idCard,
+    FacilityCreateAddressModel? address,
+    FacilityCreateReturnAddress? returnAddress,
+    FacilityCreateTaxInfoModel? taxInfo,
+    FacilityCreateBankInfoModel? bankInfo,
+  }) {
+    _brand = brand ?? '';
+    _name = name ?? '';
+    _email = email ?? '';
+    _jlcNumber = jlcNumber ?? '';
+    _facilityType = facilityType ?? '';
+    _termsAndConditions = termsAndConditions ?? '';
+    _idCard = idCard;
+    _address = address;
+    _returnAddress = returnAddress;
+    _taxInfo = taxInfo;
+    _bankInfo = bankInfo;
+  }
 
   setBrand(String brand) {
     _brand = brand;
@@ -106,5 +133,29 @@ class FacilityCreateModel {
     json['bankInfo'] = _bankInfo?.toJson();
 
     return json;
+  }
+
+  FacilityCreateModel.fromJson(dynamic json) {
+    _brand = json['brand'];
+    _name = json['name'];
+    _email = json['email'];
+    _jlcNumber = json['jlcNumber'];
+    _facilityType = json['facilityType'];
+    _termsAndConditions = json['termsAndConditions'];
+    _idCard = json['idCard'] != null
+        ? FacilityCreateIdCardModel.fromJson(json['idCard'])
+        : null;
+    _address = json['address'] != null
+        ? FacilityCreateAddressModel.fromJson(json['address'])
+        : null;
+    _returnAddress = json['returnAddress'] != null
+        ? FacilityCreateReturnAddress.fromJson(json['returnAddress'])
+        : null;
+    _taxInfo = json['taxInfo'] != null
+        ? FacilityCreateTaxInfoModel.fromJson(json['taxInfo'])
+        : null;
+    _bankInfo = json['bankInfo'] != null
+        ? FacilityCreateBankInfoModel.fromJson(json['bankInfo'])
+        : null;
   }
 }

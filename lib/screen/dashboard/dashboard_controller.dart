@@ -24,6 +24,7 @@ import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.da
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -734,6 +735,24 @@ class DashboardController extends BaseController {
     )?.then((value) {
       state.nomorResi.clear();
       update();
+    });
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (state.isFirstLogin) {
+        // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
+        await Get.dialog(
+          DefaultAlertDialog(
+            title: 'Tips Keamanan'.tr,
+            onConfirm: () {
+              Get.back();
+            },
+          ),
+        );
+      }
     });
   }
 }

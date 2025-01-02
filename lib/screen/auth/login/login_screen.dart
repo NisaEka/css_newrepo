@@ -16,8 +16,10 @@ class LoginScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: controller.state.pop,
-            onPopInvokedWithResult: (bool didPop, Object? result) =>
-                Get.offAll(() => const DashboardScreen()),
+            onPopInvokedWithResult: (bool didPop, Object? result) => Get.offAll(
+              () => const DashboardScreen(),
+              arguments: {'isFromLogin': true},
+            ),
             child: Stack(
               children: [
                 const Scaffold(
