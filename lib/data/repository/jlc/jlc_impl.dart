@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/jlc/post_jlc_point_reedem_model.dart';
@@ -50,26 +51,65 @@ class JLCRepositoryImpl extends JLCRepository {
   }
 
   @override
-  Future<DashboardBannerModel> postDashboardBanner() async {
+  Future<BaseResponse<List<BannerModel>>> postDashboardBanner() async {
     try {
       Response response = await network.base.get('/accounts/jlc/banner',
           options: Options(extra: {'skipAuth': true}));
-      return DashboardBannerModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<BannerModel>(
+                  (i) => BannerModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
       AppLogger.e('error: ${e.message}');
-      return DashboardBannerModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<BannerModel>(
+                  (i) => BannerModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     }
   }
 
   @override
-  Future<DashboardNewsModel> postDashboardNews() async {
+  Future<BaseResponse<List<NewsModel>>> postDashboardNews() async {
     try {
-      Response response = await network.base
-          .get('/news', options: Options(extra: {'skipAuth': true}));
-      return DashboardNewsModel.fromJson(response.data);
+      Response response = await network.base.get(
+        '/news',
+        options: Options(extra: {'skipAuth': true}),
+      );
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<NewsModel>(
+                  (i) => NewsModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
-      AppLogger.e('News error: ${e.message}');
-      return e.response?.data;
+      BaseResponse<List<NewsModel>> res = BaseResponse.fromJson(
+          e.response?.data,
+          (json) => json is List<dynamic>
+              ? json
+                  .map<NewsModel>(
+                    (i) => NewsModel.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+              : List.empty());
+      AppLogger.e('News error: ${res.toJson()}');
+      // return e.response?.data;
+      return res;
     }
   }
 }
