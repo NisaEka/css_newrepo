@@ -736,4 +736,122 @@ class DashboardController extends BaseController {
       update();
     });
   }
+
+  // void markLoginComplete() {
+  //   firstLogin.value = false;
+  // }
+
+  //
+  // Future<bool> isFirstLoginDialogShown() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.getBool('isFirstLoginDialogShown') ?? false;
+  // }
+  //
+  // Future<void> markFirstLoginDialogShown() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setBool('isFirstLoginDialogShown', true);
+  // }
+
+  // Future<bool> isFirstLogin() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   bool isFirstTime = prefs.getBool('isFirstLogin') ?? true;
+  //   return isFirstTime;
+  // }
+  //
+  // Future<void> markFirstLoginComplete() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   prefs.setBool('isFirstLogin', false);
+  // }
+  //
+  // void showFirstLoginDialog(BuildContext context) {
+  //   if (state.isLogin) {
+  //     Get.dialog(
+  //       AlertDialog(
+  //         backgroundColor: Theme.of(context).brightness == Brightness.light
+  //             ? whiteColor
+  //             : bgDarkColor,
+  //         // content: state.lang == "id"
+  //         //     ? Image.asset(ImageConstant.tipsKeamanan)
+  //         //     : Image.asset(ImageConstant.safetyTips),
+  //         title: Text(
+  //           'TIPS AMAN MENGGUNAKAN CSS'.tr,
+  //           textAlign: TextAlign.center,
+  //           style: Theme.of(context)
+  //               .textTheme
+  //               .titleLarge
+  //               ?.copyWith(fontWeight: regular, fontSize: 16),
+  //         ),
+  //         content: Padding(
+  //           padding: const EdgeInsets.all(8.0),
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               _buildBulletPoint(
+  //                   'Pastikan Anda hanya mengakses tautan CSS: http://css.jne.co.id.'.tr,
+  //                   context),
+  //               _buildBulletPoint(
+  //                   'Menjaga kerahasiaan informasi data Log In AD Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.'.tr,
+  //                   context),
+  //               _buildBulletPoint(
+  //                   'Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal'.tr,
+  //                   context),
+  //               _buildBulletPoint(
+  //                   'Tidak menyimpan data kata sandi saat Log In dan pastikan melakukan Log Out setelah selesai menggunakan CSS.'.tr,
+  //                   context),
+  //               _buildBulletPoint(
+  //                   'Amankan Komputer dan Jaringan yang digunakan dengan mengaktifkan Spam Blocker, menggunakan Antivirus, dan Konfigurasi Firewall.'.tr,
+  //                   context),
+  //               _buildBulletPoint(
+  //                   'Waspada terhadap email phishing, website phishing dan pastikan teliti serta validasi kembali transaksi anda.'.tr,
+  //                   context),
+  //               _buildBulletPoint(
+  //                   'Jangan pernah memberikan PIN/OTP/PASSWORD/PIN CSS/Kode OTP kepada siapapun. Pihak JNE tidak pernah meminta PIN/OTP/PASSWORD/PIN CSS/Kode OTP dari Customer.'.tr,
+  //                   context),
+  //             ],
+  //           )
+  //         ),
+  //         actions: [
+  //           CustomFilledButton(
+  //             radius: 50,
+  //             color: primaryColor(context),
+  //             title: 'Saya telah membaca & memahami'.tr,
+  //             onPressed: () {
+  //               markFirstLoginComplete();
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   }
+  // }
+  //
+  // Widget _buildBulletPoint(String text, BuildContext context) {
+  //   return Row(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       const Padding(
+  //         padding: EdgeInsets.only(top: 6.0),
+  //         child: Icon(Icons.circle, size: 5),
+  //       ), // Bullet point icon
+  //       const SizedBox(width: 8), // Space between bullet and text
+  //       Expanded(
+  //         child: Text(
+  //           text,
+  //           style: Theme.of(context)
+  //               .textTheme
+  //               .titleLarge
+  //               ?.copyWith(fontWeight: regular, fontSize: 12),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  //
+  // }
 }

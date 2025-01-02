@@ -39,6 +39,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         if (controller.state.isFirst) {
           return const SplashScreen();
         } else {
+          // WidgetsBinding.instance.addPostFrameCallback((_) async {
+          //   bool firstLogin = await controller.isFirstLogin();
+          //   if (firstLogin) {
+          //     controller.showFirstLoginDialog(context);
+          //   }
+          // });
+          // WidgetsBinding.instance.addPostFrameCallback((_) async {
+          //   if(controller.state.isLogin) {
+          //     controller.showFirstLoginDialog(context);
+          //   }
+          // });
           return PopScope(
             canPop: controller.pop,
             onPopInvokedWithResult: (didPop, result) => controller.onPop(),

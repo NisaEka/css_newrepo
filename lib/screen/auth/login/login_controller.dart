@@ -180,9 +180,13 @@ class LoginController extends BaseController {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.only(top: 6.0),
-          child: Icon(Icons.circle, size: 5),
-        ), // Bullet point icon
+          padding: EdgeInsets.only(top: 8.0),
+          child: Icon(Icons.insert_comment),
+        ),
+        // const Padding(
+        //   padding: EdgeInsets.only(top: 6.0),
+        //   child: Icon(Icons.circle, size: 5),
+        // ), // Bullet point icon
         const SizedBox(width: 8), // Space between bullet and text
         Expanded(
           child: Text(

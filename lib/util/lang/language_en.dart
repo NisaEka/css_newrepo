@@ -571,7 +571,22 @@ class LanguageEN {
       "Data dropshipper berhasil di simpan":
           "Dropshipper data successfully saved",
       "Pilih minimal satu hak akses": "Select at least one authority",
-      "Saya telah membaca & memahami": "I have read & understood"
+      "Saya telah membaca & memahami": "I have read & understood",
+      "TIPS AMAN MENGGUNAKAN CSS": "SAFETY TIPS CSS",
+      "Pastikan Anda hanya mengakses tautan CSS: http://css.jne.co.id.":
+          "Please ensure that you access only the CSS link: http://css.jne.co.id.",
+      "Menjaga kerahasiaan informasi data Log In AD Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.":
+          "Please ensure the confidentiality of your Company ID, User ID, Password, Email Password, and other credential data.",
+      "Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal":
+          "Avoid engaging with suspicious links from unfamiliar websites or WhatsApp messages received from unknown numbers.",
+      "Tidak menyimpan data kata sandi saat Log In dan pastikan melakukan Log Out setelah selesai menggunakan CSS.":
+          "Do not retain password data during the login process and ensure that you log out after use.",
+      "Amankan Komputer dan Jaringan yang digunakan dengan mengaktifkan Spam Blocker, menggunakan Antivirus, dan Konfigurasi Firewall.":
+          "Ensure the security of your computer and network by activating the Spam Blocker and configuring Antivirus and Firewall settings.",
+      "Waspada terhadap email phishing, website phishing dan pastikan teliti serta validasi kembali transaksi anda.":
+          "Exercise caution regarding phishing emails and websites. Ensure that you carefully re-validate your transactions.",
+      "Jangan pernah memberikan PIN/OTP/PASSWORD/PIN CSS/Kode OTP kepada siapapun. Pihak JNE tidak pernah meminta PIN/OTP/PASSWORD/PIN CSS/Kode OTP dari Customer.":
+          "Please do not share your PIN, OTP, Password, or any other sensitive information with anyone. JNE will never request your PIN, OTP, Password, or any other secure codes from customers."
     };
   }
 }
