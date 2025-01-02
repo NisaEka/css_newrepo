@@ -17,8 +17,8 @@ class BaseResponse<T> {
 
   BaseResponse.fromJson(dynamic json, T Function(Object? json) fromJsonT) {
     _message = json['message'] ?? json['messages'];
-    _error = json['error'] ?? json['errors']?.join(', ');
-    _code = json['statusCode'];
+    _error = json['error'] ?? json['errors'];
+    _code = json['statusCode'] ?? json['status'];
     _data = _nullableGenericFromJson(json['data'], fromJsonT);
     _meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
@@ -52,19 +52,30 @@ class BaseResponse<T> {
       );
 
   dynamic get message => _message;
+
   dynamic get error => _error;
+
   num? get code => _code;
+
   T? get data => _data;
+
   Meta? get meta => _meta;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['message'] = _message;
-    map['messages'] = _message;
-    map['error'] = _error;
-    map['errors'] = _error;
+    if (_message != null) {
+      map['message'] = _message;
+      map['messages'] = _message;
+    }
+    if (_error != null) {
+      map['error'] = _error;
+      map['errors'] = _error;
+    }
     map['statusCode'] = _code;
-    map['data'] = _data;
+    map['status'] = _code;
+    if (_data != null) {
+      map['data'] = _data;
+    }
     if (_meta != null) {
       map['meta'] = _meta?.toJson();
     }

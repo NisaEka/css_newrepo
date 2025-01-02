@@ -3,13 +3,11 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
-import 'package:css_mobile/screen/auth/login/login_screen.dart';
-import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_card_screen.dart';
 import 'package:css_mobile/screen/profile/profile_screen.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/bottom_menu_item2.dart';
 import 'package:css_mobile/widgets/items/menu_icon.dart';
 import 'package:flutter/material.dart';
@@ -94,18 +92,8 @@ class BottomBar5 extends StatelessWidget {
                                     arguments: {})
                                 : showDialog(
                                     context: context,
-                                    builder: (context) => DefaultAlertDialog(
-                                      title: 'Akses Terbatas'.tr,
-                                      subtitle: 'access_denied'.tr,
-                                      confirmButtonTitle: 'Masuk'.tr,
-                                      backButtonTitle: 'Daftar'.tr,
-                                      onConfirm: () {
-                                        Get.off(() => const LoginScreen());
-                                      },
-                                      onBack: () {
-                                        Get.off(() => const SignUpScreen());
-                                      },
-                                    ),
+                                    builder: (context) =>
+                                        const LoginAlertDialog(),
                                   ),
                           )
                         : const SizedBox(),
@@ -131,18 +119,7 @@ class BottomBar5 extends StatelessWidget {
                               transition: Transition.rightToLeft)
                           : showDialog(
                               context: context,
-                              builder: (context) => DefaultAlertDialog(
-                                title: 'Akses Terbatas'.tr,
-                                subtitle: 'access_denied'.tr,
-                                confirmButtonTitle: 'Masuk'.tr,
-                                backButtonTitle: 'Daftar'.tr,
-                                onConfirm: () {
-                                  Get.off(() => const LoginScreen());
-                                },
-                                onBack: () {
-                                  Get.off(() => const SignUpScreen());
-                                },
-                              ),
+                              builder: (context) => const LoginAlertDialog(),
                             ),
                     ),
                   ],

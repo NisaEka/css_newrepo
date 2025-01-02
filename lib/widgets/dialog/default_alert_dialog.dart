@@ -79,10 +79,11 @@ class DefaultAlertDialog extends StatelessWidget {
                   )
                 : const SizedBox(),
             CustomFilledButton(
-                radius: 50,
-                color: primaryColor(context),
-                title: confirmButtonTitle ?? '',
-                onPressed: onConfirm),
+              radius: 50,
+              color: primaryColor(context),
+              title: confirmButtonTitle ?? '',
+              onPressed: onConfirm,
+            ),
           ],
         ),
         // TextButton(

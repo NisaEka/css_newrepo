@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardState {
+  bool? isFromLogin = Get.arguments?['isFirstLogin'];
   final selectedIndex = 0.obs;
   final nomorResi = TextEditingController();
   DateTime? currentBackPressTime;
@@ -22,7 +23,8 @@ class DashboardState {
   bool isLoading = false;
   bool isOnline = false;
   bool isCcrf = true;
-  bool isFirst = false;
+  bool isFirstInstall = false;
+  bool isFirstLogin = false;
 
   CcrfProfileModel? ccrf;
 

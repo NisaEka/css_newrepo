@@ -4,11 +4,9 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:css_mobile/screen/auth/login/login_screen.dart';
-import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -357,18 +355,7 @@ class OtherMenuCotroller extends BaseController {
     (menuItem.isAuth == true && !isLogin)
         ? showDialog(
             context: context,
-            builder: (context) => DefaultAlertDialog(
-              title: 'Akses Terbatas'.tr,
-              subtitle: 'access_denied'.tr,
-              confirmButtonTitle: 'Masuk'.tr,
-              backButtonTitle: 'Daftar'.tr,
-              onConfirm: () {
-                Get.off(() => const LoginScreen());
-              },
-              onBack: () {
-                Get.off(() => const SignUpScreen());
-              },
-            ),
+            builder: (context) => const LoginAlertDialog(),
           )
         : Get.toNamed(menuItem.route.toString(), arguments: {});
   }

@@ -23,6 +23,8 @@ class CustomDropDownFormField<T> extends StatelessWidget {
     this.suffixIcon,
     this.prefixIcon,
     this.searchHintText,
+    this.onClear,
+    this.showClearButton = false,
   }) {
     if (isRequired) {
       // validator ??= ValidationBuilder().required().build() as FormFieldValidator<T>?;
@@ -43,6 +45,8 @@ class CustomDropDownFormField<T> extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final String? searchHintText;
+  final VoidCallback? onClear;
+  final bool showClearButton;
 
   _getDropDown(BuildContext context) {
     if (items == null) {
@@ -59,6 +63,11 @@ class CustomDropDownFormField<T> extends StatelessWidget {
         }
         return null;
       },
+      clearButtonProps: ClearButtonProps(
+        icon: const Icon(Icons.close),
+        isVisible: showClearButton,
+        onPressed: onClear,
+      ),
       popupProps: PopupProps.menu(
         constraints: const BoxConstraints(maxHeight: 200),
         fit: FlexFit.loose,

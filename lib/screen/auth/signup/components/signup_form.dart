@@ -31,6 +31,7 @@ class SignupForm extends StatelessWidget {
                   key: c.state.formKey,
                   onChanged: () async {
                     c.initData();
+                    c.isValidate();
                     c.update();
                   },
                   child: Padding(
@@ -95,6 +96,11 @@ class SignupForm extends StatelessWidget {
                                             : Colors.lightBlueAccent,
                                     onChanged: (value) {
                                       c.state.useJNE = value;
+                                      c.state.selectedAgent = null;
+                                      c.isValidate();
+                                      if (value == false) {
+                                        c.state.isValidate = true;
+                                      }
                                       c.update();
                                     },
                                   )
@@ -119,24 +125,25 @@ class SignupForm extends StatelessWidget {
                                   c.state.selectedAgent = value;
                                   c.update();
                                 },
+                                showClearButton: c.state.selectedAgent != null,
+                                onClear: () {
+                                  c.state.selectedAgent = null;
+                                  c.update();
+                                },
                                 value: c.state.selectedAgent,
                                 selectedItem:
                                     c.state.selectedAgent?.custName ?? '',
                               )
                             : const SizedBox(),
                         CustomFilledButton(
-                          color: c.state.formKey.currentState?.validate() ==
-                                      true &&
-                                  c.state.selectedOrigin != null
+                          color: c.isValidate()
                               ? primaryColor(context)
                               : greyColor,
                           title: 'Daftar'.tr,
                           suffixIcon: Icons.app_registration_rounded,
                           radius: 10,
                           onPressed: () {
-                            if (c.state.formKey.currentState?.validate() ==
-                                    true &&
-                                c.state.selectedOrigin != null) {
+                            if (c.isValidate()) {
                               c.saveRegistration();
                             }
                           },

@@ -22,7 +22,7 @@ class DashboardBody extends StatelessWidget {
             onRefresh: () => c
                 .initData()
                 .then(
-                  (_) => c.loadBanner(),
+                  (_) => c.loadPromo(),
                 )
                 .then((_) => c.loadNews())
                 .then((_) {

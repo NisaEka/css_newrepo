@@ -32,8 +32,9 @@ class _VersionAppState extends State<VersionApp> {
   Widget build(BuildContext context) {
     return Container(
       // width: Get.width / 2,
-      // padding: const EdgeInsets.all(10),
+      // padding: const EdgeInsets.all(15),
       // // color: Colors.green,
+      // height: 60,
       // child: Stack(
       //   fit: StackFit.passthrough,
       width: Get.width,
@@ -42,6 +43,7 @@ class _VersionAppState extends State<VersionApp> {
       height: 50,
       color: Colors.transparent,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
             ImageConstant.logoJNE,
@@ -49,10 +51,11 @@ class _VersionAppState extends State<VersionApp> {
             color: CustomTheme().logoColor(context),
           ),
           // SizedBox(width: 10),
-          Positioned(
-            left: Get.width / 5,
-            bottom: 0,
-            top: 0,
+          // Positioned(
+          SizedBox(
+            // left: Get.width / 5,
+            // bottom: 0,
+            // top: 0,
             child: Text('v $version'),
           )
         ],

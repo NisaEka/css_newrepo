@@ -41,11 +41,13 @@ class DashboardNews extends StatelessWidget {
                                 const NewsItem(isLoading: true, lang: ''))
                         : c.state.newsList
                             .map(
-                              (e) => NewsItem(
-                                news: e,
-                                lang: c.state.local,
-                                isLoading: c.state.isLoading,
-                              ),
+                              (e) => e.thumbnail != null
+                                  ? NewsItem(
+                                      news: e,
+                                      lang: c.state.local,
+                                      isLoading: c.state.isLoading,
+                                    )
+                                  : const SizedBox(),
                             )
                             .toList(),
                   ),

@@ -14,8 +14,11 @@ import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_state.dart';
+import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -36,7 +39,6 @@ class ShipperController extends BaseController {
         if (state.isOnline) {
           // AppSnackBar.success('Online Mode'.tr);
         }
-
         update();
       });
       update();
@@ -96,8 +98,7 @@ class ShipperController extends BaseController {
         ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
     state.userBasic =
         UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
-    state.userCcrf = CcrfProfileModel.fromJson(
-        await storage.readData(StorageCore.ccrfProfile));
+    // state.userCcrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
     state.tempData = DataTransactionModel.fromJson(
         await storage.readData(StorageCore.transactionTemp));
     try {
@@ -489,5 +490,30 @@ class ShipperController extends BaseController {
       state.isValidate = state.selectedAccount != null;
     }
     update();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      AppLogger.i('shipper info : ${state.shipper?.zipCode?.isEmpty}');
+      if ((state.shipper?.zipCode == null) ||
+          (state.shipper?.address == null)) {
+        // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
+        await Get.dialog(
+          DefaultAlertDialog(
+            // title: 'Informasi'.tr,
+            subtitle:
+                'Profile belum lengkap, silahkan lengkapi profil anda terlebih dahulu'
+                    .tr,
+            confirmButtonTitle: 'Lengkapi profil'.tr,
+            onConfirm: () {
+              Get.close(2);
+              Get.off(const EditProfilScreen());
+            },
+          ),
+        );
+      }
+    });
   }
 }

@@ -8,7 +8,7 @@ import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/contact_radio_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -104,11 +104,7 @@ class ListDropshipperController extends BaseController {
       },
       onDelete: (value) => showDialog(
         context: context,
-        builder: (context) => DefaultAlertDialog(
-          title: 'Data akan dihapus'.tr,
-          subtitle: 'Anda yakin menghapus data ini ?'.tr,
-          confirmButtonTitle: 'Hapus'.tr,
-          backButtonTitle: 'Tidak'.tr,
+        builder: (context) => DeleteAlertDialog(
           onConfirm: () {
             delete(e);
             Get.back();
@@ -118,16 +114,6 @@ class ListDropshipperController extends BaseController {
             initData();
           },
         ),
-        //     DeleteAlertDialog(
-        //   onDelete: () {
-        //     delete(e);
-        //     Get.back();
-        //   },
-        //   onBack: () {
-        //     Get.back();
-        //     initData();
-        //   },
-        // ),
       ),
     );
   }

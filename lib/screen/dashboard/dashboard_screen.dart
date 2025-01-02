@@ -36,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return GetBuilder<DashboardController>(
       init: DashboardController(),
       builder: (controller) {
-        if (controller.state.isFirst) {
+        if (controller.state.isFirstInstall) {
           return const SplashScreen();
         } else {
           // WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -71,7 +71,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       margin:
                           EdgeInsets.only(left: Get.width * 0.09, bottom: 29),
                       radius: 100,
-                      height: 65, width: 65,
+                      height: 65,
+                      width: 65,
                       background: (AppConst.isLightTheme(context)
                           ? (controller.state.isLogin
                               ? redJNE
