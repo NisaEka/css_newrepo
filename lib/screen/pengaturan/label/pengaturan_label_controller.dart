@@ -9,10 +9,10 @@ class PengaturanLabelController extends BaseController {
   bool copyLabel = false;
   bool isLoading = false;
 
-  StickerLabelModel? selectedSticker;
+  SettingLabelsModel? selectedSticker;
   String shipcost = "";
 
-  List<StickerLabelModel> labelList = [];
+  List<SettingLabelsModel> labelList = [];
 
   @override
   void onInit() {
@@ -23,13 +23,13 @@ class PengaturanLabelController extends BaseController {
   Future<void> initData() async {
     try {
       await setting.getSettingLabel().then((value) {
-        labelList.addAll(value.data ?? []);
-        selectedSticker = labelList.where((e) => e.enable == true).first;
-        shipcost = (selectedSticker?.showPrice ?? false) ? "HIDE" : "PUBLISH";
+        labelList.addAll(value.data?.labels ?? []);
+        selectedSticker = labelList.where((e) => e.enabled == true).first;
+        shipcost = (value.data?.priceLabel != '0') ? "PUBLISH" : "HIDE";
       });
     } catch (e) {
       AppLogger.e('error initData pengaturan label', e);
-      selectedSticker = StickerLabelModel.fromJson(
+      selectedSticker = SettingLabelsModel.fromJson(
           await storage.readData(StorageCore.transactionLabel));
       shipcost = await storage.readString(StorageCore.shippingCost);
     }
@@ -43,7 +43,7 @@ class PengaturanLabelController extends BaseController {
     try {
       setting
           .updateSettingLabel(
-        selectedSticker?.index?.toString() ?? '',
+        selectedSticker?.id?.toString() ?? '',
         shipcost == "HIDE" ? 0 : 1,
       )
           .then((value) async {

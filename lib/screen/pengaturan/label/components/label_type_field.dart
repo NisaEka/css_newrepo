@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
 class LabelTypeField extends HookWidget {
-  final StickerLabelModel? selectedSticker;
+  final SettingLabelsModel? selectedSticker;
 
   const LabelTypeField(this.selectedSticker, {super.key});
 

@@ -1,65 +1,118 @@
 class StickerLabelModel {
   StickerLabelModel({
-    num? index,
-    String? name,
-    String? image,
-    bool? enable,
-    bool? showPrice,
+    int? copyLabel,
+    String? priceLabel,
+    String? hideShipperphoneLabel,
+    List<SettingLabelsModel>? labels,
   }) {
-    _index = index;
-    _name = name;
-    _image = image;
-    _enable = enable;
-    _showPrice = showPrice;
+    _copyLabel = copyLabel;
+    _priceLabel = priceLabel;
+    _hideShipperphoneLabel = hideShipperphoneLabel;
+    _labels = labels;
   }
 
   StickerLabelModel.fromJson(dynamic json) {
-    _index = json['index'] ?? json['id'];
-    _name = json['name'];
-    _image = json['image'];
-    _enable = json['enabled'];
-    _showPrice = json['showPrice'];
+    _copyLabel = json['copyLabel'];
+    _priceLabel = json['priceLabel'];
+    _hideShipperphoneLabel = json['hideShipperphoneLabel'];
+    if (json['labels'] != null) {
+      _labels = <SettingLabelsModel>[];
+      json['labels'].forEach((v) {
+        _labels!.add(SettingLabelsModel.fromJson(v));
+      });
+    }
   }
 
-  num? _index;
-  String? _name;
-  String? _image;
-  bool? _enable;
-  bool? _showPrice;
+  int? _copyLabel;
+  String? _priceLabel;
+  String? _hideShipperphoneLabel;
+  List<SettingLabelsModel>? _labels;
 
   StickerLabelModel copyWith({
-    num? index,
-    String? name,
-    String? image,
-    bool? enable,
-    bool? showPrice,
+    int? copyLabel,
+    String? priceLabel,
+    String? hideShipperphoneLabel,
+    List<SettingLabelsModel>? labels,
   }) =>
       StickerLabelModel(
-        index: index ?? _index,
-        name: name ?? _name,
-        image: image ?? _image,
-        enable: enable ?? _enable,
-        showPrice: showPrice ?? _showPrice,
+        copyLabel: copyLabel ?? _copyLabel,
+        priceLabel: priceLabel ?? _priceLabel,
+        hideShipperphoneLabel: hideShipperphoneLabel ?? _hideShipperphoneLabel,
+        labels: labels ?? _labels,
       );
 
-  num? get index => _index;
+  int? get copyLabel => _copyLabel;
 
-  String? get name => _name;
+  String? get priceLabel => _priceLabel;
 
-  String? get image => _image;
+  String? get hideShipperphoneLabel => _hideShipperphoneLabel;
 
-  bool? get enable => _enable;
-
-  bool? get showPrice => _showPrice;
+  List<SettingLabelsModel>? get labels => _labels;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['index'] = _index;
-    map['id'] = _index;
+    map['copyLabel'] = _copyLabel;
+    map['priceLabel'] = _priceLabel;
+    map['hideShipperphoneLabel'] = _hideShipperphoneLabel;
+    if (_labels != null) {
+      map['labels'] = _labels!.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
+}
+
+class SettingLabelsModel {
+  SettingLabelsModel({
+    int? id,
+    String? name,
+    bool? enabled,
+    String? image,
+  }) {
+    _id = id;
+    _name = name;
+    _enabled = enabled;
+    _image = image;
+  }
+
+  SettingLabelsModel.fromJson(dynamic json) {
+    _id = json['id'];
+    _name = json['name'];
+    _enabled = json['enabled'];
+    _image = json['image'];
+  }
+
+  int? _id;
+  String? _name;
+  bool? _enabled;
+  String? _image;
+
+  SettingLabelsModel copyWith({
+    int? id,
+    String? name,
+    bool? enabled,
+    String? image,
+  }) =>
+      SettingLabelsModel(
+        id: id ?? _id,
+        name: name ?? _name,
+        enabled: enabled ?? _enabled,
+        image: image ?? _image,
+      );
+
+  int? get id => _id;
+
+  String? get name => _name;
+
+  bool? get enabled => _enabled;
+
+  String? get image => _image;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = _id;
     map['name'] = _name;
+    map['enabled'] = _enabled;
     map['image'] = _image;
-    map['enabled'] = _enable;
-    map['showPrice'] = _showPrice;
     return map;
   }
 }
