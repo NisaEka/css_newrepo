@@ -574,7 +574,8 @@ class LanguageEN {
       "Data dropshipper berhasil di simpan":
           "Dropshipper data successfully saved",
       "Pilih minimal satu hak akses": "Select at least one authority",
-      "Saya telah membaca & memahami": "I have read & understood"
+      "Saya telah membaca & memahami": "I have read & understood",
+      "Alamat email sudah digunakan": "Email address is already in use",
     };
   }
 }
