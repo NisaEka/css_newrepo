@@ -42,12 +42,12 @@ class SafetyTipsDialog extends StatelessWidget {
                 context,
                 Icons.link),
             _buildBulletPoint(
-                'Menjaga kerahasiaan informasi data Log In AD Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.'
+                'Menjaga kerahasiaan informasi data Log In ID Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.'
                     .tr,
                 context,
                 Icons.lock),
             _buildBulletPoint(
-                'Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal'
+                'Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal.'
                     .tr,
                 context,
                 Icons.warning),
@@ -94,7 +94,7 @@ class SafetyTipsDialog extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 3.0),
           child: Icon(icon, size: 16, color: Theme.of(context).iconTheme.color),
-        ), // Bullet point icon with dynamic icon
+        ),
         const SizedBox(width: 8), // Space between bullet and text
         Expanded(
           child: Text(

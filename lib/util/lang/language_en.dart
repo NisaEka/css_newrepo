@@ -578,9 +578,9 @@ class LanguageEN {
       "TIPS AMAN MENGGUNAKAN CSS": "SAFETY TIPS CSS",
       "Pastikan Anda hanya mengakses tautan CSS: http://css.jne.co.id.":
           "Please ensure that you access only the CSS link: http://css.jne.co.id.",
-      "Menjaga kerahasiaan informasi data Log In AD Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.":
+      "Menjaga kerahasiaan informasi data Log In ID Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.":
           "Please ensure the confidentiality of your Company ID, User ID, Password, Email Password, and other credential data.",
-      "Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal":
+      "Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal.":
           "Avoid engaging with suspicious links from unfamiliar websites or WhatsApp messages received from unknown numbers.",
       "Tidak menyimpan data kata sandi saat Log In dan pastikan melakukan Log Out setelah selesai menggunakan CSS.":
           "Do not retain password data during the login process and ensure that you log out after use.",
