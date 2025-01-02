@@ -64,6 +64,7 @@ dependencies:
   photo_view: ^0.14.0
   firebase_core: ^3.8.1
   dotted_line: ^3.2.3
+  flutter_markdown: ^0.6.10
 
 dependency_overrides:
   fading_edge_scrollview: ^4.1.1

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
@@ -54,9 +54,111 @@ class LoginController extends BaseController {
           backgroundColor: Theme.of(context).brightness == Brightness.light
               ? whiteColor
               : bgDarkColor,
-          content: state.lang == "id"
-              ? Image.asset(ImageConstant.tipsKeamanan)
-              : Image.asset(ImageConstant.safetyTips),
+          // content: state.lang == "id"
+          //     ? Image.asset(ImageConstant.tipsKeamanan)
+          //     : Image.asset(ImageConstant.safetyTips),
+          title: state.lang == "id"
+              ? Text(
+                  'TIPS AMAN MENGGUNAKAN CSS',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: regular, fontSize: 16),
+                )
+              : Text(
+                  'SAFETY TIPS CSS',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: regular, fontSize: 16),
+                ),
+          content: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: state.lang == "id"
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildBulletPoint(
+                          'Pastikan Anda hanya mengakses tautan CSS: http://css.jne.co.id.',
+                          context),
+                      _buildBulletPoint(
+                          'Menjaga kerahasiaan informasi data Log In AD Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.',
+                          context),
+                      _buildBulletPoint(
+                          'Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal',
+                          context),
+                      _buildBulletPoint(
+                          'Tidak menyimpan data kata sandi saat Log In dan pastikan melakukan Log Out setelah selesai menggunakan CSS.',
+                          context),
+                      _buildBulletPoint(
+                          'Amankan Komputer dan Jaringan yang digunakan dengan mengaktifkan Spam Blocker, menggunakan Antivirus, dan Konfigurasi Firewall.',
+                          context),
+                      _buildBulletPoint(
+                          'Waspada terhadap email phishing, website phishing dan pastikan teliti serta validasi kembali transaksi anda.',
+                          context),
+                      _buildBulletPoint(
+                          'Jangan pernah memberikan PIN/OTP/PASSWORD/PIN CSS/Kode OTP kepada siapapun. Pihak JNE tidak pernah meminta PIN/OTP/PASSWORD/PIN CSS/Kode OTP dari Customer.',
+                          context),
+                    ],
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildBulletPoint(
+                          'Please ensure that you access only the CSS link: http://css.jne.co.id.',
+                          context),
+                      _buildBulletPoint(
+                          'Please ensure the confidentiality of your Company ID, User ID, Password, Email Password, and other credential data.',
+                          context),
+                      _buildBulletPoint(
+                          'Avoid engaging with suspicious links from unfamiliar websites or WhatsApp messages received from unknown numbers.',
+                          context),
+                      _buildBulletPoint(
+                          'Do not retain password data during the login process and ensure that you log out after use.',
+                          context),
+                      _buildBulletPoint(
+                          'Ensure the security of your computer and network by activating the Spam Blocker and configuring Antivirus and Firewall settings.',
+                          context),
+                      _buildBulletPoint(
+                          'Exercise caution regarding phishing emails and websites. Ensure that you carefully re-validate your transactions.',
+                          context),
+                      _buildBulletPoint(
+                          'Please do not share your PIN, OTP, Password, or any other sensitive information with anyone. JNE will never request your PIN, OTP, Password, or any other secure codes from customers.',
+                          context),
+                    ],
+                  ),
+          ),
+//           content: state.lang == "id"
+//               ? Text('''
+// - Pastikan Anda hanya mengakses tautan CSS: http://css.jne.co.id.
+// - Menjaga kerahasiaan informasi data Log In AD Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.
+// - Hindari klik tautan mencurigakan ari Website, WhatsApp dengan alamat nomor yang tidak dikenal
+// - Tidak menyimpan data kata sandi dsaat Log In dan dipastikan melakukan Log Out setelah selesai menggunakan CSS.
+// - Amankan Komputer dan Jaringan yang digunakan dengan mengaktifkan Spam Blocker, menggunakan Antivirus, dan Konfigurasi Firewall.
+// - Waspada terhadap email phising, website phising dan pastikan teliti serta validasi kembali transaksi anda.
+// - Jangan pernah memberikan PIN/OTP/PASSWORD/PIN CSS/Kode OTP kepada siapapun. Pihak JNE tidak pernah meminta PIN/OTP/PASSWORD/PIN CSS/Kode OTP dari Customer.''',
+//                   style: Theme.of(context)
+//                   .textTheme
+//                   .titleLarge
+//                   ?.copyWith(fontWeight: regular, fontSize: 12),
+//                 )
+//               : Text('''
+// - Please ensure that you access only the CSS link: http://css.jne.co.id.
+// - Please ensure the confidentiality of your Company ID, User ID, Password, Email Password, and other credential data.
+// - Avoid engaging with suspicious links from unfamiliar websites or WhatsApp messages received from unknown numbers.
+// - Do not retain password data during the login process and ensure that you log out after use.
+// - Ensure the security of your computer and network by activating the Spam Blocker and configuring Antivirus and Firewall settings.
+// - Exercise caution regarding phishing emails and websites. Ensure that you carefully re-validate your transactions.
+// - Please do not share you PIN,OTP, Password, or any other sensitive information with anyone. JNE will never request your PIN, OTP, Password, or any other secure codes from customers.''',
+//                   style: Theme.of(context)
+//                       .textTheme
+//                       .titleLarge
+//                       ?.copyWith(fontWeight: regular, fontSize: 12),
+//                 ),
           actions: [
             CustomFilledButton(
               radius: 50,
@@ -71,6 +173,28 @@ class LoginController extends BaseController {
         ),
       );
     }
+  }
+
+  Widget _buildBulletPoint(String text, BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(top: 6.0),
+          child: Icon(Icons.circle, size: 5),
+        ), // Bullet point icon
+        const SizedBox(width: 8), // Space between bullet and text
+        Expanded(
+          child: Text(
+            text,
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontWeight: regular, fontSize: 12),
+          ),
+        ),
+      ],
+    );
   }
 
   bool onPop() {
