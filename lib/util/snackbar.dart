@@ -3,32 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppSnackBar {
-  static void success(String message) {
+  static void success(String message, {int? duration}) {
     custom(
+      durationInSeconds: duration,
       message: message,
       backgroundColor: successColor,
       icon: const Icon(Icons.info, color: Colors.white),
     );
   }
 
-  static void error(String message) {
+  static void error(String message, {int? duration}) {
     custom(
+      durationInSeconds: duration,
       message: message,
       backgroundColor: errorColor,
       icon: const Icon(Icons.error, color: Colors.white),
     );
   }
 
-  static void info(String message) {
+  static void info(String message, {int? duration}) {
     custom(
+      durationInSeconds: duration,
       message: message,
       backgroundColor: greyColor.withOpacity(0.8),
       icon: const Icon(Icons.info, color: Colors.white),
     );
   }
 
-  static void warning(String message) {
+  static void warning(String message, {int? duration}) {
     custom(
+      durationInSeconds: duration,
       message: message,
       backgroundColor: warningColor,
       icon: const Icon(Icons.warning, color: Colors.white),
@@ -39,7 +43,7 @@ class AppSnackBar {
     required String message,
     Color backgroundColor = Colors.transparent,
     Icon? icon,
-    int durationInSeconds = 10,
+    int? durationInSeconds = 10,
     SnackPosition snackPosition = SnackPosition.BOTTOM,
     SnackStyle snackStyle = SnackStyle.GROUNDED,
     EdgeInsets? margin,
@@ -52,7 +56,7 @@ class AppSnackBar {
         message: messageText == null ? message.tr : null,
         messageText: messageText,
         isDismissible: true,
-        duration: Duration(seconds: durationInSeconds),
+        duration: Duration(seconds: durationInSeconds ?? 10),
         backgroundColor: backgroundColor,
         snackPosition: snackPosition,
         snackStyle: snackStyle,

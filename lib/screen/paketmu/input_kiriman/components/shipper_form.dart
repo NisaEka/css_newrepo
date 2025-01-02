@@ -1,9 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/list_dropshipper_button.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_controller.dart';
-import 'package:css_mobile/screen/pengaturan/edit_profil/edit_profil_screen.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customswitch.dart';
@@ -40,23 +38,23 @@ class ShipperForm extends StatelessWidget {
                           c.connection
                               .isOnline()
                               .then((value) => c.state.isOnline = value);
-                          if (c.state.shipperZipCode.text.isEmpty ||
-                              c.state.shipperAddress.text.isEmpty) {
-                            showDialog(
-                              context: context,
-                              builder: (context) => DefaultAlertDialog(
-                                title: 'Informasi'.tr,
-                                subtitle:
-                                    'Profile belum lengkap, silahkan lengkapi profil anda terlebih dahulu'
-                                        .tr,
-                                confirmButtonTitle: 'Lengkapi profil'.tr,
-                                onConfirm: () {
-                                  Get.close(2);
-                                  Get.off(const EditProfilScreen());
-                                },
-                              ),
-                            );
-                          }
+                          // if (c.state.shipperZipCode.text.isEmpty ||
+                          //     c.state.shipperAddress.text.isEmpty) {
+                          //   showDialog(
+                          //     context: context,
+                          //     builder: (context) => DefaultAlertDialog(
+                          //       title: 'Informasi'.tr,
+                          //       subtitle:
+                          //           'Profile belum lengkap, silahkan lengkapi profil anda terlebih dahulu'
+                          //               .tr,
+                          //       confirmButtonTitle: 'Lengkapi profil'.tr,
+                          //       onConfirm: () {
+                          //         Get.close(2);
+                          //         Get.off(const EditProfilScreen());
+                          //       },
+                          //     ),
+                          //   );
+                          // }
                           c.update();
                         },
                         child: Column(

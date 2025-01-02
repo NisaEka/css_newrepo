@@ -503,12 +503,13 @@ class DashboardController extends BaseController {
   }
 
   Future<void> isFirst() async {
-    state.isFirst = (await storage.readString(StorageCore.isFirst)).isEmpty ||
-        (await storage.readString(StorageCore.isFirst)) == 'null' ||
-        (await storage.readString(StorageCore.isFirst)) == 'false';
+    state.isFirstInstall =
+        (await storage.readString(StorageCore.isFirstInstall)).isEmpty ||
+            (await storage.readString(StorageCore.isFirstInstall)) == 'null' ||
+            (await storage.readString(StorageCore.isFirstInstall)) == 'false';
 
-    if (state.isFirst) {
-      StorageCore().writeString(StorageCore.isFirst, "true");
+    if (state.isFirstInstall) {
+      StorageCore().writeString(StorageCore.isFirstInstall, "true");
     }
   }
 

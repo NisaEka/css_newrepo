@@ -153,7 +153,7 @@ class LoginController extends BaseController {
             ),
           );
         } else if (value.code == 401) {
-          AppSnackBar.error("login_failed".tr);
+          AppSnackBar.error("login_failed".tr, duration: 5);
         } else if (value.message == "Email not verified") {
           try {
             await auth

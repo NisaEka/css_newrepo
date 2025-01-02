@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_body.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/onboarding/splash_screen.dart';
@@ -18,24 +19,24 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     _checkFirstLogin();
-  //   });
-  // }
-  //
-  // void _checkFirstLogin() {
-  //   final loginController = Get.find<LoginController>();
-  //   loginController.showFirstLoginDialog(context);
-  // }
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkFirstLogin();
+    });
+  }
+
+  void _checkFirstLogin() {
+    final loginController = Get.find<LoginController>();
+    loginController.showFirstLoginDialog(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
       init: DashboardController(),
       builder: (controller) {
-        if (controller.state.isFirst) {
+        if (controller.state.isFirstInstall) {
           return const SplashScreen();
         } else {
           return PopScope(
