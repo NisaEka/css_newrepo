@@ -119,9 +119,6 @@ class NotificationController extends BaseController {
           )),
     ];
 
-    notificationList
-        .sort((a, b) => b.data.createDate!.compareTo(a.data.createDate!));
-
-    update();
+    readNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
   }
 }

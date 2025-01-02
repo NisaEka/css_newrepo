@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/screen/notification/notification_screen.dart';
@@ -7,8 +9,13 @@ import 'package:get/get.dart';
 
 class DashboardAppbar extends StatelessWidget {
   final int notifCount;
+  final Future<dynamic> Function(dynamic) onRefresh;
 
-  const DashboardAppbar({super.key, required this.notifCount});
+  const DashboardAppbar({
+    super.key,
+    required this.notifCount,
+    required this.onRefresh,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +29,9 @@ class DashboardAppbar extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () => Get.to(() => const NotificationScreen()),
+          onPressed: () => Get.to(() => const NotificationScreen())?.then(
+            onRefresh,
+          ),
           icon: Badge(
             isLabelVisible: notifCount != 0,
             label: Text(notifCount.toString()),

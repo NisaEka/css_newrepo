@@ -35,30 +35,33 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
   }
   listUnreadMessage.add(
     NotificationModel(
-        id: data.messageId,
-        category: data.notification?.title,
-        text: data.notification?.body,
-        createDate: data.sentTime.toString(),
-        isRead: true,
-        title: data.notification?.title,
-        img: data.notification?.android?.imageUrl),
+      id: data.messageId,
+      category: data.notification?.title,
+      text: data.notification?.body,
+      createDate: data.sentTime.toString(),
+      isRead: true,
+      title: data.notification?.title,
+      img: data.notification?.android?.imageUrl,
+    ),
   );
-  listUnread.add(Messages(
-    senderId: data.senderId,
-    category: data.category,
-    collapseKey: data.collapseKey,
-    contentAvailable: data.contentAvailable,
-    data: data.data,
-    from: data.from,
-    messageId: data.messageId,
-    messageType: data.messageType,
-    mutableContent: data.mutableContent,
-    notification: data.notification,
-    sentTime: data.sentTime,
-    threadId: data.threadId,
-    ttl: data.ttl,
-    isRead: false,
-  ));
+  listUnread.add(
+    Messages(
+      senderId: data.senderId,
+      category: data.category,
+      collapseKey: data.collapseKey,
+      contentAvailable: data.contentAvailable,
+      data: data.data,
+      from: data.from,
+      messageId: data.messageId,
+      messageType: data.messageType,
+      mutableContent: data.mutableContent,
+      notification: data.notification,
+      sentTime: data.sentTime,
+      threadId: data.threadId,
+      ttl: data.ttl,
+      isRead: false,
+    ),
+  );
 
   try {
     await StorageCore().saveData(
