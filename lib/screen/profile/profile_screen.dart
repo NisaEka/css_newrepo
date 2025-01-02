@@ -1,8 +1,6 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/screen/auth/login/login_screen.dart';
-import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
@@ -21,7 +19,7 @@ import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/custombottombar5.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/logout_button.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/menu_icon.dart';
 import 'package:css_mobile/widgets/items/setting_list_item.dart';
 import 'package:flutter/material.dart';
@@ -52,41 +50,30 @@ class ProfileScreen extends StatelessWidget {
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.miniStartDocked,
-              floatingActionButton:
-                  controller.state.menuModel.paketmuInput == "Y"
-                      ? MenuIcon(
-                          // icon: IconsConstant.add,
-                          icon: ImageConstant.paketmuIcon,
-                          margin: const EdgeInsets.only(left: 38, bottom: 29),
-                          radius: 100,
-                          background: (AppConst.isLightTheme(context)
-                              ? (controller.state.isLogin
-                                  ? redJNE
-                                  : errorLightColor2)
-                              : (controller.state.isLogin
-                                  ? warningColor
-                                  : warningLightColor2)),
-                          showContainer: false,
-                          onTap: () => controller.state.isLogin
-                              ? Get.to(() => const InformasiPengirimScreen(),
-                                  arguments: {})
-                              : showDialog(
-                                  context: context,
-                                  builder: (context) => DefaultAlertDialog(
-                                    title: 'Akses Terbatas'.tr,
-                                    subtitle: 'access_denied'.tr,
-                                    confirmButtonTitle: 'Masuk'.tr,
-                                    backButtonTitle: 'Daftar'.tr,
-                                    onConfirm: () {
-                                      Get.off(() => const LoginScreen());
-                                    },
-                                    onBack: () {
-                                      Get.off(() => const SignUpScreen());
-                                    },
-                                  ),
-                                ),
-                        )
-                      : const SizedBox(),
+              floatingActionButton: controller.state.menuModel.paketmuInput ==
+                      "Y"
+                  ? MenuIcon(
+                      // icon: IconsConstant.add,
+                      icon: ImageConstant.paketmuIcon,
+                      margin: const EdgeInsets.only(left: 38, bottom: 29),
+                      radius: 100,
+                      background: (AppConst.isLightTheme(context)
+                          ? (controller.state.isLogin
+                              ? redJNE
+                              : errorLightColor2)
+                          : (controller.state.isLogin
+                              ? warningColor
+                              : warningLightColor2)),
+                      showContainer: false,
+                      onTap: () => controller.state.isLogin
+                          ? Get.to(() => const InformasiPengirimScreen(),
+                              arguments: {})
+                          : showDialog(
+                              context: context,
+                              builder: (context) => const LoginAlertDialog(),
+                            ),
+                    )
+                  : const SizedBox(),
             ),
           );
         });
@@ -171,18 +158,8 @@ class ProfileScreen extends StatelessWidget {
                                 ? Get.to(() => const PengaturanLabelScreen())
                                 : showDialog(
                                     context: context,
-                                    builder: (context) => DefaultAlertDialog(
-                                      title: 'Akses Terbatas'.tr,
-                                      subtitle: 'access_denied'.tr,
-                                      confirmButtonTitle: 'Masuk'.tr,
-                                      backButtonTitle: 'Daftar'.tr,
-                                      onConfirm: () {
-                                        Get.off(() => const LoginScreen());
-                                      },
-                                      onBack: () {
-                                        Get.off(() => const SignUpScreen());
-                                      },
-                                    ),
+                                    builder: (context) =>
+                                        const LoginAlertDialog(),
                                   ),
                           )
                         : const SizedBox(),
@@ -195,18 +172,8 @@ class ProfileScreen extends StatelessWidget {
                                 ? Get.to(const PengaturanPetugasScreen())
                                 : showDialog(
                                     context: context,
-                                    builder: (context) => DefaultAlertDialog(
-                                      title: 'Akses Terbatas'.tr,
-                                      subtitle: 'access_denied'.tr,
-                                      confirmButtonTitle: 'Masuk'.tr,
-                                      backButtonTitle: 'Daftar'.tr,
-                                      onConfirm: () {
-                                        Get.off(() => const LoginScreen());
-                                      },
-                                      onBack: () {
-                                        Get.off(() => const SignUpScreen());
-                                      },
-                                    ),
+                                    builder: (context) =>
+                                        const LoginAlertDialog(),
                                   ),
                           )
                         : const SizedBox(),

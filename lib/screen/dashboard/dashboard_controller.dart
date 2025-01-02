@@ -6,6 +6,8 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
+import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/notification/get_notification_model.dart';
@@ -15,8 +17,6 @@ import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/auth/login/login_controller.dart';
-import 'package:css_mobile/screen/auth/login/login_screen.dart';
-import 'package:css_mobile/screen/auth/signup/signup_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
@@ -24,10 +24,9 @@ import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.da
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class DashboardController extends BaseController {
@@ -41,7 +40,7 @@ class DashboardController extends BaseController {
       cekToken(),
       initData(),
       cekLocalLanguage(),
-      loadBanner(),
+      loadPromo(),
       loadNews(),
     ]);
   }
@@ -71,15 +70,21 @@ class DashboardController extends BaseController {
     AppSnackBar.success('test cek fav menu');
   }
 
-  Future<void> loadBanner() async {
+  Future<void> loadPromo() async {
     state.bannerList.clear();
     try {
       jlc.postDashboardBanner().then((value) {
-        state.bannerList.addAll(value.data ?? []);
-        update();
+        if (value.code == 200) {
+          state.bannerList.addAll(value.data ?? []);
+          update();
+        } else {
+          state.bannerList.add(BannerModel());
+        }
       });
     } catch (e) {
-      e.printError();
+      e.printError(info: 'error load promo');
+      state.bannerList.add(BannerModel());
+      update();
     }
   }
 
@@ -87,11 +92,18 @@ class DashboardController extends BaseController {
     state.newsList.clear();
     try {
       jlc.postDashboardNews().then((value) {
-        state.newsList.addAll(value.data ?? []);
-        update();
+        AppLogger.i('respon news : ${value.toJson()}');
+        if (value.code == 200) {
+          state.newsList.addAll(value.data ?? []);
+          update();
+        } else {
+          state.newsList.add(NewsModel());
+        }
       });
     } catch (e, i) {
       AppLogger.e('error loadNews $e, $i');
+      state.newsList.add(NewsModel());
+      update();
     }
 
     update();
@@ -102,18 +114,7 @@ class DashboardController extends BaseController {
         ? Get.to(() => const InformasiPengirimScreen(), arguments: {})
         : showDialog(
             context: context,
-            builder: (context) => DefaultAlertDialog(
-              title: 'Akses Terbatas'.tr,
-              subtitle: 'access_denied'.tr,
-              confirmButtonTitle: 'Masuk'.tr,
-              backButtonTitle: 'Daftar'.tr,
-              onConfirm: () {
-                Get.off(() => const LoginScreen());
-              },
-              onBack: () {
-                Get.off(() => const SignUpScreen());
-              },
-            ),
+            builder: (context) => const LoginAlertDialog(),
           );
   }
 
@@ -176,20 +177,20 @@ class DashboardController extends BaseController {
     // bool label =
     //     (await storage.readString(StorageCore.transactionLabel)).isEmpty;
 
-    // if (label && state.isLogin) {
-    await setting.getSettingLabel().then(
-      (value) async {
-        await storage.writeString(
-          StorageCore.transactionLabel,
-          value.data?.where((e) => e.enable ?? false).first.name,
-        );
-        await storage.writeString(
-          StorageCore.shippingCost,
-          value.data?.first.showPrice ?? false ? "HIDE" : "PUBLISH",
-        );
-      },
-    );
-    // }
+    if (state.isLogin) {
+      await setting.getSettingLabel().then(
+        (value) async {
+          await storage.writeString(
+            StorageCore.transactionLabel,
+            value.data?.where((e) => e.enable ?? false).first.name,
+          );
+          await storage.writeString(
+            StorageCore.shippingCost,
+            value.data?.first.showPrice ?? false ? "HIDE" : "PUBLISH",
+          );
+        },
+      );
+    }
 
     update();
   }
@@ -513,14 +514,12 @@ class DashboardController extends BaseController {
 
   Future<void> initData() async {
     connection.isOnline().then((value) => state.isOnline = value);
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
     cekMessages();
     cekFavoritMenu();
 
     update();
     cekTheme();
     state.isLoading = true;
-    state.isLoadingKiriman = true;
 
     storage.deleteString(StorageCore.transactionTemp);
 

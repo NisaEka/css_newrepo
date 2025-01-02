@@ -10,7 +10,7 @@ import 'package:css_mobile/screen/paketmu/draft_transaksi/draft_transaksi_screen
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/items/draft_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -231,11 +231,7 @@ class DraftTransaksiController extends BaseController {
       index: i,
       onDelete: () => showDialog(
         context: context,
-        builder: (context) => DefaultAlertDialog(
-          title: 'Data akan dihapus'.tr,
-          subtitle: 'Anda yakin menghapus data ini ?'.tr,
-          confirmButtonTitle: 'Hapus'.tr,
-          backButtonTitle: 'Tidak'.tr,
+        builder: (context) => DeleteAlertDialog(
           onConfirm: () {
             delete(i);
             initData();
@@ -246,17 +242,6 @@ class DraftTransaksiController extends BaseController {
             initData();
           },
         ),
-        //     DeleteAlertDialog(
-        //   onDelete: () {
-        //     delete(i);
-        //     initData();
-        //     Get.back();
-        //   },
-        //   onBack: () {
-        //     Get.back();
-        //     initData();
-        //   },
-        // ),
       ),
       onValidate: () => validate(i),
     );
