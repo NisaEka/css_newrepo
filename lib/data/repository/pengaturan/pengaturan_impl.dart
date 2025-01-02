@@ -133,13 +133,15 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   }
 
   @override
-  Future<BaseResponse> updateSettingLabel(String label, int price) async {
+  Future<BaseResponse> updateSettingLabel(
+      String label, int price, int mask) async {
     try {
       Response response = await network.base.patch(
         "/settings/label",
         data: {
           "labelPrinter": label.toInt(),
           "priceLabel": price,
+          "hideShipperphoneLabel": mask,
         },
       );
       return BaseResponse.fromJson(response.data, (json) => null);

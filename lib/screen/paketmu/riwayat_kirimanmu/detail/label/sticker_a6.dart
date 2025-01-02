@@ -12,11 +12,13 @@ import 'package:get/get.dart';
 class StickerA6 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
+  final bool maskPhoneShipper;
 
   const StickerA6({
     super.key,
     required this.data,
     this.shippingCost = false,
+    this.maskPhoneShipper = false,
   });
 
   @override

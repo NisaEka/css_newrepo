@@ -12,12 +12,14 @@ import 'package:get/get.dart';
 class StickerMegahubHybrid2 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
+  final bool maskPhoneNumber;
   final String? stickerLabel;
 
   const StickerMegahubHybrid2(
       {super.key,
       required this.data,
       this.shippingCost = false,
+      this.maskPhoneNumber = false,
       this.stickerLabel});
 
   @override

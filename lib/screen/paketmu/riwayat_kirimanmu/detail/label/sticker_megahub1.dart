@@ -14,11 +14,13 @@ import 'package:pdf/widgets.dart' as pw;
 class StickerMegahub1 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
+  final bool maskPhoneShipper;
 
   const StickerMegahub1({
     super.key,
     required this.data,
     this.shippingCost = false,
+    this.maskPhoneShipper = false,
   });
 
   @override

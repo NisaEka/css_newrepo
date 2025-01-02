@@ -13,12 +13,14 @@ import 'package:get/get.dart';
 class StickerMegahubHybrid1 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
+  final bool maskPhoneShipper;
   final String? stickerLabel;
 
   const StickerMegahubHybrid1({
     super.key,
     required this.data,
     this.shippingCost = false,
+    this.maskPhoneShipper = false,
     this.stickerLabel,
   });
 

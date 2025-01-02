@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/pengaturan/label/components/label_type_field.dart';
+import 'package:css_mobile/screen/pengaturan/label/components/mask_phone_shipper_dropdown.dart';
 import 'package:css_mobile/screen/pengaturan/label/components/shipping_cost_dropdown.dart';
 import 'package:css_mobile/screen/pengaturan/label/components/stickers_list.dart';
 import 'package:css_mobile/screen/pengaturan/label/pengaturan_label_controller.dart';
@@ -26,6 +27,7 @@ class PengaturanLabelScreen extends StatelessWidget {
                   child: ListView(
                     children: [
                       const ShippingCostDropdown(),
+                      const MaskShipperPhoneDropdown(),
                       LabelTypeField(c.selectedSticker),
                       const StickersList(),
                       CustomFilledButton(

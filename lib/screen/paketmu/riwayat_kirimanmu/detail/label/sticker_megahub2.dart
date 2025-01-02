@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 class StickerMegahub2 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
+  final bool maskPhoneShipper;
 
   const StickerMegahub2({
     super.key,
     required this.data,
     this.shippingCost = false,
+    this.maskPhoneShipper = false,
   });
 
   @override
