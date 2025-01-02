@@ -47,7 +47,7 @@ class TransactionController extends BaseController {
           // AppSnackBar.success('Online Mode'.tr);
         }
       });
-      // initData();
+
       update();
     }));
   }
@@ -320,7 +320,7 @@ class TransactionController extends BaseController {
   Future<void> initData() async {
     state.isServiceLoad = true;
     state.serviceList = [];
-    // connection.isOnline().then((value) => state.isOnline = value);
+    connection.isOnline().then((value) => state.isOnline = value);
     state.goodType.text = "PAKET";
     update();
 
