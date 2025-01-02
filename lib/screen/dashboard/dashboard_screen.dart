@@ -1,7 +1,6 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
-import 'package:css_mobile/screen/auth/login/login_controller.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_body.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/onboarding/splash_screen.dart';
@@ -19,19 +18,6 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _checkFirstLogin();
-    });
-  }
-
-  void _checkFirstLogin() {
-    final loginController = Get.find<LoginController>();
-    loginController.showFirstLoginDialog(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
       init: DashboardController(),
@@ -39,17 +25,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         if (controller.state.isFirstInstall) {
           return const SplashScreen();
         } else {
-          // WidgetsBinding.instance.addPostFrameCallback((_) async {
-          //   bool firstLogin = await controller.isFirstLogin();
-          //   if (firstLogin) {
-          //     controller.showFirstLoginDialog(context);
-          //   }
-          // });
-          // WidgetsBinding.instance.addPostFrameCallback((_) async {
-          //   if(controller.state.isLogin) {
-          //     controller.showFirstLoginDialog(context);
-          //   }
-          // });
           return PopScope(
             canPop: controller.pop,
             onPopInvokedWithResult: (didPop, result) => controller.onPop(),
