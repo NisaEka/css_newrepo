@@ -107,8 +107,6 @@ class JLCRepositoryImpl extends JLCRepository {
                   )
                   .toList()
               : List.empty());
-      AppLogger.e('News error: ${res.toJson()}');
-      // return e.response?.data;
       return res;
     }
   }
