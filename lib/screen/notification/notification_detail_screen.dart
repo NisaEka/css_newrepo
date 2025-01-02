@@ -21,11 +21,13 @@ class NotificationDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
-            Image.network(
-              data.img ?? '',
-              width: Get.width,
-            ),
-            const SizedBox(height: 20),
+            if (data.img != null && data.img!.isNotEmpty) ...[
+              Image.network(
+                data.img ?? '',
+                width: Get.width,
+              ),
+              const SizedBox(height: 20),
+            ],
             Text(
               data.text ?? '',
               style: Theme.of(context).textTheme.bodySmall,

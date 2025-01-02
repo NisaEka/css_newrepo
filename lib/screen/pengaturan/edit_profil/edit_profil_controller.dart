@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/cupertino.dart';
@@ -119,13 +120,20 @@ class EditProfileController extends BaseController {
 
   Future<List<OriginModel>> getOriginList(String keyword) async {
     isLoadOrigin = true;
-    // var response = await ongkir.postOrigin(keyword);
-    // var models = response.payload?.toList();
+    var response = await master.getOrigins(QueryModel(
+      table: true,
+      limit: 0,
+      search: keyword.toUpperCase(),
+      sort: [
+        {"originName": "asc"}
+      ],
+    ));
+    var models = response.data?.toList();
 
     isLoadOrigin = false;
     update();
-    // return models ?? [];
-    return [];
+    return models ?? [];
+    // return [];
   }
 
   Future<void> updateBasic() async {
