@@ -203,7 +203,10 @@ class LanguageEN {
       "kerahasiaan_data":
           "This information is confidential, only you can see it and it is not shared with anyone",
       "Kerahasiaan Data": "Data Confidentiality",
-      "informasi": "Information",
+      "Informasi": "Information",
+      "Profil belum lengkap, silahkan lengkapi profil anda terlebih dahulu":
+          "Your profile is incomplete, please complete your profile first.",
+      "Lengkapi Profil": "Complete my profile",
       "return_info":
           "This data is used in the process of returning your shipment.",
       "Akun Bank": "Bank Account",

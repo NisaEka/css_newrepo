@@ -1,7 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/get_agent_model.dart';
-import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
@@ -12,7 +10,6 @@ import 'package:css_mobile/screen/auth/signup/signup_otp/signup_otp_screen.dart'
 import 'package:css_mobile/screen/auth/signup/signup_state.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
-import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
@@ -37,11 +34,6 @@ class SignUpController extends BaseController {
     }
   }
 
-  Future<List<ReferalModel>> getReferalList(String code) async {
-    var response = await auth.getReferal(code);
-    return response.payload?.toList() ?? [];
-  }
-
   Future<void> getAgentList() async {
     state.agentList = [
       AgentModel(custName: 'BELUM KIRIM KE JNE'),
@@ -60,35 +52,32 @@ class SignUpController extends BaseController {
     update();
   }
 
-  Future<void> mailValidation() async {
-    state.isLoading = true;
-    update();
-    try {
-      await auth.getCheckMail(state.email.text).then((value) =>
-          value.data?.disposable == true ||
-                  value.data?.publicDomain == false ||
-                  value.data?.mx == false
-              ? Get.showSnackbar(
-                  GetSnackBar(
-                    icon: const Icon(
-                      Icons.warning,
-                      color: whiteColor,
-                    ),
-                    message:
-                        'CSS tidak menerima pendaftaran menggunakan email temporary'
-                            .tr,
-                    isDismissible: true,
-                    duration: const Duration(seconds: 3),
-                    backgroundColor: errorColor,
-                  ),
-                )
-              : saveRegistration());
-    } catch (e) {
-      e.printError();
-    }
-    state.isLoading = false;
-    update();
-  }
+  // Future<void> mailValidation() async {
+  //   state.isLoading = true;
+  //   update();
+  //   try {
+  //     await auth
+  //         .getCheckMail(state.email.text)
+  //         .then((value) => value.data?.disposable == true || value.data?.publicDomain == false || value.data?.mx == false
+  //             ? Get.showSnackbar(
+  //                 GetSnackBar(
+  //                   icon: const Icon(
+  //                     Icons.warning,
+  //                     color: whiteColor,
+  //                   ),
+  //                   message: 'CSS tidak menerima pendaftaran menggunakan email temporary'.tr,
+  //                   isDismissible: true,
+  //                   duration: const Duration(seconds: 3),
+  //                   backgroundColor: errorColor,
+  //                 ),
+  //               )
+  //             : saveRegistration());
+  //   } catch (e) {
+  //     e.printError();
+  //   }
+  //   state.isLoading = false;
+  //   update();
+  // }
 
   Future<void> saveRegistration() async {
     state.isLoading = true;
@@ -172,5 +161,25 @@ class SignUpController extends BaseController {
     state.isDefaultOrigin = false;
     // state.isSelectCounter = false;
     update();
+  }
+
+  bool isValidate() {
+    state.formKey.currentState?.validate();
+    if (state.formKey.currentState?.validate() == true &&
+        state.selectedOrigin != null) {
+      if (state.useJNE) {
+        if (state.selectedAgent == null) {
+          state.isValidate = false;
+          return false;
+        }
+        // state.isValidate = true;
+        return true;
+      }
+      // state.isValidate = true;
+      return true;
+    }
+    // state.isValidate = false;
+    // update();
+    return false;
   }
 }

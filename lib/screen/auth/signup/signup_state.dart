@@ -18,6 +18,7 @@ class SignupState {
   String? version;
   String? branchCode;
   bool useJNE = false;
+  bool isValidate = false;
   bool isLoadOrigin = false;
   bool isLoadReferral = false;
   bool isLoadAgent = false;

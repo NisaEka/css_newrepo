@@ -96,8 +96,7 @@ class ShipperController extends BaseController {
         ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
     state.userBasic =
         UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
-    state.userCcrf = CcrfProfileModel.fromJson(
-        await storage.readData(StorageCore.ccrfProfile));
+    // state.userCcrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
     state.tempData = DataTransactionModel.fromJson(
         await storage.readData(StorageCore.transactionTemp));
     try {
