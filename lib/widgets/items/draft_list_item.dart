@@ -115,6 +115,7 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                         value: widget.data.dataAccount?.accountNumber ??
                             widget.data.account?.accountNumber ??
                             '',
+                        width: Get.width / 3,
                       ),
                       CustomLabelText(
                         title: 'Account Name'.tr,
@@ -122,7 +123,7 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                             widget.data.account?.accountName ??
                             '',
                         alignment: 'end',
-                        width: Get.width * 0.5,
+                        width: Get.width / 3,
                       ),
                     ],
                   ),
@@ -134,11 +135,13 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                         CustomLabelText(
                           title: 'Shipper'.tr,
                           value: widget.data.shipper?.name ?? '',
+                          width: Get.width / 3,
                         ),
                         CustomLabelText(
                           alignment: 'end',
                           title: 'Receiver'.tr,
                           value: widget.data.receiver?.name ?? '',
+                          width: Get.width / 3,
                         ),
                       ],
                     ),
@@ -147,17 +150,17 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomLabelText(
-                          width: Get.width * 0.4,
                           title: 'Origin'.tr,
                           value: widget.data.origin?.originName ?? '',
                           valueMaxline: 3,
+                          width: Get.width / 3,
                         ),
                         CustomLabelText(
                           alignment: 'end',
-                          width: Get.width * 0.4,
                           title: 'Destination'.tr,
                           value: widget.data.dataDestination?.cityName ?? '',
                           valueMaxline: 3,
+                          width: Get.width / 3,
                         ),
                       ],
                     ),
