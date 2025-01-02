@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardState {
-  bool? isFromLogin = Get.arguments?['isFirstLogin'];
+  bool? isFromLogin = Get.arguments?['isFromLogin'];
   final selectedIndex = 0.obs;
   final nomorResi = TextEditingController();
   DateTime? currentBackPressTime;

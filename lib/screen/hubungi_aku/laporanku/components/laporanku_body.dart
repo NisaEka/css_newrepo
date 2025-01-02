@@ -42,6 +42,7 @@ class LaporankuBody extends StatelessWidget {
                     onRefresh: () => Future.sync(
                       () {
                         c.state.pagingController.refresh();
+                        c.countReports();
                       },
                     ),
                     child: PagedListView.separated(

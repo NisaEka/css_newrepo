@@ -250,27 +250,37 @@ class TambahPetugasScreen extends StatelessWidget {
                             title: 'Transaksi'.tr,
                             icon: Icons.receipt_outlined,
                           ),
-                          const SizedBox(height: 10),
-                          Padding(
+                          GridView.builder(
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.only(
+                                left: 32, right: 0, top: 0, bottom: 12),
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 1, childAspectRatio: 9),
+                            itemCount: 1,
+                            itemBuilder: (context, index) {
+                              return _buildCheckboxItem(
+                                  'Input Kirimanmu', c.buatPesanan, (value) {
+                                c.buatPesanan = value!;
+                                if (value == false) {
+                                  c.selectedBranchList = [];
+                                  c.selectedAccountList = [];
+                                  c.selectedOrigin.clear();
+                                  c.update();
+                                  c.getCountSelectedAccountNA();
+                                }
+                                c.update();
+                              });
+                            },
+                          ),
+                          Container(
                             padding: const EdgeInsets.only(left: 32),
                             child: Column(
                               children: [
-                                _buildCheckboxItem(
-                                    'Input Kirimanmu', c.buatPesanan, (value) {
-                                  c.buatPesanan = value!;
-                                  if (value == false) {
-                                    c.selectedBranchList = [];
-                                    c.selectedAccountList = [];
-                                    c.selectedOrigin.clear();
-                                    c.update();
-                                    c.getCountSelectedAccountNA();
-                                  }
-                                  c.update();
-                                }),
                                 c.buatPesanan
                                     ? Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 32),
+                                        padding: const EdgeInsets.only(top: 10),
                                         child: Column(
                                           children: [
                                             MultiSelectDialogField(
@@ -293,14 +303,19 @@ class TambahPetugasScreen extends StatelessWidget {
                                                     ? '${c.selectedAccountList.length} ${'Akun'.tr} ${'Dipilih'.tr}'
                                                     : 'Akun'.tr,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  color: CustomTheme()
-                                                      .textColor(context),
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .copyWith(
+                                                        color: formTextColor(
+                                                            context)),
                                               ),
-                                              itemsTextStyle: TextStyle(
-                                                  color: CustomTheme()
-                                                      .textColor(context)),
+                                              itemsTextStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .copyWith(
+                                                      color: formTextColor(
+                                                          context)),
                                               dialogWidth: Get.width,
                                               initialValue:
                                                   c.selectedAccountList,
@@ -341,229 +356,224 @@ class TambahPetugasScreen extends StatelessWidget {
                                             (c.countAllAccountNA ?? 0) > 0) ||
                                         (c.serahTerima &&
                                             (c.countAllAccountNA ?? 0) > 0)
-                                    ? GridView.builder(
-                                        shrinkWrap: true,
-                                        padding:
-                                            const EdgeInsets.only(left: 32),
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          crossAxisSpacing: 10,
-                                          mainAxisSpacing: 10,
-                                          childAspectRatio: 1.9,
-                                        ),
-                                        itemCount: 2,
-                                        itemBuilder: (context, index) {
-                                          if (index == 0) {
-                                            return Column(
-                                              children: [
-                                                const SizedBox(height: 10),
-                                                MultiSelectDialogField(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color:
-                                                          AppConst.isLightTheme(
-                                                                  context)
-                                                              ? greyDarkColor1
-                                                              : greyLightColor1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  searchable: true,
-                                                  selectAll: true,
-                                                  buttonIcon: const Icon(Icons
-                                                      .keyboard_arrow_down),
-                                                  // buttonText: Text('Branch'.tr),
-                                                  buttonText: Text(
-                                                    '${c.selectedBranchList.isNotEmpty ? '${c.selectedBranchList.length} ' : ''} ${'Branch'.tr}',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                      color: CustomTheme()
-                                                          .textColor(context),
-                                                    ),
-                                                  ),
-                                                  initialValue:
-                                                      c.selectedBranchList,
-                                                  items: c.branchList
-                                                      .map((e) =>
-                                                          MultiSelectItem(
-                                                            e,
-                                                            '${e.branchCode}-${e.branchDesc}',
-                                                          ))
-                                                      .toList(),
-                                                  itemsTextStyle: TextStyle(
-                                                      color: CustomTheme()
-                                                          .textColor(context)),
-                                                  listType:
-                                                      MultiSelectListType.CHIP,
-                                                  chipDisplay:
-                                                      MultiSelectChipDisplay
-                                                          .none(),
-                                                  backgroundColor:
-                                                      AppConst.isLightTheme(
-                                                              context)
-                                                          ? whiteColor
-                                                          : greyColor,
-                                                  onConfirm: (values) {
-                                                    c.selectedBranchList =
-                                                        List<BranchModel>.from(
-                                                            values);
-                                                    c.update();
-                                                    c.loadOrigin(
-                                                        c.selectedBranchList);
-                                                  },
-                                                  onSelectionChanged: (values) {
-                                                    c.selectedBranchList =
-                                                        List<BranchModel>.from(
-                                                            values);
-                                                    c.update();
-                                                    c.loadOrigin(
-                                                        c.selectedBranchList);
-                                                  },
+                                    ? Container(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Column(
+                                          children: [
+                                            MultiSelectDialogField(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: AppConst.isLightTheme(
+                                                          context)
+                                                      ? greyDarkColor1
+                                                      : greyLightColor1,
                                                 ),
-                                              ],
-                                            );
-                                          } else if (index == 1) {
-                                            return Column(
-                                              children: [
-                                                const SizedBox(height: 10),
-                                                Obx(
-                                                  () => MultiSelectDialogField<
-                                                      OriginModel>(
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color: AppConst
-                                                                .isLightTheme(
-                                                                    context)
-                                                            ? greyDarkColor1
-                                                            : greyLightColor1,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    searchable: true,
-                                                    selectAll: true,
-                                                    buttonIcon: const Icon(Icons
-                                                        .keyboard_arrow_down),
-                                                    buttonText: c.isLoadOrigin
-                                                        ? const Text(
-                                                            'Loading...')
-                                                        : Text(
-                                                            '${c.selectedOrigin.isNotEmpty ? '${c.selectedOrigin.length} ' : ''} ${'Origin'.tr}',
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: TextStyle(
-                                                              color: CustomTheme()
-                                                                  .textColor(
-                                                                      context),
-                                                            ),
-                                                          ),
-                                                    initialValue:
-                                                        c.selectedOrigin,
-                                                    items: c.originList
-                                                        .map((e) =>
-                                                            MultiSelectItem(
-                                                              e,
-                                                              '${e.originCode}-${e.originName}',
-                                                            ))
-                                                        .toList(),
-                                                    listType:
-                                                        MultiSelectListType
-                                                            .CHIP,
-                                                    chipDisplay:
-                                                        MultiSelectChipDisplay
-                                                            .none(),
-                                                    backgroundColor:
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              searchable: true,
+                                              selectAll: true,
+                                              buttonIcon: const Icon(
+                                                  Icons.keyboard_arrow_down),
+                                              buttonText: Text(
+                                                '${c.selectedBranchList.isNotEmpty ? '${c.selectedBranchList.length} ' : ''} ${'Branch'.tr}',
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .copyWith(
+                                                        color: formTextColor(
+                                                            context)),
+                                              ),
+                                              initialValue:
+                                                  c.selectedBranchList,
+                                              items: c.branchList
+                                                  .map((e) => MultiSelectItem(
+                                                        e,
+                                                        '${e.branchCode}-${e.branchDesc}',
+                                                      ))
+                                                  .toList(),
+                                              itemsTextStyle: TextStyle(
+                                                  color: CustomTheme()
+                                                      .textColor(context)),
+                                              listType:
+                                                  MultiSelectListType.CHIP,
+                                              chipDisplay:
+                                                  MultiSelectChipDisplay.none(),
+                                              backgroundColor:
+                                                  AppConst.isLightTheme(context)
+                                                      ? whiteColor
+                                                      : greyColor,
+                                              onConfirm: (values) {
+                                                c.selectedBranchList =
+                                                    List<BranchModel>.from(
+                                                        values);
+                                                c.update();
+                                                c.loadOrigin(
+                                                    c.selectedBranchList);
+                                              },
+                                              onSelectionChanged: (values) {
+                                                c.selectedBranchList =
+                                                    List<BranchModel>.from(
+                                                        values);
+                                                c.update();
+                                                c.loadOrigin(
+                                                    c.selectedBranchList);
+                                              },
+                                            ),
+                                            const SizedBox(height: 10),
+                                            Obx(
+                                              () => MultiSelectDialogField<
+                                                  OriginModel>(
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color:
                                                         AppConst.isLightTheme(
                                                                 context)
-                                                            ? whiteColor
-                                                            : greyColor,
-                                                    itemsTextStyle: TextStyle(
-                                                        color: CustomTheme()
-                                                            .textColor(
-                                                                context)),
-                                                    onConfirm: (values) {
-                                                      c.selectedOrigin.clear();
-                                                      c.selectedOrigin
-                                                          .addAll(values);
-                                                      c.update();
-                                                    },
-                                                    onSelectionChanged:
-                                                        (values) {
-                                                      c.selectedOrigin
-                                                          .value = List<
-                                                              OriginModel>.from(
-                                                          values);
-                                                      c.update();
-                                                    },
+                                                            ? greyDarkColor1
+                                                            : greyLightColor1,
                                                   ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
                                                 ),
-                                              ],
-                                            );
-                                          }
-                                          return const SizedBox();
-                                        },
+                                                searchable: true,
+                                                selectAll: true,
+                                                buttonIcon: const Icon(
+                                                    Icons.keyboard_arrow_down),
+                                                buttonText: c.isLoadOrigin
+                                                    ? const Text('Loading...')
+                                                    : Text(
+                                                        '${c.selectedOrigin.isNotEmpty ? '${c.selectedOrigin.length} ' : ''} ${'Origin'.tr}',
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
+                                                            .copyWith(
+                                                                color:
+                                                                    formTextColor(
+                                                                        context)),
+                                                      ),
+                                                initialValue: c.selectedOrigin,
+                                                items: c.originList
+                                                    .map((e) => MultiSelectItem(
+                                                          e,
+                                                          '${e.originCode}-${e.originName}',
+                                                        ))
+                                                    .toList(),
+                                                listType:
+                                                    MultiSelectListType.CHIP,
+                                                chipDisplay:
+                                                    MultiSelectChipDisplay
+                                                        .none(),
+                                                backgroundColor:
+                                                    AppConst.isLightTheme(
+                                                            context)
+                                                        ? whiteColor
+                                                        : greyColor,
+                                                itemsTextStyle: TextStyle(
+                                                    color: CustomTheme()
+                                                        .textColor(context)),
+                                                onConfirm: (values) {
+                                                  c.selectedOrigin.clear();
+                                                  c.selectedOrigin
+                                                      .addAll(values);
+                                                  c.update();
+                                                },
+                                                onSelectionChanged: (values) {
+                                                  c.selectedOrigin.value =
+                                                      List<OriginModel>.from(
+                                                          values);
+                                                  c.update();
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       )
                                     : const SizedBox(),
                                 c.buatPesanan &&
                                         (c.countSelectedAccountNA ?? 0) > 0
                                     ? Container(
-                                        margin: const EdgeInsets.only(left: 32),
+                                        margin: const EdgeInsets.only(top: 5),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            CustomTextFormField(
-                                              width: Get.width * 0.39,
-                                              multiLine: true,
-                                              controller: c.alamat,
-                                              hintText: 'Alamat'.tr,
-                                              validator: ValidationBuilder()
-                                                  .address()
-                                                  .build(),
+                                            Expanded(
+                                              flex: 4,
+                                              child: CustomTextFormField(
+                                                multiLine: true,
+                                                controller: c.alamat,
+                                                hintText: 'Alamat'.tr,
+                                                validator: ValidationBuilder()
+                                                    .address()
+                                                    .build(),
+                                              ),
                                             ),
-                                            const SizedBox(width: 10),
-                                            CustomTextFormField(
-                                              width: Get.width * 0.18,
-                                              controller: c.zipCode,
-                                              hintText: 'Kode Pos'.tr,
-                                              validator: ValidationBuilder()
-                                                  .zipCode()
-                                                  .build(),
-                                              inputType: TextInputType.number,
-                                            )
+                                            const SizedBox(width: 5),
+                                            Expanded(
+                                              flex: 2,
+                                              child: CustomTextFormField(
+                                                controller: c.zipCode,
+                                                hintText: 'Kode Pos'.tr,
+                                                validator: ValidationBuilder()
+                                                    .zipCode()
+                                                    .build(),
+                                                inputType: TextInputType.number,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       )
                                     : const SizedBox(),
-                                c.beranda || c.riwayatPesanan || c.pantauPaketmu
-                                    ? _buildCheckboxItem(
-                                        'Tampilkan Seluruh Transaksi',
-                                        c.semuaTransaksi, (value) {
-                                        c.semuaTransaksi = value!;
-                                        c.update();
-                                      })
-                                    : const SizedBox(),
-                                c.hapusPesanan
-                                    ? _buildCheckboxItem(
-                                        'Hapus Seluruh Transaksi', c.semuaHapus,
-                                        (value) {
-                                        c.semuaHapus = value!;
-                                        c.update();
-                                      })
-                                    : const SizedBox(),
                               ],
                             ),
                           ),
+                          c.beranda || c.riwayatPesanan || c.pantauPaketmu
+                              ? GridView.builder(
+                                  shrinkWrap: true,
+                                  padding: const EdgeInsets.only(
+                                      left: 32, right: 0, top: 0, bottom: 12),
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 1,
+                                          childAspectRatio: 9),
+                                  itemCount: 1,
+                                  itemBuilder: (context, index) {
+                                    return _buildCheckboxItem(
+                                        'Tampilkan Seluruh Transaksi',
+                                        c.semuaTransaksi, (value) {
+                                      c.semuaTransaksi = value!;
+                                      c.update();
+                                    });
+                                  },
+                                )
+                              : const SizedBox(),
+                          c.hapusPesanan
+                              ? GridView.builder(
+                                  shrinkWrap: true,
+                                  padding: const EdgeInsets.only(
+                                      left: 32, right: 0, top: 0, bottom: 12),
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 1,
+                                          childAspectRatio: 9),
+                                  itemCount: 1,
+                                  itemBuilder: (context, index) {
+                                    return _buildCheckboxItem(
+                                        'Hapus Seluruh Transaksi', c.semuaHapus,
+                                        (value) {
+                                      c.semuaHapus = value!;
+                                      c.update();
+                                    });
+                                  },
+                                )
+                              : const SizedBox(),
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
@@ -613,7 +623,6 @@ class TambahPetugasScreen extends StatelessWidget {
                             title: 'Keuanganmu'.tr,
                             icon: Icons.account_balance_wallet_outlined,
                           ),
-                          const SizedBox(height: 10),
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
@@ -646,7 +655,6 @@ class TambahPetugasScreen extends StatelessWidget {
                             title: 'Hubungi Aku'.tr,
                             icon: Icons.phone,
                           ),
-                          const SizedBox(height: 10),
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
@@ -673,7 +681,6 @@ class TambahPetugasScreen extends StatelessWidget {
                             title: 'Laporanku'.tr,
                             icon: Icons.library_books_outlined,
                           ),
-                          const SizedBox(height: 10),
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
@@ -702,7 +709,6 @@ class TambahPetugasScreen extends StatelessWidget {
                             title: 'Pengaturan'.tr,
                             icon: Icons.settings,
                           ),
-                          const SizedBox(height: 10),
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [

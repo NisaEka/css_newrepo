@@ -6,6 +6,7 @@ import 'package:css_mobile/data/model/facility/facility_create_id_card_model.dar
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_controller.dart';
 import 'package:css_mobile/util/constant.dart';
@@ -33,6 +34,7 @@ class FacilityFormInfoController extends BaseController {
   final email = TextEditingController();
 
   final requestData = FacilityCreateModel();
+  FacilityCreateModel? tempData;
 
   String? pickedImageUrl;
 
@@ -163,5 +165,32 @@ class FacilityFormInfoController extends BaseController {
     requestData.setAddress(address);
 
     return requestData;
+  }
+
+  Future<void> saveTemp() async {
+    requestData.setBrand(brand.text);
+    requestData.setName(fullName.text);
+    requestData.setJlcNumber(await getJlcAccount());
+    requestData.setEmail(email.text);
+    requestData.setFacilityType(_facilityType);
+
+    final FacilityCreateIdCardModel idCard = FacilityCreateIdCardModel();
+    idCard.setNumber(idCardNumber.text);
+    idCard.setImageUrl(pickedImageUrl ?? "");
+    requestData.setIdCard(idCard);
+
+    final FacilityCreateAddressModel address = FacilityCreateAddressModel();
+    address.setAddress(fullAddress.text);
+    address.setCountry(selectedDestination!.countryName!);
+    address.setProvince(selectedDestination!.provinceName!);
+    address.setCity(selectedDestination!.cityName!);
+    address.setDistrict(selectedDestination!.districtName!);
+    address.setSubDistrict(selectedDestination!.subdistrictName!);
+    address.setZipCode(selectedDestination!.zipCode!);
+    address.setPhone(phone.text);
+    address.setHandPhone(whatsAppPhone.text);
+    requestData.setAddress(address);
+
+    await storage.saveData(StorageCore.transactionTemp, requestData);
   }
 }

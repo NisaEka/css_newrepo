@@ -1,30 +1,61 @@
 class FacilityCreateReturnAddress {
   String _address = '';
+
   String get address => _address;
 
   String _province = '';
+
   String get province => _province;
 
   String _city = '';
+
   String get city => _city;
 
   String _district = '';
+
   String get district => _district;
 
   String _subDistrict = '';
+
   String get subDistrict => _subDistrict;
 
   String _zipCode = '';
+
   String get zipCode => _zipCode;
 
   String _phone = '';
+
   String get phone => _phone;
 
   String _handphone = '';
+
   String get handphone => _handphone;
 
   String _responsibleName = '';
+
   String get responsibleName => _responsibleName;
+
+  FacilityCreateReturnAddress({
+    String? address,
+    String? province,
+    String? city,
+    String? district,
+    String? subDistrict,
+    String? zipCode,
+    String? phone,
+    String? handphone,
+    String? responsibleName,
+  }) {
+    _address = address ?? '';
+    _province = province ?? '';
+    _city = city ?? '';
+    _district = district ?? '';
+    _subDistrict = subDistrict ?? '';
+    _zipCode = zipCode ?? '';
+    _phone = phone ?? '';
+    _handphone = handphone ?? '';
+    _responsibleName = responsibleName ?? '';
+  }
 
   setAddress(String address) {
     _address = address;
@@ -76,5 +107,17 @@ class FacilityCreateReturnAddress {
     json['responsibleName'] = _responsibleName;
 
     return json;
+  }
+
+  FacilityCreateReturnAddress.fromJson(dynamic json) {
+    _address = json['address'];
+    _province = json['province'];
+    _city = json['city'];
+    _district = json['district'];
+    _subDistrict = json['subDistrict'];
+    _zipCode = json['zipCode'];
+    _phone = json['phone'];
+    _handphone = json['handphone'];
+    _responsibleName = json['responsibleName'];
   }
 }
