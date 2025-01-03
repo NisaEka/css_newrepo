@@ -576,6 +576,7 @@ class LanguageEN {
       "Pilih minimal satu hak akses": "Select at least one authority",
       "Saya telah membaca & memahami": "I have read & understood",
       "Alamat email sudah digunakan": "Email address is already in use",
+      "check_connection": "Connection Failed",
     };
   }
 }

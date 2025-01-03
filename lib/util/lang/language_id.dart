@@ -18,7 +18,8 @@ class LanguageID {
       "login_failed": "Email atau password anda salah",
       "User Not Found": "Email yang anda masukan tidak terdaftar",
       "Online Mode": "Mode Online",
-      "Double click back button to exit": "Ketuk dua kali untuk keluar"
+      "Double click back button to exit": "Ketuk dua kali untuk keluar",
+      "check_connection": "Koneksi Gagal",
     };
   }
 }

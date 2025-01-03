@@ -177,7 +177,7 @@ class LoginController extends BaseController {
       });
     } catch (e) {
       AppLogger.e('error login $e');
-      AppSnackBar.error('Login failed: ${'Bad Request'.tr}');
+      AppSnackBar.error('Login failed: ${'check_connection'.tr}');
     }
     state.isLoading = false;
     update();
