@@ -185,10 +185,10 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                       ),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: Get.width / 2.5,
+                          width: Get.width / 2.4,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -206,6 +206,9 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                 lineColor: warningColor,
                                 isLoading: isLoadingKiriman,
                               ),
+                              isLoadingKiriman
+                                  ? const SizedBox(height: 5)
+                                  : const SizedBox(),
                               TypeTransactionCard(
                                 prefixVal1: "Rp.",
                                 value1: kirimanKamu.nonCodAmount
@@ -223,7 +226,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          width: Get.width / 2.5,
+                          width: Get.width / 2.4,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -253,6 +256,9 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                 lineColor: successColor,
                                 isLoading: isLoadingKiriman,
                               ),
+                              isLoadingKiriman
+                                  ? const SizedBox(height: 5)
+                                  : const SizedBox(),
                               TypeTransactionCard(
                                 prefixVal1: "Rp.",
                                 value1:
