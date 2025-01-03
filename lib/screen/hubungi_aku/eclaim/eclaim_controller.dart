@@ -61,8 +61,12 @@ class EclaimController extends BaseController {
   Future<void> getEclaim(int page) async {
     state.isLoading = true;
     try {
-      final trans = await eclaims.getEclaim(
-          QueryModel(search: state.searchField.text, between: state.transDate));
+      final trans = await eclaims.getEclaim(QueryModel(
+          search: state.searchField.text,
+          between: state.transDate,
+          sort: [
+            {"createDate": "desc"}
+          ]));
 
       final isLastPage =
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);

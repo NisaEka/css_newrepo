@@ -12,11 +12,13 @@ import 'package:get/get.dart';
 class StickerA6 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
+  final bool hiddenPhoneShipper;
 
   const StickerA6({
     super.key,
     required this.data,
     this.shippingCost = false,
+    this.hiddenPhoneShipper = false,
   });
 
   @override
@@ -210,7 +212,9 @@ class StickerA6 extends StatelessWidget {
                                     fontWeight: bold),
                               ),
                               TextSpan(
-                                text: data.shipper?.phone ?? '',
+                                text: hiddenPhoneShipper
+                                    ? data.shipper?.phone?.maskPhoneNumber()
+                                    : data.shipper?.phone ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
                               TextSpan(

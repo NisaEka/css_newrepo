@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
@@ -16,7 +14,6 @@ import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
@@ -41,36 +38,6 @@ class LoginController extends BaseController {
     update();
     storage.deleteLogin();
     ValidationBuilder.setLocale(state.lang!);
-  }
-
-  void markFirstLoginComplete() {
-    isFirst.value = false;
-  }
-
-  void showFirstLoginDialog(BuildContext context) {
-    if (isFirst.value) {
-      Get.dialog(
-        AlertDialog(
-          backgroundColor: Theme.of(context).brightness == Brightness.light
-              ? whiteColor
-              : bgDarkColor,
-          content: state.lang == "id"
-              ? Image.asset(ImageConstant.tipsKeamanan)
-              : Image.asset(ImageConstant.safetyTips),
-          actions: [
-            CustomFilledButton(
-              radius: 50,
-              color: primaryColor(context),
-              title: 'Saya telah membaca & memahami'.tr,
-              onPressed: () {
-                markFirstLoginComplete();
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        ),
-      );
-    }
   }
 
   // bool onPop() {
@@ -99,7 +66,7 @@ class LoginController extends BaseController {
   //   }
   //   state.pop = true;
   //   update();
-  //   Get.off(() => const DashboardScreen());
+  //   Get.off(() => const DashboardScreen(), arguments: {'isFirstLogin': true});
   //   return true;
   // }
 
@@ -140,7 +107,8 @@ class LoginController extends BaseController {
               //           )
               //         : null))
               .then((_) => Get.delete<DashboardController>())
-              .then((_) => Get.offAll(() => const DashboardScreen()));
+              .then((_) => Get.offAll(() => const DashboardScreen(),
+                  arguments: {'isFirstLogin': true}));
         } else if (value.code == 403) {
           Get.dialog(
             InfoDialog(
@@ -216,8 +184,9 @@ class LoginController extends BaseController {
   //   String? token = await storage.readAccessToken();
   //   AppLogger.e('token : $token');
   //   if (token != null) {
-  //     Get.delete<DashboardController>()
-  //         .then((_) => Get.offAll(() => const DashboardScreen()));
+  //     Get.delete<DashboardController>().then((_) => Get.offAll(
+  //         () => const DashboardScreen(),
+  //         arguments: {'isFirstLogin': true}));
   //     // String all = await storage.readString(StorageCore.allowedMenu);
   //     // AllowedMenu menu = AllowedMenu.fromJson(jsonDecode(all));
   //     // print(menu.beranda);

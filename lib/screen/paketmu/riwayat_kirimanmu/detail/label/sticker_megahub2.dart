@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 class StickerMegahub2 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
+  final bool hiddenPhoneShipper;
 
   const StickerMegahub2({
     super.key,
     required this.data,
     this.shippingCost = false,
+    this.hiddenPhoneShipper = false,
   });
 
   @override
@@ -29,6 +31,7 @@ class StickerMegahub2 extends StatelessWidget {
             child: StickerMegahub1(
               data: data,
               shippingCost: shippingCost,
+              hiddenPhoneShipper: hiddenPhoneShipper,
             ).sticker1(),
           ),
           const SizedBox(height: 25),
