@@ -56,9 +56,26 @@ class NotificationListItem extends StatelessWidget {
             selectedColor: infoColor,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(data.title ?? ''),
-                Text(data.createDate?.toLongDateTimeFormat().toString() ?? ''),
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    data.title ?? '',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    data.createDate?.toDateTimeFormat().toString() ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.right,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
               ],
             ),
             subtitle: SizedBox(
@@ -68,9 +85,10 @@ class NotificationListItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            titleTextStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: primaryColor(context),
-                ),
+            titleTextStyle: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(color: primaryColor(context)),
             subtitleTextStyle: Theme.of(context).textTheme.titleSmall,
           ),
         ),

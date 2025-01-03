@@ -89,16 +89,17 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
-                  '${e.zipCode == null || e.zipCode == '00000' ? '' : '${e.zipCode}; '}'
-                          '${e.provinceName == null ? '' : '${e.provinceName}; '}'
-                          '${e.cityName == null ? '' : '${e.cityName}; '}'
-                          '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
-                          '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
-                          '${e.destinationCode == null ? '' : '${e.destinationCode}'}'
-                      .splitMapJoin(
-                    ';',
-                    onMatch: (p0) => '; ',
-                  ),
+                  e.asFacilityFormFormat(),
+                  // '${e.zipCode == null || e.zipCode == '00000' ? '' : '${e.zipCode}; '}'
+                  //         '${e.provinceName == null ? '' : '${e.provinceName}; '}'
+                  //         '${e.cityName == null ? '' : '${e.cityName}; '}'
+                  //         '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
+                  //         '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
+                  //         '${e.destinationCode == null ? '' : '${e.destinationCode}'}'
+                  //     .splitMapJoin(
+                  //   ';',
+                  //   onMatch: (p0) => '; ',
+                  // ),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: textColor(context),
                       ),
@@ -107,12 +108,13 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             },
             itemAsString: widget.itemAsString ??
                 (Destination e) => ''
-                    '${e.zipCode == null ? '' : '${e.zipCode}; '}'
-                    '${e.provinceName == null ? '' : '${e.provinceName}; '}'
-                    '${e.cityName == null ? '' : '${e.cityName}; '}'
-                    '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
-                    '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
-                    '${e.destinationCode == null ? '' : '${e.destinationCode}; '}',
+                    '${e.asFacilityFormFormat()}',
+            // '${e.zipCode == null ? '' : '${e.zipCode}; '}'
+            // '${e.provinceName == null ? '' : '${e.provinceName}; '}'
+            // '${e.cityName == null ? '' : '${e.cityName}; '}'
+            // '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
+            // '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
+            // '${e.destinationCode == null ? '' : '${e.destinationCode}; '}',
             // '${e.countryName == null ? '' : '${e.countryName}'}',
             onChanged: widget.onChanged,
             value: widget.value,
