@@ -505,7 +505,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                       ),
                       titleFontWeight: bold,
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 82),
                   ],
                 ),
               ),
