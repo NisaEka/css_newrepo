@@ -40,7 +40,7 @@ class PantauPaketmuState extends GetxController {
   UserModel? basic;
 
   String? selectedStatusPrint;
-  String? selectedTipeKiriman;
+  String? selectedTipeKiriman = 'cod';
 
   // Reactive DateFilter
   final date = Rxn<String>(

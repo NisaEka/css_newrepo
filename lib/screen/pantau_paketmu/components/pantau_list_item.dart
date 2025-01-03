@@ -119,278 +119,292 @@ class PantauItems extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 3),
-                          decoration: BoxDecoration(
-                              color: isLoading ? greyColor : Colors.transparent,
-                              borderRadius: BorderRadius.circular(5)),
-                          width: isLoading ? Get.width / 3 : null,
-                          child: Text(
-                            (item?.status ?? '').tr,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        isLoading
-                            ? const SizedBox(height: 5)
-                            : const SizedBox(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 3),
-                          decoration: BoxDecoration(
-                              color: isLoading ? greyColor : Colors.transparent,
-                              borderRadius: BorderRadius.circular(5)),
-                          width: isLoading ? Get.width / 5 : null,
-                          child: Text(
-                            c.state.selectedKiriman == 0
-                                ? item?.totalCod.toString() ?? ''
-                                : c.state.selectedKiriman == 1
-                                    ? item?.totalCodOngkir.toString() ?? ''
-                                    : item?.totalNonCod.toString() ?? '',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        isLoading
-                            ? const SizedBox(height: 5)
-                            : const SizedBox(),
-                        // COD
-                        c.state.selectedKiriman == 0 ||
-                                c.state.selectedKiriman == 1
-                            ? Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 3),
-                                decoration: BoxDecoration(
-                                    color: isLoading
-                                        ? greyColor
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(5)),
-                                width: 230,
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: blueJNE,
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(color: blueJNE),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8),
-                                            child: Row(
-                                              children: [
-                                                const SizedBox(width: 4),
-                                                const Text(
-                                                  // c.state.selectedKiriman == 0
-                                                  //     ? "COD"
-                                                  //     : c.state.selectedKiriman == 1
-                                                  //     ? "COD ONGKIR"
-                                                  //     : '',
-                                                  'COD',
-                                                  style: TextStyle(
-                                                      color: whiteColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 10),
-                                                ),
-                                                const SizedBox(width: 14),
-                                                Container(
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    color: whiteColor,
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topRight:
-                                                          Radius.circular(5),
-                                                      bottomRight:
-                                                          Radius.circular(5),
-                                                    ),
-                                                  ),
-                                                  width: 105,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 3),
-                                                    child: Text(
-                                                      c.state.selectedKiriman ==
-                                                              0
-                                                          ? 'Rp. ${item?.codAmount != null ? NumberFormat('#,##0', 'id').format(int.parse(item!.codAmount.toString())) : '0'}'
-                                                          : c.state.selectedKiriman ==
-                                                                  1
-                                                              ? 'Rp. ${item?.codOngkirAmount != null ? NumberFormat('#,##0', 'id').format(int.parse(item!.codOngkirAmount.toString())) : '0'}'
-                                                              : "Rp. 0",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .labelMedium
-                                                          ?.copyWith(
-                                                              fontSize: 10,
-                                                              color:
-                                                                  greyDarkColor1),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                SizedBox(
-                                                  width: 40,
-                                                  child: Text(
-                                                    c.state.selectedKiriman == 0
-                                                        ? '${item?.codAmountPercentage}%'
-                                                        : c.state.selectedKiriman ==
-                                                                1
-                                                            ? '${item?.codOngkirAmountPercentage}%'
-                                                            : "0%",
-                                                    style: const TextStyle(
-                                                        color: whiteColor,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 10),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox(),
-                        isLoading
-                            ? const SizedBox(height: 5)
-                            : const SizedBox(),
-                        // Ongkir
-                        c.state.selectedKiriman == 0 ||
-                                c.state.selectedKiriman == 2
-                            ? Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 3),
-                                decoration: BoxDecoration(
-                                    color: isLoading
-                                        ? greyColor
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(5)),
-                                width: 230,
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: warningColor,
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(color: warningColor),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                const Text(
-                                                  'Ongkir',
-                                                  style: TextStyle(
-                                                      color: whiteColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 10),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Container(
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    color: whiteColor,
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topRight:
-                                                          Radius.circular(5),
-                                                      bottomRight:
-                                                          Radius.circular(5),
-                                                    ),
-                                                  ),
-                                                  width: 105,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 3),
-                                                    child: Text(
-                                                      c.state.selectedKiriman ==
-                                                              0
-                                                          ? 'Rp. ${item?.ongkirCodAmount != null ? NumberFormat('#,##0', 'id').format(int.parse(item!.ongkirCodAmount.toString())) : '0'}'
-                                                          : c.state.selectedKiriman ==
-                                                                  1
-                                                              ? 'Rp. 0'
-                                                              : 'Rp. ${item?.ongkirNonCodAmount != null ? NumberFormat('#,##0', 'id').format(int.parse(item!.ongkirNonCodAmount.toString())) : '0'}',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .labelMedium
-                                                          ?.copyWith(
-                                                              fontSize: 10,
-                                                              color:
-                                                                  greyDarkColor1),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                SizedBox(
-                                                  width: 40,
-                                                  child: Text(
-                                                    c.state.selectedKiriman == 0
-                                                        ? '${item?.ongkirCodAmountPercentage}%'
-                                                        : c.state.selectedKiriman ==
-                                                                1
-                                                            ? '0%'
-                                                            : '${item?.ongkirNonCodAmountPercentage}%',
-                                                    style: const TextStyle(
-                                                        color: whiteColor,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 10),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox(),
-                      ],
-                    ),
-                    const Spacer(),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: isLoading ? greyColor : Colors.transparent,
-                          borderRadius: BorderRadius.circular(5)),
+                    Expanded(
+                      flex: 4,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 10),
-                          getStatusIcon(item?.status ?? ''),
-                          // Icon(getStatusIcon(item?.status ?? ''),
-                          //     color: greyLightColor2, size: 100),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 3),
+                            decoration: BoxDecoration(
+                                color:
+                                    isLoading ? greyColor : Colors.transparent,
+                                borderRadius: BorderRadius.circular(5)),
+                            width: isLoading ? Get.width / 3 : null,
+                            child: Text(
+                              (item?.status ?? '').tr,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          isLoading
+                              ? const SizedBox(height: 5)
+                              : const SizedBox(),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 3),
+                            decoration: BoxDecoration(
+                                color:
+                                    isLoading ? greyColor : Colors.transparent,
+                                borderRadius: BorderRadius.circular(5)),
+                            width: isLoading ? Get.width / 5 : null,
+                            child: Text(
+                              c.state.selectedKiriman == 0
+                                  ? item?.totalCod.toString() ?? ''
+                                  : c.state.selectedKiriman == 1
+                                      ? item?.totalCodOngkir.toString() ?? ''
+                                      : item?.totalNonCod.toString() ?? '',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          isLoading
+                              ? const SizedBox(height: 5)
+                              : const SizedBox(),
+                          // COD
+                          c.state.selectedKiriman == 0 ||
+                                  c.state.selectedKiriman == 1
+                              ? Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 3),
+                                  decoration: BoxDecoration(
+                                      color: isLoading
+                                          ? greyColor
+                                          : Colors.transparent,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  width: 230,
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: blueJNE,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(color: blueJNE),
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8),
+                                              child: Row(
+                                                children: [
+                                                  const SizedBox(width: 4),
+                                                  const Text(
+                                                    // c.state.selectedKiriman == 0
+                                                    //     ? "COD"
+                                                    //     : c.state.selectedKiriman == 1
+                                                    //     ? "COD ONGKIR"
+                                                    //     : '',
+                                                    'COD',
+                                                    style: TextStyle(
+                                                        color: whiteColor,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 10),
+                                                  ),
+                                                  const SizedBox(width: 14),
+                                                  Container(
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      color: whiteColor,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topRight:
+                                                            Radius.circular(5),
+                                                        bottomRight:
+                                                            Radius.circular(5),
+                                                      ),
+                                                    ),
+                                                    width: 105,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 3),
+                                                      child: Text(
+                                                        c.state.selectedKiriman ==
+                                                                0
+                                                            ? 'Rp. ${item?.codAmount != null ? NumberFormat('#,##0', 'id').format(int.parse(item!.codAmount.toString())) : '0'}'
+                                                            : c.state.selectedKiriman ==
+                                                                    1
+                                                                ? 'Rp. ${item?.codOngkirAmount != null ? NumberFormat('#,##0', 'id').format(int.parse(item!.codOngkirAmount.toString())) : '0'}'
+                                                                : "Rp. 0",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .labelMedium
+                                                            ?.copyWith(
+                                                                fontSize: 10,
+                                                                color:
+                                                                    greyDarkColor1),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  SizedBox(
+                                                    width: 40,
+                                                    child: Text(
+                                                      c.state.selectedKiriman ==
+                                                              0
+                                                          ? '${item?.codAmountPercentage}%'
+                                                          : c.state.selectedKiriman ==
+                                                                  1
+                                                              ? '${item?.codOngkirAmountPercentage}%'
+                                                              : "0%",
+                                                      style: const TextStyle(
+                                                          color: whiteColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 10),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox(),
+                          isLoading
+                              ? const SizedBox(height: 5)
+                              : const SizedBox(),
+                          // Ongkir
+                          c.state.selectedKiriman == 0 ||
+                                  c.state.selectedKiriman == 2
+                              ? Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 3),
+                                  decoration: BoxDecoration(
+                                      color: isLoading
+                                          ? greyColor
+                                          : Colors.transparent,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  width: 230,
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: warningColor,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border:
+                                              Border.all(color: warningColor),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const Text(
+                                                    'Ongkir',
+                                                    style: TextStyle(
+                                                        color: whiteColor,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 10),
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  Container(
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      color: whiteColor,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topRight:
+                                                            Radius.circular(5),
+                                                        bottomRight:
+                                                            Radius.circular(5),
+                                                      ),
+                                                    ),
+                                                    width: 105,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 3),
+                                                      child: Text(
+                                                        c.state.selectedKiriman ==
+                                                                0
+                                                            ? 'Rp. ${item?.ongkirCodAmount != null ? NumberFormat('#,##0', 'id').format(int.parse(item!.ongkirCodAmount.toString())) : '0'}'
+                                                            : c.state.selectedKiriman ==
+                                                                    1
+                                                                ? 'Rp. 0'
+                                                                : 'Rp. ${item?.ongkirNonCodAmount != null ? NumberFormat('#,##0', 'id').format(int.parse(item!.ongkirNonCodAmount.toString())) : '0'}',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .labelMedium
+                                                            ?.copyWith(
+                                                                fontSize: 10,
+                                                                color:
+                                                                    greyDarkColor1),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  SizedBox(
+                                                    width: 40,
+                                                    child: Text(
+                                                      c.state.selectedKiriman ==
+                                                              0
+                                                          ? '${item?.ongkirCodAmountPercentage}%'
+                                                          : c.state.selectedKiriman ==
+                                                                  1
+                                                              ? '0%'
+                                                              : '${item?.ongkirNonCodAmountPercentage}%',
+                                                      style: const TextStyle(
+                                                          color: whiteColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 10),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox(),
                         ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: isLoading ? greyColor : Colors.transparent,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            getStatusIcon(item?.status ?? ''),
+                          ],
+                        ),
                       ),
                     ),
                   ],

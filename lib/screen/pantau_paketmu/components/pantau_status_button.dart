@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
@@ -10,187 +11,144 @@ class PantauStatusButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PantauPaketmuController>(
-        init: PantauPaketmuController(),
-        builder: (c) {
-          return Container(
-            decoration: BoxDecoration(
-              color: primaryColor(context),
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
+      init: PantauPaketmuController(),
+      builder: (c) {
+        return Container(
+          decoration: BoxDecoration(
+            color: primaryColor(context),
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _statusCard(
+                context: context,
+                controller: c,
+                label: 'COD'.tr,
+                count: c.state.cod,
+                selected: c.state.selectedTipeKiriman == 'cod',
+                onTap: () {
+                  if (c.state.selectedTipeKiriman != 'cod') {
                     c.state.selectedKiriman = 0;
                     c.state.transType = '';
                     c.state.selectedTipeKiriman = 'cod';
                     c.update();
                     c.state.pagingController.refresh();
-                  },
-                  child: Container(
-                    width: Get.width * 0.28,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: c.state.selectedKiriman == 0
-                          ? primaryColor(context)
-                          : whiteColor,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        bottomLeft: Radius.circular(8),
-                      ),
-                      // border: const Border(
-                      //   right: BorderSide(color: greyDarkColor1),
-                      // ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          c.state.cod.toString(),
-                          // style: listTitleTextStyle.copyWith(
-                          //   color: c.state.selectedKiriman == 0
-                          //       ? whiteColor
-                          //       : blueJNE,
-                          // ),
-                          style: sublistTitleTextStyle.copyWith(
-                            fontSize: 10,
-                            color: c.state.selectedKiriman == 0
-                                ? whiteColor
-                                : primaryColor(context),
-                          ),
-                        ),
-                        Text(
-                          'COD'.tr,
-                          style: sublistTitleTextStyle.copyWith(
-                            fontSize: 10,
-                            color: c.state.selectedKiriman == 0
-                                ? whiteColor
-                                : greyColor,
-                            // style: listTitleTextStyle.copyWith(
-                            //   color: c.state.selectedKiriman == 0
-                            //       ? whiteColor
-                            //       : greyColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
+                  }
+                },
+                isFirst: true,
+                isLast: false,
+              ),
+              _statusCard(
+                context: context,
+                controller: c,
+                label: 'COD ONGKIR'.tr,
+                count: c.state.codOngkir,
+                selected: c.state.selectedTipeKiriman == 'cod ongkir',
+                onTap: () {
+                  if (c.state.selectedTipeKiriman != 'cod ongkir') {
                     c.state.selectedKiriman = 1;
                     c.state.transType = 'cod ongkir';
                     c.state.selectedTipeKiriman = 'cod ongkir';
                     c.update();
                     c.state.pagingController.refresh();
-                  },
-                  child: Container(
-                    width: Get.width * 0.28,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: c.state.selectedKiriman == 1
-                          ? primaryColor(context)
-                          : whiteColor,
-                      // border: const Border(
-                      //   right: BorderSide(color: greyDarkColor1),
-                      //   left: BorderSide(color: greyDarkColor1),
-                      // ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          c.state.codOngkir.toString(),
-                          // style: listTitleTextStyle.copyWith(
-                          //   color: c.state.selectedKiriman == 1
-                          //       ? whiteColor
-                          //       : blueJNE,
-                          // ),
-                          style: sublistTitleTextStyle.copyWith(
-                            fontSize: 10,
-                            color: c.state.selectedKiriman == 1
-                                ? whiteColor
-                                : primaryColor(context),
-                          ),
-                        ),
-                        Text(
-                          'COD ONGKIR'.tr,
-                          // style: listTitleTextStyle.copyWith(
-                          //   color: c.state.selectedKiriman == 1
-                          //       ? whiteColor
-                          //       : greyColor,
-                          // ),
-                          style: sublistTitleTextStyle.copyWith(
-                            fontSize: 10,
-                            color: c.state.selectedKiriman == 1
-                                ? whiteColor
-                                : greyColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
+                  }
+                },
+                isFirst: false,
+                isLast: false,
+              ),
+              _statusCard(
+                context: context,
+                controller: c,
+                label: 'NON COD'.tr,
+                count: c.state.noncod,
+                selected: c.state.selectedTipeKiriman == 'non cod',
+                onTap: () {
+                  if (c.state.selectedTipeKiriman != 'non cod') {
                     c.state.selectedKiriman = 2;
                     c.state.transType = 'NON COD';
                     c.state.selectedTipeKiriman = 'non cod';
                     c.update();
                     c.state.pagingController.refresh();
-                  },
-                  child: Container(
-                    width: Get.width * 0.28,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: c.state.selectedKiriman == 2
-                          ? primaryColor(context)
+                  }
+                },
+                isFirst: false,
+                isLast: true,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _statusCard({
+    required BuildContext context,
+    required PantauPaketmuController controller,
+    required String label,
+    required int count,
+    required bool selected,
+    required VoidCallback onTap,
+    required bool isFirst,
+    required bool isLast,
+  }) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 45,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: iconColor(context),
+              width: 0.5,
+            ),
+            color: selected
+                ? primaryColor(context)
+                : AppConst.isLightTheme(context)
+                    ? whiteColor
+                    : bgDarkColor,
+            borderRadius: BorderRadius.horizontal(
+              left: isFirst ? const Radius.circular(8) : Radius.zero,
+              right: isLast ? const Radius.circular(8) : Radius.zero,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                count.toString(),
+                style: sublistTitleTextStyle.copyWith(
+                  fontWeight: bold,
+                  color: selected
+                      ? whiteColor
+                      : AppConst.isLightTheme(context)
+                          ? blueJNE
                           : whiteColor,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
-                      ),
-                      // border: const Border(
-                      //   right: BorderSide(color: greyDarkColor1),
-                      // ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          c.state.noncod.toString(),
-                          // style: listTitleTextStyle.copyWith(
-                          //   color: c.state.selectedKiriman == 2
-                          //       ? whiteColor
-                          //       : blueJNE,
-                          // ),
-                          style: sublistTitleTextStyle.copyWith(
-                            fontSize: 10,
-                            color: c.state.selectedKiriman == 2
-                                ? whiteColor
-                                : primaryColor(context),
-                          ),
-                        ),
-                        Text(
-                          'NON COD'.tr,
-                          // style: listTitleTextStyle.copyWith(
-                          //   color: c.state.selectedKiriman == 2
-                          //       ? whiteColor
-                          //       : greyColor,
-                          // ),
-                          style: sublistTitleTextStyle.copyWith(
-                            fontSize: 10,
-                            color: c.state.selectedKiriman == 2
-                                ? whiteColor
-                                : greyColor,
-                          ),
-                        )
-                      ],
-                    ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 1),
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: sublistTitleTextStyle.copyWith(
+                    fontSize: 10,
+                    color: selected
+                        ? whiteColor
+                        : AppConst.isLightTheme(context)
+                            ? greyColor
+                            : whiteColor,
                   ),
                 ),
-              ],
-            ),
-          );
-        });
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
