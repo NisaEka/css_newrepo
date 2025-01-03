@@ -10,12 +10,14 @@ class TransactionCard extends StatelessWidget {
   final double? percentage;
   final String count;
   final String? countValue;
+  final String? lineChartCountValue;
   final String subtitle;
   final Color? color;
   final IconData? icon;
   final Color? statusColor;
   final Widget? suffixChart;
   final Widget? prefixChart;
+  final Widget? countValueChart;
   final bool isLoading;
   final double? innerPadding;
   final double? countFontSize;
@@ -38,6 +40,7 @@ class TransactionCard extends StatelessWidget {
     this.suffixChart,
     this.isLoading = false,
     this.prefixChart,
+    this.countValueChart,
     this.innerPadding,
     this.countFontSize,
     this.notificationLabel,
@@ -47,6 +50,7 @@ class TransactionCard extends StatelessWidget {
     this.countValue,
     this.titleWidth,
     this.height,
+    this.lineChartCountValue,
   }) : super(key: key);
 
   @override
@@ -107,8 +111,46 @@ class TransactionCard extends StatelessWidget {
                 count.toString().length >= 5
                     ? SizedBox(height: innerPadding ?? 17)
                     : SizedBox(height: innerPadding ?? 13),
+                lineChartCountValue != null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // prefixChart ?? const SizedBox(),
+                          // prefixChart != null ? const Spacer() : const SizedBox(),
+                          const SizedBox(height: 30),
+                          Text(
+                            lineChartCountValue ?? '',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          // RichText(
+                          //   text: TextSpan(
+                          //     children: [
+                          //       TextSpan(
+                          //         text: countValue,
+                          //         style: Theme.of(context).textTheme.titleMedium,
+                          //       ),
+                          //       TextSpan(
+                          //         text: count.toString(),
+                          //         style: Theme.of(context)
+                          //             .textTheme
+                          //             .titleLarge
+                          //             ?.copyWith(
+                          //                 fontSize: count.toString().length >= 5
+                          //                     ? 16 - (count.toString().length - 5)
+                          //                     : (countFontSize ?? 22)),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          countValueChart != null
+                              ? const Spacer()
+                              : const SizedBox(),
+                          countValueChart ?? const SizedBox(),
+                        ],
+                      )
+                    : const SizedBox(),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     prefixChart ?? const SizedBox(),
                     prefixChart != null ? const Spacer() : const SizedBox(),

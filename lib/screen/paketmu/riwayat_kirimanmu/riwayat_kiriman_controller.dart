@@ -112,16 +112,16 @@ class RiwayatKirimanController extends BaseController {
         // transactionList.addAll(state.pagingController.itemList ?? []);
       }
 
-      await setting.getSettingLabel().then(
-        (value) async {
-          await storage.writeString(
-            StorageCore.transactionLabel,
-            value.data?.labels?.where((e) => e.enabled ?? false).first.name,
-          );
-          await storage.writeString(StorageCore.shippingCost,
-              value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE");
-        },
-      );
+      // await setting.getSettingLabel().then(
+      //   (value) async {
+      //     await storage.writeString(
+      //       StorageCore.transactionLabel,
+      //       value.data?.labels?.where((e) => e.enabled ?? false).first.name,
+      //     );
+      //     await storage.writeString(StorageCore.shippingCost,
+      //         value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE");
+      //   },
+      // );
     } catch (e) {
       AppLogger.e('error getTransaction $e');
       state.pagingController.error = e;

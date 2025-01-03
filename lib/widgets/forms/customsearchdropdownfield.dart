@@ -89,7 +89,7 @@ class _CustomSearchDropdownFieldState<T>
                   fontSize: 16,
                   color: AppConst.isLightTheme(context)
                       ? greyDarkColor1
-                      : warningColor,
+                      : whiteColor,
                   // fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(

@@ -125,7 +125,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: AppConst.isLightTheme(context)
                       ? Colors.black
-                      : warningColor,
+                      : whiteColor,
                 ),
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,

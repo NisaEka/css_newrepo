@@ -45,8 +45,8 @@ class ListDropshipperButton extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Icon(
-                      Icons.keyboard_arrow_right,
-                      color: secondaryColor(context),
+                      Icons.arrow_circle_right_rounded,
+                      color: primaryColor(context),
                     )
                   ],
                 ),
