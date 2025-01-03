@@ -7,11 +7,13 @@ import 'package:get/get.dart';
 class StatusFilterField extends StatefulHookWidget {
   final ValueChanged<String> onChanged;
   final List<String> statuses;
+  final String? selectedStatus;
 
   const StatusFilterField({
     super.key,
     required this.onChanged,
     required this.statuses,
+    this.selectedStatus,
   });
 
   @override
@@ -20,6 +22,14 @@ class StatusFilterField extends StatefulHookWidget {
 
 class _StatusFilterFieldState extends State<StatusFilterField> {
   String? selectedStatusKiriman;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      selectedStatusKiriman = widget.selectedStatus;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

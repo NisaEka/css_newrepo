@@ -16,7 +16,7 @@ class TransactionServicesList extends StatelessWidget {
           return SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             sliver: c.state.serviceList.isEmpty &&
-                    c.state.isOnline &&
+                    //c.state.isOnline &&
                     !c.state.isServiceLoad
                 ? SliverToBoxAdapter(
                     child: GestureDetector(

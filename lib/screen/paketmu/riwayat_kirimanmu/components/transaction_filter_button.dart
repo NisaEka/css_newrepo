@@ -38,6 +38,7 @@ class TransactionFilterButton extends HookWidget {
                       ),
                       StatusFilterField(
                         statuses: c.state.listStatusKiriman,
+                        selectedStatus: c.state.selectedStatusKiriman,
                         onChanged: (value) {
                           c.state.selectedStatusKiriman = value;
                           c.update();

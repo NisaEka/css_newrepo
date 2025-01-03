@@ -594,6 +594,7 @@ class LanguageEN {
       "Tampilan Telepon Pengirim": "View Shipper Number",
       "Alamat email sudah digunakan": "Email address is already in use",
       "check_connection": "Connection Failed",
+      "Service tidak tersedia": "Service not available",
     };
   }
 }

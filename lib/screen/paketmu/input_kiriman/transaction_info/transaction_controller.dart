@@ -340,7 +340,13 @@ class TransactionController extends BaseController {
           AppSnackBar.error('Service tidak tersedia'.tr);
         }
         if (value.code != 200) {
-          AppSnackBar.error(value.message.toString());
+          if (value.code == 400) {
+            AppSnackBar.error("Service tidak tersedia".tr);
+          } else {
+            AppSnackBar.error(value.message.toString());
+            state.isOnline = false;
+            update();
+          }
           update();
         }
       });
