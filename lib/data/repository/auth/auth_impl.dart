@@ -37,6 +37,7 @@ class AuthRepositoryImpl extends AuthRepository {
         ),
       );
     } on DioException catch (e) {
+      AppLogger.e("error post login : $e");
       return BaseResponse<PostLoginModel>.fromJson(
         e.response?.data,
         (json) => PostLoginModel.fromJson(

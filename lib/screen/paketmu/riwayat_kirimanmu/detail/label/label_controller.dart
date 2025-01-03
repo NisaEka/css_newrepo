@@ -32,6 +32,7 @@ class LabelController extends BaseController {
   bool shippingCost = false;
   bool hiddenPhoneShipper = false;
   PdfPageFormat? sizeLabel;
+
   BoxConstraints? boxConstraints;
 
   @override
@@ -44,10 +45,8 @@ class LabelController extends BaseController {
     try {
       await setting.getSettingLabel().then(
         (value) async {
-          await storage.writeString(
-            StorageCore.transactionLabel,
-            value.data?.labels?.where((e) => e.enabled ?? false).first.name,
-          );
+          await storage.writeString(StorageCore.transactionLabel,
+              value.data?.labels?.where((e) => e.enabled ?? false).first.name);
           await storage.writeString(StorageCore.shippingCost,
               value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE");
           await storage.writeString(StorageCore.hiddenPhoneShipper,

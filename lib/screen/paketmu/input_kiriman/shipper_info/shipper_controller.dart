@@ -498,9 +498,12 @@ class ShipperController extends BaseController {
   void onReady() {
     super.onReady();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      AppLogger.i('shipper info : ${state.shipper?.zipCode?.isEmpty}');
-      if ((state.shipper?.zipCode == null) ||
-          (state.shipper?.address == null)) {
+      AppLogger.i('shipper info : ${state.userBasic?.toJson()}');
+      // if (state.isLoading == false) {
+      if ((state.userBasic?.zipCode == null) ||
+          (state.userBasic?.address == null)) {
+        AppLogger.i('shipper info : ${state.shipper?.zipCode?.isEmpty}');
+
         // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
         await Get.dialog(
           DefaultAlertDialog(
@@ -510,12 +513,13 @@ class ShipperController extends BaseController {
                     .tr,
             confirmButtonTitle: 'Lengkapi profil'.tr,
             onConfirm: () {
-              Get.close(2);
+              // Get.close(2);
               Get.off(const EditProfilScreen());
             },
           ),
         );
       }
+      // }
     });
   }
 }
