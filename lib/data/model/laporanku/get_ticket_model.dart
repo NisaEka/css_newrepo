@@ -4,6 +4,7 @@ class TicketModel {
     String? cnote,
     String? priority,
     String? status,
+    String? milesStatus,
     String? createdBy,
     String? createdDate,
     String? updatedDate,
@@ -14,6 +15,7 @@ class TicketModel {
     _cnote = cnote;
     _priority = priority;
     _status = status;
+    _milesStatus = milesStatus;
     _createdBy = createdBy;
     _createdDate = createdDate;
     _updatedDate = updatedDate;
@@ -26,6 +28,7 @@ class TicketModel {
     _cnote = json['cnote'];
     _priority = json['priority'];
     _status = json['status'];
+    _milesStatus = json['milesStatus'];
     _createdBy = json['createdBy'];
     _createdDate = json['createdDate'];
     _updatedDate = json['updatedDate'];
@@ -38,6 +41,7 @@ class TicketModel {
   String? _cnote;
   String? _priority;
   String? _status;
+  String? _milesStatus;
   String? _createdBy;
   String? _createdDate;
   String? _updatedDate;
@@ -49,6 +53,7 @@ class TicketModel {
     String? cnote,
     String? priority,
     String? status,
+    String? milesStatus,
     String? createdBy,
     String? createdDate,
     String? updatedDate,
@@ -60,6 +65,7 @@ class TicketModel {
         cnote: cnote ?? _cnote,
         priority: priority ?? _priority,
         status: status ?? _status,
+        milesStatus: milesStatus ?? _milesStatus,
         createdBy: createdBy ?? _createdBy,
         createdDate: createdDate ?? _createdDate,
         updatedDate: updatedDate ?? _updatedDate,
@@ -74,6 +80,8 @@ class TicketModel {
   String? get priority => _priority;
 
   String? get status => _status;
+
+  String? get milesStatus => _milesStatus;
 
   String? get createdBy => _createdBy;
 
@@ -91,6 +99,7 @@ class TicketModel {
     map['cnote'] = _cnote;
     map['priority'] = _priority;
     map['status'] = _status;
+    map['milesStatus'] = _milesStatus;
     map['createdBy'] = _createdBy;
     map['createdDate'] = _createdDate;
     map['updatedDate'] = _updatedDate;
