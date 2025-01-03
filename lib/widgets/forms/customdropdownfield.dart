@@ -41,13 +41,14 @@ class CustomDropDownField<T> extends StatelessWidget {
     }
     return DropdownButtonFormField(
       // autovalidateMode: AutovalidateMode.always,
+      dropdownColor: dropDownColor(context),
       validator: validator,
       decoration: const InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 2)),
       icon: const Icon(Icons.keyboard_arrow_down),
       hint: Text(
         hintText ?? label ?? '',
-        style: hintTextStyle,
+        style: Theme.of(context).inputDecorationTheme.labelStyle,
       ),
       value: value,
       style: Theme.of(context)

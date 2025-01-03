@@ -66,10 +66,12 @@ class PantauPaketmuFilter extends HookWidget {
                       // ),
                       // Status kiriman
                       SliverToBoxAdapter(
-                        child: CustomFormLabel(label: 'Status Kiriman'.tr),
+                        child: CustomFormLabel(
+                          label: 'Status Kiriman'.tr,
+                        ),
                       ),
                       SliverPadding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.only(top: 10),
                         sliver: SliverGrid(
                           delegate: SliverChildBuilderDelegate(
                               (context, index) {
@@ -140,26 +142,22 @@ class PantauPaketmuFilter extends HookWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 10),
+                            // const SizedBox(height: 10),
                             // Tipe Kiriman
                             CustomDropDownField(
                               items: controller.state.listTipeKiriman
                                   .map(
                                     (e) => DropdownMenuItem(
                                       value: e,
-                                      child: Text(
-                                        e.toUpperCase().tr,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                                color: formTextColor(context)),
-                                      ),
+                                      child: Text(e.toUpperCase().tr,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium),
                                     ),
                                   )
                                   .toList(),
-                              label: 'Tipe Kiriman'.tr,
-                              // hintText: 'Tipe Kiriman'.tr,
+                              // label: 'Tipe Kiriman'.tr,
+                              hintText: 'Tipe Kiriman'.tr,
                               value: controller.state.selectedTipeKiriman,
                               onChanged: (value) {
                                 controller.state.selectedTipeKiriman =

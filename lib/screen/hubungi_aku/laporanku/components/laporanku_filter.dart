@@ -1,5 +1,5 @@
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_controller.dart';
-import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
+import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/dates_filter_content.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,7 +33,7 @@ class FilterComponent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 10),
-                      CustomDropDownFormField(
+                      CustomDropDownField(
                         label: "Status",
                         items: c.state.statusList
                             .map((e) => DropdownMenuItem(
