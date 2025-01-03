@@ -13,14 +13,14 @@ import 'package:get/get.dart';
 class StickerMegahubHybrid1 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
-  final bool maskPhoneShipper;
+  final bool hiddenPhoneShipper;
   final String? stickerLabel;
 
   const StickerMegahubHybrid1({
     super.key,
     required this.data,
     this.shippingCost = false,
-    this.maskPhoneShipper = false,
+    this.hiddenPhoneShipper = false,
     this.stickerLabel,
   });
 
@@ -30,7 +30,11 @@ class StickerMegahubHybrid1 extends StatelessWidget {
       style: const TextStyle(color: Colors.black),
       child: Column(
         children: [
-          StickerMegahubHybrid2(data: data).sticker(),
+          StickerMegahubHybrid2(
+            data: data,
+            shippingCost: shippingCost,
+            hiddenPhoneShipper: hiddenPhoneShipper,
+          ).sticker(),
           const SizedBox(height: 20),
           sticker2(),
           Center(

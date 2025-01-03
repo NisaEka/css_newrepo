@@ -11,6 +11,7 @@ class PengaturanLabelController extends BaseController {
 
   SettingLabelsModel? selectedSticker;
   String shipcost = "";
+  String hiddenPhone = "";
 
   List<SettingLabelsModel> labelList = [];
 
@@ -26,12 +27,15 @@ class PengaturanLabelController extends BaseController {
         labelList.addAll(value.data?.labels ?? []);
         selectedSticker = labelList.where((e) => e.enabled == true).first;
         shipcost = (value.data?.priceLabel != '0') ? "PUBLISH" : "HIDE";
+        hiddenPhone =
+            (value.data?.hideShipperphoneLabel != 'Y') ? "PUBLISH" : "HIDE";
       });
     } catch (e) {
       AppLogger.e('error initData pengaturan label', e);
       selectedSticker = SettingLabelsModel.fromJson(
           await storage.readData(StorageCore.transactionLabel));
       shipcost = await storage.readString(StorageCore.shippingCost);
+      hiddenPhone = await storage.readString(StorageCore.hiddenPhoneShipper);
     }
 
     update();
@@ -44,11 +48,14 @@ class PengaturanLabelController extends BaseController {
       setting
           .updateSettingLabel(
         selectedSticker?.id?.toString() ?? '',
-        shipcost == "HIDE" ? 0 : 1,
+        shipcost == "PUBLISH" ? 1 : 0,
+        hiddenPhone == "PUBLISH" ? 'N' : 'Y',
       )
           .then((value) async {
         if (value.code == 200) {
           await storage.writeString(StorageCore.shippingCost, shipcost);
+          await storage.writeString(
+              StorageCore.hiddenPhoneShipper, hiddenPhone);
           await storage
               .writeString(StorageCore.transactionLabel, selectedSticker?.name)
               .then((value) => AppSnackBar.success('Label di update'.tr));

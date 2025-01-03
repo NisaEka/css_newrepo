@@ -28,7 +28,7 @@ class StorageCore {
   static const String isFirstLogin = "first_login";
   static const String transactionTemp = "transaction_temp";
   static const String themeMode = "theme";
-  static const String maskPhoneShipper = "mask_phone_shipper";
+  static const String hiddenPhoneShipper = "hidden_phone_shipper";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);

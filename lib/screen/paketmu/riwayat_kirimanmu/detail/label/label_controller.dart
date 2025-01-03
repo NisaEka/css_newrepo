@@ -30,6 +30,7 @@ class LabelController extends BaseController {
 
   String? stickerLabel;
   bool shippingCost = false;
+  bool hiddenPhoneShipper = false;
   PdfPageFormat? sizeLabel;
   BoxConstraints? boxConstraints;
 
@@ -49,6 +50,8 @@ class LabelController extends BaseController {
           );
           await storage.writeString(StorageCore.shippingCost,
               value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE");
+          await storage.writeString(StorageCore.hiddenPhoneShipper,
+              value.data?.hideShipperphoneLabel != 'Y' ? "PUBLISH" : "HIDE");
         },
       );
 
@@ -56,7 +59,10 @@ class LabelController extends BaseController {
 
       stickerLabel = await storage.readString(StorageCore.transactionLabel);
       var shipcost = await storage.readString(StorageCore.shippingCost);
+      var hiddenPhone =
+          await storage.readString(StorageCore.hiddenPhoneShipper);
       shippingCost = shipcost == "HIDE";
+      hiddenPhoneShipper = hiddenPhone == "HIDE";
       if (stickerLabel == "Default") {
         sizeLabel = const PdfPageFormat(
           8.5 * PdfPageFormat.cm,
@@ -143,35 +149,42 @@ class LabelController extends BaseController {
         ? StickerDefault(
             data: data,
             shippingCost: shippingCost,
+            hiddenPhoneShipper: hiddenPhoneShipper,
           )
         : stickerLabel == "Sticker Label (A6 10.50 X 14.80 CM)"
             ? StickerA6(
                 data: data,
                 shippingCost: shippingCost,
+                hiddenPhoneShipper: hiddenPhoneShipper,
               )
             : stickerLabel == "Sticker Label (Mega HUB 1)"
                 ? StickerMegahub1(
                     data: data,
                     shippingCost: shippingCost,
+                    hiddenPhoneShipper: hiddenPhoneShipper,
                   )
                 : stickerLabel == "Sticker Label Vertikal (Mega HUB 1)"
                     ? StickerMegahub2(
                         data: data,
                         shippingCost: shippingCost,
+                        hiddenPhoneShipper: hiddenPhoneShipper,
                       )
                     : stickerLabel == "Sticker Label (Mega HUB HYBRID)"
                         ? StickerMegahubHybrid1(
                             data: data,
                             shippingCost: shippingCost,
+                            hiddenPhoneShipper: hiddenPhoneShipper,
                           )
                         : stickerLabel == "Sticker Label (Mega HUB HYBRID 2)"
                             ? StickerMegahubHybrid2(
                                 data: data,
                                 shippingCost: shippingCost,
+                                hiddenPhoneShipper: hiddenPhoneShipper,
                               )
                             : StickerMegahubHybrid3(
                                 data: data,
                                 shippingCost: shippingCost,
+                                hiddenPhoneShipper: hiddenPhoneShipper,
                               );
   }
 }

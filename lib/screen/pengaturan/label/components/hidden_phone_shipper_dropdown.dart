@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-class MaskShipperPhoneDropdown extends HookWidget {
-  const MaskShipperPhoneDropdown({super.key});
+class HiddenShipperPhoneDropdown extends HookWidget {
+  const HiddenShipperPhoneDropdown({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class MaskShipperPhoneDropdown extends HookWidget {
             margin: const EdgeInsets.only(top: 15),
             child: CustomDropDownField(
               label: 'Tampilan Telepon Pengirim'.tr,
-              value: c.maskPhone.isNotEmpty ? c.maskPhone : "PUBLISH",
+              value: c.hiddenPhone.isNotEmpty ? c.hiddenPhone : "PUBLISH",
               hintText: 'Tampilan Telepon Pengirim'.tr,
               items: [
                 DropdownMenuItem(
@@ -36,7 +36,7 @@ class MaskShipperPhoneDropdown extends HookWidget {
                 ),
               ],
               onChanged: (value) {
-                c.maskPhone = value ?? '';
+                c.hiddenPhone = value ?? '';
                 c.update();
               },
             ),

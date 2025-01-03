@@ -589,7 +589,9 @@ class LanguageEN {
       "Waspada terhadap email phishing, website phishing dan pastikan teliti serta validasi kembali transaksi anda.":
           "Exercise caution regarding phishing emails and websites. Ensure that you carefully re-validate your transactions.",
       "Jangan pernah memberikan PIN/OTP/PASSWORD/PIN CSS/Kode OTP kepada siapapun. Pihak JNE tidak pernah meminta PIN/OTP/PASSWORD/PIN CSS/Kode OTP dari Customer.":
-          "Please do not share your PIN, OTP, Password, or any other sensitive information with anyone. JNE will never request your PIN, OTP, Password, or any other secure codes from customers."
+          "Please do not share your PIN, OTP, Password, or any other sensitive information with anyone. JNE will never request your PIN, OTP, Password, or any other secure codes from customers.",
+      "Tampilkan": "Publish",
+      "Tampilan Telepon Pengirim": "View Shipper Number"
     };
   }
 }

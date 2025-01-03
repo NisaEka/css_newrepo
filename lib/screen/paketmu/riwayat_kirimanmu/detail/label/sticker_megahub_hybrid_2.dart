@@ -12,14 +12,14 @@ import 'package:get/get.dart';
 class StickerMegahubHybrid2 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
-  final bool maskPhoneNumber;
+  final bool hiddenPhoneShipper;
   final String? stickerLabel;
 
   const StickerMegahubHybrid2(
       {super.key,
       required this.data,
       this.shippingCost = false,
-      this.maskPhoneNumber = false,
+      this.hiddenPhoneShipper = false,
       this.stickerLabel});
 
   @override
@@ -88,7 +88,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                 SizedBox(
                   width: (Get.width - 51) / 1.5,
                   child: Text(
-                    'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zipCode ?? ''}, Telp.${data.shipper?.phone ?? ''}',
+                    'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zipCode ?? ''}, Telp.${hiddenPhoneShipper ? data.shipper?.phone?.maskPhoneNumber() : data.shipper?.phone ?? ''}',
                     style: labelTextStyle,
                   ),
                 ),
