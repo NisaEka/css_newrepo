@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/util/ext/double_ext.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class JlcPointBox extends StatelessWidget {
                     color: textColor(context),
                   )),
               Text(
-                jlcPoint.toDouble().round().toCurrency(),
+                jlcPoint.toDouble().toCurrency(),
                 style: formLabelTextStyle.copyWith(color: Colors.green),
               ),
             ],

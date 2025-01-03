@@ -154,6 +154,7 @@ class ShipperController extends BaseController {
           state.shipperAddress.text = ccrf.data?.generalInfo?.address ?? '';
           state.selectedOrigin = shipper.origin;
         } else {
+          AppLogger.w("shipper ccrf is null");
           await profil.getBasicProfil().then((basic) {
             state.shipper = ShipperModel(
               name: ccrf.data?.generalInfo?.brand ?? basic.data?.user?.brand,
@@ -197,6 +198,7 @@ class ShipperController extends BaseController {
       update();
     } catch (e) {
       AppLogger.e('error getAccounts $e');
+      AppLogger.w("shipper get from local");
       state.accountList.clear();
       var accounts = BaseResponse<List<Account>>.fromJson(
         await storage.readData(StorageCore.accounts),
@@ -225,7 +227,6 @@ class ShipperController extends BaseController {
 
     state.isLoading = false;
     // state.isOnline = false;
-
     update();
     if (state.data != null) {
       state.shipper = state.data?.shipper;
@@ -286,6 +287,34 @@ class ShipperController extends BaseController {
       state.isValidate = true;
       update();
     }
+
+    _showUpdateProfileDialog();
+  }
+
+  void _showUpdateProfileDialog() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      AppLogger.i('shipper info : ${state.userCcrf?.toJson()}');
+      AppLogger.i('shipper info : ${state.isLoading}');
+      if (state.isLoading == false) {
+        if ((state.userCcrf?.generalInfo?.zipCode == null) ||
+            (state.userCcrf?.generalInfo?.address == null)) {
+          // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
+          await Get.dialog(
+            DefaultAlertDialog(
+              // title: 'Informasi'.tr,
+              subtitle:
+                  'Profile belum lengkap, silahkan lengkapi profil anda terlebih dahulu'
+                      .tr,
+              confirmButtonTitle: 'Lengkapi profil'.tr,
+              onConfirm: () {
+                // Get.close(2);
+                Get.off(const EditProfilScreen());
+              },
+            ),
+          );
+        }
+      }
+    });
   }
 
   Future<void> saveTemp() async {
@@ -492,34 +521,5 @@ class ShipperController extends BaseController {
       state.isValidate = state.selectedAccount != null;
     }
     update();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      AppLogger.i('shipper info : ${state.userBasic?.toJson()}');
-      // if (state.isLoading == false) {
-      if ((state.userBasic?.zipCode == null) ||
-          (state.userBasic?.address == null)) {
-        AppLogger.i('shipper info : ${state.shipper?.zipCode?.isEmpty}');
-
-        // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
-        await Get.dialog(
-          DefaultAlertDialog(
-            // title: 'Informasi'.tr,
-            subtitle:
-                'Profile belum lengkap, silahkan lengkapi profil anda terlebih dahulu'
-                    .tr,
-            confirmButtonTitle: 'Lengkapi profil'.tr,
-            onConfirm: () {
-              // Get.close(2);
-              Get.off(const EditProfilScreen());
-            },
-          ),
-        );
-      }
-      // }
-    });
   }
 }

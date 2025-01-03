@@ -113,6 +113,12 @@ class ObrolanLaporankuController extends BaseController {
 
   void sendMessage() async {
     try {
+      String? image;
+      if (gettedPhoto != null) {
+        final imageData =
+            await storageRepository.postLaporankuFiles(gettedPhoto ?? File(''));
+        image = imageData.data?.first.fileUrl;
+      }
       await laporanku
           .postTicketMessage(
         DataPostTicketModel(
@@ -122,7 +128,7 @@ class ObrolanLaporankuController extends BaseController {
             subject: subject,
             message: messageInsert.text.toUpperCase(),
             type: 'S',
-            image: null,
+            image: image,
             priority: ticket.priority),
       )
           .then((value) {

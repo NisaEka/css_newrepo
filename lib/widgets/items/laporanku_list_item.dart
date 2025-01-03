@@ -58,7 +58,8 @@ class LaporankuListItem extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 10),
                           decoration: BoxDecoration(
-                            color: data?.status == "Closed"
+                            color: data?.status == "Closed" ||
+                                    data?.milesStatus == "CLOSED"
                                 ? successColor
                                 : data?.status == "Reply CS"
                                     ? warningColor
@@ -67,7 +68,8 @@ class LaporankuListItem extends StatelessWidget {
                           ),
                           child: Text(
                             // data?.status ?? '',
-                            data?.status == "Closed"
+                            data?.status == "Closed" ||
+                                    data?.milesStatus == "CLOSED"
                                 ? "Selesai".tr
                                 : data?.status == "Reply CS"
                                     ? "Masih Diproses".tr

@@ -9,4 +9,5 @@ abstract class StorageRepository {
   Future<DefaultResponseModel<StorageModel?>> postStorage(File file);
   Future<BaseResponse<List<FileModel>?>> postCcrfFile(
       Map<String, String> files);
+  Future<BaseResponse<List<FileModel>?>> postLaporankuFiles(File file);
 }
