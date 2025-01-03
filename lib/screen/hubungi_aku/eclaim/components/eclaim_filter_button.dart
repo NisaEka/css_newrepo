@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_controller.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
@@ -51,7 +52,10 @@ class EclaimFilterButton extends HookWidget {
                                         .textTheme
                                         .bodyMedium
                                         ?.copyWith(
-                                            color: formTextColor(context)),
+                                            color:
+                                                AppConst.isLightTheme(context)
+                                                    ? greyDarkColor2
+                                                    : whiteColor),
                                   ),
                                 ),
                                 DropdownMenuItem(
@@ -62,7 +66,10 @@ class EclaimFilterButton extends HookWidget {
                                         .textTheme
                                         .bodyMedium
                                         ?.copyWith(
-                                            color: formTextColor(context)),
+                                            color:
+                                                AppConst.isLightTheme(context)
+                                                    ? greyDarkColor2
+                                                    : whiteColor),
                                   ),
                                 ),
                                 DropdownMenuItem(
@@ -73,7 +80,10 @@ class EclaimFilterButton extends HookWidget {
                                         .textTheme
                                         .bodyMedium
                                         ?.copyWith(
-                                            color: formTextColor(context)),
+                                            color:
+                                                AppConst.isLightTheme(context)
+                                                    ? greyDarkColor2
+                                                    : whiteColor),
                                   ),
                                 ),
                               ],

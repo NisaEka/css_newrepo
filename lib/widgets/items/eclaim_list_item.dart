@@ -31,7 +31,8 @@ class EclaimListItem extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 5),
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
+          color:
+              AppConst.isLightTheme(context) ? whiteColor : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(

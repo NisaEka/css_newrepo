@@ -30,6 +30,8 @@ class EclaimItems extends StatelessWidget {
             SizedBox(
               height: screenHeight * 0.5,
               child: RefreshIndicator(
+                // backgroundColor: whiteColor,
+                // color: warningColor,
                 onRefresh: () => Future.sync(() {
                   c.state.pagingController.refresh();
                 }),

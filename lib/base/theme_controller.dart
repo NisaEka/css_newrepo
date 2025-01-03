@@ -179,6 +179,10 @@ class CustomTheme {
       onPrimary: infoColor,
       outline: whiteColor,
     ),
+    indicatorColor: warningColor,
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      refreshBackgroundColor: greyColor,
+    ),
     useMaterial3: true,
     iconTheme: const IconThemeData(
       color: greyLightColor1,
