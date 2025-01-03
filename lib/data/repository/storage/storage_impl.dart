@@ -81,6 +81,49 @@ class StorageImpl extends StorageRepository {
     }
   }
 
+  @override
+  Future<BaseResponse<List<FileModel>?>> postLaporankuFiles(File file) async {
+    try {
+      String fileExtension = file.path.split('.').last.toLowerCase();
+
+      String mimeType = _getMimeType(fileExtension);
+
+      var formData = FormData.fromMap({
+        'files': await MultipartFile.fromFile(
+          file.path,
+          filename: file.uri.pathSegments.last,
+          contentType: DioMediaType.parse(mimeType),
+        ),
+      });
+
+      var response = await network.base.post("/uploads/laporanku",
+          data: formData,
+          options: Options(headers: {"Content-Type": "multipart/form-data"}));
+      return BaseResponse<List<FileModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<FileModel>(
+                  (i) => FileModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      AppLogger.e('error post laporanku file ${e.response?.data}');
+      return BaseResponse<List<FileModel>>.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<FileModel>(
+                  (i) => FileModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    }
+  }
+
   String _getMimeType(String fileExtension) {
     switch (fileExtension) {
       case 'jpg':

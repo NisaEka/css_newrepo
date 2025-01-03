@@ -58,7 +58,7 @@ class NotificationListItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(data.title ?? ''),
-                Text(data.createDate?.toDateTimeFormat().toString() ?? ''),
+                Text(data.createDate?.toLongDateTimeFormat().toString() ?? ''),
               ],
             ),
             subtitle: SizedBox(

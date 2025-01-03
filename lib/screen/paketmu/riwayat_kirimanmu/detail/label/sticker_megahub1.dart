@@ -14,11 +14,13 @@ import 'package:pdf/widgets.dart' as pw;
 class StickerMegahub1 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
+  final bool hiddenPhoneShipper;
 
   const StickerMegahub1({
     super.key,
     required this.data,
     this.shippingCost = false,
+    this.hiddenPhoneShipper = false,
   });
 
   @override
@@ -137,7 +139,7 @@ class StickerMegahub1 extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                            'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zipCode ?? ''}, Telp.${data.shipper?.phone ?? ''}\n\n',
+                            'Pengirim: ${data.shipper?.name ?? ''}\n${data.shipper?.address ?? ''}, ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}, ${data.shipper?.zipCode ?? ''}, Telp.${hiddenPhoneShipper ? data.shipper?.phone?.maskPhoneNumber() : data.shipper?.phone ?? ''}\n\n',
                             style: labelTextStyle),
                         const Divider(height: 1),
                         Text(
@@ -321,7 +323,7 @@ class StickerMegahub1 extends StatelessWidget {
                         mainAxisAlignment: pw.MainAxisAlignment.start,
                         children: [
                           pw.Text(
-                              'Pengirim: ${data.shipper?.name}\n${data.shipper?.address}\nTelp.${data.shipper?.phone}',
+                              'Pengirim: ${data.shipper?.name}\n${data.shipper?.address}\nTelp.${hiddenPhoneShipper ? data.shipper?.phone?.maskPhoneNumber() : data.shipper?.phone}',
                               style: const pw.TextStyle(fontSize: 8)),
                           pw.Text(
                               'Penerima: ${data.receiver?.name}\n${data.receiver?.address}\nTelp.${data.receiver?.phone?.maskPhoneNumber()}\n',

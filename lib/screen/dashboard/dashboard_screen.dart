@@ -17,19 +17,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     _checkFirstLogin();
-  //   });
-  // }
-  //
-  // void _checkFirstLogin() {
-  //   final loginController = Get.find<LoginController>();
-  //   loginController.showFirstLoginDialog(context);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
