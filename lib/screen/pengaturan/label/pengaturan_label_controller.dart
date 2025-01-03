@@ -11,6 +11,7 @@ class PengaturanLabelController extends BaseController {
 
   SettingLabelsModel? selectedSticker;
   String shipcost = "";
+  String hiddenPhone = "N";
 
   List<SettingLabelsModel> labelList = [];
 
@@ -45,6 +46,7 @@ class PengaturanLabelController extends BaseController {
           .updateSettingLabel(
         selectedSticker?.id?.toString() ?? '',
         shipcost == "HIDE" ? 0 : 1,
+        hiddenPhone,
       )
           .then((value) async {
         if (value.code == 200) {

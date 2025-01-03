@@ -172,12 +172,12 @@ class LoginController extends BaseController {
             AppLogger.e('error resend pin $e');
           }
         } else {
-          AppSnackBar.error(value.message.toString());
+          AppSnackBar.error(value.message ?? value.error ?? "Bad Request".tr);
         }
       });
     } catch (e) {
       AppLogger.e('error login $e');
-      AppSnackBar.error('Login failed: $e');
+      AppSnackBar.error('Login failed: ${'Bad Request'.tr}');
     }
     state.isLoading = false;
     update();

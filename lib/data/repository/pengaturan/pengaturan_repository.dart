@@ -18,5 +18,6 @@ abstract class PengaturanRepository {
 
   Future<BaseResponse<StickerLabelModel>> getSettingLabel();
 
-  Future<BaseResponse> updateSettingLabel(String label, int price);
+  Future<BaseResponse> updateSettingLabel(
+      String label, int price, String maskPhone);
 }

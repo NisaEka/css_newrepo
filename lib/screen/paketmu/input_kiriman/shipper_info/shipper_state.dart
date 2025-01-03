@@ -24,7 +24,7 @@ class ShipperState {
 
   bool isDropshipper = false;
   bool codOgkir = false;
-  bool isLoading = false;
+  bool isLoading = true;
   bool isLoadOrigin = false;
   bool isValidate = false;
   bool isOnline = true;
