@@ -592,6 +592,8 @@ class LanguageEN {
           "Please do not share your PIN, OTP, Password, or any other sensitive information with anyone. JNE will never request your PIN, OTP, Password, or any other secure codes from customers.",
       "Tampilkan": "Publish",
       "Tampilan Telepon Pengirim": "View Shipper Number"
+      "Alamat email sudah digunakan": "Email address is already in use",
+      "check_connection": "Connection Failed",
     };
   }
 }
