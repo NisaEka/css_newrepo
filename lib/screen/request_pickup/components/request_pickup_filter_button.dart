@@ -29,6 +29,7 @@ class RequstPickupFilterButton extends HookWidget {
                   child: CustomScrollView(
                     slivers: [
                       DateFilterField(
+                        label: "Tanggal AWB".tr,
                         selectedDateFilter: c.state.dateFilter,
                         startDate: c.state.startDate,
                         endDate: c.state.endDate,
@@ -107,8 +108,12 @@ class RequstPickupFilterButton extends HookWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomFormLabel(label: 'Tipe Kiriman'.tr),
-                            const SizedBox(height: 10),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: CustomFormLabel(label: 'Tipe Kiriman'.tr),
+                            ),
+                            // const SizedBox(height: 5),
                           ],
                         ),
                       ),
@@ -169,8 +174,11 @@ class RequstPickupFilterButton extends HookWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomFormLabel(label: 'Kota Pengiriman'.tr),
-                            const SizedBox(height: 2),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child:
+                                  CustomFormLabel(label: 'Kota Pengiriman'.tr),
+                            ),
                             PickupDestinationDropdown(
                               onChanged: (value) {
                                 AppLogger.i(

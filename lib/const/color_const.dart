@@ -73,3 +73,7 @@ Color iconShadowColor(BuildContext context) {
 Color formTextColor(BuildContext context) {
   return AppConst.isLightTheme(context) ? greyDarkColor2 : warningColor;
 }
+
+Color dropDownColor(BuildContext context) {
+  return AppConst.isLightTheme(context) ? whiteColor : greyColor;
+}
