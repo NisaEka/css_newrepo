@@ -6,7 +6,7 @@ import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/util/ext/double_ext.dart';
 
 import '../../../const/app_const.dart';
 
@@ -64,7 +64,7 @@ class JLCPointWidget extends StatelessWidget {
                           children: [
                             Image.asset(ImageConstant.logoJLC2, height: 12),
                             Text(
-                                ' ${point != '0' ? point.toDouble().round().toCurrency() : 0} Point',
+                                ' ${point != '0' ? point.toDouble().toCurrency() : 0} Point',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall
