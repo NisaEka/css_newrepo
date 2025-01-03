@@ -79,7 +79,7 @@ class NotificationController extends BaseController {
   }
 
   void readMessage(NotificationModel value) {
-    if (value.title?.split(' ').first == "Laporanku") {
+    if (value.title?.split(' - ')[1] == "Laporanku") {
       Get.to(() => const LaporankuScreen())
           ?.then((_) => updateNotificationStatus(value));
     } else {
