@@ -591,7 +591,7 @@ class LanguageEN {
       "Jangan pernah memberikan PIN/OTP/PASSWORD/PIN CSS/Kode OTP kepada siapapun. Pihak JNE tidak pernah meminta PIN/OTP/PASSWORD/PIN CSS/Kode OTP dari Customer.":
           "Please do not share your PIN, OTP, Password, or any other sensitive information with anyone. JNE will never request your PIN, OTP, Password, or any other secure codes from customers.",
       "Tampilkan": "Publish",
-      "Tampilan Telepon Pengirim": "View Shipper Number"
+      "Tampilan Telepon Pengirim": "View Shipper Number",
       "Alamat email sudah digunakan": "Email address is already in use",
       "check_connection": "Connection Failed",
     };

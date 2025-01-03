@@ -109,33 +109,37 @@ class TransactionEditButton extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(),
-                Expanded(
-                  flex: 1,
-                  child: CustomFilledButton(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                    color: warningColor,
-                    isTransparent: true,
-                    prefixIcon: Icons.phone_rounded,
-                    height: 50,
-                    fontSize: 23,
-                    isLoading: c.state.isLoading,
-                    onPressed: () {
-                      Get.bottomSheet(
-                        enableDrag: true,
-                        isDismissible: true,
-                        // isScrollControlled: true,
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return HubungiAkuDialog(
-                            awb: c.state.awb,
-                            allow: c.state.allow ?? MenuModel(),
-                          );
-                        }),
-                      );
-                    },
-                  ),
-                ),
+                c.state.transactionModel?.statusAwb != "MASIH DI KAMU" &&
+                        c.state.transactionModel?.statusAwb !=
+                            "DIBATALKAN OLEH KAMU"
+                    ? Expanded(
+                        flex: 1,
+                        child: CustomFilledButton(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 10),
+                          color: warningColor,
+                          isTransparent: true,
+                          prefixIcon: Icons.phone_rounded,
+                          height: 50,
+                          fontSize: 23,
+                          isLoading: c.state.isLoading,
+                          onPressed: () {
+                            Get.bottomSheet(
+                              enableDrag: true,
+                              isDismissible: true,
+                              // isScrollControlled: true,
+                              StatefulBuilder(builder:
+                                  (BuildContext context, StateSetter setState) {
+                                return HubungiAkuDialog(
+                                  awb: c.state.awb,
+                                  allow: c.state.allow ?? MenuModel(),
+                                );
+                              }),
+                            );
+                          },
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

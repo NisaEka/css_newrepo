@@ -23,6 +23,8 @@ class PantauPaketmuController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
     initData();
     getCountList();
     state.pagingController.addPageRequestListener((pageKey) {
