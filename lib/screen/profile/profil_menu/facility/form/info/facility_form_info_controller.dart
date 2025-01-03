@@ -6,43 +6,17 @@ import 'package:css_mobile/data/model/facility/facility_create_id_card_model.dar
 import 'package:css_mobile/data/model/facility/facility_create_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_controller.dart';
 import 'package:css_mobile/util/constant.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pinput/pinput.dart';
+import 'facility_form_info_state.dart';
 
 class FacilityFormInfoController extends BaseController {
+  final state = FacilityFormInfoState();
   final String _facilityType = Get.arguments['facility_type'];
-
-  List<String> steps = [
-    'Data Pemohon'.tr,
-    'Alamat Pengembalian'.tr,
-    'Data Rekening'.tr
-  ];
-
-  final brand = TextEditingController();
-  final idCardUrl = TextEditingController();
-  final fullName = TextEditingController();
-  final idCardNumber = TextEditingController();
-  final fullAddress = TextEditingController();
-  final phone = TextEditingController();
-  final whatsAppPhone = TextEditingController();
-  final email = TextEditingController();
-
-  final requestData = FacilityCreateModel();
-  FacilityCreateModel? tempData;
-
-  String? pickedImageUrl;
-
-  bool isLoading = false;
-  bool isLoadDestination = false;
-
-  List<Destination> destinationList = [];
-  Destination? selectedDestination;
 
   bool _pickImageFailed = false;
 
@@ -76,10 +50,10 @@ class FacilityFormInfoController extends BaseController {
     await profil.getBasicProfil().then((result) {
       if (result.code == HttpStatus.ok) {
         var payload = result.data?.user;
-        brand.setText(payload?.brand ?? '');
-        fullName.setText(payload?.name ?? '');
-        whatsAppPhone.setText(payload?.phone ?? '');
-        email.setText(payload?.email ?? '');
+        state.brand.setText(payload?.brand ?? '');
+        state.fullName.setText(payload?.name ?? '');
+        state.whatsAppPhone.setText(payload?.phone ?? '');
+        state.email.setText(payload?.email ?? '');
       }
     });
   }
@@ -104,7 +78,7 @@ class FacilityFormInfoController extends BaseController {
       final imageSizeApproved = await image.length() <= Constant.maxImageLength;
 
       if (imageSizeApproved) {
-        pickedImageUrl = image.path;
+        state.pickedImageUrl = image.path;
       } else {
         _pickImageFailed = true;
       }
@@ -119,14 +93,14 @@ class FacilityFormInfoController extends BaseController {
   }
 
   Future<List<Destination>> getDestinationList(String keyword) async {
-    isLoading = true;
-    destinationList.clear();
+    state.isLoading = true;
+    state.destinationList.clear();
 
     var response =
         await master.getDestinations(QueryModel(search: keyword.toUpperCase()));
     var models = response.data?.toList();
 
-    isLoading = false;
+    state.isLoading = false;
     update();
 
     return models ?? List.empty();
@@ -141,56 +115,29 @@ class FacilityFormInfoController extends BaseController {
   }
 
   Future<FacilityCreateModel> submitData() async {
-    requestData.setBrand(brand.text);
-    requestData.setName(fullName.text);
-    requestData.setJlcNumber(await getJlcAccount());
-    requestData.setEmail(email.text);
-    requestData.setFacilityType(_facilityType);
+    state.requestData.setBrand(state.brand.text);
+    state.requestData.setName(state.fullName.text);
+    state.requestData.setJlcNumber(await getJlcAccount());
+    state.requestData.setEmail(state.email.text);
+    state.requestData.setFacilityType(_facilityType);
 
     final FacilityCreateIdCardModel idCard = FacilityCreateIdCardModel();
-    idCard.setNumber(idCardNumber.text);
-    idCard.setImageUrl(pickedImageUrl ?? "");
-    requestData.setIdCard(idCard);
+    idCard.setNumber(state.idCardNumber.text);
+    idCard.setImageUrl(state.pickedImageUrl ?? "");
+    state.requestData.setIdCard(idCard);
 
     final FacilityCreateAddressModel address = FacilityCreateAddressModel();
-    address.setAddress(fullAddress.text);
-    address.setCountry(selectedDestination!.countryName!);
-    address.setProvince(selectedDestination!.provinceName!);
-    address.setCity(selectedDestination!.cityName!);
-    address.setDistrict(selectedDestination!.districtName!);
-    address.setSubDistrict(selectedDestination!.subdistrictName!);
-    address.setZipCode(selectedDestination!.zipCode!);
-    address.setPhone(phone.text);
-    address.setHandPhone(whatsAppPhone.text);
-    requestData.setAddress(address);
+    address.setAddress(state.fullAddress.text);
+    address.setCountry(state.selectedDestination!.countryName!);
+    address.setProvince(state.selectedDestination!.provinceName!);
+    address.setCity(state.selectedDestination!.cityName!);
+    address.setDistrict(state.selectedDestination!.districtName!);
+    address.setSubDistrict(state.selectedDestination!.subdistrictName!);
+    address.setZipCode(state.selectedDestination!.zipCode!);
+    address.setPhone(state.phone.text);
+    address.setHandPhone(state.whatsAppPhone.text);
+    state.requestData.setAddress(address);
 
-    return requestData;
-  }
-
-  Future<void> saveTemp() async {
-    requestData.setBrand(brand.text);
-    requestData.setName(fullName.text);
-    requestData.setJlcNumber(await getJlcAccount());
-    requestData.setEmail(email.text);
-    requestData.setFacilityType(_facilityType);
-
-    final FacilityCreateIdCardModel idCard = FacilityCreateIdCardModel();
-    idCard.setNumber(idCardNumber.text);
-    idCard.setImageUrl(pickedImageUrl ?? "");
-    requestData.setIdCard(idCard);
-
-    final FacilityCreateAddressModel address = FacilityCreateAddressModel();
-    address.setAddress(fullAddress.text);
-    address.setCountry(selectedDestination!.countryName!);
-    address.setProvince(selectedDestination!.provinceName!);
-    address.setCity(selectedDestination!.cityName!);
-    address.setDistrict(selectedDestination!.districtName!);
-    address.setSubDistrict(selectedDestination!.subdistrictName!);
-    address.setZipCode(selectedDestination!.zipCode!);
-    address.setPhone(phone.text);
-    address.setHandPhone(whatsAppPhone.text);
-    requestData.setAddress(address);
-
-    await storage.saveData(StorageCore.transactionTemp, requestData);
+    return state.requestData;
   }
 }

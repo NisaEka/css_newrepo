@@ -23,16 +23,15 @@ class PantauPaketmuController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
     initData();
     getCountList();
     state.pagingController.addPageRequestListener((pageKey) {
       getPantauList(pageKey);
     });
-    resetFilter();
-    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
-    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-
-    applyFilter();
+    update();
+    applyFilter(isDetail: true);
   }
 
   @override
@@ -75,7 +74,6 @@ class PantauPaketmuController extends BaseController {
       AppSnackBar.error('Gagal mengambil data'.tr);
     } finally {
       state.selectedStatusKiriman = state.listStatusKiriman.first;
-      applyFilter();
     }
     state.isLoading = false;
     update();
@@ -194,20 +192,20 @@ class PantauPaketmuController extends BaseController {
     if (state.isLoading) return;
     state.isLoading = true;
     update();
-    if (state.dateFilter != '3') {
-      state.isFiltered = true;
-    }
+    // if (state.dateFilter != '3') {
+    //   state.isFiltered = true;
+    // }
 
-    if (state.startDate != null && state.endDate != null) {
-      state.date.value = "${state.startDate}-${state.endDate}";
-      state.transDate = [
-        {
-          "awbDate": [state.startDate, state.endDate],
-        }
-      ];
-      state.date.printInfo(info: "state.date filter");
-      state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
-    }
+    // if (state.startDate != null && state.endDate != null) {
+    state.date.value = "${state.startDate}-${state.endDate}";
+    state.transDate = [
+      {
+        "awbDate": [state.startDate, state.endDate],
+      }
+    ];
+    state.date.printInfo(info: "state.date filter");
+    state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
+    // }
     update();
 
     if (isDetail != null && !isDetail) {

@@ -107,8 +107,10 @@ class LoginController extends BaseController {
               //           )
               //         : null))
               .then((_) => Get.delete<DashboardController>())
-              .then((_) => Get.offAll(() => const DashboardScreen(),
-                  arguments: {'isFirstLogin': true}));
+              .then((_) => Get.offAll(
+                    () => const DashboardScreen(),
+                    arguments: {'isFromLogin': true},
+                  ));
         } else if (value.code == 403) {
           Get.dialog(
             InfoDialog(

@@ -45,7 +45,7 @@ class RiwayatKirimanController extends BaseController {
     try {
       await transaction
           .getTransactionCount(
-        state.transType ?? '',
+        '',
         state.transDate ?? [],
         state.selectedStatusKiriman ?? '',
         state.searchField.text,
@@ -181,7 +181,7 @@ class RiwayatKirimanController extends BaseController {
       Get.to(() => const DetailTransactionScreen(), arguments: {
         'awb': item.awb,
         'data': item,
-      });
+      })?.then((_) => applyFilter());
     }
   }
 
@@ -212,6 +212,8 @@ class RiwayatKirimanController extends BaseController {
 
   applyFilter() {
     state.isFiltered = true;
+    // state.transType = '';
+    // state.selectedKiriman = 0;
     if (state.startDate != null && state.endDate != null) {
       state.transDate = [
         {
@@ -222,5 +224,6 @@ class RiwayatKirimanController extends BaseController {
     update();
     state.pagingController.refresh();
     transactionCount();
+    update();
   }
 }
