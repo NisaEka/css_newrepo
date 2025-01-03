@@ -6,12 +6,13 @@ import 'package:css_mobile/screen/keuanganmu/minus/detail/doc/aggregation_minus_
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
-import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_box.dart';
 import 'package:css_mobile/widgets/laporan_pembayaran/aggregation_minus_doc_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+import '../../../../../const/textstyle.dart';
 
 class AggregationMinusDocScreen extends StatelessWidget {
   const AggregationMinusDocScreen({super.key});
@@ -38,19 +39,42 @@ class AggregationMinusDocScreen extends StatelessWidget {
       BuildContext context, AggregationMinusDocController controller) {
     return Column(
       children: [
-        _topBox(controller.docArgs),
+        _topBox(controller.docArgs, context),
         _searchBox(context, controller),
         _listData(controller)
       ],
     );
   }
 
-  Widget _topBox(String docId) {
+  // Widget _topBox(String docId) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
+  //     child: AggregationMinusBox(
+  //       title: "Document No".tr,
+  //       value: docId,
+  //     ),
+  //   );
+  // }
+
+  Widget _topBox(String docId, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
-      child: AggregationMinusBox(
-        title: "Document No".tr,
-        value: docId,
+      padding: const EdgeInsets.only(top: 16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            docId,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .copyWith(color: primaryColor(context), fontWeight: bold),
+          ),
+          Text(
+            "Document No".tr,
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+        ],
       ),
     );
   }

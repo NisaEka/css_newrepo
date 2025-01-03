@@ -237,6 +237,13 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   const SizedBox(height: 6),
                   _textRow(
                     context,
+                    "Kota Pengirim",
+                    controller.pantauPaketmu.originName ?? "-",
+                    controller.isLoading,
+                  ),
+                  const SizedBox(height: 6),
+                  _textRow(
+                    context,
                     "Nama Penerima",
                     controller.pantauPaketmu.cnoteReceiverName ?? "-",
                     controller.isLoading,

@@ -88,9 +88,9 @@ class TransactionDetail extends StatelessWidget {
                                 c.state.isLoading || c.state.data == null,
                             valueStyle: Theme.of(context).textTheme.titleMedium,
                           ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 6),
                 const Divider(color: greyColor),
-                const SizedBox(height: 10),
+                const SizedBox(height: 6),
                 CustomFormLabel(
                     isLoading: c.state.isLoading || c.state.data == null,
                     label: 'Detail Kiriman'.tr,
@@ -126,11 +126,16 @@ class TransactionDetail extends StatelessWidget {
                 const SizedBox(height: 6),
                 CustomLabelText(
                     isLoading: c.state.isLoading || c.state.data == null,
+                    title: "Kota Penerima".tr,
+                    value: c.state.transactionModel?.receiverCity ?? '-'),
+                const SizedBox(height: 6),
+                CustomLabelText(
+                    isLoading: c.state.isLoading || c.state.data == null,
                     title: "Nama Barang".tr,
                     value: c.state.transactionModel?.goodsDesc ?? '-'),
-                const SizedBox(height: 10),
+                const SizedBox(height: 6),
                 const Divider(color: greyColor),
-                const SizedBox(height: 10),
+                const SizedBox(height: 6),
                 CustomFormLabel(
                     isLoading: c.state.isLoading || c.state.data == null,
                     label: 'Rincian Biaya Pengiriman'.tr,
@@ -174,17 +179,20 @@ class TransactionDetail extends StatelessWidget {
                       'Rp. ${c.state.transactionModel?.insuranceAmount?.toCurrency().toString() ?? '0'}',
                   isLoading: c.state.isLoading || c.state.data == null,
                 ),
-                TextRowWidget(
+                const SizedBox(height: 6),
+                const Divider(color: greyColor),
+                const SizedBox(height: 6),
+                c.state.transactionModel?.codOngkir == "NO" &&
+                    c.state.transactionModel?.codFlag == "YES"
+                ? TextRowWidget(
                   title: "COD Amount".tr,
                   value:
-                      'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}',
+                  'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}',
                   isLoading: c.state.isLoading || c.state.data == null,
                   titleStyle: Theme.of(context).textTheme.titleMedium,
                   valueStyle: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 10),
-                const Divider(color: greyColor),
-                const SizedBox(height: 10),
+                )
+                    : const SizedBox(),
                 TextRowWidget(
                   title: "Total Ongkos Kirim".tr,
                   value:

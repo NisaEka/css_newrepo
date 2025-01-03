@@ -149,12 +149,15 @@ class RiwayatKirimanListItem extends StatelessWidget {
                         // Text(ImageConstant.paket),
                         // Image.asset(IconsConstant.paket),
                         Container(
+                          width: 60,
+                          height: 60,
                           decoration: BoxDecoration(
                               color: isLoading
                                   ? greyLightColor3
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(5)),
                           child: Image.asset(
+                            fit: BoxFit.contain,
                             data?.statusAwb == "MASIH DI KAMU" ||
                                     apiType == "MASIH DI KAMU"
                                 ? ImageConstant.boxPackage
@@ -166,7 +169,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                             data?.statusAwb ==
                                                 "SUDAH DI GUDANG JNE" ||
                                             apiType == "SUDAH DI GUDANG JNE"
-                                        ? ImageConstant.boxSudahDiKotaTujuan
+                                        ? ImageConstant.boxSudahDiGudang
                                         : data?.statusAwb ==
                                                     "SUKSES DITERIMA" ||
                                                 apiType == "SUKSES DITERIMA"
@@ -176,6 +179,36 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                                     apiType ==
                                                         "DIBATALKAN OLEH KAMU"
                                                 ? ImageConstant.boxDibatalkan
+                                                : data?.statusAwb ==
+                                                "SUDAH DI KOTA TUJUAN" ||
+                                                apiType ==
+                                                    "SUDAH DI KOTA TUJUAN"
+                                                ? ImageConstant.boxSudahDiKotaTujuan
+                                                : data?.statusAwb ==
+                                                "DALAM PROSES" ||
+                                                apiType ==
+                                                    "DALAM PROSES"
+                                                ? ImageConstant.boxDalamProses
+                                                : data?.statusAwb ==
+                                                "BUTUH DICEK" ||
+                                                apiType ==
+                                                "BUTUH DICEK"
+                                                ? ImageConstant.boxButuhDicek
+                                                : data?.statusAwb ==
+                                                "SUKSES DIKEMBALIKAN KEKAMU" ||
+                                                apiType ==
+                                                    "SUKSES DIKEMBALIKAN KEKAMU"
+                                                ? ImageConstant.boxSuksesReturn
+                                                : data?.statusAwb ==
+                                                "PROSES PENGEMBALIAN KEKAMU" ||
+                                                apiType ==
+                                                    "PROSES PENGEMBALIAN KEKAMU"
+                                                ? ImageConstant.boxProsesReturn
+                                                : data?.statusAwb ==
+                                                "DALAM PENINJAUAN" ||
+                                                apiType ==
+                                                    "DALAM PENINJAUAN"
+                                                ? ImageConstant.boxDalamPeninjauan
                                                 : ImageConstant.boxPackage,
                             height: Get.width / 8,
                             color: iconColor(context),

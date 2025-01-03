@@ -897,6 +897,7 @@ class TransactionController extends BaseController {
       iconMargin: iconMargin ?? 100,
       customInfo: PackageInfoItem(
         data: data ?? TransactionModel(),
+        message: message ?? "Transaksi Berhasil".tr,
       ),
       message: message ?? "Transaksi Berhasil".tr,
       iconHeight: iconHeight ?? Get.width * 0.3,

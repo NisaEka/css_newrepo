@@ -59,7 +59,7 @@ class SuccessScreen extends StatelessWidget {
           children: [
             const LogoHeader(),
             Positioned(
-              top: iconMargin ?? 200,
+              top: iconMargin ?? 300,
               left: 0,
               right: 0,
               child: icon ??
@@ -89,11 +89,6 @@ class SuccessScreen extends StatelessWidget {
                         ? SizedBox(
                             height: customInfo != null ? null : Get.width * 0.5,
                             width: Get.width,
-                            child: Text(
-                              message?.tr ?? '',
-                              style: Theme.of(context).textTheme.titleLarge,
-                              textAlign: TextAlign.center,
-                            ),
                           )
                         : const SizedBox(),
                     customInfo ?? const SizedBox()

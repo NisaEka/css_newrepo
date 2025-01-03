@@ -9,10 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../../const/app_const.dart';
+
 class PackageInfoItem extends StatelessWidget {
   final TransactionModel data;
+  final String? message;
 
-  const PackageInfoItem({super.key, required this.data});
+  const PackageInfoItem({super.key, required this.data, this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -22,26 +25,53 @@ class PackageInfoItem extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: warningDarkColor.withOpacity(0.7),
+        // color: warningDarkColor.withOpacity(0.7),
+        border: Border.all(
+          color: AppConst.isLightTheme(context)
+              ? blueJNE
+              : warningColor,
+          width: 2.0
+        )
       ),
-      child: Column(
+      child:
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomLabelText(
+                title: '',
+                value: message?.tr ?? '',
+                fontColor: AppConst.isLightTheme(context)
+                    ? blueJNE
+                    : warningColor,
+              ),
+            ],
+          ),
           ListTile(
-            title: CustomLabelText(
-              title: 'awb number',
-              value: data.awb ?? '',
-              fontColor: whiteColor,
+            title:
+            CustomFormLabel(
+              label: data.awb ?? '',
+              fontColor: AppConst.isLightTheme(context)
+                  ? blueJNE
+                  : warningColor,
+              isBold: true,
             ),
-            leading: const MenuIcon(
+            leading: MenuIcon(
               radius: 100,
-              background: whiteColor,
+              background: AppConst.isLightTheme(context)
+                  ? blueJNE
+                  : whiteColor,
               showContainer: false,
               menuIcon: Icon(
                 CupertinoIcons.cube_fill,
-                color: blueJNE,
+                color: AppConst.isLightTheme(context)
+                    ? whiteColor
+                    : warningColor,
               ),
             ),
             contentPadding: EdgeInsets.zero,
@@ -50,47 +80,72 @@ class PackageInfoItem extends StatelessWidget {
                 ClipboardData(text: data.awb ?? ''),
               ),
               padding: EdgeInsets.zero,
-              icon: const Icon(Icons.copy),
+              icon: const Icon(Icons.copy_rounded),
             ),
           ),
-          CustomFormLabel(
-            label: 'Detail Paket'.tr,
-            fontColor: whiteColor,
-            isBold: true,
-          ),
+          const Divider(color: greyLightColor3),
           CustomLabelText(
             title: 'Nama Barang'.tr,
             value: data.goodsDesc ?? '',
-            fontColor: whiteColor,
+            fontColor: AppConst.isLightTheme(context)
+                ? blueJNE
+                : warningColor,
           ),
-          CustomLabelText(
-            title: 'Berat Kiriman'.tr,
-            value: '${data.weight?.toInt()} Kg',
-            fontColor: whiteColor,
-          ),
-          data.deliveryPrice != null
-              ? CustomLabelText(
-                  title: 'Ongkos Kirim'.tr,
-                  value: "Rp. ${data.deliveryPrice?.toInt().toCurrency()}",
-                  fontColor: whiteColor,
-                )
-              : const SizedBox(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              CustomLabelText(
+                title: 'Berat Kiriman'.tr,
+                value: '${data.weight?.toInt()} Kg',
+                fontColor: AppConst.isLightTheme(context)
+                    ? blueJNE
+                    : warningColor,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child:
+                data.deliveryPrice != null
+                    ? CustomLabelText(
+                  title: 'Ongkos Kirim'.tr,
+                  value: "Rp. ${data.deliveryPrice?.toInt().toCurrency()}",
+                  fontColor: AppConst.isLightTheme(context)
+                      ? blueJNE
+                      : warningColor,
+                )
+                    : const SizedBox(),
+              ),
+            ],
+          ),
+          const Divider(color: greyLightColor3),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               CustomLabelText(
                 title: 'Dari'.tr,
                 value: data.originDesc ?? '',
-                fontColor: whiteColor,
+                fontColor: AppConst.isLightTheme(context)
+                    ? blueJNE
+                    : warningColor,
               ),
               Transform.flip(
-                  flipX: true,
-                  child: const Icon(Icons.arrow_back, color: whiteColor)),
-              CustomLabelText(
-                title: 'Menuju'.tr,
-                value: data.destinationDesc ?? '',
-                fontColor: whiteColor,
-              )
+                  flipX: false,
+                  child: Icon(
+                      Icons.arrow_circle_right_rounded,
+                      color: AppConst.isLightTheme(context)
+                          ? blueJNE
+                          : warningColor)),
+              Align(
+                alignment: Alignment.centerRight,
+                child: CustomLabelText(
+                  title: 'Menuju'.tr,
+                  value: data.destinationDesc ?? '',
+                  fontColor: AppConst.isLightTheme(context)
+                      ? blueJNE
+                      : warningColor,
+                ),
+              ),
             ],
           )
         ],

@@ -10,7 +10,6 @@ import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
-import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:css_mobile/widgets/forms/satuanfieldicon.dart';
 import 'package:css_mobile/widgets/items/tooltip_custom_shape.dart';
@@ -170,9 +169,9 @@ class TransactionForm extends StatelessWidget {
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 5),
                             leading: Icon(
-                              Icons.verified_user_outlined,
+                              Icons.verified_user,
                               color: AppConst.isLightTheme(context)
-                                  ? redJNE
+                                  ? successColor
                                   : warningColor,
                             ),
                             title: Text(
@@ -384,7 +383,7 @@ class TransactionForm extends StatelessWidget {
                                             title: 'Rp',
                                             isPrefix: true,
                                           ),
-                                          hintText: "Harga COD".tr,
+                                          hintText: "Total Nilai COD".tr,
                                           inputFormatters: [
                                             FilteringTextInputFormatter
                                                 .digitsOnly,
@@ -421,8 +420,16 @@ class TransactionForm extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        CustomFormLabel(
-                                            label: 'Ringkasan Transaksimu'.tr),
+                                        Text(
+                                          'Ringkasan Transaksi'.tr,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium
+                                              ?.copyWith(
+                                              fontSize: 14,
+                                              color: primaryColor(context)),
+                                        ),
+                                        const Divider(color: greyLightColor3),
                                         c.state.isCalculate ||
                                                 c.state.isServiceLoad
                                             ? Column(
@@ -470,26 +477,26 @@ class TransactionForm extends StatelessWidget {
                                                         )
                                                       : const SizedBox(),
                                                   c.state.account.accountService
-                                                              ?.toUpperCase() ==
-                                                          'COD'
+                                                      ?.toUpperCase() ==
+                                                      'COD'
                                                       ? Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text('Harga COD'.tr,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleMedium),
-                                                            Text(
-                                                                'Rp. ${c.state.codAmount.toInt().toCurrency()}',
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleMedium),
-                                                          ],
-                                                        )
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                    children: [
+                                                      Text('Harga Barang'.tr,
+                                                          style: Theme.of(
+                                                              context)
+                                                              .textTheme
+                                                              .titleMedium),
+                                                      Text(
+                                                          'Rp. ${c.state.goodAmount.text}',
+                                                          style: Theme.of(
+                                                              context)
+                                                              .textTheme
+                                                              .titleMedium),
+                                                    ],
+                                                  )
                                                       : const SizedBox(),
                                                   c.state.codOngkir
                                                       ? Row(
@@ -553,6 +560,7 @@ class TransactionForm extends StatelessWidget {
                                                                   .titleMedium),
                                                     ],
                                                   ),
+                                                  const Divider(color: greyLightColor3),
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -573,7 +581,29 @@ class TransactionForm extends StatelessWidget {
                                                                   .textTheme
                                                                   .titleMedium),
                                                     ],
+                                                  ),
+                                                  c.state.account.accountService
+                                                      ?.toUpperCase() ==
+                                                      'COD'
+                                                      ? Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                    children: [
+                                                      Text('Total Nilai COD'.tr,
+                                                          style: Theme.of(
+                                                              context)
+                                                              .textTheme
+                                                              .titleMedium),
+                                                      Text(
+                                                          'Rp. ${c.state.codAmount.toInt().toCurrency()}',
+                                                          style: Theme.of(
+                                                              context)
+                                                              .textTheme
+                                                              .titleMedium),
+                                                    ],
                                                   )
+                                                      : const SizedBox(),
                                                 ],
                                               ),
                                       ],

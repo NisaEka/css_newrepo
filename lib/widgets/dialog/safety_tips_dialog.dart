@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
@@ -22,61 +23,81 @@ class SafetyTipsDialog extends StatelessWidget {
       backgroundColor: Theme.of(context).brightness == Brightness.light
           ? whiteColor
           : bgDarkColor,
-      title: Text(
-        'TIPS AMAN MENGGUNAKAN CSS'.tr,
-        textAlign: TextAlign.center,
-        style: Theme.of(context)
-            .textTheme
-            .titleLarge
-            ?.copyWith(fontWeight: regular, fontSize: 16),
-      ),
+      title:
+          Column(
+            children: [
+              Image.asset(
+                  ImageConstant.logoCSS,
+                  height: 30,
+                  width: Get.width,
+                  color: primaryColor(context)),
+              const SizedBox(height: 16),
+              Text(
+                'TIPS AMAN MENGGUNAKAN CSS'.tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(
+                    fontWeight: bold,
+                    fontSize: 16,
+                    color: primaryColor(context)),
+              ),
+            ],
+          ),
       content: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(3.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildBulletPoint(
-                'Pastikan Anda hanya mengakses tautan CSS: http://css.jne.co.id.'
+                'Pastikan Anda hanya memasang aplikasi CSS Mobile dari playstore'
                     .tr,
                 context,
-                Icons.link),
+                Icons.link_rounded),
+            const SizedBox(height: 5),
             _buildBulletPoint(
                 'Menjaga kerahasiaan informasi data Log In ID Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.'
                     .tr,
                 context,
-                Icons.lock),
+                Icons.lock_rounded),
+            const SizedBox(height: 5),
             _buildBulletPoint(
                 'Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal.'
                     .tr,
                 context,
-                Icons.warning),
+                Icons.warning_rounded),
+            const SizedBox(height: 5),
             _buildBulletPoint(
                 'Tidak menyimpan data kata sandi saat Log In dan pastikan melakukan Log Out setelah selesai menggunakan CSS.'
                     .tr,
                 context,
-                Icons.exit_to_app),
+                Icons.password_rounded),
+            const SizedBox(height: 5),
             _buildBulletPoint(
                 'Amankan Komputer dan Jaringan yang digunakan dengan mengaktifkan Spam Blocker, menggunakan Antivirus, dan Konfigurasi Firewall.'
                     .tr,
                 context,
-                Icons.security),
+                Icons.security_rounded),
+            const SizedBox(height: 5),
             _buildBulletPoint(
                 'Waspada terhadap email phishing, website phishing dan pastikan teliti serta validasi kembali transaksi anda.'
                     .tr,
                 context,
-                Icons.email),
+                Icons.email_rounded),
+            const SizedBox(height: 5),
             _buildBulletPoint(
                 'Jangan pernah memberikan PIN/OTP/PASSWORD/PIN CSS/Kode OTP kepada siapapun. Pihak JNE tidak pernah meminta PIN/OTP/PASSWORD/PIN CSS/Kode OTP dari Customer.'
                     .tr,
                 context,
-                Icons.lock_open),
+                Icons.lock_person_rounded),
           ],
         ),
       ),
       actions: [
         CustomFilledButton(
-          radius: 50,
+          radius: 10,
           color: primaryColor(context),
           title: 'Saya telah membaca & memahami'.tr,
           onPressed: () {
@@ -93,9 +114,9 @@ class SafetyTipsDialog extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 3.0),
-          child: Icon(icon, size: 16, color: Theme.of(context).iconTheme.color),
+          child: Icon(icon, size: 17, color: primaryColor(context)),
         ),
-        const SizedBox(width: 8), // Space between bullet and text
+        const SizedBox(width: 20), // Space between bullet and text
         Expanded(
           child: Text(
             text,

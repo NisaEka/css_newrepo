@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Powered By ',
+                  'By ',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Image.asset(

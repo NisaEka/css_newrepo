@@ -39,7 +39,7 @@ class TentangScreen extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Powered By ',
+                          'By ',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Image.asset(

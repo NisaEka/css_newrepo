@@ -72,7 +72,6 @@ class DefaultAlertDialog extends StatelessWidget {
                 ? CustomFilledButton(
                     radius: 50,
                     margin: EdgeInsets.zero,
-                    isTransparent: true,
                     color: primaryColor(context),
                     title: backButtonTitle ?? '',
                     onPressed: onBack ?? () => Get.back(),
@@ -81,6 +80,7 @@ class DefaultAlertDialog extends StatelessWidget {
             CustomFilledButton(
               radius: 50,
               color: primaryColor(context),
+              isTransparent: true,
               title: confirmButtonTitle ?? '',
               onPressed: onConfirm,
             ),
