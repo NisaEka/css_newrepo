@@ -33,7 +33,8 @@ class TransactionItems extends StatelessWidget {
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () => Future.sync(
-                      () => c.state.pagingController.refresh(),
+                      // () => c.state.pagingController.refresh(),
+                      () => c.applyFilter(),
                     ),
                     child: PagedListView<int, TransactionModel>(
                       pagingController: c.state.pagingController,

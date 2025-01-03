@@ -158,4 +158,31 @@ class FacilityCreateModel {
         ? FacilityCreateBankInfoModel.fromJson(json['bankInfo'])
         : null;
   }
+
+  FacilityCreateModel copyWith({
+    String? brand,
+    String? name,
+    String? email,
+    String? jlcNumber,
+    String? facilityType,
+    String? termAndCondition,
+    FacilityCreateIdCardModel? idCard,
+    FacilityCreateAddressModel? address,
+    FacilityCreateReturnAddress? returnAddress,
+    FacilityCreateTaxInfoModel? taxInfo,
+    FacilityCreateBankInfoModel? bankInfo,
+  }) =>
+      FacilityCreateModel(
+        brand: brand ?? _brand,
+        name: name ?? _name,
+        email: email ?? _email,
+        jlcNumber: jlcNumber ?? _jlcNumber,
+        facilityType: facilityType ?? _facilityType,
+        termsAndConditions: termAndCondition ?? _termsAndConditions,
+        idCard: idCard ?? _idCard,
+        address: address ?? _address,
+        returnAddress: returnAddress ?? _returnAddress,
+        taxInfo: taxInfo ?? _taxInfo,
+        bankInfo: bankInfo ?? _bankInfo,
+      );
 }
