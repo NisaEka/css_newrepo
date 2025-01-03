@@ -26,6 +26,8 @@ class ObrolanLaporankuScreen extends StatelessWidget {
           return Scaffold(
             appBar: _appBarContent(controller, context),
             body: _bodyContent(controller, context),
+            backgroundColor:
+                AppConst.isLightTheme(context) ? greyLightColor2 : bgDarkColor,
           );
         });
   }
@@ -92,8 +94,21 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                                   : ''
                               : e.createdDate?.toShortDateFormat().toString() ??
                                   '',
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  color: AppConst.isLightTheme(context)
+                                      ? greyDarkColor2
+                                      : greyLightColor2),
                         ),
+                        c.messages.length > i + 1
+                            ? e.createdDate!.toShortDateFormat() !=
+                                    c.messages[i + 1].createdDate!
+                                        .toShortDateFormat()
+                                ? const SizedBox(height: 10)
+                                : const SizedBox()
+                            : const SizedBox(),
                         chat(e, context),
                       ],
                     ),
@@ -150,6 +165,7 @@ class ObrolanLaporankuScreen extends StatelessWidget {
               hintText: "Tulis Pesan".tr,
               hintStyle: hintTextStyle,
               border: InputBorder.none,
+              contentPadding: const EdgeInsets.all(10),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: const BorderSide(color: greyColor)),
@@ -233,16 +249,17 @@ class ObrolanLaporankuScreen extends StatelessWidget {
 
   Widget chat(TicketMessageModel msg, BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 20, right: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         mainAxisAlignment:
             msg.type == "S" ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           msg.type == "R"
               ? avatar("${msg.user}\n${msg.branchCode}", context)
               : Container(),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               crossAxisAlignment: msg.type == "R"
                   ? CrossAxisAlignment.start
@@ -250,7 +267,13 @@ class ObrolanLaporankuScreen extends StatelessWidget {
               children: [
                 Bubble(
                   radius: const Radius.circular(8),
-                  color: msg.type == "R" ? warningColor : infoColor,
+                  color: msg.type == "R"
+                      ? AppConst.isLightTheme(context)
+                          ? Colors.grey[600]
+                          : greyDarkColor2
+                      : AppConst.isLightTheme(context)
+                          ? whiteColor
+                          : greyDarkColor1,
                   elevation: 0.0,
                   showNip: true,
                   nip: msg.type == "R"
@@ -259,22 +282,48 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      const SizedBox(width: 10.0),
                       Flexible(
                         child: Container(
-                          constraints: const BoxConstraints(maxWidth: 200),
+                          constraints:
+                              BoxConstraints(maxWidth: Get.width / 1.5),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
+                                '${msg.user} ${msg.branchCode != null ? '| ${msg.branchCode}' : ''}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                        color: msg.type == "R"
+                                            ? primaryColor(context)
+                                            : AppConst.isLightTheme(context)
+                                                ? redJNE
+                                                : warningColor,
+                                        fontWeight: FontWeight.bold),
+                              ),
+                              Text(
                                 "${'Subjek'.tr} : ${msg.subject ?? ''}",
-                                style: listTitleTextStyle.copyWith(
-                                    color: whiteColor),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: msg.type == "R"
+                                          ? whiteColor
+                                          : textColor(context),
+                                    ),
                               ),
                               Text(
                                 msg.message ?? '',
-                                style: listTitleTextStyle.copyWith(
-                                    color: whiteColor, fontWeight: regular),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      fontWeight: regular,
+                                      color: msg.type == "R"
+                                          ? whiteColor
+                                          : textColor(context),
+                                    ),
                               ),
                               GestureDetector(
                                 onTap: () => showDialog(
@@ -318,8 +367,8 @@ class ObrolanLaporankuScreen extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          height: 55,
-          width: 55,
+          height: 30,
+          width: 30,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: greyLightColor3, borderRadius: BorderRadius.circular(50)),
@@ -328,11 +377,6 @@ class ObrolanLaporankuScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
-        Text(
-          name,
-          style: Theme.of(context).textTheme.titleSmall,
-          textAlign: TextAlign.center,
-        )
       ],
     );
   }
