@@ -117,7 +117,9 @@ class _OriginDropdownState extends State<OriginDropdown> {
                 child: Text(
                   e.originName.toString(),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: textColor(context),
+                        color: AppConst.isLightTheme(context)
+                            ? Colors.black
+                            : whiteColor,
                       ),
                 ),
               );
@@ -132,7 +134,7 @@ class _OriginDropdownState extends State<OriginDropdown> {
             textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: AppConst.isLightTheme(context)
                       ? Colors.black
-                      : warningColor,
+                      : whiteColor,
                 ),
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,

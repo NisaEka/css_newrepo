@@ -77,13 +77,13 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                               valueBgColor: warningColor,
                               fontSize: 5,
                             ),
-                            countValue: "Rp.\n",
+                            lineChartCountValue: "Rp.",
                             count: kirimanKamu.totalKiriman.toCurrency(),
                             subtitle: '${"7 Hari Terakhir".tr}\n',
                             color: primaryColor(context),
                             icon: Icons.show_chart,
                             statusColor: whiteColor,
-                            suffixChart: SizedBox(
+                            countValueChart: SizedBox(
                               width: 45,
                               height: 20,
                               child: kirimanKamu.lineChart.isNotEmpty
@@ -184,74 +184,91 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TypeTransactionCard(
-                            prefixVal1: "Rp.",
-                            value1: kirimanKamu.codAmount.toInt().toCurrency(),
-                            suffixVal2: "Kiriman".tr,
-                            value2: kirimanKamu.totalCod.toInt().toCurrency(),
-                            description: "Butuh di Cek".tr,
-                            lineColor: infoColor,
-                            isLoading: isLoadingKiriman,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: Get.width / 2.5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TypeTransactionCard(
+                                prefixVal1: "Rp.",
+                                value1: kirimanKamu.codOngkirAmount
+                                    .toInt()
+                                    .toCurrency(),
+                                suffixVal2: "Kiriman".tr,
+                                value2: kirimanKamu.totalCodOngkir
+                                    .toInt()
+                                    .toCurrency(),
+                                description: "Dalam Peninjauan".tr,
+                                lineColor: warningColor,
+                                isLoading: isLoadingKiriman,
+                              ),
+                              TypeTransactionCard(
+                                prefixVal1: "Rp.",
+                                value1: kirimanKamu.nonCodAmount
+                                    .toInt()
+                                    .toCurrency(),
+                                suffixVal2: "Kiriman".tr,
+                                value2: kirimanKamu.totalNonCod
+                                    .toInt()
+                                    .toCurrency(),
+                                description: "Dibatalkan Oleh Kamu".tr,
+                                lineColor: errorColor,
+                                isLoading: isLoadingKiriman,
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 10),
-                          TypeTransactionCard(
-                            prefixVal1: "Rp.",
-                            value1: kirimanKamu.codOngkirAmount
-                                .toInt()
-                                .toCurrency(),
-                            suffixVal2: "Kiriman".tr,
-                            value2:
-                                kirimanKamu.totalCodOngkir.toInt().toCurrency(),
-                            description: "Dalam Peninjauan".tr,
-                            lineColor: warningColor,
-                            isLoading: isLoadingKiriman,
+                        ),
+                        SizedBox(
+                          width: Get.width / 2.5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TypeTransactionCard(
+                                prefixVal1: "Rp.",
+                                value1: transSummary?.summary
+                                        ?.where(
+                                          (e) => e.status == "Sudah Kembali",
+                                        )
+                                        .first
+                                        .codAmount
+                                        ?.toInt()
+                                        .toCurrency() ??
+                                    '0',
+                                suffixVal2: "Kiriman".tr,
+                                value2: transSummary?.summary
+                                        ?.where(
+                                          (e) => e.status == "Sudah Kembali",
+                                        )
+                                        .first
+                                        .totalCod
+                                        ?.toInt()
+                                        .toCurrency() ??
+                                    '0',
+                                description: "Sudah Kembali".tr,
+                                lineColor: successColor,
+                                isLoading: isLoadingKiriman,
+                              ),
+                              TypeTransactionCard(
+                                prefixVal1: "Rp.",
+                                value1:
+                                    kirimanKamu.codAmount.toInt().toCurrency(),
+                                suffixVal2: "Kiriman".tr,
+                                value2:
+                                    kirimanKamu.totalCod.toInt().toCurrency(),
+                                description: "Butuh di Cek".tr,
+                                lineColor: infoColor,
+                                isLoading: isLoadingKiriman,
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 10),
-                          TypeTransactionCard(
-                            prefixVal1: "Rp.",
-                            value1: transSummary?.summary
-                                    ?.where(
-                                      (e) => e.status == "Sudah Kembali",
-                                    )
-                                    .first
-                                    .codAmount
-                                    ?.toInt()
-                                    .toCurrency() ??
-                                '0',
-                            suffixVal2: "Kiriman".tr,
-                            value2: transSummary?.summary
-                                    ?.where(
-                                      (e) => e.status == "Sudah Kembali",
-                                    )
-                                    .first
-                                    .totalCod
-                                    ?.toInt()
-                                    .toCurrency() ??
-                                '0',
-                            description: "Sudah Kembali".tr,
-                            lineColor: successColor,
-                            isLoading: isLoadingKiriman,
-                          ),
-                          const SizedBox(width: 10),
-                          TypeTransactionCard(
-                            prefixVal1: "Rp.",
-                            value1:
-                                kirimanKamu.nonCodAmount.toInt().toCurrency(),
-                            suffixVal2: "Kiriman".tr,
-                            value2:
-                                kirimanKamu.totalNonCod.toInt().toCurrency(),
-                            description: "Dibatalkan Oleh Kamu".tr,
-                            lineColor: errorColor,
-                            isLoading: isLoadingKiriman,
-                          ),
-                        ],
-                      ),
-                    )
+                        )
+                      ],
+                    ),
                   ],
                 ),
                 const SizedBox(height: 8),

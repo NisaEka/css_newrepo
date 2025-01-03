@@ -178,22 +178,22 @@ class DashboardController extends BaseController {
     // bool label =
     //     (await storage.readString(StorageCore.transactionLabel)).isEmpty;
 
-    if (state.isLogin) {
-      await setting.getSettingLabel().then(
-        (value) async {
-          await storage.writeString(
-            StorageCore.transactionLabel,
-            value.data?.labels?.where((e) => e.enabled ?? false).first.name,
-          );
-          await storage.writeString(
-            StorageCore.shippingCost,
-            value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE",
-          );
-        },
-      );
-    }
-
-    update();
+    // if (state.isLogin) {
+    //   await setting.getSettingLabel().then(
+    //     (value) async {
+    //       await storage.writeString(
+    //         StorageCore.transactionLabel,
+    //         value.data?.labels?.where((e) => e.enabled ?? false).first.name,
+    //       );
+    //       await storage.writeString(
+    //         StorageCore.shippingCost,
+    //         value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE",
+    //       );
+    //     },
+    //   );
+    // }
+    //
+    // update();
   }
 
   void cekAllowance() {

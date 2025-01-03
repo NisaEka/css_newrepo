@@ -156,7 +156,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     fontSize: 16,
                     color: AppConst.isLightTheme(context)
                         ? Colors.black
-                        : warningColor,
+                        : whiteColor,
                     // fontWeight: FontWeight.w600,
                   ),
               textInputAction: TextInputAction.next,
