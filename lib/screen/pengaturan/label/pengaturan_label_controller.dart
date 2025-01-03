@@ -48,7 +48,7 @@ class PengaturanLabelController extends BaseController {
           .updateSettingLabel(
         selectedSticker?.index?.toString() ?? '',
         shipcost == "HIDE" ? 0 : 1,
-        maskPhone == "HIDE" ? 0 : 1,
+        // maskPhone == "HIDE" ? 0 : 1,
       )
           .then((value) async {
         if (value.code == 200) {
