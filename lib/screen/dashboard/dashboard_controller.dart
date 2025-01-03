@@ -73,6 +73,7 @@ class DashboardController extends BaseController {
 
   Future<void> loadPromo() async {
     state.bannerList.clear();
+
     try {
       jlc.postDashboardBanner().then((value) {
         if (value.code == 200) {
@@ -84,27 +85,31 @@ class DashboardController extends BaseController {
       });
     } catch (e) {
       e.printError(info: 'error load promo');
-      state.bannerList.add(BannerModel());
+      // state.bannerList.add(BannerModel());
       update();
     }
   }
 
   Future<void> loadNews() async {
     state.newsList.clear();
-    try {
-      jlc.postDashboardNews().then((value) {
-        AppLogger.i('respon news : ${value.toJson()}');
-        if (value.code == 200) {
-          state.newsList.addAll(value.data ?? []);
-          update();
-        } else {
-          state.newsList.add(NewsModel());
-        }
-      });
-    } catch (e, i) {
-      AppLogger.e('error loadNews $e, $i');
+    if (state.isOnline) {
+      try {
+        jlc.postDashboardNews().then((value) {
+          AppLogger.i('respon news : ${value.toJson()}');
+          if (value.code == 200) {
+            state.newsList.addAll(value.data ?? []);
+            update();
+          } else {
+            state.newsList.add(NewsModel());
+          }
+        });
+      } catch (e, i) {
+        AppLogger.e('error loadNews $e, $i');
+        state.newsList.add(NewsModel());
+        update();
+      }
+    } else {
       state.newsList.add(NewsModel());
-      update();
     }
 
     update();
@@ -343,7 +348,7 @@ class DashboardController extends BaseController {
     state.isLoadingKiriman = true;
     state.kirimanKamu = DashboardKirimanKamuModel();
     update();
-    if (state.isLogin) {
+    if (state.isLogin && state.isOnline) {
       try {
         var pantau = await transaction.getPantauCount(QueryModel(
           table: true,
@@ -398,6 +403,8 @@ class DashboardController extends BaseController {
         update();
       }
     }
+    state.isLoadingKiriman = false;
+    update();
   }
 
   Future<void> loadTransCountList(bool isKirimanCOD) async {
@@ -406,7 +413,7 @@ class DashboardController extends BaseController {
     state.transSummary = null;
     List<num> charts = [0, 0, 0, 0, 0, 0, 0, 0];
     update();
-    if (state.isLogin) {
+    if (state.isLogin && state.isOnline) {
       try {
         transaction.postTransactionDashboard(QueryModel()).then(
           (value) {
@@ -673,17 +680,16 @@ class DashboardController extends BaseController {
         });
         update();
       }
-
-      UserModel shipper =
-          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
-      state.userName = shipper.name ?? '';
-      state.allow =
-          MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
-      update();
     } catch (e, i) {
       e.printError();
       i.printError();
     }
+    UserModel shipper =
+        UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    state.userName = shipper.name ?? '';
+    state.allow =
+        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+    update();
     cekAllowance();
     state.isLoading = false;
     update();

@@ -199,6 +199,8 @@ class ShipperController extends BaseController {
     } catch (e) {
       AppLogger.e('error getAccounts $e');
       AppLogger.w("shipper get from local");
+      // state.userCcrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
+
       state.accountList.clear();
       var accounts = BaseResponse<List<Account>>.fromJson(
         await storage.readData(StorageCore.accounts),
@@ -296,9 +298,9 @@ class ShipperController extends BaseController {
       AppLogger.i('shipper info : ${state.userCcrf?.toJson()}');
       AppLogger.i('shipper info : ${state.isLoading}');
       if (state.isLoading == false) {
-        if ((state.userCcrf?.generalInfo?.zipCode == null) ||
-            (state.userCcrf?.generalInfo?.address == null)) {
-          // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
+        // if (((state.userCcrf?.generalInfo?.zipCode == null) || (state.userCcrf?.generalInfo?.address == null)) && ) {
+        if (state.shipperZipCode.text.isEmpty ||
+            state.shipperAddress.text.isEmpty) {
           await Get.dialog(
             DefaultAlertDialog(
               // title: 'Informasi'.tr,

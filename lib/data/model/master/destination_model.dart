@@ -38,6 +38,7 @@ class Destination {
     _facilityCode = json['facilityCode'];
     _cityZone = json['cityZone'];
   }
+
   dynamic _id;
   String? _countryName;
   String? _provinceName;
@@ -49,6 +50,7 @@ class Destination {
   String? _status;
   String? _facilityCode;
   String? _cityZone;
+
   Destination copyWith({
     dynamic id,
     String? countryName,
@@ -75,16 +77,27 @@ class Destination {
         facilityCode: facilityCode ?? _facilityCode,
         cityZone: cityZone ?? _cityZone,
       );
+
   dynamic get id => _id;
+
   String? get countryName => _countryName;
+
   String? get provinceName => _provinceName;
+
   String? get cityName => _cityName;
+
   String? get districtName => _districtName;
+
   String? get subdistrictName => _subdistrictName;
+
   String? get zipCode => _zipCode;
+
   String? get destinationCode => _destinationCode;
+
   String? get status => _status;
+
   String? get facilityCode => _facilityCode;
+
   String? get cityZone => _cityZone;
 
   Map<String, dynamic> toJson() {
@@ -104,6 +117,13 @@ class Destination {
   }
 
   String asFacilityFormFormat() {
-    return "$zipCode; $provinceName; $cityName; $districtName; $subdistrictName; $destinationCode";
+    return '${zipCode == null || zipCode == '00000' ? '' : '$zipCode; '}'
+            '${provinceName == null ? '' : '$provinceName; '}'
+            '${cityName == null ? '' : '$cityName; '}'
+            '${districtName == null || districtName == '-' ? '' : '$districtName; '}'
+            '${subdistrictName == null || subdistrictName == '-' ? '' : '$subdistrictName; '}'
+            '${destinationCode == null ? '' : '$destinationCode'}'
+        .splitMapJoin(';', onMatch: (p0) => '; ');
+    // return "$zipCode; $provinceName; $cityName; $districtName; $subdistrictName; $destinationCode";
   }
 }
