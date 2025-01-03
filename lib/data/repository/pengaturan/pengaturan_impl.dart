@@ -103,31 +103,19 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   }
 
   @override
-  Future<BaseResponse<List<StickerLabelModel>>> getSettingLabel() async {
+  Future<BaseResponse<StickerLabelModel>> getSettingLabel() async {
     try {
       Response response = await network.base.get(
         "/settings/label",
       );
       return BaseResponse.fromJson(
         response.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<StickerLabelModel>(
-                  (i) => StickerLabelModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
+        (json) => StickerLabelModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
       return BaseResponse.fromJson(
         e.response?.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<StickerLabelModel>(
-                  (i) => StickerLabelModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
+        (json) => StickerLabelModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }

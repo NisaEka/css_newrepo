@@ -16,7 +16,7 @@ abstract class PengaturanRepository {
 
   Future<BaseResponse> putOfficer(DataPetugasModel data);
 
-  Future<BaseResponse<List<StickerLabelModel>>> getSettingLabel();
+  Future<BaseResponse<StickerLabelModel>> getSettingLabel();
 
   Future<BaseResponse> updateSettingLabel(String label, int price);
 }

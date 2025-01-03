@@ -101,6 +101,7 @@ class ShipperController extends BaseController {
     // state.userCcrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
     state.tempData = DataTransactionModel.fromJson(
         await storage.readData(StorageCore.transactionTemp));
+    update();
     try {
       await master
           .getAccounts(QueryModel(limit: 0, sort: [
@@ -196,6 +197,7 @@ class ShipperController extends BaseController {
       update();
     } catch (e) {
       AppLogger.e('error getAccounts $e');
+      state.accountList.clear();
       var accounts = BaseResponse<List<Account>>.fromJson(
         await storage.readData(StorageCore.accounts),
         (json) => json is List<dynamic>

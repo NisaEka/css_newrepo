@@ -183,11 +183,11 @@ class DashboardController extends BaseController {
         (value) async {
           await storage.writeString(
             StorageCore.transactionLabel,
-            value.data?.where((e) => e.enable ?? false).first.name,
+            value.data?.labels?.where((e) => e.enabled ?? false).first.name,
           );
           await storage.writeString(
             StorageCore.shippingCost,
-            value.data?.first.showPrice ?? false ? "HIDE" : "PUBLISH",
+            value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE",
           );
         },
       );
