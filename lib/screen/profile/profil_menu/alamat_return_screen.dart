@@ -56,10 +56,8 @@ class AlamatReturnScreen extends StatelessWidget {
                       '${'Nomor JLC'.tr}\n${'Nomor Counter Pengiriman'.tr}',
                 ),
                 DataUmumListItem(
-                  title: c.ccrfProfil?.returnAddress?.secondPhone ??
-                      c.ccrfProfil?.returnAddress?.phone ??
-                      '-',
-                  subtitle: c.ccrfProfil?.returnAddress?.phone ?? '-',
+                  title: c.ccrfProfil?.returnAddress?.phone ?? '-',
+                  subtitle: c.ccrfProfil?.returnAddress?.secondPhone ?? '-',
                   icon: Icons.contact_phone_rounded,
                   tooltip: '${'No Telepon'.tr}\n${'Nomor Whatsapp'.tr}',
                 ),
@@ -114,11 +112,10 @@ class AlamatReturnScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(Icons.info_rounded, color:
-            Theme.of(context).brightness ==
-              Brightness.light
-              ? redJNE
-                  : warningColor),
+            icon: Icon(Icons.info_rounded,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? redJNE
+                    : warningColor),
             tooltip: 'informasi'.tr,
           ),
         )
