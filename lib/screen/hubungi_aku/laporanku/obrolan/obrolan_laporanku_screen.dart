@@ -330,12 +330,19 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                                   context: context,
                                   builder: (context) => ImagePopupDialog(
                                     title: '',
-                                    img:
-                                        "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
+                                    img: msg.image != null &&
+                                            (msg.image!.startsWith('https') ||
+                                                msg.image!.startsWith('http'))
+                                        ? msg.image!
+                                        : "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
                                   ),
                                 ),
                                 child: Image.network(
-                                  "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
+                                  msg.image != null &&
+                                          (msg.image!.startsWith('https') ||
+                                              msg.image!.startsWith('http'))
+                                      ? msg.image!
+                                      : "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
                                   errorBuilder: (context, error, stackTrace) =>
                                       const SizedBox(),
                                 ),
