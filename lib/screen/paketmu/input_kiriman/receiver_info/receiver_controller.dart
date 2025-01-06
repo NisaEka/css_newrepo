@@ -148,6 +148,7 @@ class ReceiverController extends BaseController {
     ));
 
     var receiver = receivers.data;
+    AppLogger.i("receiver : $receiver");
     if ((receiver?.isEmpty ?? false) &&
         (state.formKey.currentState?.validate() == true) &&
         state.isOnline) {
