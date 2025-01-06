@@ -37,7 +37,7 @@ class EclaimFilterButton extends HookWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 10),
+                            // const SizedBox(height: 10),
                             // const CustomFormLabel(label: 'Petugas Entry'),
                             CustomDropDownField(
                               label: 'Status Claim'.tr,

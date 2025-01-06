@@ -25,7 +25,7 @@ class PantauPaketmuListFilter extends HookWidget {
                   child: CustomScrollView(
                     slivers: [
                       DateFilterField(
-                        label: "Tanggal AWB".tr,
+                        // label: "Tanggal AWB".tr,
                         startDate: controller.state.startDate,
                         endDate: controller.state.endDate,
                         selectedDateFilter: controller.state.dateFilter,
@@ -138,7 +138,7 @@ class PantauPaketmuListFilter extends HookWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 8),
                             // Tipe Kiriman
                             CustomDropDownField(
                               items: controller.state.listTipeKiriman
@@ -172,6 +172,7 @@ class PantauPaketmuListFilter extends HookWidget {
                                 controller.update();
                               },
                             ),
+                            CustomFormLabel(label: 'Petugas Entry'.tr),
                             OfficerDropdown(
                               label: 'Petugas Entry'.tr,
                               value: controller.state.selectedPetugasEntry,
