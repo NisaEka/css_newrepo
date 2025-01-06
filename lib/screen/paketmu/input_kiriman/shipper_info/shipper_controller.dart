@@ -310,7 +310,7 @@ class ShipperController extends BaseController {
               confirmButtonTitle: 'Lengkapi profil'.tr,
               onConfirm: () {
                 // Get.close(2);
-                Get.off(const EditProfilScreen());
+                Get.off(const EditProfilScreen())?.then((_) => initData());
               },
             ),
           );
