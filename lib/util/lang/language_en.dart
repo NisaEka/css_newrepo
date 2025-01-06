@@ -451,7 +451,7 @@ class LanguageEN {
       "Nomor resi tidak boleh kosong": "Airwaybill cannot be empty",
       "Nomor resi maksimal 16 karakter": "Airwaybill maximum 16 characters",
       "Koli": "Packages",
-      "Pastikan semua aktvitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile":
+      "Pastikan semua aktivitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile":
           "Make sure all activities are completed. Thank you for using CSS Mobile",
       "Periksa kembali file gambar KTP. File gambar tidak boleh kosong atau lebih dari 2MB":
           "Check back the ID card image file. Image files must not be empty or more than 2MB",
@@ -595,6 +595,8 @@ class LanguageEN {
       "Alamat email sudah digunakan": "Email address is already in use",
       "check_connection": "Connection Failed",
       "Service tidak tersedia": "Service not available",
+      "Pastikan Anda hanya memasang aplikasi CSS Mobile dari playstore.":
+          "Make sure you only install CSS Mobile app from the Play Store."
     };
   }
 }
