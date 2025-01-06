@@ -39,7 +39,7 @@ class ObrolanLaporankuController extends BaseController {
     pagingController.addPageRequestListener((pageKey) {
       getMessages(pageKey);
     });
-    AppLogger.d('idMessage$id');
+    AppLogger.d('idMessage $id');
   }
 
   Future<void> initData() async {
