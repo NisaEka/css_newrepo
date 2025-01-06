@@ -48,8 +48,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   Future<BaseResponse<TicketSummary>> getTicketSummary(QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     try {
-      Response response = await network.base
-          .get("/transaction/tickets/summary", queryParameters: param.toJson());
+      Response response = await network.base.get(
+        "/transaction/tickets/summary",
+        queryParameters: param.toJson(),
+      );
 
       return BaseResponse<TicketSummary>.fromJson(
         response.data,
@@ -67,8 +69,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   Future<BaseResponse<List<TicketModel>>> getTickets(QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     try {
-      Response response = await network.base
-          .get("/transaction/tickets", queryParameters: param.toJson());
+      Response response = await network.base.get(
+        "/transaction/tickets",
+        queryParameters: param.toJson(),
+      );
 
       return BaseResponse<List<TicketModel>>.fromJson(
         response.data,
@@ -112,8 +116,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
       QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     try {
-      Response response = await network.base
-          .get("/transaction/ticket-messages", queryParameters: param.toJson());
+      Response response = await network.base.get(
+        "/transaction/ticket-messages",
+        queryParameters: param.toJson(),
+      );
 
       return BaseResponse<List<TicketMessageModel>>.fromJson(
         response.data,
@@ -181,8 +187,10 @@ class LaporankuRepositoryImpl extends LaporankuRepository {
   Future<BaseResponse> patchTicketMessageRead(
       String id, TicketMessageModel data) async {
     try {
-      Response response =
-          await network.base.patch("/transaction/tickets/$id/read", data: data);
+      Response response = await network.base.patch(
+        "/transaction/tickets/$id/read",
+        data: data,
+      );
 
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
