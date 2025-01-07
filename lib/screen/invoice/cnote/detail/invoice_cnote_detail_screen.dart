@@ -393,7 +393,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                             .textTheme
                             .titleMedium
                             ?.copyWith(fontWeight: regular),
-                    textAlign: TextAlign.start, // Align the value to the right
+                    textAlign: TextAlign.end, // Align the value to the right
                   ),
                 ),
               ),
