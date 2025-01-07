@@ -103,11 +103,11 @@ class AggByCnoteScreen extends StatelessWidget {
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 const Divider(
                   color: greyLightColor3,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 Shimmer(
                   isLoading: controller.isLoading,
                   child: Container(
@@ -177,9 +177,11 @@ class AggByCnoteScreen extends StatelessWidget {
                         fontWeight: regular,
                       ),
                 ),
-                const SizedBox(height: 16),
-                const Divider(),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
+                const Divider(
+                  color: greyLightColor3,
+                ),
+                const SizedBox(height: 6),
                 Shimmer(
                   isLoading: controller.isLoading,
                   child: Container(
@@ -258,7 +260,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 const DottedLine(
                   direction: Axis.horizontal,
                   alignment: WrapAlignment.center,
@@ -268,7 +270,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   dashColor: greyLightColor3,
                   dashGapLength: 2.0,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 _textRow(
                   context,
                   "Insurance Charge".tr,
@@ -292,7 +294,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 const DottedLine(
                   direction: Axis.horizontal,
                   alignment: WrapAlignment.center,
@@ -302,7 +304,7 @@ class AggByCnoteScreen extends StatelessWidget {
                   dashColor: greyLightColor3,
                   dashGapLength: 2.0,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 _textRow(
                   context,
                   "Return Freight Charge After Discount".tr,

@@ -54,306 +54,295 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
     BuildContext context,
     InvoiceCnoteDetailController controller,
   ) {
-    return Expanded(
-      child: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 35, right: 30, top: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // AWB
-                Shimmer(
-                  isLoading: controller.isLoading,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: controller.isLoading
-                            ? greyColor
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              controller.invoiceCnoteDetailModel?.awbNumber ??
-                                  '',
-                              style: appTitleTextStyle.copyWith(
-                                  fontWeight: bold,
-                                  color: primaryColor(context)),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              controller
-                                      .invoiceCnoteDetailModel?.picuUpOrderId ??
-                                  '',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall
-                                  ?.copyWith(
-                                      fontSize: 9, fontStyle: FontStyle.italic),
-                            ),
-                          ],
-                        ),
-                        IconButton(
-                          onPressed: () => Clipboard.setData(ClipboardData(
-                              text: controller
-                                      .invoiceCnoteDetailModel?.awbNumber ??
-                                  '')),
-                          icon: const Icon(Icons.copy_rounded),
-                        ),
-                      ],
-                    ),
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 35, right: 30, top: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // AWB
+              Shimmer(
+                isLoading: controller.isLoading,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color:
+                          controller.isLoading ? greyColor : Colors.transparent,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            controller.invoiceCnoteDetailModel?.awbNumber ?? '',
+                            style: appTitleTextStyle.copyWith(
+                                fontWeight: bold, color: primaryColor(context)),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            controller.invoiceCnoteDetailModel?.picuUpOrderId ??
+                                '',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
+                                    fontSize: 9, fontStyle: FontStyle.italic),
+                          ),
+                        ],
+                      ),
+                      IconButton(
+                        onPressed: () => Clipboard.setData(ClipboardData(
+                            text:
+                                controller.invoiceCnoteDetailModel?.awbNumber ??
+                                    '')),
+                        icon: const Icon(Icons.copy_rounded),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                _textRow(
-                  context,
-                  "AWB Date".tr,
-                  controller.invoiceCnoteDetailModel?.awbDate
-                          ?.toLongDateTimeFormat() ??
-                      '',
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? greyDarkColor1
-                          : greyLightColor1),
-                ),
-                _textRow(
-                  context,
-                  "Shipper Name".tr,
-                  controller.invoiceCnoteDetailModel?.shipperName,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? greyDarkColor1
-                          : greyLightColor1),
-                ),
-                _textRow(
-                  context,
-                  "Receiver Name".tr,
-                  controller.invoiceCnoteDetailModel?.consigneeName,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? Colors.black
-                          : greyLightColor1),
-                ),
-                _textRow(
-                  context,
-                  "Qty".tr,
-                  (controller.invoiceCnoteDetailModel?.quantity ?? 0)
-                      .toString(),
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? greyDarkColor1
-                          : greyLightColor1),
-                ),
-                _textRow(
-                  context,
-                  "Weight".tr,
-                  (controller.invoiceCnoteDetailModel?.weightKg ?? 0)
-                      .toString(),
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? greyDarkColor1
-                          : greyLightColor1),
-                ),
-                _textRow(
-                  context,
-                  "Service".tr,
-                  controller.invoiceCnoteDetailModel?.serviceCode,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? greyDarkColor1
-                          : greyLightColor1),
-                ),
-                const SizedBox(height: 12),
-                const DottedLine(
-                  direction: Axis.horizontal,
-                  alignment: WrapAlignment.center,
-                  lineLength: double.infinity,
-                  lineThickness: 1.0,
-                  dashLength: 2.0,
-                  dashColor: greyLightColor3,
-                  dashGapLength: 2.0,
-                ),
-                const SizedBox(height: 16),
-                _textRow(
-                  context,
-                  "Origin Code".tr,
-                  controller.invoiceCnoteDetailModel?.originSysCode,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? greyDarkColor1
-                          : greyLightColor1),
-                ),
-                _textRow(
-                  context,
-                  "Origin Name".tr,
-                  controller.invoiceCnoteDetailModel?.originName,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? greyDarkColor1
-                          : greyLightColor1),
-                ),
-                _textRow(
-                  context,
-                  "Destination Code".tr,
-                  controller.invoiceCnoteDetailModel?.destinationSysCode,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? greyDarkColor1
-                          : greyLightColor1),
-                ),
-                _textRow(
-                  context,
-                  "Destination Name".tr,
-                  controller.invoiceCnoteDetailModel?.destinationName,
-                  controller.isLoading,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppConst.isLightTheme(context)
-                          ? greyDarkColor1
-                          : greyLightColor1),
-                ),
-                const SizedBox(height: 6),
-                const Divider(
-                  color: greyLightColor3,
-                ),
-                const SizedBox(height: 12),
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+              _textRow(
+                context,
+                "AWB Date".tr,
+                controller.invoiceCnoteDetailModel?.awbDate
+                        ?.toLongDateTimeFormat() ??
+                    '',
+                controller.isLoading,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppConst.isLightTheme(context)
+                        ? greyDarkColor1
+                        : greyLightColor1),
+              ),
+              _textRow(
+                context,
+                "Shipper Name".tr,
+                controller.invoiceCnoteDetailModel?.shipperName,
+                controller.isLoading,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppConst.isLightTheme(context)
+                        ? greyDarkColor1
+                        : greyLightColor1),
+              ),
+              _textRow(
+                context,
+                "Receiver Name".tr,
+                controller.invoiceCnoteDetailModel?.consigneeName,
+                controller.isLoading,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppConst.isLightTheme(context)
+                        ? Colors.black
+                        : greyLightColor1),
+              ),
+              _textRow(
+                context,
+                "Qty".tr,
+                (controller.invoiceCnoteDetailModel?.quantity ?? 0).toString(),
+                controller.isLoading,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppConst.isLightTheme(context)
+                        ? greyDarkColor1
+                        : greyLightColor1),
+              ),
+              _textRow(
+                context,
+                "Weight".tr,
+                (controller.invoiceCnoteDetailModel?.weightKg ?? 0).toString(),
+                controller.isLoading,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppConst.isLightTheme(context)
+                        ? greyDarkColor1
+                        : greyLightColor1),
+              ),
+              _textRow(
+                context,
+                "Service".tr,
+                controller.invoiceCnoteDetailModel?.serviceCode,
+                controller.isLoading,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppConst.isLightTheme(context)
+                        ? greyDarkColor1
+                        : greyLightColor1),
+              ),
+              const SizedBox(height: 12),
+              const DottedLine(
+                direction: Axis.horizontal,
+                alignment: WrapAlignment.center,
+                lineLength: double.infinity,
+                lineThickness: 1.0,
+                dashLength: 2.0,
+                dashColor: greyLightColor3,
+                dashGapLength: 2.0,
+              ),
+              const SizedBox(height: 16),
+              _textRow(
+                context,
+                "Origin Code".tr,
+                controller.invoiceCnoteDetailModel?.originSysCode,
+                controller.isLoading,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppConst.isLightTheme(context)
+                        ? greyDarkColor1
+                        : greyLightColor1),
+              ),
+              _textRow(
+                context,
+                "Origin Name".tr,
+                controller.invoiceCnoteDetailModel?.originName,
+                controller.isLoading,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppConst.isLightTheme(context)
+                        ? greyDarkColor1
+                        : greyLightColor1),
+              ),
+              _textRow(
+                context,
+                "Destination Code".tr,
+                controller.invoiceCnoteDetailModel?.destinationSysCode,
+                controller.isLoading,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppConst.isLightTheme(context)
+                        ? greyDarkColor1
+                        : greyLightColor1),
+              ),
+              _textRow(
+                context,
+                "Destination Name".tr,
+                controller.invoiceCnoteDetailModel?.destinationName,
+                controller.isLoading,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppConst.isLightTheme(context)
+                        ? greyDarkColor1
+                        : greyLightColor1),
+              ),
+              const SizedBox(height: 6),
+              const Divider(
+                color: greyLightColor3,
+              ),
+              const SizedBox(height: 12),
+            ],
           ),
-          // Informasi Tagihan
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 35,
-            ),
-            child: Shimmer(
-              isLoading: controller.isLoading,
-              child: Container(
-                decoration: BoxDecoration(
-                    color:
-                        controller.isLoading ? greyColor : Colors.transparent,
-                    borderRadius: BorderRadius.circular(5)),
-                child: Text(
-                  "Informasi Tagihan",
-                  style: listTitleTextStyle.copyWith(
-                    color: primaryColor(context),
-                  ),
+        ),
+        // Informasi Tagihan
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 35,
+          ),
+          child: Shimmer(
+            isLoading: controller.isLoading,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: controller.isLoading ? greyColor : Colors.transparent,
+                  borderRadius: BorderRadius.circular(5)),
+              child: Text(
+                "Informasi Tagihan",
+                style: listTitleTextStyle.copyWith(
+                  color: primaryColor(context),
                 ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 35, right: 30, top: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _textRow(
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35, right: 30, top: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _textRow(
+                context,
+                "Freight Charge".tr,
+                "Rp. ${(controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0).toCurrency()}",
+                controller.isLoading,
+                style: TextStyle(
+                  fontWeight: bold,
+                  color: primaryColor(context),
+                ),
+              ),
+              _textRow(
+                context,
+                "Total Packing & Charges".tr,
+                "Rp. ${((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)).toCurrency()}",
+                controller.isLoading,
+                style: TextStyle(
+                  fontWeight: bold,
+                  color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                ),
+              ),
+              _textRow(
                   context,
-                  "Freight Charge".tr,
-                  "Rp. ${(controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0).toCurrency()}",
-                  controller.isLoading,
-                  style: TextStyle(
-                    fontWeight: bold,
-                    color: primaryColor(context),
-                  ),
+                  "Discount Amount".tr,
+                  "Rp. ${(controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0).toCurrency()}",
+                  controller.isLoading),
+              _textRow(
+                context,
+                "Total Amount After Disc & Charges".tr,
+                "Rp. ${(((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)) - (controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0)).abs().toCurrency()}",
+                controller.isLoading,
+                style: TextStyle(
+                  fontWeight: bold,
+                  color: AppConst.isLightTheme(context) ? redJNE : warningColor,
                 ),
-                _textRow(
+              ),
+              _textRow(
                   context,
-                  "Total Packing & Charges".tr,
-                  "Rp. ${((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)).toCurrency()}",
-                  controller.isLoading,
-                  style: TextStyle(
-                    fontWeight: bold,
-                    color:
-                        AppConst.isLightTheme(context) ? blueJNE : whiteColor,
-                  ),
-                ),
-                _textRow(
-                    context,
-                    "Discount Amount".tr,
-                    "Rp. ${(controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0).toCurrency()}",
-                    controller.isLoading),
-                _textRow(
+                  "Insurance".tr,
+                  "Rp. ${((controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0)).toCurrency()}",
+                  controller.isLoading),
+              _textRow(
+                context,
+                "Total Paid".tr,
+                "Rp. ${(((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)) - ((controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0) + (controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0))).abs().toCurrency()}",
+                controller.isLoading,
+                style: TextStyle(fontWeight: bold, color: successLightColor1),
+                titleFontWeight: bold,
+              ),
+              const SizedBox(height: 10),
+              const DottedLine(
+                direction: Axis.horizontal,
+                alignment: WrapAlignment.center,
+                lineLength: double.infinity,
+                lineThickness: 1.0,
+                dashLength: 2.0,
+                dashColor: greyLightColor3,
+                dashGapLength: 2.0,
+              ),
+              const SizedBox(height: 16),
+              _textRow(
                   context,
-                  "Total Amount After Disc & Charges".tr,
-                  "Rp. ${(((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)) - (controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0)).abs().toCurrency()}",
-                  controller.isLoading,
-                  style: TextStyle(
-                    fontWeight: bold,
-                    color:
-                        AppConst.isLightTheme(context) ? redJNE : warningColor,
-                  ),
-                ),
-                _textRow(
-                    context,
-                    "Insurance".tr,
-                    "Rp. ${((controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0)).toCurrency()}",
-                    controller.isLoading),
-                _textRow(
+                  "Goods Value".tr,
+                  "Rp. ${(controller.invoiceCnoteDetailModel?.goodsValue ?? 0).toCurrency()}",
+                  controller.isLoading),
+              _textRow(
                   context,
-                  "Total Paid".tr,
-                  "Rp. ${(((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)) - ((controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0) + (controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0))).abs().toCurrency()}",
-                  controller.isLoading,
-                  style: TextStyle(fontWeight: bold, color: successLightColor1),
-                  titleFontWeight: bold,
-                ),
-                const SizedBox(height: 10),
-                const DottedLine(
-                  direction: Axis.horizontal,
-                  alignment: WrapAlignment.center,
-                  lineLength: double.infinity,
-                  lineThickness: 1.0,
-                  dashLength: 2.0,
-                  dashColor: greyLightColor3,
-                  dashGapLength: 2.0,
-                ),
-                const SizedBox(height: 16),
-                _textRow(
-                    context,
-                    "Goods Value".tr,
-                    "Rp. ${(controller.invoiceCnoteDetailModel?.goodsValue ?? 0).toCurrency()}",
-                    controller.isLoading),
-                _textRow(
-                    context,
-                    "COD Amount".tr,
-                    "Rp. ${(controller.invoiceCnoteDetailModel?.codAmount ?? 0).toCurrency()}",
-                    controller.isLoading),
-                _textRow(
-                    context,
-                    "% COD Fee".tr,
-                    "Rp. ${(controller.invoiceCnoteDetailModel?.persentaseCodFee ?? 0).toCurrency()}",
-                    controller.isLoading),
-                _textRow(
-                    context,
-                    "COD Fee Amount".tr,
-                    "Rp. ${(controller.invoiceCnoteDetailModel?.codFeeAmount ?? 0).toCurrency()}",
-                    controller.isLoading),
-                _textRow(
-                    context,
-                    "COD Fee Zone".tr,
-                    controller.invoiceCnoteDetailModel?.codFeeZone,
-                    controller.isLoading),
-              ],
-            ),
+                  "COD Amount".tr,
+                  "Rp. ${(controller.invoiceCnoteDetailModel?.codAmount ?? 0).toCurrency()}",
+                  controller.isLoading),
+              _textRow(
+                  context,
+                  "% COD Fee".tr,
+                  "Rp. ${(controller.invoiceCnoteDetailModel?.persentaseCodFee ?? 0).toCurrency()}",
+                  controller.isLoading),
+              _textRow(
+                  context,
+                  "COD Fee Amount".tr,
+                  "Rp. ${(controller.invoiceCnoteDetailModel?.codFeeAmount ?? 0).toCurrency()}",
+                  controller.isLoading),
+              _textRow(
+                  context,
+                  "COD Fee Zone".tr,
+                  controller.invoiceCnoteDetailModel?.codFeeZone,
+                  controller.isLoading),
+            ],
           ),
-          const SizedBox(height: 40),
-        ],
-      ),
+        ),
+        const SizedBox(height: 40),
+      ],
     );
   }
 
@@ -404,7 +393,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                             .textTheme
                             .titleMedium
                             ?.copyWith(fontWeight: regular),
-                    textAlign: TextAlign.start, // Align the value to the right
+                    textAlign: TextAlign.end, // Align the value to the right
                   ),
                 ),
               ),

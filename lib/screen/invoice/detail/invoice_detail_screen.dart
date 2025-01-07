@@ -243,11 +243,11 @@ class InvoiceDetailScreen extends StatelessWidget {
                       controller.isLoading,
                       style: Theme.of(context).textTheme.titleMedium!,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 6),
                     const Divider(
                       color: greyLightColor3,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 6),
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
@@ -268,7 +268,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 6),
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
@@ -287,11 +287,11 @@ class InvoiceDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 6),
                     const Divider(
                       color: greyLightColor3,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 6),
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
@@ -355,7 +355,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                       controller.invoiceDetailModel?.email ?? "-",
                       controller.isLoading,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 6),
                     const DottedLine(
                       direction: Axis.horizontal,
                       alignment: WrapAlignment.center,
@@ -365,7 +365,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                       dashColor: greyLightColor3,
                       dashGapLength: 2.0,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 6),
                     _textRow(
                       context,
                       "Tax Number".tr,
@@ -393,11 +393,11 @@ class InvoiceDetailScreen extends StatelessWidget {
                       controller.invoiceDetailModel?.npwpAddress ?? "-",
                       controller.isLoading,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 6),
                     const Divider(
                       color: greyLightColor3,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 6),
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
@@ -453,7 +453,13 @@ class InvoiceDetailScreen extends StatelessWidget {
                         context,
                         "VAT".tr,
                         'Rp. ${controller.invoiceDetailModel?.vat!.toCurrency() ?? "-"}',
-                        controller.isLoading),
+                        controller.isLoading,
+                        style: listTitleTextStyle.copyWith(
+                          color: AppConst.isLightTheme(context)
+                              ? errorColor
+                              : warningColor,
+                        ),
+                        titleFontWeight: bold),
                     const SizedBox(height: 6),
                     _textRow(
                       context,

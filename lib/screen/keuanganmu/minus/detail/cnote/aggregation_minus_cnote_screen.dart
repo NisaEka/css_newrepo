@@ -57,7 +57,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   color: Colors.transparent,
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.only(
-                      right: 20), // Margin between the two text widgets
+                      right: 30), // Margin between the two text widgets
                   child: Text(
                     'Informasi Aggregasi'.tr,
                     style: listTitleTextStyle.copyWith(
@@ -89,11 +89,11 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   false,
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 const Divider(
                   color: greyLightColor3,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 Container(
                   color: Colors.transparent,
                   alignment: Alignment.centerLeft,
@@ -151,11 +151,11 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                         fontWeight: regular,
                       ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 const Divider(
                   color: greyLightColor3,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 Container(
                   color: Colors.transparent,
                   alignment: Alignment.centerLeft,
@@ -224,7 +224,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   false,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 const DottedLine(
                   direction: Axis.horizontal,
                   alignment: WrapAlignment.center,
@@ -234,7 +234,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   dashColor: greyLightColor3,
                   dashGapLength: 2.0,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 _textRow(
                   context,
                   "Insurance Charge".tr,
@@ -258,7 +258,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   false,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(),
                 const DottedLine(
                   direction: Axis.horizontal,
                   alignment: WrapAlignment.center,
@@ -268,7 +268,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                   dashColor: greyLightColor3,
                   dashGapLength: 2.0,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 _textRow(
                   context,
                   "Return Fee".tr,

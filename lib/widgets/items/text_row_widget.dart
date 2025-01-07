@@ -58,7 +58,7 @@ class TextRowWidget extends StatelessWidget {
                             .textTheme
                             .titleMedium
                             ?.copyWith(fontWeight: FontWeight.normal),
-                    textAlign: TextAlign.start,
+                    textAlign: TextAlign.end,
                   ),
                 ),
               ),

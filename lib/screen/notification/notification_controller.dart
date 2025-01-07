@@ -82,6 +82,8 @@ class NotificationController extends BaseController {
   Future<void> readMessage(NotificationModel value) async {
     String idMessage = value.text?.split(' : ').last.split('.').first ?? '';
     if (value.title?.split(' - ').last == "Laporanku") {
+      isLoading = true;
+      update();
       try {
         await laporanku
             .getTickets(QueryModel(
@@ -106,6 +108,9 @@ class NotificationController extends BaseController {
         (_) => updateNotificationStatus(value),
       );
     }
+
+    isLoading = false;
+    update();
   }
 
   void updateNotificationStatus(NotificationModel value) {

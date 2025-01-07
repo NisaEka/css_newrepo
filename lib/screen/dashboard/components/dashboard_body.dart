@@ -4,6 +4,8 @@ import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_promo.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_user_info.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/onboarding/ob1_screen.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dashboard_appbar.dart';
@@ -43,11 +45,10 @@ class DashboardBody extends StatelessWidget {
                           ? const DashboardInfo()
                           : const SizedBox(),
                       const DashboardMenu2(),
-                      // CustomFilledButton(
-                      //   color: Colors.blue,
-                      //   onPressed: () => Get.to(
-                      //
-                      // ),
+                      CustomFilledButton(
+                        color: Colors.blue,
+                        onPressed: () => Get.to(const Ob1Screen()),
+                      ),
                       c.state.isLogin &&
                               (c.state.allow.riwayatPesanan == "Y" ||
                                   c.state.allow.paketmuRiwayat == 'Y')

@@ -18,9 +18,14 @@ class NotificationScreen extends StatelessWidget {
             ),
             body: RefreshIndicator(
               onRefresh: () => controller.initData(),
-              child: controller.isLoading
-                  ? const LoadingDialog()
-                  : _bodyContent(controller, context),
+              child: Stack(
+                children: [
+                  _bodyContent(controller, context),
+                  controller.isLoading
+                      ? const LoadingDialog()
+                      : const SizedBox(),
+                ],
+              ),
             ),
           );
         });
