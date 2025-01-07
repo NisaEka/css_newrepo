@@ -40,7 +40,7 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
       onTap: widget.onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
         alignment: Alignment.center,
         child: Column(
           children: [
