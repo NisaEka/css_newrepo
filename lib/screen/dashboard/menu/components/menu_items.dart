@@ -35,7 +35,8 @@ class MenuItems extends StatelessWidget {
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
-                childAspectRatio: 0.8,
+                childAspectRatio: 0.7,
+                crossAxisSpacing: 10,
               ),
             ),
           );

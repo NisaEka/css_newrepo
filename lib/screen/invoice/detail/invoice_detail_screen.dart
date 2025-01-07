@@ -103,8 +103,6 @@ class InvoiceDetailScreen extends StatelessWidget {
 
   Widget _mainContent(
       BuildContext context, InvoiceDetailController controller) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double fontSize = screenWidth < 400 ? 16 : 18;
     return Column(
       children: [
         GestureDetector(
@@ -139,7 +137,7 @@ class InvoiceDetailScreen extends StatelessWidget {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 35, vertical: 0),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,13 +147,14 @@ class InvoiceDetailScreen extends StatelessWidget {
                       isLoading: controller.isLoading,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: controller.isLoading
-                                ? greyColor
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(5)),
+                          color: controller.isLoading
+                              ? greyColor
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -166,9 +165,9 @@ class InvoiceDetailScreen extends StatelessWidget {
                                           .invoiceDetailModel?.invoiceNumber ??
                                       '',
                                   style: appTitleTextStyle.copyWith(
-                                      fontWeight: bold,
-                                      color: primaryColor(context),
-                                      fontSize: fontSize),
+                                    fontWeight: bold,
+                                    color: primaryColor(context),
+                                  ),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
@@ -178,17 +177,21 @@ class InvoiceDetailScreen extends StatelessWidget {
                                       .textTheme
                                       .titleSmall
                                       ?.copyWith(
-                                          fontSize: 9,
-                                          fontStyle: FontStyle.italic),
+                                        fontSize: 9,
+                                        fontStyle: FontStyle.italic,
+                                      ),
                                 ),
                               ],
                             ),
-                            IconButton(
-                              onPressed: () => Clipboard.setData(ClipboardData(
+                            GestureDetector(
+                              onTap: () => Clipboard.setData(ClipboardData(
                                   text: controller
                                           .invoiceDetailModel?.invoiceNumber ??
                                       '')),
-                              icon: const Icon(Icons.copy_rounded),
+                              child: const Icon(
+                                Icons.copy_rounded,
+                                color: blueJNE,
+                              ),
                             ),
                           ],
                         ),
