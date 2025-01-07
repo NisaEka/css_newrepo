@@ -262,7 +262,6 @@ class AuthRepositoryImpl extends AuthRepository {
         data: data,
         options: Options(extra: {'skipAuth': true}),
       );
-      AppLogger.i("post device info non auth : ${response.data}");
       return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
       AppLogger.i("error post device info non auth : ${e.response?.data}");

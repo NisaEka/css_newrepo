@@ -29,7 +29,7 @@ class RequstPickupFilterButton extends HookWidget {
                   child: CustomScrollView(
                     slivers: [
                       DateFilterField(
-                        label: "Tanggal AWB".tr,
+                        // label: "Tanggal AWB".tr,
                         selectedDateFilter: c.state.dateFilter,
                         startDate: c.state.startDate,
                         endDate: c.state.endDate,

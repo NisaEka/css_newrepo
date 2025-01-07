@@ -1,7 +1,8 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/notification/get_notification_model.dart';
+import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_screen.dart';
+import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolan_laporanku_screen.dart';
 import 'package:css_mobile/screen/notification/notification_detail_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/items/notification_list_item.dart';
@@ -78,14 +79,38 @@ class NotificationController extends BaseController {
     update();
   }
 
-  void readMessage(NotificationModel value) {
-    if (value.title?.split(' - ')[1] == "Laporanku") {
-      Get.to(() => const LaporankuScreen())
-          ?.then((_) => updateNotificationStatus(value));
+  Future<void> readMessage(NotificationModel value) async {
+    String idMessage = value.text?.split(' : ').last.split('.').first ?? '';
+    if (value.title?.split(' - ').last == "Laporanku") {
+      isLoading = true;
+      update();
+      try {
+        await laporanku
+            .getTickets(QueryModel(
+              where: [
+                {"id": idMessage},
+              ],
+            ))
+            .then(
+              (ticket) => Get.to(
+                () => const ObrolanLaporankuScreen(),
+                arguments: {
+                  'id': idMessage,
+                  'ticket': ticket.data?.first,
+                },
+              )?.then((_) => updateNotificationStatus(value)),
+            );
+      } catch (e) {
+        AppLogger.e('error get ticket message : $e');
+      }
     } else {
-      Get.to(() => NotificationDetailScreen(data: value))
-          ?.then((_) => updateNotificationStatus(value));
+      Get.to(() => NotificationDetailScreen(data: value))?.then(
+        (_) => updateNotificationStatus(value),
+      );
     }
+
+    isLoading = false;
+    update();
   }
 
   void updateNotificationStatus(NotificationModel value) {
