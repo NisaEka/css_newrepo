@@ -34,9 +34,9 @@ class StickerMegahubHybrid1 extends StatelessWidget {
             data: data,
             shippingCost: shippingCost,
             hiddenPhoneShipper: hiddenPhoneShipper,
-          ).sticker(),
+          ).sticker(context),
           const SizedBox(height: 20),
-          sticker2(),
+          sticker2(context),
           Center(
             child: Text(
               textAlign: TextAlign.center,
@@ -49,7 +49,8 @@ class StickerMegahubHybrid1 extends StatelessWidget {
     );
   }
 
-  Widget sticker2() {
+  Widget sticker2(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return DefaultTextStyle(
       style: const TextStyle(color: Colors.black),
       child: Container(
@@ -60,7 +61,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: Get.width / 2,
+                  width: screenWidth < 400 ? Get.width / 2.1 : Get.width / 2,
                   padding: const EdgeInsets.only(
                     left: 10,
                     right: 5,

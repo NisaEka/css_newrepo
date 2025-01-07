@@ -35,7 +35,7 @@ class StickerMegahub2 extends StatelessWidget {
             ).sticker1(),
           ),
           const SizedBox(height: 25),
-          StickerMegahubHybrid1(data: data).sticker2(),
+          StickerMegahubHybrid1(data: data).sticker2(context),
           Center(
             child: Text(
               'Untuk informasi dan pengecekan status kiriman silahkan mengunjungi www.jne.co.id',

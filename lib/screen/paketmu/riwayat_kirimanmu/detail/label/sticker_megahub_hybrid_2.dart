@@ -26,7 +26,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        sticker(),
+        sticker(context),
         Center(
           child: Text(
             textAlign: TextAlign.center,
@@ -38,7 +38,9 @@ class StickerMegahubHybrid2 extends StatelessWidget {
     );
   }
 
-  Widget sticker() {
+  Widget sticker(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double fontSize = screenWidth < 400 ? 12 : 14;
     return DefaultTextStyle(
       style: const TextStyle(color: Colors.black),
       child: Container(
@@ -59,7 +61,8 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     "Nomor Connote: ${data.awb ?? ''}",
-                    style: listTitleTextStyle.copyWith(color: Colors.black),
+                    style: listTitleTextStyle.copyWith(
+                        color: Colors.black, fontSize: fontSize),
                   ),
                 )
               ],
