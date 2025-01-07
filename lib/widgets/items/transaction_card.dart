@@ -55,13 +55,14 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Column(
       children: [
         Shimmer(
           isLoading: isLoading,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-            width: Get.width * 0.28,
+            width: screenWidth < 400 ? Get.width * 0.27 : Get.width * 0.28,
             height: height,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),

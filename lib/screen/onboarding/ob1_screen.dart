@@ -253,6 +253,12 @@ class _Ob1ScreenState extends State<Ob1Screen> {
 
   /// Helper method to build the indicator dots.
   Widget _buildIndicator() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double verticalMargin = screenWidth < 400
+        ? 0
+        : screenWidth >= 400 && screenWidth < 500
+            ? 60
+            : 20;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
@@ -260,7 +266,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
         (index) => Container(
           width: 10,
           height: 10,
-          margin: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+          margin:
+              EdgeInsets.symmetric(vertical: verticalMargin, horizontal: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: index == currentIndex ? redJNE : greyColor,

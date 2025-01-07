@@ -20,6 +20,8 @@ class CustomCodeLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double fontSize = screenWidth < 400 ? 16 : 18;
     return Row(
       mainAxisAlignment: alignment,
       children: [
@@ -31,8 +33,7 @@ class CustomCodeLabel extends StatelessWidget {
             child: Text(
               label,
               style: appTitleTextStyle.copyWith(
-                color: primaryColor(context),
-              ),
+                  color: primaryColor(context), fontSize: fontSize),
             ),
           ),
         ),

@@ -36,6 +36,8 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double verticalMargin = screenWidth < 400 ? 0 : 10;
     return Stack(
       children: [
         GestureDetector(
@@ -43,7 +45,8 @@ class MenuItem extends StatelessWidget {
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+              margin:
+                  EdgeInsets.symmetric(vertical: verticalMargin, horizontal: 8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

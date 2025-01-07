@@ -29,6 +29,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
@@ -66,7 +67,8 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                         children: [
                           TransactionCard(
                             // title: "Jumlah Transaksi".tr,
-                            height: 140,
+                            // height: 140,
+                            height: screenWidth < 400 ? Get.height * 0.24 : 140,
                             customTitle: DashboardMiniCount(
                               width: Get.width * 0.18,
                               margin: EdgeInsets.zero,
@@ -94,7 +96,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             ),
                           ),
                           TransactionCard(
-                            height: 140,
+                            height: screenWidth < 400 ? Get.height * 0.24 : 140,
                             customTitle: DashboardMiniCount(
                               width: Get.width * 0.19,
                               margin: EdgeInsets.zero,
@@ -135,7 +137,8 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TransactionCard(
-                                height: 140,
+                                height:
+                                    screenWidth < 400 ? Get.height * 0.24 : 140,
                                 customTitle: Column(
                                   children: [
                                     DashboardMiniCount(

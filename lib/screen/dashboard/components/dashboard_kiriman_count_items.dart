@@ -28,6 +28,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
@@ -149,7 +150,9 @@ class DashboardKirimanCountItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TypeTransactionCard(
-                          width: Get.width * 0.28,
+                          width: screenWidth < 400
+                              ? Get.width * 0.27
+                              : Get.width * 0.28,
                           value1: kirimanKamu.totalCod.toString(),
                           prefixVal2: "Rp.",
                           value2: kirimanKamu.codAmount.toInt().toCurrency(),
@@ -168,7 +171,9 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           isLoading: isLoadingKiriman,
                         ),
                         TypeTransactionCard(
-                          width: Get.width * 0.28,
+                          width: screenWidth < 400
+                              ? Get.width * 0.27
+                              : Get.width * 0.28,
                           value1: kirimanKamu.totalNonCod.toString(),
                           description: "Transaksi NON COD",
                           lineColor: Colors.green,
