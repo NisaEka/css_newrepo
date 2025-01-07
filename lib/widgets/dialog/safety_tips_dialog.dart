@@ -38,52 +38,54 @@ class SafetyTipsDialog extends StatelessWidget {
       ),
       content: Padding(
         padding: const EdgeInsets.all(3.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildBulletPoint(
-                'Pastikan Anda hanya memasang aplikasi CSS Mobile dari playstore.'
-                    .tr,
-                context,
-                Icons.link_rounded),
-            const SizedBox(height: 5),
-            _buildBulletPoint(
-                'Menjaga kerahasiaan informasi data Log In ID Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.'
-                    .tr,
-                context,
-                Icons.lock_rounded),
-            const SizedBox(height: 5),
-            _buildBulletPoint(
-                'Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal.'
-                    .tr,
-                context,
-                Icons.warning_rounded),
-            const SizedBox(height: 5),
-            _buildBulletPoint(
-                'Tidak menyimpan data kata sandi saat Log In dan pastikan melakukan Log Out setelah selesai menggunakan CSS.'
-                    .tr,
-                context,
-                Icons.password_rounded),
-            const SizedBox(height: 5),
-            _buildBulletPoint(
-                'Amankan Komputer dan Jaringan yang digunakan dengan mengaktifkan Spam Blocker, menggunakan Antivirus, dan Konfigurasi Firewall.'
-                    .tr,
-                context,
-                Icons.security_rounded),
-            const SizedBox(height: 5),
-            _buildBulletPoint(
-                'Waspada terhadap email phishing, website phishing dan pastikan teliti serta validasi kembali transaksi anda.'
-                    .tr,
-                context,
-                Icons.email_rounded),
-            const SizedBox(height: 5),
-            _buildBulletPoint(
-                'Jangan pernah memberikan PIN/OTP/PASSWORD/PIN CSS/Kode OTP kepada siapapun. Pihak JNE tidak pernah meminta PIN/OTP/PASSWORD/PIN CSS/Kode OTP dari Customer.'
-                    .tr,
-                context,
-                Icons.lock_person_rounded),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildBulletPoint(
+                  'Pastikan Anda hanya memasang aplikasi CSS Mobile dari playstore.'
+                      .tr,
+                  context,
+                  Icons.link_rounded),
+              const SizedBox(height: 5),
+              _buildBulletPoint(
+                  'Menjaga kerahasiaan informasi data Log In ID Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.'
+                      .tr,
+                  context,
+                  Icons.lock_rounded),
+              const SizedBox(height: 5),
+              _buildBulletPoint(
+                  'Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal.'
+                      .tr,
+                  context,
+                  Icons.warning_rounded),
+              const SizedBox(height: 5),
+              _buildBulletPoint(
+                  'Tidak menyimpan data kata sandi saat Log In dan pastikan melakukan Log Out setelah selesai menggunakan CSS.'
+                      .tr,
+                  context,
+                  Icons.password_rounded),
+              const SizedBox(height: 5),
+              _buildBulletPoint(
+                  'Amankan Komputer dan Jaringan yang digunakan dengan mengaktifkan Spam Blocker, menggunakan Antivirus, dan Konfigurasi Firewall.'
+                      .tr,
+                  context,
+                  Icons.security_rounded),
+              const SizedBox(height: 5),
+              _buildBulletPoint(
+                  'Waspada terhadap email phishing, website phishing dan pastikan teliti serta validasi kembali transaksi anda.'
+                      .tr,
+                  context,
+                  Icons.email_rounded),
+              const SizedBox(height: 5),
+              _buildBulletPoint(
+                  'Jangan pernah memberikan PIN/OTP/PASSWORD/PIN CSS/Kode OTP kepada siapapun. Pihak JNE tidak pernah meminta PIN/OTP/PASSWORD/PIN CSS/Kode OTP dari Customer.'
+                      .tr,
+                  context,
+                  Icons.lock_person_rounded),
+            ],
+          ),
         ),
       ),
       actions: [

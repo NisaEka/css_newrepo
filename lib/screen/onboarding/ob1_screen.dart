@@ -188,6 +188,17 @@ class _Ob1ScreenState extends State<Ob1Screen> {
 
   /// Helper method to build carousel items.
   Widget _buildCarouselItem(String imagePath, Alignment alignment, int index) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double titleFontSize = screenWidth < 400
+        ? 20
+        : screenWidth >= 400 && screenWidth < 500
+            ? 24
+            : 20;
+    double descFontSize = screenWidth < 400
+        ? 14
+        : screenWidth >= 400 && screenWidth < 500
+            ? 16
+            : 14;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -228,6 +239,11 @@ class _Ob1ScreenState extends State<Ob1Screen> {
         ),
         _buildIndicator(),
         // const SizedBox(height: 40),
+        screenWidth < 400
+            ? const SizedBox(height: 10)
+            : screenWidth >= 400 && screenWidth < 500
+                ? const SizedBox()
+                : const SizedBox(height: 10),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
@@ -236,13 +252,19 @@ class _Ob1ScreenState extends State<Ob1Screen> {
               Text(
                 bannerTexts[currentIndex]['title']!.tr,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineLarge,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineLarge
+                    ?.copyWith(fontSize: titleFontSize),
               ),
               const SizedBox(height: 15),
               Text(
                 bannerTexts[currentIndex]['desc']!.tr,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontSize: descFontSize),
               ),
             ],
           ),
@@ -253,6 +275,12 @@ class _Ob1ScreenState extends State<Ob1Screen> {
 
   /// Helper method to build the indicator dots.
   Widget _buildIndicator() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double verticalMargin = screenWidth < 400
+        ? 0
+        : screenWidth >= 400 && screenWidth < 500
+            ? 60
+            : 20;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
@@ -260,7 +288,8 @@ class _Ob1ScreenState extends State<Ob1Screen> {
         (index) => Container(
           width: 10,
           height: 10,
-          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          margin:
+              EdgeInsets.symmetric(vertical: verticalMargin, horizontal: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: index == currentIndex ? redJNE : greyColor,

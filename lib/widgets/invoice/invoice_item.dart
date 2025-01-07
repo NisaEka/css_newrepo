@@ -20,6 +20,8 @@ class InvoiceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double fontSize = screenWidth < 400 ? 12 : 14;
     return Shimmer(
       isLoading: isLoading,
       child: GestureDetector(
@@ -76,7 +78,9 @@ class InvoiceItem extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
-                            ?.copyWith(color: primaryColor(context)),
+                            ?.copyWith(
+                                color: primaryColor(context),
+                                fontSize: fontSize),
                         textAlign: TextAlign.end,
                       ),
                     ]),

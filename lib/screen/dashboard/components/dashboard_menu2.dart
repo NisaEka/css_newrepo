@@ -14,12 +14,15 @@ class DashboardMenu2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double verticalMargin = screenWidth < 400 ? 20 : 0;
     return GetBuilder<DashboardController>(
         init: DashboardController(),
         builder: (controller) {
           return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12),
-            height: 120,
+            margin:
+                EdgeInsets.symmetric(horizontal: 12, vertical: verticalMargin),
+            height: screenWidth < 400 ? 100 : 120,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: controller.state.isLoading

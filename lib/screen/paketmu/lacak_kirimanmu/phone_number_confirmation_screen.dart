@@ -57,81 +57,86 @@ class PhoneNumberConfirmationScreenState
         titleTextStyle: appTitleTextStyle.copyWith(color: whiteColor),
         leading: const CustomBackButton(color: whiteColor),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 80.0),
-              child: Text(
-                'Mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima'
-                    .tr,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: CustomTheme().textColor(context),
+      body: ListView(
+        shrinkWrap: true,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 80.0),
+                  child: Text(
+                    'Mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima'
+                        .tr,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: CustomTheme().textColor(context),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              widget.awb,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: primaryColor(context),
-              ),
-            ),
-            const SizedBox(height: 40),
-            Pinput(
-              length: 4,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              focusNode: _pinputFocusNode,
-              onChanged: (phoneNumber) {
-                setState(() {
-                  _phoneNumber = phoneNumber;
-                });
-              },
-              onCompleted: (phoneNumber) {
-                setState(() {
-                  _phoneNumber = phoneNumber;
-                });
-                widget.cekResi(widget.awb, _phoneNumber).then((value) {
-                  if (value.code == 200) {
-                    Navigator.pop(context);
-                  } else {
-                    AppSnackBar.error(value.message);
-                  }
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                if (!widget.isLoading) {
-                  widget.cekResi(widget.awb, _phoneNumber).then((value) {
-                    if (value.code == 200) {
-                      Navigator.pop(context);
-                    } else {
-                      AppSnackBar.error(value.message);
+                const SizedBox(height: 10),
+                Text(
+                  widget.awb,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: primaryColor(context),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                Pinput(
+                  length: 4,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  focusNode: _pinputFocusNode,
+                  onChanged: (phoneNumber) {
+                    setState(() {
+                      _phoneNumber = phoneNumber;
+                    });
+                  },
+                  onCompleted: (phoneNumber) {
+                    setState(() {
+                      _phoneNumber = phoneNumber;
+                    });
+                    widget.cekResi(widget.awb, _phoneNumber).then((value) {
+                      if (value.code == 200) {
+                        Navigator.pop(context);
+                      } else {
+                        AppSnackBar.error(value.message);
+                      }
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    if (!widget.isLoading) {
+                      widget.cekResi(widget.awb, _phoneNumber).then((value) {
+                        if (value.code == 200) {
+                          Navigator.pop(context);
+                        } else {
+                          AppSnackBar.error(value.message);
+                        }
+                      });
                     }
-                  });
-                }
-              },
-              child: Text(
-                'Konfirmasi'.tr,
-                style: TextStyle(
-                  color: CustomTheme().textColor(context),
+                  },
+                  child: Text(
+                    'Konfirmasi'.tr,
+                    style: TextStyle(
+                      color: CustomTheme().textColor(context),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
