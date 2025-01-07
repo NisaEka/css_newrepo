@@ -75,8 +75,10 @@ class CustomDropDownField<T> extends StatelessWidget {
         //     ],
         //   ),
         // ),
-        Text(label ?? '', style: Theme.of(context).textTheme.titleSmall),
-        const SizedBox(height: 5),
+        Text(label ?? '',
+            style:
+                Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14)),
+        const SizedBox(height: 8),
         Container(
           width: width ?? Get.width,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),

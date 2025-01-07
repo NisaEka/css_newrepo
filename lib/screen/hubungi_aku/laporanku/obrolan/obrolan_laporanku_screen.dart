@@ -7,9 +7,10 @@ import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolal_laporank
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
-import 'package:css_mobile/widgets/dialog/image_popup_dialog.dart';
+// import 'package:css_mobile/widgets/dialog/image_popup_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
+import 'package:css_mobile/widgets/items/show_image_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -325,17 +326,36 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                                           : textColor(context),
                                     ),
                               ),
+                              // GestureDetector(
+                              //   onTap: () => showDialog(
+                              //     context: context,
+                              //     builder: (context) => ImagePopupDialog(
+                              //       title: '',
+                              //       img: msg.image != null &&
+                              //               (msg.image!.startsWith('https') ||
+                              //                   msg.image!.startsWith('http'))
+                              //           ? msg.image!
+                              //           : "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
+                              //     ),
+                              //   ),
+                              //   child: Image.network(
+                              //     msg.image != null &&
+                              //             (msg.image!.startsWith('https') ||
+                              //                 msg.image!.startsWith('http'))
+                              //         ? msg.image!
+                              //         : "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
+                              //     errorBuilder: (context, error, stackTrace) =>
+                              //         const SizedBox(),
+                              //   ),
+                              // )
                               GestureDetector(
-                                onTap: () => showDialog(
-                                  context: context,
-                                  builder: (context) => ImagePopupDialog(
-                                    title: '',
-                                    img: msg.image != null &&
-                                            (msg.image!.startsWith('https') ||
-                                                msg.image!.startsWith('http'))
-                                        ? msg.image!
-                                        : "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
-                                  ),
+                                onTap: () => showImagePreview(
+                                  context,
+                                  msg.image != null &&
+                                          (msg.image!.startsWith('https') ||
+                                              msg.image!.startsWith('http'))
+                                      ? msg.image!
+                                      : "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
                                 ),
                                 child: Image.network(
                                   msg.image != null &&

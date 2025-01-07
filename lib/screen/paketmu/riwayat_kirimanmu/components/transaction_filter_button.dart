@@ -34,7 +34,10 @@ class TransactionFilterButton extends HookWidget {
                         },
                       ),
                       SliverToBoxAdapter(
-                        child: CustomFormLabel(label: 'Status Kiriman'.tr),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: CustomFormLabel(label: 'Status Kiriman'.tr),
+                        ),
                       ),
                       StatusFilterField(
                         statuses: c.state.listStatusKiriman,
@@ -86,17 +89,26 @@ class TransactionFilterButton extends HookWidget {
                       //   ),
                       // ),
                       SliverToBoxAdapter(
-                        child: OfficerDropdown(
-                          label: 'Petugas Entry'.tr,
-                          readOnly: c.state.basic?.userType != "PEMILIK",
-                          selectedItem: c.state.selectedPetugasEntry?.name,
-                          value: c.state.selectedPetugasEntry,
-                          onChanged: (value) {
-                            setState(() {
-                              c.state.selectedPetugasEntry = value;
-                              c.update();
-                            });
-                          },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: CustomFormLabel(label: 'Petugas Entry'.tr),
+                            ),
+                            OfficerDropdown(
+                              label: 'Petugas Entry'.tr,
+                              readOnly: c.state.basic?.userType != "PEMILIK",
+                              selectedItem: c.state.selectedPetugasEntry?.name,
+                              value: c.state.selectedPetugasEntry,
+                              onChanged: (value) {
+                                setState(() {
+                                  c.state.selectedPetugasEntry = value;
+                                  c.update();
+                                });
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ],

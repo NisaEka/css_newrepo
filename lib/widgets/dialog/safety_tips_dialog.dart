@@ -23,28 +23,19 @@ class SafetyTipsDialog extends StatelessWidget {
       backgroundColor: Theme.of(context).brightness == Brightness.light
           ? whiteColor
           : bgDarkColor,
-      title:
-          Column(
-            children: [
-              Image.asset(
-                  ImageConstant.logoCSS,
-                  height: 30,
-                  width: Get.width,
-                  color: primaryColor(context)),
-              const SizedBox(height: 16),
-              Text(
-                'TIPS AMAN MENGGUNAKAN CSS'.tr,
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(
-                    fontWeight: bold,
-                    fontSize: 16,
-                    color: primaryColor(context)),
-              ),
-            ],
+      title: Column(
+        children: [
+          Image.asset(ImageConstant.logoCSS,
+              height: 30, width: Get.width, color: primaryColor(context)),
+          const SizedBox(height: 16),
+          Text(
+            'TIPS AMAN MENGGUNAKAN CSS'.tr,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: bold, fontSize: 16, color: primaryColor(context)),
           ),
+        ],
+      ),
       content: Padding(
         padding: const EdgeInsets.all(3.0),
         child: Column(
@@ -52,7 +43,7 @@ class SafetyTipsDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildBulletPoint(
-                'Pastikan Anda hanya memasang aplikasi CSS Mobile dari playstore'
+                'Pastikan Anda hanya memasang aplikasi CSS Mobile dari playstore.'
                     .tr,
                 context,
                 Icons.link_rounded),

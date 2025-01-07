@@ -48,10 +48,12 @@ class JLCPointWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
-                              color: color ??
-                                  (AppConst.isLightTheme(context)
-                                      ? redJNE
-                                      : warningColor),
+                              color: controller.state.isLoading
+                                  ? greyColor
+                                  : color ??
+                                      (AppConst.isLightTheme(context)
+                                          ? redJNE
+                                          : warningColor),
                               spreadRadius: 1,
                               offset: const Offset(-2, 2),
                             ),
