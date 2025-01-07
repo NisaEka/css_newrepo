@@ -171,6 +171,7 @@ class _DestinationExternalDropdownState
                   autoFocus: true,
                   validate: _showValidationError,
                   validationText: 'Masukan 3 atau lebih karakter'.tr,
+                  onClear: () => _onSearchChanged('', setState),
                   onChanged: (value) {
                     _onSearchChanged(value, setState); // Use debounce logic
                   },
@@ -181,11 +182,11 @@ class _DestinationExternalDropdownState
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasData &&
-                          snapshot.data!.isNotEmpty) {
-                        return buildPosts(snapshot.data!, title);
                       } else {
-                        return const Center(child: DataEmpty());
+                        // if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                        return buildPosts(snapshot.data, title);
+                        // } else {
+                        //   return const Center(child: DataEmpty());
                       }
                     },
                   ),
@@ -198,18 +199,21 @@ class _DestinationExternalDropdownState
     );
   }
 
-  Widget buildPosts(List<DestinationExternal> data, String title) {
+  Widget buildPosts(List<DestinationExternal>? data, String title) {
     return ListView.builder(
-      itemCount: data.length,
+      itemCount: data?.length,
       itemBuilder: (context, index) {
-        final post = data[index];
+        final post = data?[index];
+        if (data == null) {
+          return const DataEmpty();
+        }
         return ListTile(
           title: Text(
-            post.label!,
+            post?.label ?? '',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           onTap: () {
-            widget.controller?.text = post.label ?? '';
+            widget.controller?.text = post?.label ?? '';
             widget.onSelect?.call(post);
             widget.onChanged?.call(post);
             Get.back();
