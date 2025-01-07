@@ -70,7 +70,9 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             // height: 140,
                             height: screenWidth < 400 ? Get.height * 0.24 : 140,
                             customTitle: DashboardMiniCount(
-                              width: Get.width * 0.18,
+                              width: screenWidth < 400
+                                  ? Get.width * 0.16
+                                  : Get.width * 0.18,
                               margin: EdgeInsets.zero,
                               label: 'Jumlah Transaksi COD'.tr,
                               value: (transSummary?.totalKirimanCod?.totalCod)

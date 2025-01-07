@@ -103,6 +103,8 @@ class InvoiceDetailScreen extends StatelessWidget {
 
   Widget _mainContent(
       BuildContext context, InvoiceDetailController controller) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double fontSize = screenWidth < 400 ? 16 : 18;
     return Column(
       children: [
         GestureDetector(
@@ -165,7 +167,8 @@ class InvoiceDetailScreen extends StatelessWidget {
                                       '',
                                   style: appTitleTextStyle.copyWith(
                                       fontWeight: bold,
-                                      color: primaryColor(context)),
+                                      color: primaryColor(context),
+                                      fontSize: fontSize),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(

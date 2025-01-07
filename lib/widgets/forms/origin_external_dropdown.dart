@@ -182,7 +182,9 @@ class _OriginExternalDropdownState extends State<OriginExternalDropdown> {
                     } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                       return buildPosts(snapshot.data!, title);
                     } else {
-                      return const Center(child: DataEmpty());
+                      return ListView(
+                          shrinkWrap: true,
+                          children: const [Center(child: DataEmpty())]);
                     }
                   },
                 ),

@@ -108,9 +108,9 @@ class LacakKirimanScreen extends StatelessWidget {
             },
           ),
           Expanded(
-            child: c.trackModel != null && c.trackModel?.error == null ||
-                    c.isLoading
-                ? ListView(
+              child: ListView(children: [
+            c.trackModel != null && c.trackModel?.error == null || c.isLoading
+                ? Column(
                     children: [
                       const SizedBox(height: 5),
                       Row(
@@ -295,9 +295,8 @@ class LacakKirimanScreen extends StatelessWidget {
                   )
                 : Center(
                     child:
-                        DataEmpty(text: c.trackModel?.error ?? 'Data Kosong'),
-                  ),
-          )
+                        DataEmpty(text: c.trackModel?.error ?? 'Data Kosong')),
+          ]))
         ],
       ),
     );

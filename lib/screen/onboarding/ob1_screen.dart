@@ -188,6 +188,17 @@ class _Ob1ScreenState extends State<Ob1Screen> {
 
   /// Helper method to build carousel items.
   Widget _buildCarouselItem(String imagePath, Alignment alignment, int index) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double titleFontSize = screenWidth < 400
+        ? 20
+        : screenWidth >= 400 && screenWidth < 500
+            ? 24
+            : 20;
+    double descFontSize = screenWidth < 400
+        ? 14
+        : screenWidth >= 400 && screenWidth < 500
+            ? 16
+            : 14;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -228,6 +239,11 @@ class _Ob1ScreenState extends State<Ob1Screen> {
         ),
         _buildIndicator(),
         // const SizedBox(height: 40),
+        screenWidth < 400
+            ? const SizedBox(height: 10)
+            : screenWidth >= 400 && screenWidth < 500
+                ? const SizedBox()
+                : const SizedBox(height: 10),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
@@ -236,13 +252,19 @@ class _Ob1ScreenState extends State<Ob1Screen> {
               Text(
                 bannerTexts[currentIndex]['title']!.tr,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineLarge,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineLarge
+                    ?.copyWith(fontSize: titleFontSize),
               ),
               const SizedBox(height: 15),
               Text(
                 bannerTexts[currentIndex]['desc']!.tr,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontSize: descFontSize),
               ),
             ],
           ),
