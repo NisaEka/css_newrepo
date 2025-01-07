@@ -19,20 +19,21 @@ class MenuItem extends StatelessWidget {
   final bool isLoading;
   final double iconSize;
 
-  const MenuItem(
-      {super.key,
-      this.menuTitle,
-      this.menuImg,
-      this.onTap,
-      this.menuIcon,
-      this.isActive = true,
-      this.isFavorite,
-      this.isEdit = false,
-      this.onEdit,
-      this.data,
-      this.isLogin = false,
-      this.isLoading = false,
-      this.iconSize = 50});
+  const MenuItem({
+    super.key,
+    this.menuTitle,
+    this.menuImg,
+    this.onTap,
+    this.menuIcon,
+    this.isActive = true,
+    this.isFavorite,
+    this.isEdit = false,
+    this.onEdit,
+    this.data,
+    this.isLogin = false,
+    this.isLoading = false,
+    this.iconSize = 50,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class MenuItem extends StatelessWidget {
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
