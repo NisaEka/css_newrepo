@@ -53,7 +53,7 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
                 ),
                 SizedBox(
                   height: 62,
-                  width: 120,
+                  width: Get.width * 0.3,
                   child: widget.img != null
                       ? Image.network(
                           widget.img ?? '',
