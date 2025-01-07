@@ -96,7 +96,10 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                                   .textTheme
                                   .titleSmall
                                   ?.copyWith(
-                                      fontSize: 9, fontStyle: FontStyle.italic),
+                                      fontSize: 9,
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: bold,
+                              ),
                             ),
                           ],
                         ),
@@ -158,7 +161,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                 _textRow(
                   context,
                   "Weight".tr,
-                  (controller.invoiceCnoteDetailModel?.weightKg ?? 0)
+                  "${(controller.invoiceCnoteDetailModel?.weightKg ?? 0)} KG"
                       .toString(),
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -263,6 +266,42 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _textRow(
+                    context,
+                    "Goods Value".tr,
+                    "Rp. ${(controller.invoiceCnoteDetailModel?.goodsValue ?? 0).toCurrency()}",
+                    controller.isLoading),
+                _textRow(
+                    context,
+                    "COD Amount".tr,
+                    "Rp. ${(controller.invoiceCnoteDetailModel?.codAmount ?? 0).toCurrency()}",
+                    controller.isLoading),
+                _textRow(
+                    context,
+                    "% COD Fee".tr,
+                    "Rp. ${(controller.invoiceCnoteDetailModel?.persentaseCodFee ?? 0).toCurrency()}",
+                    controller.isLoading),
+                _textRow(
+                    context,
+                    "COD Fee Amount".tr,
+                    "Rp. ${(controller.invoiceCnoteDetailModel?.codFeeAmount ?? 0).toCurrency()}",
+                    controller.isLoading),
+                _textRow(
+                    context,
+                    "COD Fee Zone".tr,
+                    controller.invoiceCnoteDetailModel?.codFeeZone,
+                    controller.isLoading),
+                const SizedBox(height: 6),
+                const DottedLine(
+                  direction: Axis.horizontal,
+                  alignment: WrapAlignment.center,
+                  lineLength: double.infinity,
+                  lineThickness: 1.0,
+                  dashLength: 2.0,
+                  dashColor: greyLightColor3,
+                  dashGapLength: 2.0,
+                ),
+                const SizedBox(height: 6),
+                _textRow(
                   context,
                   "Freight Charge".tr,
                   "Rp. ${(controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0).toCurrency()}",
@@ -304,15 +343,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                     "Insurance".tr,
                     "Rp. ${((controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0)).toCurrency()}",
                     controller.isLoading),
-                _textRow(
-                  context,
-                  "Total Paid".tr,
-                  "Rp. ${(((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)) - ((controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0) + (controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0))).abs().toCurrency()}",
-                  controller.isLoading,
-                  style: TextStyle(fontWeight: bold, color: successLightColor1),
-                  titleFontWeight: bold,
-                ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 6),
                 const DottedLine(
                   direction: Axis.horizontal,
                   alignment: WrapAlignment.center,
@@ -322,32 +353,15 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   dashColor: greyLightColor3,
                   dashGapLength: 2.0,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 6),
                 _textRow(
-                    context,
-                    "Goods Value".tr,
-                    "Rp. ${(controller.invoiceCnoteDetailModel?.goodsValue ?? 0).toCurrency()}",
-                    controller.isLoading),
-                _textRow(
-                    context,
-                    "COD Amount".tr,
-                    "Rp. ${(controller.invoiceCnoteDetailModel?.codAmount ?? 0).toCurrency()}",
-                    controller.isLoading),
-                _textRow(
-                    context,
-                    "% COD Fee".tr,
-                    "Rp. ${(controller.invoiceCnoteDetailModel?.persentaseCodFee ?? 0).toCurrency()}",
-                    controller.isLoading),
-                _textRow(
-                    context,
-                    "COD Fee Amount".tr,
-                    "Rp. ${(controller.invoiceCnoteDetailModel?.codFeeAmount ?? 0).toCurrency()}",
-                    controller.isLoading),
-                _textRow(
-                    context,
-                    "COD Fee Zone".tr,
-                    controller.invoiceCnoteDetailModel?.codFeeZone,
-                    controller.isLoading),
+                  context,
+                  "Total Paid".tr,
+                  "Rp. ${(((controller.invoiceCnoteDetailModel?.originalAmountNumber ?? 0) + (controller.invoiceCnoteDetailModel?.surcharge ?? 0) + (controller.invoiceCnoteDetailModel?.otherCharges ?? 0)) - ((controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0) + (controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0))).abs().toCurrency()}",
+                  controller.isLoading,
+                  style: TextStyle(fontWeight: bold, color: successLightColor1),
+                  titleFontWeight: bold,
+                ),
               ],
             ),
           ),
@@ -404,7 +418,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                             .textTheme
                             .titleMedium
                             ?.copyWith(fontWeight: regular),
-                    textAlign: TextAlign.start, // Align the value to the right
+                    textAlign: TextAlign.end, // Align the value to the right
                   ),
                 ),
               ),

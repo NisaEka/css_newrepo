@@ -207,8 +207,61 @@ class TransactionForm extends StatelessWidget {
                                   : null,
                             ),
                             const Spacer(),
-                            Text('Dimensi Kiriman'.tr,
-                                style: Theme.of(context).textTheme.titleSmall),
+                            Tooltip(
+                              key: c.state.tooltipkey,
+                              triggerMode: TooltipTriggerMode.tap,
+                              showDuration: const Duration(seconds: 3),
+                              decoration: const ShapeDecoration(
+                                color: greyColor,
+                                shape:
+                                ToolTipCustomShape(usePadding: false),
+                              ),
+                              textStyle: listTitleTextStyle.copyWith(
+                                  color: whiteColor),
+                              message:
+                              'Hanya sebagai instruksi penggunaan packing kayu'
+                                  .tr,
+                              child: Icon(
+                                Icons.info_outline,
+                                color: color ??
+                                    (AppConst.isLightTheme(context)
+                                        ? redJNE
+                                        : warningColor),
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              "Packing Kayu".tr,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(fontWeight: regular),
+                            ),
+                            Switch(
+                              value: c.state.woodPacking,
+                              activeColor: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : Colors.lightBlueAccent,
+                              inactiveThumbColor: AppConst.isLightTheme(context)
+                                  ? blueJNE
+                                  : Colors.lightBlueAccent,
+                              onChanged: (bool? value) {
+                                c.state.woodPacking = value!;
+                                // var temp = c.state.specialInstruction.text;
+                                c.state.specialIns =
+                                    c.state.specialInstruction.text;
+                                // c.state.specialInstruction.text = value == true ? "MOHON DIPACKING KAYU $temp" : temp.substring(21, temp.length);
+                                c.update();
+                              },
+                            ),
+                          ],
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(),
+                          child: ListTile(
+                            contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 1),
+                            leading:
                             Switch(
                               value: c.state.dimension,
                               activeColor: AppConst.isLightTheme(context)
@@ -226,132 +279,85 @@ class TransactionForm extends StatelessWidget {
                                 c.update();
                                 c.getOngkir();
                               },
-                            )
-                          ],
-                        ),
-                        c.state.dimension
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  CustomTextFormField(
-                                    controller: c.state.goodLength,
-                                    hintText: 'Panjang'.tr,
-                                    // hintText: 'Cm',
-                                    width: Get.width / 3.7,
-                                    inputType: TextInputType.number,
-                                    suffixIcon: const SatuanFieldIcon(
-                                      title: 'CM',
-                                      isSuffix: true,
-                                    ),
-                                    readOnly: !c.state.dimension,
-                                    onChanged: (value) {
-                                      c.hitungBerat(
-                                        c.state.goodLength.text.toDouble(),
-                                        c.state.goodWidth.text.toDouble(),
-                                        c.state.goodHeight.text.toDouble(),
-                                      );
-                                    },
-                                  ),
-                                  CustomTextFormField(
-                                    controller: c.state.goodWidth,
-                                    hintText: 'Lebar'.tr,
-                                    // hintText: 'Cm',
-                                    width: Get.width / 3.7,
-                                    inputType: TextInputType.number,
-                                    suffixIcon: const SatuanFieldIcon(
-                                      title: 'CM',
-                                      isSuffix: true,
-                                    ),
-                                    readOnly: !c.state.dimension,
-                                    onChanged: (value) {
-                                      c.hitungBerat(
-                                        c.state.goodLength.text.toDouble(),
-                                        c.state.goodWidth.text.toDouble(),
-                                        c.state.goodHeight.text.toDouble(),
-                                      );
-                                    },
-                                  ),
-                                  CustomTextFormField(
-                                    controller: c.state.goodHeight,
-                                    hintText: 'Tinggi'.tr,
-                                    // hintText: 'Cm',
-                                    width: Get.width / 3.7,
-                                    inputType: TextInputType.number,
-                                    suffixIcon: const SatuanFieldIcon(
-                                      title: 'CM',
-                                      isSuffix: true,
-                                    ),
-                                    readOnly: !c.state.dimension,
-                                    onChanged: (value) {
-                                      c.hitungBerat(
-                                        c.state.goodLength.text.toDouble(),
-                                        c.state.goodWidth.text.toDouble(),
-                                        c.state.goodHeight.text.toDouble(),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              )
-                            : const SizedBox(),
-                        Container(
-                          decoration: const BoxDecoration(),
-                          child: ListTile(
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 5),
-                            leading: Switch(
-                              value: c.state.woodPacking,
-                              activeColor: AppConst.isLightTheme(context)
-                                  ? blueJNE
-                                  : Colors.lightBlueAccent,
-                              inactiveThumbColor: AppConst.isLightTheme(context)
-                                  ? blueJNE
-                                  : Colors.lightBlueAccent,
-                              onChanged: (bool? value) {
-                                c.state.woodPacking = value!;
-                                // var temp = c.state.specialInstruction.text;
-                                c.state.specialIns =
-                                    c.state.specialInstruction.text;
-                                // c.state.specialInstruction.text = value == true ? "MOHON DIPACKING KAYU $temp" : temp.substring(21, temp.length);
-                                c.update();
-                              },
                             ),
                             title: Row(
                               children: [
                                 Text(
-                                  "Packing Kayu".tr,
+                                  "Dimensi Kiriman".tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium
                                       ?.copyWith(fontWeight: regular),
                                 ),
-                                const SizedBox(width: 10),
-                                Tooltip(
-                                  key: c.state.tooltipkey,
-                                  triggerMode: TooltipTriggerMode.tap,
-                                  showDuration: const Duration(seconds: 3),
-                                  decoration: const ShapeDecoration(
-                                    color: greyColor,
-                                    shape:
-                                        ToolTipCustomShape(usePadding: false),
-                                  ),
-                                  textStyle: listTitleTextStyle.copyWith(
-                                      color: whiteColor),
-                                  message:
-                                      'Hanya sebagai instruksi penggunaan packing kayu'
-                                          .tr,
-                                  child: Icon(
-                                    Icons.info_outline,
-                                    color: color ??
-                                        (AppConst.isLightTheme(context)
-                                            ? redJNE
-                                            : warningColor),
-                                  ),
-                                ),
                               ],
                             ),
                           ),
                         ),
+                        c.state.dimension
+                            ? Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomTextFormField(
+                              controller: c.state.goodLength,
+                              hintText: 'Panjang'.tr,
+                              // hintText: 'Cm',
+                              width: Get.width / 3.7,
+                              inputType: TextInputType.number,
+                              suffixIcon: const SatuanFieldIcon(
+                                title: 'CM',
+                                isSuffix: true,
+                              ),
+                              readOnly: !c.state.dimension,
+                              onChanged: (value) {
+                                c.hitungBerat(
+                                  c.state.goodLength.text.toDouble(),
+                                  c.state.goodWidth.text.toDouble(),
+                                  c.state.goodHeight.text.toDouble(),
+                                );
+                              },
+                            ),
+                            CustomTextFormField(
+                              controller: c.state.goodWidth,
+                              hintText: 'Lebar'.tr,
+                              // hintText: 'Cm',
+                              width: Get.width / 3.7,
+                              inputType: TextInputType.number,
+                              suffixIcon: const SatuanFieldIcon(
+                                title: 'CM',
+                                isSuffix: true,
+                              ),
+                              readOnly: !c.state.dimension,
+                              onChanged: (value) {
+                                c.hitungBerat(
+                                  c.state.goodLength.text.toDouble(),
+                                  c.state.goodWidth.text.toDouble(),
+                                  c.state.goodHeight.text.toDouble(),
+                                );
+                              },
+                            ),
+                            CustomTextFormField(
+                              controller: c.state.goodHeight,
+                              hintText: 'Tinggi'.tr,
+                              // hintText: 'Cm',
+                              width: Get.width / 3.7,
+                              inputType: TextInputType.number,
+                              suffixIcon: const SatuanFieldIcon(
+                                title: 'CM',
+                                isSuffix: true,
+                              ),
+                              readOnly: !c.state.dimension,
+                              onChanged: (value) {
+                                c.hitungBerat(
+                                  c.state.goodLength.text.toDouble(),
+                                  c.state.goodWidth.text.toDouble(),
+                                  c.state.goodHeight.text.toDouble(),
+                                );
+                              },
+                            ),
+                          ],
+                        )
+                            : const SizedBox(),
                         c.state.isOnline && c.state.selectedService != null
                             ? /*controller..state.isCalculate
                                               ? Container(
@@ -478,7 +484,7 @@ class TransactionForm extends StatelessWidget {
                                                       : const SizedBox(),
                                                   c.state.account.accountService
                                                       ?.toUpperCase() ==
-                                                      'COD'
+                                                      'COD' || c.state.goodAmount.text != ''
                                                       ? Row(
                                                     mainAxisAlignment:
                                                     MainAxisAlignment
