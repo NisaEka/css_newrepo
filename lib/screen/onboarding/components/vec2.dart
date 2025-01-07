@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class Vec2 extends StatelessWidget {
   const Vec2({super.key});
@@ -15,21 +14,66 @@ class Vec2 extends StatelessWidget {
     //   ),
     // );
     return CustomPaint(
-      size: Size(Get.width, Get.width),
-      painter: RPSCustomPainter(),
+      // size: Size(Get.width, Get.width),
+      // painter: RPSCustomPainter(),
+      size: Size(MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height),
+      painter: RPSCustomPainter(scaleWidth: 3, scaleHeight: 1.0),
     );
   }
 }
 
 class RPSCustomPainter extends CustomPainter {
+  final double scaleWidth;
+  final double scaleHeight;
+
+  RPSCustomPainter({required this.scaleWidth, required this.scaleHeight});
+
   @override
   void paint(Canvas canvas, Size size) {
+    double scaledWidth = size.width * scaleWidth;
+    double scaledHeight = size.height * scaleHeight;
+
+    double widthScaleFactor = scaledWidth / 1234.5;
+    double heightScaleFactor = scaledHeight / 483.645;
+
     Path path_0 = Path();
-    path_0.moveTo(824.5, 172.145);
-    path_0.cubicTo(824.5, 297.976, 531.5, 502.145, 163.5, 483.645);
-    path_0.cubicTo(-185, 435.645, -370, 403.145, -410, 190.645);
-    path_0.cubicTo(-399.5, 40.6454, -347.5, -71.5795, -38.0029, 54.6454);
-    path_0.cubicTo(433.998, 247.145, 758, -147.946, 824.5, 172.145);
+    path_0.moveTo(
+      824.5 * widthScaleFactor,
+      172.145 * heightScaleFactor,
+    );
+    path_0.cubicTo(
+      824.5 * widthScaleFactor,
+      297.976 * heightScaleFactor,
+      531.5 * widthScaleFactor,
+      502.145 * heightScaleFactor,
+      163.5 * widthScaleFactor,
+      483.645 * heightScaleFactor,
+    );
+    path_0.cubicTo(
+      -185 * widthScaleFactor,
+      435.645 * heightScaleFactor,
+      -370 * widthScaleFactor,
+      403.145 * heightScaleFactor,
+      -410 * widthScaleFactor,
+      190.645 * heightScaleFactor,
+    );
+    path_0.cubicTo(
+      -399.5 * widthScaleFactor,
+      40.6454 * heightScaleFactor,
+      -347.5 * widthScaleFactor,
+      -71.5795 * heightScaleFactor,
+      -38.0029 * widthScaleFactor,
+      54.6454 * heightScaleFactor,
+    );
+    path_0.cubicTo(
+      433.998 * widthScaleFactor,
+      247.145 * heightScaleFactor,
+      758 * widthScaleFactor,
+      -147.946 * heightScaleFactor,
+      824.5 * widthScaleFactor,
+      172.145 * heightScaleFactor,
+    );
     path_0.close();
 
     Paint paint0Fill = Paint()..style = PaintingStyle.fill;
@@ -39,7 +83,7 @@ class RPSCustomPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+    return false;
   }
 }
 

@@ -260,7 +260,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
         (index) => Container(
           width: 10,
           height: 10,
-          margin: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: index == currentIndex ? redJNE : greyColor,
