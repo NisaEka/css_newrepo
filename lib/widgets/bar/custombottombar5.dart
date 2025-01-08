@@ -113,7 +113,6 @@ class BottomBar5 extends StatelessWidget {
                       color: AppConst.isLightTheme(context)
                           ? redJNE
                           : warningColor,
-                      // onTap: () => Get.offAll(const ProfileScreen()),
                       onTap: () => controller.state.isLogin
                           ? Get.to(() => const ProfileScreen(),
                               transition: Transition.rightToLeft)

@@ -151,7 +151,6 @@ class LoginController extends BaseController {
     }
     state.isLoading = false;
     update();
-    // Get.offAll(DashboardScreen());
   }
 
   Future<DeviceModel?> getDeviceinfo(String token) async {
@@ -179,23 +178,6 @@ class LoginController extends BaseController {
     }
     return null;
   }
-
-  // Future cekToken() async {
-  //   state.isLoading = true;
-  //   update();
-  //   String? token = await storage.readAccessToken();
-  //   AppLogger.e('token : $token');
-  //   if (token != null) {
-  //     Get.delete<DashboardController>().then((_) => Get.offAll(
-  //         () => const DashboardScreen(),
-  //         arguments: {'isFirstLogin': true}));
-  //     // String all = await storage.readString(StorageCore.allowedMenu);
-  //     // AllowedMenu menu = AllowedMenu.fromJson(jsonDecode(all));
-  //     // print(menu.beranda);
-  //   }
-  //   state.isLoading = false;
-  //   update();
-  // }
 
   Future<Coordinate> getCurrentLocation() async {
     bool serviceEnabled;

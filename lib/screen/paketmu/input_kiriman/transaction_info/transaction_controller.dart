@@ -921,7 +921,7 @@ class TransactionController extends BaseController {
                       'awb': data?.awb,
                       'data': data,
                       'fromMenu': false,
-                    })?.then((_) => Get.offAll(const DashboardScreen()));
+                    })?.then((_) => Get.offAll(() => const DashboardScreen()));
               }),
           CustomFilledButton(
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
@@ -942,7 +942,7 @@ class TransactionController extends BaseController {
             width: 50,
             height: 50,
             fontSize: 23,
-            onPressed: () => Get.offAll(const DashboardScreen()),
+            onPressed: () => Get.offAll(() => const DashboardScreen()),
           ),
         ],
       ),
