@@ -406,6 +406,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
       return trans;
     } on DioException catch (e) {
+      AppLogger.e("error get pantau count : $e");
       return BaseResponse<List<PantauCountModel>>.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>

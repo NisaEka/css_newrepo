@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
-import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_card_controller.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -23,8 +23,8 @@ class PantauItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PantauPaketmuController>(
-      init: PantauPaketmuController(),
+    return GetBuilder<PantauCardController>(
+      init: PantauCardController(),
       builder: (c) {
         Widget getStatusIcon(String status) {
           switch (status) {
@@ -100,9 +100,15 @@ class PantauItems extends StatelessWidget {
         return InkWell(
           onTap: () {
             if (item != null && !isLoading) {
-              AppLogger.i('Card tapped.');
+              AppLogger.i('Card tapped : ${item?.status} $index');
               c.setSelectedStatus(item!);
-              Get.to(() => const PantauPaketmuScreen())?.then(
+              Get.to(() => const PantauPaketmuScreen(), arguments: {
+                "status": item?.status,
+                "startDate": c.state.startDate,
+                "endDate": c.state.endDate,
+                "dateFilter": c.state.dateFilter,
+                "tipe": c.state.selectedTipeKiriman,
+              })?.then(
                 (_) {
                   c.selectedStatus = 0;
                   c.state.selectedStatusKiriman = 'Total Kiriman';

@@ -12,9 +12,9 @@ class DashboardMiniCount extends StatelessWidget {
   final double? width;
   final Color? labelBgColor;
   final Color? valueBgColor;
-  final Color? circleColor;
   final double? fontSize;
   final EdgeInsets? margin;
+  final VoidCallback? onTap;
 
   const DashboardMiniCount({
     super.key,
@@ -27,80 +27,84 @@ class DashboardMiniCount extends StatelessWidget {
     this.valueBgColor,
     this.fontSize,
     this.margin,
-    this.circleColor,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Shimmer(
       isLoading: isLoading,
-      child: Container(
-        width: width != null ? null : Get.width * 0.28,
-        margin: margin ?? const EdgeInsets.only(top: 5),
-        decoration: BoxDecoration(
-          color: valueBgColor ?? primaryColor(context),
-          borderRadius: BorderRadius.circular(3),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: labelBgColor ??
-                    (AppConst.isLightTheme(context)
-                        ? greyLightColor3
-                        : greyDarkColor1),
-                borderRadius: BorderRadius.circular(3),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
-                    width: width ?? Get.width * 0.21,
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.circle,
-                          size: 5,
-                          color: circleColor ?? whiteColor,
-                        ),
-                        const SizedBox(width: 5),
-                        SizedBox(
-                          width: width != null ? width! - 16 : null,
-                          child: Text(
-                            label ?? '',
-                            style: TextStyle(
-                              color: labelBgColor != null
-                                  ? whiteColor
-                                  : (AppConst.isLightTheme(context)
-                                      ? blueJNE
-                                      : warningColor),
-                              fontWeight: FontWeight.bold,
-                              fontSize: fontSize ?? 7,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: width != null ? null : Get.width * 0.28,
+          margin: margin ?? const EdgeInsets.only(top: 5),
+          decoration: BoxDecoration(
+            color: valueBgColor ?? primaryColor(context),
+            borderRadius: BorderRadius.circular(3),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: labelBgColor ??
+                      (AppConst.isLightTheme(context)
+                          ? greyLightColor3
+                          : greyDarkColor1),
+                  borderRadius: BorderRadius.circular(3),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 3, vertical: 3),
+                      width: width ?? Get.width * 0.21,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.circle,
+                            size: 5,
+                            color: labelBgColor != null ? whiteColor : (color),
+                          ),
+                          const SizedBox(width: 5),
+                          SizedBox(
+                            width: width != null ? width! - 16 : null,
+                            child: Text(
+                              label ?? '',
+                              style: TextStyle(
+                                color: labelBgColor != null
+                                    ? whiteColor
+                                    : (AppConst.isLightTheme(context)
+                                        ? blueJNE
+                                        : warningColor),
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSize ?? 7,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Text(
-                '$value',
-                style: TextStyle(
-                  color:
-                      AppConst.isLightTheme(context) ? whiteColor : whiteColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 9,
+                  ],
                 ),
               ),
-            ),
-          ],
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Text(
+                  '$value',
+                  style: TextStyle(
+                    color: AppConst.isLightTheme(context)
+                        ? whiteColor
+                        : whiteColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 9,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

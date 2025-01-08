@@ -21,6 +21,7 @@ class RiwayatKirimanController extends BaseController {
     state.pagingController.addPageRequestListener((pageKey) {
       getTransaction(pageKey);
     });
+    // categoryList();
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
@@ -29,11 +30,15 @@ class RiwayatKirimanController extends BaseController {
 
   void cekAllowance() {
     if (state.basic?.userType != "PEMILIK") {
+      // final petugasEntry = state.listOfficerEntry.firstWhere((element) => element.id == state.basic?.id);
       state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
+      // state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
     }
     update();
     state.pagingController.refresh();
     transactionCount();
+    // state.pagingController.refresh();
+    // transactionCount();
   }
 
   Future<void> transactionCount() async {
@@ -59,6 +64,7 @@ class RiwayatKirimanController extends BaseController {
   }
 
   Future<void> initData() async {
+    // transactionList = [];
     state.selectedTransaction = [];
     state.listStatusKiriman = [];
     state.allow =
@@ -99,10 +105,29 @@ class RiwayatKirimanController extends BaseController {
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
+        if (state.isSelect) {
+          state.selectedTransaction
+              .addAll(state.pagingController.itemList ?? []);
+        }
       } else {
         final nextPageKey = page + 1;
         state.pagingController.appendPage(trans.data ?? [], nextPageKey);
+        if (state.isSelect) {
+          state.selectedTransaction
+              .addAll(state.pagingController.itemList ?? []);
+        }
       }
+
+      // await setting.getSettingLabel().then(
+      //   (value) async {
+      //     await storage.writeString(
+      //       StorageCore.transactionLabel,
+      //       value.data?.labels?.where((e) => e.enabled ?? false).first.name,
+      //     );
+      //     await storage.writeString(StorageCore.shippingCost,
+      //         value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE");
+      //   },
+      // );
     } catch (e) {
       AppLogger.e('error getTransaction $e');
       state.pagingController.error = e;
@@ -113,11 +138,13 @@ class RiwayatKirimanController extends BaseController {
   }
 
   void resetFilter() {
+    // // if (state.basic?.userType == "PEMILIK") {
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
     state.selectedPetugasEntry = null;
     state.selectedStatusKiriman = null;
+    // state.isFiltered = false;
     state.searchField.clear();
     update();
     applyFilter();
@@ -125,6 +152,7 @@ class RiwayatKirimanController extends BaseController {
 
   void selectAll(bool value) {
     state.isSelectAll = value;
+    // state.selectedTransaction = value ? transactionList : [];
     state.selectedTransaction =
         value ? state.pagingController.itemList ?? [] : [];
     update();
@@ -150,6 +178,7 @@ class RiwayatKirimanController extends BaseController {
         state.selectedTransaction.add(item);
       }
       update();
+      // state.selectedTransaction.length == transactionList.length ? state.isSelectAll = true : state.isSelectAll = false;
       state.selectedTransaction.length ==
               state.pagingController.itemList?.length
           ? state.isSelectAll = true
@@ -189,6 +218,8 @@ class RiwayatKirimanController extends BaseController {
 
   applyFilter() {
     state.isFiltered = true;
+    // state.transType = '';
+    // state.selectedKiriman = 0;
     if (state.startDate != null && state.endDate != null) {
       state.transDate = [
         {

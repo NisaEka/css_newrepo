@@ -1,7 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,8 +10,8 @@ class PantauStatusButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PantauPaketmuController>(
-      init: PantauPaketmuController(),
+    return GetBuilder<PantauCardController>(
+      init: PantauCardController(),
       builder: (c) {
         return Container(
           decoration: BoxDecoration(
@@ -34,7 +34,7 @@ class PantauStatusButton extends StatelessWidget {
                     c.state.transType = '';
                     c.state.selectedTipeKiriman = 'cod';
                     c.update();
-                    c.state.pagingController.refresh();
+                    // c.state.pagingController.refresh();
                   }
                 },
                 isFirst: true,
@@ -52,7 +52,7 @@ class PantauStatusButton extends StatelessWidget {
                     c.state.transType = 'cod ongkir';
                     c.state.selectedTipeKiriman = 'cod ongkir';
                     c.update();
-                    c.state.pagingController.refresh();
+                    // c.state.pagingController.refresh();
                   }
                 },
                 isFirst: false,
@@ -70,7 +70,7 @@ class PantauStatusButton extends StatelessWidget {
                     c.state.transType = 'NON COD';
                     c.state.selectedTipeKiriman = 'non cod';
                     c.update();
-                    c.state.pagingController.refresh();
+                    // c.state.pagingController.refresh();
                   }
                 },
                 isFirst: false,
@@ -85,7 +85,7 @@ class PantauStatusButton extends StatelessWidget {
 
   Widget _statusCard({
     required BuildContext context,
-    required PantauPaketmuController controller,
+    required PantauCardController controller,
     required String label,
     required int count,
     required bool selected,

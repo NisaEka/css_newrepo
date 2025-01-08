@@ -7,6 +7,12 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class PantauPaketmuState {
+  String? statusFilter = Get.arguments?['status'];
+  DateTime? startDateFilter = Get.arguments?['startDate'];
+  DateTime? endDateFilter = Get.arguments?['endDate'];
+  String? dateF = Get.arguments?['dateFilter'];
+  String? tipeFilter = Get.arguments?['tipe'];
+
   // Reactive List for countList
   // final countList = RxList<dynamic>([]);
   List<PantauPaketmuCountModel> countList = [];

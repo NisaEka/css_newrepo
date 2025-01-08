@@ -6,6 +6,7 @@ class CustomCheckbox extends StatelessWidget {
   final String label;
   final void Function(bool?) onChanged;
   final double? width;
+  final Widget? trailing;
 
   const CustomCheckbox({
     super.key,
@@ -13,6 +14,7 @@ class CustomCheckbox extends StatelessWidget {
     required this.label,
     required this.onChanged,
     this.width,
+    this.trailing,
   });
 
   @override
@@ -33,6 +35,7 @@ class CustomCheckbox extends StatelessWidget {
           ),
         ),
         title: Text(label, style: Theme.of(context).textTheme.titleSmall),
+        trailing: trailing,
       ),
     );
     // return Row(

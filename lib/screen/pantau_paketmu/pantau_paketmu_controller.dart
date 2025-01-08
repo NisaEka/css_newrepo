@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
@@ -18,15 +17,31 @@ class PantauPaketmuController extends BaseController {
   final network = Get.find<NetworkCore>();
   final storageSecure = const FlutterSecureStorage();
   Timer? _debounceTimer;
-  int selectedStatus = 0;
 
   @override
   void onInit() {
     super.onInit();
+    initData();
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-    initData();
-    getCountList();
+    state.selectedStatusKiriman = 'Total Kiriman';
+    AppLogger.i('selected status filter : ${state.statusFilter}');
+    if (state.statusFilter != null) {
+      state.selectedStatusKiriman = state.statusFilter;
+      state.startDate = state.startDateFilter ??
+          DateTime.now()
+              .subtract(const Duration(days: 6))
+              .copyWith(hour: 0, minute: 0);
+      state.endDate = state.endDateFilter ?? DateTime.now();
+      state.dateFilter = state.dateF ?? '2';
+      state.selectedTipeKiriman = state.tipeFilter;
+      update();
+    }
+    state.transDate = [
+      {
+        "awbDate": [state.startDate, state.endDate]
+      }
+    ];
     state.pagingController.addPageRequestListener((pageKey) {
       getPantauList(pageKey);
     });
@@ -47,6 +62,7 @@ class PantauPaketmuController extends BaseController {
   }
 
   Future<void> initData() async {
+    // if (state.isLoading) return;
     state.listStatusKiriman = [];
     state.isLoading = true;
     update();
@@ -72,51 +88,7 @@ class PantauPaketmuController extends BaseController {
       AppLogger.e('error pantau', e, i);
       AppSnackBar.error('Gagal mengambil data'.tr);
     } finally {
-      state.selectedStatusKiriman = state.listStatusKiriman.first;
-    }
-    state.isLoading = false;
-    update();
-  }
-
-  Future<void> getCountList() async {
-    state.isLoading = true;
-    state.countList = [];
-    update();
-    var param = QueryModel(
-        between: [
-          {
-            "awbDate": [
-              state.startDate,
-              state.endDate,
-            ]
-          }
-        ],
-        petugasEntry: (state.selectedPetugasEntry?.name == "SEMUA")
-            ? ""
-            : state.selectedPetugasEntry?.name ?? "",
-        status: state.selectedStatusKiriman);
-
-    try {
-      var responseCount = await pantau.getPantauCount(param);
-      state.countList.addAll(responseCount.data ?? []);
-      state.cod = responseCount.data?.first.totalCod?.toInt() ?? 0;
-      state.codOngkir = responseCount.data?.first.totalCodOngkir?.toInt() ?? 0;
-      state.noncod = responseCount.data?.first.totalNonCod?.toInt() ?? 0;
-      update();
-    } catch (e, i) {
-      AppLogger.e('error pantau count', e, i);
-      AppSnackBar.error('Gagal mengambil data pantau'.tr);
-    }
-
-    if (state.selectedStatusKiriman != null &&
-        state.selectedStatusKiriman != "") {
-      state.filteredCountList = state.countList
-          .where((e) => e.status == state.selectedStatusKiriman)
-          .toList();
-      update();
-    } else {
-      state.filteredCountList = List.from(state.countList);
-      update();
+      // state.selectedStatusKiriman = state.listStatusKiriman.first;
     }
     state.isLoading = false;
     update();
@@ -128,7 +100,7 @@ class PantauPaketmuController extends BaseController {
       final trans = await pantau.getPantauList(QueryModel(
         search: state.searchField.text,
         between: state.transDate,
-        entity: state.selectedStatusKiriman,
+        entity: state.statusFilter ?? state.selectedStatusKiriman,
         type: state.selectedTipeKiriman,
         petugasEntry: state.selectedPetugasEntry?.name,
       ));
@@ -136,10 +108,23 @@ class PantauPaketmuController extends BaseController {
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
+        // transactionList.addAll(state.pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
         state.pagingController.appendPage(trans.data ?? [], nextPageKey);
+        // transactionList.addAll(state.pagingController.itemList ?? []);
       }
+
+      // await setting.getSettingLabel().then(
+      //   (value) async {
+      //     await storage.writeString(
+      //       StorageCore.transactionLabel,
+      //       value.data?.labels?.where((e) => e.enabled ?? false).first.name,
+      //     );
+      //     await storage.writeString(StorageCore.shippingCost,
+      //         value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE");
+      //   },
+      // );
     } catch (e) {
       AppLogger.e('error getPantauList $e');
       state.pagingController.error = e;
@@ -152,7 +137,9 @@ class PantauPaketmuController extends BaseController {
   Future<void> resetFilter({bool? isDetail = false}) async {
     state.countList.clear();
     if (state.basic?.userType != "PEMILIK") {
+      // final petugasEntry = state.listOfficerEntry.firstWhere((element) => element.id == state.basic?.id);
       state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
+      // state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
     } else {
       state.selectedPetugasEntry = null;
     }
@@ -171,27 +158,30 @@ class PantauPaketmuController extends BaseController {
   }
 
   applyFilter({bool? isDetail = false}) async {
-    state.filteredCountList = [];
+    // state.filteredCountList = [];
     if (state.isLoading) return;
     state.isLoading = true;
     update();
+    // if (state.dateFilter != '3') {
+    //   state.isFiltered = true;
+    // }
+
+    // if (state.startDate != null && state.endDate != null) {
     state.date.value = "${state.startDate}-${state.endDate}";
     state.transDate = [
       {
         "awbDate": [state.startDate, state.endDate],
       }
-    ];
-    state.date.printInfo(info: "state.date filter");
-    state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
+    ]; // }
     update();
 
-    if (isDetail != null && !isDetail) {
-      getCountList();
-    } else {
-      state.pagingController.refresh();
-    }
+    // if (isDetail != null && !isDetail) {
+    // getCountList();
+    // } else {
+    state.pagingController.refresh();
+    // }
 
-    AppLogger.i("filtered status : ${state.filteredCountList.length}");
+    // AppLogger.i("filtered status : ${state.filteredCountList.length}");
     update();
 
     state.isLoading = false;
@@ -210,11 +200,5 @@ class PantauPaketmuController extends BaseController {
       state.searchField.text = value;
       state.pagingController.refresh();
     });
-  }
-
-  void setSelectedStatus(PantauPaketmuCountModel item) {
-    state.selectedStatusKiriman = item.status;
-    applyFilter(isDetail: true);
-    update();
   }
 }

@@ -5,6 +5,7 @@ import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcheckbox.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/items/riwayat_kiriman_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,13 @@ class TransactionItems extends StatelessWidget {
                         onChanged: (value) {
                           c.selectAll(value!);
                         },
+                        trailing: CustomFilledButton(
+                          color: redJNE,
+                          width: Get.width * 0.4,
+                          title: "Hapus Semua",
+                          prefixIcon: Icons.delete,
+                          padding: const EdgeInsets.only(right: 5),
+                        ),
                       )
                     : const SizedBox(),
                 Expanded(

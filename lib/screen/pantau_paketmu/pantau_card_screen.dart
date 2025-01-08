@@ -4,7 +4,7 @@ import 'package:css_mobile/screen/pantau_paketmu/components/pantau_list_item.dar
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_paketmu_filter.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_status_button.dart';
 import 'package:css_mobile/screen/pantau_paketmu/components/pantau_total_kiriman.dart';
-import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_card_controller.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +15,8 @@ class PantauCardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PantauPaketmuController>(
-        init: PantauPaketmuController(),
+    return GetBuilder<PantauCardController>(
+        init: PantauCardController(),
         builder: (controller) {
           return Scaffold(
             appBar: CustomTopBar(
@@ -60,7 +60,8 @@ class PantauCardScreen extends StatelessWidget {
                                         ? PantauItems(
                                             item: item,
                                             index: index,
-                                            isLoading: false)
+                                            isLoading: false,
+                                          )
                                         : const SizedBox()))
                                     .toList()
                                 : controller.state.filteredCountList
