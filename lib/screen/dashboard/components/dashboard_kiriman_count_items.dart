@@ -2,6 +2,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_screen.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
@@ -92,8 +93,11 @@ class DashboardKirimanCountItem extends StatelessWidget {
                               const PantauPaketmuScreen(),
                               arguments: {
                                 "status": "Total Kiriman",
+                                "tipe": "cod",
                               },
                             ),
+                            onTapNotification: () =>
+                                Get.to(const RiwayatKirimanScreen()),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,6 +124,13 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                 notificationLabel: "Dibatalkan".tr,
                                 notificationCount: kirimanKamu.totalCancel,
                                 notificationColor: errorColor,
+                                onTap: () => Get.to(
+                                  const PantauPaketmuScreen(),
+                                  arguments: {
+                                    "status": "Dalam Proses",
+                                    "tipe": "cod",
+                                  },
+                                ),
                               ),
                               const SizedBox(height: 16),
                             ],
@@ -145,6 +156,13 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                     color: Colors.green,
                                     strokeWidth: 4,
                                   ),
+                                ),
+                                onTap: () => Get.to(
+                                  const PantauPaketmuScreen(),
+                                  arguments: {
+                                    "status": "Sukses Diterima",
+                                    "tipe": "cod",
+                                  },
                                 ),
                               ),
                               const SizedBox(height: 5),

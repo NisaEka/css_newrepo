@@ -28,6 +28,7 @@ class TransactionCard extends StatelessWidget {
   final double? titleWidth;
   final double? height;
   final VoidCallback? onTap;
+  final VoidCallback? onTapNotification;
 
   const TransactionCard({
     Key? key,
@@ -53,6 +54,7 @@ class TransactionCard extends StatelessWidget {
     this.height,
     this.lineChartCountValue,
     this.onTap,
+    this.onTapNotification,
   }) : super(key: key);
 
   @override
@@ -206,6 +208,7 @@ class TransactionCard extends StatelessWidget {
                 label: notificationLabel,
                 value: notificationCount.toString(),
                 isLoading: isLoading,
+                onTap: onTapNotification,
               )
             : const SizedBox(),
       ],
