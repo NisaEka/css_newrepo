@@ -1,3 +1,4 @@
+import 'package:css_mobile/screen/dashboard/components/dashboard_aggregation_count_items.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_info.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_kiriman_count_items.dart';
 import 'package:css_mobile/screen/dashboard/components/dashboard_news.dart';
@@ -28,6 +29,8 @@ class DashboardBody extends StatelessWidget {
                 .then((_) {
               c.loadPantauCountList();
               c.loadTransCountList(true);
+              c.getAggregation();
+              c.getAggregationMinus();
             }),
             child: CustomScrollView(
               slivers: [
@@ -47,6 +50,14 @@ class DashboardBody extends StatelessWidget {
                       //   color: Colors.blue,
                       //   onPressed: () => Get.to(const Ob1Screen()),
                       // ),
+                      c.state.isLogin &&
+                              (c.state.allow.riwayatPesanan == "Y" ||
+                                  c.state.allow.paketmuRiwayat == 'Y')
+                          ? DashboardAggregasiCountItems(
+                              aggregationPembayaran: c.state.aggregationModel,
+                              aggregationMinus: c.state.aggregationMinus,
+                            )
+                          : const SizedBox(),
                       c.state.isLogin &&
                               (c.state.allow.riwayatPesanan == "Y" ||
                                   c.state.allow.paketmuRiwayat == 'Y')

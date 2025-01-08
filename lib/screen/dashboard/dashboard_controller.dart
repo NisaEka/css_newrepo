@@ -43,6 +43,8 @@ class DashboardController extends BaseController {
       cekLocalLanguage(),
       loadPromo(),
       loadNews(),
+      getAggregation(),
+      getAggregationMinus(),
     ]);
   }
 
@@ -754,5 +756,32 @@ class DashboardController extends BaseController {
         await Get.dialog(const SafetyTipsDialog());
       }
     });
+  }
+
+  Future<void> getAggregation() async {
+    final agg =
+        await aggregation.getAggregationReport(QueryModel(limit: 0, between: [
+      {
+        "mpayWdrGrpPayDate": ["2024-11-12 00:00:00", "2024-11-12 23:59:59"]
+        // DateTime.now().copyWith(hour: 0, minute: 0, second: 0),
+        // DateTime.now().copyWith(hour: 23, minute: 59, second: 59),
+      }
+    ]));
+    state.aggregationModel = agg.data?.first;
+    update();
+  }
+
+  Future<void> getAggregationMinus() async {
+    final aggregations =
+        await aggregation.getAggregationMinus(QueryModel(limit: 0, between: [
+      {
+        "createddtm": ["2024-12-12 00:00:00", "2024-12-12 23:59:59"]
+        // DateTime.now().copyWith(hour: 0, minute: 0, second: 0),
+        // DateTime.now().copyWith(hour: 23, minute: 59, second: 59),
+      }
+    ]));
+
+    state.aggregationMinus = aggregations.data?.first;
+    update();
   }
 }
