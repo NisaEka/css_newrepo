@@ -57,6 +57,7 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
         '/transaction/tracks/count/details',
         queryParameters: param.toJson(),
       );
+
       return BaseResponse<List<PantauPaketmuListModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>

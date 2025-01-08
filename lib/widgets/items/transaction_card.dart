@@ -27,6 +27,7 @@ class TransactionCard extends StatelessWidget {
   final Widget? customTitle;
   final double? titleWidth;
   final double? height;
+  final VoidCallback? onTap;
 
   const TransactionCard({
     Key? key,
@@ -51,6 +52,7 @@ class TransactionCard extends StatelessWidget {
     this.titleWidth,
     this.height,
     this.lineChartCountValue,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -60,137 +62,141 @@ class TransactionCard extends StatelessWidget {
       children: [
         Shimmer(
           isLoading: isLoading,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-            width: screenWidth < 400 ? Get.width * 0.27 : Get.width * 0.28,
-            height: height,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                  color: AppConst.isLightTheme(context)
-                      ? greyLightColor3
-                      : greyDarkColor1),
-              color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    customTitle ??
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 4, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: color ??
-                                (AppConst.isLightTheme(context)
-                                    ? blueJNE
-                                    : warningColor),
-                            borderRadius: BorderRadius.circular(3),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.circle,
-                                  color: statusColor ?? whiteColor, size: 6),
-                              const SizedBox(width: 5),
-                              SizedBox(
-                                width: titleWidth,
-                                child: Text(
-                                  title ?? '',
-                                  style: const TextStyle(
-                                      color: whiteColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 7),
+          child: GestureDetector(
+            onTap: onTap,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+              width: screenWidth < 400 ? Get.width * 0.27 : Get.width * 0.28,
+              height: height,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                    color: AppConst.isLightTheme(context)
+                        ? greyLightColor3
+                        : greyDarkColor1),
+                color:
+                    AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      customTitle ??
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 4, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: color ??
+                                  (AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : warningColor),
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(Icons.circle,
+                                    color: statusColor ?? whiteColor, size: 6),
+                                const SizedBox(width: 5),
+                                SizedBox(
+                                  width: titleWidth,
+                                  child: Text(
+                                    title ?? '',
+                                    style: const TextStyle(
+                                        color: whiteColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 7),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+                    ],
+                  ),
+                  // SizedBox(height: innerPadding ?? 13),
+                  count.toString().length >= 5
+                      ? SizedBox(height: innerPadding ?? 17)
+                      : SizedBox(height: innerPadding ?? 13),
+                  lineChartCountValue != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // prefixChart ?? const SizedBox(),
+                            // prefixChart != null ? const Spacer() : const SizedBox(),
+                            const SizedBox(height: 30),
+                            Text(
+                              lineChartCountValue ?? '',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            // RichText(
+                            //   text: TextSpan(
+                            //     children: [
+                            //       TextSpan(
+                            //         text: countValue,
+                            //         style: Theme.of(context).textTheme.titleMedium,
+                            //       ),
+                            //       TextSpan(
+                            //         text: count.toString(),
+                            //         style: Theme.of(context)
+                            //             .textTheme
+                            //             .titleLarge
+                            //             ?.copyWith(
+                            //                 fontSize: count.toString().length >= 5
+                            //                     ? 16 - (count.toString().length - 5)
+                            //                     : (countFontSize ?? 22)),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                            countValueChart != null
+                                ? const Spacer()
+                                : const SizedBox(),
+                            countValueChart ?? const SizedBox(),
+                          ],
+                        )
+                      : const SizedBox(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      prefixChart ?? const SizedBox(),
+                      prefixChart != null ? const Spacer() : const SizedBox(),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: countValue,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            TextSpan(
+                              text: count.toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                      fontSize: count.toString().length >= 5
+                                          ? 16 - (count.toString().length - 5)
+                                          : (countFontSize ?? 22)),
+                            ),
+                          ],
                         ),
-                  ],
-                ),
-                // SizedBox(height: innerPadding ?? 13),
-                count.toString().length >= 5
-                    ? SizedBox(height: innerPadding ?? 17)
-                    : SizedBox(height: innerPadding ?? 13),
-                lineChartCountValue != null
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // prefixChart ?? const SizedBox(),
-                          // prefixChart != null ? const Spacer() : const SizedBox(),
-                          const SizedBox(height: 30),
-                          Text(
-                            lineChartCountValue ?? '',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          // RichText(
-                          //   text: TextSpan(
-                          //     children: [
-                          //       TextSpan(
-                          //         text: countValue,
-                          //         style: Theme.of(context).textTheme.titleMedium,
-                          //       ),
-                          //       TextSpan(
-                          //         text: count.toString(),
-                          //         style: Theme.of(context)
-                          //             .textTheme
-                          //             .titleLarge
-                          //             ?.copyWith(
-                          //                 fontSize: count.toString().length >= 5
-                          //                     ? 16 - (count.toString().length - 5)
-                          //                     : (countFontSize ?? 22)),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-                          countValueChart != null
-                              ? const Spacer()
-                              : const SizedBox(),
-                          countValueChart ?? const SizedBox(),
-                        ],
-                      )
-                    : const SizedBox(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    prefixChart ?? const SizedBox(),
-                    prefixChart != null ? const Spacer() : const SizedBox(),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: countValue,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          TextSpan(
-                            text: count.toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(
-                                    fontSize: count.toString().length >= 5
-                                        ? 16 - (count.toString().length - 5)
-                                        : (countFontSize ?? 22)),
-                          ),
-                        ],
                       ),
-                    ),
-                    suffixChart != null ? const Spacer() : const SizedBox(),
-                    suffixChart ?? const SizedBox(),
-                  ],
-                ),
-                count.toString().length >= 5
-                    ? SizedBox(height: innerPadding ?? 17)
-                    : SizedBox(height: innerPadding ?? 13),
-                // SizedBox(height: innerPadding ?? 13),
-                Text(
-                  subtitle,
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium
-                      ?.copyWith(fontSize: 8),
-                ),
-              ],
+                      suffixChart != null ? const Spacer() : const SizedBox(),
+                      suffixChart ?? const SizedBox(),
+                    ],
+                  ),
+                  count.toString().length >= 5
+                      ? SizedBox(height: innerPadding ?? 17)
+                      : SizedBox(height: innerPadding ?? 13),
+                  // SizedBox(height: innerPadding ?? 13),
+                  Text(
+                    subtitle,
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium
+                        ?.copyWith(fontSize: 8),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

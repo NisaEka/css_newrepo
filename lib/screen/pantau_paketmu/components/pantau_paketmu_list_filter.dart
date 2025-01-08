@@ -1,11 +1,11 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/dates_filter_content.dart';
 import 'package:css_mobile/widgets/forms/officer_dropdown.dart';
+import 'package:css_mobile/widgets/forms/status_filter_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -36,103 +36,15 @@ class PantauPaketmuListFilter extends HookWidget {
                           controller.update();
                         },
                       ),
-
-                      // SliverToBoxAdapter(
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       CustomFormLabel(label: 'Status Kiriman'.tr),
-                      //       const SizedBox(height: 10),
-                      //       // CustomDropDownField<String>(
-                      //       //   items: controller.state.listStatusKiriman
-                      //       //       .map(
-                      //       //         (e) => DropdownMenuItem(
-                      //       //       value: e,
-                      //       //       child: Text(e.toUpperCase()),
-                      //       //     ),
-                      //       //   )
-                      //       //       .toList(),
-                      //       //   label: 'Status Kiriman'.tr,
-                      //       //   hintText: 'Status Kiriman'.tr,
-                      //       //   value: controller.state.selectedStatusKiriman,
-                      //       //   onChanged: (value) {
-                      //       //     controller.state.selectedStatusKiriman = value ?? '';
-                      //       //   },
-                      //       // ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Status kiriman
                       SliverToBoxAdapter(
                         child: CustomFormLabel(label: 'Status Kiriman'.tr),
                       ),
-                      SliverPadding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        sliver: SliverGrid(
-                          delegate: SliverChildBuilderDelegate(
-                              (context, index) {
-                            // Skipping the first index by starting from index 1
-                            int adjustedIndex = index;
-
-                            return GestureDetector(
-                              onTap: () => setState(() {
-                                if (controller.state.selectedStatusKiriman !=
-                                    controller.state
-                                        .listStatusKiriman[adjustedIndex]) {
-                                  controller.state.selectedStatusKiriman =
-                                      controller.state
-                                          .listStatusKiriman[adjustedIndex];
-                                } else {
-                                  controller.state.selectedStatusKiriman =
-                                      "Total Kiriman";
-                                }
-                                controller.update();
-                              }),
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: controller
-                                              .state.selectedStatusKiriman ==
-                                          controller.state
-                                              .listStatusKiriman[adjustedIndex]
-                                      ? primaryColor(context)
-                                      : whiteColor,
-                                  border: Border.all(
-                                    color: controller
-                                                .state.selectedStatusKiriman !=
-                                            controller.state.listStatusKiriman[
-                                                adjustedIndex]
-                                        ? primaryColor(context)
-                                        : whiteColor,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Text(
-                                  controller.state
-                                      .listStatusKiriman[adjustedIndex].tr,
-                                  textAlign: TextAlign.center,
-                                  style: listTitleTextStyle.copyWith(
-                                      color: controller.state
-                                                  .selectedStatusKiriman ==
-                                              controller
-                                                      .state.listStatusKiriman[
-                                                  adjustedIndex]
-                                          ? whiteColor
-                                          : primaryColor(context)),
-                                ),
-                              ),
-                            );
-                          },
-                              childCount:
-                                  controller.state.listStatusKiriman.length),
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 140,
-                            mainAxisSpacing: 5,
-                            crossAxisSpacing: 16,
-                            childAspectRatio: 2.5,
-                          ),
-                        ),
+                      StatusFilterField(
+                        onChanged: (value) {
+                          controller.state.selectedStatusKiriman = value;
+                        },
+                        statuses: controller.state.listStatusKiriman,
+                        selectedStatus: controller.state.selectedStatusKiriman,
                       ),
                       SliverToBoxAdapter(
                         child: Column(

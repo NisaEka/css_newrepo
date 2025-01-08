@@ -25,10 +25,11 @@ class PantauPaketmuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Find the controller (initialization is handled here)
-    PantauPaketmuController controller = Get.find<PantauPaketmuController>();
+    // PantauPaketmuController controller = Get.find<PantauPaketmuController>();
 
     return GetBuilder<PantauPaketmuController>(
-      init: controller, // Ensure controller is initialized here if not already
+      init:
+          PantauPaketmuController(), // Ensure controller is initialized here if not already
       builder: (controller) {
         return Scaffold(
           appBar: CustomTopBar(

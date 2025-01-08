@@ -28,6 +28,7 @@ class DashboardBody extends StatelessWidget {
                 .then((_) {
               c.loadPantauCountList();
               c.loadTransCountList(true);
+              c.getAggregations();
             }),
             child: CustomScrollView(
               slivers: [

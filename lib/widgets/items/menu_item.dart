@@ -46,7 +46,7 @@ class MenuItem extends StatelessWidget {
             isLoading: isLoading,
             child: Container(
               margin:
-                  EdgeInsets.symmetric(vertical: verticalMargin, horizontal: 8),
+                  EdgeInsets.symmetric(vertical: verticalMargin, horizontal: 4),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

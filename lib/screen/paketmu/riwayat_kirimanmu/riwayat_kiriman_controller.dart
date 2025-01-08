@@ -105,11 +105,17 @@ class RiwayatKirimanController extends BaseController {
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
+        if (state.isSelect) {
+          state.selectedTransaction
+              .addAll(state.pagingController.itemList ?? []);
+        }
       } else {
         final nextPageKey = page + 1;
         state.pagingController.appendPage(trans.data ?? [], nextPageKey);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
+        if (state.isSelect) {
+          state.selectedTransaction
+              .addAll(state.pagingController.itemList ?? []);
+        }
       }
 
       // await setting.getSettingLabel().then(

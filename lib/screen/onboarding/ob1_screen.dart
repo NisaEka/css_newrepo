@@ -276,11 +276,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
   /// Helper method to build the indicator dots.
   Widget _buildIndicator() {
     double screenWidth = MediaQuery.of(context).size.width;
-    double verticalMargin = screenWidth < 400
-        ? 0
-        : screenWidth >= 400 && screenWidth < 500
-            ? 60
-            : 20;
+    double verticalMargin = screenWidth * 0.03;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(

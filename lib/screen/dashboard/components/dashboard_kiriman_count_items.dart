@@ -2,6 +2,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_screen.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -87,6 +88,12 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                     ?.toInt() ??
                                 0,
                             notificationColor: warningColor,
+                            onTap: () => Get.to(
+                              const PantauPaketmuScreen(),
+                              arguments: {
+                                "status": "Total Kiriman",
+                              },
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

@@ -43,6 +43,7 @@ class DashboardController extends BaseController {
       cekLocalLanguage(),
       loadPromo(),
       loadNews(),
+      getAggregations(),
     ]);
   }
 
@@ -52,6 +53,24 @@ class DashboardController extends BaseController {
     var unread = GetNotificationModel.fromJson(
         await storage.readData(StorageCore.unreadMessage));
     state.unreadNotifList.addAll(unread.payload ?? []);
+    update();
+  }
+
+  Future<void> getAggregations() async {
+    final agg = await aggregation.getAggregationReport(QueryModel(
+      limit: 0,
+      between: [
+        {
+          "mpayWdrGrpPayDate": [
+            "2024-11-12 00:00:00", "2024-11-12 23:59:59"
+            // DateTime.now().copyWith(hour: 0, minute: 0, second: 0),
+            // DateTime.now().copyWith(hour: 23, minute: 59, second: 59),
+          ]
+        }
+      ],
+    ));
+
+    state.aggregationModel = agg.data?.first;
     update();
   }
 
