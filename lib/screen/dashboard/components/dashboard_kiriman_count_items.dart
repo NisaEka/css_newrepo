@@ -2,6 +2,9 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/transaction/dashboard_kiriman_kamu_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
+import 'package:css_mobile/screen/dashboard/components/dashboard_mini_count.dart';
+import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_screen.dart';
+import 'package:css_mobile/screen/pantau_paketmu/pantau_card_screen.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -63,89 +66,157 @@ class DashboardKirimanCountItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TransactionCard(
-                            title: "Jumlah Transaksi".tr,
-                            count: kirimanKamu.totalKiriman.toString(),
-                            subtitle: '${"7 Hari Terakhir".tr}\n',
-                            color: primaryColor(context),
-                            icon: Icons.show_chart,
-                            statusColor: whiteColor,
-                            suffixChart: SizedBox(
-                              width: 45,
-                              height: 20,
-                              child: kirimanKamu.lineChart.isNotEmpty
-                                  ? LineChartItem(kirimanKamu.lineChart
-                                      .map((e) => e.toDouble())
-                                      .toList())
-                                  : const SizedBox(),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                () => const PantauCardScreen(),
+                              );
+                            },
+                            child: TransactionCard(
+                              title: "Jumlah Transaksi".tr,
+                              count: kirimanKamu.totalKiriman.toString(),
+                              subtitle: '${"7 Hari Terakhir".tr}\n',
+                              color: primaryColor(context),
+                              icon: Icons.show_chart,
+                              statusColor: whiteColor,
+                              suffixChart: SizedBox(
+                                width: 45,
+                                height: 20,
+                                child: kirimanKamu.lineChart.isNotEmpty
+                                    ? LineChartItem(kirimanKamu.lineChart
+                                        .map((e) => e.toDouble())
+                                        .toList())
+                                    : const SizedBox(),
+                              ),
+                              // notificationLabel: "Masih dikamu".tr,
+                              // notificationCount: transSummary?.summary
+                              //         ?.where((e) => e.status == "Masih di Kamu")
+                              //         .first
+                              //         .total
+                              //         ?.toInt() ??
+                              //     0,
+                              // notificationColor: warningColor,
                             ),
-                            notificationLabel: "Masih dikamu".tr,
-                            notificationCount: transSummary?.summary
-                                    ?.where((e) => e.status == "Masih di Kamu")
-                                    .first
-                                    .total
-                                    ?.toInt() ??
-                                0,
-                            notificationColor: warningColor,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TransactionCard(
-                                title: "Dalam Proses".tr,
-                                count: kirimanKamu.onProcess.toString(),
-                                subtitle:
-                                    "${double.parse((kirimanKamu.onProcessPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
-                                color: redJNE,
-                                isLoading: isLoadingKiriman,
-                                prefixChart: SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    value: (kirimanKamu.onProcessPercentage
-                                            .toDouble() /
-                                        100),
-                                    backgroundColor: Colors.grey[300],
-                                    color: redJNE,
-                                    strokeWidth: 4,
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                () => const PantauCardScreen(),
+                              );
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TransactionCard(
+                                  title: "Dalam Proses".tr,
+                                  count: kirimanKamu.onProcess.toString(),
+                                  subtitle:
+                                      "${double.parse((kirimanKamu.onProcessPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
+                                  color: redJNE,
+                                  isLoading: isLoadingKiriman,
+                                  prefixChart: SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      value: (kirimanKamu.onProcessPercentage
+                                              .toDouble() /
+                                          100),
+                                      backgroundColor: Colors.grey[300],
+                                      color: redJNE,
+                                      strokeWidth: 4,
+                                    ),
+                                  ),
+                                  // notificationLabel: "Dibatalkan".tr,
+                                  // notificationCount: kirimanKamu.totalCancel,
+                                  // notificationColor: errorColor,
+                                ),
+                                const SizedBox(height: 16),
+                              ],
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                () => const PantauCardScreen(),
+                              );
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TransactionCard(
+                                  title: "Transaksi Terkirim".tr,
+                                  count: kirimanKamu.suksesDiterima.toString(),
+                                  subtitle:
+                                      "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
+                                  color: primaryColor(context),
+                                  statusColor: Colors.green,
+                                  suffixChart: SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      value: (kirimanKamu
+                                              .suksesDiterimaPercentage
+                                              .toDouble() /
+                                          100),
+                                      backgroundColor: Colors.grey[300],
+                                      color: Colors.green,
+                                      strokeWidth: 4,
+                                    ),
                                   ),
                                 ),
-                                notificationLabel: "Dibatalkan".tr,
-                                notificationCount: kirimanKamu.totalCancel,
-                                notificationColor: errorColor,
-                              ),
-                              const SizedBox(height: 16),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TransactionCard(
-                                title: "Transaksi Terkirim".tr,
-                                count: kirimanKamu.suksesDiterima.toString(),
-                                subtitle:
-                                    "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
-                                color: primaryColor(context),
-                                statusColor: Colors.green,
-                                suffixChart: SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    value: (kirimanKamu.suksesDiterimaPercentage
-                                            .toDouble() /
-                                        100),
-                                    backgroundColor: Colors.grey[300],
-                                    color: Colors.green,
-                                    strokeWidth: 4,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                            ],
+                                const SizedBox(height: 5),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
+                    Shimmer(
+                      isLoading: isLoadingKiriman,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                () => const RiwayatKirimanScreen(),
+                              );
+                            },
+                            child: DashboardMiniCount(
+                              color: blueJNE,
+                              label: 'Masih dikamu',
+                              // width: Get.width * 0.18,
+                              circleColor: warningColor,
+                              margin: const EdgeInsets.only(right: 4),
+                              value: transSummary?.summary
+                                      ?.where(
+                                          (e) => e.status == "Masih di Kamu")
+                                      .first
+                                      .total
+                                      ?.toString() ??
+                                  '0',
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                () => const RiwayatKirimanScreen(),
+                              );
+                            },
+                            child: DashboardMiniCount(
+                              color: blueJNE,
+                              label: 'Dibatalkan',
+                              // width: Get.width * 0.18,
+                              // circleColor: warningColor,
+                              value: kirimanKamu.totalCancel.toString(),
+                              margin: const EdgeInsets.only(right: 2),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

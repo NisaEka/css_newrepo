@@ -12,6 +12,7 @@ class DashboardMiniCount extends StatelessWidget {
   final double? width;
   final Color? labelBgColor;
   final Color? valueBgColor;
+  final Color? circleColor;
   final double? fontSize;
   final EdgeInsets? margin;
 
@@ -26,6 +27,7 @@ class DashboardMiniCount extends StatelessWidget {
     this.valueBgColor,
     this.fontSize,
     this.margin,
+    this.circleColor,
   });
 
   @override
@@ -62,7 +64,7 @@ class DashboardMiniCount extends StatelessWidget {
                         Icon(
                           Icons.circle,
                           size: 5,
-                          color: labelBgColor != null ? whiteColor : (color),
+                          color: circleColor ?? whiteColor,
                         ),
                         const SizedBox(width: 5),
                         SizedBox(

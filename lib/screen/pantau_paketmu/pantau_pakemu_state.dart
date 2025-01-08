@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class PantauPaketmuState extends GetxController {
+class PantauPaketmuState {
   // Reactive List for countList
   // final countList = RxList<dynamic>([]);
   List<PantauPaketmuCountModel> countList = [];
