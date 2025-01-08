@@ -184,6 +184,13 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           description: "Transaksi COD",
                           lineColor: redJNE,
                           isLoading: isLoadingKiriman,
+                          onTap: () => Get.to(
+                            const PantauPaketmuScreen(),
+                            arguments: {
+                              "status": "Total Kiriman",
+                              "tipe": "cod",
+                            },
+                          ),
                         ),
                         TypeTransactionCard(
                           width: Get.width * 0.28,
@@ -194,6 +201,13 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           description: "Transaksi COD Ongkir",
                           lineColor: warningColor,
                           isLoading: isLoadingKiriman,
+                          onTap: () => Get.to(
+                            const PantauPaketmuScreen(),
+                            arguments: {
+                              "status": "Total Kiriman",
+                              "tipe": "cod ongkir",
+                            },
+                          ),
                         ),
                         TypeTransactionCard(
                           width: screenWidth < 400
@@ -203,6 +217,13 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           description: "Transaksi NON COD",
                           lineColor: Colors.green,
                           isLoading: isLoadingKiriman,
+                          onTap: () => Get.to(
+                            const PantauPaketmuScreen(),
+                            arguments: {
+                              "status": "Total Kiriman",
+                              "tipe": "non cod",
+                            },
+                          ),
                         ),
                       ],
                     )
