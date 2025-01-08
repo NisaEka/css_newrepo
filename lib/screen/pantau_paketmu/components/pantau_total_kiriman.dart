@@ -40,7 +40,6 @@ class PantauTotalKiriman extends StatelessWidget {
                                     isLoading ? greyColor : Colors.transparent,
                                 borderRadius: BorderRadius.circular(5)),
                             width: isLoading ? Get.width / 5 : null,
-                            // height: isLoading ? 40 : null,
                             child: Text(
                               c.state.selectedKiriman == 0
                                   ? c.state.cod.toString()
@@ -62,7 +61,6 @@ class PantauTotalKiriman extends StatelessWidget {
                                     isLoading ? greyColor : Colors.transparent,
                                 borderRadius: BorderRadius.circular(5)),
                             width: isLoading ? Get.width / 3 : null,
-                            // height: isLoading ? 20 : null,
                             child: Text("Total Kiriman".tr,
                                 style: Theme.of(context).textTheme.titleSmall),
                           ),
@@ -110,7 +108,6 @@ class PantauTotalKiriman extends StatelessWidget {
                                         ),
                                       ),
                                       Expanded(
-                                        // padding: const EdgeInsets.symmetric(horizontal: 10),
                                         child: Text(
                                           c.state.selectedKiriman == 0
                                               ? (c.state.countList.isNotEmpty &&

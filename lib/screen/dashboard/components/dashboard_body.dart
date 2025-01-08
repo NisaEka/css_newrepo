@@ -53,9 +53,10 @@ class DashboardBody extends StatelessWidget {
                       c.state.isLogin &&
                               (c.state.allow.riwayatPesanan == "Y" ||
                                   c.state.allow.paketmuRiwayat == 'Y')
-                          ? DashboardAggregasiCountItems(
+                          ? DashboardAggregationCountItem(
                               aggregationPembayaran: c.state.aggregationModel,
                               aggregationMinus: c.state.aggregationMinus,
+                              isLoading: c.state.isLoading,
                             )
                           : const SizedBox(),
                       c.state.isLogin &&

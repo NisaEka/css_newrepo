@@ -9,12 +9,12 @@ import 'package:css_mobile/widgets/items/type_transaction_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DashboardAggregasiCountItems extends StatelessWidget {
+class DashboardAggregationCountItem extends StatelessWidget {
   final AggregationModel? aggregationPembayaran;
   final AggregationMinusModel? aggregationMinus;
   final bool isLoading;
 
-  const DashboardAggregasiCountItems({
+  const DashboardAggregationCountItem({
     super.key,
     this.isLoading = false,
     this.aggregationMinus,

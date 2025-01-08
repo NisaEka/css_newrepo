@@ -33,7 +33,6 @@ class TransactionItems extends StatelessWidget {
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () => Future.sync(
-                      // () => c.state.pagingController.refresh(),
                       () => c.applyFilter(),
                     ),
                     child: PagedListView<int, TransactionModel>(
@@ -45,7 +44,6 @@ class TransactionItems extends StatelessWidget {
                             RiwayatKirimanListItem(
                           data: item,
                           isLoading: false,
-                          // status: item.statusAwb,
                           index: index,
                           isSelected: c.state.selectedTransaction
                               .where((e) => e == item)
@@ -72,19 +70,6 @@ class TransactionItems extends StatelessWidget {
                                 c.initData();
                               },
                             ),
-                            //     DeleteAlertDialog(
-                            //
-                            //   onDelete: () {
-                            //     c.delete(item);
-                            //     c.initData();
-                            //     Get.back();
-                            //   },
-                            //   onBack: () {
-                            //     Get.back();
-                            //     c.state.pagingController.refresh();
-                            //     c.initData();
-                            //   },
-                            // ),
                           ),
                         ),
                         firstPageErrorIndicatorBuilder: (context) =>
@@ -96,10 +81,6 @@ class TransactionItems extends StatelessWidget {
                                 const RiwayatKirimanListItem(isLoading: true),
                           ),
                         ),
-                        // firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                        //   height: 100,
-                        //   background: Colors.transparent,
-                        // ),
                         noItemsFoundIndicatorBuilder: (context) =>
                             const DataEmpty(),
                         noMoreItemsIndicatorBuilder: (context) => Center(

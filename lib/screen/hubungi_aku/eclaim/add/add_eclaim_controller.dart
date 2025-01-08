@@ -29,7 +29,7 @@ class AddEclaimController extends BaseController {
   File? selectedImage;
   int? imageSize;
   var maxImageSize = 2 * 1048576;
-  final int maxFileSize = 5 * 1048576; // Membatasi ukuran file 5MB
+  final int maxFileSize = 5 * 1048576;
 
   List<String> manualCategories = [];
 
@@ -54,7 +54,7 @@ class AddEclaimController extends BaseController {
     update();
   }
 
-  // Kirim file
+  // Send form add eclaim
   Future<void> sendReport() async {
     isLoading = true;
     update();
@@ -103,7 +103,6 @@ class AddEclaimController extends BaseController {
     update();
   }
 
-  // List kategori
   void showManualCategoryList() {
     Get.bottomSheet(
       enableDrag: true,
@@ -139,8 +138,8 @@ class AddEclaimController extends BaseController {
                       ),
                       onTap: () {
                         category.text = manualCategories[index];
-                        update(); // Untuk memperbarui tampilan
-                        Get.back(); // Menutup bottom sheet
+                        update();
+                        Get.back();
                       },
                     ),
                     const Divider(height: 1, color: Colors.grey),
@@ -154,19 +153,6 @@ class AddEclaimController extends BaseController {
     );
   }
 
-  // Future<void> addImage(ImageSource source) async {
-  //   final ImagePicker picker = ImagePicker();
-  //   final XFile? image = await picker.pickImage(source: source);
-  //
-  //   if (image != null) {
-  //     selectedImage = File(image.path);
-  //     imageFile.text = selectedImage?.path ?? '';
-  //     AppLogger.i(selectedImage?.lengthSync().toString() ?? '');
-  //     update(); // Update UI setelah gambar dipilih
-  //   }
-  // }
-
-  // Tambah berkas lampiran
   Future<void> addFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
@@ -178,11 +164,10 @@ class AddEclaimController extends BaseController {
     }
   }
 
-  // Hapus berkas lampiran
   void removeFile() {
     selectedImage = null;
     imageFile.text = '';
-    update(); // Update UI setelah gambar dihapus
+    update();
   }
 
   void setLoading(bool value) {

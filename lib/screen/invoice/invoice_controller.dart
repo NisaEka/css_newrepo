@@ -10,7 +10,6 @@ class InvoiceController extends BaseController {
 
   num get invoiceCount => _invoiceCount;
 
-  // final AdvanceFilterModel _advanceFilterModel = AdvanceFilterModel();
   final QueryModel _queryParamModel = QueryModel();
 
   static const pageSize = 10;
@@ -27,107 +26,7 @@ class InvoiceController extends BaseController {
 
     applyFilter();
     requireRetry();
-    // applyFilter();
   }
-
-  // void applyFilterDate() {
-  //   bool startDateAvailable = selectedDateStart != null;
-  //   bool endDateAvailable = selectedDateEnd != null;
-  //
-  //   List<Map<String, dynamic>> between = [];
-  //
-  //   switch (selectedFilterDate) {
-  //     case RequestPickupDateEnum.custom:
-  //       if (startDateAvailable && endDateAvailable) {
-  //         between.add({
-  //           "invoiceDate": [
-  //             DateTime(selectedDateStart!.year, selectedDateStart!.month,
-  //                     selectedDateStart!.day)
-  //                 .toIso8601String(),
-  //             DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
-  //                     selectedDateEnd!.day, 23, 59, 59, 999)
-  //                 .toIso8601String()
-  //           ]
-  //         });
-  //         filterDateText = '$selectedDateStartText - $selectedDateEndText';
-  //       } else if (startDateAvailable) {
-  //         between.add({
-  //           "invoiceDate": [
-  //             DateTime(selectedDateStart!.year, selectedDateStart!.month,
-  //                     selectedDateStart!.day)
-  //                 .toIso8601String(),
-  //             DateTime(selectedDateStart!.year, selectedDateStart!.month,
-  //                     selectedDateStart!.day, 23, 59, 59, 999)
-  //                 .toIso8601String()
-  //           ]
-  //         });
-  //         filterDateText = selectedDateStartText;
-  //       } else if (endDateAvailable) {
-  //         between.add({
-  //           "invoiceDate": [
-  //             DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
-  //                     selectedDateEnd!.day)
-  //                 .toIso8601String(),
-  //             DateTime(selectedDateEnd!.year, selectedDateEnd!.month,
-  //                     selectedDateEnd!.day, 23, 59, 59, 999)
-  //                 .toIso8601String()
-  //           ]
-  //         });
-  //         filterDateText = selectedDateEndText;
-  //       }
-  //       break;
-  //     case RequestPickupDateEnum.all:
-  //       between = [];
-  //       break;
-  //     case RequestPickupDateEnum.oneMonth:
-  //       final currentDateTime = DateTime.now();
-  //       final oneMonthAgo = currentDateTime.subtract(const Duration(days: 30));
-  //       between.add({
-  //         "invoiceDate": [
-  //           DateTime(oneMonthAgo.year, oneMonthAgo.month, oneMonthAgo.day)
-  //               .toIso8601String(),
-  //           DateTime(currentDateTime.year, currentDateTime.month,
-  //                   currentDateTime.day, 23, 59, 59, 999)
-  //               .toIso8601String()
-  //         ]
-  //       });
-  //       break;
-  //     case RequestPickupDateEnum.oneWeek:
-  //       final currentDateTime = DateTime.now();
-  //       final oneWeekAgo = currentDateTime.subtract(const Duration(days: 7));
-  //       between.add({
-  //         "invoiceDate": [
-  //           DateTime(oneWeekAgo.year, oneWeekAgo.month, oneWeekAgo.day)
-  //               .toIso8601String(),
-  //           DateTime(currentDateTime.year, currentDateTime.month,
-  //                   currentDateTime.day, 23, 59, 59, 999)
-  //               .toIso8601String()
-  //         ]
-  //       });
-  //       break;
-  //     case RequestPickupDateEnum.today:
-  //       final currentDateTime = DateTime.now();
-  //       final startOfDay = DateTime(
-  //           currentDateTime.year, currentDateTime.month, currentDateTime.day);
-  //       final endOfDay = DateTime(currentDateTime.year, currentDateTime.month,
-  //           currentDateTime.day, 23, 59, 59, 999);
-  //       between.add({
-  //         "invoiceDate": [
-  //           startOfDay.toIso8601String(),
-  //           endOfDay.toIso8601String()
-  //         ]
-  //       });
-  //       break;
-  //     default:
-  //       between = [];
-  //       break;
-  //   }
-  //
-  //   _queryParamModel.setBetween(between);
-  //
-  //   requireRetry();
-  //   update();
-  // }
 
   Future<void> _getInvoiceCount() async {
     try {
@@ -147,9 +46,7 @@ class InvoiceController extends BaseController {
       final response = await invoiceRepository.getInvoices(_queryParamModel);
 
       final payload = response.data ?? List.empty();
-      // final isLastPage = payload.length < (_queryParamModel.limit ?? 0);
       final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
-      // AppLogger.d(jsonEncode(response.toJson()));
 
       if (isLastPage) {
         state.pagingController.appendLastPage(payload);
@@ -167,7 +64,6 @@ class InvoiceController extends BaseController {
 
   void requireRetry() {
     _getInvoiceCount();
-    // _getInvoices(Constant.defaultPage);
     refreshInvoices();
   }
 
@@ -185,12 +81,9 @@ class InvoiceController extends BaseController {
   }
 
   void resetFilter() {
-    // selectedDateStart = null;
-    // selectedDateEnd = null;
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
-    // state.isFiltered = false;
     state.searchField.clear();
     state.transDate = [];
     state.dateFilter = '3';
@@ -205,10 +98,6 @@ class InvoiceController extends BaseController {
   }
 
   applyFilter() {
-    // if (selectedDateStart != null ||
-    //     selectedDateEnd != null ||
-    //     state.selectedPetugasEntry != null ||
-    //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
       state.transDate = [
@@ -216,7 +105,6 @@ class InvoiceController extends BaseController {
           "invoiceDate": ["${state.startDate}", "${state.endDate}"]
         }
       ];
-      // "${selectedDateStart?.millisecondsSinceEpoch ?? ''}-${selectedDateEnd?.millisecondsSinceEpoch ?? ''}";
     }
     if (state.dateFilter == '0') {
       resetFilter();

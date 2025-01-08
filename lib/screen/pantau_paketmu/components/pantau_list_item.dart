@@ -198,11 +198,6 @@ class PantauItems extends StatelessWidget {
                                                 children: [
                                                   const SizedBox(width: 4),
                                                   const Text(
-                                                    // c.state.selectedKiriman == 0
-                                                    //     ? "COD"
-                                                    //     : c.state.selectedKiriman == 1
-                                                    //     ? "COD ONGKIR"
-                                                    //     : '',
                                                     'COD',
                                                     style: TextStyle(
                                                         color: whiteColor,

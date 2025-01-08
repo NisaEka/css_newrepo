@@ -134,14 +134,6 @@ class OtherMenuCotroller extends BaseController {
         isEdit: isEdit,
         route: "/aggregasiMinus",
       ),
-      // Items(
-      //   title: "Uang_COD Kamu",
-      //   icon: ImageConstant.keuanganmuIcon,
-      //   isAuth: false,
-      //   isFavorite: favoritList.where((e) => e.title == "Uang_COD Kamu").isNotEmpty,
-      //   isEdit: isEdit,
-      //   route: "/uangCODKamu",
-      // ),
       Items(
         title: "Invoice",
         // icon: IconsConstant.invoice,
@@ -325,7 +317,6 @@ class OtherMenuCotroller extends BaseController {
 
       favoritList.removeWhere((e) => e.title == menu.title);
     }
-    // }
 
     update();
   }

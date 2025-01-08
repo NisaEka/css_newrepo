@@ -82,7 +82,7 @@ class EclaimStatusButton extends StatelessWidget {
                 Container(
                   width: screenWidth * 0.2,
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: successColor,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(
@@ -107,7 +107,7 @@ class EclaimStatusButton extends StatelessWidget {
                           children: [
                             const Icon(
                               Icons.check_circle_outline,
-                              color: Colors.green,
+                              color: successColor,
                               size: 18,
                             ),
                             Align(

@@ -47,7 +47,6 @@ class PantauPaketmuController extends BaseController {
   }
 
   Future<void> initData() async {
-    // if (state.isLoading) return;
     state.listStatusKiriman = [];
     state.isLoading = true;
     update();
@@ -119,7 +118,6 @@ class PantauPaketmuController extends BaseController {
       state.filteredCountList = List.from(state.countList);
       update();
     }
-    // await Future.delayed(const Duration(seconds: 2));
     state.isLoading = false;
     update();
   }
@@ -138,23 +136,10 @@ class PantauPaketmuController extends BaseController {
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
         state.pagingController.appendPage(trans.data ?? [], nextPageKey);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
       }
-
-      // await setting.getSettingLabel().then(
-      //   (value) async {
-      //     await storage.writeString(
-      //       StorageCore.transactionLabel,
-      //       value.data?.labels?.where((e) => e.enabled ?? false).first.name,
-      //     );
-      //     await storage.writeString(StorageCore.shippingCost,
-      //         value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE");
-      //   },
-      // );
     } catch (e) {
       AppLogger.e('error getPantauList $e');
       state.pagingController.error = e;
@@ -167,9 +152,7 @@ class PantauPaketmuController extends BaseController {
   Future<void> resetFilter({bool? isDetail = false}) async {
     state.countList.clear();
     if (state.basic?.userType != "PEMILIK") {
-      // final petugasEntry = state.listOfficerEntry.firstWhere((element) => element.id == state.basic?.id);
       state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
-      // state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
     } else {
       state.selectedPetugasEntry = null;
     }
@@ -192,11 +175,6 @@ class PantauPaketmuController extends BaseController {
     if (state.isLoading) return;
     state.isLoading = true;
     update();
-    // if (state.dateFilter != '3') {
-    //   state.isFiltered = true;
-    // }
-
-    // if (state.startDate != null && state.endDate != null) {
     state.date.value = "${state.startDate}-${state.endDate}";
     state.transDate = [
       {
@@ -205,7 +183,6 @@ class PantauPaketmuController extends BaseController {
     ];
     state.date.printInfo(info: "state.date filter");
     state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
-    // }
     update();
 
     if (isDetail != null && !isDetail) {

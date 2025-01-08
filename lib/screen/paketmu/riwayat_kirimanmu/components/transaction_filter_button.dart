@@ -47,47 +47,6 @@ class TransactionFilterButton extends HookWidget {
                           c.update();
                         },
                       ),
-                      // SliverPadding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 10),
-                      //   sliver: SliverGrid(
-                      //     delegate: SliverChildBuilderDelegate(
-                      //       (context, index) => GestureDetector(
-                      //         onTap: () => setState(() {
-                      //           if (c.state.selectedStatusKiriman != c.state.listStatusKiriman[index]) {
-                      //             c.state.selectedStatusKiriman = c.state.listStatusKiriman[index];
-                      //           } else {
-                      //             c.state.selectedStatusKiriman = null;
-                      //           }
-                      //           c.update();
-                      //         }),
-                      //         child: Container(
-                      //           alignment: Alignment.center,
-                      //           decoration: BoxDecoration(
-                      //             color: c.state.selectedStatusKiriman == c.state.listStatusKiriman[index] ? primaryColor(context) : whiteColor,
-                      //             border: Border.all(
-                      //               color: c.state.selectedStatusKiriman != c.state.listStatusKiriman[index] ? primaryColor(context) : whiteColor,
-                      //             ),
-                      //             borderRadius: BorderRadius.circular(5),
-                      //           ),
-                      //           child: Text(
-                      //             c.state.listStatusKiriman[index].tr,
-                      //             textAlign: TextAlign.center,
-                      //             style: listTitleTextStyle.copyWith(
-                      //                 color: c.state.selectedStatusKiriman == c.state.listStatusKiriman[index] ? whiteColor : primaryColor(context)),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       childCount: c.state.listStatusKiriman.length,
-                      //     ),
-                      //     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      //       maxCrossAxisExtent: 140,
-                      //       mainAxisSpacing: 5,
-                      //       crossAxisSpacing: 16,
-                      //       childAspectRatio: 2,
-                      //       // mainAxisExtent: 100
-                      //     ),
-                      //   ),
-                      // ),
                       SliverToBoxAdapter(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,15 +76,8 @@ class TransactionFilterButton extends HookWidget {
               },
             ),
             isFiltered: c.state.isFiltered,
-            // isApplyFilter: c.state.startDate != null || c.state.endDate != null,
             onResetFilter: () {
               c.resetFilter();
-              // if (c.state.listOfficerEntry.length > 1) {
-              //   c.state.selectedPetugasEntry = null;
-              //   c.update();
-              // }
-              // c.selectDateFilter(3);
-              // c.applyFilter();
               Get.back();
             },
             onApplyFilter: () {

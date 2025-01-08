@@ -150,7 +150,6 @@ class InvoiceScreen extends StatelessWidget {
                 10,
                 (index) => const InvoiceItem(
                   isLoading: true,
-                  // onTap: () => Get.to(const DetailLaporankuScreen()),
                 ),
               ),
             ),
