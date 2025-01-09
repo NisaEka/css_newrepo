@@ -29,6 +29,7 @@ class StorageCore {
   static const String transactionTemp = "transaction_temp";
   static const String themeMode = "theme";
   static const String hiddenPhoneShipper = "hidden_phone_shipper";
+  static const String lastAgg = "last_aggregation_payment_date";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);

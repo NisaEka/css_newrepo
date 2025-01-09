@@ -26,95 +26,118 @@ class DashboardAggregationCountItem extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     return Shimmer(
       isLoading: isLoading,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: AppConst.isLightTheme(context)
-                ? greyLightColor3
-                : greyDarkColor1,
-          ),
-          color: isLoading
-              ? greyColor
-              : AppConst.isLightTheme(context)
-                  ? greyLightColor3
-                  : greyDarkColor1,
-        ),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
+      child: (aggregationPembayaran?.mpayWdrGrpPayNo?.isEmpty ?? false) &&
+              (aggregationMinus?.aggMinDoc.isEmpty ?? false)
+          ? const SizedBox()
+          : Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: BoxDecoration(
-                color:
-                    AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
                 borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: AppConst.isLightTheme(context)
+                      ? greyLightColor3
+                      : greyDarkColor1,
+                ),
+                color: isLoading
+                    ? greyColor
+                    : AppConst.isLightTheme(context)
+                        ? greyLightColor3
+                        : greyDarkColor1,
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
                 children: [
-                  SizedBox(
-                    width: Get.width / 2.5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Aggregasi Pembayaran".tr,
-                            textAlign: TextAlign.left,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                    fontSize: screenWidth < 400 ? 12 : 14)),
-                        TypeTransactionCard(
-                          value1: aggregationPembayaran?.mpayWdrGrpPayNo ?? '-',
-                          value2:
-                              'Rp. ${aggregationPembayaran?.mpayWdrGrpPayCodAmt?.toCurrency().toString() ?? '0'}',
-                          description: aggregationPembayaran?.createddtm
-                                  ?.toLongDateTimeFormat() ??
-                              '-',
-                          lineColor: successColor,
-                          value1fontSize: screenWidth < 400 ? 10 : 12,
-                          value2fontSize: 14,
-                          isSuccess: true,
-                        ),
-                      ],
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AppConst.isLightTheme(context)
+                          ? whiteColor
+                          : bgDarkColor,
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                  ),
-                  SizedBox(
-                    width:
-                        screenWidth < 400 ? Get.width / 2.3 : Get.width / 2.2,
-                    child: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment:
+                          aggregationPembayaran?.mpayWdrGrpPayNo?.isEmpty ??
+                                  false
+                              ? MainAxisAlignment.spaceBetween
+                              : MainAxisAlignment.start,
                       children: [
-                        Text("Aggregasi Minus".tr,
-                            textAlign: TextAlign.left,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                    fontSize: screenWidth < 400 ? 12 : 14)),
-                        const SizedBox(height: 3),
-                        TypeTransactionCard(
-                          value1: aggregationMinus?.aggMinDoc ?? '-',
-                          value2:
-                              'Rp. ${aggregationMinus?.codAmt.toCurrency().toString() ?? '0'}',
-                          description: aggregationMinus?.createddtm
-                                  .toLongDateTimeFormat() ??
-                              '-',
-                          lineColor: errorLightColor3,
-                          value1fontSize: 12,
-                          value2fontSize: 14,
-                        ),
+                        aggregationPembayaran?.mpayWdrGrpPayNo?.isNotEmpty ??
+                                false
+                            ? SizedBox(
+                                width: Get.width / 2.5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Aggregasi Pembayaran".tr,
+                                        textAlign: TextAlign.left,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(
+                                                fontSize: screenWidth < 400
+                                                    ? 12
+                                                    : 14)),
+                                    TypeTransactionCard(
+                                      value1: aggregationPembayaran
+                                              ?.mpayWdrGrpPayNo ??
+                                          '-',
+                                      value2:
+                                          'Rp. ${aggregationPembayaran?.mpayWdrGrpPayCodAmt?.toCurrency().toString() ?? '0'}',
+                                      description: aggregationPembayaran
+                                              ?.createddtm
+                                              ?.toLongDateTimeFormat() ??
+                                          '-',
+                                      lineColor: successColor,
+                                      value1fontSize:
+                                          screenWidth < 400 ? 10 : 12,
+                                      value2fontSize: 14,
+                                      isSuccess: true,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : const SizedBox(),
+                        aggregationMinus?.aggMinDoc.isNotEmpty ?? false
+                            ? SizedBox(
+                                width: screenWidth < 400
+                                    ? Get.width / 2.3
+                                    : Get.width / 2.2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Aggregasi Minus".tr,
+                                        textAlign: TextAlign.left,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(
+                                                fontSize: screenWidth < 400
+                                                    ? 12
+                                                    : 14)),
+                                    const SizedBox(height: 3),
+                                    TypeTransactionCard(
+                                      value1:
+                                          aggregationMinus?.aggMinDoc ?? '-',
+                                      value2:
+                                          'Rp. ${aggregationMinus?.codAmt.toCurrency().toString() ?? '0'}',
+                                      description: aggregationMinus?.createddtm
+                                              .toLongDateTimeFormat() ??
+                                          '-',
+                                      lineColor: errorLightColor3,
+                                      value1fontSize: 12,
+                                      value2fontSize: 14,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }
