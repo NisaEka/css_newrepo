@@ -96,8 +96,17 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                 "tipe": "cod",
                               },
                             ),
-                            onTapNotification: () =>
-                                Get.to(const RiwayatKirimanScreen()),
+                            onTapNotification: () => Get.to(
+                              const RiwayatKirimanScreen(),
+                              arguments: {
+                                "status": "Masih di Kamu",
+                                "tipe": "ALL",
+                                "startDate": DateTime.now()
+                                    .subtract(const Duration(days: 6))
+                                    .copyWith(hour: 0, minute: 0),
+                                "endDate": DateTime.now(),
+                              },
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,6 +137,13 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                   const PantauPaketmuScreen(),
                                   arguments: {
                                     "status": "Dalam Proses",
+                                    "tipe": "cod",
+                                  },
+                                ),
+                                onTapNotification: () => Get.to(
+                                  const PantauPaketmuScreen(),
+                                  arguments: {
+                                    "status": "Dibatalkan Oleh Kamu",
                                     "tipe": "cod",
                                   },
                                 ),

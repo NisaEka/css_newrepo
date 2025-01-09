@@ -17,14 +17,14 @@ class RiwayatKirimanController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
     Future.wait([initData()]);
     if (state.statusFilter != null) {
       state.selectedStatusKiriman = state.statusFilter;
-      state.startDate = state.startDateFilter ??
-          DateTime.now()
-              .subtract(const Duration(days: 6))
-              .copyWith(hour: 0, minute: 0);
-      state.endDate = state.endDateFilter ?? DateTime.now();
+      state.startDate = state.startDateFilter;
+      state.endDate = state.endDateFilter;
       state.dateFilter = state.dateF ?? '2';
       if (state.tipeFilter == 'COD ONGKIR') {
         state.selectedKiriman = 3;
@@ -43,15 +43,16 @@ class RiwayatKirimanController extends BaseController {
     }
     state.transDate = [
       {
-        "awbDate": [state.startDate, state.endDate]
+        "createdDateSearch": [
+          state.startDate.toString(),
+          state.endDate.toString()
+        ]
       }
     ];
     state.pagingController.addPageRequestListener((pageKey) {
       getTransaction(pageKey);
     });
     // categoryList();
-    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
-    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
     applyFilter();
   }
