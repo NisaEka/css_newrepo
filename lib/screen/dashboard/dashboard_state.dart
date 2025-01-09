@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
+import 'package:css_mobile/data/model/master/apps_info_model.dart';
 import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/model/profile/ccrf_profile_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -46,11 +47,12 @@ class DashboardState {
 
   List<Items> menuItems = [];
   List<String> appTitle = <String>["Beranda".tr, "Profil".tr];
-  List<BannerModel> bannerList = [];
+  List<BannerModel> promoList = [];
   List<NewsModel> newsList = [];
   List<CountCardModel> transCountList = [];
   List<CountCardModel> transCountCodList = [];
   List<NotificationModel> unreadNotifList = [];
+  List<AppsInfoModel> bannerList = [];
   List<String> transType = [
     'Jumlah Transaksi',
     'Masih Dikamu',

@@ -45,6 +45,7 @@ class DashboardController extends BaseController {
       loadNews(),
       getAggregation(),
       getAggregationMinus(),
+      getBanners()
     ]);
   }
 
@@ -55,6 +56,43 @@ class DashboardController extends BaseController {
         await storage.readData(StorageCore.unreadMessage));
     state.unreadNotifList.addAll(unread.payload ?? []);
     update();
+  }
+
+  Future<void> getBanners() async {
+    state.bannerList = [];
+    try {
+      await master
+          .getAppsInfo(QueryModel(
+        table: true,
+        where: [
+          {"infoStatus": "on"},
+          {"infoCategory": "INFORMASI COMMERCIAL - CSS CUSTOMER MOBILE"}
+        ],
+        sort: [
+          {"infoCreateddate": "desc"}
+        ],
+      ))
+          .then((banners) {
+        state.bannerList.addAll(banners.data ?? []);
+        state.bannerList.forEachIndexed(
+          (index, banner) {
+            if ((banner.region != "ALL" &&
+                    banner.region !=
+                        state.basic?.origin?.branch?.regionalCode) ||
+                (banner.branch != "ALL" &&
+                    banner.region != state.basic?.origin?.branch?.branchCode) ||
+                (banner.origin != "ALL" &&
+                    banner.region != state.basic?.origin?.originCode)) {
+              state.bannerList.removeAt(index);
+            }
+          },
+        );
+        update();
+      });
+    } catch (e, i) {
+      AppLogger.e("error get banners : $e");
+      AppLogger.e("error get banners : $i");
+    }
   }
 
   Future<bool> cekToken() async {
@@ -74,15 +112,15 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadPromo() async {
-    state.bannerList.clear();
+    state.promoList.clear();
 
     try {
       jlc.postDashboardBanner().then((value) {
         if (value.code == 200) {
-          state.bannerList.addAll(value.data ?? []);
+          state.promoList.addAll(value.data ?? []);
           update();
         } else {
-          state.bannerList.add(BannerModel());
+          state.promoList.add(BannerModel());
         }
       });
     } catch (e) {

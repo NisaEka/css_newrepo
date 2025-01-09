@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/master/apps_info_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_agent_model.dart';
@@ -370,6 +371,30 @@ class MasterRepositoryImpl extends MasterRepository {
           json as Map<String, dynamic>,
         ),
       );
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<AppsInfoModel>>> getAppsInfo(
+      QueryModel param) async {
+    try {
+      Response response = await network.base.get(
+        '/auth/apps-infos',
+        queryParameters: param.toJson(),
+      );
+      return BaseResponse<List<AppsInfoModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<AppsInfoModel>(
+                  (i) => AppsInfoModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e) {
+      AppLogger.e("error get apps infos : $e");
+      return e.response?.data;
     }
   }
 }
