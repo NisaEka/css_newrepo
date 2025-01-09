@@ -12,9 +12,7 @@ class UserPhotoProfile extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          // border: Border.all(color: primaryColor(context)),
-          color: Colors.white60),
+          borderRadius: BorderRadius.circular(50), color: Colors.white60),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [

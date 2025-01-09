@@ -50,13 +50,11 @@ class RiwayatKirimanListItem extends StatelessWidget {
       startActionPane: isDelete
           ? ActionPane(
               dragDismissible: false,
-              // dismissible: DismissiblePane(onDismissed: onDelete ?? () {}),
               motion: const DrawerMotion(),
               children: [
                 isDelete
                     ? SlidableAction(
                         onPressed: onDelete,
-                        // backgroundColor: errorColor,
                         foregroundColor: errorColor,
                         icon: Icons.delete,
                         label: 'Hapus'.tr,
@@ -86,13 +84,6 @@ class RiwayatKirimanListItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // Container(
-                    //   color: isLoading ? greyLightColor3 : Colors.transparent,
-                    //   width: isLoading ? Get.width / 3 : null,
-                    //   child: Text(
-                    //       'Order ID : ${data?.orderId ?? orderID ?? '-'}',
-                    //       style: Theme.of(context).textTheme.titleSmall),
-                    // ),
                     Container(
                       decoration: BoxDecoration(
                           color:
@@ -117,37 +108,6 @@ class RiwayatKirimanListItem extends StatelessWidget {
                     const SizedBox(width: 10),
                     Column(
                       children: [
-                        // (data?.apiType?.isNotEmpty ?? false)
-                        //     ? Container(
-                        //         padding: const EdgeInsets.all(5),
-                        //         width: isLoading ? 50 : null,
-                        //         decoration: BoxDecoration(
-                        //           color:
-                        //               data?.apiType == "COD" || apiType == "COD"
-                        //                   ? successColor
-                        //                   : data?.apiType == "NON COD" ||
-                        //                           apiType == "NON COD"
-                        //                       ? warningColor
-                        //                       : data?.apiType == "COD ONGKIR" ||
-                        //                               apiType == "COD ONGKIR"
-                        //                           ? infoColor
-                        //                           : errorColor,
-                        //           borderRadius: BorderRadius.circular(15),
-                        //         ),
-                        //         child: Text(
-                        //           data?.apiType ?? apiType ?? '-',
-                        //           style: Theme.of(context)
-                        //               .textTheme
-                        //               .titleSmall
-                        //               ?.copyWith(
-                        //                 color: whiteColor,
-                        //                 fontSize: 8,
-                        //               ),
-                        //         ),
-                        //       )
-                        //     : const SizedBox(),
-                        // Text(ImageConstant.paket),
-                        // Image.asset(IconsConstant.paket),
                         Container(
                           width: 60,
                           height: 60,
@@ -170,8 +130,7 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                                 "SUDAH DI GUDANG JNE" ||
                                             apiType == "SUDAH DI GUDANG JNE"
                                         ? ImageConstant.boxSudahDiGudang
-                                        : data?.statusAwb ==
-                                                    "SUKSES DITERIMA" ||
+                                        : data?.statusAwb == "SUKSES DITERIMA" ||
                                                 apiType == "SUKSES DITERIMA"
                                             ? ImageConstant.boxSuksesDiterima
                                             : data?.statusAwb ==
@@ -180,36 +139,41 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                                         "DIBATALKAN OLEH KAMU"
                                                 ? ImageConstant.boxDibatalkan
                                                 : data?.statusAwb ==
-                                                "SUDAH DI KOTA TUJUAN" ||
-                                                apiType ==
-                                                    "SUDAH DI KOTA TUJUAN"
-                                                ? ImageConstant.boxSudahDiKotaTujuan
-                                                : data?.statusAwb ==
-                                                "DALAM PROSES" ||
-                                                apiType ==
-                                                    "DALAM PROSES"
-                                                ? ImageConstant.boxDalamProses
-                                                : data?.statusAwb ==
-                                                "BUTUH DICEK" ||
-                                                apiType ==
-                                                "BUTUH DICEK"
-                                                ? ImageConstant.boxButuhDicek
-                                                : data?.statusAwb ==
-                                                "SUKSES DIKEMBALIKAN KEKAMU" ||
-                                                apiType ==
-                                                    "SUKSES DIKEMBALIKAN KEKAMU"
-                                                ? ImageConstant.boxSuksesReturn
-                                                : data?.statusAwb ==
-                                                "PROSES PENGEMBALIAN KEKAMU" ||
-                                                apiType ==
-                                                    "PROSES PENGEMBALIAN KEKAMU"
-                                                ? ImageConstant.boxProsesReturn
-                                                : data?.statusAwb ==
-                                                "DALAM PENINJAUAN" ||
-                                                apiType ==
-                                                    "DALAM PENINJAUAN"
-                                                ? ImageConstant.boxDalamPeninjauan
-                                                : ImageConstant.boxPackage,
+                                                            "SUDAH DI KOTA TUJUAN" ||
+                                                        apiType ==
+                                                            "SUDAH DI KOTA TUJUAN"
+                                                    ? ImageConstant
+                                                        .boxSudahDiKotaTujuan
+                                                    : data?.statusAwb ==
+                                                                "DALAM PROSES" ||
+                                                            apiType ==
+                                                                "DALAM PROSES"
+                                                        ? ImageConstant
+                                                            .boxDalamProses
+                                                        : data?.statusAwb ==
+                                                                    "BUTUH DICEK" ||
+                                                                apiType ==
+                                                                    "BUTUH DICEK"
+                                                            ? ImageConstant
+                                                                .boxButuhDicek
+                                                            : data?.statusAwb ==
+                                                                        "SUKSES DIKEMBALIKAN KEKAMU" ||
+                                                                    apiType ==
+                                                                        "SUKSES DIKEMBALIKAN KEKAMU"
+                                                                ? ImageConstant
+                                                                    .boxSuksesReturn
+                                                                : data?.statusAwb ==
+                                                                            "PROSES PENGEMBALIAN KEKAMU" ||
+                                                                        apiType ==
+                                                                            "PROSES PENGEMBALIAN KEKAMU"
+                                                                    ? ImageConstant
+                                                                        .boxProsesReturn
+                                                                    : data?.statusAwb == "DALAM PENINJAUAN" ||
+                                                                            apiType ==
+                                                                                "DALAM PENINJAUAN"
+                                                                        ? ImageConstant
+                                                                            .boxDalamPeninjauan
+                                                                        : ImageConstant.boxPackage,
                             height: Get.width / 8,
                             color: iconColor(context),
                           ),
@@ -263,9 +227,6 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                 (data?.statusAwb?.isNotEmpty ?? false)
                                     ? Container(
                                         padding: const EdgeInsets.all(6),
-                                        // padding: const EdgeInsets.symmetric(
-                                        //     horizontal: 10, vertical: 4),
-                                        // margin: const EdgeInsets.only(bottom: 10),
                                         width: isLoading ? Get.width / 5 : null,
                                         decoration: BoxDecoration(
                                           //DIBATALKAN OLEH KAMU
