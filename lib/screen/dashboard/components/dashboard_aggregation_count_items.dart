@@ -23,6 +23,7 @@ class DashboardAggregationCountItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Shimmer(
       isLoading: isLoading,
       child: Container(
@@ -51,6 +52,7 @@ class DashboardAggregationCountItem extends StatelessWidget {
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     width: Get.width / 2.5,
@@ -59,7 +61,11 @@ class DashboardAggregationCountItem extends StatelessWidget {
                       children: [
                         Text("Aggregasi Pembayaran".tr,
                             textAlign: TextAlign.left,
-                            style: Theme.of(context).textTheme.titleMedium),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                    fontSize: screenWidth < 400 ? 12 : 14)),
                         TypeTransactionCard(
                           value1: aggregationPembayaran?.mpayWdrGrpPayNo ?? '-',
                           value2:
@@ -68,7 +74,7 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                   ?.toLongDateTimeFormat() ??
                               '-',
                           lineColor: successColor,
-                          value1fontSize: 12,
+                          value1fontSize: screenWidth < 400 ? 10 : 12,
                           value2fontSize: 14,
                           isSuccess: true,
                         ),
@@ -76,13 +82,18 @@ class DashboardAggregationCountItem extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: Get.width / 2.2,
+                    width:
+                        screenWidth < 400 ? Get.width / 2.3 : Get.width / 2.2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Aggregasi Minus".tr,
                             textAlign: TextAlign.left,
-                            style: Theme.of(context).textTheme.titleMedium),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                    fontSize: screenWidth < 400 ? 12 : 14)),
                         const SizedBox(height: 3),
                         TypeTransactionCard(
                           value1: aggregationMinus?.aggMinDoc ?? '-',

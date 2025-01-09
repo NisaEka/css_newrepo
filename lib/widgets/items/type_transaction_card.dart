@@ -39,6 +39,7 @@ class TypeTransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Shimmer(
       isLoading: isLoading,
       child: GestureDetector(
@@ -66,7 +67,11 @@ class TypeTransactionCard extends StatelessWidget {
                     "${prefixVal1 ?? ''}$value1 ${suffixVal1 ?? ''} ",
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        fontSize: value1.length > 20 ? 10 : value1fontSize,
+                        fontSize: value1.length > 20
+                            ? screenWidth < 400
+                                ? 8
+                                : 10
+                            : value1fontSize,
                         color: value1fontSize == null
                             ? (AppConst.isLightTheme(context)
                                 ? greyDarkColor1
