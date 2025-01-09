@@ -3,6 +3,7 @@ import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolan_laporanku_screen.dart';
+import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_doc/agg_by_doc_screen.dart';
 import 'package:css_mobile/screen/notification/notification_detail_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/items/notification_list_item.dart';
@@ -81,7 +82,9 @@ class NotificationController extends BaseController {
 
   Future<void> readMessage(NotificationModel value) async {
     String idMessage = value.text?.split(' : ').last.split('.').first ?? '';
-    if (value.title?.split(' - ').last == "Laporanku") {
+    String aggDoc =
+        value.text?.split(' : ').elementAt(1).split('.').first ?? '';
+    if (value.title == "CSS MOBILE - Laporanku") {
       isLoading = true;
       update();
       try {
@@ -103,7 +106,11 @@ class NotificationController extends BaseController {
       } catch (e) {
         AppLogger.e('error get ticket message : $e');
       }
-    } else if (value.title?.split(' - ').last == "AGGREGASI PEMBAYARAN") {
+    } else if (value.title == "CSS MOBILE - AGREGASI PEMBAYARAN") {
+      Get.to(
+        const AggByDocScreen(),
+        arguments: {"aggregationID": aggDoc},
+      );
     } else {
       Get.to(() => NotificationDetailScreen(data: value))?.then(
         (_) => updateNotificationStatus(value),
