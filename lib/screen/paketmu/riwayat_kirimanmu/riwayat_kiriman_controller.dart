@@ -18,6 +18,34 @@ class RiwayatKirimanController extends BaseController {
   void onInit() {
     super.onInit();
     Future.wait([initData()]);
+    if (state.statusFilter != null) {
+      state.selectedStatusKiriman = state.statusFilter;
+      state.startDate = state.startDateFilter ??
+          DateTime.now()
+              .subtract(const Duration(days: 6))
+              .copyWith(hour: 0, minute: 0);
+      state.endDate = state.endDateFilter ?? DateTime.now();
+      state.dateFilter = state.dateF ?? '2';
+      if (state.tipeFilter == 'COD ONGKIR') {
+        state.selectedKiriman = 3;
+        state.transType = 'COD ONGKIR';
+      } else if (state.tipeFilter == 'NON COD') {
+        state.selectedKiriman = 2;
+        state.transType = 'NON COD';
+      } else if (state.tipeFilter == 'COD') {
+        state.selectedKiriman = 1;
+        state.transType = 'COD';
+      } else if (state.tipeFilter == 'ALL') {
+        state.selectedKiriman = 0;
+        state.transType = '';
+      }
+      update();
+    }
+    state.transDate = [
+      {
+        "awbDate": [state.startDate, state.endDate]
+      }
+    ];
     state.pagingController.addPageRequestListener((pageKey) {
       getTransaction(pageKey);
     });
