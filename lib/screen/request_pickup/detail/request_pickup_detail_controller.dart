@@ -33,7 +33,6 @@ class RequestPickupDetailController extends BaseController {
 
   Future<void> _getRequestPickupByAwb() async {
     isLoading = true;
-    // _showLoadingIndicator = true;
     update();
 
     requestPickupRepository.getRequestPickupByAwb(awb).then(
@@ -58,7 +57,6 @@ class RequestPickupDetailController extends BaseController {
 
     await Future.delayed(const Duration(seconds: 2));
     isLoading = false;
-    // _showLoadingIndicator = false;
     update();
   }
 }

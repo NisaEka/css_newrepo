@@ -71,8 +71,6 @@ class RequestPickupLocationController extends BaseController {
     _updateAddressText();
   }
 
-  /// Internal methods.
-
   void _getAddress(List<Placemark> foundPlaceMarks) {
     final places = foundPlaceMarks;
     _placeMarks.clear();

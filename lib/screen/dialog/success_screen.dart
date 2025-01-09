@@ -76,15 +76,6 @@ class SuccessScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Container(
-                    //   color: Colors.grey,
-                    //   child: icon ??
-                    //       Lottie.asset(
-                    //         lottie ?? ImageConstant.successLottie,
-                    //         // height: iconHeight ?? Get.width / 1.2,
-                    //         fit: BoxFit.cover,
-                    //       ),
-                    // ),
                     (message?.isNotEmpty ?? false)
                         ? SizedBox(
                             height: customInfo != null ? null : Get.width * 0.5,
@@ -106,10 +97,6 @@ class SuccessScreen extends StatelessWidget {
               ? CustomFilledButton(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  // color: whiteColor,
-                  //
-                  // fontColor: blueJNE,
-                  // borderColor: blueJNE,
                   color: primaryColor(context),
                   isTransparent: true,
                   title: firstButtonTitle,
@@ -131,10 +118,7 @@ class SuccessScreen extends StatelessWidget {
               ? CustomFilledButton(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  // color: Colors.white,
                   isTransparent: true,
-                  // borderColor: blueJNE,
-                  // fontColor: primaryColor(context),
                   color: primaryColor(context),
                   radius: 10,
                   title: thirdButtonTitle?.tr,

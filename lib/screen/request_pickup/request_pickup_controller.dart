@@ -43,10 +43,6 @@ class RequestPickupController extends BaseController {
   }
 
   applyFilter() {
-    // if (state.startDate != null ||
-    //     state.endDate != null ||
-    //     state.selectedPetugasEntry != null ||
-    //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
       state.queryParam.setBetween([
@@ -57,7 +53,6 @@ class RequestPickupController extends BaseController {
           ]
         }
       ]);
-      // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     } else {
       state.queryParam.setBetween([]);
     }

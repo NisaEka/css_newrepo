@@ -29,7 +29,6 @@ class RequstPickupFilterButton extends HookWidget {
                   child: CustomScrollView(
                     slivers: [
                       DateFilterField(
-                        // label: "Tanggal AWB".tr,
                         selectedDateFilter: c.state.dateFilter,
                         startDate: c.state.startDate,
                         endDate: c.state.endDate,
@@ -46,7 +45,6 @@ class RequstPickupFilterButton extends HookWidget {
                           children: [
                             CustomFormLabel(label: 'Status Kiriman'.tr),
                             const SizedBox(height: 10),
-                            // CustomFormLabel(label: 'Petugas Entry'),
                           ],
                         ),
                       ),
@@ -100,7 +98,6 @@ class RequstPickupFilterButton extends HookWidget {
                             mainAxisSpacing: 5,
                             crossAxisSpacing: 16,
                             childAspectRatio: 1.8,
-                            // mainAxisExtent: 100
                           ),
                         ),
                       ),
@@ -113,7 +110,6 @@ class RequstPickupFilterButton extends HookWidget {
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: CustomFormLabel(label: 'Tipe Kiriman'.tr),
                             ),
-                            // const SizedBox(height: 5),
                           ],
                         ),
                       ),
@@ -166,7 +162,6 @@ class RequstPickupFilterButton extends HookWidget {
                             mainAxisSpacing: 5,
                             crossAxisSpacing: 16,
                             childAspectRatio: 2,
-                            // mainAxisExtent: 100
                           ),
                         ),
                       ),
@@ -197,27 +192,6 @@ class RequstPickupFilterButton extends HookWidget {
                                     : greyLightColor1,
                               ),
                             ),
-                            // const SizedBox(height: 10),
-                            // // const CustomFormLabel(label: 'Petugas Entry'),
-                            // CustomDropDownField(
-                            //   items: c.state.listOfficerEntry
-                            //       .map(
-                            //         (e) => DropdownMenuItem(
-                            //           value: e,
-                            //           child: Text(e),
-                            //         ),
-                            //       )
-                            //       .toList(),
-                            //   label: 'Petugas Entry'.tr,
-                            //   hintText: 'Petugas Entry'.tr,
-                            //   value: c.state.selectedPetugasEntry,
-                            //   onChanged: (value) {
-                            //     setState(() {
-                            //       c.state.selectedPetugasEntry = value;
-                            //       c.update();
-                            //     });
-                            //   },
-                            // )
                           ],
                         ),
                       ),
@@ -227,10 +201,8 @@ class RequstPickupFilterButton extends HookWidget {
               },
             ),
             isFiltered: c.state.isFiltered,
-            // isApplyFilter: c.state.startDate != null || c.state.endDate != null,
             onResetFilter: () {
               c.resetFilter(false);
-              // c.resetQueryParam();
               c.state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
               c.state.endDate =
                   DateTime.now().copyWith(hour: 23, minute: 59, second: 59);

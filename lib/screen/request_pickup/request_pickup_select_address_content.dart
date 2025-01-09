@@ -86,7 +86,6 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
             itemBuilder: (context, item, index) {
               return RequestPickupAddressItem(
                 address: item,
-                // lastItem: index + 1 == pagingController.itemList!.length,
                 lastItem: index + 1 == pagingController.itemList!.length,
                 selected: selectedAddressId == item.pickupDataId,
                 onItemClick: () => onSelectAddress(item.pickupDataId),
@@ -100,21 +99,6 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
             ),
           ),
         ),
-        // child: ListView.separated(
-        //   scrollDirection: Axis.horizontal,
-        //   itemBuilder: (context, index) {
-        //     return RequestPickupAddressItem(
-        //       address: addresses[index],
-        //       lastItem: index == addresses.length - 1,
-        //       selected: selectedAddressId == addresses[index].pickupDataId,
-        //       onItemClick: () => onSelectAddress(addresses[index].pickupDataId),
-        //     );
-        //   },
-        //   separatorBuilder: (BuildContext context, int index) {
-        //     return Container();
-        //   },
-        //   itemCount: addresses.length,
-        // ),
       );
     } else {
       return Container(
