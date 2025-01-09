@@ -20,7 +20,6 @@ class AggByDocController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    // Future.wait([initData()]);
     pagingController.addPageRequestListener((pageKey) {
       getAggregation(pageKey);
     });
@@ -37,11 +36,9 @@ class AggByDocController extends BaseController {
       final isLastPage = (agg.data?.length ?? 0) < pageSize;
       if (isLastPage) {
         pagingController.appendLastPage(agg.data ?? []);
-        // transactionList.addAll(pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
         pagingController.appendPage(agg.data ?? [], nextPageKey);
-        // transactionList.addAll(pagingController.itemList ?? []);
       }
     } catch (e, i) {
       AppLogger.e('error getAggregation $e, $i');

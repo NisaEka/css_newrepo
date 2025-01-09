@@ -9,8 +9,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 class InvoiceCnoteController extends BaseController {
   String invoiceNumber = Get.arguments["invoice_number"];
 
-  // final DefaultPageFilterModel _defaultPageFilterModel =
-  //     DefaultPageFilterModel();
   final QueryModel _queryParamModel = QueryModel();
 
   final PagingController<int, InvoiceCnoteModel> pagingController =
@@ -31,7 +29,6 @@ class InvoiceCnoteController extends BaseController {
           invoiceNumber, _queryParamModel);
 
       final payload = response.data ?? List.empty();
-      // final isLastPage = payload.length < (_queryParamModel.limit ?? 0);
       final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
 
       if (isLastPage) {

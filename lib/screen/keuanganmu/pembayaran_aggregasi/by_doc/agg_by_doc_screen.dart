@@ -38,10 +38,6 @@ class AggByDocScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // PaymentBox(
-          //   title: "Document No".tr,
-          //   value: c.aggregationID,
-          // ),
           Text(
             c.aggregationID,
             style: Theme.of(context)
