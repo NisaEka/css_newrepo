@@ -58,7 +58,10 @@ class TransactionItems extends StatelessWidget {
                               .where((e) => e == item)
                               .isNotEmpty,
                           onLongPress: () {
-                            c.select(item);
+                            if (item.statusAwb == "MASIH DI KAMU" &&
+                                c.state.allow?.hapusPesanan == 'Y') {
+                              c.select(item);
+                            }
                           },
                           onTap: () {
                             c.unselect(item);
