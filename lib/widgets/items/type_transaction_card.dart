@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -7,12 +8,15 @@ class TypeTransactionCard extends StatelessWidget {
   final String? value2;
   final String description;
   final Color lineColor;
+  final bool? isSuccess;
   final bool isLoading;
   final String? prefixVal1;
   final String? prefixVal2;
   final String? suffixVal1;
   final String? suffixVal2;
   final double? width;
+  final double? value1fontSize;
+  final double? value2fontSize;
   final VoidCallback? onTap;
 
   const TypeTransactionCard({
@@ -28,6 +32,9 @@ class TypeTransactionCard extends StatelessWidget {
     this.suffixVal2,
     this.width,
     this.onTap,
+    this.value1fontSize,
+    this.value2fontSize,
+    this.isSuccess,
   }) : super(key: key);
 
   @override
@@ -57,20 +64,32 @@ class TypeTransactionCard extends StatelessWidget {
                 children: [
                   Text(
                     "${prefixVal1 ?? ''}$value1 ${suffixVal1 ?? ''} ",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: value1.length > 20 ? 10 : value1fontSize,
+                        color: value1fontSize == null
+                            ? (AppConst.isLightTheme(context)
+                                ? greyDarkColor1
+                                : greyLightColor1)
+                            : (AppConst.isLightTheme(context)
+                                ? blueJNE
+                                : warningColor)),
                   ),
                   Text(
-                    (value2?.isNotEmpty ?? false)
-                        ? "${prefixVal2 ?? ''}$value2 ${suffixVal2 ?? ''} "
-                        : "",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontSize: 8, fontWeight: FontWeight.bold),
-                  ),
+                      (value2?.isNotEmpty ?? false)
+                          ? "${prefixVal2 ?? ''}$value2 ${suffixVal2 ?? ''} "
+                          : "",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: value2fontSize ?? 8,
+                            fontWeight: FontWeight.bold,
+                            color: value1fontSize == null
+                                ? (AppConst.isLightTheme(context)
+                                    ? greyDarkColor1
+                                    : greyLightColor1)
+                                : isSuccess == true
+                                    ? successLightColor1
+                                    : errorLightColor3,
+                          )),
                   Text(
                     description,
                     style: Theme.of(context)
