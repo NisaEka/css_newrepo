@@ -27,6 +27,7 @@ class TransactionCard extends StatelessWidget {
   final Widget? customTitle;
   final double? titleWidth;
   final double? height;
+  final double? sizedBox;
   final VoidCallback? onTap;
   final VoidCallback? onTapNotification;
 
@@ -55,6 +56,7 @@ class TransactionCard extends StatelessWidget {
     this.lineChartCountValue,
     this.onTap,
     this.onTapNotification,
+    this.sizedBox,
   }) : super(key: key);
 
   @override
@@ -123,39 +125,20 @@ class TransactionCard extends StatelessWidget {
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // prefixChart ?? const SizedBox(),
-                            // prefixChart != null ? const Spacer() : const SizedBox(),
                             const SizedBox(height: 30),
                             Text(
                               lineChartCountValue ?? '',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            // RichText(
-                            //   text: TextSpan(
-                            //     children: [
-                            //       TextSpan(
-                            //         text: countValue,
-                            //         style: Theme.of(context).textTheme.titleMedium,
-                            //       ),
-                            //       TextSpan(
-                            //         text: count.toString(),
-                            //         style: Theme.of(context)
-                            //             .textTheme
-                            //             .titleLarge
-                            //             ?.copyWith(
-                            //                 fontSize: count.toString().length >= 5
-                            //                     ? 16 - (count.toString().length - 5)
-                            //                     : (countFontSize ?? 22)),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
                             countValueChart != null
                                 ? const Spacer()
                                 : const SizedBox(),
                             countValueChart ?? const SizedBox(),
                           ],
                         )
+                      : const SizedBox(),
+                  screenWidth < 400 || screenWidth >= 400 && screenWidth > 500
+                      ? SizedBox(height: sizedBox)
                       : const SizedBox(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,

@@ -68,7 +68,10 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           TransactionCard(
                             title: "Jumlah Transaksi".tr,
                             count: kirimanKamu.totalKiriman.toString(),
-                            subtitle: '${"7 Hari Terakhir".tr}\n',
+                            subtitle: screenWidth < 400 ||
+                                    screenWidth >= 400 && screenWidth < 500
+                                ? '${"7 Hari Terakhir".tr}\n'
+                                : '7 Hari Terakhir".tr',
                             color: primaryColor(context),
                             icon: Icons.show_chart,
                             statusColor: whiteColor,
