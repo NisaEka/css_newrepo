@@ -78,7 +78,20 @@ class RequestPickupScreen extends StatelessWidget {
             ),
             FilledButton(
               onPressed: () {
-                _pickupAddressBottomSheet(controller);
+                controller.state.selectedAwbs.isEmpty
+                    ? Get.showSnackbar(
+                        GetSnackBar(
+                          icon: const Icon(
+                            Icons.warning,
+                            color: whiteColor,
+                          ),
+                          message: 'Pilih kiriman terlebih dahulu'.tr,
+                          isDismissible: true,
+                          duration: const Duration(seconds: 3),
+                          backgroundColor: errorColor,
+                        ),
+                      )
+                    : _pickupAddressBottomSheet(controller);
               },
               style: FilledButtonTheme.of(context).style?.copyWith(
                   backgroundColor:
