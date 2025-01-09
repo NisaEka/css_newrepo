@@ -4,6 +4,7 @@ import 'package:css_mobile/data/model/notification/get_notification_model.dart';
 import 'package:css_mobile/data/model/notification/unread_message_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/notification/notification_controller.dart';
 import 'package:css_mobile/screen/notification/notification_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -28,6 +29,7 @@ Future<void> firebaseMessagingOpenAppHandler(RemoteMessage message) async {
 
 Future<void> saveUnreadMessage(RemoteMessage data) async {
   final DashboardController controller = Get.find();
+  final NotificationController notification = Get.find();
   List<Messages> listUnread = [];
   List<NotificationModel> listUnreadMessage = [];
   var u = GetNotificationModel.fromJson(
@@ -76,6 +78,7 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
       controller.getAggregation();
     }
     controller.cekMessages();
+    notification.initData();
     AppLogger.i("Message saved successfully");
   } catch (e, stackTrace) {
     AppLogger.e("Failed to save message", e, stackTrace);

@@ -129,7 +129,7 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                       value1:
                                           aggregationMinus?.aggMinDoc ?? '-',
                                       value2:
-                                          'Rp. ${aggregationMinus?.codAmt.toCurrency().toString() ?? '0'}',
+                                          'Rp. ${aggregationMinus?.netAmt.toCurrency().toString() ?? '0'}',
                                       description: aggregationMinus?.createddtm
                                               .toLongDateTimeFormat() ??
                                           '-',

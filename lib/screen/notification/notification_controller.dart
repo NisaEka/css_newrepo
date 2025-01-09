@@ -82,8 +82,6 @@ class NotificationController extends BaseController {
 
   Future<void> readMessage(NotificationModel value) async {
     String idMessage = value.text?.split(' : ').last.split('.').first ?? '';
-    String aggDoc =
-        value.text?.split(' : ').elementAt(1).split('.').first ?? '';
     if (value.title == "CSS MOBILE - Laporanku") {
       isLoading = true;
       update();
@@ -107,6 +105,9 @@ class NotificationController extends BaseController {
         AppLogger.e('error get ticket message : $e');
       }
     } else if (value.title == "CSS MOBILE - AGREGASI PEMBAYARAN") {
+      String aggDoc =
+          value.text?.split(' : ').elementAt(1).split('.').first ?? '';
+
       Get.to(
         const AggByDocScreen(),
         arguments: {"aggregationID": aggDoc},

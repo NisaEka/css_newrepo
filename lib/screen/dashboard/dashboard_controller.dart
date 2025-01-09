@@ -61,6 +61,7 @@ class DashboardController extends BaseController {
 
   Future<void> getBanners() async {
     state.bannerList = [];
+    update();
     try {
       await master
           .getAppsInfo(QueryModel(
@@ -833,14 +834,19 @@ class DashboardController extends BaseController {
   }
 
   Future<void> getAggregationMinus() async {
-    final aggregations = await aggregation.getAggregationMinus(QueryModel(
-      limit: 0,
-      sort: [
-        {"createddtm": "desc"}
-      ],
-    ));
+    try {
+      final aggregations = await aggregation.getAggregationMinus(QueryModel(
+        limit: 0,
+        sort: [
+          {"createddtm": "desc"}
+        ],
+      ));
 
-    state.aggregationMinus = aggregations.data?.first;
+      state.aggregationMinus = aggregations.data?.first;
+    } catch (e) {
+      AppLogger.e("error get aggregation minus : $e");
+    }
+
     update();
   }
 }

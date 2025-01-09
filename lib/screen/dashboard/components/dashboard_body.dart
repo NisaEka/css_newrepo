@@ -33,6 +33,7 @@ class DashboardBody extends StatelessWidget {
               c.getAggregationMinus();
               c.getAggregation();
               c.getAggregationMinus();
+              c.getBanners();
             }),
             child: CustomScrollView(
               slivers: [
@@ -53,8 +54,10 @@ class DashboardBody extends StatelessWidget {
                       //   onPressed: () => Get.to(const Ob1Screen()),
                       // ),
                       c.state.isLogin &&
-                              (c.state.allow.riwayatPesanan == "Y" ||
-                                  c.state.allow.paketmuRiwayat == 'Y')
+                              (c.state.allow.monitoringAgg == "Y" ||
+                                  c.state.allow.monitoringAggMinus == 'Y' ||
+                                  c.state.allow.keuanganAggregasi == 'Y' ||
+                                  c.state.allow.keuanganAggregasiMinus == 'Y')
                           ? DashboardAggregationCountItem(
                               aggregationPembayaran: c.state.aggregationModel,
                               aggregationMinus: c.state.aggregationMinus,
