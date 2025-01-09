@@ -8,6 +8,7 @@ import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transa
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_state.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
 import 'package:get/get.dart';
 
 class RiwayatKirimanController extends BaseController {
@@ -17,14 +18,14 @@ class RiwayatKirimanController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
+    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+
     Future.wait([initData()]);
     if (state.statusFilter != null) {
       state.selectedStatusKiriman = state.statusFilter;
-      state.startDate = state.startDateFilter ??
-          DateTime.now()
-              .subtract(const Duration(days: 6))
-              .copyWith(hour: 0, minute: 0);
-      state.endDate = state.endDateFilter ?? DateTime.now();
+      state.startDate = state.startDateFilter;
+      state.endDate = state.endDateFilter;
       state.dateFilter = state.dateF ?? '2';
       if (state.tipeFilter == 'COD ONGKIR') {
         state.selectedKiriman = 3;
@@ -43,15 +44,16 @@ class RiwayatKirimanController extends BaseController {
     }
     state.transDate = [
       {
-        "awbDate": [state.startDate, state.endDate]
+        "createdDateSearch": [
+          state.startDate.toString(),
+          state.endDate.toString()
+        ]
       }
     ];
     state.pagingController.addPageRequestListener((pageKey) {
       getTransaction(pageKey);
     });
     // categoryList();
-    state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
-    state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
     applyFilter();
   }
@@ -133,14 +135,14 @@ class RiwayatKirimanController extends BaseController {
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
-        if (state.isSelect) {
+        if (state.isSelectAll) {
           state.selectedTransaction
               .addAll(state.pagingController.itemList ?? []);
         }
       } else {
         final nextPageKey = page + 1;
         state.pagingController.appendPage(trans.data ?? [], nextPageKey);
-        if (state.isSelect) {
+        if (state.isSelectAll) {
           state.selectedTransaction
               .addAll(state.pagingController.itemList ?? []);
         }
@@ -258,6 +260,27 @@ class RiwayatKirimanController extends BaseController {
     update();
     state.pagingController.refresh();
     transactionCount();
+    update();
+  }
+
+  void onDeleteAll() {
+    Get.dialog(
+      DeleteAlertDialog(
+        onConfirm: () {
+          for (var element in state.selectedTransaction) {
+            delete(element);
+          }
+          Get.back();
+        },
+        onBack: () {
+          Get.back();
+          state.pagingController.refresh();
+          initData();
+        },
+      ),
+    );
+    state.isSelect = false;
+    state.isSelectAll = false;
     update();
   }
 }

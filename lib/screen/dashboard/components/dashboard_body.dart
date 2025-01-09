@@ -31,6 +31,8 @@ class DashboardBody extends StatelessWidget {
               c.loadTransCountList(true);
               c.getAggregation();
               c.getAggregationMinus();
+              c.getAggregation();
+              c.getAggregationMinus();
             }),
             child: CustomScrollView(
               slivers: [
@@ -56,7 +58,7 @@ class DashboardBody extends StatelessWidget {
                           ? DashboardAggregationCountItem(
                               aggregationPembayaran: c.state.aggregationModel,
                               aggregationMinus: c.state.aggregationMinus,
-                              isLoading: c.state.isLoading,
+                              isLoading: c.state.isLoadAggregation,
                             )
                           : const SizedBox(),
                       c.state.isLogin &&

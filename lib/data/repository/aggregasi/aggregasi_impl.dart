@@ -41,6 +41,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
+      AppLogger.e("error get aggregation : $e");
       return e.response?.data;
     }
   }
