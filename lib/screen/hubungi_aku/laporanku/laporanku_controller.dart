@@ -87,11 +87,9 @@ class LaporankuController extends BaseController {
       final isLastPage = (tickets.data?.length ?? 0) < LaporankuState.pageSize;
       if (isLastPage) {
         state.pagingController.appendLastPage(tickets.data ?? []);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
         state.pagingController.appendPage(tickets.data ?? [], nextPageKey);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
       }
     } catch (e) {
       AppLogger.e('error getTicketList $e');
@@ -133,8 +131,6 @@ class LaporankuController extends BaseController {
     state.startDateField.text =
         state.startDate.toString().toShortDateTimeFormat();
     state.endDateField.text = state.endDate.toString().toShortDateTimeFormat();
-    // state.startDateField.clear();
-    // state.endDateField.clear();
     state.isFiltered = false;
     state.searchField.clear();
     state.date = [];

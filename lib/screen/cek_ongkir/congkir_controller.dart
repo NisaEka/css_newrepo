@@ -66,7 +66,6 @@ class CekOngkirController extends BaseController {
                 .map((item) => Ongkir.fromJson(item))
                 .toList();
 
-        // Add all the mapped Ongkir objects to state.ongkirList
         state.ongkirList.addAll(resultExpressList);
         state.ongkirList.addAll(resultJtrList);
         update();

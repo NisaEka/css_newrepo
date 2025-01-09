@@ -30,8 +30,6 @@ class EclaimItems extends StatelessWidget {
             SizedBox(
               height: screenHeight * 0.5,
               child: RefreshIndicator(
-                // backgroundColor: whiteColor,
-                // color: warningColor,
                 onRefresh: () => Future.sync(() {
                   c.state.pagingController.refresh();
                 }),
@@ -44,10 +42,6 @@ class EclaimItems extends StatelessWidget {
                       awb: item.awb ?? '',
                       date: item.createDate ?? '',
                       amount: item.valueclaim ?? '',
-                      // amount: double.tryParse(
-                      //             item.valueclaim?.replaceAll('.', '') ?? '0')
-                      //         ?.toString() ??
-                      //     '',
                       isSuccess: true,
                     ),
                     firstPageErrorIndicatorBuilder: (context) =>

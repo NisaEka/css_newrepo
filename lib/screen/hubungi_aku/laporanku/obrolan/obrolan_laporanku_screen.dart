@@ -7,7 +7,6 @@ import 'package:css_mobile/screen/hubungi_aku/laporanku/obrolan/obrolal_laporank
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
-// import 'package:css_mobile/widgets/dialog/image_popup_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/items/show_image_preview.dart';
@@ -55,19 +54,9 @@ class ObrolanLaporankuScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        // IconButton(
-        //   onPressed: () {
-        //     // c.pagingController.refresh();
-        //     c.getMessages(c.currentPage);
-        //     print(c.currentPage);
-        //     // c.initData(c.currentPage+1);
-        //   },
-        //   icon: Icon(Icons.refresh),
-        // ),
         Flexible(
           child: c.gettedPhoto != null
               ? SizedBox(
-                  // height: Get.height / 2,
                   width: Get.width - 50,
                   child: Image.file(
                     c.gettedPhoto!,
@@ -83,7 +72,6 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                     itemBuilder: (context, e, i) => Column(
                       children: [
                         Text(
-                          // e.createdDate.toString(),
                           c.messages.length > i + 1
                               ? e.createdDate!.toShortDateFormat() !=
                                       c.messages[i + 1].createdDate!
@@ -128,34 +116,6 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                         const DataEmpty(),
                   ),
                 ),
-          // child: ListView(
-          //   reverse: true,
-          //   children: c.gettedPhoto != null
-          //       ? [
-          //           SizedBox(
-          //             // height: Get.height / 2,
-          //             width: Get.width - 50,
-          //             child: Image.file(
-          //               c.gettedPhoto!,
-          //               fit: BoxFit.fill,
-          //             ),
-          //           )
-          //         ]
-          //       : c.messages
-          //           .mapIndexed(
-          //             (i, e) => Column(
-          //               children: [
-          //                 Text(c.messages.length > i + 1
-          //                     ? e.createdDate!.toShortDateFormat() != c.messages[i + 1].createdDate!.toShortDateFormat()
-          //                         ? e.createdDate?.toShortDateFormat().toString() ?? ''
-          //                         : ''
-          //                     : e.createdDate?.toShortDateFormat().toString() ?? ''),
-          //                 chat(e, context),
-          //               ],
-          //             ),
-          //           )
-          //           .toList(),
-          // ),
         ),
         ListTile(
           title: TextFormField(
@@ -192,7 +152,6 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Text("Upload Gambar".tr),
                         CustomFilledButton(
                           color: AppConst.isLightTheme(context)
                               ? blueJNE
@@ -326,28 +285,6 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                                           : textColor(context),
                                     ),
                               ),
-                              // GestureDetector(
-                              //   onTap: () => showDialog(
-                              //     context: context,
-                              //     builder: (context) => ImagePopupDialog(
-                              //       title: '',
-                              //       img: msg.image != null &&
-                              //               (msg.image!.startsWith('https') ||
-                              //                   msg.image!.startsWith('http'))
-                              //           ? msg.image!
-                              //           : "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
-                              //     ),
-                              //   ),
-                              //   child: Image.network(
-                              //     msg.image != null &&
-                              //             (msg.image!.startsWith('https') ||
-                              //                 msg.image!.startsWith('http'))
-                              //         ? msg.image!
-                              //         : "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
-                              //     errorBuilder: (context, error, stackTrace) =>
-                              //         const SizedBox(),
-                              //   ),
-                              // )
                               GestureDetector(
                                 onTap: () => showImagePreview(
                                   context,

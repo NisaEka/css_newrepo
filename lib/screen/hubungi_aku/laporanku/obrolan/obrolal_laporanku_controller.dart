@@ -16,7 +16,6 @@ class ObrolanLaporankuController extends BaseController {
   TicketModel ticket = Get.arguments['ticket'];
   final messageInsert = TextEditingController();
 
-  // ignore: deprecated_member_use
   List<TicketMessageModel> messages = [];
   late String markMsg;
   String? subject;
@@ -85,12 +84,10 @@ class ObrolanLaporankuController extends BaseController {
       if (isLastPage) {
         pagingController.appendLastPage(message.data ?? []);
         messages.addAll(message.data ?? []);
-        // subject = message.payload?.first.subject;
       } else {
         final nextPageKey = page + 1;
         pagingController.appendPage(message.data ?? [], nextPageKey);
         messages.addAll(message.data ?? []);
-        // subject = message.payload?.first.subject;
       }
     } catch (e) {
       e.printError(info: 'error message paging');
@@ -151,7 +148,6 @@ class ObrolanLaporankuController extends BaseController {
 
   getSinglePhoto(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
-    // Pick an image
     final XFile? image = await picker.pickImage(source: source);
 
     if (image != null) {

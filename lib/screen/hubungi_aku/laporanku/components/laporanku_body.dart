@@ -66,14 +66,9 @@ class LaporankuBody extends StatelessWidget {
                             10,
                             (index) => const LaporankuListItem(
                               isLoading: true,
-                              // onTap: () => Get.to(const DetailLaporankuScreen()),
                             ),
                           ),
                         ),
-                        // firstPageProgressIndicatorBuilder: (context) => const LoadingDialog(
-                        //   height: 100,
-                        //   background: Colors.transparent,
-                        // ),
                         noItemsFoundIndicatorBuilder: (context) =>
                             const DataEmpty(),
                         noMoreItemsIndicatorBuilder: (context) => Center(

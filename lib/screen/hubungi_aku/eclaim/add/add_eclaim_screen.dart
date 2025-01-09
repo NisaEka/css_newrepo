@@ -90,7 +90,7 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
           CustomFormLabel(label: 'Ajukan Claim'.tr),
           const SizedBox(height: 10),
           Container(
-            height: 70, // Tinggi kotak
+            height: 70,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
@@ -170,20 +170,6 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
               width: 100,
               isSuffix: true,
             ),
-            // suffixIcon: GestureDetector(
-            //   onTap: c.selectedImage != null
-            //       ? () {
-            //     c.selectedImage = null;
-            //     c.imageFile.clear();
-            //     c.update();
-            //   }
-            //       : null,
-            //   child: SatuanFieldIcon(
-            //     title: 'Pilih'.tr,
-            //     width: 100,
-            //     isSuffix: true,
-            //   ),
-            // ),
             validator: (value) {
               if ((c.selectedImage?.lengthSync() ?? 0) >= c.maxImageSize) {
                 return "Ukuran file terlalu besar".tr;

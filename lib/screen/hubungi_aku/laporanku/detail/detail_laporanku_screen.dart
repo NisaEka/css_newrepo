@@ -95,8 +95,7 @@ class DetailLaporankuScreen extends StatelessWidget {
                     child: Container(
                       color: Colors.transparent,
                       alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(
-                          right: 20), // Margin between the two text widgets
+                      margin: const EdgeInsets.only(right: 20),
                       child: Text(
                         'Informasi Tiket Laporan'.tr,
                         style: listTitleTextStyle.copyWith(

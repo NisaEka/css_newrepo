@@ -108,7 +108,6 @@ class InputLaporankuScreen extends StatelessWidget {
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Text("Upload Gambar".tr),
                       CustomFilledButton(
                         color: AppConst.isLightTheme(context)
                             ? blueJNE

@@ -96,9 +96,7 @@ class InputLaporankuController extends BaseController {
                 controller: searchCategory,
                 hintText: 'Cari'.tr,
                 margin: const EdgeInsets.only(top: 20),
-                // validate: searchCategory.text.length < 3,
                 autoFocus: false,
-                // validationText: 'Masukan 3 atau lebih karakter'.tr,
                 onChanged: (value) {
                   update();
                   setState(() {
