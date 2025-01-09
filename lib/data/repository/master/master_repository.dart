@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/master/apps_info_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/master/get_agent_model.dart';
@@ -40,4 +41,6 @@ abstract class MasterRepository {
   Future<BaseResponse<int>> getAccountCount(QueryModel countQuery);
 
   Future<BaseResponse<GetServiceModel>> getServices(DataServiceModel param);
+
+  Future<BaseResponse<List<AppsInfoModel>>> getAppsInfo(QueryModel param);
 }

@@ -68,6 +68,9 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
       StorageCore.unreadMessage,
       GetNotificationModel(payload: listUnreadMessage),
     );
+    if (data.notification?.title == "CSS MOBILE - AGREGASI PEMBAYARAN") {
+      await StorageCore().writeString(StorageCore.lastAgg, data.sentTime);
+    }
     AppLogger.i("Message saved successfully");
   } catch (e, stackTrace) {
     AppLogger.e("Failed to save message", e, stackTrace);

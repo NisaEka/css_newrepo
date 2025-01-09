@@ -33,12 +33,12 @@ class DashboardPromo extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: c.state.isLoading && c.state.bannerList.isEmpty
+                    children: c.state.isLoading && c.state.promoList.isEmpty
                         ? List.generate(
                             3,
                             (index) =>
                                 const PromoItem(isLoading: true, lang: ''))
-                        : c.state.bannerList
+                        : c.state.promoList
                             .map(
                               (e) => PromoItem(
                                 promo: e,

@@ -22,6 +22,7 @@ import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
@@ -45,6 +46,7 @@ class DashboardController extends BaseController {
       loadNews(),
       getAggregation(),
       getAggregationMinus(),
+      getBanners(),
     ]);
   }
 
@@ -55,6 +57,43 @@ class DashboardController extends BaseController {
         await storage.readData(StorageCore.unreadMessage));
     state.unreadNotifList.addAll(unread.payload ?? []);
     update();
+  }
+
+  Future<void> getBanners() async {
+    state.bannerList = [];
+    try {
+      await master
+          .getAppsInfo(QueryModel(
+        table: true,
+        where: [
+          {"infoStatus": "on"},
+          {"infoCategory": "INFORMASI COMMERCIAL - CSS CUSTOMER MOBILE"}
+        ],
+        sort: [
+          {"infoCreateddate": "desc"}
+        ],
+      ))
+          .then((banners) {
+        state.bannerList.addAll(banners.data ?? []);
+        state.bannerList.forEachIndexed(
+          (index, banner) {
+            if ((banner.region != "ALL" &&
+                    banner.region !=
+                        state.basic?.origin?.branch?.regionalCode) ||
+                (banner.branch != "ALL" &&
+                    banner.region != state.basic?.origin?.branch?.branchCode) ||
+                (banner.origin != "ALL" &&
+                    banner.region != state.basic?.origin?.originCode)) {
+              state.bannerList.removeAt(index);
+            }
+          },
+        );
+        update();
+      });
+    } catch (e, i) {
+      AppLogger.e("error get banners : $e");
+      AppLogger.e("error get banners : $i");
+    }
   }
 
   Future<bool> cekToken() async {
@@ -74,15 +113,15 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadPromo() async {
-    state.bannerList.clear();
+    state.promoList.clear();
 
     try {
       jlc.postDashboardBanner().then((value) {
         if (value.code == 200) {
-          state.bannerList.addAll(value.data ?? []);
+          state.promoList.addAll(value.data ?? []);
           update();
         } else {
-          state.bannerList.add(BannerModel());
+          state.promoList.add(BannerModel());
         }
       });
     } catch (e) {
@@ -759,27 +798,45 @@ class DashboardController extends BaseController {
   }
 
   Future<void> getAggregation() async {
-    final agg =
-        await aggregation.getAggregationReport(QueryModel(limit: 0, between: [
-      {
-        "mpayWdrGrpPayDate": ["2024-11-12 00:00:00", "2024-11-12 23:59:59"]
-        // DateTime.now().copyWith(hour: 0, minute: 0, second: 0),
-        // DateTime.now().copyWith(hour: 23, minute: 59, second: 59),
+    var date = await storage.readString(StorageCore.lastAgg);
+    AppLogger.d("last date = ${date.isEmpty}");
+    if (date.isNotEmpty) {
+      try {
+        final agg = await aggregation.getAggregationReport(QueryModel(
+          limit: 0,
+          between: [
+            {
+              "mpayWdrGrpPayDatePaid": [
+                // "2024-11-12 00:00:00", "2024-11-12 23:59:59",
+                date
+                    .toDate()
+                    ?.subtract(const Duration(hours: 24))
+                    .toIso8601String(),
+                date.toDate()?.toIso8601String()
+              ]
+            }
+          ],
+          sort: [
+            {"mpayWdrGrpPayDatePaid": "desc"}
+          ],
+        ));
+        state.aggregationModel = agg.data?.first;
+      } catch (e, i) {
+        AppLogger.e("error get aggregation dashboard : $e");
+        AppLogger.e("error get aggregation dashboard : $i");
       }
-    ]));
-    state.aggregationModel = agg.data?.first;
+    }
+
     update();
   }
 
   Future<void> getAggregationMinus() async {
-    final aggregations =
-        await aggregation.getAggregationMinus(QueryModel(limit: 0, between: [
-      {
-        "createddtm": ["2024-12-12 00:00:00", "2024-12-12 23:59:59"]
-        // DateTime.now().copyWith(hour: 0, minute: 0, second: 0),
-        // DateTime.now().copyWith(hour: 23, minute: 59, second: 59),
-      }
-    ]));
+    final aggregations = await aggregation.getAggregationMinus(QueryModel(
+      limit: 0,
+      sort: [
+        {"createddtm": "desc"}
+      ],
+    ));
 
     state.aggregationMinus = aggregations.data?.first;
     update();

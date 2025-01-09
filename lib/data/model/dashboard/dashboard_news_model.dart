@@ -5,7 +5,7 @@ class NewsModel {
     String? thumbnail,
     String? createdAt,
     String? updatedAt,
-    List<Detail>? detail,
+    List<NewsDetail>? detail,
   }) {
     _id = id;
     _date = date;
@@ -24,23 +24,25 @@ class NewsModel {
     if (json['detail'] != null) {
       _detail = [];
       json['detail'].forEach((v) {
-        _detail?.add(Detail.fromJson(v));
+        _detail?.add(NewsDetail.fromJson(v));
       });
     }
   }
+
   String? _id;
   String? _date;
   String? _thumbnail;
   String? _createdAt;
   String? _updatedAt;
-  List<Detail>? _detail;
+  List<NewsDetail>? _detail;
+
   NewsModel copyWith({
     String? id,
     String? date,
     String? thumbnail,
     String? createdAt,
     String? updatedAt,
-    List<Detail>? detail,
+    List<NewsDetail>? detail,
   }) =>
       NewsModel(
         id: id ?? _id,
@@ -50,12 +52,18 @@ class NewsModel {
         updatedAt: updatedAt ?? _updatedAt,
         detail: detail ?? _detail,
       );
+
   String? get id => _id;
+
   String? get date => _date;
+
   String? get thumbnail => _thumbnail;
+
   String? get createdAt => _createdAt;
+
   String? get updatedAt => _updatedAt;
-  List<Detail>? get detail => _detail;
+
+  List<NewsDetail>? get detail => _detail;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -71,8 +79,8 @@ class NewsModel {
   }
 }
 
-class Detail {
-  Detail({
+class NewsDetail {
+  NewsDetail({
     String? baseId,
     String? lang,
     String? title,
@@ -88,7 +96,7 @@ class Detail {
     _externalLink = externalLink;
   }
 
-  Detail.fromJson(dynamic json) {
+  NewsDetail.fromJson(dynamic json) {
     _baseId = json['baseId'];
     _lang = json['lang'];
     _title = json['title'];
@@ -96,13 +104,15 @@ class Detail {
     _description = json['description'];
     _externalLink = json['externalLink'];
   }
+
   String? _baseId;
   String? _lang;
   String? _title;
   dynamic _intro;
   dynamic _description;
   String? _externalLink;
-  Detail copyWith({
+
+  NewsDetail copyWith({
     String? baseId,
     String? lang,
     String? title,
@@ -110,7 +120,7 @@ class Detail {
     dynamic description,
     String? externalLink,
   }) =>
-      Detail(
+      NewsDetail(
         baseId: baseId ?? _baseId,
         lang: lang ?? _lang,
         title: title ?? _title,
@@ -118,11 +128,17 @@ class Detail {
         description: description ?? _description,
         externalLink: externalLink ?? _externalLink,
       );
+
   String? get baseId => _baseId;
+
   String? get lang => _lang;
+
   String? get title => _title;
+
   dynamic get intro => _intro;
+
   dynamic get description => _description;
+
   String? get externalLink => _externalLink;
 
   Map<String, dynamic> toJson() {
