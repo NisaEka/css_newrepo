@@ -399,7 +399,7 @@ class DashboardController extends BaseController {
                 DateTime.now()
                     .subtract(const Duration(days: 6))
                     .copyWith(hour: 0, minute: 0, second: 0),
-                DateTime.now()
+                DateTime.now(),
               ]
             }
           ],
@@ -799,34 +799,36 @@ class DashboardController extends BaseController {
 
   Future<void> getAggregation() async {
     var date = await storage.readString(StorageCore.lastAgg);
-    AppLogger.d("last date = ${date.isEmpty}");
-    if (date.isNotEmpty) {
-      try {
-        final agg = await aggregation.getAggregationReport(QueryModel(
-          limit: 0,
-          between: [
-            {
-              "mpayWdrGrpPayDatePaid": [
-                // "2024-12-16 00:00:00", "2024-12-16 23:59:59",
-                date
-                    .toDate()
-                    ?.subtract(const Duration(hours: 24))
-                    .toIso8601String(),
-                date.toDate()?.toIso8601String()
-              ]
-            }
-          ],
-          sort: [
-            {"mpayWdrGrpPayDatePaid": "desc"}
-          ],
-        ));
-        state.aggregationModel = agg.data?.first;
-      } catch (e, i) {
-        AppLogger.e("error get aggregation dashboard : $e");
-        AppLogger.e("error get aggregation dashboard : $i");
-      }
+    state.isLoadAggregation = true;
+    update();
+    AppLogger.d("last date : $date");
+    // if (date.isNotEmpty) {
+    try {
+      final agg = await aggregation.getAggregationReport(QueryModel(
+        limit: 0,
+        between: [
+          {
+            "mpayWdrGrpPayDatePaid": [
+              // "2024-12-16 00:00:00", "2024-12-16 23:59:59",
+              date
+                  .toDate(originFormat: "yyyy-MM-dd hh:mm:ss")
+                  ?.subtract(const Duration(hours: 24))
+                  .toIso8601String(),
+              date,
+            ]
+          }
+        ],
+        sort: [
+          {"mpayWdrGrpPayDatePaid": "desc"}
+        ],
+      ));
+      state.aggregationModel = agg.data?.first;
+    } catch (e, i) {
+      AppLogger.e("error get aggregation dashboard : $e");
+      AppLogger.e("error get aggregation dashboard : $i");
     }
-
+    // }
+    state.isLoadAggregation = false;
     update();
   }
 

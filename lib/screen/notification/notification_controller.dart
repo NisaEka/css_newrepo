@@ -110,7 +110,7 @@ class NotificationController extends BaseController {
       Get.to(
         const AggByDocScreen(),
         arguments: {"aggregationID": aggDoc},
-      );
+      )?.then((_) => updateNotificationStatus(value));
     } else {
       Get.to(() => NotificationDetailScreen(data: value))?.then(
         (_) => updateNotificationStatus(value),
