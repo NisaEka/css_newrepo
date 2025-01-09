@@ -29,14 +29,7 @@ class TransactionStatusButton extends StatelessWidget {
                 label: 'Kiriman'.tr,
                 count: c.state.total,
                 selected: c.state.selectedKiriman == 0,
-                onTap: () {
-                  if (c.state.selectedKiriman != 0) {
-                    c.state.selectedKiriman = 0;
-                    c.state.transType = '';
-                    c.update();
-                    c.state.pagingController.refresh();
-                  }
-                },
+                value: 'ALL',
                 isFirst: true,
                 isLast: false,
               ),
@@ -46,14 +39,7 @@ class TransactionStatusButton extends StatelessWidget {
                 label: 'COD'.tr,
                 count: c.state.cod,
                 selected: c.state.selectedKiriman == 1,
-                onTap: () {
-                  if (c.state.selectedKiriman != 1) {
-                    c.state.selectedKiriman = 1;
-                    c.state.transType = 'COD';
-                    c.update();
-                    c.state.pagingController.refresh();
-                  }
-                },
+                value: 'COD',
                 isFirst: false,
                 isLast: false,
               ),
@@ -63,14 +49,7 @@ class TransactionStatusButton extends StatelessWidget {
                 label: 'NON COD'.tr,
                 count: c.state.noncod,
                 selected: c.state.selectedKiriman == 2,
-                onTap: () {
-                  if (c.state.selectedKiriman != 2) {
-                    c.state.selectedKiriman = 2;
-                    c.state.transType = 'NON COD';
-                    c.update();
-                    c.state.pagingController.refresh();
-                  }
-                },
+                value: 'NON COD',
                 isFirst: false,
                 isLast: false,
               ),
@@ -80,14 +59,7 @@ class TransactionStatusButton extends StatelessWidget {
                 label: 'COD ONGKIR'.tr,
                 count: c.state.codOngkir,
                 selected: c.state.selectedKiriman == 3,
-                onTap: () {
-                  if (c.state.selectedKiriman != 3) {
-                    c.state.selectedKiriman = 3;
-                    c.state.transType = 'COD ONGKIR';
-                    c.update();
-                    c.state.pagingController.refresh();
-                  }
-                },
+                value: 'COD ONGKIR',
                 isFirst: false,
                 isLast: true,
               ),
@@ -104,13 +76,30 @@ class TransactionStatusButton extends StatelessWidget {
     required String label,
     required int count,
     required bool selected,
-    required VoidCallback onTap,
+    // VoidCallback? onTap,
     required bool isFirst,
     required bool isLast,
+    String? value,
   }) {
     return Expanded(
       child: GestureDetector(
-        onTap: onTap,
+        onTap: () {
+          if (value == 'COD ONGKIR') {
+            controller.state.selectedKiriman = 3;
+            controller.state.transType = 'COD ONGKIR';
+          } else if (value == 'NON COD') {
+            controller.state.selectedKiriman = 2;
+            controller.state.transType = 'NON COD';
+          } else if (value == 'COD') {
+            controller.state.selectedKiriman = 1;
+            controller.state.transType = 'COD';
+          } else if (value == 'ALL') {
+            controller.state.selectedKiriman = 0;
+            controller.state.transType = '';
+          }
+          controller.update();
+          controller.state.pagingController.refresh();
+        },
         child: Container(
           height: 45,
           alignment: Alignment.center,
