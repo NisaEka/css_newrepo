@@ -103,6 +103,7 @@ class NotificationController extends BaseController {
       } catch (e) {
         AppLogger.e('error get ticket message : $e');
       }
+    } else if (value.title?.split(' - ').last == "AGGREGASI PEMBAYARAN") {
     } else {
       Get.to(() => NotificationDetailScreen(data: value))?.then(
         (_) => updateNotificationStatus(value),

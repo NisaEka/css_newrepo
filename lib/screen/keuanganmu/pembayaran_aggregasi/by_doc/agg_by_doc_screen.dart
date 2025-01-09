@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_cnote/agg_by_cnote_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_doc/agg_by_doc_controller.dart';
@@ -12,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import '../../../../const/textstyle.dart';
 
 class AggByDocScreen extends StatelessWidget {
   const AggByDocScreen({super.key});
@@ -44,10 +44,10 @@ class AggByDocScreen extends StatelessWidget {
           // ),
           Text(
             c.aggregationID,
-            style: Theme.of(context)
-                .textTheme
-                .headlineLarge!
-                .copyWith(color: primaryColor(context), fontWeight: bold),
+            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  color: primaryColor(context),
+                  fontWeight: bold,
+                ),
           ),
           Text(
             "Document No".tr,

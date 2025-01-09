@@ -2,6 +2,8 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
+import 'package:css_mobile/screen/keuanganmu/minus/detail/doc/aggregation_minus_doc_screen.dart';
+import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_doc/agg_by_doc_screen.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -93,6 +95,13 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                           screenWidth < 400 ? 10 : 12,
                                       value2fontSize: 14,
                                       isSuccess: true,
+                                      onTap: () => Get.to(
+                                        const AggByDocScreen(),
+                                        arguments: {
+                                          "aggregationID": aggregationPembayaran
+                                              ?.mpayWdrGrpPayNo,
+                                        },
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -127,6 +136,12 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                       lineColor: errorLightColor3,
                                       value1fontSize: 12,
                                       value2fontSize: 14,
+                                      onTap: () => Get.to(
+                                        const AggregationMinusDocScreen(),
+                                        arguments: {
+                                          "doc": aggregationMinus?.aggMinDoc,
+                                        },
+                                      ),
                                     ),
                                   ],
                                 ),
