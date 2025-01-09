@@ -75,8 +75,7 @@ class PromoItem extends StatelessWidget {
                   right: 0,
                   child: Container(
                     padding: const EdgeInsets.all(8),
-                    color:
-                        Colors.black.withOpacity(0.6), // Background transparan
+                    color: Colors.black.withOpacity(0.6),
                     child: Text(
                       lang == "id"
                           ? news?.detail

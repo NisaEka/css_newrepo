@@ -37,7 +37,6 @@ class FilterButton extends StatelessWidget {
           Get.bottomSheet(
             enableDrag: true,
             isDismissible: false,
-            // isScrollControlled: true,
             StatefulBuilder(
                 builder: (BuildContext context, StateSetter setState) {
               return Container(
@@ -68,7 +67,6 @@ class FilterButton extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // const Divider(color: greyColor),
                     const SizedBox(height: 10),
                     filterContent,
                     Row(

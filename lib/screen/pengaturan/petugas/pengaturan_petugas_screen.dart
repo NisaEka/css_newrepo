@@ -67,7 +67,6 @@ class PengaturanPetugasScreen extends StatelessWidget {
                 builderDelegate: PagedChildBuilderDelegate<PetugasModel>(
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => PetugasListItem(
-                    // isLoading: true,
                     index: index,
                     icon: Icon(
                       Icons.shield_outlined,

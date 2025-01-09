@@ -8,7 +8,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
-  // final Widget? title;
   final Widget? leading;
   final List<Widget>? action;
   final Size? height;
@@ -21,7 +20,6 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
 
   const CustomTopBar({
     Key? key,
-    // this.title,
     this.leading,
     this.action,
     this.height,

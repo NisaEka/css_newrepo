@@ -27,7 +27,6 @@ class UangCODController extends BaseController {
             "${startDate?.millisecondsSinceEpoch ?? ''}-${endDate?.millisecondsSinceEpoch ?? ''}";
       }
       update();
-      // pagingController.refresh();
       update();
       Get.back();
     }

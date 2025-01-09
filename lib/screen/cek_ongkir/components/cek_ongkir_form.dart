@@ -141,7 +141,6 @@ class CekOngkirForm extends StatelessWidget {
                           FilteringTextInputFormatter.digitsOnly,
                           ThousandsSeparatorInputFormatter(),
                         ],
-                        // onChanged: (value) => controller.hitungAsuransi(),
                       )
                     : const SizedBox(),
               ],

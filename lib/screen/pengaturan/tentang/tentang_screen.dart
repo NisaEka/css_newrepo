@@ -77,7 +77,6 @@ class TentangScreen extends StatelessWidget {
                       suffixIcon: Icons.info_rounded,
                       width: Get.width / 1,
                     ),
-                    // const SizedBox(height: 100)
                   ],
                 ),
               ),

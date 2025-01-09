@@ -33,7 +33,6 @@ class DefaultAlertDialog extends StatelessWidget {
           ? whiteColor
           : bgDarkColor,
       title: Column(
-        // mainAxisSize: MainAxisSize.max,
         children: [
           Image.asset(
             ImageConstant.logoCSS,
@@ -48,10 +47,6 @@ class DefaultAlertDialog extends StatelessWidget {
                 .textTheme
                 .titleLarge
                 ?.copyWith(fontWeight: regular, fontSize: 16),
-            // style: TextStyle(
-            //     color: AppConst.isLightTheme(context)
-            //         ? greyDarkColor2
-            //         : greyLightColor2)),
           ),
           icon ?? const SizedBox(),
         ],
@@ -86,27 +81,6 @@ class DefaultAlertDialog extends StatelessWidget {
             ),
           ],
         ),
-        // TextButton(
-        //     style: TextButton.styleFrom(
-        //       textStyle: Theme.of(context).textTheme.labelLarge,
-        //     ),
-        //     onPressed: onBack ?? () => Get.back(),
-        //     child: Text(
-        //       'Tidak'.tr,
-        //       style: TextStyle(
-        //           color: AppConst.isLightTheme(context) ? blueJNE : infoColor),
-        //     )),
-        // TextButton(
-        //   style: TextButton.styleFrom(
-        //     textStyle: Theme.of(context).textTheme.labelLarge,
-        //   ),
-        //   onPressed: onLogout,
-        //   child: Text(
-        //     'Keluar'.tr,
-        //     style: TextStyle(
-        //         color: AppConst.isLightTheme(context) ? blueJNE : infoColor),
-        //   ),
-        // ),
       ],
     );
   }

@@ -46,16 +46,6 @@ class AggregationMinusDocScreen extends StatelessWidget {
     );
   }
 
-  // Widget _topBox(String docId) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
-  //     child: AggregationMinusBox(
-  //       title: "Document No".tr,
-  //       value: docId,
-  //     ),
-  //   );
-  // }
-
   Widget _topBox(String docId, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16),

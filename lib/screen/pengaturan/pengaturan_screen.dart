@@ -85,41 +85,6 @@ class PengaturanScreen extends StatelessWidget {
                   ],
                 ),
               )),
-          // c.allow.label == "Y" || c.allow.pengaturanLabel == "Y"
-          //     ? SettingListItem(
-          //         title: 'Pengaturan Label'.tr,
-          //         leading: Icons.label_outline,
-          //         onTap: () => c.isLogin
-          //             ? Get.to(const PengaturanLabelScreen())
-          //             : showDialog(
-          //                 context: context,
-          //                 builder: (context) => const LoginAlertDialog(),
-          //               ),
-          //       )
-          //     : const SizedBox(),
-          // c.allow.petugas == "Y" || c.allow.pengaturanPetugas == "Y"
-          //     ? SettingListItem(
-          //         title: 'Pengaturan Petugas'.tr,
-          //         leading: Icons.account_circle,
-          //         onTap: () => c.isLogin
-          //             ? Get.to(const PengaturanPetugasScreen())
-          //             : showDialog(
-          //                 context: context,
-          //                 builder: (context) => const LoginAlertDialog(),
-          //               ),
-          //       )
-          //     : const SizedBox(),
-          // c.isLogin && c.allow.katasandi == "Y"
-          //     ? SettingListItem(
-          //         title: 'Ubah Kata Sandi'.tr,
-          //         leading: Icons.lock_open_outlined,
-          //         // onTap: () => Get.to(const InputEmailScreen(), arguments: {
-          //         //   'isChange': true,
-          //         //   'email': controller.basicProfil?.email,
-          //         // }),
-          //         onTap: () => c.sendEmail(),
-          //       )
-          //     : const SizedBox(),
           SettingListItem(
               title: 'Tema Aplikasi'.tr,
               leading: Icons.color_lens_rounded,

@@ -17,7 +17,6 @@ class HubungiAkuDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Get.width,
-      // padding: const EdgeInsets.symmetric(horizontal: 50),
       decoration: BoxDecoration(
         color: Theme.of(context).dialogBackgroundColor,
         borderRadius: const BorderRadius.only(

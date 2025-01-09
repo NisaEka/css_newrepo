@@ -109,7 +109,7 @@ class SafetyTipsDialog extends StatelessWidget {
           padding: const EdgeInsets.only(top: 3.0),
           child: Icon(icon, size: 17, color: primaryColor(context)),
         ),
-        const SizedBox(width: 20), // Space between bullet and text
+        const SizedBox(width: 20),
         Expanded(
           child: Text(
             text,

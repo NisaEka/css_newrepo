@@ -33,6 +33,7 @@ class PantauPaketmuListModel {
     String? orderId,
     String? awbType,
     String? statusawb,
+    String? type,
   }) {
     _awbNo = awbNo;
     _awbDate = awbDate;
@@ -67,6 +68,7 @@ class PantauPaketmuListModel {
     _orderId = orderId;
     _awbType = awbType;
     _statusawb = statusawb;
+    _type = type;
   }
 
   PantauPaketmuListModel.fromJson(dynamic json) {
@@ -103,6 +105,7 @@ class PantauPaketmuListModel {
     _orderId = json['orderId'];
     _awbType = json['awbType'];
     _statusawb = json['statusawb'];
+    _type = json['type'];
   }
   String? _awbNo;
   String? _awbDate;
@@ -137,6 +140,7 @@ class PantauPaketmuListModel {
   String? _orderId;
   String? _awbType;
   String? _statusawb;
+  String? _type;
   PantauPaketmuListModel copyWith({
     String? awbNo,
     String? awbDate,
@@ -171,6 +175,7 @@ class PantauPaketmuListModel {
     String? orderId,
     String? awbType,
     String? statusawb,
+    String? type,
   }) =>
       PantauPaketmuListModel(
         awbNo: awbNo ?? _awbNo,
@@ -207,6 +212,7 @@ class PantauPaketmuListModel {
         orderId: orderId ?? _orderId,
         awbType: awbType ?? _awbType,
         statusawb: statusawb ?? _statusawb,
+        type: type ?? _type,
       );
   String? get awbNo => _awbNo;
   String? get awbDate => _awbDate;
@@ -241,6 +247,7 @@ class PantauPaketmuListModel {
   String? get orderId => _orderId;
   String? get awbType => _awbType;
   String? get statusawb => _statusawb;
+  String? get type => _type;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -277,6 +284,7 @@ class PantauPaketmuListModel {
     map['orderId'] = _orderId;
     map['awbType'] = _awbType;
     map['statusawb'] = _statusawb;
+    map['type'] = _type;
     return map;
   }
 }

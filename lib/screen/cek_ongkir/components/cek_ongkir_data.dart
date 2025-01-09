@@ -24,8 +24,7 @@ class CekOngkirData extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(
-                        right: 20), // Margin between the two text widgets
+                    margin: const EdgeInsets.only(right: 20),
                     child: Text(
                       'Berat Express'.tr,
                       style: Theme.of(context).textTheme.titleSmall,
@@ -52,8 +51,7 @@ class CekOngkirData extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(
-                        right: 20), // Margin between the two text widgets
+                    margin: const EdgeInsets.only(right: 20),
                     child: Text(
                       'Berat JTR'.tr,
                       style: Theme.of(context).textTheme.titleSmall,

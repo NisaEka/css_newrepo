@@ -14,7 +14,6 @@ class EclaimController extends BaseController {
     state.pagingController.addPageRequestListener((pageKey) {
       getEclaim(pageKey);
     });
-    // categoryList();
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
@@ -42,21 +41,8 @@ class EclaimController extends BaseController {
   }
 
   Future<void> initData() async {
-    // transactionList = [];
     state.selectedStatusClaim = '';
   }
-
-  // Future<void> initData() async {
-  //   state.selectedStatusClaim = "Total";
-  //   state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
-  //   state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-  //   state.transDate = [
-  //     {
-  //       "createDate": ["${state.startDate}", "${state.endDate}"]
-  //     }
-  //   ];
-  //   await eclaimCount();
-  // }
 
   Future<void> getEclaim(int page) async {
     state.isLoading = true;
@@ -72,11 +58,9 @@ class EclaimController extends BaseController {
           (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
         state.pagingController.appendPage(trans.data ?? [], nextPageKey);
-        // transactionList.addAll(state.pagingController.itemList ?? []);
       }
     } catch (e) {
       AppLogger.e('error getEclaim $e');
@@ -88,11 +72,8 @@ class EclaimController extends BaseController {
   }
 
   void resetFilter() {
-    // state.startDate = null;
-    // state.endDate = null;
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-    // state.isFiltered = false;
     state.searchField.clear();
     state.transDate = [];
     state.dateFilter = '0';
@@ -109,10 +90,6 @@ class EclaimController extends BaseController {
   }
 
   applyFilter() {
-    // if (state.startDate != null ||
-    //     state.endDate != null ||
-    //     state.selectedPetugasEntry != null ||
-    //     state.selectedStatusKiriman != null) {
     state.isFiltered = true;
     if (state.startDate != null && state.endDate != null) {
       state.transDate = [
@@ -120,17 +97,9 @@ class EclaimController extends BaseController {
           "createDate": ["${state.startDate}", "${state.endDate}"]
         }
       ];
-      // "${state.startDate?.millisecondsSinceEpoch ?? ''}-${state.endDate?.millisecondsSinceEpoch ?? ''}";
     }
     update();
     state.pagingController.refresh();
     eclaimCount();
-    // update();
-    // if (state.dateFilter == '0') {
-    //   resetFilter();
-    // }
-    // } else {
-    //   resetFilter();
-    // }
   }
 }

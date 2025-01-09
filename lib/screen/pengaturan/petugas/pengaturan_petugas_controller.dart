@@ -50,11 +50,9 @@ class PengaturanPetugasController extends BaseController {
           (officer.meta?.currentPage ?? 0) == (officer.meta?.lastPage ?? 0);
       if (isLastPage) {
         pagingController.appendLastPage(officer.data ?? []);
-        // transactionList.addAll(pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
         pagingController.appendPage(officer.data ?? [], nextPageKey);
-        // transactionList.addAll(pagingController.itemList ?? []);
       }
     } catch (e) {
       AppLogger.e('error getOfficerList $e');

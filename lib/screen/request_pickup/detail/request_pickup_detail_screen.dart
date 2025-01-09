@@ -30,15 +30,6 @@ class RequestPickupDetailScreen extends StatelessWidget {
 
   Widget _detailBody(
       BuildContext context, RequestPickupDetailController controller) {
-    // if (controller.showLoadingIndicator) {
-    //   return Container(
-    //     alignment: Alignment.center,
-    //     child: CircularProgressIndicator(
-    //       color: Theme.of(context).colorScheme.primary,
-    //     ),
-    //   );
-    // }
-
     if (controller.showEmptyContainer) {
       return const Center(child: Text("Not Found"));
     }
@@ -84,14 +75,12 @@ class RequestPickupDetailScreen extends StatelessWidget {
             BarcodeWidget(
               barcode: Barcode.code128(
                 useCode128A: true,
-                // escapes: true,
               ),
               color: CustomTheme().textColor(context) ?? greyColor,
               data: requestPickup.awb,
               drawText: false,
               style: const TextStyle(fontSize: 20),
               height: 100,
-              // width: Get.width ,
             ),
             CustomCodeLabel(
               label: requestPickup.awb,
@@ -104,8 +93,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
               child: Container(
                 color: c.isLoading ? greyColor : Colors.transparent,
                 alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.only(
-                    right: 20), // Margin between the two text widgets
+                margin: const EdgeInsets.only(right: 20),
                 child: Text(
                   'Detail Permintaan Pickup'.tr,
                   style: listTitleTextStyle.copyWith(
@@ -153,8 +141,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
               child: Container(
                 color: c.isLoading ? greyColor : Colors.transparent,
                 alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.only(
-                    right: 20), // Margin between the two text widgets
+                margin: const EdgeInsets.only(right: 20),
                 child: Text(
                   'Status Permintaan Pickup'.tr,
                   style: listTitleTextStyle.copyWith(
@@ -186,8 +173,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
               child: Container(
                 color: c.isLoading ? greyColor : Colors.transparent,
                 alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.only(
-                    right: 20), // Margin between the two text widgets
+                margin: const EdgeInsets.only(right: 20),
                 child: Text(
                   'Detail Kiriman'.tr,
                   style: listTitleTextStyle.copyWith(
@@ -240,11 +226,10 @@ class RequestPickupDetailScreen extends StatelessWidget {
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start, // Spread the columns
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          // Ensures that the title takes up only as much space as it needs
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
@@ -263,7 +248,6 @@ class RequestPickupDetailScreen extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Expanded(
-          // Makes the value take the rest of the space in the row
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
@@ -277,7 +261,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
                         .textTheme
                         .titleMedium
                         ?.copyWith(fontWeight: regular),
-                textAlign: TextAlign.start, // Align the value to the right
+                textAlign: TextAlign.start,
               ),
             ),
           ),

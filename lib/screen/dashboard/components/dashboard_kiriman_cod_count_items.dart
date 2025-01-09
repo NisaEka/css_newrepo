@@ -116,6 +116,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                               valueBgColor: errorColor,
                               fontSize: 5,
                             ),
+                            sizedBox: 8,
                             countValue: "Rp.\n",
                             count: transSummary?.summary
                                     ?.where(

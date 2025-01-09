@@ -10,8 +10,6 @@ import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:css_mobile/screen/request_pickup/address/location/request_pickup_location_screen.dart';
-// import 'package:geocoding/geocoding.dart';
 
 class RequestPickupAddressUpsertScreen extends StatelessWidget {
   const RequestPickupAddressUpsertScreen({super.key});
@@ -61,21 +59,6 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
       BuildContext context, RequestPickupAddressUpsertController controller) {
     return Column(
       children: [
-        // GestureDetector(
-        //   behavior: HitTestBehavior.translucent,
-        //   onTap: () async {
-        //     Placemark? selectedPlaceMark =
-        //         await Get.to(() => const RequestPickupLocationScreen());
-        //     controller.onSelectedPlaceMark(selectedPlaceMark);
-        //   },
-        //   child: const Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: [
-        //       Text("Pilih berdasarkan lokasi"),
-        //       Icon(Icons.keyboard_arrow_right)
-        //     ],
-        //   ),
-        // ),
         const SizedBox(height: 16),
         CustomTextFormField(
           controller: controller.name,
@@ -90,7 +73,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           inputType: TextInputType.phone,
         ),
         Align(
-          alignment: Alignment.centerLeft, // Aligns the text to the left
+          alignment: Alignment.centerLeft,
           child: RichText(
             text: TextSpan(
               text: "Kota Penjemputan".tr,
@@ -99,7 +82,6 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           ),
         ),
         CustomSearchDropdownField<Destination>(
-          // label: "Kota Penjemputan".tr,
           asyncItems: (String filter) => controller.getDestinationList(filter),
           itemBuilder: (context, e, b) {
             return GestureDetector(

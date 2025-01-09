@@ -74,11 +74,6 @@ class PembayaranAggergasiScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // PaymentBox(
-          //   isLoading: c.aggTotal == null,
-          //   title: "Total nilai yang sudah dibayarkan".tr,
-          //   value: "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
-          // ),
           Text(
             "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
             style: Theme.of(context)

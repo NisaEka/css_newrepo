@@ -31,12 +31,6 @@ class _VersionAppState extends State<VersionApp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: Get.width / 2,
-      // padding: const EdgeInsets.all(15),
-      // // color: Colors.green,
-      // height: 60,
-      // child: Stack(
-      //   fit: StackFit.passthrough,
       width: Get.width,
       alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 50, bottom: 10),
@@ -50,12 +44,7 @@ class _VersionAppState extends State<VersionApp> {
             height: 30,
             color: CustomTheme().logoColor(context),
           ),
-          // SizedBox(width: 10),
-          // Positioned(
           SizedBox(
-            // left: Get.width / 5,
-            // bottom: 0,
-            // top: 0,
             child: Text('v $version'),
           )
         ],

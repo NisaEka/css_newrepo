@@ -26,7 +26,6 @@ class EditProfileController extends BaseController {
   bool isCcrf = false;
   bool isLoadOrigin = false;
 
-  // GetDestinationModel? destinationModel;
   Destination? selectedCity;
   OriginModel? selectedOrigin;
   UserModel? basicProfil;
@@ -105,16 +104,12 @@ class EditProfileController extends BaseController {
 
   Future<List<Destination>> getDestinationList(String keyword) async {
     isLoading = true;
-    try {
-      // var response = await master.getdes(keyword);
-      // destinationModel = response;
-    } catch (e, i) {
+    try {} catch (e, i) {
       AppLogger.e('error getDestinationList $e, $i');
     }
 
     isLoading = false;
     update();
-    // return destinationModel?.payload?.toList() ?? [];
     return [];
   }
 
@@ -133,7 +128,6 @@ class EditProfileController extends BaseController {
     isLoadOrigin = false;
     update();
     return models ?? [];
-    // return [];
   }
 
   Future<void> updateBasic() async {

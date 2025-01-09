@@ -95,7 +95,6 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
                               child: CircularProgressIndicator.adaptive(),
                             )
                           : GoogleMap(
-                              // onMapCreated: _onMapCreated,
                               onMapCreated: (controller) =>
                                   googleMapController?.complete(controller),
                               zoomControlsEnabled: false,

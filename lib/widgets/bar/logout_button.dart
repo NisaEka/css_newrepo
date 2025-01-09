@@ -26,7 +26,6 @@ class LogoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 50),
-      // height: showBottomBar ? 113 : null,
       decoration: showBottomBar
           ? BoxDecoration(
               color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
@@ -35,7 +34,6 @@ class LogoutButton extends StatelessWidget {
                     color: AppConst.isLightTheme(context)
                         ? greyColor
                         : Colors.white),
-                // top: BorderSide(color: AppConst.isLightTheme(context) ? Colors.black : Colors.white),
               ),
             )
           : null,
@@ -75,7 +73,6 @@ class LogoutButton extends StatelessWidget {
             ),
             contentPadding: showBottomBar ? EdgeInsets.zero : null,
           ),
-          // showBottomBar ? const BottomBar4(menu: 3) : const SizedBox()
         ],
       ),
     );

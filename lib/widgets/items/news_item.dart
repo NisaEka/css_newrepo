@@ -7,7 +7,6 @@ import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:photo_view/photo_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsItem extends StatelessWidget {
@@ -124,38 +123,4 @@ class NewsItem extends StatelessWidget {
       await launchUrl(Uri.parse(url));
     } else {}
   }
-
-  // void _showImagePreview(BuildContext context, String imageUrl) {
-  //   if (imageUrl.isNotEmpty) {
-  //     Navigator.of(context).push(
-  //       MaterialPageRoute(
-  //         builder: (_) => Scaffold(
-  //           backgroundColor: Colors.black,
-  //           appBar: AppBar(
-  //             backgroundColor: Colors.black,
-  //             elevation: 0,
-  //             automaticallyImplyLeading: false,
-  //             actions: [
-  //               IconButton(
-  //                 icon: const Icon(Icons.close, color: whiteColor),
-  //                 onPressed: () => Navigator.of(context).pop(),
-  //               ),
-  //             ],
-  //           ),
-  //           body: Center(
-  //             child: PhotoView(
-  //               imageProvider: CachedNetworkImageProvider(imageUrl),
-  //               backgroundDecoration: const BoxDecoration(
-  //                 color: Colors.black,
-  //               ),
-  //               minScale: PhotoViewComputedScale.contained,
-  //               maxScale: PhotoViewComputedScale.covered * 3.0,
-  //               initialScale: PhotoViewComputedScale.contained,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     );
-  //   }
-  // }
 }

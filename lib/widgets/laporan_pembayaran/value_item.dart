@@ -43,7 +43,6 @@ class ValueItem extends StatelessWidget {
         ),
         Container(
           alignment: Alignment.centerRight,
-          // width: width ?? Get.width / 2,
           child: Text(
             value ?? '',
             style: valueTextStyle ??

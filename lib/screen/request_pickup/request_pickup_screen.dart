@@ -25,9 +25,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-// import 'package:css_mobile/data/model/request_pickup/request_pickup_date_enum.dart';
-// import 'package:css_mobile/screen/request_pickup/request_pickup_filter_item.dart';
-// import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 
 class RequestPickupScreen extends StatelessWidget {
   const RequestPickupScreen({super.key});
@@ -81,7 +78,20 @@ class RequestPickupScreen extends StatelessWidget {
             ),
             FilledButton(
               onPressed: () {
-                _pickupAddressBottomSheet(controller);
+                controller.state.selectedAwbs.isEmpty
+                    ? Get.showSnackbar(
+                        GetSnackBar(
+                          icon: const Icon(
+                            Icons.warning,
+                            color: whiteColor,
+                          ),
+                          message: 'Pilih kiriman terlebih dahulu'.tr,
+                          isDismissible: true,
+                          duration: const Duration(seconds: 3),
+                          backgroundColor: errorColor,
+                        ),
+                      )
+                    : _pickupAddressBottomSheet(controller);
               },
               style: FilledButtonTheme.of(context).style?.copyWith(
                   backgroundColor:
@@ -101,10 +111,6 @@ class RequestPickupScreen extends StatelessWidget {
 
   Widget _requestPickupBody(
       BuildContext context, RequestPickupController controller) {
-    // if (controller.state.showLoadingIndicator) {
-    //   return const Center(child: CircularProgressIndicator());
-    // }
-
     if (controller.state.showEmptyContent) {
       return const Center(child: DataEmpty());
     }
@@ -150,11 +156,6 @@ class RequestPickupScreen extends StatelessWidget {
             onBack: Get.back,
             onConfirm: () => controller.refreshState(),
           ),
-        // if (controller.createDataSuccess)
-        //   MessageInfoDialog(
-        //     message: 'Pickup request created successfully!',
-        //     onClickAction: () => controller.refreshState(),
-        //   ),
       ],
     );
   }
@@ -234,7 +235,6 @@ class RequestPickupScreen extends StatelessWidget {
                         onLongTap: () {},
                         checkMode: false,
                         onTap: (awb) => {},
-                        // onTap: () => Get.to(const DetailLaporankuScreen()),
                       ),
                     ),
                   ),
@@ -299,303 +299,6 @@ class RequestPickupScreen extends StatelessWidget {
     }
   }
 
-  // Widget _buttonFilters(
-  //     BuildContext context, RequestPickupController controller) {
-  //   return SizedBox(
-  //     height: 64,
-  //     child: SingleChildScrollView(
-  //       scrollDirection: Axis.horizontal,
-  //       child: Row(
-  //         children: [
-  //           const SizedBox(width: 16),
-  //           _buttonFilter(
-  //               context, controller.state.filterDateText.tr, Constant.allDate,
-  //               () {
-  //             _filterDateBottomSheet(controller);
-  //           }),
-  //           const SizedBox(width: 16),
-  //           _buttonFilter(context, controller.state.filterStatusText.tr,
-  //               Constant.allStatus, () {
-  //             _filterStatusBottomSheet(controller);
-  //           }),
-  //           const SizedBox(width: 16),
-  //           _buttonFilter(context, controller.state.filterDeliveryTypeText.tr,
-  //               Constant.allDeliveryType, () {
-  //             _filterDeliveryTypeBottomSheet(controller);
-  //           }),
-  //           const SizedBox(width: 16),
-  //           _buttonFilter(context, controller.state.filterDeliveryCityText.tr,
-  //               Constant.allDeliveryCity, () {
-  //             _filterDeliveryCityBottomSheet(controller);
-  //           }),
-  //           const SizedBox(width: 16),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // Widget _buttonFilter(BuildContext context, String text, String defaultFilter,
-  //     Function onPressed) {
-  //   return OutlinedButton(
-  //     onPressed: () {
-  //       onPressed();
-  //     },
-  //     style: OutlinedButton.styleFrom(
-  //       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-  //       side: const BorderSide(width: 1, color: greyColor),
-  //       backgroundColor: text == defaultFilter ? whiteColor : blueJNE,
-  //     ),
-  //     child: Row(
-  //       children: [
-  //         Text(text.tr,
-  //             style: Theme.of(context)
-  //                 .textTheme
-  //                 .labelMedium
-  //                 ?.copyWith(color: text == defaultFilter ? null : whiteColor)),
-  //         const SizedBox(width: 8),
-  //         Icon(
-  //           Icons.keyboard_arrow_down,
-  //           size: 24,
-  //           color: Theme.of(context).colorScheme.outline,
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // _filterDateBottomSheet(RequestPickupController controller) {
-  //   const items = RequestPickupDateEnum.values;
-
-  //   Get.bottomSheet(
-  //     enableDrag: true,
-  //     isDismissible: true,
-  //     StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-  //       return RequestPickupBottomSheetScaffold(
-  //         title: "Pilih Tanggal".tr,
-  //         content: Column(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: [
-  //             SizedBox(
-  //               height: (Get.height / 2) / 1.5,
-  //               child: ListView.separated(
-  //                 separatorBuilder: (BuildContext context, int index) {
-  //                   if (index <= items.length) {
-  //                     return const SizedBox(
-  //                       height: 16,
-  //                     );
-  //                   } else {
-  //                     return Container();
-  //                   }
-  //                 },
-  //                 padding: const EdgeInsets.all(16),
-  //                 itemCount: items.length,
-  //                 itemBuilder: (context, index) {
-  //                   bool isSelected =
-  //                       controller.state.selectedFilterDate == items[index];
-  //                   bool isCustom = controller.state.selectedFilterDate ==
-  //                       RequestPickupDateEnum.custom;
-  //                   bool showDatePickerContent = isCustom && isSelected;
-
-  //                   return RequestPickupFilterItem(
-  //                     onItemSelected: () {
-  //                       setState(() =>
-  //                           controller.setSelectedFilterDate(items[index]));
-  //                     },
-  //                     itemName: items[index].asName(),
-  //                     isSelected: isSelected,
-  //                     requireDatePicker: showDatePickerContent,
-  //                     startDate: controller.state.selectedDateStartText,
-  //                     endDate: controller.state.selectedDateEndText,
-  //                     onStartDateChange: (newDateTime) {
-  //                       setState(
-  //                           () => controller.setSelectedDateStart(newDateTime));
-  //                     },
-  //                     onEndDateChange: (newDateTime) {
-  //                       setState(
-  //                           () => controller.setSelectedDateEnd(newDateTime));
-  //                     },
-  //                   );
-  //                 },
-  //               ),
-  //             ),
-  //             SizedBox(
-  //                 width: Get.width,
-  //                 child: Padding(
-  //                   padding: const EdgeInsets.symmetric(
-  //                     horizontal: 16,
-  //                   ),
-  //                   child: FilledButton(
-  //                     onPressed: () {
-  //                       controller.applyFilterDate();
-  //                       Get.back();
-  //                     },
-  //                     child: Text(
-  //                       "Terapkan".tr,
-  //                       style: const TextStyle(color: whiteColor),
-  //                     ),
-  //                   ),
-  //                 ))
-  //           ],
-  //         ),
-  //       );
-  //     }),
-  //   );
-  // }
-
-  // _filterStatusBottomSheet(RequestPickupController controller) {
-  //   List<String> items = controller.state.statuses;
-
-  //   _requestPickupBottomSheetScaffold(
-  //     "Pilih Status".tr,
-  //     Expanded(
-  //       child: ListView.separated(
-  //         separatorBuilder: (BuildContext context, int index) {
-  //           if (index <= items.length) {
-  //             return const SizedBox(
-  //               height: 16,
-  //             );
-  //           } else {
-  //             return Container();
-  //           }
-  //         },
-  //         padding: const EdgeInsets.all(16),
-  //         itemCount: items.length,
-  //         itemBuilder: (context, index) {
-  //           bool isSelected = controller.state.filterStatusText == items[index];
-  //           return GestureDetector(
-  //             onTap: () {
-  //               controller.setSelectedFilterStatus(items[index]);
-  //               Get.back();
-  //             },
-  //             child: Expanded(
-  //               child: Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                 children: [
-  //                   Text(items[index].tr),
-  //                   Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-  //                 ],
-  //               ),
-  //             ),
-  //           );
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // _filterDeliveryTypeBottomSheet(RequestPickupController controller) {
-  //   List<String> items = controller.state.types;
-
-  //   _requestPickupBottomSheetScaffold(
-  //     "Pilih Tipe Kiriman".tr,
-  //     Expanded(
-  //       child: ListView.separated(
-  //         separatorBuilder: (BuildContext context, int index) {
-  //           if (index <= items.length) {
-  //             return const SizedBox(
-  //               height: 16,
-  //             );
-  //           } else {
-  //             return Container();
-  //           }
-  //         },
-  //         padding: const EdgeInsets.all(16),
-  //         itemCount: items.length,
-  //         itemBuilder: (context, index) {
-  //           bool isSelected =
-  //               controller.state.filterDeliveryTypeText == items[index];
-  //           return GestureDetector(
-  //             onTap: () {
-  //               controller.setSelectedDeliveryType(items[index]);
-  //               Get.back();
-  //             },
-  //             child: Expanded(
-  //               child: Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                 children: [
-  //                   Text(items[index].tr),
-  //                   Icon(isSelected ? Icons.circle : Icons.circle_outlined)
-  //                 ],
-  //               ),
-  //             ),
-  //           );
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // _filterDeliveryCityBottomSheet(RequestPickupController controller) {
-  //   List<Map<String, dynamic>> items = controller.state.cities;
-
-  //   Get.bottomSheet(
-  //     enableDrag: true,
-  //     isDismissible: true,
-  //     StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-  //       return RequestPickupBottomSheetScaffold(
-  //         title: "Pilih Kota Pengiriman",
-  //         content: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             Padding(
-  //               padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-  //               child: CustomTextFormField(
-  //                 controller: controller.state.cityKeyword,
-  //                 label: 'Nama Kota'.tr,
-  //                 hintText: 'Masukkan nama kota',
-  //                 inputType: TextInputType.streetAddress,
-  //                 onChanged: (newText) =>
-  //                     setState(() => controller.onCityKeywordChange(newText)),
-  //               ),
-  //             ),
-  //             const SizedBox(
-  //               height: 16,
-  //             ),
-  //             Expanded(
-  //               child: ListView.separated(
-  //                 shrinkWrap: true,
-  //                 separatorBuilder: (BuildContext context, int index) {
-  //                   if (index <= items.length) {
-  //                     return const SizedBox(
-  //                       height: 16,
-  //                     );
-  //                   } else {
-  //                     return Container();
-  //                   }
-  //                 },
-  //                 padding: const EdgeInsets.all(16),
-  //                 itemCount: items.length,
-  //                 itemBuilder: (context, index) {
-  //                   bool isSelected = controller.state.filterDeliveryCityText ==
-  //                       items[index]['label'];
-  //                   return GestureDetector(
-  //                     onTap: () {
-  //                       controller.setSelectedFilterCity(items[index]);
-  //                       Get.back();
-  //                     },
-  //                     child: Expanded(
-  //                       child: Row(
-  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                         children: [
-  //                           Text(items[index]['label']),
-  //                           Icon(isSelected
-  //                               ? Icons.circle
-  //                               : Icons.circle_outlined)
-  //                         ],
-  //                       ),
-  //                     ),
-  //                   );
-  //                 },
-  //               ),
-  //             )
-  //           ],
-  //         ),
-  //       );
-  //     }),
-  //   );
-  // }
-
   _pickupAddressBottomSheet(RequestPickupController controller) {
     Get.bottomSheet(
       enableDrag: true,
@@ -642,14 +345,4 @@ class RequestPickupScreen extends StatelessWidget {
       }),
     );
   }
-
-  // _requestPickupBottomSheetScaffold(String title, Widget content) {
-  //   Get.bottomSheet(
-  //     enableDrag: true,
-  //     isDismissible: true,
-  //     StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-  //       return RequestPickupBottomSheetScaffold(content: content, title: title);
-  //     }),
-  //   );
-  // }
 }

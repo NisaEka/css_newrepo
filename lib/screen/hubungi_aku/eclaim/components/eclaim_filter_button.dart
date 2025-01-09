@@ -37,8 +37,6 @@ class EclaimFilterButton extends HookWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // const SizedBox(height: 10),
-                            // const CustomFormLabel(label: 'Petugas Entry'),
                             CustomDropDownField(
                               label: 'Status Claim'.tr,
                               value: c.state.selectedStatusClaim,
@@ -101,9 +99,7 @@ class EclaimFilterButton extends HookWidget {
               },
             ),
             isFiltered: c.state.isFiltered,
-            // isApplyFilter: c.state.startDate != null || c.state.endDate != null,
             onResetFilter: () {
-              // c.resetFilter();
               c.state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
               c.state.endDate =
                   DateTime.now().copyWith(hour: 23, minute: 59, second: 59);

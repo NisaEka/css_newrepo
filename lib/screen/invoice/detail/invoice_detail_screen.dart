@@ -528,35 +528,6 @@ class InvoiceDetailScreen extends StatelessWidget {
     );
   }
 
-  // Widget _viewAwbList(BuildContext context, String encodedInvoiceNumber) {
-  //   return GestureDetector(
-  //     behavior: HitTestBehavior.translucent,
-  //     onTap: () {
-  //       Get.to(const InvoiceCnoteScreen(),
-  //           arguments: {"invoice_number": encodedInvoiceNumber});
-  //     },
-  //     child: Container(
-  //       color: AppConst.isLightTheme(context) ? blueJNE : redJNE,
-  //       child: Padding(
-  //         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.start,
-  //           children: [
-  //             Text(
-  //               "Lihat Daftar Transaksi ".tr,
-  //               style: Theme.of(context)
-  //                   .textTheme
-  //                   .titleMedium
-  //                   ?.copyWith(color: Colors.white),
-  //             ),
-  //             const Icon(Icons.arrow_circle_right, color: Colors.white),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget _textRow(
       BuildContext context, String title, String? value, bool isLoading,
       {TextStyle? style, FontWeight? titleFontWeight}) {

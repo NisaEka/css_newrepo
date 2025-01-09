@@ -8,6 +8,7 @@ import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_address_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,7 +45,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
         _addNewAddressWidget(context),
         _addressesWidget(context),
         _pickupTime(context),
-        _pickupButton()
+        _pickupButton(context)
       ],
     );
   }
@@ -86,7 +87,6 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
             itemBuilder: (context, item, index) {
               return RequestPickupAddressItem(
                 address: item,
-                // lastItem: index + 1 == pagingController.itemList!.length,
                 lastItem: index + 1 == pagingController.itemList!.length,
                 selected: selectedAddressId == item.pickupDataId,
                 onItemClick: () => onSelectAddress(item.pickupDataId),
@@ -100,21 +100,6 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
             ),
           ),
         ),
-        // child: ListView.separated(
-        //   scrollDirection: Axis.horizontal,
-        //   itemBuilder: (context, index) {
-        //     return RequestPickupAddressItem(
-        //       address: addresses[index],
-        //       lastItem: index == addresses.length - 1,
-        //       selected: selectedAddressId == addresses[index].pickupDataId,
-        //       onItemClick: () => onSelectAddress(addresses[index].pickupDataId),
-        //     );
-        //   },
-        //   separatorBuilder: (BuildContext context, int index) {
-        //     return Container();
-        //   },
-        //   itemCount: addresses.length,
-        // ),
       );
     } else {
       return Container(
@@ -180,19 +165,17 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
     );
   }
 
-  Widget _pickupButton() {
+  Widget _pickupButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: SizedBox(
-        width: Get.width,
-        child: FilledButton(
-          onPressed: () => onPickupClick(),
-          child: Text(
-            _pickupButtonText(),
-            style: const TextStyle(color: whiteColor),
-          ),
-        ),
-      ),
+          width: Get.width,
+          child: CustomFilledButton(
+              color:
+                  selectedAddressId != null ? primaryColor(context) : greyColor,
+              title: _pickupButtonText(),
+              onPressed: () =>
+                  selectedAddressId != null ? onPickupClick() : null)),
     );
   }
 

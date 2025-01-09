@@ -73,11 +73,9 @@ class PembayaranAggergasiController extends BaseController {
       final isLastPage = agg.meta!.currentPage == agg.meta!.lastPage;
       if (isLastPage) {
         pagingController.appendLastPage(agg.data ?? []);
-        // transactionList.addAll(pagingController.itemList ?? []);
       } else {
         final nextPageKey = page + 1;
         pagingController.appendPage(agg.data ?? [], nextPageKey);
-        // transactionList.addAll(pagingController.itemList ?? []);
       }
     } catch (e, i) {
       AppLogger.e('error getAggregation $e, $i');
@@ -164,12 +162,10 @@ class PembayaranAggergasiController extends BaseController {
       update();
       pagingController.refresh();
       fetchAggregationTotal();
-      // Get.back();
     }
   }
 
   void resetFilter() {
-    // if (!isFiltered) {
     startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
@@ -188,8 +184,6 @@ class PembayaranAggergasiController extends BaseController {
 
     pagingController.refresh();
     fetchAggregationTotal();
-    // Get.back();
-    // }
   }
 
   void onSelectAccount(Account e) {

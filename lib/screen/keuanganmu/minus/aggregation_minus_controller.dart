@@ -24,8 +24,6 @@ class AggregasiMinusController extends BaseController {
       PagingController(firstPageKey: 1);
   static const pageSize = 20;
 
-  // List<AggregationMinusModel> aggregations = [];
-
   @override
   void onInit() {
     super.onInit();

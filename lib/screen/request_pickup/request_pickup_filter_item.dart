@@ -110,15 +110,3 @@ class RequestPickupFilterItem extends StatelessWidget {
     );
   }
 }
-
-// child: showDatePickerContent
-// ?
-//     : Row(
-// mainAxisAlignment: MainAxisAlignment.spaceBetween,
-// children: [
-// Text(items[index].asName().tr),
-// Icon(isSelected
-// ? Icons.circle
-//     : Icons.circle_outlined)
-// ],
-// )

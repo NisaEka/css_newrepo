@@ -80,7 +80,6 @@ class EditProfilScreen extends StatelessWidget {
                     itemAsString: (OriginModel e) => e.originName.toString(),
                     onChanged: (value) => c.selectOrigin(value),
                     value: c.selectedOrigin,
-                    // selectedItem: c.kotaPengirim.text,
                     hintText:
                         c.isLoadOrigin ? "Loading..." : "Kota Pengiriman".tr,
                     searchHintText: 'Masukan Kota Pengiriman'.tr,
