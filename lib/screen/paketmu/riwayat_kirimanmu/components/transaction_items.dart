@@ -32,9 +32,10 @@ class TransactionItems extends StatelessWidget {
                         trailing: CustomFilledButton(
                           color: redJNE,
                           width: Get.width * 0.4,
-                          title: "Hapus Semua",
+                          title: "Hapus".tr,
                           prefixIcon: Icons.delete,
                           padding: const EdgeInsets.only(right: 5),
+                          onPressed: () => c.onDeleteAll(),
                         ),
                       )
                     : const SizedBox(),
