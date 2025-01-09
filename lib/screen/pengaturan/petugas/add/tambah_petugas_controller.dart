@@ -336,12 +336,6 @@ class TambahPetugasController extends BaseController {
     } catch (e, i) {
       AppLogger.e('error loadOrigin $e, $i');
     }
-    // for (var value in originCodes) {
-    //   selectedOrigin.add(
-    //       originList.where((e) => e.originCode == value).isNotEmpty
-    //           ? originList.where((e) => e.originCode == value).first
-    //           : OriginModel());
-    // }
     isLoadOrigin = false;
     update();
   }
