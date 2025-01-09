@@ -19,14 +19,11 @@ class InfoDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      // scrollable: false,
       contentPadding: const EdgeInsets.only(top: 10),
       actionsPadding: EdgeInsets.zero,
-      // backgroundColor: Colors.white,
       elevation: 0,
       content: SizedBox(
         height: Get.width / 1.3,
-        // color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

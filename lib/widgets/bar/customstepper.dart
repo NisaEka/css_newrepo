@@ -27,8 +27,6 @@ class CustomStepper extends StatelessWidget {
             children: List.generate(
               totalStep,
               (index) => Container(
-                // height: 100,
-                // color: Colors.blue,
                 margin: const EdgeInsets.only(top: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,8 +34,6 @@ class CustomStepper extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          // margin: const EdgeInsets.all(10),
-                          // padding: EdgeInsets.all(10),
                           height: 30,
                           width: 30,
                           decoration: BoxDecoration(
@@ -45,9 +41,6 @@ class CustomStepper extends StatelessWidget {
                                 ? primaryColor(context)
                                 : greyColor,
                             borderRadius: BorderRadius.circular(50),
-                            // border: Border.all(
-                            //   color: currentStep >= index ? Colors.transparent : whiteColor,
-                            // ),
                             boxShadow: [
                               BoxShadow(
                                 color: secondaryColor(context),

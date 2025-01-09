@@ -35,9 +35,6 @@ class LogActivityStepper extends StatelessWidget {
               margin: const EdgeInsets.only(left: 8, right: 5),
               height: 26,
               width: 26,
-              // decoration: BoxDecoration(
-              //   color: blueJNE,
-              // ),
               child: Container(
                 width: 23,
                 height: 23,
@@ -98,7 +95,6 @@ class LogActivityStepper extends StatelessWidget {
               margin: const EdgeInsets.only(top: 10),
               title: data?.activityStatus ?? '',
               fontSize: 10,
-              // height: 20,
               width: calcTextSize(TextSpan(text: data?.activityStatus ?? ''))
                   .width,
               height: calcTextSize(TextSpan(text: data?.activityStatus ?? ''))
