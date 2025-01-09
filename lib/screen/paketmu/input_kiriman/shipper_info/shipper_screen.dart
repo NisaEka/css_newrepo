@@ -23,7 +23,7 @@ class InformasiPengirimScreen extends StatelessWidget {
                 Get.delete<DashboardController>().then(
               (_) {
                 controller.storage.deleteString(StorageCore.transactionTemp);
-                Get.offAll(const DashboardScreen());
+                Get.offAll(() => const DashboardScreen());
               },
             ),
             child: Stack(

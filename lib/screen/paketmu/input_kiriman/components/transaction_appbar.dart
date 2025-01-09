@@ -39,7 +39,7 @@ class TransactionAppbar extends StatelessWidget implements PreferredSizeWidget {
             ? Get.back()
             : Get.delete<DashboardController>().then((_) {
                 StorageCore().deleteString(StorageCore.transactionTemp);
-                Get.offAll(const DashboardScreen());
+                Get.offAll(() => const DashboardScreen());
               }),
       ),
       flexibleSpace: Column(

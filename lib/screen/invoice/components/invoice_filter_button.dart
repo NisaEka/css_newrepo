@@ -33,11 +33,7 @@ class InvoiceFilterButton extends HookWidget {
                       const SliverToBoxAdapter(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // CustomFormLabel(label: 'Status Kiriman'.tr),
-                            // const SizedBox(height: 10),
-                            // CustomFormLabel(label: 'Petugas Entry'),
-                          ],
+                          children: [],
                         ),
                       ),
                     ],
@@ -46,9 +42,7 @@ class InvoiceFilterButton extends HookWidget {
               },
             ),
             isFiltered: c.state.isFiltered,
-            // isApplyFilter: c.state.startDate != null || c.state.endDate != null,
             onResetFilter: () {
-              // c.resetFilter();
               c.state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
               c.state.endDate =
                   DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
@@ -58,7 +52,6 @@ class InvoiceFilterButton extends HookWidget {
               Get.back();
             },
             onApplyFilter: () {
-              // c.applyFilter();
               c.applyFilter();
               Get.back();
             },

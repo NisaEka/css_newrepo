@@ -1,3 +1,4 @@
+import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
@@ -79,4 +80,5 @@ class DashboardState {
   DashboardKirimanKamuModel kirimanKamu = DashboardKirimanKamuModel();
   DashboardKirimanKamuModel kirimanKamuCOD = DashboardKirimanKamuModel();
   AggregationModel? aggregationModel;
+  AggregationMinusModel? aggregationMinus;
 }

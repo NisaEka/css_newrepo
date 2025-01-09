@@ -111,15 +111,6 @@ class LoginForm extends StatelessWidget {
                           }
                         },
                       ),
-                      // CustomFilledButton(
-                      //   color: Colors.transparent,
-                      //   borderColor: blueJNE,
-                      //   fontColor: blueJNE,
-                      //   title: 'Masuk Tanpa Login'.tr,
-                      //   onPressed: () async {
-                      //     Get.offAll(const DashboardScreen());
-                      //   },
-                      // ),
                       Container(
                         alignment: Alignment.center,
                         child: Text(

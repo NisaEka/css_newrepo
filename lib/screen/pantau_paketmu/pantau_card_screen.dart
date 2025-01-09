@@ -38,35 +38,10 @@ class PantauCardScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const PantauStatusButton(),
-                    // const SizedBox(height: 5),
                     // Total Kiriman
                     PantauTotalKiriman(
                         isLoading: controller.state.isLoading ||
                             controller.state.countList.isEmpty),
-                    // Pantau List
-                    // Expanded(
-                    //   child: ListView.builder(
-                    //     itemCount: 8,
-                    //     itemBuilder: (context, index) {
-                    //       if (controller.state.isLoading) {
-                    //         return const PantauItems(
-                    //           item: null,
-                    //           isLoading: true,
-                    //         );
-                    //       }
-                    //       // else if (controller.state.countList.isEmpty) {
-                    //       //   return const Center(
-                    //       //       child: CircularProgressIndicator());
-                    //       // }
-                    //
-                    //       var item = controller.state.countList[index];
-                    //       return index != 0
-                    //           ? PantauItems(
-                    //               item: item, index: index, isLoading: false)
-                    //           : const SizedBox();
-                    //     },
-                    //   ),
-                    // ),
                     Expanded(
                       child: ListView(
                         children: controller.state.countList.isEmpty ||
@@ -97,15 +72,6 @@ class PantauCardScreen extends StatelessWidget {
                                       isLoading: false,
                                     );
                                   }).toList(),
-
-                        // : controller.state.countList
-                        //     .mapIndexed((index, item) => (index != 0
-                        //         ? PantauItems(
-                        //             item: item,
-                        //             index: index,
-                        //             isLoading: false)
-                        //         : const SizedBox()))
-                        //     .toList(),
                       ),
                     ),
                   ],

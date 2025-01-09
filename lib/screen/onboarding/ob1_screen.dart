@@ -84,15 +84,6 @@ class _Ob1ScreenState extends State<Ob1Screen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // CustomFilledButton(
-              //   color: redJNE,
-              //   margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
-              //   height: 51,
-              //   width: 20,
-              //   isTransparent: true,
-              //   title: 'Lewati'.tr,
-              //   onPressed: () => Get.delete<DashboardController>().then((_) => Get.offAll(const DashboardScreen())),
-              // ),
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
