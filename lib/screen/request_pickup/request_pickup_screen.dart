@@ -54,6 +54,8 @@ class RequestPickupScreen extends StatelessWidget {
 
   Widget? _requestPickupBottomBar(
       BuildContext context, RequestPickupController controller) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double fontSize = screenWidth < 400 ? 12 : 14;
     if (controller.state.checkMode) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
@@ -65,8 +67,11 @@ class RequestPickupScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Total kiriman dipilih",
-                    style: Theme.of(context).textTheme.titleMedium,
+                    "Total kiriman dipilih".tr,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontSize: fontSize),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -219,7 +224,9 @@ class RequestPickupScreen extends StatelessWidget {
                         }
                       },
                       onLongTap: () {
-                        controller.setCheckMode(true);
+                        item.status != Constant.statusAlreadyRequestPickedUp
+                            ? controller.setCheckMode(true)
+                            : const SizedBox();
                       },
                       checkMode: controller.state.checkMode,
                       checked: controller.isItemChecked(item.awb),

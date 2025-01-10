@@ -307,8 +307,8 @@ class LanguageEN {
       "Kirim ulang kode": "Resend code",
       "Gunakan cara lain": "Use another method",
       "Peringatan": "Alert",
-      "Total Ongkos Kirim tidak bisa lebih dari Rp.1000.000":
-          "Total shipping costs cannot exceed Rp. 1000,000",
+      "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000":
+          "Total shipping costs cannot exceed Rp. 1.000,000",
       "Tidak dapat menyimpan data": "Cannot save data",
       "Draft Kosong": "Draft Empty",
       "Mode offline": "Offline Mode",
@@ -604,7 +604,36 @@ class LanguageEN {
       "Badan Usaha": "Business Entity",
       "Format nomor NPWP tidak sesuai": "TaxID number format is incorrect",
       "Periksa kembali format nomor NPWP yang diinputkan":
-          "Please check the TaxID number format you have entered"
+          "Please check the TaxID number format you have entered",
+      "Total Nilai COD": "Total COD Amount",
+      "Ringkasan Transaksi": "Summary Transaction",
+      "Harga COD tidak boleh lebih dari": "COD Price must not be greater than",
+      "Nomor telepon tidak boleh lebih dari 13 karakter":
+          "The phone number cannot be more than 13 characters",
+      "Claim Gagal YES": "Claim Failed YES",
+      "Claim Kiriman Hilang": "Claim Shipment is Missing",
+      "Claim Kiriman Rusak": "Claim Shipment is Damaged",
+      "Total kiriman dipilih": "Total selected shipment",
+      "Pilih kiriman terlebih dahulu": "Please select a shipment",
+      "Nama PIC": "PIC Name",
+      "Telepon": "Phone",
+      "Kota Penjemputan": "Pickup City",
+      "Kecamatan Penjemputan": "Pickup District",
+      "Alamat Penjemputan": "Pickup Address",
+      "Layanan Pickup": "Pickup Service",
+      "Pilih Alamat Penjemputan": "Choose Pickup Address",
+      "Tambah alamat penjemputan": "Add Pickup Address",
+      "Jam Pickup": "Pickup Time",
+      "Jemput": "Pickup",
+      "Jemput Sekarang": "Pickup Now",
+      "Nama Kamu": "Name",
+      "Masukkan nama anda": "Enter your name",
+      "Masukan no handphone": "Enter phone number",
+      "Masukkan alamat penjemputan": "Enter pickup address",
+      "Simpan Alamat": "Save Address",
+      "Tambah Alamat Penjemputan": "Add Pickup Address",
+      "Apakah kamu sudah yakin untuk melakukan penjemputan di jam ":
+          "Are you sure to schedule the pickup at "
     };
   }
 }

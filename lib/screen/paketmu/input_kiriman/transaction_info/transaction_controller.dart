@@ -790,7 +790,7 @@ class TransactionController extends BaseController {
             color: errorColor,
             size: 100,
           ),
-          subtitle: "${'Harga COD tidak boleh Lebih dari'.tr} Rp.10.000.000",
+          subtitle: "${'Harga COD tidak boleh lebih dari'.tr} Rp.10.000.000",
           confirmButtonTitle: "OK",
           onConfirm: Get.back,
         ),

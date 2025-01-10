@@ -40,13 +40,15 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _addNewAddressWidget(context),
-        _addressesWidget(context),
-        _pickupTime(context),
-        _pickupButton(context)
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _addNewAddressWidget(context),
+          _addressesWidget(context),
+          _pickupTime(context),
+          _pickupButton(context)
+        ],
+      ),
     );
   }
 

@@ -25,6 +25,7 @@ class TransactionForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return GetBuilder<TransactionController>(
         init: TransactionController(),
         builder: (c) {
@@ -193,7 +194,9 @@ class TransactionForm extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             CustomTextFormField(
-                              width: Get.width / 2.4,
+                              width: screenWidth < 400
+                                  ? Get.width / 2.7
+                                  : Get.width / 2.4,
                               controller: c.state.specialInstruction,
                               hintText: 'Instruksi Khusus (Opsional)'.tr,
                               validator: (value) => value!.isNotEmpty
