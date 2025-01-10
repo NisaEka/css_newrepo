@@ -47,9 +47,9 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 : Container(),
             controller.npwpNumberFailed
                 ? DefaultAlertDialog(
-                    title: 'Format nomor NPWP tidak sesuai.'.tr,
+                    title: 'Format nomor NPWP tidak sesuai'.tr,
                     subtitle:
-                        'Periksa kembali format nomor NPWP yang diinputkan.'.tr,
+                        'Periksa kembali format nomor NPWP yang diinputkan'.tr,
                     confirmButtonTitle: 'OK'.tr,
                     onConfirm: () => controller.onRefreshNpwpNumberState(),
                   )
@@ -166,7 +166,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
               CustomDropDownFormField(
                 hintText: 'Jenis NPWP'.tr,
                 width: Get.width,
-                value: c.npwpType.text,
+                value: c.npwpType.text.tr,
                 items: [
                   DropdownMenuItem(
                     value: 'PRIBADI'.tr,

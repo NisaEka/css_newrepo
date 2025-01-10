@@ -19,6 +19,9 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double leftPadding =
+        screenWidth < 400 ? Get.width * 0.08 : Get.width * 0.09;
     return GetBuilder<DashboardController>(
       init: DashboardController(),
       builder: (controller) {
@@ -43,8 +46,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ? MenuIcon(
                       // icon: IconsConstant.add,
                       icon: ImageConstant.paketmuIcon,
-                      margin:
-                          EdgeInsets.only(left: Get.width * 0.09, bottom: 29),
+                      margin: EdgeInsets.only(left: leftPadding, bottom: 29),
                       radius: 100,
                       height: 65,
                       width: 65,

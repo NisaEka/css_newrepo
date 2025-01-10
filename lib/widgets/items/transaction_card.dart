@@ -62,6 +62,7 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double horizontalPadding = screenWidth < 400 ? 1 : 4;
     return Column(
       children: [
         Shimmer(
@@ -88,8 +89,8 @@ class TransactionCard extends StatelessWidget {
                     children: [
                       customTitle ??
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 4, vertical: 2),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: horizontalPadding, vertical: 2),
                             decoration: BoxDecoration(
                               color: color ??
                                   (AppConst.isLightTheme(context)

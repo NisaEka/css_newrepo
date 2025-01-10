@@ -298,9 +298,9 @@ class ShipperController extends BaseController {
           await Get.dialog(
             DefaultAlertDialog(
               subtitle:
-                  'Profile belum lengkap, silahkan lengkapi profil anda terlebih dahulu'
+                  'Profil belum lengkap, silahkan lengkapi profil anda terlebih dahulu'
                       .tr,
-              confirmButtonTitle: 'Lengkapi profil'.tr,
+              confirmButtonTitle: 'Lengkapi Profil'.tr,
               onConfirm: () {
                 Get.off(const EditProfilScreen())?.then((_) => initData());
               },

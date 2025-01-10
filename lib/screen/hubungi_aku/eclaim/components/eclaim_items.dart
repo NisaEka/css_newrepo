@@ -13,8 +13,6 @@ class EclaimItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return GetBuilder<EclaimController>(
       init: EclaimController(),
       builder: (c) {
@@ -28,7 +26,7 @@ class EclaimItems extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium),
             ),
             SizedBox(
-              height: screenHeight * 0.5,
+              height: Get.height * 0.5,
               child: RefreshIndicator(
                 onRefresh: () => Future.sync(() {
                   c.state.pagingController.refresh();
@@ -45,15 +43,16 @@ class EclaimItems extends StatelessWidget {
                       isSuccess: true,
                     ),
                     firstPageErrorIndicatorBuilder: (context) =>
-                        const DataEmpty(),
+                        const DataEmpty(
+                            mainAxisAlignment: MainAxisAlignment.start),
                     firstPageProgressIndicatorBuilder: (context) => Column(
                       children: List.generate(
                         3,
                         (index) => const EclaimListItem(isLoading: true),
                       ),
                     ),
-                    noItemsFoundIndicatorBuilder: (context) =>
-                        const DataEmpty(),
+                    noItemsFoundIndicatorBuilder: (context) => const DataEmpty(
+                        mainAxisAlignment: MainAxisAlignment.start),
                     noMoreItemsIndicatorBuilder: (context) => Padding(
                       padding: const EdgeInsets.only(bottom: 30),
                       child: Center(

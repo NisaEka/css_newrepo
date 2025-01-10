@@ -95,7 +95,7 @@ class NoAkunScreen extends StatelessWidget {
                     ],
                   ),
                 )
-              : Center(
+              : Expanded(
                   child: DataEmpty(
                   text: 'Log Aktivitas Kosong'.tr,
                 )),

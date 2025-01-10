@@ -186,7 +186,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
             ? 24
             : 20;
     double descFontSize = screenWidth < 400
-        ? 14
+        ? 12
         : screenWidth >= 400 && screenWidth < 500
             ? 16
             : 14;

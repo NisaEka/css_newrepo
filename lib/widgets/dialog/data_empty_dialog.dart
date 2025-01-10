@@ -7,11 +7,13 @@ import 'package:get/get.dart';
 class DataEmpty extends StatelessWidget {
   final String text;
   final EdgeInsets? padding;
+  final MainAxisAlignment? mainAxisAlignment;
 
   const DataEmpty({
     super.key,
     this.text = "Data Kosong",
     this.padding,
+    this.mainAxisAlignment,
   });
 
   @override
@@ -23,7 +25,7 @@ class DataEmpty extends StatelessWidget {
       ),
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
           children: [
             Image.asset(
               ImageConstant.dataEmpty,

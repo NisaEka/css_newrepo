@@ -11,7 +11,8 @@ class EclaimStatusButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = Get.width;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double rightPadding = screenWidth < 400 ? 0 : 5;
     return GetBuilder<EclaimController>(
         init: EclaimController(),
         builder: (c) {
@@ -23,7 +24,7 @@ class EclaimStatusButton extends StatelessWidget {
               children: [
                 // Total Pengajuan
                 Container(
-                  width: screenWidth * 0.4,
+                  width: Get.width * 0.4,
                   decoration: BoxDecoration(
                     color: blueJNE,
                     borderRadius: BorderRadius.circular(8),
@@ -80,7 +81,7 @@ class EclaimStatusButton extends StatelessWidget {
                 ),
                 // Diterima
                 Container(
-                  width: screenWidth * 0.2,
+                  width: Get.width * 0.2,
                   decoration: BoxDecoration(
                     color: successColor,
                     borderRadius: BorderRadius.circular(8),
@@ -129,7 +130,8 @@ class EclaimStatusButton extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 5),
+                                    padding:
+                                        EdgeInsets.only(right: rightPadding),
                                     child: Text(
                                       'Diterima'.tr,
                                       style: Theme.of(context)
@@ -161,7 +163,7 @@ class EclaimStatusButton extends StatelessWidget {
                 ),
                 // Ditolak
                 Container(
-                  width: screenWidth * 0.2,
+                  width: Get.width * 0.2,
                   decoration: BoxDecoration(
                     color: redJNE,
                     borderRadius: BorderRadius.circular(8),
